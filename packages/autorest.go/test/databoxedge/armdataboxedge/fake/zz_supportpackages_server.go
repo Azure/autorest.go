@@ -58,14 +58,20 @@ func (s *SupportPackagesServerTransport) dispatchToMethodFake(req *http.Request,
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "SupportPackagesClient.BeginTriggerSupportPackage":
-			res.resp, res.err = s.dispatchBeginTriggerSupportPackage(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if supportPackagesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = supportPackagesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "SupportPackagesClient.BeginTriggerSupportPackage":
+				res.resp, res.err = s.dispatchBeginTriggerSupportPackage(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -126,4 +132,10 @@ func (s *SupportPackagesServerTransport) dispatchBeginTriggerSupportPackage(req 
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SupportPackagesServerTransport
+var supportPackagesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

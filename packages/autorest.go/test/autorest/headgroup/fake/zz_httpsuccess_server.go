@@ -60,18 +60,24 @@ func (h *HTTPSuccessServerTransport) dispatchToMethodFake(req *http.Request, met
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "HTTPSuccessClient.Head200":
-			res.resp, res.err = h.dispatchHead200(req)
-		case "HTTPSuccessClient.Head204":
-			res.resp, res.err = h.dispatchHead204(req)
-		case "HTTPSuccessClient.Head404":
-			res.resp, res.err = h.dispatchHead404(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if httpSuccessServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = httpSuccessServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "HTTPSuccessClient.Head200":
+				res.resp, res.err = h.dispatchHead200(req)
+			case "HTTPSuccessClient.Head204":
+				res.resp, res.err = h.dispatchHead204(req)
+			case "HTTPSuccessClient.Head404":
+				res.resp, res.err = h.dispatchHead404(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -141,4 +147,10 @@ func (h *HTTPSuccessServerTransport) dispatchHead404(req *http.Request) (*http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to HTTPSuccessServerTransport
+var httpSuccessServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

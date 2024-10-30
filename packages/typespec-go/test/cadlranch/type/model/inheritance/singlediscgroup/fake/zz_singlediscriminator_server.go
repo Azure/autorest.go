@@ -75,26 +75,32 @@ func (s *SingleDiscriminatorServerTransport) dispatchToMethodFake(req *http.Requ
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "SingleDiscriminatorClient.GetLegacyModel":
-			res.resp, res.err = s.dispatchGetLegacyModel(req)
-		case "SingleDiscriminatorClient.GetMissingDiscriminator":
-			res.resp, res.err = s.dispatchGetMissingDiscriminator(req)
-		case "SingleDiscriminatorClient.GetModel":
-			res.resp, res.err = s.dispatchGetModel(req)
-		case "SingleDiscriminatorClient.GetRecursiveModel":
-			res.resp, res.err = s.dispatchGetRecursiveModel(req)
-		case "SingleDiscriminatorClient.GetWrongDiscriminator":
-			res.resp, res.err = s.dispatchGetWrongDiscriminator(req)
-		case "SingleDiscriminatorClient.PutModel":
-			res.resp, res.err = s.dispatchPutModel(req)
-		case "SingleDiscriminatorClient.PutRecursiveModel":
-			res.resp, res.err = s.dispatchPutRecursiveModel(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if singleDiscriminatorServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = singleDiscriminatorServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "SingleDiscriminatorClient.GetLegacyModel":
+				res.resp, res.err = s.dispatchGetLegacyModel(req)
+			case "SingleDiscriminatorClient.GetMissingDiscriminator":
+				res.resp, res.err = s.dispatchGetMissingDiscriminator(req)
+			case "SingleDiscriminatorClient.GetModel":
+				res.resp, res.err = s.dispatchGetModel(req)
+			case "SingleDiscriminatorClient.GetRecursiveModel":
+				res.resp, res.err = s.dispatchGetRecursiveModel(req)
+			case "SingleDiscriminatorClient.GetWrongDiscriminator":
+				res.resp, res.err = s.dispatchGetWrongDiscriminator(req)
+			case "SingleDiscriminatorClient.PutModel":
+				res.resp, res.err = s.dispatchPutModel(req)
+			case "SingleDiscriminatorClient.PutRecursiveModel":
+				res.resp, res.err = s.dispatchPutRecursiveModel(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -256,4 +262,10 @@ func (s *SingleDiscriminatorServerTransport) dispatchPutRecursiveModel(req *http
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SingleDiscriminatorServerTransport
+var singleDiscriminatorServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

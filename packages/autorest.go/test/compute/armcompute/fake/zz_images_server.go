@@ -87,24 +87,30 @@ func (i *ImagesServerTransport) dispatchToMethodFake(req *http.Request, method s
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ImagesClient.BeginCreateOrUpdate":
-			res.resp, res.err = i.dispatchBeginCreateOrUpdate(req)
-		case "ImagesClient.BeginDelete":
-			res.resp, res.err = i.dispatchBeginDelete(req)
-		case "ImagesClient.Get":
-			res.resp, res.err = i.dispatchGet(req)
-		case "ImagesClient.NewListPager":
-			res.resp, res.err = i.dispatchNewListPager(req)
-		case "ImagesClient.NewListByResourceGroupPager":
-			res.resp, res.err = i.dispatchNewListByResourceGroupPager(req)
-		case "ImagesClient.BeginUpdate":
-			res.resp, res.err = i.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if imagesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = imagesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ImagesClient.BeginCreateOrUpdate":
+				res.resp, res.err = i.dispatchBeginCreateOrUpdate(req)
+			case "ImagesClient.BeginDelete":
+				res.resp, res.err = i.dispatchBeginDelete(req)
+			case "ImagesClient.Get":
+				res.resp, res.err = i.dispatchGet(req)
+			case "ImagesClient.NewListPager":
+				res.resp, res.err = i.dispatchNewListPager(req)
+			case "ImagesClient.NewListByResourceGroupPager":
+				res.resp, res.err = i.dispatchNewListByResourceGroupPager(req)
+			case "ImagesClient.BeginUpdate":
+				res.resp, res.err = i.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -372,4 +378,10 @@ func (i *ImagesServerTransport) dispatchBeginUpdate(req *http.Request) (*http.Re
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ImagesServerTransport
+var imagesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

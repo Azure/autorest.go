@@ -72,20 +72,26 @@ func (d *DeletedServicesServerTransport) dispatchToMethodFake(req *http.Request,
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DeletedServicesClient.Delete":
-			res.resp, res.err = d.dispatchDelete(req)
-		case "DeletedServicesClient.Get":
-			res.resp, res.err = d.dispatchGet(req)
-		case "DeletedServicesClient.NewListPager":
-			res.resp, res.err = d.dispatchNewListPager(req)
-		case "DeletedServicesClient.NewListBySubscriptionPager":
-			res.resp, res.err = d.dispatchNewListBySubscriptionPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if deletedServicesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = deletedServicesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DeletedServicesClient.Delete":
+				res.resp, res.err = d.dispatchDelete(req)
+			case "DeletedServicesClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DeletedServicesClient.NewListPager":
+				res.resp, res.err = d.dispatchNewListPager(req)
+			case "DeletedServicesClient.NewListBySubscriptionPager":
+				res.resp, res.err = d.dispatchNewListBySubscriptionPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -249,4 +255,10 @@ func (d *DeletedServicesServerTransport) dispatchNewListBySubscriptionPager(req 
 		d.newListBySubscriptionPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DeletedServicesServerTransport
+var deletedServicesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

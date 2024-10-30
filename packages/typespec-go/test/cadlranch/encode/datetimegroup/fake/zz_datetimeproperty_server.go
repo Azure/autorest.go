@@ -67,22 +67,28 @@ func (d *DatetimePropertyServerTransport) dispatchToMethodFake(req *http.Request
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DatetimePropertyClient.Default":
-			res.resp, res.err = d.dispatchDefault(req)
-		case "DatetimePropertyClient.RFC3339":
-			res.resp, res.err = d.dispatchRFC3339(req)
-		case "DatetimePropertyClient.RFC7231":
-			res.resp, res.err = d.dispatchRFC7231(req)
-		case "DatetimePropertyClient.UnixTimestamp":
-			res.resp, res.err = d.dispatchUnixTimestamp(req)
-		case "DatetimePropertyClient.UnixTimestampArray":
-			res.resp, res.err = d.dispatchUnixTimestampArray(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if datetimePropertyServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = datetimePropertyServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DatetimePropertyClient.Default":
+				res.resp, res.err = d.dispatchDefault(req)
+			case "DatetimePropertyClient.RFC3339":
+				res.resp, res.err = d.dispatchRFC3339(req)
+			case "DatetimePropertyClient.RFC7231":
+				res.resp, res.err = d.dispatchRFC7231(req)
+			case "DatetimePropertyClient.UnixTimestamp":
+				res.resp, res.err = d.dispatchUnixTimestamp(req)
+			case "DatetimePropertyClient.UnixTimestampArray":
+				res.resp, res.err = d.dispatchUnixTimestampArray(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -210,4 +216,10 @@ func (d *DatetimePropertyServerTransport) dispatchUnixTimestampArray(req *http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DatetimePropertyServerTransport
+var datetimePropertyServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

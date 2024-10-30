@@ -192,82 +192,88 @@ func (q *QueriesServerTransport) dispatchToMethodFake(req *http.Request, method 
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "QueriesClient.ArrayStringCSVEmpty":
-			res.resp, res.err = q.dispatchArrayStringCSVEmpty(req)
-		case "QueriesClient.ArrayStringCSVNull":
-			res.resp, res.err = q.dispatchArrayStringCSVNull(req)
-		case "QueriesClient.ArrayStringCSVValid":
-			res.resp, res.err = q.dispatchArrayStringCSVValid(req)
-		case "QueriesClient.ArrayStringNoCollectionFormatEmpty":
-			res.resp, res.err = q.dispatchArrayStringNoCollectionFormatEmpty(req)
-		case "QueriesClient.ArrayStringPipesValid":
-			res.resp, res.err = q.dispatchArrayStringPipesValid(req)
-		case "QueriesClient.ArrayStringSsvValid":
-			res.resp, res.err = q.dispatchArrayStringSsvValid(req)
-		case "QueriesClient.ArrayStringTsvValid":
-			res.resp, res.err = q.dispatchArrayStringTsvValid(req)
-		case "QueriesClient.ByteEmpty":
-			res.resp, res.err = q.dispatchByteEmpty(req)
-		case "QueriesClient.ByteMultiByte":
-			res.resp, res.err = q.dispatchByteMultiByte(req)
-		case "QueriesClient.ByteNull":
-			res.resp, res.err = q.dispatchByteNull(req)
-		case "QueriesClient.DateNull":
-			res.resp, res.err = q.dispatchDateNull(req)
-		case "QueriesClient.DateTimeNull":
-			res.resp, res.err = q.dispatchDateTimeNull(req)
-		case "QueriesClient.DateTimeValid":
-			res.resp, res.err = q.dispatchDateTimeValid(req)
-		case "QueriesClient.DateValid":
-			res.resp, res.err = q.dispatchDateValid(req)
-		case "QueriesClient.DoubleDecimalNegative":
-			res.resp, res.err = q.dispatchDoubleDecimalNegative(req)
-		case "QueriesClient.DoubleDecimalPositive":
-			res.resp, res.err = q.dispatchDoubleDecimalPositive(req)
-		case "QueriesClient.DoubleNull":
-			res.resp, res.err = q.dispatchDoubleNull(req)
-		case "QueriesClient.EnumNull":
-			res.resp, res.err = q.dispatchEnumNull(req)
-		case "QueriesClient.EnumValid":
-			res.resp, res.err = q.dispatchEnumValid(req)
-		case "QueriesClient.FloatNull":
-			res.resp, res.err = q.dispatchFloatNull(req)
-		case "QueriesClient.FloatScientificNegative":
-			res.resp, res.err = q.dispatchFloatScientificNegative(req)
-		case "QueriesClient.FloatScientificPositive":
-			res.resp, res.err = q.dispatchFloatScientificPositive(req)
-		case "QueriesClient.GetBooleanFalse":
-			res.resp, res.err = q.dispatchGetBooleanFalse(req)
-		case "QueriesClient.GetBooleanNull":
-			res.resp, res.err = q.dispatchGetBooleanNull(req)
-		case "QueriesClient.GetBooleanTrue":
-			res.resp, res.err = q.dispatchGetBooleanTrue(req)
-		case "QueriesClient.GetIntNegativeOneMillion":
-			res.resp, res.err = q.dispatchGetIntNegativeOneMillion(req)
-		case "QueriesClient.GetIntNull":
-			res.resp, res.err = q.dispatchGetIntNull(req)
-		case "QueriesClient.GetIntOneMillion":
-			res.resp, res.err = q.dispatchGetIntOneMillion(req)
-		case "QueriesClient.GetLongNull":
-			res.resp, res.err = q.dispatchGetLongNull(req)
-		case "QueriesClient.GetNegativeTenBillion":
-			res.resp, res.err = q.dispatchGetNegativeTenBillion(req)
-		case "QueriesClient.GetTenBillion":
-			res.resp, res.err = q.dispatchGetTenBillion(req)
-		case "QueriesClient.StringEmpty":
-			res.resp, res.err = q.dispatchStringEmpty(req)
-		case "QueriesClient.StringNull":
-			res.resp, res.err = q.dispatchStringNull(req)
-		case "QueriesClient.StringURLEncoded":
-			res.resp, res.err = q.dispatchStringURLEncoded(req)
-		case "QueriesClient.StringUnicode":
-			res.resp, res.err = q.dispatchStringUnicode(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if queriesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = queriesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "QueriesClient.ArrayStringCSVEmpty":
+				res.resp, res.err = q.dispatchArrayStringCSVEmpty(req)
+			case "QueriesClient.ArrayStringCSVNull":
+				res.resp, res.err = q.dispatchArrayStringCSVNull(req)
+			case "QueriesClient.ArrayStringCSVValid":
+				res.resp, res.err = q.dispatchArrayStringCSVValid(req)
+			case "QueriesClient.ArrayStringNoCollectionFormatEmpty":
+				res.resp, res.err = q.dispatchArrayStringNoCollectionFormatEmpty(req)
+			case "QueriesClient.ArrayStringPipesValid":
+				res.resp, res.err = q.dispatchArrayStringPipesValid(req)
+			case "QueriesClient.ArrayStringSsvValid":
+				res.resp, res.err = q.dispatchArrayStringSsvValid(req)
+			case "QueriesClient.ArrayStringTsvValid":
+				res.resp, res.err = q.dispatchArrayStringTsvValid(req)
+			case "QueriesClient.ByteEmpty":
+				res.resp, res.err = q.dispatchByteEmpty(req)
+			case "QueriesClient.ByteMultiByte":
+				res.resp, res.err = q.dispatchByteMultiByte(req)
+			case "QueriesClient.ByteNull":
+				res.resp, res.err = q.dispatchByteNull(req)
+			case "QueriesClient.DateNull":
+				res.resp, res.err = q.dispatchDateNull(req)
+			case "QueriesClient.DateTimeNull":
+				res.resp, res.err = q.dispatchDateTimeNull(req)
+			case "QueriesClient.DateTimeValid":
+				res.resp, res.err = q.dispatchDateTimeValid(req)
+			case "QueriesClient.DateValid":
+				res.resp, res.err = q.dispatchDateValid(req)
+			case "QueriesClient.DoubleDecimalNegative":
+				res.resp, res.err = q.dispatchDoubleDecimalNegative(req)
+			case "QueriesClient.DoubleDecimalPositive":
+				res.resp, res.err = q.dispatchDoubleDecimalPositive(req)
+			case "QueriesClient.DoubleNull":
+				res.resp, res.err = q.dispatchDoubleNull(req)
+			case "QueriesClient.EnumNull":
+				res.resp, res.err = q.dispatchEnumNull(req)
+			case "QueriesClient.EnumValid":
+				res.resp, res.err = q.dispatchEnumValid(req)
+			case "QueriesClient.FloatNull":
+				res.resp, res.err = q.dispatchFloatNull(req)
+			case "QueriesClient.FloatScientificNegative":
+				res.resp, res.err = q.dispatchFloatScientificNegative(req)
+			case "QueriesClient.FloatScientificPositive":
+				res.resp, res.err = q.dispatchFloatScientificPositive(req)
+			case "QueriesClient.GetBooleanFalse":
+				res.resp, res.err = q.dispatchGetBooleanFalse(req)
+			case "QueriesClient.GetBooleanNull":
+				res.resp, res.err = q.dispatchGetBooleanNull(req)
+			case "QueriesClient.GetBooleanTrue":
+				res.resp, res.err = q.dispatchGetBooleanTrue(req)
+			case "QueriesClient.GetIntNegativeOneMillion":
+				res.resp, res.err = q.dispatchGetIntNegativeOneMillion(req)
+			case "QueriesClient.GetIntNull":
+				res.resp, res.err = q.dispatchGetIntNull(req)
+			case "QueriesClient.GetIntOneMillion":
+				res.resp, res.err = q.dispatchGetIntOneMillion(req)
+			case "QueriesClient.GetLongNull":
+				res.resp, res.err = q.dispatchGetLongNull(req)
+			case "QueriesClient.GetNegativeTenBillion":
+				res.resp, res.err = q.dispatchGetNegativeTenBillion(req)
+			case "QueriesClient.GetTenBillion":
+				res.resp, res.err = q.dispatchGetTenBillion(req)
+			case "QueriesClient.StringEmpty":
+				res.resp, res.err = q.dispatchStringEmpty(req)
+			case "QueriesClient.StringNull":
+				res.resp, res.err = q.dispatchStringNull(req)
+			case "QueriesClient.StringURLEncoded":
+				res.resp, res.err = q.dispatchStringURLEncoded(req)
+			case "QueriesClient.StringUnicode":
+				res.resp, res.err = q.dispatchStringUnicode(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -1224,4 +1230,10 @@ func (q *QueriesServerTransport) dispatchStringUnicode(req *http.Request) (*http
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to QueriesServerTransport
+var queriesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -85,24 +85,30 @@ func (d *DdosProtectionPlansServerTransport) dispatchToMethodFake(req *http.Requ
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DdosProtectionPlansClient.BeginCreateOrUpdate":
-			res.resp, res.err = d.dispatchBeginCreateOrUpdate(req)
-		case "DdosProtectionPlansClient.BeginDelete":
-			res.resp, res.err = d.dispatchBeginDelete(req)
-		case "DdosProtectionPlansClient.Get":
-			res.resp, res.err = d.dispatchGet(req)
-		case "DdosProtectionPlansClient.NewListPager":
-			res.resp, res.err = d.dispatchNewListPager(req)
-		case "DdosProtectionPlansClient.NewListByResourceGroupPager":
-			res.resp, res.err = d.dispatchNewListByResourceGroupPager(req)
-		case "DdosProtectionPlansClient.UpdateTags":
-			res.resp, res.err = d.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if ddosProtectionPlansServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = ddosProtectionPlansServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DdosProtectionPlansClient.BeginCreateOrUpdate":
+				res.resp, res.err = d.dispatchBeginCreateOrUpdate(req)
+			case "DdosProtectionPlansClient.BeginDelete":
+				res.resp, res.err = d.dispatchBeginDelete(req)
+			case "DdosProtectionPlansClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DdosProtectionPlansClient.NewListPager":
+				res.resp, res.err = d.dispatchNewListPager(req)
+			case "DdosProtectionPlansClient.NewListByResourceGroupPager":
+				res.resp, res.err = d.dispatchNewListByResourceGroupPager(req)
+			case "DdosProtectionPlansClient.UpdateTags":
+				res.resp, res.err = d.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -347,4 +353,10 @@ func (d *DdosProtectionPlansServerTransport) dispatchUpdateTags(req *http.Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DdosProtectionPlansServerTransport
+var ddosProtectionPlansServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

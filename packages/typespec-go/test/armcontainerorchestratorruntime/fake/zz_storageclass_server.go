@@ -80,22 +80,28 @@ func (s *StorageClassServerTransport) dispatchToMethodFake(req *http.Request, me
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "StorageClassClient.BeginCreateOrUpdate":
-			res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
-		case "StorageClassClient.BeginDelete":
-			res.resp, res.err = s.dispatchBeginDelete(req)
-		case "StorageClassClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "StorageClassClient.NewListPager":
-			res.resp, res.err = s.dispatchNewListPager(req)
-		case "StorageClassClient.BeginUpdate":
-			res.resp, res.err = s.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if storageClassServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = storageClassServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "StorageClassClient.BeginCreateOrUpdate":
+				res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
+			case "StorageClassClient.BeginDelete":
+				res.resp, res.err = s.dispatchBeginDelete(req)
+			case "StorageClassClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "StorageClassClient.NewListPager":
+				res.resp, res.err = s.dispatchNewListPager(req)
+			case "StorageClassClient.BeginUpdate":
+				res.resp, res.err = s.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -318,4 +324,10 @@ func (s *StorageClassServerTransport) dispatchBeginUpdate(req *http.Request) (*h
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to StorageClassServerTransport
+var storageClassServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

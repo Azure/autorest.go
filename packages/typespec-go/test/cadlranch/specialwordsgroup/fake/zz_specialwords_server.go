@@ -88,3 +88,9 @@ func (s *SpecialWordsServerTransport) dispatchToClientFake(req *http.Request, cl
 
 	return resp, err
 }
+
+// set this to conditionally intercept incoming requests to SpecialWordsServerTransport
+var specialWordsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
+}

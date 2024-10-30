@@ -55,16 +55,22 @@ func (x *XMLModelWithRenamedFieldsValueServerTransport) dispatchToMethodFake(req
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "XMLModelWithRenamedFieldsValueClient.Get":
-			res.resp, res.err = x.dispatchGet(req)
-		case "XMLModelWithRenamedFieldsValueClient.Put":
-			res.resp, res.err = x.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if xmlModelWithRenamedFieldsValueServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = xmlModelWithRenamedFieldsValueServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "XMLModelWithRenamedFieldsValueClient.Get":
+				res.resp, res.err = x.dispatchGet(req)
+			case "XMLModelWithRenamedFieldsValueClient.Put":
+				res.resp, res.err = x.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -122,4 +128,10 @@ func (x *XMLModelWithRenamedFieldsValueServerTransport) dispatchPut(req *http.Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to XMLModelWithRenamedFieldsValueServerTransport
+var xmlModelWithRenamedFieldsValueServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

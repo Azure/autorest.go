@@ -55,16 +55,22 @@ func (x *XMLSimpleModelValueServerTransport) dispatchToMethodFake(req *http.Requ
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "XMLSimpleModelValueClient.Get":
-			res.resp, res.err = x.dispatchGet(req)
-		case "XMLSimpleModelValueClient.Put":
-			res.resp, res.err = x.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if xmlSimpleModelValueServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = xmlSimpleModelValueServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "XMLSimpleModelValueClient.Get":
+				res.resp, res.err = x.dispatchGet(req)
+			case "XMLSimpleModelValueClient.Put":
+				res.resp, res.err = x.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -122,4 +128,10 @@ func (x *XMLSimpleModelValueServerTransport) dispatchPut(req *http.Request) (*ht
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to XMLSimpleModelValueServerTransport
+var xmlSimpleModelValueServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

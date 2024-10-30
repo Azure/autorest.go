@@ -63,16 +63,22 @@ func (i *InterfaceIPConfigurationsServerTransport) dispatchToMethodFake(req *htt
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "InterfaceIPConfigurationsClient.Get":
-			res.resp, res.err = i.dispatchGet(req)
-		case "InterfaceIPConfigurationsClient.NewListPager":
-			res.resp, res.err = i.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if interfaceIPConfigurationsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = interfaceIPConfigurationsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "InterfaceIPConfigurationsClient.Get":
+				res.resp, res.err = i.dispatchGet(req)
+			case "InterfaceIPConfigurationsClient.NewListPager":
+				res.resp, res.err = i.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -163,4 +169,10 @@ func (i *InterfaceIPConfigurationsServerTransport) dispatchNewListPager(req *htt
 		i.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to InterfaceIPConfigurationsServerTransport
+var interfaceIPConfigurationsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

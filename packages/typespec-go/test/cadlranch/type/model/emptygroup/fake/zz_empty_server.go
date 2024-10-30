@@ -59,18 +59,24 @@ func (e *EmptyServerTransport) dispatchToMethodFake(req *http.Request, method st
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "EmptyClient.GetEmpty":
-			res.resp, res.err = e.dispatchGetEmpty(req)
-		case "EmptyClient.PostRoundTripEmpty":
-			res.resp, res.err = e.dispatchPostRoundTripEmpty(req)
-		case "EmptyClient.PutEmpty":
-			res.resp, res.err = e.dispatchPutEmpty(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if emptyServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = emptyServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "EmptyClient.GetEmpty":
+				res.resp, res.err = e.dispatchGetEmpty(req)
+			case "EmptyClient.PostRoundTripEmpty":
+				res.resp, res.err = e.dispatchPostRoundTripEmpty(req)
+			case "EmptyClient.PutEmpty":
+				res.resp, res.err = e.dispatchPutEmpty(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -148,4 +154,10 @@ func (e *EmptyServerTransport) dispatchPutEmpty(req *http.Request) (*http.Respon
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to EmptyServerTransport
+var emptyServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

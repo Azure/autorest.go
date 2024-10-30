@@ -62,18 +62,24 @@ func (c *ComplexModelServerTransport) dispatchToMethodFake(req *http.Request, me
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ComplexModelClient.Create":
-			res.resp, res.err = c.dispatchCreate(req)
-		case "ComplexModelClient.List":
-			res.resp, res.err = c.dispatchList(req)
-		case "ComplexModelClient.Update":
-			res.resp, res.err = c.dispatchUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if complexModelServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = complexModelServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ComplexModelClient.Create":
+				res.resp, res.err = c.dispatchCreate(req)
+			case "ComplexModelClient.List":
+				res.resp, res.err = c.dispatchList(req)
+			case "ComplexModelClient.Update":
+				res.resp, res.err = c.dispatchUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -189,4 +195,10 @@ func (c *ComplexModelServerTransport) dispatchUpdate(req *http.Request) (*http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ComplexModelServerTransport
+var complexModelServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

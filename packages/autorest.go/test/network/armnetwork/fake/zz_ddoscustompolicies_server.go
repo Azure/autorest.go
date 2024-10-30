@@ -72,20 +72,26 @@ func (d *DdosCustomPoliciesServerTransport) dispatchToMethodFake(req *http.Reque
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DdosCustomPoliciesClient.BeginCreateOrUpdate":
-			res.resp, res.err = d.dispatchBeginCreateOrUpdate(req)
-		case "DdosCustomPoliciesClient.BeginDelete":
-			res.resp, res.err = d.dispatchBeginDelete(req)
-		case "DdosCustomPoliciesClient.Get":
-			res.resp, res.err = d.dispatchGet(req)
-		case "DdosCustomPoliciesClient.UpdateTags":
-			res.resp, res.err = d.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if ddosCustomPoliciesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = ddosCustomPoliciesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DdosCustomPoliciesClient.BeginCreateOrUpdate":
+				res.resp, res.err = d.dispatchBeginCreateOrUpdate(req)
+			case "DdosCustomPoliciesClient.BeginDelete":
+				res.resp, res.err = d.dispatchBeginDelete(req)
+			case "DdosCustomPoliciesClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DdosCustomPoliciesClient.UpdateTags":
+				res.resp, res.err = d.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -260,4 +266,10 @@ func (d *DdosCustomPoliciesServerTransport) dispatchUpdateTags(req *http.Request
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DdosCustomPoliciesServerTransport
+var ddosCustomPoliciesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

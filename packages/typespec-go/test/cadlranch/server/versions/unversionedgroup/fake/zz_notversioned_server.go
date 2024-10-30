@@ -61,18 +61,24 @@ func (n *NotVersionedServerTransport) dispatchToMethodFake(req *http.Request, me
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "NotVersionedClient.WithPathAPIVersion":
-			res.resp, res.err = n.dispatchWithPathAPIVersion(req)
-		case "NotVersionedClient.WithQueryAPIVersion":
-			res.resp, res.err = n.dispatchWithQueryAPIVersion(req)
-		case "NotVersionedClient.WithoutAPIVersion":
-			res.resp, res.err = n.dispatchWithoutAPIVersion(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if notVersionedServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = notVersionedServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "NotVersionedClient.WithPathAPIVersion":
+				res.resp, res.err = n.dispatchWithPathAPIVersion(req)
+			case "NotVersionedClient.WithQueryAPIVersion":
+				res.resp, res.err = n.dispatchWithQueryAPIVersion(req)
+			case "NotVersionedClient.WithoutAPIVersion":
+				res.resp, res.err = n.dispatchWithoutAPIVersion(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -157,4 +163,10 @@ func (n *NotVersionedServerTransport) dispatchWithoutAPIVersion(req *http.Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NotVersionedServerTransport
+var notVersionedServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

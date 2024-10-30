@@ -54,14 +54,20 @@ func (e *ExpressRouteProviderPortsLocationServerTransport) dispatchToMethodFake(
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ExpressRouteProviderPortsLocationClient.List":
-			res.resp, res.err = e.dispatchList(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if expressRouteProviderPortsLocationServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = expressRouteProviderPortsLocationServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ExpressRouteProviderPortsLocationClient.List":
+				res.resp, res.err = e.dispatchList(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -111,4 +117,10 @@ func (e *ExpressRouteProviderPortsLocationServerTransport) dispatchList(req *htt
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ExpressRouteProviderPortsLocationServerTransport
+var expressRouteProviderPortsLocationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

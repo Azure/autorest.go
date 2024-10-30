@@ -75,20 +75,26 @@ func (l *LROsCustomHeaderServerTransport) dispatchToMethodFake(req *http.Request
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "LROsCustomHeaderClient.BeginPost202Retry200":
-			res.resp, res.err = l.dispatchBeginPost202Retry200(req)
-		case "LROsCustomHeaderClient.BeginPostAsyncRetrySucceeded":
-			res.resp, res.err = l.dispatchBeginPostAsyncRetrySucceeded(req)
-		case "LROsCustomHeaderClient.BeginPut201CreatingSucceeded200":
-			res.resp, res.err = l.dispatchBeginPut201CreatingSucceeded200(req)
-		case "LROsCustomHeaderClient.BeginPutAsyncRetrySucceeded":
-			res.resp, res.err = l.dispatchBeginPutAsyncRetrySucceeded(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if lrOSCustomHeaderServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = lrOSCustomHeaderServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "LROsCustomHeaderClient.BeginPost202Retry200":
+				res.resp, res.err = l.dispatchBeginPost202Retry200(req)
+			case "LROsCustomHeaderClient.BeginPostAsyncRetrySucceeded":
+				res.resp, res.err = l.dispatchBeginPostAsyncRetrySucceeded(req)
+			case "LROsCustomHeaderClient.BeginPut201CreatingSucceeded200":
+				res.resp, res.err = l.dispatchBeginPut201CreatingSucceeded200(req)
+			case "LROsCustomHeaderClient.BeginPutAsyncRetrySucceeded":
+				res.resp, res.err = l.dispatchBeginPutAsyncRetrySucceeded(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -249,4 +255,10 @@ func (l *LROsCustomHeaderServerTransport) dispatchBeginPutAsyncRetrySucceeded(re
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to LROsCustomHeaderServerTransport
+var lrOSCustomHeaderServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

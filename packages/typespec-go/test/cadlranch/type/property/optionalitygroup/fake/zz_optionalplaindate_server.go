@@ -63,20 +63,26 @@ func (o *OptionalPlainDateServerTransport) dispatchToMethodFake(req *http.Reques
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "OptionalPlainDateClient.GetAll":
-			res.resp, res.err = o.dispatchGetAll(req)
-		case "OptionalPlainDateClient.GetDefault":
-			res.resp, res.err = o.dispatchGetDefault(req)
-		case "OptionalPlainDateClient.PutAll":
-			res.resp, res.err = o.dispatchPutAll(req)
-		case "OptionalPlainDateClient.PutDefault":
-			res.resp, res.err = o.dispatchPutDefault(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if optionalPlainDateServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = optionalPlainDateServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "OptionalPlainDateClient.GetAll":
+				res.resp, res.err = o.dispatchGetAll(req)
+			case "OptionalPlainDateClient.GetDefault":
+				res.resp, res.err = o.dispatchGetDefault(req)
+			case "OptionalPlainDateClient.PutAll":
+				res.resp, res.err = o.dispatchPutAll(req)
+			case "OptionalPlainDateClient.PutDefault":
+				res.resp, res.err = o.dispatchPutDefault(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -173,4 +179,10 @@ func (o *OptionalPlainDateServerTransport) dispatchPutDefault(req *http.Request)
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OptionalPlainDateServerTransport
+var optionalPlainDateServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

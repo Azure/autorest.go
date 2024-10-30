@@ -75,20 +75,26 @@ func (b *BandwidthSchedulesServerTransport) dispatchToMethodFake(req *http.Reque
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "BandwidthSchedulesClient.BeginCreateOrUpdate":
-			res.resp, res.err = b.dispatchBeginCreateOrUpdate(req)
-		case "BandwidthSchedulesClient.BeginDelete":
-			res.resp, res.err = b.dispatchBeginDelete(req)
-		case "BandwidthSchedulesClient.Get":
-			res.resp, res.err = b.dispatchGet(req)
-		case "BandwidthSchedulesClient.NewListByDataBoxEdgeDevicePager":
-			res.resp, res.err = b.dispatchNewListByDataBoxEdgeDevicePager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if bandwidthSchedulesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = bandwidthSchedulesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "BandwidthSchedulesClient.BeginCreateOrUpdate":
+				res.resp, res.err = b.dispatchBeginCreateOrUpdate(req)
+			case "BandwidthSchedulesClient.BeginDelete":
+				res.resp, res.err = b.dispatchBeginDelete(req)
+			case "BandwidthSchedulesClient.Get":
+				res.resp, res.err = b.dispatchGet(req)
+			case "BandwidthSchedulesClient.NewListByDataBoxEdgeDevicePager":
+				res.resp, res.err = b.dispatchNewListByDataBoxEdgeDevicePager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (b *BandwidthSchedulesServerTransport) dispatchNewListByDataBoxEdgeDevicePa
 		b.newListByDataBoxEdgeDevicePager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to BandwidthSchedulesServerTransport
+var bandwidthSchedulesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

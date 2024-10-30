@@ -10,7 +10,10 @@ import (
 	"azacr"
 	"azacr/fake"
 	"context"
+	"io"
+	"net"
 	"net/http"
+	"strings"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
@@ -81,4 +84,53 @@ func TestFakeUpdateTagAttributes(t *testing.T) {
 	resp, err := client.UpdateTagAttributes(context.Background(), theName, theReference, props, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
+}
+
+func TestFakeAuthenticationServerInterceptor(t *testing.T) {
+	server := fake.ContainerRegistryServer{
+		CheckDockerV2Support: func(ctx context.Context, options *azacr.ContainerRegistryClientCheckDockerV2SupportOptions) (resp azfake.Responder[azacr.ContainerRegistryClientCheckDockerV2SupportResponse], errResp azfake.ErrorResponder) {
+			resp.SetResponse(http.StatusOK, azacr.ContainerRegistryClientCheckDockerV2SupportResponse{}, nil)
+			return
+		},
+	}
+	client, err := azacr.NewContainerRegistryClient("https://contoso.com/fake/thing", &azcore.ClientOptions{
+		Transport: fake.NewContainerRegistryServerTransport(&server),
+	})
+	require.NoError(t, err)
+
+	// intercept to return ResponseError
+	fake.SetContainerRegistryServerInterceptor(func(req *http.Request) (*http.Response, error, bool) {
+		resp := &http.Response{
+			Request:    req,
+			Status:     "Fake ResponseError",
+			StatusCode: http.StatusBadRequest,
+			Body:       io.NopCloser(strings.NewReader(`{"error":{"code":"Intercepted"}}`)),
+			Header:     http.Header{},
+		}
+
+		return resp, nil, true
+	})
+	_, err = client.CheckDockerV2Support(context.Background(), nil)
+	var respErr *azcore.ResponseError
+	require.ErrorAs(t, err, &respErr)
+	require.EqualValues(t, "Intercepted", respErr.ErrorCode)
+
+	// intercept to return error
+	fake.SetContainerRegistryServerInterceptor(func(*http.Request) (*http.Response, error, bool) {
+		return nil, net.ErrClosed, true
+	})
+	_, err = client.CheckDockerV2Support(context.Background(), nil)
+	require.ErrorIs(t, err, net.ErrClosed)
+
+	// no intercept
+	fake.SetContainerRegistryServerInterceptor(func(*http.Request) (*http.Response, error, bool) {
+		return nil, nil, false
+	})
+	_, err = client.CheckDockerV2Support(context.Background(), nil)
+	require.NoError(t, err)
+
+	// nil intercept
+	fake.SetContainerRegistryServerInterceptor(nil)
+	_, err = client.CheckDockerV2Support(context.Background(), nil)
+	require.NoError(t, err)
 }

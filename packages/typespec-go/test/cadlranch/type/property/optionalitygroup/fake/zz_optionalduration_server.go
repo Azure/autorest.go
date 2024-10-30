@@ -63,20 +63,26 @@ func (o *OptionalDurationServerTransport) dispatchToMethodFake(req *http.Request
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "OptionalDurationClient.GetAll":
-			res.resp, res.err = o.dispatchGetAll(req)
-		case "OptionalDurationClient.GetDefault":
-			res.resp, res.err = o.dispatchGetDefault(req)
-		case "OptionalDurationClient.PutAll":
-			res.resp, res.err = o.dispatchPutAll(req)
-		case "OptionalDurationClient.PutDefault":
-			res.resp, res.err = o.dispatchPutDefault(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if optionalDurationServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = optionalDurationServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "OptionalDurationClient.GetAll":
+				res.resp, res.err = o.dispatchGetAll(req)
+			case "OptionalDurationClient.GetDefault":
+				res.resp, res.err = o.dispatchGetDefault(req)
+			case "OptionalDurationClient.PutAll":
+				res.resp, res.err = o.dispatchPutAll(req)
+			case "OptionalDurationClient.PutDefault":
+				res.resp, res.err = o.dispatchPutDefault(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -173,4 +179,10 @@ func (o *OptionalDurationServerTransport) dispatchPutDefault(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OptionalDurationServerTransport
+var optionalDurationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

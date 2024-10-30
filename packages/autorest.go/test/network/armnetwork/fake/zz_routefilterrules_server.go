@@ -75,20 +75,26 @@ func (r *RouteFilterRulesServerTransport) dispatchToMethodFake(req *http.Request
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "RouteFilterRulesClient.BeginCreateOrUpdate":
-			res.resp, res.err = r.dispatchBeginCreateOrUpdate(req)
-		case "RouteFilterRulesClient.BeginDelete":
-			res.resp, res.err = r.dispatchBeginDelete(req)
-		case "RouteFilterRulesClient.Get":
-			res.resp, res.err = r.dispatchGet(req)
-		case "RouteFilterRulesClient.NewListByRouteFilterPager":
-			res.resp, res.err = r.dispatchNewListByRouteFilterPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if routeFilterRulesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = routeFilterRulesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "RouteFilterRulesClient.BeginCreateOrUpdate":
+				res.resp, res.err = r.dispatchBeginCreateOrUpdate(req)
+			case "RouteFilterRulesClient.BeginDelete":
+				res.resp, res.err = r.dispatchBeginDelete(req)
+			case "RouteFilterRulesClient.Get":
+				res.resp, res.err = r.dispatchGet(req)
+			case "RouteFilterRulesClient.NewListByRouteFilterPager":
+				res.resp, res.err = r.dispatchNewListByRouteFilterPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (r *RouteFilterRulesServerTransport) dispatchNewListByRouteFilterPager(req 
 		r.newListByRouteFilterPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to RouteFilterRulesServerTransport
+var routeFilterRulesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

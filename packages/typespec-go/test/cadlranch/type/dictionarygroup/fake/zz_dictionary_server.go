@@ -151,3 +151,9 @@ func (d *DictionaryServerTransport) dispatchToClientFake(req *http.Request, clie
 
 	return resp, err
 }
+
+// set this to conditionally intercept incoming requests to DictionaryServerTransport
+var dictionaryServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
+}

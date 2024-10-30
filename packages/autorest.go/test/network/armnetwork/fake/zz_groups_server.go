@@ -74,20 +74,26 @@ func (g *GroupsServerTransport) dispatchToMethodFake(req *http.Request, method s
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "GroupsClient.CreateOrUpdate":
-			res.resp, res.err = g.dispatchCreateOrUpdate(req)
-		case "GroupsClient.BeginDelete":
-			res.resp, res.err = g.dispatchBeginDelete(req)
-		case "GroupsClient.Get":
-			res.resp, res.err = g.dispatchGet(req)
-		case "GroupsClient.NewListPager":
-			res.resp, res.err = g.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if groupsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = groupsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "GroupsClient.CreateOrUpdate":
+				res.resp, res.err = g.dispatchCreateOrUpdate(req)
+			case "GroupsClient.BeginDelete":
+				res.resp, res.err = g.dispatchBeginDelete(req)
+			case "GroupsClient.Get":
+				res.resp, res.err = g.dispatchGet(req)
+			case "GroupsClient.NewListPager":
+				res.resp, res.err = g.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -319,4 +325,10 @@ func (g *GroupsServerTransport) dispatchNewListPager(req *http.Request) (*http.R
 		g.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to GroupsServerTransport
+var groupsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

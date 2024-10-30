@@ -88,32 +88,38 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchToMethodFake(req *ht
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "MultipleInheritanceServiceClient.GetCat":
-			res.resp, res.err = m.dispatchGetCat(req)
-		case "MultipleInheritanceServiceClient.GetFeline":
-			res.resp, res.err = m.dispatchGetFeline(req)
-		case "MultipleInheritanceServiceClient.GetHorse":
-			res.resp, res.err = m.dispatchGetHorse(req)
-		case "MultipleInheritanceServiceClient.GetKitten":
-			res.resp, res.err = m.dispatchGetKitten(req)
-		case "MultipleInheritanceServiceClient.GetPet":
-			res.resp, res.err = m.dispatchGetPet(req)
-		case "MultipleInheritanceServiceClient.PutCat":
-			res.resp, res.err = m.dispatchPutCat(req)
-		case "MultipleInheritanceServiceClient.PutFeline":
-			res.resp, res.err = m.dispatchPutFeline(req)
-		case "MultipleInheritanceServiceClient.PutHorse":
-			res.resp, res.err = m.dispatchPutHorse(req)
-		case "MultipleInheritanceServiceClient.PutKitten":
-			res.resp, res.err = m.dispatchPutKitten(req)
-		case "MultipleInheritanceServiceClient.PutPet":
-			res.resp, res.err = m.dispatchPutPet(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if multipleInheritanceServiceServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = multipleInheritanceServiceServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "MultipleInheritanceServiceClient.GetCat":
+				res.resp, res.err = m.dispatchGetCat(req)
+			case "MultipleInheritanceServiceClient.GetFeline":
+				res.resp, res.err = m.dispatchGetFeline(req)
+			case "MultipleInheritanceServiceClient.GetHorse":
+				res.resp, res.err = m.dispatchGetHorse(req)
+			case "MultipleInheritanceServiceClient.GetKitten":
+				res.resp, res.err = m.dispatchGetKitten(req)
+			case "MultipleInheritanceServiceClient.GetPet":
+				res.resp, res.err = m.dispatchGetPet(req)
+			case "MultipleInheritanceServiceClient.PutCat":
+				res.resp, res.err = m.dispatchPutCat(req)
+			case "MultipleInheritanceServiceClient.PutFeline":
+				res.resp, res.err = m.dispatchPutFeline(req)
+			case "MultipleInheritanceServiceClient.PutHorse":
+				res.resp, res.err = m.dispatchPutHorse(req)
+			case "MultipleInheritanceServiceClient.PutKitten":
+				res.resp, res.err = m.dispatchPutKitten(req)
+			case "MultipleInheritanceServiceClient.PutPet":
+				res.resp, res.err = m.dispatchPutPet(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -336,4 +342,10 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchPutPet(req *http.Req
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to MultipleInheritanceServiceServerTransport
+var multipleInheritanceServiceServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

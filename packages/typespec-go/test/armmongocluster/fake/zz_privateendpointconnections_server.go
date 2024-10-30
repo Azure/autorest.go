@@ -74,20 +74,26 @@ func (p *PrivateEndpointConnectionsServerTransport) dispatchToMethodFake(req *ht
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "PrivateEndpointConnectionsClient.BeginCreate":
-			res.resp, res.err = p.dispatchBeginCreate(req)
-		case "PrivateEndpointConnectionsClient.BeginDelete":
-			res.resp, res.err = p.dispatchBeginDelete(req)
-		case "PrivateEndpointConnectionsClient.Get":
-			res.resp, res.err = p.dispatchGet(req)
-		case "PrivateEndpointConnectionsClient.NewListByMongoClusterPager":
-			res.resp, res.err = p.dispatchNewListByMongoClusterPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if privateEndpointConnectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = privateEndpointConnectionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "PrivateEndpointConnectionsClient.BeginCreate":
+				res.resp, res.err = p.dispatchBeginCreate(req)
+			case "PrivateEndpointConnectionsClient.BeginDelete":
+				res.resp, res.err = p.dispatchBeginDelete(req)
+			case "PrivateEndpointConnectionsClient.Get":
+				res.resp, res.err = p.dispatchGet(req)
+			case "PrivateEndpointConnectionsClient.NewListByMongoClusterPager":
+				res.resp, res.err = p.dispatchNewListByMongoClusterPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -278,4 +284,10 @@ func (p *PrivateEndpointConnectionsServerTransport) dispatchNewListByMongoCluste
 		p.newListByMongoClusterPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to PrivateEndpointConnectionsServerTransport
+var privateEndpointConnectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

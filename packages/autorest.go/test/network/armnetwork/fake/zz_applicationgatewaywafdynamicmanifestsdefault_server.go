@@ -54,14 +54,20 @@ func (a *ApplicationGatewayWafDynamicManifestsDefaultServerTransport) dispatchTo
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ApplicationGatewayWafDynamicManifestsDefaultClient.Get":
-			res.resp, res.err = a.dispatchGet(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if applicationGatewayWafDynamicManifestsDefaultServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = applicationGatewayWafDynamicManifestsDefaultServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ApplicationGatewayWafDynamicManifestsDefaultClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -103,4 +109,10 @@ func (a *ApplicationGatewayWafDynamicManifestsDefaultServerTransport) dispatchGe
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ApplicationGatewayWafDynamicManifestsDefaultServerTransport
+var applicationGatewayWafDynamicManifestsDefaultServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

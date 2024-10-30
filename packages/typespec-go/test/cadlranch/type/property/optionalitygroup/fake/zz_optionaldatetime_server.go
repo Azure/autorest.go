@@ -63,20 +63,26 @@ func (o *OptionalDatetimeServerTransport) dispatchToMethodFake(req *http.Request
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "OptionalDatetimeClient.GetAll":
-			res.resp, res.err = o.dispatchGetAll(req)
-		case "OptionalDatetimeClient.GetDefault":
-			res.resp, res.err = o.dispatchGetDefault(req)
-		case "OptionalDatetimeClient.PutAll":
-			res.resp, res.err = o.dispatchPutAll(req)
-		case "OptionalDatetimeClient.PutDefault":
-			res.resp, res.err = o.dispatchPutDefault(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if optionalDatetimeServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = optionalDatetimeServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "OptionalDatetimeClient.GetAll":
+				res.resp, res.err = o.dispatchGetAll(req)
+			case "OptionalDatetimeClient.GetDefault":
+				res.resp, res.err = o.dispatchGetDefault(req)
+			case "OptionalDatetimeClient.PutAll":
+				res.resp, res.err = o.dispatchPutAll(req)
+			case "OptionalDatetimeClient.PutDefault":
+				res.resp, res.err = o.dispatchPutDefault(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -173,4 +179,10 @@ func (o *OptionalDatetimeServerTransport) dispatchPutDefault(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OptionalDatetimeServerTransport
+var optionalDatetimeServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

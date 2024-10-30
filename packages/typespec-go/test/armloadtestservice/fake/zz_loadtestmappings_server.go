@@ -74,22 +74,28 @@ func (l *LoadTestMappingsServerTransport) dispatchToMethodFake(req *http.Request
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "LoadTestMappingsClient.CreateOrUpdate":
-			res.resp, res.err = l.dispatchCreateOrUpdate(req)
-		case "LoadTestMappingsClient.Delete":
-			res.resp, res.err = l.dispatchDelete(req)
-		case "LoadTestMappingsClient.Get":
-			res.resp, res.err = l.dispatchGet(req)
-		case "LoadTestMappingsClient.NewListPager":
-			res.resp, res.err = l.dispatchNewListPager(req)
-		case "LoadTestMappingsClient.Update":
-			res.resp, res.err = l.dispatchUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if loadTestMappingsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = loadTestMappingsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "LoadTestMappingsClient.CreateOrUpdate":
+				res.resp, res.err = l.dispatchCreateOrUpdate(req)
+			case "LoadTestMappingsClient.Delete":
+				res.resp, res.err = l.dispatchDelete(req)
+			case "LoadTestMappingsClient.Get":
+				res.resp, res.err = l.dispatchGet(req)
+			case "LoadTestMappingsClient.NewListPager":
+				res.resp, res.err = l.dispatchNewListPager(req)
+			case "LoadTestMappingsClient.Update":
+				res.resp, res.err = l.dispatchUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (l *LoadTestMappingsServerTransport) dispatchUpdate(req *http.Request) (*ht
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to LoadTestMappingsServerTransport
+var loadTestMappingsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

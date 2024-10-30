@@ -128,38 +128,44 @@ func (c *CloudServicesServerTransport) dispatchToMethodFake(req *http.Request, m
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "CloudServicesClient.BeginCreateOrUpdate":
-			res.resp, res.err = c.dispatchBeginCreateOrUpdate(req)
-		case "CloudServicesClient.BeginDelete":
-			res.resp, res.err = c.dispatchBeginDelete(req)
-		case "CloudServicesClient.BeginDeleteInstances":
-			res.resp, res.err = c.dispatchBeginDeleteInstances(req)
-		case "CloudServicesClient.Get":
-			res.resp, res.err = c.dispatchGet(req)
-		case "CloudServicesClient.GetInstanceView":
-			res.resp, res.err = c.dispatchGetInstanceView(req)
-		case "CloudServicesClient.NewListPager":
-			res.resp, res.err = c.dispatchNewListPager(req)
-		case "CloudServicesClient.NewListAllPager":
-			res.resp, res.err = c.dispatchNewListAllPager(req)
-		case "CloudServicesClient.BeginPowerOff":
-			res.resp, res.err = c.dispatchBeginPowerOff(req)
-		case "CloudServicesClient.BeginRebuild":
-			res.resp, res.err = c.dispatchBeginRebuild(req)
-		case "CloudServicesClient.BeginReimage":
-			res.resp, res.err = c.dispatchBeginReimage(req)
-		case "CloudServicesClient.BeginRestart":
-			res.resp, res.err = c.dispatchBeginRestart(req)
-		case "CloudServicesClient.BeginStart":
-			res.resp, res.err = c.dispatchBeginStart(req)
-		case "CloudServicesClient.BeginUpdate":
-			res.resp, res.err = c.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if cloudServicesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = cloudServicesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "CloudServicesClient.BeginCreateOrUpdate":
+				res.resp, res.err = c.dispatchBeginCreateOrUpdate(req)
+			case "CloudServicesClient.BeginDelete":
+				res.resp, res.err = c.dispatchBeginDelete(req)
+			case "CloudServicesClient.BeginDeleteInstances":
+				res.resp, res.err = c.dispatchBeginDeleteInstances(req)
+			case "CloudServicesClient.Get":
+				res.resp, res.err = c.dispatchGet(req)
+			case "CloudServicesClient.GetInstanceView":
+				res.resp, res.err = c.dispatchGetInstanceView(req)
+			case "CloudServicesClient.NewListPager":
+				res.resp, res.err = c.dispatchNewListPager(req)
+			case "CloudServicesClient.NewListAllPager":
+				res.resp, res.err = c.dispatchNewListAllPager(req)
+			case "CloudServicesClient.BeginPowerOff":
+				res.resp, res.err = c.dispatchBeginPowerOff(req)
+			case "CloudServicesClient.BeginRebuild":
+				res.resp, res.err = c.dispatchBeginRebuild(req)
+			case "CloudServicesClient.BeginReimage":
+				res.resp, res.err = c.dispatchBeginReimage(req)
+			case "CloudServicesClient.BeginRestart":
+				res.resp, res.err = c.dispatchBeginRestart(req)
+			case "CloudServicesClient.BeginStart":
+				res.resp, res.err = c.dispatchBeginStart(req)
+			case "CloudServicesClient.BeginUpdate":
+				res.resp, res.err = c.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -752,4 +758,10 @@ func (c *CloudServicesServerTransport) dispatchBeginUpdate(req *http.Request) (*
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to CloudServicesServerTransport
+var cloudServicesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

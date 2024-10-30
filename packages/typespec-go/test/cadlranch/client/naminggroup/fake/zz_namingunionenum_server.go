@@ -55,16 +55,22 @@ func (n *NamingUnionEnumServerTransport) dispatchToMethodFake(req *http.Request,
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "NamingUnionEnumClient.UnionEnumMemberName":
-			res.resp, res.err = n.dispatchUnionEnumMemberName(req)
-		case "NamingUnionEnumClient.UnionEnumName":
-			res.resp, res.err = n.dispatchUnionEnumName(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if namingUnionEnumServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = namingUnionEnumServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "NamingUnionEnumClient.UnionEnumMemberName":
+				res.resp, res.err = n.dispatchUnionEnumMemberName(req)
+			case "NamingUnionEnumClient.UnionEnumName":
+				res.resp, res.err = n.dispatchUnionEnumName(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -123,4 +129,10 @@ func (n *NamingUnionEnumServerTransport) dispatchUnionEnumName(req *http.Request
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NamingUnionEnumServerTransport
+var namingUnionEnumServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

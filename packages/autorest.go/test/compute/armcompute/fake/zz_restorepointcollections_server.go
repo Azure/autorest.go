@@ -83,24 +83,30 @@ func (r *RestorePointCollectionsServerTransport) dispatchToMethodFake(req *http.
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "RestorePointCollectionsClient.CreateOrUpdate":
-			res.resp, res.err = r.dispatchCreateOrUpdate(req)
-		case "RestorePointCollectionsClient.BeginDelete":
-			res.resp, res.err = r.dispatchBeginDelete(req)
-		case "RestorePointCollectionsClient.Get":
-			res.resp, res.err = r.dispatchGet(req)
-		case "RestorePointCollectionsClient.NewListPager":
-			res.resp, res.err = r.dispatchNewListPager(req)
-		case "RestorePointCollectionsClient.NewListAllPager":
-			res.resp, res.err = r.dispatchNewListAllPager(req)
-		case "RestorePointCollectionsClient.Update":
-			res.resp, res.err = r.dispatchUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if restorePointCollectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = restorePointCollectionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "RestorePointCollectionsClient.CreateOrUpdate":
+				res.resp, res.err = r.dispatchCreateOrUpdate(req)
+			case "RestorePointCollectionsClient.BeginDelete":
+				res.resp, res.err = r.dispatchBeginDelete(req)
+			case "RestorePointCollectionsClient.Get":
+				res.resp, res.err = r.dispatchGet(req)
+			case "RestorePointCollectionsClient.NewListPager":
+				res.resp, res.err = r.dispatchNewListPager(req)
+			case "RestorePointCollectionsClient.NewListAllPager":
+				res.resp, res.err = r.dispatchNewListAllPager(req)
+			case "RestorePointCollectionsClient.Update":
+				res.resp, res.err = r.dispatchUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -346,4 +352,10 @@ func (r *RestorePointCollectionsServerTransport) dispatchUpdate(req *http.Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to RestorePointCollectionsServerTransport
+var restorePointCollectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

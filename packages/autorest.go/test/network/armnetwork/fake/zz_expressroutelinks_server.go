@@ -63,16 +63,22 @@ func (e *ExpressRouteLinksServerTransport) dispatchToMethodFake(req *http.Reques
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ExpressRouteLinksClient.Get":
-			res.resp, res.err = e.dispatchGet(req)
-		case "ExpressRouteLinksClient.NewListPager":
-			res.resp, res.err = e.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if expressRouteLinksServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = expressRouteLinksServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ExpressRouteLinksClient.Get":
+				res.resp, res.err = e.dispatchGet(req)
+			case "ExpressRouteLinksClient.NewListPager":
+				res.resp, res.err = e.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -163,4 +169,10 @@ func (e *ExpressRouteLinksServerTransport) dispatchNewListPager(req *http.Reques
 		e.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ExpressRouteLinksServerTransport
+var expressRouteLinksServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -136,56 +136,62 @@ func (p *PrimitiveServerTransport) dispatchToMethodFake(req *http.Request, metho
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "PrimitiveClient.GetBool":
-			res.resp, res.err = p.dispatchGetBool(req)
-		case "PrimitiveClient.GetByte":
-			res.resp, res.err = p.dispatchGetByte(req)
-		case "PrimitiveClient.GetDate":
-			res.resp, res.err = p.dispatchGetDate(req)
-		case "PrimitiveClient.GetDateTime":
-			res.resp, res.err = p.dispatchGetDateTime(req)
-		case "PrimitiveClient.GetDateTimeRFC1123":
-			res.resp, res.err = p.dispatchGetDateTimeRFC1123(req)
-		case "PrimitiveClient.GetDouble":
-			res.resp, res.err = p.dispatchGetDouble(req)
-		case "PrimitiveClient.GetDuration":
-			res.resp, res.err = p.dispatchGetDuration(req)
-		case "PrimitiveClient.GetFloat":
-			res.resp, res.err = p.dispatchGetFloat(req)
-		case "PrimitiveClient.GetInt":
-			res.resp, res.err = p.dispatchGetInt(req)
-		case "PrimitiveClient.GetLong":
-			res.resp, res.err = p.dispatchGetLong(req)
-		case "PrimitiveClient.GetString":
-			res.resp, res.err = p.dispatchGetString(req)
-		case "PrimitiveClient.PutBool":
-			res.resp, res.err = p.dispatchPutBool(req)
-		case "PrimitiveClient.PutByte":
-			res.resp, res.err = p.dispatchPutByte(req)
-		case "PrimitiveClient.PutDate":
-			res.resp, res.err = p.dispatchPutDate(req)
-		case "PrimitiveClient.PutDateTime":
-			res.resp, res.err = p.dispatchPutDateTime(req)
-		case "PrimitiveClient.PutDateTimeRFC1123":
-			res.resp, res.err = p.dispatchPutDateTimeRFC1123(req)
-		case "PrimitiveClient.PutDouble":
-			res.resp, res.err = p.dispatchPutDouble(req)
-		case "PrimitiveClient.PutDuration":
-			res.resp, res.err = p.dispatchPutDuration(req)
-		case "PrimitiveClient.PutFloat":
-			res.resp, res.err = p.dispatchPutFloat(req)
-		case "PrimitiveClient.PutInt":
-			res.resp, res.err = p.dispatchPutInt(req)
-		case "PrimitiveClient.PutLong":
-			res.resp, res.err = p.dispatchPutLong(req)
-		case "PrimitiveClient.PutString":
-			res.resp, res.err = p.dispatchPutString(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if primitiveServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = primitiveServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "PrimitiveClient.GetBool":
+				res.resp, res.err = p.dispatchGetBool(req)
+			case "PrimitiveClient.GetByte":
+				res.resp, res.err = p.dispatchGetByte(req)
+			case "PrimitiveClient.GetDate":
+				res.resp, res.err = p.dispatchGetDate(req)
+			case "PrimitiveClient.GetDateTime":
+				res.resp, res.err = p.dispatchGetDateTime(req)
+			case "PrimitiveClient.GetDateTimeRFC1123":
+				res.resp, res.err = p.dispatchGetDateTimeRFC1123(req)
+			case "PrimitiveClient.GetDouble":
+				res.resp, res.err = p.dispatchGetDouble(req)
+			case "PrimitiveClient.GetDuration":
+				res.resp, res.err = p.dispatchGetDuration(req)
+			case "PrimitiveClient.GetFloat":
+				res.resp, res.err = p.dispatchGetFloat(req)
+			case "PrimitiveClient.GetInt":
+				res.resp, res.err = p.dispatchGetInt(req)
+			case "PrimitiveClient.GetLong":
+				res.resp, res.err = p.dispatchGetLong(req)
+			case "PrimitiveClient.GetString":
+				res.resp, res.err = p.dispatchGetString(req)
+			case "PrimitiveClient.PutBool":
+				res.resp, res.err = p.dispatchPutBool(req)
+			case "PrimitiveClient.PutByte":
+				res.resp, res.err = p.dispatchPutByte(req)
+			case "PrimitiveClient.PutDate":
+				res.resp, res.err = p.dispatchPutDate(req)
+			case "PrimitiveClient.PutDateTime":
+				res.resp, res.err = p.dispatchPutDateTime(req)
+			case "PrimitiveClient.PutDateTimeRFC1123":
+				res.resp, res.err = p.dispatchPutDateTimeRFC1123(req)
+			case "PrimitiveClient.PutDouble":
+				res.resp, res.err = p.dispatchPutDouble(req)
+			case "PrimitiveClient.PutDuration":
+				res.resp, res.err = p.dispatchPutDuration(req)
+			case "PrimitiveClient.PutFloat":
+				res.resp, res.err = p.dispatchPutFloat(req)
+			case "PrimitiveClient.PutInt":
+				res.resp, res.err = p.dispatchPutInt(req)
+			case "PrimitiveClient.PutLong":
+				res.resp, res.err = p.dispatchPutLong(req)
+			case "PrimitiveClient.PutString":
+				res.resp, res.err = p.dispatchPutString(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -660,4 +666,10 @@ func (p *PrimitiveServerTransport) dispatchPutString(req *http.Request) (*http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to PrimitiveServerTransport
+var primitiveServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

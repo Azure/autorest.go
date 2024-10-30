@@ -92,26 +92,32 @@ func (l *LoadTestsServerTransport) dispatchToMethodFake(req *http.Request, metho
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "LoadTestsClient.BeginCreateOrUpdate":
-			res.resp, res.err = l.dispatchBeginCreateOrUpdate(req)
-		case "LoadTestsClient.BeginDelete":
-			res.resp, res.err = l.dispatchBeginDelete(req)
-		case "LoadTestsClient.Get":
-			res.resp, res.err = l.dispatchGet(req)
-		case "LoadTestsClient.NewListByResourceGroupPager":
-			res.resp, res.err = l.dispatchNewListByResourceGroupPager(req)
-		case "LoadTestsClient.NewListBySubscriptionPager":
-			res.resp, res.err = l.dispatchNewListBySubscriptionPager(req)
-		case "LoadTestsClient.NewOutboundNetworkDependenciesEndpointsPager":
-			res.resp, res.err = l.dispatchNewOutboundNetworkDependenciesEndpointsPager(req)
-		case "LoadTestsClient.BeginUpdate":
-			res.resp, res.err = l.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if loadTestsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = loadTestsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "LoadTestsClient.BeginCreateOrUpdate":
+				res.resp, res.err = l.dispatchBeginCreateOrUpdate(req)
+			case "LoadTestsClient.BeginDelete":
+				res.resp, res.err = l.dispatchBeginDelete(req)
+			case "LoadTestsClient.Get":
+				res.resp, res.err = l.dispatchGet(req)
+			case "LoadTestsClient.NewListByResourceGroupPager":
+				res.resp, res.err = l.dispatchNewListByResourceGroupPager(req)
+			case "LoadTestsClient.NewListBySubscriptionPager":
+				res.resp, res.err = l.dispatchNewListBySubscriptionPager(req)
+			case "LoadTestsClient.NewOutboundNetworkDependenciesEndpointsPager":
+				res.resp, res.err = l.dispatchNewOutboundNetworkDependenciesEndpointsPager(req)
+			case "LoadTestsClient.BeginUpdate":
+				res.resp, res.err = l.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -408,4 +414,10 @@ func (l *LoadTestsServerTransport) dispatchBeginUpdate(req *http.Request) (*http
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to LoadTestsServerTransport
+var loadTestsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

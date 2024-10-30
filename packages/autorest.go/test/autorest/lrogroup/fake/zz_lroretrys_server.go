@@ -93,26 +93,32 @@ func (l *LRORetrysServerTransport) dispatchToMethodFake(req *http.Request, metho
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "LRORetrysClient.BeginDelete202Retry200":
-			res.resp, res.err = l.dispatchBeginDelete202Retry200(req)
-		case "LRORetrysClient.BeginDeleteAsyncRelativeRetrySucceeded":
-			res.resp, res.err = l.dispatchBeginDeleteAsyncRelativeRetrySucceeded(req)
-		case "LRORetrysClient.BeginDeleteProvisioning202Accepted200Succeeded":
-			res.resp, res.err = l.dispatchBeginDeleteProvisioning202Accepted200Succeeded(req)
-		case "LRORetrysClient.BeginPost202Retry200":
-			res.resp, res.err = l.dispatchBeginPost202Retry200(req)
-		case "LRORetrysClient.BeginPostAsyncRelativeRetrySucceeded":
-			res.resp, res.err = l.dispatchBeginPostAsyncRelativeRetrySucceeded(req)
-		case "LRORetrysClient.BeginPut201CreatingSucceeded200":
-			res.resp, res.err = l.dispatchBeginPut201CreatingSucceeded200(req)
-		case "LRORetrysClient.BeginPutAsyncRelativeRetrySucceeded":
-			res.resp, res.err = l.dispatchBeginPutAsyncRelativeRetrySucceeded(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if lroRetrysServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = lroRetrysServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "LRORetrysClient.BeginDelete202Retry200":
+				res.resp, res.err = l.dispatchBeginDelete202Retry200(req)
+			case "LRORetrysClient.BeginDeleteAsyncRelativeRetrySucceeded":
+				res.resp, res.err = l.dispatchBeginDeleteAsyncRelativeRetrySucceeded(req)
+			case "LRORetrysClient.BeginDeleteProvisioning202Accepted200Succeeded":
+				res.resp, res.err = l.dispatchBeginDeleteProvisioning202Accepted200Succeeded(req)
+			case "LRORetrysClient.BeginPost202Retry200":
+				res.resp, res.err = l.dispatchBeginPost202Retry200(req)
+			case "LRORetrysClient.BeginPostAsyncRelativeRetrySucceeded":
+				res.resp, res.err = l.dispatchBeginPostAsyncRelativeRetrySucceeded(req)
+			case "LRORetrysClient.BeginPut201CreatingSucceeded200":
+				res.resp, res.err = l.dispatchBeginPut201CreatingSucceeded200(req)
+			case "LRORetrysClient.BeginPutAsyncRelativeRetrySucceeded":
+				res.resp, res.err = l.dispatchBeginPutAsyncRelativeRetrySucceeded(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -363,4 +369,10 @@ func (l *LRORetrysServerTransport) dispatchBeginPutAsyncRelativeRetrySucceeded(r
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to LRORetrysServerTransport
+var lroRetrysServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

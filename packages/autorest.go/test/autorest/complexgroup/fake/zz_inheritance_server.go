@@ -56,16 +56,22 @@ func (i *InheritanceServerTransport) dispatchToMethodFake(req *http.Request, met
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "InheritanceClient.GetValid":
-			res.resp, res.err = i.dispatchGetValid(req)
-		case "InheritanceClient.PutValid":
-			res.resp, res.err = i.dispatchPutValid(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if inheritanceServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = inheritanceServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "InheritanceClient.GetValid":
+				res.resp, res.err = i.dispatchGetValid(req)
+			case "InheritanceClient.PutValid":
+				res.resp, res.err = i.dispatchPutValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -120,4 +126,10 @@ func (i *InheritanceServerTransport) dispatchPutValid(req *http.Request) (*http.
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to InheritanceServerTransport
+var inheritanceServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

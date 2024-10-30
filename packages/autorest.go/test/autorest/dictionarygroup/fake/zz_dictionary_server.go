@@ -309,142 +309,148 @@ func (d *DictionaryServerTransport) dispatchToMethodFake(req *http.Request, meth
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DictionaryClient.GetArrayEmpty":
-			res.resp, res.err = d.dispatchGetArrayEmpty(req)
-		case "DictionaryClient.GetArrayItemEmpty":
-			res.resp, res.err = d.dispatchGetArrayItemEmpty(req)
-		case "DictionaryClient.GetArrayItemNull":
-			res.resp, res.err = d.dispatchGetArrayItemNull(req)
-		case "DictionaryClient.GetArrayNull":
-			res.resp, res.err = d.dispatchGetArrayNull(req)
-		case "DictionaryClient.GetArrayValid":
-			res.resp, res.err = d.dispatchGetArrayValid(req)
-		case "DictionaryClient.GetBase64URL":
-			res.resp, res.err = d.dispatchGetBase64URL(req)
-		case "DictionaryClient.GetBooleanInvalidNull":
-			res.resp, res.err = d.dispatchGetBooleanInvalidNull(req)
-		case "DictionaryClient.GetBooleanInvalidString":
-			res.resp, res.err = d.dispatchGetBooleanInvalidString(req)
-		case "DictionaryClient.GetBooleanTfft":
-			res.resp, res.err = d.dispatchGetBooleanTfft(req)
-		case "DictionaryClient.GetByteInvalidNull":
-			res.resp, res.err = d.dispatchGetByteInvalidNull(req)
-		case "DictionaryClient.GetByteValid":
-			res.resp, res.err = d.dispatchGetByteValid(req)
-		case "DictionaryClient.GetComplexEmpty":
-			res.resp, res.err = d.dispatchGetComplexEmpty(req)
-		case "DictionaryClient.GetComplexItemEmpty":
-			res.resp, res.err = d.dispatchGetComplexItemEmpty(req)
-		case "DictionaryClient.GetComplexItemNull":
-			res.resp, res.err = d.dispatchGetComplexItemNull(req)
-		case "DictionaryClient.GetComplexNull":
-			res.resp, res.err = d.dispatchGetComplexNull(req)
-		case "DictionaryClient.GetComplexValid":
-			res.resp, res.err = d.dispatchGetComplexValid(req)
-		case "DictionaryClient.GetDateInvalidChars":
-			res.resp, res.err = d.dispatchGetDateInvalidChars(req)
-		case "DictionaryClient.GetDateInvalidNull":
-			res.resp, res.err = d.dispatchGetDateInvalidNull(req)
-		case "DictionaryClient.GetDateTimeInvalidChars":
-			res.resp, res.err = d.dispatchGetDateTimeInvalidChars(req)
-		case "DictionaryClient.GetDateTimeInvalidNull":
-			res.resp, res.err = d.dispatchGetDateTimeInvalidNull(req)
-		case "DictionaryClient.GetDateTimeRFC1123Valid":
-			res.resp, res.err = d.dispatchGetDateTimeRFC1123Valid(req)
-		case "DictionaryClient.GetDateTimeValid":
-			res.resp, res.err = d.dispatchGetDateTimeValid(req)
-		case "DictionaryClient.GetDateValid":
-			res.resp, res.err = d.dispatchGetDateValid(req)
-		case "DictionaryClient.GetDictionaryEmpty":
-			res.resp, res.err = d.dispatchGetDictionaryEmpty(req)
-		case "DictionaryClient.GetDictionaryItemEmpty":
-			res.resp, res.err = d.dispatchGetDictionaryItemEmpty(req)
-		case "DictionaryClient.GetDictionaryItemNull":
-			res.resp, res.err = d.dispatchGetDictionaryItemNull(req)
-		case "DictionaryClient.GetDictionaryNull":
-			res.resp, res.err = d.dispatchGetDictionaryNull(req)
-		case "DictionaryClient.GetDictionaryValid":
-			res.resp, res.err = d.dispatchGetDictionaryValid(req)
-		case "DictionaryClient.GetDoubleInvalidNull":
-			res.resp, res.err = d.dispatchGetDoubleInvalidNull(req)
-		case "DictionaryClient.GetDoubleInvalidString":
-			res.resp, res.err = d.dispatchGetDoubleInvalidString(req)
-		case "DictionaryClient.GetDoubleValid":
-			res.resp, res.err = d.dispatchGetDoubleValid(req)
-		case "DictionaryClient.GetDurationValid":
-			res.resp, res.err = d.dispatchGetDurationValid(req)
-		case "DictionaryClient.GetEmpty":
-			res.resp, res.err = d.dispatchGetEmpty(req)
-		case "DictionaryClient.GetEmptyStringKey":
-			res.resp, res.err = d.dispatchGetEmptyStringKey(req)
-		case "DictionaryClient.GetFloatInvalidNull":
-			res.resp, res.err = d.dispatchGetFloatInvalidNull(req)
-		case "DictionaryClient.GetFloatInvalidString":
-			res.resp, res.err = d.dispatchGetFloatInvalidString(req)
-		case "DictionaryClient.GetFloatValid":
-			res.resp, res.err = d.dispatchGetFloatValid(req)
-		case "DictionaryClient.GetIntInvalidNull":
-			res.resp, res.err = d.dispatchGetIntInvalidNull(req)
-		case "DictionaryClient.GetIntInvalidString":
-			res.resp, res.err = d.dispatchGetIntInvalidString(req)
-		case "DictionaryClient.GetIntegerValid":
-			res.resp, res.err = d.dispatchGetIntegerValid(req)
-		case "DictionaryClient.GetInvalid":
-			res.resp, res.err = d.dispatchGetInvalid(req)
-		case "DictionaryClient.GetLongInvalidNull":
-			res.resp, res.err = d.dispatchGetLongInvalidNull(req)
-		case "DictionaryClient.GetLongInvalidString":
-			res.resp, res.err = d.dispatchGetLongInvalidString(req)
-		case "DictionaryClient.GetLongValid":
-			res.resp, res.err = d.dispatchGetLongValid(req)
-		case "DictionaryClient.GetNull":
-			res.resp, res.err = d.dispatchGetNull(req)
-		case "DictionaryClient.GetNullKey":
-			res.resp, res.err = d.dispatchGetNullKey(req)
-		case "DictionaryClient.GetNullValue":
-			res.resp, res.err = d.dispatchGetNullValue(req)
-		case "DictionaryClient.GetStringValid":
-			res.resp, res.err = d.dispatchGetStringValid(req)
-		case "DictionaryClient.GetStringWithInvalid":
-			res.resp, res.err = d.dispatchGetStringWithInvalid(req)
-		case "DictionaryClient.GetStringWithNull":
-			res.resp, res.err = d.dispatchGetStringWithNull(req)
-		case "DictionaryClient.PutArrayValid":
-			res.resp, res.err = d.dispatchPutArrayValid(req)
-		case "DictionaryClient.PutBooleanTfft":
-			res.resp, res.err = d.dispatchPutBooleanTfft(req)
-		case "DictionaryClient.PutByteValid":
-			res.resp, res.err = d.dispatchPutByteValid(req)
-		case "DictionaryClient.PutComplexValid":
-			res.resp, res.err = d.dispatchPutComplexValid(req)
-		case "DictionaryClient.PutDateTimeRFC1123Valid":
-			res.resp, res.err = d.dispatchPutDateTimeRFC1123Valid(req)
-		case "DictionaryClient.PutDateTimeValid":
-			res.resp, res.err = d.dispatchPutDateTimeValid(req)
-		case "DictionaryClient.PutDateValid":
-			res.resp, res.err = d.dispatchPutDateValid(req)
-		case "DictionaryClient.PutDictionaryValid":
-			res.resp, res.err = d.dispatchPutDictionaryValid(req)
-		case "DictionaryClient.PutDoubleValid":
-			res.resp, res.err = d.dispatchPutDoubleValid(req)
-		case "DictionaryClient.PutDurationValid":
-			res.resp, res.err = d.dispatchPutDurationValid(req)
-		case "DictionaryClient.PutEmpty":
-			res.resp, res.err = d.dispatchPutEmpty(req)
-		case "DictionaryClient.PutFloatValid":
-			res.resp, res.err = d.dispatchPutFloatValid(req)
-		case "DictionaryClient.PutIntegerValid":
-			res.resp, res.err = d.dispatchPutIntegerValid(req)
-		case "DictionaryClient.PutLongValid":
-			res.resp, res.err = d.dispatchPutLongValid(req)
-		case "DictionaryClient.PutStringValid":
-			res.resp, res.err = d.dispatchPutStringValid(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if dictionaryServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = dictionaryServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DictionaryClient.GetArrayEmpty":
+				res.resp, res.err = d.dispatchGetArrayEmpty(req)
+			case "DictionaryClient.GetArrayItemEmpty":
+				res.resp, res.err = d.dispatchGetArrayItemEmpty(req)
+			case "DictionaryClient.GetArrayItemNull":
+				res.resp, res.err = d.dispatchGetArrayItemNull(req)
+			case "DictionaryClient.GetArrayNull":
+				res.resp, res.err = d.dispatchGetArrayNull(req)
+			case "DictionaryClient.GetArrayValid":
+				res.resp, res.err = d.dispatchGetArrayValid(req)
+			case "DictionaryClient.GetBase64URL":
+				res.resp, res.err = d.dispatchGetBase64URL(req)
+			case "DictionaryClient.GetBooleanInvalidNull":
+				res.resp, res.err = d.dispatchGetBooleanInvalidNull(req)
+			case "DictionaryClient.GetBooleanInvalidString":
+				res.resp, res.err = d.dispatchGetBooleanInvalidString(req)
+			case "DictionaryClient.GetBooleanTfft":
+				res.resp, res.err = d.dispatchGetBooleanTfft(req)
+			case "DictionaryClient.GetByteInvalidNull":
+				res.resp, res.err = d.dispatchGetByteInvalidNull(req)
+			case "DictionaryClient.GetByteValid":
+				res.resp, res.err = d.dispatchGetByteValid(req)
+			case "DictionaryClient.GetComplexEmpty":
+				res.resp, res.err = d.dispatchGetComplexEmpty(req)
+			case "DictionaryClient.GetComplexItemEmpty":
+				res.resp, res.err = d.dispatchGetComplexItemEmpty(req)
+			case "DictionaryClient.GetComplexItemNull":
+				res.resp, res.err = d.dispatchGetComplexItemNull(req)
+			case "DictionaryClient.GetComplexNull":
+				res.resp, res.err = d.dispatchGetComplexNull(req)
+			case "DictionaryClient.GetComplexValid":
+				res.resp, res.err = d.dispatchGetComplexValid(req)
+			case "DictionaryClient.GetDateInvalidChars":
+				res.resp, res.err = d.dispatchGetDateInvalidChars(req)
+			case "DictionaryClient.GetDateInvalidNull":
+				res.resp, res.err = d.dispatchGetDateInvalidNull(req)
+			case "DictionaryClient.GetDateTimeInvalidChars":
+				res.resp, res.err = d.dispatchGetDateTimeInvalidChars(req)
+			case "DictionaryClient.GetDateTimeInvalidNull":
+				res.resp, res.err = d.dispatchGetDateTimeInvalidNull(req)
+			case "DictionaryClient.GetDateTimeRFC1123Valid":
+				res.resp, res.err = d.dispatchGetDateTimeRFC1123Valid(req)
+			case "DictionaryClient.GetDateTimeValid":
+				res.resp, res.err = d.dispatchGetDateTimeValid(req)
+			case "DictionaryClient.GetDateValid":
+				res.resp, res.err = d.dispatchGetDateValid(req)
+			case "DictionaryClient.GetDictionaryEmpty":
+				res.resp, res.err = d.dispatchGetDictionaryEmpty(req)
+			case "DictionaryClient.GetDictionaryItemEmpty":
+				res.resp, res.err = d.dispatchGetDictionaryItemEmpty(req)
+			case "DictionaryClient.GetDictionaryItemNull":
+				res.resp, res.err = d.dispatchGetDictionaryItemNull(req)
+			case "DictionaryClient.GetDictionaryNull":
+				res.resp, res.err = d.dispatchGetDictionaryNull(req)
+			case "DictionaryClient.GetDictionaryValid":
+				res.resp, res.err = d.dispatchGetDictionaryValid(req)
+			case "DictionaryClient.GetDoubleInvalidNull":
+				res.resp, res.err = d.dispatchGetDoubleInvalidNull(req)
+			case "DictionaryClient.GetDoubleInvalidString":
+				res.resp, res.err = d.dispatchGetDoubleInvalidString(req)
+			case "DictionaryClient.GetDoubleValid":
+				res.resp, res.err = d.dispatchGetDoubleValid(req)
+			case "DictionaryClient.GetDurationValid":
+				res.resp, res.err = d.dispatchGetDurationValid(req)
+			case "DictionaryClient.GetEmpty":
+				res.resp, res.err = d.dispatchGetEmpty(req)
+			case "DictionaryClient.GetEmptyStringKey":
+				res.resp, res.err = d.dispatchGetEmptyStringKey(req)
+			case "DictionaryClient.GetFloatInvalidNull":
+				res.resp, res.err = d.dispatchGetFloatInvalidNull(req)
+			case "DictionaryClient.GetFloatInvalidString":
+				res.resp, res.err = d.dispatchGetFloatInvalidString(req)
+			case "DictionaryClient.GetFloatValid":
+				res.resp, res.err = d.dispatchGetFloatValid(req)
+			case "DictionaryClient.GetIntInvalidNull":
+				res.resp, res.err = d.dispatchGetIntInvalidNull(req)
+			case "DictionaryClient.GetIntInvalidString":
+				res.resp, res.err = d.dispatchGetIntInvalidString(req)
+			case "DictionaryClient.GetIntegerValid":
+				res.resp, res.err = d.dispatchGetIntegerValid(req)
+			case "DictionaryClient.GetInvalid":
+				res.resp, res.err = d.dispatchGetInvalid(req)
+			case "DictionaryClient.GetLongInvalidNull":
+				res.resp, res.err = d.dispatchGetLongInvalidNull(req)
+			case "DictionaryClient.GetLongInvalidString":
+				res.resp, res.err = d.dispatchGetLongInvalidString(req)
+			case "DictionaryClient.GetLongValid":
+				res.resp, res.err = d.dispatchGetLongValid(req)
+			case "DictionaryClient.GetNull":
+				res.resp, res.err = d.dispatchGetNull(req)
+			case "DictionaryClient.GetNullKey":
+				res.resp, res.err = d.dispatchGetNullKey(req)
+			case "DictionaryClient.GetNullValue":
+				res.resp, res.err = d.dispatchGetNullValue(req)
+			case "DictionaryClient.GetStringValid":
+				res.resp, res.err = d.dispatchGetStringValid(req)
+			case "DictionaryClient.GetStringWithInvalid":
+				res.resp, res.err = d.dispatchGetStringWithInvalid(req)
+			case "DictionaryClient.GetStringWithNull":
+				res.resp, res.err = d.dispatchGetStringWithNull(req)
+			case "DictionaryClient.PutArrayValid":
+				res.resp, res.err = d.dispatchPutArrayValid(req)
+			case "DictionaryClient.PutBooleanTfft":
+				res.resp, res.err = d.dispatchPutBooleanTfft(req)
+			case "DictionaryClient.PutByteValid":
+				res.resp, res.err = d.dispatchPutByteValid(req)
+			case "DictionaryClient.PutComplexValid":
+				res.resp, res.err = d.dispatchPutComplexValid(req)
+			case "DictionaryClient.PutDateTimeRFC1123Valid":
+				res.resp, res.err = d.dispatchPutDateTimeRFC1123Valid(req)
+			case "DictionaryClient.PutDateTimeValid":
+				res.resp, res.err = d.dispatchPutDateTimeValid(req)
+			case "DictionaryClient.PutDateValid":
+				res.resp, res.err = d.dispatchPutDateValid(req)
+			case "DictionaryClient.PutDictionaryValid":
+				res.resp, res.err = d.dispatchPutDictionaryValid(req)
+			case "DictionaryClient.PutDoubleValid":
+				res.resp, res.err = d.dispatchPutDoubleValid(req)
+			case "DictionaryClient.PutDurationValid":
+				res.resp, res.err = d.dispatchPutDurationValid(req)
+			case "DictionaryClient.PutEmpty":
+				res.resp, res.err = d.dispatchPutEmpty(req)
+			case "DictionaryClient.PutFloatValid":
+				res.resp, res.err = d.dispatchPutFloatValid(req)
+			case "DictionaryClient.PutIntegerValid":
+				res.resp, res.err = d.dispatchPutIntegerValid(req)
+			case "DictionaryClient.PutLongValid":
+				res.resp, res.err = d.dispatchPutLongValid(req)
+			case "DictionaryClient.PutStringValid":
+				res.resp, res.err = d.dispatchPutStringValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -1752,4 +1758,10 @@ func (d *DictionaryServerTransport) dispatchPutStringValid(req *http.Request) (*
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DictionaryServerTransport
+var dictionaryServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

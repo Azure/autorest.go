@@ -118,38 +118,44 @@ func (m *ManagementServerTransport) dispatchToMethodFake(req *http.Request, meth
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ManagementClient.CheckDNSNameAvailability":
-			res.resp, res.err = m.dispatchCheckDNSNameAvailability(req)
-		case "ManagementClient.BeginDeleteBastionShareableLink":
-			res.resp, res.err = m.dispatchBeginDeleteBastionShareableLink(req)
-		case "ManagementClient.NewDisconnectActiveSessionsPager":
-			res.resp, res.err = m.dispatchNewDisconnectActiveSessionsPager(req)
-		case "ManagementClient.ExpressRouteProviderPort":
-			res.resp, res.err = m.dispatchExpressRouteProviderPort(req)
-		case "ManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile":
-			res.resp, res.err = m.dispatchBeginGeneratevirtualwanvpnserverconfigurationvpnprofile(req)
-		case "ManagementClient.BeginGetActiveSessions":
-			res.resp, res.err = m.dispatchBeginGetActiveSessions(req)
-		case "ManagementClient.NewGetBastionShareableLinkPager":
-			res.resp, res.err = m.dispatchNewGetBastionShareableLinkPager(req)
-		case "ManagementClient.ListActiveConnectivityConfigurations":
-			res.resp, res.err = m.dispatchListActiveConnectivityConfigurations(req)
-		case "ManagementClient.ListActiveSecurityAdminRules":
-			res.resp, res.err = m.dispatchListActiveSecurityAdminRules(req)
-		case "ManagementClient.ListNetworkManagerEffectiveConnectivityConfigurations":
-			res.resp, res.err = m.dispatchListNetworkManagerEffectiveConnectivityConfigurations(req)
-		case "ManagementClient.ListNetworkManagerEffectiveSecurityAdminRules":
-			res.resp, res.err = m.dispatchListNetworkManagerEffectiveSecurityAdminRules(req)
-		case "ManagementClient.BeginPutBastionShareableLink":
-			res.resp, res.err = m.dispatchBeginPutBastionShareableLink(req)
-		case "ManagementClient.SupportedSecurityProviders":
-			res.resp, res.err = m.dispatchSupportedSecurityProviders(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if managementServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = managementServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ManagementClient.CheckDNSNameAvailability":
+				res.resp, res.err = m.dispatchCheckDNSNameAvailability(req)
+			case "ManagementClient.BeginDeleteBastionShareableLink":
+				res.resp, res.err = m.dispatchBeginDeleteBastionShareableLink(req)
+			case "ManagementClient.NewDisconnectActiveSessionsPager":
+				res.resp, res.err = m.dispatchNewDisconnectActiveSessionsPager(req)
+			case "ManagementClient.ExpressRouteProviderPort":
+				res.resp, res.err = m.dispatchExpressRouteProviderPort(req)
+			case "ManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile":
+				res.resp, res.err = m.dispatchBeginGeneratevirtualwanvpnserverconfigurationvpnprofile(req)
+			case "ManagementClient.BeginGetActiveSessions":
+				res.resp, res.err = m.dispatchBeginGetActiveSessions(req)
+			case "ManagementClient.NewGetBastionShareableLinkPager":
+				res.resp, res.err = m.dispatchNewGetBastionShareableLinkPager(req)
+			case "ManagementClient.ListActiveConnectivityConfigurations":
+				res.resp, res.err = m.dispatchListActiveConnectivityConfigurations(req)
+			case "ManagementClient.ListActiveSecurityAdminRules":
+				res.resp, res.err = m.dispatchListActiveSecurityAdminRules(req)
+			case "ManagementClient.ListNetworkManagerEffectiveConnectivityConfigurations":
+				res.resp, res.err = m.dispatchListNetworkManagerEffectiveConnectivityConfigurations(req)
+			case "ManagementClient.ListNetworkManagerEffectiveSecurityAdminRules":
+				res.resp, res.err = m.dispatchListNetworkManagerEffectiveSecurityAdminRules(req)
+			case "ManagementClient.BeginPutBastionShareableLink":
+				res.resp, res.err = m.dispatchBeginPutBastionShareableLink(req)
+			case "ManagementClient.SupportedSecurityProviders":
+				res.resp, res.err = m.dispatchSupportedSecurityProviders(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -768,4 +774,10 @@ func (m *ManagementServerTransport) dispatchSupportedSecurityProviders(req *http
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ManagementServerTransport
+var managementServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -100,30 +100,36 @@ func (m *MongoClustersServerTransport) dispatchToMethodFake(req *http.Request, m
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "MongoClustersClient.CheckNameAvailability":
-			res.resp, res.err = m.dispatchCheckNameAvailability(req)
-		case "MongoClustersClient.BeginCreateOrUpdate":
-			res.resp, res.err = m.dispatchBeginCreateOrUpdate(req)
-		case "MongoClustersClient.BeginDelete":
-			res.resp, res.err = m.dispatchBeginDelete(req)
-		case "MongoClustersClient.Get":
-			res.resp, res.err = m.dispatchGet(req)
-		case "MongoClustersClient.NewListPager":
-			res.resp, res.err = m.dispatchNewListPager(req)
-		case "MongoClustersClient.NewListByResourceGroupPager":
-			res.resp, res.err = m.dispatchNewListByResourceGroupPager(req)
-		case "MongoClustersClient.ListConnectionStrings":
-			res.resp, res.err = m.dispatchListConnectionStrings(req)
-		case "MongoClustersClient.BeginPromote":
-			res.resp, res.err = m.dispatchBeginPromote(req)
-		case "MongoClustersClient.BeginUpdate":
-			res.resp, res.err = m.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if mongoClustersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = mongoClustersServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "MongoClustersClient.CheckNameAvailability":
+				res.resp, res.err = m.dispatchCheckNameAvailability(req)
+			case "MongoClustersClient.BeginCreateOrUpdate":
+				res.resp, res.err = m.dispatchBeginCreateOrUpdate(req)
+			case "MongoClustersClient.BeginDelete":
+				res.resp, res.err = m.dispatchBeginDelete(req)
+			case "MongoClustersClient.Get":
+				res.resp, res.err = m.dispatchGet(req)
+			case "MongoClustersClient.NewListPager":
+				res.resp, res.err = m.dispatchNewListPager(req)
+			case "MongoClustersClient.NewListByResourceGroupPager":
+				res.resp, res.err = m.dispatchNewListByResourceGroupPager(req)
+			case "MongoClustersClient.ListConnectionStrings":
+				res.resp, res.err = m.dispatchListConnectionStrings(req)
+			case "MongoClustersClient.BeginPromote":
+				res.resp, res.err = m.dispatchBeginPromote(req)
+			case "MongoClustersClient.BeginUpdate":
+				res.resp, res.err = m.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -493,4 +499,10 @@ func (m *MongoClustersServerTransport) dispatchBeginUpdate(req *http.Request) (*
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to MongoClustersServerTransport
+var mongoClustersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

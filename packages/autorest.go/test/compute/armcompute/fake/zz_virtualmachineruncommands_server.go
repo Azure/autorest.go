@@ -91,26 +91,32 @@ func (v *VirtualMachineRunCommandsServerTransport) dispatchToMethodFake(req *htt
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualMachineRunCommandsClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VirtualMachineRunCommandsClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualMachineRunCommandsClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualMachineRunCommandsClient.GetByVirtualMachine":
-			res.resp, res.err = v.dispatchGetByVirtualMachine(req)
-		case "VirtualMachineRunCommandsClient.NewListPager":
-			res.resp, res.err = v.dispatchNewListPager(req)
-		case "VirtualMachineRunCommandsClient.NewListByVirtualMachinePager":
-			res.resp, res.err = v.dispatchNewListByVirtualMachinePager(req)
-		case "VirtualMachineRunCommandsClient.BeginUpdate":
-			res.resp, res.err = v.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualMachineRunCommandsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualMachineRunCommandsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualMachineRunCommandsClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualMachineRunCommandsClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualMachineRunCommandsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualMachineRunCommandsClient.GetByVirtualMachine":
+				res.resp, res.err = v.dispatchGetByVirtualMachine(req)
+			case "VirtualMachineRunCommandsClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualMachineRunCommandsClient.NewListByVirtualMachinePager":
+				res.resp, res.err = v.dispatchNewListByVirtualMachinePager(req)
+			case "VirtualMachineRunCommandsClient.BeginUpdate":
+				res.resp, res.err = v.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -447,4 +453,10 @@ func (v *VirtualMachineRunCommandsServerTransport) dispatchBeginUpdate(req *http
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualMachineRunCommandsServerTransport
+var virtualMachineRunCommandsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

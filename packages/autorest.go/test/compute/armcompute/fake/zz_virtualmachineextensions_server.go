@@ -78,22 +78,28 @@ func (v *VirtualMachineExtensionsServerTransport) dispatchToMethodFake(req *http
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualMachineExtensionsClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VirtualMachineExtensionsClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualMachineExtensionsClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualMachineExtensionsClient.List":
-			res.resp, res.err = v.dispatchList(req)
-		case "VirtualMachineExtensionsClient.BeginUpdate":
-			res.resp, res.err = v.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualMachineExtensionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualMachineExtensionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualMachineExtensionsClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualMachineExtensionsClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualMachineExtensionsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualMachineExtensionsClient.List":
+				res.resp, res.err = v.dispatchList(req)
+			case "VirtualMachineExtensionsClient.BeginUpdate":
+				res.resp, res.err = v.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -352,4 +358,10 @@ func (v *VirtualMachineExtensionsServerTransport) dispatchBeginUpdate(req *http.
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualMachineExtensionsServerTransport
+var virtualMachineExtensionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

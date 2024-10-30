@@ -70,3 +70,9 @@ func (c *ContentNegotiationServerTransport) dispatchToClientFake(req *http.Reque
 
 	return resp, err
 }
+
+// set this to conditionally intercept incoming requests to ContentNegotiationServerTransport
+var contentNegotiationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
+}

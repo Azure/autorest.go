@@ -63,16 +63,22 @@ func (s *SharedGalleryImageVersionsServerTransport) dispatchToMethodFake(req *ht
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "SharedGalleryImageVersionsClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "SharedGalleryImageVersionsClient.NewListPager":
-			res.resp, res.err = s.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if sharedGalleryImageVersionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = sharedGalleryImageVersionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "SharedGalleryImageVersionsClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "SharedGalleryImageVersionsClient.NewListPager":
+				res.resp, res.err = s.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -183,4 +189,10 @@ func (s *SharedGalleryImageVersionsServerTransport) dispatchNewListPager(req *ht
 		s.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SharedGalleryImageVersionsServerTransport
+var sharedGalleryImageVersionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

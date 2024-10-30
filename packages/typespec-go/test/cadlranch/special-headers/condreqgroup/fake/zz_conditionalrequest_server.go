@@ -64,20 +64,26 @@ func (c *ConditionalRequestServerTransport) dispatchToMethodFake(req *http.Reque
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ConditionalRequestClient.HeadIfModifiedSince":
-			res.resp, res.err = c.dispatchHeadIfModifiedSince(req)
-		case "ConditionalRequestClient.PostIfMatch":
-			res.resp, res.err = c.dispatchPostIfMatch(req)
-		case "ConditionalRequestClient.PostIfNoneMatch":
-			res.resp, res.err = c.dispatchPostIfNoneMatch(req)
-		case "ConditionalRequestClient.PostIfUnmodifiedSince":
-			res.resp, res.err = c.dispatchPostIfUnmodifiedSince(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if conditionalRequestServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = conditionalRequestServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ConditionalRequestClient.HeadIfModifiedSince":
+				res.resp, res.err = c.dispatchHeadIfModifiedSince(req)
+			case "ConditionalRequestClient.PostIfMatch":
+				res.resp, res.err = c.dispatchPostIfMatch(req)
+			case "ConditionalRequestClient.PostIfNoneMatch":
+				res.resp, res.err = c.dispatchPostIfNoneMatch(req)
+			case "ConditionalRequestClient.PostIfUnmodifiedSince":
+				res.resp, res.err = c.dispatchPostIfUnmodifiedSince(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -200,4 +206,10 @@ func (c *ConditionalRequestServerTransport) dispatchPostIfUnmodifiedSince(req *h
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ConditionalRequestServerTransport
+var conditionalRequestServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

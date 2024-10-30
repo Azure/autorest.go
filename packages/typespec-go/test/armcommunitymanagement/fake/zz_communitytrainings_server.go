@@ -86,24 +86,30 @@ func (c *CommunityTrainingsServerTransport) dispatchToMethodFake(req *http.Reque
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "CommunityTrainingsClient.BeginCreate":
-			res.resp, res.err = c.dispatchBeginCreate(req)
-		case "CommunityTrainingsClient.BeginDelete":
-			res.resp, res.err = c.dispatchBeginDelete(req)
-		case "CommunityTrainingsClient.Get":
-			res.resp, res.err = c.dispatchGet(req)
-		case "CommunityTrainingsClient.NewListByResourceGroupPager":
-			res.resp, res.err = c.dispatchNewListByResourceGroupPager(req)
-		case "CommunityTrainingsClient.NewListBySubscriptionPager":
-			res.resp, res.err = c.dispatchNewListBySubscriptionPager(req)
-		case "CommunityTrainingsClient.BeginUpdate":
-			res.resp, res.err = c.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if communityTrainingsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = communityTrainingsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "CommunityTrainingsClient.BeginCreate":
+				res.resp, res.err = c.dispatchBeginCreate(req)
+			case "CommunityTrainingsClient.BeginDelete":
+				res.resp, res.err = c.dispatchBeginDelete(req)
+			case "CommunityTrainingsClient.Get":
+				res.resp, res.err = c.dispatchGet(req)
+			case "CommunityTrainingsClient.NewListByResourceGroupPager":
+				res.resp, res.err = c.dispatchNewListByResourceGroupPager(req)
+			case "CommunityTrainingsClient.NewListBySubscriptionPager":
+				res.resp, res.err = c.dispatchNewListBySubscriptionPager(req)
+			case "CommunityTrainingsClient.BeginUpdate":
+				res.resp, res.err = c.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -359,4 +365,10 @@ func (c *CommunityTrainingsServerTransport) dispatchBeginUpdate(req *http.Reques
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to CommunityTrainingsServerTransport
+var communityTrainingsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -55,16 +55,22 @@ func (s *ScalarBooleanServerTransport) dispatchToMethodFake(req *http.Request, m
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ScalarBooleanClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "ScalarBooleanClient.Put":
-			res.resp, res.err = s.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if scalarBooleanServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = scalarBooleanServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ScalarBooleanClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "ScalarBooleanClient.Put":
+				res.resp, res.err = s.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -119,4 +125,10 @@ func (s *ScalarBooleanServerTransport) dispatchPut(req *http.Request) (*http.Res
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ScalarBooleanServerTransport
+var scalarBooleanServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -123,38 +123,44 @@ func (p *PublicIPAddressesServerTransport) dispatchToMethodFake(req *http.Reques
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "PublicIPAddressesClient.BeginCreateOrUpdate":
-			res.resp, res.err = p.dispatchBeginCreateOrUpdate(req)
-		case "PublicIPAddressesClient.BeginDdosProtectionStatus":
-			res.resp, res.err = p.dispatchBeginDdosProtectionStatus(req)
-		case "PublicIPAddressesClient.BeginDelete":
-			res.resp, res.err = p.dispatchBeginDelete(req)
-		case "PublicIPAddressesClient.Get":
-			res.resp, res.err = p.dispatchGet(req)
-		case "PublicIPAddressesClient.GetCloudServicePublicIPAddress":
-			res.resp, res.err = p.dispatchGetCloudServicePublicIPAddress(req)
-		case "PublicIPAddressesClient.GetVirtualMachineScaleSetPublicIPAddress":
-			res.resp, res.err = p.dispatchGetVirtualMachineScaleSetPublicIPAddress(req)
-		case "PublicIPAddressesClient.NewListPager":
-			res.resp, res.err = p.dispatchNewListPager(req)
-		case "PublicIPAddressesClient.NewListAllPager":
-			res.resp, res.err = p.dispatchNewListAllPager(req)
-		case "PublicIPAddressesClient.NewListCloudServicePublicIPAddressesPager":
-			res.resp, res.err = p.dispatchNewListCloudServicePublicIPAddressesPager(req)
-		case "PublicIPAddressesClient.NewListCloudServiceRoleInstancePublicIPAddressesPager":
-			res.resp, res.err = p.dispatchNewListCloudServiceRoleInstancePublicIPAddressesPager(req)
-		case "PublicIPAddressesClient.NewListVirtualMachineScaleSetPublicIPAddressesPager":
-			res.resp, res.err = p.dispatchNewListVirtualMachineScaleSetPublicIPAddressesPager(req)
-		case "PublicIPAddressesClient.NewListVirtualMachineScaleSetVMPublicIPAddressesPager":
-			res.resp, res.err = p.dispatchNewListVirtualMachineScaleSetVMPublicIPAddressesPager(req)
-		case "PublicIPAddressesClient.UpdateTags":
-			res.resp, res.err = p.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if publicIPAddressesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = publicIPAddressesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "PublicIPAddressesClient.BeginCreateOrUpdate":
+				res.resp, res.err = p.dispatchBeginCreateOrUpdate(req)
+			case "PublicIPAddressesClient.BeginDdosProtectionStatus":
+				res.resp, res.err = p.dispatchBeginDdosProtectionStatus(req)
+			case "PublicIPAddressesClient.BeginDelete":
+				res.resp, res.err = p.dispatchBeginDelete(req)
+			case "PublicIPAddressesClient.Get":
+				res.resp, res.err = p.dispatchGet(req)
+			case "PublicIPAddressesClient.GetCloudServicePublicIPAddress":
+				res.resp, res.err = p.dispatchGetCloudServicePublicIPAddress(req)
+			case "PublicIPAddressesClient.GetVirtualMachineScaleSetPublicIPAddress":
+				res.resp, res.err = p.dispatchGetVirtualMachineScaleSetPublicIPAddress(req)
+			case "PublicIPAddressesClient.NewListPager":
+				res.resp, res.err = p.dispatchNewListPager(req)
+			case "PublicIPAddressesClient.NewListAllPager":
+				res.resp, res.err = p.dispatchNewListAllPager(req)
+			case "PublicIPAddressesClient.NewListCloudServicePublicIPAddressesPager":
+				res.resp, res.err = p.dispatchNewListCloudServicePublicIPAddressesPager(req)
+			case "PublicIPAddressesClient.NewListCloudServiceRoleInstancePublicIPAddressesPager":
+				res.resp, res.err = p.dispatchNewListCloudServiceRoleInstancePublicIPAddressesPager(req)
+			case "PublicIPAddressesClient.NewListVirtualMachineScaleSetPublicIPAddressesPager":
+				res.resp, res.err = p.dispatchNewListVirtualMachineScaleSetPublicIPAddressesPager(req)
+			case "PublicIPAddressesClient.NewListVirtualMachineScaleSetVMPublicIPAddressesPager":
+				res.resp, res.err = p.dispatchNewListVirtualMachineScaleSetVMPublicIPAddressesPager(req)
+			case "PublicIPAddressesClient.UpdateTags":
+				res.resp, res.err = p.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -765,4 +771,10 @@ func (p *PublicIPAddressesServerTransport) dispatchUpdateTags(req *http.Request)
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to PublicIPAddressesServerTransport
+var publicIPAddressesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

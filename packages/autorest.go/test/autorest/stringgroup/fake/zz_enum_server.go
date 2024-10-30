@@ -72,24 +72,30 @@ func (e *EnumServerTransport) dispatchToMethodFake(req *http.Request, method str
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "EnumClient.GetNotExpandable":
-			res.resp, res.err = e.dispatchGetNotExpandable(req)
-		case "EnumClient.GetReferenced":
-			res.resp, res.err = e.dispatchGetReferenced(req)
-		case "EnumClient.GetReferencedConstant":
-			res.resp, res.err = e.dispatchGetReferencedConstant(req)
-		case "EnumClient.PutNotExpandable":
-			res.resp, res.err = e.dispatchPutNotExpandable(req)
-		case "EnumClient.PutReferenced":
-			res.resp, res.err = e.dispatchPutReferenced(req)
-		case "EnumClient.PutReferencedConstant":
-			res.resp, res.err = e.dispatchPutReferencedConstant(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if enumServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = enumServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "EnumClient.GetNotExpandable":
+				res.resp, res.err = e.dispatchGetNotExpandable(req)
+			case "EnumClient.GetReferenced":
+				res.resp, res.err = e.dispatchGetReferenced(req)
+			case "EnumClient.GetReferencedConstant":
+				res.resp, res.err = e.dispatchGetReferencedConstant(req)
+			case "EnumClient.PutNotExpandable":
+				res.resp, res.err = e.dispatchPutNotExpandable(req)
+			case "EnumClient.PutReferenced":
+				res.resp, res.err = e.dispatchPutReferenced(req)
+			case "EnumClient.PutReferencedConstant":
+				res.resp, res.err = e.dispatchPutReferencedConstant(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -228,4 +234,10 @@ func (e *EnumServerTransport) dispatchPutReferencedConstant(req *http.Request) (
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to EnumServerTransport
+var enumServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -74,22 +74,28 @@ func (a *APIVersionsServerTransport) dispatchToMethodFake(req *http.Request, met
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "APIVersionsClient.CreateOrUpdate":
-			res.resp, res.err = a.dispatchCreateOrUpdate(req)
-		case "APIVersionsClient.Delete":
-			res.resp, res.err = a.dispatchDelete(req)
-		case "APIVersionsClient.Get":
-			res.resp, res.err = a.dispatchGet(req)
-		case "APIVersionsClient.Head":
-			res.resp, res.err = a.dispatchHead(req)
-		case "APIVersionsClient.NewListPager":
-			res.resp, res.err = a.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if apiVersionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = apiVersionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "APIVersionsClient.CreateOrUpdate":
+				res.resp, res.err = a.dispatchCreateOrUpdate(req)
+			case "APIVersionsClient.Delete":
+				res.resp, res.err = a.dispatchDelete(req)
+			case "APIVersionsClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "APIVersionsClient.Head":
+				res.resp, res.err = a.dispatchHead(req)
+			case "APIVersionsClient.NewListPager":
+				res.resp, res.err = a.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -353,4 +359,10 @@ func (a *APIVersionsServerTransport) dispatchNewListPager(req *http.Request) (*h
 		a.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to APIVersionsServerTransport
+var apiVersionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

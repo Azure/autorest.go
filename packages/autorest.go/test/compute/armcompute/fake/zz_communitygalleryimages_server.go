@@ -54,14 +54,20 @@ func (c *CommunityGalleryImagesServerTransport) dispatchToMethodFake(req *http.R
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "CommunityGalleryImagesClient.Get":
-			res.resp, res.err = c.dispatchGet(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if communityGalleryImagesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = communityGalleryImagesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "CommunityGalleryImagesClient.Get":
+				res.resp, res.err = c.dispatchGet(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -111,4 +117,10 @@ func (c *CommunityGalleryImagesServerTransport) dispatchGet(req *http.Request) (
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to CommunityGalleryImagesServerTransport
+var communityGalleryImagesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

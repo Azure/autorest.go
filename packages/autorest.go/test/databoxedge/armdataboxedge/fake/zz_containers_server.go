@@ -81,22 +81,28 @@ func (c *ContainersServerTransport) dispatchToMethodFake(req *http.Request, meth
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ContainersClient.BeginCreateOrUpdate":
-			res.resp, res.err = c.dispatchBeginCreateOrUpdate(req)
-		case "ContainersClient.BeginDelete":
-			res.resp, res.err = c.dispatchBeginDelete(req)
-		case "ContainersClient.Get":
-			res.resp, res.err = c.dispatchGet(req)
-		case "ContainersClient.NewListByStorageAccountPager":
-			res.resp, res.err = c.dispatchNewListByStorageAccountPager(req)
-		case "ContainersClient.BeginRefresh":
-			res.resp, res.err = c.dispatchBeginRefresh(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if containersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = containersServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ContainersClient.BeginCreateOrUpdate":
+				res.resp, res.err = c.dispatchBeginCreateOrUpdate(req)
+			case "ContainersClient.BeginDelete":
+				res.resp, res.err = c.dispatchBeginDelete(req)
+			case "ContainersClient.Get":
+				res.resp, res.err = c.dispatchGet(req)
+			case "ContainersClient.NewListByStorageAccountPager":
+				res.resp, res.err = c.dispatchNewListByStorageAccountPager(req)
+			case "ContainersClient.BeginRefresh":
+				res.resp, res.err = c.dispatchBeginRefresh(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -355,4 +361,10 @@ func (c *ContainersServerTransport) dispatchBeginRefresh(req *http.Request) (*ht
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ContainersServerTransport
+var containersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

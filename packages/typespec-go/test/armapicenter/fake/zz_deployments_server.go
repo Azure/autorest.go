@@ -74,22 +74,28 @@ func (d *DeploymentsServerTransport) dispatchToMethodFake(req *http.Request, met
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DeploymentsClient.CreateOrUpdate":
-			res.resp, res.err = d.dispatchCreateOrUpdate(req)
-		case "DeploymentsClient.Delete":
-			res.resp, res.err = d.dispatchDelete(req)
-		case "DeploymentsClient.Get":
-			res.resp, res.err = d.dispatchGet(req)
-		case "DeploymentsClient.Head":
-			res.resp, res.err = d.dispatchHead(req)
-		case "DeploymentsClient.NewListPager":
-			res.resp, res.err = d.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if deploymentsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = deploymentsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DeploymentsClient.CreateOrUpdate":
+				res.resp, res.err = d.dispatchCreateOrUpdate(req)
+			case "DeploymentsClient.Delete":
+				res.resp, res.err = d.dispatchDelete(req)
+			case "DeploymentsClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DeploymentsClient.Head":
+				res.resp, res.err = d.dispatchHead(req)
+			case "DeploymentsClient.NewListPager":
+				res.resp, res.err = d.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -353,4 +359,10 @@ func (d *DeploymentsServerTransport) dispatchNewListPager(req *http.Request) (*h
 		d.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DeploymentsServerTransport
+var deploymentsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -75,20 +75,26 @@ func (v *VirtualApplianceSitesServerTransport) dispatchToMethodFake(req *http.Re
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualApplianceSitesClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VirtualApplianceSitesClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualApplianceSitesClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualApplianceSitesClient.NewListPager":
-			res.resp, res.err = v.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualApplianceSitesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualApplianceSitesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualApplianceSitesClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualApplianceSitesClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualApplianceSitesClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualApplianceSitesClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (v *VirtualApplianceSitesServerTransport) dispatchNewListPager(req *http.Re
 		v.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualApplianceSitesServerTransport
+var virtualApplianceSitesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -51,14 +51,20 @@ func (c *CollectionFormatHeaderServerTransport) dispatchToMethodFake(req *http.R
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "CollectionFormatHeaderClient.CSV":
-			res.resp, res.err = c.dispatchCSV(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if collectionFormatHeaderServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = collectionFormatHeaderServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "CollectionFormatHeaderClient.CSV":
+				res.resp, res.err = c.dispatchCSV(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -90,4 +96,10 @@ func (c *CollectionFormatHeaderServerTransport) dispatchCSV(req *http.Request) (
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to CollectionFormatHeaderServerTransport
+var collectionFormatHeaderServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

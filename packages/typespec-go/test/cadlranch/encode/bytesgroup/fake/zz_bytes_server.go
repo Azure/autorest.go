@@ -97,3 +97,9 @@ func (b *BytesServerTransport) dispatchToClientFake(req *http.Request, client st
 
 	return resp, err
 }
+
+// set this to conditionally intercept incoming requests to BytesServerTransport
+var bytesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
+}

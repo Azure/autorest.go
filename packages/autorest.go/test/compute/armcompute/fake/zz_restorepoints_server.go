@@ -68,18 +68,24 @@ func (r *RestorePointsServerTransport) dispatchToMethodFake(req *http.Request, m
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "RestorePointsClient.BeginCreate":
-			res.resp, res.err = r.dispatchBeginCreate(req)
-		case "RestorePointsClient.BeginDelete":
-			res.resp, res.err = r.dispatchBeginDelete(req)
-		case "RestorePointsClient.Get":
-			res.resp, res.err = r.dispatchGet(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if restorePointsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = restorePointsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "RestorePointsClient.BeginCreate":
+				res.resp, res.err = r.dispatchBeginCreate(req)
+			case "RestorePointsClient.BeginDelete":
+				res.resp, res.err = r.dispatchBeginDelete(req)
+			case "RestorePointsClient.Get":
+				res.resp, res.err = r.dispatchGet(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -241,4 +247,10 @@ func (r *RestorePointsServerTransport) dispatchGet(req *http.Request) (*http.Res
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to RestorePointsServerTransport
+var restorePointsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

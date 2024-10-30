@@ -99,28 +99,34 @@ func (s *SnapshotsServerTransport) dispatchToMethodFake(req *http.Request, metho
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "SnapshotsClient.BeginCreateOrUpdate":
-			res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
-		case "SnapshotsClient.BeginDelete":
-			res.resp, res.err = s.dispatchBeginDelete(req)
-		case "SnapshotsClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "SnapshotsClient.BeginGrantAccess":
-			res.resp, res.err = s.dispatchBeginGrantAccess(req)
-		case "SnapshotsClient.NewListPager":
-			res.resp, res.err = s.dispatchNewListPager(req)
-		case "SnapshotsClient.NewListByResourceGroupPager":
-			res.resp, res.err = s.dispatchNewListByResourceGroupPager(req)
-		case "SnapshotsClient.BeginRevokeAccess":
-			res.resp, res.err = s.dispatchBeginRevokeAccess(req)
-		case "SnapshotsClient.BeginUpdate":
-			res.resp, res.err = s.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if snapshotsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = snapshotsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "SnapshotsClient.BeginCreateOrUpdate":
+				res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
+			case "SnapshotsClient.BeginDelete":
+				res.resp, res.err = s.dispatchBeginDelete(req)
+			case "SnapshotsClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "SnapshotsClient.BeginGrantAccess":
+				res.resp, res.err = s.dispatchBeginGrantAccess(req)
+			case "SnapshotsClient.NewListPager":
+				res.resp, res.err = s.dispatchNewListPager(req)
+			case "SnapshotsClient.NewListByResourceGroupPager":
+				res.resp, res.err = s.dispatchNewListByResourceGroupPager(req)
+			case "SnapshotsClient.BeginRevokeAccess":
+				res.resp, res.err = s.dispatchBeginRevokeAccess(req)
+			case "SnapshotsClient.BeginUpdate":
+				res.resp, res.err = s.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -468,4 +474,10 @@ func (s *SnapshotsServerTransport) dispatchBeginUpdate(req *http.Request) (*http
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SnapshotsServerTransport
+var snapshotsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

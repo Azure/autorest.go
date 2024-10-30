@@ -55,16 +55,22 @@ func (f *FlattenPropertyServerTransport) dispatchToMethodFake(req *http.Request,
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "FlattenPropertyClient.PutFlattenModel":
-			res.resp, res.err = f.dispatchPutFlattenModel(req)
-		case "FlattenPropertyClient.PutNestedFlattenModel":
-			res.resp, res.err = f.dispatchPutNestedFlattenModel(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if flattenPropertyServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = flattenPropertyServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "FlattenPropertyClient.PutFlattenModel":
+				res.resp, res.err = f.dispatchPutFlattenModel(req)
+			case "FlattenPropertyClient.PutNestedFlattenModel":
+				res.resp, res.err = f.dispatchPutNestedFlattenModel(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -123,4 +129,10 @@ func (f *FlattenPropertyServerTransport) dispatchPutNestedFlattenModel(req *http
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to FlattenPropertyServerTransport
+var flattenPropertyServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

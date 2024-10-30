@@ -55,16 +55,22 @@ func (x *XMLModelWithSimpleArraysValueServerTransport) dispatchToMethodFake(req 
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "XMLModelWithSimpleArraysValueClient.Get":
-			res.resp, res.err = x.dispatchGet(req)
-		case "XMLModelWithSimpleArraysValueClient.Put":
-			res.resp, res.err = x.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if xmlModelWithSimpleArraysValueServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = xmlModelWithSimpleArraysValueServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "XMLModelWithSimpleArraysValueClient.Get":
+				res.resp, res.err = x.dispatchGet(req)
+			case "XMLModelWithSimpleArraysValueClient.Put":
+				res.resp, res.err = x.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -122,4 +128,10 @@ func (x *XMLModelWithSimpleArraysValueServerTransport) dispatchPut(req *http.Req
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to XMLModelWithSimpleArraysValueServerTransport
+var xmlModelWithSimpleArraysValueServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

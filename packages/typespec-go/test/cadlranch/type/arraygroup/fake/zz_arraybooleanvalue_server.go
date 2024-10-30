@@ -55,16 +55,22 @@ func (a *ArrayBooleanValueServerTransport) dispatchToMethodFake(req *http.Reques
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ArrayBooleanValueClient.Get":
-			res.resp, res.err = a.dispatchGet(req)
-		case "ArrayBooleanValueClient.Put":
-			res.resp, res.err = a.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if arrayBooleanValueServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = arrayBooleanValueServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ArrayBooleanValueClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "ArrayBooleanValueClient.Put":
+				res.resp, res.err = a.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -119,4 +125,10 @@ func (a *ArrayBooleanValueServerTransport) dispatchPut(req *http.Request) (*http
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ArrayBooleanValueServerTransport
+var arrayBooleanValueServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

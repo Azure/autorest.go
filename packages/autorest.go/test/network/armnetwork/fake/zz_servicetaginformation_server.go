@@ -59,14 +59,20 @@ func (s *ServiceTagInformationServerTransport) dispatchToMethodFake(req *http.Re
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ServiceTagInformationClient.NewListPager":
-			res.resp, res.err = s.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if serviceTagInformationServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = serviceTagInformationServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ServiceTagInformationClient.NewListPager":
+				res.resp, res.err = s.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -137,4 +143,10 @@ func (s *ServiceTagInformationServerTransport) dispatchNewListPager(req *http.Re
 		s.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ServiceTagInformationServerTransport
+var serviceTagInformationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

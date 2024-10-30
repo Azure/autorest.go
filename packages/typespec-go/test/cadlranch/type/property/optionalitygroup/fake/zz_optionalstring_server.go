@@ -63,20 +63,26 @@ func (o *OptionalStringServerTransport) dispatchToMethodFake(req *http.Request, 
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "OptionalStringClient.GetAll":
-			res.resp, res.err = o.dispatchGetAll(req)
-		case "OptionalStringClient.GetDefault":
-			res.resp, res.err = o.dispatchGetDefault(req)
-		case "OptionalStringClient.PutAll":
-			res.resp, res.err = o.dispatchPutAll(req)
-		case "OptionalStringClient.PutDefault":
-			res.resp, res.err = o.dispatchPutDefault(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if optionalStringServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = optionalStringServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "OptionalStringClient.GetAll":
+				res.resp, res.err = o.dispatchGetAll(req)
+			case "OptionalStringClient.GetDefault":
+				res.resp, res.err = o.dispatchGetDefault(req)
+			case "OptionalStringClient.PutAll":
+				res.resp, res.err = o.dispatchPutAll(req)
+			case "OptionalStringClient.PutDefault":
+				res.resp, res.err = o.dispatchPutDefault(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -173,4 +179,10 @@ func (o *OptionalStringServerTransport) dispatchPutDefault(req *http.Request) (*
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OptionalStringServerTransport
+var optionalStringServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -54,14 +54,20 @@ func (o *OperationsStatusServerTransport) dispatchToMethodFake(req *http.Request
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "OperationsStatusClient.Get":
-			res.resp, res.err = o.dispatchGet(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if operationsStatusServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = operationsStatusServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "OperationsStatusClient.Get":
+				res.resp, res.err = o.dispatchGet(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -111,4 +117,10 @@ func (o *OperationsStatusServerTransport) dispatchGet(req *http.Request) (*http.
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OperationsStatusServerTransport
+var operationsStatusServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -61,3 +61,9 @@ func (m *MediaTypeServerTransport) dispatchToClientFake(req *http.Request, clien
 
 	return resp, err
 }
+
+// set this to conditionally intercept incoming requests to MediaTypeServerTransport
+var mediaTypeServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
+}

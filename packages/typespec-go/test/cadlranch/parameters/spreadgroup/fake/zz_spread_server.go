@@ -70,3 +70,9 @@ func (s *SpreadServerTransport) dispatchToClientFake(req *http.Request, client s
 
 	return resp, err
 }
+
+// set this to conditionally intercept incoming requests to SpreadServerTransport
+var spreadServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
+}

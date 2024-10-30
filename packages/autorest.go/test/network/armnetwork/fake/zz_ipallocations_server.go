@@ -85,24 +85,30 @@ func (i *IPAllocationsServerTransport) dispatchToMethodFake(req *http.Request, m
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "IPAllocationsClient.BeginCreateOrUpdate":
-			res.resp, res.err = i.dispatchBeginCreateOrUpdate(req)
-		case "IPAllocationsClient.BeginDelete":
-			res.resp, res.err = i.dispatchBeginDelete(req)
-		case "IPAllocationsClient.Get":
-			res.resp, res.err = i.dispatchGet(req)
-		case "IPAllocationsClient.NewListPager":
-			res.resp, res.err = i.dispatchNewListPager(req)
-		case "IPAllocationsClient.NewListByResourceGroupPager":
-			res.resp, res.err = i.dispatchNewListByResourceGroupPager(req)
-		case "IPAllocationsClient.UpdateTags":
-			res.resp, res.err = i.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if ipAllocationsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = ipAllocationsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "IPAllocationsClient.BeginCreateOrUpdate":
+				res.resp, res.err = i.dispatchBeginCreateOrUpdate(req)
+			case "IPAllocationsClient.BeginDelete":
+				res.resp, res.err = i.dispatchBeginDelete(req)
+			case "IPAllocationsClient.Get":
+				res.resp, res.err = i.dispatchGet(req)
+			case "IPAllocationsClient.NewListPager":
+				res.resp, res.err = i.dispatchNewListPager(req)
+			case "IPAllocationsClient.NewListByResourceGroupPager":
+				res.resp, res.err = i.dispatchNewListByResourceGroupPager(req)
+			case "IPAllocationsClient.UpdateTags":
+				res.resp, res.err = i.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -359,4 +365,10 @@ func (i *IPAllocationsServerTransport) dispatchUpdateTags(req *http.Request) (*h
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to IPAllocationsServerTransport
+var ipAllocationsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

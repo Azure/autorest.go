@@ -57,14 +57,20 @@ func (i *ImageVersionsServerTransport) dispatchToMethodFake(req *http.Request, m
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ImageVersionsClient.NewListByImagePager":
-			res.resp, res.err = i.dispatchNewListByImagePager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if imageVersionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = imageVersionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ImageVersionsClient.NewListByImagePager":
+				res.resp, res.err = i.dispatchNewListByImagePager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -118,4 +124,10 @@ func (i *ImageVersionsServerTransport) dispatchNewListByImagePager(req *http.Req
 		i.newListByImagePager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ImageVersionsServerTransport
+var imageVersionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

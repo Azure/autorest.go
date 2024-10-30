@@ -85,24 +85,30 @@ func (n *NatGatewaysServerTransport) dispatchToMethodFake(req *http.Request, met
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "NatGatewaysClient.BeginCreateOrUpdate":
-			res.resp, res.err = n.dispatchBeginCreateOrUpdate(req)
-		case "NatGatewaysClient.BeginDelete":
-			res.resp, res.err = n.dispatchBeginDelete(req)
-		case "NatGatewaysClient.Get":
-			res.resp, res.err = n.dispatchGet(req)
-		case "NatGatewaysClient.NewListPager":
-			res.resp, res.err = n.dispatchNewListPager(req)
-		case "NatGatewaysClient.NewListAllPager":
-			res.resp, res.err = n.dispatchNewListAllPager(req)
-		case "NatGatewaysClient.UpdateTags":
-			res.resp, res.err = n.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if natGatewaysServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = natGatewaysServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "NatGatewaysClient.BeginCreateOrUpdate":
+				res.resp, res.err = n.dispatchBeginCreateOrUpdate(req)
+			case "NatGatewaysClient.BeginDelete":
+				res.resp, res.err = n.dispatchBeginDelete(req)
+			case "NatGatewaysClient.Get":
+				res.resp, res.err = n.dispatchGet(req)
+			case "NatGatewaysClient.NewListPager":
+				res.resp, res.err = n.dispatchNewListPager(req)
+			case "NatGatewaysClient.NewListAllPager":
+				res.resp, res.err = n.dispatchNewListAllPager(req)
+			case "NatGatewaysClient.UpdateTags":
+				res.resp, res.err = n.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -359,4 +365,10 @@ func (n *NatGatewaysServerTransport) dispatchUpdateTags(req *http.Request) (*htt
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NatGatewaysServerTransport
+var natGatewaysServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

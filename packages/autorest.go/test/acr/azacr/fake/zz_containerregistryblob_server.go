@@ -96,34 +96,40 @@ func (c *ContainerRegistryBlobServerTransport) dispatchToMethodFake(req *http.Re
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ContainerRegistryBlobClient.CancelUpload":
-			res.resp, res.err = c.dispatchCancelUpload(req)
-		case "ContainerRegistryBlobClient.CheckBlobExists":
-			res.resp, res.err = c.dispatchCheckBlobExists(req)
-		case "ContainerRegistryBlobClient.CheckChunkExists":
-			res.resp, res.err = c.dispatchCheckChunkExists(req)
-		case "ContainerRegistryBlobClient.CompleteUpload":
-			res.resp, res.err = c.dispatchCompleteUpload(req)
-		case "ContainerRegistryBlobClient.DeleteBlob":
-			res.resp, res.err = c.dispatchDeleteBlob(req)
-		case "ContainerRegistryBlobClient.GetBlob":
-			res.resp, res.err = c.dispatchGetBlob(req)
-		case "ContainerRegistryBlobClient.GetChunk":
-			res.resp, res.err = c.dispatchGetChunk(req)
-		case "ContainerRegistryBlobClient.GetUploadStatus":
-			res.resp, res.err = c.dispatchGetUploadStatus(req)
-		case "ContainerRegistryBlobClient.MountBlob":
-			res.resp, res.err = c.dispatchMountBlob(req)
-		case "ContainerRegistryBlobClient.StartUpload":
-			res.resp, res.err = c.dispatchStartUpload(req)
-		case "ContainerRegistryBlobClient.UploadChunk":
-			res.resp, res.err = c.dispatchUploadChunk(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if containerRegistryBlobServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = containerRegistryBlobServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ContainerRegistryBlobClient.CancelUpload":
+				res.resp, res.err = c.dispatchCancelUpload(req)
+			case "ContainerRegistryBlobClient.CheckBlobExists":
+				res.resp, res.err = c.dispatchCheckBlobExists(req)
+			case "ContainerRegistryBlobClient.CheckChunkExists":
+				res.resp, res.err = c.dispatchCheckChunkExists(req)
+			case "ContainerRegistryBlobClient.CompleteUpload":
+				res.resp, res.err = c.dispatchCompleteUpload(req)
+			case "ContainerRegistryBlobClient.DeleteBlob":
+				res.resp, res.err = c.dispatchDeleteBlob(req)
+			case "ContainerRegistryBlobClient.GetBlob":
+				res.resp, res.err = c.dispatchGetBlob(req)
+			case "ContainerRegistryBlobClient.GetChunk":
+				res.resp, res.err = c.dispatchGetChunk(req)
+			case "ContainerRegistryBlobClient.GetUploadStatus":
+				res.resp, res.err = c.dispatchGetUploadStatus(req)
+			case "ContainerRegistryBlobClient.MountBlob":
+				res.resp, res.err = c.dispatchMountBlob(req)
+			case "ContainerRegistryBlobClient.StartUpload":
+				res.resp, res.err = c.dispatchStartUpload(req)
+			case "ContainerRegistryBlobClient.UploadChunk":
+				res.resp, res.err = c.dispatchUploadChunk(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -567,4 +573,10 @@ func (c *ContainerRegistryBlobServerTransport) dispatchUploadChunk(req *http.Req
 		resp.Header.Set("Range", *val)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ContainerRegistryBlobServerTransport
+var containerRegistryBlobServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -87,24 +87,30 @@ func (b *BastionHostsServerTransport) dispatchToMethodFake(req *http.Request, me
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "BastionHostsClient.BeginCreateOrUpdate":
-			res.resp, res.err = b.dispatchBeginCreateOrUpdate(req)
-		case "BastionHostsClient.BeginDelete":
-			res.resp, res.err = b.dispatchBeginDelete(req)
-		case "BastionHostsClient.Get":
-			res.resp, res.err = b.dispatchGet(req)
-		case "BastionHostsClient.NewListPager":
-			res.resp, res.err = b.dispatchNewListPager(req)
-		case "BastionHostsClient.NewListByResourceGroupPager":
-			res.resp, res.err = b.dispatchNewListByResourceGroupPager(req)
-		case "BastionHostsClient.BeginUpdateTags":
-			res.resp, res.err = b.dispatchBeginUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if bastionHostsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = bastionHostsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "BastionHostsClient.BeginCreateOrUpdate":
+				res.resp, res.err = b.dispatchBeginCreateOrUpdate(req)
+			case "BastionHostsClient.BeginDelete":
+				res.resp, res.err = b.dispatchBeginDelete(req)
+			case "BastionHostsClient.Get":
+				res.resp, res.err = b.dispatchGet(req)
+			case "BastionHostsClient.NewListPager":
+				res.resp, res.err = b.dispatchNewListPager(req)
+			case "BastionHostsClient.NewListByResourceGroupPager":
+				res.resp, res.err = b.dispatchNewListByResourceGroupPager(req)
+			case "BastionHostsClient.BeginUpdateTags":
+				res.resp, res.err = b.dispatchBeginUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -360,4 +366,10 @@ func (b *BastionHostsServerTransport) dispatchBeginUpdateTags(req *http.Request)
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to BastionHostsServerTransport
+var bastionHostsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

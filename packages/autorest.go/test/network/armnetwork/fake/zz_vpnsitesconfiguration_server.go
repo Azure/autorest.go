@@ -58,14 +58,20 @@ func (v *VPNSitesConfigurationServerTransport) dispatchToMethodFake(req *http.Re
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VPNSitesConfigurationClient.BeginDownload":
-			res.resp, res.err = v.dispatchBeginDownload(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if vpnSitesConfigurationServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = vpnSitesConfigurationServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VPNSitesConfigurationClient.BeginDownload":
+				res.resp, res.err = v.dispatchBeginDownload(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -126,4 +132,10 @@ func (v *VPNSitesConfigurationServerTransport) dispatchBeginDownload(req *http.R
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VPNSitesConfigurationServerTransport
+var vpnSitesConfigurationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -90,26 +90,32 @@ func (a *AccountsServerTransport) dispatchToMethodFake(req *http.Request, method
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "AccountsClient.CheckNameAvailability":
-			res.resp, res.err = a.dispatchCheckNameAvailability(req)
-		case "AccountsClient.BeginCreate":
-			res.resp, res.err = a.dispatchBeginCreate(req)
-		case "AccountsClient.BeginDelete":
-			res.resp, res.err = a.dispatchBeginDelete(req)
-		case "AccountsClient.Get":
-			res.resp, res.err = a.dispatchGet(req)
-		case "AccountsClient.NewListByResourceGroupPager":
-			res.resp, res.err = a.dispatchNewListByResourceGroupPager(req)
-		case "AccountsClient.NewListBySubscriptionPager":
-			res.resp, res.err = a.dispatchNewListBySubscriptionPager(req)
-		case "AccountsClient.BeginUpdate":
-			res.resp, res.err = a.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if accountsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = accountsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "AccountsClient.CheckNameAvailability":
+				res.resp, res.err = a.dispatchCheckNameAvailability(req)
+			case "AccountsClient.BeginCreate":
+				res.resp, res.err = a.dispatchBeginCreate(req)
+			case "AccountsClient.BeginDelete":
+				res.resp, res.err = a.dispatchBeginDelete(req)
+			case "AccountsClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "AccountsClient.NewListByResourceGroupPager":
+				res.resp, res.err = a.dispatchNewListByResourceGroupPager(req)
+			case "AccountsClient.NewListBySubscriptionPager":
+				res.resp, res.err = a.dispatchNewListBySubscriptionPager(req)
+			case "AccountsClient.BeginUpdate":
+				res.resp, res.err = a.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -394,4 +400,10 @@ func (a *AccountsServerTransport) dispatchBeginUpdate(req *http.Request) (*http.
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AccountsServerTransport
+var accountsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

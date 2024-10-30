@@ -57,14 +57,20 @@ func (r *ResourceDetailsServerTransport) dispatchToMethodFake(req *http.Request,
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ResourceDetailsClient.NewListByPoolPager":
-			res.resp, res.err = r.dispatchNewListByPoolPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if resourceDetailsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = resourceDetailsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ResourceDetailsClient.NewListByPoolPager":
+				res.resp, res.err = r.dispatchNewListByPoolPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -118,4 +124,10 @@ func (r *ResourceDetailsServerTransport) dispatchNewListByPoolPager(req *http.Re
 		r.newListByPoolPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ResourceDetailsServerTransport
+var resourceDetailsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -72,20 +72,26 @@ func (s *SubscriptionNetworkManagerConnectionsServerTransport) dispatchToMethodF
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "SubscriptionNetworkManagerConnectionsClient.CreateOrUpdate":
-			res.resp, res.err = s.dispatchCreateOrUpdate(req)
-		case "SubscriptionNetworkManagerConnectionsClient.Delete":
-			res.resp, res.err = s.dispatchDelete(req)
-		case "SubscriptionNetworkManagerConnectionsClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "SubscriptionNetworkManagerConnectionsClient.NewListPager":
-			res.resp, res.err = s.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if subscriptionNetworkManagerConnectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = subscriptionNetworkManagerConnectionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "SubscriptionNetworkManagerConnectionsClient.CreateOrUpdate":
+				res.resp, res.err = s.dispatchCreateOrUpdate(req)
+			case "SubscriptionNetworkManagerConnectionsClient.Delete":
+				res.resp, res.err = s.dispatchDelete(req)
+			case "SubscriptionNetworkManagerConnectionsClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "SubscriptionNetworkManagerConnectionsClient.NewListPager":
+				res.resp, res.err = s.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -249,4 +255,10 @@ func (s *SubscriptionNetworkManagerConnectionsServerTransport) dispatchNewListPa
 		s.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SubscriptionNetworkManagerConnectionsServerTransport
+var subscriptionNetworkManagerConnectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

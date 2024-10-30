@@ -70,18 +70,24 @@ func (c *CloudServicesUpdateDomainServerTransport) dispatchToMethodFake(req *htt
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "CloudServicesUpdateDomainClient.GetUpdateDomain":
-			res.resp, res.err = c.dispatchGetUpdateDomain(req)
-		case "CloudServicesUpdateDomainClient.NewListUpdateDomainsPager":
-			res.resp, res.err = c.dispatchNewListUpdateDomainsPager(req)
-		case "CloudServicesUpdateDomainClient.BeginWalkUpdateDomain":
-			res.resp, res.err = c.dispatchBeginWalkUpdateDomain(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if cloudServicesUpdateDomainServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = cloudServicesUpdateDomainServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "CloudServicesUpdateDomainClient.GetUpdateDomain":
+				res.resp, res.err = c.dispatchGetUpdateDomain(req)
+			case "CloudServicesUpdateDomainClient.NewListUpdateDomainsPager":
+				res.resp, res.err = c.dispatchNewListUpdateDomainsPager(req)
+			case "CloudServicesUpdateDomainClient.BeginWalkUpdateDomain":
+				res.resp, res.err = c.dispatchBeginWalkUpdateDomain(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -244,4 +250,10 @@ func (c *CloudServicesUpdateDomainServerTransport) dispatchBeginWalkUpdateDomain
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to CloudServicesUpdateDomainServerTransport
+var cloudServicesUpdateDomainServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

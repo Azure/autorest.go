@@ -74,22 +74,28 @@ func (m *MetadataSchemasServerTransport) dispatchToMethodFake(req *http.Request,
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "MetadataSchemasClient.CreateOrUpdate":
-			res.resp, res.err = m.dispatchCreateOrUpdate(req)
-		case "MetadataSchemasClient.Delete":
-			res.resp, res.err = m.dispatchDelete(req)
-		case "MetadataSchemasClient.Get":
-			res.resp, res.err = m.dispatchGet(req)
-		case "MetadataSchemasClient.Head":
-			res.resp, res.err = m.dispatchHead(req)
-		case "MetadataSchemasClient.NewListPager":
-			res.resp, res.err = m.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if metadataSchemasServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = metadataSchemasServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "MetadataSchemasClient.CreateOrUpdate":
+				res.resp, res.err = m.dispatchCreateOrUpdate(req)
+			case "MetadataSchemasClient.Delete":
+				res.resp, res.err = m.dispatchDelete(req)
+			case "MetadataSchemasClient.Get":
+				res.resp, res.err = m.dispatchGet(req)
+			case "MetadataSchemasClient.Head":
+				res.resp, res.err = m.dispatchHead(req)
+			case "MetadataSchemasClient.NewListPager":
+				res.resp, res.err = m.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -313,4 +319,10 @@ func (m *MetadataSchemasServerTransport) dispatchNewListPager(req *http.Request)
 		m.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to MetadataSchemasServerTransport
+var metadataSchemasServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

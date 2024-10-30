@@ -69,18 +69,24 @@ func (s *StandardServerTransport) dispatchToMethodFake(req *http.Request, method
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "StandardClient.BeginCreateOrReplace":
-			res.resp, res.err = s.dispatchBeginCreateOrReplace(req)
-		case "StandardClient.BeginDelete":
-			res.resp, res.err = s.dispatchBeginDelete(req)
-		case "StandardClient.BeginExport":
-			res.resp, res.err = s.dispatchBeginExport(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if standardServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = standardServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "StandardClient.BeginCreateOrReplace":
+				res.resp, res.err = s.dispatchBeginCreateOrReplace(req)
+			case "StandardClient.BeginDelete":
+				res.resp, res.err = s.dispatchBeginDelete(req)
+			case "StandardClient.BeginExport":
+				res.resp, res.err = s.dispatchBeginExport(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -222,4 +228,10 @@ func (s *StandardServerTransport) dispatchBeginExport(req *http.Request) (*http.
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to StandardServerTransport
+var standardServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

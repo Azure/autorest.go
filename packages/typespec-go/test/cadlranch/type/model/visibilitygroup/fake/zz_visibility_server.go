@@ -75,26 +75,32 @@ func (v *VisibilityServerTransport) dispatchToMethodFake(req *http.Request, meth
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VisibilityClient.DeleteModel":
-			res.resp, res.err = v.dispatchDeleteModel(req)
-		case "VisibilityClient.GetModel":
-			res.resp, res.err = v.dispatchGetModel(req)
-		case "VisibilityClient.HeadModel":
-			res.resp, res.err = v.dispatchHeadModel(req)
-		case "VisibilityClient.PatchModel":
-			res.resp, res.err = v.dispatchPatchModel(req)
-		case "VisibilityClient.PostModel":
-			res.resp, res.err = v.dispatchPostModel(req)
-		case "VisibilityClient.PutModel":
-			res.resp, res.err = v.dispatchPutModel(req)
-		case "VisibilityClient.PutReadOnlyModel":
-			res.resp, res.err = v.dispatchPutReadOnlyModel(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if visibilityServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = visibilityServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VisibilityClient.DeleteModel":
+				res.resp, res.err = v.dispatchDeleteModel(req)
+			case "VisibilityClient.GetModel":
+				res.resp, res.err = v.dispatchGetModel(req)
+			case "VisibilityClient.HeadModel":
+				res.resp, res.err = v.dispatchHeadModel(req)
+			case "VisibilityClient.PatchModel":
+				res.resp, res.err = v.dispatchPatchModel(req)
+			case "VisibilityClient.PostModel":
+				res.resp, res.err = v.dispatchPostModel(req)
+			case "VisibilityClient.PutModel":
+				res.resp, res.err = v.dispatchPutModel(req)
+			case "VisibilityClient.PutReadOnlyModel":
+				res.resp, res.err = v.dispatchPutReadOnlyModel(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -268,4 +274,10 @@ func (v *VisibilityServerTransport) dispatchPutReadOnlyModel(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VisibilityServerTransport
+var visibilityServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

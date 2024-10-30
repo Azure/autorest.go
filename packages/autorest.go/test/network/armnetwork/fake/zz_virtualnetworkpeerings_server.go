@@ -75,20 +75,26 @@ func (v *VirtualNetworkPeeringsServerTransport) dispatchToMethodFake(req *http.R
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualNetworkPeeringsClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VirtualNetworkPeeringsClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualNetworkPeeringsClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualNetworkPeeringsClient.NewListPager":
-			res.resp, res.err = v.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualNetworkPeeringsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualNetworkPeeringsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualNetworkPeeringsClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualNetworkPeeringsClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualNetworkPeeringsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualNetworkPeeringsClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -291,4 +297,10 @@ func (v *VirtualNetworkPeeringsServerTransport) dispatchNewListPager(req *http.R
 		v.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualNetworkPeeringsServerTransport
+var virtualNetworkPeeringsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

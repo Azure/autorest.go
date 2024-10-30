@@ -81,22 +81,28 @@ func (v *VirtualMachineScaleSetExtensionsServerTransport) dispatchToMethodFake(r
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualMachineScaleSetExtensionsClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VirtualMachineScaleSetExtensionsClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualMachineScaleSetExtensionsClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualMachineScaleSetExtensionsClient.NewListPager":
-			res.resp, res.err = v.dispatchNewListPager(req)
-		case "VirtualMachineScaleSetExtensionsClient.BeginUpdate":
-			res.resp, res.err = v.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualMachineScaleSetExtensionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualMachineScaleSetExtensionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualMachineScaleSetExtensionsClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualMachineScaleSetExtensionsClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualMachineScaleSetExtensionsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualMachineScaleSetExtensionsClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualMachineScaleSetExtensionsClient.BeginUpdate":
+				res.resp, res.err = v.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -351,4 +357,10 @@ func (v *VirtualMachineScaleSetExtensionsServerTransport) dispatchBeginUpdate(re
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualMachineScaleSetExtensionsServerTransport
+var virtualMachineScaleSetExtensionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

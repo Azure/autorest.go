@@ -63,16 +63,22 @@ func (d *DefaultSecurityRulesServerTransport) dispatchToMethodFake(req *http.Req
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DefaultSecurityRulesClient.Get":
-			res.resp, res.err = d.dispatchGet(req)
-		case "DefaultSecurityRulesClient.NewListPager":
-			res.resp, res.err = d.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if defaultSecurityRulesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = defaultSecurityRulesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DefaultSecurityRulesClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DefaultSecurityRulesClient.NewListPager":
+				res.resp, res.err = d.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -163,4 +169,10 @@ func (d *DefaultSecurityRulesServerTransport) dispatchNewListPager(req *http.Req
 		d.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DefaultSecurityRulesServerTransport
+var defaultSecurityRulesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

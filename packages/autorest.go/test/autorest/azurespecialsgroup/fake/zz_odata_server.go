@@ -54,14 +54,20 @@ func (o *ODataServerTransport) dispatchToMethodFake(req *http.Request, method st
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ODataClient.GetWithFilter":
-			res.resp, res.err = o.dispatchGetWithFilter(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if oDataServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = oDataServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ODataClient.GetWithFilter":
+				res.resp, res.err = o.dispatchGetWithFilter(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -126,4 +132,10 @@ func (o *ODataServerTransport) dispatchGetWithFilter(req *http.Request) (*http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ODataServerTransport
+var oDataServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

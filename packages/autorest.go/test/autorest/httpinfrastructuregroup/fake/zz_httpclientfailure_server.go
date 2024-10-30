@@ -153,64 +153,70 @@ func (h *HTTPClientFailureServerTransport) dispatchToMethodFake(req *http.Reques
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "HTTPClientFailureClient.Delete400":
-			res.resp, res.err = h.dispatchDelete400(req)
-		case "HTTPClientFailureClient.Delete407":
-			res.resp, res.err = h.dispatchDelete407(req)
-		case "HTTPClientFailureClient.Delete417":
-			res.resp, res.err = h.dispatchDelete417(req)
-		case "HTTPClientFailureClient.Get400":
-			res.resp, res.err = h.dispatchGet400(req)
-		case "HTTPClientFailureClient.Get402":
-			res.resp, res.err = h.dispatchGet402(req)
-		case "HTTPClientFailureClient.Get403":
-			res.resp, res.err = h.dispatchGet403(req)
-		case "HTTPClientFailureClient.Get411":
-			res.resp, res.err = h.dispatchGet411(req)
-		case "HTTPClientFailureClient.Get412":
-			res.resp, res.err = h.dispatchGet412(req)
-		case "HTTPClientFailureClient.Get416":
-			res.resp, res.err = h.dispatchGet416(req)
-		case "HTTPClientFailureClient.Head400":
-			res.resp, res.err = h.dispatchHead400(req)
-		case "HTTPClientFailureClient.Head401":
-			res.resp, res.err = h.dispatchHead401(req)
-		case "HTTPClientFailureClient.Head410":
-			res.resp, res.err = h.dispatchHead410(req)
-		case "HTTPClientFailureClient.Head429":
-			res.resp, res.err = h.dispatchHead429(req)
-		case "HTTPClientFailureClient.Options400":
-			res.resp, res.err = h.dispatchOptions400(req)
-		case "HTTPClientFailureClient.Options403":
-			res.resp, res.err = h.dispatchOptions403(req)
-		case "HTTPClientFailureClient.Options412":
-			res.resp, res.err = h.dispatchOptions412(req)
-		case "HTTPClientFailureClient.Patch400":
-			res.resp, res.err = h.dispatchPatch400(req)
-		case "HTTPClientFailureClient.Patch405":
-			res.resp, res.err = h.dispatchPatch405(req)
-		case "HTTPClientFailureClient.Patch414":
-			res.resp, res.err = h.dispatchPatch414(req)
-		case "HTTPClientFailureClient.Post400":
-			res.resp, res.err = h.dispatchPost400(req)
-		case "HTTPClientFailureClient.Post406":
-			res.resp, res.err = h.dispatchPost406(req)
-		case "HTTPClientFailureClient.Post415":
-			res.resp, res.err = h.dispatchPost415(req)
-		case "HTTPClientFailureClient.Put400":
-			res.resp, res.err = h.dispatchPut400(req)
-		case "HTTPClientFailureClient.Put404":
-			res.resp, res.err = h.dispatchPut404(req)
-		case "HTTPClientFailureClient.Put409":
-			res.resp, res.err = h.dispatchPut409(req)
-		case "HTTPClientFailureClient.Put413":
-			res.resp, res.err = h.dispatchPut413(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if httpClientFailureServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = httpClientFailureServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "HTTPClientFailureClient.Delete400":
+				res.resp, res.err = h.dispatchDelete400(req)
+			case "HTTPClientFailureClient.Delete407":
+				res.resp, res.err = h.dispatchDelete407(req)
+			case "HTTPClientFailureClient.Delete417":
+				res.resp, res.err = h.dispatchDelete417(req)
+			case "HTTPClientFailureClient.Get400":
+				res.resp, res.err = h.dispatchGet400(req)
+			case "HTTPClientFailureClient.Get402":
+				res.resp, res.err = h.dispatchGet402(req)
+			case "HTTPClientFailureClient.Get403":
+				res.resp, res.err = h.dispatchGet403(req)
+			case "HTTPClientFailureClient.Get411":
+				res.resp, res.err = h.dispatchGet411(req)
+			case "HTTPClientFailureClient.Get412":
+				res.resp, res.err = h.dispatchGet412(req)
+			case "HTTPClientFailureClient.Get416":
+				res.resp, res.err = h.dispatchGet416(req)
+			case "HTTPClientFailureClient.Head400":
+				res.resp, res.err = h.dispatchHead400(req)
+			case "HTTPClientFailureClient.Head401":
+				res.resp, res.err = h.dispatchHead401(req)
+			case "HTTPClientFailureClient.Head410":
+				res.resp, res.err = h.dispatchHead410(req)
+			case "HTTPClientFailureClient.Head429":
+				res.resp, res.err = h.dispatchHead429(req)
+			case "HTTPClientFailureClient.Options400":
+				res.resp, res.err = h.dispatchOptions400(req)
+			case "HTTPClientFailureClient.Options403":
+				res.resp, res.err = h.dispatchOptions403(req)
+			case "HTTPClientFailureClient.Options412":
+				res.resp, res.err = h.dispatchOptions412(req)
+			case "HTTPClientFailureClient.Patch400":
+				res.resp, res.err = h.dispatchPatch400(req)
+			case "HTTPClientFailureClient.Patch405":
+				res.resp, res.err = h.dispatchPatch405(req)
+			case "HTTPClientFailureClient.Patch414":
+				res.resp, res.err = h.dispatchPatch414(req)
+			case "HTTPClientFailureClient.Post400":
+				res.resp, res.err = h.dispatchPost400(req)
+			case "HTTPClientFailureClient.Post406":
+				res.resp, res.err = h.dispatchPost406(req)
+			case "HTTPClientFailureClient.Post415":
+				res.resp, res.err = h.dispatchPost415(req)
+			case "HTTPClientFailureClient.Put400":
+				res.resp, res.err = h.dispatchPut400(req)
+			case "HTTPClientFailureClient.Put404":
+				res.resp, res.err = h.dispatchPut404(req)
+			case "HTTPClientFailureClient.Put409":
+				res.resp, res.err = h.dispatchPut409(req)
+			case "HTTPClientFailureClient.Put413":
+				res.resp, res.err = h.dispatchPut413(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -777,4 +783,10 @@ func (h *HTTPClientFailureServerTransport) dispatchPut413(req *http.Request) (*h
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to HTTPClientFailureServerTransport
+var httpClientFailureServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

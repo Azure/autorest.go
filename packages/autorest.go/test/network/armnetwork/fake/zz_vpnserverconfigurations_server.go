@@ -85,24 +85,30 @@ func (v *VPNServerConfigurationsServerTransport) dispatchToMethodFake(req *http.
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VPNServerConfigurationsClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VPNServerConfigurationsClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VPNServerConfigurationsClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VPNServerConfigurationsClient.NewListPager":
-			res.resp, res.err = v.dispatchNewListPager(req)
-		case "VPNServerConfigurationsClient.NewListByResourceGroupPager":
-			res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
-		case "VPNServerConfigurationsClient.UpdateTags":
-			res.resp, res.err = v.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if vpnServerConfigurationsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = vpnServerConfigurationsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VPNServerConfigurationsClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VPNServerConfigurationsClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VPNServerConfigurationsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VPNServerConfigurationsClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VPNServerConfigurationsClient.NewListByResourceGroupPager":
+				res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
+			case "VPNServerConfigurationsClient.UpdateTags":
+				res.resp, res.err = v.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -347,4 +353,10 @@ func (v *VPNServerConfigurationsServerTransport) dispatchUpdateTags(req *http.Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VPNServerConfigurationsServerTransport
+var vpnServerConfigurationsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

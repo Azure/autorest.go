@@ -75,20 +75,26 @@ func (d *DiskRestorePointServerTransport) dispatchToMethodFake(req *http.Request
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DiskRestorePointClient.Get":
-			res.resp, res.err = d.dispatchGet(req)
-		case "DiskRestorePointClient.BeginGrantAccess":
-			res.resp, res.err = d.dispatchBeginGrantAccess(req)
-		case "DiskRestorePointClient.NewListByRestorePointPager":
-			res.resp, res.err = d.dispatchNewListByRestorePointPager(req)
-		case "DiskRestorePointClient.BeginRevokeAccess":
-			res.resp, res.err = d.dispatchBeginRevokeAccess(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if diskRestorePointServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = diskRestorePointServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DiskRestorePointClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DiskRestorePointClient.BeginGrantAccess":
+				res.resp, res.err = d.dispatchBeginGrantAccess(req)
+			case "DiskRestorePointClient.NewListByRestorePointPager":
+				res.resp, res.err = d.dispatchNewListByRestorePointPager(req)
+			case "DiskRestorePointClient.BeginRevokeAccess":
+				res.resp, res.err = d.dispatchBeginRevokeAccess(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -295,4 +301,10 @@ func (d *DiskRestorePointServerTransport) dispatchBeginRevokeAccess(req *http.Re
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DiskRestorePointServerTransport
+var diskRestorePointServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

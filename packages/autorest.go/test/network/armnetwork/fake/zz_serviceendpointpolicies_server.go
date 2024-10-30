@@ -85,24 +85,30 @@ func (s *ServiceEndpointPoliciesServerTransport) dispatchToMethodFake(req *http.
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ServiceEndpointPoliciesClient.BeginCreateOrUpdate":
-			res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
-		case "ServiceEndpointPoliciesClient.BeginDelete":
-			res.resp, res.err = s.dispatchBeginDelete(req)
-		case "ServiceEndpointPoliciesClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "ServiceEndpointPoliciesClient.NewListPager":
-			res.resp, res.err = s.dispatchNewListPager(req)
-		case "ServiceEndpointPoliciesClient.NewListByResourceGroupPager":
-			res.resp, res.err = s.dispatchNewListByResourceGroupPager(req)
-		case "ServiceEndpointPoliciesClient.UpdateTags":
-			res.resp, res.err = s.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if serviceEndpointPoliciesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = serviceEndpointPoliciesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ServiceEndpointPoliciesClient.BeginCreateOrUpdate":
+				res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
+			case "ServiceEndpointPoliciesClient.BeginDelete":
+				res.resp, res.err = s.dispatchBeginDelete(req)
+			case "ServiceEndpointPoliciesClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "ServiceEndpointPoliciesClient.NewListPager":
+				res.resp, res.err = s.dispatchNewListPager(req)
+			case "ServiceEndpointPoliciesClient.NewListByResourceGroupPager":
+				res.resp, res.err = s.dispatchNewListByResourceGroupPager(req)
+			case "ServiceEndpointPoliciesClient.UpdateTags":
+				res.resp, res.err = s.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -359,4 +365,10 @@ func (s *ServiceEndpointPoliciesServerTransport) dispatchUpdateTags(req *http.Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ServiceEndpointPoliciesServerTransport
+var serviceEndpointPoliciesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

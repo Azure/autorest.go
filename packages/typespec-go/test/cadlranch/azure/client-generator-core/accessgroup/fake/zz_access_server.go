@@ -70,3 +70,9 @@ func (a *AccessServerTransport) dispatchToClientFake(req *http.Request, client s
 
 	return resp, err
 }
+
+// set this to conditionally intercept incoming requests to AccessServerTransport
+var accessServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
+}

@@ -63,20 +63,26 @@ func (b *BytesPropertyServerTransport) dispatchToMethodFake(req *http.Request, m
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "BytesPropertyClient.Base64":
-			res.resp, res.err = b.dispatchBase64(req)
-		case "BytesPropertyClient.Base64URL":
-			res.resp, res.err = b.dispatchBase64URL(req)
-		case "BytesPropertyClient.Base64URLArray":
-			res.resp, res.err = b.dispatchBase64URLArray(req)
-		case "BytesPropertyClient.Default":
-			res.resp, res.err = b.dispatchDefault(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if bytesPropertyServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = bytesPropertyServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "BytesPropertyClient.Base64":
+				res.resp, res.err = b.dispatchBase64(req)
+			case "BytesPropertyClient.Base64URL":
+				res.resp, res.err = b.dispatchBase64URL(req)
+			case "BytesPropertyClient.Base64URLArray":
+				res.resp, res.err = b.dispatchBase64URLArray(req)
+			case "BytesPropertyClient.Default":
+				res.resp, res.err = b.dispatchDefault(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -181,4 +187,10 @@ func (b *BytesPropertyServerTransport) dispatchDefault(req *http.Request) (*http
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to BytesPropertyServerTransport
+var bytesPropertyServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

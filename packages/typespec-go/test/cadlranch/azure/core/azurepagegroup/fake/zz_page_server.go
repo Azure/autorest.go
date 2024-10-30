@@ -95,18 +95,24 @@ func (p *PageServerTransport) dispatchToMethodFake(req *http.Request, method str
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "PageClient.NewListWithCustomPageModelPager":
-			res.resp, res.err = p.dispatchNewListWithCustomPageModelPager(req)
-		case "PageClient.NewListWithPagePager":
-			res.resp, res.err = p.dispatchNewListWithPagePager(req)
-		case "PageClient.NewListWithParametersPager":
-			res.resp, res.err = p.dispatchNewListWithParametersPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if pageServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = pageServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "PageClient.NewListWithCustomPageModelPager":
+				res.resp, res.err = p.dispatchNewListWithCustomPageModelPager(req)
+			case "PageClient.NewListWithPagePager":
+				res.resp, res.err = p.dispatchNewListWithPagePager(req)
+			case "PageClient.NewListWithParametersPager":
+				res.resp, res.err = p.dispatchNewListWithParametersPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -216,4 +222,10 @@ func (p *PageServerTransport) dispatchNewListWithParametersPager(req *http.Reque
 		p.newListWithParametersPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to PageServerTransport
+var pageServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -131,44 +131,50 @@ func (d *DevicesServerTransport) dispatchToMethodFake(req *http.Request, method 
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DevicesClient.CreateOrUpdate":
-			res.resp, res.err = d.dispatchCreateOrUpdate(req)
-		case "DevicesClient.BeginCreateOrUpdateSecuritySettings":
-			res.resp, res.err = d.dispatchBeginCreateOrUpdateSecuritySettings(req)
-		case "DevicesClient.BeginDelete":
-			res.resp, res.err = d.dispatchBeginDelete(req)
-		case "DevicesClient.BeginDownloadUpdates":
-			res.resp, res.err = d.dispatchBeginDownloadUpdates(req)
-		case "DevicesClient.GenerateCertificate":
-			res.resp, res.err = d.dispatchGenerateCertificate(req)
-		case "DevicesClient.Get":
-			res.resp, res.err = d.dispatchGet(req)
-		case "DevicesClient.GetExtendedInformation":
-			res.resp, res.err = d.dispatchGetExtendedInformation(req)
-		case "DevicesClient.GetNetworkSettings":
-			res.resp, res.err = d.dispatchGetNetworkSettings(req)
-		case "DevicesClient.GetUpdateSummary":
-			res.resp, res.err = d.dispatchGetUpdateSummary(req)
-		case "DevicesClient.BeginInstallUpdates":
-			res.resp, res.err = d.dispatchBeginInstallUpdates(req)
-		case "DevicesClient.NewListByResourceGroupPager":
-			res.resp, res.err = d.dispatchNewListByResourceGroupPager(req)
-		case "DevicesClient.NewListBySubscriptionPager":
-			res.resp, res.err = d.dispatchNewListBySubscriptionPager(req)
-		case "DevicesClient.BeginScanForUpdates":
-			res.resp, res.err = d.dispatchBeginScanForUpdates(req)
-		case "DevicesClient.Update":
-			res.resp, res.err = d.dispatchUpdate(req)
-		case "DevicesClient.UpdateExtendedInformation":
-			res.resp, res.err = d.dispatchUpdateExtendedInformation(req)
-		case "DevicesClient.UploadCertificate":
-			res.resp, res.err = d.dispatchUploadCertificate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if devicesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = devicesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DevicesClient.CreateOrUpdate":
+				res.resp, res.err = d.dispatchCreateOrUpdate(req)
+			case "DevicesClient.BeginCreateOrUpdateSecuritySettings":
+				res.resp, res.err = d.dispatchBeginCreateOrUpdateSecuritySettings(req)
+			case "DevicesClient.BeginDelete":
+				res.resp, res.err = d.dispatchBeginDelete(req)
+			case "DevicesClient.BeginDownloadUpdates":
+				res.resp, res.err = d.dispatchBeginDownloadUpdates(req)
+			case "DevicesClient.GenerateCertificate":
+				res.resp, res.err = d.dispatchGenerateCertificate(req)
+			case "DevicesClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DevicesClient.GetExtendedInformation":
+				res.resp, res.err = d.dispatchGetExtendedInformation(req)
+			case "DevicesClient.GetNetworkSettings":
+				res.resp, res.err = d.dispatchGetNetworkSettings(req)
+			case "DevicesClient.GetUpdateSummary":
+				res.resp, res.err = d.dispatchGetUpdateSummary(req)
+			case "DevicesClient.BeginInstallUpdates":
+				res.resp, res.err = d.dispatchBeginInstallUpdates(req)
+			case "DevicesClient.NewListByResourceGroupPager":
+				res.resp, res.err = d.dispatchNewListByResourceGroupPager(req)
+			case "DevicesClient.NewListBySubscriptionPager":
+				res.resp, res.err = d.dispatchNewListBySubscriptionPager(req)
+			case "DevicesClient.BeginScanForUpdates":
+				res.resp, res.err = d.dispatchBeginScanForUpdates(req)
+			case "DevicesClient.Update":
+				res.resp, res.err = d.dispatchUpdate(req)
+			case "DevicesClient.UpdateExtendedInformation":
+				res.resp, res.err = d.dispatchUpdateExtendedInformation(req)
+			case "DevicesClient.UploadCertificate":
+				res.resp, res.err = d.dispatchUploadCertificate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -812,4 +818,10 @@ func (d *DevicesServerTransport) dispatchUploadCertificate(req *http.Request) (*
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DevicesServerTransport
+var devicesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

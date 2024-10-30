@@ -98,28 +98,34 @@ func (w *WatchersServerTransport) dispatchToMethodFake(req *http.Request, method
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "WatchersClient.BeginCreateOrUpdate":
-			res.resp, res.err = w.dispatchBeginCreateOrUpdate(req)
-		case "WatchersClient.BeginDelete":
-			res.resp, res.err = w.dispatchBeginDelete(req)
-		case "WatchersClient.Get":
-			res.resp, res.err = w.dispatchGet(req)
-		case "WatchersClient.NewListByResourceGroupPager":
-			res.resp, res.err = w.dispatchNewListByResourceGroupPager(req)
-		case "WatchersClient.NewListBySubscriptionPager":
-			res.resp, res.err = w.dispatchNewListBySubscriptionPager(req)
-		case "WatchersClient.BeginStart":
-			res.resp, res.err = w.dispatchBeginStart(req)
-		case "WatchersClient.BeginStop":
-			res.resp, res.err = w.dispatchBeginStop(req)
-		case "WatchersClient.BeginUpdate":
-			res.resp, res.err = w.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if watchersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = watchersServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "WatchersClient.BeginCreateOrUpdate":
+				res.resp, res.err = w.dispatchBeginCreateOrUpdate(req)
+			case "WatchersClient.BeginDelete":
+				res.resp, res.err = w.dispatchBeginDelete(req)
+			case "WatchersClient.Get":
+				res.resp, res.err = w.dispatchGet(req)
+			case "WatchersClient.NewListByResourceGroupPager":
+				res.resp, res.err = w.dispatchNewListByResourceGroupPager(req)
+			case "WatchersClient.NewListBySubscriptionPager":
+				res.resp, res.err = w.dispatchNewListBySubscriptionPager(req)
+			case "WatchersClient.BeginStart":
+				res.resp, res.err = w.dispatchBeginStart(req)
+			case "WatchersClient.BeginStop":
+				res.resp, res.err = w.dispatchBeginStop(req)
+			case "WatchersClient.BeginUpdate":
+				res.resp, res.err = w.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -463,4 +469,10 @@ func (w *WatchersServerTransport) dispatchBeginUpdate(req *http.Request) (*http.
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to WatchersServerTransport
+var watchersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

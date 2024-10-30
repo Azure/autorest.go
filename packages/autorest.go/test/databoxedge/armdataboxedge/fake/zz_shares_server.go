@@ -81,22 +81,28 @@ func (s *SharesServerTransport) dispatchToMethodFake(req *http.Request, method s
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "SharesClient.BeginCreateOrUpdate":
-			res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
-		case "SharesClient.BeginDelete":
-			res.resp, res.err = s.dispatchBeginDelete(req)
-		case "SharesClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "SharesClient.NewListByDataBoxEdgeDevicePager":
-			res.resp, res.err = s.dispatchNewListByDataBoxEdgeDevicePager(req)
-		case "SharesClient.BeginRefresh":
-			res.resp, res.err = s.dispatchBeginRefresh(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if sharesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = sharesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "SharesClient.BeginCreateOrUpdate":
+				res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
+			case "SharesClient.BeginDelete":
+				res.resp, res.err = s.dispatchBeginDelete(req)
+			case "SharesClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "SharesClient.NewListByDataBoxEdgeDevicePager":
+				res.resp, res.err = s.dispatchNewListByDataBoxEdgeDevicePager(req)
+			case "SharesClient.BeginRefresh":
+				res.resp, res.err = s.dispatchBeginRefresh(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -335,4 +341,10 @@ func (s *SharesServerTransport) dispatchBeginRefresh(req *http.Request) (*http.R
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SharesServerTransport
+var sharesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

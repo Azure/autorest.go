@@ -55,16 +55,22 @@ func (s *ScalarUnknownServerTransport) dispatchToMethodFake(req *http.Request, m
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ScalarUnknownClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "ScalarUnknownClient.Put":
-			res.resp, res.err = s.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if scalarUnknownServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = scalarUnknownServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ScalarUnknownClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "ScalarUnknownClient.Put":
+				res.resp, res.err = s.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -119,4 +125,10 @@ func (s *ScalarUnknownServerTransport) dispatchPut(req *http.Request) (*http.Res
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ScalarUnknownServerTransport
+var scalarUnknownServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

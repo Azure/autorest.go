@@ -57,16 +57,22 @@ func (a *AutoRestReportServiceServerTransport) dispatchToMethodFake(req *http.Re
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "AutoRestReportServiceClient.GetOptionalReport":
-			res.resp, res.err = a.dispatchGetOptionalReport(req)
-		case "AutoRestReportServiceClient.GetReport":
-			res.resp, res.err = a.dispatchGetReport(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if autoRestReportServiceServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = autoRestReportServiceServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "AutoRestReportServiceClient.GetOptionalReport":
+				res.resp, res.err = a.dispatchGetOptionalReport(req)
+			case "AutoRestReportServiceClient.GetReport":
+				res.resp, res.err = a.dispatchGetReport(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -141,4 +147,10 @@ func (a *AutoRestReportServiceServerTransport) dispatchGetReport(req *http.Reque
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AutoRestReportServiceServerTransport
+var autoRestReportServiceServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

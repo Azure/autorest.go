@@ -81,22 +81,28 @@ func (v *VirtualMachineScaleSetVMRunCommandsServerTransport) dispatchToMethodFak
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualMachineScaleSetVMRunCommandsClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VirtualMachineScaleSetVMRunCommandsClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualMachineScaleSetVMRunCommandsClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualMachineScaleSetVMRunCommandsClient.NewListPager":
-			res.resp, res.err = v.dispatchNewListPager(req)
-		case "VirtualMachineScaleSetVMRunCommandsClient.BeginUpdate":
-			res.resp, res.err = v.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualMachineScaleSetVMRunCommandsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualMachineScaleSetVMRunCommandsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualMachineScaleSetVMRunCommandsClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualMachineScaleSetVMRunCommandsClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualMachineScaleSetVMRunCommandsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualMachineScaleSetVMRunCommandsClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualMachineScaleSetVMRunCommandsClient.BeginUpdate":
+				res.resp, res.err = v.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -383,4 +389,10 @@ func (v *VirtualMachineScaleSetVMRunCommandsServerTransport) dispatchBeginUpdate
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualMachineScaleSetVMRunCommandsServerTransport
+var virtualMachineScaleSetVMRunCommandsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

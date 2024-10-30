@@ -81,22 +81,28 @@ func (g *GalleryApplicationVersionsServerTransport) dispatchToMethodFake(req *ht
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "GalleryApplicationVersionsClient.BeginCreateOrUpdate":
-			res.resp, res.err = g.dispatchBeginCreateOrUpdate(req)
-		case "GalleryApplicationVersionsClient.BeginDelete":
-			res.resp, res.err = g.dispatchBeginDelete(req)
-		case "GalleryApplicationVersionsClient.Get":
-			res.resp, res.err = g.dispatchGet(req)
-		case "GalleryApplicationVersionsClient.NewListByGalleryApplicationPager":
-			res.resp, res.err = g.dispatchNewListByGalleryApplicationPager(req)
-		case "GalleryApplicationVersionsClient.BeginUpdate":
-			res.resp, res.err = g.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if galleryApplicationVersionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = galleryApplicationVersionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "GalleryApplicationVersionsClient.BeginCreateOrUpdate":
+				res.resp, res.err = g.dispatchBeginCreateOrUpdate(req)
+			case "GalleryApplicationVersionsClient.BeginDelete":
+				res.resp, res.err = g.dispatchBeginDelete(req)
+			case "GalleryApplicationVersionsClient.Get":
+				res.resp, res.err = g.dispatchGet(req)
+			case "GalleryApplicationVersionsClient.NewListByGalleryApplicationPager":
+				res.resp, res.err = g.dispatchNewListByGalleryApplicationPager(req)
+			case "GalleryApplicationVersionsClient.BeginUpdate":
+				res.resp, res.err = g.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -371,4 +377,10 @@ func (g *GalleryApplicationVersionsServerTransport) dispatchBeginUpdate(req *htt
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to GalleryApplicationVersionsServerTransport
+var galleryApplicationVersionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

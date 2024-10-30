@@ -86,18 +86,24 @@ func (r *RenamedOperationServerTransport) dispatchToMethodFake(req *http.Request
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "RenamedOperationClient.RenamedFive":
-			res.resp, res.err = r.dispatchRenamedFive(req)
-		case "RenamedOperationClient.RenamedOne":
-			res.resp, res.err = r.dispatchRenamedOne(req)
-		case "RenamedOperationClient.RenamedThree":
-			res.resp, res.err = r.dispatchRenamedThree(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if renamedOperationServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = renamedOperationServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "RenamedOperationClient.RenamedFive":
+				res.resp, res.err = r.dispatchRenamedFive(req)
+			case "RenamedOperationClient.RenamedOne":
+				res.resp, res.err = r.dispatchRenamedOne(req)
+			case "RenamedOperationClient.RenamedThree":
+				res.resp, res.err = r.dispatchRenamedThree(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -167,4 +173,10 @@ func (r *RenamedOperationServerTransport) dispatchRenamedThree(req *http.Request
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to RenamedOperationServerTransport
+var renamedOperationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

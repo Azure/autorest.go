@@ -71,18 +71,24 @@ func (v *VPNLinkConnectionsServerTransport) dispatchToMethodFake(req *http.Reque
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VPNLinkConnectionsClient.BeginGetIkeSas":
-			res.resp, res.err = v.dispatchBeginGetIkeSas(req)
-		case "VPNLinkConnectionsClient.NewListByVPNConnectionPager":
-			res.resp, res.err = v.dispatchNewListByVPNConnectionPager(req)
-		case "VPNLinkConnectionsClient.BeginResetConnection":
-			res.resp, res.err = v.dispatchBeginResetConnection(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if vpnLinkConnectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = vpnLinkConnectionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VPNLinkConnectionsClient.BeginGetIkeSas":
+				res.resp, res.err = v.dispatchBeginGetIkeSas(req)
+			case "VPNLinkConnectionsClient.NewListByVPNConnectionPager":
+				res.resp, res.err = v.dispatchNewListByVPNConnectionPager(req)
+			case "VPNLinkConnectionsClient.BeginResetConnection":
+				res.resp, res.err = v.dispatchBeginResetConnection(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -244,4 +250,10 @@ func (v *VPNLinkConnectionsServerTransport) dispatchBeginResetConnection(req *ht
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VPNLinkConnectionsServerTransport
+var vpnLinkConnectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

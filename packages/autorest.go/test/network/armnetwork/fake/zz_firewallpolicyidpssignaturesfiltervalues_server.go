@@ -54,14 +54,20 @@ func (f *FirewallPolicyIdpsSignaturesFilterValuesServerTransport) dispatchToMeth
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "FirewallPolicyIdpsSignaturesFilterValuesClient.List":
-			res.resp, res.err = f.dispatchList(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if firewallPolicyIdpsSignaturesFilterValuesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = firewallPolicyIdpsSignaturesFilterValuesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "FirewallPolicyIdpsSignaturesFilterValuesClient.List":
+				res.resp, res.err = f.dispatchList(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -111,4 +117,10 @@ func (f *FirewallPolicyIdpsSignaturesFilterValuesServerTransport) dispatchList(r
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to FirewallPolicyIdpsSignaturesFilterValuesServerTransport
+var firewallPolicyIdpsSignaturesFilterValuesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

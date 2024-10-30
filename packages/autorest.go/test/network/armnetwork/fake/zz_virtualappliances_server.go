@@ -85,24 +85,30 @@ func (v *VirtualAppliancesServerTransport) dispatchToMethodFake(req *http.Reques
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualAppliancesClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VirtualAppliancesClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualAppliancesClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualAppliancesClient.NewListPager":
-			res.resp, res.err = v.dispatchNewListPager(req)
-		case "VirtualAppliancesClient.NewListByResourceGroupPager":
-			res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
-		case "VirtualAppliancesClient.UpdateTags":
-			res.resp, res.err = v.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualAppliancesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualAppliancesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualAppliancesClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualAppliancesClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualAppliancesClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualAppliancesClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualAppliancesClient.NewListByResourceGroupPager":
+				res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
+			case "VirtualAppliancesClient.UpdateTags":
+				res.resp, res.err = v.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -359,4 +365,10 @@ func (v *VirtualAppliancesServerTransport) dispatchUpdateTags(req *http.Request)
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualAppliancesServerTransport
+var virtualAppliancesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

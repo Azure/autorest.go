@@ -57,14 +57,20 @@ func (p *PrivateLinksServerTransport) dispatchToMethodFake(req *http.Request, me
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "PrivateLinksClient.NewListByMongoClusterPager":
-			res.resp, res.err = p.dispatchNewListByMongoClusterPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if privateLinksServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = privateLinksServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "PrivateLinksClient.NewListByMongoClusterPager":
+				res.resp, res.err = p.dispatchNewListByMongoClusterPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -118,4 +124,10 @@ func (p *PrivateLinksServerTransport) dispatchNewListByMongoClusterPager(req *ht
 		p.newListByMongoClusterPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to PrivateLinksServerTransport
+var privateLinksServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

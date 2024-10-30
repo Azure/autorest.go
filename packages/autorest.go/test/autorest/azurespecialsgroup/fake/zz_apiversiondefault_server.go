@@ -64,20 +64,26 @@ func (a *APIVersionDefaultServerTransport) dispatchToMethodFake(req *http.Reques
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "APIVersionDefaultClient.GetMethodGlobalNotProvidedValid":
-			res.resp, res.err = a.dispatchGetMethodGlobalNotProvidedValid(req)
-		case "APIVersionDefaultClient.GetMethodGlobalValid":
-			res.resp, res.err = a.dispatchGetMethodGlobalValid(req)
-		case "APIVersionDefaultClient.GetPathGlobalValid":
-			res.resp, res.err = a.dispatchGetPathGlobalValid(req)
-		case "APIVersionDefaultClient.GetSwaggerGlobalValid":
-			res.resp, res.err = a.dispatchGetSwaggerGlobalValid(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if apiVersionDefaultServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = apiVersionDefaultServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "APIVersionDefaultClient.GetMethodGlobalNotProvidedValid":
+				res.resp, res.err = a.dispatchGetMethodGlobalNotProvidedValid(req)
+			case "APIVersionDefaultClient.GetMethodGlobalValid":
+				res.resp, res.err = a.dispatchGetMethodGlobalValid(req)
+			case "APIVersionDefaultClient.GetPathGlobalValid":
+				res.resp, res.err = a.dispatchGetPathGlobalValid(req)
+			case "APIVersionDefaultClient.GetSwaggerGlobalValid":
+				res.resp, res.err = a.dispatchGetSwaggerGlobalValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -166,4 +172,10 @@ func (a *APIVersionDefaultServerTransport) dispatchGetSwaggerGlobalValid(req *ht
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to APIVersionDefaultServerTransport
+var apiVersionDefaultServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

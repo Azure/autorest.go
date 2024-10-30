@@ -55,14 +55,20 @@ func (m *ManagerDeploymentStatusServerTransport) dispatchToMethodFake(req *http.
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ManagerDeploymentStatusClient.List":
-			res.resp, res.err = m.dispatchList(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if managerDeploymentStatusServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = managerDeploymentStatusServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ManagerDeploymentStatusClient.List":
+				res.resp, res.err = m.dispatchList(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -133,4 +139,10 @@ func (m *ManagerDeploymentStatusServerTransport) dispatchList(req *http.Request)
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ManagerDeploymentStatusServerTransport
+var managerDeploymentStatusServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

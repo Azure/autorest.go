@@ -55,16 +55,22 @@ func (u *UnionServerTransport) dispatchToMethodFake(req *http.Request, method st
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "UnionClient.ValidKey":
-			res.resp, res.err = u.dispatchValidKey(req)
-		case "UnionClient.ValidToken":
-			res.resp, res.err = u.dispatchValidToken(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if unionServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = unionServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "UnionClient.ValidKey":
+				res.resp, res.err = u.dispatchValidKey(req)
+			case "UnionClient.ValidToken":
+				res.resp, res.err = u.dispatchValidToken(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -115,4 +121,10 @@ func (u *UnionServerTransport) dispatchValidToken(req *http.Request) (*http.Resp
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to UnionServerTransport
+var unionServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -59,18 +59,24 @@ func (u *UsageModelInOperationServerTransport) dispatchToMethodFake(req *http.Re
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "UsageModelInOperationClient.InputToInputOutput":
-			res.resp, res.err = u.dispatchInputToInputOutput(req)
-		case "UsageModelInOperationClient.ModelInReadOnlyProperty":
-			res.resp, res.err = u.dispatchModelInReadOnlyProperty(req)
-		case "UsageModelInOperationClient.OutputToInputOutput":
-			res.resp, res.err = u.dispatchOutputToInputOutput(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if usageModelInOperationServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = usageModelInOperationServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "UsageModelInOperationClient.InputToInputOutput":
+				res.resp, res.err = u.dispatchInputToInputOutput(req)
+			case "UsageModelInOperationClient.ModelInReadOnlyProperty":
+				res.resp, res.err = u.dispatchModelInReadOnlyProperty(req)
+			case "UsageModelInOperationClient.OutputToInputOutput":
+				res.resp, res.err = u.dispatchOutputToInputOutput(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -148,4 +154,10 @@ func (u *UsageModelInOperationServerTransport) dispatchOutputToInputOutput(req *
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to UsageModelInOperationServerTransport
+var usageModelInOperationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

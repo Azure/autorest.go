@@ -75,20 +75,26 @@ func (e *ExpressRoutePortAuthorizationsServerTransport) dispatchToMethodFake(req
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ExpressRoutePortAuthorizationsClient.BeginCreateOrUpdate":
-			res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
-		case "ExpressRoutePortAuthorizationsClient.BeginDelete":
-			res.resp, res.err = e.dispatchBeginDelete(req)
-		case "ExpressRoutePortAuthorizationsClient.Get":
-			res.resp, res.err = e.dispatchGet(req)
-		case "ExpressRoutePortAuthorizationsClient.NewListPager":
-			res.resp, res.err = e.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if expressRoutePortAuthorizationsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = expressRoutePortAuthorizationsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ExpressRoutePortAuthorizationsClient.BeginCreateOrUpdate":
+				res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
+			case "ExpressRoutePortAuthorizationsClient.BeginDelete":
+				res.resp, res.err = e.dispatchBeginDelete(req)
+			case "ExpressRoutePortAuthorizationsClient.Get":
+				res.resp, res.err = e.dispatchGet(req)
+			case "ExpressRoutePortAuthorizationsClient.NewListPager":
+				res.resp, res.err = e.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (e *ExpressRoutePortAuthorizationsServerTransport) dispatchNewListPager(req
 		e.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ExpressRoutePortAuthorizationsServerTransport
+var expressRoutePortAuthorizationsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

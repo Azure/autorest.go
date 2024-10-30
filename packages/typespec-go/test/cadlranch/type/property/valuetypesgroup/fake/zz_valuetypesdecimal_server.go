@@ -55,16 +55,22 @@ func (v *ValueTypesDecimalServerTransport) dispatchToMethodFake(req *http.Reques
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ValueTypesDecimalClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "ValueTypesDecimalClient.Put":
-			res.resp, res.err = v.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if valueTypesDecimalServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = valueTypesDecimalServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ValueTypesDecimalClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "ValueTypesDecimalClient.Put":
+				res.resp, res.err = v.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -119,4 +125,10 @@ func (v *ValueTypesDecimalServerTransport) dispatchPut(req *http.Request) (*http
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ValueTypesDecimalServerTransport
+var valueTypesDecimalServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

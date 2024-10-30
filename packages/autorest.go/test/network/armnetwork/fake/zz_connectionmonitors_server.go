@@ -96,28 +96,34 @@ func (c *ConnectionMonitorsServerTransport) dispatchToMethodFake(req *http.Reque
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ConnectionMonitorsClient.BeginCreateOrUpdate":
-			res.resp, res.err = c.dispatchBeginCreateOrUpdate(req)
-		case "ConnectionMonitorsClient.BeginDelete":
-			res.resp, res.err = c.dispatchBeginDelete(req)
-		case "ConnectionMonitorsClient.Get":
-			res.resp, res.err = c.dispatchGet(req)
-		case "ConnectionMonitorsClient.NewListPager":
-			res.resp, res.err = c.dispatchNewListPager(req)
-		case "ConnectionMonitorsClient.BeginQuery":
-			res.resp, res.err = c.dispatchBeginQuery(req)
-		case "ConnectionMonitorsClient.BeginStart":
-			res.resp, res.err = c.dispatchBeginStart(req)
-		case "ConnectionMonitorsClient.BeginStop":
-			res.resp, res.err = c.dispatchBeginStop(req)
-		case "ConnectionMonitorsClient.UpdateTags":
-			res.resp, res.err = c.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if connectionMonitorsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = connectionMonitorsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ConnectionMonitorsClient.BeginCreateOrUpdate":
+				res.resp, res.err = c.dispatchBeginCreateOrUpdate(req)
+			case "ConnectionMonitorsClient.BeginDelete":
+				res.resp, res.err = c.dispatchBeginDelete(req)
+			case "ConnectionMonitorsClient.Get":
+				res.resp, res.err = c.dispatchGet(req)
+			case "ConnectionMonitorsClient.NewListPager":
+				res.resp, res.err = c.dispatchNewListPager(req)
+			case "ConnectionMonitorsClient.BeginQuery":
+				res.resp, res.err = c.dispatchBeginQuery(req)
+			case "ConnectionMonitorsClient.BeginStart":
+				res.resp, res.err = c.dispatchBeginStart(req)
+			case "ConnectionMonitorsClient.BeginStop":
+				res.resp, res.err = c.dispatchBeginStop(req)
+			case "ConnectionMonitorsClient.UpdateTags":
+				res.resp, res.err = c.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -502,4 +508,10 @@ func (c *ConnectionMonitorsServerTransport) dispatchUpdateTags(req *http.Request
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ConnectionMonitorsServerTransport
+var connectionMonitorsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

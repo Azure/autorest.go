@@ -52,14 +52,20 @@ func (m *MadeOptionalServerTransport) dispatchToMethodFake(req *http.Request, me
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "MadeOptionalClient.Test":
-			res.resp, res.err = m.dispatchTest(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if madeOptionalServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = madeOptionalServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "MadeOptionalClient.Test":
+				res.resp, res.err = m.dispatchTest(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -107,4 +113,10 @@ func (m *MadeOptionalServerTransport) dispatchTest(req *http.Request) (*http.Res
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to MadeOptionalServerTransport
+var madeOptionalServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -72,20 +72,26 @@ func (l *LoadBalancersServerTransport) dispatchToMethodFake(req *http.Request, m
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "LoadBalancersClient.BeginCreateOrUpdate":
-			res.resp, res.err = l.dispatchBeginCreateOrUpdate(req)
-		case "LoadBalancersClient.Delete":
-			res.resp, res.err = l.dispatchDelete(req)
-		case "LoadBalancersClient.Get":
-			res.resp, res.err = l.dispatchGet(req)
-		case "LoadBalancersClient.NewListPager":
-			res.resp, res.err = l.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if loadBalancersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = loadBalancersServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "LoadBalancersClient.BeginCreateOrUpdate":
+				res.resp, res.err = l.dispatchBeginCreateOrUpdate(req)
+			case "LoadBalancersClient.Delete":
+				res.resp, res.err = l.dispatchDelete(req)
+			case "LoadBalancersClient.Get":
+				res.resp, res.err = l.dispatchGet(req)
+			case "LoadBalancersClient.NewListPager":
+				res.resp, res.err = l.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -249,4 +255,10 @@ func (l *LoadBalancersServerTransport) dispatchNewListPager(req *http.Request) (
 		l.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to LoadBalancersServerTransport
+var loadBalancersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

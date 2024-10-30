@@ -60,18 +60,24 @@ func (j *JSONMergePatchServerTransport) dispatchToMethodFake(req *http.Request, 
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "JSONMergePatchClient.CreateResource":
-			res.resp, res.err = j.dispatchCreateResource(req)
-		case "JSONMergePatchClient.UpdateOptionalResource":
-			res.resp, res.err = j.dispatchUpdateOptionalResource(req)
-		case "JSONMergePatchClient.UpdateResource":
-			res.resp, res.err = j.dispatchUpdateResource(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if jsonMergePatchServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = jsonMergePatchServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "JSONMergePatchClient.CreateResource":
+				res.resp, res.err = j.dispatchCreateResource(req)
+			case "JSONMergePatchClient.UpdateOptionalResource":
+				res.resp, res.err = j.dispatchUpdateOptionalResource(req)
+			case "JSONMergePatchClient.UpdateResource":
+				res.resp, res.err = j.dispatchUpdateResource(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -159,4 +165,10 @@ func (j *JSONMergePatchServerTransport) dispatchUpdateResource(req *http.Request
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to JSONMergePatchServerTransport
+var jsonMergePatchServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

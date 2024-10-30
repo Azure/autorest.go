@@ -5,6 +5,7 @@
 ### Features Added
 
 * Add support for XML payloads.
+* Internal fake server request interceptor.
 
 ### Bugs Fixed
 

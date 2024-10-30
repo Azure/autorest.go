@@ -195,62 +195,68 @@ func (v *VirtualMachinesServerTransport) dispatchToMethodFake(req *http.Request,
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualMachinesClient.BeginAssessPatches":
-			res.resp, res.err = v.dispatchBeginAssessPatches(req)
-		case "VirtualMachinesClient.BeginCapture":
-			res.resp, res.err = v.dispatchBeginCapture(req)
-		case "VirtualMachinesClient.BeginConvertToManagedDisks":
-			res.resp, res.err = v.dispatchBeginConvertToManagedDisks(req)
-		case "VirtualMachinesClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VirtualMachinesClient.BeginDeallocate":
-			res.resp, res.err = v.dispatchBeginDeallocate(req)
-		case "VirtualMachinesClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualMachinesClient.Generalize":
-			res.resp, res.err = v.dispatchGeneralize(req)
-		case "VirtualMachinesClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualMachinesClient.BeginInstallPatches":
-			res.resp, res.err = v.dispatchBeginInstallPatches(req)
-		case "VirtualMachinesClient.InstanceView":
-			res.resp, res.err = v.dispatchInstanceView(req)
-		case "VirtualMachinesClient.NewListPager":
-			res.resp, res.err = v.dispatchNewListPager(req)
-		case "VirtualMachinesClient.NewListAllPager":
-			res.resp, res.err = v.dispatchNewListAllPager(req)
-		case "VirtualMachinesClient.NewListAvailableSizesPager":
-			res.resp, res.err = v.dispatchNewListAvailableSizesPager(req)
-		case "VirtualMachinesClient.NewListByLocationPager":
-			res.resp, res.err = v.dispatchNewListByLocationPager(req)
-		case "VirtualMachinesClient.BeginPerformMaintenance":
-			res.resp, res.err = v.dispatchBeginPerformMaintenance(req)
-		case "VirtualMachinesClient.BeginPowerOff":
-			res.resp, res.err = v.dispatchBeginPowerOff(req)
-		case "VirtualMachinesClient.BeginReapply":
-			res.resp, res.err = v.dispatchBeginReapply(req)
-		case "VirtualMachinesClient.BeginRedeploy":
-			res.resp, res.err = v.dispatchBeginRedeploy(req)
-		case "VirtualMachinesClient.BeginReimage":
-			res.resp, res.err = v.dispatchBeginReimage(req)
-		case "VirtualMachinesClient.BeginRestart":
-			res.resp, res.err = v.dispatchBeginRestart(req)
-		case "VirtualMachinesClient.RetrieveBootDiagnosticsData":
-			res.resp, res.err = v.dispatchRetrieveBootDiagnosticsData(req)
-		case "VirtualMachinesClient.BeginRunCommand":
-			res.resp, res.err = v.dispatchBeginRunCommand(req)
-		case "VirtualMachinesClient.SimulateEviction":
-			res.resp, res.err = v.dispatchSimulateEviction(req)
-		case "VirtualMachinesClient.BeginStart":
-			res.resp, res.err = v.dispatchBeginStart(req)
-		case "VirtualMachinesClient.BeginUpdate":
-			res.resp, res.err = v.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualMachinesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualMachinesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualMachinesClient.BeginAssessPatches":
+				res.resp, res.err = v.dispatchBeginAssessPatches(req)
+			case "VirtualMachinesClient.BeginCapture":
+				res.resp, res.err = v.dispatchBeginCapture(req)
+			case "VirtualMachinesClient.BeginConvertToManagedDisks":
+				res.resp, res.err = v.dispatchBeginConvertToManagedDisks(req)
+			case "VirtualMachinesClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualMachinesClient.BeginDeallocate":
+				res.resp, res.err = v.dispatchBeginDeallocate(req)
+			case "VirtualMachinesClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualMachinesClient.Generalize":
+				res.resp, res.err = v.dispatchGeneralize(req)
+			case "VirtualMachinesClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualMachinesClient.BeginInstallPatches":
+				res.resp, res.err = v.dispatchBeginInstallPatches(req)
+			case "VirtualMachinesClient.InstanceView":
+				res.resp, res.err = v.dispatchInstanceView(req)
+			case "VirtualMachinesClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualMachinesClient.NewListAllPager":
+				res.resp, res.err = v.dispatchNewListAllPager(req)
+			case "VirtualMachinesClient.NewListAvailableSizesPager":
+				res.resp, res.err = v.dispatchNewListAvailableSizesPager(req)
+			case "VirtualMachinesClient.NewListByLocationPager":
+				res.resp, res.err = v.dispatchNewListByLocationPager(req)
+			case "VirtualMachinesClient.BeginPerformMaintenance":
+				res.resp, res.err = v.dispatchBeginPerformMaintenance(req)
+			case "VirtualMachinesClient.BeginPowerOff":
+				res.resp, res.err = v.dispatchBeginPowerOff(req)
+			case "VirtualMachinesClient.BeginReapply":
+				res.resp, res.err = v.dispatchBeginReapply(req)
+			case "VirtualMachinesClient.BeginRedeploy":
+				res.resp, res.err = v.dispatchBeginRedeploy(req)
+			case "VirtualMachinesClient.BeginReimage":
+				res.resp, res.err = v.dispatchBeginReimage(req)
+			case "VirtualMachinesClient.BeginRestart":
+				res.resp, res.err = v.dispatchBeginRestart(req)
+			case "VirtualMachinesClient.RetrieveBootDiagnosticsData":
+				res.resp, res.err = v.dispatchRetrieveBootDiagnosticsData(req)
+			case "VirtualMachinesClient.BeginRunCommand":
+				res.resp, res.err = v.dispatchBeginRunCommand(req)
+			case "VirtualMachinesClient.SimulateEviction":
+				res.resp, res.err = v.dispatchSimulateEviction(req)
+			case "VirtualMachinesClient.BeginStart":
+				res.resp, res.err = v.dispatchBeginStart(req)
+			case "VirtualMachinesClient.BeginUpdate":
+				res.resp, res.err = v.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -1415,4 +1421,10 @@ func (v *VirtualMachinesServerTransport) dispatchBeginUpdate(req *http.Request) 
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualMachinesServerTransport
+var virtualMachinesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -68,22 +68,28 @@ func (s *ScalarAzureLocationScalarServerTransport) dispatchToMethodFake(req *htt
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ScalarAzureLocationScalarClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "ScalarAzureLocationScalarClient.Header":
-			res.resp, res.err = s.dispatchHeader(req)
-		case "ScalarAzureLocationScalarClient.Post":
-			res.resp, res.err = s.dispatchPost(req)
-		case "ScalarAzureLocationScalarClient.Put":
-			res.resp, res.err = s.dispatchPut(req)
-		case "ScalarAzureLocationScalarClient.Query":
-			res.resp, res.err = s.dispatchQuery(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if scalarAzureLocationScalarServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = scalarAzureLocationScalarServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ScalarAzureLocationScalarClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "ScalarAzureLocationScalarClient.Header":
+				res.resp, res.err = s.dispatchHeader(req)
+			case "ScalarAzureLocationScalarClient.Post":
+				res.resp, res.err = s.dispatchPost(req)
+			case "ScalarAzureLocationScalarClient.Put":
+				res.resp, res.err = s.dispatchPut(req)
+			case "ScalarAzureLocationScalarClient.Query":
+				res.resp, res.err = s.dispatchQuery(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -204,4 +210,10 @@ func (s *ScalarAzureLocationScalarServerTransport) dispatchQuery(req *http.Reque
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ScalarAzureLocationScalarServerTransport
+var scalarAzureLocationScalarServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

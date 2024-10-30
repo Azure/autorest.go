@@ -71,22 +71,28 @@ func (v *VirtualMachineImagesEdgeZoneServerTransport) dispatchToMethodFake(req *
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualMachineImagesEdgeZoneClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualMachineImagesEdgeZoneClient.List":
-			res.resp, res.err = v.dispatchList(req)
-		case "VirtualMachineImagesEdgeZoneClient.ListOffers":
-			res.resp, res.err = v.dispatchListOffers(req)
-		case "VirtualMachineImagesEdgeZoneClient.ListPublishers":
-			res.resp, res.err = v.dispatchListPublishers(req)
-		case "VirtualMachineImagesEdgeZoneClient.ListSKUs":
-			res.resp, res.err = v.dispatchListSKUs(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualMachineImagesEdgeZoneServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualMachineImagesEdgeZoneServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualMachineImagesEdgeZoneClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualMachineImagesEdgeZoneClient.List":
+				res.resp, res.err = v.dispatchList(req)
+			case "VirtualMachineImagesEdgeZoneClient.ListOffers":
+				res.resp, res.err = v.dispatchListOffers(req)
+			case "VirtualMachineImagesEdgeZoneClient.ListPublishers":
+				res.resp, res.err = v.dispatchListPublishers(req)
+			case "VirtualMachineImagesEdgeZoneClient.ListSKUs":
+				res.resp, res.err = v.dispatchListSKUs(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -337,4 +343,10 @@ func (v *VirtualMachineImagesEdgeZoneServerTransport) dispatchListSKUs(req *http
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualMachineImagesEdgeZoneServerTransport
+var virtualMachineImagesEdgeZoneServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

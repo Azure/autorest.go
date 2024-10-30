@@ -83,26 +83,32 @@ func (b *BasicServerTransport) dispatchToMethodFake(req *http.Request, method st
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "BasicClient.CreateOrReplace":
-			res.resp, res.err = b.dispatchCreateOrReplace(req)
-		case "BasicClient.CreateOrUpdate":
-			res.resp, res.err = b.dispatchCreateOrUpdate(req)
-		case "BasicClient.Delete":
-			res.resp, res.err = b.dispatchDelete(req)
-		case "BasicClient.Export":
-			res.resp, res.err = b.dispatchExport(req)
-		case "BasicClient.ExportAllUsers":
-			res.resp, res.err = b.dispatchExportAllUsers(req)
-		case "BasicClient.Get":
-			res.resp, res.err = b.dispatchGet(req)
-		case "BasicClient.NewListPager":
-			res.resp, res.err = b.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if basicServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = basicServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "BasicClient.CreateOrReplace":
+				res.resp, res.err = b.dispatchCreateOrReplace(req)
+			case "BasicClient.CreateOrUpdate":
+				res.resp, res.err = b.dispatchCreateOrUpdate(req)
+			case "BasicClient.Delete":
+				res.resp, res.err = b.dispatchDelete(req)
+			case "BasicClient.Export":
+				res.resp, res.err = b.dispatchExport(req)
+			case "BasicClient.ExportAllUsers":
+				res.resp, res.err = b.dispatchExportAllUsers(req)
+			case "BasicClient.Get":
+				res.resp, res.err = b.dispatchGet(req)
+			case "BasicClient.NewListPager":
+				res.resp, res.err = b.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -461,4 +467,10 @@ func (b *BasicServerTransport) dispatchNewListPager(req *http.Request) (*http.Re
 		b.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to BasicServerTransport
+var basicServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

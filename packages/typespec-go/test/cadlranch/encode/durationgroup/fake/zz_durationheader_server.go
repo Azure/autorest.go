@@ -72,24 +72,30 @@ func (d *DurationHeaderServerTransport) dispatchToMethodFake(req *http.Request, 
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DurationHeaderClient.Default":
-			res.resp, res.err = d.dispatchDefault(req)
-		case "DurationHeaderClient.Float64Seconds":
-			res.resp, res.err = d.dispatchFloat64Seconds(req)
-		case "DurationHeaderClient.FloatSeconds":
-			res.resp, res.err = d.dispatchFloatSeconds(req)
-		case "DurationHeaderClient.ISO8601":
-			res.resp, res.err = d.dispatchISO8601(req)
-		case "DurationHeaderClient.ISO8601Array":
-			res.resp, res.err = d.dispatchISO8601Array(req)
-		case "DurationHeaderClient.Int32Seconds":
-			res.resp, res.err = d.dispatchInt32Seconds(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if durationHeaderServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = durationHeaderServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DurationHeaderClient.Default":
+				res.resp, res.err = d.dispatchDefault(req)
+			case "DurationHeaderClient.Float64Seconds":
+				res.resp, res.err = d.dispatchFloat64Seconds(req)
+			case "DurationHeaderClient.FloatSeconds":
+				res.resp, res.err = d.dispatchFloatSeconds(req)
+			case "DurationHeaderClient.ISO8601":
+				res.resp, res.err = d.dispatchISO8601(req)
+			case "DurationHeaderClient.ISO8601Array":
+				res.resp, res.err = d.dispatchISO8601Array(req)
+			case "DurationHeaderClient.Int32Seconds":
+				res.resp, res.err = d.dispatchInt32Seconds(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -240,4 +246,10 @@ func (d *DurationHeaderServerTransport) dispatchInt32Seconds(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DurationHeaderServerTransport
+var durationHeaderServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -75,20 +75,26 @@ func (s *StorageAccountsServerTransport) dispatchToMethodFake(req *http.Request,
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "StorageAccountsClient.BeginCreateOrUpdate":
-			res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
-		case "StorageAccountsClient.BeginDelete":
-			res.resp, res.err = s.dispatchBeginDelete(req)
-		case "StorageAccountsClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "StorageAccountsClient.NewListByDataBoxEdgeDevicePager":
-			res.resp, res.err = s.dispatchNewListByDataBoxEdgeDevicePager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if storageAccountsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = storageAccountsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "StorageAccountsClient.BeginCreateOrUpdate":
+				res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
+			case "StorageAccountsClient.BeginDelete":
+				res.resp, res.err = s.dispatchBeginDelete(req)
+			case "StorageAccountsClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "StorageAccountsClient.NewListByDataBoxEdgeDevicePager":
+				res.resp, res.err = s.dispatchNewListByDataBoxEdgeDevicePager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (s *StorageAccountsServerTransport) dispatchNewListByDataBoxEdgeDevicePager
 		s.newListByDataBoxEdgeDevicePager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to StorageAccountsServerTransport
+var storageAccountsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -63,20 +63,26 @@ func (o *OptionalCollectionsModelServerTransport) dispatchToMethodFake(req *http
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "OptionalCollectionsModelClient.GetAll":
-			res.resp, res.err = o.dispatchGetAll(req)
-		case "OptionalCollectionsModelClient.GetDefault":
-			res.resp, res.err = o.dispatchGetDefault(req)
-		case "OptionalCollectionsModelClient.PutAll":
-			res.resp, res.err = o.dispatchPutAll(req)
-		case "OptionalCollectionsModelClient.PutDefault":
-			res.resp, res.err = o.dispatchPutDefault(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if optionalCollectionsModelServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = optionalCollectionsModelServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "OptionalCollectionsModelClient.GetAll":
+				res.resp, res.err = o.dispatchGetAll(req)
+			case "OptionalCollectionsModelClient.GetDefault":
+				res.resp, res.err = o.dispatchGetDefault(req)
+			case "OptionalCollectionsModelClient.PutAll":
+				res.resp, res.err = o.dispatchPutAll(req)
+			case "OptionalCollectionsModelClient.PutDefault":
+				res.resp, res.err = o.dispatchPutDefault(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -173,4 +179,10 @@ func (o *OptionalCollectionsModelServerTransport) dispatchPutDefault(req *http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OptionalCollectionsModelServerTransport
+var optionalCollectionsModelServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

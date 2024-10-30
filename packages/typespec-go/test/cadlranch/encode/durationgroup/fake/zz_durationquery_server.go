@@ -73,24 +73,30 @@ func (d *DurationQueryServerTransport) dispatchToMethodFake(req *http.Request, m
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DurationQueryClient.Default":
-			res.resp, res.err = d.dispatchDefault(req)
-		case "DurationQueryClient.Float64Seconds":
-			res.resp, res.err = d.dispatchFloat64Seconds(req)
-		case "DurationQueryClient.FloatSeconds":
-			res.resp, res.err = d.dispatchFloatSeconds(req)
-		case "DurationQueryClient.ISO8601":
-			res.resp, res.err = d.dispatchISO8601(req)
-		case "DurationQueryClient.Int32Seconds":
-			res.resp, res.err = d.dispatchInt32Seconds(req)
-		case "DurationQueryClient.Int32SecondsArray":
-			res.resp, res.err = d.dispatchInt32SecondsArray(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if durationQueryServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = durationQueryServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DurationQueryClient.Default":
+				res.resp, res.err = d.dispatchDefault(req)
+			case "DurationQueryClient.Float64Seconds":
+				res.resp, res.err = d.dispatchFloat64Seconds(req)
+			case "DurationQueryClient.FloatSeconds":
+				res.resp, res.err = d.dispatchFloatSeconds(req)
+			case "DurationQueryClient.ISO8601":
+				res.resp, res.err = d.dispatchISO8601(req)
+			case "DurationQueryClient.Int32Seconds":
+				res.resp, res.err = d.dispatchInt32Seconds(req)
+			case "DurationQueryClient.Int32SecondsArray":
+				res.resp, res.err = d.dispatchInt32SecondsArray(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -280,4 +286,10 @@ func (d *DurationQueryServerTransport) dispatchInt32SecondsArray(req *http.Reque
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DurationQueryServerTransport
+var durationQueryServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

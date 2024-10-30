@@ -85,24 +85,30 @@ func (v *VirtualNetworkTapsServerTransport) dispatchToMethodFake(req *http.Reque
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualNetworkTapsClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VirtualNetworkTapsClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualNetworkTapsClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualNetworkTapsClient.NewListAllPager":
-			res.resp, res.err = v.dispatchNewListAllPager(req)
-		case "VirtualNetworkTapsClient.NewListByResourceGroupPager":
-			res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
-		case "VirtualNetworkTapsClient.UpdateTags":
-			res.resp, res.err = v.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualNetworkTapsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualNetworkTapsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualNetworkTapsClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualNetworkTapsClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualNetworkTapsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualNetworkTapsClient.NewListAllPager":
+				res.resp, res.err = v.dispatchNewListAllPager(req)
+			case "VirtualNetworkTapsClient.NewListByResourceGroupPager":
+				res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
+			case "VirtualNetworkTapsClient.UpdateTags":
+				res.resp, res.err = v.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -347,4 +353,10 @@ func (v *VirtualNetworkTapsServerTransport) dispatchUpdateTags(req *http.Request
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualNetworkTapsServerTransport
+var virtualNetworkTapsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

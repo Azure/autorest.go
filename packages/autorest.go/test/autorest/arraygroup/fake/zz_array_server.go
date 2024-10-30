@@ -325,150 +325,156 @@ func (a *ArrayServerTransport) dispatchToMethodFake(req *http.Request, method st
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ArrayClient.GetArrayEmpty":
-			res.resp, res.err = a.dispatchGetArrayEmpty(req)
-		case "ArrayClient.GetArrayItemEmpty":
-			res.resp, res.err = a.dispatchGetArrayItemEmpty(req)
-		case "ArrayClient.GetArrayItemNull":
-			res.resp, res.err = a.dispatchGetArrayItemNull(req)
-		case "ArrayClient.GetArrayNull":
-			res.resp, res.err = a.dispatchGetArrayNull(req)
-		case "ArrayClient.GetArrayValid":
-			res.resp, res.err = a.dispatchGetArrayValid(req)
-		case "ArrayClient.GetBase64URL":
-			res.resp, res.err = a.dispatchGetBase64URL(req)
-		case "ArrayClient.GetBooleanInvalidNull":
-			res.resp, res.err = a.dispatchGetBooleanInvalidNull(req)
-		case "ArrayClient.GetBooleanInvalidString":
-			res.resp, res.err = a.dispatchGetBooleanInvalidString(req)
-		case "ArrayClient.GetBooleanTfft":
-			res.resp, res.err = a.dispatchGetBooleanTfft(req)
-		case "ArrayClient.GetByteInvalidNull":
-			res.resp, res.err = a.dispatchGetByteInvalidNull(req)
-		case "ArrayClient.GetByteValid":
-			res.resp, res.err = a.dispatchGetByteValid(req)
-		case "ArrayClient.GetComplexEmpty":
-			res.resp, res.err = a.dispatchGetComplexEmpty(req)
-		case "ArrayClient.GetComplexItemEmpty":
-			res.resp, res.err = a.dispatchGetComplexItemEmpty(req)
-		case "ArrayClient.GetComplexItemNull":
-			res.resp, res.err = a.dispatchGetComplexItemNull(req)
-		case "ArrayClient.GetComplexNull":
-			res.resp, res.err = a.dispatchGetComplexNull(req)
-		case "ArrayClient.GetComplexValid":
-			res.resp, res.err = a.dispatchGetComplexValid(req)
-		case "ArrayClient.GetDateInvalidChars":
-			res.resp, res.err = a.dispatchGetDateInvalidChars(req)
-		case "ArrayClient.GetDateInvalidNull":
-			res.resp, res.err = a.dispatchGetDateInvalidNull(req)
-		case "ArrayClient.GetDateTimeInvalidChars":
-			res.resp, res.err = a.dispatchGetDateTimeInvalidChars(req)
-		case "ArrayClient.GetDateTimeInvalidNull":
-			res.resp, res.err = a.dispatchGetDateTimeInvalidNull(req)
-		case "ArrayClient.GetDateTimeRFC1123Valid":
-			res.resp, res.err = a.dispatchGetDateTimeRFC1123Valid(req)
-		case "ArrayClient.GetDateTimeValid":
-			res.resp, res.err = a.dispatchGetDateTimeValid(req)
-		case "ArrayClient.GetDateValid":
-			res.resp, res.err = a.dispatchGetDateValid(req)
-		case "ArrayClient.GetDictionaryEmpty":
-			res.resp, res.err = a.dispatchGetDictionaryEmpty(req)
-		case "ArrayClient.GetDictionaryItemEmpty":
-			res.resp, res.err = a.dispatchGetDictionaryItemEmpty(req)
-		case "ArrayClient.GetDictionaryItemNull":
-			res.resp, res.err = a.dispatchGetDictionaryItemNull(req)
-		case "ArrayClient.GetDictionaryNull":
-			res.resp, res.err = a.dispatchGetDictionaryNull(req)
-		case "ArrayClient.GetDictionaryValid":
-			res.resp, res.err = a.dispatchGetDictionaryValid(req)
-		case "ArrayClient.GetDoubleInvalidNull":
-			res.resp, res.err = a.dispatchGetDoubleInvalidNull(req)
-		case "ArrayClient.GetDoubleInvalidString":
-			res.resp, res.err = a.dispatchGetDoubleInvalidString(req)
-		case "ArrayClient.GetDoubleValid":
-			res.resp, res.err = a.dispatchGetDoubleValid(req)
-		case "ArrayClient.GetDurationValid":
-			res.resp, res.err = a.dispatchGetDurationValid(req)
-		case "ArrayClient.GetEmpty":
-			res.resp, res.err = a.dispatchGetEmpty(req)
-		case "ArrayClient.GetEnumValid":
-			res.resp, res.err = a.dispatchGetEnumValid(req)
-		case "ArrayClient.GetFloatInvalidNull":
-			res.resp, res.err = a.dispatchGetFloatInvalidNull(req)
-		case "ArrayClient.GetFloatInvalidString":
-			res.resp, res.err = a.dispatchGetFloatInvalidString(req)
-		case "ArrayClient.GetFloatValid":
-			res.resp, res.err = a.dispatchGetFloatValid(req)
-		case "ArrayClient.GetIntInvalidNull":
-			res.resp, res.err = a.dispatchGetIntInvalidNull(req)
-		case "ArrayClient.GetIntInvalidString":
-			res.resp, res.err = a.dispatchGetIntInvalidString(req)
-		case "ArrayClient.GetIntegerValid":
-			res.resp, res.err = a.dispatchGetIntegerValid(req)
-		case "ArrayClient.GetInvalid":
-			res.resp, res.err = a.dispatchGetInvalid(req)
-		case "ArrayClient.GetLongInvalidNull":
-			res.resp, res.err = a.dispatchGetLongInvalidNull(req)
-		case "ArrayClient.GetLongInvalidString":
-			res.resp, res.err = a.dispatchGetLongInvalidString(req)
-		case "ArrayClient.GetLongValid":
-			res.resp, res.err = a.dispatchGetLongValid(req)
-		case "ArrayClient.GetNull":
-			res.resp, res.err = a.dispatchGetNull(req)
-		case "ArrayClient.GetStringEnumValid":
-			res.resp, res.err = a.dispatchGetStringEnumValid(req)
-		case "ArrayClient.GetStringValid":
-			res.resp, res.err = a.dispatchGetStringValid(req)
-		case "ArrayClient.GetStringWithInvalid":
-			res.resp, res.err = a.dispatchGetStringWithInvalid(req)
-		case "ArrayClient.GetStringWithNull":
-			res.resp, res.err = a.dispatchGetStringWithNull(req)
-		case "ArrayClient.GetUUIDInvalidChars":
-			res.resp, res.err = a.dispatchGetUUIDInvalidChars(req)
-		case "ArrayClient.GetUUIDValid":
-			res.resp, res.err = a.dispatchGetUUIDValid(req)
-		case "ArrayClient.PutArrayValid":
-			res.resp, res.err = a.dispatchPutArrayValid(req)
-		case "ArrayClient.PutBooleanTfft":
-			res.resp, res.err = a.dispatchPutBooleanTfft(req)
-		case "ArrayClient.PutByteValid":
-			res.resp, res.err = a.dispatchPutByteValid(req)
-		case "ArrayClient.PutComplexValid":
-			res.resp, res.err = a.dispatchPutComplexValid(req)
-		case "ArrayClient.PutDateTimeRFC1123Valid":
-			res.resp, res.err = a.dispatchPutDateTimeRFC1123Valid(req)
-		case "ArrayClient.PutDateTimeValid":
-			res.resp, res.err = a.dispatchPutDateTimeValid(req)
-		case "ArrayClient.PutDateValid":
-			res.resp, res.err = a.dispatchPutDateValid(req)
-		case "ArrayClient.PutDictionaryValid":
-			res.resp, res.err = a.dispatchPutDictionaryValid(req)
-		case "ArrayClient.PutDoubleValid":
-			res.resp, res.err = a.dispatchPutDoubleValid(req)
-		case "ArrayClient.PutDurationValid":
-			res.resp, res.err = a.dispatchPutDurationValid(req)
-		case "ArrayClient.PutEmpty":
-			res.resp, res.err = a.dispatchPutEmpty(req)
-		case "ArrayClient.PutEnumValid":
-			res.resp, res.err = a.dispatchPutEnumValid(req)
-		case "ArrayClient.PutFloatValid":
-			res.resp, res.err = a.dispatchPutFloatValid(req)
-		case "ArrayClient.PutIntegerValid":
-			res.resp, res.err = a.dispatchPutIntegerValid(req)
-		case "ArrayClient.PutLongValid":
-			res.resp, res.err = a.dispatchPutLongValid(req)
-		case "ArrayClient.PutStringEnumValid":
-			res.resp, res.err = a.dispatchPutStringEnumValid(req)
-		case "ArrayClient.PutStringValid":
-			res.resp, res.err = a.dispatchPutStringValid(req)
-		case "ArrayClient.PutUUIDValid":
-			res.resp, res.err = a.dispatchPutUUIDValid(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if arrayServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = arrayServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ArrayClient.GetArrayEmpty":
+				res.resp, res.err = a.dispatchGetArrayEmpty(req)
+			case "ArrayClient.GetArrayItemEmpty":
+				res.resp, res.err = a.dispatchGetArrayItemEmpty(req)
+			case "ArrayClient.GetArrayItemNull":
+				res.resp, res.err = a.dispatchGetArrayItemNull(req)
+			case "ArrayClient.GetArrayNull":
+				res.resp, res.err = a.dispatchGetArrayNull(req)
+			case "ArrayClient.GetArrayValid":
+				res.resp, res.err = a.dispatchGetArrayValid(req)
+			case "ArrayClient.GetBase64URL":
+				res.resp, res.err = a.dispatchGetBase64URL(req)
+			case "ArrayClient.GetBooleanInvalidNull":
+				res.resp, res.err = a.dispatchGetBooleanInvalidNull(req)
+			case "ArrayClient.GetBooleanInvalidString":
+				res.resp, res.err = a.dispatchGetBooleanInvalidString(req)
+			case "ArrayClient.GetBooleanTfft":
+				res.resp, res.err = a.dispatchGetBooleanTfft(req)
+			case "ArrayClient.GetByteInvalidNull":
+				res.resp, res.err = a.dispatchGetByteInvalidNull(req)
+			case "ArrayClient.GetByteValid":
+				res.resp, res.err = a.dispatchGetByteValid(req)
+			case "ArrayClient.GetComplexEmpty":
+				res.resp, res.err = a.dispatchGetComplexEmpty(req)
+			case "ArrayClient.GetComplexItemEmpty":
+				res.resp, res.err = a.dispatchGetComplexItemEmpty(req)
+			case "ArrayClient.GetComplexItemNull":
+				res.resp, res.err = a.dispatchGetComplexItemNull(req)
+			case "ArrayClient.GetComplexNull":
+				res.resp, res.err = a.dispatchGetComplexNull(req)
+			case "ArrayClient.GetComplexValid":
+				res.resp, res.err = a.dispatchGetComplexValid(req)
+			case "ArrayClient.GetDateInvalidChars":
+				res.resp, res.err = a.dispatchGetDateInvalidChars(req)
+			case "ArrayClient.GetDateInvalidNull":
+				res.resp, res.err = a.dispatchGetDateInvalidNull(req)
+			case "ArrayClient.GetDateTimeInvalidChars":
+				res.resp, res.err = a.dispatchGetDateTimeInvalidChars(req)
+			case "ArrayClient.GetDateTimeInvalidNull":
+				res.resp, res.err = a.dispatchGetDateTimeInvalidNull(req)
+			case "ArrayClient.GetDateTimeRFC1123Valid":
+				res.resp, res.err = a.dispatchGetDateTimeRFC1123Valid(req)
+			case "ArrayClient.GetDateTimeValid":
+				res.resp, res.err = a.dispatchGetDateTimeValid(req)
+			case "ArrayClient.GetDateValid":
+				res.resp, res.err = a.dispatchGetDateValid(req)
+			case "ArrayClient.GetDictionaryEmpty":
+				res.resp, res.err = a.dispatchGetDictionaryEmpty(req)
+			case "ArrayClient.GetDictionaryItemEmpty":
+				res.resp, res.err = a.dispatchGetDictionaryItemEmpty(req)
+			case "ArrayClient.GetDictionaryItemNull":
+				res.resp, res.err = a.dispatchGetDictionaryItemNull(req)
+			case "ArrayClient.GetDictionaryNull":
+				res.resp, res.err = a.dispatchGetDictionaryNull(req)
+			case "ArrayClient.GetDictionaryValid":
+				res.resp, res.err = a.dispatchGetDictionaryValid(req)
+			case "ArrayClient.GetDoubleInvalidNull":
+				res.resp, res.err = a.dispatchGetDoubleInvalidNull(req)
+			case "ArrayClient.GetDoubleInvalidString":
+				res.resp, res.err = a.dispatchGetDoubleInvalidString(req)
+			case "ArrayClient.GetDoubleValid":
+				res.resp, res.err = a.dispatchGetDoubleValid(req)
+			case "ArrayClient.GetDurationValid":
+				res.resp, res.err = a.dispatchGetDurationValid(req)
+			case "ArrayClient.GetEmpty":
+				res.resp, res.err = a.dispatchGetEmpty(req)
+			case "ArrayClient.GetEnumValid":
+				res.resp, res.err = a.dispatchGetEnumValid(req)
+			case "ArrayClient.GetFloatInvalidNull":
+				res.resp, res.err = a.dispatchGetFloatInvalidNull(req)
+			case "ArrayClient.GetFloatInvalidString":
+				res.resp, res.err = a.dispatchGetFloatInvalidString(req)
+			case "ArrayClient.GetFloatValid":
+				res.resp, res.err = a.dispatchGetFloatValid(req)
+			case "ArrayClient.GetIntInvalidNull":
+				res.resp, res.err = a.dispatchGetIntInvalidNull(req)
+			case "ArrayClient.GetIntInvalidString":
+				res.resp, res.err = a.dispatchGetIntInvalidString(req)
+			case "ArrayClient.GetIntegerValid":
+				res.resp, res.err = a.dispatchGetIntegerValid(req)
+			case "ArrayClient.GetInvalid":
+				res.resp, res.err = a.dispatchGetInvalid(req)
+			case "ArrayClient.GetLongInvalidNull":
+				res.resp, res.err = a.dispatchGetLongInvalidNull(req)
+			case "ArrayClient.GetLongInvalidString":
+				res.resp, res.err = a.dispatchGetLongInvalidString(req)
+			case "ArrayClient.GetLongValid":
+				res.resp, res.err = a.dispatchGetLongValid(req)
+			case "ArrayClient.GetNull":
+				res.resp, res.err = a.dispatchGetNull(req)
+			case "ArrayClient.GetStringEnumValid":
+				res.resp, res.err = a.dispatchGetStringEnumValid(req)
+			case "ArrayClient.GetStringValid":
+				res.resp, res.err = a.dispatchGetStringValid(req)
+			case "ArrayClient.GetStringWithInvalid":
+				res.resp, res.err = a.dispatchGetStringWithInvalid(req)
+			case "ArrayClient.GetStringWithNull":
+				res.resp, res.err = a.dispatchGetStringWithNull(req)
+			case "ArrayClient.GetUUIDInvalidChars":
+				res.resp, res.err = a.dispatchGetUUIDInvalidChars(req)
+			case "ArrayClient.GetUUIDValid":
+				res.resp, res.err = a.dispatchGetUUIDValid(req)
+			case "ArrayClient.PutArrayValid":
+				res.resp, res.err = a.dispatchPutArrayValid(req)
+			case "ArrayClient.PutBooleanTfft":
+				res.resp, res.err = a.dispatchPutBooleanTfft(req)
+			case "ArrayClient.PutByteValid":
+				res.resp, res.err = a.dispatchPutByteValid(req)
+			case "ArrayClient.PutComplexValid":
+				res.resp, res.err = a.dispatchPutComplexValid(req)
+			case "ArrayClient.PutDateTimeRFC1123Valid":
+				res.resp, res.err = a.dispatchPutDateTimeRFC1123Valid(req)
+			case "ArrayClient.PutDateTimeValid":
+				res.resp, res.err = a.dispatchPutDateTimeValid(req)
+			case "ArrayClient.PutDateValid":
+				res.resp, res.err = a.dispatchPutDateValid(req)
+			case "ArrayClient.PutDictionaryValid":
+				res.resp, res.err = a.dispatchPutDictionaryValid(req)
+			case "ArrayClient.PutDoubleValid":
+				res.resp, res.err = a.dispatchPutDoubleValid(req)
+			case "ArrayClient.PutDurationValid":
+				res.resp, res.err = a.dispatchPutDurationValid(req)
+			case "ArrayClient.PutEmpty":
+				res.resp, res.err = a.dispatchPutEmpty(req)
+			case "ArrayClient.PutEnumValid":
+				res.resp, res.err = a.dispatchPutEnumValid(req)
+			case "ArrayClient.PutFloatValid":
+				res.resp, res.err = a.dispatchPutFloatValid(req)
+			case "ArrayClient.PutIntegerValid":
+				res.resp, res.err = a.dispatchPutIntegerValid(req)
+			case "ArrayClient.PutLongValid":
+				res.resp, res.err = a.dispatchPutLongValid(req)
+			case "ArrayClient.PutStringEnumValid":
+				res.resp, res.err = a.dispatchPutStringEnumValid(req)
+			case "ArrayClient.PutStringValid":
+				res.resp, res.err = a.dispatchPutStringValid(req)
+			case "ArrayClient.PutUUIDValid":
+				res.resp, res.err = a.dispatchPutUUIDValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -1864,4 +1870,10 @@ func (a *ArrayServerTransport) dispatchPutUUIDValid(req *http.Request) (*http.Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ArrayServerTransport
+var arrayServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

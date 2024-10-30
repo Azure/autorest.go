@@ -99,30 +99,36 @@ func (a *AzureLargeInstanceServerTransport) dispatchToMethodFake(req *http.Reque
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "AzureLargeInstanceClient.Create":
-			res.resp, res.err = a.dispatchCreate(req)
-		case "AzureLargeInstanceClient.Delete":
-			res.resp, res.err = a.dispatchDelete(req)
-		case "AzureLargeInstanceClient.Get":
-			res.resp, res.err = a.dispatchGet(req)
-		case "AzureLargeInstanceClient.NewListByResourceGroupPager":
-			res.resp, res.err = a.dispatchNewListByResourceGroupPager(req)
-		case "AzureLargeInstanceClient.NewListBySubscriptionPager":
-			res.resp, res.err = a.dispatchNewListBySubscriptionPager(req)
-		case "AzureLargeInstanceClient.BeginRestart":
-			res.resp, res.err = a.dispatchBeginRestart(req)
-		case "AzureLargeInstanceClient.BeginShutdown":
-			res.resp, res.err = a.dispatchBeginShutdown(req)
-		case "AzureLargeInstanceClient.BeginStart":
-			res.resp, res.err = a.dispatchBeginStart(req)
-		case "AzureLargeInstanceClient.Update":
-			res.resp, res.err = a.dispatchUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if azureLargeInstanceServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = azureLargeInstanceServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "AzureLargeInstanceClient.Create":
+				res.resp, res.err = a.dispatchCreate(req)
+			case "AzureLargeInstanceClient.Delete":
+				res.resp, res.err = a.dispatchDelete(req)
+			case "AzureLargeInstanceClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "AzureLargeInstanceClient.NewListByResourceGroupPager":
+				res.resp, res.err = a.dispatchNewListByResourceGroupPager(req)
+			case "AzureLargeInstanceClient.NewListBySubscriptionPager":
+				res.resp, res.err = a.dispatchNewListBySubscriptionPager(req)
+			case "AzureLargeInstanceClient.BeginRestart":
+				res.resp, res.err = a.dispatchBeginRestart(req)
+			case "AzureLargeInstanceClient.BeginShutdown":
+				res.resp, res.err = a.dispatchBeginShutdown(req)
+			case "AzureLargeInstanceClient.BeginStart":
+				res.resp, res.err = a.dispatchBeginStart(req)
+			case "AzureLargeInstanceClient.Update":
+				res.resp, res.err = a.dispatchUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -487,4 +493,10 @@ func (a *AzureLargeInstanceServerTransport) dispatchUpdate(req *http.Request) (*
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AzureLargeInstanceServerTransport
+var azureLargeInstanceServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

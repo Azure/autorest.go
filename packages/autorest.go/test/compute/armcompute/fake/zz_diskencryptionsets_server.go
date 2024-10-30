@@ -93,26 +93,32 @@ func (d *DiskEncryptionSetsServerTransport) dispatchToMethodFake(req *http.Reque
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DiskEncryptionSetsClient.BeginCreateOrUpdate":
-			res.resp, res.err = d.dispatchBeginCreateOrUpdate(req)
-		case "DiskEncryptionSetsClient.BeginDelete":
-			res.resp, res.err = d.dispatchBeginDelete(req)
-		case "DiskEncryptionSetsClient.Get":
-			res.resp, res.err = d.dispatchGet(req)
-		case "DiskEncryptionSetsClient.NewListPager":
-			res.resp, res.err = d.dispatchNewListPager(req)
-		case "DiskEncryptionSetsClient.NewListAssociatedResourcesPager":
-			res.resp, res.err = d.dispatchNewListAssociatedResourcesPager(req)
-		case "DiskEncryptionSetsClient.NewListByResourceGroupPager":
-			res.resp, res.err = d.dispatchNewListByResourceGroupPager(req)
-		case "DiskEncryptionSetsClient.BeginUpdate":
-			res.resp, res.err = d.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if diskEncryptionSetsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = diskEncryptionSetsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DiskEncryptionSetsClient.BeginCreateOrUpdate":
+				res.resp, res.err = d.dispatchBeginCreateOrUpdate(req)
+			case "DiskEncryptionSetsClient.BeginDelete":
+				res.resp, res.err = d.dispatchBeginDelete(req)
+			case "DiskEncryptionSetsClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DiskEncryptionSetsClient.NewListPager":
+				res.resp, res.err = d.dispatchNewListPager(req)
+			case "DiskEncryptionSetsClient.NewListAssociatedResourcesPager":
+				res.resp, res.err = d.dispatchNewListAssociatedResourcesPager(req)
+			case "DiskEncryptionSetsClient.NewListByResourceGroupPager":
+				res.resp, res.err = d.dispatchNewListByResourceGroupPager(req)
+			case "DiskEncryptionSetsClient.BeginUpdate":
+				res.resp, res.err = d.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -409,4 +415,10 @@ func (d *DiskEncryptionSetsServerTransport) dispatchBeginUpdate(req *http.Reques
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DiskEncryptionSetsServerTransport
+var diskEncryptionSetsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

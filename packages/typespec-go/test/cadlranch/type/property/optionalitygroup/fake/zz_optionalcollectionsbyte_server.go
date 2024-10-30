@@ -63,20 +63,26 @@ func (o *OptionalCollectionsByteServerTransport) dispatchToMethodFake(req *http.
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "OptionalCollectionsByteClient.GetAll":
-			res.resp, res.err = o.dispatchGetAll(req)
-		case "OptionalCollectionsByteClient.GetDefault":
-			res.resp, res.err = o.dispatchGetDefault(req)
-		case "OptionalCollectionsByteClient.PutAll":
-			res.resp, res.err = o.dispatchPutAll(req)
-		case "OptionalCollectionsByteClient.PutDefault":
-			res.resp, res.err = o.dispatchPutDefault(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if optionalCollectionsByteServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = optionalCollectionsByteServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "OptionalCollectionsByteClient.GetAll":
+				res.resp, res.err = o.dispatchGetAll(req)
+			case "OptionalCollectionsByteClient.GetDefault":
+				res.resp, res.err = o.dispatchGetDefault(req)
+			case "OptionalCollectionsByteClient.PutAll":
+				res.resp, res.err = o.dispatchPutAll(req)
+			case "OptionalCollectionsByteClient.PutDefault":
+				res.resp, res.err = o.dispatchPutDefault(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -173,4 +179,10 @@ func (o *OptionalCollectionsByteServerTransport) dispatchPutDefault(req *http.Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OptionalCollectionsByteServerTransport
+var optionalCollectionsByteServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

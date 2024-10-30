@@ -75,20 +75,26 @@ func (a *AddonsServerTransport) dispatchToMethodFake(req *http.Request, method s
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "AddonsClient.BeginCreateOrUpdate":
-			res.resp, res.err = a.dispatchBeginCreateOrUpdate(req)
-		case "AddonsClient.BeginDelete":
-			res.resp, res.err = a.dispatchBeginDelete(req)
-		case "AddonsClient.Get":
-			res.resp, res.err = a.dispatchGet(req)
-		case "AddonsClient.NewListByRolePager":
-			res.resp, res.err = a.dispatchNewListByRolePager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if addonsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = addonsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "AddonsClient.BeginCreateOrUpdate":
+				res.resp, res.err = a.dispatchBeginCreateOrUpdate(req)
+			case "AddonsClient.BeginDelete":
+				res.resp, res.err = a.dispatchBeginDelete(req)
+			case "AddonsClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "AddonsClient.NewListByRolePager":
+				res.resp, res.err = a.dispatchNewListByRolePager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -299,4 +305,10 @@ func (a *AddonsServerTransport) dispatchNewListByRolePager(req *http.Request) (*
 		a.newListByRolePager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AddonsServerTransport
+var addonsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

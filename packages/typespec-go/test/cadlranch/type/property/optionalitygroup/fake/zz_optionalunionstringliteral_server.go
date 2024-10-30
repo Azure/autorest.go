@@ -63,20 +63,26 @@ func (o *OptionalUnionStringLiteralServerTransport) dispatchToMethodFake(req *ht
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "OptionalUnionStringLiteralClient.GetAll":
-			res.resp, res.err = o.dispatchGetAll(req)
-		case "OptionalUnionStringLiteralClient.GetDefault":
-			res.resp, res.err = o.dispatchGetDefault(req)
-		case "OptionalUnionStringLiteralClient.PutAll":
-			res.resp, res.err = o.dispatchPutAll(req)
-		case "OptionalUnionStringLiteralClient.PutDefault":
-			res.resp, res.err = o.dispatchPutDefault(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if optionalUnionStringLiteralServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = optionalUnionStringLiteralServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "OptionalUnionStringLiteralClient.GetAll":
+				res.resp, res.err = o.dispatchGetAll(req)
+			case "OptionalUnionStringLiteralClient.GetDefault":
+				res.resp, res.err = o.dispatchGetDefault(req)
+			case "OptionalUnionStringLiteralClient.PutAll":
+				res.resp, res.err = o.dispatchPutAll(req)
+			case "OptionalUnionStringLiteralClient.PutDefault":
+				res.resp, res.err = o.dispatchPutDefault(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -173,4 +179,10 @@ func (o *OptionalUnionStringLiteralServerTransport) dispatchPutDefault(req *http
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OptionalUnionStringLiteralServerTransport
+var optionalUnionStringLiteralServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

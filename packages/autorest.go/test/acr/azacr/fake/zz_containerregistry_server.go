@@ -122,42 +122,48 @@ func (c *ContainerRegistryServerTransport) dispatchToMethodFake(req *http.Reques
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ContainerRegistryClient.CheckDockerV2Support":
-			res.resp, res.err = c.dispatchCheckDockerV2Support(req)
-		case "ContainerRegistryClient.CreateManifest":
-			res.resp, res.err = c.dispatchCreateManifest(req)
-		case "ContainerRegistryClient.DeleteManifest":
-			res.resp, res.err = c.dispatchDeleteManifest(req)
-		case "ContainerRegistryClient.DeleteRepository":
-			res.resp, res.err = c.dispatchDeleteRepository(req)
-		case "ContainerRegistryClient.DeleteTag":
-			res.resp, res.err = c.dispatchDeleteTag(req)
-		case "ContainerRegistryClient.GetManifest":
-			res.resp, res.err = c.dispatchGetManifest(req)
-		case "ContainerRegistryClient.GetManifestProperties":
-			res.resp, res.err = c.dispatchGetManifestProperties(req)
-		case "ContainerRegistryClient.NewGetManifestsPager":
-			res.resp, res.err = c.dispatchNewGetManifestsPager(req)
-		case "ContainerRegistryClient.GetProperties":
-			res.resp, res.err = c.dispatchGetProperties(req)
-		case "ContainerRegistryClient.NewGetRepositoriesPager":
-			res.resp, res.err = c.dispatchNewGetRepositoriesPager(req)
-		case "ContainerRegistryClient.GetTagProperties":
-			res.resp, res.err = c.dispatchGetTagProperties(req)
-		case "ContainerRegistryClient.NewGetTagsPager":
-			res.resp, res.err = c.dispatchNewGetTagsPager(req)
-		case "ContainerRegistryClient.UpdateManifestProperties":
-			res.resp, res.err = c.dispatchUpdateManifestProperties(req)
-		case "ContainerRegistryClient.UpdateProperties":
-			res.resp, res.err = c.dispatchUpdateProperties(req)
-		case "ContainerRegistryClient.UpdateTagAttributes":
-			res.resp, res.err = c.dispatchUpdateTagAttributes(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if containerRegistryServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = containerRegistryServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ContainerRegistryClient.CheckDockerV2Support":
+				res.resp, res.err = c.dispatchCheckDockerV2Support(req)
+			case "ContainerRegistryClient.CreateManifest":
+				res.resp, res.err = c.dispatchCreateManifest(req)
+			case "ContainerRegistryClient.DeleteManifest":
+				res.resp, res.err = c.dispatchDeleteManifest(req)
+			case "ContainerRegistryClient.DeleteRepository":
+				res.resp, res.err = c.dispatchDeleteRepository(req)
+			case "ContainerRegistryClient.DeleteTag":
+				res.resp, res.err = c.dispatchDeleteTag(req)
+			case "ContainerRegistryClient.GetManifest":
+				res.resp, res.err = c.dispatchGetManifest(req)
+			case "ContainerRegistryClient.GetManifestProperties":
+				res.resp, res.err = c.dispatchGetManifestProperties(req)
+			case "ContainerRegistryClient.NewGetManifestsPager":
+				res.resp, res.err = c.dispatchNewGetManifestsPager(req)
+			case "ContainerRegistryClient.GetProperties":
+				res.resp, res.err = c.dispatchGetProperties(req)
+			case "ContainerRegistryClient.NewGetRepositoriesPager":
+				res.resp, res.err = c.dispatchNewGetRepositoriesPager(req)
+			case "ContainerRegistryClient.GetTagProperties":
+				res.resp, res.err = c.dispatchGetTagProperties(req)
+			case "ContainerRegistryClient.NewGetTagsPager":
+				res.resp, res.err = c.dispatchNewGetTagsPager(req)
+			case "ContainerRegistryClient.UpdateManifestProperties":
+				res.resp, res.err = c.dispatchUpdateManifestProperties(req)
+			case "ContainerRegistryClient.UpdateProperties":
+				res.resp, res.err = c.dispatchUpdateProperties(req)
+			case "ContainerRegistryClient.UpdateTagAttributes":
+				res.resp, res.err = c.dispatchUpdateTagAttributes(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -775,4 +781,10 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateTagAttributes(req *http
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ContainerRegistryServerTransport
+var containerRegistryServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

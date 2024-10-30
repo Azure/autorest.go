@@ -86,24 +86,30 @@ func (p *PacketCapturesServerTransport) dispatchToMethodFake(req *http.Request, 
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "PacketCapturesClient.BeginCreate":
-			res.resp, res.err = p.dispatchBeginCreate(req)
-		case "PacketCapturesClient.BeginDelete":
-			res.resp, res.err = p.dispatchBeginDelete(req)
-		case "PacketCapturesClient.Get":
-			res.resp, res.err = p.dispatchGet(req)
-		case "PacketCapturesClient.BeginGetStatus":
-			res.resp, res.err = p.dispatchBeginGetStatus(req)
-		case "PacketCapturesClient.NewListPager":
-			res.resp, res.err = p.dispatchNewListPager(req)
-		case "PacketCapturesClient.BeginStop":
-			res.resp, res.err = p.dispatchBeginStop(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if packetCapturesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = packetCapturesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "PacketCapturesClient.BeginCreate":
+				res.resp, res.err = p.dispatchBeginCreate(req)
+			case "PacketCapturesClient.BeginDelete":
+				res.resp, res.err = p.dispatchBeginDelete(req)
+			case "PacketCapturesClient.Get":
+				res.resp, res.err = p.dispatchGet(req)
+			case "PacketCapturesClient.BeginGetStatus":
+				res.resp, res.err = p.dispatchBeginGetStatus(req)
+			case "PacketCapturesClient.NewListPager":
+				res.resp, res.err = p.dispatchNewListPager(req)
+			case "PacketCapturesClient.BeginStop":
+				res.resp, res.err = p.dispatchBeginStop(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -387,4 +393,10 @@ func (p *PacketCapturesServerTransport) dispatchBeginStop(req *http.Request) (*h
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to PacketCapturesServerTransport
+var packetCapturesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

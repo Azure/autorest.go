@@ -62,18 +62,24 @@ func (a *AuthenticationServerTransport) dispatchToMethodFake(req *http.Request, 
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "AuthenticationClient.ExchangeAADAccessTokenForAcrRefreshToken":
-			res.resp, res.err = a.dispatchExchangeAADAccessTokenForAcrRefreshToken(req)
-		case "AuthenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken":
-			res.resp, res.err = a.dispatchExchangeAcrRefreshTokenForAcrAccessToken(req)
-		case "AuthenticationClient.GetAcrAccessTokenFromLogin":
-			res.resp, res.err = a.dispatchGetAcrAccessTokenFromLogin(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if authenticationServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = authenticationServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "AuthenticationClient.ExchangeAADAccessTokenForAcrRefreshToken":
+				res.resp, res.err = a.dispatchExchangeAADAccessTokenForAcrRefreshToken(req)
+			case "AuthenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken":
+				res.resp, res.err = a.dispatchExchangeAcrRefreshTokenForAcrAccessToken(req)
+			case "AuthenticationClient.GetAcrAccessTokenFromLogin":
+				res.resp, res.err = a.dispatchGetAcrAccessTokenFromLogin(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -207,4 +213,10 @@ func (a *AuthenticationServerTransport) dispatchGetAcrAccessTokenFromLogin(req *
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AuthenticationServerTransport
+var authenticationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

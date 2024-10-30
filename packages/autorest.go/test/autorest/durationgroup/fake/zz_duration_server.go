@@ -64,20 +64,26 @@ func (d *DurationServerTransport) dispatchToMethodFake(req *http.Request, method
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DurationClient.GetInvalid":
-			res.resp, res.err = d.dispatchGetInvalid(req)
-		case "DurationClient.GetNull":
-			res.resp, res.err = d.dispatchGetNull(req)
-		case "DurationClient.GetPositiveDuration":
-			res.resp, res.err = d.dispatchGetPositiveDuration(req)
-		case "DurationClient.PutPositiveDuration":
-			res.resp, res.err = d.dispatchPutPositiveDuration(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if durationServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = durationServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DurationClient.GetInvalid":
+				res.resp, res.err = d.dispatchGetInvalid(req)
+			case "DurationClient.GetNull":
+				res.resp, res.err = d.dispatchGetNull(req)
+			case "DurationClient.GetPositiveDuration":
+				res.resp, res.err = d.dispatchGetPositiveDuration(req)
+			case "DurationClient.PutPositiveDuration":
+				res.resp, res.err = d.dispatchPutPositiveDuration(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -170,4 +176,10 @@ func (d *DurationServerTransport) dispatchPutPositiveDuration(req *http.Request)
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DurationServerTransport
+var durationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

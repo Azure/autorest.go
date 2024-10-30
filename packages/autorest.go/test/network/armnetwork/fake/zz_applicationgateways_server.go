@@ -139,46 +139,52 @@ func (a *ApplicationGatewaysServerTransport) dispatchToMethodFake(req *http.Requ
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ApplicationGatewaysClient.BeginBackendHealth":
-			res.resp, res.err = a.dispatchBeginBackendHealth(req)
-		case "ApplicationGatewaysClient.BeginBackendHealthOnDemand":
-			res.resp, res.err = a.dispatchBeginBackendHealthOnDemand(req)
-		case "ApplicationGatewaysClient.BeginCreateOrUpdate":
-			res.resp, res.err = a.dispatchBeginCreateOrUpdate(req)
-		case "ApplicationGatewaysClient.BeginDelete":
-			res.resp, res.err = a.dispatchBeginDelete(req)
-		case "ApplicationGatewaysClient.Get":
-			res.resp, res.err = a.dispatchGet(req)
-		case "ApplicationGatewaysClient.GetSSLPredefinedPolicy":
-			res.resp, res.err = a.dispatchGetSSLPredefinedPolicy(req)
-		case "ApplicationGatewaysClient.NewListPager":
-			res.resp, res.err = a.dispatchNewListPager(req)
-		case "ApplicationGatewaysClient.NewListAllPager":
-			res.resp, res.err = a.dispatchNewListAllPager(req)
-		case "ApplicationGatewaysClient.ListAvailableRequestHeaders":
-			res.resp, res.err = a.dispatchListAvailableRequestHeaders(req)
-		case "ApplicationGatewaysClient.ListAvailableResponseHeaders":
-			res.resp, res.err = a.dispatchListAvailableResponseHeaders(req)
-		case "ApplicationGatewaysClient.ListAvailableSSLOptions":
-			res.resp, res.err = a.dispatchListAvailableSSLOptions(req)
-		case "ApplicationGatewaysClient.NewListAvailableSSLPredefinedPoliciesPager":
-			res.resp, res.err = a.dispatchNewListAvailableSSLPredefinedPoliciesPager(req)
-		case "ApplicationGatewaysClient.ListAvailableServerVariables":
-			res.resp, res.err = a.dispatchListAvailableServerVariables(req)
-		case "ApplicationGatewaysClient.ListAvailableWafRuleSets":
-			res.resp, res.err = a.dispatchListAvailableWafRuleSets(req)
-		case "ApplicationGatewaysClient.BeginStart":
-			res.resp, res.err = a.dispatchBeginStart(req)
-		case "ApplicationGatewaysClient.BeginStop":
-			res.resp, res.err = a.dispatchBeginStop(req)
-		case "ApplicationGatewaysClient.UpdateTags":
-			res.resp, res.err = a.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if applicationGatewaysServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = applicationGatewaysServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ApplicationGatewaysClient.BeginBackendHealth":
+				res.resp, res.err = a.dispatchBeginBackendHealth(req)
+			case "ApplicationGatewaysClient.BeginBackendHealthOnDemand":
+				res.resp, res.err = a.dispatchBeginBackendHealthOnDemand(req)
+			case "ApplicationGatewaysClient.BeginCreateOrUpdate":
+				res.resp, res.err = a.dispatchBeginCreateOrUpdate(req)
+			case "ApplicationGatewaysClient.BeginDelete":
+				res.resp, res.err = a.dispatchBeginDelete(req)
+			case "ApplicationGatewaysClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "ApplicationGatewaysClient.GetSSLPredefinedPolicy":
+				res.resp, res.err = a.dispatchGetSSLPredefinedPolicy(req)
+			case "ApplicationGatewaysClient.NewListPager":
+				res.resp, res.err = a.dispatchNewListPager(req)
+			case "ApplicationGatewaysClient.NewListAllPager":
+				res.resp, res.err = a.dispatchNewListAllPager(req)
+			case "ApplicationGatewaysClient.ListAvailableRequestHeaders":
+				res.resp, res.err = a.dispatchListAvailableRequestHeaders(req)
+			case "ApplicationGatewaysClient.ListAvailableResponseHeaders":
+				res.resp, res.err = a.dispatchListAvailableResponseHeaders(req)
+			case "ApplicationGatewaysClient.ListAvailableSSLOptions":
+				res.resp, res.err = a.dispatchListAvailableSSLOptions(req)
+			case "ApplicationGatewaysClient.NewListAvailableSSLPredefinedPoliciesPager":
+				res.resp, res.err = a.dispatchNewListAvailableSSLPredefinedPoliciesPager(req)
+			case "ApplicationGatewaysClient.ListAvailableServerVariables":
+				res.resp, res.err = a.dispatchListAvailableServerVariables(req)
+			case "ApplicationGatewaysClient.ListAvailableWafRuleSets":
+				res.resp, res.err = a.dispatchListAvailableWafRuleSets(req)
+			case "ApplicationGatewaysClient.BeginStart":
+				res.resp, res.err = a.dispatchBeginStart(req)
+			case "ApplicationGatewaysClient.BeginStop":
+				res.resp, res.err = a.dispatchBeginStop(req)
+			case "ApplicationGatewaysClient.UpdateTags":
+				res.resp, res.err = a.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -814,4 +820,10 @@ func (a *ApplicationGatewaysServerTransport) dispatchUpdateTags(req *http.Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ApplicationGatewaysServerTransport
+var applicationGatewaysServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

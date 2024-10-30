@@ -75,20 +75,26 @@ func (h *HubVirtualNetworkConnectionsServerTransport) dispatchToMethodFake(req *
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "HubVirtualNetworkConnectionsClient.BeginCreateOrUpdate":
-			res.resp, res.err = h.dispatchBeginCreateOrUpdate(req)
-		case "HubVirtualNetworkConnectionsClient.BeginDelete":
-			res.resp, res.err = h.dispatchBeginDelete(req)
-		case "HubVirtualNetworkConnectionsClient.Get":
-			res.resp, res.err = h.dispatchGet(req)
-		case "HubVirtualNetworkConnectionsClient.NewListPager":
-			res.resp, res.err = h.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if hubVirtualNetworkConnectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = hubVirtualNetworkConnectionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "HubVirtualNetworkConnectionsClient.BeginCreateOrUpdate":
+				res.resp, res.err = h.dispatchBeginCreateOrUpdate(req)
+			case "HubVirtualNetworkConnectionsClient.BeginDelete":
+				res.resp, res.err = h.dispatchBeginDelete(req)
+			case "HubVirtualNetworkConnectionsClient.Get":
+				res.resp, res.err = h.dispatchGet(req)
+			case "HubVirtualNetworkConnectionsClient.NewListPager":
+				res.resp, res.err = h.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (h *HubVirtualNetworkConnectionsServerTransport) dispatchNewListPager(req *
 		h.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to HubVirtualNetworkConnectionsServerTransport
+var hubVirtualNetworkConnectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

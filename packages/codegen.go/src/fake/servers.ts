@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { capitalize, uncapitalize } from '@azure-tools/codegen';
+import { camelCase, capitalize, uncapitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import * as go from '../../../codemodel.go/src/index.js';
 import * as helpers from '../helpers.js';
@@ -207,6 +207,11 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     content += generateServerTransportMethodDispatch(serverTransport, client, finalMethods);
     content += generateServerTransportMethods(codeModel, serverTransport, finalMethods, imports);
 
+    content += `// set this to conditionally intercept incoming requests to ${serverTransport}\n`;
+    content += `var ${getTransportInterceptorVarName(client)} interface {\n`;
+    content += '\t// Do returns true if the server transport should use the returned response/error\n';
+    content += '\tDo(*http.Request) (*http.Response, error, bool)\n}\n';
+
     ///////////////////////////////////////////////////////////////////////////
 
     // stitch everything together
@@ -216,6 +221,10 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     operations.push(new OperationGroupContent(serverName, text));
   }
   return new ServerContent(operations, generateServerInternal(codeModel, requiredHelpers));
+}
+
+function getTransportInterceptorVarName(client: go.Client): string {
+  return `${camelCase(getServerName(client))}TransportInterceptor`;
 }
 
 // method names for fakes dispatching
@@ -277,17 +286,22 @@ function generateServerTransportMethodDispatch(serverTransport: string, client: 
   let content = `func (${receiverName} *${serverTransport}) ${dispatchMethodFake}(req *http.Request, method string) (*http.Response, error) {\n`;
   content += '\tresultChan := make(chan result)\n';
   content += '\tdefer close(resultChan)\n\n';
-  content += '\tgo func() {\n\t\tvar res result\n';
-  content += '\t\tswitch method {\n';
+  content += '\tgo func() {\n\t\tvar intercepted bool\n\t\tvar res result\n';
+  const interceptorVarName = getTransportInterceptorVarName(client);
+  content += `\t\t if ${interceptorVarName} != nil {\n`;
+  content += `\t\t\t res.resp, res.err, intercepted = ${interceptorVarName}.Do(req)\n\t\t}\n`;
+  content += '\t\tif !intercepted {\n';
+  content += '\t\t\tswitch method {\n';
 
   for (const method of values(finalMethods)) {
     const operationName = fixUpMethodName(method);
-    content += `\t\tcase "${client.name}.${operationName}":\n`;
-    content += `\t\t\tres.resp, res.err = ${receiverName}.dispatch${operationName}(req)\n`;
+    content += `\t\t\tcase "${client.name}.${operationName}":\n`;
+    content += `\t\t\t\tres.resp, res.err = ${receiverName}.dispatch${operationName}(req)\n`;
   }
 
-  content += '\t\t\tdefault:\n\t\tres.err = fmt.Errorf("unhandled API %s", method)\n';
-  content += '\t\t}\n\n'; // end switch
+  content += '\t\t\t\tdefault:\n\t\tres.err = fmt.Errorf("unhandled API %s", method)\n';
+  content += '\t\t\t}\n\n'; // end switch
+  content += '\t\t}\n'; // end if !intercepted
 
   content += '\t\tselect {\n';
   content += '\t\tcase resultChan <- res:\n';

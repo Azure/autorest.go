@@ -69,22 +69,28 @@ func (s *SubscriptionInCredentialsServerTransport) dispatchToMethodFake(req *htt
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "SubscriptionInCredentialsClient.PostMethodGlobalNotProvidedValid":
-			res.resp, res.err = s.dispatchPostMethodGlobalNotProvidedValid(req)
-		case "SubscriptionInCredentialsClient.PostMethodGlobalNull":
-			res.resp, res.err = s.dispatchPostMethodGlobalNull(req)
-		case "SubscriptionInCredentialsClient.PostMethodGlobalValid":
-			res.resp, res.err = s.dispatchPostMethodGlobalValid(req)
-		case "SubscriptionInCredentialsClient.PostPathGlobalValid":
-			res.resp, res.err = s.dispatchPostPathGlobalValid(req)
-		case "SubscriptionInCredentialsClient.PostSwaggerGlobalValid":
-			res.resp, res.err = s.dispatchPostSwaggerGlobalValid(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if subscriptionInCredentialsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = subscriptionInCredentialsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "SubscriptionInCredentialsClient.PostMethodGlobalNotProvidedValid":
+				res.resp, res.err = s.dispatchPostMethodGlobalNotProvidedValid(req)
+			case "SubscriptionInCredentialsClient.PostMethodGlobalNull":
+				res.resp, res.err = s.dispatchPostMethodGlobalNull(req)
+			case "SubscriptionInCredentialsClient.PostMethodGlobalValid":
+				res.resp, res.err = s.dispatchPostMethodGlobalValid(req)
+			case "SubscriptionInCredentialsClient.PostPathGlobalValid":
+				res.resp, res.err = s.dispatchPostPathGlobalValid(req)
+			case "SubscriptionInCredentialsClient.PostSwaggerGlobalValid":
+				res.resp, res.err = s.dispatchPostSwaggerGlobalValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -222,4 +228,10 @@ func (s *SubscriptionInCredentialsServerTransport) dispatchPostSwaggerGlobalVali
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SubscriptionInCredentialsServerTransport
+var subscriptionInCredentialsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

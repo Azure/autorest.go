@@ -60,18 +60,24 @@ func (f *FilesServerTransport) dispatchToMethodFake(req *http.Request, method st
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "FilesClient.GetEmptyFile":
-			res.resp, res.err = f.dispatchGetEmptyFile(req)
-		case "FilesClient.GetFile":
-			res.resp, res.err = f.dispatchGetFile(req)
-		case "FilesClient.GetFileLarge":
-			res.resp, res.err = f.dispatchGetFileLarge(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if filesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = filesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "FilesClient.GetEmptyFile":
+				res.resp, res.err = f.dispatchGetEmptyFile(req)
+			case "FilesClient.GetFile":
+				res.resp, res.err = f.dispatchGetFile(req)
+			case "FilesClient.GetFileLarge":
+				res.resp, res.err = f.dispatchGetFileLarge(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -150,4 +156,10 @@ func (f *FilesServerTransport) dispatchGetFileLarge(req *http.Request) (*http.Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to FilesServerTransport
+var filesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -75,20 +75,26 @@ func (i *InboundNatRulesServerTransport) dispatchToMethodFake(req *http.Request,
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "InboundNatRulesClient.BeginCreateOrUpdate":
-			res.resp, res.err = i.dispatchBeginCreateOrUpdate(req)
-		case "InboundNatRulesClient.BeginDelete":
-			res.resp, res.err = i.dispatchBeginDelete(req)
-		case "InboundNatRulesClient.Get":
-			res.resp, res.err = i.dispatchGet(req)
-		case "InboundNatRulesClient.NewListPager":
-			res.resp, res.err = i.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if inboundNatRulesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = inboundNatRulesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "InboundNatRulesClient.BeginCreateOrUpdate":
+				res.resp, res.err = i.dispatchBeginCreateOrUpdate(req)
+			case "InboundNatRulesClient.BeginDelete":
+				res.resp, res.err = i.dispatchBeginDelete(req)
+			case "InboundNatRulesClient.Get":
+				res.resp, res.err = i.dispatchGet(req)
+			case "InboundNatRulesClient.NewListPager":
+				res.resp, res.err = i.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -291,4 +297,10 @@ func (i *InboundNatRulesServerTransport) dispatchNewListPager(req *http.Request)
 		i.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to InboundNatRulesServerTransport
+var inboundNatRulesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -79,22 +79,28 @@ func (f *FlowLogsServerTransport) dispatchToMethodFake(req *http.Request, method
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "FlowLogsClient.BeginCreateOrUpdate":
-			res.resp, res.err = f.dispatchBeginCreateOrUpdate(req)
-		case "FlowLogsClient.BeginDelete":
-			res.resp, res.err = f.dispatchBeginDelete(req)
-		case "FlowLogsClient.Get":
-			res.resp, res.err = f.dispatchGet(req)
-		case "FlowLogsClient.NewListPager":
-			res.resp, res.err = f.dispatchNewListPager(req)
-		case "FlowLogsClient.UpdateTags":
-			res.resp, res.err = f.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if flowLogsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = flowLogsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "FlowLogsClient.BeginCreateOrUpdate":
+				res.resp, res.err = f.dispatchBeginCreateOrUpdate(req)
+			case "FlowLogsClient.BeginDelete":
+				res.resp, res.err = f.dispatchBeginDelete(req)
+			case "FlowLogsClient.Get":
+				res.resp, res.err = f.dispatchGet(req)
+			case "FlowLogsClient.NewListPager":
+				res.resp, res.err = f.dispatchNewListPager(req)
+			case "FlowLogsClient.UpdateTags":
+				res.resp, res.err = f.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -326,4 +332,10 @@ func (f *FlowLogsServerTransport) dispatchUpdateTags(req *http.Request) (*http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to FlowLogsServerTransport
+var flowLogsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

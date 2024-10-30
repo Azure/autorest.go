@@ -55,16 +55,22 @@ func (a *ArrayUnknownValueServerTransport) dispatchToMethodFake(req *http.Reques
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ArrayUnknownValueClient.Get":
-			res.resp, res.err = a.dispatchGet(req)
-		case "ArrayUnknownValueClient.Put":
-			res.resp, res.err = a.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if arrayUnknownValueServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = arrayUnknownValueServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ArrayUnknownValueClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "ArrayUnknownValueClient.Put":
+				res.resp, res.err = a.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -119,4 +125,10 @@ func (a *ArrayUnknownValueServerTransport) dispatchPut(req *http.Request) (*http
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ArrayUnknownValueServerTransport
+var arrayUnknownValueServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

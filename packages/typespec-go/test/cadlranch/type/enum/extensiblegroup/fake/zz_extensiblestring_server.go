@@ -63,20 +63,26 @@ func (e *ExtensibleStringServerTransport) dispatchToMethodFake(req *http.Request
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ExtensibleStringClient.GetKnownValue":
-			res.resp, res.err = e.dispatchGetKnownValue(req)
-		case "ExtensibleStringClient.GetUnknownValue":
-			res.resp, res.err = e.dispatchGetUnknownValue(req)
-		case "ExtensibleStringClient.PutKnownValue":
-			res.resp, res.err = e.dispatchPutKnownValue(req)
-		case "ExtensibleStringClient.PutUnknownValue":
-			res.resp, res.err = e.dispatchPutUnknownValue(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if extensibleStringServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = extensibleStringServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ExtensibleStringClient.GetKnownValue":
+				res.resp, res.err = e.dispatchGetKnownValue(req)
+			case "ExtensibleStringClient.GetUnknownValue":
+				res.resp, res.err = e.dispatchGetUnknownValue(req)
+			case "ExtensibleStringClient.PutKnownValue":
+				res.resp, res.err = e.dispatchPutKnownValue(req)
+			case "ExtensibleStringClient.PutUnknownValue":
+				res.resp, res.err = e.dispatchPutUnknownValue(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -173,4 +179,10 @@ func (e *ExtensibleStringServerTransport) dispatchPutUnknownValue(req *http.Requ
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ExtensibleStringServerTransport
+var extensibleStringServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

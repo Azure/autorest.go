@@ -125,50 +125,56 @@ func (h *HTTPSuccessServerTransport) dispatchToMethodFake(req *http.Request, met
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "HTTPSuccessClient.Delete200":
-			res.resp, res.err = h.dispatchDelete200(req)
-		case "HTTPSuccessClient.Delete202":
-			res.resp, res.err = h.dispatchDelete202(req)
-		case "HTTPSuccessClient.Delete204":
-			res.resp, res.err = h.dispatchDelete204(req)
-		case "HTTPSuccessClient.Get200":
-			res.resp, res.err = h.dispatchGet200(req)
-		case "HTTPSuccessClient.Head200":
-			res.resp, res.err = h.dispatchHead200(req)
-		case "HTTPSuccessClient.Head204":
-			res.resp, res.err = h.dispatchHead204(req)
-		case "HTTPSuccessClient.Head404":
-			res.resp, res.err = h.dispatchHead404(req)
-		case "HTTPSuccessClient.Options200":
-			res.resp, res.err = h.dispatchOptions200(req)
-		case "HTTPSuccessClient.Patch200":
-			res.resp, res.err = h.dispatchPatch200(req)
-		case "HTTPSuccessClient.Patch202":
-			res.resp, res.err = h.dispatchPatch202(req)
-		case "HTTPSuccessClient.Patch204":
-			res.resp, res.err = h.dispatchPatch204(req)
-		case "HTTPSuccessClient.Post200":
-			res.resp, res.err = h.dispatchPost200(req)
-		case "HTTPSuccessClient.Post201":
-			res.resp, res.err = h.dispatchPost201(req)
-		case "HTTPSuccessClient.Post202":
-			res.resp, res.err = h.dispatchPost202(req)
-		case "HTTPSuccessClient.Post204":
-			res.resp, res.err = h.dispatchPost204(req)
-		case "HTTPSuccessClient.Put200":
-			res.resp, res.err = h.dispatchPut200(req)
-		case "HTTPSuccessClient.Put201":
-			res.resp, res.err = h.dispatchPut201(req)
-		case "HTTPSuccessClient.Put202":
-			res.resp, res.err = h.dispatchPut202(req)
-		case "HTTPSuccessClient.Put204":
-			res.resp, res.err = h.dispatchPut204(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if httpSuccessServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = httpSuccessServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "HTTPSuccessClient.Delete200":
+				res.resp, res.err = h.dispatchDelete200(req)
+			case "HTTPSuccessClient.Delete202":
+				res.resp, res.err = h.dispatchDelete202(req)
+			case "HTTPSuccessClient.Delete204":
+				res.resp, res.err = h.dispatchDelete204(req)
+			case "HTTPSuccessClient.Get200":
+				res.resp, res.err = h.dispatchGet200(req)
+			case "HTTPSuccessClient.Head200":
+				res.resp, res.err = h.dispatchHead200(req)
+			case "HTTPSuccessClient.Head204":
+				res.resp, res.err = h.dispatchHead204(req)
+			case "HTTPSuccessClient.Head404":
+				res.resp, res.err = h.dispatchHead404(req)
+			case "HTTPSuccessClient.Options200":
+				res.resp, res.err = h.dispatchOptions200(req)
+			case "HTTPSuccessClient.Patch200":
+				res.resp, res.err = h.dispatchPatch200(req)
+			case "HTTPSuccessClient.Patch202":
+				res.resp, res.err = h.dispatchPatch202(req)
+			case "HTTPSuccessClient.Patch204":
+				res.resp, res.err = h.dispatchPatch204(req)
+			case "HTTPSuccessClient.Post200":
+				res.resp, res.err = h.dispatchPost200(req)
+			case "HTTPSuccessClient.Post201":
+				res.resp, res.err = h.dispatchPost201(req)
+			case "HTTPSuccessClient.Post202":
+				res.resp, res.err = h.dispatchPost202(req)
+			case "HTTPSuccessClient.Post204":
+				res.resp, res.err = h.dispatchPost204(req)
+			case "HTTPSuccessClient.Put200":
+				res.resp, res.err = h.dispatchPut200(req)
+			case "HTTPSuccessClient.Put201":
+				res.resp, res.err = h.dispatchPut201(req)
+			case "HTTPSuccessClient.Put202":
+				res.resp, res.err = h.dispatchPut202(req)
+			case "HTTPSuccessClient.Put204":
+				res.resp, res.err = h.dispatchPut204(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -612,4 +618,10 @@ func (h *HTTPSuccessServerTransport) dispatchPut204(req *http.Request) (*http.Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to HTTPSuccessServerTransport
+var httpSuccessServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

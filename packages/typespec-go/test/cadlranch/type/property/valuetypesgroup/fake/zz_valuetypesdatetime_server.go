@@ -55,16 +55,22 @@ func (v *ValueTypesDatetimeServerTransport) dispatchToMethodFake(req *http.Reque
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ValueTypesDatetimeClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "ValueTypesDatetimeClient.Put":
-			res.resp, res.err = v.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if valueTypesDatetimeServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = valueTypesDatetimeServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ValueTypesDatetimeClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "ValueTypesDatetimeClient.Put":
+				res.resp, res.err = v.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -119,4 +125,10 @@ func (v *ValueTypesDatetimeServerTransport) dispatchPut(req *http.Request) (*htt
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ValueTypesDatetimeServerTransport
+var valueTypesDatetimeServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

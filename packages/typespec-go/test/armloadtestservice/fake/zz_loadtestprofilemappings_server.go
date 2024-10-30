@@ -74,22 +74,28 @@ func (l *LoadTestProfileMappingsServerTransport) dispatchToMethodFake(req *http.
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "LoadTestProfileMappingsClient.CreateOrUpdate":
-			res.resp, res.err = l.dispatchCreateOrUpdate(req)
-		case "LoadTestProfileMappingsClient.Delete":
-			res.resp, res.err = l.dispatchDelete(req)
-		case "LoadTestProfileMappingsClient.Get":
-			res.resp, res.err = l.dispatchGet(req)
-		case "LoadTestProfileMappingsClient.NewListPager":
-			res.resp, res.err = l.dispatchNewListPager(req)
-		case "LoadTestProfileMappingsClient.Update":
-			res.resp, res.err = l.dispatchUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if loadTestProfileMappingsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = loadTestProfileMappingsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "LoadTestProfileMappingsClient.CreateOrUpdate":
+				res.resp, res.err = l.dispatchCreateOrUpdate(req)
+			case "LoadTestProfileMappingsClient.Delete":
+				res.resp, res.err = l.dispatchDelete(req)
+			case "LoadTestProfileMappingsClient.Get":
+				res.resp, res.err = l.dispatchGet(req)
+			case "LoadTestProfileMappingsClient.NewListPager":
+				res.resp, res.err = l.dispatchNewListPager(req)
+			case "LoadTestProfileMappingsClient.Update":
+				res.resp, res.err = l.dispatchUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (l *LoadTestProfileMappingsServerTransport) dispatchUpdate(req *http.Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to LoadTestProfileMappingsServerTransport
+var loadTestProfileMappingsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

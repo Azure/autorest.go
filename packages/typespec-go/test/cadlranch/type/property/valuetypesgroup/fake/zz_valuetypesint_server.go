@@ -55,16 +55,22 @@ func (v *ValueTypesIntServerTransport) dispatchToMethodFake(req *http.Request, m
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ValueTypesIntClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "ValueTypesIntClient.Put":
-			res.resp, res.err = v.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if valueTypesIntServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = valueTypesIntServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ValueTypesIntClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "ValueTypesIntClient.Put":
+				res.resp, res.err = v.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -119,4 +125,10 @@ func (v *ValueTypesIntServerTransport) dispatchPut(req *http.Request) (*http.Res
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ValueTypesIntServerTransport
+var valueTypesIntServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }
