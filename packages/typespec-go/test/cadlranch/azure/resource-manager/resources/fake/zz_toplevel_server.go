@@ -18,64 +18,64 @@ import (
 	"resources"
 )
 
-// TopLevelTrackedResourcesServer is a fake server for instances of the resources.TopLevelTrackedResourcesClient type.
-type TopLevelTrackedResourcesServer struct {
-	// ActionSync is the fake for method TopLevelTrackedResourcesClient.ActionSync
+// TopLevelServer is a fake server for instances of the resources.TopLevelClient type.
+type TopLevelServer struct {
+	// ActionSync is the fake for method TopLevelClient.ActionSync
 	// HTTP status codes to indicate success: http.StatusNoContent
-	ActionSync func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, body resources.NotificationDetails, options *resources.TopLevelTrackedResourcesClientActionSyncOptions) (resp azfake.Responder[resources.TopLevelTrackedResourcesClientActionSyncResponse], errResp azfake.ErrorResponder)
+	ActionSync func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, body resources.NotificationDetails, options *resources.TopLevelClientActionSyncOptions) (resp azfake.Responder[resources.TopLevelClientActionSyncResponse], errResp azfake.ErrorResponder)
 
-	// BeginCreateOrReplace is the fake for method TopLevelTrackedResourcesClient.BeginCreateOrReplace
+	// BeginCreateOrReplace is the fake for method TopLevelClient.BeginCreateOrReplace
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	BeginCreateOrReplace func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, resource resources.TopLevelTrackedResource, options *resources.TopLevelTrackedResourcesClientBeginCreateOrReplaceOptions) (resp azfake.PollerResponder[resources.TopLevelTrackedResourcesClientCreateOrReplaceResponse], errResp azfake.ErrorResponder)
+	BeginCreateOrReplace func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, resource resources.TopLevelTrackedResource, options *resources.TopLevelClientBeginCreateOrReplaceOptions) (resp azfake.PollerResponder[resources.TopLevelClientCreateOrReplaceResponse], errResp azfake.ErrorResponder)
 
-	// BeginDelete is the fake for method TopLevelTrackedResourcesClient.BeginDelete
+	// BeginDelete is the fake for method TopLevelClient.BeginDelete
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
-	BeginDelete func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, options *resources.TopLevelTrackedResourcesClientBeginDeleteOptions) (resp azfake.PollerResponder[resources.TopLevelTrackedResourcesClientDeleteResponse], errResp azfake.ErrorResponder)
+	BeginDelete func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, options *resources.TopLevelClientBeginDeleteOptions) (resp azfake.PollerResponder[resources.TopLevelClientDeleteResponse], errResp azfake.ErrorResponder)
 
-	// Get is the fake for method TopLevelTrackedResourcesClient.Get
+	// Get is the fake for method TopLevelClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, options *resources.TopLevelTrackedResourcesClientGetOptions) (resp azfake.Responder[resources.TopLevelTrackedResourcesClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, options *resources.TopLevelClientGetOptions) (resp azfake.Responder[resources.TopLevelClientGetResponse], errResp azfake.ErrorResponder)
 
-	// NewListByResourceGroupPager is the fake for method TopLevelTrackedResourcesClient.NewListByResourceGroupPager
+	// NewListByResourceGroupPager is the fake for method TopLevelClient.NewListByResourceGroupPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListByResourceGroupPager func(resourceGroupName string, options *resources.TopLevelTrackedResourcesClientListByResourceGroupOptions) (resp azfake.PagerResponder[resources.TopLevelTrackedResourcesClientListByResourceGroupResponse])
+	NewListByResourceGroupPager func(resourceGroupName string, options *resources.TopLevelClientListByResourceGroupOptions) (resp azfake.PagerResponder[resources.TopLevelClientListByResourceGroupResponse])
 
-	// NewListBySubscriptionPager is the fake for method TopLevelTrackedResourcesClient.NewListBySubscriptionPager
+	// NewListBySubscriptionPager is the fake for method TopLevelClient.NewListBySubscriptionPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListBySubscriptionPager func(options *resources.TopLevelTrackedResourcesClientListBySubscriptionOptions) (resp azfake.PagerResponder[resources.TopLevelTrackedResourcesClientListBySubscriptionResponse])
+	NewListBySubscriptionPager func(options *resources.TopLevelClientListBySubscriptionOptions) (resp azfake.PagerResponder[resources.TopLevelClientListBySubscriptionResponse])
 
-	// BeginUpdate is the fake for method TopLevelTrackedResourcesClient.BeginUpdate
+	// BeginUpdate is the fake for method TopLevelClient.BeginUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginUpdate func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, properties resources.TopLevelTrackedResource, options *resources.TopLevelTrackedResourcesClientBeginUpdateOptions) (resp azfake.PollerResponder[resources.TopLevelTrackedResourcesClientUpdateResponse], errResp azfake.ErrorResponder)
+	BeginUpdate func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, properties resources.TopLevelTrackedResource, options *resources.TopLevelClientBeginUpdateOptions) (resp azfake.PollerResponder[resources.TopLevelClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
-// NewTopLevelTrackedResourcesServerTransport creates a new instance of TopLevelTrackedResourcesServerTransport with the provided implementation.
-// The returned TopLevelTrackedResourcesServerTransport instance is connected to an instance of resources.TopLevelTrackedResourcesClient via the
+// NewTopLevelServerTransport creates a new instance of TopLevelServerTransport with the provided implementation.
+// The returned TopLevelServerTransport instance is connected to an instance of resources.TopLevelClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewTopLevelTrackedResourcesServerTransport(srv *TopLevelTrackedResourcesServer) *TopLevelTrackedResourcesServerTransport {
-	return &TopLevelTrackedResourcesServerTransport{
+func NewTopLevelServerTransport(srv *TopLevelServer) *TopLevelServerTransport {
+	return &TopLevelServerTransport{
 		srv:                         srv,
-		beginCreateOrReplace:        newTracker[azfake.PollerResponder[resources.TopLevelTrackedResourcesClientCreateOrReplaceResponse]](),
-		beginDelete:                 newTracker[azfake.PollerResponder[resources.TopLevelTrackedResourcesClientDeleteResponse]](),
-		newListByResourceGroupPager: newTracker[azfake.PagerResponder[resources.TopLevelTrackedResourcesClientListByResourceGroupResponse]](),
-		newListBySubscriptionPager:  newTracker[azfake.PagerResponder[resources.TopLevelTrackedResourcesClientListBySubscriptionResponse]](),
-		beginUpdate:                 newTracker[azfake.PollerResponder[resources.TopLevelTrackedResourcesClientUpdateResponse]](),
+		beginCreateOrReplace:        newTracker[azfake.PollerResponder[resources.TopLevelClientCreateOrReplaceResponse]](),
+		beginDelete:                 newTracker[azfake.PollerResponder[resources.TopLevelClientDeleteResponse]](),
+		newListByResourceGroupPager: newTracker[azfake.PagerResponder[resources.TopLevelClientListByResourceGroupResponse]](),
+		newListBySubscriptionPager:  newTracker[azfake.PagerResponder[resources.TopLevelClientListBySubscriptionResponse]](),
+		beginUpdate:                 newTracker[azfake.PollerResponder[resources.TopLevelClientUpdateResponse]](),
 	}
 }
 
-// TopLevelTrackedResourcesServerTransport connects instances of resources.TopLevelTrackedResourcesClient to instances of TopLevelTrackedResourcesServer.
-// Don't use this type directly, use NewTopLevelTrackedResourcesServerTransport instead.
-type TopLevelTrackedResourcesServerTransport struct {
-	srv                         *TopLevelTrackedResourcesServer
-	beginCreateOrReplace        *tracker[azfake.PollerResponder[resources.TopLevelTrackedResourcesClientCreateOrReplaceResponse]]
-	beginDelete                 *tracker[azfake.PollerResponder[resources.TopLevelTrackedResourcesClientDeleteResponse]]
-	newListByResourceGroupPager *tracker[azfake.PagerResponder[resources.TopLevelTrackedResourcesClientListByResourceGroupResponse]]
-	newListBySubscriptionPager  *tracker[azfake.PagerResponder[resources.TopLevelTrackedResourcesClientListBySubscriptionResponse]]
-	beginUpdate                 *tracker[azfake.PollerResponder[resources.TopLevelTrackedResourcesClientUpdateResponse]]
+// TopLevelServerTransport connects instances of resources.TopLevelClient to instances of TopLevelServer.
+// Don't use this type directly, use NewTopLevelServerTransport instead.
+type TopLevelServerTransport struct {
+	srv                         *TopLevelServer
+	beginCreateOrReplace        *tracker[azfake.PollerResponder[resources.TopLevelClientCreateOrReplaceResponse]]
+	beginDelete                 *tracker[azfake.PollerResponder[resources.TopLevelClientDeleteResponse]]
+	newListByResourceGroupPager *tracker[azfake.PagerResponder[resources.TopLevelClientListByResourceGroupResponse]]
+	newListBySubscriptionPager  *tracker[azfake.PagerResponder[resources.TopLevelClientListBySubscriptionResponse]]
+	beginUpdate                 *tracker[azfake.PollerResponder[resources.TopLevelClientUpdateResponse]]
 }
 
-// Do implements the policy.Transporter interface for TopLevelTrackedResourcesServerTransport.
-func (t *TopLevelTrackedResourcesServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for TopLevelServerTransport.
+func (t *TopLevelServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
@@ -85,31 +85,37 @@ func (t *TopLevelTrackedResourcesServerTransport) Do(req *http.Request) (*http.R
 	return t.dispatchToMethodFake(req, method)
 }
 
-func (t *TopLevelTrackedResourcesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (t *TopLevelServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "TopLevelTrackedResourcesClient.ActionSync":
-			res.resp, res.err = t.dispatchActionSync(req)
-		case "TopLevelTrackedResourcesClient.BeginCreateOrReplace":
-			res.resp, res.err = t.dispatchBeginCreateOrReplace(req)
-		case "TopLevelTrackedResourcesClient.BeginDelete":
-			res.resp, res.err = t.dispatchBeginDelete(req)
-		case "TopLevelTrackedResourcesClient.Get":
-			res.resp, res.err = t.dispatchGet(req)
-		case "TopLevelTrackedResourcesClient.NewListByResourceGroupPager":
-			res.resp, res.err = t.dispatchNewListByResourceGroupPager(req)
-		case "TopLevelTrackedResourcesClient.NewListBySubscriptionPager":
-			res.resp, res.err = t.dispatchNewListBySubscriptionPager(req)
-		case "TopLevelTrackedResourcesClient.BeginUpdate":
-			res.resp, res.err = t.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if topLevelServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = topLevelServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "TopLevelClient.ActionSync":
+				res.resp, res.err = t.dispatchActionSync(req)
+			case "TopLevelClient.BeginCreateOrReplace":
+				res.resp, res.err = t.dispatchBeginCreateOrReplace(req)
+			case "TopLevelClient.BeginDelete":
+				res.resp, res.err = t.dispatchBeginDelete(req)
+			case "TopLevelClient.Get":
+				res.resp, res.err = t.dispatchGet(req)
+			case "TopLevelClient.NewListByResourceGroupPager":
+				res.resp, res.err = t.dispatchNewListByResourceGroupPager(req)
+			case "TopLevelClient.NewListBySubscriptionPager":
+				res.resp, res.err = t.dispatchNewListBySubscriptionPager(req)
+			case "TopLevelClient.BeginUpdate":
+				res.resp, res.err = t.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -124,11 +130,11 @@ func (t *TopLevelTrackedResourcesServerTransport) dispatchToMethodFake(req *http
 	}
 }
 
-func (t *TopLevelTrackedResourcesServerTransport) dispatchActionSync(req *http.Request) (*http.Response, error) {
+func (t *TopLevelServerTransport) dispatchActionSync(req *http.Request) (*http.Response, error) {
 	if t.srv.ActionSync == nil {
 		return nil, &nonRetriableError{errors.New("fake for method ActionSync not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Models\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/actionSync`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/actionSync`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 3 {
@@ -161,13 +167,13 @@ func (t *TopLevelTrackedResourcesServerTransport) dispatchActionSync(req *http.R
 	return resp, nil
 }
 
-func (t *TopLevelTrackedResourcesServerTransport) dispatchBeginCreateOrReplace(req *http.Request) (*http.Response, error) {
+func (t *TopLevelServerTransport) dispatchBeginCreateOrReplace(req *http.Request) (*http.Response, error) {
 	if t.srv.BeginCreateOrReplace == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginCreateOrReplace not implemented")}
 	}
 	beginCreateOrReplace := t.beginCreateOrReplace.get(req)
 	if beginCreateOrReplace == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Models\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 3 {
@@ -209,13 +215,13 @@ func (t *TopLevelTrackedResourcesServerTransport) dispatchBeginCreateOrReplace(r
 	return resp, nil
 }
 
-func (t *TopLevelTrackedResourcesServerTransport) dispatchBeginDelete(req *http.Request) (*http.Response, error) {
+func (t *TopLevelServerTransport) dispatchBeginDelete(req *http.Request) (*http.Response, error) {
 	if t.srv.BeginDelete == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginDelete not implemented")}
 	}
 	beginDelete := t.beginDelete.get(req)
 	if beginDelete == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Models\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 3 {
@@ -253,11 +259,11 @@ func (t *TopLevelTrackedResourcesServerTransport) dispatchBeginDelete(req *http.
 	return resp, nil
 }
 
-func (t *TopLevelTrackedResourcesServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
+func (t *TopLevelServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
 	if t.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Models\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 3 {
@@ -286,13 +292,13 @@ func (t *TopLevelTrackedResourcesServerTransport) dispatchGet(req *http.Request)
 	return resp, nil
 }
 
-func (t *TopLevelTrackedResourcesServerTransport) dispatchNewListByResourceGroupPager(req *http.Request) (*http.Response, error) {
+func (t *TopLevelServerTransport) dispatchNewListByResourceGroupPager(req *http.Request) (*http.Response, error) {
 	if t.srv.NewListByResourceGroupPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewListByResourceGroupPager not implemented")}
 	}
 	newListByResourceGroupPager := t.newListByResourceGroupPager.get(req)
 	if newListByResourceGroupPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Models\.Resources/topLevelTrackedResources`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Resources/topLevelTrackedResources`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 2 {
@@ -305,7 +311,7 @@ func (t *TopLevelTrackedResourcesServerTransport) dispatchNewListByResourceGroup
 		resp := t.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		t.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
-		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *resources.TopLevelTrackedResourcesClientListByResourceGroupResponse, createLink func() string) {
+		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *resources.TopLevelClientListByResourceGroupResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
@@ -323,13 +329,13 @@ func (t *TopLevelTrackedResourcesServerTransport) dispatchNewListByResourceGroup
 	return resp, nil
 }
 
-func (t *TopLevelTrackedResourcesServerTransport) dispatchNewListBySubscriptionPager(req *http.Request) (*http.Response, error) {
+func (t *TopLevelServerTransport) dispatchNewListBySubscriptionPager(req *http.Request) (*http.Response, error) {
 	if t.srv.NewListBySubscriptionPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewListBySubscriptionPager not implemented")}
 	}
 	newListBySubscriptionPager := t.newListBySubscriptionPager.get(req)
 	if newListBySubscriptionPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Models\.Resources/topLevelTrackedResources`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Resources/topLevelTrackedResources`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 1 {
@@ -338,7 +344,7 @@ func (t *TopLevelTrackedResourcesServerTransport) dispatchNewListBySubscriptionP
 		resp := t.srv.NewListBySubscriptionPager(nil)
 		newListBySubscriptionPager = &resp
 		t.newListBySubscriptionPager.add(req, newListBySubscriptionPager)
-		server.PagerResponderInjectNextLinks(newListBySubscriptionPager, req, func(page *resources.TopLevelTrackedResourcesClientListBySubscriptionResponse, createLink func() string) {
+		server.PagerResponderInjectNextLinks(newListBySubscriptionPager, req, func(page *resources.TopLevelClientListBySubscriptionResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
@@ -356,13 +362,13 @@ func (t *TopLevelTrackedResourcesServerTransport) dispatchNewListBySubscriptionP
 	return resp, nil
 }
 
-func (t *TopLevelTrackedResourcesServerTransport) dispatchBeginUpdate(req *http.Request) (*http.Response, error) {
+func (t *TopLevelServerTransport) dispatchBeginUpdate(req *http.Request) (*http.Response, error) {
 	if t.srv.BeginUpdate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginUpdate not implemented")}
 	}
 	beginUpdate := t.beginUpdate.get(req)
 	if beginUpdate == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Models\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 3 {
@@ -402,4 +408,10 @@ func (t *TopLevelTrackedResourcesServerTransport) dispatchBeginUpdate(req *http.
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to TopLevelServerTransport
+var topLevelServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

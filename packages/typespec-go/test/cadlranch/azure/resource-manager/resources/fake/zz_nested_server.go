@@ -18,54 +18,54 @@ import (
 	"resources"
 )
 
-// NestedProxyResourcesServer is a fake server for instances of the resources.NestedProxyResourcesClient type.
-type NestedProxyResourcesServer struct {
-	// BeginCreateOrReplace is the fake for method NestedProxyResourcesClient.BeginCreateOrReplace
+// NestedServer is a fake server for instances of the resources.NestedClient type.
+type NestedServer struct {
+	// BeginCreateOrReplace is the fake for method NestedClient.BeginCreateOrReplace
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	BeginCreateOrReplace func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, resource resources.NestedProxyResource, options *resources.NestedProxyResourcesClientBeginCreateOrReplaceOptions) (resp azfake.PollerResponder[resources.NestedProxyResourcesClientCreateOrReplaceResponse], errResp azfake.ErrorResponder)
+	BeginCreateOrReplace func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, resource resources.NestedProxyResource, options *resources.NestedClientBeginCreateOrReplaceOptions) (resp azfake.PollerResponder[resources.NestedClientCreateOrReplaceResponse], errResp azfake.ErrorResponder)
 
-	// BeginDelete is the fake for method NestedProxyResourcesClient.BeginDelete
+	// BeginDelete is the fake for method NestedClient.BeginDelete
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
-	BeginDelete func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, options *resources.NestedProxyResourcesClientBeginDeleteOptions) (resp azfake.PollerResponder[resources.NestedProxyResourcesClientDeleteResponse], errResp azfake.ErrorResponder)
+	BeginDelete func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, options *resources.NestedClientBeginDeleteOptions) (resp azfake.PollerResponder[resources.NestedClientDeleteResponse], errResp azfake.ErrorResponder)
 
-	// Get is the fake for method NestedProxyResourcesClient.Get
+	// Get is the fake for method NestedClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, options *resources.NestedProxyResourcesClientGetOptions) (resp azfake.Responder[resources.NestedProxyResourcesClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, options *resources.NestedClientGetOptions) (resp azfake.Responder[resources.NestedClientGetResponse], errResp azfake.ErrorResponder)
 
-	// NewListByTopLevelTrackedResourcePager is the fake for method NestedProxyResourcesClient.NewListByTopLevelTrackedResourcePager
+	// NewListByTopLevelTrackedResourcePager is the fake for method NestedClient.NewListByTopLevelTrackedResourcePager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListByTopLevelTrackedResourcePager func(resourceGroupName string, topLevelTrackedResourceName string, options *resources.NestedProxyResourcesClientListByTopLevelTrackedResourceOptions) (resp azfake.PagerResponder[resources.NestedProxyResourcesClientListByTopLevelTrackedResourceResponse])
+	NewListByTopLevelTrackedResourcePager func(resourceGroupName string, topLevelTrackedResourceName string, options *resources.NestedClientListByTopLevelTrackedResourceOptions) (resp azfake.PagerResponder[resources.NestedClientListByTopLevelTrackedResourceResponse])
 
-	// BeginUpdate is the fake for method NestedProxyResourcesClient.BeginUpdate
+	// BeginUpdate is the fake for method NestedClient.BeginUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginUpdate func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, properties resources.NestedProxyResource, options *resources.NestedProxyResourcesClientBeginUpdateOptions) (resp azfake.PollerResponder[resources.NestedProxyResourcesClientUpdateResponse], errResp azfake.ErrorResponder)
+	BeginUpdate func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, properties resources.NestedProxyResource, options *resources.NestedClientBeginUpdateOptions) (resp azfake.PollerResponder[resources.NestedClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
-// NewNestedProxyResourcesServerTransport creates a new instance of NestedProxyResourcesServerTransport with the provided implementation.
-// The returned NestedProxyResourcesServerTransport instance is connected to an instance of resources.NestedProxyResourcesClient via the
+// NewNestedServerTransport creates a new instance of NestedServerTransport with the provided implementation.
+// The returned NestedServerTransport instance is connected to an instance of resources.NestedClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewNestedProxyResourcesServerTransport(srv *NestedProxyResourcesServer) *NestedProxyResourcesServerTransport {
-	return &NestedProxyResourcesServerTransport{
+func NewNestedServerTransport(srv *NestedServer) *NestedServerTransport {
+	return &NestedServerTransport{
 		srv:                                   srv,
-		beginCreateOrReplace:                  newTracker[azfake.PollerResponder[resources.NestedProxyResourcesClientCreateOrReplaceResponse]](),
-		beginDelete:                           newTracker[azfake.PollerResponder[resources.NestedProxyResourcesClientDeleteResponse]](),
-		newListByTopLevelTrackedResourcePager: newTracker[azfake.PagerResponder[resources.NestedProxyResourcesClientListByTopLevelTrackedResourceResponse]](),
-		beginUpdate:                           newTracker[azfake.PollerResponder[resources.NestedProxyResourcesClientUpdateResponse]](),
+		beginCreateOrReplace:                  newTracker[azfake.PollerResponder[resources.NestedClientCreateOrReplaceResponse]](),
+		beginDelete:                           newTracker[azfake.PollerResponder[resources.NestedClientDeleteResponse]](),
+		newListByTopLevelTrackedResourcePager: newTracker[azfake.PagerResponder[resources.NestedClientListByTopLevelTrackedResourceResponse]](),
+		beginUpdate:                           newTracker[azfake.PollerResponder[resources.NestedClientUpdateResponse]](),
 	}
 }
 
-// NestedProxyResourcesServerTransport connects instances of resources.NestedProxyResourcesClient to instances of NestedProxyResourcesServer.
-// Don't use this type directly, use NewNestedProxyResourcesServerTransport instead.
-type NestedProxyResourcesServerTransport struct {
-	srv                                   *NestedProxyResourcesServer
-	beginCreateOrReplace                  *tracker[azfake.PollerResponder[resources.NestedProxyResourcesClientCreateOrReplaceResponse]]
-	beginDelete                           *tracker[azfake.PollerResponder[resources.NestedProxyResourcesClientDeleteResponse]]
-	newListByTopLevelTrackedResourcePager *tracker[azfake.PagerResponder[resources.NestedProxyResourcesClientListByTopLevelTrackedResourceResponse]]
-	beginUpdate                           *tracker[azfake.PollerResponder[resources.NestedProxyResourcesClientUpdateResponse]]
+// NestedServerTransport connects instances of resources.NestedClient to instances of NestedServer.
+// Don't use this type directly, use NewNestedServerTransport instead.
+type NestedServerTransport struct {
+	srv                                   *NestedServer
+	beginCreateOrReplace                  *tracker[azfake.PollerResponder[resources.NestedClientCreateOrReplaceResponse]]
+	beginDelete                           *tracker[azfake.PollerResponder[resources.NestedClientDeleteResponse]]
+	newListByTopLevelTrackedResourcePager *tracker[azfake.PagerResponder[resources.NestedClientListByTopLevelTrackedResourceResponse]]
+	beginUpdate                           *tracker[azfake.PollerResponder[resources.NestedClientUpdateResponse]]
 }
 
-// Do implements the policy.Transporter interface for NestedProxyResourcesServerTransport.
-func (n *NestedProxyResourcesServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for NestedServerTransport.
+func (n *NestedServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
@@ -75,27 +75,33 @@ func (n *NestedProxyResourcesServerTransport) Do(req *http.Request) (*http.Respo
 	return n.dispatchToMethodFake(req, method)
 }
 
-func (n *NestedProxyResourcesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (n *NestedServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "NestedProxyResourcesClient.BeginCreateOrReplace":
-			res.resp, res.err = n.dispatchBeginCreateOrReplace(req)
-		case "NestedProxyResourcesClient.BeginDelete":
-			res.resp, res.err = n.dispatchBeginDelete(req)
-		case "NestedProxyResourcesClient.Get":
-			res.resp, res.err = n.dispatchGet(req)
-		case "NestedProxyResourcesClient.NewListByTopLevelTrackedResourcePager":
-			res.resp, res.err = n.dispatchNewListByTopLevelTrackedResourcePager(req)
-		case "NestedProxyResourcesClient.BeginUpdate":
-			res.resp, res.err = n.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if nestedServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = nestedServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "NestedClient.BeginCreateOrReplace":
+				res.resp, res.err = n.dispatchBeginCreateOrReplace(req)
+			case "NestedClient.BeginDelete":
+				res.resp, res.err = n.dispatchBeginDelete(req)
+			case "NestedClient.Get":
+				res.resp, res.err = n.dispatchGet(req)
+			case "NestedClient.NewListByTopLevelTrackedResourcePager":
+				res.resp, res.err = n.dispatchNewListByTopLevelTrackedResourcePager(req)
+			case "NestedClient.BeginUpdate":
+				res.resp, res.err = n.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -110,13 +116,13 @@ func (n *NestedProxyResourcesServerTransport) dispatchToMethodFake(req *http.Req
 	}
 }
 
-func (n *NestedProxyResourcesServerTransport) dispatchBeginCreateOrReplace(req *http.Request) (*http.Response, error) {
+func (n *NestedServerTransport) dispatchBeginCreateOrReplace(req *http.Request) (*http.Response, error) {
 	if n.srv.BeginCreateOrReplace == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginCreateOrReplace not implemented")}
 	}
 	beginCreateOrReplace := n.beginCreateOrReplace.get(req)
 	if beginCreateOrReplace == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Models\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/nestedProxyResources/(?P<nextedProxyResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/nestedProxyResources/(?P<nextedProxyResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 4 {
@@ -162,13 +168,13 @@ func (n *NestedProxyResourcesServerTransport) dispatchBeginCreateOrReplace(req *
 	return resp, nil
 }
 
-func (n *NestedProxyResourcesServerTransport) dispatchBeginDelete(req *http.Request) (*http.Response, error) {
+func (n *NestedServerTransport) dispatchBeginDelete(req *http.Request) (*http.Response, error) {
 	if n.srv.BeginDelete == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginDelete not implemented")}
 	}
 	beginDelete := n.beginDelete.get(req)
 	if beginDelete == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Models\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/nestedProxyResources/(?P<nextedProxyResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/nestedProxyResources/(?P<nextedProxyResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 4 {
@@ -210,11 +216,11 @@ func (n *NestedProxyResourcesServerTransport) dispatchBeginDelete(req *http.Requ
 	return resp, nil
 }
 
-func (n *NestedProxyResourcesServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
+func (n *NestedServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
 	if n.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Models\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/nestedProxyResources/(?P<nextedProxyResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/nestedProxyResources/(?P<nextedProxyResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 4 {
@@ -247,13 +253,13 @@ func (n *NestedProxyResourcesServerTransport) dispatchGet(req *http.Request) (*h
 	return resp, nil
 }
 
-func (n *NestedProxyResourcesServerTransport) dispatchNewListByTopLevelTrackedResourcePager(req *http.Request) (*http.Response, error) {
+func (n *NestedServerTransport) dispatchNewListByTopLevelTrackedResourcePager(req *http.Request) (*http.Response, error) {
 	if n.srv.NewListByTopLevelTrackedResourcePager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewListByTopLevelTrackedResourcePager not implemented")}
 	}
 	newListByTopLevelTrackedResourcePager := n.newListByTopLevelTrackedResourcePager.get(req)
 	if newListByTopLevelTrackedResourcePager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Models\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/nestedProxyResources`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/nestedProxyResources`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 3 {
@@ -270,7 +276,7 @@ func (n *NestedProxyResourcesServerTransport) dispatchNewListByTopLevelTrackedRe
 		resp := n.srv.NewListByTopLevelTrackedResourcePager(resourceGroupNameParam, topLevelTrackedResourceNameParam, nil)
 		newListByTopLevelTrackedResourcePager = &resp
 		n.newListByTopLevelTrackedResourcePager.add(req, newListByTopLevelTrackedResourcePager)
-		server.PagerResponderInjectNextLinks(newListByTopLevelTrackedResourcePager, req, func(page *resources.NestedProxyResourcesClientListByTopLevelTrackedResourceResponse, createLink func() string) {
+		server.PagerResponderInjectNextLinks(newListByTopLevelTrackedResourcePager, req, func(page *resources.NestedClientListByTopLevelTrackedResourceResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
@@ -288,13 +294,13 @@ func (n *NestedProxyResourcesServerTransport) dispatchNewListByTopLevelTrackedRe
 	return resp, nil
 }
 
-func (n *NestedProxyResourcesServerTransport) dispatchBeginUpdate(req *http.Request) (*http.Response, error) {
+func (n *NestedServerTransport) dispatchBeginUpdate(req *http.Request) (*http.Response, error) {
 	if n.srv.BeginUpdate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginUpdate not implemented")}
 	}
 	beginUpdate := n.beginUpdate.get(req)
 	if beginUpdate == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Models\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/nestedProxyResources/(?P<nextedProxyResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/nestedProxyResources/(?P<nextedProxyResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 4 {
@@ -338,4 +344,10 @@ func (n *NestedProxyResourcesServerTransport) dispatchBeginUpdate(req *http.Requ
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NestedServerTransport
+var nestedServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

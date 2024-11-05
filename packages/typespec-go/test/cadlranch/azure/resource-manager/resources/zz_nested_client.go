@@ -16,23 +16,23 @@ import (
 	"strings"
 )
 
-// NestedProxyResourcesClient contains the methods for the NestedProxyResources group.
-// Don't use this type directly, use NewNestedProxyResourcesClient() instead.
-type NestedProxyResourcesClient struct {
+// NestedClient contains the methods for the Nested group.
+// Don't use this type directly, use NewNestedClient() instead.
+type NestedClient struct {
 	internal       *arm.Client
 	subscriptionID string
 }
 
-// NewNestedProxyResourcesClient creates a new instance of NestedProxyResourcesClient with the specified values.
+// NewNestedClient creates a new instance of NestedClient with the specified values.
 //   - subscriptionID - The ID of the target subscription. The value must be an UUID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewNestedProxyResourcesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*NestedProxyResourcesClient, error) {
+func NewNestedClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*NestedClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
-	client := &NestedProxyResourcesClient{
+	client := &NestedClient{
 		subscriptionID: subscriptionID,
 		internal:       cl,
 	}
@@ -47,20 +47,20 @@ func NewNestedProxyResourcesClient(subscriptionID string, credential azcore.Toke
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - nextedProxyResourceName - Name of the nested resource.
 //   - resource - Resource create parameters.
-//   - options - NestedProxyResourcesClientBeginCreateOrReplaceOptions contains the optional parameters for the NestedProxyResourcesClient.BeginCreateOrReplace
+//   - options - NestedClientBeginCreateOrReplaceOptions contains the optional parameters for the NestedClient.BeginCreateOrReplace
 //     method.
-func (client *NestedProxyResourcesClient) BeginCreateOrReplace(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, resource NestedProxyResource, options *NestedProxyResourcesClientBeginCreateOrReplaceOptions) (*runtime.Poller[NestedProxyResourcesClientCreateOrReplaceResponse], error) {
+func (client *NestedClient) BeginCreateOrReplace(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, resource NestedProxyResource, options *NestedClientBeginCreateOrReplaceOptions) (*runtime.Poller[NestedClientCreateOrReplaceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrReplace(ctx, resourceGroupName, topLevelTrackedResourceName, nextedProxyResourceName, resource, options)
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[NestedProxyResourcesClientCreateOrReplaceResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[NestedClientCreateOrReplaceResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[NestedProxyResourcesClientCreateOrReplaceResponse]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[NestedClientCreateOrReplaceResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 	}
@@ -70,9 +70,9 @@ func (client *NestedProxyResourcesClient) BeginCreateOrReplace(ctx context.Conte
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2023-12-01-preview
-func (client *NestedProxyResourcesClient) createOrReplace(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, resource NestedProxyResource, options *NestedProxyResourcesClientBeginCreateOrReplaceOptions) (*http.Response, error) {
+func (client *NestedClient) createOrReplace(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, resource NestedProxyResource, options *NestedClientBeginCreateOrReplaceOptions) (*http.Response, error) {
 	var err error
-	const operationName = "NestedProxyResourcesClient.BeginCreateOrReplace"
+	const operationName = "NestedClient.BeginCreateOrReplace"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
@@ -92,8 +92,8 @@ func (client *NestedProxyResourcesClient) createOrReplace(ctx context.Context, r
 }
 
 // createOrReplaceCreateRequest creates the CreateOrReplace request.
-func (client *NestedProxyResourcesClient) createOrReplaceCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, resource NestedProxyResource, _ *NestedProxyResourcesClientBeginCreateOrReplaceOptions) (*policy.Request, error) {
-	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}/nestedProxyResources/{nextedProxyResourceName}"
+func (client *NestedClient) createOrReplaceCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, resource NestedProxyResource, _ *NestedClientBeginCreateOrReplaceOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}/nestedProxyResources/{nextedProxyResourceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
@@ -132,20 +132,19 @@ func (client *NestedProxyResourcesClient) createOrReplaceCreateRequest(ctx conte
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - nextedProxyResourceName - Name of the nested resource.
-//   - options - NestedProxyResourcesClientBeginDeleteOptions contains the optional parameters for the NestedProxyResourcesClient.BeginDelete
-//     method.
-func (client *NestedProxyResourcesClient) BeginDelete(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, options *NestedProxyResourcesClientBeginDeleteOptions) (*runtime.Poller[NestedProxyResourcesClientDeleteResponse], error) {
+//   - options - NestedClientBeginDeleteOptions contains the optional parameters for the NestedClient.BeginDelete method.
+func (client *NestedClient) BeginDelete(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, options *NestedClientBeginDeleteOptions) (*runtime.Poller[NestedClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, topLevelTrackedResourceName, nextedProxyResourceName, options)
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[NestedProxyResourcesClientDeleteResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[NestedClientDeleteResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[NestedProxyResourcesClientDeleteResponse]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[NestedClientDeleteResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 	}
@@ -155,9 +154,9 @@ func (client *NestedProxyResourcesClient) BeginDelete(ctx context.Context, resou
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2023-12-01-preview
-func (client *NestedProxyResourcesClient) deleteOperation(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, options *NestedProxyResourcesClientBeginDeleteOptions) (*http.Response, error) {
+func (client *NestedClient) deleteOperation(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, options *NestedClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
-	const operationName = "NestedProxyResourcesClient.BeginDelete"
+	const operationName = "NestedClient.BeginDelete"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
@@ -177,8 +176,8 @@ func (client *NestedProxyResourcesClient) deleteOperation(ctx context.Context, r
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *NestedProxyResourcesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, _ *NestedProxyResourcesClientBeginDeleteOptions) (*policy.Request, error) {
-	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}/nestedProxyResources/{nextedProxyResourceName}"
+func (client *NestedClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, _ *NestedClientBeginDeleteOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}/nestedProxyResources/{nextedProxyResourceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
@@ -213,33 +212,32 @@ func (client *NestedProxyResourcesClient) deleteCreateRequest(ctx context.Contex
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - nextedProxyResourceName - Name of the nested resource.
-//   - options - NestedProxyResourcesClientGetOptions contains the optional parameters for the NestedProxyResourcesClient.Get
-//     method.
-func (client *NestedProxyResourcesClient) Get(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, options *NestedProxyResourcesClientGetOptions) (NestedProxyResourcesClientGetResponse, error) {
+//   - options - NestedClientGetOptions contains the optional parameters for the NestedClient.Get method.
+func (client *NestedClient) Get(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, options *NestedClientGetOptions) (NestedClientGetResponse, error) {
 	var err error
-	const operationName = "NestedProxyResourcesClient.Get"
+	const operationName = "NestedClient.Get"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, topLevelTrackedResourceName, nextedProxyResourceName, options)
 	if err != nil {
-		return NestedProxyResourcesClientGetResponse{}, err
+		return NestedClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return NestedProxyResourcesClientGetResponse{}, err
+		return NestedClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return NestedProxyResourcesClientGetResponse{}, err
+		return NestedClientGetResponse{}, err
 	}
 	resp, err := client.getHandleResponse(httpResp)
 	return resp, err
 }
 
 // getCreateRequest creates the Get request.
-func (client *NestedProxyResourcesClient) getCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, _ *NestedProxyResourcesClientGetOptions) (*policy.Request, error) {
-	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}/nestedProxyResources/{nextedProxyResourceName}"
+func (client *NestedClient) getCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, _ *NestedClientGetOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}/nestedProxyResources/{nextedProxyResourceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
@@ -268,10 +266,10 @@ func (client *NestedProxyResourcesClient) getCreateRequest(ctx context.Context, 
 }
 
 // getHandleResponse handles the Get response.
-func (client *NestedProxyResourcesClient) getHandleResponse(resp *http.Response) (NestedProxyResourcesClientGetResponse, error) {
-	result := NestedProxyResourcesClientGetResponse{}
+func (client *NestedClient) getHandleResponse(resp *http.Response) (NestedClientGetResponse, error) {
+	result := NestedClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NestedProxyResource); err != nil {
-		return NestedProxyResourcesClientGetResponse{}, err
+		return NestedClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -281,15 +279,15 @@ func (client *NestedProxyResourcesClient) getHandleResponse(resp *http.Response)
 // Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
-//   - options - NestedProxyResourcesClientListByTopLevelTrackedResourceOptions contains the optional parameters for the NestedProxyResourcesClient.NewListByTopLevelTrackedResourcePager
+//   - options - NestedClientListByTopLevelTrackedResourceOptions contains the optional parameters for the NestedClient.NewListByTopLevelTrackedResourcePager
 //     method.
-func (client *NestedProxyResourcesClient) NewListByTopLevelTrackedResourcePager(resourceGroupName string, topLevelTrackedResourceName string, options *NestedProxyResourcesClientListByTopLevelTrackedResourceOptions) *runtime.Pager[NestedProxyResourcesClientListByTopLevelTrackedResourceResponse] {
-	return runtime.NewPager(runtime.PagingHandler[NestedProxyResourcesClientListByTopLevelTrackedResourceResponse]{
-		More: func(page NestedProxyResourcesClientListByTopLevelTrackedResourceResponse) bool {
+func (client *NestedClient) NewListByTopLevelTrackedResourcePager(resourceGroupName string, topLevelTrackedResourceName string, options *NestedClientListByTopLevelTrackedResourceOptions) *runtime.Pager[NestedClientListByTopLevelTrackedResourceResponse] {
+	return runtime.NewPager(runtime.PagingHandler[NestedClientListByTopLevelTrackedResourceResponse]{
+		More: func(page NestedClientListByTopLevelTrackedResourceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		Fetcher: func(ctx context.Context, page *NestedProxyResourcesClientListByTopLevelTrackedResourceResponse) (NestedProxyResourcesClientListByTopLevelTrackedResourceResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "NestedProxyResourcesClient.NewListByTopLevelTrackedResourcePager")
+		Fetcher: func(ctx context.Context, page *NestedClientListByTopLevelTrackedResourceResponse) (NestedClientListByTopLevelTrackedResourceResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "NestedClient.NewListByTopLevelTrackedResourcePager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -298,7 +296,7 @@ func (client *NestedProxyResourcesClient) NewListByTopLevelTrackedResourcePager(
 				return client.listByTopLevelTrackedResourceCreateRequest(ctx, resourceGroupName, topLevelTrackedResourceName, options)
 			}, nil)
 			if err != nil {
-				return NestedProxyResourcesClientListByTopLevelTrackedResourceResponse{}, err
+				return NestedClientListByTopLevelTrackedResourceResponse{}, err
 			}
 			return client.listByTopLevelTrackedResourceHandleResponse(resp)
 		},
@@ -307,8 +305,8 @@ func (client *NestedProxyResourcesClient) NewListByTopLevelTrackedResourcePager(
 }
 
 // listByTopLevelTrackedResourceCreateRequest creates the ListByTopLevelTrackedResource request.
-func (client *NestedProxyResourcesClient) listByTopLevelTrackedResourceCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, _ *NestedProxyResourcesClientListByTopLevelTrackedResourceOptions) (*policy.Request, error) {
-	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}/nestedProxyResources"
+func (client *NestedClient) listByTopLevelTrackedResourceCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, _ *NestedClientListByTopLevelTrackedResourceOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}/nestedProxyResources"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
@@ -333,10 +331,10 @@ func (client *NestedProxyResourcesClient) listByTopLevelTrackedResourceCreateReq
 }
 
 // listByTopLevelTrackedResourceHandleResponse handles the ListByTopLevelTrackedResource response.
-func (client *NestedProxyResourcesClient) listByTopLevelTrackedResourceHandleResponse(resp *http.Response) (NestedProxyResourcesClientListByTopLevelTrackedResourceResponse, error) {
-	result := NestedProxyResourcesClientListByTopLevelTrackedResourceResponse{}
+func (client *NestedClient) listByTopLevelTrackedResourceHandleResponse(resp *http.Response) (NestedClientListByTopLevelTrackedResourceResponse, error) {
+	result := NestedClientListByTopLevelTrackedResourceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NestedProxyResourceListResult); err != nil {
-		return NestedProxyResourcesClientListByTopLevelTrackedResourceResponse{}, err
+		return NestedClientListByTopLevelTrackedResourceResponse{}, err
 	}
 	return result, nil
 }
@@ -349,20 +347,19 @@ func (client *NestedProxyResourcesClient) listByTopLevelTrackedResourceHandleRes
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - nextedProxyResourceName - Name of the nested resource.
 //   - properties - The resource properties to be updated.
-//   - options - NestedProxyResourcesClientBeginUpdateOptions contains the optional parameters for the NestedProxyResourcesClient.BeginUpdate
-//     method.
-func (client *NestedProxyResourcesClient) BeginUpdate(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, properties NestedProxyResource, options *NestedProxyResourcesClientBeginUpdateOptions) (*runtime.Poller[NestedProxyResourcesClientUpdateResponse], error) {
+//   - options - NestedClientBeginUpdateOptions contains the optional parameters for the NestedClient.BeginUpdate method.
+func (client *NestedClient) BeginUpdate(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, properties NestedProxyResource, options *NestedClientBeginUpdateOptions) (*runtime.Poller[NestedClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, topLevelTrackedResourceName, nextedProxyResourceName, properties, options)
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[NestedProxyResourcesClientUpdateResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[NestedClientUpdateResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[NestedProxyResourcesClientUpdateResponse]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[NestedClientUpdateResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 	}
@@ -372,9 +369,9 @@ func (client *NestedProxyResourcesClient) BeginUpdate(ctx context.Context, resou
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2023-12-01-preview
-func (client *NestedProxyResourcesClient) update(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, properties NestedProxyResource, options *NestedProxyResourcesClientBeginUpdateOptions) (*http.Response, error) {
+func (client *NestedClient) update(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, properties NestedProxyResource, options *NestedClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
-	const operationName = "NestedProxyResourcesClient.BeginUpdate"
+	const operationName = "NestedClient.BeginUpdate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
@@ -394,8 +391,8 @@ func (client *NestedProxyResourcesClient) update(ctx context.Context, resourceGr
 }
 
 // updateCreateRequest creates the Update request.
-func (client *NestedProxyResourcesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, properties NestedProxyResource, _ *NestedProxyResourcesClientBeginUpdateOptions) (*policy.Request, error) {
-	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}/nestedProxyResources/{nextedProxyResourceName}"
+func (client *NestedClient) updateCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, properties NestedProxyResource, _ *NestedClientBeginUpdateOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}/nestedProxyResources/{nextedProxyResourceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}

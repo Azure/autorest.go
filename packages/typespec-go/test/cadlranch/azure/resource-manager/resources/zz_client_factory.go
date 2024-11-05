@@ -32,17 +32,25 @@ func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, 
 	}, nil
 }
 
-// NewNestedProxyResourcesClient creates a new instance of NestedProxyResourcesClient.
-func (c *ClientFactory) NewNestedProxyResourcesClient() *NestedProxyResourcesClient {
-	return &NestedProxyResourcesClient{
+// NewNestedClient creates a new instance of NestedClient.
+func (c *ClientFactory) NewNestedClient() *NestedClient {
+	return &NestedClient{
 		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
-// NewTopLevelTrackedResourcesClient creates a new instance of TopLevelTrackedResourcesClient.
-func (c *ClientFactory) NewTopLevelTrackedResourcesClient() *TopLevelTrackedResourcesClient {
-	return &TopLevelTrackedResourcesClient{
+// NewSingletonClient creates a new instance of SingletonClient.
+func (c *ClientFactory) NewSingletonClient() *SingletonClient {
+	return &SingletonClient{
+		subscriptionID: c.subscriptionID,
+		internal:       c.internal,
+	}
+}
+
+// NewTopLevelClient creates a new instance of TopLevelClient.
+func (c *ClientFactory) NewTopLevelClient() *TopLevelClient {
+	return &TopLevelClient{
 		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}

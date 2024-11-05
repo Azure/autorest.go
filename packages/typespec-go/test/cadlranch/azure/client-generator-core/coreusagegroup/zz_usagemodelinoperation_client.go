@@ -21,7 +21,7 @@ type UsageModelInOperationClient struct {
 // InputToInputOutput - Expected body parameter:
 // ```json
 // {
-// "name": <any string>
+// "name": "Madge"
 // }
 // ```
 // If the operation fails it returns an *azcore.ResponseError type.
@@ -72,7 +72,7 @@ func (client *UsageModelInOperationClient) inputToInputOutputCreateRequest(ctx c
 // ```json
 // {
 // "result": {
-// "name": <any string>
+// "name": "Madge"
 // }
 // }
 // ```
@@ -128,7 +128,7 @@ func (client *UsageModelInOperationClient) modelInReadOnlyPropertyHandleResponse
 // OutputToInputOutput - Expected response body:
 // ```json
 // {
-// "name": <any string>
+// "name": "Madge"
 // }
 // ```
 // If the operation fails it returns an *azcore.ResponseError type.

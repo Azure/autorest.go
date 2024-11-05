@@ -29,7 +29,7 @@ const cadlRanch = {
   'azurepagegroup': ['azure/core/page'],
   'corescalargroup': ['azure/core/scalar'],
   'commonpropsgroup': ['azure/resource-manager/common-properties'],
-  //'resources': ['azure/resource-manager/models/resources'], // TODO: https://github.com/Azure/typespec-azure/issues/1709
+  'resources': ['azure/resource-manager/resources'],
   //'traitsgroup': ['azure/core/traits'], // requires union support
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
   'naminggroup': ['client/naming'],
