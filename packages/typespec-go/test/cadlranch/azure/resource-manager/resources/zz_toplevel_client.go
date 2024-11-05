@@ -16,23 +16,23 @@ import (
 	"strings"
 )
 
-// TopLevelTrackedResourcesClient contains the methods for the TopLevelTrackedResources group.
-// Don't use this type directly, use NewTopLevelTrackedResourcesClient() instead.
-type TopLevelTrackedResourcesClient struct {
+// TopLevelClient contains the methods for the TopLevel group.
+// Don't use this type directly, use NewTopLevelClient() instead.
+type TopLevelClient struct {
 	internal       *arm.Client
 	subscriptionID string
 }
 
-// NewTopLevelTrackedResourcesClient creates a new instance of TopLevelTrackedResourcesClient with the specified values.
+// NewTopLevelClient creates a new instance of TopLevelClient with the specified values.
 //   - subscriptionID - The ID of the target subscription. The value must be an UUID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewTopLevelTrackedResourcesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*TopLevelTrackedResourcesClient, error) {
+func NewTopLevelClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*TopLevelClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
-	client := &TopLevelTrackedResourcesClient{
+	client := &TopLevelClient{
 		subscriptionID: subscriptionID,
 		internal:       cl,
 	}
@@ -46,32 +46,31 @@ func NewTopLevelTrackedResourcesClient(subscriptionID string, credential azcore.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - body - The content of the action request
-//   - options - TopLevelTrackedResourcesClientActionSyncOptions contains the optional parameters for the TopLevelTrackedResourcesClient.ActionSync
-//     method.
-func (client *TopLevelTrackedResourcesClient) ActionSync(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, body NotificationDetails, options *TopLevelTrackedResourcesClientActionSyncOptions) (TopLevelTrackedResourcesClientActionSyncResponse, error) {
+//   - options - TopLevelClientActionSyncOptions contains the optional parameters for the TopLevelClient.ActionSync method.
+func (client *TopLevelClient) ActionSync(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, body NotificationDetails, options *TopLevelClientActionSyncOptions) (TopLevelClientActionSyncResponse, error) {
 	var err error
-	const operationName = "TopLevelTrackedResourcesClient.ActionSync"
+	const operationName = "TopLevelClient.ActionSync"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.actionSyncCreateRequest(ctx, resourceGroupName, topLevelTrackedResourceName, body, options)
 	if err != nil {
-		return TopLevelTrackedResourcesClientActionSyncResponse{}, err
+		return TopLevelClientActionSyncResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return TopLevelTrackedResourcesClientActionSyncResponse{}, err
+		return TopLevelClientActionSyncResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return TopLevelTrackedResourcesClientActionSyncResponse{}, err
+		return TopLevelClientActionSyncResponse{}, err
 	}
-	return TopLevelTrackedResourcesClientActionSyncResponse{}, nil
+	return TopLevelClientActionSyncResponse{}, nil
 }
 
 // actionSyncCreateRequest creates the ActionSync request.
-func (client *TopLevelTrackedResourcesClient) actionSyncCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, body NotificationDetails, _ *TopLevelTrackedResourcesClientActionSyncOptions) (*policy.Request, error) {
-	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}/actionSync"
+func (client *TopLevelClient) actionSyncCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, body NotificationDetails, _ *TopLevelClientActionSyncOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}/actionSync"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
@@ -106,20 +105,20 @@ func (client *TopLevelTrackedResourcesClient) actionSyncCreateRequest(ctx contex
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - resource - Resource create parameters.
-//   - options - TopLevelTrackedResourcesClientBeginCreateOrReplaceOptions contains the optional parameters for the TopLevelTrackedResourcesClient.BeginCreateOrReplace
+//   - options - TopLevelClientBeginCreateOrReplaceOptions contains the optional parameters for the TopLevelClient.BeginCreateOrReplace
 //     method.
-func (client *TopLevelTrackedResourcesClient) BeginCreateOrReplace(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, resource TopLevelTrackedResource, options *TopLevelTrackedResourcesClientBeginCreateOrReplaceOptions) (*runtime.Poller[TopLevelTrackedResourcesClientCreateOrReplaceResponse], error) {
+func (client *TopLevelClient) BeginCreateOrReplace(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, resource TopLevelTrackedResource, options *TopLevelClientBeginCreateOrReplaceOptions) (*runtime.Poller[TopLevelClientCreateOrReplaceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrReplace(ctx, resourceGroupName, topLevelTrackedResourceName, resource, options)
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[TopLevelTrackedResourcesClientCreateOrReplaceResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[TopLevelClientCreateOrReplaceResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[TopLevelTrackedResourcesClientCreateOrReplaceResponse]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[TopLevelClientCreateOrReplaceResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 	}
@@ -129,9 +128,9 @@ func (client *TopLevelTrackedResourcesClient) BeginCreateOrReplace(ctx context.C
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2023-12-01-preview
-func (client *TopLevelTrackedResourcesClient) createOrReplace(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, resource TopLevelTrackedResource, options *TopLevelTrackedResourcesClientBeginCreateOrReplaceOptions) (*http.Response, error) {
+func (client *TopLevelClient) createOrReplace(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, resource TopLevelTrackedResource, options *TopLevelClientBeginCreateOrReplaceOptions) (*http.Response, error) {
 	var err error
-	const operationName = "TopLevelTrackedResourcesClient.BeginCreateOrReplace"
+	const operationName = "TopLevelClient.BeginCreateOrReplace"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
@@ -151,8 +150,8 @@ func (client *TopLevelTrackedResourcesClient) createOrReplace(ctx context.Contex
 }
 
 // createOrReplaceCreateRequest creates the CreateOrReplace request.
-func (client *TopLevelTrackedResourcesClient) createOrReplaceCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, resource TopLevelTrackedResource, _ *TopLevelTrackedResourcesClientBeginCreateOrReplaceOptions) (*policy.Request, error) {
-	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}"
+func (client *TopLevelClient) createOrReplaceCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, resource TopLevelTrackedResource, _ *TopLevelClientBeginCreateOrReplaceOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
@@ -186,20 +185,19 @@ func (client *TopLevelTrackedResourcesClient) createOrReplaceCreateRequest(ctx c
 // Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
-//   - options - TopLevelTrackedResourcesClientBeginDeleteOptions contains the optional parameters for the TopLevelTrackedResourcesClient.BeginDelete
-//     method.
-func (client *TopLevelTrackedResourcesClient) BeginDelete(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, options *TopLevelTrackedResourcesClientBeginDeleteOptions) (*runtime.Poller[TopLevelTrackedResourcesClientDeleteResponse], error) {
+//   - options - TopLevelClientBeginDeleteOptions contains the optional parameters for the TopLevelClient.BeginDelete method.
+func (client *TopLevelClient) BeginDelete(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, options *TopLevelClientBeginDeleteOptions) (*runtime.Poller[TopLevelClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, topLevelTrackedResourceName, options)
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[TopLevelTrackedResourcesClientDeleteResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[TopLevelClientDeleteResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[TopLevelTrackedResourcesClientDeleteResponse]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[TopLevelClientDeleteResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 	}
@@ -209,9 +207,9 @@ func (client *TopLevelTrackedResourcesClient) BeginDelete(ctx context.Context, r
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2023-12-01-preview
-func (client *TopLevelTrackedResourcesClient) deleteOperation(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, options *TopLevelTrackedResourcesClientBeginDeleteOptions) (*http.Response, error) {
+func (client *TopLevelClient) deleteOperation(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, options *TopLevelClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
-	const operationName = "TopLevelTrackedResourcesClient.BeginDelete"
+	const operationName = "TopLevelClient.BeginDelete"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
@@ -231,8 +229,8 @@ func (client *TopLevelTrackedResourcesClient) deleteOperation(ctx context.Contex
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *TopLevelTrackedResourcesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, _ *TopLevelTrackedResourcesClientBeginDeleteOptions) (*policy.Request, error) {
-	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}"
+func (client *TopLevelClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, _ *TopLevelClientBeginDeleteOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
@@ -262,33 +260,32 @@ func (client *TopLevelTrackedResourcesClient) deleteCreateRequest(ctx context.Co
 // Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
-//   - options - TopLevelTrackedResourcesClientGetOptions contains the optional parameters for the TopLevelTrackedResourcesClient.Get
-//     method.
-func (client *TopLevelTrackedResourcesClient) Get(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, options *TopLevelTrackedResourcesClientGetOptions) (TopLevelTrackedResourcesClientGetResponse, error) {
+//   - options - TopLevelClientGetOptions contains the optional parameters for the TopLevelClient.Get method.
+func (client *TopLevelClient) Get(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, options *TopLevelClientGetOptions) (TopLevelClientGetResponse, error) {
 	var err error
-	const operationName = "TopLevelTrackedResourcesClient.Get"
+	const operationName = "TopLevelClient.Get"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, topLevelTrackedResourceName, options)
 	if err != nil {
-		return TopLevelTrackedResourcesClientGetResponse{}, err
+		return TopLevelClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return TopLevelTrackedResourcesClientGetResponse{}, err
+		return TopLevelClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return TopLevelTrackedResourcesClientGetResponse{}, err
+		return TopLevelClientGetResponse{}, err
 	}
 	resp, err := client.getHandleResponse(httpResp)
 	return resp, err
 }
 
 // getCreateRequest creates the Get request.
-func (client *TopLevelTrackedResourcesClient) getCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, _ *TopLevelTrackedResourcesClientGetOptions) (*policy.Request, error) {
-	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}"
+func (client *TopLevelClient) getCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, _ *TopLevelClientGetOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
@@ -313,10 +310,10 @@ func (client *TopLevelTrackedResourcesClient) getCreateRequest(ctx context.Conte
 }
 
 // getHandleResponse handles the Get response.
-func (client *TopLevelTrackedResourcesClient) getHandleResponse(resp *http.Response) (TopLevelTrackedResourcesClientGetResponse, error) {
-	result := TopLevelTrackedResourcesClientGetResponse{}
+func (client *TopLevelClient) getHandleResponse(resp *http.Response) (TopLevelClientGetResponse, error) {
+	result := TopLevelClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TopLevelTrackedResource); err != nil {
-		return TopLevelTrackedResourcesClientGetResponse{}, err
+		return TopLevelClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -325,15 +322,15 @@ func (client *TopLevelTrackedResourcesClient) getHandleResponse(resp *http.Respo
 //
 // Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
-//   - options - TopLevelTrackedResourcesClientListByResourceGroupOptions contains the optional parameters for the TopLevelTrackedResourcesClient.NewListByResourceGroupPager
+//   - options - TopLevelClientListByResourceGroupOptions contains the optional parameters for the TopLevelClient.NewListByResourceGroupPager
 //     method.
-func (client *TopLevelTrackedResourcesClient) NewListByResourceGroupPager(resourceGroupName string, options *TopLevelTrackedResourcesClientListByResourceGroupOptions) *runtime.Pager[TopLevelTrackedResourcesClientListByResourceGroupResponse] {
-	return runtime.NewPager(runtime.PagingHandler[TopLevelTrackedResourcesClientListByResourceGroupResponse]{
-		More: func(page TopLevelTrackedResourcesClientListByResourceGroupResponse) bool {
+func (client *TopLevelClient) NewListByResourceGroupPager(resourceGroupName string, options *TopLevelClientListByResourceGroupOptions) *runtime.Pager[TopLevelClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PagingHandler[TopLevelClientListByResourceGroupResponse]{
+		More: func(page TopLevelClientListByResourceGroupResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		Fetcher: func(ctx context.Context, page *TopLevelTrackedResourcesClientListByResourceGroupResponse) (TopLevelTrackedResourcesClientListByResourceGroupResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TopLevelTrackedResourcesClient.NewListByResourceGroupPager")
+		Fetcher: func(ctx context.Context, page *TopLevelClientListByResourceGroupResponse) (TopLevelClientListByResourceGroupResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TopLevelClient.NewListByResourceGroupPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -342,7 +339,7 @@ func (client *TopLevelTrackedResourcesClient) NewListByResourceGroupPager(resour
 				return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 			}, nil)
 			if err != nil {
-				return TopLevelTrackedResourcesClientListByResourceGroupResponse{}, err
+				return TopLevelClientListByResourceGroupResponse{}, err
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
@@ -351,8 +348,8 @@ func (client *TopLevelTrackedResourcesClient) NewListByResourceGroupPager(resour
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *TopLevelTrackedResourcesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *TopLevelTrackedResourcesClientListByResourceGroupOptions) (*policy.Request, error) {
-	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources"
+func (client *TopLevelClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *TopLevelClientListByResourceGroupOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Resources/topLevelTrackedResources"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
@@ -373,10 +370,10 @@ func (client *TopLevelTrackedResourcesClient) listByResourceGroupCreateRequest(c
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *TopLevelTrackedResourcesClient) listByResourceGroupHandleResponse(resp *http.Response) (TopLevelTrackedResourcesClientListByResourceGroupResponse, error) {
-	result := TopLevelTrackedResourcesClientListByResourceGroupResponse{}
+func (client *TopLevelClient) listByResourceGroupHandleResponse(resp *http.Response) (TopLevelClientListByResourceGroupResponse, error) {
+	result := TopLevelClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TopLevelTrackedResourceListResult); err != nil {
-		return TopLevelTrackedResourcesClientListByResourceGroupResponse{}, err
+		return TopLevelClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -384,15 +381,15 @@ func (client *TopLevelTrackedResourcesClient) listByResourceGroupHandleResponse(
 // NewListBySubscriptionPager - List TopLevelTrackedResource resources by subscription ID
 //
 // Generated from API version 2023-12-01-preview
-//   - options - TopLevelTrackedResourcesClientListBySubscriptionOptions contains the optional parameters for the TopLevelTrackedResourcesClient.NewListBySubscriptionPager
+//   - options - TopLevelClientListBySubscriptionOptions contains the optional parameters for the TopLevelClient.NewListBySubscriptionPager
 //     method.
-func (client *TopLevelTrackedResourcesClient) NewListBySubscriptionPager(options *TopLevelTrackedResourcesClientListBySubscriptionOptions) *runtime.Pager[TopLevelTrackedResourcesClientListBySubscriptionResponse] {
-	return runtime.NewPager(runtime.PagingHandler[TopLevelTrackedResourcesClientListBySubscriptionResponse]{
-		More: func(page TopLevelTrackedResourcesClientListBySubscriptionResponse) bool {
+func (client *TopLevelClient) NewListBySubscriptionPager(options *TopLevelClientListBySubscriptionOptions) *runtime.Pager[TopLevelClientListBySubscriptionResponse] {
+	return runtime.NewPager(runtime.PagingHandler[TopLevelClientListBySubscriptionResponse]{
+		More: func(page TopLevelClientListBySubscriptionResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		Fetcher: func(ctx context.Context, page *TopLevelTrackedResourcesClientListBySubscriptionResponse) (TopLevelTrackedResourcesClientListBySubscriptionResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TopLevelTrackedResourcesClient.NewListBySubscriptionPager")
+		Fetcher: func(ctx context.Context, page *TopLevelClientListBySubscriptionResponse) (TopLevelClientListBySubscriptionResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TopLevelClient.NewListBySubscriptionPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -401,7 +398,7 @@ func (client *TopLevelTrackedResourcesClient) NewListBySubscriptionPager(options
 				return client.listBySubscriptionCreateRequest(ctx, options)
 			}, nil)
 			if err != nil {
-				return TopLevelTrackedResourcesClientListBySubscriptionResponse{}, err
+				return TopLevelClientListBySubscriptionResponse{}, err
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
@@ -410,8 +407,8 @@ func (client *TopLevelTrackedResourcesClient) NewListBySubscriptionPager(options
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *TopLevelTrackedResourcesClient) listBySubscriptionCreateRequest(ctx context.Context, _ *TopLevelTrackedResourcesClientListBySubscriptionOptions) (*policy.Request, error) {
-	urlPath := "/subscriptions/{subscriptionId}/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources"
+func (client *TopLevelClient) listBySubscriptionCreateRequest(ctx context.Context, _ *TopLevelClientListBySubscriptionOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/providers/Azure.ResourceManager.Resources/topLevelTrackedResources"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
@@ -428,10 +425,10 @@ func (client *TopLevelTrackedResourcesClient) listBySubscriptionCreateRequest(ct
 }
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
-func (client *TopLevelTrackedResourcesClient) listBySubscriptionHandleResponse(resp *http.Response) (TopLevelTrackedResourcesClientListBySubscriptionResponse, error) {
-	result := TopLevelTrackedResourcesClientListBySubscriptionResponse{}
+func (client *TopLevelClient) listBySubscriptionHandleResponse(resp *http.Response) (TopLevelClientListBySubscriptionResponse, error) {
+	result := TopLevelClientListBySubscriptionResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TopLevelTrackedResourceListResult); err != nil {
-		return TopLevelTrackedResourcesClientListBySubscriptionResponse{}, err
+		return TopLevelClientListBySubscriptionResponse{}, err
 	}
 	return result, nil
 }
@@ -443,20 +440,19 @@ func (client *TopLevelTrackedResourcesClient) listBySubscriptionHandleResponse(r
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - topLevelTrackedResourceName - arm resource name for path
 //   - properties - The resource properties to be updated.
-//   - options - TopLevelTrackedResourcesClientBeginUpdateOptions contains the optional parameters for the TopLevelTrackedResourcesClient.BeginUpdate
-//     method.
-func (client *TopLevelTrackedResourcesClient) BeginUpdate(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, properties TopLevelTrackedResource, options *TopLevelTrackedResourcesClientBeginUpdateOptions) (*runtime.Poller[TopLevelTrackedResourcesClientUpdateResponse], error) {
+//   - options - TopLevelClientBeginUpdateOptions contains the optional parameters for the TopLevelClient.BeginUpdate method.
+func (client *TopLevelClient) BeginUpdate(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, properties TopLevelTrackedResource, options *TopLevelClientBeginUpdateOptions) (*runtime.Poller[TopLevelClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, topLevelTrackedResourceName, properties, options)
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[TopLevelTrackedResourcesClientUpdateResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[TopLevelClientUpdateResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[TopLevelTrackedResourcesClientUpdateResponse]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[TopLevelClientUpdateResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 	}
@@ -466,9 +462,9 @@ func (client *TopLevelTrackedResourcesClient) BeginUpdate(ctx context.Context, r
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2023-12-01-preview
-func (client *TopLevelTrackedResourcesClient) update(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, properties TopLevelTrackedResource, options *TopLevelTrackedResourcesClientBeginUpdateOptions) (*http.Response, error) {
+func (client *TopLevelClient) update(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, properties TopLevelTrackedResource, options *TopLevelClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
-	const operationName = "TopLevelTrackedResourcesClient.BeginUpdate"
+	const operationName = "TopLevelClient.BeginUpdate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
@@ -488,8 +484,8 @@ func (client *TopLevelTrackedResourcesClient) update(ctx context.Context, resour
 }
 
 // updateCreateRequest creates the Update request.
-func (client *TopLevelTrackedResourcesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, properties TopLevelTrackedResource, _ *TopLevelTrackedResourcesClientBeginUpdateOptions) (*policy.Request, error) {
-	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}"
+func (client *TopLevelClient) updateCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, properties TopLevelTrackedResource, _ *TopLevelClientBeginUpdateOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}

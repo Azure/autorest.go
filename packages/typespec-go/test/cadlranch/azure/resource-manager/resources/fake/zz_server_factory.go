@@ -15,11 +15,14 @@ import (
 
 // ServerFactory is a fake server for instances of the resources.ClientFactory type.
 type ServerFactory struct {
-	// NestedProxyResourcesServer contains the fakes for client NestedProxyResourcesClient
-	NestedProxyResourcesServer NestedProxyResourcesServer
+	// NestedServer contains the fakes for client NestedClient
+	NestedServer NestedServer
 
-	// TopLevelTrackedResourcesServer contains the fakes for client TopLevelTrackedResourcesClient
-	TopLevelTrackedResourcesServer TopLevelTrackedResourcesServer
+	// SingletonServer contains the fakes for client SingletonClient
+	SingletonServer SingletonServer
+
+	// TopLevelServer contains the fakes for client TopLevelClient
+	TopLevelServer TopLevelServer
 }
 
 // NewServerFactoryTransport creates a new instance of ServerFactoryTransport with the provided implementation.
@@ -34,10 +37,11 @@ func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
 // ServerFactoryTransport connects instances of resources.ClientFactory to instances of ServerFactory.
 // Don't use this type directly, use NewServerFactoryTransport instead.
 type ServerFactoryTransport struct {
-	srv                              *ServerFactory
-	trMu                             sync.Mutex
-	trNestedProxyResourcesServer     *NestedProxyResourcesServerTransport
-	trTopLevelTrackedResourcesServer *TopLevelTrackedResourcesServerTransport
+	srv               *ServerFactory
+	trMu              sync.Mutex
+	trNestedServer    *NestedServerTransport
+	trSingletonServer *SingletonServerTransport
+	trTopLevelServer  *TopLevelServerTransport
 }
 
 // Do implements the policy.Transporter interface for ServerFactoryTransport.
@@ -53,16 +57,15 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	var err error
 
 	switch client {
-	case "NestedProxyResourcesClient":
-		initServer(s, &s.trNestedProxyResourcesServer, func() *NestedProxyResourcesServerTransport {
-			return NewNestedProxyResourcesServerTransport(&s.srv.NestedProxyResourcesServer)
-		})
-		resp, err = s.trNestedProxyResourcesServer.Do(req)
-	case "TopLevelTrackedResourcesClient":
-		initServer(s, &s.trTopLevelTrackedResourcesServer, func() *TopLevelTrackedResourcesServerTransport {
-			return NewTopLevelTrackedResourcesServerTransport(&s.srv.TopLevelTrackedResourcesServer)
-		})
-		resp, err = s.trTopLevelTrackedResourcesServer.Do(req)
+	case "NestedClient":
+		initServer(s, &s.trNestedServer, func() *NestedServerTransport { return NewNestedServerTransport(&s.srv.NestedServer) })
+		resp, err = s.trNestedServer.Do(req)
+	case "SingletonClient":
+		initServer(s, &s.trSingletonServer, func() *SingletonServerTransport { return NewSingletonServerTransport(&s.srv.SingletonServer) })
+		resp, err = s.trSingletonServer.Do(req)
+	case "TopLevelClient":
+		initServer(s, &s.trTopLevelServer, func() *TopLevelServerTransport { return NewTopLevelServerTransport(&s.srv.TopLevelServer) })
+		resp, err = s.trTopLevelServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

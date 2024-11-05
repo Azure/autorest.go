@@ -14,19 +14,19 @@ import (
 func TestPublicOperationClient_NoDecoratorInPublic(t *testing.T) {
 	client, err := NewAccessClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewAccessPublicOperationClient().NoDecoratorInPublic(context.Background(), "foo", nil)
+	resp, err := client.NewAccessPublicOperationClient().NoDecoratorInPublic(context.Background(), "sample", nil)
 	require.NoError(t, err)
 	require.Equal(t, NoDecoratorModelInPublic{
-		Name: to.Ptr("foo"),
+		Name: to.Ptr("sample"),
 	}, resp.NoDecoratorModelInPublic)
 }
 
 func TestPublicOperationClient_PublicDecoratorInPublic(t *testing.T) {
 	client, err := NewAccessClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewAccessPublicOperationClient().PublicDecoratorInPublic(context.Background(), "foo", nil)
+	resp, err := client.NewAccessPublicOperationClient().PublicDecoratorInPublic(context.Background(), "sample", nil)
 	require.NoError(t, err)
 	require.Equal(t, PublicDecoratorModelInPublic{
-		Name: to.Ptr("foo"),
+		Name: to.Ptr("sample"),
 	}, resp.PublicDecoratorModelInPublic)
 }

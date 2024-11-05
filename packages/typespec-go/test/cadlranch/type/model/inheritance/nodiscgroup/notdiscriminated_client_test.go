@@ -43,9 +43,9 @@ func TestNotDiscriminatedClientPutValid(t *testing.T) {
 	client, err := nodiscgroup.NewNotDiscriminatedClient(nil)
 	require.NoError(t, err)
 	myCat := nodiscgroup.Siamese{
-		Age:   to.Ptr[int32](9),
-		Name:  to.Ptr("Luna"),
-		Smart: to.Ptr(false),
+		Age:   to.Ptr[int32](32),
+		Name:  to.Ptr("abc"),
+		Smart: to.Ptr(true),
 	}
 	resp, err := client.PutValid(context.Background(), myCat, nil)
 	require.NoError(t, err)

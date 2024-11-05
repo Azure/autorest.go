@@ -51,6 +51,49 @@ type NotificationDetails struct {
 	Urgent *bool
 }
 
+// SingletonTrackedResource - Concrete tracked resource types can be created by aliasing this type using a specific property
+// type.
+type SingletonTrackedResource struct {
+	// REQUIRED; The geo-location where the resource lives
+	Location *string
+
+	// The resource-specific properties for this resource.
+	Properties *SingletonTrackedResourceProperties
+
+	// Resource tags.
+	Tags map[string]*string
+
+	// READ-ONLY; The name of the SingletonTrackedResource
+	Name *string
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+// SingletonTrackedResourceListResult - The response of a SingletonTrackedResource list operation.
+type SingletonTrackedResourceListResult struct {
+	// REQUIRED; The SingletonTrackedResource items on this page
+	Value []*SingletonTrackedResource
+
+	// The link to the next page of items
+	NextLink *string
+}
+
+// SingletonTrackedResourceProperties - Singleton Arm Resource Properties.
+type SingletonTrackedResourceProperties struct {
+	// The description of the resource.
+	Description *string
+
+	// READ-ONLY; The status of the last operation.
+	ProvisioningState *ProvisioningState
+}
+
 // SystemData - Metadata pertaining to creation and last modification of the resource.
 type SystemData struct {
 	// The timestamp of resource creation (UTC).

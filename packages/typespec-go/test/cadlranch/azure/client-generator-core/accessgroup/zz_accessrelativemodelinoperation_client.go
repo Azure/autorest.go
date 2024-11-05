@@ -18,11 +18,11 @@ type AccessRelativeModelInOperationClient struct {
 	internal *azcore.Client
 }
 
-// discriminator - Expected query parameter: kind=<any string>
+// discriminator - Expected query parameter: kind= "real"
 // Expected response body:
 // ```json
 // {
-// "name": <any string>,
+// "name": "Madge",
 // "kind": "real"
 // }
 // ```
@@ -74,14 +74,14 @@ func (client *AccessRelativeModelInOperationClient) discriminatorHandleResponse(
 	return result, nil
 }
 
-// operation - Expected query parameter: name=<any string>
+// operation - Expected query parameter: name="Madge"
 // Expected response body:
 // ```json
 // {
-// "name": <any string>,
+// "name": "Madge",
 // "inner":
 // {
-// "name": <any string>
+// "name": "Madge"
 // }
 // }
 // ```
