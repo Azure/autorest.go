@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { capitalize, uncapitalize } from '@azure-tools/codegen';
+import { camelCase, capitalize, uncapitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import * as go from '../../../codemodel.go/src/index.js';
 import * as helpers from '../helpers.js';
@@ -112,7 +112,7 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
       content += `\t// ${operationName} is the fake for method ${client.name}.${operationName}\n`;
       const successCodes = new Array<string>();
       if (method.responseEnvelope.result && go.isAnyResult(method.responseEnvelope.result)) {
-        for (const httpStatus of values(method.httpStatusCodes)) {
+        for (const httpStatus of getMethodStatusCodes(method)) {
           const result = method.responseEnvelope.result.httpStatusCodeType[httpStatus];
           if (!result) {
             // the operation contains a mix of schemas and non-schema responses
@@ -126,7 +126,7 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
           content += `\t//   - ${successCode}\n`;
         }
       } else {
-        for (const statusCode of values(method.httpStatusCodes)) {
+        for (const statusCode of getMethodStatusCodes(method)) {
           successCodes.push(`${helpers.formatStatusCode(statusCode)}`);
         }
         content += `\t// HTTP status codes to indicate success: ${successCodes.join(', ')}\n`;
@@ -207,6 +207,11 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     content += generateServerTransportMethodDispatch(serverTransport, client, finalMethods);
     content += generateServerTransportMethods(codeModel, serverTransport, finalMethods, imports);
 
+    content += `// set this to conditionally intercept incoming requests to ${serverTransport}\n`;
+    content += `var ${getTransportInterceptorVarName(client)} interface {\n`;
+    content += '\t// Do returns true if the server transport should use the returned response/error\n';
+    content += '\tDo(*http.Request) (*http.Response, error, bool)\n}\n';
+
     ///////////////////////////////////////////////////////////////////////////
 
     // stitch everything together
@@ -216,6 +221,10 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     operations.push(new OperationGroupContent(serverName, text));
   }
   return new ServerContent(operations, generateServerInternal(codeModel, requiredHelpers));
+}
+
+function getTransportInterceptorVarName(client: go.Client): string {
+  return `${camelCase(getServerName(client))}TransportInterceptor`;
 }
 
 // method names for fakes dispatching
@@ -275,19 +284,38 @@ function generateServerTransportMethodDispatch(serverTransport: string, client: 
 
   const receiverName = serverTransport[0].toLowerCase();
   let content = `func (${receiverName} *${serverTransport}) ${dispatchMethodFake}(req *http.Request, method string) (*http.Response, error) {\n`;
-  content += '\tvar resp *http.Response\n';
-  content += '\tvar err error\n\n';
-  content += '\tswitch method {\n';
+  content += '\tresultChan := make(chan result)\n';
+  content += '\tdefer close(resultChan)\n\n';
+  content += '\tgo func() {\n\t\tvar intercepted bool\n\t\tvar res result\n';
+  const interceptorVarName = getTransportInterceptorVarName(client);
+  content += `\t\t if ${interceptorVarName} != nil {\n`;
+  content += `\t\t\t res.resp, res.err, intercepted = ${interceptorVarName}.Do(req)\n\t\t}\n`;
+  content += '\t\tif !intercepted {\n';
+  content += '\t\t\tswitch method {\n';
 
   for (const method of values(finalMethods)) {
     const operationName = fixUpMethodName(method);
-    content += `\tcase "${client.name}.${operationName}":\n`;
-    content += `\t\tresp, err = ${receiverName}.dispatch${operationName}(req)\n`;
+    content += `\t\t\tcase "${client.name}.${operationName}":\n`;
+    content += `\t\t\t\tres.resp, res.err = ${receiverName}.dispatch${operationName}(req)\n`;
   }
 
-  content += '\tdefault:\n\t\terr = fmt.Errorf("unhandled API %s", method)\n';
-  content += '\t}\n\n'; // end switch
-  content += '\treturn resp, err\n}\n\n';
+  content += '\t\t\t\tdefault:\n\t\tres.err = fmt.Errorf("unhandled API %s", method)\n';
+  content += '\t\t\t}\n\n'; // end switch
+  content += '\t\t}\n'; // end if !intercepted
+
+  content += '\t\tselect {\n';
+  content += '\t\tcase resultChan <- res:\n';
+  content += '\t\tcase <-req.Context().Done():\n';
+  content += '\t\t}\n';
+  content += '\t}()\n\n'; // end goroutine
+
+  content += '\tselect {\n';
+  content += '\tcase <-req.Context().Done():\n';
+  content += '\t\treturn nil, req.Context().Err()\n';
+  content += '\tcase res := <-resultChan:\n';
+  content += '\t\treturn res.resp, res.err\n';
+  content += '\t}\n}\n\n';
+
   return content;
 }
 
@@ -426,16 +454,19 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     content += '\t\tswitch fn := part.FormName(); fn {\n';
 
     // specify boolTarget if parsing bools happens in place.
-    // in this case, the err check is omitted and assumed to happen elsewhere.
-    // the parsed value is in a local var named parsed.
+    // i.e. the result from the parsing doesn't require further conversion (e.g. casting)
+    // otherwise the parsed value is in a local var named parsed.
     const parsePrimitiveType = function (typeName: go.PrimitiveTypeName, boolTarget?: string): string {
-      const parseResults = 'parsed, parseErr';
+      let parseErr = 'parseErr';
+      const parseResults = `parsed, ${parseErr}`;
       let parsingCode = '';
       imports.add('strconv');
       switch (typeName) {
         case 'bool':
           if (boolTarget) {
-            parsingCode = `\t\t\t${boolTarget} = strconv.ParseBool(string(content))\n`;
+            // we reuse the err var declared earlier when calling reader.NextPart()
+            parsingCode = `\t\t\t${boolTarget}, err = strconv.ParseBool(string(content))\n`;
+            parseErr = 'err';
           } else {
             parsingCode = `\t\t\t${parseResults} := strconv.ParseBool(string(content))\n`;
           }
@@ -453,9 +484,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
         default:
           throw new Error(`unhandled multipart parameter primitive type ${typeName}`);
       }
-      if (!boolTarget) {
-        parsingCode += '\t\t\tif parseErr != nil {\n\t\t\t\treturn nil, parseErr\n\t\t\t}\n';
-      }
+      parsingCode += `\t\t\tif ${parseErr} != nil {\n\t\t\t\treturn nil, ${parseErr}\n\t\t\t}\n`;
       return parsingCode;
     };
 
@@ -497,7 +526,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
           case 'bool':
             imports.add('strconv');
             // ParseBool happens in place, so no need to set assignedValue
-            caseContent += parsePrimitiveType(type.typeName, `${paramVar}, err`);
+            caseContent += parsePrimitiveType(type.typeName, paramVar);
             break;
           case 'float32':
           case 'float64':
@@ -658,6 +687,22 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
   return content;
 }
 
+function getMethodStatusCodes(method: go.Method): Array<number> {
+  // NOTE: don't modify the original array!
+  const statusCodes = Array.from(method.httpStatusCodes);
+  if (go.isLROMethod(method)) {
+    if (!statusCodes.includes(200)) {
+      // pollers always include 200 as an acceptible status code so we emulate that here
+      statusCodes.unshift(200);
+    }
+    if (!method.responseEnvelope.result && !statusCodes.includes(204)) {
+      // also include 204 if the LRO doesn't return a body
+      statusCodes.push(204);
+    }
+  }
+  return statusCodes;
+}
+
 function dispatchForLROBody(clientPkg: string, receiverName: string, method: go.Method, imports: ImportManager): string {
   const operationName = fixUpMethodName(method);
   const localVarName = uncapitalize(operationName);
@@ -672,7 +717,7 @@ function dispatchForLROBody(clientPkg: string, receiverName: string, method: go.
   content += `\tresp, err := server.PollerResponderNext(${localVarName}, req)\n`;
   content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n\n';
 
-  const formattedStatusCodes = helpers.formatStatusCodes(method.httpStatusCodes);
+  const formattedStatusCodes = helpers.formatStatusCodes(getMethodStatusCodes(method));
   content += `\tif !contains([]int{${formattedStatusCodes}}, resp.StatusCode) {\n`;
   content += `\t\t${operationStateMachine}.remove(req)\n`;
   content += `\t\treturn nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", resp.StatusCode)}\n\t}\n`;

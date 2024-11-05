@@ -71,23 +71,42 @@ func (v *VirtualHubRouteTableV2SServerTransport) Do(req *http.Request) (*http.Re
 }
 
 func (v *VirtualHubRouteTableV2SServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualHubRouteTableV2SClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualHubRouteTableV2SClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualHubRouteTableV2SClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualHubRouteTableV2SClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if virtualHubRouteTableV2SServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualHubRouteTableV2SServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VirtualHubRouteTableV2SClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualHubRouteTableV2SClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualHubRouteTableV2SClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualHubRouteTableV2SClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualHubRouteTableV2SServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -266,4 +285,10 @@ func (v *VirtualHubRouteTableV2SServerTransport) dispatchNewListPager(req *http.
 		v.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualHubRouteTableV2SServerTransport
+var virtualHubRouteTableV2SServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

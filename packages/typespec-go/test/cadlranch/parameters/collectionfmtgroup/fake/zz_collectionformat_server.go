@@ -70,3 +70,9 @@ func (c *CollectionFormatServerTransport) dispatchToClientFake(req *http.Request
 
 	return resp, err
 }
+
+// set this to conditionally intercept incoming requests to CollectionFormatServerTransport
+var collectionFormatServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
+}

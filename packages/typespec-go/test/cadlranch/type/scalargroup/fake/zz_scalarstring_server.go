@@ -51,19 +51,38 @@ func (s *ScalarStringServerTransport) Do(req *http.Request) (*http.Response, err
 }
 
 func (s *ScalarStringServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ScalarStringClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "ScalarStringClient.Put":
-		resp, err = s.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if scalarStringServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = scalarStringServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ScalarStringClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "ScalarStringClient.Put":
+				res.resp, res.err = s.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ScalarStringServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -106,4 +125,10 @@ func (s *ScalarStringServerTransport) dispatchPut(req *http.Request) (*http.Resp
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ScalarStringServerTransport
+var scalarStringServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -42,15 +42,15 @@ type CloudServiceRoleInstancesServer struct {
 	NewListPager func(resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientListOptions) (resp azfake.PagerResponder[armcompute.CloudServiceRoleInstancesClientListResponse])
 
 	// BeginRebuild is the fake for method CloudServiceRoleInstancesClient.BeginRebuild
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginRebuild func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientBeginRebuildOptions) (resp azfake.PollerResponder[armcompute.CloudServiceRoleInstancesClientRebuildResponse], errResp azfake.ErrorResponder)
 
 	// BeginReimage is the fake for method CloudServiceRoleInstancesClient.BeginReimage
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginReimage func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientBeginReimageOptions) (resp azfake.PollerResponder[armcompute.CloudServiceRoleInstancesClientReimageResponse], errResp azfake.ErrorResponder)
 
 	// BeginRestart is the fake for method CloudServiceRoleInstancesClient.BeginRestart
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginRestart func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientBeginRestartOptions) (resp azfake.PollerResponder[armcompute.CloudServiceRoleInstancesClientRestartResponse], errResp azfake.ErrorResponder)
 }
 
@@ -91,31 +91,50 @@ func (c *CloudServiceRoleInstancesServerTransport) Do(req *http.Request) (*http.
 }
 
 func (c *CloudServiceRoleInstancesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "CloudServiceRoleInstancesClient.BeginDelete":
-		resp, err = c.dispatchBeginDelete(req)
-	case "CloudServiceRoleInstancesClient.Get":
-		resp, err = c.dispatchGet(req)
-	case "CloudServiceRoleInstancesClient.GetInstanceView":
-		resp, err = c.dispatchGetInstanceView(req)
-	case "CloudServiceRoleInstancesClient.GetRemoteDesktopFile":
-		resp, err = c.dispatchGetRemoteDesktopFile(req)
-	case "CloudServiceRoleInstancesClient.NewListPager":
-		resp, err = c.dispatchNewListPager(req)
-	case "CloudServiceRoleInstancesClient.BeginRebuild":
-		resp, err = c.dispatchBeginRebuild(req)
-	case "CloudServiceRoleInstancesClient.BeginReimage":
-		resp, err = c.dispatchBeginReimage(req)
-	case "CloudServiceRoleInstancesClient.BeginRestart":
-		resp, err = c.dispatchBeginRestart(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if cloudServiceRoleInstancesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = cloudServiceRoleInstancesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "CloudServiceRoleInstancesClient.BeginDelete":
+				res.resp, res.err = c.dispatchBeginDelete(req)
+			case "CloudServiceRoleInstancesClient.Get":
+				res.resp, res.err = c.dispatchGet(req)
+			case "CloudServiceRoleInstancesClient.GetInstanceView":
+				res.resp, res.err = c.dispatchGetInstanceView(req)
+			case "CloudServiceRoleInstancesClient.GetRemoteDesktopFile":
+				res.resp, res.err = c.dispatchGetRemoteDesktopFile(req)
+			case "CloudServiceRoleInstancesClient.NewListPager":
+				res.resp, res.err = c.dispatchNewListPager(req)
+			case "CloudServiceRoleInstancesClient.BeginRebuild":
+				res.resp, res.err = c.dispatchBeginRebuild(req)
+			case "CloudServiceRoleInstancesClient.BeginReimage":
+				res.resp, res.err = c.dispatchBeginReimage(req)
+			case "CloudServiceRoleInstancesClient.BeginRestart":
+				res.resp, res.err = c.dispatchBeginRestart(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginDelete(req *http.Request) (*http.Response, error) {
@@ -382,9 +401,9 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginRebuild(req *htt
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		c.beginRebuild.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRebuild) {
 		c.beginRebuild.remove(req)
@@ -430,9 +449,9 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginReimage(req *htt
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		c.beginReimage.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginReimage) {
 		c.beginReimage.remove(req)
@@ -478,13 +497,19 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginRestart(req *htt
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		c.beginRestart.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRestart) {
 		c.beginRestart.remove(req)
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to CloudServiceRoleInstancesServerTransport
+var cloudServiceRoleInstancesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

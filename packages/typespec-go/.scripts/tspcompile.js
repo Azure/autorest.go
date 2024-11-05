@@ -11,7 +11,7 @@ const pkgRoot = execSync('git rev-parse --show-toplevel').toString().trim() + '/
 
 const tspRoot = pkgRoot + 'node_modules/@azure-tools/cadl-ranch-specs/http/';
 
-const compiler = pkgRoot + 'node_modules/@typespec/compiler/node_modules/.bin/tsp';
+const compiler = pkgRoot + 'node_modules/@typespec/compiler/cmd/tsp.js';
 
 // the format is as follows
 // 'moduleName': [ 'input', 'emitter option 1', 'emitter option N...' ]
@@ -28,8 +28,8 @@ const cadlRanch = {
   'lrostdgroup': ['azure/core/lro/standard'],
   'azurepagegroup': ['azure/core/page'],
   'corescalargroup': ['azure/core/scalar'],
-  'managed_identity': ['azure/resource-manager/models/common-types/managed-identity'],
-  'resources': ['azure/resource-manager/models/resources'],
+  'commonpropsgroup': ['azure/resource-manager/common-properties'],
+  //'resources': ['azure/resource-manager/models/resources'], // TODO: https://github.com/Azure/typespec-azure/issues/1709
   //'traitsgroup': ['azure/core/traits'], // requires union support
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
   'naminggroup': ['client/naming'],
@@ -48,8 +48,9 @@ const cadlRanch = {
   'contentneggroup': ['payload/content-negotiation'],
   'jmergepatchgroup': ['payload/json-merge-patch'],
   'mediatypegroup': ['payload/media-type'],
-  'multipartgroup': ['payload/multipart'],
+  //'multipartgroup': ['payload/multipart'], // TODO: https://github.com/Azure/autorest.go/issues/1445
   'pageablegroup': ['payload/pageable'],
+  'xmlgroup': ['payload/xml', 'slice-elements-byval=true'],
   'srvdrivenoldgroup': ['resiliency/srv-driven/old.tsp'],
   'srvdrivennewgroup': ['resiliency/srv-driven'],
   'jsongroup': ['serialization/encoded-name/json'],
@@ -148,6 +149,9 @@ generate('armcommunitymanagement', armcommunitymanagement, 'test/armcommunityman
 const armmongocluster = pkgRoot + 'test/tsp/MongoCluster.Management';
 generate('armmongocluster', armmongocluster, 'test/armmongocluster');
 
+const armcontainerorchestratorruntime = pkgRoot + 'test/tsp/KubernetesRuntime.Management';
+generate('armcontainerorchestratorruntime', armcontainerorchestratorruntime, 'test/armcontainerorchestratorruntime');
+
 const azmodelsonly = pkgRoot + 'test/tsp/ModelsOnlyWithBaseTypes';
 generate('azmodelsonly', azmodelsonly, 'test/azmodelsonly', ['remove-unreferenced-types=false']);
 
@@ -186,6 +190,7 @@ function generate(moduleName, input, outputDir, perTestOptions) {
   ];
 
   // these options _can_ be changed per test
+  // TODO: disabled examples by default https://github.com/Azure/autorest.go/issues/1441
   const defaultOptions = [
     'module-version=0.1.0',
     'generate-fakes=true',
@@ -231,7 +236,7 @@ function generate(moduleName, input, outputDir, perTestOptions) {
       if (switches.includes('--debugger')) {
         options.push(`--option="@azure-tools/typespec-go.debugger=true"`);
       }
-      const command = `${compiler} compile ${input} --emit=${pkgRoot} ${options.join(' ')}`;
+      const command = `node ${compiler} compile ${input} --emit=${pkgRoot} ${options.join(' ')}`;
       if (switches.includes('--verbose')) {
         console.log(command);
       }

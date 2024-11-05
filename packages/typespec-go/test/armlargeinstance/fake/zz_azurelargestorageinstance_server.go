@@ -20,6 +20,14 @@ import (
 
 // AzureLargeStorageInstanceServer is a fake server for instances of the armlargeinstance.AzureLargeStorageInstanceClient type.
 type AzureLargeStorageInstanceServer struct {
+	// Create is the fake for method AzureLargeStorageInstanceClient.Create
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
+	Create func(ctx context.Context, resourceGroupName string, azureLargeStorageInstanceName string, resource armlargeinstance.AzureLargeStorageInstance, options *armlargeinstance.AzureLargeStorageInstanceClientCreateOptions) (resp azfake.Responder[armlargeinstance.AzureLargeStorageInstanceClientCreateResponse], errResp azfake.ErrorResponder)
+
+	// Delete is the fake for method AzureLargeStorageInstanceClient.Delete
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
+	Delete func(ctx context.Context, resourceGroupName string, azureLargeStorageInstanceName string, options *armlargeinstance.AzureLargeStorageInstanceClientDeleteOptions) (resp azfake.Responder[armlargeinstance.AzureLargeStorageInstanceClientDeleteResponse], errResp azfake.ErrorResponder)
+
 	// Get is the fake for method AzureLargeStorageInstanceClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
 	Get func(ctx context.Context, resourceGroupName string, azureLargeStorageInstanceName string, options *armlargeinstance.AzureLargeStorageInstanceClientGetOptions) (resp azfake.Responder[armlargeinstance.AzureLargeStorageInstanceClientGetResponse], errResp azfake.ErrorResponder)
@@ -68,23 +76,116 @@ func (a *AzureLargeStorageInstanceServerTransport) Do(req *http.Request) (*http.
 }
 
 func (a *AzureLargeStorageInstanceServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "AzureLargeStorageInstanceClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "AzureLargeStorageInstanceClient.NewListByResourceGroupPager":
-		resp, err = a.dispatchNewListByResourceGroupPager(req)
-	case "AzureLargeStorageInstanceClient.NewListBySubscriptionPager":
-		resp, err = a.dispatchNewListBySubscriptionPager(req)
-	case "AzureLargeStorageInstanceClient.Update":
-		resp, err = a.dispatchUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if azureLargeStorageInstanceServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = azureLargeStorageInstanceServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "AzureLargeStorageInstanceClient.Create":
+				res.resp, res.err = a.dispatchCreate(req)
+			case "AzureLargeStorageInstanceClient.Delete":
+				res.resp, res.err = a.dispatchDelete(req)
+			case "AzureLargeStorageInstanceClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "AzureLargeStorageInstanceClient.NewListByResourceGroupPager":
+				res.resp, res.err = a.dispatchNewListByResourceGroupPager(req)
+			case "AzureLargeStorageInstanceClient.NewListBySubscriptionPager":
+				res.resp, res.err = a.dispatchNewListBySubscriptionPager(req)
+			case "AzureLargeStorageInstanceClient.Update":
+				res.resp, res.err = a.dispatchUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
+}
 
-	return resp, err
+func (a *AzureLargeStorageInstanceServerTransport) dispatchCreate(req *http.Request) (*http.Response, error) {
+	if a.srv.Create == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Create not implemented")}
+	}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.AzureLargeInstance/azureLargeStorageInstances/(?P<azureLargeStorageInstanceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 3 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	body, err := server.UnmarshalRequestAsJSON[armlargeinstance.AzureLargeStorageInstance](req)
+	if err != nil {
+		return nil, err
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	azureLargeStorageInstanceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("azureLargeStorageInstanceName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := a.srv.Create(req.Context(), resourceGroupNameParam, azureLargeStorageInstanceNameParam, body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AzureLargeStorageInstance, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (a *AzureLargeStorageInstanceServerTransport) dispatchDelete(req *http.Request) (*http.Response, error) {
+	if a.srv.Delete == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Delete not implemented")}
+	}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.AzureLargeInstance/azureLargeStorageInstances/(?P<azureLargeStorageInstanceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 3 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	azureLargeStorageInstanceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("azureLargeStorageInstanceName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := a.srv.Delete(req.Context(), resourceGroupNameParam, azureLargeStorageInstanceNameParam, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK, http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (a *AzureLargeStorageInstanceServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -225,4 +326,10 @@ func (a *AzureLargeStorageInstanceServerTransport) dispatchUpdate(req *http.Requ
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AzureLargeStorageInstanceServerTransport
+var azureLargeStorageInstanceServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

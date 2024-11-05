@@ -60,23 +60,42 @@ func (d *DurationServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (d *DurationServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DurationClient.GetInvalid":
-		resp, err = d.dispatchGetInvalid(req)
-	case "DurationClient.GetNull":
-		resp, err = d.dispatchGetNull(req)
-	case "DurationClient.GetPositiveDuration":
-		resp, err = d.dispatchGetPositiveDuration(req)
-	case "DurationClient.PutPositiveDuration":
-		resp, err = d.dispatchPutPositiveDuration(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if durationServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = durationServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "DurationClient.GetInvalid":
+				res.resp, res.err = d.dispatchGetInvalid(req)
+			case "DurationClient.GetNull":
+				res.resp, res.err = d.dispatchGetNull(req)
+			case "DurationClient.GetPositiveDuration":
+				res.resp, res.err = d.dispatchGetPositiveDuration(req)
+			case "DurationClient.PutPositiveDuration":
+				res.resp, res.err = d.dispatchPutPositiveDuration(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DurationServerTransport) dispatchGetInvalid(req *http.Request) (*http.Response, error) {
@@ -157,4 +176,10 @@ func (d *DurationServerTransport) dispatchPutPositiveDuration(req *http.Request)
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DurationServerTransport
+var durationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

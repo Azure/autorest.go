@@ -52,19 +52,38 @@ func (x *XMSClientRequestIDServerTransport) Do(req *http.Request) (*http.Respons
 }
 
 func (x *XMSClientRequestIDServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "XMSClientRequestIDClient.Get":
-		resp, err = x.dispatchGet(req)
-	case "XMSClientRequestIDClient.ParamGet":
-		resp, err = x.dispatchParamGet(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if xmsClientRequestIdserverTransportInterceptor != nil {
+			res.resp, res.err, intercepted = xmsClientRequestIdserverTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "XMSClientRequestIDClient.Get":
+				res.resp, res.err = x.dispatchGet(req)
+			case "XMSClientRequestIDClient.ParamGet":
+				res.resp, res.err = x.dispatchParamGet(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (x *XMSClientRequestIDServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -103,4 +122,10 @@ func (x *XMSClientRequestIDServerTransport) dispatchParamGet(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to XMSClientRequestIDServerTransport
+var xmsClientRequestIdserverTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

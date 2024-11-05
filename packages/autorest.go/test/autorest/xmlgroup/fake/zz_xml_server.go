@@ -180,83 +180,102 @@ func (x *XMLServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (x *XMLServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "XMLClient.GetACLs":
-		resp, err = x.dispatchGetACLs(req)
-	case "XMLClient.GetBytes":
-		resp, err = x.dispatchGetBytes(req)
-	case "XMLClient.GetComplexTypeRefNoMeta":
-		resp, err = x.dispatchGetComplexTypeRefNoMeta(req)
-	case "XMLClient.GetComplexTypeRefWithMeta":
-		resp, err = x.dispatchGetComplexTypeRefWithMeta(req)
-	case "XMLClient.GetEmptyChildElement":
-		resp, err = x.dispatchGetEmptyChildElement(req)
-	case "XMLClient.GetEmptyList":
-		resp, err = x.dispatchGetEmptyList(req)
-	case "XMLClient.GetEmptyRootList":
-		resp, err = x.dispatchGetEmptyRootList(req)
-	case "XMLClient.GetEmptyWrappedLists":
-		resp, err = x.dispatchGetEmptyWrappedLists(req)
-	case "XMLClient.GetHeaders":
-		resp, err = x.dispatchGetHeaders(req)
-	case "XMLClient.GetRootList":
-		resp, err = x.dispatchGetRootList(req)
-	case "XMLClient.GetRootListSingleItem":
-		resp, err = x.dispatchGetRootListSingleItem(req)
-	case "XMLClient.GetServiceProperties":
-		resp, err = x.dispatchGetServiceProperties(req)
-	case "XMLClient.GetSimple":
-		resp, err = x.dispatchGetSimple(req)
-	case "XMLClient.GetURI":
-		resp, err = x.dispatchGetURI(req)
-	case "XMLClient.GetWrappedLists":
-		resp, err = x.dispatchGetWrappedLists(req)
-	case "XMLClient.GetXMsText":
-		resp, err = x.dispatchGetXMsText(req)
-	case "XMLClient.JSONInput":
-		resp, err = x.dispatchJSONInput(req)
-	case "XMLClient.JSONOutput":
-		resp, err = x.dispatchJSONOutput(req)
-	case "XMLClient.ListBlobs":
-		resp, err = x.dispatchListBlobs(req)
-	case "XMLClient.ListContainers":
-		resp, err = x.dispatchListContainers(req)
-	case "XMLClient.PutACLs":
-		resp, err = x.dispatchPutACLs(req)
-	case "XMLClient.PutBinary":
-		resp, err = x.dispatchPutBinary(req)
-	case "XMLClient.PutComplexTypeRefNoMeta":
-		resp, err = x.dispatchPutComplexTypeRefNoMeta(req)
-	case "XMLClient.PutComplexTypeRefWithMeta":
-		resp, err = x.dispatchPutComplexTypeRefWithMeta(req)
-	case "XMLClient.PutEmptyChildElement":
-		resp, err = x.dispatchPutEmptyChildElement(req)
-	case "XMLClient.PutEmptyList":
-		resp, err = x.dispatchPutEmptyList(req)
-	case "XMLClient.PutEmptyRootList":
-		resp, err = x.dispatchPutEmptyRootList(req)
-	case "XMLClient.PutEmptyWrappedLists":
-		resp, err = x.dispatchPutEmptyWrappedLists(req)
-	case "XMLClient.PutRootList":
-		resp, err = x.dispatchPutRootList(req)
-	case "XMLClient.PutRootListSingleItem":
-		resp, err = x.dispatchPutRootListSingleItem(req)
-	case "XMLClient.PutServiceProperties":
-		resp, err = x.dispatchPutServiceProperties(req)
-	case "XMLClient.PutSimple":
-		resp, err = x.dispatchPutSimple(req)
-	case "XMLClient.PutURI":
-		resp, err = x.dispatchPutURI(req)
-	case "XMLClient.PutWrappedLists":
-		resp, err = x.dispatchPutWrappedLists(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if xmlServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = xmlServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "XMLClient.GetACLs":
+				res.resp, res.err = x.dispatchGetACLs(req)
+			case "XMLClient.GetBytes":
+				res.resp, res.err = x.dispatchGetBytes(req)
+			case "XMLClient.GetComplexTypeRefNoMeta":
+				res.resp, res.err = x.dispatchGetComplexTypeRefNoMeta(req)
+			case "XMLClient.GetComplexTypeRefWithMeta":
+				res.resp, res.err = x.dispatchGetComplexTypeRefWithMeta(req)
+			case "XMLClient.GetEmptyChildElement":
+				res.resp, res.err = x.dispatchGetEmptyChildElement(req)
+			case "XMLClient.GetEmptyList":
+				res.resp, res.err = x.dispatchGetEmptyList(req)
+			case "XMLClient.GetEmptyRootList":
+				res.resp, res.err = x.dispatchGetEmptyRootList(req)
+			case "XMLClient.GetEmptyWrappedLists":
+				res.resp, res.err = x.dispatchGetEmptyWrappedLists(req)
+			case "XMLClient.GetHeaders":
+				res.resp, res.err = x.dispatchGetHeaders(req)
+			case "XMLClient.GetRootList":
+				res.resp, res.err = x.dispatchGetRootList(req)
+			case "XMLClient.GetRootListSingleItem":
+				res.resp, res.err = x.dispatchGetRootListSingleItem(req)
+			case "XMLClient.GetServiceProperties":
+				res.resp, res.err = x.dispatchGetServiceProperties(req)
+			case "XMLClient.GetSimple":
+				res.resp, res.err = x.dispatchGetSimple(req)
+			case "XMLClient.GetURI":
+				res.resp, res.err = x.dispatchGetURI(req)
+			case "XMLClient.GetWrappedLists":
+				res.resp, res.err = x.dispatchGetWrappedLists(req)
+			case "XMLClient.GetXMsText":
+				res.resp, res.err = x.dispatchGetXMsText(req)
+			case "XMLClient.JSONInput":
+				res.resp, res.err = x.dispatchJSONInput(req)
+			case "XMLClient.JSONOutput":
+				res.resp, res.err = x.dispatchJSONOutput(req)
+			case "XMLClient.ListBlobs":
+				res.resp, res.err = x.dispatchListBlobs(req)
+			case "XMLClient.ListContainers":
+				res.resp, res.err = x.dispatchListContainers(req)
+			case "XMLClient.PutACLs":
+				res.resp, res.err = x.dispatchPutACLs(req)
+			case "XMLClient.PutBinary":
+				res.resp, res.err = x.dispatchPutBinary(req)
+			case "XMLClient.PutComplexTypeRefNoMeta":
+				res.resp, res.err = x.dispatchPutComplexTypeRefNoMeta(req)
+			case "XMLClient.PutComplexTypeRefWithMeta":
+				res.resp, res.err = x.dispatchPutComplexTypeRefWithMeta(req)
+			case "XMLClient.PutEmptyChildElement":
+				res.resp, res.err = x.dispatchPutEmptyChildElement(req)
+			case "XMLClient.PutEmptyList":
+				res.resp, res.err = x.dispatchPutEmptyList(req)
+			case "XMLClient.PutEmptyRootList":
+				res.resp, res.err = x.dispatchPutEmptyRootList(req)
+			case "XMLClient.PutEmptyWrappedLists":
+				res.resp, res.err = x.dispatchPutEmptyWrappedLists(req)
+			case "XMLClient.PutRootList":
+				res.resp, res.err = x.dispatchPutRootList(req)
+			case "XMLClient.PutRootListSingleItem":
+				res.resp, res.err = x.dispatchPutRootListSingleItem(req)
+			case "XMLClient.PutServiceProperties":
+				res.resp, res.err = x.dispatchPutServiceProperties(req)
+			case "XMLClient.PutSimple":
+				res.resp, res.err = x.dispatchPutSimple(req)
+			case "XMLClient.PutURI":
+				res.resp, res.err = x.dispatchPutURI(req)
+			case "XMLClient.PutWrappedLists":
+				res.resp, res.err = x.dispatchPutWrappedLists(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (x *XMLServerTransport) dispatchGetACLs(req *http.Request) (*http.Response, error) {
@@ -966,4 +985,10 @@ func (x *XMLServerTransport) dispatchPutWrappedLists(req *http.Request) (*http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to XMLServerTransport
+var xmlServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

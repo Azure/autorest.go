@@ -55,21 +55,40 @@ func (t *TwoOperationGroupGroup2ServerTransport) Do(req *http.Request) (*http.Re
 }
 
 func (t *TwoOperationGroupGroup2ServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "TwoOperationGroupGroup2Client.Five":
-		resp, err = t.dispatchFive(req)
-	case "TwoOperationGroupGroup2Client.Six":
-		resp, err = t.dispatchSix(req)
-	case "TwoOperationGroupGroup2Client.Two":
-		resp, err = t.dispatchTwo(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if twoOperationGroupGroup2ServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = twoOperationGroupGroup2ServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "TwoOperationGroupGroup2Client.Five":
+				res.resp, res.err = t.dispatchFive(req)
+			case "TwoOperationGroupGroup2Client.Six":
+				res.resp, res.err = t.dispatchSix(req)
+			case "TwoOperationGroupGroup2Client.Two":
+				res.resp, res.err = t.dispatchTwo(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (t *TwoOperationGroupGroup2ServerTransport) dispatchFive(req *http.Request) (*http.Response, error) {
@@ -127,4 +146,10 @@ func (t *TwoOperationGroupGroup2ServerTransport) dispatchTwo(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to TwoOperationGroupGroup2ServerTransport
+var twoOperationGroupGroup2ServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

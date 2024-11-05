@@ -63,25 +63,44 @@ func (b *BytesResponseBodyServerTransport) Do(req *http.Request) (*http.Response
 }
 
 func (b *BytesResponseBodyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "BytesResponseBodyClient.Base64":
-		resp, err = b.dispatchBase64(req)
-	case "BytesResponseBodyClient.Base64URL":
-		resp, err = b.dispatchBase64URL(req)
-	case "BytesResponseBodyClient.CustomContentType":
-		resp, err = b.dispatchCustomContentType(req)
-	case "BytesResponseBodyClient.Default":
-		resp, err = b.dispatchDefault(req)
-	case "BytesResponseBodyClient.OctetStream":
-		resp, err = b.dispatchOctetStream(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if bytesResponseBodyServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = bytesResponseBodyServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "BytesResponseBodyClient.Base64":
+				res.resp, res.err = b.dispatchBase64(req)
+			case "BytesResponseBodyClient.Base64URL":
+				res.resp, res.err = b.dispatchBase64URL(req)
+			case "BytesResponseBodyClient.CustomContentType":
+				res.resp, res.err = b.dispatchCustomContentType(req)
+			case "BytesResponseBodyClient.Default":
+				res.resp, res.err = b.dispatchDefault(req)
+			case "BytesResponseBodyClient.OctetStream":
+				res.resp, res.err = b.dispatchOctetStream(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (b *BytesResponseBodyServerTransport) dispatchBase64(req *http.Request) (*http.Response, error) {
@@ -189,4 +208,10 @@ func (b *BytesResponseBodyServerTransport) dispatchOctetStream(req *http.Request
 		resp.Header.Set("content-type", "application/octet-stream")
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to BytesResponseBodyServerTransport
+var bytesResponseBodyServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

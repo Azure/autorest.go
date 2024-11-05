@@ -62,21 +62,40 @@ func (q *QuotasServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (q *QuotasServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "QuotasClient.CheckAvailability":
-		resp, err = q.dispatchCheckAvailability(req)
-	case "QuotasClient.Get":
-		resp, err = q.dispatchGet(req)
-	case "QuotasClient.NewListPager":
-		resp, err = q.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if quotasServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = quotasServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "QuotasClient.CheckAvailability":
+				res.resp, res.err = q.dispatchCheckAvailability(req)
+			case "QuotasClient.Get":
+				res.resp, res.err = q.dispatchGet(req)
+			case "QuotasClient.NewListPager":
+				res.resp, res.err = q.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (q *QuotasServerTransport) dispatchCheckAvailability(req *http.Request) (*http.Response, error) {
@@ -184,4 +203,10 @@ func (q *QuotasServerTransport) dispatchNewListPager(req *http.Request) (*http.R
 		q.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to QuotasServerTransport
+var quotasServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

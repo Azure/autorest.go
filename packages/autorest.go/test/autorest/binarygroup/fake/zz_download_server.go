@@ -48,17 +48,36 @@ func (d *DownloadServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (d *DownloadServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DownloadClient.ErrorStream":
-		resp, err = d.dispatchErrorStream(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if downloadServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = downloadServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "DownloadClient.ErrorStream":
+				res.resp, res.err = d.dispatchErrorStream(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DownloadServerTransport) dispatchErrorStream(req *http.Request) (*http.Response, error) {
@@ -81,4 +100,10 @@ func (d *DownloadServerTransport) dispatchErrorStream(req *http.Request) (*http.
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DownloadServerTransport
+var downloadServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

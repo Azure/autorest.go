@@ -18,7 +18,7 @@ import (
 // RPCServer is a fake server for instances of the lrorpcgroup.RPCClient type.
 type RPCServer struct {
 	// BeginLongRunningRPC is the fake for method RPCClient.BeginLongRunningRPC
-	// HTTP status codes to indicate success: http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
 	BeginLongRunningRPC func(ctx context.Context, body lrorpcgroup.GenerationOptions, options *lrorpcgroup.RPCClientBeginLongRunningRPCOptions) (resp azfake.PollerResponder[lrorpcgroup.RPCClientLongRunningRPCResponse], errResp azfake.ErrorResponder)
 }
 
@@ -51,17 +51,36 @@ func (r *RPCServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (r *RPCServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "RPCClient.BeginLongRunningRPC":
-		resp, err = r.dispatchBeginLongRunningRPC(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if rpcServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = rpcServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "RPCClient.BeginLongRunningRPC":
+				res.resp, res.err = r.dispatchBeginLongRunningRPC(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (r *RPCServerTransport) dispatchBeginLongRunningRPC(req *http.Request) (*http.Response, error) {
@@ -87,13 +106,19 @@ func (r *RPCServerTransport) dispatchBeginLongRunningRPC(req *http.Request) (*ht
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
 		r.beginLongRunningRPC.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginLongRunningRPC) {
 		r.beginLongRunningRPC.remove(req)
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to RPCServerTransport
+var rpcServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

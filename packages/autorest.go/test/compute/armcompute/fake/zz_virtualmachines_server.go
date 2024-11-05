@@ -32,7 +32,7 @@ type VirtualMachinesServer struct {
 	BeginCapture func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachineCaptureParameters, options *armcompute.VirtualMachinesClientBeginCaptureOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCaptureResponse], errResp azfake.ErrorResponder)
 
 	// BeginConvertToManagedDisks is the fake for method VirtualMachinesClient.BeginConvertToManagedDisks
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginConvertToManagedDisks func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginConvertToManagedDisksOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientConvertToManagedDisksResponse], errResp azfake.ErrorResponder)
 
 	// BeginCreateOrUpdate is the fake for method VirtualMachinesClient.BeginCreateOrUpdate
@@ -40,7 +40,7 @@ type VirtualMachinesServer struct {
 	BeginCreateOrUpdate func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// BeginDeallocate is the fake for method VirtualMachinesClient.BeginDeallocate
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDeallocate func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginDeallocateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientDeallocateResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method VirtualMachinesClient.BeginDelete
@@ -80,27 +80,27 @@ type VirtualMachinesServer struct {
 	NewListByLocationPager func(location string, options *armcompute.VirtualMachinesClientListByLocationOptions) (resp azfake.PagerResponder[armcompute.VirtualMachinesClientListByLocationResponse])
 
 	// BeginPerformMaintenance is the fake for method VirtualMachinesClient.BeginPerformMaintenance
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginPerformMaintenance func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginPerformMaintenanceOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientPerformMaintenanceResponse], errResp azfake.ErrorResponder)
 
 	// BeginPowerOff is the fake for method VirtualMachinesClient.BeginPowerOff
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginPowerOff func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginPowerOffOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientPowerOffResponse], errResp azfake.ErrorResponder)
 
 	// BeginReapply is the fake for method VirtualMachinesClient.BeginReapply
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginReapply func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginReapplyOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientReapplyResponse], errResp azfake.ErrorResponder)
 
 	// BeginRedeploy is the fake for method VirtualMachinesClient.BeginRedeploy
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginRedeploy func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginRedeployOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientRedeployResponse], errResp azfake.ErrorResponder)
 
 	// BeginReimage is the fake for method VirtualMachinesClient.BeginReimage
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginReimage func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginReimageOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientReimageResponse], errResp azfake.ErrorResponder)
 
 	// BeginRestart is the fake for method VirtualMachinesClient.BeginRestart
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginRestart func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginRestartOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientRestartResponse], errResp azfake.ErrorResponder)
 
 	// RetrieveBootDiagnosticsData is the fake for method VirtualMachinesClient.RetrieveBootDiagnosticsData
@@ -116,7 +116,7 @@ type VirtualMachinesServer struct {
 	SimulateEviction func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientSimulateEvictionOptions) (resp azfake.Responder[armcompute.VirtualMachinesClientSimulateEvictionResponse], errResp azfake.ErrorResponder)
 
 	// BeginStart is the fake for method VirtualMachinesClient.BeginStart
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginStart func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginStartOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientStartResponse], errResp azfake.ErrorResponder)
 
 	// BeginUpdate is the fake for method VirtualMachinesClient.BeginUpdate
@@ -191,65 +191,84 @@ func (v *VirtualMachinesServerTransport) Do(req *http.Request) (*http.Response, 
 }
 
 func (v *VirtualMachinesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualMachinesClient.BeginAssessPatches":
-		resp, err = v.dispatchBeginAssessPatches(req)
-	case "VirtualMachinesClient.BeginCapture":
-		resp, err = v.dispatchBeginCapture(req)
-	case "VirtualMachinesClient.BeginConvertToManagedDisks":
-		resp, err = v.dispatchBeginConvertToManagedDisks(req)
-	case "VirtualMachinesClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualMachinesClient.BeginDeallocate":
-		resp, err = v.dispatchBeginDeallocate(req)
-	case "VirtualMachinesClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualMachinesClient.Generalize":
-		resp, err = v.dispatchGeneralize(req)
-	case "VirtualMachinesClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualMachinesClient.BeginInstallPatches":
-		resp, err = v.dispatchBeginInstallPatches(req)
-	case "VirtualMachinesClient.InstanceView":
-		resp, err = v.dispatchInstanceView(req)
-	case "VirtualMachinesClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	case "VirtualMachinesClient.NewListAllPager":
-		resp, err = v.dispatchNewListAllPager(req)
-	case "VirtualMachinesClient.NewListAvailableSizesPager":
-		resp, err = v.dispatchNewListAvailableSizesPager(req)
-	case "VirtualMachinesClient.NewListByLocationPager":
-		resp, err = v.dispatchNewListByLocationPager(req)
-	case "VirtualMachinesClient.BeginPerformMaintenance":
-		resp, err = v.dispatchBeginPerformMaintenance(req)
-	case "VirtualMachinesClient.BeginPowerOff":
-		resp, err = v.dispatchBeginPowerOff(req)
-	case "VirtualMachinesClient.BeginReapply":
-		resp, err = v.dispatchBeginReapply(req)
-	case "VirtualMachinesClient.BeginRedeploy":
-		resp, err = v.dispatchBeginRedeploy(req)
-	case "VirtualMachinesClient.BeginReimage":
-		resp, err = v.dispatchBeginReimage(req)
-	case "VirtualMachinesClient.BeginRestart":
-		resp, err = v.dispatchBeginRestart(req)
-	case "VirtualMachinesClient.RetrieveBootDiagnosticsData":
-		resp, err = v.dispatchRetrieveBootDiagnosticsData(req)
-	case "VirtualMachinesClient.BeginRunCommand":
-		resp, err = v.dispatchBeginRunCommand(req)
-	case "VirtualMachinesClient.SimulateEviction":
-		resp, err = v.dispatchSimulateEviction(req)
-	case "VirtualMachinesClient.BeginStart":
-		resp, err = v.dispatchBeginStart(req)
-	case "VirtualMachinesClient.BeginUpdate":
-		resp, err = v.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if virtualMachinesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualMachinesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VirtualMachinesClient.BeginAssessPatches":
+				res.resp, res.err = v.dispatchBeginAssessPatches(req)
+			case "VirtualMachinesClient.BeginCapture":
+				res.resp, res.err = v.dispatchBeginCapture(req)
+			case "VirtualMachinesClient.BeginConvertToManagedDisks":
+				res.resp, res.err = v.dispatchBeginConvertToManagedDisks(req)
+			case "VirtualMachinesClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualMachinesClient.BeginDeallocate":
+				res.resp, res.err = v.dispatchBeginDeallocate(req)
+			case "VirtualMachinesClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualMachinesClient.Generalize":
+				res.resp, res.err = v.dispatchGeneralize(req)
+			case "VirtualMachinesClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualMachinesClient.BeginInstallPatches":
+				res.resp, res.err = v.dispatchBeginInstallPatches(req)
+			case "VirtualMachinesClient.InstanceView":
+				res.resp, res.err = v.dispatchInstanceView(req)
+			case "VirtualMachinesClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualMachinesClient.NewListAllPager":
+				res.resp, res.err = v.dispatchNewListAllPager(req)
+			case "VirtualMachinesClient.NewListAvailableSizesPager":
+				res.resp, res.err = v.dispatchNewListAvailableSizesPager(req)
+			case "VirtualMachinesClient.NewListByLocationPager":
+				res.resp, res.err = v.dispatchNewListByLocationPager(req)
+			case "VirtualMachinesClient.BeginPerformMaintenance":
+				res.resp, res.err = v.dispatchBeginPerformMaintenance(req)
+			case "VirtualMachinesClient.BeginPowerOff":
+				res.resp, res.err = v.dispatchBeginPowerOff(req)
+			case "VirtualMachinesClient.BeginReapply":
+				res.resp, res.err = v.dispatchBeginReapply(req)
+			case "VirtualMachinesClient.BeginRedeploy":
+				res.resp, res.err = v.dispatchBeginRedeploy(req)
+			case "VirtualMachinesClient.BeginReimage":
+				res.resp, res.err = v.dispatchBeginReimage(req)
+			case "VirtualMachinesClient.BeginRestart":
+				res.resp, res.err = v.dispatchBeginRestart(req)
+			case "VirtualMachinesClient.RetrieveBootDiagnosticsData":
+				res.resp, res.err = v.dispatchRetrieveBootDiagnosticsData(req)
+			case "VirtualMachinesClient.BeginRunCommand":
+				res.resp, res.err = v.dispatchBeginRunCommand(req)
+			case "VirtualMachinesClient.SimulateEviction":
+				res.resp, res.err = v.dispatchSimulateEviction(req)
+			case "VirtualMachinesClient.BeginStart":
+				res.resp, res.err = v.dispatchBeginStart(req)
+			case "VirtualMachinesClient.BeginUpdate":
+				res.resp, res.err = v.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualMachinesServerTransport) dispatchBeginAssessPatches(req *http.Request) (*http.Response, error) {
@@ -377,9 +396,9 @@ func (v *VirtualMachinesServerTransport) dispatchBeginConvertToManagedDisks(req 
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginConvertToManagedDisks.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginConvertToManagedDisks) {
 		v.beginConvertToManagedDisks.remove(req)
@@ -484,9 +503,9 @@ func (v *VirtualMachinesServerTransport) dispatchBeginDeallocate(req *http.Reque
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginDeallocate.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDeallocate) {
 		v.beginDeallocate.remove(req)
@@ -921,9 +940,9 @@ func (v *VirtualMachinesServerTransport) dispatchBeginPerformMaintenance(req *ht
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginPerformMaintenance.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginPerformMaintenance) {
 		v.beginPerformMaintenance.remove(req)
@@ -980,9 +999,9 @@ func (v *VirtualMachinesServerTransport) dispatchBeginPowerOff(req *http.Request
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginPowerOff.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginPowerOff) {
 		v.beginPowerOff.remove(req)
@@ -1024,9 +1043,9 @@ func (v *VirtualMachinesServerTransport) dispatchBeginReapply(req *http.Request)
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginReapply.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginReapply) {
 		v.beginReapply.remove(req)
@@ -1068,9 +1087,9 @@ func (v *VirtualMachinesServerTransport) dispatchBeginRedeploy(req *http.Request
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginRedeploy.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRedeploy) {
 		v.beginRedeploy.remove(req)
@@ -1122,9 +1141,9 @@ func (v *VirtualMachinesServerTransport) dispatchBeginReimage(req *http.Request)
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginReimage.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginReimage) {
 		v.beginReimage.remove(req)
@@ -1166,9 +1185,9 @@ func (v *VirtualMachinesServerTransport) dispatchBeginRestart(req *http.Request)
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginRestart.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRestart) {
 		v.beginRestart.remove(req)
@@ -1345,9 +1364,9 @@ func (v *VirtualMachinesServerTransport) dispatchBeginStart(req *http.Request) (
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginStart.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginStart) {
 		v.beginStart.remove(req)
@@ -1402,4 +1421,10 @@ func (v *VirtualMachinesServerTransport) dispatchBeginUpdate(req *http.Request) 
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualMachinesServerTransport
+var virtualMachinesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

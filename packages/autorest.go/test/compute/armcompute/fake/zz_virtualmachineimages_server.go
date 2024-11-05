@@ -67,25 +67,44 @@ func (v *VirtualMachineImagesServerTransport) Do(req *http.Request) (*http.Respo
 }
 
 func (v *VirtualMachineImagesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualMachineImagesClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualMachineImagesClient.List":
-		resp, err = v.dispatchList(req)
-	case "VirtualMachineImagesClient.ListOffers":
-		resp, err = v.dispatchListOffers(req)
-	case "VirtualMachineImagesClient.ListPublishers":
-		resp, err = v.dispatchListPublishers(req)
-	case "VirtualMachineImagesClient.ListSKUs":
-		resp, err = v.dispatchListSKUs(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if virtualMachineImagesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualMachineImagesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VirtualMachineImagesClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualMachineImagesClient.List":
+				res.resp, res.err = v.dispatchList(req)
+			case "VirtualMachineImagesClient.ListOffers":
+				res.resp, res.err = v.dispatchListOffers(req)
+			case "VirtualMachineImagesClient.ListPublishers":
+				res.resp, res.err = v.dispatchListPublishers(req)
+			case "VirtualMachineImagesClient.ListSKUs":
+				res.resp, res.err = v.dispatchListSKUs(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualMachineImagesServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -304,4 +323,10 @@ func (v *VirtualMachineImagesServerTransport) dispatchListSKUs(req *http.Request
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualMachineImagesServerTransport
+var virtualMachineImagesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

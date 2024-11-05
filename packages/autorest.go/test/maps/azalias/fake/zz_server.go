@@ -39,7 +39,7 @@ type Server struct {
 	NewListPager func(headerEnums []azalias.IntEnum, queryEnum azalias.IntEnum, options *azalias.ListOptions) (resp azfake.PagerResponder[azalias.ListResponseEnvelope])
 
 	// BeginListLRO is the fake for method Client.BeginListLRO
-	// HTTP status codes to indicate success: http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
 	BeginListLRO func(ctx context.Context, options *azalias.BeginListLROOptions) (resp azfake.PollerResponder[azfake.PagerResponder[azalias.ListLROResponse]], errResp azfake.ErrorResponder)
 
 	// NewListWithSharedNextOnePager is the fake for method Client.NewListWithSharedNextOnePager
@@ -94,31 +94,50 @@ func (s *ServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "Client.Create":
-		resp, err = s.dispatchCreate(req)
-	case "Client.GetScript":
-		resp, err = s.dispatchGetScript(req)
-	case "Client.NewListPager":
-		resp, err = s.dispatchNewListPager(req)
-	case "Client.BeginListLRO":
-		resp, err = s.dispatchBeginListLRO(req)
-	case "Client.NewListWithSharedNextOnePager":
-		resp, err = s.dispatchNewListWithSharedNextOnePager(req)
-	case "Client.NewListWithSharedNextTwoPager":
-		resp, err = s.dispatchNewListWithSharedNextTwoPager(req)
-	case "Client.PolicyAssignment":
-		resp, err = s.dispatchPolicyAssignment(req)
-	case "Client.UploadForm":
-		resp, err = s.dispatchUploadForm(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if serverTransportInterceptor != nil {
+			res.resp, res.err, intercepted = serverTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "Client.Create":
+				res.resp, res.err = s.dispatchCreate(req)
+			case "Client.GetScript":
+				res.resp, res.err = s.dispatchGetScript(req)
+			case "Client.NewListPager":
+				res.resp, res.err = s.dispatchNewListPager(req)
+			case "Client.BeginListLRO":
+				res.resp, res.err = s.dispatchBeginListLRO(req)
+			case "Client.NewListWithSharedNextOnePager":
+				res.resp, res.err = s.dispatchNewListWithSharedNextOnePager(req)
+			case "Client.NewListWithSharedNextTwoPager":
+				res.resp, res.err = s.dispatchNewListWithSharedNextTwoPager(req)
+			case "Client.PolicyAssignment":
+				res.resp, res.err = s.dispatchPolicyAssignment(req)
+			case "Client.UploadForm":
+				res.resp, res.err = s.dispatchUploadForm(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, error) {
@@ -491,9 +510,9 @@ func (s *ServerTransport) dispatchBeginListLRO(req *http.Request) (*http.Respons
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
 		s.beginListLRO.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginListLRO) {
 		s.beginListLRO.remove(req)
@@ -669,6 +688,9 @@ func (s *ServerTransport) dispatchUploadForm(req *http.Request) (*http.Response,
 				return nil, err
 			}
 			OptionalBool, err = strconv.ParseBool(string(content))
+			if err != nil {
+				return nil, err
+			}
 		case "OptionalIntEnum":
 			content, err = io.ReadAll(part)
 			if err != nil {
@@ -704,4 +726,10 @@ func (s *ServerTransport) dispatchUploadForm(req *http.Request) (*http.Response,
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ServerTransport
+var serverTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

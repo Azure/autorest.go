@@ -25,7 +25,7 @@ type ConnectionMonitorsServer struct {
 	BeginCreateOrUpdate func(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters armnetwork.ConnectionMonitor, options *armnetwork.ConnectionMonitorsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armnetwork.ConnectionMonitorsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method ConnectionMonitorsClient.BeginDelete
-	// HTTP status codes to indicate success: http.StatusAccepted, http.StatusNoContent
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDelete func(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *armnetwork.ConnectionMonitorsClientBeginDeleteOptions) (resp azfake.PollerResponder[armnetwork.ConnectionMonitorsClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method ConnectionMonitorsClient.Get
@@ -41,11 +41,11 @@ type ConnectionMonitorsServer struct {
 	BeginQuery func(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *armnetwork.ConnectionMonitorsClientBeginQueryOptions) (resp azfake.PollerResponder[armnetwork.ConnectionMonitorsClientQueryResponse], errResp azfake.ErrorResponder)
 
 	// BeginStart is the fake for method ConnectionMonitorsClient.BeginStart
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginStart func(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *armnetwork.ConnectionMonitorsClientBeginStartOptions) (resp azfake.PollerResponder[armnetwork.ConnectionMonitorsClientStartResponse], errResp azfake.ErrorResponder)
 
 	// BeginStop is the fake for method ConnectionMonitorsClient.BeginStop
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginStop func(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *armnetwork.ConnectionMonitorsClientBeginStopOptions) (resp azfake.PollerResponder[armnetwork.ConnectionMonitorsClientStopResponse], errResp azfake.ErrorResponder)
 
 	// UpdateTags is the fake for method ConnectionMonitorsClient.UpdateTags
@@ -92,31 +92,50 @@ func (c *ConnectionMonitorsServerTransport) Do(req *http.Request) (*http.Respons
 }
 
 func (c *ConnectionMonitorsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ConnectionMonitorsClient.BeginCreateOrUpdate":
-		resp, err = c.dispatchBeginCreateOrUpdate(req)
-	case "ConnectionMonitorsClient.BeginDelete":
-		resp, err = c.dispatchBeginDelete(req)
-	case "ConnectionMonitorsClient.Get":
-		resp, err = c.dispatchGet(req)
-	case "ConnectionMonitorsClient.NewListPager":
-		resp, err = c.dispatchNewListPager(req)
-	case "ConnectionMonitorsClient.BeginQuery":
-		resp, err = c.dispatchBeginQuery(req)
-	case "ConnectionMonitorsClient.BeginStart":
-		resp, err = c.dispatchBeginStart(req)
-	case "ConnectionMonitorsClient.BeginStop":
-		resp, err = c.dispatchBeginStop(req)
-	case "ConnectionMonitorsClient.UpdateTags":
-		resp, err = c.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if connectionMonitorsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = connectionMonitorsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ConnectionMonitorsClient.BeginCreateOrUpdate":
+				res.resp, res.err = c.dispatchBeginCreateOrUpdate(req)
+			case "ConnectionMonitorsClient.BeginDelete":
+				res.resp, res.err = c.dispatchBeginDelete(req)
+			case "ConnectionMonitorsClient.Get":
+				res.resp, res.err = c.dispatchGet(req)
+			case "ConnectionMonitorsClient.NewListPager":
+				res.resp, res.err = c.dispatchNewListPager(req)
+			case "ConnectionMonitorsClient.BeginQuery":
+				res.resp, res.err = c.dispatchBeginQuery(req)
+			case "ConnectionMonitorsClient.BeginStart":
+				res.resp, res.err = c.dispatchBeginStart(req)
+			case "ConnectionMonitorsClient.BeginStop":
+				res.resp, res.err = c.dispatchBeginStop(req)
+			case "ConnectionMonitorsClient.UpdateTags":
+				res.resp, res.err = c.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *ConnectionMonitorsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -220,9 +239,9 @@ func (c *ConnectionMonitorsServerTransport) dispatchBeginDelete(req *http.Reques
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		c.beginDelete.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDelete) {
 		c.beginDelete.remove(req)
@@ -391,9 +410,9 @@ func (c *ConnectionMonitorsServerTransport) dispatchBeginStart(req *http.Request
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		c.beginStart.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginStart) {
 		c.beginStart.remove(req)
@@ -439,9 +458,9 @@ func (c *ConnectionMonitorsServerTransport) dispatchBeginStop(req *http.Request)
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		c.beginStop.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginStop) {
 		c.beginStop.remove(req)
@@ -489,4 +508,10 @@ func (c *ConnectionMonitorsServerTransport) dispatchUpdateTags(req *http.Request
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ConnectionMonitorsServerTransport
+var connectionMonitorsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

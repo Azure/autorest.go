@@ -116,7 +116,7 @@ function adaptConstantTypes(m4CodeModel: m4.CodeModel, goCodeModel: go.CodeModel
 
 function adaptParameterGroup(paramGroup: go.ParameterGroup): go.StructType {
   const structType = new go.StructType(paramGroup.groupName);
-  structType.description = paramGroup.description;
+  structType.docs = paramGroup.docs;
   if (paramGroup.params.length > 0) {
     for (const param of values(paramGroup.params)) {
       if (param.kind === 'literal') {
@@ -129,7 +129,7 @@ function adaptParameterGroup(paramGroup: go.ParameterGroup): go.StructType {
         byValue = param.byValue;
       }
       const field = new go.StructField(param.name, param.type, byValue);
-      field.description = param.description;
+      field.docs = param.docs;
       structType.fields.push(field);
     }
   }

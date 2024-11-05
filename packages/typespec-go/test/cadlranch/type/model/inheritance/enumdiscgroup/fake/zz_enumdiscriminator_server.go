@@ -75,31 +75,50 @@ func (e *EnumDiscriminatorServerTransport) Do(req *http.Request) (*http.Response
 }
 
 func (e *EnumDiscriminatorServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "EnumDiscriminatorClient.GetExtensibleModel":
-		resp, err = e.dispatchGetExtensibleModel(req)
-	case "EnumDiscriminatorClient.GetExtensibleModelMissingDiscriminator":
-		resp, err = e.dispatchGetExtensibleModelMissingDiscriminator(req)
-	case "EnumDiscriminatorClient.GetExtensibleModelWrongDiscriminator":
-		resp, err = e.dispatchGetExtensibleModelWrongDiscriminator(req)
-	case "EnumDiscriminatorClient.GetFixedModel":
-		resp, err = e.dispatchGetFixedModel(req)
-	case "EnumDiscriminatorClient.GetFixedModelMissingDiscriminator":
-		resp, err = e.dispatchGetFixedModelMissingDiscriminator(req)
-	case "EnumDiscriminatorClient.GetFixedModelWrongDiscriminator":
-		resp, err = e.dispatchGetFixedModelWrongDiscriminator(req)
-	case "EnumDiscriminatorClient.PutExtensibleModel":
-		resp, err = e.dispatchPutExtensibleModel(req)
-	case "EnumDiscriminatorClient.PutFixedModel":
-		resp, err = e.dispatchPutFixedModel(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if enumDiscriminatorServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = enumDiscriminatorServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "EnumDiscriminatorClient.GetExtensibleModel":
+				res.resp, res.err = e.dispatchGetExtensibleModel(req)
+			case "EnumDiscriminatorClient.GetExtensibleModelMissingDiscriminator":
+				res.resp, res.err = e.dispatchGetExtensibleModelMissingDiscriminator(req)
+			case "EnumDiscriminatorClient.GetExtensibleModelWrongDiscriminator":
+				res.resp, res.err = e.dispatchGetExtensibleModelWrongDiscriminator(req)
+			case "EnumDiscriminatorClient.GetFixedModel":
+				res.resp, res.err = e.dispatchGetFixedModel(req)
+			case "EnumDiscriminatorClient.GetFixedModelMissingDiscriminator":
+				res.resp, res.err = e.dispatchGetFixedModelMissingDiscriminator(req)
+			case "EnumDiscriminatorClient.GetFixedModelWrongDiscriminator":
+				res.resp, res.err = e.dispatchGetFixedModelWrongDiscriminator(req)
+			case "EnumDiscriminatorClient.PutExtensibleModel":
+				res.resp, res.err = e.dispatchPutExtensibleModel(req)
+			case "EnumDiscriminatorClient.PutFixedModel":
+				res.resp, res.err = e.dispatchPutFixedModel(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *EnumDiscriminatorServerTransport) dispatchGetExtensibleModel(req *http.Request) (*http.Response, error) {
@@ -268,4 +287,10 @@ func (e *EnumDiscriminatorServerTransport) dispatchPutFixedModel(req *http.Reque
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to EnumDiscriminatorServerTransport
+var enumDiscriminatorServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

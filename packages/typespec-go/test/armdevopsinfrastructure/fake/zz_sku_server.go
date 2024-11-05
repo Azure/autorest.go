@@ -53,17 +53,36 @@ func (s *SKUServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (s *SKUServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "SKUClient.NewListByLocationPager":
-		resp, err = s.dispatchNewListByLocationPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if skuServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = skuServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "SKUClient.NewListByLocationPager":
+				res.resp, res.err = s.dispatchNewListByLocationPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SKUServerTransport) dispatchNewListByLocationPager(req *http.Request) (*http.Response, error) {
@@ -101,4 +120,10 @@ func (s *SKUServerTransport) dispatchNewListByLocationPager(req *http.Request) (
 		s.newListByLocationPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SKUServerTransport
+var skuServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

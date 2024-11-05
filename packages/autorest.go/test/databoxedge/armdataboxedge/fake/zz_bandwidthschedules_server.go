@@ -71,23 +71,42 @@ func (b *BandwidthSchedulesServerTransport) Do(req *http.Request) (*http.Respons
 }
 
 func (b *BandwidthSchedulesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "BandwidthSchedulesClient.BeginCreateOrUpdate":
-		resp, err = b.dispatchBeginCreateOrUpdate(req)
-	case "BandwidthSchedulesClient.BeginDelete":
-		resp, err = b.dispatchBeginDelete(req)
-	case "BandwidthSchedulesClient.Get":
-		resp, err = b.dispatchGet(req)
-	case "BandwidthSchedulesClient.NewListByDataBoxEdgeDevicePager":
-		resp, err = b.dispatchNewListByDataBoxEdgeDevicePager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if bandwidthSchedulesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = bandwidthSchedulesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "BandwidthSchedulesClient.BeginCreateOrUpdate":
+				res.resp, res.err = b.dispatchBeginCreateOrUpdate(req)
+			case "BandwidthSchedulesClient.BeginDelete":
+				res.resp, res.err = b.dispatchBeginDelete(req)
+			case "BandwidthSchedulesClient.Get":
+				res.resp, res.err = b.dispatchGet(req)
+			case "BandwidthSchedulesClient.NewListByDataBoxEdgeDevicePager":
+				res.resp, res.err = b.dispatchNewListByDataBoxEdgeDevicePager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (b *BandwidthSchedulesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -266,4 +285,10 @@ func (b *BandwidthSchedulesServerTransport) dispatchNewListByDataBoxEdgeDevicePa
 		b.newListByDataBoxEdgeDevicePager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to BandwidthSchedulesServerTransport
+var bandwidthSchedulesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -61,23 +61,42 @@ func (b *BytesQueryServerTransport) Do(req *http.Request) (*http.Response, error
 }
 
 func (b *BytesQueryServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "BytesQueryClient.Base64":
-		resp, err = b.dispatchBase64(req)
-	case "BytesQueryClient.Base64URL":
-		resp, err = b.dispatchBase64URL(req)
-	case "BytesQueryClient.Base64URLArray":
-		resp, err = b.dispatchBase64URLArray(req)
-	case "BytesQueryClient.Default":
-		resp, err = b.dispatchDefault(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if bytesQueryServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = bytesQueryServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "BytesQueryClient.Base64":
+				res.resp, res.err = b.dispatchBase64(req)
+			case "BytesQueryClient.Base64URL":
+				res.resp, res.err = b.dispatchBase64URL(req)
+			case "BytesQueryClient.Base64URLArray":
+				res.resp, res.err = b.dispatchBase64URLArray(req)
+			case "BytesQueryClient.Default":
+				res.resp, res.err = b.dispatchDefault(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (b *BytesQueryServerTransport) dispatchBase64(req *http.Request) (*http.Response, error) {
@@ -195,4 +214,10 @@ func (b *BytesQueryServerTransport) dispatchDefault(req *http.Request) (*http.Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to BytesQueryServerTransport
+var bytesQueryServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

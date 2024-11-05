@@ -53,19 +53,38 @@ func (u *UploadServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (u *UploadServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "UploadClient.Binary":
-		resp, err = u.dispatchBinary(req)
-	case "UploadClient.File":
-		resp, err = u.dispatchFile(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if uploadServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = uploadServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "UploadClient.Binary":
+				res.resp, res.err = u.dispatchBinary(req)
+			case "UploadClient.File":
+				res.resp, res.err = u.dispatchFile(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (u *UploadServerTransport) dispatchBinary(req *http.Request) (*http.Response, error) {
@@ -104,4 +123,10 @@ func (u *UploadServerTransport) dispatchFile(req *http.Request) (*http.Response,
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to UploadServerTransport
+var uploadServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

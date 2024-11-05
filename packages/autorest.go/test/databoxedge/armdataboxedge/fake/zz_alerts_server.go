@@ -59,19 +59,38 @@ func (a *AlertsServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (a *AlertsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "AlertsClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "AlertsClient.NewListByDataBoxEdgeDevicePager":
-		resp, err = a.dispatchNewListByDataBoxEdgeDevicePager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if alertsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = alertsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "AlertsClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "AlertsClient.NewListByDataBoxEdgeDevicePager":
+				res.resp, res.err = a.dispatchNewListByDataBoxEdgeDevicePager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AlertsServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -150,4 +169,10 @@ func (a *AlertsServerTransport) dispatchNewListByDataBoxEdgeDevicePager(req *htt
 		a.newListByDataBoxEdgeDevicePager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AlertsServerTransport
+var alertsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

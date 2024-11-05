@@ -51,19 +51,38 @@ func (a *ArrayStringValueServerTransport) Do(req *http.Request) (*http.Response,
 }
 
 func (a *ArrayStringValueServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ArrayStringValueClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "ArrayStringValueClient.Put":
-		resp, err = a.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if arrayStringValueServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = arrayStringValueServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ArrayStringValueClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "ArrayStringValueClient.Put":
+				res.resp, res.err = a.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *ArrayStringValueServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -106,4 +125,10 @@ func (a *ArrayStringValueServerTransport) dispatchPut(req *http.Request) (*http.
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ArrayStringValueServerTransport
+var arrayStringValueServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

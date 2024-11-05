@@ -81,27 +81,46 @@ func (v *VirtualAppliancesServerTransport) Do(req *http.Request) (*http.Response
 }
 
 func (v *VirtualAppliancesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualAppliancesClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualAppliancesClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualAppliancesClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualAppliancesClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	case "VirtualAppliancesClient.NewListByResourceGroupPager":
-		resp, err = v.dispatchNewListByResourceGroupPager(req)
-	case "VirtualAppliancesClient.UpdateTags":
-		resp, err = v.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if virtualAppliancesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualAppliancesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VirtualAppliancesClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualAppliancesClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualAppliancesClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualAppliancesClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualAppliancesClient.NewListByResourceGroupPager":
+				res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
+			case "VirtualAppliancesClient.UpdateTags":
+				res.resp, res.err = v.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualAppliancesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -346,4 +365,10 @@ func (v *VirtualAppliancesServerTransport) dispatchUpdateTags(req *http.Request)
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualAppliancesServerTransport
+var virtualAppliancesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -21,7 +21,7 @@ import (
 // VPNSitesConfigurationServer is a fake server for instances of the armnetwork.VPNSitesConfigurationClient type.
 type VPNSitesConfigurationServer struct {
 	// BeginDownload is the fake for method VPNSitesConfigurationClient.BeginDownload
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDownload func(ctx context.Context, resourceGroupName string, virtualWANName string, request armnetwork.GetVPNSitesConfigurationRequest, options *armnetwork.VPNSitesConfigurationClientBeginDownloadOptions) (resp azfake.PollerResponder[armnetwork.VPNSitesConfigurationClientDownloadResponse], errResp azfake.ErrorResponder)
 }
 
@@ -54,17 +54,36 @@ func (v *VPNSitesConfigurationServerTransport) Do(req *http.Request) (*http.Resp
 }
 
 func (v *VPNSitesConfigurationServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VPNSitesConfigurationClient.BeginDownload":
-		resp, err = v.dispatchBeginDownload(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if vpnSitesConfigurationServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = vpnSitesConfigurationServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VPNSitesConfigurationClient.BeginDownload":
+				res.resp, res.err = v.dispatchBeginDownload(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VPNSitesConfigurationServerTransport) dispatchBeginDownload(req *http.Request) (*http.Response, error) {
@@ -104,13 +123,19 @@ func (v *VPNSitesConfigurationServerTransport) dispatchBeginDownload(req *http.R
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginDownload.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDownload) {
 		v.beginDownload.remove(req)
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VPNSitesConfigurationServerTransport
+var vpnSitesConfigurationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

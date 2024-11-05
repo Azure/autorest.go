@@ -70,23 +70,42 @@ func (a *AdminRuleCollectionsServerTransport) Do(req *http.Request) (*http.Respo
 }
 
 func (a *AdminRuleCollectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "AdminRuleCollectionsClient.CreateOrUpdate":
-		resp, err = a.dispatchCreateOrUpdate(req)
-	case "AdminRuleCollectionsClient.BeginDelete":
-		resp, err = a.dispatchBeginDelete(req)
-	case "AdminRuleCollectionsClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "AdminRuleCollectionsClient.NewListPager":
-		resp, err = a.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if adminRuleCollectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = adminRuleCollectionsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "AdminRuleCollectionsClient.CreateOrUpdate":
+				res.resp, res.err = a.dispatchCreateOrUpdate(req)
+			case "AdminRuleCollectionsClient.BeginDelete":
+				res.resp, res.err = a.dispatchBeginDelete(req)
+			case "AdminRuleCollectionsClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "AdminRuleCollectionsClient.NewListPager":
+				res.resp, res.err = a.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AdminRuleCollectionsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -312,4 +331,10 @@ func (a *AdminRuleCollectionsServerTransport) dispatchNewListPager(req *http.Req
 		a.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AdminRuleCollectionsServerTransport
+var adminRuleCollectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

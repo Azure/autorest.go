@@ -50,8 +50,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
 
     // generate client type
 
-    let clientText = '';
-    clientText += `${comment(`${client.description}`, '//', undefined, helpers.commentLength)}\n`;
+    let clientText = helpers.formatDocComment(client.docs);
     clientText += '// Don\'t use this type directly, use ';
     if (client.constructors.length === 1) {
       clientText += `${client.constructors[0].name}() instead.\n`;
@@ -181,18 +180,18 @@ function generateConstructors(azureARM: boolean, client: go.Client, imports: Imp
     for (const ctorParam of constructor.parameters) {
       imports.addImportForType(ctorParam.type);
       ctorParams.push(`${ctorParam.name} ${helpers.formatParameterTypeName(ctorParam)}`);
-      if (ctorParam.description) {
-        paramDocs.push(helpers.formatCommentAsBulletItem(`${ctorParam.name} - ${ctorParam.description}`));
+      if (ctorParam.docs.summary || ctorParam.docs.description) {
+        paramDocs.push(helpers.formatCommentAsBulletItem(ctorParam.name, ctorParam.docs));
       }
     }
 
     // add client options last
     ctorParams.push(`${client.options.name} ${helpers.formatParameterTypeName(client.options)}`);
-    paramDocs.push(helpers.formatCommentAsBulletItem(`${client.options.name} - ${client.options.description}`));
+    paramDocs.push(helpers.formatCommentAsBulletItem(client.options.name, client.options.docs));
 
     ctorText += `// ${constructor.name} creates a new instance of ${client.name} with the specified values.\n`;
     for (const doc of paramDocs) {
-      ctorText += `${doc}\n`;
+      ctorText += doc;
     }
 
     ctorText += `func ${constructor.name}(${ctorParams.join(', ')}) (*${client.name}, error) {\n`;
@@ -230,7 +229,7 @@ function createARMClientConstructor(client: go.Client, imports: ImportManager): 
     ctor.parameters.push(param);
   }
   const tokenCredParam = new go.Parameter('credential', new go.QualifiedType('TokenCredential', 'github.com/Azure/azure-sdk-for-go/sdk/azcore'), 'required', true, 'client');
-  tokenCredParam.description = 'used to authorize requests. Usually a credential from azidentity.';
+  tokenCredParam.docs.summary = 'used to authorize requests. Usually a credential from azidentity.';
   ctor.parameters.push(tokenCredParam);
   return ctor;
 }
@@ -437,8 +436,8 @@ function generateOperation(client: go.Client, method: go.Method, imports: Import
   let text = '';
   const respErrDoc = genRespErrorDoc(method);
   const apiVerDoc = genApiVersionDoc(method.apiVersions);
-  if (method.description) {
-    text += `${comment(`${methodName} - ${method.description}`, '//', undefined, helpers.commentLength)}\n`;
+  if (method.docs.summary || method.docs.description) {
+    text += helpers.formatDocCommentWithPrefix(methodName, method.docs);
   } else if (respErrDoc.length > 0 || apiVerDoc.length > 0) {
     // if the method has no doc comment but we're adding other
     // doc comments, add an empty method name comment. this preserves
@@ -451,9 +450,7 @@ function generateOperation(client: go.Client, method: go.Method, imports: Import
     methodName = method.naming.internalMethod;
   } else {
     for (const param of values(helpers.getMethodParameters(method))) {
-      if (param.description) {
-        text += `${helpers.formatCommentAsBulletItem(`${param.name} - ${param.description}`)}\n`;
-      }
+      text += helpers.formatCommentAsBulletItem(param.name, param.docs);
     }
   }
   text += `func (client *${client.name}) ${methodName}(${params}) (${returns.join(', ')}) {\n`;
@@ -739,12 +736,21 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
       headerParams.push(param);
     }
   }
+
+  let contentType: string | undefined;
   for (const param of headerParams.sort((a: go.HeaderParameter, b: go.HeaderParameter) => { return helpers.sortAscending(a.headerName, b.headerName);})) {
     if (param.headerName.match(/^content-type$/)) {
       // canonicalize content-type as req.SetBody checks for it via its canonicalized name :(
       param.headerName = 'Content-Type';
     }
-    if (go.isRequiredParameter(param) || go.isLiteralParameter(param) || go.isClientSideDefault(param.kind)) {
+
+    if (param.headerName === 'Content-Type' && param.kind === 'literal') {
+      // the content-type header will be set as part of emitSetBodyWithErrCheck
+      // to handle cases where the body param is optional. we don't want to set
+      // the content-type if the body is nil.
+      // we do it like this as tsp specifies content-type while swagger does not.
+      contentType = helpers.formatParamValue(param, imports);
+    } else if (go.isRequiredParameter(param) || go.isLiteralParameter(param) || go.isClientSideDefault(param.kind)) {
       text += emitHeaderSet(param, '\t');
     } else if (param.location === 'client' && !param.group) {
       // global optional param
@@ -760,8 +766,12 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
 
   const partialBodyParams = values(method.parameters).where((param: go.Parameter) => { return go.isPartialBodyParameter(param); }).toArray();
   const bodyParam = <go.BodyParameter | undefined>values(method.parameters).where((each: go.Parameter) => { return go.isBodyParameter(each) || go.isFormBodyParameter(each) || go.isMultipartFormBodyParameter(each); }).first();
-  const emitSetBodyWithErrCheck = function(setBodyParam: string): string {
-    return `if err := ${setBodyParam}; err != nil {\n\treturn nil, err\n}\n`;
+  const emitSetBodyWithErrCheck = function(setBodyParam: string, contentType?: string): string {
+    let content = `if err := ${setBodyParam}; err != nil {\n\treturn nil, err\n}\n;`;
+    if (contentType) {
+      content = `req.Raw().Header["Content-Type"] = []string{${contentType}}\n` + content;
+    }
+    return content;
   };
 
   if (partialBodyParams.length > 0) {
@@ -786,6 +796,8 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
         text += `\t\tbody.${capitalize(partialBodyParam.serializedName)} = options.${capitalize(partialBodyParam.name)}\n\t}\n`;
       }
     }
+    // TODO: spread params are JSON only https://github.com/Azure/autorest.go/issues/1455
+    text += '\treq.Raw().Header["Content-Type"] = []string{"application/json"}\n';
     text += '\tif err := runtime.MarshalAsJSON(req, body); err != nil {\n\t\treturn nil, err\n\t}\n';
     text += '\treturn req, nil\n';
   } else if (!bodyParam) {
@@ -847,22 +859,22 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
       setBody = `req.SetBody(streaming.NopCloser(bytes.NewReader(${body})), "application/${bodyParam.bodyFormat.toLowerCase()}")`;
     }
     if (go.isRequiredParameter(bodyParam) || go.isLiteralParameter(bodyParam)) {
-      text += `\t${emitSetBodyWithErrCheck(setBody)}`;
+      text += `\t${emitSetBodyWithErrCheck(setBody, contentType)}`;
       text += '\treturn req, nil\n';
     } else {
       text += emitParamGroupCheck(bodyParam);
-      text += `\t${emitSetBodyWithErrCheck(setBody)}`;
+      text += `\t${emitSetBodyWithErrCheck(setBody, contentType)}`;
       text += '\t\treturn req, nil\n';
       text += '\t}\n';
       text += '\treturn req, nil\n';
     }
   } else if (bodyParam.bodyFormat === 'binary') {
     if (go.isRequiredParameter(bodyParam)) {
-      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${bodyParam.name}, ${bodyParam.contentType})`)}`;
+      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${bodyParam.name}, ${bodyParam.contentType})`, contentType)}`;
       text += '\treturn req, nil\n';
     } else {
       text += emitParamGroupCheck(bodyParam);
-      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${helpers.getParamName(bodyParam)}, ${bodyParam.contentType})`)}`;
+      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${helpers.getParamName(bodyParam)}, ${bodyParam.contentType})`, contentType)}`;
       text += '\treturn req, nil\n';
       text += '\t}\n';
       text += '\treturn req, nil\n';
@@ -873,12 +885,12 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     const bodyParam = <go.BodyParameter>values(method.parameters).where((each: go.Parameter) => { return go.isBodyParameter(each); }).first();
     if (go.isRequiredParameter(bodyParam)) {
       text += `\tbody := streaming.NopCloser(strings.NewReader(${bodyParam.name}))\n`;
-      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`)}`;
+      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`, contentType)}`;
       text += '\treturn req, nil\n';
     } else {
       text += emitParamGroupCheck(bodyParam);
       text += `\tbody := streaming.NopCloser(strings.NewReader(${helpers.getParamName(bodyParam)}))\n`;
-      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`)}`;
+      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`, contentType)}`;
       text += '\treturn req, nil\n';
       text += '\t}\n';
       text += '\treturn req, nil\n';
@@ -1208,17 +1220,15 @@ function generateLROBeginMethod(client: go.Client, method: go.LROMethod, imports
   const returns = generateReturnsInfo(method, 'api');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
   let text = '';
-  if (method.description) {
-    text += `${comment(`${fixUpMethodName(method)} - ${method.description}`, '//', undefined, helpers.commentLength)}\n`;
+  if (method.docs.summary || method.docs.description) {
+    text += helpers.formatDocCommentWithPrefix(fixUpMethodName(method), method.docs);
     text += genRespErrorDoc(method);
     text += genApiVersionDoc(method.apiVersions);
   }
   const zeroResp = getZeroReturnValue(method, 'api');
   const methodParams = helpers.getMethodParameters(method);
   for (const param of values(methodParams)) {
-    if (param.description) {
-      text += `${helpers.formatCommentAsBulletItem(`${param.name} - ${param.description}`)}\n`;
-    }
+    text += helpers.formatCommentAsBulletItem(param.name, param.docs);
   }
   text += `func (client *${client.name}) ${fixUpMethodName(method)}(${params}) (${returns.join(', ')}) {\n`;
   let pollerType = 'nil';

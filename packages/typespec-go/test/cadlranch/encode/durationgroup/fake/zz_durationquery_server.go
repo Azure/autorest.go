@@ -69,27 +69,46 @@ func (d *DurationQueryServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (d *DurationQueryServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DurationQueryClient.Default":
-		resp, err = d.dispatchDefault(req)
-	case "DurationQueryClient.Float64Seconds":
-		resp, err = d.dispatchFloat64Seconds(req)
-	case "DurationQueryClient.FloatSeconds":
-		resp, err = d.dispatchFloatSeconds(req)
-	case "DurationQueryClient.ISO8601":
-		resp, err = d.dispatchISO8601(req)
-	case "DurationQueryClient.Int32Seconds":
-		resp, err = d.dispatchInt32Seconds(req)
-	case "DurationQueryClient.Int32SecondsArray":
-		resp, err = d.dispatchInt32SecondsArray(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if durationQueryServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = durationQueryServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "DurationQueryClient.Default":
+				res.resp, res.err = d.dispatchDefault(req)
+			case "DurationQueryClient.Float64Seconds":
+				res.resp, res.err = d.dispatchFloat64Seconds(req)
+			case "DurationQueryClient.FloatSeconds":
+				res.resp, res.err = d.dispatchFloatSeconds(req)
+			case "DurationQueryClient.ISO8601":
+				res.resp, res.err = d.dispatchISO8601(req)
+			case "DurationQueryClient.Int32Seconds":
+				res.resp, res.err = d.dispatchInt32Seconds(req)
+			case "DurationQueryClient.Int32SecondsArray":
+				res.resp, res.err = d.dispatchInt32SecondsArray(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DurationQueryServerTransport) dispatchDefault(req *http.Request) (*http.Response, error) {
@@ -267,4 +286,10 @@ func (d *DurationQueryServerTransport) dispatchInt32SecondsArray(req *http.Reque
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DurationQueryServerTransport
+var durationQueryServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

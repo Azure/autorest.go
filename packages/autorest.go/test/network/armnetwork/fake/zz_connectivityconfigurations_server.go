@@ -70,23 +70,42 @@ func (c *ConnectivityConfigurationsServerTransport) Do(req *http.Request) (*http
 }
 
 func (c *ConnectivityConfigurationsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ConnectivityConfigurationsClient.CreateOrUpdate":
-		resp, err = c.dispatchCreateOrUpdate(req)
-	case "ConnectivityConfigurationsClient.BeginDelete":
-		resp, err = c.dispatchBeginDelete(req)
-	case "ConnectivityConfigurationsClient.Get":
-		resp, err = c.dispatchGet(req)
-	case "ConnectivityConfigurationsClient.NewListPager":
-		resp, err = c.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if connectivityConfigurationsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = connectivityConfigurationsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ConnectivityConfigurationsClient.CreateOrUpdate":
+				res.resp, res.err = c.dispatchCreateOrUpdate(req)
+			case "ConnectivityConfigurationsClient.BeginDelete":
+				res.resp, res.err = c.dispatchBeginDelete(req)
+			case "ConnectivityConfigurationsClient.Get":
+				res.resp, res.err = c.dispatchGet(req)
+			case "ConnectivityConfigurationsClient.NewListPager":
+				res.resp, res.err = c.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *ConnectivityConfigurationsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -296,4 +315,10 @@ func (c *ConnectivityConfigurationsServerTransport) dispatchNewListPager(req *ht
 		c.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ConnectivityConfigurationsServerTransport
+var connectivityConfigurationsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

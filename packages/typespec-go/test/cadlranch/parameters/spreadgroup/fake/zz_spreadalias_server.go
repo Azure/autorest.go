@@ -65,25 +65,44 @@ func (s *SpreadAliasServerTransport) Do(req *http.Request) (*http.Response, erro
 }
 
 func (s *SpreadAliasServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "SpreadAliasClient.SpreadAsRequestBody":
-		resp, err = s.dispatchSpreadAsRequestBody(req)
-	case "SpreadAliasClient.SpreadAsRequestParameter":
-		resp, err = s.dispatchSpreadAsRequestParameter(req)
-	case "SpreadAliasClient.SpreadParameterWithInnerAlias":
-		resp, err = s.dispatchSpreadParameterWithInnerAlias(req)
-	case "SpreadAliasClient.SpreadParameterWithInnerModel":
-		resp, err = s.dispatchSpreadParameterWithInnerModel(req)
-	case "SpreadAliasClient.SpreadWithMultipleParameters":
-		resp, err = s.dispatchSpreadWithMultipleParameters(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if spreadAliasServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = spreadAliasServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "SpreadAliasClient.SpreadAsRequestBody":
+				res.resp, res.err = s.dispatchSpreadAsRequestBody(req)
+			case "SpreadAliasClient.SpreadAsRequestParameter":
+				res.resp, res.err = s.dispatchSpreadAsRequestParameter(req)
+			case "SpreadAliasClient.SpreadParameterWithInnerAlias":
+				res.resp, res.err = s.dispatchSpreadParameterWithInnerAlias(req)
+			case "SpreadAliasClient.SpreadParameterWithInnerModel":
+				res.resp, res.err = s.dispatchSpreadParameterWithInnerModel(req)
+			case "SpreadAliasClient.SpreadWithMultipleParameters":
+				res.resp, res.err = s.dispatchSpreadWithMultipleParameters(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SpreadAliasServerTransport) dispatchSpreadAsRequestBody(req *http.Request) (*http.Response, error) {
@@ -265,4 +284,10 @@ func (s *SpreadAliasServerTransport) dispatchSpreadWithMultipleParameters(req *h
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SpreadAliasServerTransport
+var spreadAliasServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

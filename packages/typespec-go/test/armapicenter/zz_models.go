@@ -197,6 +197,8 @@ type Contact struct {
 }
 
 // CustomProperties - Custom Properties
+//
+// The custom metadata defined for API catalog entities.
 type CustomProperties struct {
 }
 
@@ -558,6 +560,24 @@ type ServiceProperties struct {
 
 	// READ-ONLY; Provisioning state of the service.
 	ProvisioningState *ProvisioningState
+}
+
+// ServiceUpdate - The type used for update operations of the Service.
+type ServiceUpdate struct {
+	// The managed service identities assigned to this resource.
+	Identity *ManagedServiceIdentity
+
+	// The resource-specific properties for this resource.
+	Properties *ServiceUpdateProperties
+
+	// Resource tags.
+	Tags map[string]*string
+}
+
+// ServiceUpdateProperties - The updatable properties of the Service.
+type ServiceUpdateProperties struct {
+	// Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored.
+	Restore *bool
 }
 
 // SystemData - Metadata pertaining to creation and last modification of the resource.

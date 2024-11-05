@@ -74,29 +74,48 @@ func (s *SkipURLEncodingServerTransport) Do(req *http.Request) (*http.Response, 
 }
 
 func (s *SkipURLEncodingServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "SkipURLEncodingClient.GetMethodPathValid":
-		resp, err = s.dispatchGetMethodPathValid(req)
-	case "SkipURLEncodingClient.GetMethodQueryNull":
-		resp, err = s.dispatchGetMethodQueryNull(req)
-	case "SkipURLEncodingClient.GetMethodQueryValid":
-		resp, err = s.dispatchGetMethodQueryValid(req)
-	case "SkipURLEncodingClient.GetPathQueryValid":
-		resp, err = s.dispatchGetPathQueryValid(req)
-	case "SkipURLEncodingClient.GetPathValid":
-		resp, err = s.dispatchGetPathValid(req)
-	case "SkipURLEncodingClient.GetSwaggerPathValid":
-		resp, err = s.dispatchGetSwaggerPathValid(req)
-	case "SkipURLEncodingClient.GetSwaggerQueryValid":
-		resp, err = s.dispatchGetSwaggerQueryValid(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if skipUrlEncodingServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = skipUrlEncodingServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "SkipURLEncodingClient.GetMethodPathValid":
+				res.resp, res.err = s.dispatchGetMethodPathValid(req)
+			case "SkipURLEncodingClient.GetMethodQueryNull":
+				res.resp, res.err = s.dispatchGetMethodQueryNull(req)
+			case "SkipURLEncodingClient.GetMethodQueryValid":
+				res.resp, res.err = s.dispatchGetMethodQueryValid(req)
+			case "SkipURLEncodingClient.GetPathQueryValid":
+				res.resp, res.err = s.dispatchGetPathQueryValid(req)
+			case "SkipURLEncodingClient.GetPathValid":
+				res.resp, res.err = s.dispatchGetPathValid(req)
+			case "SkipURLEncodingClient.GetSwaggerPathValid":
+				res.resp, res.err = s.dispatchGetSwaggerPathValid(req)
+			case "SkipURLEncodingClient.GetSwaggerQueryValid":
+				res.resp, res.err = s.dispatchGetSwaggerQueryValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SkipURLEncodingServerTransport) dispatchGetMethodPathValid(req *http.Request) (*http.Response, error) {
@@ -272,4 +291,10 @@ func (s *SkipURLEncodingServerTransport) dispatchGetSwaggerQueryValid(req *http.
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SkipURLEncodingServerTransport
+var skipUrlEncodingServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

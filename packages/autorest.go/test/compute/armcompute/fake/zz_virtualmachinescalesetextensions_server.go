@@ -77,25 +77,44 @@ func (v *VirtualMachineScaleSetExtensionsServerTransport) Do(req *http.Request) 
 }
 
 func (v *VirtualMachineScaleSetExtensionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualMachineScaleSetExtensionsClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualMachineScaleSetExtensionsClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualMachineScaleSetExtensionsClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualMachineScaleSetExtensionsClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	case "VirtualMachineScaleSetExtensionsClient.BeginUpdate":
-		resp, err = v.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if virtualMachineScaleSetExtensionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualMachineScaleSetExtensionsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VirtualMachineScaleSetExtensionsClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualMachineScaleSetExtensionsClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualMachineScaleSetExtensionsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualMachineScaleSetExtensionsClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualMachineScaleSetExtensionsClient.BeginUpdate":
+				res.resp, res.err = v.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualMachineScaleSetExtensionsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -338,4 +357,10 @@ func (v *VirtualMachineScaleSetExtensionsServerTransport) dispatchBeginUpdate(re
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualMachineScaleSetExtensionsServerTransport
+var virtualMachineScaleSetExtensionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

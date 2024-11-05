@@ -81,27 +81,46 @@ func (v *VPNSitesServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (v *VPNSitesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VPNSitesClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VPNSitesClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VPNSitesClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VPNSitesClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	case "VPNSitesClient.NewListByResourceGroupPager":
-		resp, err = v.dispatchNewListByResourceGroupPager(req)
-	case "VPNSitesClient.UpdateTags":
-		resp, err = v.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if vpnSitesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = vpnSitesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VPNSitesClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VPNSitesClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VPNSitesClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VPNSitesClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VPNSitesClient.NewListByResourceGroupPager":
+				res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
+			case "VPNSitesClient.UpdateTags":
+				res.resp, res.err = v.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VPNSitesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -334,4 +353,10 @@ func (v *VPNSitesServerTransport) dispatchUpdateTags(req *http.Request) (*http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VPNSitesServerTransport
+var vpnSitesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

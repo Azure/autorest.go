@@ -53,17 +53,36 @@ func (e *ExpressRouteServiceProvidersServerTransport) Do(req *http.Request) (*ht
 }
 
 func (e *ExpressRouteServiceProvidersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ExpressRouteServiceProvidersClient.NewListPager":
-		resp, err = e.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if expressRouteServiceProvidersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = expressRouteServiceProvidersServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ExpressRouteServiceProvidersClient.NewListPager":
+				res.resp, res.err = e.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *ExpressRouteServiceProvidersServerTransport) dispatchNewListPager(req *http.Request) (*http.Response, error) {
@@ -97,4 +116,10 @@ func (e *ExpressRouteServiceProvidersServerTransport) dispatchNewListPager(req *
 		e.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ExpressRouteServiceProvidersServerTransport
+var expressRouteServiceProvidersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

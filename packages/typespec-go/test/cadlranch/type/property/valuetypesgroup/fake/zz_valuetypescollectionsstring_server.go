@@ -51,19 +51,38 @@ func (v *ValueTypesCollectionsStringServerTransport) Do(req *http.Request) (*htt
 }
 
 func (v *ValueTypesCollectionsStringServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ValueTypesCollectionsStringClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "ValueTypesCollectionsStringClient.Put":
-		resp, err = v.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if valueTypesCollectionsStringServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = valueTypesCollectionsStringServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ValueTypesCollectionsStringClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "ValueTypesCollectionsStringClient.Put":
+				res.resp, res.err = v.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *ValueTypesCollectionsStringServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -106,4 +125,10 @@ func (v *ValueTypesCollectionsStringServerTransport) dispatchPut(req *http.Reque
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ValueTypesCollectionsStringServerTransport
+var valueTypesCollectionsStringServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

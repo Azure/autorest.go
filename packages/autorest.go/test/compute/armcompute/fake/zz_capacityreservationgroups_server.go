@@ -77,27 +77,46 @@ func (c *CapacityReservationGroupsServerTransport) Do(req *http.Request) (*http.
 }
 
 func (c *CapacityReservationGroupsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "CapacityReservationGroupsClient.CreateOrUpdate":
-		resp, err = c.dispatchCreateOrUpdate(req)
-	case "CapacityReservationGroupsClient.Delete":
-		resp, err = c.dispatchDelete(req)
-	case "CapacityReservationGroupsClient.Get":
-		resp, err = c.dispatchGet(req)
-	case "CapacityReservationGroupsClient.NewListByResourceGroupPager":
-		resp, err = c.dispatchNewListByResourceGroupPager(req)
-	case "CapacityReservationGroupsClient.NewListBySubscriptionPager":
-		resp, err = c.dispatchNewListBySubscriptionPager(req)
-	case "CapacityReservationGroupsClient.Update":
-		resp, err = c.dispatchUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if capacityReservationGroupsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = capacityReservationGroupsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "CapacityReservationGroupsClient.CreateOrUpdate":
+				res.resp, res.err = c.dispatchCreateOrUpdate(req)
+			case "CapacityReservationGroupsClient.Delete":
+				res.resp, res.err = c.dispatchDelete(req)
+			case "CapacityReservationGroupsClient.Get":
+				res.resp, res.err = c.dispatchGet(req)
+			case "CapacityReservationGroupsClient.NewListByResourceGroupPager":
+				res.resp, res.err = c.dispatchNewListByResourceGroupPager(req)
+			case "CapacityReservationGroupsClient.NewListBySubscriptionPager":
+				res.resp, res.err = c.dispatchNewListBySubscriptionPager(req)
+			case "CapacityReservationGroupsClient.Update":
+				res.resp, res.err = c.dispatchUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *CapacityReservationGroupsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -344,4 +363,10 @@ func (c *CapacityReservationGroupsServerTransport) dispatchUpdate(req *http.Requ
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to CapacityReservationGroupsServerTransport
+var capacityReservationGroupsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

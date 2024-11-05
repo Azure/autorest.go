@@ -77,25 +77,44 @@ func (g *GalleryImageVersionsServerTransport) Do(req *http.Request) (*http.Respo
 }
 
 func (g *GalleryImageVersionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "GalleryImageVersionsClient.BeginCreateOrUpdate":
-		resp, err = g.dispatchBeginCreateOrUpdate(req)
-	case "GalleryImageVersionsClient.BeginDelete":
-		resp, err = g.dispatchBeginDelete(req)
-	case "GalleryImageVersionsClient.Get":
-		resp, err = g.dispatchGet(req)
-	case "GalleryImageVersionsClient.NewListByGalleryImagePager":
-		resp, err = g.dispatchNewListByGalleryImagePager(req)
-	case "GalleryImageVersionsClient.BeginUpdate":
-		resp, err = g.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if galleryImageVersionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = galleryImageVersionsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "GalleryImageVersionsClient.BeginCreateOrUpdate":
+				res.resp, res.err = g.dispatchBeginCreateOrUpdate(req)
+			case "GalleryImageVersionsClient.BeginDelete":
+				res.resp, res.err = g.dispatchBeginDelete(req)
+			case "GalleryImageVersionsClient.Get":
+				res.resp, res.err = g.dispatchGet(req)
+			case "GalleryImageVersionsClient.NewListByGalleryImagePager":
+				res.resp, res.err = g.dispatchNewListByGalleryImagePager(req)
+			case "GalleryImageVersionsClient.BeginUpdate":
+				res.resp, res.err = g.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (g *GalleryImageVersionsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -358,4 +377,10 @@ func (g *GalleryImageVersionsServerTransport) dispatchBeginUpdate(req *http.Requ
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to GalleryImageVersionsServerTransport
+var galleryImageVersionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

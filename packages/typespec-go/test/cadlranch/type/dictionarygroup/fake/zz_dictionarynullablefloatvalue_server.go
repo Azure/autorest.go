@@ -51,19 +51,38 @@ func (d *DictionaryNullableFloatValueServerTransport) Do(req *http.Request) (*ht
 }
 
 func (d *DictionaryNullableFloatValueServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DictionaryNullableFloatValueClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DictionaryNullableFloatValueClient.Put":
-		resp, err = d.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if dictionaryNullableFloatValueServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = dictionaryNullableFloatValueServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "DictionaryNullableFloatValueClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DictionaryNullableFloatValueClient.Put":
+				res.resp, res.err = d.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DictionaryNullableFloatValueServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -106,4 +125,10 @@ func (d *DictionaryNullableFloatValueServerTransport) dispatchPut(req *http.Requ
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DictionaryNullableFloatValueServerTransport
+var dictionaryNullableFloatValueServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -51,19 +51,38 @@ func (s *ServiceFooServerTransport) Do(req *http.Request) (*http.Response, error
 }
 
 func (s *ServiceFooServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ServiceFooClient.Four":
-		resp, err = s.dispatchFour(req)
-	case "ServiceFooClient.Three":
-		resp, err = s.dispatchThree(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if serviceFooServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = serviceFooServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ServiceFooClient.Four":
+				res.resp, res.err = s.dispatchFour(req)
+			case "ServiceFooClient.Three":
+				res.resp, res.err = s.dispatchThree(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ServiceFooServerTransport) dispatchFour(req *http.Request) (*http.Response, error) {
@@ -102,4 +121,10 @@ func (s *ServiceFooServerTransport) dispatchThree(req *http.Request) (*http.Resp
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ServiceFooServerTransport
+var serviceFooServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

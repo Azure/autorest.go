@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: 2023-09-01-preview/SharedPrivateLinkResources_Create_200.json
+// Generated from example definition: 2024-07-19-preview/SharedPrivateLinkResources_Create_MaximumSet_Gen.json
 func ExampleSharedPrivateLinkResourcesClient_BeginCreate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -29,6 +29,7 @@ func ExampleSharedPrivateLinkResourcesClient_BeginCreate() {
 			GroupID:               to.Ptr("vault"),
 			RequestMessage:        to.Ptr("request message"),
 			DNSZone:               to.Ptr("ec3ae9d410ba"),
+			Status:                to.Ptr(armdatabasewatcher.SharedPrivateLinkResourceStatusPending),
 		},
 	}, nil)
 	if err != nil {
@@ -43,9 +44,6 @@ func ExampleSharedPrivateLinkResourcesClient_BeginCreate() {
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armdatabasewatcher.SharedPrivateLinkResourcesClientCreateResponse{
 	// 	SharedPrivateLinkResource: &armdatabasewatcher.SharedPrivateLinkResource{
-	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.DatabaseWatcher/watchers/databasemo3ej9ih/sharedPrivateLinkResources/monitoringh22eed"),
-	// 		Name: to.Ptr("monitoringh22eed"),
-	// 		Type: to.Ptr("microsoft.databasewatcher/watchers/sharedPrivateLinkResources"),
 	// 		Properties: &armdatabasewatcher.SharedPrivateLinkResourceProperties{
 	// 			PrivateLinkResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.KeyVault/vaults/kvmo3ej9ih"),
 	// 			GroupID: to.Ptr("vault"),
@@ -53,11 +51,22 @@ func ExampleSharedPrivateLinkResourcesClient_BeginCreate() {
 	// 			DNSZone: to.Ptr("ec3ae9d410ba"),
 	// 			Status: to.Ptr(armdatabasewatcher.SharedPrivateLinkResourceStatusPending),
 	// 		},
+	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.DatabaseWatcher/watchers/databasemo3ej9ih/sharedPrivateLinkResources/monitoringh22eed"),
+	// 		Name: to.Ptr("monitoringh22eed"),
+	// 		Type: to.Ptr("microsoft.databasewatcher/watchers/sharedPrivateLinkResources"),
+	// 		SystemData: &armdatabasewatcher.SystemData{
+	// 			CreatedBy: to.Ptr("enbpvlpqbwd"),
+	// 			CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+	// 			LastModifiedBy: to.Ptr("mxp"),
+	// 			LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+	// 		},
 	// 	},
 	// }
 }
 
-// Generated from example definition: 2023-09-01-preview/SharedPrivateLinkResources_Delete_200.json
+// Generated from example definition: 2024-07-19-preview/SharedPrivateLinkResources_Delete_MaximumSet_Gen.json
 func ExampleSharedPrivateLinkResourcesClient_BeginDelete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -78,7 +87,7 @@ func ExampleSharedPrivateLinkResourcesClient_BeginDelete() {
 	}
 }
 
-// Generated from example definition: 2023-09-01-preview/SharedPrivateLinkResources_Get_200.json
+// Generated from example definition: 2024-07-19-preview/SharedPrivateLinkResources_Get_MaximumSet_Gen.json
 func ExampleSharedPrivateLinkResourcesClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -98,9 +107,6 @@ func ExampleSharedPrivateLinkResourcesClient_Get() {
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armdatabasewatcher.SharedPrivateLinkResourcesClientGetResponse{
 	// 	SharedPrivateLinkResource: &armdatabasewatcher.SharedPrivateLinkResource{
-	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.DatabaseWatcher/watchers/databasemo3ej9ih/sharedPrivateLinkResources/monitoringh22eed"),
-	// 		Name: to.Ptr("monitoringh22eed"),
-	// 		Type: to.Ptr("microsoft.databasewatcher/watchers/sharedPrivateLinkResources"),
 	// 		Properties: &armdatabasewatcher.SharedPrivateLinkResourceProperties{
 	// 			PrivateLinkResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.KeyVault/vaults/kvmo3ej9ih"),
 	// 			GroupID: to.Ptr("vault"),
@@ -108,11 +114,22 @@ func ExampleSharedPrivateLinkResourcesClient_Get() {
 	// 			DNSZone: to.Ptr("ec3ae9d410ba"),
 	// 			Status: to.Ptr(armdatabasewatcher.SharedPrivateLinkResourceStatusPending),
 	// 		},
+	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.DatabaseWatcher/watchers/databasemo3ej9ih/sharedPrivateLinkResources/monitoringh22eed"),
+	// 		Name: to.Ptr("monitoringh22eed"),
+	// 		Type: to.Ptr("microsoft.databasewatcher/watchers/sharedPrivateLinkResources"),
+	// 		SystemData: &armdatabasewatcher.SystemData{
+	// 			CreatedBy: to.Ptr("enbpvlpqbwd"),
+	// 			CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+	// 			LastModifiedBy: to.Ptr("mxp"),
+	// 			LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+	// 		},
 	// 	},
 	// }
 }
 
-// Generated from example definition: 2023-09-01-preview/SharedPrivateLinkResources_ListByWatcher_200.json
+// Generated from example definition: 2024-07-19-preview/SharedPrivateLinkResources_ListByWatcher_MaximumSet_Gen.json
 func ExampleSharedPrivateLinkResourcesClient_NewListByWatcherPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -148,8 +165,17 @@ func ExampleSharedPrivateLinkResourcesClient_NewListByWatcherPager() {
 		// 					DNSZone: to.Ptr("ec3ae9d410ba"),
 		// 					Status: to.Ptr(armdatabasewatcher.SharedPrivateLinkResourceStatusPending),
 		// 				},
+		// 				SystemData: &armdatabasewatcher.SystemData{
+		// 					CreatedBy: to.Ptr("enbpvlpqbwd"),
+		// 					CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 					LastModifiedBy: to.Ptr("mxp"),
+		// 					LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 				},
 		// 			},
 		// 		},
+		// 		NextLink: to.Ptr("https://microsoft.com/awfba"),
 		// 	},
 		// }
 	}

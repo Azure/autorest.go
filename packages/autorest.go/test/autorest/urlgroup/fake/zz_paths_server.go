@@ -157,69 +157,88 @@ func (p *PathsServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (p *PathsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "PathsClient.ArrayCSVInPath":
-		resp, err = p.dispatchArrayCSVInPath(req)
-	case "PathsClient.Base64URL":
-		resp, err = p.dispatchBase64URL(req)
-	case "PathsClient.ByteEmpty":
-		resp, err = p.dispatchByteEmpty(req)
-	case "PathsClient.ByteMultiByte":
-		resp, err = p.dispatchByteMultiByte(req)
-	case "PathsClient.ByteNull":
-		resp, err = p.dispatchByteNull(req)
-	case "PathsClient.DateNull":
-		resp, err = p.dispatchDateNull(req)
-	case "PathsClient.DateTimeNull":
-		resp, err = p.dispatchDateTimeNull(req)
-	case "PathsClient.DateTimeValid":
-		resp, err = p.dispatchDateTimeValid(req)
-	case "PathsClient.DateValid":
-		resp, err = p.dispatchDateValid(req)
-	case "PathsClient.DoubleDecimalNegative":
-		resp, err = p.dispatchDoubleDecimalNegative(req)
-	case "PathsClient.DoubleDecimalPositive":
-		resp, err = p.dispatchDoubleDecimalPositive(req)
-	case "PathsClient.EnumNull":
-		resp, err = p.dispatchEnumNull(req)
-	case "PathsClient.EnumValid":
-		resp, err = p.dispatchEnumValid(req)
-	case "PathsClient.FloatScientificNegative":
-		resp, err = p.dispatchFloatScientificNegative(req)
-	case "PathsClient.FloatScientificPositive":
-		resp, err = p.dispatchFloatScientificPositive(req)
-	case "PathsClient.GetBooleanFalse":
-		resp, err = p.dispatchGetBooleanFalse(req)
-	case "PathsClient.GetBooleanTrue":
-		resp, err = p.dispatchGetBooleanTrue(req)
-	case "PathsClient.GetIntNegativeOneMillion":
-		resp, err = p.dispatchGetIntNegativeOneMillion(req)
-	case "PathsClient.GetIntOneMillion":
-		resp, err = p.dispatchGetIntOneMillion(req)
-	case "PathsClient.GetNegativeTenBillion":
-		resp, err = p.dispatchGetNegativeTenBillion(req)
-	case "PathsClient.GetTenBillion":
-		resp, err = p.dispatchGetTenBillion(req)
-	case "PathsClient.StringEmpty":
-		resp, err = p.dispatchStringEmpty(req)
-	case "PathsClient.StringNull":
-		resp, err = p.dispatchStringNull(req)
-	case "PathsClient.StringURLEncoded":
-		resp, err = p.dispatchStringURLEncoded(req)
-	case "PathsClient.StringURLNonEncoded":
-		resp, err = p.dispatchStringURLNonEncoded(req)
-	case "PathsClient.StringUnicode":
-		resp, err = p.dispatchStringUnicode(req)
-	case "PathsClient.UnixTimeURL":
-		resp, err = p.dispatchUnixTimeURL(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if pathsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = pathsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "PathsClient.ArrayCSVInPath":
+				res.resp, res.err = p.dispatchArrayCSVInPath(req)
+			case "PathsClient.Base64URL":
+				res.resp, res.err = p.dispatchBase64URL(req)
+			case "PathsClient.ByteEmpty":
+				res.resp, res.err = p.dispatchByteEmpty(req)
+			case "PathsClient.ByteMultiByte":
+				res.resp, res.err = p.dispatchByteMultiByte(req)
+			case "PathsClient.ByteNull":
+				res.resp, res.err = p.dispatchByteNull(req)
+			case "PathsClient.DateNull":
+				res.resp, res.err = p.dispatchDateNull(req)
+			case "PathsClient.DateTimeNull":
+				res.resp, res.err = p.dispatchDateTimeNull(req)
+			case "PathsClient.DateTimeValid":
+				res.resp, res.err = p.dispatchDateTimeValid(req)
+			case "PathsClient.DateValid":
+				res.resp, res.err = p.dispatchDateValid(req)
+			case "PathsClient.DoubleDecimalNegative":
+				res.resp, res.err = p.dispatchDoubleDecimalNegative(req)
+			case "PathsClient.DoubleDecimalPositive":
+				res.resp, res.err = p.dispatchDoubleDecimalPositive(req)
+			case "PathsClient.EnumNull":
+				res.resp, res.err = p.dispatchEnumNull(req)
+			case "PathsClient.EnumValid":
+				res.resp, res.err = p.dispatchEnumValid(req)
+			case "PathsClient.FloatScientificNegative":
+				res.resp, res.err = p.dispatchFloatScientificNegative(req)
+			case "PathsClient.FloatScientificPositive":
+				res.resp, res.err = p.dispatchFloatScientificPositive(req)
+			case "PathsClient.GetBooleanFalse":
+				res.resp, res.err = p.dispatchGetBooleanFalse(req)
+			case "PathsClient.GetBooleanTrue":
+				res.resp, res.err = p.dispatchGetBooleanTrue(req)
+			case "PathsClient.GetIntNegativeOneMillion":
+				res.resp, res.err = p.dispatchGetIntNegativeOneMillion(req)
+			case "PathsClient.GetIntOneMillion":
+				res.resp, res.err = p.dispatchGetIntOneMillion(req)
+			case "PathsClient.GetNegativeTenBillion":
+				res.resp, res.err = p.dispatchGetNegativeTenBillion(req)
+			case "PathsClient.GetTenBillion":
+				res.resp, res.err = p.dispatchGetTenBillion(req)
+			case "PathsClient.StringEmpty":
+				res.resp, res.err = p.dispatchStringEmpty(req)
+			case "PathsClient.StringNull":
+				res.resp, res.err = p.dispatchStringNull(req)
+			case "PathsClient.StringURLEncoded":
+				res.resp, res.err = p.dispatchStringURLEncoded(req)
+			case "PathsClient.StringURLNonEncoded":
+				res.resp, res.err = p.dispatchStringURLNonEncoded(req)
+			case "PathsClient.StringUnicode":
+				res.resp, res.err = p.dispatchStringUnicode(req)
+			case "PathsClient.UnixTimeURL":
+				res.resp, res.err = p.dispatchUnixTimeURL(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PathsServerTransport) dispatchArrayCSVInPath(req *http.Request) (*http.Response, error) {
@@ -875,4 +894,10 @@ func (p *PathsServerTransport) dispatchUnixTimeURL(req *http.Request) (*http.Res
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to PathsServerTransport
+var pathsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

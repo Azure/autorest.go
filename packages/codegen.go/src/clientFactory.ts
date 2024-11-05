@@ -5,9 +5,8 @@
 
 import * as go from '../../codemodel.go/src/index.js';
 import { values } from '@azure-tools/linq';
-import { contentPreamble, formatCommentAsBulletItem, formatParameterTypeName, getAllClientParameters } from './helpers.js';
+import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
-
 
 // Creates the content for client_factory.go (ARM only)
 export async function generateClientFactory(codeModel: go.CodeModel): Promise<string> {
@@ -20,7 +19,7 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
   // the list of packages to import
   const imports = new ImportManager();
 
-  const allClientParams = getAllClientParameters(codeModel);
+  const allClientParams = helpers.getAllClientParameters(codeModel);
 
   // add factory type
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
@@ -28,7 +27,7 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
   result += '// Don\'t use this type directly, use NewClientFactory instead.\n';
   result += 'type ClientFactory struct {\n';
   for (const clientParam of values(allClientParams)) {
-    result += `\t${clientParam.name} ${formatParameterTypeName(clientParam)}\n`;
+    result += `\t${clientParam.name} ${helpers.formatParameterTypeName(clientParam)}\n`;
   }
   result += '\tinternal *arm.Client\n';
   result += '}\n\n';
@@ -38,12 +37,12 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
   result += '// NewClientFactory creates a new instance of ClientFactory with the specified values.\n';
   result += '// The parameter values will be propagated to any client created from this factory.\n';
   for (const clientParam of values(allClientParams)) {
-    result += `${formatCommentAsBulletItem(`${clientParam.name} - ${clientParam.description}`)}\n`;
+    result += helpers.formatCommentAsBulletItem(clientParam.name, clientParam.docs);
   }
-  result += `${formatCommentAsBulletItem('credential - used to authorize requests. Usually a credential from azidentity.')}\n`;
-  result += `${formatCommentAsBulletItem('options - pass nil to accept the default values.')}\n`;
+  result += helpers.formatCommentAsBulletItem('credential', {summary: 'used to authorize requests. Usually a credential from azidentity.'});
+  result += helpers.formatCommentAsBulletItem('options', {summary: 'pass nil to accept the default values.'});
 
-  result += `func NewClientFactory(${allClientParams.map(param => { return `${param.name} ${formatParameterTypeName(param)}`; }).join(', ')}${allClientParams.length>0 ? ',' : ''} credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {\n`;
+  result += `func NewClientFactory(${allClientParams.map(param => { return `${param.name} ${helpers.formatParameterTypeName(param)}`; }).join(', ')}${allClientParams.length>0 ? ',' : ''} credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {\n`;
   result += '\tinternal, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
   result += '\tif err != nil {\n';
   result += '\t\treturn nil, err\n';
@@ -75,6 +74,6 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
     result += '}\n\n';
   }
 
-  result = contentPreamble(codeModel) + imports.text() + result;
+  result = helpers.contentPreamble(codeModel) + imports.text() + result;
   return result;
 }

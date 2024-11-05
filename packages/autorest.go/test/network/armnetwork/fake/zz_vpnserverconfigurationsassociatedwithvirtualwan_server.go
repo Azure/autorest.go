@@ -54,17 +54,36 @@ func (v *VPNServerConfigurationsAssociatedWithVirtualWanServerTransport) Do(req 
 }
 
 func (v *VPNServerConfigurationsAssociatedWithVirtualWanServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList":
-		resp, err = v.dispatchBeginList(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if vpnServerConfigurationsAssociatedWithVirtualWanServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = vpnServerConfigurationsAssociatedWithVirtualWanServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList":
+				res.resp, res.err = v.dispatchBeginList(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VPNServerConfigurationsAssociatedWithVirtualWanServerTransport) dispatchBeginList(req *http.Request) (*http.Response, error) {
@@ -109,4 +128,10 @@ func (v *VPNServerConfigurationsAssociatedWithVirtualWanServerTransport) dispatc
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VPNServerConfigurationsAssociatedWithVirtualWanServerTransport
+var vpnServerConfigurationsAssociatedWithVirtualWanServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

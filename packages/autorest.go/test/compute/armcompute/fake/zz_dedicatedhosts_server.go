@@ -38,7 +38,7 @@ type DedicatedHostsServer struct {
 	NewListByHostGroupPager func(resourceGroupName string, hostGroupName string, options *armcompute.DedicatedHostsClientListByHostGroupOptions) (resp azfake.PagerResponder[armcompute.DedicatedHostsClientListByHostGroupResponse])
 
 	// BeginRestart is the fake for method DedicatedHostsClient.BeginRestart
-	// HTTP status codes to indicate success: http.StatusOK
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
 	BeginRestart func(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *armcompute.DedicatedHostsClientBeginRestartOptions) (resp azfake.PollerResponder[armcompute.DedicatedHostsClientRestartResponse], errResp azfake.ErrorResponder)
 
 	// BeginUpdate is the fake for method DedicatedHostsClient.BeginUpdate
@@ -83,27 +83,46 @@ func (d *DedicatedHostsServerTransport) Do(req *http.Request) (*http.Response, e
 }
 
 func (d *DedicatedHostsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DedicatedHostsClient.BeginCreateOrUpdate":
-		resp, err = d.dispatchBeginCreateOrUpdate(req)
-	case "DedicatedHostsClient.BeginDelete":
-		resp, err = d.dispatchBeginDelete(req)
-	case "DedicatedHostsClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DedicatedHostsClient.NewListByHostGroupPager":
-		resp, err = d.dispatchNewListByHostGroupPager(req)
-	case "DedicatedHostsClient.BeginRestart":
-		resp, err = d.dispatchBeginRestart(req)
-	case "DedicatedHostsClient.BeginUpdate":
-		resp, err = d.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if dedicatedHostsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = dedicatedHostsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "DedicatedHostsClient.BeginCreateOrUpdate":
+				res.resp, res.err = d.dispatchBeginCreateOrUpdate(req)
+			case "DedicatedHostsClient.BeginDelete":
+				res.resp, res.err = d.dispatchBeginDelete(req)
+			case "DedicatedHostsClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DedicatedHostsClient.NewListByHostGroupPager":
+				res.resp, res.err = d.dispatchNewListByHostGroupPager(req)
+			case "DedicatedHostsClient.BeginRestart":
+				res.resp, res.err = d.dispatchBeginRestart(req)
+			case "DedicatedHostsClient.BeginUpdate":
+				res.resp, res.err = d.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DedicatedHostsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -333,9 +352,9 @@ func (d *DedicatedHostsServerTransport) dispatchBeginRestart(req *http.Request) 
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusNoContent}, resp.StatusCode) {
 		d.beginRestart.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRestart) {
 		d.beginRestart.remove(req)
@@ -394,4 +413,10 @@ func (d *DedicatedHostsServerTransport) dispatchBeginUpdate(req *http.Request) (
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DedicatedHostsServerTransport
+var dedicatedHostsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -275,7 +275,7 @@ func ExampleServicesClient_Update() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewServicesClient().Update(ctx, "contoso-resources", "contoso", armapicenter.Service{
+	res, err := clientFactory.NewServicesClient().Update(ctx, "contoso-resources", "contoso", armapicenter.ServiceUpdate{
 		Tags: map[string]*string{},
 		Identity: &armapicenter.ManagedServiceIdentity{
 			UserAssignedIdentities: map[string]*armapicenter.UserAssignedIdentity{

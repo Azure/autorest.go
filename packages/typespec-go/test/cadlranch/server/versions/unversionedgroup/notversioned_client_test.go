@@ -14,7 +14,7 @@ import (
 func TestNotVersionedClient_WithPathAPIVersion(t *testing.T) {
 	client, err := unversionedgroup.NewNotVersionedClient(nil)
 	require.NoError(t, err)
-	resp, err := client.WithPathAPIVersion(context.Background(), nil)
+	resp, err := client.WithPathAPIVersion(context.Background(), "v1.0", nil)
 	require.NoError(t, err)
 	require.True(t, resp.Success)
 }
@@ -22,7 +22,7 @@ func TestNotVersionedClient_WithPathAPIVersion(t *testing.T) {
 func TestNotVersionedClient_WithQueryAPIVersion(t *testing.T) {
 	client, err := unversionedgroup.NewNotVersionedClient(nil)
 	require.NoError(t, err)
-	resp, err := client.WithQueryAPIVersion(context.Background(), nil)
+	resp, err := client.WithQueryAPIVersion(context.Background(), "v1.0", nil)
 	require.NoError(t, err)
 	require.True(t, resp.Success)
 }

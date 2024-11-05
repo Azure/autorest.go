@@ -71,23 +71,42 @@ func (a *ApplicationGatewayPrivateEndpointConnectionsServerTransport) Do(req *ht
 }
 
 func (a *ApplicationGatewayPrivateEndpointConnectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ApplicationGatewayPrivateEndpointConnectionsClient.BeginDelete":
-		resp, err = a.dispatchBeginDelete(req)
-	case "ApplicationGatewayPrivateEndpointConnectionsClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "ApplicationGatewayPrivateEndpointConnectionsClient.NewListPager":
-		resp, err = a.dispatchNewListPager(req)
-	case "ApplicationGatewayPrivateEndpointConnectionsClient.BeginUpdate":
-		resp, err = a.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if applicationGatewayPrivateEndpointConnectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = applicationGatewayPrivateEndpointConnectionsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ApplicationGatewayPrivateEndpointConnectionsClient.BeginDelete":
+				res.resp, res.err = a.dispatchBeginDelete(req)
+			case "ApplicationGatewayPrivateEndpointConnectionsClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "ApplicationGatewayPrivateEndpointConnectionsClient.NewListPager":
+				res.resp, res.err = a.dispatchNewListPager(req)
+			case "ApplicationGatewayPrivateEndpointConnectionsClient.BeginUpdate":
+				res.resp, res.err = a.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *ApplicationGatewayPrivateEndpointConnectionsServerTransport) dispatchBeginDelete(req *http.Request) (*http.Response, error) {
@@ -266,4 +285,10 @@ func (a *ApplicationGatewayPrivateEndpointConnectionsServerTransport) dispatchBe
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ApplicationGatewayPrivateEndpointConnectionsServerTransport
+var applicationGatewayPrivateEndpointConnectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

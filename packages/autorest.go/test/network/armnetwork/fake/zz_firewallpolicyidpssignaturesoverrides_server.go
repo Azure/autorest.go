@@ -62,23 +62,42 @@ func (f *FirewallPolicyIdpsSignaturesOverridesServerTransport) Do(req *http.Requ
 }
 
 func (f *FirewallPolicyIdpsSignaturesOverridesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "FirewallPolicyIdpsSignaturesOverridesClient.Get":
-		resp, err = f.dispatchGet(req)
-	case "FirewallPolicyIdpsSignaturesOverridesClient.List":
-		resp, err = f.dispatchList(req)
-	case "FirewallPolicyIdpsSignaturesOverridesClient.Patch":
-		resp, err = f.dispatchPatch(req)
-	case "FirewallPolicyIdpsSignaturesOverridesClient.Put":
-		resp, err = f.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if firewallPolicyIdpsSignaturesOverridesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = firewallPolicyIdpsSignaturesOverridesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "FirewallPolicyIdpsSignaturesOverridesClient.Get":
+				res.resp, res.err = f.dispatchGet(req)
+			case "FirewallPolicyIdpsSignaturesOverridesClient.List":
+				res.resp, res.err = f.dispatchList(req)
+			case "FirewallPolicyIdpsSignaturesOverridesClient.Patch":
+				res.resp, res.err = f.dispatchPatch(req)
+			case "FirewallPolicyIdpsSignaturesOverridesClient.Put":
+				res.resp, res.err = f.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (f *FirewallPolicyIdpsSignaturesOverridesServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -219,4 +238,10 @@ func (f *FirewallPolicyIdpsSignaturesOverridesServerTransport) dispatchPut(req *
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to FirewallPolicyIdpsSignaturesOverridesServerTransport
+var firewallPolicyIdpsSignaturesOverridesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

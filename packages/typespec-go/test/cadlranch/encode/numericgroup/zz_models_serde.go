@@ -83,6 +83,41 @@ func (u *Uint32AsStringProperty) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the json.Marshaller interface for type Uint8AsStringProperty.
+func (u Uint8AsStringProperty) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "value", to.Ptr(strconv.FormatUint(uint64(*u.Value), 10)))
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type Uint8AsStringProperty.
+func (u *Uint8AsStringProperty) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", u, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "value":
+			var aux string
+			err = unpopulate(val, "Value", &aux)
+			if err == nil {
+				var v uint64
+				v, err = strconv.ParseUint(aux, 10, 0)
+				if err == nil {
+					u.Value = to.Ptr(uint8(v))
+				}
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", u, err)
+		}
+	}
+	return nil
+}
+
 func populate(m map[string]any, k string, v any) {
 	if v == nil {
 		return

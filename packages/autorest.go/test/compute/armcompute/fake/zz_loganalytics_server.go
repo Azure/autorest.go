@@ -60,19 +60,38 @@ func (l *LogAnalyticsServerTransport) Do(req *http.Request) (*http.Response, err
 }
 
 func (l *LogAnalyticsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "LogAnalyticsClient.BeginExportRequestRateByInterval":
-		resp, err = l.dispatchBeginExportRequestRateByInterval(req)
-	case "LogAnalyticsClient.BeginExportThrottledRequests":
-		resp, err = l.dispatchBeginExportThrottledRequests(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if logAnalyticsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = logAnalyticsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "LogAnalyticsClient.BeginExportRequestRateByInterval":
+				res.resp, res.err = l.dispatchBeginExportRequestRateByInterval(req)
+			case "LogAnalyticsClient.BeginExportThrottledRequests":
+				res.resp, res.err = l.dispatchBeginExportThrottledRequests(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (l *LogAnalyticsServerTransport) dispatchBeginExportRequestRateByInterval(req *http.Request) (*http.Response, error) {
@@ -161,4 +180,10 @@ func (l *LogAnalyticsServerTransport) dispatchBeginExportThrottledRequests(req *
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to LogAnalyticsServerTransport
+var logAnalyticsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

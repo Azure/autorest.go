@@ -81,27 +81,46 @@ func (a *ApplicationSecurityGroupsServerTransport) Do(req *http.Request) (*http.
 }
 
 func (a *ApplicationSecurityGroupsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ApplicationSecurityGroupsClient.BeginCreateOrUpdate":
-		resp, err = a.dispatchBeginCreateOrUpdate(req)
-	case "ApplicationSecurityGroupsClient.BeginDelete":
-		resp, err = a.dispatchBeginDelete(req)
-	case "ApplicationSecurityGroupsClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "ApplicationSecurityGroupsClient.NewListPager":
-		resp, err = a.dispatchNewListPager(req)
-	case "ApplicationSecurityGroupsClient.NewListAllPager":
-		resp, err = a.dispatchNewListAllPager(req)
-	case "ApplicationSecurityGroupsClient.UpdateTags":
-		resp, err = a.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if applicationSecurityGroupsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = applicationSecurityGroupsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ApplicationSecurityGroupsClient.BeginCreateOrUpdate":
+				res.resp, res.err = a.dispatchBeginCreateOrUpdate(req)
+			case "ApplicationSecurityGroupsClient.BeginDelete":
+				res.resp, res.err = a.dispatchBeginDelete(req)
+			case "ApplicationSecurityGroupsClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "ApplicationSecurityGroupsClient.NewListPager":
+				res.resp, res.err = a.dispatchNewListPager(req)
+			case "ApplicationSecurityGroupsClient.NewListAllPager":
+				res.resp, res.err = a.dispatchNewListAllPager(req)
+			case "ApplicationSecurityGroupsClient.UpdateTags":
+				res.resp, res.err = a.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *ApplicationSecurityGroupsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -334,4 +353,10 @@ func (a *ApplicationSecurityGroupsServerTransport) dispatchUpdateTags(req *http.
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ApplicationSecurityGroupsServerTransport
+var applicationSecurityGroupsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

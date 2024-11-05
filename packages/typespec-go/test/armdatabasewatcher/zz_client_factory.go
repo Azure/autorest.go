@@ -32,6 +32,14 @@ func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, 
 	}, nil
 }
 
+// NewAlertRuleResourcesClient creates a new instance of AlertRuleResourcesClient.
+func (c *ClientFactory) NewAlertRuleResourcesClient() *AlertRuleResourcesClient {
+	return &AlertRuleResourcesClient{
+		subscriptionID: c.subscriptionID,
+		internal:       c.internal,
+	}
+}
+
 // NewOperationsClient creates a new instance of OperationsClient.
 func (c *ClientFactory) NewOperationsClient() *OperationsClient {
 	return &OperationsClient{

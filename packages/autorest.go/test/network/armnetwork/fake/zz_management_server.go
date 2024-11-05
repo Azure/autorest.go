@@ -27,7 +27,7 @@ type ManagementServer struct {
 	CheckDNSNameAvailability func(ctx context.Context, location string, domainNameLabel string, options *armnetwork.ManagementClientCheckDNSNameAvailabilityOptions) (resp azfake.Responder[armnetwork.ManagementClientCheckDNSNameAvailabilityResponse], errResp azfake.ErrorResponder)
 
 	// BeginDeleteBastionShareableLink is the fake for method ManagementClient.BeginDeleteBastionShareableLink
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDeleteBastionShareableLink func(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest armnetwork.BastionShareableLinkListRequest, options *armnetwork.ManagementClientBeginDeleteBastionShareableLinkOptions) (resp azfake.PollerResponder[armnetwork.ManagementClientDeleteBastionShareableLinkResponse], errResp azfake.ErrorResponder)
 
 	// NewDisconnectActiveSessionsPager is the fake for method ManagementClient.NewDisconnectActiveSessionsPager
@@ -114,41 +114,60 @@ func (m *ManagementServerTransport) Do(req *http.Request) (*http.Response, error
 }
 
 func (m *ManagementServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ManagementClient.CheckDNSNameAvailability":
-		resp, err = m.dispatchCheckDNSNameAvailability(req)
-	case "ManagementClient.BeginDeleteBastionShareableLink":
-		resp, err = m.dispatchBeginDeleteBastionShareableLink(req)
-	case "ManagementClient.NewDisconnectActiveSessionsPager":
-		resp, err = m.dispatchNewDisconnectActiveSessionsPager(req)
-	case "ManagementClient.ExpressRouteProviderPort":
-		resp, err = m.dispatchExpressRouteProviderPort(req)
-	case "ManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile":
-		resp, err = m.dispatchBeginGeneratevirtualwanvpnserverconfigurationvpnprofile(req)
-	case "ManagementClient.BeginGetActiveSessions":
-		resp, err = m.dispatchBeginGetActiveSessions(req)
-	case "ManagementClient.NewGetBastionShareableLinkPager":
-		resp, err = m.dispatchNewGetBastionShareableLinkPager(req)
-	case "ManagementClient.ListActiveConnectivityConfigurations":
-		resp, err = m.dispatchListActiveConnectivityConfigurations(req)
-	case "ManagementClient.ListActiveSecurityAdminRules":
-		resp, err = m.dispatchListActiveSecurityAdminRules(req)
-	case "ManagementClient.ListNetworkManagerEffectiveConnectivityConfigurations":
-		resp, err = m.dispatchListNetworkManagerEffectiveConnectivityConfigurations(req)
-	case "ManagementClient.ListNetworkManagerEffectiveSecurityAdminRules":
-		resp, err = m.dispatchListNetworkManagerEffectiveSecurityAdminRules(req)
-	case "ManagementClient.BeginPutBastionShareableLink":
-		resp, err = m.dispatchBeginPutBastionShareableLink(req)
-	case "ManagementClient.SupportedSecurityProviders":
-		resp, err = m.dispatchSupportedSecurityProviders(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if managementServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = managementServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ManagementClient.CheckDNSNameAvailability":
+				res.resp, res.err = m.dispatchCheckDNSNameAvailability(req)
+			case "ManagementClient.BeginDeleteBastionShareableLink":
+				res.resp, res.err = m.dispatchBeginDeleteBastionShareableLink(req)
+			case "ManagementClient.NewDisconnectActiveSessionsPager":
+				res.resp, res.err = m.dispatchNewDisconnectActiveSessionsPager(req)
+			case "ManagementClient.ExpressRouteProviderPort":
+				res.resp, res.err = m.dispatchExpressRouteProviderPort(req)
+			case "ManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile":
+				res.resp, res.err = m.dispatchBeginGeneratevirtualwanvpnserverconfigurationvpnprofile(req)
+			case "ManagementClient.BeginGetActiveSessions":
+				res.resp, res.err = m.dispatchBeginGetActiveSessions(req)
+			case "ManagementClient.NewGetBastionShareableLinkPager":
+				res.resp, res.err = m.dispatchNewGetBastionShareableLinkPager(req)
+			case "ManagementClient.ListActiveConnectivityConfigurations":
+				res.resp, res.err = m.dispatchListActiveConnectivityConfigurations(req)
+			case "ManagementClient.ListActiveSecurityAdminRules":
+				res.resp, res.err = m.dispatchListActiveSecurityAdminRules(req)
+			case "ManagementClient.ListNetworkManagerEffectiveConnectivityConfigurations":
+				res.resp, res.err = m.dispatchListNetworkManagerEffectiveConnectivityConfigurations(req)
+			case "ManagementClient.ListNetworkManagerEffectiveSecurityAdminRules":
+				res.resp, res.err = m.dispatchListNetworkManagerEffectiveSecurityAdminRules(req)
+			case "ManagementClient.BeginPutBastionShareableLink":
+				res.resp, res.err = m.dispatchBeginPutBastionShareableLink(req)
+			case "ManagementClient.SupportedSecurityProviders":
+				res.resp, res.err = m.dispatchSupportedSecurityProviders(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (m *ManagementServerTransport) dispatchCheckDNSNameAvailability(req *http.Request) (*http.Response, error) {
@@ -222,9 +241,9 @@ func (m *ManagementServerTransport) dispatchBeginDeleteBastionShareableLink(req 
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		m.beginDeleteBastionShareableLink.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDeleteBastionShareableLink) {
 		m.beginDeleteBastionShareableLink.remove(req)
@@ -755,4 +774,10 @@ func (m *ManagementServerTransport) dispatchSupportedSecurityProviders(req *http
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ManagementServerTransport
+var managementServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

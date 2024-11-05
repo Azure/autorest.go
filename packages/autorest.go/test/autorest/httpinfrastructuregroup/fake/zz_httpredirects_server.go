@@ -109,47 +109,66 @@ func (h *HTTPRedirectsServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (h *HTTPRedirectsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "HTTPRedirectsClient.Delete307":
-		resp, err = h.dispatchDelete307(req)
-	case "HTTPRedirectsClient.Get300":
-		resp, err = h.dispatchGet300(req)
-	case "HTTPRedirectsClient.Get301":
-		resp, err = h.dispatchGet301(req)
-	case "HTTPRedirectsClient.Get302":
-		resp, err = h.dispatchGet302(req)
-	case "HTTPRedirectsClient.Get307":
-		resp, err = h.dispatchGet307(req)
-	case "HTTPRedirectsClient.Head300":
-		resp, err = h.dispatchHead300(req)
-	case "HTTPRedirectsClient.Head301":
-		resp, err = h.dispatchHead301(req)
-	case "HTTPRedirectsClient.Head302":
-		resp, err = h.dispatchHead302(req)
-	case "HTTPRedirectsClient.Head307":
-		resp, err = h.dispatchHead307(req)
-	case "HTTPRedirectsClient.Options307":
-		resp, err = h.dispatchOptions307(req)
-	case "HTTPRedirectsClient.Patch302":
-		resp, err = h.dispatchPatch302(req)
-	case "HTTPRedirectsClient.Patch307":
-		resp, err = h.dispatchPatch307(req)
-	case "HTTPRedirectsClient.Post303":
-		resp, err = h.dispatchPost303(req)
-	case "HTTPRedirectsClient.Post307":
-		resp, err = h.dispatchPost307(req)
-	case "HTTPRedirectsClient.Put301":
-		resp, err = h.dispatchPut301(req)
-	case "HTTPRedirectsClient.Put307":
-		resp, err = h.dispatchPut307(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if httpRedirectsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = httpRedirectsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "HTTPRedirectsClient.Delete307":
+				res.resp, res.err = h.dispatchDelete307(req)
+			case "HTTPRedirectsClient.Get300":
+				res.resp, res.err = h.dispatchGet300(req)
+			case "HTTPRedirectsClient.Get301":
+				res.resp, res.err = h.dispatchGet301(req)
+			case "HTTPRedirectsClient.Get302":
+				res.resp, res.err = h.dispatchGet302(req)
+			case "HTTPRedirectsClient.Get307":
+				res.resp, res.err = h.dispatchGet307(req)
+			case "HTTPRedirectsClient.Head300":
+				res.resp, res.err = h.dispatchHead300(req)
+			case "HTTPRedirectsClient.Head301":
+				res.resp, res.err = h.dispatchHead301(req)
+			case "HTTPRedirectsClient.Head302":
+				res.resp, res.err = h.dispatchHead302(req)
+			case "HTTPRedirectsClient.Head307":
+				res.resp, res.err = h.dispatchHead307(req)
+			case "HTTPRedirectsClient.Options307":
+				res.resp, res.err = h.dispatchOptions307(req)
+			case "HTTPRedirectsClient.Patch302":
+				res.resp, res.err = h.dispatchPatch302(req)
+			case "HTTPRedirectsClient.Patch307":
+				res.resp, res.err = h.dispatchPatch307(req)
+			case "HTTPRedirectsClient.Post303":
+				res.resp, res.err = h.dispatchPost303(req)
+			case "HTTPRedirectsClient.Post307":
+				res.resp, res.err = h.dispatchPost307(req)
+			case "HTTPRedirectsClient.Put301":
+				res.resp, res.err = h.dispatchPut301(req)
+			case "HTTPRedirectsClient.Put307":
+				res.resp, res.err = h.dispatchPut307(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (h *HTTPRedirectsServerTransport) dispatchDelete307(req *http.Request) (*http.Response, error) {
@@ -499,4 +518,10 @@ func (h *HTTPRedirectsServerTransport) dispatchPut307(req *http.Request) (*http.
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to HTTPRedirectsServerTransport
+var httpRedirectsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

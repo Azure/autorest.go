@@ -59,23 +59,42 @@ func (n *NullableStringServerTransport) Do(req *http.Request) (*http.Response, e
 }
 
 func (n *NullableStringServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "NullableStringClient.GetNonNull":
-		resp, err = n.dispatchGetNonNull(req)
-	case "NullableStringClient.GetNull":
-		resp, err = n.dispatchGetNull(req)
-	case "NullableStringClient.PatchNonNull":
-		resp, err = n.dispatchPatchNonNull(req)
-	case "NullableStringClient.PatchNull":
-		resp, err = n.dispatchPatchNull(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if nullableStringServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = nullableStringServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "NullableStringClient.GetNonNull":
+				res.resp, res.err = n.dispatchGetNonNull(req)
+			case "NullableStringClient.GetNull":
+				res.resp, res.err = n.dispatchGetNull(req)
+			case "NullableStringClient.PatchNonNull":
+				res.resp, res.err = n.dispatchPatchNonNull(req)
+			case "NullableStringClient.PatchNull":
+				res.resp, res.err = n.dispatchPatchNull(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (n *NullableStringServerTransport) dispatchGetNonNull(req *http.Request) (*http.Response, error) {
@@ -160,4 +179,10 @@ func (n *NullableStringServerTransport) dispatchPatchNull(req *http.Request) (*h
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NullableStringServerTransport
+var nullableStringServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

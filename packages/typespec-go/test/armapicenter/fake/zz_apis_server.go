@@ -70,25 +70,44 @@ func (a *ApisServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (a *ApisServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ApisClient.CreateOrUpdate":
-		resp, err = a.dispatchCreateOrUpdate(req)
-	case "ApisClient.Delete":
-		resp, err = a.dispatchDelete(req)
-	case "ApisClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "ApisClient.Head":
-		resp, err = a.dispatchHead(req)
-	case "ApisClient.NewListPager":
-		resp, err = a.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if apisServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = apisServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ApisClient.CreateOrUpdate":
+				res.resp, res.err = a.dispatchCreateOrUpdate(req)
+			case "ApisClient.Delete":
+				res.resp, res.err = a.dispatchDelete(req)
+			case "ApisClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "ApisClient.Head":
+				res.resp, res.err = a.dispatchHead(req)
+			case "ApisClient.NewListPager":
+				res.resp, res.err = a.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *ApisServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -320,4 +339,10 @@ func (a *ApisServerTransport) dispatchNewListPager(req *http.Request) (*http.Res
 		a.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ApisServerTransport
+var apisServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -52,19 +52,38 @@ func (a *AccessPublicOperationServerTransport) Do(req *http.Request) (*http.Resp
 }
 
 func (a *AccessPublicOperationServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "AccessPublicOperationClient.NoDecoratorInPublic":
-		resp, err = a.dispatchNoDecoratorInPublic(req)
-	case "AccessPublicOperationClient.PublicDecoratorInPublic":
-		resp, err = a.dispatchPublicDecoratorInPublic(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if accessPublicOperationServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = accessPublicOperationServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "AccessPublicOperationClient.NoDecoratorInPublic":
+				res.resp, res.err = a.dispatchNoDecoratorInPublic(req)
+			case "AccessPublicOperationClient.PublicDecoratorInPublic":
+				res.resp, res.err = a.dispatchPublicDecoratorInPublic(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AccessPublicOperationServerTransport) dispatchNoDecoratorInPublic(req *http.Request) (*http.Response, error) {
@@ -113,4 +132,10 @@ func (a *AccessPublicOperationServerTransport) dispatchPublicDecoratorInPublic(r
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AccessPublicOperationServerTransport
+var accessPublicOperationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

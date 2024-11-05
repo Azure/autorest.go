@@ -21,6 +21,14 @@ import (
 
 // AzureLargeInstanceServer is a fake server for instances of the armlargeinstance.AzureLargeInstanceClient type.
 type AzureLargeInstanceServer struct {
+	// Create is the fake for method AzureLargeInstanceClient.Create
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
+	Create func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, resource armlargeinstance.AzureLargeInstance, options *armlargeinstance.AzureLargeInstanceClientCreateOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstanceClientCreateResponse], errResp azfake.ErrorResponder)
+
+	// Delete is the fake for method AzureLargeInstanceClient.Delete
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
+	Delete func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstanceClientDeleteOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstanceClientDeleteResponse], errResp azfake.ErrorResponder)
+
 	// Get is the fake for method AzureLargeInstanceClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
 	Get func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstanceClientGetOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstanceClientGetResponse], errResp azfake.ErrorResponder)
@@ -34,7 +42,7 @@ type AzureLargeInstanceServer struct {
 	NewListBySubscriptionPager func(options *armlargeinstance.AzureLargeInstanceClientListBySubscriptionOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeInstanceClientListBySubscriptionResponse])
 
 	// BeginRestart is the fake for method AzureLargeInstanceClient.BeginRestart
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginRestart func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstanceClientBeginRestartOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstanceClientRestartResponse], errResp azfake.ErrorResponder)
 
 	// BeginShutdown is the fake for method AzureLargeInstanceClient.BeginShutdown
@@ -87,29 +95,122 @@ func (a *AzureLargeInstanceServerTransport) Do(req *http.Request) (*http.Respons
 }
 
 func (a *AzureLargeInstanceServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "AzureLargeInstanceClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "AzureLargeInstanceClient.NewListByResourceGroupPager":
-		resp, err = a.dispatchNewListByResourceGroupPager(req)
-	case "AzureLargeInstanceClient.NewListBySubscriptionPager":
-		resp, err = a.dispatchNewListBySubscriptionPager(req)
-	case "AzureLargeInstanceClient.BeginRestart":
-		resp, err = a.dispatchBeginRestart(req)
-	case "AzureLargeInstanceClient.BeginShutdown":
-		resp, err = a.dispatchBeginShutdown(req)
-	case "AzureLargeInstanceClient.BeginStart":
-		resp, err = a.dispatchBeginStart(req)
-	case "AzureLargeInstanceClient.Update":
-		resp, err = a.dispatchUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if azureLargeInstanceServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = azureLargeInstanceServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "AzureLargeInstanceClient.Create":
+				res.resp, res.err = a.dispatchCreate(req)
+			case "AzureLargeInstanceClient.Delete":
+				res.resp, res.err = a.dispatchDelete(req)
+			case "AzureLargeInstanceClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "AzureLargeInstanceClient.NewListByResourceGroupPager":
+				res.resp, res.err = a.dispatchNewListByResourceGroupPager(req)
+			case "AzureLargeInstanceClient.NewListBySubscriptionPager":
+				res.resp, res.err = a.dispatchNewListBySubscriptionPager(req)
+			case "AzureLargeInstanceClient.BeginRestart":
+				res.resp, res.err = a.dispatchBeginRestart(req)
+			case "AzureLargeInstanceClient.BeginShutdown":
+				res.resp, res.err = a.dispatchBeginShutdown(req)
+			case "AzureLargeInstanceClient.BeginStart":
+				res.resp, res.err = a.dispatchBeginStart(req)
+			case "AzureLargeInstanceClient.Update":
+				res.resp, res.err = a.dispatchUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
+}
 
-	return resp, err
+func (a *AzureLargeInstanceServerTransport) dispatchCreate(req *http.Request) (*http.Response, error) {
+	if a.srv.Create == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Create not implemented")}
+	}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.AzureLargeInstance/azureLargeInstances/(?P<azureLargeInstanceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 3 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	body, err := server.UnmarshalRequestAsJSON[armlargeinstance.AzureLargeInstance](req)
+	if err != nil {
+		return nil, err
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	azureLargeInstanceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("azureLargeInstanceName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := a.srv.Create(req.Context(), resourceGroupNameParam, azureLargeInstanceNameParam, body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AzureLargeInstance, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (a *AzureLargeInstanceServerTransport) dispatchDelete(req *http.Request) (*http.Response, error) {
+	if a.srv.Delete == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Delete not implemented")}
+	}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.AzureLargeInstance/azureLargeInstances/(?P<azureLargeInstanceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 3 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	azureLargeInstanceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("azureLargeInstanceName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := a.srv.Delete(req.Context(), resourceGroupNameParam, azureLargeInstanceNameParam, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK, http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (a *AzureLargeInstanceServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -258,9 +359,9 @@ func (a *AzureLargeInstanceServerTransport) dispatchBeginRestart(req *http.Reque
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		a.beginRestart.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRestart) {
 		a.beginRestart.remove(req)
@@ -392,4 +493,10 @@ func (a *AzureLargeInstanceServerTransport) dispatchUpdate(req *http.Request) (*
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AzureLargeInstanceServerTransport
+var azureLargeInstanceServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

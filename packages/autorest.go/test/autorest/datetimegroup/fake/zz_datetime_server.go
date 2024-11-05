@@ -133,59 +133,78 @@ func (d *DatetimeServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (d *DatetimeServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DatetimeClient.GetInvalid":
-		resp, err = d.dispatchGetInvalid(req)
-	case "DatetimeClient.GetLocalNegativeOffsetLowercaseMaxDateTime":
-		resp, err = d.dispatchGetLocalNegativeOffsetLowercaseMaxDateTime(req)
-	case "DatetimeClient.GetLocalNegativeOffsetMinDateTime":
-		resp, err = d.dispatchGetLocalNegativeOffsetMinDateTime(req)
-	case "DatetimeClient.GetLocalNegativeOffsetUppercaseMaxDateTime":
-		resp, err = d.dispatchGetLocalNegativeOffsetUppercaseMaxDateTime(req)
-	case "DatetimeClient.GetLocalNoOffsetMinDateTime":
-		resp, err = d.dispatchGetLocalNoOffsetMinDateTime(req)
-	case "DatetimeClient.GetLocalPositiveOffsetLowercaseMaxDateTime":
-		resp, err = d.dispatchGetLocalPositiveOffsetLowercaseMaxDateTime(req)
-	case "DatetimeClient.GetLocalPositiveOffsetMinDateTime":
-		resp, err = d.dispatchGetLocalPositiveOffsetMinDateTime(req)
-	case "DatetimeClient.GetLocalPositiveOffsetUppercaseMaxDateTime":
-		resp, err = d.dispatchGetLocalPositiveOffsetUppercaseMaxDateTime(req)
-	case "DatetimeClient.GetNull":
-		resp, err = d.dispatchGetNull(req)
-	case "DatetimeClient.GetOverflow":
-		resp, err = d.dispatchGetOverflow(req)
-	case "DatetimeClient.GetUTCLowercaseMaxDateTime":
-		resp, err = d.dispatchGetUTCLowercaseMaxDateTime(req)
-	case "DatetimeClient.GetUTCMinDateTime":
-		resp, err = d.dispatchGetUTCMinDateTime(req)
-	case "DatetimeClient.GetUTCUppercaseMaxDateTime":
-		resp, err = d.dispatchGetUTCUppercaseMaxDateTime(req)
-	case "DatetimeClient.GetUTCUppercaseMaxDateTime7Digits":
-		resp, err = d.dispatchGetUTCUppercaseMaxDateTime7Digits(req)
-	case "DatetimeClient.GetUnderflow":
-		resp, err = d.dispatchGetUnderflow(req)
-	case "DatetimeClient.PutLocalNegativeOffsetMaxDateTime":
-		resp, err = d.dispatchPutLocalNegativeOffsetMaxDateTime(req)
-	case "DatetimeClient.PutLocalNegativeOffsetMinDateTime":
-		resp, err = d.dispatchPutLocalNegativeOffsetMinDateTime(req)
-	case "DatetimeClient.PutLocalPositiveOffsetMaxDateTime":
-		resp, err = d.dispatchPutLocalPositiveOffsetMaxDateTime(req)
-	case "DatetimeClient.PutLocalPositiveOffsetMinDateTime":
-		resp, err = d.dispatchPutLocalPositiveOffsetMinDateTime(req)
-	case "DatetimeClient.PutUTCMaxDateTime":
-		resp, err = d.dispatchPutUTCMaxDateTime(req)
-	case "DatetimeClient.PutUTCMaxDateTime7Digits":
-		resp, err = d.dispatchPutUTCMaxDateTime7Digits(req)
-	case "DatetimeClient.PutUTCMinDateTime":
-		resp, err = d.dispatchPutUTCMinDateTime(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if datetimeServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = datetimeServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "DatetimeClient.GetInvalid":
+				res.resp, res.err = d.dispatchGetInvalid(req)
+			case "DatetimeClient.GetLocalNegativeOffsetLowercaseMaxDateTime":
+				res.resp, res.err = d.dispatchGetLocalNegativeOffsetLowercaseMaxDateTime(req)
+			case "DatetimeClient.GetLocalNegativeOffsetMinDateTime":
+				res.resp, res.err = d.dispatchGetLocalNegativeOffsetMinDateTime(req)
+			case "DatetimeClient.GetLocalNegativeOffsetUppercaseMaxDateTime":
+				res.resp, res.err = d.dispatchGetLocalNegativeOffsetUppercaseMaxDateTime(req)
+			case "DatetimeClient.GetLocalNoOffsetMinDateTime":
+				res.resp, res.err = d.dispatchGetLocalNoOffsetMinDateTime(req)
+			case "DatetimeClient.GetLocalPositiveOffsetLowercaseMaxDateTime":
+				res.resp, res.err = d.dispatchGetLocalPositiveOffsetLowercaseMaxDateTime(req)
+			case "DatetimeClient.GetLocalPositiveOffsetMinDateTime":
+				res.resp, res.err = d.dispatchGetLocalPositiveOffsetMinDateTime(req)
+			case "DatetimeClient.GetLocalPositiveOffsetUppercaseMaxDateTime":
+				res.resp, res.err = d.dispatchGetLocalPositiveOffsetUppercaseMaxDateTime(req)
+			case "DatetimeClient.GetNull":
+				res.resp, res.err = d.dispatchGetNull(req)
+			case "DatetimeClient.GetOverflow":
+				res.resp, res.err = d.dispatchGetOverflow(req)
+			case "DatetimeClient.GetUTCLowercaseMaxDateTime":
+				res.resp, res.err = d.dispatchGetUTCLowercaseMaxDateTime(req)
+			case "DatetimeClient.GetUTCMinDateTime":
+				res.resp, res.err = d.dispatchGetUTCMinDateTime(req)
+			case "DatetimeClient.GetUTCUppercaseMaxDateTime":
+				res.resp, res.err = d.dispatchGetUTCUppercaseMaxDateTime(req)
+			case "DatetimeClient.GetUTCUppercaseMaxDateTime7Digits":
+				res.resp, res.err = d.dispatchGetUTCUppercaseMaxDateTime7Digits(req)
+			case "DatetimeClient.GetUnderflow":
+				res.resp, res.err = d.dispatchGetUnderflow(req)
+			case "DatetimeClient.PutLocalNegativeOffsetMaxDateTime":
+				res.resp, res.err = d.dispatchPutLocalNegativeOffsetMaxDateTime(req)
+			case "DatetimeClient.PutLocalNegativeOffsetMinDateTime":
+				res.resp, res.err = d.dispatchPutLocalNegativeOffsetMinDateTime(req)
+			case "DatetimeClient.PutLocalPositiveOffsetMaxDateTime":
+				res.resp, res.err = d.dispatchPutLocalPositiveOffsetMaxDateTime(req)
+			case "DatetimeClient.PutLocalPositiveOffsetMinDateTime":
+				res.resp, res.err = d.dispatchPutLocalPositiveOffsetMinDateTime(req)
+			case "DatetimeClient.PutUTCMaxDateTime":
+				res.resp, res.err = d.dispatchPutUTCMaxDateTime(req)
+			case "DatetimeClient.PutUTCMaxDateTime7Digits":
+				res.resp, res.err = d.dispatchPutUTCMaxDateTime7Digits(req)
+			case "DatetimeClient.PutUTCMinDateTime":
+				res.resp, res.err = d.dispatchPutUTCMinDateTime(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DatetimeServerTransport) dispatchGetInvalid(req *http.Request) (*http.Response, error) {
@@ -632,4 +651,10 @@ func (d *DatetimeServerTransport) dispatchPutUTCMinDateTime(req *http.Request) (
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DatetimeServerTransport
+var datetimeServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

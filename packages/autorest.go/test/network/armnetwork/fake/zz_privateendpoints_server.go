@@ -77,25 +77,44 @@ func (p *PrivateEndpointsServerTransport) Do(req *http.Request) (*http.Response,
 }
 
 func (p *PrivateEndpointsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "PrivateEndpointsClient.BeginCreateOrUpdate":
-		resp, err = p.dispatchBeginCreateOrUpdate(req)
-	case "PrivateEndpointsClient.BeginDelete":
-		resp, err = p.dispatchBeginDelete(req)
-	case "PrivateEndpointsClient.Get":
-		resp, err = p.dispatchGet(req)
-	case "PrivateEndpointsClient.NewListPager":
-		resp, err = p.dispatchNewListPager(req)
-	case "PrivateEndpointsClient.NewListBySubscriptionPager":
-		resp, err = p.dispatchNewListBySubscriptionPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if privateEndpointsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = privateEndpointsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "PrivateEndpointsClient.BeginCreateOrUpdate":
+				res.resp, res.err = p.dispatchBeginCreateOrUpdate(req)
+			case "PrivateEndpointsClient.BeginDelete":
+				res.resp, res.err = p.dispatchBeginDelete(req)
+			case "PrivateEndpointsClient.Get":
+				res.resp, res.err = p.dispatchGet(req)
+			case "PrivateEndpointsClient.NewListPager":
+				res.resp, res.err = p.dispatchNewListPager(req)
+			case "PrivateEndpointsClient.NewListBySubscriptionPager":
+				res.resp, res.err = p.dispatchNewListBySubscriptionPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PrivateEndpointsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -303,4 +322,10 @@ func (p *PrivateEndpointsServerTransport) dispatchNewListBySubscriptionPager(req
 		p.newListBySubscriptionPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to PrivateEndpointsServerTransport
+var privateEndpointsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

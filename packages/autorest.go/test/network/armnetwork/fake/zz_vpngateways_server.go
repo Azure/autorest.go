@@ -102,33 +102,52 @@ func (v *VPNGatewaysServerTransport) Do(req *http.Request) (*http.Response, erro
 }
 
 func (v *VPNGatewaysServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VPNGatewaysClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VPNGatewaysClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VPNGatewaysClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VPNGatewaysClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	case "VPNGatewaysClient.NewListByResourceGroupPager":
-		resp, err = v.dispatchNewListByResourceGroupPager(req)
-	case "VPNGatewaysClient.BeginReset":
-		resp, err = v.dispatchBeginReset(req)
-	case "VPNGatewaysClient.BeginStartPacketCapture":
-		resp, err = v.dispatchBeginStartPacketCapture(req)
-	case "VPNGatewaysClient.BeginStopPacketCapture":
-		resp, err = v.dispatchBeginStopPacketCapture(req)
-	case "VPNGatewaysClient.BeginUpdateTags":
-		resp, err = v.dispatchBeginUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if vpnGatewaysServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = vpnGatewaysServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VPNGatewaysClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VPNGatewaysClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VPNGatewaysClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VPNGatewaysClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VPNGatewaysClient.NewListByResourceGroupPager":
+				res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
+			case "VPNGatewaysClient.BeginReset":
+				res.resp, res.err = v.dispatchBeginReset(req)
+			case "VPNGatewaysClient.BeginStartPacketCapture":
+				res.resp, res.err = v.dispatchBeginStartPacketCapture(req)
+			case "VPNGatewaysClient.BeginStopPacketCapture":
+				res.resp, res.err = v.dispatchBeginStopPacketCapture(req)
+			case "VPNGatewaysClient.BeginUpdateTags":
+				res.resp, res.err = v.dispatchBeginUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VPNGatewaysServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -536,4 +555,10 @@ func (v *VPNGatewaysServerTransport) dispatchBeginUpdateTags(req *http.Request) 
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VPNGatewaysServerTransport
+var vpnGatewaysServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -96,7 +96,7 @@ function adaptNextPageMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, client
 function populateMethod(op: m4.Operation, method: go.Method | go.NextPageMethod, m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
   if (go.isMethod(method)) {
     if (hasDescription(op.language.go!)) {
-      method.description = op.language.go!.description;
+      method.docs.description = op.language.go!.description;
     }
 
     let optionalParamsGroup = paramGroups.get(op.language.go!.optionalParamGroup.schema.language.go!.name);
@@ -153,7 +153,7 @@ function adaptURIPrameterType(schema: m4.Schema): go.URIParameterType {
 
 function adaptClient(type: go.CodeModelType, group: m4.OperationGroup): go.Client {
   const description = `${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.`;
-  const client = new go.Client(group.language.go!.clientName, description, go.newClientOptions(type, group.language.go!.clientName));
+  const client = new go.Client(group.language.go!.clientName, {description: description}, go.newClientOptions(type, group.language.go!.clientName));
 
   client.host = group.language.go!.host;
   if (group.language.go!.complexHostParams) {
@@ -197,7 +197,7 @@ function adaptMethodParameters(op: m4.Operation, method: go.Method | go.NextPage
 
 function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel, op: m4.Operation, forMethod: go.Method): go.ResponseEnvelope {
   const respEnvSchema = <m4.ObjectSchema>op.language.go!.responseEnv;
-  const respEnv = new go.ResponseEnvelope(respEnvSchema.language.go!.name, respEnvSchema.language.go!.description, forMethod);
+  const respEnv = new go.ResponseEnvelope(respEnvSchema.language.go!.name, {description: respEnvSchema.language.go!.description}, forMethod);
 
   // add any headers
   for (const prop of values(respEnvSchema.properties)) {
@@ -213,7 +213,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
         headerResp = new go.HeaderResponse(prop.language.go!.name, adaptHeaderType(prop.schema, false), prop.language.go!.fromHeader, prop.language.go!.byValue);
       }
       if (hasDescription(prop.language.go!)) {
-        headerResp.description = prop.language.go!.description;
+        headerResp.docs.description = prop.language.go!.description;
       }
       respEnv.headers.push(headerResp);
     }
@@ -271,7 +271,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
   }
 
   if (hasDescription(resultProp.language.go!)) {
-      respEnv.result!.description = resultProp.language.go!.description;
+      respEnv.result!.docs.description = resultProp.language.go!.description;
   }
 
   return respEnv;
@@ -315,6 +315,9 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
 
   switch (param.protocol.http?.in) {
     case 'body': {
+      if (!op.requests![0].protocol.http!.mediaTypes) {
+        throw new Error(`no media types defined for operation ${op.operationId}`);
+      }
       let contentType = `"${op.requests![0].protocol.http!.mediaTypes[0]}"`;
       if (op.requests![0].protocol.http!.mediaTypes.length > 1) {
         for (const param of values(op.requests![0].parameters)) {
@@ -342,9 +345,9 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
       } else {
         const format = adaptBodyFormat(op.requests![0].protocol);
         adaptedParam = new go.BodyParameter(param.language.go!.name, format, contentType, bodyType, placement, param.language.go!.byValue);
+        (<go.BodyParameter>adaptedParam).xml = adaptXMLInfo(param.schema);
       }
 
-      adaptedParam.xml = adaptXMLInfo(param.schema);
       break;
     }
     case 'header': {
@@ -420,7 +423,7 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
   }
 
   if (hasDescription(param.language.go!)) {
-    adaptedParam.description = param.language.go!.description;
+    adaptedParam.docs.description = param.language.go!.description;
   }
 
   // track client parameter for later use
@@ -535,7 +538,7 @@ function findOrAdaptParamsGroup(param: m4.Parameter): go.ParameterGroup {
 
 function adaptParameterGroup(location: go.ParameterLocation, groupProp: m4.GroupProperty): go.ParameterGroup {
   const paramGroup = new go.ParameterGroup(groupProp.language.go!.name, groupProp.schema.language.go!.name, groupProp.required === true, location);
-  paramGroup.description = groupProp.language.go!.description;
+  paramGroup.docs.description = groupProp.language.go!.description;
   return paramGroup;
 }
 

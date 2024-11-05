@@ -5,7 +5,7 @@
 
 import * as go from '../../codemodel.go/src/index.js';
 import { values } from '@azure-tools/linq';
-import { contentPreamble, formatLiteralValue, getParentImport, recursiveUnwrapMapSlice } from './helpers.js';
+import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 
 // Creates the content in polymorphic_helpers.go
@@ -15,12 +15,12 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
     return '';
   }
 
-  let text = contentPreamble(codeModel, fakeServerPkg);
+  let text = helpers.contentPreamble(codeModel, fakeServerPkg);
   const imports = new ImportManager();
   imports.add('encoding/json');
   if (fakeServerPkg) {
     // content is being generated into a separate package, add the necessary import
-    imports.add(getParentImport(codeModel));
+    imports.add(helpers.getParentImport(codeModel));
   }
 
   text += imports.text();
@@ -36,13 +36,13 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
     if (go.isInterfaceType(type)) {
       scalars.add(type.name);
     } else if (go.isSliceType(type)) {
-      const leafType = recursiveUnwrapMapSlice(type);
+      const leafType = helpers.recursiveUnwrapMapSlice(type);
       if (go.isInterfaceType(leafType)) {
         scalars.add(leafType.name);
         arrays.add(leafType.name);
       }
     } else if (go.isMapType(type)) {
-      const leafType = recursiveUnwrapMapSlice(type);
+      const leafType = helpers.recursiveUnwrapMapSlice(type);
       if (go.isInterfaceType(leafType)) {
         scalars.add(leafType.name);
         maps.add(leafType.name);
@@ -115,7 +115,7 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
       text += `\tvar b ${prefix}${interfaceType.name}\n`;
       text += `\tswitch m["${interfaceType.discriminatorField}"] {\n`;
       for (const possibleType of interfaceType.possibleTypes) {
-        let disc = formatLiteralValue(possibleType.discriminatorValue!, true);
+        let disc = helpers.formatLiteralValue(possibleType.discriminatorValue!, true);
         // when the discriminator value is an enum, cast the const as a string
         if (go.isConstantType(possibleType.discriminatorValue!.type)) {
           disc = `string(${prefix}${disc})`;

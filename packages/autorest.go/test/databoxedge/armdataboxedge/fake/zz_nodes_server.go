@@ -54,17 +54,36 @@ func (n *NodesServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (n *NodesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "NodesClient.NewListByDataBoxEdgeDevicePager":
-		resp, err = n.dispatchNewListByDataBoxEdgeDevicePager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if nodesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = nodesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "NodesClient.NewListByDataBoxEdgeDevicePager":
+				res.resp, res.err = n.dispatchNewListByDataBoxEdgeDevicePager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (n *NodesServerTransport) dispatchNewListByDataBoxEdgeDevicePager(req *http.Request) (*http.Response, error) {
@@ -106,4 +125,10 @@ func (n *NodesServerTransport) dispatchNewListByDataBoxEdgeDevicePager(req *http
 		n.newListByDataBoxEdgeDevicePager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NodesServerTransport
+var nodesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

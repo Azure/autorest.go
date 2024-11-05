@@ -59,23 +59,42 @@ func (o *OptionalBytesServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (o *OptionalBytesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "OptionalBytesClient.GetAll":
-		resp, err = o.dispatchGetAll(req)
-	case "OptionalBytesClient.GetDefault":
-		resp, err = o.dispatchGetDefault(req)
-	case "OptionalBytesClient.PutAll":
-		resp, err = o.dispatchPutAll(req)
-	case "OptionalBytesClient.PutDefault":
-		resp, err = o.dispatchPutDefault(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if optionalBytesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = optionalBytesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "OptionalBytesClient.GetAll":
+				res.resp, res.err = o.dispatchGetAll(req)
+			case "OptionalBytesClient.GetDefault":
+				res.resp, res.err = o.dispatchGetDefault(req)
+			case "OptionalBytesClient.PutAll":
+				res.resp, res.err = o.dispatchPutAll(req)
+			case "OptionalBytesClient.PutDefault":
+				res.resp, res.err = o.dispatchPutDefault(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (o *OptionalBytesServerTransport) dispatchGetAll(req *http.Request) (*http.Response, error) {
@@ -160,4 +179,10 @@ func (o *OptionalBytesServerTransport) dispatchPutDefault(req *http.Request) (*h
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OptionalBytesServerTransport
+var optionalBytesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

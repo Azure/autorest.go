@@ -18,6 +18,7 @@ import { generateResponses } from '../../codegen.go/src/responses.js';
 import { generateTimeHelpers } from '../../codegen.go/src/time.js';
 import { generateServers } from '../../codegen.go/src/fake/servers.js';
 import { generateServerFactory } from '../../codegen.go/src/fake/factory.js';
+import { generateXMLAdditionalPropsHelpers } from '../../codegen.go/src/xmlAdditionalProps.js';
 import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { EmitContext } from '@typespec/compiler';
@@ -119,6 +120,11 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   const timeHelpers = await generateTimeHelpers(codeModel);
   for (const helper of timeHelpers) {
     writeFile(`${context.emitterOutputDir}/${filePrefix}${helper.name.toLowerCase()}.go`, helper.content);
+  }
+
+  const xmlAddlProps = await generateXMLAdditionalPropsHelpers(codeModel);
+  if (xmlAddlProps.length > 0) {
+    writeFile(`${context.emitterOutputDir}/${filePrefix}xml_helper.go`, xmlAddlProps);
   }
 
   if (codeModel.options.generateFakes) {

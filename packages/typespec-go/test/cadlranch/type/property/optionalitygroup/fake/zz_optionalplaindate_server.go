@@ -59,23 +59,42 @@ func (o *OptionalPlainDateServerTransport) Do(req *http.Request) (*http.Response
 }
 
 func (o *OptionalPlainDateServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "OptionalPlainDateClient.GetAll":
-		resp, err = o.dispatchGetAll(req)
-	case "OptionalPlainDateClient.GetDefault":
-		resp, err = o.dispatchGetDefault(req)
-	case "OptionalPlainDateClient.PutAll":
-		resp, err = o.dispatchPutAll(req)
-	case "OptionalPlainDateClient.PutDefault":
-		resp, err = o.dispatchPutDefault(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if optionalPlainDateServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = optionalPlainDateServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "OptionalPlainDateClient.GetAll":
+				res.resp, res.err = o.dispatchGetAll(req)
+			case "OptionalPlainDateClient.GetDefault":
+				res.resp, res.err = o.dispatchGetDefault(req)
+			case "OptionalPlainDateClient.PutAll":
+				res.resp, res.err = o.dispatchPutAll(req)
+			case "OptionalPlainDateClient.PutDefault":
+				res.resp, res.err = o.dispatchPutDefault(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (o *OptionalPlainDateServerTransport) dispatchGetAll(req *http.Request) (*http.Response, error) {
@@ -160,4 +179,10 @@ func (o *OptionalPlainDateServerTransport) dispatchPutDefault(req *http.Request)
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OptionalPlainDateServerTransport
+var optionalPlainDateServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

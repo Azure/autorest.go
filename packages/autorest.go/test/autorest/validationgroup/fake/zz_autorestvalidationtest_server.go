@@ -64,23 +64,42 @@ func (a *AutoRestValidationTestServerTransport) Do(req *http.Request) (*http.Res
 }
 
 func (a *AutoRestValidationTestServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "AutoRestValidationTestClient.GetWithConstantInPath":
-		resp, err = a.dispatchGetWithConstantInPath(req)
-	case "AutoRestValidationTestClient.PostWithConstantInBody":
-		resp, err = a.dispatchPostWithConstantInBody(req)
-	case "AutoRestValidationTestClient.ValidationOfBody":
-		resp, err = a.dispatchValidationOfBody(req)
-	case "AutoRestValidationTestClient.ValidationOfMethodParameters":
-		resp, err = a.dispatchValidationOfMethodParameters(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if autoRestValidationTestServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = autoRestValidationTestServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "AutoRestValidationTestClient.GetWithConstantInPath":
+				res.resp, res.err = a.dispatchGetWithConstantInPath(req)
+			case "AutoRestValidationTestClient.PostWithConstantInBody":
+				res.resp, res.err = a.dispatchPostWithConstantInBody(req)
+			case "AutoRestValidationTestClient.ValidationOfBody":
+				res.resp, res.err = a.dispatchValidationOfBody(req)
+			case "AutoRestValidationTestClient.ValidationOfMethodParameters":
+				res.resp, res.err = a.dispatchValidationOfMethodParameters(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AutoRestValidationTestServerTransport) dispatchGetWithConstantInPath(req *http.Request) (*http.Response, error) {
@@ -219,4 +238,10 @@ func (a *AutoRestValidationTestServerTransport) dispatchValidationOfMethodParame
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AutoRestValidationTestServerTransport
+var autoRestValidationTestServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

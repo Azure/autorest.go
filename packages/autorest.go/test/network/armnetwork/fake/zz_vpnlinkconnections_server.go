@@ -30,7 +30,7 @@ type VPNLinkConnectionsServer struct {
 	NewListByVPNConnectionPager func(resourceGroupName string, gatewayName string, connectionName string, options *armnetwork.VPNLinkConnectionsClientListByVPNConnectionOptions) (resp azfake.PagerResponder[armnetwork.VPNLinkConnectionsClientListByVPNConnectionResponse])
 
 	// BeginResetConnection is the fake for method VPNLinkConnectionsClient.BeginResetConnection
-	// HTTP status codes to indicate success: http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginResetConnection func(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, linkConnectionName string, options *armnetwork.VPNLinkConnectionsClientBeginResetConnectionOptions) (resp azfake.PollerResponder[armnetwork.VPNLinkConnectionsClientResetConnectionResponse], errResp azfake.ErrorResponder)
 }
 
@@ -67,21 +67,40 @@ func (v *VPNLinkConnectionsServerTransport) Do(req *http.Request) (*http.Respons
 }
 
 func (v *VPNLinkConnectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VPNLinkConnectionsClient.BeginGetIkeSas":
-		resp, err = v.dispatchBeginGetIkeSas(req)
-	case "VPNLinkConnectionsClient.NewListByVPNConnectionPager":
-		resp, err = v.dispatchNewListByVPNConnectionPager(req)
-	case "VPNLinkConnectionsClient.BeginResetConnection":
-		resp, err = v.dispatchBeginResetConnection(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if vpnLinkConnectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = vpnLinkConnectionsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VPNLinkConnectionsClient.BeginGetIkeSas":
+				res.resp, res.err = v.dispatchBeginGetIkeSas(req)
+			case "VPNLinkConnectionsClient.NewListByVPNConnectionPager":
+				res.resp, res.err = v.dispatchNewListByVPNConnectionPager(req)
+			case "VPNLinkConnectionsClient.BeginResetConnection":
+				res.resp, res.err = v.dispatchBeginResetConnection(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VPNLinkConnectionsServerTransport) dispatchBeginGetIkeSas(req *http.Request) (*http.Response, error) {
@@ -222,13 +241,19 @@ func (v *VPNLinkConnectionsServerTransport) dispatchBeginResetConnection(req *ht
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginResetConnection.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginResetConnection) {
 		v.beginResetConnection.remove(req)
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VPNLinkConnectionsServerTransport
+var vpnLinkConnectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

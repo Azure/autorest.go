@@ -69,6 +69,24 @@ type CommunityTrainingProperties struct {
 	ProvisioningState *ProvisioningState
 }
 
+// CommunityTrainingUpdate - The type used for update operations of the CommunityTraining.
+type CommunityTrainingUpdate struct {
+	// The resource-specific properties for this resource.
+	Properties *CommunityTrainingUpdateProperties
+
+	// The SKU (Stock Keeping Unit) assigned to this resource.
+	SKU *SKU
+
+	// Resource tags.
+	Tags map[string]*string
+}
+
+// CommunityTrainingUpdateProperties - The updatable properties of the CommunityTraining.
+type CommunityTrainingUpdateProperties struct {
+	// The identity configuration of the Community Training resource
+	IdentityConfiguration *IdentityConfigurationProperties
+}
+
 // IdentityConfigurationProperties - Details of the Community CommunityTraining Identity Configuration
 type IdentityConfigurationProperties struct {
 	// REQUIRED; The clientId of the application registered in the selected identity provider for the Community Training Resource

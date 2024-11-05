@@ -34,6 +34,7 @@ export class typeAdapter {
 
   // converts all model/enum SDK types to Go code model types
   adaptTypes(sdkContext: tcgc.SdkContext, removeUnreferencedTypes: boolean) {
+    // TODO: fix flagging unreferenced types https://github.com/Azure/autorest.go/issues/1443
     if (removeUnreferencedTypes) {
       // this is a superset of flagUnreferencedBaseModels
       this.flagUnreferencedTypes(sdkContext);
@@ -57,10 +58,15 @@ export class typeAdapter {
     const modelTypes = new Array<ModelTypeSdkModelType>();
     const ifaceTypes = new Array<InterfaceTypeSdkModelType>();
     for (const modelType of sdkContext.sdkPackage.models) {
-      if (this.unreferencedModels.has(modelType.name)) {
+      if (modelType.name.length === 0) {
+        // tcgc creates some unamed models for spread params.
+        // we don't use these so just skip them.
+        continue;
+      } else if (this.unreferencedModels.has(modelType.name)) {
         // skip unreferenced type
         continue;
       }
+
       if (modelType.discriminatedSubtypes) {
         // this is a root discriminated type
         const iface = this.getInterfaceType(modelType);
@@ -151,7 +157,6 @@ export class typeAdapter {
   // returns the same instance of the converted type.
   getPossibleType(type: tcgc.SdkType, elementTypeByValue: boolean, substituteDiscriminator: boolean): go.PossibleType {
     switch (type.kind) {
-      case 'any':
       case 'boolean':
       case 'bytes':
       case 'decimal':
@@ -167,6 +172,7 @@ export class typeAdapter {
       case 'uint16':
       case 'uint32':
       case 'uint64':
+      case 'unknown':
       case 'safeint':
       case 'plainDate':
       case 'plainTime':
@@ -294,7 +300,7 @@ export class typeAdapter {
 
   private getBuiltInType(type: tcgc.SdkBuiltInType): go.PossibleType {
     switch (type.kind) {
-      case 'any': {
+      case 'unknown': {
         if (this.codeModel.options.rawJSONAsBytes) {
           const anyRawJSONKey = 'any-raw-json';
           let anyRawJSON = this.types.get(anyRawJSONKey);
@@ -445,7 +451,8 @@ export class typeAdapter {
     }
     constType = new go.ConstantType(constTypeName, getPrimitiveType(enumType.valueType.kind), `Possible${constTypeName}Values`);
     constType.values = this.getConstantValues(constType, enumType.values);
-    constType.description = enumType.description;
+    constType.docs.summary = enumType.summary;
+    constType.docs.description = enumType.doc;
     this.types.set(constTypeName, constType);
     return constType;
   }
@@ -486,11 +493,7 @@ export class typeAdapter {
 
   // converts an SdkModelType to a go.ModelType or go.PolymorphicType if the model is polymorphic
   private getModel(model: tcgc.SdkModelType): go.ModelType | go.PolymorphicType {
-    let modelName = model.name;
-    if (modelName.length === 0) {
-      throw new Error('unnamed model');
-    }
-    modelName = naming.ensureNameCase(modelName);
+    let modelName = naming.ensureNameCase(model.name);
     if (model.access === 'internal') {
       modelName = naming.getEscapedReservedName(uncapitalize(modelName), 'Model');
     }
@@ -507,7 +510,7 @@ export class typeAdapter {
       usage |= go.UsageFlags.Output;
     }
 
-    const annotations = new go.ModelAnnotations(false, model.isFormDataType);
+    const annotations = new go.ModelAnnotations(false, (model.usage & tcgc.UsageFlags.MultipartFormData) === tcgc.UsageFlags.MultipartFormData);
     if (model.discriminatedSubtypes || model.discriminatorValue) {
       let iface: go.InterfaceType | undefined;
       let discriminatorLiteral: go.LiteralValue | undefined;
@@ -543,14 +546,21 @@ export class typeAdapter {
     } else {
       modelType = new go.ModelType(modelName, annotations, usage);
       // polymorphic types don't have XMLInfo
-      // TODO: XMLInfo
+      modelType.xml = adaptXMLInfo(model.decorators);
     }
-    if (model.description) {
-      modelType.description = model.description;
-      if (!modelType.description.startsWith(modelName)) {
-        modelType.description = `${modelName} - ${modelType.description}`;
+
+    modelType.docs.summary = model.summary;
+    modelType.docs.description = model.doc;
+    if (modelType.docs.summary) {
+      if (!modelType.docs.summary.startsWith(modelName)) {
+        modelType.docs.summary = `${modelName} - ${modelType.docs.summary}`;
+      }
+    } else if (modelType.docs.description) {
+      if (!modelType.docs.description.startsWith(modelName)) {
+        modelType.docs.description = `${modelName} - ${modelType.docs.description}`;
       }
     }
+
     this.types.set(modelName, modelType);
     return modelType;
   }
@@ -592,7 +602,8 @@ export class typeAdapter {
       }
     }
     const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.name)), type, fieldByValue, prop.serializedName, annotations);
-    field.description = prop.description;
+    field.docs.summary = prop.summary;
+    field.docs.description = prop.doc;
     if (prop.kind === 'path') {
       // for ARM resources, a property of kind path is usually the model
       // key and will be exposed as a discrete method parameter. this also
@@ -605,8 +616,7 @@ export class typeAdapter {
       field.defaultValue = this.getDiscriminatorLiteral(prop);
     }
   
-    // TODO: XMLInfo
-    //field.xml = adaptXMLInfo(prop.schema);
+    field.xml = adaptXMLInfo(prop.decorators, field);
   
     return field;
   }
@@ -621,7 +631,8 @@ export class typeAdapter {
       let value = this.constValues.get(valueTypeName);
       if (!value) {
         value = new go.ConstantValue(valueTypeName, type, valueType.value);
-        value.description = valueType.description;
+        value.docs.summary = valueType.summary;
+        value.docs.description = valueType.doc;
         this.constValues.set(valueTypeName, value);
       }
       values.push(value);
@@ -944,11 +955,11 @@ export function getEndpointType(param: tcgc.SdkEndpointParameter) {
   if (param.type.kind === 'endpoint') {
     endpointType = param.type;
   } else {
-    endpointType = param.type.values[0];
+    endpointType = param.type.variantTypes[0];
   }
   // for endpoint with only a template argument with default value, we fall back to constant endpoint
   if (endpointType.templateArguments.length === 1 && endpointType.templateArguments[0].clientDefaultValue) {
-    endpointType.serverUrl = endpointType.templateArguments[0].clientDefaultValue;
+    endpointType.serverUrl = <string>endpointType.templateArguments[0].clientDefaultValue;
     endpointType.templateArguments = [];
   }
   return endpointType;
@@ -1017,7 +1028,7 @@ export function isTypePassedByValue(type: tcgc.SdkType): boolean {
   if (type.kind === 'nullable') {
     type = type.type;
   }
-  return type.kind === 'any' || type.kind === 'array' ||
+  return type.kind === 'unknown' || type.kind === 'array' ||
   type.kind === 'bytes' || type.kind === 'dict' ||
     (type.kind === 'model' && !!type.discriminatedSubtypes);
 }
@@ -1059,4 +1070,60 @@ function aggregateProperties(model: tcgc.SdkModelType): {props: Array<tcgc.SdkMo
     parent = parent.baseModel;
   }
   return {props: allProps, addlProps: addlProps};
+}
+
+// called for models and model fields. for the former, the field param will be undefined
+export function adaptXMLInfo(decorators: Array<tcgc.DecoratorInfo>, field?: go.ModelField): go.XMLInfo | undefined {
+  // if there are no decorators and this isn't a slice
+  // type in a model field then do nothing
+  if (decorators.length === 0 && (!field || (!go.isSliceType(field.type)))) {
+    return undefined;
+  }
+
+  const xmlInfo = new go.XMLInfo();
+  if (field && go.isSliceType(field.type)) {
+    // for tsp, arrays are wrapped by default
+    xmlInfo.wraps = go.getTypeDeclaration(field.type.elementType);
+  }
+
+  const handleName = (decorator: tcgc.DecoratorInfo): void => {
+    if (field) {
+      xmlInfo.name = decorator.arguments['name'];
+    } else {
+      // when applied to a model, it means the model's XML element
+      // node has a different name than the model.
+      xmlInfo.wrapper = decorator.arguments['name'];
+    }
+  };
+
+  for (const decorator of decorators) {
+    switch (decorator.name) {
+      case 'TypeSpec.@encodedName':
+        if (decorator.arguments['mimeType'] === 'application/xml') {
+          handleName(decorator);
+        }
+        break;
+      case 'TypeSpec.Xml.@attribute':
+        xmlInfo.attribute = true;
+        break;
+      case 'TypeSpec.Xml.@name':
+        handleName(decorator);
+        break;
+      case 'TypeSpec.Xml.@unwrapped':
+        // unwrapped can only be applied fields
+        if (field) {
+          if (go.isPrimitiveType(field.type) && field.type.typeName === 'string') {
+            // an unwrapped string means it's text
+            xmlInfo.text = true;  
+          } else if (go.isSliceType(field.type)) {
+            // unwrapped slice. default to using the serialized name
+            xmlInfo.wraps = undefined;
+            xmlInfo.name = field.serializedName;
+          }
+        }
+        break;
+    }
+  }
+
+  return xmlInfo;
 }

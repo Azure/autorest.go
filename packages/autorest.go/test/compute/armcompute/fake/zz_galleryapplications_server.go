@@ -77,25 +77,44 @@ func (g *GalleryApplicationsServerTransport) Do(req *http.Request) (*http.Respon
 }
 
 func (g *GalleryApplicationsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "GalleryApplicationsClient.BeginCreateOrUpdate":
-		resp, err = g.dispatchBeginCreateOrUpdate(req)
-	case "GalleryApplicationsClient.BeginDelete":
-		resp, err = g.dispatchBeginDelete(req)
-	case "GalleryApplicationsClient.Get":
-		resp, err = g.dispatchGet(req)
-	case "GalleryApplicationsClient.NewListByGalleryPager":
-		resp, err = g.dispatchNewListByGalleryPager(req)
-	case "GalleryApplicationsClient.BeginUpdate":
-		resp, err = g.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if galleryApplicationsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = galleryApplicationsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "GalleryApplicationsClient.BeginCreateOrUpdate":
+				res.resp, res.err = g.dispatchBeginCreateOrUpdate(req)
+			case "GalleryApplicationsClient.BeginDelete":
+				res.resp, res.err = g.dispatchBeginDelete(req)
+			case "GalleryApplicationsClient.Get":
+				res.resp, res.err = g.dispatchGet(req)
+			case "GalleryApplicationsClient.NewListByGalleryPager":
+				res.resp, res.err = g.dispatchNewListByGalleryPager(req)
+			case "GalleryApplicationsClient.BeginUpdate":
+				res.resp, res.err = g.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (g *GalleryApplicationsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -326,4 +345,10 @@ func (g *GalleryApplicationsServerTransport) dispatchBeginUpdate(req *http.Reque
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to GalleryApplicationsServerTransport
+var galleryApplicationsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

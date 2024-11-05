@@ -51,19 +51,38 @@ func (a *ArrayNullableFloatValueServerTransport) Do(req *http.Request) (*http.Re
 }
 
 func (a *ArrayNullableFloatValueServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ArrayNullableFloatValueClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "ArrayNullableFloatValueClient.Put":
-		resp, err = a.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if arrayNullableFloatValueServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = arrayNullableFloatValueServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ArrayNullableFloatValueClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "ArrayNullableFloatValueClient.Put":
+				res.resp, res.err = a.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *ArrayNullableFloatValueServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -106,4 +125,10 @@ func (a *ArrayNullableFloatValueServerTransport) dispatchPut(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ArrayNullableFloatValueServerTransport
+var arrayNullableFloatValueServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -59,23 +59,42 @@ func (v *VersionedServerTransport) Do(req *http.Request) (*http.Response, error)
 }
 
 func (v *VersionedServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VersionedClient.WithPathAPIVersion":
-		resp, err = v.dispatchWithPathAPIVersion(req)
-	case "VersionedClient.WithQueryAPIVersion":
-		resp, err = v.dispatchWithQueryAPIVersion(req)
-	case "VersionedClient.WithQueryOldAPIVersion":
-		resp, err = v.dispatchWithQueryOldAPIVersion(req)
-	case "VersionedClient.WithoutAPIVersion":
-		resp, err = v.dispatchWithoutAPIVersion(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if versionedServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = versionedServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VersionedClient.WithPathAPIVersion":
+				res.resp, res.err = v.dispatchWithPathAPIVersion(req)
+			case "VersionedClient.WithQueryAPIVersion":
+				res.resp, res.err = v.dispatchWithQueryAPIVersion(req)
+			case "VersionedClient.WithQueryOldAPIVersion":
+				res.resp, res.err = v.dispatchWithQueryOldAPIVersion(req)
+			case "VersionedClient.WithoutAPIVersion":
+				res.resp, res.err = v.dispatchWithoutAPIVersion(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VersionedServerTransport) dispatchWithPathAPIVersion(req *http.Request) (*http.Response, error) {
@@ -152,4 +171,10 @@ func (v *VersionedServerTransport) dispatchWithoutAPIVersion(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VersionedServerTransport
+var versionedServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -73,6 +73,19 @@ func (b BlockLookupList) MarshalXML(enc *xml.Encoder, start xml.StartElement) er
 	return enc.EncodeElement(aux, start)
 }
 
+// MarshalXML implements the xml.Marshaller interface for type ContainerItem.
+func (c ContainerItem) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	type alias ContainerItem
+	aux := &struct {
+		*alias
+		Metadata additionalProperties `xml:"Metadata"`
+	}{
+		alias: (*alias)(&c),
+	}
+	aux.Metadata = (additionalProperties)(c.Metadata)
+	return enc.EncodeElement(aux, start)
+}
+
 // UnmarshalXML implements the xml.Unmarshaller interface for type ContainerItem.
 func (c *ContainerItem) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
 	type alias ContainerItem

@@ -64,21 +64,40 @@ func (v *VirtualHubBgpConnectionServerTransport) Do(req *http.Request) (*http.Re
 }
 
 func (v *VirtualHubBgpConnectionServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualHubBgpConnectionClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualHubBgpConnectionClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualHubBgpConnectionClient.Get":
-		resp, err = v.dispatchGet(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if virtualHubBgpConnectionServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualHubBgpConnectionServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VirtualHubBgpConnectionClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualHubBgpConnectionClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualHubBgpConnectionClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualHubBgpConnectionServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -216,4 +235,10 @@ func (v *VirtualHubBgpConnectionServerTransport) dispatchGet(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualHubBgpConnectionServerTransport
+var virtualHubBgpConnectionServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

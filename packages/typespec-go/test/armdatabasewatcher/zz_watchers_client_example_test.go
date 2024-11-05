@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: 2023-09-01-preview/Watchers_CreateOrUpdate_200.json
+// Generated from example definition: 2024-07-19-preview/Watchers_CreateOrUpdate_MaximumSet_Gen.json
 func ExampleWatchersClient_BeginCreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -23,8 +23,25 @@ func ExampleWatchersClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewWatchersClient().BeginCreateOrUpdate(ctx, "apiTest-ddat4p", "databasemo3ej9ih", armdatabasewatcher.Watcher{
-		Location: to.Ptr("westus"),
+	poller, err := clientFactory.NewWatchersClient().BeginCreateOrUpdate(ctx, "rgWatcher", "testWatcher", armdatabasewatcher.Watcher{
+		Properties: &armdatabasewatcher.WatcherProperties{
+			Status:                             to.Ptr(armdatabasewatcher.WatcherStatusStarting),
+			DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+			Datastore: &armdatabasewatcher.Datastore{
+				AdxClusterResourceID:    to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+				KustoClusterURI:         to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+				KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+				KustoDataIngestionURI:   to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+				KustoDatabaseName:       to.Ptr("kustoDatabaseName1"),
+				KustoManagementURL:      to.Ptr("https://portal.azure.com/"),
+				KustoOfferingType:       to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+			},
+		},
+		Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+			Type: to.Ptr(armdatabasewatcher.ManagedServiceIdentityTypeSystemAssigned),
+		},
+		Tags:     map[string]*string{},
+		Location: to.Ptr("eastus2euap"),
 	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
@@ -38,18 +55,46 @@ func ExampleWatchersClient_BeginCreateOrUpdate() {
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armdatabasewatcher.WatchersClientCreateOrUpdateResponse{
 	// 	Watcher: &armdatabasewatcher.Watcher{
-	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.DatabaseWatcher/watchers/databasemo3ej9ih"),
-	// 		Name: to.Ptr("databasemo3ej9ih"),
-	// 		Type: to.Ptr("microsoft.databasewatcher/watchers"),
-	// 		Location: to.Ptr("westus"),
 	// 		Properties: &armdatabasewatcher.WatcherProperties{
+	// 			Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
+	// 			DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+	// 			Datastore: &armdatabasewatcher.Datastore{
+	// 				AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+	// 				KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+	// 				KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+	// 				KustoDataIngestionURI: to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+	// 				KustoDatabaseName: to.Ptr("kustoDatabaseName1"),
+	// 				KustoManagementURL: to.Ptr("https://portal.azure.com/"),
+	// 				KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+	// 			},
 	// 			ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+	// 		},
+	// 		Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+	// 			Type: to.Ptr(armdatabasewatcher.ManagedServiceIdentityTypeSystemAssigned),
+	// 			UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
+	// 			},
+	// 			PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+	// 			TenantID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 		},
+	// 		Location: to.Ptr("eastus2euap"),
+	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/dummyrg/providers/Microsoft.DatabaseWatcher/watchers/myWatcher"),
+	// 		Name: to.Ptr("myWatcher"),
+	// 		Type: to.Ptr("microsoft.databasewatcher/watchers"),
+	// 		SystemData: &armdatabasewatcher.SystemData{
+	// 			CreatedBy: to.Ptr("enbpvlpqbwd"),
+	// 			CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+	// 			LastModifiedBy: to.Ptr("mxp"),
+	// 			LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
 	// 		},
 	// 	},
 	// }
 }
 
-// Generated from example definition: 2023-09-01-preview/Watchers_Delete_200.json
+// Generated from example definition: 2024-07-19-preview/Watchers_Delete_MaximumSet_Gen.json
 func ExampleWatchersClient_BeginDelete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -60,7 +105,7 @@ func ExampleWatchersClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewWatchersClient().BeginDelete(ctx, "apiTest-ddat4p", "databasemo3ej9ih", nil)
+	poller, err := clientFactory.NewWatchersClient().BeginDelete(ctx, "rgWatcher", "testWatcher", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -70,7 +115,7 @@ func ExampleWatchersClient_BeginDelete() {
 	}
 }
 
-// Generated from example definition: 2023-09-01-preview/Watchers_Get_200.json
+// Generated from example definition: 2024-07-19-preview/Watchers_Get_MaximumSet_Gen.json
 func ExampleWatchersClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -81,7 +126,7 @@ func ExampleWatchersClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewWatchersClient().Get(ctx, "apiTest-ddat4p", "databasemo3ej9ih", nil)
+	res, err := clientFactory.NewWatchersClient().Get(ctx, "rgWatcher", "myWatcher", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -90,18 +135,45 @@ func ExampleWatchersClient_Get() {
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armdatabasewatcher.WatchersClientGetResponse{
 	// 	Watcher: &armdatabasewatcher.Watcher{
-	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.DatabaseWatcher/watchers/databasemo3ej9ih"),
-	// 		Name: to.Ptr("databasemo3ej9ih"),
-	// 		Type: to.Ptr("microsoft.databasewatcher/watchers"),
-	// 		Location: to.Ptr("westus"),
 	// 		Properties: &armdatabasewatcher.WatcherProperties{
+	// 			Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
+	// 			DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+	// 			Datastore: &armdatabasewatcher.Datastore{
+	// 				AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+	// 				KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+	// 				KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+	// 				KustoDataIngestionURI: to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+	// 				KustoDatabaseName: to.Ptr("kustoDatabaseName1"),
+	// 				KustoManagementURL: to.Ptr("https://portal.azure.com/"),
+	// 				KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+	// 			},
 	// 			ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+	// 		},
+	// 		Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+	// 			UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
+	// 			},
+	// 			PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+	// 			TenantID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 		},
+	// 		Location: to.Ptr("eastus2euap"),
+	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/dummyrg/providers/Microsoft.DatabaseWatcher/watchers/myWatcher"),
+	// 		Name: to.Ptr("myWatcher"),
+	// 		Type: to.Ptr("microsoft.databasewatcher/watchers"),
+	// 		SystemData: &armdatabasewatcher.SystemData{
+	// 			CreatedBy: to.Ptr("enbpvlpqbwd"),
+	// 			CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+	// 			LastModifiedBy: to.Ptr("mxp"),
+	// 			LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
 	// 		},
 	// 	},
 	// }
 }
 
-// Generated from example definition: 2023-09-01-preview/Watchers_ListByResourceGroup_200.json
+// Generated from example definition: 2024-07-19-preview/Watchers_ListByResourceGroup_MaximumSet_Gen.json
 func ExampleWatchersClient_NewListByResourceGroupPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -112,7 +184,7 @@ func ExampleWatchersClient_NewListByResourceGroupPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewWatchersClient().NewListByResourceGroupPager("apiTest-ddat4p", nil)
+	pager := clientFactory.NewWatchersClient().NewListByResourceGroupPager("rgWatcher", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -127,21 +199,265 @@ func ExampleWatchersClient_NewListByResourceGroupPager() {
 		// 	WatcherListResult: armdatabasewatcher.WatcherListResult{
 		// 		Value: []*armdatabasewatcher.Watcher{
 		// 			{
+		// 				ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/dummyrg/providers/Microsoft.DatabaseWatcher/watchers/myWatcher"),
+		// 				Name: to.Ptr("myWatcher"),
+		// 				Type: to.Ptr("microsoft.databasewatcher/watchers"),
+		// 				Location: to.Ptr("West US"),
+		// 				Tags: map[string]*string{
+		// 				},
+		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
+		// 					},
+		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 					TenantID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 				},
+		// 				Properties: &armdatabasewatcher.WatcherProperties{
+		// 					Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
+		// 					ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+		// 					DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+		// 					Datastore: &armdatabasewatcher.Datastore{
+		// 						AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+		// 						KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+		// 						KustoDataIngestionURI: to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoDatabaseName: to.Ptr("kustoDatabaseName1"),
+		// 						KustoManagementURL: to.Ptr("https://portal.azure.com/"),
+		// 						KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+		// 					},
+		// 				},
+		// 				SystemData: &armdatabasewatcher.SystemData{
+		// 					CreatedBy: to.Ptr("enbpvlpqbwd"),
+		// 					CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 					LastModifiedBy: to.Ptr("mxp"),
+		// 					LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 				},
+		// 			},
+		// 			{
+		// 				ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-4sz1jg/providers/Microsoft.DatabaseWatcher/watchers/databasemo4o4zdf"),
+		// 				Name: to.Ptr("databasemo4o4zdf"),
+		// 				Type: to.Ptr("microsoft.databasewatcher/watchers"),
+		// 				Location: to.Ptr("westus"),
+		// 				Properties: &armdatabasewatcher.WatcherProperties{
+		// 					Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
+		// 					ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+		// 					DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+		// 					Datastore: &armdatabasewatcher.Datastore{
+		// 						AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+		// 						KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+		// 						KustoDataIngestionURI: to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoDatabaseName: to.Ptr("kustoDatabaseName1"),
+		// 						KustoManagementURL: to.Ptr("https://portal.azure.com/"),
+		// 						KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+		// 					},
+		// 				},
+		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
+		// 					},
+		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 					TenantID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 				},
+		// 				SystemData: &armdatabasewatcher.SystemData{
+		// 					CreatedBy: to.Ptr("enbpvlpqbwd"),
+		// 					CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 					LastModifiedBy: to.Ptr("mxp"),
+		// 					LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 				},
+		// 			},
+		// 			{
+		// 				ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-d77ftn/providers/Microsoft.DatabaseWatcher/watchers/databasemosn3h6l"),
+		// 				Name: to.Ptr("databasemosn3h6l"),
+		// 				Type: to.Ptr("microsoft.databasewatcher/watchers"),
+		// 				Location: to.Ptr("westus"),
+		// 				Properties: &armdatabasewatcher.WatcherProperties{
+		// 					Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
+		// 					ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+		// 					DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+		// 					Datastore: &armdatabasewatcher.Datastore{
+		// 						AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+		// 						KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+		// 						KustoDataIngestionURI: to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoDatabaseName: to.Ptr("kustoDatabaseName1"),
+		// 						KustoManagementURL: to.Ptr("https://portal.azure.com/"),
+		// 						KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+		// 					},
+		// 				},
+		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
+		// 					},
+		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 					TenantID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 				},
+		// 				SystemData: &armdatabasewatcher.SystemData{
+		// 					CreatedBy: to.Ptr("enbpvlpqbwd"),
+		// 					CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 					LastModifiedBy: to.Ptr("mxp"),
+		// 					LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 				},
+		// 			},
+		// 			{
+		// 				ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-nyb4gm/providers/Microsoft.DatabaseWatcher/watchers/databasemoyb6iar"),
+		// 				Name: to.Ptr("databasemoyb6iar"),
+		// 				Type: to.Ptr("microsoft.databasewatcher/watchers"),
+		// 				Location: to.Ptr("westus"),
+		// 				Properties: &armdatabasewatcher.WatcherProperties{
+		// 					Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
+		// 					ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+		// 					DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+		// 					Datastore: &armdatabasewatcher.Datastore{
+		// 						AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+		// 						KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+		// 						KustoDataIngestionURI: to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoDatabaseName: to.Ptr("kustoDatabaseName1"),
+		// 						KustoManagementURL: to.Ptr("https://portal.azure.com/"),
+		// 						KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+		// 					},
+		// 				},
+		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
+		// 					},
+		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 					TenantID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 				},
+		// 				SystemData: &armdatabasewatcher.SystemData{
+		// 					CreatedBy: to.Ptr("enbpvlpqbwd"),
+		// 					CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 					LastModifiedBy: to.Ptr("mxp"),
+		// 					LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 				},
+		// 			},
+		// 			{
+		// 				ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-llis4j/providers/Microsoft.DatabaseWatcher/watchers/databasemoi04xst"),
+		// 				Name: to.Ptr("databasemoi04xst"),
+		// 				Type: to.Ptr("microsoft.databasewatcher/watchers"),
+		// 				Location: to.Ptr("westus"),
+		// 				Properties: &armdatabasewatcher.WatcherProperties{
+		// 					Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
+		// 					ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+		// 					DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+		// 					Datastore: &armdatabasewatcher.Datastore{
+		// 						AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+		// 						KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+		// 						KustoDataIngestionURI: to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoDatabaseName: to.Ptr("kustoDatabaseName1"),
+		// 						KustoManagementURL: to.Ptr("https://portal.azure.com/"),
+		// 						KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+		// 					},
+		// 				},
+		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
+		// 					},
+		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 					TenantID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 				},
+		// 				SystemData: &armdatabasewatcher.SystemData{
+		// 					CreatedBy: to.Ptr("enbpvlpqbwd"),
+		// 					CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 					LastModifiedBy: to.Ptr("mxp"),
+		// 					LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 				},
+		// 			},
+		// 			{
+		// 				ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-thy6zd/providers/Microsoft.DatabaseWatcher/watchers/databasemonpyl24"),
+		// 				Name: to.Ptr("databasemonpyl24"),
+		// 				Type: to.Ptr("microsoft.databasewatcher/watchers"),
+		// 				Location: to.Ptr("westus"),
+		// 				SystemData: &armdatabasewatcher.SystemData{
+		// 					CreatedBy: to.Ptr("ysoqerxnmxqsvhmvjojoyzotc"),
+		// 					CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T18:01:18.690Z"); return t}()),
+		// 					LastModifiedBy: to.Ptr("yrilzsg"),
+		// 					LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T18:01:18.690Z"); return t}()),
+		// 				},
+		// 				Properties: &armdatabasewatcher.WatcherProperties{
+		// 					Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
+		// 					ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+		// 					DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+		// 					Datastore: &armdatabasewatcher.Datastore{
+		// 						AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+		// 						KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+		// 						KustoDataIngestionURI: to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoDatabaseName: to.Ptr("kustoDatabaseName1"),
+		// 						KustoManagementURL: to.Ptr("https://portal.azure.com/"),
+		// 						KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+		// 					},
+		// 				},
+		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
+		// 					},
+		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 					TenantID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 				},
+		// 			},
+		// 			{
 		// 				ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.DatabaseWatcher/watchers/databasemo3ej9ih"),
 		// 				Name: to.Ptr("databasemo3ej9ih"),
 		// 				Type: to.Ptr("microsoft.databasewatcher/watchers"),
 		// 				Location: to.Ptr("westus"),
 		// 				Properties: &armdatabasewatcher.WatcherProperties{
+		// 					Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
 		// 					ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+		// 					DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+		// 					Datastore: &armdatabasewatcher.Datastore{
+		// 						AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+		// 						KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+		// 						KustoDataIngestionURI: to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoDatabaseName: to.Ptr("kustoDatabaseName1"),
+		// 						KustoManagementURL: to.Ptr("https://portal.azure.com/"),
+		// 						KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+		// 					},
+		// 				},
+		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
+		// 					},
+		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 					TenantID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 				},
+		// 				SystemData: &armdatabasewatcher.SystemData{
+		// 					CreatedBy: to.Ptr("enbpvlpqbwd"),
+		// 					CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 					LastModifiedBy: to.Ptr("mxp"),
+		// 					LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
 		// 				},
 		// 			},
 		// 		},
+		// 		NextLink: to.Ptr("https://microsoft.com/a"),
 		// 	},
 		// }
 	}
 }
 
-// Generated from example definition: 2023-09-01-preview/Watchers_ListBySubscription_200.json
+// Generated from example definition: 2024-07-19-preview/Watchers_ListBySubscription_MaximumSet_Gen.json
 func ExampleWatchersClient_NewListBySubscriptionPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -173,11 +489,30 @@ func ExampleWatchersClient_NewListBySubscriptionPager() {
 		// 				Location: to.Ptr("West US"),
 		// 				Tags: map[string]*string{
 		// 				},
-		// 				Identity: &armdatabasewatcher.ManagedServiceIdentity{
+		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
 		// 					Type: to.Ptr(armdatabasewatcher.ManagedServiceIdentityTypeSystemAssigned),
 		// 				},
 		// 				Properties: &armdatabasewatcher.WatcherProperties{
+		// 					Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
 		// 					ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+		// 					DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+		// 					Datastore: &armdatabasewatcher.Datastore{
+		// 						AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+		// 						KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+		// 						KustoDataIngestionURI: to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoDatabaseName: to.Ptr("kustoDatabaseName1"),
+		// 						KustoManagementURL: to.Ptr("https://portal.azure.com/"),
+		// 						KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+		// 					},
+		// 				},
+		// 				SystemData: &armdatabasewatcher.SystemData{
+		// 					CreatedBy: to.Ptr("enbpvlpqbwd"),
+		// 					CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 					LastModifiedBy: to.Ptr("mxp"),
+		// 					LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
 		// 				},
 		// 			},
 		// 			{
@@ -186,7 +521,34 @@ func ExampleWatchersClient_NewListBySubscriptionPager() {
 		// 				Type: to.Ptr("microsoft.databasewatcher/watchers"),
 		// 				Location: to.Ptr("westus"),
 		// 				Properties: &armdatabasewatcher.WatcherProperties{
+		// 					Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
 		// 					ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+		// 					DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+		// 					Datastore: &armdatabasewatcher.Datastore{
+		// 						AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+		// 						KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+		// 						KustoDataIngestionURI: to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoDatabaseName: to.Ptr("kustoDatabaseName1"),
+		// 						KustoManagementURL: to.Ptr("https://portal.azure.com/"),
+		// 						KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+		// 					},
+		// 				},
+		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
+		// 					},
+		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 					TenantID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 				},
+		// 				SystemData: &armdatabasewatcher.SystemData{
+		// 					CreatedBy: to.Ptr("enbpvlpqbwd"),
+		// 					CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 					LastModifiedBy: to.Ptr("mxp"),
+		// 					LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
 		// 				},
 		// 			},
 		// 			{
@@ -195,7 +557,34 @@ func ExampleWatchersClient_NewListBySubscriptionPager() {
 		// 				Type: to.Ptr("microsoft.databasewatcher/watchers"),
 		// 				Location: to.Ptr("westus"),
 		// 				Properties: &armdatabasewatcher.WatcherProperties{
+		// 					Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
 		// 					ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+		// 					DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+		// 					Datastore: &armdatabasewatcher.Datastore{
+		// 						AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+		// 						KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+		// 						KustoDataIngestionURI: to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoDatabaseName: to.Ptr("kustoDatabaseName1"),
+		// 						KustoManagementURL: to.Ptr("https://portal.azure.com/"),
+		// 						KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+		// 					},
+		// 				},
+		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
+		// 					},
+		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 					TenantID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 				},
+		// 				SystemData: &armdatabasewatcher.SystemData{
+		// 					CreatedBy: to.Ptr("enbpvlpqbwd"),
+		// 					CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 					LastModifiedBy: to.Ptr("mxp"),
+		// 					LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
 		// 				},
 		// 			},
 		// 			{
@@ -204,7 +593,34 @@ func ExampleWatchersClient_NewListBySubscriptionPager() {
 		// 				Type: to.Ptr("microsoft.databasewatcher/watchers"),
 		// 				Location: to.Ptr("westus"),
 		// 				Properties: &armdatabasewatcher.WatcherProperties{
+		// 					Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
 		// 					ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+		// 					DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+		// 					Datastore: &armdatabasewatcher.Datastore{
+		// 						AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+		// 						KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+		// 						KustoDataIngestionURI: to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoDatabaseName: to.Ptr("kustoDatabaseName1"),
+		// 						KustoManagementURL: to.Ptr("https://portal.azure.com/"),
+		// 						KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+		// 					},
+		// 				},
+		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
+		// 					},
+		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 					TenantID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 				},
+		// 				SystemData: &armdatabasewatcher.SystemData{
+		// 					CreatedBy: to.Ptr("enbpvlpqbwd"),
+		// 					CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 					LastModifiedBy: to.Ptr("mxp"),
+		// 					LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
 		// 				},
 		// 			},
 		// 			{
@@ -213,7 +629,34 @@ func ExampleWatchersClient_NewListBySubscriptionPager() {
 		// 				Type: to.Ptr("microsoft.databasewatcher/watchers"),
 		// 				Location: to.Ptr("westus"),
 		// 				Properties: &armdatabasewatcher.WatcherProperties{
+		// 					Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
 		// 					ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+		// 					DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+		// 					Datastore: &armdatabasewatcher.Datastore{
+		// 						AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+		// 						KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+		// 						KustoDataIngestionURI: to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoDatabaseName: to.Ptr("kustoDatabaseName1"),
+		// 						KustoManagementURL: to.Ptr("https://portal.azure.com/"),
+		// 						KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+		// 					},
+		// 				},
+		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
+		// 					},
+		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 					TenantID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 				},
+		// 				SystemData: &armdatabasewatcher.SystemData{
+		// 					CreatedBy: to.Ptr("enbpvlpqbwd"),
+		// 					CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 					LastModifiedBy: to.Ptr("mxp"),
+		// 					LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
 		// 				},
 		// 			},
 		// 			{
@@ -222,9 +665,34 @@ func ExampleWatchersClient_NewListBySubscriptionPager() {
 		// 				Type: to.Ptr("microsoft.databasewatcher/watchers"),
 		// 				Location: to.Ptr("westus"),
 		// 				SystemData: &armdatabasewatcher.SystemData{
+		// 					CreatedBy: to.Ptr("ysoqerxnmxqsvhmvjojoyzotc"),
+		// 					CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T18:01:18.690Z"); return t}()),
+		// 					LastModifiedBy: to.Ptr("yrilzsg"),
+		// 					LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T18:01:18.690Z"); return t}()),
 		// 				},
 		// 				Properties: &armdatabasewatcher.WatcherProperties{
+		// 					Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
 		// 					ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+		// 					DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+		// 					Datastore: &armdatabasewatcher.Datastore{
+		// 						AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+		// 						KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+		// 						KustoDataIngestionURI: to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoDatabaseName: to.Ptr("kustoDatabaseName1"),
+		// 						KustoManagementURL: to.Ptr("https://portal.azure.com/"),
+		// 						KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+		// 					},
+		// 				},
+		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
+		// 					},
+		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 					TenantID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 				},
+		// 				Tags: map[string]*string{
 		// 				},
 		// 			},
 		// 			{
@@ -233,16 +701,44 @@ func ExampleWatchersClient_NewListBySubscriptionPager() {
 		// 				Type: to.Ptr("microsoft.databasewatcher/watchers"),
 		// 				Location: to.Ptr("westus"),
 		// 				Properties: &armdatabasewatcher.WatcherProperties{
+		// 					Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
 		// 					ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+		// 					DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
+		// 					Datastore: &armdatabasewatcher.Datastore{
+		// 						AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
+		// 						KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoClusterDisplayName: to.Ptr("kustoUri-adx"),
+		// 						KustoDataIngestionURI: to.Ptr("https://ingest-kustouri-adx.eastus.kusto.windows.net"),
+		// 						KustoDatabaseName: to.Ptr("kustoDatabaseName1"),
+		// 						KustoManagementURL: to.Ptr("https://portal.azure.com/"),
+		// 						KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
+		// 					},
+		// 				},
+		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
+		// 					},
+		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 					TenantID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+		// 				},
+		// 				Tags: map[string]*string{
+		// 				},
+		// 				SystemData: &armdatabasewatcher.SystemData{
+		// 					CreatedBy: to.Ptr("enbpvlpqbwd"),
+		// 					CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 					LastModifiedBy: to.Ptr("mxp"),
+		// 					LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
 		// 				},
 		// 			},
 		// 		},
+		// 		NextLink: to.Ptr("https://microsoft.com/a"),
 		// 	},
 		// }
 	}
 }
 
-// Generated from example definition: 2023-09-01-preview/Watchers_Start_200.json
+// Generated from example definition: 2024-07-19-preview/Watchers_Start_MaximumSet_Gen.json
 func ExampleWatchersClient_BeginStart() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -253,7 +749,7 @@ func ExampleWatchersClient_BeginStart() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewWatchersClient().BeginStart(ctx, "apiTest-ddat4p", "databasemo3ej9ih", nil)
+	poller, err := clientFactory.NewWatchersClient().BeginStart(ctx, "rgWatcher", "testWatcher", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -265,19 +761,10 @@ func ExampleWatchersClient_BeginStart() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armdatabasewatcher.WatchersClientStartResponse{
-	// 	Watcher: &armdatabasewatcher.Watcher{
-	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.DatabaseWatcher/watchers/databasemo3ej9ih"),
-	// 		Name: to.Ptr("databasemo3ej9ih"),
-	// 		Type: to.Ptr("microsoft.databasewatcher/watchers"),
-	// 		Location: to.Ptr("westus"),
-	// 		Properties: &armdatabasewatcher.WatcherProperties{
-	// 			ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
-	// 		},
-	// 	},
 	// }
 }
 
-// Generated from example definition: 2023-09-01-preview/Watchers_Stop_200.json
+// Generated from example definition: 2024-07-19-preview/Watchers_Stop_MaximumSet_Gen.json
 func ExampleWatchersClient_BeginStop() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -288,7 +775,7 @@ func ExampleWatchersClient_BeginStop() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewWatchersClient().BeginStop(ctx, "apiTest-ddat4p", "databasemo3ej9ih", nil)
+	poller, err := clientFactory.NewWatchersClient().BeginStop(ctx, "rgWatcher", "myWatcher", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -300,19 +787,10 @@ func ExampleWatchersClient_BeginStop() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armdatabasewatcher.WatchersClientStopResponse{
-	// 	Watcher: &armdatabasewatcher.Watcher{
-	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.DatabaseWatcher/watchers/databasemo3ej9ih"),
-	// 		Name: to.Ptr("databasemo3ej9ih"),
-	// 		Type: to.Ptr("microsoft.databasewatcher/watchers"),
-	// 		Location: to.Ptr("westus"),
-	// 		Properties: &armdatabasewatcher.WatcherProperties{
-	// 			ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
-	// 		},
-	// 	},
 	// }
 }
 
-// Generated from example definition: 2023-09-01-preview/Watchers_Update_200.json
+// Generated from example definition: 2024-07-19-preview/Watchers_Update_MaximumSet_Gen.json
 func ExampleWatchersClient_BeginUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -323,11 +801,11 @@ func ExampleWatchersClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewWatchersClient().BeginUpdate(ctx, "apiTest-lzect6", "databasemohkp6fn", armdatabasewatcher.Watcher{
-		Identity: &armdatabasewatcher.ManagedServiceIdentity{
+	poller, err := clientFactory.NewWatchersClient().BeginUpdate(ctx, "rgWatcher", "testWatcher", armdatabasewatcher.WatcherUpdate{
+		Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
 			Type: to.Ptr(armdatabasewatcher.ManagedServiceIdentityTypeSystemAssigned),
 		},
-		Properties: &armdatabasewatcher.WatcherProperties{
+		Properties: &armdatabasewatcher.WatcherUpdateProperties{
 			Datastore: &armdatabasewatcher.Datastore{
 				AdxClusterResourceID:    to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
 				KustoClusterURI:         to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
@@ -337,7 +815,9 @@ func ExampleWatchersClient_BeginUpdate() {
 				KustoManagementURL:      to.Ptr("https://portal.azure.com/"),
 				KustoOfferingType:       to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
 			},
+			DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/newtest"),
 		},
+		Tags: map[string]*string{},
 	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
@@ -351,17 +831,9 @@ func ExampleWatchersClient_BeginUpdate() {
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armdatabasewatcher.WatchersClientUpdateResponse{
 	// 	Watcher: &armdatabasewatcher.Watcher{
-	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-lzect6/providers/Microsoft.DatabaseWatcher/watchers/databasemohkp6fn"),
-	// 		Name: to.Ptr("databasemohkp6fn"),
-	// 		Type: to.Ptr("microsoft.databasewatcher/watchers"),
-	// 		Location: to.Ptr("westus"),
-	// 		SystemData: &armdatabasewatcher.SystemData{
-	// 		},
-	// 		Identity: &armdatabasewatcher.ManagedServiceIdentity{
-	// 			Type: to.Ptr(armdatabasewatcher.ManagedServiceIdentityTypeSystemAssigned),
-	// 		},
 	// 		Properties: &armdatabasewatcher.WatcherProperties{
-	// 			ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+	// 			Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
+	// 			DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
 	// 			Datastore: &armdatabasewatcher.Datastore{
 	// 				AdxClusterResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
 	// 				KustoClusterURI: to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),
@@ -371,6 +843,28 @@ func ExampleWatchersClient_BeginUpdate() {
 	// 				KustoManagementURL: to.Ptr("https://portal.azure.com/"),
 	// 				KustoOfferingType: to.Ptr(armdatabasewatcher.KustoOfferingTypeAdx),
 	// 			},
+	// 			ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
+	// 		},
+	// 		Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+	// 			Type: to.Ptr(armdatabasewatcher.ManagedServiceIdentityTypeSystemAssigned),
+	// 			UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
+	// 			},
+	// 			PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+	// 			TenantID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
+	// 		},
+	// 		Tags: map[string]*string{
+	// 		},
+	// 		Location: to.Ptr("eastus2euap"),
+	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/dummyrg/providers/Microsoft.DatabaseWatcher/watchers/myWatcher"),
+	// 		Name: to.Ptr("myWatcher"),
+	// 		Type: to.Ptr("microsoft.databasewatcher/watchers"),
+	// 		SystemData: &armdatabasewatcher.SystemData{
+	// 			CreatedBy: to.Ptr("enbpvlpqbwd"),
+	// 			CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+	// 			LastModifiedBy: to.Ptr("mxp"),
+	// 			LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
 	// 		},
 	// 	},
 	// }

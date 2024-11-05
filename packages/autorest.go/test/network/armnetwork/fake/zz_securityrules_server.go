@@ -71,23 +71,42 @@ func (s *SecurityRulesServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (s *SecurityRulesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "SecurityRulesClient.BeginCreateOrUpdate":
-		resp, err = s.dispatchBeginCreateOrUpdate(req)
-	case "SecurityRulesClient.BeginDelete":
-		resp, err = s.dispatchBeginDelete(req)
-	case "SecurityRulesClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "SecurityRulesClient.NewListPager":
-		resp, err = s.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if securityRulesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = securityRulesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "SecurityRulesClient.BeginCreateOrUpdate":
+				res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
+			case "SecurityRulesClient.BeginDelete":
+				res.resp, res.err = s.dispatchBeginDelete(req)
+			case "SecurityRulesClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "SecurityRulesClient.NewListPager":
+				res.resp, res.err = s.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SecurityRulesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -266,4 +285,10 @@ func (s *SecurityRulesServerTransport) dispatchNewListPager(req *http.Request) (
 		s.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SecurityRulesServerTransport
+var securityRulesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

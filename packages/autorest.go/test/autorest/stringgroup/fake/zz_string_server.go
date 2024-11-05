@@ -96,41 +96,60 @@ func (s *StringServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (s *StringServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "StringClient.GetBase64Encoded":
-		resp, err = s.dispatchGetBase64Encoded(req)
-	case "StringClient.GetBase64URLEncoded":
-		resp, err = s.dispatchGetBase64URLEncoded(req)
-	case "StringClient.GetEmpty":
-		resp, err = s.dispatchGetEmpty(req)
-	case "StringClient.GetMBCS":
-		resp, err = s.dispatchGetMBCS(req)
-	case "StringClient.GetNotProvided":
-		resp, err = s.dispatchGetNotProvided(req)
-	case "StringClient.GetNull":
-		resp, err = s.dispatchGetNull(req)
-	case "StringClient.GetNullBase64URLEncoded":
-		resp, err = s.dispatchGetNullBase64URLEncoded(req)
-	case "StringClient.GetWhitespace":
-		resp, err = s.dispatchGetWhitespace(req)
-	case "StringClient.PutBase64URLEncoded":
-		resp, err = s.dispatchPutBase64URLEncoded(req)
-	case "StringClient.PutEmpty":
-		resp, err = s.dispatchPutEmpty(req)
-	case "StringClient.PutMBCS":
-		resp, err = s.dispatchPutMBCS(req)
-	case "StringClient.PutNull":
-		resp, err = s.dispatchPutNull(req)
-	case "StringClient.PutWhitespace":
-		resp, err = s.dispatchPutWhitespace(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if stringServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = stringServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "StringClient.GetBase64Encoded":
+				res.resp, res.err = s.dispatchGetBase64Encoded(req)
+			case "StringClient.GetBase64URLEncoded":
+				res.resp, res.err = s.dispatchGetBase64URLEncoded(req)
+			case "StringClient.GetEmpty":
+				res.resp, res.err = s.dispatchGetEmpty(req)
+			case "StringClient.GetMBCS":
+				res.resp, res.err = s.dispatchGetMBCS(req)
+			case "StringClient.GetNotProvided":
+				res.resp, res.err = s.dispatchGetNotProvided(req)
+			case "StringClient.GetNull":
+				res.resp, res.err = s.dispatchGetNull(req)
+			case "StringClient.GetNullBase64URLEncoded":
+				res.resp, res.err = s.dispatchGetNullBase64URLEncoded(req)
+			case "StringClient.GetWhitespace":
+				res.resp, res.err = s.dispatchGetWhitespace(req)
+			case "StringClient.PutBase64URLEncoded":
+				res.resp, res.err = s.dispatchPutBase64URLEncoded(req)
+			case "StringClient.PutEmpty":
+				res.resp, res.err = s.dispatchPutEmpty(req)
+			case "StringClient.PutMBCS":
+				res.resp, res.err = s.dispatchPutMBCS(req)
+			case "StringClient.PutNull":
+				res.resp, res.err = s.dispatchPutNull(req)
+			case "StringClient.PutWhitespace":
+				res.resp, res.err = s.dispatchPutWhitespace(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *StringServerTransport) dispatchGetBase64Encoded(req *http.Request) (*http.Response, error) {
@@ -386,4 +405,10 @@ func (s *StringServerTransport) dispatchPutWhitespace(req *http.Request) (*http.
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to StringServerTransport
+var stringServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -524,12 +524,15 @@ export function formatStatusCode(statusCode: number): string {
   }
 }
 
-export function formatCommentAsBulletItem(description: string): string {
+export function formatCommentAsBulletItem(prefix: string, docs: go.Docs): string {
   // first create the comment block. note that it can be multi-line depending on length:
   //
   // some comment first line
   // and it finishes here.
-  description = comment(description, '//', undefined, commentLength);
+  let description = formatDocCommentWithPrefix(prefix, docs);
+  if (description.length === 0) {
+    return '';
+  }
 
   // transform the above to look like this:
   //
@@ -544,6 +547,59 @@ export function formatCommentAsBulletItem(description: string): string {
     }
   }
   return chunks.join('\n');
+}
+
+// conditionally returns a doc comment on an entity that requires a prefix.
+// e.g.:
+// {Prefix} - {docs.summary}
+//
+// {docs.description}
+export function formatDocCommentWithPrefix(prefix: string, docs: go.Docs): string {
+  if (!docs.summary && !docs.description) {
+    return '';
+  }
+
+  let docComment = '';
+  if (docs.summary) {
+    docComment = `${comment(`${prefix} - ${docs.summary}`, '//', undefined, commentLength)}\n`;
+  }
+
+  if (docs.description) {
+    let description = docs.description;
+    if (docs.summary) {
+      docComment += '//\n';
+    } else {
+      // only apply the prefix to the description if there was no summary
+      description = `${prefix} - ${description}`;
+    }
+    docComment += `${comment(`${description}`, '//', undefined, commentLength)}\n`;
+  }
+
+  return docComment;
+}
+
+// conditionally returns a doc comment
+// {docs.summary}
+//
+// {docs.description}
+export function formatDocComment(docs: go.Docs): string {
+  if (!docs.summary && !docs.description) {
+    return '';
+  }
+
+  let docComment = '';
+  if (docs.summary) {
+    docComment = `${comment(docs.summary, '//', undefined, commentLength)}\n`;
+  }
+
+  if (docs.description) {
+    if (docs.summary) {
+      docComment += '//\n';
+    }
+    docComment += `${comment(docs.description, '//', undefined, commentLength)}\n`;
+  }
+
+  return docComment;
 }
 
 export function getParentImport(codeModel: go.CodeModel): string {

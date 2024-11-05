@@ -82,29 +82,48 @@ func (a *APIDefinitionsServerTransport) Do(req *http.Request) (*http.Response, e
 }
 
 func (a *APIDefinitionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "APIDefinitionsClient.CreateOrUpdate":
-		resp, err = a.dispatchCreateOrUpdate(req)
-	case "APIDefinitionsClient.Delete":
-		resp, err = a.dispatchDelete(req)
-	case "APIDefinitionsClient.BeginExportSpecification":
-		resp, err = a.dispatchBeginExportSpecification(req)
-	case "APIDefinitionsClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "APIDefinitionsClient.Head":
-		resp, err = a.dispatchHead(req)
-	case "APIDefinitionsClient.BeginImportSpecification":
-		resp, err = a.dispatchBeginImportSpecification(req)
-	case "APIDefinitionsClient.NewListPager":
-		resp, err = a.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if apiDefinitionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = apiDefinitionsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "APIDefinitionsClient.CreateOrUpdate":
+				res.resp, res.err = a.dispatchCreateOrUpdate(req)
+			case "APIDefinitionsClient.Delete":
+				res.resp, res.err = a.dispatchDelete(req)
+			case "APIDefinitionsClient.BeginExportSpecification":
+				res.resp, res.err = a.dispatchBeginExportSpecification(req)
+			case "APIDefinitionsClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "APIDefinitionsClient.Head":
+				res.resp, res.err = a.dispatchHead(req)
+			case "APIDefinitionsClient.BeginImportSpecification":
+				res.resp, res.err = a.dispatchBeginImportSpecification(req)
+			case "APIDefinitionsClient.NewListPager":
+				res.resp, res.err = a.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *APIDefinitionsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -500,4 +519,10 @@ func (a *APIDefinitionsServerTransport) dispatchNewListPager(req *http.Request) 
 		a.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to APIDefinitionsServerTransport
+var apiDefinitionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

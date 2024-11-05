@@ -60,19 +60,38 @@ func (a *AvailablePrivateEndpointTypesServerTransport) Do(req *http.Request) (*h
 }
 
 func (a *AvailablePrivateEndpointTypesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "AvailablePrivateEndpointTypesClient.NewListPager":
-		resp, err = a.dispatchNewListPager(req)
-	case "AvailablePrivateEndpointTypesClient.NewListByResourceGroupPager":
-		resp, err = a.dispatchNewListByResourceGroupPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if availablePrivateEndpointTypesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = availablePrivateEndpointTypesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "AvailablePrivateEndpointTypesClient.NewListPager":
+				res.resp, res.err = a.dispatchNewListPager(req)
+			case "AvailablePrivateEndpointTypesClient.NewListByResourceGroupPager":
+				res.resp, res.err = a.dispatchNewListByResourceGroupPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AvailablePrivateEndpointTypesServerTransport) dispatchNewListPager(req *http.Request) (*http.Response, error) {
@@ -151,4 +170,10 @@ func (a *AvailablePrivateEndpointTypesServerTransport) dispatchNewListByResource
 		a.newListByResourceGroupPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AvailablePrivateEndpointTypesServerTransport
+var availablePrivateEndpointTypesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

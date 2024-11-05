@@ -25,7 +25,7 @@ type SharedPrivateLinkResourcesServer struct {
 	BeginCreate func(ctx context.Context, resourceGroupName string, watcherName string, sharedPrivateLinkResourceName string, resource armdatabasewatcher.SharedPrivateLinkResource, options *armdatabasewatcher.SharedPrivateLinkResourcesClientBeginCreateOptions) (resp azfake.PollerResponder[armdatabasewatcher.SharedPrivateLinkResourcesClientCreateResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method SharedPrivateLinkResourcesClient.BeginDelete
-	// HTTP status codes to indicate success: http.StatusAccepted, http.StatusNoContent
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDelete func(ctx context.Context, resourceGroupName string, watcherName string, sharedPrivateLinkResourceName string, options *armdatabasewatcher.SharedPrivateLinkResourcesClientBeginDeleteOptions) (resp azfake.PollerResponder[armdatabasewatcher.SharedPrivateLinkResourcesClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method SharedPrivateLinkResourcesClient.Get
@@ -70,23 +70,42 @@ func (s *SharedPrivateLinkResourcesServerTransport) Do(req *http.Request) (*http
 }
 
 func (s *SharedPrivateLinkResourcesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "SharedPrivateLinkResourcesClient.BeginCreate":
-		resp, err = s.dispatchBeginCreate(req)
-	case "SharedPrivateLinkResourcesClient.BeginDelete":
-		resp, err = s.dispatchBeginDelete(req)
-	case "SharedPrivateLinkResourcesClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "SharedPrivateLinkResourcesClient.NewListByWatcherPager":
-		resp, err = s.dispatchNewListByWatcherPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if sharedPrivateLinkResourcesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = sharedPrivateLinkResourcesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "SharedPrivateLinkResourcesClient.BeginCreate":
+				res.resp, res.err = s.dispatchBeginCreate(req)
+			case "SharedPrivateLinkResourcesClient.BeginDelete":
+				res.resp, res.err = s.dispatchBeginDelete(req)
+			case "SharedPrivateLinkResourcesClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "SharedPrivateLinkResourcesClient.NewListByWatcherPager":
+				res.resp, res.err = s.dispatchNewListByWatcherPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SharedPrivateLinkResourcesServerTransport) dispatchBeginCreate(req *http.Request) (*http.Response, error) {
@@ -178,9 +197,9 @@ func (s *SharedPrivateLinkResourcesServerTransport) dispatchBeginDelete(req *htt
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		s.beginDelete.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDelete) {
 		s.beginDelete.remove(req)
@@ -265,4 +284,10 @@ func (s *SharedPrivateLinkResourcesServerTransport) dispatchNewListByWatcherPage
 		s.newListByWatcherPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SharedPrivateLinkResourcesServerTransport
+var sharedPrivateLinkResourcesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

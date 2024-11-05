@@ -35,15 +35,15 @@ type VirtualHubsServer struct {
 	Get func(ctx context.Context, resourceGroupName string, virtualHubName string, options *armnetwork.VirtualHubsClientGetOptions) (resp azfake.Responder[armnetwork.VirtualHubsClientGetResponse], errResp azfake.ErrorResponder)
 
 	// BeginGetEffectiveVirtualHubRoutes is the fake for method VirtualHubsClient.BeginGetEffectiveVirtualHubRoutes
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginGetEffectiveVirtualHubRoutes func(ctx context.Context, resourceGroupName string, virtualHubName string, options *armnetwork.VirtualHubsClientBeginGetEffectiveVirtualHubRoutesOptions) (resp azfake.PollerResponder[armnetwork.VirtualHubsClientGetEffectiveVirtualHubRoutesResponse], errResp azfake.ErrorResponder)
 
 	// BeginGetInboundRoutes is the fake for method VirtualHubsClient.BeginGetInboundRoutes
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginGetInboundRoutes func(ctx context.Context, resourceGroupName string, virtualHubName string, getInboundRoutesParameters armnetwork.GetInboundRoutesParameters, options *armnetwork.VirtualHubsClientBeginGetInboundRoutesOptions) (resp azfake.PollerResponder[armnetwork.VirtualHubsClientGetInboundRoutesResponse], errResp azfake.ErrorResponder)
 
 	// BeginGetOutboundRoutes is the fake for method VirtualHubsClient.BeginGetOutboundRoutes
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginGetOutboundRoutes func(ctx context.Context, resourceGroupName string, virtualHubName string, getOutboundRoutesParameters armnetwork.GetOutboundRoutesParameters, options *armnetwork.VirtualHubsClientBeginGetOutboundRoutesOptions) (resp azfake.PollerResponder[armnetwork.VirtualHubsClientGetOutboundRoutesResponse], errResp azfake.ErrorResponder)
 
 	// NewListPager is the fake for method VirtualHubsClient.NewListPager
@@ -100,33 +100,52 @@ func (v *VirtualHubsServerTransport) Do(req *http.Request) (*http.Response, erro
 }
 
 func (v *VirtualHubsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualHubsClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualHubsClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualHubsClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualHubsClient.BeginGetEffectiveVirtualHubRoutes":
-		resp, err = v.dispatchBeginGetEffectiveVirtualHubRoutes(req)
-	case "VirtualHubsClient.BeginGetInboundRoutes":
-		resp, err = v.dispatchBeginGetInboundRoutes(req)
-	case "VirtualHubsClient.BeginGetOutboundRoutes":
-		resp, err = v.dispatchBeginGetOutboundRoutes(req)
-	case "VirtualHubsClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	case "VirtualHubsClient.NewListByResourceGroupPager":
-		resp, err = v.dispatchNewListByResourceGroupPager(req)
-	case "VirtualHubsClient.UpdateTags":
-		resp, err = v.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if virtualHubsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualHubsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VirtualHubsClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualHubsClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualHubsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualHubsClient.BeginGetEffectiveVirtualHubRoutes":
+				res.resp, res.err = v.dispatchBeginGetEffectiveVirtualHubRoutes(req)
+			case "VirtualHubsClient.BeginGetInboundRoutes":
+				res.resp, res.err = v.dispatchBeginGetInboundRoutes(req)
+			case "VirtualHubsClient.BeginGetOutboundRoutes":
+				res.resp, res.err = v.dispatchBeginGetOutboundRoutes(req)
+			case "VirtualHubsClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualHubsClient.NewListByResourceGroupPager":
+				res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
+			case "VirtualHubsClient.UpdateTags":
+				res.resp, res.err = v.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualHubsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -297,9 +316,9 @@ func (v *VirtualHubsServerTransport) dispatchBeginGetEffectiveVirtualHubRoutes(r
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginGetEffectiveVirtualHubRoutes.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginGetEffectiveVirtualHubRoutes) {
 		v.beginGetEffectiveVirtualHubRoutes.remove(req)
@@ -345,9 +364,9 @@ func (v *VirtualHubsServerTransport) dispatchBeginGetInboundRoutes(req *http.Req
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginGetInboundRoutes.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginGetInboundRoutes) {
 		v.beginGetInboundRoutes.remove(req)
@@ -393,9 +412,9 @@ func (v *VirtualHubsServerTransport) dispatchBeginGetOutboundRoutes(req *http.Re
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginGetOutboundRoutes.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginGetOutboundRoutes) {
 		v.beginGetOutboundRoutes.remove(req)
@@ -509,4 +528,10 @@ func (v *VirtualHubsServerTransport) dispatchUpdateTags(req *http.Request) (*htt
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualHubsServerTransport
+var virtualHubsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

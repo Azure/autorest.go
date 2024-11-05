@@ -59,19 +59,38 @@ func (v *VirtualApplianceSKUsServerTransport) Do(req *http.Request) (*http.Respo
 }
 
 func (v *VirtualApplianceSKUsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualApplianceSKUsClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualApplianceSKUsClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if virtualApplianceSkUsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualApplianceSkUsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VirtualApplianceSKUsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualApplianceSKUsClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualApplianceSKUsServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -134,4 +153,10 @@ func (v *VirtualApplianceSKUsServerTransport) dispatchNewListPager(req *http.Req
 		v.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualApplianceSKUsServerTransport
+var virtualApplianceSkUsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

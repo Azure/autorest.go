@@ -29,11 +29,11 @@ type DiagnosticSettingsServer struct {
 	GetDiagnosticRemoteSupportSettings func(ctx context.Context, deviceName string, resourceGroupName string, options *armdataboxedge.DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsOptions) (resp azfake.Responder[armdataboxedge.DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse], errResp azfake.ErrorResponder)
 
 	// BeginUpdateDiagnosticProactiveLogCollectionSettings is the fake for method DiagnosticSettingsClient.BeginUpdateDiagnosticProactiveLogCollectionSettings
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginUpdateDiagnosticProactiveLogCollectionSettings func(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings armdataboxedge.DiagnosticProactiveLogCollectionSettings, options *armdataboxedge.DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (resp azfake.PollerResponder[armdataboxedge.DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsResponse], errResp azfake.ErrorResponder)
 
 	// BeginUpdateDiagnosticRemoteSupportSettings is the fake for method DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginUpdateDiagnosticRemoteSupportSettings func(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings armdataboxedge.DiagnosticRemoteSupportSettings, options *armdataboxedge.DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions) (resp azfake.PollerResponder[armdataboxedge.DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse], errResp azfake.ErrorResponder)
 }
 
@@ -68,23 +68,42 @@ func (d *DiagnosticSettingsServerTransport) Do(req *http.Request) (*http.Respons
 }
 
 func (d *DiagnosticSettingsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DiagnosticSettingsClient.GetDiagnosticProactiveLogCollectionSettings":
-		resp, err = d.dispatchGetDiagnosticProactiveLogCollectionSettings(req)
-	case "DiagnosticSettingsClient.GetDiagnosticRemoteSupportSettings":
-		resp, err = d.dispatchGetDiagnosticRemoteSupportSettings(req)
-	case "DiagnosticSettingsClient.BeginUpdateDiagnosticProactiveLogCollectionSettings":
-		resp, err = d.dispatchBeginUpdateDiagnosticProactiveLogCollectionSettings(req)
-	case "DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings":
-		resp, err = d.dispatchBeginUpdateDiagnosticRemoteSupportSettings(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if diagnosticSettingsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = diagnosticSettingsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "DiagnosticSettingsClient.GetDiagnosticProactiveLogCollectionSettings":
+				res.resp, res.err = d.dispatchGetDiagnosticProactiveLogCollectionSettings(req)
+			case "DiagnosticSettingsClient.GetDiagnosticRemoteSupportSettings":
+				res.resp, res.err = d.dispatchGetDiagnosticRemoteSupportSettings(req)
+			case "DiagnosticSettingsClient.BeginUpdateDiagnosticProactiveLogCollectionSettings":
+				res.resp, res.err = d.dispatchBeginUpdateDiagnosticProactiveLogCollectionSettings(req)
+			case "DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings":
+				res.resp, res.err = d.dispatchBeginUpdateDiagnosticRemoteSupportSettings(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DiagnosticSettingsServerTransport) dispatchGetDiagnosticProactiveLogCollectionSettings(req *http.Request) (*http.Response, error) {
@@ -190,9 +209,9 @@ func (d *DiagnosticSettingsServerTransport) dispatchBeginUpdateDiagnosticProacti
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		d.beginUpdateDiagnosticProactiveLogCollectionSettings.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginUpdateDiagnosticProactiveLogCollectionSettings) {
 		d.beginUpdateDiagnosticProactiveLogCollectionSettings.remove(req)
@@ -238,13 +257,19 @@ func (d *DiagnosticSettingsServerTransport) dispatchBeginUpdateDiagnosticRemoteS
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		d.beginUpdateDiagnosticRemoteSupportSettings.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginUpdateDiagnosticRemoteSupportSettings) {
 		d.beginUpdateDiagnosticRemoteSupportSettings.remove(req)
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DiagnosticSettingsServerTransport
+var diagnosticSettingsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

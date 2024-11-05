@@ -79,27 +79,46 @@ func (p *ProfilesServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (p *ProfilesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ProfilesClient.CreateOrUpdate":
-		resp, err = p.dispatchCreateOrUpdate(req)
-	case "ProfilesClient.BeginDelete":
-		resp, err = p.dispatchBeginDelete(req)
-	case "ProfilesClient.Get":
-		resp, err = p.dispatchGet(req)
-	case "ProfilesClient.NewListPager":
-		resp, err = p.dispatchNewListPager(req)
-	case "ProfilesClient.NewListAllPager":
-		resp, err = p.dispatchNewListAllPager(req)
-	case "ProfilesClient.UpdateTags":
-		resp, err = p.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if profilesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = profilesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ProfilesClient.CreateOrUpdate":
+				res.resp, res.err = p.dispatchCreateOrUpdate(req)
+			case "ProfilesClient.BeginDelete":
+				res.resp, res.err = p.dispatchBeginDelete(req)
+			case "ProfilesClient.Get":
+				res.resp, res.err = p.dispatchGet(req)
+			case "ProfilesClient.NewListPager":
+				res.resp, res.err = p.dispatchNewListPager(req)
+			case "ProfilesClient.NewListAllPager":
+				res.resp, res.err = p.dispatchNewListAllPager(req)
+			case "ProfilesClient.UpdateTags":
+				res.resp, res.err = p.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *ProfilesServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -333,4 +352,10 @@ func (p *ProfilesServerTransport) dispatchUpdateTags(req *http.Request) (*http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ProfilesServerTransport
+var profilesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

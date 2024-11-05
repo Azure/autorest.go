@@ -71,29 +71,48 @@ func (s *SingleDiscriminatorServerTransport) Do(req *http.Request) (*http.Respon
 }
 
 func (s *SingleDiscriminatorServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "SingleDiscriminatorClient.GetLegacyModel":
-		resp, err = s.dispatchGetLegacyModel(req)
-	case "SingleDiscriminatorClient.GetMissingDiscriminator":
-		resp, err = s.dispatchGetMissingDiscriminator(req)
-	case "SingleDiscriminatorClient.GetModel":
-		resp, err = s.dispatchGetModel(req)
-	case "SingleDiscriminatorClient.GetRecursiveModel":
-		resp, err = s.dispatchGetRecursiveModel(req)
-	case "SingleDiscriminatorClient.GetWrongDiscriminator":
-		resp, err = s.dispatchGetWrongDiscriminator(req)
-	case "SingleDiscriminatorClient.PutModel":
-		resp, err = s.dispatchPutModel(req)
-	case "SingleDiscriminatorClient.PutRecursiveModel":
-		resp, err = s.dispatchPutRecursiveModel(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if singleDiscriminatorServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = singleDiscriminatorServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "SingleDiscriminatorClient.GetLegacyModel":
+				res.resp, res.err = s.dispatchGetLegacyModel(req)
+			case "SingleDiscriminatorClient.GetMissingDiscriminator":
+				res.resp, res.err = s.dispatchGetMissingDiscriminator(req)
+			case "SingleDiscriminatorClient.GetModel":
+				res.resp, res.err = s.dispatchGetModel(req)
+			case "SingleDiscriminatorClient.GetRecursiveModel":
+				res.resp, res.err = s.dispatchGetRecursiveModel(req)
+			case "SingleDiscriminatorClient.GetWrongDiscriminator":
+				res.resp, res.err = s.dispatchGetWrongDiscriminator(req)
+			case "SingleDiscriminatorClient.PutModel":
+				res.resp, res.err = s.dispatchPutModel(req)
+			case "SingleDiscriminatorClient.PutRecursiveModel":
+				res.resp, res.err = s.dispatchPutRecursiveModel(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SingleDiscriminatorServerTransport) dispatchGetLegacyModel(req *http.Request) (*http.Response, error) {
@@ -243,4 +262,10 @@ func (s *SingleDiscriminatorServerTransport) dispatchPutRecursiveModel(req *http
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SingleDiscriminatorServerTransport
+var singleDiscriminatorServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -59,23 +59,42 @@ func (o *OptionalBooleanLiteralServerTransport) Do(req *http.Request) (*http.Res
 }
 
 func (o *OptionalBooleanLiteralServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "OptionalBooleanLiteralClient.GetAll":
-		resp, err = o.dispatchGetAll(req)
-	case "OptionalBooleanLiteralClient.GetDefault":
-		resp, err = o.dispatchGetDefault(req)
-	case "OptionalBooleanLiteralClient.PutAll":
-		resp, err = o.dispatchPutAll(req)
-	case "OptionalBooleanLiteralClient.PutDefault":
-		resp, err = o.dispatchPutDefault(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if optionalBooleanLiteralServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = optionalBooleanLiteralServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "OptionalBooleanLiteralClient.GetAll":
+				res.resp, res.err = o.dispatchGetAll(req)
+			case "OptionalBooleanLiteralClient.GetDefault":
+				res.resp, res.err = o.dispatchGetDefault(req)
+			case "OptionalBooleanLiteralClient.PutAll":
+				res.resp, res.err = o.dispatchPutAll(req)
+			case "OptionalBooleanLiteralClient.PutDefault":
+				res.resp, res.err = o.dispatchPutDefault(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (o *OptionalBooleanLiteralServerTransport) dispatchGetAll(req *http.Request) (*http.Response, error) {
@@ -160,4 +179,10 @@ func (o *OptionalBooleanLiteralServerTransport) dispatchPutDefault(req *http.Req
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OptionalBooleanLiteralServerTransport
+var optionalBooleanLiteralServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

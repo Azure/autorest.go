@@ -71,23 +71,42 @@ func (e *ExpressRouteCircuitPeeringsServerTransport) Do(req *http.Request) (*htt
 }
 
 func (e *ExpressRouteCircuitPeeringsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ExpressRouteCircuitPeeringsClient.BeginCreateOrUpdate":
-		resp, err = e.dispatchBeginCreateOrUpdate(req)
-	case "ExpressRouteCircuitPeeringsClient.BeginDelete":
-		resp, err = e.dispatchBeginDelete(req)
-	case "ExpressRouteCircuitPeeringsClient.Get":
-		resp, err = e.dispatchGet(req)
-	case "ExpressRouteCircuitPeeringsClient.NewListPager":
-		resp, err = e.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if expressRouteCircuitPeeringsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = expressRouteCircuitPeeringsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ExpressRouteCircuitPeeringsClient.BeginCreateOrUpdate":
+				res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
+			case "ExpressRouteCircuitPeeringsClient.BeginDelete":
+				res.resp, res.err = e.dispatchBeginDelete(req)
+			case "ExpressRouteCircuitPeeringsClient.Get":
+				res.resp, res.err = e.dispatchGet(req)
+			case "ExpressRouteCircuitPeeringsClient.NewListPager":
+				res.resp, res.err = e.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *ExpressRouteCircuitPeeringsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -266,4 +285,10 @@ func (e *ExpressRouteCircuitPeeringsServerTransport) dispatchNewListPager(req *h
 		e.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ExpressRouteCircuitPeeringsServerTransport
+var expressRouteCircuitPeeringsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

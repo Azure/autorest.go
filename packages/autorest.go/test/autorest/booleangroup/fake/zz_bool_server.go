@@ -68,27 +68,46 @@ func (b *BoolServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (b *BoolServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "BoolClient.GetFalse":
-		resp, err = b.dispatchGetFalse(req)
-	case "BoolClient.GetInvalid":
-		resp, err = b.dispatchGetInvalid(req)
-	case "BoolClient.GetNull":
-		resp, err = b.dispatchGetNull(req)
-	case "BoolClient.GetTrue":
-		resp, err = b.dispatchGetTrue(req)
-	case "BoolClient.PutFalse":
-		resp, err = b.dispatchPutFalse(req)
-	case "BoolClient.PutTrue":
-		resp, err = b.dispatchPutTrue(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if boolServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = boolServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "BoolClient.GetFalse":
+				res.resp, res.err = b.dispatchGetFalse(req)
+			case "BoolClient.GetInvalid":
+				res.resp, res.err = b.dispatchGetInvalid(req)
+			case "BoolClient.GetNull":
+				res.resp, res.err = b.dispatchGetNull(req)
+			case "BoolClient.GetTrue":
+				res.resp, res.err = b.dispatchGetTrue(req)
+			case "BoolClient.PutFalse":
+				res.resp, res.err = b.dispatchPutFalse(req)
+			case "BoolClient.PutTrue":
+				res.resp, res.err = b.dispatchPutTrue(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (b *BoolServerTransport) dispatchGetFalse(req *http.Request) (*http.Response, error) {
@@ -203,4 +222,10 @@ func (b *BoolServerTransport) dispatchPutTrue(req *http.Request) (*http.Response
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to BoolServerTransport
+var boolServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -34,7 +34,7 @@ type DiskRestorePointServer struct {
 	NewListByRestorePointPager func(resourceGroupName string, restorePointCollectionName string, vmRestorePointName string, options *armcompute.DiskRestorePointClientListByRestorePointOptions) (resp azfake.PagerResponder[armcompute.DiskRestorePointClientListByRestorePointResponse])
 
 	// BeginRevokeAccess is the fake for method DiskRestorePointClient.BeginRevokeAccess
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginRevokeAccess func(ctx context.Context, resourceGroupName string, restorePointCollectionName string, vmRestorePointName string, diskRestorePointName string, options *armcompute.DiskRestorePointClientBeginRevokeAccessOptions) (resp azfake.PollerResponder[armcompute.DiskRestorePointClientRevokeAccessResponse], errResp azfake.ErrorResponder)
 }
 
@@ -71,23 +71,42 @@ func (d *DiskRestorePointServerTransport) Do(req *http.Request) (*http.Response,
 }
 
 func (d *DiskRestorePointServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DiskRestorePointClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DiskRestorePointClient.BeginGrantAccess":
-		resp, err = d.dispatchBeginGrantAccess(req)
-	case "DiskRestorePointClient.NewListByRestorePointPager":
-		resp, err = d.dispatchNewListByRestorePointPager(req)
-	case "DiskRestorePointClient.BeginRevokeAccess":
-		resp, err = d.dispatchBeginRevokeAccess(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if diskRestorePointServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = diskRestorePointServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "DiskRestorePointClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DiskRestorePointClient.BeginGrantAccess":
+				res.resp, res.err = d.dispatchBeginGrantAccess(req)
+			case "DiskRestorePointClient.NewListByRestorePointPager":
+				res.resp, res.err = d.dispatchNewListByRestorePointPager(req)
+			case "DiskRestorePointClient.BeginRevokeAccess":
+				res.resp, res.err = d.dispatchBeginRevokeAccess(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DiskRestorePointServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -273,13 +292,19 @@ func (d *DiskRestorePointServerTransport) dispatchBeginRevokeAccess(req *http.Re
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		d.beginRevokeAccess.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRevokeAccess) {
 		d.beginRevokeAccess.remove(req)
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DiskRestorePointServerTransport
+var diskRestorePointServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

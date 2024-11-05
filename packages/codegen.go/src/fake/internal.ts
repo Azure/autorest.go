@@ -36,6 +36,7 @@ export function generateServerInternal(codeModel: go.CodeModel, requiredHelpers:
   const text = contentPreamble(codeModel, 'fake');
   const imports = new ImportManager();
   let body = alwaysUsed;
+  imports.add('net/http');
 
   if (requiredHelpers.getHeaderValue) {
     body += emitGetHeaderValue(imports);
@@ -67,6 +68,11 @@ export function generateServerInternal(codeModel: go.CodeModel, requiredHelpers:
 
 // contains helpers that are used in all servers
 const alwaysUsed = `
+type result struct {
+	resp *http.Response
+	err error
+}
+
 type nonRetriableError struct {
 	error
 }

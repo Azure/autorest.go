@@ -48,17 +48,36 @@ func (a *AccessSharedModelInOperationServerTransport) Do(req *http.Request) (*ht
 }
 
 func (a *AccessSharedModelInOperationServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "AccessSharedModelInOperationClient.Public":
-		resp, err = a.dispatchPublic(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if accessSharedModelInOperationServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = accessSharedModelInOperationServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "AccessSharedModelInOperationClient.Public":
+				res.resp, res.err = a.dispatchPublic(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AccessSharedModelInOperationServerTransport) dispatchPublic(req *http.Request) (*http.Response, error) {
@@ -83,4 +102,10 @@ func (a *AccessSharedModelInOperationServerTransport) dispatchPublic(req *http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AccessSharedModelInOperationServerTransport
+var accessSharedModelInOperationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

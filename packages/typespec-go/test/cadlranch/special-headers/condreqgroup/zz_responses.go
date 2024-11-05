@@ -4,6 +4,12 @@
 
 package condreqgroup
 
+// ConditionalRequestClientHeadIfModifiedSinceResponse contains the response from method ConditionalRequestClient.HeadIfModifiedSince.
+type ConditionalRequestClientHeadIfModifiedSinceResponse struct {
+	// Success indicates if the operation succeeded or failed.
+	Success bool
+}
+
 // ConditionalRequestClientPostIfMatchResponse contains the response from method ConditionalRequestClient.PostIfMatch.
 type ConditionalRequestClientPostIfMatchResponse struct {
 	// placeholder for future response values
@@ -11,5 +17,10 @@ type ConditionalRequestClientPostIfMatchResponse struct {
 
 // ConditionalRequestClientPostIfNoneMatchResponse contains the response from method ConditionalRequestClient.PostIfNoneMatch.
 type ConditionalRequestClientPostIfNoneMatchResponse struct {
+	// placeholder for future response values
+}
+
+// ConditionalRequestClientPostIfUnmodifiedSinceResponse contains the response from method ConditionalRequestClient.PostIfUnmodifiedSince.
+type ConditionalRequestClientPostIfUnmodifiedSinceResponse struct {
 	// placeholder for future response values
 }

@@ -81,27 +81,46 @@ func (r *RouteFiltersServerTransport) Do(req *http.Request) (*http.Response, err
 }
 
 func (r *RouteFiltersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "RouteFiltersClient.BeginCreateOrUpdate":
-		resp, err = r.dispatchBeginCreateOrUpdate(req)
-	case "RouteFiltersClient.BeginDelete":
-		resp, err = r.dispatchBeginDelete(req)
-	case "RouteFiltersClient.Get":
-		resp, err = r.dispatchGet(req)
-	case "RouteFiltersClient.NewListPager":
-		resp, err = r.dispatchNewListPager(req)
-	case "RouteFiltersClient.NewListByResourceGroupPager":
-		resp, err = r.dispatchNewListByResourceGroupPager(req)
-	case "RouteFiltersClient.UpdateTags":
-		resp, err = r.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if routeFiltersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = routeFiltersServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "RouteFiltersClient.BeginCreateOrUpdate":
+				res.resp, res.err = r.dispatchBeginCreateOrUpdate(req)
+			case "RouteFiltersClient.BeginDelete":
+				res.resp, res.err = r.dispatchBeginDelete(req)
+			case "RouteFiltersClient.Get":
+				res.resp, res.err = r.dispatchGet(req)
+			case "RouteFiltersClient.NewListPager":
+				res.resp, res.err = r.dispatchNewListPager(req)
+			case "RouteFiltersClient.NewListByResourceGroupPager":
+				res.resp, res.err = r.dispatchNewListByResourceGroupPager(req)
+			case "RouteFiltersClient.UpdateTags":
+				res.resp, res.err = r.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (r *RouteFiltersServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -346,4 +365,10 @@ func (r *RouteFiltersServerTransport) dispatchUpdateTags(req *http.Request) (*ht
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to RouteFiltersServerTransport
+var routeFiltersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

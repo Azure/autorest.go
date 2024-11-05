@@ -29,7 +29,7 @@ type WatchersServer struct {
 	CreateOrUpdate func(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters armnetwork.Watcher, options *armnetwork.WatchersClientCreateOrUpdateOptions) (resp azfake.Responder[armnetwork.WatchersClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method WatchersClient.BeginDelete
-	// HTTP status codes to indicate success: http.StatusAccepted, http.StatusNoContent
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDelete func(ctx context.Context, resourceGroupName string, networkWatcherName string, options *armnetwork.WatchersClientBeginDeleteOptions) (resp azfake.PollerResponder[armnetwork.WatchersClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method WatchersClient.Get
@@ -148,51 +148,70 @@ func (w *WatchersServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (w *WatchersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "WatchersClient.BeginCheckConnectivity":
-		resp, err = w.dispatchBeginCheckConnectivity(req)
-	case "WatchersClient.CreateOrUpdate":
-		resp, err = w.dispatchCreateOrUpdate(req)
-	case "WatchersClient.BeginDelete":
-		resp, err = w.dispatchBeginDelete(req)
-	case "WatchersClient.Get":
-		resp, err = w.dispatchGet(req)
-	case "WatchersClient.BeginGetAzureReachabilityReport":
-		resp, err = w.dispatchBeginGetAzureReachabilityReport(req)
-	case "WatchersClient.BeginGetFlowLogStatus":
-		resp, err = w.dispatchBeginGetFlowLogStatus(req)
-	case "WatchersClient.BeginGetNetworkConfigurationDiagnostic":
-		resp, err = w.dispatchBeginGetNetworkConfigurationDiagnostic(req)
-	case "WatchersClient.BeginGetNextHop":
-		resp, err = w.dispatchBeginGetNextHop(req)
-	case "WatchersClient.GetTopology":
-		resp, err = w.dispatchGetTopology(req)
-	case "WatchersClient.BeginGetTroubleshooting":
-		resp, err = w.dispatchBeginGetTroubleshooting(req)
-	case "WatchersClient.BeginGetTroubleshootingResult":
-		resp, err = w.dispatchBeginGetTroubleshootingResult(req)
-	case "WatchersClient.BeginGetVMSecurityRules":
-		resp, err = w.dispatchBeginGetVMSecurityRules(req)
-	case "WatchersClient.NewListPager":
-		resp, err = w.dispatchNewListPager(req)
-	case "WatchersClient.NewListAllPager":
-		resp, err = w.dispatchNewListAllPager(req)
-	case "WatchersClient.BeginListAvailableProviders":
-		resp, err = w.dispatchBeginListAvailableProviders(req)
-	case "WatchersClient.BeginSetFlowLogConfiguration":
-		resp, err = w.dispatchBeginSetFlowLogConfiguration(req)
-	case "WatchersClient.UpdateTags":
-		resp, err = w.dispatchUpdateTags(req)
-	case "WatchersClient.BeginVerifyIPFlow":
-		resp, err = w.dispatchBeginVerifyIPFlow(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if watchersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = watchersServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "WatchersClient.BeginCheckConnectivity":
+				res.resp, res.err = w.dispatchBeginCheckConnectivity(req)
+			case "WatchersClient.CreateOrUpdate":
+				res.resp, res.err = w.dispatchCreateOrUpdate(req)
+			case "WatchersClient.BeginDelete":
+				res.resp, res.err = w.dispatchBeginDelete(req)
+			case "WatchersClient.Get":
+				res.resp, res.err = w.dispatchGet(req)
+			case "WatchersClient.BeginGetAzureReachabilityReport":
+				res.resp, res.err = w.dispatchBeginGetAzureReachabilityReport(req)
+			case "WatchersClient.BeginGetFlowLogStatus":
+				res.resp, res.err = w.dispatchBeginGetFlowLogStatus(req)
+			case "WatchersClient.BeginGetNetworkConfigurationDiagnostic":
+				res.resp, res.err = w.dispatchBeginGetNetworkConfigurationDiagnostic(req)
+			case "WatchersClient.BeginGetNextHop":
+				res.resp, res.err = w.dispatchBeginGetNextHop(req)
+			case "WatchersClient.GetTopology":
+				res.resp, res.err = w.dispatchGetTopology(req)
+			case "WatchersClient.BeginGetTroubleshooting":
+				res.resp, res.err = w.dispatchBeginGetTroubleshooting(req)
+			case "WatchersClient.BeginGetTroubleshootingResult":
+				res.resp, res.err = w.dispatchBeginGetTroubleshootingResult(req)
+			case "WatchersClient.BeginGetVMSecurityRules":
+				res.resp, res.err = w.dispatchBeginGetVMSecurityRules(req)
+			case "WatchersClient.NewListPager":
+				res.resp, res.err = w.dispatchNewListPager(req)
+			case "WatchersClient.NewListAllPager":
+				res.resp, res.err = w.dispatchNewListAllPager(req)
+			case "WatchersClient.BeginListAvailableProviders":
+				res.resp, res.err = w.dispatchBeginListAvailableProviders(req)
+			case "WatchersClient.BeginSetFlowLogConfiguration":
+				res.resp, res.err = w.dispatchBeginSetFlowLogConfiguration(req)
+			case "WatchersClient.UpdateTags":
+				res.resp, res.err = w.dispatchUpdateTags(req)
+			case "WatchersClient.BeginVerifyIPFlow":
+				res.resp, res.err = w.dispatchBeginVerifyIPFlow(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (w *WatchersServerTransport) dispatchBeginCheckConnectivity(req *http.Request) (*http.Response, error) {
@@ -313,9 +332,9 @@ func (w *WatchersServerTransport) dispatchBeginDelete(req *http.Request) (*http.
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		w.beginDelete.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDelete) {
 		w.beginDelete.remove(req)
@@ -973,4 +992,10 @@ func (w *WatchersServerTransport) dispatchBeginVerifyIPFlow(req *http.Request) (
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to WatchersServerTransport
+var watchersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

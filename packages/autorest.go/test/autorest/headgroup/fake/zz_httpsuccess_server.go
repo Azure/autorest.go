@@ -56,21 +56,40 @@ func (h *HTTPSuccessServerTransport) Do(req *http.Request) (*http.Response, erro
 }
 
 func (h *HTTPSuccessServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "HTTPSuccessClient.Head200":
-		resp, err = h.dispatchHead200(req)
-	case "HTTPSuccessClient.Head204":
-		resp, err = h.dispatchHead204(req)
-	case "HTTPSuccessClient.Head404":
-		resp, err = h.dispatchHead404(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if httpSuccessServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = httpSuccessServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "HTTPSuccessClient.Head200":
+				res.resp, res.err = h.dispatchHead200(req)
+			case "HTTPSuccessClient.Head204":
+				res.resp, res.err = h.dispatchHead204(req)
+			case "HTTPSuccessClient.Head404":
+				res.resp, res.err = h.dispatchHead404(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (h *HTTPSuccessServerTransport) dispatchHead200(req *http.Request) (*http.Response, error) {
@@ -128,4 +147,10 @@ func (h *HTTPSuccessServerTransport) dispatchHead404(req *http.Request) (*http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to HTTPSuccessServerTransport
+var httpSuccessServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

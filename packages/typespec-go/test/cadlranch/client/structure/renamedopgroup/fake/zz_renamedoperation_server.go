@@ -82,21 +82,40 @@ func (r *RenamedOperationServerTransport) dispatchToClientFake(req *http.Request
 }
 
 func (r *RenamedOperationServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "RenamedOperationClient.RenamedFive":
-		resp, err = r.dispatchRenamedFive(req)
-	case "RenamedOperationClient.RenamedOne":
-		resp, err = r.dispatchRenamedOne(req)
-	case "RenamedOperationClient.RenamedThree":
-		resp, err = r.dispatchRenamedThree(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if renamedOperationServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = renamedOperationServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "RenamedOperationClient.RenamedFive":
+				res.resp, res.err = r.dispatchRenamedFive(req)
+			case "RenamedOperationClient.RenamedOne":
+				res.resp, res.err = r.dispatchRenamedOne(req)
+			case "RenamedOperationClient.RenamedThree":
+				res.resp, res.err = r.dispatchRenamedThree(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (r *RenamedOperationServerTransport) dispatchRenamedFive(req *http.Request) (*http.Response, error) {
@@ -154,4 +173,10 @@ func (r *RenamedOperationServerTransport) dispatchRenamedThree(req *http.Request
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to RenamedOperationServerTransport
+var renamedOperationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

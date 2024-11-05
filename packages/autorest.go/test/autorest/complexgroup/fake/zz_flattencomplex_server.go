@@ -48,17 +48,36 @@ func (f *FlattencomplexServerTransport) Do(req *http.Request) (*http.Response, e
 }
 
 func (f *FlattencomplexServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "FlattencomplexClient.GetValid":
-		resp, err = f.dispatchGetValid(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if flattencomplexServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = flattencomplexServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "FlattencomplexClient.GetValid":
+				res.resp, res.err = f.dispatchGetValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (f *FlattencomplexServerTransport) dispatchGetValid(req *http.Request) (*http.Response, error) {
@@ -78,4 +97,10 @@ func (f *FlattencomplexServerTransport) dispatchGetValid(req *http.Request) (*ht
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to FlattencomplexServerTransport
+var flattencomplexServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

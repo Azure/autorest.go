@@ -67,25 +67,44 @@ func (v *VirtualMachineImagesEdgeZoneServerTransport) Do(req *http.Request) (*ht
 }
 
 func (v *VirtualMachineImagesEdgeZoneServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualMachineImagesEdgeZoneClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualMachineImagesEdgeZoneClient.List":
-		resp, err = v.dispatchList(req)
-	case "VirtualMachineImagesEdgeZoneClient.ListOffers":
-		resp, err = v.dispatchListOffers(req)
-	case "VirtualMachineImagesEdgeZoneClient.ListPublishers":
-		resp, err = v.dispatchListPublishers(req)
-	case "VirtualMachineImagesEdgeZoneClient.ListSKUs":
-		resp, err = v.dispatchListSKUs(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if virtualMachineImagesEdgeZoneServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualMachineImagesEdgeZoneServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VirtualMachineImagesEdgeZoneClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualMachineImagesEdgeZoneClient.List":
+				res.resp, res.err = v.dispatchList(req)
+			case "VirtualMachineImagesEdgeZoneClient.ListOffers":
+				res.resp, res.err = v.dispatchListOffers(req)
+			case "VirtualMachineImagesEdgeZoneClient.ListPublishers":
+				res.resp, res.err = v.dispatchListPublishers(req)
+			case "VirtualMachineImagesEdgeZoneClient.ListSKUs":
+				res.resp, res.err = v.dispatchListSKUs(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualMachineImagesEdgeZoneServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -324,4 +343,10 @@ func (v *VirtualMachineImagesEdgeZoneServerTransport) dispatchListSKUs(req *http
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualMachineImagesEdgeZoneServerTransport
+var virtualMachineImagesEdgeZoneServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

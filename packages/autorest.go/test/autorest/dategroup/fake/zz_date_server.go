@@ -77,31 +77,50 @@ func (d *DateServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (d *DateServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DateClient.GetInvalidDate":
-		resp, err = d.dispatchGetInvalidDate(req)
-	case "DateClient.GetMaxDate":
-		resp, err = d.dispatchGetMaxDate(req)
-	case "DateClient.GetMinDate":
-		resp, err = d.dispatchGetMinDate(req)
-	case "DateClient.GetNull":
-		resp, err = d.dispatchGetNull(req)
-	case "DateClient.GetOverflowDate":
-		resp, err = d.dispatchGetOverflowDate(req)
-	case "DateClient.GetUnderflowDate":
-		resp, err = d.dispatchGetUnderflowDate(req)
-	case "DateClient.PutMaxDate":
-		resp, err = d.dispatchPutMaxDate(req)
-	case "DateClient.PutMinDate":
-		resp, err = d.dispatchPutMinDate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if dateServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = dateServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "DateClient.GetInvalidDate":
+				res.resp, res.err = d.dispatchGetInvalidDate(req)
+			case "DateClient.GetMaxDate":
+				res.resp, res.err = d.dispatchGetMaxDate(req)
+			case "DateClient.GetMinDate":
+				res.resp, res.err = d.dispatchGetMinDate(req)
+			case "DateClient.GetNull":
+				res.resp, res.err = d.dispatchGetNull(req)
+			case "DateClient.GetOverflowDate":
+				res.resp, res.err = d.dispatchGetOverflowDate(req)
+			case "DateClient.GetUnderflowDate":
+				res.resp, res.err = d.dispatchGetUnderflowDate(req)
+			case "DateClient.PutMaxDate":
+				res.resp, res.err = d.dispatchPutMaxDate(req)
+			case "DateClient.PutMinDate":
+				res.resp, res.err = d.dispatchPutMinDate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DateServerTransport) dispatchGetInvalidDate(req *http.Request) (*http.Response, error) {
@@ -262,4 +281,10 @@ func (d *DateServerTransport) dispatchPutMinDate(req *http.Request) (*http.Respo
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DateServerTransport
+var dateServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

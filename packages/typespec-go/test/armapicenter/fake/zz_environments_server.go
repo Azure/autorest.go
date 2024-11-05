@@ -70,25 +70,44 @@ func (e *EnvironmentsServerTransport) Do(req *http.Request) (*http.Response, err
 }
 
 func (e *EnvironmentsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "EnvironmentsClient.CreateOrUpdate":
-		resp, err = e.dispatchCreateOrUpdate(req)
-	case "EnvironmentsClient.Delete":
-		resp, err = e.dispatchDelete(req)
-	case "EnvironmentsClient.Get":
-		resp, err = e.dispatchGet(req)
-	case "EnvironmentsClient.Head":
-		resp, err = e.dispatchHead(req)
-	case "EnvironmentsClient.NewListPager":
-		resp, err = e.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if environmentsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = environmentsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "EnvironmentsClient.CreateOrUpdate":
+				res.resp, res.err = e.dispatchCreateOrUpdate(req)
+			case "EnvironmentsClient.Delete":
+				res.resp, res.err = e.dispatchDelete(req)
+			case "EnvironmentsClient.Get":
+				res.resp, res.err = e.dispatchGet(req)
+			case "EnvironmentsClient.Head":
+				res.resp, res.err = e.dispatchHead(req)
+			case "EnvironmentsClient.NewListPager":
+				res.resp, res.err = e.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *EnvironmentsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -320,4 +339,10 @@ func (e *EnvironmentsServerTransport) dispatchNewListPager(req *http.Request) (*
 		e.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to EnvironmentsServerTransport
+var environmentsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

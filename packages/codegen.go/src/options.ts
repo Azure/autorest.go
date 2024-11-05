@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { capitalize, comment } from '@azure-tools/codegen';
+import { capitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import * as go from '../../codemodel.go/src/index.js';
-import { commentLength, contentPreamble } from './helpers.js';
+import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 
 // Creates the content in options.go
@@ -16,7 +16,7 @@ export async function generateOptions(codeModel: go.CodeModel): Promise<string> 
   }
 
   const imports = new ImportManager();
-  let optionsText = contentPreamble(codeModel);
+  let optionsText = helpers.contentPreamble(codeModel);
   let content = '';
 
   for (const paramGroup of values(codeModel.paramGroups)) {
@@ -29,10 +29,7 @@ export async function generateOptions(codeModel: go.CodeModel): Promise<string> 
 }
 
 function emit(struct: go.StructType, imports: ImportManager): string {
-  let text = '';
-  if (struct.description) {
-    text += `${comment(struct.description, '// ', undefined, commentLength)}\n`;
-  }
+  let text = helpers.formatDocComment(struct.docs);
   text += `type ${struct.name} struct {\n`;
 
   if (struct.fields.length === 0) {
@@ -44,13 +41,13 @@ function emit(struct: go.StructType, imports: ImportManager): string {
 
     for (const field of values(struct.fields)) {
       imports.addImportForType(field.type);
-      if (field.description) {
+      if (field.docs.summary || field.docs.description) {
         if (!first) {
           // add an extra new-line between fields IFF the field
           // has a comment and it's not the very first one.
           text += '\n';
         }
-        text += `\t${comment(field.description, '// ', undefined, commentLength)}\n`;
+        text += helpers.formatDocComment(field.docs);
       }
 
       let typeName = go.getTypeDeclaration(field.type);

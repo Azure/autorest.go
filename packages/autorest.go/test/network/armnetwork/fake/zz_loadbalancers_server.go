@@ -46,7 +46,7 @@ type LoadBalancersServer struct {
 	BeginListInboundNatRulePortMappings func(ctx context.Context, groupName string, loadBalancerName string, backendPoolName string, parameters armnetwork.QueryInboundNatRulePortMappingRequest, options *armnetwork.LoadBalancersClientBeginListInboundNatRulePortMappingsOptions) (resp azfake.PollerResponder[armnetwork.LoadBalancersClientListInboundNatRulePortMappingsResponse], errResp azfake.ErrorResponder)
 
 	// BeginSwapPublicIPAddresses is the fake for method LoadBalancersClient.BeginSwapPublicIPAddresses
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginSwapPublicIPAddresses func(ctx context.Context, location string, parameters armnetwork.LoadBalancerVipSwapRequest, options *armnetwork.LoadBalancersClientBeginSwapPublicIPAddressesOptions) (resp azfake.PollerResponder[armnetwork.LoadBalancersClientSwapPublicIPAddressesResponse], errResp azfake.ErrorResponder)
 
 	// UpdateTags is the fake for method LoadBalancersClient.UpdateTags
@@ -93,31 +93,50 @@ func (l *LoadBalancersServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (l *LoadBalancersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "LoadBalancersClient.BeginCreateOrUpdate":
-		resp, err = l.dispatchBeginCreateOrUpdate(req)
-	case "LoadBalancersClient.BeginDelete":
-		resp, err = l.dispatchBeginDelete(req)
-	case "LoadBalancersClient.Get":
-		resp, err = l.dispatchGet(req)
-	case "LoadBalancersClient.NewListPager":
-		resp, err = l.dispatchNewListPager(req)
-	case "LoadBalancersClient.NewListAllPager":
-		resp, err = l.dispatchNewListAllPager(req)
-	case "LoadBalancersClient.BeginListInboundNatRulePortMappings":
-		resp, err = l.dispatchBeginListInboundNatRulePortMappings(req)
-	case "LoadBalancersClient.BeginSwapPublicIPAddresses":
-		resp, err = l.dispatchBeginSwapPublicIPAddresses(req)
-	case "LoadBalancersClient.UpdateTags":
-		resp, err = l.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if loadBalancersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = loadBalancersServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "LoadBalancersClient.BeginCreateOrUpdate":
+				res.resp, res.err = l.dispatchBeginCreateOrUpdate(req)
+			case "LoadBalancersClient.BeginDelete":
+				res.resp, res.err = l.dispatchBeginDelete(req)
+			case "LoadBalancersClient.Get":
+				res.resp, res.err = l.dispatchGet(req)
+			case "LoadBalancersClient.NewListPager":
+				res.resp, res.err = l.dispatchNewListPager(req)
+			case "LoadBalancersClient.NewListAllPager":
+				res.resp, res.err = l.dispatchNewListAllPager(req)
+			case "LoadBalancersClient.BeginListInboundNatRulePortMappings":
+				res.resp, res.err = l.dispatchBeginListInboundNatRulePortMappings(req)
+			case "LoadBalancersClient.BeginSwapPublicIPAddresses":
+				res.resp, res.err = l.dispatchBeginSwapPublicIPAddresses(req)
+			case "LoadBalancersClient.UpdateTags":
+				res.resp, res.err = l.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (l *LoadBalancersServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -412,9 +431,9 @@ func (l *LoadBalancersServerTransport) dispatchBeginSwapPublicIPAddresses(req *h
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		l.beginSwapPublicIPAddresses.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginSwapPublicIPAddresses) {
 		l.beginSwapPublicIPAddresses.remove(req)
@@ -458,4 +477,10 @@ func (l *LoadBalancersServerTransport) dispatchUpdateTags(req *http.Request) (*h
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to LoadBalancersServerTransport
+var loadBalancersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

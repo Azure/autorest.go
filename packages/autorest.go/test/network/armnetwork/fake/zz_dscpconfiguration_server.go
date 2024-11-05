@@ -77,25 +77,44 @@ func (d *DscpConfigurationServerTransport) Do(req *http.Request) (*http.Response
 }
 
 func (d *DscpConfigurationServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DscpConfigurationClient.BeginCreateOrUpdate":
-		resp, err = d.dispatchBeginCreateOrUpdate(req)
-	case "DscpConfigurationClient.BeginDelete":
-		resp, err = d.dispatchBeginDelete(req)
-	case "DscpConfigurationClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DscpConfigurationClient.NewListPager":
-		resp, err = d.dispatchNewListPager(req)
-	case "DscpConfigurationClient.NewListAllPager":
-		resp, err = d.dispatchNewListAllPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if dscpConfigurationServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = dscpConfigurationServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "DscpConfigurationClient.BeginCreateOrUpdate":
+				res.resp, res.err = d.dispatchBeginCreateOrUpdate(req)
+			case "DscpConfigurationClient.BeginDelete":
+				res.resp, res.err = d.dispatchBeginDelete(req)
+			case "DscpConfigurationClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DscpConfigurationClient.NewListPager":
+				res.resp, res.err = d.dispatchNewListPager(req)
+			case "DscpConfigurationClient.NewListAllPager":
+				res.resp, res.err = d.dispatchNewListAllPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DscpConfigurationServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -291,4 +310,10 @@ func (d *DscpConfigurationServerTransport) dispatchNewListAllPager(req *http.Req
 		d.newListAllPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DscpConfigurationServerTransport
+var dscpConfigurationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -60,23 +60,42 @@ func (b *BytesHeaderServerTransport) Do(req *http.Request) (*http.Response, erro
 }
 
 func (b *BytesHeaderServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "BytesHeaderClient.Base64":
-		resp, err = b.dispatchBase64(req)
-	case "BytesHeaderClient.Base64URL":
-		resp, err = b.dispatchBase64URL(req)
-	case "BytesHeaderClient.Base64URLArray":
-		resp, err = b.dispatchBase64URLArray(req)
-	case "BytesHeaderClient.Default":
-		resp, err = b.dispatchDefault(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if bytesHeaderServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = bytesHeaderServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "BytesHeaderClient.Base64":
+				res.resp, res.err = b.dispatchBase64(req)
+			case "BytesHeaderClient.Base64URL":
+				res.resp, res.err = b.dispatchBase64URL(req)
+			case "BytesHeaderClient.Base64URLArray":
+				res.resp, res.err = b.dispatchBase64URLArray(req)
+			case "BytesHeaderClient.Default":
+				res.resp, res.err = b.dispatchDefault(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (b *BytesHeaderServerTransport) dispatchBase64(req *http.Request) (*http.Response, error) {
@@ -174,4 +193,10 @@ func (b *BytesHeaderServerTransport) dispatchDefault(req *http.Request) (*http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to BytesHeaderServerTransport
+var bytesHeaderServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

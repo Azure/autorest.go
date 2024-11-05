@@ -42,7 +42,7 @@ type CommunityTrainingsServer struct {
 
 	// BeginUpdate is the fake for method CommunityTrainingsClient.BeginUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginUpdate func(ctx context.Context, resourceGroupName string, communityTrainingName string, properties armcommunitymanagement.CommunityTraining, options *armcommunitymanagement.CommunityTrainingsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcommunitymanagement.CommunityTrainingsClientUpdateResponse], errResp azfake.ErrorResponder)
+	BeginUpdate func(ctx context.Context, resourceGroupName string, communityTrainingName string, properties armcommunitymanagement.CommunityTrainingUpdate, options *armcommunitymanagement.CommunityTrainingsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcommunitymanagement.CommunityTrainingsClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewCommunityTrainingsServerTransport creates a new instance of CommunityTrainingsServerTransport with the provided implementation.
@@ -82,27 +82,46 @@ func (c *CommunityTrainingsServerTransport) Do(req *http.Request) (*http.Respons
 }
 
 func (c *CommunityTrainingsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "CommunityTrainingsClient.BeginCreate":
-		resp, err = c.dispatchBeginCreate(req)
-	case "CommunityTrainingsClient.BeginDelete":
-		resp, err = c.dispatchBeginDelete(req)
-	case "CommunityTrainingsClient.Get":
-		resp, err = c.dispatchGet(req)
-	case "CommunityTrainingsClient.NewListByResourceGroupPager":
-		resp, err = c.dispatchNewListByResourceGroupPager(req)
-	case "CommunityTrainingsClient.NewListBySubscriptionPager":
-		resp, err = c.dispatchNewListBySubscriptionPager(req)
-	case "CommunityTrainingsClient.BeginUpdate":
-		resp, err = c.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if communityTrainingsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = communityTrainingsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "CommunityTrainingsClient.BeginCreate":
+				res.resp, res.err = c.dispatchBeginCreate(req)
+			case "CommunityTrainingsClient.BeginDelete":
+				res.resp, res.err = c.dispatchBeginDelete(req)
+			case "CommunityTrainingsClient.Get":
+				res.resp, res.err = c.dispatchGet(req)
+			case "CommunityTrainingsClient.NewListByResourceGroupPager":
+				res.resp, res.err = c.dispatchNewListByResourceGroupPager(req)
+			case "CommunityTrainingsClient.NewListBySubscriptionPager":
+				res.resp, res.err = c.dispatchNewListBySubscriptionPager(req)
+			case "CommunityTrainingsClient.BeginUpdate":
+				res.resp, res.err = c.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *CommunityTrainingsServerTransport) dispatchBeginCreate(req *http.Request) (*http.Response, error) {
@@ -312,7 +331,7 @@ func (c *CommunityTrainingsServerTransport) dispatchBeginUpdate(req *http.Reques
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		body, err := server.UnmarshalRequestAsJSON[armcommunitymanagement.CommunityTraining](req)
+		body, err := server.UnmarshalRequestAsJSON[armcommunitymanagement.CommunityTrainingUpdate](req)
 		if err != nil {
 			return nil, err
 		}
@@ -346,4 +365,10 @@ func (c *CommunityTrainingsServerTransport) dispatchBeginUpdate(req *http.Reques
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to CommunityTrainingsServerTransport
+var communityTrainingsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

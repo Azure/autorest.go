@@ -86,7 +86,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
               clientFactoryParams.push({ parameter: clientParam, value: generateFakeExample(clientParam.type, clientParam.name) });
             }
           }
-          exampleText += `\tclientFactory, err := ${codeModel.packageName}.NewClientFactory(${clientFactoryParams.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}, cred, nil)\n`;
+          exampleText += `\tclientFactory, err := ${codeModel.packageName}.NewClientFactory(${clientFactoryParams.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${clientFactoryParams.length > 0 ? ', ' : ''}cred, nil)\n`;
           exampleText += `\tif err != nil {\n`;
           exampleText += `\t\tlog.Fatalf("failed to create client: %v", err)\n`;
           exampleText += `\t}\n`;
@@ -204,6 +204,8 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
       exampleText = getTimeValue(example.type, example.value, imports);
     } else if (go.isBytesType(example.type)) {
       exampleText = `[]byte("${escapeString(example.value)}")`
+    } else if (go.isLiteralValue(example.type) && go.isConstantType(example.type.type)) {
+      exampleText = getConstantValue(codeModel, example.type.type, example.type.literal.value);
     }
     return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
   } else if (example.kind === 'number') {

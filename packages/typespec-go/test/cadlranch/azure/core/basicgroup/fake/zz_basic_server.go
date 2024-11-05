@@ -37,6 +37,10 @@ type BasicServer struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	Export func(ctx context.Context, id int32, formatParam string, options *basicgroup.BasicClientExportOptions) (resp azfake.Responder[basicgroup.BasicClientExportResponse], errResp azfake.ErrorResponder)
 
+	// ExportAllUsers is the fake for method BasicClient.ExportAllUsers
+	// HTTP status codes to indicate success: http.StatusOK
+	ExportAllUsers func(ctx context.Context, formatParam string, options *basicgroup.BasicClientExportAllUsersOptions) (resp azfake.Responder[basicgroup.BasicClientExportAllUsersResponse], errResp azfake.ErrorResponder)
+
 	// Get is the fake for method BasicClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
 	Get func(ctx context.Context, id int32, options *basicgroup.BasicClientGetOptions) (resp azfake.Responder[basicgroup.BasicClientGetResponse], errResp azfake.ErrorResponder)
@@ -75,27 +79,48 @@ func (b *BasicServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (b *BasicServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "BasicClient.CreateOrReplace":
-		resp, err = b.dispatchCreateOrReplace(req)
-	case "BasicClient.CreateOrUpdate":
-		resp, err = b.dispatchCreateOrUpdate(req)
-	case "BasicClient.Delete":
-		resp, err = b.dispatchDelete(req)
-	case "BasicClient.Export":
-		resp, err = b.dispatchExport(req)
-	case "BasicClient.Get":
-		resp, err = b.dispatchGet(req)
-	case "BasicClient.NewListPager":
-		resp, err = b.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if basicServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = basicServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "BasicClient.CreateOrReplace":
+				res.resp, res.err = b.dispatchCreateOrReplace(req)
+			case "BasicClient.CreateOrUpdate":
+				res.resp, res.err = b.dispatchCreateOrUpdate(req)
+			case "BasicClient.Delete":
+				res.resp, res.err = b.dispatchDelete(req)
+			case "BasicClient.Export":
+				res.resp, res.err = b.dispatchExport(req)
+			case "BasicClient.ExportAllUsers":
+				res.resp, res.err = b.dispatchExportAllUsers(req)
+			case "BasicClient.Get":
+				res.resp, res.err = b.dispatchGet(req)
+			case "BasicClient.NewListPager":
+				res.resp, res.err = b.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (b *BasicServerTransport) dispatchCreateOrReplace(req *http.Request) (*http.Response, error) {
@@ -267,6 +292,30 @@ func (b *BasicServerTransport) dispatchExport(req *http.Request) (*http.Response
 	return resp, nil
 }
 
+func (b *BasicServerTransport) dispatchExportAllUsers(req *http.Request) (*http.Response, error) {
+	if b.srv.ExportAllUsers == nil {
+		return nil, &nonRetriableError{errors.New("fake for method ExportAllUsers not implemented")}
+	}
+	qp := req.URL.Query()
+	formatParamParam, err := url.QueryUnescape(qp.Get("format"))
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := b.srv.ExportAllUsers(req.Context(), formatParamParam, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).UserList, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (b *BasicServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
 	if b.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
@@ -418,4 +467,10 @@ func (b *BasicServerTransport) dispatchNewListPager(req *http.Request) (*http.Re
 		b.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to BasicServerTransport
+var basicServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

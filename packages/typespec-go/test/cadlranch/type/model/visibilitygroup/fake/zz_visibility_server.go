@@ -71,29 +71,48 @@ func (v *VisibilityServerTransport) Do(req *http.Request) (*http.Response, error
 }
 
 func (v *VisibilityServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VisibilityClient.DeleteModel":
-		resp, err = v.dispatchDeleteModel(req)
-	case "VisibilityClient.GetModel":
-		resp, err = v.dispatchGetModel(req)
-	case "VisibilityClient.HeadModel":
-		resp, err = v.dispatchHeadModel(req)
-	case "VisibilityClient.PatchModel":
-		resp, err = v.dispatchPatchModel(req)
-	case "VisibilityClient.PostModel":
-		resp, err = v.dispatchPostModel(req)
-	case "VisibilityClient.PutModel":
-		resp, err = v.dispatchPutModel(req)
-	case "VisibilityClient.PutReadOnlyModel":
-		resp, err = v.dispatchPutReadOnlyModel(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if visibilityServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = visibilityServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VisibilityClient.DeleteModel":
+				res.resp, res.err = v.dispatchDeleteModel(req)
+			case "VisibilityClient.GetModel":
+				res.resp, res.err = v.dispatchGetModel(req)
+			case "VisibilityClient.HeadModel":
+				res.resp, res.err = v.dispatchHeadModel(req)
+			case "VisibilityClient.PatchModel":
+				res.resp, res.err = v.dispatchPatchModel(req)
+			case "VisibilityClient.PostModel":
+				res.resp, res.err = v.dispatchPostModel(req)
+			case "VisibilityClient.PutModel":
+				res.resp, res.err = v.dispatchPutModel(req)
+			case "VisibilityClient.PutReadOnlyModel":
+				res.resp, res.err = v.dispatchPutReadOnlyModel(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VisibilityServerTransport) dispatchDeleteModel(req *http.Request) (*http.Response, error) {
@@ -255,4 +274,10 @@ func (v *VisibilityServerTransport) dispatchPutReadOnlyModel(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VisibilityServerTransport
+var visibilityServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

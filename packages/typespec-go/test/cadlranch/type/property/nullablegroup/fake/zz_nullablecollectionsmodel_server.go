@@ -59,23 +59,42 @@ func (n *NullableCollectionsModelServerTransport) Do(req *http.Request) (*http.R
 }
 
 func (n *NullableCollectionsModelServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "NullableCollectionsModelClient.GetNonNull":
-		resp, err = n.dispatchGetNonNull(req)
-	case "NullableCollectionsModelClient.GetNull":
-		resp, err = n.dispatchGetNull(req)
-	case "NullableCollectionsModelClient.PatchNonNull":
-		resp, err = n.dispatchPatchNonNull(req)
-	case "NullableCollectionsModelClient.PatchNull":
-		resp, err = n.dispatchPatchNull(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if nullableCollectionsModelServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = nullableCollectionsModelServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "NullableCollectionsModelClient.GetNonNull":
+				res.resp, res.err = n.dispatchGetNonNull(req)
+			case "NullableCollectionsModelClient.GetNull":
+				res.resp, res.err = n.dispatchGetNull(req)
+			case "NullableCollectionsModelClient.PatchNonNull":
+				res.resp, res.err = n.dispatchPatchNonNull(req)
+			case "NullableCollectionsModelClient.PatchNull":
+				res.resp, res.err = n.dispatchPatchNull(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (n *NullableCollectionsModelServerTransport) dispatchGetNonNull(req *http.Request) (*http.Response, error) {
@@ -160,4 +179,10 @@ func (n *NullableCollectionsModelServerTransport) dispatchPatchNull(req *http.Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NullableCollectionsModelServerTransport
+var nullableCollectionsModelServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

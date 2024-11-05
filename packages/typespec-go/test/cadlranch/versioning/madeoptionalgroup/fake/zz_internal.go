@@ -4,7 +4,15 @@
 
 package fake
 
-import "reflect"
+import (
+	"net/http"
+	"reflect"
+)
+
+type result struct {
+	resp *http.Response
+	err  error
+}
 
 type nonRetriableError struct {
 	error

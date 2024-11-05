@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: 2022-12-01/LoadTests_CreateOrUpdate.json
+// Generated from example definition: 2023-12-01-preview/LoadTests_CreateOrUpdate.json
 func ExampleLoadTestsClient_BeginCreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -29,7 +29,7 @@ func ExampleLoadTestsClient_BeginCreateOrUpdate() {
 			"Team": to.Ptr("Dev Exp"),
 		},
 		Identity: &armloadtestservice.ManagedServiceIdentity{
-			Type: to.Ptr(armloadtestservice.ManagedServiceIdentityTypeSystemAndUserAssigned),
+			Type: to.Ptr(armloadtestservice.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
 			UserAssignedIdentities: map[string]*armloadtestservice.UserAssignedIdentity{
 				"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1": &armloadtestservice.UserAssignedIdentity{},
 			},
@@ -59,7 +59,7 @@ func ExampleLoadTestsClient_BeginCreateOrUpdate() {
 	// 	LoadTestResource: &armloadtestservice.LoadTestResource{
 	// 		Location: to.Ptr("westus"),
 	// 		Identity: &armloadtestservice.ManagedServiceIdentity{
-	// 			Type: to.Ptr(armloadtestservice.ManagedServiceIdentityTypeSystemAndUserAssigned),
+	// 			Type: to.Ptr(armloadtestservice.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
 	// 			PrincipalID: to.Ptr("12345678-1234-1234-1234-123456789012"),
 	// 			TenantID: to.Ptr("12345678-1234-1234-4321-123456789012"),
 	// 			UserAssignedIdentities: map[string]*armloadtestservice.UserAssignedIdentity{
@@ -99,7 +99,7 @@ func ExampleLoadTestsClient_BeginCreateOrUpdate() {
 	// }
 }
 
-// Generated from example definition: 2022-12-01/LoadTests_Delete.json
+// Generated from example definition: 2023-12-01-preview/LoadTests_Delete.json
 func ExampleLoadTestsClient_BeginDelete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -120,7 +120,7 @@ func ExampleLoadTestsClient_BeginDelete() {
 	}
 }
 
-// Generated from example definition: 2022-12-01/LoadTests_Get.json
+// Generated from example definition: 2023-12-01-preview/LoadTests_Get.json
 func ExampleLoadTestsClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -164,7 +164,7 @@ func ExampleLoadTestsClient_Get() {
 	// }
 }
 
-// Generated from example definition: 2022-12-01/LoadTests_ListByResourceGroup.json
+// Generated from example definition: 2023-12-01-preview/LoadTests_ListByResourceGroup.json
 func ExampleLoadTestsClient_NewListByResourceGroupPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -217,7 +217,7 @@ func ExampleLoadTestsClient_NewListByResourceGroupPager() {
 	}
 }
 
-// Generated from example definition: 2022-12-01/LoadTests_ListBySubscription.json
+// Generated from example definition: 2023-12-01-preview/LoadTests_ListBySubscription.json
 func ExampleLoadTestsClient_NewListBySubscriptionPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -270,7 +270,7 @@ func ExampleLoadTestsClient_NewListBySubscriptionPager() {
 	}
 }
 
-// Generated from example definition: 2022-12-01/LoadTests_ListOutboundNetworkDependenciesEndpoints.json
+// Generated from example definition: 2023-12-01-preview/LoadTests_ListOutboundNetworkDependenciesEndpoints.json
 func ExampleLoadTestsClient_NewOutboundNetworkDependenciesEndpointsPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -293,7 +293,7 @@ func ExampleLoadTestsClient_NewOutboundNetworkDependenciesEndpointsPager() {
 		}
 		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page = armloadtestservice.LoadTestsClientOutboundNetworkDependenciesEndpointsResponse{
-		// 	OutboundEnvironmentEndpointCollection: armloadtestservice.OutboundEnvironmentEndpointCollection{
+		// 	PagedOutboundEnvironmentEndpoint: armloadtestservice.PagedOutboundEnvironmentEndpoint{
 		// 		Value: []*armloadtestservice.OutboundEnvironmentEndpoint{
 		// 			{
 		// 				Category: to.Ptr("Azure Batch"),
@@ -393,7 +393,7 @@ func ExampleLoadTestsClient_NewOutboundNetworkDependenciesEndpointsPager() {
 	}
 }
 
-// Generated from example definition: 2022-12-01/LoadTests_Update.json
+// Generated from example definition: 2023-12-01-preview/LoadTests_Update.json
 func ExampleLoadTestsClient_BeginUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -404,18 +404,18 @@ func ExampleLoadTestsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewLoadTestsClient().BeginUpdate(ctx, "dummyrg", "myLoadTest", armloadtestservice.LoadTestResource{
+	poller, err := clientFactory.NewLoadTestsClient().BeginUpdate(ctx, "dummyrg", "myLoadTest", armloadtestservice.LoadTestResourceUpdate{
 		Tags: map[string]*string{
 			"Team":     to.Ptr("Dev Exp"),
 			"Division": to.Ptr("LT"),
 		},
 		Identity: &armloadtestservice.ManagedServiceIdentity{
-			Type: to.Ptr(armloadtestservice.ManagedServiceIdentityTypeSystemAndUserAssigned),
+			Type: to.Ptr(armloadtestservice.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
 			UserAssignedIdentities: map[string]*armloadtestservice.UserAssignedIdentity{
 				"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1": &armloadtestservice.UserAssignedIdentity{},
 			},
 		},
-		Properties: &armloadtestservice.LoadTestProperties{
+		Properties: &armloadtestservice.LoadTestResourceUpdateProperties{
 			Description: to.Ptr("This is new load test resource"),
 			Encryption: &armloadtestservice.EncryptionProperties{
 				Identity: &armloadtestservice.EncryptionPropertiesIdentity{
@@ -437,46 +437,5 @@ func ExampleLoadTestsClient_BeginUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armloadtestservice.LoadTestsClientUpdateResponse{
-	// 	LoadTestResource: &armloadtestservice.LoadTestResource{
-	// 		Location: to.Ptr("westus"),
-	// 		Identity: &armloadtestservice.ManagedServiceIdentity{
-	// 			Type: to.Ptr(armloadtestservice.ManagedServiceIdentityTypeSystemAndUserAssigned),
-	// 			PrincipalID: to.Ptr("12345678-1234-1234-1234-123456789012"),
-	// 			TenantID: to.Ptr("12345678-1234-1234-4321-123456789012"),
-	// 			UserAssignedIdentities: map[string]*armloadtestservice.UserAssignedIdentity{
-	// 				"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1": &armloadtestservice.UserAssignedIdentity{
-	// 					PrincipalID: to.Ptr("12345678-1234-4321-1234-123456789012"),
-	// 					ClientID: to.Ptr("12345678-4321-1234-1234-123456789012"),
-	// 				},
-	// 			},
-	// 		},
-	// 		Properties: &armloadtestservice.LoadTestProperties{
-	// 			Description: to.Ptr("This is new load test resource"),
-	// 			DataPlaneURI: to.Ptr("https://myLoadTest.00000000-0000-0000-0000-000000000000.cnt-dp.domain.com"),
-	// 			ProvisioningState: to.Ptr(armloadtestservice.ResourceStateSucceeded),
-	// 			Encryption: &armloadtestservice.EncryptionProperties{
-	// 				Identity: &armloadtestservice.EncryptionPropertiesIdentity{
-	// 					Type: to.Ptr(armloadtestservice.TypeSystemAssigned),
-	// 					ResourceID: nil,
-	// 				},
-	// 				KeyURL: to.Ptr("https://dummy.vault.azure.net/keys/dummykey1"),
-	// 			},
-	// 		},
-	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.LoadTestService/loadTests/myLoadTest"),
-	// 		Name: to.Ptr("myLoadTest"),
-	// 		Type: to.Ptr("Microsoft.LoadTestService/loadTests"),
-	// 		Tags: map[string]*string{
-	// 			"Team": to.Ptr("Dev Exp"),
-	// 			"Division": to.Ptr("LT"),
-	// 		},
-	// 		SystemData: &armloadtestservice.SystemData{
-	// 			CreatedBy: to.Ptr("userId1001"),
-	// 			CreatedByType: to.Ptr(armloadtestservice.CreatedByTypeUser),
-	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-09-28T12:32:33Z"); return t}()),
-	// 			LastModifiedBy: to.Ptr("userId1001"),
-	// 			LastModifiedByType: to.Ptr(armloadtestservice.CreatedByTypeUser),
-	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-09-28T12:32:33Z"); return t}()),
-	// 		},
-	// 	},
 	// }
 }

@@ -71,23 +71,42 @@ func (v *VirtualRouterPeeringsServerTransport) Do(req *http.Request) (*http.Resp
 }
 
 func (v *VirtualRouterPeeringsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualRouterPeeringsClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualRouterPeeringsClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualRouterPeeringsClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualRouterPeeringsClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if virtualRouterPeeringsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualRouterPeeringsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VirtualRouterPeeringsClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualRouterPeeringsClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualRouterPeeringsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualRouterPeeringsClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualRouterPeeringsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -266,4 +285,10 @@ func (v *VirtualRouterPeeringsServerTransport) dispatchNewListPager(req *http.Re
 		v.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualRouterPeeringsServerTransport
+var virtualRouterPeeringsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

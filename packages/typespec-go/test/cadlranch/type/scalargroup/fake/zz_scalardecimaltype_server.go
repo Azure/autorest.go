@@ -57,21 +57,40 @@ func (s *ScalarDecimalTypeServerTransport) Do(req *http.Request) (*http.Response
 }
 
 func (s *ScalarDecimalTypeServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ScalarDecimalTypeClient.RequestBody":
-		resp, err = s.dispatchRequestBody(req)
-	case "ScalarDecimalTypeClient.RequestParameter":
-		resp, err = s.dispatchRequestParameter(req)
-	case "ScalarDecimalTypeClient.ResponseBody":
-		resp, err = s.dispatchResponseBody(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if scalarDecimalTypeServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = scalarDecimalTypeServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ScalarDecimalTypeClient.RequestBody":
+				res.resp, res.err = s.dispatchRequestBody(req)
+			case "ScalarDecimalTypeClient.RequestParameter":
+				res.resp, res.err = s.dispatchRequestParameter(req)
+			case "ScalarDecimalTypeClient.ResponseBody":
+				res.resp, res.err = s.dispatchResponseBody(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ScalarDecimalTypeServerTransport) dispatchRequestBody(req *http.Request) (*http.Response, error) {
@@ -142,4 +161,10 @@ func (s *ScalarDecimalTypeServerTransport) dispatchResponseBody(req *http.Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ScalarDecimalTypeServerTransport
+var scalarDecimalTypeServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

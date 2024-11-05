@@ -70,25 +70,44 @@ func (m *MetadataSchemasServerTransport) Do(req *http.Request) (*http.Response, 
 }
 
 func (m *MetadataSchemasServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "MetadataSchemasClient.CreateOrUpdate":
-		resp, err = m.dispatchCreateOrUpdate(req)
-	case "MetadataSchemasClient.Delete":
-		resp, err = m.dispatchDelete(req)
-	case "MetadataSchemasClient.Get":
-		resp, err = m.dispatchGet(req)
-	case "MetadataSchemasClient.Head":
-		resp, err = m.dispatchHead(req)
-	case "MetadataSchemasClient.NewListPager":
-		resp, err = m.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if metadataSchemasServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = metadataSchemasServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "MetadataSchemasClient.CreateOrUpdate":
+				res.resp, res.err = m.dispatchCreateOrUpdate(req)
+			case "MetadataSchemasClient.Delete":
+				res.resp, res.err = m.dispatchDelete(req)
+			case "MetadataSchemasClient.Get":
+				res.resp, res.err = m.dispatchGet(req)
+			case "MetadataSchemasClient.Head":
+				res.resp, res.err = m.dispatchHead(req)
+			case "MetadataSchemasClient.NewListPager":
+				res.resp, res.err = m.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (m *MetadataSchemasServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -300,4 +319,10 @@ func (m *MetadataSchemasServerTransport) dispatchNewListPager(req *http.Request)
 		m.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to MetadataSchemasServerTransport
+var metadataSchemasServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

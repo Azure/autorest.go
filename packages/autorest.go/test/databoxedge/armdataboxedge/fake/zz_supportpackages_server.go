@@ -21,7 +21,7 @@ import (
 // SupportPackagesServer is a fake server for instances of the armdataboxedge.SupportPackagesClient type.
 type SupportPackagesServer struct {
 	// BeginTriggerSupportPackage is the fake for method SupportPackagesClient.BeginTriggerSupportPackage
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginTriggerSupportPackage func(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest armdataboxedge.TriggerSupportPackageRequest, options *armdataboxedge.SupportPackagesClientBeginTriggerSupportPackageOptions) (resp azfake.PollerResponder[armdataboxedge.SupportPackagesClientTriggerSupportPackageResponse], errResp azfake.ErrorResponder)
 }
 
@@ -54,17 +54,36 @@ func (s *SupportPackagesServerTransport) Do(req *http.Request) (*http.Response, 
 }
 
 func (s *SupportPackagesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "SupportPackagesClient.BeginTriggerSupportPackage":
-		resp, err = s.dispatchBeginTriggerSupportPackage(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if supportPackagesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = supportPackagesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "SupportPackagesClient.BeginTriggerSupportPackage":
+				res.resp, res.err = s.dispatchBeginTriggerSupportPackage(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SupportPackagesServerTransport) dispatchBeginTriggerSupportPackage(req *http.Request) (*http.Response, error) {
@@ -104,13 +123,19 @@ func (s *SupportPackagesServerTransport) dispatchBeginTriggerSupportPackage(req 
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		s.beginTriggerSupportPackage.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginTriggerSupportPackage) {
 		s.beginTriggerSupportPackage.remove(req)
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SupportPackagesServerTransport
+var supportPackagesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

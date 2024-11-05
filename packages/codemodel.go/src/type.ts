@@ -3,12 +3,21 @@
 *  Licensed under the MIT License. See License.txt in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
+// Docs contains the values used in doc comment generation.
+export interface Docs {
+  // the high level summary
+  summary?: string;
+
+  // detailed description
+  description?: string;
+}
+
 // Struct describes a vanilla struct definition (pretty much exclusively used for parameter groups/options bag types)
 // UDTs that are sent/received are modeled as ModelType.
 export interface StructType {
   name: string;
 
-  description?: string;
+  docs: Docs;
 
   // there are only a few corner-cases where a struct has no fields
   fields: Array<StructField>;
@@ -68,7 +77,7 @@ export type PossibleType = BytesType | ConstantType | InterfaceType | LiteralVal
 export interface StructField {
   name: string;
 
-  description?: string;
+  docs: Docs;
 
   type: PossibleType;
 
@@ -104,7 +113,7 @@ export type ConstantTypeTypes = 'bool' | 'float32' | 'float64' | 'int32' | 'int6
 export interface ConstantType {
   name: string;
 
-  description?: string;
+  docs: Docs;
 
   type: ConstantTypeTypes;
 
@@ -119,7 +128,7 @@ export type ConstantValueValueTypes = boolean | number | string;
 export interface ConstantValue {
   name: string;
 
-  description?: string;
+  docs: Docs;
 
   type: ConstantType;
 
@@ -192,7 +201,7 @@ export interface InterfaceType {
   // Name is the name of the interface (e.g. FishClassification)
   name: string;
 
-  description?: string;
+  docs: Docs;
 
   // contains possible concrete type instances (e.g. Flounder, Carp)
   possibleTypes: Array<PolymorphicType>;
@@ -330,6 +339,7 @@ export class StructField implements StructField {
     this.name = name;
     this.type = type;
     this.byValue = byValue;
+    this.docs = {};
   }
 }
 
@@ -337,6 +347,7 @@ export class StructType implements StructType {
   constructor(name: string) {
     this.fields = new Array<StructField>();
     this.name = name;
+    this.docs = {};
   }
 }
 
@@ -349,6 +360,7 @@ export class ConstantType implements ConstantType {
     this.type = type;
     this.values = new Array<ConstantValue>();
     this.valuesFuncName = valuesFuncName;
+    this.docs = {};
   }
 }
 
@@ -357,6 +369,7 @@ export class ConstantValue implements ConstantValue {
     this.name = name;
     this.type = type;
     this.value = value;
+    this.docs = {};
   }
 }
 
@@ -418,7 +431,7 @@ export class InterfaceType implements InterfaceType {
     this.name = name;
     this.discriminatorField = discriminatorField;
     this.possibleTypes = new Array<PolymorphicType>();
-    //this.rootType = rootType;
+    this.docs = {};
   }
 }
 

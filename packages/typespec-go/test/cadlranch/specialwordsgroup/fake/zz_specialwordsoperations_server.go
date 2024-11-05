@@ -175,81 +175,100 @@ func (s *SpecialWordsOperationsServerTransport) Do(req *http.Request) (*http.Res
 }
 
 func (s *SpecialWordsOperationsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "SpecialWordsOperationsClient.And":
-		resp, err = s.dispatchAnd(req)
-	case "SpecialWordsOperationsClient.As":
-		resp, err = s.dispatchAs(req)
-	case "SpecialWordsOperationsClient.Assert":
-		resp, err = s.dispatchAssert(req)
-	case "SpecialWordsOperationsClient.Async":
-		resp, err = s.dispatchAsync(req)
-	case "SpecialWordsOperationsClient.Await":
-		resp, err = s.dispatchAwait(req)
-	case "SpecialWordsOperationsClient.Break":
-		resp, err = s.dispatchBreak(req)
-	case "SpecialWordsOperationsClient.Class":
-		resp, err = s.dispatchClass(req)
-	case "SpecialWordsOperationsClient.Constructor":
-		resp, err = s.dispatchConstructor(req)
-	case "SpecialWordsOperationsClient.Continue":
-		resp, err = s.dispatchContinue(req)
-	case "SpecialWordsOperationsClient.Def":
-		resp, err = s.dispatchDef(req)
-	case "SpecialWordsOperationsClient.Del":
-		resp, err = s.dispatchDel(req)
-	case "SpecialWordsOperationsClient.Elif":
-		resp, err = s.dispatchElif(req)
-	case "SpecialWordsOperationsClient.Else":
-		resp, err = s.dispatchElse(req)
-	case "SpecialWordsOperationsClient.Except":
-		resp, err = s.dispatchExcept(req)
-	case "SpecialWordsOperationsClient.Exec":
-		resp, err = s.dispatchExec(req)
-	case "SpecialWordsOperationsClient.Finally":
-		resp, err = s.dispatchFinally(req)
-	case "SpecialWordsOperationsClient.For":
-		resp, err = s.dispatchFor(req)
-	case "SpecialWordsOperationsClient.From":
-		resp, err = s.dispatchFrom(req)
-	case "SpecialWordsOperationsClient.Global":
-		resp, err = s.dispatchGlobal(req)
-	case "SpecialWordsOperationsClient.If":
-		resp, err = s.dispatchIf(req)
-	case "SpecialWordsOperationsClient.Import":
-		resp, err = s.dispatchImport(req)
-	case "SpecialWordsOperationsClient.In":
-		resp, err = s.dispatchIn(req)
-	case "SpecialWordsOperationsClient.Is":
-		resp, err = s.dispatchIs(req)
-	case "SpecialWordsOperationsClient.Lambda":
-		resp, err = s.dispatchLambda(req)
-	case "SpecialWordsOperationsClient.Not":
-		resp, err = s.dispatchNot(req)
-	case "SpecialWordsOperationsClient.Or":
-		resp, err = s.dispatchOr(req)
-	case "SpecialWordsOperationsClient.Pass":
-		resp, err = s.dispatchPass(req)
-	case "SpecialWordsOperationsClient.Raise":
-		resp, err = s.dispatchRaise(req)
-	case "SpecialWordsOperationsClient.Return":
-		resp, err = s.dispatchReturn(req)
-	case "SpecialWordsOperationsClient.Try":
-		resp, err = s.dispatchTry(req)
-	case "SpecialWordsOperationsClient.While":
-		resp, err = s.dispatchWhile(req)
-	case "SpecialWordsOperationsClient.With":
-		resp, err = s.dispatchWith(req)
-	case "SpecialWordsOperationsClient.Yield":
-		resp, err = s.dispatchYield(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if specialWordsOperationsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = specialWordsOperationsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "SpecialWordsOperationsClient.And":
+				res.resp, res.err = s.dispatchAnd(req)
+			case "SpecialWordsOperationsClient.As":
+				res.resp, res.err = s.dispatchAs(req)
+			case "SpecialWordsOperationsClient.Assert":
+				res.resp, res.err = s.dispatchAssert(req)
+			case "SpecialWordsOperationsClient.Async":
+				res.resp, res.err = s.dispatchAsync(req)
+			case "SpecialWordsOperationsClient.Await":
+				res.resp, res.err = s.dispatchAwait(req)
+			case "SpecialWordsOperationsClient.Break":
+				res.resp, res.err = s.dispatchBreak(req)
+			case "SpecialWordsOperationsClient.Class":
+				res.resp, res.err = s.dispatchClass(req)
+			case "SpecialWordsOperationsClient.Constructor":
+				res.resp, res.err = s.dispatchConstructor(req)
+			case "SpecialWordsOperationsClient.Continue":
+				res.resp, res.err = s.dispatchContinue(req)
+			case "SpecialWordsOperationsClient.Def":
+				res.resp, res.err = s.dispatchDef(req)
+			case "SpecialWordsOperationsClient.Del":
+				res.resp, res.err = s.dispatchDel(req)
+			case "SpecialWordsOperationsClient.Elif":
+				res.resp, res.err = s.dispatchElif(req)
+			case "SpecialWordsOperationsClient.Else":
+				res.resp, res.err = s.dispatchElse(req)
+			case "SpecialWordsOperationsClient.Except":
+				res.resp, res.err = s.dispatchExcept(req)
+			case "SpecialWordsOperationsClient.Exec":
+				res.resp, res.err = s.dispatchExec(req)
+			case "SpecialWordsOperationsClient.Finally":
+				res.resp, res.err = s.dispatchFinally(req)
+			case "SpecialWordsOperationsClient.For":
+				res.resp, res.err = s.dispatchFor(req)
+			case "SpecialWordsOperationsClient.From":
+				res.resp, res.err = s.dispatchFrom(req)
+			case "SpecialWordsOperationsClient.Global":
+				res.resp, res.err = s.dispatchGlobal(req)
+			case "SpecialWordsOperationsClient.If":
+				res.resp, res.err = s.dispatchIf(req)
+			case "SpecialWordsOperationsClient.Import":
+				res.resp, res.err = s.dispatchImport(req)
+			case "SpecialWordsOperationsClient.In":
+				res.resp, res.err = s.dispatchIn(req)
+			case "SpecialWordsOperationsClient.Is":
+				res.resp, res.err = s.dispatchIs(req)
+			case "SpecialWordsOperationsClient.Lambda":
+				res.resp, res.err = s.dispatchLambda(req)
+			case "SpecialWordsOperationsClient.Not":
+				res.resp, res.err = s.dispatchNot(req)
+			case "SpecialWordsOperationsClient.Or":
+				res.resp, res.err = s.dispatchOr(req)
+			case "SpecialWordsOperationsClient.Pass":
+				res.resp, res.err = s.dispatchPass(req)
+			case "SpecialWordsOperationsClient.Raise":
+				res.resp, res.err = s.dispatchRaise(req)
+			case "SpecialWordsOperationsClient.Return":
+				res.resp, res.err = s.dispatchReturn(req)
+			case "SpecialWordsOperationsClient.Try":
+				res.resp, res.err = s.dispatchTry(req)
+			case "SpecialWordsOperationsClient.While":
+				res.resp, res.err = s.dispatchWhile(req)
+			case "SpecialWordsOperationsClient.With":
+				res.resp, res.err = s.dispatchWith(req)
+			case "SpecialWordsOperationsClient.Yield":
+				res.resp, res.err = s.dispatchYield(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SpecialWordsOperationsServerTransport) dispatchAnd(req *http.Request) (*http.Response, error) {
@@ -877,4 +896,10 @@ func (s *SpecialWordsOperationsServerTransport) dispatchYield(req *http.Request)
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SpecialWordsOperationsServerTransport
+var specialWordsOperationsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

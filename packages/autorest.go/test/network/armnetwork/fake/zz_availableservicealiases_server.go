@@ -60,19 +60,38 @@ func (a *AvailableServiceAliasesServerTransport) Do(req *http.Request) (*http.Re
 }
 
 func (a *AvailableServiceAliasesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "AvailableServiceAliasesClient.NewListPager":
-		resp, err = a.dispatchNewListPager(req)
-	case "AvailableServiceAliasesClient.NewListByResourceGroupPager":
-		resp, err = a.dispatchNewListByResourceGroupPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if availableServiceAliasesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = availableServiceAliasesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "AvailableServiceAliasesClient.NewListPager":
+				res.resp, res.err = a.dispatchNewListPager(req)
+			case "AvailableServiceAliasesClient.NewListByResourceGroupPager":
+				res.resp, res.err = a.dispatchNewListByResourceGroupPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AvailableServiceAliasesServerTransport) dispatchNewListPager(req *http.Request) (*http.Response, error) {
@@ -151,4 +170,10 @@ func (a *AvailableServiceAliasesServerTransport) dispatchNewListByResourceGroupP
 		a.newListByResourceGroupPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AvailableServiceAliasesServerTransport
+var availableServiceAliasesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

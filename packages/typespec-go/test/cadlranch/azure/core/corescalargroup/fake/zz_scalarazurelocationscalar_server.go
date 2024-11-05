@@ -64,25 +64,44 @@ func (s *ScalarAzureLocationScalarServerTransport) Do(req *http.Request) (*http.
 }
 
 func (s *ScalarAzureLocationScalarServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ScalarAzureLocationScalarClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "ScalarAzureLocationScalarClient.Header":
-		resp, err = s.dispatchHeader(req)
-	case "ScalarAzureLocationScalarClient.Post":
-		resp, err = s.dispatchPost(req)
-	case "ScalarAzureLocationScalarClient.Put":
-		resp, err = s.dispatchPut(req)
-	case "ScalarAzureLocationScalarClient.Query":
-		resp, err = s.dispatchQuery(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if scalarAzureLocationScalarServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = scalarAzureLocationScalarServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ScalarAzureLocationScalarClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "ScalarAzureLocationScalarClient.Header":
+				res.resp, res.err = s.dispatchHeader(req)
+			case "ScalarAzureLocationScalarClient.Post":
+				res.resp, res.err = s.dispatchPost(req)
+			case "ScalarAzureLocationScalarClient.Put":
+				res.resp, res.err = s.dispatchPut(req)
+			case "ScalarAzureLocationScalarClient.Query":
+				res.resp, res.err = s.dispatchQuery(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ScalarAzureLocationScalarServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -191,4 +210,10 @@ func (s *ScalarAzureLocationScalarServerTransport) dispatchQuery(req *http.Reque
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ScalarAzureLocationScalarServerTransport
+var scalarAzureLocationScalarServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

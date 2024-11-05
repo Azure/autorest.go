@@ -80,27 +80,46 @@ func (m *ManagersServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (m *ManagersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ManagersClient.CreateOrUpdate":
-		resp, err = m.dispatchCreateOrUpdate(req)
-	case "ManagersClient.BeginDelete":
-		resp, err = m.dispatchBeginDelete(req)
-	case "ManagersClient.Get":
-		resp, err = m.dispatchGet(req)
-	case "ManagersClient.NewListPager":
-		resp, err = m.dispatchNewListPager(req)
-	case "ManagersClient.NewListBySubscriptionPager":
-		resp, err = m.dispatchNewListBySubscriptionPager(req)
-	case "ManagersClient.Patch":
-		resp, err = m.dispatchPatch(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if managersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = managersServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ManagersClient.CreateOrUpdate":
+				res.resp, res.err = m.dispatchCreateOrUpdate(req)
+			case "ManagersClient.BeginDelete":
+				res.resp, res.err = m.dispatchBeginDelete(req)
+			case "ManagersClient.Get":
+				res.resp, res.err = m.dispatchGet(req)
+			case "ManagersClient.NewListPager":
+				res.resp, res.err = m.dispatchNewListPager(req)
+			case "ManagersClient.NewListBySubscriptionPager":
+				res.resp, res.err = m.dispatchNewListBySubscriptionPager(req)
+			case "ManagersClient.Patch":
+				res.resp, res.err = m.dispatchPatch(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (m *ManagersServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -391,4 +410,10 @@ func (m *ManagersServerTransport) dispatchPatch(req *http.Request) (*http.Respon
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ManagersServerTransport
+var managersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

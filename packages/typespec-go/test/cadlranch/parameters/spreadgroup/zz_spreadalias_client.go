@@ -53,12 +53,12 @@ func (client *SpreadAliasClient) spreadAsRequestBodyCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	body := struct {
 		Name string `json:"name"`
 	}{
 		Name: name,
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -101,13 +101,13 @@ func (client *SpreadAliasClient) spreadAsRequestParameterCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	req.Raw().Header["x-ms-test-header"] = []string{xMSTestHeader}
 	body := struct {
 		Name string `json:"name"`
 	}{
 		Name: name,
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -152,7 +152,6 @@ func (client *SpreadAliasClient) spreadParameterWithInnerAliasCreateRequest(ctx 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	req.Raw().Header["x-ms-test-header"] = []string{xMSTestHeader}
 	body := struct {
 		Name string `json:"name"`
@@ -161,6 +160,7 @@ func (client *SpreadAliasClient) spreadParameterWithInnerAliasCreateRequest(ctx 
 		Name: name,
 		Age:  age,
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -203,13 +203,13 @@ func (client *SpreadAliasClient) spreadParameterWithInnerModelCreateRequest(ctx 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	req.Raw().Header["x-ms-test-header"] = []string{xMSTestHeader}
 	body := struct {
 		Name string `json:"name"`
 	}{
 		Name: name,
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -254,7 +254,6 @@ func (client *SpreadAliasClient) spreadWithMultipleParametersCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	req.Raw().Header["x-ms-test-header"] = []string{xMSTestHeader}
 	body := struct {
 		RequiredString     string   `json:"requiredString"`
@@ -271,6 +270,7 @@ func (client *SpreadAliasClient) spreadWithMultipleParametersCreateRequest(ctx c
 	if options != nil && options.OptionalStringList != nil {
 		body.OptionalStringList = options.OptionalStringList
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}

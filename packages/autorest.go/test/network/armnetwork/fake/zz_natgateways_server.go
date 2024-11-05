@@ -81,27 +81,46 @@ func (n *NatGatewaysServerTransport) Do(req *http.Request) (*http.Response, erro
 }
 
 func (n *NatGatewaysServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "NatGatewaysClient.BeginCreateOrUpdate":
-		resp, err = n.dispatchBeginCreateOrUpdate(req)
-	case "NatGatewaysClient.BeginDelete":
-		resp, err = n.dispatchBeginDelete(req)
-	case "NatGatewaysClient.Get":
-		resp, err = n.dispatchGet(req)
-	case "NatGatewaysClient.NewListPager":
-		resp, err = n.dispatchNewListPager(req)
-	case "NatGatewaysClient.NewListAllPager":
-		resp, err = n.dispatchNewListAllPager(req)
-	case "NatGatewaysClient.UpdateTags":
-		resp, err = n.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if natGatewaysServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = natGatewaysServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "NatGatewaysClient.BeginCreateOrUpdate":
+				res.resp, res.err = n.dispatchBeginCreateOrUpdate(req)
+			case "NatGatewaysClient.BeginDelete":
+				res.resp, res.err = n.dispatchBeginDelete(req)
+			case "NatGatewaysClient.Get":
+				res.resp, res.err = n.dispatchGet(req)
+			case "NatGatewaysClient.NewListPager":
+				res.resp, res.err = n.dispatchNewListPager(req)
+			case "NatGatewaysClient.NewListAllPager":
+				res.resp, res.err = n.dispatchNewListAllPager(req)
+			case "NatGatewaysClient.UpdateTags":
+				res.resp, res.err = n.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (n *NatGatewaysServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -346,4 +365,10 @@ func (n *NatGatewaysServerTransport) dispatchUpdateTags(req *http.Request) (*htt
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NatGatewaysServerTransport
+var natGatewaysServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

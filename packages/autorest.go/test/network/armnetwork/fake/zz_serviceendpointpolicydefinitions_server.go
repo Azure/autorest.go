@@ -71,23 +71,42 @@ func (s *ServiceEndpointPolicyDefinitionsServerTransport) Do(req *http.Request) 
 }
 
 func (s *ServiceEndpointPolicyDefinitionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ServiceEndpointPolicyDefinitionsClient.BeginCreateOrUpdate":
-		resp, err = s.dispatchBeginCreateOrUpdate(req)
-	case "ServiceEndpointPolicyDefinitionsClient.BeginDelete":
-		resp, err = s.dispatchBeginDelete(req)
-	case "ServiceEndpointPolicyDefinitionsClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "ServiceEndpointPolicyDefinitionsClient.NewListByResourceGroupPager":
-		resp, err = s.dispatchNewListByResourceGroupPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if serviceEndpointPolicyDefinitionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = serviceEndpointPolicyDefinitionsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ServiceEndpointPolicyDefinitionsClient.BeginCreateOrUpdate":
+				res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
+			case "ServiceEndpointPolicyDefinitionsClient.BeginDelete":
+				res.resp, res.err = s.dispatchBeginDelete(req)
+			case "ServiceEndpointPolicyDefinitionsClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "ServiceEndpointPolicyDefinitionsClient.NewListByResourceGroupPager":
+				res.resp, res.err = s.dispatchNewListByResourceGroupPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ServiceEndpointPolicyDefinitionsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -266,4 +285,10 @@ func (s *ServiceEndpointPolicyDefinitionsServerTransport) dispatchNewListByResou
 		s.newListByResourceGroupPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ServiceEndpointPolicyDefinitionsServerTransport
+var serviceEndpointPolicyDefinitionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

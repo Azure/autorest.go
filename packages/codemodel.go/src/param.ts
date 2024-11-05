@@ -20,7 +20,7 @@ export interface ClientSideDefault {
 export interface Parameter {
   name: string;
 
-  description?: string;
+  docs: type.Docs;
 
   // NOTE: if the type is a LiteralValue the paramType will either be literal or flag
   type: type.PossibleType;
@@ -33,8 +33,6 @@ export interface Parameter {
   group?: ParameterGroup;
 
   location: ParameterLocation;
-
-  xml?: type.XMLInfo;
 }
 
 export function isClientSideDefault(kind: ParameterKind): kind is ClientSideDefault {
@@ -47,7 +45,7 @@ export interface ParameterGroup {
   // name is the name of the parameter
   name: string;
 
-  description?: string;
+  docs: type.Docs;
 
   // groupName is the name of the param group (i.e. the struct name)
   groupName: string;
@@ -149,6 +147,8 @@ export interface BodyParameter extends Parameter {
 
   // "application/text" etc...
   contentType: string;
+
+  xml?: type.XMLInfo;
 }
 
 // PartialBodyParameter is a field within a struct type sent in the body
@@ -157,6 +157,8 @@ export interface PartialBodyParameter extends Parameter {
   serializedName: string;
 
   format: 'JSON' | 'XML';
+
+  xml?: type.XMLInfo;
 }
 
 export interface FormBodyParameter extends Parameter {
@@ -261,6 +263,7 @@ export class Parameter implements Parameter {
     this.kind = kind;
     this.byValue = byValue;
     this.location = location;
+    this.docs = {};
   }
 }
 
@@ -373,7 +376,7 @@ export class ResumeTokenParameter extends Parameter implements ResumeTokenParame
   constructor() {
     super('ResumeToken', new type.PrimitiveType('string'), 'optional', true, 'method');
     this.isResumeToken = true;
-    this.description = 'Resumes the long-running operation from the provided token.';
+    this.docs.summary = 'Resumes the long-running operation from the provided token.';
   }
 }
 
@@ -391,5 +394,6 @@ export class ParameterGroup implements ParameterGroup {
     // params is required but must be populated post construction
     this.params = new Array<Parameter>();
     this.required = required;
+    this.docs = {};
   }
 }

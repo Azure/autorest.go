@@ -54,17 +54,36 @@ func (u *UsagesServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (u *UsagesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "UsagesClient.NewListPager":
-		resp, err = u.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if usagesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = usagesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "UsagesClient.NewListPager":
+				res.resp, res.err = u.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (u *UsagesServerTransport) dispatchNewListPager(req *http.Request) (*http.Response, error) {
@@ -102,4 +121,10 @@ func (u *UsagesServerTransport) dispatchNewListPager(req *http.Request) (*http.R
 		u.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to UsagesServerTransport
+var usagesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

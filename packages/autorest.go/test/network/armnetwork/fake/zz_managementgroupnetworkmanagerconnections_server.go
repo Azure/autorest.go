@@ -68,23 +68,42 @@ func (m *ManagementGroupNetworkManagerConnectionsServerTransport) Do(req *http.R
 }
 
 func (m *ManagementGroupNetworkManagerConnectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ManagementGroupNetworkManagerConnectionsClient.CreateOrUpdate":
-		resp, err = m.dispatchCreateOrUpdate(req)
-	case "ManagementGroupNetworkManagerConnectionsClient.Delete":
-		resp, err = m.dispatchDelete(req)
-	case "ManagementGroupNetworkManagerConnectionsClient.Get":
-		resp, err = m.dispatchGet(req)
-	case "ManagementGroupNetworkManagerConnectionsClient.NewListPager":
-		resp, err = m.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if managementGroupNetworkManagerConnectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = managementGroupNetworkManagerConnectionsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ManagementGroupNetworkManagerConnectionsClient.CreateOrUpdate":
+				res.resp, res.err = m.dispatchCreateOrUpdate(req)
+			case "ManagementGroupNetworkManagerConnectionsClient.Delete":
+				res.resp, res.err = m.dispatchDelete(req)
+			case "ManagementGroupNetworkManagerConnectionsClient.Get":
+				res.resp, res.err = m.dispatchGet(req)
+			case "ManagementGroupNetworkManagerConnectionsClient.NewListPager":
+				res.resp, res.err = m.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (m *ManagementGroupNetworkManagerConnectionsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -252,4 +271,10 @@ func (m *ManagementGroupNetworkManagerConnectionsServerTransport) dispatchNewLis
 		m.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ManagementGroupNetworkManagerConnectionsServerTransport
+var managementGroupNetworkManagerConnectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

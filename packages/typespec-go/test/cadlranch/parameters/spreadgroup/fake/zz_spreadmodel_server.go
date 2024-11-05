@@ -65,25 +65,44 @@ func (s *SpreadModelServerTransport) Do(req *http.Request) (*http.Response, erro
 }
 
 func (s *SpreadModelServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "SpreadModelClient.SpreadAsRequestBody":
-		resp, err = s.dispatchSpreadAsRequestBody(req)
-	case "SpreadModelClient.SpreadCompositeRequest":
-		resp, err = s.dispatchSpreadCompositeRequest(req)
-	case "SpreadModelClient.SpreadCompositeRequestMix":
-		resp, err = s.dispatchSpreadCompositeRequestMix(req)
-	case "SpreadModelClient.SpreadCompositeRequestOnlyWithBody":
-		resp, err = s.dispatchSpreadCompositeRequestOnlyWithBody(req)
-	case "SpreadModelClient.SpreadCompositeRequestWithoutBody":
-		resp, err = s.dispatchSpreadCompositeRequestWithoutBody(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if spreadModelServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = spreadModelServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "SpreadModelClient.SpreadAsRequestBody":
+				res.resp, res.err = s.dispatchSpreadAsRequestBody(req)
+			case "SpreadModelClient.SpreadCompositeRequest":
+				res.resp, res.err = s.dispatchSpreadCompositeRequest(req)
+			case "SpreadModelClient.SpreadCompositeRequestMix":
+				res.resp, res.err = s.dispatchSpreadCompositeRequestMix(req)
+			case "SpreadModelClient.SpreadCompositeRequestOnlyWithBody":
+				res.resp, res.err = s.dispatchSpreadCompositeRequestOnlyWithBody(req)
+			case "SpreadModelClient.SpreadCompositeRequestWithoutBody":
+				res.resp, res.err = s.dispatchSpreadCompositeRequestWithoutBody(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SpreadModelServerTransport) dispatchSpreadAsRequestBody(req *http.Request) (*http.Response, error) {
@@ -231,4 +250,10 @@ func (s *SpreadModelServerTransport) dispatchSpreadCompositeRequestWithoutBody(r
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SpreadModelServerTransport
+var spreadModelServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -60,23 +60,42 @@ func (a *APIVersionDefaultServerTransport) Do(req *http.Request) (*http.Response
 }
 
 func (a *APIVersionDefaultServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "APIVersionDefaultClient.GetMethodGlobalNotProvidedValid":
-		resp, err = a.dispatchGetMethodGlobalNotProvidedValid(req)
-	case "APIVersionDefaultClient.GetMethodGlobalValid":
-		resp, err = a.dispatchGetMethodGlobalValid(req)
-	case "APIVersionDefaultClient.GetPathGlobalValid":
-		resp, err = a.dispatchGetPathGlobalValid(req)
-	case "APIVersionDefaultClient.GetSwaggerGlobalValid":
-		resp, err = a.dispatchGetSwaggerGlobalValid(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if apiVersionDefaultServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = apiVersionDefaultServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "APIVersionDefaultClient.GetMethodGlobalNotProvidedValid":
+				res.resp, res.err = a.dispatchGetMethodGlobalNotProvidedValid(req)
+			case "APIVersionDefaultClient.GetMethodGlobalValid":
+				res.resp, res.err = a.dispatchGetMethodGlobalValid(req)
+			case "APIVersionDefaultClient.GetPathGlobalValid":
+				res.resp, res.err = a.dispatchGetPathGlobalValid(req)
+			case "APIVersionDefaultClient.GetSwaggerGlobalValid":
+				res.resp, res.err = a.dispatchGetSwaggerGlobalValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *APIVersionDefaultServerTransport) dispatchGetMethodGlobalNotProvidedValid(req *http.Request) (*http.Response, error) {
@@ -153,4 +172,10 @@ func (a *APIVersionDefaultServerTransport) dispatchGetSwaggerGlobalValid(req *ht
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to APIVersionDefaultServerTransport
+var apiVersionDefaultServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

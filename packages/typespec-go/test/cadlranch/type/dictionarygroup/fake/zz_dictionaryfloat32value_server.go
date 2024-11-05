@@ -51,19 +51,38 @@ func (d *DictionaryFloat32ValueServerTransport) Do(req *http.Request) (*http.Res
 }
 
 func (d *DictionaryFloat32ValueServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DictionaryFloat32ValueClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DictionaryFloat32ValueClient.Put":
-		resp, err = d.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if dictionaryFloat32ValueServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = dictionaryFloat32ValueServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "DictionaryFloat32ValueClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DictionaryFloat32ValueClient.Put":
+				res.resp, res.err = d.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DictionaryFloat32ValueServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -106,4 +125,10 @@ func (d *DictionaryFloat32ValueServerTransport) dispatchPut(req *http.Request) (
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DictionaryFloat32ValueServerTransport
+var dictionaryFloat32ValueServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -71,23 +71,42 @@ func (n *NatRulesServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (n *NatRulesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "NatRulesClient.BeginCreateOrUpdate":
-		resp, err = n.dispatchBeginCreateOrUpdate(req)
-	case "NatRulesClient.BeginDelete":
-		resp, err = n.dispatchBeginDelete(req)
-	case "NatRulesClient.Get":
-		resp, err = n.dispatchGet(req)
-	case "NatRulesClient.NewListByVPNGatewayPager":
-		resp, err = n.dispatchNewListByVPNGatewayPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if natRulesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = natRulesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "NatRulesClient.BeginCreateOrUpdate":
+				res.resp, res.err = n.dispatchBeginCreateOrUpdate(req)
+			case "NatRulesClient.BeginDelete":
+				res.resp, res.err = n.dispatchBeginDelete(req)
+			case "NatRulesClient.Get":
+				res.resp, res.err = n.dispatchGet(req)
+			case "NatRulesClient.NewListByVPNGatewayPager":
+				res.resp, res.err = n.dispatchNewListByVPNGatewayPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (n *NatRulesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -266,4 +285,10 @@ func (n *NatRulesServerTransport) dispatchNewListByVPNGatewayPager(req *http.Req
 		n.newListByVPNGatewayPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NatRulesServerTransport
+var natRulesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

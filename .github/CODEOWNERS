@@ -1,5 +1,5 @@
 # Default
-* @chlowell     @jhendrixMSFT @RickWinter @ArcturusZhang @lirenhe @tadelesh
+*                             @chlowell @jhendrixMSFT @RickWinter @ArcturusZhang @lirenhe @tadelesh
 
 # codegen (autorest and typespec)
 /packages/autorest.go         @chlowell @jhendrixMSFT @RickWinter
@@ -11,6 +11,12 @@
 /packages/autorest.gotest     @ArcturusZhang @lirenhe @tadelesh
 /swagger                      @ArcturusZhang @lirenhe @tadelesh
 
-# Git Hub bot rules
-/.github/CODEOWNERS  @jsquire @ronniegeraghty
-/.github/fabricbot.json  @jsquire @ronniegeraghty
+###########
+# Eng Sys
+###########
+/eng/                         @benbp @weshaggard
+/eng/common/                  @Azure/azure-sdk-eng
+/eng/config.json              @chlowell @jhendrixMSFT @RickWinter
+/.config/1espt/               @benbp @weshaggard
+/.github/workflows/           @Azure/azure-sdk-eng
+/.github/CODEOWNERS           @rickwinter @sandeep-sen @Azure/azure-sdk-eng

@@ -59,23 +59,42 @@ func (o *OptionalUnionIntLiteralServerTransport) Do(req *http.Request) (*http.Re
 }
 
 func (o *OptionalUnionIntLiteralServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "OptionalUnionIntLiteralClient.GetAll":
-		resp, err = o.dispatchGetAll(req)
-	case "OptionalUnionIntLiteralClient.GetDefault":
-		resp, err = o.dispatchGetDefault(req)
-	case "OptionalUnionIntLiteralClient.PutAll":
-		resp, err = o.dispatchPutAll(req)
-	case "OptionalUnionIntLiteralClient.PutDefault":
-		resp, err = o.dispatchPutDefault(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if optionalUnionIntLiteralServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = optionalUnionIntLiteralServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "OptionalUnionIntLiteralClient.GetAll":
+				res.resp, res.err = o.dispatchGetAll(req)
+			case "OptionalUnionIntLiteralClient.GetDefault":
+				res.resp, res.err = o.dispatchGetDefault(req)
+			case "OptionalUnionIntLiteralClient.PutAll":
+				res.resp, res.err = o.dispatchPutAll(req)
+			case "OptionalUnionIntLiteralClient.PutDefault":
+				res.resp, res.err = o.dispatchPutDefault(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (o *OptionalUnionIntLiteralServerTransport) dispatchGetAll(req *http.Request) (*http.Response, error) {
@@ -160,4 +179,10 @@ func (o *OptionalUnionIntLiteralServerTransport) dispatchPutDefault(req *http.Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OptionalUnionIntLiteralServerTransport
+var optionalUnionIntLiteralServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: 2023-09-01-preview/Targets_CreateOrUpdate_200.json
+// Generated from example definition: 2024-07-19-preview/Targets_CreateOrUpdate_MaximumSet_Gen.json
 func ExampleTargetsClient_CreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -39,20 +39,29 @@ func ExampleTargetsClient_CreateOrUpdate() {
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armdatabasewatcher.TargetsClientCreateOrUpdateResponse{
 	// 	Target: &armdatabasewatcher.Target{
-	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.DatabaseWatcher/watchers/databasemo3ej9ih/targets/monitoringh22eed"),
-	// 		Name: to.Ptr("monitoringh22eed"),
-	// 		Type: to.Ptr("microsoft.databasewatcher/watchers/targets"),
 	// 		Properties: &armdatabasewatcher.SQLDbSingleDatabaseTargetProperties{
 	// 			TargetType: to.Ptr("SqlDb"),
 	// 			TargetAuthenticationType: to.Ptr(armdatabasewatcher.TargetAuthenticationTypeAAD),
 	// 			ConnectionServerName: to.Ptr("sqlServero1ihe2"),
 	// 			SQLDbResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.Sql/servers/m1/databases/m2"),
+	// 			ProvisioningState: to.Ptr(armdatabasewatcher.ResourceProvisioningStateSucceeded),
+	// 		},
+	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-px9ma7/providers/Microsoft.DatabaseWatcher/watchers/databasemo3d9sgt/targets/monitoringzkndgm"),
+	// 		Name: to.Ptr("monitoringzkndgm"),
+	// 		Type: to.Ptr("microsoft.databasewatcher/watchers/targets"),
+	// 		SystemData: &armdatabasewatcher.SystemData{
+	// 			CreatedBy: to.Ptr("enbpvlpqbwd"),
+	// 			CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+	// 			LastModifiedBy: to.Ptr("mxp"),
+	// 			LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
 	// 		},
 	// 	},
 	// }
 }
 
-// Generated from example definition: 2023-09-01-preview/Targets_Delete_200.json
+// Generated from example definition: 2024-07-19-preview/Targets_Delete_MaximumSet_Gen.json
 func ExampleTargetsClient_Delete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -74,7 +83,7 @@ func ExampleTargetsClient_Delete() {
 	// }
 }
 
-// Generated from example definition: 2023-09-01-preview/Targets_Get_200.json
+// Generated from example definition: 2024-07-19-preview/Targets_Get_MaximumSet_Gen.json
 func ExampleTargetsClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -94,20 +103,29 @@ func ExampleTargetsClient_Get() {
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armdatabasewatcher.TargetsClientGetResponse{
 	// 	Target: &armdatabasewatcher.Target{
-	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.DatabaseWatcher/watchers/databasemo3ej9ih/targets/monitoringh22eed"),
-	// 		Name: to.Ptr("monitoringh22eed"),
-	// 		Type: to.Ptr("microsoft.databasewatcher/watchers/targets"),
 	// 		Properties: &armdatabasewatcher.SQLDbSingleDatabaseTargetProperties{
 	// 			TargetType: to.Ptr("SqlDb"),
 	// 			TargetAuthenticationType: to.Ptr(armdatabasewatcher.TargetAuthenticationTypeAAD),
 	// 			ConnectionServerName: to.Ptr("sqlServero1ihe2"),
 	// 			SQLDbResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.Sql/servers/m1/databases/m2"),
+	// 			ProvisioningState: to.Ptr(armdatabasewatcher.ResourceProvisioningStateSucceeded),
+	// 		},
+	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-px9ma7/providers/Microsoft.DatabaseWatcher/watchers/databasemo3d9sgt/targets/monitoringzkndgm"),
+	// 		Name: to.Ptr("monitoringzkndgm"),
+	// 		Type: to.Ptr("microsoft.databasewatcher/watchers/targets"),
+	// 		SystemData: &armdatabasewatcher.SystemData{
+	// 			CreatedBy: to.Ptr("enbpvlpqbwd"),
+	// 			CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+	// 			LastModifiedBy: to.Ptr("mxp"),
+	// 			LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
 	// 		},
 	// 	},
 	// }
 }
 
-// Generated from example definition: 2023-09-01-preview/Targets_ListByWatcher_200.json
+// Generated from example definition: 2024-07-19-preview/Targets_ListByWatcher_MaximumSet_Gen.json
 func ExampleTargetsClient_NewListByWatcherPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -141,9 +159,19 @@ func ExampleTargetsClient_NewListByWatcherPager() {
 		// 					TargetAuthenticationType: to.Ptr(armdatabasewatcher.TargetAuthenticationTypeAAD),
 		// 					ConnectionServerName: to.Ptr("sqlServero1ihe2"),
 		// 					SQLDbResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.Sql/servers/m1/databases/m2"),
+		// 					ProvisioningState: to.Ptr(armdatabasewatcher.ResourceProvisioningStateSucceeded),
+		// 				},
+		// 				SystemData: &armdatabasewatcher.SystemData{
+		// 					CreatedBy: to.Ptr("enbpvlpqbwd"),
+		// 					CreatedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
+		// 					LastModifiedBy: to.Ptr("mxp"),
+		// 					LastModifiedByType: to.Ptr(armdatabasewatcher.CreatedByTypeUser),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-07-25T15:38:47.092Z"); return t}()),
 		// 				},
 		// 			},
 		// 		},
+		// 		NextLink: to.Ptr("https://microsoft.com/a"),
 		// 	},
 		// }
 	}

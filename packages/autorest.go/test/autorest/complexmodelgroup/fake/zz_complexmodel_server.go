@@ -58,21 +58,40 @@ func (c *ComplexModelServerTransport) Do(req *http.Request) (*http.Response, err
 }
 
 func (c *ComplexModelServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ComplexModelClient.Create":
-		resp, err = c.dispatchCreate(req)
-	case "ComplexModelClient.List":
-		resp, err = c.dispatchList(req)
-	case "ComplexModelClient.Update":
-		resp, err = c.dispatchUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if complexModelServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = complexModelServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ComplexModelClient.Create":
+				res.resp, res.err = c.dispatchCreate(req)
+			case "ComplexModelClient.List":
+				res.resp, res.err = c.dispatchList(req)
+			case "ComplexModelClient.Update":
+				res.resp, res.err = c.dispatchUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *ComplexModelServerTransport) dispatchCreate(req *http.Request) (*http.Response, error) {
@@ -176,4 +195,10 @@ func (c *ComplexModelServerTransport) dispatchUpdate(req *http.Request) (*http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ComplexModelServerTransport
+var complexModelServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

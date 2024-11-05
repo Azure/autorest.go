@@ -54,17 +54,36 @@ func (a *ApplicationGatewayWafDynamicManifestsServerTransport) Do(req *http.Requ
 }
 
 func (a *ApplicationGatewayWafDynamicManifestsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ApplicationGatewayWafDynamicManifestsClient.NewGetPager":
-		resp, err = a.dispatchNewGetPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if applicationGatewayWafDynamicManifestsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = applicationGatewayWafDynamicManifestsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ApplicationGatewayWafDynamicManifestsClient.NewGetPager":
+				res.resp, res.err = a.dispatchNewGetPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *ApplicationGatewayWafDynamicManifestsServerTransport) dispatchNewGetPager(req *http.Request) (*http.Response, error) {
@@ -102,4 +121,10 @@ func (a *ApplicationGatewayWafDynamicManifestsServerTransport) dispatchNewGetPag
 		a.newGetPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ApplicationGatewayWafDynamicManifestsServerTransport
+var applicationGatewayWafDynamicManifestsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

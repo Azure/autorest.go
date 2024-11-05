@@ -64,25 +64,44 @@ func (a *ArrayServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (a *ArrayServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ArrayClient.GetEmpty":
-		resp, err = a.dispatchGetEmpty(req)
-	case "ArrayClient.GetNotProvided":
-		resp, err = a.dispatchGetNotProvided(req)
-	case "ArrayClient.GetValid":
-		resp, err = a.dispatchGetValid(req)
-	case "ArrayClient.PutEmpty":
-		resp, err = a.dispatchPutEmpty(req)
-	case "ArrayClient.PutValid":
-		resp, err = a.dispatchPutValid(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if arrayServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = arrayServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ArrayClient.GetEmpty":
+				res.resp, res.err = a.dispatchGetEmpty(req)
+			case "ArrayClient.GetNotProvided":
+				res.resp, res.err = a.dispatchGetNotProvided(req)
+			case "ArrayClient.GetValid":
+				res.resp, res.err = a.dispatchGetValid(req)
+			case "ArrayClient.PutEmpty":
+				res.resp, res.err = a.dispatchPutEmpty(req)
+			case "ArrayClient.PutValid":
+				res.resp, res.err = a.dispatchPutValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *ArrayServerTransport) dispatchGetEmpty(req *http.Request) (*http.Response, error) {
@@ -186,4 +205,10 @@ func (a *ArrayServerTransport) dispatchPutValid(req *http.Request) (*http.Respon
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ArrayServerTransport
+var arrayServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

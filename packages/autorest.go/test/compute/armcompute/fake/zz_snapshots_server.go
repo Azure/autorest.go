@@ -46,7 +46,7 @@ type SnapshotsServer struct {
 	NewListByResourceGroupPager func(resourceGroupName string, options *armcompute.SnapshotsClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.SnapshotsClientListByResourceGroupResponse])
 
 	// BeginRevokeAccess is the fake for method SnapshotsClient.BeginRevokeAccess
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginRevokeAccess func(ctx context.Context, resourceGroupName string, snapshotName string, options *armcompute.SnapshotsClientBeginRevokeAccessOptions) (resp azfake.PollerResponder[armcompute.SnapshotsClientRevokeAccessResponse], errResp azfake.ErrorResponder)
 
 	// BeginUpdate is the fake for method SnapshotsClient.BeginUpdate
@@ -95,31 +95,50 @@ func (s *SnapshotsServerTransport) Do(req *http.Request) (*http.Response, error)
 }
 
 func (s *SnapshotsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "SnapshotsClient.BeginCreateOrUpdate":
-		resp, err = s.dispatchBeginCreateOrUpdate(req)
-	case "SnapshotsClient.BeginDelete":
-		resp, err = s.dispatchBeginDelete(req)
-	case "SnapshotsClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "SnapshotsClient.BeginGrantAccess":
-		resp, err = s.dispatchBeginGrantAccess(req)
-	case "SnapshotsClient.NewListPager":
-		resp, err = s.dispatchNewListPager(req)
-	case "SnapshotsClient.NewListByResourceGroupPager":
-		resp, err = s.dispatchNewListByResourceGroupPager(req)
-	case "SnapshotsClient.BeginRevokeAccess":
-		resp, err = s.dispatchBeginRevokeAccess(req)
-	case "SnapshotsClient.BeginUpdate":
-		resp, err = s.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if snapshotsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = snapshotsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "SnapshotsClient.BeginCreateOrUpdate":
+				res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
+			case "SnapshotsClient.BeginDelete":
+				res.resp, res.err = s.dispatchBeginDelete(req)
+			case "SnapshotsClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "SnapshotsClient.BeginGrantAccess":
+				res.resp, res.err = s.dispatchBeginGrantAccess(req)
+			case "SnapshotsClient.NewListPager":
+				res.resp, res.err = s.dispatchNewListPager(req)
+			case "SnapshotsClient.NewListByResourceGroupPager":
+				res.resp, res.err = s.dispatchNewListByResourceGroupPager(req)
+			case "SnapshotsClient.BeginRevokeAccess":
+				res.resp, res.err = s.dispatchBeginRevokeAccess(req)
+			case "SnapshotsClient.BeginUpdate":
+				res.resp, res.err = s.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SnapshotsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -398,9 +417,9 @@ func (s *SnapshotsServerTransport) dispatchBeginRevokeAccess(req *http.Request) 
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		s.beginRevokeAccess.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRevokeAccess) {
 		s.beginRevokeAccess.remove(req)
@@ -455,4 +474,10 @@ func (s *SnapshotsServerTransport) dispatchBeginUpdate(req *http.Request) (*http
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SnapshotsServerTransport
+var snapshotsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

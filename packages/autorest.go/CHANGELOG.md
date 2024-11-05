@@ -1,8 +1,26 @@
 # Release History
 
+## 4.0.0-preview.69 (2024-11-04)
+
+### Features Added
+
+* Internal fake server request interceptor.
+
+## 4.0.0-preview.68 (2024-10-08)
+
+### Bugs Fixed
+
+* Throw an error when an operation doesn't define any media types. This is indicative of an authoring error.
+* Fake servers will honor the caller's context in the `*http.Request`.
+* Add missing error check when parsing multipart/form content in fakes.
+
+### Other Fixes
+
+* Fake pollers will always include `http.StatusOK` as an acceptible status code, and `http.StatusNoContent` for operations that don't return a body.
+
 ## 4.0.0-preview.67 (2024-07-30)
 
-## Bugs Fixed
+### Bugs Fixed
 
 * Fixed a rare issue causing some method doc comments to be omitted.
 * Fixed bad codegen for slices of raw JSON objects.

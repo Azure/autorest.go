@@ -18,20 +18,19 @@ import (
 // NotVersionedClient - Illustrates not-versioned server.
 // Don't use this type directly, use a constructor function instead.
 type NotVersionedClient struct {
-	internal   *azcore.Client
-	endpoint   string
-	apiVersion string
+	internal *azcore.Client
+	endpoint string
 }
 
 //   - options - NotVersionedClientWithPathAPIVersionOptions contains the optional parameters for the NotVersionedClient.WithPathAPIVersion
 //     method.
-func (client *NotVersionedClient) WithPathAPIVersion(ctx context.Context, options *NotVersionedClientWithPathAPIVersionOptions) (NotVersionedClientWithPathAPIVersionResponse, error) {
+func (client *NotVersionedClient) WithPathAPIVersion(ctx context.Context, apiVersion string, options *NotVersionedClientWithPathAPIVersionOptions) (NotVersionedClientWithPathAPIVersionResponse, error) {
 	var err error
 	const operationName = "NotVersionedClient.WithPathAPIVersion"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.withPathAPIVersionCreateRequest(ctx, options)
+	req, err := client.withPathAPIVersionCreateRequest(ctx, apiVersion, options)
 	if err != nil {
 		return NotVersionedClientWithPathAPIVersionResponse{}, err
 	}
@@ -47,14 +46,14 @@ func (client *NotVersionedClient) WithPathAPIVersion(ctx context.Context, option
 }
 
 // withPathAPIVersionCreateRequest creates the WithPathAPIVersion request.
-func (client *NotVersionedClient) withPathAPIVersionCreateRequest(ctx context.Context, _ *NotVersionedClientWithPathAPIVersionOptions) (*policy.Request, error) {
+func (client *NotVersionedClient) withPathAPIVersionCreateRequest(ctx context.Context, apiVersion string, _ *NotVersionedClientWithPathAPIVersionOptions) (*policy.Request, error) {
 	host := "{endpoint}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/versions/not-versioned/with-path-api-version/{apiVersion}"
-	if client.apiVersion == "" {
-		return nil, errors.New("parameter client.apiVersion cannot be empty")
+	if apiVersion == "" {
+		return nil, errors.New("parameter apiVersion cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{apiVersion}", url.PathEscape(client.apiVersion))
+	urlPath = strings.ReplaceAll(urlPath, "{apiVersion}", url.PathEscape(apiVersion))
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
@@ -64,13 +63,13 @@ func (client *NotVersionedClient) withPathAPIVersionCreateRequest(ctx context.Co
 
 //   - options - NotVersionedClientWithQueryAPIVersionOptions contains the optional parameters for the NotVersionedClient.WithQueryAPIVersion
 //     method.
-func (client *NotVersionedClient) WithQueryAPIVersion(ctx context.Context, options *NotVersionedClientWithQueryAPIVersionOptions) (NotVersionedClientWithQueryAPIVersionResponse, error) {
+func (client *NotVersionedClient) WithQueryAPIVersion(ctx context.Context, apiVersion string, options *NotVersionedClientWithQueryAPIVersionOptions) (NotVersionedClientWithQueryAPIVersionResponse, error) {
 	var err error
 	const operationName = "NotVersionedClient.WithQueryAPIVersion"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.withQueryAPIVersionCreateRequest(ctx, options)
+	req, err := client.withQueryAPIVersionCreateRequest(ctx, apiVersion, options)
 	if err != nil {
 		return NotVersionedClientWithQueryAPIVersionResponse{}, err
 	}
@@ -86,7 +85,7 @@ func (client *NotVersionedClient) WithQueryAPIVersion(ctx context.Context, optio
 }
 
 // withQueryAPIVersionCreateRequest creates the WithQueryAPIVersion request.
-func (client *NotVersionedClient) withQueryAPIVersionCreateRequest(ctx context.Context, _ *NotVersionedClientWithQueryAPIVersionOptions) (*policy.Request, error) {
+func (client *NotVersionedClient) withQueryAPIVersionCreateRequest(ctx context.Context, apiVersion string, _ *NotVersionedClientWithQueryAPIVersionOptions) (*policy.Request, error) {
 	host := "{endpoint}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/versions/not-versioned/with-query-api-version"
@@ -95,7 +94,7 @@ func (client *NotVersionedClient) withQueryAPIVersionCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", apiVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }

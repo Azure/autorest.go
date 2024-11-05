@@ -59,23 +59,42 @@ func (n *NullableDatetimeServerTransport) Do(req *http.Request) (*http.Response,
 }
 
 func (n *NullableDatetimeServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "NullableDatetimeClient.GetNonNull":
-		resp, err = n.dispatchGetNonNull(req)
-	case "NullableDatetimeClient.GetNull":
-		resp, err = n.dispatchGetNull(req)
-	case "NullableDatetimeClient.PatchNonNull":
-		resp, err = n.dispatchPatchNonNull(req)
-	case "NullableDatetimeClient.PatchNull":
-		resp, err = n.dispatchPatchNull(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if nullableDatetimeServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = nullableDatetimeServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "NullableDatetimeClient.GetNonNull":
+				res.resp, res.err = n.dispatchGetNonNull(req)
+			case "NullableDatetimeClient.GetNull":
+				res.resp, res.err = n.dispatchGetNull(req)
+			case "NullableDatetimeClient.PatchNonNull":
+				res.resp, res.err = n.dispatchPatchNonNull(req)
+			case "NullableDatetimeClient.PatchNull":
+				res.resp, res.err = n.dispatchPatchNull(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (n *NullableDatetimeServerTransport) dispatchGetNonNull(req *http.Request) (*http.Response, error) {
@@ -160,4 +179,10 @@ func (n *NullableDatetimeServerTransport) dispatchPatchNull(req *http.Request) (
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NullableDatetimeServerTransport
+var nullableDatetimeServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

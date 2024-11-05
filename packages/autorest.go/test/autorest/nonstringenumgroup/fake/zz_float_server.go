@@ -52,19 +52,38 @@ func (f *FloatServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (f *FloatServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "FloatClient.Get":
-		resp, err = f.dispatchGet(req)
-	case "FloatClient.Put":
-		resp, err = f.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if floatServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = floatServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "FloatClient.Get":
+				res.resp, res.err = f.dispatchGet(req)
+			case "FloatClient.Put":
+				res.resp, res.err = f.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (f *FloatServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -107,4 +126,10 @@ func (f *FloatServerTransport) dispatchPut(req *http.Request) (*http.Response, e
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to FloatServerTransport
+var floatServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

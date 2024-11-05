@@ -59,23 +59,42 @@ func (e *ExtensibleStringServerTransport) Do(req *http.Request) (*http.Response,
 }
 
 func (e *ExtensibleStringServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ExtensibleStringClient.GetKnownValue":
-		resp, err = e.dispatchGetKnownValue(req)
-	case "ExtensibleStringClient.GetUnknownValue":
-		resp, err = e.dispatchGetUnknownValue(req)
-	case "ExtensibleStringClient.PutKnownValue":
-		resp, err = e.dispatchPutKnownValue(req)
-	case "ExtensibleStringClient.PutUnknownValue":
-		resp, err = e.dispatchPutUnknownValue(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if extensibleStringServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = extensibleStringServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ExtensibleStringClient.GetKnownValue":
+				res.resp, res.err = e.dispatchGetKnownValue(req)
+			case "ExtensibleStringClient.GetUnknownValue":
+				res.resp, res.err = e.dispatchGetUnknownValue(req)
+			case "ExtensibleStringClient.PutKnownValue":
+				res.resp, res.err = e.dispatchPutKnownValue(req)
+			case "ExtensibleStringClient.PutUnknownValue":
+				res.resp, res.err = e.dispatchPutUnknownValue(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *ExtensibleStringServerTransport) dispatchGetKnownValue(req *http.Request) (*http.Response, error) {
@@ -160,4 +179,10 @@ func (e *ExtensibleStringServerTransport) dispatchPutUnknownValue(req *http.Requ
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ExtensibleStringServerTransport
+var extensibleStringServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

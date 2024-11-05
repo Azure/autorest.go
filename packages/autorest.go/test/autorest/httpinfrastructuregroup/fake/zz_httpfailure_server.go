@@ -56,21 +56,40 @@ func (h *HTTPFailureServerTransport) Do(req *http.Request) (*http.Response, erro
 }
 
 func (h *HTTPFailureServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "HTTPFailureClient.GetEmptyError":
-		resp, err = h.dispatchGetEmptyError(req)
-	case "HTTPFailureClient.GetNoModelEmpty":
-		resp, err = h.dispatchGetNoModelEmpty(req)
-	case "HTTPFailureClient.GetNoModelError":
-		resp, err = h.dispatchGetNoModelError(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if httpFailureServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = httpFailureServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "HTTPFailureClient.GetEmptyError":
+				res.resp, res.err = h.dispatchGetEmptyError(req)
+			case "HTTPFailureClient.GetNoModelEmpty":
+				res.resp, res.err = h.dispatchGetNoModelEmpty(req)
+			case "HTTPFailureClient.GetNoModelError":
+				res.resp, res.err = h.dispatchGetNoModelError(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (h *HTTPFailureServerTransport) dispatchGetEmptyError(req *http.Request) (*http.Response, error) {
@@ -128,4 +147,10 @@ func (h *HTTPFailureServerTransport) dispatchGetNoModelError(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to HTTPFailureServerTransport
+var httpFailureServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

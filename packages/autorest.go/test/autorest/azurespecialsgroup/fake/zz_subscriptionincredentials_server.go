@@ -65,25 +65,44 @@ func (s *SubscriptionInCredentialsServerTransport) Do(req *http.Request) (*http.
 }
 
 func (s *SubscriptionInCredentialsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "SubscriptionInCredentialsClient.PostMethodGlobalNotProvidedValid":
-		resp, err = s.dispatchPostMethodGlobalNotProvidedValid(req)
-	case "SubscriptionInCredentialsClient.PostMethodGlobalNull":
-		resp, err = s.dispatchPostMethodGlobalNull(req)
-	case "SubscriptionInCredentialsClient.PostMethodGlobalValid":
-		resp, err = s.dispatchPostMethodGlobalValid(req)
-	case "SubscriptionInCredentialsClient.PostPathGlobalValid":
-		resp, err = s.dispatchPostPathGlobalValid(req)
-	case "SubscriptionInCredentialsClient.PostSwaggerGlobalValid":
-		resp, err = s.dispatchPostSwaggerGlobalValid(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if subscriptionInCredentialsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = subscriptionInCredentialsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "SubscriptionInCredentialsClient.PostMethodGlobalNotProvidedValid":
+				res.resp, res.err = s.dispatchPostMethodGlobalNotProvidedValid(req)
+			case "SubscriptionInCredentialsClient.PostMethodGlobalNull":
+				res.resp, res.err = s.dispatchPostMethodGlobalNull(req)
+			case "SubscriptionInCredentialsClient.PostMethodGlobalValid":
+				res.resp, res.err = s.dispatchPostMethodGlobalValid(req)
+			case "SubscriptionInCredentialsClient.PostPathGlobalValid":
+				res.resp, res.err = s.dispatchPostPathGlobalValid(req)
+			case "SubscriptionInCredentialsClient.PostSwaggerGlobalValid":
+				res.resp, res.err = s.dispatchPostSwaggerGlobalValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SubscriptionInCredentialsServerTransport) dispatchPostMethodGlobalNotProvidedValid(req *http.Request) (*http.Response, error) {
@@ -209,4 +228,10 @@ func (s *SubscriptionInCredentialsServerTransport) dispatchPostSwaggerGlobalVali
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SubscriptionInCredentialsServerTransport
+var subscriptionInCredentialsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

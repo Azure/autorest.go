@@ -56,21 +56,40 @@ func (h *HeaderServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (h *HeaderServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "HeaderClient.CustomNamedRequestID":
-		resp, err = h.dispatchCustomNamedRequestID(req)
-	case "HeaderClient.CustomNamedRequestIDHead":
-		resp, err = h.dispatchCustomNamedRequestIDHead(req)
-	case "HeaderClient.CustomNamedRequestIDParamGrouping":
-		resp, err = h.dispatchCustomNamedRequestIDParamGrouping(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if headerServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = headerServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "HeaderClient.CustomNamedRequestID":
+				res.resp, res.err = h.dispatchCustomNamedRequestID(req)
+			case "HeaderClient.CustomNamedRequestIDHead":
+				res.resp, res.err = h.dispatchCustomNamedRequestIDHead(req)
+			case "HeaderClient.CustomNamedRequestIDParamGrouping":
+				res.resp, res.err = h.dispatchCustomNamedRequestIDParamGrouping(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (h *HeaderServerTransport) dispatchCustomNamedRequestID(req *http.Request) (*http.Response, error) {
@@ -140,4 +159,10 @@ func (h *HeaderServerTransport) dispatchCustomNamedRequestIDParamGrouping(req *h
 		resp.Header.Set("foo-request-id", *val)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to HeaderServerTransport
+var headerServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

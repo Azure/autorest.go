@@ -25,7 +25,7 @@ type LoadTestsServer struct {
 	BeginCreateOrUpdate func(ctx context.Context, resourceGroupName string, loadTestName string, resource armloadtestservice.LoadTestResource, options *armloadtestservice.LoadTestsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armloadtestservice.LoadTestsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method LoadTestsClient.BeginDelete
-	// HTTP status codes to indicate success: http.StatusAccepted, http.StatusNoContent
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDelete func(ctx context.Context, resourceGroupName string, loadTestName string, options *armloadtestservice.LoadTestsClientBeginDeleteOptions) (resp azfake.PollerResponder[armloadtestservice.LoadTestsClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method LoadTestsClient.Get
@@ -45,8 +45,8 @@ type LoadTestsServer struct {
 	NewOutboundNetworkDependenciesEndpointsPager func(resourceGroupName string, loadTestName string, options *armloadtestservice.LoadTestsClientOutboundNetworkDependenciesEndpointsOptions) (resp azfake.PagerResponder[armloadtestservice.LoadTestsClientOutboundNetworkDependenciesEndpointsResponse])
 
 	// BeginUpdate is the fake for method LoadTestsClient.BeginUpdate
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginUpdate func(ctx context.Context, resourceGroupName string, loadTestName string, properties armloadtestservice.LoadTestResource, options *armloadtestservice.LoadTestsClientBeginUpdateOptions) (resp azfake.PollerResponder[armloadtestservice.LoadTestsClientUpdateResponse], errResp azfake.ErrorResponder)
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
+	BeginUpdate func(ctx context.Context, resourceGroupName string, loadTestName string, properties armloadtestservice.LoadTestResourceUpdate, options *armloadtestservice.LoadTestsClientBeginUpdateOptions) (resp azfake.PollerResponder[armloadtestservice.LoadTestsClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewLoadTestsServerTransport creates a new instance of LoadTestsServerTransport with the provided implementation.
@@ -88,29 +88,48 @@ func (l *LoadTestsServerTransport) Do(req *http.Request) (*http.Response, error)
 }
 
 func (l *LoadTestsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "LoadTestsClient.BeginCreateOrUpdate":
-		resp, err = l.dispatchBeginCreateOrUpdate(req)
-	case "LoadTestsClient.BeginDelete":
-		resp, err = l.dispatchBeginDelete(req)
-	case "LoadTestsClient.Get":
-		resp, err = l.dispatchGet(req)
-	case "LoadTestsClient.NewListByResourceGroupPager":
-		resp, err = l.dispatchNewListByResourceGroupPager(req)
-	case "LoadTestsClient.NewListBySubscriptionPager":
-		resp, err = l.dispatchNewListBySubscriptionPager(req)
-	case "LoadTestsClient.NewOutboundNetworkDependenciesEndpointsPager":
-		resp, err = l.dispatchNewOutboundNetworkDependenciesEndpointsPager(req)
-	case "LoadTestsClient.BeginUpdate":
-		resp, err = l.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if loadTestsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = loadTestsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "LoadTestsClient.BeginCreateOrUpdate":
+				res.resp, res.err = l.dispatchBeginCreateOrUpdate(req)
+			case "LoadTestsClient.BeginDelete":
+				res.resp, res.err = l.dispatchBeginDelete(req)
+			case "LoadTestsClient.Get":
+				res.resp, res.err = l.dispatchGet(req)
+			case "LoadTestsClient.NewListByResourceGroupPager":
+				res.resp, res.err = l.dispatchNewListByResourceGroupPager(req)
+			case "LoadTestsClient.NewListBySubscriptionPager":
+				res.resp, res.err = l.dispatchNewListBySubscriptionPager(req)
+			case "LoadTestsClient.NewOutboundNetworkDependenciesEndpointsPager":
+				res.resp, res.err = l.dispatchNewOutboundNetworkDependenciesEndpointsPager(req)
+			case "LoadTestsClient.BeginUpdate":
+				res.resp, res.err = l.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (l *LoadTestsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -194,9 +213,9 @@ func (l *LoadTestsServerTransport) dispatchBeginDelete(req *http.Request) (*http
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		l.beginDelete.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDelete) {
 		l.beginDelete.remove(req)
@@ -361,7 +380,7 @@ func (l *LoadTestsServerTransport) dispatchBeginUpdate(req *http.Request) (*http
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		body, err := server.UnmarshalRequestAsJSON[armloadtestservice.LoadTestResource](req)
+		body, err := server.UnmarshalRequestAsJSON[armloadtestservice.LoadTestResourceUpdate](req)
 		if err != nil {
 			return nil, err
 		}
@@ -386,13 +405,19 @@ func (l *LoadTestsServerTransport) dispatchBeginUpdate(req *http.Request) (*http
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		l.beginUpdate.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginUpdate) {
 		l.beginUpdate.remove(req)
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to LoadTestsServerTransport
+var loadTestsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -51,19 +51,38 @@ func (o *OAuth2ServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (o *OAuth2ServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "OAuth2Client.Invalid":
-		resp, err = o.dispatchInvalid(req)
-	case "OAuth2Client.Valid":
-		resp, err = o.dispatchValid(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if oAuth2ServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = oAuth2ServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "OAuth2Client.Invalid":
+				res.resp, res.err = o.dispatchInvalid(req)
+			case "OAuth2Client.Valid":
+				res.resp, res.err = o.dispatchValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (o *OAuth2ServerTransport) dispatchInvalid(req *http.Request) (*http.Response, error) {
@@ -102,4 +121,10 @@ func (o *OAuth2ServerTransport) dispatchValid(req *http.Request) (*http.Response
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OAuth2ServerTransport
+var oAuth2ServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -81,27 +81,46 @@ func (v *VirtualWansServerTransport) Do(req *http.Request) (*http.Response, erro
 }
 
 func (v *VirtualWansServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualWansClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualWansClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualWansClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualWansClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	case "VirtualWansClient.NewListByResourceGroupPager":
-		resp, err = v.dispatchNewListByResourceGroupPager(req)
-	case "VirtualWansClient.UpdateTags":
-		resp, err = v.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if virtualWansServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualWansServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "VirtualWansClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualWansClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualWansClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualWansClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualWansClient.NewListByResourceGroupPager":
+				res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
+			case "VirtualWansClient.UpdateTags":
+				res.resp, res.err = v.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualWansServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -334,4 +353,10 @@ func (v *VirtualWansServerTransport) dispatchUpdateTags(req *http.Request) (*htt
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualWansServerTransport
+var virtualWansServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

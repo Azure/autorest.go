@@ -75,25 +75,44 @@ func (o *OrdersServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (o *OrdersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "OrdersClient.BeginCreateOrUpdate":
-		resp, err = o.dispatchBeginCreateOrUpdate(req)
-	case "OrdersClient.BeginDelete":
-		resp, err = o.dispatchBeginDelete(req)
-	case "OrdersClient.Get":
-		resp, err = o.dispatchGet(req)
-	case "OrdersClient.NewListByDataBoxEdgeDevicePager":
-		resp, err = o.dispatchNewListByDataBoxEdgeDevicePager(req)
-	case "OrdersClient.ListDCAccessCode":
-		resp, err = o.dispatchListDCAccessCode(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if ordersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = ordersServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "OrdersClient.BeginCreateOrUpdate":
+				res.resp, res.err = o.dispatchBeginCreateOrUpdate(req)
+			case "OrdersClient.BeginDelete":
+				res.resp, res.err = o.dispatchBeginDelete(req)
+			case "OrdersClient.Get":
+				res.resp, res.err = o.dispatchGet(req)
+			case "OrdersClient.NewListByDataBoxEdgeDevicePager":
+				res.resp, res.err = o.dispatchNewListByDataBoxEdgeDevicePager(req)
+			case "OrdersClient.ListDCAccessCode":
+				res.resp, res.err = o.dispatchListDCAccessCode(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (o *OrdersServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -293,4 +312,10 @@ func (o *OrdersServerTransport) dispatchListDCAccessCode(req *http.Request) (*ht
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OrdersServerTransport
+var ordersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

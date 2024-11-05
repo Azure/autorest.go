@@ -25,7 +25,7 @@ type NestedProxyResourcesServer struct {
 	BeginCreateOrReplace func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, resource resources.NestedProxyResource, options *resources.NestedProxyResourcesClientBeginCreateOrReplaceOptions) (resp azfake.PollerResponder[resources.NestedProxyResourcesClientCreateOrReplaceResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method NestedProxyResourcesClient.BeginDelete
-	// HTTP status codes to indicate success: http.StatusAccepted, http.StatusNoContent
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDelete func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, options *resources.NestedProxyResourcesClientBeginDeleteOptions) (resp azfake.PollerResponder[resources.NestedProxyResourcesClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method NestedProxyResourcesClient.Get
@@ -76,25 +76,38 @@ func (n *NestedProxyResourcesServerTransport) Do(req *http.Request) (*http.Respo
 }
 
 func (n *NestedProxyResourcesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "NestedProxyResourcesClient.BeginCreateOrReplace":
-		resp, err = n.dispatchBeginCreateOrReplace(req)
-	case "NestedProxyResourcesClient.BeginDelete":
-		resp, err = n.dispatchBeginDelete(req)
-	case "NestedProxyResourcesClient.Get":
-		resp, err = n.dispatchGet(req)
-	case "NestedProxyResourcesClient.NewListByTopLevelTrackedResourcePager":
-		resp, err = n.dispatchNewListByTopLevelTrackedResourcePager(req)
-	case "NestedProxyResourcesClient.BeginUpdate":
-		resp, err = n.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "NestedProxyResourcesClient.BeginCreateOrReplace":
+			res.resp, res.err = n.dispatchBeginCreateOrReplace(req)
+		case "NestedProxyResourcesClient.BeginDelete":
+			res.resp, res.err = n.dispatchBeginDelete(req)
+		case "NestedProxyResourcesClient.Get":
+			res.resp, res.err = n.dispatchGet(req)
+		case "NestedProxyResourcesClient.NewListByTopLevelTrackedResourcePager":
+			res.resp, res.err = n.dispatchNewListByTopLevelTrackedResourcePager(req)
+		case "NestedProxyResourcesClient.BeginUpdate":
+			res.resp, res.err = n.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (n *NestedProxyResourcesServerTransport) dispatchBeginCreateOrReplace(req *http.Request) (*http.Response, error) {
@@ -186,9 +199,9 @@ func (n *NestedProxyResourcesServerTransport) dispatchBeginDelete(req *http.Requ
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		n.beginDelete.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDelete) {
 		n.beginDelete.remove(req)

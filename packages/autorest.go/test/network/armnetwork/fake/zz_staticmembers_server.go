@@ -68,23 +68,42 @@ func (s *StaticMembersServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (s *StaticMembersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "StaticMembersClient.CreateOrUpdate":
-		resp, err = s.dispatchCreateOrUpdate(req)
-	case "StaticMembersClient.Delete":
-		resp, err = s.dispatchDelete(req)
-	case "StaticMembersClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "StaticMembersClient.NewListPager":
-		resp, err = s.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if staticMembersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = staticMembersServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "StaticMembersClient.CreateOrUpdate":
+				res.resp, res.err = s.dispatchCreateOrUpdate(req)
+			case "StaticMembersClient.Delete":
+				res.resp, res.err = s.dispatchDelete(req)
+			case "StaticMembersClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "StaticMembersClient.NewListPager":
+				res.resp, res.err = s.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *StaticMembersServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -284,4 +303,10 @@ func (s *StaticMembersServerTransport) dispatchNewListPager(req *http.Request) (
 		s.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to StaticMembersServerTransport
+var staticMembersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

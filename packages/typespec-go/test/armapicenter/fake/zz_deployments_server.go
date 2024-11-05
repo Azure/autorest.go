@@ -70,25 +70,44 @@ func (d *DeploymentsServerTransport) Do(req *http.Request) (*http.Response, erro
 }
 
 func (d *DeploymentsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DeploymentsClient.CreateOrUpdate":
-		resp, err = d.dispatchCreateOrUpdate(req)
-	case "DeploymentsClient.Delete":
-		resp, err = d.dispatchDelete(req)
-	case "DeploymentsClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DeploymentsClient.Head":
-		resp, err = d.dispatchHead(req)
-	case "DeploymentsClient.NewListPager":
-		resp, err = d.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if deploymentsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = deploymentsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "DeploymentsClient.CreateOrUpdate":
+				res.resp, res.err = d.dispatchCreateOrUpdate(req)
+			case "DeploymentsClient.Delete":
+				res.resp, res.err = d.dispatchDelete(req)
+			case "DeploymentsClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DeploymentsClient.Head":
+				res.resp, res.err = d.dispatchHead(req)
+			case "DeploymentsClient.NewListPager":
+				res.resp, res.err = d.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DeploymentsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -340,4 +359,10 @@ func (d *DeploymentsServerTransport) dispatchNewListPager(req *http.Request) (*h
 		d.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DeploymentsServerTransport
+var deploymentsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

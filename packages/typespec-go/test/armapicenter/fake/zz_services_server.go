@@ -46,7 +46,7 @@ type ServicesServer struct {
 
 	// Update is the fake for method ServicesClient.Update
 	// HTTP status codes to indicate success: http.StatusOK
-	Update func(ctx context.Context, resourceGroupName string, serviceName string, payload armapicenter.Service, options *armapicenter.ServicesClientUpdateOptions) (resp azfake.Responder[armapicenter.ServicesClientUpdateResponse], errResp azfake.ErrorResponder)
+	Update func(ctx context.Context, resourceGroupName string, serviceName string, payload armapicenter.ServiceUpdate, options *armapicenter.ServicesClientUpdateOptions) (resp azfake.Responder[armapicenter.ServicesClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewServicesServerTransport creates a new instance of ServicesServerTransport with the provided implementation.
@@ -82,29 +82,48 @@ func (s *ServicesServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (s *ServicesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ServicesClient.CreateOrUpdate":
-		resp, err = s.dispatchCreateOrUpdate(req)
-	case "ServicesClient.Delete":
-		resp, err = s.dispatchDelete(req)
-	case "ServicesClient.BeginExportMetadataSchema":
-		resp, err = s.dispatchBeginExportMetadataSchema(req)
-	case "ServicesClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "ServicesClient.NewListByResourceGroupPager":
-		resp, err = s.dispatchNewListByResourceGroupPager(req)
-	case "ServicesClient.NewListBySubscriptionPager":
-		resp, err = s.dispatchNewListBySubscriptionPager(req)
-	case "ServicesClient.Update":
-		resp, err = s.dispatchUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if servicesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = servicesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ServicesClient.CreateOrUpdate":
+				res.resp, res.err = s.dispatchCreateOrUpdate(req)
+			case "ServicesClient.Delete":
+				res.resp, res.err = s.dispatchDelete(req)
+			case "ServicesClient.BeginExportMetadataSchema":
+				res.resp, res.err = s.dispatchBeginExportMetadataSchema(req)
+			case "ServicesClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "ServicesClient.NewListByResourceGroupPager":
+				res.resp, res.err = s.dispatchNewListByResourceGroupPager(req)
+			case "ServicesClient.NewListBySubscriptionPager":
+				res.resp, res.err = s.dispatchNewListBySubscriptionPager(req)
+			case "ServicesClient.Update":
+				res.resp, res.err = s.dispatchUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ServicesServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -338,7 +357,7 @@ func (s *ServicesServerTransport) dispatchUpdate(req *http.Request) (*http.Respo
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[armapicenter.Service](req)
+	body, err := server.UnmarshalRequestAsJSON[armapicenter.ServiceUpdate](req)
 	if err != nil {
 		return nil, err
 	}
@@ -363,4 +382,10 @@ func (s *ServicesServerTransport) dispatchUpdate(req *http.Request) (*http.Respo
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ServicesServerTransport
+var servicesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

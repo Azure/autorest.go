@@ -68,23 +68,42 @@ func (d *DeletedServicesServerTransport) Do(req *http.Request) (*http.Response, 
 }
 
 func (d *DeletedServicesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DeletedServicesClient.Delete":
-		resp, err = d.dispatchDelete(req)
-	case "DeletedServicesClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DeletedServicesClient.NewListPager":
-		resp, err = d.dispatchNewListPager(req)
-	case "DeletedServicesClient.NewListBySubscriptionPager":
-		resp, err = d.dispatchNewListBySubscriptionPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if deletedServicesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = deletedServicesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "DeletedServicesClient.Delete":
+				res.resp, res.err = d.dispatchDelete(req)
+			case "DeletedServicesClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DeletedServicesClient.NewListPager":
+				res.resp, res.err = d.dispatchNewListPager(req)
+			case "DeletedServicesClient.NewListBySubscriptionPager":
+				res.resp, res.err = d.dispatchNewListBySubscriptionPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DeletedServicesServerTransport) dispatchDelete(req *http.Request) (*http.Response, error) {
@@ -236,4 +255,10 @@ func (d *DeletedServicesServerTransport) dispatchNewListBySubscriptionPager(req 
 		d.newListBySubscriptionPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DeletedServicesServerTransport
+var deletedServicesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

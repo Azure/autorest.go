@@ -47,17 +47,36 @@ func (n *NotDefinedServerTransport) Do(req *http.Request) (*http.Response, error
 }
 
 func (n *NotDefinedServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "NotDefinedClient.Valid":
-		resp, err = n.dispatchValid(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if notDefinedServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = notDefinedServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "NotDefinedClient.Valid":
+				res.resp, res.err = n.dispatchValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (n *NotDefinedServerTransport) dispatchValid(req *http.Request) (*http.Response, error) {
@@ -77,4 +96,10 @@ func (n *NotDefinedServerTransport) dispatchValid(req *http.Request) (*http.Resp
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NotDefinedServerTransport
+var notDefinedServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -77,25 +77,44 @@ func (g *GalleryImagesServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (g *GalleryImagesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "GalleryImagesClient.BeginCreateOrUpdate":
-		resp, err = g.dispatchBeginCreateOrUpdate(req)
-	case "GalleryImagesClient.BeginDelete":
-		resp, err = g.dispatchBeginDelete(req)
-	case "GalleryImagesClient.Get":
-		resp, err = g.dispatchGet(req)
-	case "GalleryImagesClient.NewListByGalleryPager":
-		resp, err = g.dispatchNewListByGalleryPager(req)
-	case "GalleryImagesClient.BeginUpdate":
-		resp, err = g.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if galleryImagesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = galleryImagesServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "GalleryImagesClient.BeginCreateOrUpdate":
+				res.resp, res.err = g.dispatchBeginCreateOrUpdate(req)
+			case "GalleryImagesClient.BeginDelete":
+				res.resp, res.err = g.dispatchBeginDelete(req)
+			case "GalleryImagesClient.Get":
+				res.resp, res.err = g.dispatchGet(req)
+			case "GalleryImagesClient.NewListByGalleryPager":
+				res.resp, res.err = g.dispatchNewListByGalleryPager(req)
+			case "GalleryImagesClient.BeginUpdate":
+				res.resp, res.err = g.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (g *GalleryImagesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -326,4 +345,10 @@ func (g *GalleryImagesServerTransport) dispatchBeginUpdate(req *http.Request) (*
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to GalleryImagesServerTransport
+var galleryImagesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

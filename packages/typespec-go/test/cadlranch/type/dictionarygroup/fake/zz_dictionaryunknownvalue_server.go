@@ -51,19 +51,38 @@ func (d *DictionaryUnknownValueServerTransport) Do(req *http.Request) (*http.Res
 }
 
 func (d *DictionaryUnknownValueServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DictionaryUnknownValueClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DictionaryUnknownValueClient.Put":
-		resp, err = d.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if dictionaryUnknownValueServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = dictionaryUnknownValueServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "DictionaryUnknownValueClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DictionaryUnknownValueClient.Put":
+				res.resp, res.err = d.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DictionaryUnknownValueServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -106,4 +125,10 @@ func (d *DictionaryUnknownValueServerTransport) dispatchPut(req *http.Request) (
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DictionaryUnknownValueServerTransport
+var dictionaryUnknownValueServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

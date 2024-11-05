@@ -85,29 +85,48 @@ func (e *ExpressRoutePortsServerTransport) Do(req *http.Request) (*http.Response
 }
 
 func (e *ExpressRoutePortsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ExpressRoutePortsClient.BeginCreateOrUpdate":
-		resp, err = e.dispatchBeginCreateOrUpdate(req)
-	case "ExpressRoutePortsClient.BeginDelete":
-		resp, err = e.dispatchBeginDelete(req)
-	case "ExpressRoutePortsClient.GenerateLOA":
-		resp, err = e.dispatchGenerateLOA(req)
-	case "ExpressRoutePortsClient.Get":
-		resp, err = e.dispatchGet(req)
-	case "ExpressRoutePortsClient.NewListPager":
-		resp, err = e.dispatchNewListPager(req)
-	case "ExpressRoutePortsClient.NewListByResourceGroupPager":
-		resp, err = e.dispatchNewListByResourceGroupPager(req)
-	case "ExpressRoutePortsClient.UpdateTags":
-		resp, err = e.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if expressRoutePortsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = expressRoutePortsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "ExpressRoutePortsClient.BeginCreateOrUpdate":
+				res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
+			case "ExpressRoutePortsClient.BeginDelete":
+				res.resp, res.err = e.dispatchBeginDelete(req)
+			case "ExpressRoutePortsClient.GenerateLOA":
+				res.resp, res.err = e.dispatchGenerateLOA(req)
+			case "ExpressRoutePortsClient.Get":
+				res.resp, res.err = e.dispatchGet(req)
+			case "ExpressRoutePortsClient.NewListPager":
+				res.resp, res.err = e.dispatchNewListPager(req)
+			case "ExpressRoutePortsClient.NewListByResourceGroupPager":
+				res.resp, res.err = e.dispatchNewListByResourceGroupPager(req)
+			case "ExpressRoutePortsClient.UpdateTags":
+				res.resp, res.err = e.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *ExpressRoutePortsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -377,4 +396,10 @@ func (e *ExpressRoutePortsServerTransport) dispatchUpdateTags(req *http.Request)
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ExpressRoutePortsServerTransport
+var expressRoutePortsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

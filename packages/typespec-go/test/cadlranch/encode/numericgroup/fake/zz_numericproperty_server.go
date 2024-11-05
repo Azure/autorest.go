@@ -19,11 +19,15 @@ import (
 type NumericPropertyServer struct {
 	// SafeintAsString is the fake for method NumericPropertyClient.SafeintAsString
 	// HTTP status codes to indicate success: http.StatusOK
-	SafeintAsString func(ctx context.Context, body numericgroup.SafeintAsStringProperty, options *numericgroup.NumericPropertyClientSafeintAsStringOptions) (resp azfake.Responder[numericgroup.NumericPropertyClientSafeintAsStringResponse], errResp azfake.ErrorResponder)
+	SafeintAsString func(ctx context.Context, value numericgroup.SafeintAsStringProperty, options *numericgroup.NumericPropertyClientSafeintAsStringOptions) (resp azfake.Responder[numericgroup.NumericPropertyClientSafeintAsStringResponse], errResp azfake.ErrorResponder)
 
 	// Uint32AsStringOptional is the fake for method NumericPropertyClient.Uint32AsStringOptional
 	// HTTP status codes to indicate success: http.StatusOK
-	Uint32AsStringOptional func(ctx context.Context, body numericgroup.Uint32AsStringProperty, options *numericgroup.NumericPropertyClientUint32AsStringOptionalOptions) (resp azfake.Responder[numericgroup.NumericPropertyClientUint32AsStringOptionalResponse], errResp azfake.ErrorResponder)
+	Uint32AsStringOptional func(ctx context.Context, value numericgroup.Uint32AsStringProperty, options *numericgroup.NumericPropertyClientUint32AsStringOptionalOptions) (resp azfake.Responder[numericgroup.NumericPropertyClientUint32AsStringOptionalResponse], errResp azfake.ErrorResponder)
+
+	// Uint8AsString is the fake for method NumericPropertyClient.Uint8AsString
+	// HTTP status codes to indicate success: http.StatusOK
+	Uint8AsString func(ctx context.Context, value numericgroup.Uint8AsStringProperty, options *numericgroup.NumericPropertyClientUint8AsStringOptions) (resp azfake.Responder[numericgroup.NumericPropertyClientUint8AsStringResponse], errResp azfake.ErrorResponder)
 }
 
 // NewNumericPropertyServerTransport creates a new instance of NumericPropertyServerTransport with the provided implementation.
@@ -51,19 +55,40 @@ func (n *NumericPropertyServerTransport) Do(req *http.Request) (*http.Response, 
 }
 
 func (n *NumericPropertyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "NumericPropertyClient.SafeintAsString":
-		resp, err = n.dispatchSafeintAsString(req)
-	case "NumericPropertyClient.Uint32AsStringOptional":
-		resp, err = n.dispatchUint32AsStringOptional(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if numericPropertyServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = numericPropertyServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "NumericPropertyClient.SafeintAsString":
+				res.resp, res.err = n.dispatchSafeintAsString(req)
+			case "NumericPropertyClient.Uint32AsStringOptional":
+				res.resp, res.err = n.dispatchUint32AsStringOptional(req)
+			case "NumericPropertyClient.Uint8AsString":
+				res.resp, res.err = n.dispatchUint8AsString(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (n *NumericPropertyServerTransport) dispatchSafeintAsString(req *http.Request) (*http.Response, error) {
@@ -110,4 +135,33 @@ func (n *NumericPropertyServerTransport) dispatchUint32AsStringOptional(req *htt
 		return nil, err
 	}
 	return resp, nil
+}
+
+func (n *NumericPropertyServerTransport) dispatchUint8AsString(req *http.Request) (*http.Response, error) {
+	if n.srv.Uint8AsString == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Uint8AsString not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[numericgroup.Uint8AsStringProperty](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := n.srv.Uint8AsString(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Uint8AsStringProperty, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NumericPropertyServerTransport
+var numericPropertyServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

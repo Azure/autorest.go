@@ -70,23 +70,42 @@ func (s *SecurityAdminConfigurationsServerTransport) Do(req *http.Request) (*htt
 }
 
 func (s *SecurityAdminConfigurationsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "SecurityAdminConfigurationsClient.CreateOrUpdate":
-		resp, err = s.dispatchCreateOrUpdate(req)
-	case "SecurityAdminConfigurationsClient.BeginDelete":
-		resp, err = s.dispatchBeginDelete(req)
-	case "SecurityAdminConfigurationsClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "SecurityAdminConfigurationsClient.NewListPager":
-		resp, err = s.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var intercepted bool
+		var res result
+		if securityAdminConfigurationsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = securityAdminConfigurationsServerTransportInterceptor.Do(req)
+		}
+		if !intercepted {
+			switch method {
+			case "SecurityAdminConfigurationsClient.CreateOrUpdate":
+				res.resp, res.err = s.dispatchCreateOrUpdate(req)
+			case "SecurityAdminConfigurationsClient.BeginDelete":
+				res.resp, res.err = s.dispatchBeginDelete(req)
+			case "SecurityAdminConfigurationsClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "SecurityAdminConfigurationsClient.NewListPager":
+				res.resp, res.err = s.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
+
+		}
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SecurityAdminConfigurationsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {
@@ -296,4 +315,10 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchNewListPager(req *h
 		s.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SecurityAdminConfigurationsServerTransport
+var securityAdminConfigurationsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }
