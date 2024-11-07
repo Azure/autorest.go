@@ -132,7 +132,7 @@ const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
 generate('armlargeinstance', armlargeinstance, 'test/armlargeinstance', ['stutter=AzureLargeInstance']);
 
 const armdatabasewatcher = pkgRoot + 'test/tsp/DatabaseWatcher.Management';
-generate('armdatabasewatcher', armdatabasewatcher, 'test/armdatabasewatcher', ['remove-unreferenced-types=false', 'fix-const-stuttering=false']);
+generate('armdatabasewatcher', armdatabasewatcher, 'test/armdatabasewatcher', ['fix-const-stuttering=false']);
 
 const armloadtestservice = pkgRoot + 'test/tsp/LoadTestService.Management';
 generate('armloadtestservice', armloadtestservice, 'test/armloadtestservice');
@@ -153,7 +153,7 @@ const armcontainerorchestratorruntime = pkgRoot + 'test/tsp/KubernetesRuntime.Ma
 generate('armcontainerorchestratorruntime', armcontainerorchestratorruntime, 'test/armcontainerorchestratorruntime');
 
 const azmodelsonly = pkgRoot + 'test/tsp/ModelsOnlyWithBaseTypes';
-generate('azmodelsonly', azmodelsonly, 'test/azmodelsonly', ['remove-unreferenced-types=false']);
+generate('azmodelsonly', azmodelsonly, 'test/azmodelsonly');
 
 for (const module in cadlRanch) {
   const values = cadlRanch[module];
@@ -196,7 +196,6 @@ function generate(moduleName, input, outputDir, perTestOptions) {
     'generate-fakes=true',
     'inject-spans=true',
     'head-as-boolean=true',
-    'remove-unreferenced-types=true',
     'fix-const-stuttering=true',
     `examples-directory=${input}/examples`,
     'generate-examples=true'

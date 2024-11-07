@@ -4,11 +4,6 @@
 
 package azmodelsonly
 
-type BaseClassThatsPruned struct {
-	// REQUIRED
-	ID *int32
-}
-
 type DerivedOne struct {
 	// REQUIRED
 	ID *int32
@@ -23,9 +18,4 @@ type DerivedTwo struct {
 
 	// REQUIRED
 	Name *string
-}
-
-type PreservedBaseClass struct {
-	// REQUIRED
-	ID *int32
 }

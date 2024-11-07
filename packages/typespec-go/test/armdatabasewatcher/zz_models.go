@@ -78,42 +78,6 @@ type Datastore struct {
 	KustoClusterDisplayName *string
 }
 
-// ErrorAdditionalInfo - The resource management error additional info.
-type ErrorAdditionalInfo struct {
-	// READ-ONLY; The additional info.
-	Info *ErrorAdditionalInfoInfo
-
-	// READ-ONLY; The additional info type.
-	Type *string
-}
-
-type ErrorAdditionalInfoInfo struct {
-}
-
-// ErrorDetail - The error detail.
-type ErrorDetail struct {
-	// READ-ONLY; The error additional info.
-	AdditionalInfo []*ErrorAdditionalInfo
-
-	// READ-ONLY; The error code.
-	Code *string
-
-	// READ-ONLY; The error details.
-	Details []*ErrorDetail
-
-	// READ-ONLY; The error message.
-	Message *string
-
-	// READ-ONLY; The error target.
-	Target *string
-}
-
-// ErrorResponse - Common error response for all Azure Resource Manager APIs to return error details for failed operations.
-type ErrorResponse struct {
-	// The error object.
-	Error *ErrorDetail
-}
-
 // ManagedServiceIdentityV4 - Managed service identity (system assigned and/or user assigned identities)
 type ManagedServiceIdentityV4 struct {
 	// REQUIRED; The type of managed identity assigned to this resource.
@@ -177,37 +141,6 @@ type OperationListResult struct {
 
 	// The link to the next page of items
 	NextLink *string
-}
-
-// ProxyResource - The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a
-// location
-type ProxyResource struct {
-	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
-
-	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-}
-
-// Resource - Common fields that are returned in the response for all Azure Resource Manager resources
-type Resource struct {
-	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
-
-	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
 }
 
 // SQLDbElasticPoolTargetProperties - The properties specific to elastic pool in Azure SQL Database.
@@ -485,28 +418,6 @@ type TargetProperties struct {
 
 // GetTargetProperties implements the TargetPropertiesClassification interface for type TargetProperties.
 func (t *TargetProperties) GetTargetProperties() *TargetProperties { return t }
-
-// TrackedResource - The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags'
-// and a 'location'
-type TrackedResource struct {
-	// REQUIRED; The geo-location where the resource lives
-	Location *string
-
-	// Resource tags.
-	Tags map[string]*string
-
-	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
-
-	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-}
 
 // UserAssignedIdentity - User assigned identity properties
 type UserAssignedIdentity struct {
