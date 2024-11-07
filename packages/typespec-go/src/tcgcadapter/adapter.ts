@@ -50,7 +50,7 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
   fixStutteringTypeNames(sdkContext.sdkPackage, codeModel, context.options);
 
   const ta = new typeAdapter(codeModel);
-  ta.adaptTypes(sdkContext, context.options['remove-unreferenced-types'] === true);
+  ta.adaptTypes(sdkContext);
 
   const ca = new clientAdapter(ta, context.options);
   ca.adaptClients(sdkContext.sdkPackage);
