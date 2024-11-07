@@ -831,6 +831,8 @@ export class typeAdapter {
             }
           }
           break;
+        case 'nullable':
+          recursiveAddType(type.type);
       }
     };
 
