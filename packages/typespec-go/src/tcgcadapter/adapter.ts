@@ -28,6 +28,7 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
   // to add it to the allow list of decorators
   const sdkContext = await tcgc.createSdkContext(context, '@azure-tools/typespec-go', {
     additionalDecorators: ['TypeSpec\\.@encodedName'],
+    disableUsageAccessPropagationToBase: true,
   });
   let codeModelType: go.CodeModelType = 'data-plane';
   if (sdkContext.arm === true) {

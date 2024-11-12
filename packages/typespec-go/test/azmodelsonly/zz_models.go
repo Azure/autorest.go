@@ -19,3 +19,8 @@ type DerivedTwo struct {
 	// REQUIRED
 	Name *string
 }
+
+type PreservedBaseClass struct {
+	// REQUIRED
+	ID *int32
+}
