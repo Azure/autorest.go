@@ -19,27 +19,21 @@ export class typeAdapter {
   // cache of previously created types/constant values
   private types: Map<string, go.PossibleType>;
   private constValues: Map<string, go.ConstantValue>;
-
-  // contains the names of unreferenced types
-  private unreferencedTypeNames: Set<string>;
   
   constructor(codeModel: go.CodeModel) {
     this.codeModel = codeModel;
     this.types = new Map<string, go.PossibleType>();
     this.constValues = new Map<string, go.ConstantValue>();
-    this.unreferencedTypeNames = new Set<string>();
   }
 
   // converts all model/enum SDK types to Go code model types
   adaptTypes(sdkContext: tcgc.SdkContext) {
-    this.findUnreferencedTypes(sdkContext);
-
     for (const enumType of sdkContext.sdkPackage.enums) {
       if (enumType.usage === tcgc.UsageFlags.ApiVersionEnum) {
         // we have a pipeline policy for controlling the api-version
         continue;
-      } else if (this.unreferencedTypeNames.has(enumType.name)) {
-        // skip unreferenced type
+      } else if ((enumType.usage & tcgc.UsageFlags.Exception) === tcgc.UsageFlags.Exception && (enumType.usage & tcgc.UsageFlags.Input) === 0 && (enumType.usage & tcgc.UsageFlags.Output) === 0 || tcgc.isAzureCoreModel(enumType)) {
+        // skip error and core type
         continue;
       }
       const constType = this.getConstantType(enumType);
@@ -54,8 +48,8 @@ export class typeAdapter {
         // tcgc creates some unamed models for spread params.
         // we don't use these so just skip them.
         continue;
-      } else if (this.unreferencedTypeNames.has(modelType.name)) {
-        // skip unreferenced type
+      } else if ((modelType.usage & tcgc.UsageFlags.Exception) === tcgc.UsageFlags.Exception && (modelType.usage & tcgc.UsageFlags.Input) === 0 && (modelType.usage & tcgc.UsageFlags.Output) === 0 || tcgc.isAzureCoreModel(modelType)) {
+        // skip error and core type
         continue;
       } else if (modelType.access === 'internal' && (modelType.usage & tcgc.UsageFlags.Spread) === tcgc.UsageFlags.Spread) {
         // we don't use the internal models for spread params
@@ -756,146 +750,6 @@ export class typeAdapter {
     }
   
     // TODO: tcgc doesn't support duration as a literal value
-  }
-
-  // updates this.unreferencedTypeNames
-  // tcgc shakes out unreferenced types by default, so we only need to
-  // handle cases specific to Go. this includes base, error, and core types
-  private findUnreferencedTypes(sdkContext: tcgc.SdkContext): void {
-    const candidateTypeNames = new Set<string>();
-    const referencedCandidate = new Set<string>();
-    const visitedModels = new Set<string>(); // avoids infinite recursion
-
-    const recursiveAddReferencedCandidate = function(type: tcgc.SdkType): void {
-      switch (type.kind) {
-        case 'array':
-        case 'dict':
-          recursiveAddReferencedCandidate(type.valueType);
-          break;
-        case 'enum':
-          if (candidateTypeNames.has(type.name)) {
-            referencedCandidate.add(type.name);
-          }
-          break;
-        case 'enumvalue':
-          if (candidateTypeNames.has(type.enumType.name)) {
-            referencedCandidate.add(type.enumType.name);
-          }
-          break;
-        case 'model':
-          if (candidateTypeNames.has(type.name)) {
-            referencedCandidate.add(type.name);
-          }
-          // recursively walk this type if we haven't already
-          if (!visitedModels.has(type.name)) {
-            visitedModels.add(type.name);
-            const aggregateProps = aggregateProperties(type);
-            for (const prop of aggregateProps.props) {
-              recursiveAddReferencedCandidate(prop.type);
-            }
-            if (aggregateProps.addlProps) {
-              recursiveAddReferencedCandidate(aggregateProps.addlProps);
-            }
-            if (type.discriminatedSubtypes) {
-              for (const subType of values(type.discriminatedSubtypes)) {
-                recursiveAddReferencedCandidate(subType);
-              }
-            }
-          }
-          break;
-        case 'nullable':
-          return recursiveAddReferencedCandidate(type.type);
-      }
-    };
-
-    const recursiveAddType = (type: tcgc.SdkType): void => {
-      switch (type.kind) {
-        case 'array':
-        case 'dict':
-          recursiveAddType(type.valueType);
-          break;
-        case 'enum':
-          candidateTypeNames.add(type.name);
-          break;
-        case 'enumvalue':
-          candidateTypeNames.add(type.enumType.name);
-          break;
-        case 'model':
-          // while Set<T> ensures unique entries, we need to check
-          // if we've already processed this type to avoid potential
-          // for infinite recursion.
-          if (!candidateTypeNames.has(type.name)) {
-            candidateTypeNames.add(type.name);
-            for (const property of type.properties) {
-              recursiveAddType(property.type);
-            }
-          }
-          break;
-        case 'nullable':
-          recursiveAddType(type.type);
-      }
-    };
-
-    // collect all the unreferenced type candidates.
-    // NOTE: UsageFlags are propagated from derived type to base type(s) so we
-    // can't tell if a base type is actually used as output based on its flags
-    for (const model of sdkContext.sdkPackage.models) {
-      if ((model.usage & tcgc.UsageFlags.Error) === tcgc.UsageFlags.Error || tcgc.isAzureCoreModel(model)) {
-        // include this type and its transitive types
-        recursiveAddType(model);
-        continue;
-      }
-
-      let parent = model.baseModel;
-      while (parent) {
-        // exclude any polymorphic root type from the check
-        // as we always need to include the root type even
-        // if it's not referenced.
-        // TODO: https://github.com/Azure/typespec-azure/issues/1827 prevents
-        // identification of base model types explicitly annotated as output types.
-        if (!parent.discriminatedSubtypes) {
-          candidateTypeNames.add(parent.name);
-        }
-        parent = parent.baseModel;
-      }
-    }
-
-    // traverse all methods to find any references to a candidate type.
-    // NOTE: it's possible for there to be no candidate types
-    if (candidateTypeNames.size > 0) {
-      const recursiveWalkClients = function(client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
-        for (const method of client.methods) {
-          if (method.kind === 'clientaccessor') {
-            recursiveWalkClients(method.response);
-            continue;
-          }
-  
-          for (const param of method.parameters) {
-            recursiveAddReferencedCandidate(param.type);
-          }
-  
-          if (method.response.type) {
-            recursiveAddReferencedCandidate(method.response.type);
-          }
-        }
-      };
-
-      for (const client of sdkContext.sdkPackage.clients) {
-        recursiveWalkClients(client);
-      }
-
-      const pagedResponses = this.getPagedResponses(sdkContext);
-      for (const pagedResponse of pagedResponses) {
-        recursiveAddReferencedCandidate(pagedResponse);
-      }
-    }
-
-    // now that we have the referenced set, update the unreferenced set
-    for (const candidateTypeName of candidateTypeNames) {
-      if (!referencedCandidate.has(candidateTypeName)) {
-        this.unreferencedTypeNames.add(candidateTypeName);
-      }
-    }
   }
 }
 
