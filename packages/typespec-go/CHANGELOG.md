@@ -1,5 +1,11 @@
 # Release History
 
+## 0.3.3 (2024-11-19)
+
+### Other Fixes
+
+* Updated dependencies (fixes incorrectly pruned base models).
+
 ## 0.3.2 (2024-11-07)
 
 ### Features Added
