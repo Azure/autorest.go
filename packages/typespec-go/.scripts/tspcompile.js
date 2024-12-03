@@ -155,6 +155,9 @@ generate('armcontainerorchestratorruntime', armcontainerorchestratorruntime, 'te
 const azmodelsonly = pkgRoot + 'test/tsp/ModelsOnlyWithBaseTypes';
 generate('azmodelsonly', azmodelsonly, 'test/azmodelsonly');
 
+const azkeys = pkgRoot + 'test/tsp/KeyVault.Keys';
+generate('azkeys', azkeys, 'test/azkeys');
+
 for (const module in cadlRanch) {
   const values = cadlRanch[module];
   let perTestOptions;

@@ -1,5 +1,11 @@
 # Release History
 
+## 0.3.4 (2024-12-03)
+
+### Other Fixes
+
+* Updated dependencies (fixes missing parameters in some cases).
+
 ## 0.3.3 (2024-11-19)
 
 ### Other Fixes
