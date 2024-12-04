@@ -8,8 +8,8 @@ trigger:
 pr: none
 
 variables:
-  - name: cadl-ranch
-    value: $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@azure-tools/cadl-ranch/node_modules/.bin/cadl-ranch
+  - name: spector
+    value: $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@typespec/spector/node_modules/.bin/tsp-spector
 
 steps:
   - template: /eng/pipelines/templates/steps/set-env.yaml
@@ -17,9 +17,9 @@ steps:
   - template: /eng/pipelines/templates/steps/build-test-typespec.yaml
 
   - task: AzureCLI@2
-    displayName: Upload CADL Ranch Test Coverage
+    displayName: Upload TypeSpec Spector Test Coverage
     inputs:
       azureSubscription: "Cadl Ranch Storage"
       scriptType: "bash"
       scriptLocation: "inlineScript"
-      inlineScript: $(cadl-ranch) upload-coverage --generatorName go --storageAccountName azuresdkcadlranch --generatorVersion $(node -p -e "require('$(System.DefaultWorkingDirectory)/packages/typespec-go/package.json').version") --generatorMode azure
+      inlineScript: $(spector) upload-coverage --generatorName go --storageAccountName typespec --generatorVersion $(node -p -e "require('$(System.DefaultWorkingDirectory)/packages/typespec-go/package.json').version") --generatorMode azure
