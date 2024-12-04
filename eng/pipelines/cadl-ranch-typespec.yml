@@ -4,7 +4,8 @@ trigger:
       - main
   paths:
     include:
-      - packages/typespec-go/test/cadlranch
+      - packages/typespec-go/test/http-spec
+      - packages/typespec-go/test/azure-http-spec
 pr: none
 
 variables:
