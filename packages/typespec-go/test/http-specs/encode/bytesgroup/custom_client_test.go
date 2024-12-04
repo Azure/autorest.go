@@ -143,7 +143,7 @@ func TestRequestBodyClientBase64URL(t *testing.T) {
 func TestRequestBodyClientCustomContentType(t *testing.T) {
 	client, err := bytesgroup.NewBytesClient(nil)
 	require.NoError(t, err)
-	pngFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png", os.O_RDONLY, 0)
+	pngFile, err := os.OpenFile("../../../../node_modules/@typespec/http-specs/assets/image.png", os.O_RDONLY, 0)
 	require.NoError(t, err)
 	defer pngFile.Close()
 	resp, err := client.NewBytesRequestBodyClient().CustomContentType(context.Background(), pngFile, nil)
@@ -162,7 +162,7 @@ func TestRequestBodyClientDefault(t *testing.T) {
 func TestRequestBodyClientOctetStream(t *testing.T) {
 	client, err := bytesgroup.NewBytesClient(nil)
 	require.NoError(t, err)
-	pngFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png", os.O_RDONLY, 0)
+	pngFile, err := os.OpenFile("../../../../node_modules/@typespec/http-specs/assets/image.png", os.O_RDONLY, 0)
 	require.NoError(t, err)
 	defer pngFile.Close()
 	resp, err := client.NewBytesRequestBodyClient().OctetStream(context.Background(), pngFile, nil)
@@ -196,7 +196,7 @@ func TestResponseBodyClientCustomContent(t *testing.T) {
 	respBody, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
 	require.NoError(t, resp.Body.Close())
-	pngFile, err := os.ReadFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png")
+	pngFile, err := os.ReadFile("../../../../node_modules/@typespec/http-specs/assets/image.png")
 	require.NoError(t, err)
 	require.EqualValues(t, pngFile, respBody)
 }
@@ -218,7 +218,7 @@ func TestResponseBodyClientOctetStream(t *testing.T) {
 	respBody, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
 	require.NoError(t, resp.Body.Close())
-	pngFile, err := os.ReadFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png")
+	pngFile, err := os.ReadFile("../../../../node_modules/@typespec/http-specs/assets/image.png")
 	require.NoError(t, err)
 	require.EqualValues(t, pngFile, respBody)
 }

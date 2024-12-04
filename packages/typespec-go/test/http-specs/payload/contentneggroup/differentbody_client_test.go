@@ -18,7 +18,7 @@ func TestDifferentBodyClient_GetAvatarAsJSON(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewContentNegotiationDifferentBodyClient().GetAvatarAsJSON(context.Background(), nil)
 	require.NoError(t, err)
-	pngFile, err := os.ReadFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png")
+	pngFile, err := os.ReadFile("../../../../node_modules/@typespec/http-specs/assets/image.png")
 	require.NoError(t, err)
 	require.EqualValues(t, pngFile, resp.Content)
 }
@@ -30,7 +30,7 @@ func TestDifferentBodyClient_GetAvatarAsPNG(t *testing.T) {
 	require.NoError(t, err)
 	pngResp, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
-	pngFile, err := os.ReadFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png")
+	pngFile, err := os.ReadFile("../../../../node_modules/@typespec/http-specs/assets/image.png")
 	require.NoError(t, err)
 	require.EqualValues(t, pngFile, pngResp)
 }

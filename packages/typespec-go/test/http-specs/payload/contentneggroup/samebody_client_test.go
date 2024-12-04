@@ -20,7 +20,7 @@ func TestSameBodyClient_GetAvatarAsJPEG(t *testing.T) {
 	require.NoError(t, err)
 	jpgResp, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
-	jpgFile, err := os.ReadFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.jpg")
+	jpgFile, err := os.ReadFile("../../../../node_modules/@typespec/http-specs/assets/image.jpg")
 	require.NoError(t, err)
 	require.EqualValues(t, jpgFile, jpgResp)
 }
@@ -32,7 +32,7 @@ func TestSameBodyClient_GetAvatarAsPNG(t *testing.T) {
 	require.NoError(t, err)
 	pngResp, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
-	pngFile, err := os.ReadFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png")
+	pngFile, err := os.ReadFile("../../../../node_modules/@typespec/http-specs/assets/image.png")
 	require.NoError(t, err)
 	require.EqualValues(t, pngFile, pngResp)
 }
