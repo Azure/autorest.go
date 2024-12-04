@@ -21,10 +21,6 @@ type VisibilityModel struct {
 	// REQUIRED; Required bool, illustrating a delete property.
 	DeleteProp *bool
 
-	// CONSTANT; Property that does not exist in any payload.
-	// Field has constant value "none", any specified value is ignored.
-	NoneProp *string
-
 	// REQUIRED; Required int32, illustrating a query property.
 	QueryProp *int32
 
