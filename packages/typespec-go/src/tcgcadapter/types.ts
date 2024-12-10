@@ -32,8 +32,8 @@ export class typeAdapter {
       if (enumType.usage === tcgc.UsageFlags.ApiVersionEnum) {
         // we have a pipeline policy for controlling the api-version
         continue;
-      } else if ((enumType.usage & tcgc.UsageFlags.Exception) === tcgc.UsageFlags.Exception && (enumType.usage & tcgc.UsageFlags.Input) === 0 && (enumType.usage & tcgc.UsageFlags.Output) === 0 || tcgc.isAzureCoreModel(enumType)) {
-        // skip error and core type
+      } else if (this.skipSpecificTypes(enumType)) {
+        // skip specific types
         continue;
       }
       const constType = this.getConstantType(enumType);
@@ -48,11 +48,11 @@ export class typeAdapter {
         // tcgc creates some unamed models for spread params.
         // we don't use these so just skip them.
         continue;
-      } else if ((modelType.usage & tcgc.UsageFlags.Exception) === tcgc.UsageFlags.Exception && (modelType.usage & tcgc.UsageFlags.Input) === 0 && (modelType.usage & tcgc.UsageFlags.Output) === 0 || tcgc.isAzureCoreModel(modelType)) {
-        // skip error and core type
-        continue;
       } else if (modelType.access === 'internal' && (modelType.usage & tcgc.UsageFlags.Spread) === tcgc.UsageFlags.Spread) {
         // we don't use the internal models for spread params
+        continue;
+      } else if (this.skipSpecificTypes(modelType)) {
+        // skip specific types
         continue;
       }
 
@@ -109,6 +109,23 @@ export class typeAdapter {
       }
       this.codeModel.models.push(modelType.go);
     }
+  }
+
+  private skipSpecificTypes(type: tcgc.SdkModelType | tcgc.SdkEnumType): boolean {
+    if (tcgc.isAzureCoreModel(type)) {
+      // skip core types
+      return true;
+    } else if ((type.usage & tcgc.UsageFlags.Exception) === tcgc.UsageFlags.Exception && (type.usage & tcgc.UsageFlags.Input) === 0 && (type.usage & tcgc.UsageFlags.Output) === 0) {
+      // skip error type
+      return true;
+    } else if ((type.usage & tcgc.UsageFlags.LroPolling) === tcgc.UsageFlags.LroPolling && (type.usage & tcgc.UsageFlags.Input) === 0 && (type.usage & tcgc.UsageFlags.Output) === 0) {
+      // skip lro polling type
+      return true;
+    } else if ((type.usage & tcgc.UsageFlags.LroInitial) === tcgc.UsageFlags.LroInitial && (type.usage & tcgc.UsageFlags.Input) === 0 && (type.usage & tcgc.UsageFlags.Output) === 0) {
+      // skip lro initial response type
+      return true;
+    }
+    return false;
   }
 
   // returns the synthesized paged response types
