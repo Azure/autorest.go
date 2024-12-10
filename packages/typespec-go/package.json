@@ -33,7 +33,6 @@
     "url": "git+https://github.com/Azure/autorest.go.git"
   },
   "keywords": [
-    "cadl",
     "go",
     "golang",
     "typespec"
@@ -46,9 +45,9 @@
   "homepage": "https://github.com/Azure/autorest.go#readme",
   "readme": "https://github.com/Azure/autorest.go/blob/main/readme.md",
   "devDependencies": {
-    "@azure-tools/cadl-ranch": "~0.16.1",
-    "@azure-tools/cadl-ranch-expect": "~0.15.6",
-    "@azure-tools/cadl-ranch-specs": "0.39.1",
+    "@typespec/spector": "~0.1.0-alpha.3",
+    "@typespec/http-specs": "~0.1.0-alpha.3-dev.6",
+    "@azure-tools/azure-http-specs": "~0.1.0-alpha.3-dev.6",
     "@azure-tools/typespec-autorest": ">=0.48.0 <1.0.0",
     "@azure-tools/typespec-azure-core": ">=0.48.0 <1.0.0",
     "@azure-tools/typespec-azure-resource-manager": ">=0.48.0 <1.0.0",
