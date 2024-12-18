@@ -1,5 +1,11 @@
 # Release History
 
+## 0.3.5 (2024-12-18)
+
+### Other Fixes
+
+* Updated dependencies (accounts for latest tsp toolset).
+
 ## 0.3.4 (2024-12-03)
 
 ### Other Fixes
