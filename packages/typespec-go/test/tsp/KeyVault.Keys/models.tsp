@@ -765,7 +765,7 @@ model KeyListResult {
   /**
    * The URL to get the next set of keys.
    */
-  @Azure.Core.nextLink
+  @nextLink
   @visibility("read")
   nextLink?: string;
 }
@@ -1007,7 +1007,7 @@ model DeletedKeyListResult {
   /**
    * The URL to get the next set of deleted keys.
    */
-  @Azure.Core.nextLink
+  @nextLink
   @visibility("read")
   nextLink?: string;
 }

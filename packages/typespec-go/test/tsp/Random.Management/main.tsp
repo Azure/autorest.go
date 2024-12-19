@@ -46,7 +46,7 @@ model ThingsListResult {
   value: FakeData[];
 
   @doc("The link to the next page of items")
-  @Azure.Core.nextLink
+  @nextLink
   nextLink?: string;
 
   @doc("More fake things")

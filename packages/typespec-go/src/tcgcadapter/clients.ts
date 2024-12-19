@@ -295,7 +295,7 @@ export class clientAdapter {
     }
 
     // stuff all of the operation parameters into one array for easy traversal
-    type OperationParamType = tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter;
+    type OperationParamType = tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter;
     const allOpParams = new Array<OperationParamType>();
     allOpParams.push(...sdkMethod.operation.parameters);
     if (sdkMethod.operation.bodyParam) {
@@ -434,7 +434,7 @@ export class clientAdapter {
     return contentType;
   }
 
-  private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter, optionalGroup?: go.ParameterGroup): go.Parameter {
+  private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter, optionalGroup?: go.ParameterGroup): go.Parameter {
     if (param.isApiVersionParam && param.clientDefaultValue) {
       // we emit the api version param inline as a literal, never as a param.
       // the ClientOptions.APIVersion setting is used to change the version.
@@ -452,7 +452,7 @@ export class clientAdapter {
     }
 
     let location: go.ParameterLocation = 'method';
-    const getClientParamsKey = function (param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): string {
+    const getClientParamsKey = function (param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter): string {
       // include the param kind in the key name as a client param can be used
       // in different places across methods (path/query)
       return `${param.name}-${param.kind}`;
@@ -500,6 +500,9 @@ export class clientAdapter {
       }
     } else if (param.kind === 'path') {
       adaptedParam = new go.PathParameter(paramName, param.serializedName, !param.allowReserved, this.adaptPathParameterType(param.type), paramKind, byVal, location);
+    } else if (param.kind === 'cookie') {
+      // TODO: currently we don't have Azure service using cookie parameter. need to add support if needed in the future.
+      throw new Error('could not support cookie parameter');
     } else {
       if (param.collectionFormat) {
         const type = this.ta.getPossibleType(param.type, true, false);
@@ -693,7 +696,7 @@ export class clientAdapter {
     return type;
   }
 
-  private adaptParameterKind(param: tcgc.SdkBodyParameter | tcgc.SdkEndpointParameter | tcgc.SdkHeaderParameter | tcgc.SdkMethodParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): go.ParameterKind {
+  private adaptParameterKind(param: tcgc.SdkBodyParameter | tcgc.SdkEndpointParameter | tcgc.SdkHeaderParameter | tcgc.SdkMethodParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter): go.ParameterKind {
     // NOTE: must check for constant type first as it will also set clientDefaultValue
     if (param.type.kind === 'constant') {
       if (param.optional) {
