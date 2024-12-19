@@ -23,4 +23,4 @@ steps:
       azureSubscription: "TypeSpec Storage"
       scriptType: "bash"
       scriptLocation: "inlineScript"
-      inlineScript: $(spector) upload-coverage --generatorName go --storageAccountName typespec --generatorVersion $(node -p -e "require('$(System.DefaultWorkingDirectory)/packages/typespec-go/package.json').version") --generatorMode azure
+      inlineScript: $(spector) upload-coverage --containerName=coverages --generatorName @azure-tools/typespec-go --storageAccountName typespec --generatorVersion $(node -p -e "require('$(System.DefaultWorkingDirectory)/packages/typespec-go/package.json').version") --generatorMode azure
