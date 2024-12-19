@@ -142,12 +142,6 @@
       "longName": "--serve",
       "description": "Starts the spector test server with output",
       "associatedCommands": ["spector"]
-    },
-    {
-      "parameterKind": "flag",
-      "longName": "--azure",
-      "description": "Load azure specs",
-      "associatedCommands": ["spector"]
     }
   ]
 }

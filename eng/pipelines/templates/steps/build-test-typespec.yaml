@@ -1,15 +1,15 @@
 parameters:
-  GoTestPath: '$(System.DefaultWorkingDirectory)/packages/typespec-go/test'
+  GoTestPath: "$(System.DefaultWorkingDirectory)/packages/typespec-go/test"
 
 steps:
   - script: |
       rush install
       rush rebuild -v
-    displayName: 'Build Emitter Sources'
+    displayName: "Build Emitter Sources"
 
   - script: |
       npm run eslint
-    displayName: 'Run Lint'
+    displayName: "Run Lint"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
 
   - script: |
@@ -17,7 +17,7 @@ steps:
       rush modtidy 2>&1
       git add -A .
       git diff --staged -w 1>&2
-    displayName: 'Regenerate TypeSpec Tests'
+    displayName: "Regenerate TypeSpec Tests"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go/test
     failOnStderr: true
 
@@ -28,8 +28,8 @@ steps:
       go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow@latest
       curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.55.2
       ~/go/bin/golangci-lint --version
-    displayName: 'Install Test Tools'
-    workingDirectory: '${{ parameters.GoTestPath }}'
+    displayName: "Install Test Tools"
+    workingDirectory: "${{ parameters.GoTestPath }}"
 
   - pwsh: |
       $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
@@ -48,11 +48,11 @@ steps:
         }
       }
       exit $exit
-    displayName: 'Lint Generated Content'
+    displayName: "Lint Generated Content"
 
   - pwsh: |
       rush spector --start
-      $testDirs = ($(System.DefaultWorkingDirectory)/eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }}/http-specs)
+      $testDirs = ($(System.DefaultWorkingDirectory)/eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
       foreach ($td in $testDirs) {
         pushd $td
         Write-Host "##[command]Executing go test -run "^Test" -v $td | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml"
@@ -60,33 +60,7 @@ steps:
         popd
       }
       rush spector --stop
-    displayName: 'Run Http Specs Tests'
-    timeoutInMinutes: 10
-
-  - pwsh: |
-      rush spector --start --azure
-      $testDirs = ($(System.DefaultWorkingDirectory)/eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }}/azure-http-specs)
-      foreach ($td in $testDirs) {
-        pushd $td
-        Write-Host "##[command]Executing go test -run "^Test" -v $td | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml"
-        go test -run "^Test" -v | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml
-        popd
-      }
-      rush spector --stop
-    displayName: 'Run Azure Http Specs Tests'
-    timeoutInMinutes: 10
-
-  - pwsh: |
-      rush spector --start
-      $testDirs = ($(System.DefaultWorkingDirectory)/eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }}/local)
-      foreach ($td in $testDirs) {
-        pushd $td
-        Write-Host "##[command]Executing go test -run "^Test" -v $td | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml"
-        go test -run "^Test" -v | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml
-        popd
-      }
-      rush spector --stop
-    displayName: 'Run Local Tests'
+    displayName: "Run All Tests"
     timeoutInMinutes: 10
 
   - task: PublishTestResults@2

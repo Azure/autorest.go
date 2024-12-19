@@ -10,21 +10,18 @@ const azureHttpSpecs = nodeModulesRoot + '@azure-tools/azure-http-specs/specs';
 const switches = [];
 let execSyncOptions;
 
-let spec = httpSpecs;
-if (process.argv[3] === '--azure') {
-  spec = azureHttpSpecs;
-}
-
 switch (process.argv[2]) {
   case '--serve':
     switches.push('serve');
-    switches.push(spec);
+    switches.push(httpSpecs);
+    switches.push(azureHttpSpecs);
     execSyncOptions = {stdio: 'inherit'};
     break;
   case '--start':
     switches.push('server');
     switches.push('start');
-    switches.push(spec);
+    switches.push(httpSpecs);
+    switches.push(azureHttpSpecs);
     break;
   case '--stop':
     switches.push('server');
