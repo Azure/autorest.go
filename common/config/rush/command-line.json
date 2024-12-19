@@ -87,9 +87,9 @@
     },
     {
       "commandKind": "global",
-      "name": "cadl-ranch",
-      "summary": "used to start or stop the cadl-ranch test server",
-      "shellCommand": "node packages/typespec-go/.scripts/cadl-ranch.js"
+      "name": "spector",
+      "summary": "used to start or stop the spector test server",
+      "shellCommand": "node packages/typespec-go/.scripts/spector.js"
     }
   ],
   "parameters": [
@@ -128,20 +128,20 @@
     {
       "parameterKind": "flag",
       "longName": "--start",
-      "description": "Starts the cadl-ranch test server",
-      "associatedCommands": ["cadl-ranch"]
+      "description": "Starts the spector test server",
+      "associatedCommands": ["spector"]
     },
     {
       "parameterKind": "flag",
       "longName": "--stop",
-      "description": "Stops the cadl-ranch test server",
-      "associatedCommands": ["cadl-ranch"]
+      "description": "Stops the spector test server",
+      "associatedCommands": ["spector"]
     },
     {
       "parameterKind": "flag",
       "longName": "--serve",
-      "description": "Starts the cadl-ranch test server with output",
-      "associatedCommands": ["cadl-ranch"]
+      "description": "Starts the spector test server with output",
+      "associatedCommands": ["spector"]
     }
   ]
 }

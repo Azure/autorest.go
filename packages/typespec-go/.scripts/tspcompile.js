@@ -9,34 +9,19 @@ const sem = semaphore(8);
 
 const pkgRoot = execSync('git rev-parse --show-toplevel').toString().trim() + '/packages/typespec-go/';
 
-const tspRoot = pkgRoot + 'node_modules/@azure-tools/cadl-ranch-specs/http/';
+const httpSpecs = pkgRoot + 'node_modules/@typespec/http-specs/specs/';
+const azureHttpSpecs = pkgRoot + 'node_modules/@azure-tools/azure-http-specs/specs/';
 
 const compiler = pkgRoot + 'node_modules/@typespec/compiler/cmd/tsp.js';
 
 // the format is as follows
 // 'moduleName': [ 'input', 'emitter option 1', 'emitter option N...' ]
 // if no .tsp file is specified in input, it's assumed to be main.tsp
-const cadlRanch = {
+const httpSpecsGroup = {
   'apikeygroup': ['authentication/api-key'],     // missing tests
   'customgroup': ['authentication/http/custom'], // missing tests
   'oauth2group': ['authentication/oauth2'],      // missing tests
   'unionauthgroup': ['authentication/union'],    // missing tests
-  'accessgroup': ['azure/client-generator-core/access'],
-  'coreusagegroup': ['azure/client-generator-core/usage'],
-  'basicgroup': ['azure/core/basic'],
-  'lrorpcgroup': ['azure/core/lro/rpc'],
-  'lrostdgroup': ['azure/core/lro/standard'],
-  'azurepagegroup': ['azure/core/page'],
-  'corescalargroup': ['azure/core/scalar'],
-  'commonpropsgroup': ['azure/resource-manager/common-properties'],
-  'resources': ['azure/resource-manager/resources'],
-  //'traitsgroup': ['azure/core/traits'], // requires union support
-  'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
-  'naminggroup': ['client/naming'],
-  'defaultgroup': ['client/structure/default/client.tsp'],
-  'multiclientgroup': ['client/structure/multi-client/client.tsp'],
-  'renamedopgroup': ['client/structure/renamed-operation/client.tsp'],
-  'twoopgroup': ['client/structure/two-operation-group/client.tsp'],
   'bytesgroup': ['encode/bytes'],
   'datetimegroup': ['encode/datetime', 'slice-elements-byval=true'],
   'durationgroup': ['encode/duration'],
@@ -51,8 +36,6 @@ const cadlRanch = {
   //'multipartgroup': ['payload/multipart'], // TODO: https://github.com/Azure/autorest.go/issues/1445
   'pageablegroup': ['payload/pageable'],
   'xmlgroup': ['payload/xml', 'slice-elements-byval=true'],
-  'srvdrivenoldgroup': ['resiliency/srv-driven/old.tsp'],
-  'srvdrivennewgroup': ['resiliency/srv-driven'],
   'jsongroup': ['serialization/encoded-name/json'],
   'noendpointgroup': ['server/endpoint/not-defined'],
   'multiplegroup': ['server/path/multiple'],
@@ -67,7 +50,6 @@ const cadlRanch = {
   'extensiblegroup': ['type/enum/extensible'],
   'fixedgroup': ['type/enum/fixed'],
   'emptygroup': ['type/model/empty', 'single-client=true'],
-  'flattengroup': ['azure/client-generator-core/flatten-property'],
   'enumdiscgroup': ['type/model/inheritance/enum-discriminator'],
   //'nesteddiscgroup': ['type/model/inheritance/nested-discriminator'], // not a real scenario
   'nodiscgroup': ['type/model/inheritance/not-discriminated'],
@@ -87,6 +69,29 @@ const cadlRanch = {
   //'renamedfromgroup': ['versioning/renamedFrom'], // requires union support
   'rettypechangedfromgroup': ['versioning/returnTypeChangedFrom'],
   'typechangedfromgroup': ['versioning/typeChangedFrom']
+};
+
+const azureHttpSpecsGroup = {
+  'accessgroup': ['azure/client-generator-core/access'],
+  'flattengroup': ['azure/client-generator-core/flatten-property'],
+  'coreusagegroup': ['azure/client-generator-core/usage'],
+  'basicgroup': ['azure/core/basic'],
+  'lrorpcgroup': ['azure/core/lro/rpc'],
+  'lrostdgroup': ['azure/core/lro/standard'],
+  'azurepagegroup': ['azure/core/page'],
+  'corescalargroup': ['azure/core/scalar'],
+  //'traitsgroup': ['azure/core/traits'], // requires union support
+  'pageablegroup': ['azure/payload/pageable'],
+  'commonpropsgroup': ['azure/resource-manager/common-properties'],
+  'resources': ['azure/resource-manager/resources'],
+  'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
+  'naminggroup': ['client/naming'],
+  'defaultgroup': ['client/structure/default/client.tsp'],
+  'multiclientgroup': ['client/structure/multi-client/client.tsp'],
+  'renamedopgroup': ['client/structure/renamed-operation/client.tsp'],
+  'twoopgroup': ['client/structure/two-operation-group/client.tsp'],
+  'srvdrivenoldgroup': ['resiliency/srv-driven/old.tsp'],
+  'srvdrivennewgroup': ['resiliency/srv-driven'],
 };
 
 // any new args must also be added to autorest.go\common\config\rush\command-line.json
@@ -123,56 +128,61 @@ function should_generate(name) {
 }
 
 const armcodesigning = pkgRoot + 'test/tsp/CodeSigning.Management';
-generate('armcodesigning', armcodesigning, 'test/armcodesigning');
+generate('armcodesigning', armcodesigning, 'test/local/armcodesigning');
 
 const armapicenter = pkgRoot +  'test/tsp/ApiCenter.Management';
-generate('armapicenter', armapicenter, 'test/armapicenter');
+generate('armapicenter', armapicenter, 'test/local/armapicenter');
 
 const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
-generate('armlargeinstance', armlargeinstance, 'test/armlargeinstance', ['stutter=AzureLargeInstance']);
+generate('armlargeinstance', armlargeinstance, 'test/local/armlargeinstance', ['stutter=AzureLargeInstance']);
 
 const armdatabasewatcher = pkgRoot + 'test/tsp/DatabaseWatcher.Management';
-generate('armdatabasewatcher', armdatabasewatcher, 'test/armdatabasewatcher', ['fix-const-stuttering=false']);
+generate('armdatabasewatcher', armdatabasewatcher, 'test/local/armdatabasewatcher', ['fix-const-stuttering=false']);
 
 const armloadtestservice = pkgRoot + 'test/tsp/LoadTestService.Management';
-generate('armloadtestservice', armloadtestservice, 'test/armloadtestservice');
+generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice');
 
 const armdevopsinfrastructure = pkgRoot + 'test/tsp/Microsoft.DevOpsInfrastructure';
-generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/armdevopsinfrastructure');
+generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/local/armdevopsinfrastructure');
 
 const armrandom = pkgRoot + 'test/tsp/Random.Management';
-generate('armrandom', armrandom, 'test/armrandom');
+generate('armrandom', armrandom, 'test/local/armrandom');
 
 const armcommunitymanagement = pkgRoot + 'test/tsp/Community.Management';
-generate('armcommunitymanagement', armcommunitymanagement, 'test/armcommunitymanagement');
+generate('armcommunitymanagement', armcommunitymanagement, 'test/local/armcommunitymanagement');
 
 const armmongocluster = pkgRoot + 'test/tsp/MongoCluster.Management';
-generate('armmongocluster', armmongocluster, 'test/armmongocluster');
+generate('armmongocluster', armmongocluster, 'test/local/armmongocluster');
 
 const armcontainerorchestratorruntime = pkgRoot + 'test/tsp/KubernetesRuntime.Management';
-generate('armcontainerorchestratorruntime', armcontainerorchestratorruntime, 'test/armcontainerorchestratorruntime');
+generate('armcontainerorchestratorruntime', armcontainerorchestratorruntime, 'test/local/armcontainerorchestratorruntime');
 
 const azmodelsonly = pkgRoot + 'test/tsp/ModelsOnlyWithBaseTypes';
-generate('azmodelsonly', azmodelsonly, 'test/azmodelsonly');
+generate('azmodelsonly', azmodelsonly, 'test/local/azmodelsonly');
 
 const azkeys = pkgRoot + 'test/tsp/KeyVault.Keys';
-generate('azkeys', azkeys, 'test/azkeys');
+generate('azkeys', azkeys, 'test/local/azkeys');
 
-for (const module in cadlRanch) {
-  const values = cadlRanch[module];
-  let perTestOptions;
-  if (values.length > 1) {
-    perTestOptions = values.slice(1);
-  }
-  // keep the output directory structure similar to the cadl input directory.
-  // remove the last dir from the input path as we'll use the module name instead.
-  // if the input specifies a .tsp file, remove that first.
-  let outDir = values[0];
-  if (outDir.lastIndexOf('.tsp') > -1) {
+loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
+loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
+
+function loopSpec(group, root, prefix) {
+  for (const module in group) {
+    const values = group[module];
+    let perTestOptions;
+    if (values.length > 1) {
+      perTestOptions = values.slice(1);
+    }
+    // keep the output directory structure similar to the cadl input directory.
+    // remove the last dir from the input path as we'll use the module name instead.
+    // if the input specifies a .tsp file, remove that first.
+    let outDir = values[0];
+    if (outDir.lastIndexOf('.tsp') > -1) {
+      outDir = outDir.substring(0, outDir.lastIndexOf('/'));
+    }
     outDir = outDir.substring(0, outDir.lastIndexOf('/'));
+    generate(module, root + values[0], `${prefix}/${outDir}/` + module, perTestOptions);
   }
-  outDir = outDir.substring(0, outDir.lastIndexOf('/'));
-  generate(module, tspRoot + values[0], `test/cadlranch/${outDir}/` + module, perTestOptions);
 }
 
 function generate(moduleName, input, outputDir, perTestOptions) {
