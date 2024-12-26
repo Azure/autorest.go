@@ -17,7 +17,7 @@ steps:
       rush modtidy 2>&1
       git add -A .
       git diff --staged -w 1>&2
-    displayName: "Regenerate Cadl Tests"
+    displayName: "Regenerate TypeSpec Tests"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go/test
     failOnStderr: true
 
@@ -51,7 +51,7 @@ steps:
     displayName: "Lint Generated Content"
 
   - pwsh: |
-      rush cadl-ranch --start
+      rush spector --start
       $testDirs = ($(System.DefaultWorkingDirectory)/eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
       foreach ($td in $testDirs) {
         pushd $td
@@ -59,10 +59,9 @@ steps:
         go test -run "^Test" -v | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml
         popd
       }
-      rush cadl-ranch --stop
+      rush spector --stop
     displayName: "Run All Tests"
     timeoutInMinutes: 10
-    workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@azure-tools/cadl-ranch-specs
 
   - task: PublishTestResults@2
     inputs:
