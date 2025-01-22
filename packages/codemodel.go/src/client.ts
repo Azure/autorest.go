@@ -105,6 +105,8 @@ export interface LROMethod extends Method {
   finalStateVia?: 'azure-async-operation' | 'location' | 'operation-location' | 'original-uri';
 
   isLRO: true;
+
+  operationLocationResultPath?: string;
 }
 
 export interface PageableMethod extends Method {

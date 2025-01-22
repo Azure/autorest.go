@@ -4,7 +4,7 @@
 
 package pageablegroup
 
-// PageableServerDrivenPaginationClientLinkOptions contains the optional parameters for the PageableServerDrivenPaginationClient.Link
+// PageableServerDrivenPaginationClientLinkOptions contains the optional parameters for the PageableServerDrivenPaginationClient.NewLinkPager
 // method.
 type PageableServerDrivenPaginationClientLinkOptions struct {
 	// placeholder for future optional parameters

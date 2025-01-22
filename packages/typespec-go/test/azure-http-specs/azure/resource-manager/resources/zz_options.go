@@ -4,6 +4,61 @@
 
 package resources
 
+// ExtensionsResourcesClientBeginCreateOrUpdateOptions contains the optional parameters for the ExtensionsResourcesClient.BeginCreateOrUpdate
+// method.
+type ExtensionsResourcesClientBeginCreateOrUpdateOptions struct {
+	// Resumes the long-running operation from the provided token.
+	ResumeToken string
+}
+
+// ExtensionsResourcesClientDeleteOptions contains the optional parameters for the ExtensionsResourcesClient.Delete method.
+type ExtensionsResourcesClientDeleteOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ExtensionsResourcesClientGetOptions contains the optional parameters for the ExtensionsResourcesClient.Get method.
+type ExtensionsResourcesClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ExtensionsResourcesClientListByScopeOptions contains the optional parameters for the ExtensionsResourcesClient.NewListByScopePager
+// method.
+type ExtensionsResourcesClientListByScopeOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ExtensionsResourcesClientUpdateOptions contains the optional parameters for the ExtensionsResourcesClient.Update method.
+type ExtensionsResourcesClientUpdateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LocationResourcesClientCreateOrUpdateOptions contains the optional parameters for the LocationResourcesClient.CreateOrUpdate
+// method.
+type LocationResourcesClientCreateOrUpdateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LocationResourcesClientDeleteOptions contains the optional parameters for the LocationResourcesClient.Delete method.
+type LocationResourcesClientDeleteOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LocationResourcesClientGetOptions contains the optional parameters for the LocationResourcesClient.Get method.
+type LocationResourcesClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LocationResourcesClientListByLocationOptions contains the optional parameters for the LocationResourcesClient.NewListByLocationPager
+// method.
+type LocationResourcesClientListByLocationOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LocationResourcesClientUpdateOptions contains the optional parameters for the LocationResourcesClient.Update method.
+type LocationResourcesClientUpdateOptions struct {
+	// placeholder for future optional parameters
+}
+
 // NestedClientBeginCreateOrReplaceOptions contains the optional parameters for the NestedClient.BeginCreateOrReplace method.
 type NestedClientBeginCreateOrReplaceOptions struct {
 	// Resumes the long-running operation from the provided token.

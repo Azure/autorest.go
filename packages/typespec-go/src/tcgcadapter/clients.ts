@@ -215,6 +215,9 @@ export class clientAdapter {
       if (lroOptions) {
         (<go.LROMethod>method).finalStateVia = lroOptions['finalState'];
       }
+      if (sdkMethod.lroMetadata.finalResponse?.resultPath) {
+        (<go.LROMethod>method).operationLocationResultPath = sdkMethod.lroMetadata.finalResponse.resultPath;
+      }
     } else {
       throw new Error(`method kind ${sdkMethod.kind} NYI`);
     }

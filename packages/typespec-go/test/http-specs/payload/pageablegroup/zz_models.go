@@ -6,17 +6,8 @@ package pageablegroup
 
 type LinkResponse struct {
 	// REQUIRED
-	Links *LinkResponseLinks
-
-	// REQUIRED
 	Pets []*Pet
-}
-
-type LinkResponseLinks struct {
-	First *string
-	Last  *string
-	Next  *string
-	Prev  *string
+	Next *string
 }
 
 type Pet struct {

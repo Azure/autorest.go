@@ -15,6 +15,12 @@ import (
 
 // ServerFactory is a fake server for instances of the resources.ClientFactory type.
 type ServerFactory struct {
+	// ExtensionsResourcesServer contains the fakes for client ExtensionsResourcesClient
+	ExtensionsResourcesServer ExtensionsResourcesServer
+
+	// LocationResourcesServer contains the fakes for client LocationResourcesClient
+	LocationResourcesServer LocationResourcesServer
+
 	// NestedServer contains the fakes for client NestedClient
 	NestedServer NestedServer
 
@@ -37,11 +43,13 @@ func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
 // ServerFactoryTransport connects instances of resources.ClientFactory to instances of ServerFactory.
 // Don't use this type directly, use NewServerFactoryTransport instead.
 type ServerFactoryTransport struct {
-	srv               *ServerFactory
-	trMu              sync.Mutex
-	trNestedServer    *NestedServerTransport
-	trSingletonServer *SingletonServerTransport
-	trTopLevelServer  *TopLevelServerTransport
+	srv                         *ServerFactory
+	trMu                        sync.Mutex
+	trExtensionsResourcesServer *ExtensionsResourcesServerTransport
+	trLocationResourcesServer   *LocationResourcesServerTransport
+	trNestedServer              *NestedServerTransport
+	trSingletonServer           *SingletonServerTransport
+	trTopLevelServer            *TopLevelServerTransport
 }
 
 // Do implements the policy.Transporter interface for ServerFactoryTransport.
@@ -57,6 +65,16 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	var err error
 
 	switch client {
+	case "ExtensionsResourcesClient":
+		initServer(s, &s.trExtensionsResourcesServer, func() *ExtensionsResourcesServerTransport {
+			return NewExtensionsResourcesServerTransport(&s.srv.ExtensionsResourcesServer)
+		})
+		resp, err = s.trExtensionsResourcesServer.Do(req)
+	case "LocationResourcesClient":
+		initServer(s, &s.trLocationResourcesServer, func() *LocationResourcesServerTransport {
+			return NewLocationResourcesServerTransport(&s.srv.LocationResourcesServer)
+		})
+		resp, err = s.trLocationResourcesServer.Do(req)
 	case "NestedClient":
 		initServer(s, &s.trNestedServer, func() *NestedServerTransport { return NewNestedServerTransport(&s.srv.NestedServer) })
 		resp, err = s.trNestedServer.Do(req)

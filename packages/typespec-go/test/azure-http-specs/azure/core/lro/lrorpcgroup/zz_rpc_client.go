@@ -33,7 +33,8 @@ func (client *RPCClient) BeginLongRunningRPC(ctx context.Context, body Generatio
 			return nil, err
 		}
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[RPCClientLongRunningRPCResponse]{
-			Tracer: client.internal.Tracer(),
+			OperationLocationResultPath: "result",
+			Tracer:                      client.internal.Tracer(),
 		})
 		return poller, err
 	} else {

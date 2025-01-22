@@ -32,6 +32,21 @@ func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, 
 	}, nil
 }
 
+// NewExtensionsResourcesClient creates a new instance of ExtensionsResourcesClient.
+func (c *ClientFactory) NewExtensionsResourcesClient() *ExtensionsResourcesClient {
+	return &ExtensionsResourcesClient{
+		internal: c.internal,
+	}
+}
+
+// NewLocationResourcesClient creates a new instance of LocationResourcesClient.
+func (c *ClientFactory) NewLocationResourcesClient() *LocationResourcesClient {
+	return &LocationResourcesClient{
+		subscriptionID: c.subscriptionID,
+		internal:       c.internal,
+	}
+}
+
 // NewNestedClient creates a new instance of NestedClient.
 func (c *ClientFactory) NewNestedClient() *NestedClient {
 	return &NestedClient{
