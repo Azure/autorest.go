@@ -14,7 +14,7 @@ import (
 // MarshalJSON implements the json.Marshaller interface for type LinkResponse.
 func (l LinkResponse) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populate(objectMap, "links", l.Links)
+	populate(objectMap, "next", l.Next)
 	populate(objectMap, "pets", l.Pets)
 	return json.Marshal(objectMap)
 }
@@ -28,50 +28,11 @@ func (l *LinkResponse) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
-		case "links":
-			err = unpopulate(val, "Links", &l.Links)
-			delete(rawMsg, key)
-		case "pets":
-			err = unpopulate(val, "Pets", &l.Pets)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", l, err)
-		}
-	}
-	return nil
-}
-
-// MarshalJSON implements the json.Marshaller interface for type LinkResponseLinks.
-func (l LinkResponseLinks) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]any)
-	populate(objectMap, "first", l.First)
-	populate(objectMap, "last", l.Last)
-	populate(objectMap, "next", l.Next)
-	populate(objectMap, "prev", l.Prev)
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type LinkResponseLinks.
-func (l *LinkResponseLinks) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", l, err)
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "first":
-			err = unpopulate(val, "First", &l.First)
-			delete(rawMsg, key)
-		case "last":
-			err = unpopulate(val, "Last", &l.Last)
-			delete(rawMsg, key)
 		case "next":
 			err = unpopulate(val, "Next", &l.Next)
 			delete(rawMsg, key)
-		case "prev":
-			err = unpopulate(val, "Prev", &l.Prev)
+		case "pets":
+			err = unpopulate(val, "Pets", &l.Pets)
 			delete(rawMsg, key)
 		}
 		if err != nil {

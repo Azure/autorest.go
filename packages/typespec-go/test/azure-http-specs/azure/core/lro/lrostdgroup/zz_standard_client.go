@@ -183,7 +183,8 @@ func (client *StandardClient) BeginExport(ctx context.Context, name string, form
 			return nil, err
 		}
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[StandardClientExportResponse]{
-			Tracer: client.internal.Tracer(),
+			OperationLocationResultPath: "result",
+			Tracer:                      client.internal.Tracer(),
 		})
 		return poller, err
 	} else {

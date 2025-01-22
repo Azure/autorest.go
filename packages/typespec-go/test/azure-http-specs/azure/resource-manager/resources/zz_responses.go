@@ -4,6 +4,64 @@
 
 package resources
 
+// ExtensionsResourcesClientCreateOrUpdateResponse contains the response from method ExtensionsResourcesClient.BeginCreateOrUpdate.
+type ExtensionsResourcesClientCreateOrUpdateResponse struct {
+	// Concrete extension resource types can be created by aliasing this type using a specific property type.
+	ExtensionsResource
+}
+
+// ExtensionsResourcesClientDeleteResponse contains the response from method ExtensionsResourcesClient.Delete.
+type ExtensionsResourcesClientDeleteResponse struct {
+	// placeholder for future response values
+}
+
+// ExtensionsResourcesClientGetResponse contains the response from method ExtensionsResourcesClient.Get.
+type ExtensionsResourcesClientGetResponse struct {
+	// Concrete extension resource types can be created by aliasing this type using a specific property type.
+	ExtensionsResource
+}
+
+// ExtensionsResourcesClientListByScopeResponse contains the response from method ExtensionsResourcesClient.NewListByScopePager.
+type ExtensionsResourcesClientListByScopeResponse struct {
+	// The response of a ExtensionsResource list operation.
+	ExtensionsResourceListResult
+}
+
+// ExtensionsResourcesClientUpdateResponse contains the response from method ExtensionsResourcesClient.Update.
+type ExtensionsResourcesClientUpdateResponse struct {
+	// Concrete extension resource types can be created by aliasing this type using a specific property type.
+	ExtensionsResource
+}
+
+// LocationResourcesClientCreateOrUpdateResponse contains the response from method LocationResourcesClient.CreateOrUpdate.
+type LocationResourcesClientCreateOrUpdateResponse struct {
+	// Concrete proxy resource types can be created by aliasing this type using a specific property type.
+	LocationResource
+}
+
+// LocationResourcesClientDeleteResponse contains the response from method LocationResourcesClient.Delete.
+type LocationResourcesClientDeleteResponse struct {
+	// placeholder for future response values
+}
+
+// LocationResourcesClientGetResponse contains the response from method LocationResourcesClient.Get.
+type LocationResourcesClientGetResponse struct {
+	// Concrete proxy resource types can be created by aliasing this type using a specific property type.
+	LocationResource
+}
+
+// LocationResourcesClientListByLocationResponse contains the response from method LocationResourcesClient.NewListByLocationPager.
+type LocationResourcesClientListByLocationResponse struct {
+	// The response of a LocationResource list operation.
+	LocationResourceListResult
+}
+
+// LocationResourcesClientUpdateResponse contains the response from method LocationResourcesClient.Update.
+type LocationResourcesClientUpdateResponse struct {
+	// Concrete proxy resource types can be created by aliasing this type using a specific property type.
+	LocationResource
+}
+
 // NestedClientCreateOrReplaceResponse contains the response from method NestedClient.BeginCreateOrReplace.
 type NestedClientCreateOrReplaceResponse struct {
 	// Nested child of Top Level Tracked Resource.

@@ -18,30 +18,29 @@ type PageableServerDrivenPaginationClient struct {
 	internal *azcore.Client
 }
 
-// Link -
-// If the operation fails it returns an *azcore.ResponseError type.
-//   - options - PageableServerDrivenPaginationClientLinkOptions contains the optional parameters for the PageableServerDrivenPaginationClient.Link
+//   - options - PageableServerDrivenPaginationClientLinkOptions contains the optional parameters for the PageableServerDrivenPaginationClient.NewLinkPager
 //     method.
-func (client *PageableServerDrivenPaginationClient) Link(ctx context.Context, options *PageableServerDrivenPaginationClientLinkOptions) (PageableServerDrivenPaginationClientLinkResponse, error) {
-	var err error
-	const operationName = "PageableServerDrivenPaginationClient.Link"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
-	req, err := client.linkCreateRequest(ctx, options)
-	if err != nil {
-		return PageableServerDrivenPaginationClientLinkResponse{}, err
-	}
-	httpResp, err := client.internal.Pipeline().Do(req)
-	if err != nil {
-		return PageableServerDrivenPaginationClientLinkResponse{}, err
-	}
-	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
-		err = runtime.NewResponseError(httpResp)
-		return PageableServerDrivenPaginationClientLinkResponse{}, err
-	}
-	resp, err := client.linkHandleResponse(httpResp)
-	return resp, err
+func (client *PageableServerDrivenPaginationClient) NewLinkPager(options *PageableServerDrivenPaginationClientLinkOptions) *runtime.Pager[PageableServerDrivenPaginationClientLinkResponse] {
+	return runtime.NewPager(runtime.PagingHandler[PageableServerDrivenPaginationClientLinkResponse]{
+		More: func(page PageableServerDrivenPaginationClientLinkResponse) bool {
+			return page.Next != nil && len(*page.Next) > 0
+		},
+		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationClientLinkResponse) (PageableServerDrivenPaginationClientLinkResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationClient.NewLinkPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.Next
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.linkCreateRequest(ctx, options)
+			}, nil)
+			if err != nil {
+				return PageableServerDrivenPaginationClientLinkResponse{}, err
+			}
+			return client.linkHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
 }
 
 // linkCreateRequest creates the Link request.

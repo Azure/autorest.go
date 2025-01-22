@@ -1280,7 +1280,7 @@ function generateLROBeginMethod(client: go.Client, method: go.LROMethod, imports
     text += pollerTypeParam;
   }
   text += '(resp, client.internal.Pipeline(), ';
-  if (finalStateVia === '' && pollerType === 'nil' && !injectSpans) {
+  if (finalStateVia === '' && pollerType === 'nil' && !injectSpans && !method.operationLocationResultPath) {
     // no options
     text += 'nil)\n';
   } else {
@@ -1288,6 +1288,9 @@ function generateLROBeginMethod(client: go.Client, method: go.LROMethod, imports
     text += `&runtime.NewPollerOptions${pollerTypeParam}{\n`;
     if (finalStateVia !== '') {
       text += `\t\t\tFinalStateVia: ${finalStateVia},\n`;  
+    }
+    if (method.operationLocationResultPath) {
+      text += `\t\t\tOperationLocationResultPath: "${method.operationLocationResultPath}",\n`;
     }
     if (pollerType !== 'nil') {
       text += `\t\t\tResponse: ${pollerType},\n`;

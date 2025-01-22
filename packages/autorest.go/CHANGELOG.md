@@ -1,5 +1,11 @@
 # Release History
 
+## 4.0.0-preview.70 (unreleased)
+
+### Other Changes
+
+* Upgraded default `azcore` version to `v1.17.0`.
+
 ## 4.0.0-preview.69 (2024-11-04)
 
 ### Features Added

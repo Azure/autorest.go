@@ -5,34 +5,38 @@
 package fake
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"net/http"
 	"pageablegroup"
 )
 
 // PageableServerDrivenPaginationServer is a fake server for instances of the pageablegroup.PageableServerDrivenPaginationClient type.
 type PageableServerDrivenPaginationServer struct {
-	// Link is the fake for method PageableServerDrivenPaginationClient.Link
+	// NewLinkPager is the fake for method PageableServerDrivenPaginationClient.NewLinkPager
 	// HTTP status codes to indicate success: http.StatusOK
-	Link func(ctx context.Context, options *pageablegroup.PageableServerDrivenPaginationClientLinkOptions) (resp azfake.Responder[pageablegroup.PageableServerDrivenPaginationClientLinkResponse], errResp azfake.ErrorResponder)
+	NewLinkPager func(options *pageablegroup.PageableServerDrivenPaginationClientLinkOptions) (resp azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientLinkResponse])
 }
 
 // NewPageableServerDrivenPaginationServerTransport creates a new instance of PageableServerDrivenPaginationServerTransport with the provided implementation.
 // The returned PageableServerDrivenPaginationServerTransport instance is connected to an instance of pageablegroup.PageableServerDrivenPaginationClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPageableServerDrivenPaginationServerTransport(srv *PageableServerDrivenPaginationServer) *PageableServerDrivenPaginationServerTransport {
-	return &PageableServerDrivenPaginationServerTransport{srv: srv}
+	return &PageableServerDrivenPaginationServerTransport{
+		srv:          srv,
+		newLinkPager: newTracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientLinkResponse]](),
+	}
 }
 
 // PageableServerDrivenPaginationServerTransport connects instances of pageablegroup.PageableServerDrivenPaginationClient to instances of PageableServerDrivenPaginationServer.
 // Don't use this type directly, use NewPageableServerDrivenPaginationServerTransport instead.
 type PageableServerDrivenPaginationServerTransport struct {
-	srv *PageableServerDrivenPaginationServer
+	srv          *PageableServerDrivenPaginationServer
+	newLinkPager *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientLinkResponse]]
 }
 
 // Do implements the policy.Transporter interface for PageableServerDrivenPaginationServerTransport.
@@ -58,8 +62,8 @@ func (p *PageableServerDrivenPaginationServerTransport) dispatchToMethodFake(req
 		}
 		if !intercepted {
 			switch method {
-			case "PageableServerDrivenPaginationClient.Link":
-				res.resp, res.err = p.dispatchLink(req)
+			case "PageableServerDrivenPaginationClient.NewLinkPager":
+				res.resp, res.err = p.dispatchNewLinkPager(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
 			}
@@ -79,21 +83,29 @@ func (p *PageableServerDrivenPaginationServerTransport) dispatchToMethodFake(req
 	}
 }
 
-func (p *PageableServerDrivenPaginationServerTransport) dispatchLink(req *http.Request) (*http.Response, error) {
-	if p.srv.Link == nil {
-		return nil, &nonRetriableError{errors.New("fake for method Link not implemented")}
+func (p *PageableServerDrivenPaginationServerTransport) dispatchNewLinkPager(req *http.Request) (*http.Response, error) {
+	if p.srv.NewLinkPager == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NewLinkPager not implemented")}
 	}
-	respr, errRespr := p.srv.Link(req.Context(), nil)
-	if respErr := server.GetError(errRespr, req); respErr != nil {
-		return nil, respErr
+	newLinkPager := p.newLinkPager.get(req)
+	if newLinkPager == nil {
+		resp := p.srv.NewLinkPager(nil)
+		newLinkPager = &resp
+		p.newLinkPager.add(req, newLinkPager)
+		server.PagerResponderInjectNextLinks(newLinkPager, req, func(page *pageablegroup.PageableServerDrivenPaginationClientLinkResponse, createLink func() string) {
+			page.Next = to.Ptr(createLink())
+		})
 	}
-	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
-	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).LinkResponse, req)
+	resp, err := server.PagerResponderNext(newLinkPager, req)
 	if err != nil {
 		return nil, err
+	}
+	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newLinkPager.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+	}
+	if !server.PagerResponderMore(newLinkPager) {
+		p.newLinkPager.remove(req)
 	}
 	return resp, nil
 }

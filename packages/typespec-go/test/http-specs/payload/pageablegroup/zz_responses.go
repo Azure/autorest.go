@@ -4,7 +4,7 @@
 
 package pageablegroup
 
-// PageableServerDrivenPaginationClientLinkResponse contains the response from method PageableServerDrivenPaginationClient.Link.
+// PageableServerDrivenPaginationClientLinkResponse contains the response from method PageableServerDrivenPaginationClient.NewLinkPager.
 type PageableServerDrivenPaginationClientLinkResponse struct {
 	LinkResponse
 }

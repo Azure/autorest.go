@@ -6,6 +6,78 @@ package resources
 
 import "time"
 
+// ExtensionsResource - Concrete extension resource types can be created by aliasing this type using a specific property type.
+type ExtensionsResource struct {
+	// The resource-specific properties for this resource.
+	Properties *ExtensionsResourceProperties
+
+	// READ-ONLY; The name of the ExtensionsResource
+	Name *string
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+// ExtensionsResourceListResult - The response of a ExtensionsResource list operation.
+type ExtensionsResourceListResult struct {
+	// REQUIRED; The ExtensionsResource items on this page
+	Value []*ExtensionsResource
+
+	// The link to the next page of items
+	NextLink *string
+}
+
+// ExtensionsResourceProperties - ExtensionsResource properties
+type ExtensionsResourceProperties struct {
+	// The description of the resource.
+	Description *string
+
+	// READ-ONLY; The status of the last operation.
+	ProvisioningState *ProvisioningState
+}
+
+// LocationResource - Concrete proxy resource types can be created by aliasing this type using a specific property type.
+type LocationResource struct {
+	// The resource-specific properties for this resource.
+	Properties *LocationResourceProperties
+
+	// READ-ONLY; The name of the LocationResource
+	Name *string
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+// LocationResourceListResult - The response of a LocationResource list operation.
+type LocationResourceListResult struct {
+	// REQUIRED; The LocationResource items on this page
+	Value []*LocationResource
+
+	// The link to the next page of items
+	NextLink *string
+}
+
+// LocationResourceProperties - Location resource properties
+type LocationResourceProperties struct {
+	// The description of the resource.
+	Description *string
+
+	// READ-ONLY; The status of the last operation.
+	ProvisioningState *ProvisioningState
+}
+
 // NestedProxyResource - Nested child of Top Level Tracked Resource.
 type NestedProxyResource struct {
 	// The resource-specific properties for this resource.

@@ -1,5 +1,16 @@
 # Release History
 
+## 0.3.6 (unreleased)
+
+### Bugs Fixed
+
+* `Operation-Location` LROs will correctly set the `OperationLocationResultPath` when constructing a `Poller[T]`.
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
+* Upgraded default `azcore` version to `v1.17.0`.
+
 ## 0.3.5 (2024-12-18)
 
 ### Other Fixes
