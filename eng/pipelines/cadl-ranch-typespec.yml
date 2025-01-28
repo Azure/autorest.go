@@ -4,8 +4,8 @@ trigger:
       - main
   paths:
     include:
-      - packages/typespec-go/test/http-spec
-      - packages/typespec-go/test/azure-http-spec
+      - packages/typespec-go/test/http-specs
+      - packages/typespec-go/test/azure-http-specs
 pr: none
 
 variables:
