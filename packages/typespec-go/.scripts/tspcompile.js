@@ -163,6 +163,9 @@ generate('azmodelsonly', azmodelsonly, 'test/local/azmodelsonly');
 const azkeys = pkgRoot + 'test/tsp/KeyVault.Keys';
 generate('azkeys', azkeys, 'test/local/azkeys');
 
+const armtest = pkgRoot + 'test/tsp/Test.Management';
+generate('armtest', armtest, 'test/local/armtest');
+
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
 
