@@ -1,5 +1,11 @@
 # Release History
 
+## 0.3.7 (2025-02-11)
+
+### Bugs Fixed
+
+* When dealing with mapping of parameters, get operation's body parameter from method's parameter's property if the method's parameter is a model with property decorated with `@bodyRoot` or `@body`.
+
 ## 0.3.6 (2025-01-23)
 
 ### Bugs Fixed
