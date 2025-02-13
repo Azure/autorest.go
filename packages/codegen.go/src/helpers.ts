@@ -739,3 +739,26 @@ export function getAllClientParameters(codeModel: go.CodeModel): Array<go.Parame
   allClientParams.sort(sortParametersByRequired);
   return allClientParams;
 }
+
+// return common client parameters for all the clients
+export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.Parameter> {
+  const commonClientParams = new Array<go.Parameter>();
+  const paramCount = new Map<string, { count: number, param: go.Parameter }>();
+
+  for (const clients of codeModel.clients) {
+    for (const clientParam of values(clients.parameters)) {
+      const entry = paramCount.get(clientParam.name);
+      if (entry) {
+        entry.count++;
+        if (entry.count === codeModel.clients.length) {
+          commonClientParams.push(entry.param);
+        }
+        continue
+      }
+      paramCount.set(clientParam.name, { count: 1, param: clientParam });
+    }
+  }
+
+  commonClientParams.sort(sortParametersByRequired);
+  return commonClientParams;
+}
