@@ -74,6 +74,8 @@ export interface Options {
   sliceElementsByval: boolean;
 
   generateExamples: boolean;
+
+  factoryCtorCommonParams: boolean;
 }
 
 export interface Module {
