@@ -20,10 +20,10 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
   const imports = new ImportManager();
 
   let clientFactoryParams = new Array<go.Parameter>();
-  if (codeModel.options.factoryCtorCommonParams) {
-    clientFactoryParams = helpers.getCommonClientParameters(codeModel);
-  } else {
+  if (codeModel.options.factoryGatherAllParams) {
     clientFactoryParams =  helpers.getAllClientParameters(codeModel);
+  } else {
+    clientFactoryParams = helpers.getCommonClientParameters(codeModel);
   }
   const clientFactoryParamsMap = new Map<string, go.Parameter>();
   for (const param of clientFactoryParams) {

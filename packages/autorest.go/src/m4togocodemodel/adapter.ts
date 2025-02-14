@@ -26,7 +26,8 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
       await session.getValue('generate-fakes', session.model.language.go!.azureARM), 
       await session.getValue('inject-spans', session.model.language.go!.azureARM),
       await session.getValue('disallow-unknown-fields', false),
-      await session.getValue('generate-sdk-example', false));
+      await session.getValue('generate-sdk-example', false),
+      await session.getValue('factory-gather-all-params', false));
     const azcoreVersion = await session.getValue('azcore-version', '');
     if (azcoreVersion !== '') {
       options.azcoreVersion = azcoreVersion;
