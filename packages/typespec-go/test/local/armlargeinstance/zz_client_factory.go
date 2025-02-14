@@ -12,38 +12,35 @@ import (
 // ClientFactory is a client factory used to create any client in this module.
 // Don't use this type directly, use NewClientFactory instead.
 type ClientFactory struct {
-	subscriptionID string
-	internal       *arm.Client
+	internal *arm.Client
 }
 
 // NewClientFactory creates a new instance of ClientFactory with the specified values.
 // The parameter values will be propagated to any client created from this factory.
-//   - subscriptionID - The ID of the target subscription. The value must be an UUID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
+func NewClientFactory(credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
 	internal, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	return &ClientFactory{
-		subscriptionID: subscriptionID,
-		internal:       internal,
+		internal: internal,
 	}, nil
 }
 
 // NewAzureLargeInstanceClient creates a new instance of AzureLargeInstanceClient.
-func (c *ClientFactory) NewAzureLargeInstanceClient() *AzureLargeInstanceClient {
+func (c *ClientFactory) NewAzureLargeInstanceClient(subscriptionID string) *AzureLargeInstanceClient {
 	return &AzureLargeInstanceClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewAzureLargeStorageInstanceClient creates a new instance of AzureLargeStorageInstanceClient.
-func (c *ClientFactory) NewAzureLargeStorageInstanceClient() *AzureLargeStorageInstanceClient {
+func (c *ClientFactory) NewAzureLargeStorageInstanceClient(subscriptionID string) *AzureLargeStorageInstanceClient {
 	return &AzureLargeStorageInstanceClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }

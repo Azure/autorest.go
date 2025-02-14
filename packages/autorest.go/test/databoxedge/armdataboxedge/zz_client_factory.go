@@ -13,102 +13,99 @@ import (
 // ClientFactory is a client factory used to create any client in this module.
 // Don't use this type directly, use NewClientFactory instead.
 type ClientFactory struct {
-	subscriptionID string
-	internal       *arm.Client
+	internal *arm.Client
 }
 
 // NewClientFactory creates a new instance of ClientFactory with the specified values.
 // The parameter values will be propagated to any client created from this factory.
-//   - subscriptionID - The subscription ID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
+func NewClientFactory(credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
 	internal, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	return &ClientFactory{
-		subscriptionID: subscriptionID,
-		internal:       internal,
+		internal: internal,
 	}, nil
 }
 
 // NewAddonsClient creates a new instance of AddonsClient.
-func (c *ClientFactory) NewAddonsClient() *AddonsClient {
+func (c *ClientFactory) NewAddonsClient(subscriptionID string) *AddonsClient {
 	return &AddonsClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewAlertsClient creates a new instance of AlertsClient.
-func (c *ClientFactory) NewAlertsClient() *AlertsClient {
+func (c *ClientFactory) NewAlertsClient(subscriptionID string) *AlertsClient {
 	return &AlertsClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewAvailableSKUsClient creates a new instance of AvailableSKUsClient.
-func (c *ClientFactory) NewAvailableSKUsClient() *AvailableSKUsClient {
+func (c *ClientFactory) NewAvailableSKUsClient(subscriptionID string) *AvailableSKUsClient {
 	return &AvailableSKUsClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewBandwidthSchedulesClient creates a new instance of BandwidthSchedulesClient.
-func (c *ClientFactory) NewBandwidthSchedulesClient() *BandwidthSchedulesClient {
+func (c *ClientFactory) NewBandwidthSchedulesClient(subscriptionID string) *BandwidthSchedulesClient {
 	return &BandwidthSchedulesClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewContainersClient creates a new instance of ContainersClient.
-func (c *ClientFactory) NewContainersClient() *ContainersClient {
+func (c *ClientFactory) NewContainersClient(subscriptionID string) *ContainersClient {
 	return &ContainersClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewDevicesClient creates a new instance of DevicesClient.
-func (c *ClientFactory) NewDevicesClient() *DevicesClient {
+func (c *ClientFactory) NewDevicesClient(subscriptionID string) *DevicesClient {
 	return &DevicesClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewDiagnosticSettingsClient creates a new instance of DiagnosticSettingsClient.
-func (c *ClientFactory) NewDiagnosticSettingsClient() *DiagnosticSettingsClient {
+func (c *ClientFactory) NewDiagnosticSettingsClient(subscriptionID string) *DiagnosticSettingsClient {
 	return &DiagnosticSettingsClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewJobsClient creates a new instance of JobsClient.
-func (c *ClientFactory) NewJobsClient() *JobsClient {
+func (c *ClientFactory) NewJobsClient(subscriptionID string) *JobsClient {
 	return &JobsClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewMonitoringConfigClient creates a new instance of MonitoringConfigClient.
-func (c *ClientFactory) NewMonitoringConfigClient() *MonitoringConfigClient {
+func (c *ClientFactory) NewMonitoringConfigClient(subscriptionID string) *MonitoringConfigClient {
 	return &MonitoringConfigClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewNodesClient creates a new instance of NodesClient.
-func (c *ClientFactory) NewNodesClient() *NodesClient {
+func (c *ClientFactory) NewNodesClient(subscriptionID string) *NodesClient {
 	return &NodesClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
@@ -121,73 +118,73 @@ func (c *ClientFactory) NewOperationsClient() *OperationsClient {
 }
 
 // NewOperationsStatusClient creates a new instance of OperationsStatusClient.
-func (c *ClientFactory) NewOperationsStatusClient() *OperationsStatusClient {
+func (c *ClientFactory) NewOperationsStatusClient(subscriptionID string) *OperationsStatusClient {
 	return &OperationsStatusClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewOrdersClient creates a new instance of OrdersClient.
-func (c *ClientFactory) NewOrdersClient() *OrdersClient {
+func (c *ClientFactory) NewOrdersClient(subscriptionID string) *OrdersClient {
 	return &OrdersClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewRolesClient creates a new instance of RolesClient.
-func (c *ClientFactory) NewRolesClient() *RolesClient {
+func (c *ClientFactory) NewRolesClient(subscriptionID string) *RolesClient {
 	return &RolesClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewSharesClient creates a new instance of SharesClient.
-func (c *ClientFactory) NewSharesClient() *SharesClient {
+func (c *ClientFactory) NewSharesClient(subscriptionID string) *SharesClient {
 	return &SharesClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewStorageAccountCredentialsClient creates a new instance of StorageAccountCredentialsClient.
-func (c *ClientFactory) NewStorageAccountCredentialsClient() *StorageAccountCredentialsClient {
+func (c *ClientFactory) NewStorageAccountCredentialsClient(subscriptionID string) *StorageAccountCredentialsClient {
 	return &StorageAccountCredentialsClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewStorageAccountsClient creates a new instance of StorageAccountsClient.
-func (c *ClientFactory) NewStorageAccountsClient() *StorageAccountsClient {
+func (c *ClientFactory) NewStorageAccountsClient(subscriptionID string) *StorageAccountsClient {
 	return &StorageAccountsClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewSupportPackagesClient creates a new instance of SupportPackagesClient.
-func (c *ClientFactory) NewSupportPackagesClient() *SupportPackagesClient {
+func (c *ClientFactory) NewSupportPackagesClient(subscriptionID string) *SupportPackagesClient {
 	return &SupportPackagesClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewTriggersClient creates a new instance of TriggersClient.
-func (c *ClientFactory) NewTriggersClient() *TriggersClient {
+func (c *ClientFactory) NewTriggersClient(subscriptionID string) *TriggersClient {
 	return &TriggersClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewUsersClient creates a new instance of UsersClient.
-func (c *ClientFactory) NewUsersClient() *UsersClient {
+func (c *ClientFactory) NewUsersClient(subscriptionID string) *UsersClient {
 	return &UsersClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }

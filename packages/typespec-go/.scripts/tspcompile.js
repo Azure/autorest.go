@@ -214,8 +214,7 @@ function generate(moduleName, input, outputDir, perTestOptions) {
     'head-as-boolean=true',
     'fix-const-stuttering=true',
     `examples-directory=${input}/examples`,
-    'generate-examples=true',
-    'factory-gather-all-params=true',
+    'generate-examples=true'
   ];
 
   let allOptions = fixedOptions;
