@@ -13,23 +13,20 @@ import (
 // ClientFactory is a client factory used to create any client in this module.
 // Don't use this type directly, use NewClientFactory instead.
 type ClientFactory struct {
-	subscriptionID string
-	internal       *arm.Client
+	internal *arm.Client
 }
 
 // NewClientFactory creates a new instance of ClientFactory with the specified values.
 // The parameter values will be propagated to any client created from this factory.
-//   - subscriptionID - Azure Subscription ID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
+func NewClientFactory(credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
 	internal, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	return &ClientFactory{
-		subscriptionID: subscriptionID,
-		internal:       internal,
+		internal: internal,
 	}, nil
 }
 
@@ -76,9 +73,9 @@ func (c *ClientFactory) NewEventsClient() *EventsClient {
 }
 
 // NewForecastsClient creates a new instance of ForecastsClient.
-func (c *ClientFactory) NewForecastsClient() *ForecastsClient {
+func (c *ClientFactory) NewForecastsClient(subscriptionID string) *ForecastsClient {
 	return &ForecastsClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
@@ -105,9 +102,9 @@ func (c *ClientFactory) NewOperationsClient() *OperationsClient {
 }
 
 // NewPriceSheetClient creates a new instance of PriceSheetClient.
-func (c *ClientFactory) NewPriceSheetClient() *PriceSheetClient {
+func (c *ClientFactory) NewPriceSheetClient(subscriptionID string) *PriceSheetClient {
 	return &PriceSheetClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }

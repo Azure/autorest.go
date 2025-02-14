@@ -12,30 +12,27 @@ import (
 // ClientFactory is a client factory used to create any client in this module.
 // Don't use this type directly, use NewClientFactory instead.
 type ClientFactory struct {
-	subscriptionID string
-	internal       *arm.Client
+	internal *arm.Client
 }
 
 // NewClientFactory creates a new instance of ClientFactory with the specified values.
 // The parameter values will be propagated to any client created from this factory.
-//   - subscriptionID - The ID of the target subscription. The value must be an UUID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
+func NewClientFactory(credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
 	internal, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	return &ClientFactory{
-		subscriptionID: subscriptionID,
-		internal:       internal,
+		internal: internal,
 	}, nil
 }
 
 // NewAlertRuleResourcesClient creates a new instance of AlertRuleResourcesClient.
-func (c *ClientFactory) NewAlertRuleResourcesClient() *AlertRuleResourcesClient {
+func (c *ClientFactory) NewAlertRuleResourcesClient(subscriptionID string) *AlertRuleResourcesClient {
 	return &AlertRuleResourcesClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
@@ -48,25 +45,25 @@ func (c *ClientFactory) NewOperationsClient() *OperationsClient {
 }
 
 // NewSharedPrivateLinkResourcesClient creates a new instance of SharedPrivateLinkResourcesClient.
-func (c *ClientFactory) NewSharedPrivateLinkResourcesClient() *SharedPrivateLinkResourcesClient {
+func (c *ClientFactory) NewSharedPrivateLinkResourcesClient(subscriptionID string) *SharedPrivateLinkResourcesClient {
 	return &SharedPrivateLinkResourcesClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewTargetsClient creates a new instance of TargetsClient.
-func (c *ClientFactory) NewTargetsClient() *TargetsClient {
+func (c *ClientFactory) NewTargetsClient(subscriptionID string) *TargetsClient {
 	return &TargetsClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewWatchersClient creates a new instance of WatchersClient.
-func (c *ClientFactory) NewWatchersClient() *WatchersClient {
+func (c *ClientFactory) NewWatchersClient(subscriptionID string) *WatchersClient {
 	return &WatchersClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
