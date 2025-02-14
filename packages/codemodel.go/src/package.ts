@@ -96,13 +96,12 @@ export class Info implements Info {
 }
 
 export class Options implements Options {
-  constructor(headerText: string, generateFakes: boolean, injectSpans: boolean, disallowUnknownFields: boolean, generateExamples: boolean, factoryGatherAllParams: boolean) {
+  constructor(headerText: string, generateFakes: boolean, injectSpans: boolean, disallowUnknownFields: boolean, generateExamples: boolean) {
     this.headerText = headerText;
     this.generateFakes = generateFakes;
     this.injectSpans = injectSpans;
     this.disallowUnknownFields = disallowUnknownFields;
     this.generateExamples = generateExamples;
-    this.factoryGatherAllParams = factoryGatherAllParams;
   }
 }
 
