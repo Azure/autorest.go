@@ -74,6 +74,8 @@ export interface Options {
   sliceElementsByval: boolean;
 
   generateExamples: boolean;
+
+  factoryGatherAllParams: boolean;
 }
 
 export interface Module {
