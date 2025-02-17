@@ -34,7 +34,7 @@ export class clientAdapter {
     }
     for (const sdkClient of sdkPackage.clients) {
       // start with instantiable clients and recursively work down
-      if (sdkClient.initialization.access === 'public') {
+      if (sdkClient.clientInitialization.initializedBy & tcgc.InitializedByFlags.Individually) {
         this.recursiveAdaptClient(sdkClient);
       }
     }
@@ -91,8 +91,8 @@ export class clientAdapter {
     goClient.parent = parent;
 
     // anything other than public means non-instantiable client
-    if (sdkClient.initialization.access === 'public') {
-      for (const param of sdkClient.initialization.properties) {
+    if (sdkClient.clientInitialization.initializedBy & tcgc.InitializedByFlags.Individually) {
+      for (const param of sdkClient.clientInitialization.parameters) {
         if (param.kind === 'credential') {
           // skip this for now as we don't generate client constructors
           continue;
@@ -215,8 +215,9 @@ export class clientAdapter {
       if (lroOptions) {
         (<go.LROMethod>method).finalStateVia = lroOptions['finalState'];
       }
-      if (sdkMethod.lroMetadata.finalResponse?.resultPath) {
-        (<go.LROMethod>method).operationLocationResultPath = sdkMethod.lroMetadata.finalResponse.resultPath;
+      if (sdkMethod.lroMetadata.finalResponse?.resultSegments) {
+        const resultPath = sdkMethod.lroMetadata.finalResponse?.resultSegments.map(segment => (<tcgc.SdkBodyModelPropertyType>segment).serializationOptions.json?.name).join('/');
+        (<go.LROMethod>method).operationLocationResultPath = resultPath;
       }
     } else {
       throw new Error(`method kind ${sdkMethod.kind} NYI`);
@@ -362,7 +363,7 @@ export class clientAdapter {
             let serializedName: string | undefined;
             for (const property of opParam.type.properties) {
               if (property.name === param.name) {
-                serializedName = (<tcgc.SdkBodyModelPropertyType>property).serializedName;
+                serializedName = (<tcgc.SdkBodyModelPropertyType>property).serializationOptions.json?.name;
                 break;
               }
             }
