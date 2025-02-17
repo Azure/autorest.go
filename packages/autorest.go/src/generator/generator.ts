@@ -60,7 +60,7 @@ export async function generateCode(host: AutorestExtensionHost) {
       });
     }
 
-    let factoryGatherAllParams = await session.getValue('factory-gather-all-params', false);
+    const factoryGatherAllParams = await session.getValue('factory-gather-all-params', false);
     session.model.options.factoryGatherAllParams = factoryGatherAllParams;
     const clientFactory = await generateClientFactory(session.model);
     if (clientFactory.length > 0) {
