@@ -12,27 +12,30 @@ import (
 // ClientFactory is a client factory used to create any client in this module.
 // Don't use this type directly, use NewClientFactory instead.
 type ClientFactory struct {
-	internal *arm.Client
+	subscriptionID string
+	internal       *arm.Client
 }
 
 // NewClientFactory creates a new instance of ClientFactory with the specified values.
 // The parameter values will be propagated to any client created from this factory.
+//   - subscriptionID - The ID of the target subscription. The value must be an UUID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewClientFactory(credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
+func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
 	internal, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	return &ClientFactory{
-		internal: internal,
+		subscriptionID: subscriptionID,
+		internal:       internal,
 	}, nil
 }
 
 // NewImageVersionsClient creates a new instance of ImageVersionsClient.
-func (c *ClientFactory) NewImageVersionsClient(subscriptionID string) *ImageVersionsClient {
+func (c *ClientFactory) NewImageVersionsClient() *ImageVersionsClient {
 	return &ImageVersionsClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
@@ -45,33 +48,33 @@ func (c *ClientFactory) NewOperationsClient() *OperationsClient {
 }
 
 // NewPoolsClient creates a new instance of PoolsClient.
-func (c *ClientFactory) NewPoolsClient(subscriptionID string) *PoolsClient {
+func (c *ClientFactory) NewPoolsClient() *PoolsClient {
 	return &PoolsClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewResourceDetailsClient creates a new instance of ResourceDetailsClient.
-func (c *ClientFactory) NewResourceDetailsClient(subscriptionID string) *ResourceDetailsClient {
+func (c *ClientFactory) NewResourceDetailsClient() *ResourceDetailsClient {
 	return &ResourceDetailsClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewSKUClient creates a new instance of SKUClient.
-func (c *ClientFactory) NewSKUClient(subscriptionID string) *SKUClient {
+func (c *ClientFactory) NewSKUClient() *SKUClient {
 	return &SKUClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewSubscriptionUsagesClient creates a new instance of SubscriptionUsagesClient.
-func (c *ClientFactory) NewSubscriptionUsagesClient(subscriptionID string) *SubscriptionUsagesClient {
+func (c *ClientFactory) NewSubscriptionUsagesClient() *SubscriptionUsagesClient {
 	return &SubscriptionUsagesClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
