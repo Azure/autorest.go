@@ -13,155 +13,158 @@ import (
 // ClientFactory is a client factory used to create any client in this module.
 // Don't use this type directly, use NewClientFactory instead.
 type ClientFactory struct {
-	internal *arm.Client
+	subscriptionID string
+	internal       *arm.Client
 }
 
 // NewClientFactory creates a new instance of ClientFactory with the specified values.
 // The parameter values will be propagated to any client created from this factory.
+//   - subscriptionID - The ID of the target subscription.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewClientFactory(credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
+func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
 	internal, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	return &ClientFactory{
-		internal: internal,
+		subscriptionID: subscriptionID,
+		internal:       internal,
 	}, nil
 }
 
 // NewBatchDeploymentsClient creates a new instance of BatchDeploymentsClient.
-func (c *ClientFactory) NewBatchDeploymentsClient(subscriptionID string) *BatchDeploymentsClient {
+func (c *ClientFactory) NewBatchDeploymentsClient() *BatchDeploymentsClient {
 	return &BatchDeploymentsClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewBatchEndpointsClient creates a new instance of BatchEndpointsClient.
-func (c *ClientFactory) NewBatchEndpointsClient(subscriptionID string) *BatchEndpointsClient {
+func (c *ClientFactory) NewBatchEndpointsClient() *BatchEndpointsClient {
 	return &BatchEndpointsClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewCodeContainersClient creates a new instance of CodeContainersClient.
-func (c *ClientFactory) NewCodeContainersClient(subscriptionID string) *CodeContainersClient {
+func (c *ClientFactory) NewCodeContainersClient() *CodeContainersClient {
 	return &CodeContainersClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewCodeVersionsClient creates a new instance of CodeVersionsClient.
-func (c *ClientFactory) NewCodeVersionsClient(subscriptionID string) *CodeVersionsClient {
+func (c *ClientFactory) NewCodeVersionsClient() *CodeVersionsClient {
 	return &CodeVersionsClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewComponentContainersClient creates a new instance of ComponentContainersClient.
-func (c *ClientFactory) NewComponentContainersClient(subscriptionID string) *ComponentContainersClient {
+func (c *ClientFactory) NewComponentContainersClient() *ComponentContainersClient {
 	return &ComponentContainersClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewComponentVersionsClient creates a new instance of ComponentVersionsClient.
-func (c *ClientFactory) NewComponentVersionsClient(subscriptionID string) *ComponentVersionsClient {
+func (c *ClientFactory) NewComponentVersionsClient() *ComponentVersionsClient {
 	return &ComponentVersionsClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewComputeClient creates a new instance of ComputeClient.
-func (c *ClientFactory) NewComputeClient(subscriptionID string) *ComputeClient {
+func (c *ClientFactory) NewComputeClient() *ComputeClient {
 	return &ComputeClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewDataContainersClient creates a new instance of DataContainersClient.
-func (c *ClientFactory) NewDataContainersClient(subscriptionID string) *DataContainersClient {
+func (c *ClientFactory) NewDataContainersClient() *DataContainersClient {
 	return &DataContainersClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewDataVersionsClient creates a new instance of DataVersionsClient.
-func (c *ClientFactory) NewDataVersionsClient(subscriptionID string) *DataVersionsClient {
+func (c *ClientFactory) NewDataVersionsClient() *DataVersionsClient {
 	return &DataVersionsClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewDatastoresClient creates a new instance of DatastoresClient.
-func (c *ClientFactory) NewDatastoresClient(subscriptionID string) *DatastoresClient {
+func (c *ClientFactory) NewDatastoresClient() *DatastoresClient {
 	return &DatastoresClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewEnvironmentContainersClient creates a new instance of EnvironmentContainersClient.
-func (c *ClientFactory) NewEnvironmentContainersClient(subscriptionID string) *EnvironmentContainersClient {
+func (c *ClientFactory) NewEnvironmentContainersClient() *EnvironmentContainersClient {
 	return &EnvironmentContainersClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewEnvironmentVersionsClient creates a new instance of EnvironmentVersionsClient.
-func (c *ClientFactory) NewEnvironmentVersionsClient(subscriptionID string) *EnvironmentVersionsClient {
+func (c *ClientFactory) NewEnvironmentVersionsClient() *EnvironmentVersionsClient {
 	return &EnvironmentVersionsClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewJobsClient creates a new instance of JobsClient.
-func (c *ClientFactory) NewJobsClient(subscriptionID string) *JobsClient {
+func (c *ClientFactory) NewJobsClient() *JobsClient {
 	return &JobsClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewModelContainersClient creates a new instance of ModelContainersClient.
-func (c *ClientFactory) NewModelContainersClient(subscriptionID string) *ModelContainersClient {
+func (c *ClientFactory) NewModelContainersClient() *ModelContainersClient {
 	return &ModelContainersClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewModelVersionsClient creates a new instance of ModelVersionsClient.
-func (c *ClientFactory) NewModelVersionsClient(subscriptionID string) *ModelVersionsClient {
+func (c *ClientFactory) NewModelVersionsClient() *ModelVersionsClient {
 	return &ModelVersionsClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewOnlineDeploymentsClient creates a new instance of OnlineDeploymentsClient.
-func (c *ClientFactory) NewOnlineDeploymentsClient(subscriptionID string) *OnlineDeploymentsClient {
+func (c *ClientFactory) NewOnlineDeploymentsClient() *OnlineDeploymentsClient {
 	return &OnlineDeploymentsClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewOnlineEndpointsClient creates a new instance of OnlineEndpointsClient.
-func (c *ClientFactory) NewOnlineEndpointsClient(subscriptionID string) *OnlineEndpointsClient {
+func (c *ClientFactory) NewOnlineEndpointsClient() *OnlineEndpointsClient {
 	return &OnlineEndpointsClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
@@ -174,65 +177,65 @@ func (c *ClientFactory) NewOperationsClient() *OperationsClient {
 }
 
 // NewPrivateEndpointConnectionsClient creates a new instance of PrivateEndpointConnectionsClient.
-func (c *ClientFactory) NewPrivateEndpointConnectionsClient(subscriptionID string) *PrivateEndpointConnectionsClient {
+func (c *ClientFactory) NewPrivateEndpointConnectionsClient() *PrivateEndpointConnectionsClient {
 	return &PrivateEndpointConnectionsClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewPrivateLinkResourcesClient creates a new instance of PrivateLinkResourcesClient.
-func (c *ClientFactory) NewPrivateLinkResourcesClient(subscriptionID string) *PrivateLinkResourcesClient {
+func (c *ClientFactory) NewPrivateLinkResourcesClient() *PrivateLinkResourcesClient {
 	return &PrivateLinkResourcesClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewQuotasClient creates a new instance of QuotasClient.
-func (c *ClientFactory) NewQuotasClient(subscriptionID string) *QuotasClient {
+func (c *ClientFactory) NewQuotasClient() *QuotasClient {
 	return &QuotasClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewUsagesClient creates a new instance of UsagesClient.
-func (c *ClientFactory) NewUsagesClient(subscriptionID string) *UsagesClient {
+func (c *ClientFactory) NewUsagesClient() *UsagesClient {
 	return &UsagesClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewVirtualMachineSizesClient creates a new instance of VirtualMachineSizesClient.
-func (c *ClientFactory) NewVirtualMachineSizesClient(subscriptionID string) *VirtualMachineSizesClient {
+func (c *ClientFactory) NewVirtualMachineSizesClient() *VirtualMachineSizesClient {
 	return &VirtualMachineSizesClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewWorkspaceConnectionsClient creates a new instance of WorkspaceConnectionsClient.
-func (c *ClientFactory) NewWorkspaceConnectionsClient(subscriptionID string) *WorkspaceConnectionsClient {
+func (c *ClientFactory) NewWorkspaceConnectionsClient() *WorkspaceConnectionsClient {
 	return &WorkspaceConnectionsClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewWorkspaceFeaturesClient creates a new instance of WorkspaceFeaturesClient.
-func (c *ClientFactory) NewWorkspaceFeaturesClient(subscriptionID string) *WorkspaceFeaturesClient {
+func (c *ClientFactory) NewWorkspaceFeaturesClient() *WorkspaceFeaturesClient {
 	return &WorkspaceFeaturesClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewWorkspacesClient creates a new instance of WorkspacesClient.
-func (c *ClientFactory) NewWorkspacesClient(subscriptionID string) *WorkspacesClient {
+func (c *ClientFactory) NewWorkspacesClient() *WorkspacesClient {
 	return &WorkspacesClient{
-		subscriptionID: subscriptionID,
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
