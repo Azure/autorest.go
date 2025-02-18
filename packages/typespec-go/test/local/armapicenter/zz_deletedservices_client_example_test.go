@@ -18,11 +18,11 @@ func ExampleDeletedServicesClient_Delete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewDeletedServicesClient().Delete(ctx, "contoso-resources", "contoso", nil)
+	res, err := clientFactory.NewDeletedServicesClient("00000000-0000-0000-0000-000000000000").Delete(ctx, "contoso-resources", "contoso", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -40,11 +40,11 @@ func ExampleDeletedServicesClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewDeletedServicesClient().Get(ctx, "contoso-resources", "contoso", nil)
+	res, err := clientFactory.NewDeletedServicesClient("00000000-0000-0000-0000-000000000000").Get(ctx, "contoso-resources", "contoso", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -71,11 +71,11 @@ func ExampleDeletedServicesClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewDeletedServicesClient().NewListPager("contoso-resources", nil)
+	pager := clientFactory.NewDeletedServicesClient("00000000-0000-0000-0000-000000000000").NewListPager("contoso-resources", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -111,11 +111,11 @@ func ExampleDeletedServicesClient_NewListBySubscriptionPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewDeletedServicesClient().NewListBySubscriptionPager(nil)
+	pager := clientFactory.NewDeletedServicesClient("00000000-0000-0000-0000-000000000000").NewListBySubscriptionPager(nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
