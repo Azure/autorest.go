@@ -358,7 +358,7 @@ export class clientAdapter {
         const byVal = isTypePassedByValue(param.type);
         const contentType = this.adaptContentType(opParam.defaultContentType);
         switch (contentType) {
-          case 'JSON':
+          case 'JSON' {
             // find the corresponding field within the model param so we can get the serialized name
             let serializedName: string | undefined;
             for (const property of opParam.type.properties) {
@@ -372,6 +372,7 @@ export class clientAdapter {
             }
             adaptedParam = new go.PartialBodyParameter(param.name, serializedName, contentType, this.ta.getPossibleType(param.type, true, true), paramKind, byVal);
             break;
+          }
           case 'XML': {
             // find the corresponding field within the model param so we can get the serialized name
             let serializedName: string | undefined;
