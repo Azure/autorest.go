@@ -216,7 +216,7 @@ export class clientAdapter {
         (<go.LROMethod>method).finalStateVia = lroOptions['finalState'];
       }
       if (sdkMethod.lroMetadata.finalResponse?.resultSegments) {
-        const segment = sdkMethod.lroMetadata.finalResponse?.resultSegments[0]
+        const segment = sdkMethod.lroMetadata.finalResponse?.resultSegments[0];
         const resultPath = (<tcgc.SdkBodyModelPropertyType>segment).serializationOptions.json?.name;
         (<go.LROMethod>method).operationLocationResultPath = resultPath;
       }
