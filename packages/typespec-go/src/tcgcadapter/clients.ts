@@ -216,9 +216,9 @@ export class clientAdapter {
         (<go.LROMethod>method).finalStateVia = lroOptions['finalState'];
       }
       if (sdkMethod.lroMetadata.finalResponse?.resultSegments) {
-        const segment = sdkMethod.lroMetadata.finalResponse?.resultSegments[0];
-        const resultPath = (<tcgc.SdkBodyModelPropertyType>segment).serializationOptions.json?.name;
-        (<go.LROMethod>method).operationLocationResultPath = resultPath;
+        (<go.LROMethod>method).operationLocationResultPath = sdkMethod.lroMetadata.finalResponse.resultSegments.map((segment) => {
+          return (<tcgc.SdkBodyModelPropertyType>segment).serializationOptions.json?.name;
+        }).join('.');
       }
     } else {
       throw new Error(`method kind ${sdkMethod.kind} NYI`);
@@ -359,12 +359,25 @@ export class clientAdapter {
         const contentType = this.adaptContentType(opParam.defaultContentType);
         switch (contentType) {
           case 'JSON':
-          case 'XML': {
             // find the corresponding field within the model param so we can get the serialized name
             let serializedName: string | undefined;
             for (const property of opParam.type.properties) {
               if (property.name === param.name) {
                 serializedName = (<tcgc.SdkBodyModelPropertyType>property).serializationOptions.json?.name;
+                break;
+              }
+            }
+            if (!serializedName) {
+              throw new Error(`didn't find body model property for spread parameter ${param.name}`);
+            }
+            adaptedParam = new go.PartialBodyParameter(param.name, serializedName, contentType, this.ta.getPossibleType(param.type, true, true), paramKind, byVal);
+            break;
+          case 'XML': {
+            // find the corresponding field within the model param so we can get the serialized name
+            let serializedName: string | undefined;
+            for (const property of opParam.type.properties) {
+              if (property.name === param.name) {
+                serializedName = (<tcgc.SdkBodyModelPropertyType>property).serializationOptions.xml?.name;
                 break;
               }
             }
