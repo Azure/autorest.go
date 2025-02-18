@@ -358,7 +358,7 @@ export class clientAdapter {
         const byVal = isTypePassedByValue(param.type);
         const contentType = this.adaptContentType(opParam.defaultContentType);
         switch (contentType) {
-          case 'JSON' {
+          case 'JSON':{
             // find the corresponding field within the model param so we can get the serialized name
             let serializedName: string | undefined;
             for (const property of opParam.type.properties) {
