@@ -66,8 +66,8 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
 
   // add new sub client method for all operation groups
   for (const client of codeModel.clients) {
-    var clientPrivateParams = new Array<go.Parameter>();
-    var clientCommonParams = new Array<go.Parameter>();
+    const clientPrivateParams = new Array<go.Parameter>();
+    const clientCommonParams = new Array<go.Parameter>();
     for (const param of client.parameters) {
       if (clientFactoryParamsMap.has(param.name)) {
         clientCommonParams.push(param);

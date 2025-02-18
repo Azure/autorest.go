@@ -19,11 +19,11 @@ func ExampleAPIVersionsClient_CreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewAPIVersionsClient().CreateOrUpdate(ctx, "contoso-resources", "contoso", "default", "echo-api", "2023-01-01", armapicenter.APIVersion{
+	res, err := clientFactory.NewAPIVersionsClient("00000000-0000-0000-0000-000000000000").CreateOrUpdate(ctx, "contoso-resources", "contoso", "default", "echo-api", "2023-01-01", armapicenter.APIVersion{
 		Properties: &armapicenter.APIVersionProperties{
 			Title:          to.Ptr("2023-01-01"),
 			LifecycleStage: to.Ptr(armapicenter.LifecycleStageProduction),
@@ -59,11 +59,11 @@ func ExampleAPIVersionsClient_Delete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewAPIVersionsClient().Delete(ctx, "contoso-resources", "contoso", "default", "echo-api", "2023-01-01", nil)
+	res, err := clientFactory.NewAPIVersionsClient("00000000-0000-0000-0000-000000000000").Delete(ctx, "contoso-resources", "contoso", "default", "echo-api", "2023-01-01", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -81,11 +81,11 @@ func ExampleAPIVersionsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewAPIVersionsClient().Get(ctx, "contoso-resources", "contoso", "default", "echo-api", "2023-01-01", nil)
+	res, err := clientFactory.NewAPIVersionsClient("00000000-0000-0000-0000-000000000000").Get(ctx, "contoso-resources", "contoso", "default", "echo-api", "2023-01-01", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -116,11 +116,11 @@ func ExampleAPIVersionsClient_Head() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewAPIVersionsClient().Head(ctx, "contoso-resources", "contoso", "default", "echo-api", "2023-01-01", nil)
+	res, err := clientFactory.NewAPIVersionsClient("00000000-0000-0000-0000-000000000000").Head(ctx, "contoso-resources", "contoso", "default", "echo-api", "2023-01-01", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -138,11 +138,11 @@ func ExampleAPIVersionsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewAPIVersionsClient().NewListPager("contoso-resources", "contoso", "default", "echo-api", nil)
+	pager := clientFactory.NewAPIVersionsClient("00000000-0000-0000-0000-000000000000").NewListPager("contoso-resources", "contoso", "default", "echo-api", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

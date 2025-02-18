@@ -19,11 +19,11 @@ func ExampleAccountsClient_CheckNameAvailability() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armcodesigning.NewClientFactory("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armcodesigning.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewAccountsClient().CheckNameAvailability(ctx, armcodesigning.CheckNameAvailability{
+	res, err := clientFactory.NewAccountsClient("00000000-1111-2222-3333-444444444444").CheckNameAvailability(ctx, armcodesigning.CheckNameAvailability{
 		Name: to.Ptr("sample-account"),
 	}, nil)
 	if err != nil {
@@ -46,11 +46,11 @@ func ExampleAccountsClient_BeginCreate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armcodesigning.NewClientFactory("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armcodesigning.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewAccountsClient().BeginCreate(ctx, "MyResourceGroup", "MyAccount", armcodesigning.Account{
+	poller, err := clientFactory.NewAccountsClient("00000000-1111-2222-3333-444444444444").BeginCreate(ctx, "MyResourceGroup", "MyAccount", armcodesigning.Account{
 		Location: to.Ptr("westus"),
 		Properties: &armcodesigning.AccountProperties{
 			SKU: &armcodesigning.AccountSKU{
@@ -91,11 +91,11 @@ func ExampleAccountsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armcodesigning.NewClientFactory("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armcodesigning.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewAccountsClient().BeginDelete(ctx, "MyResourceGroup", "MyAccount", nil)
+	poller, err := clientFactory.NewAccountsClient("00000000-1111-2222-3333-444444444444").BeginDelete(ctx, "MyResourceGroup", "MyAccount", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -112,11 +112,11 @@ func ExampleAccountsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armcodesigning.NewClientFactory("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armcodesigning.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewAccountsClient().Get(ctx, "MyResourceGroup", "MyAccount", nil)
+	res, err := clientFactory.NewAccountsClient("00000000-1111-2222-3333-444444444444").Get(ctx, "MyResourceGroup", "MyAccount", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -149,11 +149,11 @@ func ExampleAccountsClient_NewListByResourceGroupPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armcodesigning.NewClientFactory("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armcodesigning.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewAccountsClient().NewListByResourceGroupPager("MyResourceGroup", nil)
+	pager := clientFactory.NewAccountsClient("00000000-1111-2222-3333-444444444444").NewListByResourceGroupPager("MyResourceGroup", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -195,11 +195,11 @@ func ExampleAccountsClient_NewListBySubscriptionPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armcodesigning.NewClientFactory("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armcodesigning.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewAccountsClient().NewListBySubscriptionPager(nil)
+	pager := clientFactory.NewAccountsClient("00000000-1111-2222-3333-444444444444").NewListBySubscriptionPager(nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -241,11 +241,11 @@ func ExampleAccountsClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armcodesigning.NewClientFactory("00000000-1111-2222-3333-444444444444", cred, nil)
+	clientFactory, err := armcodesigning.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewAccountsClient().BeginUpdate(ctx, "MyResourceGroup", "MyAccount", armcodesigning.AccountPatch{
+	poller, err := clientFactory.NewAccountsClient("00000000-1111-2222-3333-444444444444").BeginUpdate(ctx, "MyResourceGroup", "MyAccount", armcodesigning.AccountPatch{
 		Tags: map[string]*string{
 			"key1": to.Ptr("value1"),
 		},

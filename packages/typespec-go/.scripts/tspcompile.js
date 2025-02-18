@@ -134,25 +134,25 @@ const armapicenter = pkgRoot +  'test/tsp/ApiCenter.Management';
 generate('armapicenter', armapicenter, 'test/local/armapicenter');
 
 const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
-generate('armlargeinstance', armlargeinstance, 'test/local/armlargeinstance', ['stutter=AzureLargeInstance']);
+generate('armlargeinstance', armlargeinstance, 'test/local/armlargeinstance', ['stutter=AzureLargeInstance', 'factory-gather-all-params=true']);
 
 const armdatabasewatcher = pkgRoot + 'test/tsp/DatabaseWatcher.Management';
-generate('armdatabasewatcher', armdatabasewatcher, 'test/local/armdatabasewatcher', ['fix-const-stuttering=false']);
+generate('armdatabasewatcher', armdatabasewatcher, 'test/local/armdatabasewatcher', ['fix-const-stuttering=false', 'factory-gather-all-params=true']);
 
 const armloadtestservice = pkgRoot + 'test/tsp/LoadTestService.Management';
-generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice');
+generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice', ['factory-gather-all-params=true']);
 
 const armdevopsinfrastructure = pkgRoot + 'test/tsp/Microsoft.DevOpsInfrastructure';
-generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/local/armdevopsinfrastructure');
+generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/local/armdevopsinfrastructure', ['factory-gather-all-params=true']);
 
 const armrandom = pkgRoot + 'test/tsp/Random.Management';
 generate('armrandom', armrandom, 'test/local/armrandom');
 
 const armcommunitymanagement = pkgRoot + 'test/tsp/Community.Management';
-generate('armcommunitymanagement', armcommunitymanagement, 'test/local/armcommunitymanagement');
+generate('armcommunitymanagement', armcommunitymanagement, 'test/local/armcommunitymanagement', ['factory-gather-all-params=true']);
 
 const armmongocluster = pkgRoot + 'test/tsp/MongoCluster.Management';
-generate('armmongocluster', armmongocluster, 'test/local/armmongocluster');
+generate('armmongocluster', armmongocluster, 'test/local/armmongocluster', ['factory-gather-all-params=true']);
 
 const armcontainerorchestratorruntime = pkgRoot + 'test/tsp/KubernetesRuntime.Management';
 generate('armcontainerorchestratorruntime', armcontainerorchestratorruntime, 'test/local/armcontainerorchestratorruntime');
@@ -218,7 +218,6 @@ function generate(moduleName, input, outputDir, perTestOptions) {
     'fix-const-stuttering=true',
     `examples-directory=${input}/examples`,
     'generate-examples=true',
-    'factory-gather-all-params=true',
   ];
 
   let allOptions = fixedOptions;

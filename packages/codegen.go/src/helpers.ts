@@ -750,15 +750,16 @@ export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.Par
       const entry = paramCount.get(clientParam.name);
       if (entry) {
         entry.count++;
-        if (entry.count === codeModel.clients.length) {
-          commonClientParams.push(entry.param);
-        }
-        continue
+        continue;
       }
       paramCount.set(clientParam.name, { count: 1, param: clientParam });
     }
   }
-
+  for (const [_, entry] of paramCount) {
+    if (entry.count === codeModel.clients.length) {
+      commonClientParams.push(entry.param);
+    }
+  }
   commonClientParams.sort(sortParametersByRequired);
   return commonClientParams;
 }

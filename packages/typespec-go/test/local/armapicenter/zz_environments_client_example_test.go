@@ -19,11 +19,11 @@ func ExampleEnvironmentsClient_CreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewEnvironmentsClient().CreateOrUpdate(ctx, "contoso-resources", "contoso", "default", "public", armapicenter.Environment{
+	res, err := clientFactory.NewEnvironmentsClient("00000000-0000-0000-0000-000000000000").CreateOrUpdate(ctx, "contoso-resources", "contoso", "default", "public", armapicenter.Environment{
 		Properties: &armapicenter.EnvironmentProperties{
 			Title:       to.Ptr("Contoso Europe Azure API Management"),
 			Description: to.Ptr("The primary Azure API Management service for the European division of Contoso."),
@@ -85,11 +85,11 @@ func ExampleEnvironmentsClient_Delete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewEnvironmentsClient().Delete(ctx, "contoso-resources", "contoso", "default", "public", nil)
+	res, err := clientFactory.NewEnvironmentsClient("00000000-0000-0000-0000-000000000000").Delete(ctx, "contoso-resources", "contoso", "default", "public", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -107,11 +107,11 @@ func ExampleEnvironmentsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewEnvironmentsClient().Get(ctx, "contoso-resources", "contoso", "default", "public", nil)
+	res, err := clientFactory.NewEnvironmentsClient("00000000-0000-0000-0000-000000000000").Get(ctx, "contoso-resources", "contoso", "default", "public", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -153,11 +153,11 @@ func ExampleEnvironmentsClient_Head() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewEnvironmentsClient().Head(ctx, "contoso-resources", "contoso", "default", "public", nil)
+	res, err := clientFactory.NewEnvironmentsClient("00000000-0000-0000-0000-000000000000").Head(ctx, "contoso-resources", "contoso", "default", "public", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -175,11 +175,11 @@ func ExampleEnvironmentsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewEnvironmentsClient().NewListPager("contoso-resources", "contoso", "default", nil)
+	pager := clientFactory.NewEnvironmentsClient("00000000-0000-0000-0000-000000000000").NewListPager("contoso-resources", "contoso", "default", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {

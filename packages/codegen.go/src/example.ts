@@ -42,7 +42,16 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
       imports.add(codeModel.options.module!.name);
     }
 
-    const allClientParams = helpers.getAllClientParameters(codeModel);
+    let clientFactoryParams = new Array<go.Parameter>();
+    if (codeModel.options.factoryGatherAllParams) {
+      clientFactoryParams =  helpers.getAllClientParameters(codeModel);
+    } else {
+      clientFactoryParams = helpers.getCommonClientParameters(codeModel);
+    }
+    const clientFactoryParamsMap = new Map<string, go.Parameter>();
+    for (const param of clientFactoryParams) {
+      clientFactoryParamsMap.set(param.name, param);
+    }
 
     let exampleText = '';
     for (const method of client.methods) {
@@ -77,20 +86,30 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
         let clientRef = '';
         if (azureARM) {
           // since not all operation has all the client factory required parameters, we need to fake for the missing ones
-          const clientFactoryParams: go.ParameterExample[] = [];
-          for (const clientParam of allClientParams) {
+          const clientFactoryParamsExample: go.ParameterExample[] = [];
+          for (const clientParam of clientFactoryParams) {
             const clientFactoryParam = clientParameters.find(p => p.parameter.name === clientParam.name);
             if (clientFactoryParam) {
-              clientFactoryParams.push(clientFactoryParam);
+              clientFactoryParamsExample.push(clientFactoryParam);
             } else {
-              clientFactoryParams.push({ parameter: clientParam, value: generateFakeExample(clientParam.type, clientParam.name) });
+              clientFactoryParamsExample.push({ parameter: clientParam, value: generateFakeExample(clientParam.type, clientParam.name) });
             }
           }
-          exampleText += `\tclientFactory, err := ${codeModel.packageName}.NewClientFactory(${clientFactoryParams.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${clientFactoryParams.length > 0 ? ', ' : ''}cred, nil)\n`;
+          exampleText += `\tclientFactory, err := ${codeModel.packageName}.NewClientFactory(${clientFactoryParamsExample.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${clientFactoryParams.length > 0 ? ', ' : ''}cred, nil)\n`;
           exampleText += `\tif err != nil {\n`;
           exampleText += `\t\tlog.Fatalf("failed to create client: %v", err)\n`;
           exampleText += `\t}\n`;
-          clientRef = `clientFactory.${client.constructors[0]?.name}()`;
+          clientRef = `clientFactory.${client.constructors[0]?.name}(`;
+          const clientPrivateParameters: go.ParameterExample[] = [];
+          for (const clientParam of clientParameters) {
+            if (!clientFactoryParamsMap.has(clientParam.parameter.name)) {
+              clientPrivateParameters.push(clientParam);
+            }
+          }
+          if (clientPrivateParameters.length > 0) {
+            clientRef += `${clientPrivateParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}`;
+          }
+          clientRef += `)`;
         } else {
           exampleText += `\tclient, err := ${codeModel.packageName}.${client.constructors[0]?.name}(${clientParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}, cred, nil)\n`;
           exampleText += `\tif err != nil {\n`;

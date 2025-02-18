@@ -19,11 +19,11 @@ func ExampleMetadataSchemasClient_CreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewMetadataSchemasClient().CreateOrUpdate(ctx, "contoso-resources", "contoso", "author", armapicenter.MetadataSchema{
+	res, err := clientFactory.NewMetadataSchemasClient("00000000-0000-0000-0000-000000000000").CreateOrUpdate(ctx, "contoso-resources", "contoso", "author", armapicenter.MetadataSchema{
 		Properties: &armapicenter.MetadataSchemaProperties{
 			AssignedTo: []*armapicenter.MetadataAssignment{
 				{
@@ -69,11 +69,11 @@ func ExampleMetadataSchemasClient_Delete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewMetadataSchemasClient().Delete(ctx, "contoso-resources", "contoso", "author", nil)
+	res, err := clientFactory.NewMetadataSchemasClient("00000000-0000-0000-0000-000000000000").Delete(ctx, "contoso-resources", "contoso", "author", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -91,11 +91,11 @@ func ExampleMetadataSchemasClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewMetadataSchemasClient().Get(ctx, "contoso-resources", "contoso", "lastName", nil)
+	res, err := clientFactory.NewMetadataSchemasClient("00000000-0000-0000-0000-000000000000").Get(ctx, "contoso-resources", "contoso", "lastName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -131,11 +131,11 @@ func ExampleMetadataSchemasClient_Head() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewMetadataSchemasClient().Head(ctx, "contoso-resources", "contoso", "author", nil)
+	res, err := clientFactory.NewMetadataSchemasClient("00000000-0000-0000-0000-000000000000").Head(ctx, "contoso-resources", "contoso", "author", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -153,11 +153,11 @@ func ExampleMetadataSchemasClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewMetadataSchemasClient().NewListPager("contoso-resources", "contoso", nil)
+	pager := clientFactory.NewMetadataSchemasClient("00000000-0000-0000-0000-000000000000").NewListPager("contoso-resources", "contoso", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
