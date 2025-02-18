@@ -163,7 +163,7 @@ export class clientAdapter {
     return goClient;
   }
 
-  private adaptURIParam(sdkParam: tcgc.SdkEndpointParameter | tcgc.SdkPathParameter): go.URIParameter {
+  private adaptURIParam(sdkParam: tcgc.SdkPathParameter): go.URIParameter {
     const paramType = this.ta.getPossibleType(sdkParam.type, true, false);
     if (!go.isConstantType(paramType) && !go.isPrimitiveType(paramType)) {
       throw new Error(`unexpected URI parameter type ${go.getTypeDeclaration(paramType)}`);
@@ -216,7 +216,8 @@ export class clientAdapter {
         (<go.LROMethod>method).finalStateVia = lroOptions['finalState'];
       }
       if (sdkMethod.lroMetadata.finalResponse?.resultSegments) {
-        const resultPath = sdkMethod.lroMetadata.finalResponse?.resultSegments.map(segment => (<tcgc.SdkBodyModelPropertyType>segment).serializationOptions.json?.name).join('/');
+        const segment = sdkMethod.lroMetadata.finalResponse?.resultSegments[0]
+        const resultPath = (<tcgc.SdkBodyModelPropertyType>segment).serializationOptions.json?.name;
         (<go.LROMethod>method).operationLocationResultPath = resultPath;
       }
     } else {
