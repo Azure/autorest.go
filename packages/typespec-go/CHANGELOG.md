@@ -1,5 +1,11 @@
 # Release History
 
+## 0.3.8 (UNRELEASED)
+
+### Bugs Fixed
+
+* Remove filtering Azure core model since some instances of template model is in `Azure.Core` namespace. Logic of filtering exception model could cover the filtering needs.
+
 ## 0.3.7 (2025-02-11)
 
 ### Bugs Fixed
