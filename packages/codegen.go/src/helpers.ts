@@ -744,8 +744,13 @@ export function getAllClientParameters(codeModel: go.CodeModel): Array<go.Parame
 export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.Parameter> {
   const commonClientParams = new Array<go.Parameter>();
   const paramCount = new Map<string, { count: number, param: go.Parameter }>();
-
+  var clientCnt = 0;
   for (const clients of codeModel.clients) {
+    // special cases: some clients always don't contain any parameters (OperationsClient will be depracated in the future)
+    if (new RegExp('^OperationsClient$').test(clients.name)) {
+      continue; 
+    }
+    clientCnt++;
     for (const clientParam of values(clients.parameters)) {
       const entry = paramCount.get(clientParam.name);
       if (entry) {
@@ -756,7 +761,7 @@ export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.Par
     }
   }
   for (const [_, entry] of paramCount) {
-    if (entry.count === codeModel.clients.length) {
+    if (entry.count === clientCnt) {
       commonClientParams.push(entry.param);
     }
   }

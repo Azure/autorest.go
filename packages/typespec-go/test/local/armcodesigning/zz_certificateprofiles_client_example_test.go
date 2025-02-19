@@ -20,11 +20,11 @@ func ExampleCertificateProfilesClient_BeginCreate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armcodesigning.NewClientFactory(cred, nil)
+	clientFactory, err := armcodesigning.NewClientFactory("00000000-1111-2222-3333-444444444444", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewCertificateProfilesClient("00000000-1111-2222-3333-444444444444").BeginCreate(ctx, "MyResourceGroup", "MyAccount", "profileA", armcodesigning.CertificateProfile{
+	poller, err := clientFactory.NewCertificateProfilesClient().BeginCreate(ctx, "MyResourceGroup", "MyAccount", "profileA", armcodesigning.CertificateProfile{
 		Properties: &armcodesigning.CertificateProfileProperties{
 			ProfileType:          to.Ptr(armcodesigning.ProfileTypePublicTrust),
 			IdentityValidationID: to.Ptr("00000000-1234-5678-3333-444444444444"),
@@ -80,11 +80,11 @@ func ExampleCertificateProfilesClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armcodesigning.NewClientFactory(cred, nil)
+	clientFactory, err := armcodesigning.NewClientFactory("00000000-1111-2222-3333-444444444444", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewCertificateProfilesClient("00000000-1111-2222-3333-444444444444").BeginDelete(ctx, "MyResourceGroup", "MyAccount", "profileA", nil)
+	poller, err := clientFactory.NewCertificateProfilesClient().BeginDelete(ctx, "MyResourceGroup", "MyAccount", "profileA", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -101,11 +101,11 @@ func ExampleCertificateProfilesClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armcodesigning.NewClientFactory(cred, nil)
+	clientFactory, err := armcodesigning.NewClientFactory("00000000-1111-2222-3333-444444444444", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewCertificateProfilesClient("00000000-1111-2222-3333-444444444444").Get(ctx, "MyResourceGroup", "MyAccount", "profileA", nil)
+	res, err := clientFactory.NewCertificateProfilesClient().Get(ctx, "MyResourceGroup", "MyAccount", "profileA", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -150,11 +150,11 @@ func ExampleCertificateProfilesClient_NewListByCodeSigningAccountPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armcodesigning.NewClientFactory(cred, nil)
+	clientFactory, err := armcodesigning.NewClientFactory("00000000-1111-2222-3333-444444444444", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewCertificateProfilesClient("00000000-1111-2222-3333-444444444444").NewListByCodeSigningAccountPager("MyResourceGroup", "MyAccount", nil)
+	pager := clientFactory.NewCertificateProfilesClient().NewListByCodeSigningAccountPager("MyResourceGroup", "MyAccount", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -208,11 +208,11 @@ func ExampleCertificateProfilesClient_RevokeCertificate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armcodesigning.NewClientFactory(cred, nil)
+	clientFactory, err := armcodesigning.NewClientFactory("00000000-1111-2222-3333-444444444444", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = clientFactory.NewCertificateProfilesClient("00000000-1111-2222-3333-444444444444").RevokeCertificate(ctx, "MyResourceGroup", "MyAccount", "profileA", armcodesigning.RevokeCertificate{
+	_, err = clientFactory.NewCertificateProfilesClient().RevokeCertificate(ctx, "MyResourceGroup", "MyAccount", "profileA", armcodesigning.RevokeCertificate{
 		EffectiveAt:  to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2023-11-12T23:40:25+00:00"); return t }()),
 		Reason:       to.Ptr("KeyCompromised"),
 		Remarks:      to.Ptr("test"),

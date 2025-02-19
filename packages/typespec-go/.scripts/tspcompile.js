@@ -137,22 +137,22 @@ const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
 generate('armlargeinstance', armlargeinstance, 'test/local/armlargeinstance', ['stutter=AzureLargeInstance', 'factory-gather-all-params=true']);
 
 const armdatabasewatcher = pkgRoot + 'test/tsp/DatabaseWatcher.Management';
-generate('armdatabasewatcher', armdatabasewatcher, 'test/local/armdatabasewatcher', ['fix-const-stuttering=false', 'factory-gather-all-params=true']);
+generate('armdatabasewatcher', armdatabasewatcher, 'test/local/armdatabasewatcher', ['fix-const-stuttering=false']);
 
 const armloadtestservice = pkgRoot + 'test/tsp/LoadTestService.Management';
-generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice', ['factory-gather-all-params=true']);
+generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice');
 
 const armdevopsinfrastructure = pkgRoot + 'test/tsp/Microsoft.DevOpsInfrastructure';
-generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/local/armdevopsinfrastructure', ['factory-gather-all-params=true']);
+generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/local/armdevopsinfrastructure');
 
 const armrandom = pkgRoot + 'test/tsp/Random.Management';
 generate('armrandom', armrandom, 'test/local/armrandom');
 
 const armcommunitymanagement = pkgRoot + 'test/tsp/Community.Management';
-generate('armcommunitymanagement', armcommunitymanagement, 'test/local/armcommunitymanagement', ['factory-gather-all-params=true']);
+generate('armcommunitymanagement', armcommunitymanagement, 'test/local/armcommunitymanagement');
 
 const armmongocluster = pkgRoot + 'test/tsp/MongoCluster.Management';
-generate('armmongocluster', armmongocluster, 'test/local/armmongocluster', ['factory-gather-all-params=true']);
+generate('armmongocluster', armmongocluster, 'test/local/armmongocluster');
 
 const armcontainerorchestratorruntime = pkgRoot + 'test/tsp/KubernetesRuntime.Management';
 generate('armcontainerorchestratorruntime', armcontainerorchestratorruntime, 'test/local/armcontainerorchestratorruntime');
