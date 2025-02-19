@@ -369,21 +369,21 @@ export class clientAdapter {
             return property.serializationOptions.multipart?.name;
           }
           return undefined;
-        }
+        };
         switch (contentType) {
           case 'JSON':
           case 'XML': {
-             // find the corresponding field within the model param so we can get the serialized name
-             let serializedName: string | undefined;
-             for (const property of opParam.type.properties) {
-               if (property.name === param.name) {
-                 serializedName = getSerializedNameFromProperty(<tcgc.SdkBodyModelPropertyType>property);
-                 break;
-               }
-             }
-             if (!serializedName) {
-               throw new Error(`didn't find body model property for spread parameter ${param.name}`);
-             }
+            // find the corresponding field within the model param so we can get the serialized name
+            let serializedName: string | undefined;
+            for (const property of opParam.type.properties) {
+              if (property.name === param.name) {
+                serializedName = getSerializedNameFromProperty(<tcgc.SdkBodyModelPropertyType>property);
+                break;
+              }
+            }
+            if (!serializedName) {
+              throw new Error(`didn't find body model property for spread parameter ${param.name}`);
+            }
             adaptedParam = new go.PartialBodyParameter(param.name, serializedName, contentType, this.ta.getPossibleType(param.type, true, true), paramKind, byVal);
             break;
           }
