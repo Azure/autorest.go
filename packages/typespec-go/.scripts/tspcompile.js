@@ -134,13 +134,13 @@ const armapicenter = pkgRoot +  'test/tsp/ApiCenter.Management';
 generate('armapicenter', armapicenter, 'test/local/armapicenter');
 
 const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
-generate('armlargeinstance', armlargeinstance, 'test/local/armlargeinstance', ['stutter=AzureLargeInstance', 'factory-gather-all-params=true']);
+generate('armlargeinstance', armlargeinstance, 'test/local/armlargeinstance', ['stutter=AzureLargeInstance']);
 
 const armdatabasewatcher = pkgRoot + 'test/tsp/DatabaseWatcher.Management';
 generate('armdatabasewatcher', armdatabasewatcher, 'test/local/armdatabasewatcher', ['fix-const-stuttering=false']);
 
 const armloadtestservice = pkgRoot + 'test/tsp/LoadTestService.Management';
-generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice');
+generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice', ['factory-gather-all-params=true']);
 
 const armdevopsinfrastructure = pkgRoot + 'test/tsp/Microsoft.DevOpsInfrastructure';
 generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/local/armdevopsinfrastructure');
