@@ -1331,8 +1331,18 @@ function generateLROBeginMethod(client: go.Client, method: go.LROMethod, imports
 export function fixUpMethodName(method: go.Method): string {
   if (go.isLROMethod(method)) {
     return `Begin${method.name}`;
-  } else if (go.isPageableMethod(method)) {
-    return `New${method.name}Pager`;
+  }
+  if (go.isPageableMethod(method)) {
+    let N = 'N';
+    let name = method.name;
+    if (method.name[0] !== method.name[0].toUpperCase()) {
+      // the method isn't exported; don't export the pager ctor
+      N = 'n';
+      // ensure correct casing of the emitted function name e.g.,
+      // "listThings" -> "newListThingsPager"
+      name = name[0].toUpperCase() + name.substring(1);
+    }
+    return `${N}ew${name}Pager`;
   }
   return method.name;
 }
