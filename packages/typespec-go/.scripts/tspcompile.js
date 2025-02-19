@@ -167,7 +167,7 @@ const armtest = pkgRoot + 'test/tsp/Test.Management';
 generate('armtest', armtest, 'test/local/armtest');
 
 const internalpager = pkgRoot + 'test/tsp/Internal.Pager';
-generate('internalpager', internalpager, 'test/local/internalpager');
+generate('internalpager', internalpager, 'test/local/internalpager', ['generate-fakes=false']);
 
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')

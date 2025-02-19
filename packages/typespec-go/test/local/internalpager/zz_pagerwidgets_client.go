@@ -28,7 +28,6 @@ func (client *PagerWidgetsClient) newListMethodPager(options *pagerWidgetsClient
 			return false
 		},
 		Fetcher: func(ctx context.Context, page *pagerWidgetsClientlistMethodResponse) (pagerWidgetsClientlistMethodResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PagerWidgetsClient.newListMethodPager")
 			req, err := client.listCreateRequest(ctx, options)
 			if err != nil {
 				return pagerWidgetsClientlistMethodResponse{}, err
