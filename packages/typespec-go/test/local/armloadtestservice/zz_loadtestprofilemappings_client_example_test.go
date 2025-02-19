@@ -19,7 +19,7 @@ func ExampleLoadTestProfileMappingsClient_CreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory("<subscriptionID>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
@@ -64,7 +64,7 @@ func ExampleLoadTestProfileMappingsClient_Delete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory("<subscriptionID>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
@@ -86,7 +86,7 @@ func ExampleLoadTestProfileMappingsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory("<subscriptionID>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
@@ -126,7 +126,7 @@ func ExampleLoadTestProfileMappingsClient_NewListPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory("<subscriptionID>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
@@ -175,7 +175,7 @@ func ExampleLoadTestProfileMappingsClient_Update() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory("<subscriptionID>", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
