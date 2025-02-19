@@ -127,13 +127,13 @@ const consumption = './swagger/specification/consumption/resource-manager/readme
 generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consumption/armconsumption', '--module=armconsumption --module-version=1.0.0 --azure-arm=true --generate-fakes=false --inject-spans=false --remove-unreferenced-types');
 
 const databoxedge = './swagger/specification/databoxedge/resource-manager/readme.md';
-generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/armdataboxedge', '--module=armdataboxedge --module-version=2.0.0 --azure-arm=true --remove-unreferenced-types --inject-spans=false --fix-const-stuttering=true --factory-gather-all-params=true');
+generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/armdataboxedge', '--module=armdataboxedge --module-version=2.0.0 --azure-arm=true --remove-unreferenced-types --inject-spans=false --fix-const-stuttering=true');
 
 const acr = './swagger/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json';
 generate("azacr", acr, 'test/acr/azacr', '--module="azacr" --module-version=0.1.0 --openapi-type="data-plane" --rawjson-as-bytes --generate-fakes');
 
 const machineLearning = './swagger/specification/machinelearningservices/resource-manager';
-generateFromReadme("armmachinelearning", machineLearning, 'package-2022-02-01-preview', 'test/machinelearning/armmachinelearning', '--module=armmachinelearning --module-version=1.0.0 --azure-arm=true --generate-fakes=false --inject-spans=false --remove-unreferenced-types --factory-gather-all-params=true');
+generateFromReadme("armmachinelearning", machineLearning, 'package-2022-02-01-preview', 'test/machinelearning/armmachinelearning', '--module=armmachinelearning --module-version=1.0.0 --azure-arm=true --generate-fakes=false --inject-spans=false --remove-unreferenced-types');
 
 generate("azalias", 'packages/autorest.go/test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --module-version=0.1.0 --openapi-type="data-plane" --generate-fakes --inject-spans --slice-elements-byval --disallow-unknown-fields --single-client');
 

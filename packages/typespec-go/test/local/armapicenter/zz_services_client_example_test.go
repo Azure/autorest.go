@@ -19,11 +19,11 @@ func ExampleServicesClient_CreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewServicesClient("00000000-0000-0000-0000-000000000000").CreateOrUpdate(ctx, "contoso-resources", "contoso", armapicenter.Service{
+	res, err := clientFactory.NewServicesClient().CreateOrUpdate(ctx, "contoso-resources", "contoso", armapicenter.Service{
 		Properties: &armapicenter.ServiceProperties{},
 		Tags:       map[string]*string{},
 		Location:   to.Ptr("East US"),
@@ -71,11 +71,11 @@ func ExampleServicesClient_Delete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewServicesClient("00000000-0000-0000-0000-000000000000").Delete(ctx, "contoso-resources", "contoso", nil)
+	res, err := clientFactory.NewServicesClient().Delete(ctx, "contoso-resources", "contoso", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -93,11 +93,11 @@ func ExampleServicesClient_BeginExportMetadataSchema() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewServicesClient("00000000-0000-0000-0000-000000000000").BeginExportMetadataSchema(ctx, "contoso-resources", "contoso", armapicenter.MetadataSchemaExportRequest{
+	poller, err := clientFactory.NewServicesClient().BeginExportMetadataSchema(ctx, "contoso-resources", "contoso", armapicenter.MetadataSchemaExportRequest{
 		AssignedTo: to.Ptr(armapicenter.MetadataAssignmentEntityAPI),
 	}, nil)
 	if err != nil {
@@ -124,11 +124,11 @@ func ExampleServicesClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewServicesClient("00000000-0000-0000-0000-000000000000").Get(ctx, "contoso-resources", "contoso", nil)
+	res, err := clientFactory.NewServicesClient().Get(ctx, "contoso-resources", "contoso", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -167,11 +167,11 @@ func ExampleServicesClient_NewListByResourceGroupPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewServicesClient("00000000-0000-0000-0000-000000000000").NewListByResourceGroupPager("contoso-resources", nil)
+	pager := clientFactory.NewServicesClient().NewListByResourceGroupPager("contoso-resources", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -219,11 +219,11 @@ func ExampleServicesClient_NewListBySubscriptionPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewServicesClient("00000000-0000-0000-0000-000000000000").NewListBySubscriptionPager(nil)
+	pager := clientFactory.NewServicesClient().NewListBySubscriptionPager(nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -271,11 +271,11 @@ func ExampleServicesClient_Update() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armapicenter.NewClientFactory(cred, nil)
+	clientFactory, err := armapicenter.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewServicesClient("00000000-0000-0000-0000-000000000000").Update(ctx, "contoso-resources", "contoso", armapicenter.ServiceUpdate{
+	res, err := clientFactory.NewServicesClient().Update(ctx, "contoso-resources", "contoso", armapicenter.ServiceUpdate{
 		Tags: map[string]*string{},
 		Identity: &armapicenter.ManagedServiceIdentity{
 			UserAssignedIdentities: map[string]*armapicenter.UserAssignedIdentity{
