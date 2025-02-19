@@ -482,6 +482,7 @@ export class typeAdapter {
     let discriminatorField: string | undefined;
     for (const prop of model.properties) {
       if (prop.kind === 'property' && prop.discriminator) {
+        // only json support discriminator type
         discriminatorField = prop.serializationOptions.json?.name;
         break;
       }
