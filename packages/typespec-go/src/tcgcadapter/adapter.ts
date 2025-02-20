@@ -30,6 +30,7 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
     additionalDecorators: ['TypeSpec\\.@encodedName'],
     disableUsageAccessPropagationToBase: true,
   });
+  context.program.reportDiagnostics(sdkContext.diagnostics);
   let codeModelType: go.CodeModelType = 'data-plane';
   if (sdkContext.arm === true) {
     codeModelType = 'azure-arm';

@@ -6,5 +6,5 @@ package internalpager
 
 // pagerWidgetsClientlistMethodResponse contains the response from method PagerWidgetsClient.NewlistMethodPager.
 type pagerWidgetsClientlistMethodResponse struct {
-	Value []*widget
+	widgetList
 }

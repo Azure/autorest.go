@@ -1,5 +1,16 @@
 # Release History
 
+## 0.3.8 (2025-02-20)
+
+### Bugs Fixed
+
+* Don't export `NewPager` methods when their access is internal.
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
+* Report tcgc diagnostics.
+
 ## 0.3.7 (2025-02-11)
 
 ### Bugs Fixed
