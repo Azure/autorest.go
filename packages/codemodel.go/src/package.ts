@@ -74,6 +74,9 @@ export interface Options {
   sliceElementsByval: boolean;
 
   generateExamples: boolean;
+
+  // whether or not to gather all client parameters for the client factory.
+  factoryGatherAllParams: boolean;
 }
 
 export interface Module {

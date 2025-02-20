@@ -14,7 +14,7 @@ import (
 )
 
 func TestLocationResourcesClient_CreateOrUpdate(t *testing.T) {
-	resp, err := clientFactory.NewLocationResourcesClient().CreateOrUpdate(context.Background(), "eastus", "resource", resources.LocationResource{
+	resp, err := clientFactory.NewLocationResourcesClient(subscriptionIdExpected).CreateOrUpdate(context.Background(), "eastus", "resource", resources.LocationResource{
 		Properties: &resources.LocationResourceProperties{
 			Description: to.Ptr("valid"),
 		},
@@ -40,13 +40,13 @@ func TestLocationResourcesClient_CreateOrUpdate(t *testing.T) {
 }
 
 func TestLocationResourcesClient_Delete(t *testing.T) {
-	resp, err := clientFactory.NewLocationResourcesClient().Delete(context.Background(), "eastus", "resource", nil)
+	resp, err := clientFactory.NewLocationResourcesClient(subscriptionIdExpected).Delete(context.Background(), "eastus", "resource", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
 func TestLocationResourcesClient_Get(t *testing.T) {
-	resp, err := clientFactory.NewLocationResourcesClient().Get(context.Background(), "eastus", "resource", nil)
+	resp, err := clientFactory.NewLocationResourcesClient(subscriptionIdExpected).Get(context.Background(), "eastus", "resource", nil)
 	require.NoError(t, err)
 	require.Equal(t, resources.LocationResource{
 		Properties: &resources.LocationResourceProperties{
@@ -68,7 +68,7 @@ func TestLocationResourcesClient_Get(t *testing.T) {
 }
 
 func TestLocationResourcesClient_NewListByScopePager(t *testing.T) {
-	pager := clientFactory.NewLocationResourcesClient().NewListByLocationPager("eastus", nil)
+	pager := clientFactory.NewLocationResourcesClient(subscriptionIdExpected).NewListByLocationPager("eastus", nil)
 	pageCount := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
@@ -97,7 +97,7 @@ func TestLocationResourcesClient_NewListByScopePager(t *testing.T) {
 }
 
 func TestLocationResourcesClient_Update(t *testing.T) {
-	resp, err := clientFactory.NewLocationResourcesClient().Update(context.Background(), "eastus", "resource", resources.LocationResource{
+	resp, err := clientFactory.NewLocationResourcesClient(subscriptionIdExpected).Update(context.Background(), "eastus", "resource", resources.LocationResource{
 		Properties: &resources.LocationResourceProperties{
 			Description: to.Ptr("valid2"),
 		},

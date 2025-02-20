@@ -34,7 +34,7 @@ var (
 )
 
 func TestNestedClient_Get(t *testing.T) {
-	nestedClientGetResponse, err := clientFactory.NewNestedClient().Get(
+	nestedClientGetResponse, err := clientFactory.NewNestedClient(subscriptionIdExpected).Get(
 		ctx,
 		"test-rg",
 		"top",
@@ -50,7 +50,7 @@ func TestNestedClient_Get(t *testing.T) {
 }
 
 func TestNestedClient_BeginCreateOrReplace(t *testing.T) {
-	nestedClientCreateOrReplaceResponsePoller, err := clientFactory.NewNestedClient().BeginCreateOrReplace(
+	nestedClientCreateOrReplaceResponsePoller, err := clientFactory.NewNestedClient(subscriptionIdExpected).BeginCreateOrReplace(
 		ctx,
 		"test-rg",
 		"top",
@@ -73,7 +73,7 @@ func TestNestedClient_BeginCreateOrReplace(t *testing.T) {
 }
 
 func TestNestedClient_BeginUpdate(t *testing.T) {
-	nestedClientUpdateResponsePoller, err := clientFactory.NewNestedClient().BeginUpdate(
+	nestedClientUpdateResponsePoller, err := clientFactory.NewNestedClient(subscriptionIdExpected).BeginUpdate(
 		ctx,
 		"test-rg",
 		"top",
@@ -96,7 +96,7 @@ func TestNestedClient_BeginUpdate(t *testing.T) {
 }
 
 func TestNestedClient_BeginDelete(t *testing.T) {
-	nestedClientDeleteResponsePoller, err := clientFactory.NewNestedClient().BeginDelete(ctx, "test-rg", "top", "nested", nil)
+	nestedClientDeleteResponsePoller, err := clientFactory.NewNestedClient(subscriptionIdExpected).BeginDelete(ctx, "test-rg", "top", "nested", nil)
 	require.NoError(t, err)
 	nestedClientDeleteResponse, err := nestedClientDeleteResponsePoller.Poll(ctx)
 	require.NoError(t, err)
@@ -104,7 +104,7 @@ func TestNestedClient_BeginDelete(t *testing.T) {
 }
 
 func TestNestedClient_NewListByTopLevelTrackedResourcePager(t *testing.T) {
-	nestedClientListByTopLevelTrackedResourceResponsePager := clientFactory.NewNestedClient().NewListByTopLevelTrackedResourcePager("test-rg", "top", nil)
+	nestedClientListByTopLevelTrackedResourceResponsePager := clientFactory.NewNestedClient(subscriptionIdExpected).NewListByTopLevelTrackedResourcePager("test-rg", "top", nil)
 	require.True(t, nestedClientListByTopLevelTrackedResourceResponsePager.More())
 	nestedClientListByTopLevelTrackedResourceResponse, err := nestedClientListByTopLevelTrackedResourceResponsePager.NextPage(ctx)
 	require.NoError(t, err)

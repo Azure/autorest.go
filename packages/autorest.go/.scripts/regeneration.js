@@ -124,7 +124,7 @@ const keyvault = './swagger/specification/keyvault/data-plane/readme.md';
 generateFromReadme("azkeyvault", keyvault, 'package-7.2', 'test/keyvault/azkeyvault', '--module=azkeyvault --module-version=0.1.0');
 
 const consumption = './swagger/specification/consumption/resource-manager/readme.md';
-generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consumption/armconsumption', '--module=armconsumption --module-version=1.0.0 --azure-arm=true --generate-fakes=false --inject-spans=false --remove-unreferenced-types');
+generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consumption/armconsumption', '--module=armconsumption --module-version=1.0.0 --azure-arm=true --generate-fakes=false --inject-spans=false --remove-unreferenced-types --factory-gather-all-params=true');
 
 const databoxedge = './swagger/specification/databoxedge/resource-manager/readme.md';
 generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/armdataboxedge', '--module=armdataboxedge --module-version=2.0.0 --azure-arm=true --remove-unreferenced-types --inject-spans=false --fix-const-stuttering=true');

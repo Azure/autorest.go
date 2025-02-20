@@ -37,7 +37,7 @@ var (
 )
 
 func TestTopLevelClient_Get(t *testing.T) {
-	topLevelClientGetResponse, err := clientFactory.NewTopLevelClient().Get(
+	topLevelClientGetResponse, err := clientFactory.NewTopLevelClient(subscriptionIdExpected).Get(
 		ctx,
 		"test-rg",
 		"top",
@@ -53,7 +53,7 @@ func TestTopLevelClient_Get(t *testing.T) {
 }
 
 func TestTopLevelClient_CreateOrReplace(t *testing.T) {
-	topLevelClientCreateOrReplaceResponsePoller, err := clientFactory.NewTopLevelClient().BeginCreateOrReplace(
+	topLevelClientCreateOrReplaceResponsePoller, err := clientFactory.NewTopLevelClient(subscriptionIdExpected).BeginCreateOrReplace(
 		ctx,
 		"test-rg",
 		"top",
@@ -77,7 +77,7 @@ func TestTopLevelClient_CreateOrReplace(t *testing.T) {
 }
 
 func TestTopLevelClient_BeginUpdate(t *testing.T) {
-	topLevelClientUpdateResponsePoller, err := clientFactory.NewTopLevelClient().BeginUpdate(
+	topLevelClientUpdateResponsePoller, err := clientFactory.NewTopLevelClient(subscriptionIdExpected).BeginUpdate(
 		ctx,
 		"test-rg",
 		"top",
@@ -100,7 +100,7 @@ func TestTopLevelClient_BeginUpdate(t *testing.T) {
 }
 
 func TestTopLevelClient_BeginDelete(t *testing.T) {
-	topLevelClientDeleteResponsePoller, err := clientFactory.NewTopLevelClient().BeginDelete(
+	topLevelClientDeleteResponsePoller, err := clientFactory.NewTopLevelClient(subscriptionIdExpected).BeginDelete(
 		ctx,
 		"test-rg",
 		"top",
@@ -113,7 +113,7 @@ func TestTopLevelClient_BeginDelete(t *testing.T) {
 }
 
 func TestTopLevelClient_NewListByResourceGroupPager(t *testing.T) {
-	topLevelClientListByResourceGroupResponsePager := clientFactory.NewTopLevelClient().NewListByResourceGroupPager("test-rg", nil)
+	topLevelClientListByResourceGroupResponsePager := clientFactory.NewTopLevelClient(subscriptionIdExpected).NewListByResourceGroupPager("test-rg", nil)
 	require.True(t, topLevelClientListByResourceGroupResponsePager.More())
 	topLevelClientListByResourceGroupResponse, err := topLevelClientListByResourceGroupResponsePager.NextPage(ctx)
 	require.NoError(t, err)
@@ -127,7 +127,7 @@ func TestTopLevelClient_NewListByResourceGroupPager(t *testing.T) {
 }
 
 func TestTopLevelClient_NewListBySubscriptionPager(t *testing.T) {
-	TopLevelClientListBySubscriptionResponsePager := clientFactory.NewTopLevelClient().NewListBySubscriptionPager(nil)
+	TopLevelClientListBySubscriptionResponsePager := clientFactory.NewTopLevelClient(subscriptionIdExpected).NewListBySubscriptionPager(nil)
 	require.True(t, TopLevelClientListBySubscriptionResponsePager.More())
 	TopLevelClientListBySubscriptionResponse, err := TopLevelClientListBySubscriptionResponsePager.NextPage(ctx)
 	require.NoError(t, err)
@@ -141,7 +141,7 @@ func TestTopLevelClient_NewListBySubscriptionPager(t *testing.T) {
 }
 
 func TestTopLevelClient_ActionSync(t *testing.T) {
-	_, err := clientFactory.NewTopLevelClient().ActionSync(
+	_, err := clientFactory.NewTopLevelClient(subscriptionIdExpected).ActionSync(
 		ctx,
 		resourceGroupExpected,
 		"top",

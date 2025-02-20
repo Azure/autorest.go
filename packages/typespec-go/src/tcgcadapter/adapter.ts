@@ -47,6 +47,9 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
   if (context.options['slice-elements-byval']) {
     codeModel.options.sliceElementsByval = true;
   }
+  if (context.options['factory-gather-all-params']) {
+    codeModel.options.factoryGatherAllParams = true;
+  }
 
   fixStutteringTypeNames(sdkContext.sdkPackage, codeModel, context.options);
 
