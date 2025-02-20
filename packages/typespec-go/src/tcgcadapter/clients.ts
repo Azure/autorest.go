@@ -34,7 +34,7 @@ export class clientAdapter {
     }
     for (const sdkClient of sdkPackage.clients) {
       // start with instantiable clients and recursively work down
-      if (sdkClient.initialization.access === 'public') {
+      if (sdkClient.clientInitialization.initializedBy & tcgc.InitializedByFlags.Individually) {
         this.recursiveAdaptClient(sdkClient);
       }
     }
@@ -91,8 +91,8 @@ export class clientAdapter {
     goClient.parent = parent;
 
     // anything other than public means non-instantiable client
-    if (sdkClient.initialization.access === 'public') {
-      for (const param of sdkClient.initialization.properties) {
+    if (sdkClient.clientInitialization.initializedBy & tcgc.InitializedByFlags.Individually) {
+      for (const param of sdkClient.clientInitialization.parameters) {
         if (param.kind === 'credential') {
           // skip this for now as we don't generate client constructors
           continue;
@@ -141,13 +141,18 @@ export class clientAdapter {
     } else {
       throw new Error(`uninstantiable client ${sdkClient.name} has no parent`);
     }
-
-    for (const sdkMethod of sdkClient.methods) {
-      if (sdkMethod.kind === 'clientaccessor') {
-        const subClient = this.recursiveAdaptClient(sdkMethod.response, goClient);
+    if (sdkClient.children && sdkClient.children.length > 0) {
+      for (const child of sdkClient.children) {
+        const subClient = this.recursiveAdaptClient(child, goClient);
         if (subClient) {
           goClient.clientAccessors.push(new go.ClientAccessor(`New${subClient.name}`, subClient));
         }
+      }
+    }
+    for (const sdkMethod of sdkClient.methods) {
+      if (sdkMethod.kind === 'clientaccessor') {
+        // skip this for now as SdkClientAccessor has been deprecated
+        continue;
       } else {
         this.adaptMethod(sdkMethod, goClient);
       }
@@ -163,7 +168,7 @@ export class clientAdapter {
     return goClient;
   }
 
-  private adaptURIParam(sdkParam: tcgc.SdkEndpointParameter | tcgc.SdkPathParameter): go.URIParameter {
+  private adaptURIParam(sdkParam: tcgc.SdkPathParameter): go.URIParameter {
     const paramType = this.ta.getPossibleType(sdkParam.type, true, false);
     if (!go.isConstantType(paramType) && !go.isPrimitiveType(paramType)) {
       throw new Error(`unexpected URI parameter type ${go.getTypeDeclaration(paramType)}`);
@@ -215,8 +220,11 @@ export class clientAdapter {
       if (lroOptions) {
         (<go.LROMethod>method).finalStateVia = lroOptions['finalState'];
       }
-      if (sdkMethod.lroMetadata.finalResponse?.resultPath) {
-        (<go.LROMethod>method).operationLocationResultPath = sdkMethod.lroMetadata.finalResponse.resultPath;
+      if (sdkMethod.lroMetadata.finalResponse?.resultSegments) {
+        // 'resultSegments' is designed for furture extensibility, currently only has one segment
+        (<go.LROMethod>method).operationLocationResultPath = sdkMethod.lroMetadata.finalResponse.resultSegments.map((segment) => {
+          return (<tcgc.SdkBodyModelPropertyType>segment).serializationOptions.json?.name;
+        }).join('.');
       }
     } else {
       throw new Error(`method kind ${sdkMethod.kind} NYI`);
@@ -355,6 +363,18 @@ export class clientAdapter {
         const paramKind = this.adaptParameterKind(param);
         const byVal = isTypePassedByValue(param.type);
         const contentType = this.adaptContentType(opParam.defaultContentType);
+        const getSerializedNameFromProperty = function(property: tcgc.SdkBodyModelPropertyType): string | undefined {
+          if (contentType === 'JSON') {
+            return property.serializationOptions.json?.name;
+          }
+          if (contentType === 'XML') {
+            return property.serializationOptions.xml?.name;
+          }
+          if (contentType === 'binary') {
+            return property.serializationOptions.multipart?.name;
+          }
+          return undefined;
+        };
         switch (contentType) {
           case 'JSON':
           case 'XML': {
@@ -362,7 +382,7 @@ export class clientAdapter {
             let serializedName: string | undefined;
             for (const property of opParam.type.properties) {
               if (property.name === param.name) {
-                serializedName = (<tcgc.SdkBodyModelPropertyType>property).serializedName;
+                serializedName = getSerializedNameFromProperty(<tcgc.SdkBodyModelPropertyType>property);
                 break;
               }
             }

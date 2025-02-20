@@ -132,9 +132,14 @@ export class typeAdapter {
   private getPagedResponses(sdkContext: tcgc.SdkContext): Array<tcgc.SdkModelType> {
     const pagedResponses = new Array<tcgc.SdkModelType>();
     const recursiveWalkClients = function(client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
+      if (client.children && client.children.length > 0) {
+        for (const child of client.children) {
+          recursiveWalkClients(child);
+        }
+      }
       for (const sdkMethod of client.methods) {
         if (sdkMethod.kind === 'clientaccessor') {
-          recursiveWalkClients(sdkMethod.response);
+          // skip this for now as SdkClientAccessor has been deprecated
           continue;
         } else if (sdkMethod.kind !== 'paging') {
           continue;
@@ -482,7 +487,8 @@ export class typeAdapter {
     let discriminatorField: string | undefined;
     for (const prop of model.properties) {
       if (prop.kind === 'property' && prop.discriminator) {
-        discriminatorField = prop.serializedName;
+        // only json support discriminator type
+        discriminatorField = prop.serializationOptions.json?.name;
         break;
       }
     }
