@@ -139,7 +139,7 @@ export class typeAdapter {
       }
       for (const sdkMethod of client.methods) {
         if (sdkMethod.kind === 'clientaccessor') {
-          // SdkClientAccessor has been deprecated
+          // skip this for now as SdkClientAccessor has been deprecated
           continue;
         } else if (sdkMethod.kind !== 'paging') {
           continue;

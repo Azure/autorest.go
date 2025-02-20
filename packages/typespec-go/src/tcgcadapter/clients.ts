@@ -151,7 +151,7 @@ export class clientAdapter {
     }
     for (const sdkMethod of sdkClient.methods) {
       if (sdkMethod.kind === 'clientaccessor') {
-        // SdkClientAccessor has been deprecated
+        // skip this for now as SdkClientAccessor has been deprecated
         continue;
       } else {
         this.adaptMethod(sdkMethod, goClient);
