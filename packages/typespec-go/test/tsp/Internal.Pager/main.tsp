@@ -12,6 +12,11 @@ using TypeSpec.Http;
 namespace Microsoft.Internal.Pager;
 
 @pagedResult
+model WidgetList {
+  @items
+  values: Widget[];
+}
+
 model Widget {
   weight: int32;
 }
@@ -21,5 +26,5 @@ model Widget {
 interface Widgets {
   @access(Access.internal)
   @get
-  list(): Widget[];
+  list(): WidgetList;
 }

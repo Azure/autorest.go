@@ -8,3 +8,8 @@ type widget struct {
 	// REQUIRED
 	Weight *int32
 }
+
+type widgetList struct {
+	// REQUIRED
+	Values []*widget
+}

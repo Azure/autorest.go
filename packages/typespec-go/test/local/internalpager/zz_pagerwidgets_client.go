@@ -61,7 +61,7 @@ func (client *PagerWidgetsClient) listCreateRequest(ctx context.Context, _ *page
 // listHandleResponse handles the listMethod response.
 func (client *PagerWidgetsClient) listHandleResponse(resp *http.Response) (pagerWidgetsClientlistMethodResponse, error) {
 	result := pagerWidgetsClientlistMethodResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.widgetList); err != nil {
 		return pagerWidgetsClientlistMethodResponse{}, err
 	}
 	return result, nil
