@@ -141,13 +141,18 @@ export class clientAdapter {
     } else {
       throw new Error(`uninstantiable client ${sdkClient.name} has no parent`);
     }
-
-    for (const sdkMethod of sdkClient.methods) {
-      if (sdkMethod.kind === 'clientaccessor') {
-        const subClient = this.recursiveAdaptClient(sdkMethod.response, goClient);
+    if (sdkClient.children && sdkClient.children.length > 0) {
+      for (const child of sdkClient.children) {
+        const subClient = this.recursiveAdaptClient(child, goClient);
         if (subClient) {
           goClient.clientAccessors.push(new go.ClientAccessor(`New${subClient.name}`, subClient));
         }
+      }
+    }
+    for (const sdkMethod of sdkClient.methods) {
+      if (sdkMethod.kind === 'clientaccessor') {
+        // SdkClientAccessor has been deprecated
+        continue;
       } else {
         this.adaptMethod(sdkMethod, goClient);
       }

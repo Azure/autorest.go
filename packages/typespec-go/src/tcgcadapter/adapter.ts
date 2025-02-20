@@ -80,9 +80,13 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
     client.name = trimPackagePrefix(stutteringPrefix, client.name);
 
     // fix up the synthesized type names for page responses
+    if (client.children && client.children.length > 0) {
+      for (const child of client.children) {
+        recursiveWalkClients(child);
+      }
+    }
     for (const sdkMethod of client.methods) {
       if (sdkMethod.kind === 'clientaccessor') {
-        recursiveWalkClients(sdkMethod.response);
         continue;
       } else if (sdkMethod.kind !== 'paging') {
         continue;
