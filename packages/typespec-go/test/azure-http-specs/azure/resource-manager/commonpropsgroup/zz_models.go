@@ -6,6 +6,12 @@ package commonpropsgroup
 
 import "time"
 
+// ErrorResponse - A response containing error details.
+type ErrorResponse struct {
+	// REQUIRED; The error object.
+	Error *Error
+}
+
 // ManagedIdentityTrackedResource - Concrete tracked resource types can be created by aliasing this type using a specific
 // property type.
 type ManagedIdentityTrackedResource struct {

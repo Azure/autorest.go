@@ -45,7 +45,7 @@ export class typeAdapter {
     const ifaceTypes = new Array<InterfaceTypeSdkModelType>();
     for (const modelType of sdkContext.sdkPackage.models) {
       if (modelType.name.length === 0) {
-        // tcgc creates some unamed models for spread params.
+        // tcgc creates some unnamed models for spread params.
         // we don't use these so just skip them.
         continue;
       } else if (modelType.access === 'internal' && (modelType.usage & tcgc.UsageFlags.Spread) === tcgc.UsageFlags.Spread) {
@@ -112,10 +112,7 @@ export class typeAdapter {
   }
 
   private skipSpecificTypes(type: tcgc.SdkModelType | tcgc.SdkEnumType): boolean {
-    if (tcgc.isAzureCoreModel(type)) {
-      // skip core types
-      return true;
-    } else if ((type.usage & tcgc.UsageFlags.Exception) === tcgc.UsageFlags.Exception && (type.usage & tcgc.UsageFlags.Input) === 0 && (type.usage & tcgc.UsageFlags.Output) === 0) {
+    if ((type.usage & tcgc.UsageFlags.Exception) === tcgc.UsageFlags.Exception && (type.usage & tcgc.UsageFlags.Input) === 0 && (type.usage & tcgc.UsageFlags.Output) === 0) {
       // skip error type
       return true;
     } else if ((type.usage & tcgc.UsageFlags.LroPolling) === tcgc.UsageFlags.LroPolling && (type.usage & tcgc.UsageFlags.Input) === 0 && (type.usage & tcgc.UsageFlags.Output) === 0) {
