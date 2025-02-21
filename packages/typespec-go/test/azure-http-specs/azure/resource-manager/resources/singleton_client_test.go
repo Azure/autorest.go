@@ -34,7 +34,7 @@ var (
 )
 
 func TestSingletonClient_GetByResourceGroup(t *testing.T) {
-	singletonClientGetByResourceGroupResponse, err := clientFactory.NewSingletonClient().GetByResourceGroup(
+	singletonClientGetByResourceGroupResponse, err := clientFactory.NewSingletonClient(subscriptionIdExpected).GetByResourceGroup(
 		ctx,
 		"test-rg",
 		nil,
@@ -49,7 +49,7 @@ func TestSingletonClient_GetByResourceGroup(t *testing.T) {
 }
 
 func TestSingletonClient_BeginCreateOrUpdate(t *testing.T) {
-	singletonClientBeginCreateOrUpdatePoller, err := clientFactory.NewSingletonClient().BeginCreateOrUpdate(
+	singletonClientBeginCreateOrUpdatePoller, err := clientFactory.NewSingletonClient(subscriptionIdExpected).BeginCreateOrUpdate(
 		ctx,
 		"test-rg",
 		resources.SingletonTrackedResource{
@@ -72,7 +72,7 @@ func TestSingletonClient_BeginCreateOrUpdate(t *testing.T) {
 }
 
 func TestSingletonClient_Update(t *testing.T) {
-	singletonClientUpdateResponse, err := clientFactory.NewSingletonClient().Update(
+	singletonClientUpdateResponse, err := clientFactory.NewSingletonClient(subscriptionIdExpected).Update(
 		ctx,
 		"test-rg",
 		resources.SingletonTrackedResource{
@@ -92,7 +92,7 @@ func TestSingletonClient_Update(t *testing.T) {
 }
 
 func TestSingletonClient_NewListByResourceGroupPager(t *testing.T) {
-	singletonClientListByResourceGroupResponsePager := clientFactory.NewSingletonClient().NewListByResourceGroupPager("test-rg", nil)
+	singletonClientListByResourceGroupResponsePager := clientFactory.NewSingletonClient(subscriptionIdExpected).NewListByResourceGroupPager("test-rg", nil)
 	require.True(t, singletonClientListByResourceGroupResponsePager.More())
 	singletonClientListByResourceGroupResponse, err := singletonClientListByResourceGroupResponsePager.NextPage(ctx)
 	require.NoError(t, err)

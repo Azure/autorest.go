@@ -739,3 +739,37 @@ export function getAllClientParameters(codeModel: go.CodeModel): Array<go.Parame
   allClientParams.sort(sortParametersByRequired);
   return allClientParams;
 }
+
+// returns common client parameters for all the clients
+export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.Parameter> {
+  const paramCount = new Map<string, { uses: number, param: go.Parameter }>();
+  let numClients = 0; // track client count since we might skip some
+  for (const clients of codeModel.clients) {
+    // special cases: some ARM clients always don't contain any parameters (OperationsClient will be depracated in the future)
+    if (codeModel.type === 'azure-arm' && clients.name.match(/^OperationsClient$/)) {
+      continue; 
+    }
+
+    ++numClients;
+    for (const clientParam of values(clients.parameters)) {
+      let entry = paramCount.get(clientParam.name);
+      if (!entry) {
+        entry = { uses: 0, param: clientParam };
+        paramCount.set(clientParam.name, entry);
+      }
+
+      ++entry.uses;
+    }
+  }
+
+  // for each param, if its usage count is equal to the
+  // number of clients, then it's common to all clients
+  const commonClientParams = new Array<go.Parameter>();
+  for (const entry of paramCount.values()) {
+    if (entry.uses === numClients) {
+      commonClientParams.push(entry.param);
+    }
+  }
+
+  return commonClientParams.sort(sortParametersByRequired);
+}

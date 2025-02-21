@@ -1,5 +1,11 @@
 # Release History
 
+## 4.0.0-preview.71 (unreleased)
+
+### Other Changes
+
+* Added switch `--factory-gather-all-params` to control the `NewClientFactory` constructor parameters. This switch allows gathering either only common parameters of clients or all parameters of clients.
+
 ## 4.0.0-preview.70 (unreleased)
 
 ### Other Changes

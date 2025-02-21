@@ -27,7 +27,7 @@ var (
 
 func TestMain(m *testing.M) {
 	ctx = context.Background()
-	clientFactory, _ = resources.NewClientFactory(subscriptionIdExpected, &azfake.TokenCredential{}, &arm.ClientOptions{
+	clientFactory, _ = resources.NewClientFactory(&azfake.TokenCredential{}, &arm.ClientOptions{
 		ClientOptions: azcore.ClientOptions{
 			InsecureAllowCredentialWithHTTP: true,
 			PerCallPolicies: []policy.Policy{

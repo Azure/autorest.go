@@ -6,6 +6,10 @@
 
 * Remove filtering Azure core model since some instances of template model is in `Azure.Core` namespace. Logic of filtering exception model could cover the filtering needs.
 
+### Other Changes
+
+* Added switch `--factory-gather-all-params` to control the `NewClientFactory` constructor parameters. This switch allows gathering either only common parameters of clients or all parameters of clients.
+
 ## 0.3.7 (2025-02-11)
 
 ### Bugs Fixed

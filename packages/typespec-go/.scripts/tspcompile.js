@@ -140,7 +140,7 @@ const armdatabasewatcher = pkgRoot + 'test/tsp/DatabaseWatcher.Management';
 generate('armdatabasewatcher', armdatabasewatcher, 'test/local/armdatabasewatcher', ['fix-const-stuttering=false']);
 
 const armloadtestservice = pkgRoot + 'test/tsp/LoadTestService.Management';
-generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice');
+generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice', ['factory-gather-all-params=true']);
 
 const armdevopsinfrastructure = pkgRoot + 'test/tsp/Microsoft.DevOpsInfrastructure';
 generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/local/armdevopsinfrastructure');
@@ -217,7 +217,7 @@ function generate(moduleName, input, outputDir, perTestOptions) {
     'head-as-boolean=true',
     'fix-const-stuttering=true',
     `examples-directory=${input}/examples`,
-    'generate-examples=true'
+    'generate-examples=true',
   ];
 
   let allOptions = fixedOptions;
