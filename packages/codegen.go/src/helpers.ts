@@ -740,31 +740,36 @@ export function getAllClientParameters(codeModel: go.CodeModel): Array<go.Parame
   return allClientParams;
 }
 
-// return common client parameters for all the clients
+// returns common client parameters for all the clients
 export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.Parameter> {
-  const commonClientParams = new Array<go.Parameter>();
-  const paramCount = new Map<string, { count: number, param: go.Parameter }>();
-  var clientCnt = 0;
+  const paramCount = new Map<string, { uses: number, param: go.Parameter }>();
+  let numClients = 0; // track client count since we might skip some
   for (const clients of codeModel.clients) {
-    // special cases: some clients always don't contain any parameters (OperationsClient will be depracated in the future)
-    if (new RegExp('^OperationsClient$').test(clients.name)) {
+    // special cases: some ARM clients always don't contain any parameters (OperationsClient will be depracated in the future)
+    if (codeModel.type === 'azure-arm' && clients.name.match(/^OperationsClient$/)) {
       continue; 
     }
-    clientCnt++;
+
+    ++numClients;
     for (const clientParam of values(clients.parameters)) {
-      const entry = paramCount.get(clientParam.name);
-      if (entry) {
-        entry.count++;
-        continue;
+      let entry = paramCount.get(clientParam.name);
+      if (!entry) {
+        entry = { uses: 0, param: clientParam };
+        paramCount.set(clientParam.name, entry);
       }
-      paramCount.set(clientParam.name, { count: 1, param: clientParam });
+
+      ++entry.uses;
     }
   }
-  for (const [_, entry] of paramCount) {
-    if (entry.count === clientCnt) {
+
+  // for each param, if its usage count is equal to the
+  // number of clients, then it's common to all clients
+  const commonClientParams = new Array<go.Parameter>();
+  for (const entry of paramCount.values()) {
+    if (entry.uses === numClients) {
       commonClientParams.push(entry.param);
     }
   }
-  commonClientParams.sort(sortParametersByRequired);
-  return commonClientParams;
+
+  return commonClientParams.sort(sortParametersByRequired);
 }
