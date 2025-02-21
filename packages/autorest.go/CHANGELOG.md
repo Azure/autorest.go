@@ -1,16 +1,11 @@
 # Release History
 
-## 4.0.0-preview.71 (unreleased)
-
-### Other Changes
-
-* Added switch `--factory-gather-all-params` to control the `NewClientFactory` constructor parameters. This switch allows gathering either only common parameters of clients or all parameters of clients.
-
-## 4.0.0-preview.70 (unreleased)
+## 4.0.0-preview.70 (2025-02-21)
 
 ### Other Changes
 
 * Upgraded default `azcore` version to `v1.17.0`.
+* Added switch `--factory-gather-all-params` to control the `NewClientFactory` constructor parameters. This switch allows gathering either only common parameters of clients or all parameters of clients.
 
 ## 4.0.0-preview.69 (2024-11-04)
 

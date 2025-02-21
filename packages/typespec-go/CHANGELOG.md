@@ -1,13 +1,16 @@
 # Release History
 
-## 0.3.8 (UNRELEASED)
+## 0.3.8 (2025-02-21)
 
 ### Bugs Fixed
 
+* Don't export `NewPager` methods when their access is internal.
 * Remove filtering Azure core model since some instances of template model is in `Azure.Core` namespace. Logic of filtering exception model could cover the filtering needs.
 
 ### Other Changes
 
+* Updated to the latest tsp toolset.
+* Report tcgc diagnostics.
 * Added switch `--factory-gather-all-params` to control the `NewClientFactory` constructor parameters. This switch allows gathering either only common parameters of clients or all parameters of clients.
 
 ## 0.3.7 (2025-02-11)
