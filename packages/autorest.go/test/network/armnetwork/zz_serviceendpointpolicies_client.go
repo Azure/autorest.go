@@ -280,8 +280,10 @@ func (client *ServiceEndpointPoliciesClient) NewListPager(options *ServiceEndpoi
 		Fetcher: func(ctx context.Context, page *ServiceEndpointPoliciesClientListResponse) (ServiceEndpointPoliciesClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ServiceEndpointPoliciesClient.NewListPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, options)
@@ -336,8 +338,10 @@ func (client *ServiceEndpointPoliciesClient) NewListByResourceGroupPager(resourc
 		Fetcher: func(ctx context.Context, page *ServiceEndpointPoliciesClientListByResourceGroupResponse) (ServiceEndpointPoliciesClientListByResourceGroupResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ServiceEndpointPoliciesClient.NewListByResourceGroupPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

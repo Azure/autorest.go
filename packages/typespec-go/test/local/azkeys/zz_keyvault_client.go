@@ -466,8 +466,10 @@ func (client *KeyVaultClient) NewGetDeletedKeysPager(options *KeyVaultClientGetD
 		Fetcher: func(ctx context.Context, page *KeyVaultClientGetDeletedKeysResponse) (KeyVaultClientGetDeletedKeysResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "KeyVaultClient.NewGetDeletedKeysPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getDeletedKeysCreateRequest(ctx, options)
@@ -655,8 +657,10 @@ func (client *KeyVaultClient) NewGetKeyVersionsPager(keyName string, options *Ke
 		Fetcher: func(ctx context.Context, page *KeyVaultClientGetKeyVersionsResponse) (KeyVaultClientGetKeyVersionsResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "KeyVaultClient.NewGetKeyVersionsPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getKeyVersionsCreateRequest(ctx, keyName, options)
@@ -720,8 +724,10 @@ func (client *KeyVaultClient) NewGetKeysPager(options *KeyVaultClientGetKeysOpti
 		Fetcher: func(ctx context.Context, page *KeyVaultClientGetKeysResponse) (KeyVaultClientGetKeysResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "KeyVaultClient.NewGetKeysPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getKeysCreateRequest(ctx, options)

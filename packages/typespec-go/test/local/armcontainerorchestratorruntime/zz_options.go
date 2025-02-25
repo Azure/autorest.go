@@ -22,7 +22,8 @@ type BgpPeersClientGetOptions struct {
 
 // BgpPeersClientListOptions contains the optional parameters for the BgpPeersClient.NewListPager method.
 type BgpPeersClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // LoadBalancersClientBeginCreateOrUpdateOptions contains the optional parameters for the LoadBalancersClient.BeginCreateOrUpdate
@@ -44,12 +45,14 @@ type LoadBalancersClientGetOptions struct {
 
 // LoadBalancersClientListOptions contains the optional parameters for the LoadBalancersClient.NewListPager method.
 type LoadBalancersClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ServicesClientCreateOrUpdateOptions contains the optional parameters for the ServicesClient.CreateOrUpdate method.
@@ -69,7 +72,8 @@ type ServicesClientGetOptions struct {
 
 // ServicesClientListOptions contains the optional parameters for the ServicesClient.NewListPager method.
 type ServicesClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // StorageClassClientBeginCreateOrUpdateOptions contains the optional parameters for the StorageClassClient.BeginCreateOrUpdate
@@ -98,5 +102,6 @@ type StorageClassClientGetOptions struct {
 
 // StorageClassClientListOptions contains the optional parameters for the StorageClassClient.NewListPager method.
 type StorageClassClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }

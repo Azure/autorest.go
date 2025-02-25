@@ -56,8 +56,10 @@ func (client *AvailablePrivateEndpointTypesClient) NewListPager(location string,
 		Fetcher: func(ctx context.Context, page *AvailablePrivateEndpointTypesClientListResponse) (AvailablePrivateEndpointTypesClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AvailablePrivateEndpointTypesClient.NewListPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, location, options)
@@ -118,8 +120,10 @@ func (client *AvailablePrivateEndpointTypesClient) NewListByResourceGroupPager(l
 		Fetcher: func(ctx context.Context, page *AvailablePrivateEndpointTypesClientListByResourceGroupResponse) (AvailablePrivateEndpointTypesClientListByResourceGroupResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AvailablePrivateEndpointTypesClient.NewListByResourceGroupPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByResourceGroupCreateRequest(ctx, location, resourceGroupName, options)

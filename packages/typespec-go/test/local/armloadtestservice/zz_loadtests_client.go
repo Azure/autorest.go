@@ -273,8 +273,10 @@ func (client *LoadTestsClient) NewListByResourceGroupPager(resourceGroupName str
 		Fetcher: func(ctx context.Context, page *LoadTestsClientListByResourceGroupResponse) (LoadTestsClientListByResourceGroupResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LoadTestsClient.NewListByResourceGroupPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
@@ -332,8 +334,10 @@ func (client *LoadTestsClient) NewListBySubscriptionPager(options *LoadTestsClie
 		Fetcher: func(ctx context.Context, page *LoadTestsClientListBySubscriptionResponse) (LoadTestsClientListBySubscriptionResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LoadTestsClient.NewListBySubscriptionPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listBySubscriptionCreateRequest(ctx, options)
@@ -389,8 +393,10 @@ func (client *LoadTestsClient) NewOutboundNetworkDependenciesEndpointsPager(reso
 		Fetcher: func(ctx context.Context, page *LoadTestsClientOutboundNetworkDependenciesEndpointsResponse) (LoadTestsClientOutboundNetworkDependenciesEndpointsResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LoadTestsClient.NewOutboundNetworkDependenciesEndpointsPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.outboundNetworkDependenciesEndpointsCreateRequest(ctx, resourceGroupName, loadTestName, options)

@@ -276,8 +276,10 @@ func (client *VirtualNetworkTapsClient) NewListAllPager(options *VirtualNetworkT
 		Fetcher: func(ctx context.Context, page *VirtualNetworkTapsClientListAllResponse) (VirtualNetworkTapsClientListAllResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualNetworkTapsClient.NewListAllPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listAllCreateRequest(ctx, options)
@@ -332,8 +334,10 @@ func (client *VirtualNetworkTapsClient) NewListByResourceGroupPager(resourceGrou
 		Fetcher: func(ctx context.Context, page *VirtualNetworkTapsClientListByResourceGroupResponse) (VirtualNetworkTapsClientListByResourceGroupResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualNetworkTapsClient.NewListByResourceGroupPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

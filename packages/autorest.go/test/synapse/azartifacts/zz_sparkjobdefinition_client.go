@@ -336,8 +336,10 @@ func (client *SparkJobDefinitionClient) NewGetSparkJobDefinitionsByWorkspacePage
 		},
 		Fetcher: func(ctx context.Context, page *SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse) (SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getSparkJobDefinitionsByWorkspaceCreateRequest(ctx, options)

@@ -47,13 +47,15 @@ type AzureLargeInstanceClientGetOptions struct {
 // AzureLargeInstanceClientListByResourceGroupOptions contains the optional parameters for the AzureLargeInstanceClient.NewListByResourceGroupPager
 // method.
 type AzureLargeInstanceClientListByResourceGroupOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // AzureLargeInstanceClientListBySubscriptionOptions contains the optional parameters for the AzureLargeInstanceClient.NewListBySubscriptionPager
 // method.
 type AzureLargeInstanceClientListBySubscriptionOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // AzureLargeInstanceClientUpdateOptions contains the optional parameters for the AzureLargeInstanceClient.Update method.
@@ -82,13 +84,15 @@ type AzureLargeStorageInstanceClientGetOptions struct {
 // AzureLargeStorageInstanceClientListByResourceGroupOptions contains the optional parameters for the AzureLargeStorageInstanceClient.NewListByResourceGroupPager
 // method.
 type AzureLargeStorageInstanceClientListByResourceGroupOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // AzureLargeStorageInstanceClientListBySubscriptionOptions contains the optional parameters for the AzureLargeStorageInstanceClient.NewListBySubscriptionPager
 // method.
 type AzureLargeStorageInstanceClientListBySubscriptionOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // AzureLargeStorageInstanceClientUpdateOptions contains the optional parameters for the AzureLargeStorageInstanceClient.Update
@@ -99,5 +103,6 @@ type AzureLargeStorageInstanceClientUpdateOptions struct {
 
 // OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }

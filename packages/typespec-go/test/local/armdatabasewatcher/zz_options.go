@@ -23,12 +23,14 @@ type AlertRuleResourcesClientGetOptions struct {
 // AlertRuleResourcesClientListByParentOptions contains the optional parameters for the AlertRuleResourcesClient.NewListByParentPager
 // method.
 type AlertRuleResourcesClientListByParentOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // SharedPrivateLinkResourcesClientBeginCreateOptions contains the optional parameters for the SharedPrivateLinkResourcesClient.BeginCreate
@@ -54,7 +56,8 @@ type SharedPrivateLinkResourcesClientGetOptions struct {
 // SharedPrivateLinkResourcesClientListByWatcherOptions contains the optional parameters for the SharedPrivateLinkResourcesClient.NewListByWatcherPager
 // method.
 type SharedPrivateLinkResourcesClientListByWatcherOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // TargetsClientCreateOrUpdateOptions contains the optional parameters for the TargetsClient.CreateOrUpdate method.
@@ -74,7 +77,8 @@ type TargetsClientGetOptions struct {
 
 // TargetsClientListByWatcherOptions contains the optional parameters for the TargetsClient.NewListByWatcherPager method.
 type TargetsClientListByWatcherOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // WatchersClientBeginCreateOrUpdateOptions contains the optional parameters for the WatchersClient.BeginCreateOrUpdate method.
@@ -115,11 +119,13 @@ type WatchersClientGetOptions struct {
 // WatchersClientListByResourceGroupOptions contains the optional parameters for the WatchersClient.NewListByResourceGroupPager
 // method.
 type WatchersClientListByResourceGroupOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // WatchersClientListBySubscriptionOptions contains the optional parameters for the WatchersClient.NewListBySubscriptionPager
 // method.
 type WatchersClientListBySubscriptionOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }

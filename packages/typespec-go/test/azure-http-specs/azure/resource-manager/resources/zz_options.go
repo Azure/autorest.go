@@ -24,7 +24,8 @@ type ExtensionsResourcesClientGetOptions struct {
 // ExtensionsResourcesClientListByScopeOptions contains the optional parameters for the ExtensionsResourcesClient.NewListByScopePager
 // method.
 type ExtensionsResourcesClientListByScopeOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ExtensionsResourcesClientUpdateOptions contains the optional parameters for the ExtensionsResourcesClient.Update method.
@@ -51,7 +52,8 @@ type LocationResourcesClientGetOptions struct {
 // LocationResourcesClientListByLocationOptions contains the optional parameters for the LocationResourcesClient.NewListByLocationPager
 // method.
 type LocationResourcesClientListByLocationOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // LocationResourcesClientUpdateOptions contains the optional parameters for the LocationResourcesClient.Update method.
@@ -85,7 +87,8 @@ type NestedClientGetOptions struct {
 // NestedClientListByTopLevelTrackedResourceOptions contains the optional parameters for the NestedClient.NewListByTopLevelTrackedResourcePager
 // method.
 type NestedClientListByTopLevelTrackedResourceOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // SingletonClientBeginCreateOrUpdateOptions contains the optional parameters for the SingletonClient.BeginCreateOrUpdate
@@ -103,7 +106,8 @@ type SingletonClientGetByResourceGroupOptions struct {
 // SingletonClientListByResourceGroupOptions contains the optional parameters for the SingletonClient.NewListByResourceGroupPager
 // method.
 type SingletonClientListByResourceGroupOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // SingletonClientUpdateOptions contains the optional parameters for the SingletonClient.Update method.
@@ -143,11 +147,13 @@ type TopLevelClientGetOptions struct {
 // TopLevelClientListByResourceGroupOptions contains the optional parameters for the TopLevelClient.NewListByResourceGroupPager
 // method.
 type TopLevelClientListByResourceGroupOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // TopLevelClientListBySubscriptionOptions contains the optional parameters for the TopLevelClient.NewListBySubscriptionPager
 // method.
 type TopLevelClientListBySubscriptionOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }

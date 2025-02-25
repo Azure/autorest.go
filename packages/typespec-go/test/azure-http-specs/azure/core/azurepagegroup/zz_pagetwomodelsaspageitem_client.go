@@ -32,8 +32,10 @@ func (client *PageTwoModelsAsPageItemClient) NewListFirstItemPager(options *Page
 		Fetcher: func(ctx context.Context, page *PageTwoModelsAsPageItemClientListFirstItemResponse) (PageTwoModelsAsPageItemClientListFirstItemResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageTwoModelsAsPageItemClient.NewListFirstItemPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listFirstItemCreateRequest(ctx, options)
@@ -84,8 +86,10 @@ func (client *PageTwoModelsAsPageItemClient) NewListSecondItemPager(options *Pag
 		Fetcher: func(ctx context.Context, page *PageTwoModelsAsPageItemClientListSecondItemResponse) (PageTwoModelsAsPageItemClientListSecondItemResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageTwoModelsAsPageItemClient.NewListSecondItemPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listSecondItemCreateRequest(ctx, options)

@@ -36,13 +36,15 @@ type AccountsClientGetOptions struct {
 // AccountsClientListByResourceGroupOptions contains the optional parameters for the AccountsClient.NewListByResourceGroupPager
 // method.
 type AccountsClientListByResourceGroupOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // AccountsClientListBySubscriptionOptions contains the optional parameters for the AccountsClient.NewListBySubscriptionPager
 // method.
 type AccountsClientListBySubscriptionOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // CertificateProfilesClientBeginCreateOptions contains the optional parameters for the CertificateProfilesClient.BeginCreate
@@ -67,7 +69,8 @@ type CertificateProfilesClientGetOptions struct {
 // CertificateProfilesClientListByCodeSigningAccountOptions contains the optional parameters for the CertificateProfilesClient.NewListByCodeSigningAccountPager
 // method.
 type CertificateProfilesClientListByCodeSigningAccountOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // CertificateProfilesClientRevokeCertificateOptions contains the optional parameters for the CertificateProfilesClient.RevokeCertificate
@@ -78,5 +81,6 @@ type CertificateProfilesClientRevokeCertificateOptions struct {
 
 // OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }

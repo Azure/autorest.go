@@ -189,8 +189,10 @@ func (client *CloudServiceOperatingSystemsClient) NewListOSFamiliesPager(locatio
 		Fetcher: func(ctx context.Context, page *CloudServiceOperatingSystemsClientListOSFamiliesResponse) (CloudServiceOperatingSystemsClientListOSFamiliesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "CloudServiceOperatingSystemsClient.NewListOSFamiliesPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listOSFamiliesCreateRequest(ctx, location, options)
@@ -251,8 +253,10 @@ func (client *CloudServiceOperatingSystemsClient) NewListOSVersionsPager(locatio
 		Fetcher: func(ctx context.Context, page *CloudServiceOperatingSystemsClientListOSVersionsResponse) (CloudServiceOperatingSystemsClientListOSVersionsResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "CloudServiceOperatingSystemsClient.NewListOSVersionsPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listOSVersionsCreateRequest(ctx, location, options)

@@ -36,6 +36,9 @@ type BasicClientGetOptions struct {
 
 // BasicClientListOptions contains the optional parameters for the BasicClient.NewListPager method.
 type BasicClientListOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Expand the indicated resources into the response.
 	Expand []string
 

@@ -228,8 +228,10 @@ func (client *BgpPeersClient) NewListPager(resourceURI string, options *BgpPeers
 		Fetcher: func(ctx context.Context, page *BgpPeersClientListResponse) (BgpPeersClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BgpPeersClient.NewListPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, resourceURI, options)

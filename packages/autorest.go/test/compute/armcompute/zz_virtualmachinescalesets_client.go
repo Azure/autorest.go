@@ -651,8 +651,10 @@ func (client *VirtualMachineScaleSetsClient) NewGetOSUpgradeHistoryPager(resourc
 		Fetcher: func(ctx context.Context, page *VirtualMachineScaleSetsClientGetOSUpgradeHistoryResponse) (VirtualMachineScaleSetsClientGetOSUpgradeHistoryResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualMachineScaleSetsClient.NewGetOSUpgradeHistoryPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getOSUpgradeHistoryCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
@@ -715,8 +717,10 @@ func (client *VirtualMachineScaleSetsClient) NewListPager(resourceGroupName stri
 		Fetcher: func(ctx context.Context, page *VirtualMachineScaleSetsClientListResponse) (VirtualMachineScaleSetsClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualMachineScaleSetsClient.NewListPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -776,8 +780,10 @@ func (client *VirtualMachineScaleSetsClient) NewListAllPager(options *VirtualMac
 		Fetcher: func(ctx context.Context, page *VirtualMachineScaleSetsClientListAllResponse) (VirtualMachineScaleSetsClientListAllResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualMachineScaleSetsClient.NewListAllPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listAllCreateRequest(ctx, options)
@@ -832,8 +838,10 @@ func (client *VirtualMachineScaleSetsClient) NewListByLocationPager(location str
 		Fetcher: func(ctx context.Context, page *VirtualMachineScaleSetsClientListByLocationResponse) (VirtualMachineScaleSetsClientListByLocationResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualMachineScaleSetsClient.NewListByLocationPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByLocationCreateRequest(ctx, location, options)
@@ -894,8 +902,10 @@ func (client *VirtualMachineScaleSetsClient) NewListSKUsPager(resourceGroupName 
 		Fetcher: func(ctx context.Context, page *VirtualMachineScaleSetsClientListSKUsResponse) (VirtualMachineScaleSetsClientListSKUsResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualMachineScaleSetsClient.NewListSKUsPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listSKUsCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)

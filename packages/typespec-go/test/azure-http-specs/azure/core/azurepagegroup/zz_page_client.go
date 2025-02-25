@@ -38,8 +38,10 @@ func (client *PageClient) NewListWithCustomPageModelPager(options *PageClientLis
 		Fetcher: func(ctx context.Context, page *PageClientListWithCustomPageModelResponse) (PageClientListWithCustomPageModelResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageClient.NewListWithCustomPageModelPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listWithCustomPageModelCreateRequest(ctx, options)
@@ -88,8 +90,10 @@ func (client *PageClient) NewListWithPagePager(options *PageClientListWithPageOp
 		Fetcher: func(ctx context.Context, page *PageClientListWithPageResponse) (PageClientListWithPageResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageClient.NewListWithPagePager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listWithPageCreateRequest(ctx, options)
@@ -140,8 +144,10 @@ func (client *PageClient) NewListWithParametersPager(bodyInput ListItemInputBody
 		Fetcher: func(ctx context.Context, page *PageClientListWithParametersResponse) (PageClientListWithParametersResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageClient.NewListWithParametersPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listWithParametersCreateRequest(ctx, bodyInput, options)

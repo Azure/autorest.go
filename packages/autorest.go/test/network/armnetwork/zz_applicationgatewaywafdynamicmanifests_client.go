@@ -55,8 +55,10 @@ func (client *ApplicationGatewayWafDynamicManifestsClient) NewGetPager(location 
 		Fetcher: func(ctx context.Context, page *ApplicationGatewayWafDynamicManifestsClientGetResponse) (ApplicationGatewayWafDynamicManifestsClientGetResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ApplicationGatewayWafDynamicManifestsClient.NewGetPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getCreateRequest(ctx, location, options)

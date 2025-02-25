@@ -6,5 +6,6 @@ package armrandom
 
 // SomeServiceClientListThingsOptions contains the optional parameters for the SomeServiceClient.NewListThingsPager method.
 type SomeServiceClientListThingsOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
