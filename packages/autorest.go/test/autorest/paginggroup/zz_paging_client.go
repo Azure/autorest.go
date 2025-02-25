@@ -417,7 +417,7 @@ func (client *PagingClient) NewGetMultiplePagesFragmentNextLinkPager(apiVersion 
 				return client.getMultiplePagesFragmentNextLinkCreateRequest(ctx, apiVersion, tenant, options)
 			}, &runtime.FetcherForNextLinkOptions{
 				NextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {
-					return client.nextFragmentCreateRequest(ctx, apiVersion, tenant, encodedNextLink)
+					return client.nextFragmentCreateRequest(ctx, apiVersion, tenant, encodedNextLink, nextLink)
 				},
 			})
 			if err != nil {
@@ -481,7 +481,7 @@ func (client *PagingClient) NewGetMultiplePagesFragmentWithGroupingNextLinkPager
 				return client.getMultiplePagesFragmentWithGroupingNextLinkCreateRequest(ctx, customParameterGroup, options)
 			}, &runtime.FetcherForNextLinkOptions{
 				NextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {
-					return client.nextFragmentWithGroupingCreateRequest(ctx, encodedNextLink, customParameterGroup)
+					return client.nextFragmentWithGroupingCreateRequest(ctx, encodedNextLink, nextLink, customParameterGroup)
 				},
 			})
 			if err != nil {
@@ -1162,7 +1162,7 @@ func (client *PagingClient) NewGetWithQueryParamsPager(requiredQueryParameter in
 				return client.getWithQueryParamsCreateRequest(ctx, requiredQueryParameter, options)
 			}, &runtime.FetcherForNextLinkOptions{
 				NextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {
-					return client.nextOperationWithQueryParamsCreateRequest(ctx)
+					return client.nextOperationWithQueryParamsCreateRequest(ctx, nextLink)
 				},
 			})
 			if err != nil {
@@ -1308,7 +1308,7 @@ func (client *PagingClient) replaceAPIVersionHandleResponse(resp *http.Response)
 }
 
 // nextFragmentCreateRequest creates the nextFragmentCreateRequest request.
-func (client *PagingClient) nextFragmentCreateRequest(ctx context.Context, apiVersion string, tenant string, nextLink string) (*policy.Request, error) {
+func (client *PagingClient) nextFragmentCreateRequest(ctx context.Context, apiVersion string, tenant string, nextLink string, nextLink *string) (*policy.Request, error) {
 	urlPath := "/paging/multiple/fragment/{tenant}/{nextLink}"
 	if tenant == "" {
 		return nil, errors.New("parameter tenant cannot be empty")
@@ -1327,7 +1327,7 @@ func (client *PagingClient) nextFragmentCreateRequest(ctx context.Context, apiVe
 }
 
 // nextFragmentWithGroupingCreateRequest creates the nextFragmentWithGroupingCreateRequest request.
-func (client *PagingClient) nextFragmentWithGroupingCreateRequest(ctx context.Context, nextLink string, customParameterGroup CustomParameterGroup) (*policy.Request, error) {
+func (client *PagingClient) nextFragmentWithGroupingCreateRequest(ctx context.Context, nextLink string, nextLink *string, customParameterGroup CustomParameterGroup) (*policy.Request, error) {
 	urlPath := "/paging/multiple/fragmentwithgrouping/{tenant}/{nextLink}"
 	if customParameterGroup.Tenant == "" {
 		return nil, errors.New("parameter customParameterGroup.Tenant cannot be empty")
@@ -1346,7 +1346,7 @@ func (client *PagingClient) nextFragmentWithGroupingCreateRequest(ctx context.Co
 }
 
 // nextOperationWithQueryParamsCreateRequest creates the nextOperationWithQueryParamsCreateRequest request.
-func (client *PagingClient) nextOperationWithQueryParamsCreateRequest(ctx context.Context) (*policy.Request, error) {
+func (client *PagingClient) nextOperationWithQueryParamsCreateRequest(ctx context.Context, nextLink *string) (*policy.Request, error) {
 	urlPath := "/paging/multiple/nextOperationWithQueryParams"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

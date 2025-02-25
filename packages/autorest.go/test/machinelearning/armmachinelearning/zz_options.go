@@ -31,6 +31,9 @@ type BatchDeploymentsClientGetOptions struct {
 
 // BatchDeploymentsClientListOptions contains the optional parameters for the BatchDeploymentsClient.NewListPager method.
 type BatchDeploymentsClientListOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Ordering of list.
 	OrderBy *string
 
@@ -75,6 +78,9 @@ type BatchEndpointsClientListOptions struct {
 	// Number of endpoints to be retrieved in a page of results.
 	Count *int32
 
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Continuation token for pagination.
 	Skip *string
 }
@@ -97,6 +103,9 @@ type CodeContainersClientGetOptions struct {
 
 // CodeContainersClientListOptions contains the optional parameters for the CodeContainersClient.NewListPager method.
 type CodeContainersClientListOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Continuation token for pagination.
 	Skip *string
 }
@@ -118,6 +127,9 @@ type CodeVersionsClientGetOptions struct {
 
 // CodeVersionsClientListOptions contains the optional parameters for the CodeVersionsClient.NewListPager method.
 type CodeVersionsClientListOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Ordering of list.
 	OrderBy *string
 
@@ -149,6 +161,9 @@ type ComponentContainersClientListOptions struct {
 	// View type for including/excluding (for example) archived entities.
 	ListViewType *ListViewType
 
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Continuation token for pagination.
 	Skip *string
 }
@@ -173,6 +188,9 @@ type ComponentVersionsClientGetOptions struct {
 type ComponentVersionsClientListOptions struct {
 	// View type for including/excluding (for example) archived entities.
 	ListViewType *ListViewType
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 
 	// Ordering of list.
 	OrderBy *string
@@ -232,11 +250,15 @@ type ComputeClientListKeysOptions struct {
 
 // ComputeClientListNodesOptions contains the optional parameters for the ComputeClient.NewListNodesPager method.
 type ComputeClientListNodesOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ComputeClientListOptions contains the optional parameters for the ComputeClient.NewListPager method.
 type ComputeClientListOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Continuation token for pagination.
 	Skip *string
 }
@@ -262,6 +284,9 @@ type DataContainersClientListOptions struct {
 	// View type for including/excluding (for example) archived entities.
 	ListViewType *ListViewType
 
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Continuation token for pagination.
 	Skip *string
 }
@@ -286,6 +311,9 @@ type DataVersionsClientListOptions struct {
 	// [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived
 	// entities.
 	ListViewType *ListViewType
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 
 	// Please choose OrderBy value from ['createdtime', 'modifiedtime']
 	OrderBy *string
@@ -328,6 +356,9 @@ type DatastoresClientListOptions struct {
 	// Names of datastores to return.
 	Names []string
 
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Order by property (createdtime | modifiedtime | name).
 	OrderBy *string
 
@@ -368,6 +399,9 @@ type EnvironmentContainersClientListOptions struct {
 	// View type for including/excluding (for example) archived entities.
 	ListViewType *ListViewType
 
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Continuation token for pagination.
 	Skip *string
 }
@@ -392,6 +426,9 @@ type EnvironmentVersionsClientGetOptions struct {
 type EnvironmentVersionsClientListOptions struct {
 	// View type for including/excluding (for example) archived entities.
 	ListViewType *ListViewType
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 
 	// Ordering of list.
 	OrderBy *string
@@ -432,6 +469,9 @@ type JobsClientListOptions struct {
 	// View type for including/excluding (for example) archived entities.
 	ListViewType *ListViewType
 
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// The scheduled id for listing the job triggered from
 	ScheduleID *string
 
@@ -469,6 +509,9 @@ type ModelContainersClientListOptions struct {
 	// View type for including/excluding (for example) archived entities.
 	ListViewType *ListViewType
 
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Continuation token for pagination.
 	Skip *string
 }
@@ -498,6 +541,9 @@ type ModelVersionsClientListOptions struct {
 
 	// View type for including/excluding (for example) archived entities.
 	ListViewType *ListViewType
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 
 	// Number of initial results to skip.
 	Offset *int32
@@ -554,6 +600,9 @@ type OnlineDeploymentsClientGetOptions struct {
 
 // OnlineDeploymentsClientListOptions contains the optional parameters for the OnlineDeploymentsClient.NewListPager method.
 type OnlineDeploymentsClientListOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Ordering of list.
 	OrderBy *string
 
@@ -569,6 +618,9 @@ type OnlineDeploymentsClientListOptions struct {
 type OnlineDeploymentsClientListSKUsOptions struct {
 	// Number of Skus to be retrieved in a page of results.
 	Count *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 
 	// Continuation token for pagination.
 	Skip *string
@@ -626,6 +678,9 @@ type OnlineEndpointsClientListOptions struct {
 	// Name of the endpoint.
 	Name *string
 
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// The option to order the response.
 	OrderBy *OrderString
 
@@ -643,7 +698,8 @@ type OnlineEndpointsClientListOptions struct {
 
 // OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PrivateEndpointConnectionsClientCreateOrUpdateOptions contains the optional parameters for the PrivateEndpointConnectionsClient.CreateOrUpdate
@@ -667,7 +723,8 @@ type PrivateEndpointConnectionsClientGetOptions struct {
 // PrivateEndpointConnectionsClientListOptions contains the optional parameters for the PrivateEndpointConnectionsClient.NewListPager
 // method.
 type PrivateEndpointConnectionsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PrivateLinkResourcesClientListOptions contains the optional parameters for the PrivateLinkResourcesClient.List method.
@@ -677,7 +734,8 @@ type PrivateLinkResourcesClientListOptions struct {
 
 // QuotasClientListOptions contains the optional parameters for the QuotasClient.NewListPager method.
 type QuotasClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // QuotasClientUpdateOptions contains the optional parameters for the QuotasClient.Update method.
@@ -687,7 +745,8 @@ type QuotasClientUpdateOptions struct {
 
 // UsagesClientListOptions contains the optional parameters for the UsagesClient.NewListPager method.
 type UsagesClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // VirtualMachineSizesClientListOptions contains the optional parameters for the VirtualMachineSizesClient.List method.
@@ -716,13 +775,17 @@ type WorkspaceConnectionsClientListOptions struct {
 	// Category of the workspace connection.
 	Category *string
 
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Target of the workspace connection.
 	Target *string
 }
 
 // WorkspaceFeaturesClientListOptions contains the optional parameters for the WorkspaceFeaturesClient.NewListPager method.
 type WorkspaceFeaturesClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // WorkspacesClientBeginCreateOrUpdateOptions contains the optional parameters for the WorkspacesClient.BeginCreateOrUpdate
@@ -774,6 +837,9 @@ type WorkspacesClientGetOptions struct {
 // WorkspacesClientListByResourceGroupOptions contains the optional parameters for the WorkspacesClient.NewListByResourceGroupPager
 // method.
 type WorkspacesClientListByResourceGroupOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Continuation token for pagination.
 	Skip *string
 }
@@ -781,6 +847,9 @@ type WorkspacesClientListByResourceGroupOptions struct {
 // WorkspacesClientListBySubscriptionOptions contains the optional parameters for the WorkspacesClient.NewListBySubscriptionPager
 // method.
 type WorkspacesClientListBySubscriptionOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Continuation token for pagination.
 	Skip *string
 }

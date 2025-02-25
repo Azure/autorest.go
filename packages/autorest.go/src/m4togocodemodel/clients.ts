@@ -413,6 +413,8 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
       // this is a synthesized parameter (e.g. ResumeToken)
       if (param.language.go!.isResumeToken) {
         adaptedParam = new go.ResumeTokenParameter();
+      } else if (param.language.go!.isNextLink) {
+        adaptedParam = new go.NextLinkParameter();
       } else {
         const type = adaptPossibleType(param.schema);
         const placement = adaptParameterKind(param);

@@ -920,6 +920,9 @@ type ContainerClientListBlobFlatSegmentOptions struct {
 	// return fewer results than specified by maxresults, or than the default of 5000.
 	Maxresults *int32
 
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Filters the results to return only containers whose name begins with the specified prefix.
 	Prefix *string
 
@@ -951,6 +954,9 @@ type ContainerClientListBlobHierarchySegmentOptions struct {
 	// of the results. For this reason, it is possible that the service will
 	// return fewer results than specified by maxresults, or than the default of 5000.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 
 	// Filters the results to return only containers whose name begins with the specified prefix.
 	Prefix *string
@@ -1202,6 +1208,9 @@ type PageBlobClientGetPageRangesDiffOptions struct {
 	// return fewer results than specified by maxresults, or than the default of 5000.
 	Maxresults *int32
 
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot
 	// of the target blob. The response will only contain pages that were changed
 	// between the target blob and its previous snapshot.
@@ -1246,6 +1255,9 @@ type PageBlobClientGetPageRangesOptions struct {
 	// of the results. For this reason, it is possible that the service will
 	// return fewer results than specified by maxresults, or than the default of 5000.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 
 	// Return only the bytes of the blob in the specified range.
 	Range *string
@@ -1431,6 +1443,9 @@ type ServiceClientListContainersSegmentOptions struct {
 	// of the results. For this reason, it is possible that the service will
 	// return fewer results than specified by maxresults, or than the default of 5000.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 
 	// Filters the results to return only containers whose name begins with the specified prefix.
 	Prefix *string

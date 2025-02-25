@@ -148,6 +148,9 @@ type ContainerRegistryClientGetManifestsOptions struct {
 	// query parameter for max number of items
 	N *int32
 
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// orderby query parameter
 	Orderby *string
 }
@@ -166,6 +169,9 @@ type ContainerRegistryClientGetRepositoriesOptions struct {
 
 	// query parameter for max number of items
 	N *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ContainerRegistryClientGetTagPropertiesOptions contains the optional parameters for the ContainerRegistryClient.GetTagProperties
@@ -185,6 +191,9 @@ type ContainerRegistryClientGetTagsOptions struct {
 
 	// query parameter for max number of items
 	N *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 
 	// orderby query parameter
 	Orderby *string

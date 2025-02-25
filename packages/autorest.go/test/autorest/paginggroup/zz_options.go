@@ -16,7 +16,8 @@ type CustomParameterGroup struct {
 
 // PagingClientAppendAPIVersionOptions contains the optional parameters for the PagingClient.NewAppendAPIVersionPager method.
 type PagingClientAppendAPIVersionOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientBeginGetMultiplePagesLROOptions contains the optional parameters for the PagingClient.BeginGetMultiplePagesLRO
@@ -38,42 +39,51 @@ type PagingClientBeginGetMultiplePagesLROOptions struct {
 type PagingClientDuplicateParamsOptions struct {
 	// OData filter options. Pass in 'foo'
 	Filter *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientFirstResponseEmptyOptions contains the optional parameters for the PagingClient.NewFirstResponseEmptyPager
 // method.
 type PagingClientFirstResponseEmptyOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientGetEmptyNextLinkNamePagesOptions contains the optional parameters for the PagingClient.NewGetEmptyNextLinkNamePagesPager
 // method.
 type PagingClientGetEmptyNextLinkNamePagesOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientGetMultiplePagesFailureOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesFailurePager
 // method.
 type PagingClientGetMultiplePagesFailureOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientGetMultiplePagesFailureURIOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesFailureURIPager
 // method.
 type PagingClientGetMultiplePagesFailureURIOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientGetMultiplePagesFragmentNextLinkOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesFragmentNextLinkPager
 // method.
 type PagingClientGetMultiplePagesFragmentNextLinkOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientGetMultiplePagesFragmentWithGroupingNextLinkOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesFragmentWithGroupingNextLinkPager
 // method.
 type PagingClientGetMultiplePagesFragmentWithGroupingNextLinkOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientGetMultiplePagesOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesPager method.
@@ -83,6 +93,9 @@ type PagingClientGetMultiplePagesOptions struct {
 	// Sets the maximum number of items to return in the response.
 	Maxresults *int32
 
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Sets the maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.
 	Timeout *int32
 }
@@ -90,13 +103,15 @@ type PagingClientGetMultiplePagesOptions struct {
 // PagingClientGetMultiplePagesRetryFirstOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesRetryFirstPager
 // method.
 type PagingClientGetMultiplePagesRetryFirstOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientGetMultiplePagesRetrySecondOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesRetrySecondPager
 // method.
 type PagingClientGetMultiplePagesRetrySecondOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientGetMultiplePagesWithOffsetOptions contains the optional parameters for the PagingClient.NewGetMultiplePagesWithOffsetPager
@@ -106,6 +121,9 @@ type PagingClientGetMultiplePagesWithOffsetOptions struct {
 
 	// Sets the maximum number of items to return in the response.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 
 	// Offset of return value
 	Offset int32
@@ -117,13 +135,15 @@ type PagingClientGetMultiplePagesWithOffsetOptions struct {
 // PagingClientGetNoItemNamePagesOptions contains the optional parameters for the PagingClient.NewGetNoItemNamePagesPager
 // method.
 type PagingClientGetNoItemNamePagesOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientGetNullNextLinkNamePagesOptions contains the optional parameters for the PagingClient.NewGetNullNextLinkNamePagesPager
 // method.
 type PagingClientGetNullNextLinkNamePagesOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientGetODataMultiplePagesOptions contains the optional parameters for the PagingClient.NewGetODataMultiplePagesPager
@@ -134,6 +154,9 @@ type PagingClientGetODataMultiplePagesOptions struct {
 	// Sets the maximum number of items to return in the response.
 	Maxresults *int32
 
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Sets the maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.
 	Timeout *int32
 }
@@ -141,30 +164,35 @@ type PagingClientGetODataMultiplePagesOptions struct {
 // PagingClientGetPagingModelWithItemNameWithXMSClientNameOptions contains the optional parameters for the PagingClient.NewGetPagingModelWithItemNameWithXMSClientNamePager
 // method.
 type PagingClientGetPagingModelWithItemNameWithXMSClientNameOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientGetSinglePagesFailureOptions contains the optional parameters for the PagingClient.NewGetSinglePagesFailurePager
 // method.
 type PagingClientGetSinglePagesFailureOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientGetSinglePagesOptions contains the optional parameters for the PagingClient.NewGetSinglePagesPager method.
 type PagingClientGetSinglePagesOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientGetSinglePagesWithBodyParamsOptions contains the optional parameters for the PagingClient.NewGetSinglePagesWithBodyParamsPager
 // method.
 type PagingClientGetSinglePagesWithBodyParamsOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientGetWithQueryParamsOptions contains the optional parameters for the PagingClient.NewGetWithQueryParamsPager
 // method.
 type PagingClientGetWithQueryParamsOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientPageWithMaxPageSizeOptions contains the optional parameters for the PagingClient.NewPageWithMaxPageSizePager
@@ -172,9 +200,13 @@ type PagingClientGetWithQueryParamsOptions struct {
 type PagingClientPageWithMaxPageSizeOptions struct {
 	// Max page size query param. Don't send. Specifying any value will set the value to 5.
 	Maxpagesize *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PagingClientReplaceAPIVersionOptions contains the optional parameters for the PagingClient.NewReplaceAPIVersionPager method.
 type PagingClientReplaceAPIVersionOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }

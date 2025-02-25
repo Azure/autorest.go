@@ -653,6 +653,17 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
         op.parameters?.push(tokenParam);
         tokenParam.language.go!.paramGroup = op.language.go!.optionalParamGroup;
         (<m4.GroupProperty>op.language.go!.optionalParamGroup).originalParameter.push(tokenParam);
+      } else if (helpers.isPageableOperation(op)) {
+        // add the NextLink to the optional params type
+        const nextLinkParam = newParameter('NextLink', '', newString('string', ''));
+        nextLinkParam.language.go!.byValue = true;
+        nextLinkParam.language.go!.isNextLink = true;
+        nextLinkParam.required = false;
+        op.parameters?.push(nextLinkParam);
+        nextLinkParam.language.go!.paramGroup = op.language.go!.optionalParamGroup;
+        if (<m4.GroupProperty>op.language.go!.optionalParamGroup) { // TODO: why is this sometimes unset?
+          (<m4.GroupProperty>op.language.go!.optionalParamGroup).originalParameter.push(nextLinkParam);
+        }
       }
       // recursively add the marshalling format to the body param if applicable
       const marshallingFormat = getMarshallingFormat(op.requests![0].protocol);

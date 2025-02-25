@@ -24,7 +24,8 @@ type AddonsClientGetOptions struct {
 
 // AddonsClientListByRoleOptions contains the optional parameters for the AddonsClient.NewListByRolePager method.
 type AddonsClientListByRoleOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // AlertsClientGetOptions contains the optional parameters for the AlertsClient.Get method.
@@ -35,12 +36,14 @@ type AlertsClientGetOptions struct {
 // AlertsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the AlertsClient.NewListByDataBoxEdgeDevicePager
 // method.
 type AlertsClientListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // AvailableSKUsClientListOptions contains the optional parameters for the AvailableSKUsClient.NewListPager method.
 type AvailableSKUsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // BandwidthSchedulesClientBeginCreateOrUpdateOptions contains the optional parameters for the BandwidthSchedulesClient.BeginCreateOrUpdate
@@ -65,7 +68,8 @@ type BandwidthSchedulesClientGetOptions struct {
 // BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the BandwidthSchedulesClient.NewListByDataBoxEdgeDevicePager
 // method.
 type BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ContainersClientBeginCreateOrUpdateOptions contains the optional parameters for the ContainersClient.BeginCreateOrUpdate
@@ -95,7 +99,8 @@ type ContainersClientGetOptions struct {
 // ContainersClientListByStorageAccountOptions contains the optional parameters for the ContainersClient.NewListByStorageAccountPager
 // method.
 type ContainersClientListByStorageAccountOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // DevicesClientBeginCreateOrUpdateSecuritySettingsOptions contains the optional parameters for the DevicesClient.BeginCreateOrUpdateSecuritySettings
@@ -166,6 +171,9 @@ type DevicesClientListByResourceGroupOptions struct {
 	// Specify $expand=details to populate additional fields related to the resource or Specify $skipToken= to populate the next
 	// page in the list.
 	Expand *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // DevicesClientListBySubscriptionOptions contains the optional parameters for the DevicesClient.NewListBySubscriptionPager
@@ -174,6 +182,9 @@ type DevicesClientListBySubscriptionOptions struct {
 	// Specify $expand=details to populate additional fields related to the resource or Specify $skipToken= to populate the next
 	// page in the list.
 	Expand *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // DevicesClientUpdateExtendedInformationOptions contains the optional parameters for the DevicesClient.UpdateExtendedInformation
@@ -243,18 +254,21 @@ type MonitoringConfigClientGetOptions struct {
 
 // MonitoringConfigClientListOptions contains the optional parameters for the MonitoringConfigClient.NewListPager method.
 type MonitoringConfigClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // NodesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the NodesClient.NewListByDataBoxEdgeDevicePager
 // method.
 type NodesClientListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // OperationsStatusClientGetOptions contains the optional parameters for the OperationsStatusClient.Get method.
@@ -282,7 +296,8 @@ type OrdersClientGetOptions struct {
 // OrdersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the OrdersClient.NewListByDataBoxEdgeDevicePager
 // method.
 type OrdersClientListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // OrdersClientListDCAccessCodeOptions contains the optional parameters for the OrdersClient.ListDCAccessCode method.
@@ -310,7 +325,8 @@ type RolesClientGetOptions struct {
 // RolesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the RolesClient.NewListByDataBoxEdgeDevicePager
 // method.
 type RolesClientListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // SharesClientBeginCreateOrUpdateOptions contains the optional parameters for the SharesClient.BeginCreateOrUpdate method.
@@ -339,7 +355,8 @@ type SharesClientGetOptions struct {
 // SharesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the SharesClient.NewListByDataBoxEdgeDevicePager
 // method.
 type SharesClientListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // StorageAccountCredentialsClientBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginCreateOrUpdate
@@ -365,7 +382,8 @@ type StorageAccountCredentialsClientGetOptions struct {
 // StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountCredentialsClient.NewListByDataBoxEdgeDevicePager
 // method.
 type StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // StorageAccountsClientBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountsClient.BeginCreateOrUpdate
@@ -389,7 +407,8 @@ type StorageAccountsClientGetOptions struct {
 // StorageAccountsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountsClient.NewListByDataBoxEdgeDevicePager
 // method.
 type StorageAccountsClientListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // SupportPackagesClientBeginTriggerSupportPackageOptions contains the optional parameters for the SupportPackagesClient.BeginTriggerSupportPackage
@@ -421,6 +440,9 @@ type TriggersClientGetOptions struct {
 type TriggersClientListByDataBoxEdgeDeviceOptions struct {
 	// Specify $filter='CustomContextTag eq ' to filter on custom context tag property
 	Filter *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // UsersClientBeginCreateOrUpdateOptions contains the optional parameters for the UsersClient.BeginCreateOrUpdate method.
@@ -445,4 +467,7 @@ type UsersClientGetOptions struct {
 type UsersClientListByDataBoxEdgeDeviceOptions struct {
 	// Specify $filter='Type eq ' to filter on user type property
 	Filter *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
