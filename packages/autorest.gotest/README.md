@@ -50,6 +50,10 @@ File prefix for auto-generated tests.
 
 Whether skip lint go file after generation.
 
+### --factory-gather-all-params
+
+Whether client factory constructor gather all params or common params
+
 ## Autorest Pipeline Configurations
 
 ```yaml $(go)
