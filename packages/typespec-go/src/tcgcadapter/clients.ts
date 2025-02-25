@@ -303,6 +303,9 @@ export class clientAdapter {
       if (go.isLROMethod(method)) {
         optionalGroup.params.push(new go.ResumeTokenParameter());
       }
+      if (go.isPageableMethod(method)) {
+        optionalGroup.params.push(new go.NextLinkParameter());
+      }
     }
 
     // stuff all of the operation parameters into one array for easy traversal

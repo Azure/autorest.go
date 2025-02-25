@@ -104,8 +104,8 @@ export function getCreateRequestParametersSig(method: go.Method | go.NextPageMet
   for (const methodParam of values(methodParams)) {
     let paramName = uncapitalize(methodParam.name);
     // when creating the method sig for fooCreateRequest, if the options type is empty
-    // or only contains the ResumeToken param use _ for the param name to quiet the linter
-    if (isParameterGroup(methodParam) && (methodParam.params.length === 0 || (methodParam.params.length === 1 && go.isResumeTokenParameter(methodParam.params[0])))) {
+    // or only contains the ResumeToken or NextLink param use _ for the param name to quiet the linter
+    if (isParameterGroup(methodParam) && (methodParam.params.length === 0 || (methodParam.params.length === 1 && (go.isResumeTokenParameter(methodParam.params[0]) || go.isNextLinkParameter(methodParam.params[0]))))) {
       paramName = '_';
     }
     params.push(`${paramName} ${formatParameterTypeName(methodParam)}`);
