@@ -181,6 +181,10 @@ export interface ResumeTokenParameter extends Parameter {
   isResumeToken: true;
 }
 
+export interface NextLinkParameter extends Parameter {
+  isNextLink: true;
+}
+
 export function isBodyParameter(param: Parameter): param is BodyParameter {
   return (<BodyParameter>param).bodyFormat !== undefined;
 }
@@ -235,6 +239,10 @@ export function isURIParameter(param: Parameter): param is URIParameter {
 
 export function isResumeTokenParameter(param: Parameter): param is ResumeTokenParameter {
   return (<ResumeTokenParameter>param).isResumeToken !== undefined;
+}
+
+export function isNextLinkParameter(param: Parameter): param is NextLinkParameter {
+  return (<NextLinkParameter>param).isNextLink !== undefined;
 }
 
 export function isRequiredParameter(param: Parameter): boolean {
@@ -377,6 +385,14 @@ export class ResumeTokenParameter extends Parameter implements ResumeTokenParame
     super('ResumeToken', new type.PrimitiveType('string'), 'optional', true, 'method');
     this.isResumeToken = true;
     this.docs.summary = 'Resumes the long-running operation from the provided token.';
+  }
+}
+
+export class NextLinkParameter extends Parameter implements NextLinkParameter {
+  constructor() {
+    super('NextLink', new type.PrimitiveType('string'), 'optional', true, 'method');
+    this.isNextLink = true;
+    this.docs.summary = 'Resumes the paging operation from the provided link.';
   }
 }
 

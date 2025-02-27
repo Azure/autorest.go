@@ -7,16 +7,21 @@ package azurepagegroup
 // PageClientListWithCustomPageModelOptions contains the optional parameters for the PageClient.NewListWithCustomPageModelPager
 // method.
 type PageClientListWithCustomPageModelOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PageClientListWithPageOptions contains the optional parameters for the PageClient.NewListWithPagePager method.
 type PageClientListWithPageOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PageClientListWithParametersOptions contains the optional parameters for the PageClient.NewListWithParametersPager method.
 type PageClientListWithParametersOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Another query parameter.
 	Another *ListItemInputExtensibleEnum
 }
@@ -24,11 +29,13 @@ type PageClientListWithParametersOptions struct {
 // PageTwoModelsAsPageItemClientListFirstItemOptions contains the optional parameters for the PageTwoModelsAsPageItemClient.NewListFirstItemPager
 // method.
 type PageTwoModelsAsPageItemClientListFirstItemOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PageTwoModelsAsPageItemClientListSecondItemOptions contains the optional parameters for the PageTwoModelsAsPageItemClient.NewListSecondItemPager
 // method.
 type PageTwoModelsAsPageItemClientListSecondItemOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }

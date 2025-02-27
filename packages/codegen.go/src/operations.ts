@@ -358,8 +358,11 @@ function emitPagerDefinition(client: go.Client, method: go.PageableMethod, impor
     if (!go.isLROMethod(method)) {
       text += '\t\t\tnextLink := ""\n';
       nextLinkVar = 'nextLink';
-      text += '\t\t\tif page != nil {\n';
-      text += `\t\t\t\tnextLink = *page.${method.nextLinkName}\n\t\t\t}\n`;
+      text += `\t\t\tif page != nil && page.${method.nextLinkName} != nil {\n`;
+      text += `\t\t\t\tnextLink = *page.${method.nextLinkName}\n`;
+      text += `\t\t\t} else if options != nil && options.NextLink != "" {\n`;
+      text += `\t\t\t\tnextLink = options.NextLink\n`;
+      text += `\t\t\t}\n`;
     } else {
       nextLinkVar = `*page.${method.nextLinkName}`;
     }
@@ -1234,7 +1237,7 @@ function generateLROBeginMethod(client: go.Client, method: go.LROMethod, imports
   let pollerType = 'nil';
   let pollerTypeParam = `[${method.responseEnvelope.name}]`;
   if (go.isPageableMethod(method)) {
-    // for paged LROs, we construct a pager and pass it to the LRO ctor.
+    // for paged LROs, we construct a pager and pass it to the LRO actor.
     pollerTypeParam = `[*runtime.Pager${pollerTypeParam}]`;
     pollerType = '&pager';
     text += '\tpager := ';
