@@ -28,7 +28,7 @@ import _ = require('lodash');
 import { sortParametersByRequired } from '../common/helpers';
 export class MockTestDataRender extends BaseDataRender {
   public clientFactoryParams: Array<Parameter>;
-  
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public skipPropertyFunc = (exampleValue: ExampleValue): boolean => {
     // skip any null value
@@ -82,7 +82,7 @@ export class MockTestDataRender extends BaseDataRender {
     this.replaceValueFunc = (rawValue: any): any => {
       return rawValue;
     };
-    const clientPrivateParameters: ExampleParameter[] = [];
+    const clientPrivateParameters = new Array<ExampleParameter>();
     for (const clientParam of example.clientParameters) {
       if (this.clientFactoryParams.filter((cp) => cp.language.go!.name === clientParam.parameter.language.go!.name).length > 0) {
         continue;
@@ -164,13 +164,13 @@ export class MockTestDataRender extends BaseDataRender {
   }
 
   private getCommonClientParameters(): Array<Parameter> {
-    const paramCount = new Map<string, { uses: number, param: Parameter }>();
+    const paramCount = new Map<string, { uses: number; param: Parameter }>();
     let numClients = 0; // track client count since we might skip some
     for (const group of this.context.codeModel.operationGroups) {
-      const clientName = group.language.go!.clientName
+      const clientName = group.language.go!.clientName;
       // special cases: some ARM clients always don't contain any parameters (OperationsClient will be depracated in the future)
       if (clientName.match(/^OperationsClient$/)) {
-        continue; 
+        continue;
       }
       numClients++;
       if (group.language.go!.clientParams) {
@@ -181,7 +181,7 @@ export class MockTestDataRender extends BaseDataRender {
             entry = { uses: 0, param: clientParam };
             paramCount.set(clientParam.language.go!.name, entry);
           }
-    
+
           ++entry.uses;
         }
       }
