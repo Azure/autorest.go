@@ -128,34 +128,34 @@ function should_generate(name) {
 }
 
 const armcodesigning = pkgRoot + 'test/tsp/CodeSigning.Management';
-generate('armcodesigning', armcodesigning, 'test/local/armcodesigning');
+generate('armcodesigning', armcodesigning, 'test/local/armcodesigning', [`examples-directory=${armcodesigning}/examples`, 'generate-examples=true']);
 
 const armapicenter = pkgRoot +  'test/tsp/ApiCenter.Management';
-generate('armapicenter', armapicenter, 'test/local/armapicenter');
+generate('armapicenter', armapicenter, 'test/local/armapicenter', [`examples-directory=${armapicenter}/examples`, 'generate-examples=true']);
 
 const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
-generate('armlargeinstance', armlargeinstance, 'test/local/armlargeinstance', ['stutter=AzureLargeInstance']);
+generate('armlargeinstance', armlargeinstance, 'test/local/armlargeinstance', ['stutter=AzureLargeInstance', `examples-directory=${armlargeinstance}/examples`, 'generate-examples=true']);
 
 const armdatabasewatcher = pkgRoot + 'test/tsp/DatabaseWatcher.Management';
-generate('armdatabasewatcher', armdatabasewatcher, 'test/local/armdatabasewatcher', ['fix-const-stuttering=false']);
+generate('armdatabasewatcher', armdatabasewatcher, 'test/local/armdatabasewatcher', ['fix-const-stuttering=false', `examples-directory=${armdatabasewatcher}/examples`, 'generate-examples=true']);
 
 const armloadtestservice = pkgRoot + 'test/tsp/LoadTestService.Management';
-generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice', ['factory-gather-all-params=true']);
+generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice', ['factory-gather-all-params=true', `examples-directory=${armloadtestservice}/examples`, 'generate-examples=true']);
 
 const armdevopsinfrastructure = pkgRoot + 'test/tsp/Microsoft.DevOpsInfrastructure';
-generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/local/armdevopsinfrastructure');
+generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/local/armdevopsinfrastructure', [`examples-directory=${armdevopsinfrastructure}/examples`, 'generate-examples=true']);
 
 const armrandom = pkgRoot + 'test/tsp/Random.Management';
 generate('armrandom', armrandom, 'test/local/armrandom');
 
 const armcommunitymanagement = pkgRoot + 'test/tsp/Community.Management';
-generate('armcommunitymanagement', armcommunitymanagement, 'test/local/armcommunitymanagement');
+generate('armcommunitymanagement', armcommunitymanagement, 'test/local/armcommunitymanagement', [`examples-directory=${armcommunitymanagement}/examples`, 'generate-examples=true']);
 
 const armmongocluster = pkgRoot + 'test/tsp/MongoCluster.Management';
-generate('armmongocluster', armmongocluster, 'test/local/armmongocluster');
+generate('armmongocluster', armmongocluster, 'test/local/armmongocluster', [`examples-directory=${armmongocluster}/examples`, 'generate-examples=true']);
 
 const armcontainerorchestratorruntime = pkgRoot + 'test/tsp/KubernetesRuntime.Management';
-generate('armcontainerorchestratorruntime', armcontainerorchestratorruntime, 'test/local/armcontainerorchestratorruntime');
+generate('armcontainerorchestratorruntime', armcontainerorchestratorruntime, 'test/local/armcontainerorchestratorruntime', [`examples-directory=${armcontainerorchestratorruntime}/examples`, 'generate-examples=true']);
 
 const azmodelsonly = pkgRoot + 'test/tsp/ModelsOnlyWithBaseTypes';
 generate('azmodelsonly', azmodelsonly, 'test/local/azmodelsonly');
@@ -216,8 +216,6 @@ function generate(moduleName, input, outputDir, perTestOptions) {
     'inject-spans=true',
     'head-as-boolean=true',
     'fix-const-stuttering=true',
-    `examples-directory=${input}/examples`,
-    'generate-examples=true',
   ];
 
   let allOptions = fixedOptions;
