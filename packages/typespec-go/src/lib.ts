@@ -60,12 +60,12 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
     'module': {
       type: 'string',
       nullable: true,
-      description: 'The name of the Go module written to go.mod. Omit to skip go.mod generation.',
+      description: 'The name of the Go module written to go.mod. Omit to skip go.mod generation. When module is specified, module-version must also be specified.',
     },
     'module-version': {
       type: 'string',
       nullable: true,
-      description: 'Semantic version of the Go module without the leading \'v\' written to constants.go. (e.g. 1.2.3).',
+      description: 'Semantic version of the Go module without the leading \'v\' written to constants.go. (e.g. 1.2.3). When module-version is specified, module must also be specified.',
     },
     'rawjson-as-bytes': {
       type: 'boolean',
