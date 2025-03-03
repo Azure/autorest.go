@@ -1,5 +1,11 @@
 # Release History
 
+## 0.3.11 (2025-03-07)
+
+### Other Changes
+
+* Added switch `generate-samples` to control example code generation. `generate-examples` will be depracated in the future.
+
 ## 0.3.10 (2025-03-06)
 
 ### Other Changes
