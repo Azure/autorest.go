@@ -21,6 +21,7 @@ export interface GoEmitterOptions {
   'fix-const-stuttering'?: boolean;
   'generate-examples'?: boolean;
   'factory-gather-all-params'?: boolean;
+  'generate-samples'?: boolean;
 }
 
 const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
@@ -93,6 +94,11 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
       description: 'When true, fix stuttering for `const` types and values. The default is false.',
     },
     'generate-examples': {
+      type: 'boolean',
+      nullable: true,
+      description: 'Deprecated. Use generate-samples instead.',
+    },
+    'generate-samples': {
       type: 'boolean',
       nullable: true,
       description: 'When true, generate example tests. The default is false.',
