@@ -43,8 +43,9 @@ export class MockTestDataRender extends BaseDataRender {
   };
 
   public renderData(): void {
-    let clientFactoryParams = new Array<Parameter>();
-    if (Config.factoryGatherAllParams) {
+    let clientFactoryParams: Array<Parameter>;
+    const factoryGatherAllParamsFlag = this.context.testConfig.getValue(Config.factoryGatherAllParams)
+    if (factoryGatherAllParamsFlag) {
       clientFactoryParams = this.getAllClientParameters();
     } else {
       clientFactoryParams = this.getCommonClientParameters();
@@ -82,15 +83,8 @@ export class MockTestDataRender extends BaseDataRender {
     this.replaceValueFunc = (rawValue: any): any => {
       return rawValue;
     };
-    const clientPrivateParameters = new Array<ExampleParameter>();
-    for (const clientParam of example.clientParameters) {
-      if (this.clientFactoryParams.filter((cp) => cp.language.go!.name === clientParam.parameter.language.go!.name).length > 0) {
-        continue;
-      }
-      clientPrivateParameters.push(clientParam);
-    }
     example.methodParametersOutput = this.toParametersOutput(getAPIParametersSig(op), example.methodParameters);
-    example.clientParametersOutput = this.toParametersOutput(getClientParametersSig(example.operationGroup), clientPrivateParameters, true);
+    example.clientParametersOutput = this.toParametersOutput(getClientParametersSig(example.operationGroup), example.clientParameters, true);
     example.returnInfo = generateReturnsInfo(op, 'op');
     const schemaResponse = getSchemaResponse(<any>op);
     if (example.isPageable) {
