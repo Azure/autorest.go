@@ -16,7 +16,7 @@ export class ExampleDataRender extends MockTestDataRender {
   public renderData(): void {
     super.renderData();
     let clientFactoryParams: Array<Parameter>;
-    const factoryGatherAllParamsFlag = this.context.testConfig.getValue(Config.factoryGatherAllParams)
+    const factoryGatherAllParamsFlag = this.context.testConfig.getValue(Config.factoryGatherAllParams);
     if (factoryGatherAllParamsFlag) {
       clientFactoryParams = this.getAllClientParameters();
     } else {
@@ -30,7 +30,7 @@ export class ExampleDataRender extends MockTestDataRender {
     }
     this.context.codeModel.testModel.mockTest['clientFactoryParametersOutput'] = clientFactoryParametersOutput;
   }
-  
+
   private getCommonClientParameters(): Array<Parameter> {
     const paramCount = new Map<string, { uses: number; param: Parameter }>();
     let numClients = 0; // track client count since we might skip some
