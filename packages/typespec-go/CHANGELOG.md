@@ -4,7 +4,7 @@
 
 ### Other Changes
 
-* Added switch `generate-samples` to control example code generation. `generate-examples` will be depracated in the future.
+* Added switch `generate-samples` to control example code generation. `generate-examples` will be deprecated in the future.
 
 ## 0.3.10 (2025-03-06)
 
