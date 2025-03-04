@@ -68,7 +68,7 @@ options:
     - key: generate-examples
         type: boolean
         nullable: true
-        description: When true, generate example tests. The default is false. It will be deprecated in the future, please use generate-samples.
+        description: Deprecated, please use generate-samples.
     - key: generate-samples
         type: boolean
         nullable: true
