@@ -19,7 +19,10 @@ export interface GoEmitterOptions {
   'single-client'?: boolean;
   'stutter'?: string;
   'fix-const-stuttering'?: boolean;
-  'generate-examples'?: boolean; // Deprecated, use 'generate-samples' instead
+  /**
+   * @deprecated Use 'generate-samples' instead
+   */
+  'generate-examples'?: boolean;
   'factory-gather-all-params'?: boolean;
   'generate-samples'?: boolean;
 }
