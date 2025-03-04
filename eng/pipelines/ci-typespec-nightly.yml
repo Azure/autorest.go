@@ -1,14 +1,13 @@
-trigger: none
 schedules:
 - cron: '0 0 * * *'
   displayName: Daily midnight build
   branches:
     include:
     - main
-pr: none
+  always: true
 
-variables:
-  PythonVersion: "3.10"
+trigger: none
+pr: none
 
 jobs:
 - job: Go_Nightly_Build
@@ -25,5 +24,4 @@ jobs:
         GoVersion: "1.21.4"
     - script: npm install -g @typespec/compiler@next
       displayName: Install @typespec/compiler@next
-
     - template: /eng/pipelines/templates/steps/build-test-typespec.yaml
