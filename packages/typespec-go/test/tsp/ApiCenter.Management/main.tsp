@@ -22,9 +22,7 @@ using Azure.ResourceManager;
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 @armProviderNamespace
-@service({
-  title: "Azure API Center",
-})
+@service(#{title: "Azure API Center"})
 @versioned(Versions)
 @doc("Azure API Center Resource Provider.")
 @Azure.ResourceManager.armCommonTypesVersion("v5")

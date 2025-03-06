@@ -56,12 +56,12 @@
     "@types/node": "^18.16.3",
     "@typescript-eslint/eslint-plugin": "~4.1.1",
     "@typescript-eslint/parser": "~4.1.1",
-    "@typespec/compiler": ">=0.65.3 <1.0.0",
-    "@typespec/http": ">=0.65.0 <1.0.0",
-    "@typespec/openapi": ">=0.65.0 <1.0.0",
-    "@typespec/rest": ">=0.65.0 <1.0.0",
-    "@typespec/versioning": ">=0.65.0 <1.0.0",
-    "@typespec/xml": ">=0.65.0 <1.0.0",
+    "@typespec/compiler": ">=0.66.0 <1.0.0",
+    "@typespec/http": ">=0.66.0 <1.0.0",
+    "@typespec/openapi": ">=0.66.0 <1.0.0",
+    "@typespec/rest": ">=0.66.0 <1.0.0",
+    "@typespec/versioning": ">=0.66.0 <1.0.0",
+    "@typespec/xml": ">=0.66.0 <1.0.0",
     "@types/jest": "~26.0.24",
     "eslint": "~6.6.0",
     "jest": "~27.0.6",
@@ -70,8 +70,8 @@
   },
   "peerDependencies": {
     "@azure-tools/typespec-client-generator-core": ">=0.51.3 <1.0.0",
-    "@typespec/compiler": ">=0.65.3 <1.0.0",
-    "@typespec/http": ">=0.65.0 <1.0.0"
+    "@typespec/compiler": ">=0.66.0 <1.0.0",
+    "@typespec/http": ">=0.66.0 <1.0.0"
   },
   "dependencies": {
     "@azure-tools/codegen": "~2.9.2",
