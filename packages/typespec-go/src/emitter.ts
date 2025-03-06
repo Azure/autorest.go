@@ -164,11 +164,11 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
     }
   } catch (error: any) {
     if (error.constructor === Error) {
-      const errStackStart = "========================================= error stack start ================================================";
-      const errStackEnd = "========================================= error stack end ================================================";
-      const errStack = error.stack ? `\n${errStackStart}\n${error.stack}\n${errStackEnd}` : "";
+      const errStackStart = '========================================= error stack start ================================================';
+      const errStackEnd = '========================================= error stack end ================================================';
+      const errStack = error.stack ? `\n${errStackStart}\n${error.stack}\n${errStackEnd}` : '';
       reportDiagnostic(context.program, {
-        code: "expected-error",
+        code: 'expected-error',
         target: NoTarget,
         format: { stack: errStack },
       });
