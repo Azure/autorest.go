@@ -1,0 +1,27 @@
+schedules:
+- cron: '0 0 * * *'
+  displayName: Daily midnight build
+  branches:
+    include:
+    - main
+  always: true
+
+trigger: none
+pr: none
+
+jobs:
+- job: Go_Nightly_Build
+  timeoutInMinutes: 120
+  variables:
+    - template: /eng/pipelines/templates/variables/image.yml
+  pool:
+    name: "$(LINUXNEXTPOOL)"
+    image: "$(LINUXNEXTVMIMAGE)"
+    os: linux
+  steps:
+    - template: /eng/pipelines/templates/steps/set-env.yaml
+      parameters:
+        GoVersion: "1.21.4"
+    - script: npm install -g @typespec/compiler@next
+      displayName: Install @typespec/compiler@next
+    - template: /eng/pipelines/templates/steps/build-test-typespec.yaml
