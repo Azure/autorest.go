@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { createTypeSpecLibrary, JSONSchemaType } from '@typespec/compiler';
+import { createTypeSpecLibrary, JSONSchemaType, paramMessage } from '@typespec/compiler';
 
 export interface GoEmitterOptions {
   'azcore-version'?: string;
@@ -117,7 +117,14 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
 
 const libDef = {
   name: '@azure-tools/typespec-go',
-  diagnostics: {},
+  diagnostics: {
+    "expected-error": {
+      severity: "error",
+      messages: {
+        default: paramMessage`Unable to generate Go client code from the provided TypeSpec. Please check the error log for more details. If the issue persists, open an issue at https://github.com/microsoft/typespec with the relevant information.${"stack"}`,
+      },
+    }
+  },
   emitter: {
     options: <JSONSchemaType<GoEmitterOptions>>EmitterOptionsSchema,
   },
