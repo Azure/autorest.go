@@ -118,10 +118,10 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
 const libDef = {
   name: '@azure-tools/typespec-go',
   diagnostics: {
-    "expected-error": {
-      severity: "error",
+    'expected-error': {
+      severity: 'error',
       messages: {
-        default: paramMessage`Unable to generate Go client code from the provided TypeSpec. Please check the error log for more details. If the issue persists, open an issue at https://github.com/microsoft/typespec with the relevant information.${"stack"}`,
+        default: paramMessage`Unable to generate Go client code from the provided TypeSpec. Please check the error log for more details. If the issue persists, open an issue at https://github.com/microsoft/typespec with the relevant information.${'stack'}`,
       },
     }
   },
