@@ -248,8 +248,10 @@ func (client *AzureLargeStorageInstanceClient) NewListByResourceGroupPager(resou
 		Fetcher: func(ctx context.Context, page *AzureLargeStorageInstanceClientListByResourceGroupResponse) (AzureLargeStorageInstanceClientListByResourceGroupResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AzureLargeStorageInstanceClient.NewListByResourceGroupPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
@@ -308,8 +310,10 @@ func (client *AzureLargeStorageInstanceClient) NewListBySubscriptionPager(option
 		Fetcher: func(ctx context.Context, page *AzureLargeStorageInstanceClientListBySubscriptionResponse) (AzureLargeStorageInstanceClientListBySubscriptionResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AzureLargeStorageInstanceClient.NewListBySubscriptionPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listBySubscriptionCreateRequest(ctx, options)

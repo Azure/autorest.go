@@ -831,8 +831,8 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
       // client params and parameter literals aren't passed to APIs
       continue;
     }
-    if (go.isResumeTokenParameter(param)) {
-      // skip the ResumeToken param as we don't send that back to the caller
+    if (go.isResumeTokenParameter(param) || go.isNextLinkParameter(param)) {
+      // skip the ResumeToken and NextLink params as we don't send them back to the caller
       continue;
     }
 
@@ -1183,7 +1183,7 @@ function populateApiParams(clientPkg: string, method: go.Method, paramValues: Ma
     if (helpers.isParameterGroup(param)) {
       if (param.groupName === method.optionalParamsGroup.groupName) {
         // this is the optional params type. in some cases we just pass nil
-        const countParams = values(param.params).where((each: go.Parameter) => { return !go.isResumeTokenParameter(each); }).count();
+        const countParams = values(param.params).where((each: go.Parameter) => { return !go.isResumeTokenParameter(each) && !go.isNextLinkParameter(each); }).count();
         if (countParams === 0) {
           // if the options param is empty or only contains the resume token param just pass nil
           params.push('nil');

@@ -503,8 +503,10 @@ func (client *ApplicationGatewaysClient) NewListPager(resourceGroupName string, 
 		Fetcher: func(ctx context.Context, page *ApplicationGatewaysClientListResponse) (ApplicationGatewaysClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ApplicationGatewaysClient.NewListPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -562,8 +564,10 @@ func (client *ApplicationGatewaysClient) NewListAllPager(options *ApplicationGat
 		Fetcher: func(ctx context.Context, page *ApplicationGatewaysClientListAllResponse) (ApplicationGatewaysClientListAllResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ApplicationGatewaysClient.NewListAllPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listAllCreateRequest(ctx, options)
@@ -782,8 +786,10 @@ func (client *ApplicationGatewaysClient) NewListAvailableSSLPredefinedPoliciesPa
 		Fetcher: func(ctx context.Context, page *ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse) (ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ApplicationGatewaysClient.NewListAvailableSSLPredefinedPoliciesPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listAvailableSSLPredefinedPoliciesCreateRequest(ctx, options)

@@ -33,16 +33,19 @@ type CommunityTrainingsClientGetOptions struct {
 // CommunityTrainingsClientListByResourceGroupOptions contains the optional parameters for the CommunityTrainingsClient.NewListByResourceGroupPager
 // method.
 type CommunityTrainingsClientListByResourceGroupOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // CommunityTrainingsClientListBySubscriptionOptions contains the optional parameters for the CommunityTrainingsClient.NewListBySubscriptionPager
 // method.
 type CommunityTrainingsClientListBySubscriptionOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
