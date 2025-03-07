@@ -7,14 +7,66 @@ import { ObjectSchema, Parameter, SchemaType } from '@autorest/codemodel';
 import { ExampleModel, MockTestDefinitionModel } from '@autorest/testmodeler/dist/src/core/model';
 import { camelCase, trimEnd } from 'lodash';
 import { Config } from '../common/constant';
-import { sortParametersByRequired } from '../common/helpers';
 import { ParameterOutput } from '../common/model';
 import { BaseCodeGenerator } from './baseGenerator';
 import { MockTestDataRender } from './mockTestGenerator';
+import { sortParametersByRequired } from '../common/helpers';
 
 export class ExampleDataRender extends MockTestDataRender {
   public renderData(): void {
     super.renderData();
+    let clientFactoryParams: Array<Parameter>;
+    const factoryGatherAllParamsFlag = this.context.testConfig.getValue(Config.factoryGatherAllParams);
+    if (factoryGatherAllParamsFlag) {
+      clientFactoryParams = this.getAllClientParameters();
+    } else {
+      clientFactoryParams = this.getCommonClientParameters();
+    }
+    const clientFactoryParametersOutput = new Array<ParameterOutput>();
+    for (const clientParam of clientFactoryParams) {
+      const isPolymophismValue = clientParam?.schema?.type === SchemaType.Object && (<ObjectSchema>clientParam.schema).discriminator?.property.isDiscriminator === true;
+      const isPtr: boolean = isPolymophismValue || !(clientParam.required || clientParam.language.go.byValue === true);
+      clientFactoryParametersOutput.push(new ParameterOutput(this.getLanguageName(clientParam), this.getDefaultValue(clientParam, isPtr)));
+    }
+    this.context.codeModel.testModel.mockTest['clientFactoryParametersOutput'] = clientFactoryParametersOutput;
+  }
+
+  private getCommonClientParameters(): Array<Parameter> {
+    const paramCount = new Map<string, { uses: number; param: Parameter }>();
+    let numClients = 0; // track client count since we might skip some
+    for (const group of this.context.codeModel.operationGroups) {
+      const clientName = group.language.go!.clientName;
+      // special cases: some ARM clients always don't contain any parameters (OperationsClient will be depracated in the future)
+      if (clientName.match(/^OperationsClient$/)) {
+        continue;
+      }
+      numClients++;
+      if (group.language.go!.clientParams) {
+        const clientParams = <Array<Parameter>>group.language.go!.clientParams;
+        for (const clientParam of clientParams) {
+          let entry = paramCount.get(clientParam.language.go!.name);
+          if (!entry) {
+            entry = { uses: 0, param: clientParam };
+            paramCount.set(clientParam.language.go!.name, entry);
+          }
+
+          ++entry.uses;
+        }
+      }
+    }
+    // for each param, if its usage count is equal to the
+    // number of clients, then it's common to all clients
+    const commonClientParams = new Array<Parameter>();
+    for (const entry of paramCount.values()) {
+      if (entry.uses === numClients) {
+        commonClientParams.push(entry.param);
+      }
+    }
+    commonClientParams.sort(sortParametersByRequired);
+    return commonClientParams;
+  }
+
+  private getAllClientParameters(): Array<Parameter> {
     const allClientParams = new Array<Parameter>();
     for (const group of this.context.codeModel.operationGroups) {
       if (group.language.go!.clientParams) {
@@ -28,13 +80,7 @@ export class ExampleDataRender extends MockTestDataRender {
       }
     }
     allClientParams.sort(sortParametersByRequired);
-    const clientFactoryParametersOutput = new Array<ParameterOutput>();
-    for (const clientParam of allClientParams) {
-      const isPolymophismValue = clientParam?.schema?.type === SchemaType.Object && (<ObjectSchema>clientParam.schema).discriminator?.property.isDiscriminator === true;
-      const isPtr: boolean = isPolymophismValue || !(clientParam.required || clientParam.language.go.byValue === true);
-      clientFactoryParametersOutput.push(new ParameterOutput(this.getLanguageName(clientParam), this.getDefaultValue(clientParam, isPtr)));
-    }
-    this.context.codeModel.testModel.mockTest['clientFactoryParametersOutput'] = clientFactoryParametersOutput;
+    return allClientParams;
   }
 }
 
