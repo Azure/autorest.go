@@ -43,7 +43,7 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
       throw error;
     }
   }
-};
+}
 
 async function generate(context: EmitContext<GoEmitterOptions>) {
   const codeModel = await tcgcToGoCodeModel(context);
