@@ -9,6 +9,7 @@ import * as go from '../../../codemodel.go/src/index.js';
 import { capitalize, createOptionsTypeDescription, createResponseEnvelopeDescription, ensureNameCase, getEscapedReservedName, uncapitalize } from '../../../naming.go/src/naming.js';
 import { GoEmitterOptions } from '../lib.js';
 import { getEndpointType, isTypePassedByValue, typeAdapter } from './types.js';
+import { DiagnosticError } from '../../../codegen.go/src/error.js';
 
 // used to convert SDK clients and their methods to Go code model types
 export class clientAdapter {
@@ -30,7 +31,7 @@ export class clientAdapter {
   // this includes parameter groups/options types and response envelopes.
   adaptClients(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperation>) {
     if (this.opts['single-client'] && sdkPackage.clients.length > 1) {
-      throw new Error('single-client cannot be enabled when there are multiple clients');
+      throw new DiagnosticError('single-client cannot be enabled when there are multiple clients');
     }
     for (const sdkClient of sdkPackage.clients) {
       // start with instantiable clients and recursively work down
@@ -108,7 +109,7 @@ export class clientAdapter {
             if (!this.ta.codeModel.host) {
               this.ta.codeModel.host = goClient.host;
             } else if (this.ta.codeModel.host !== goClient.host) {
-              throw new Error(`client ${goClient.name} has a conflicting host ${goClient.host}`);
+              throw new DiagnosticError(`client ${goClient.name} has a conflicting host ${goClient.host}`);
             }
           } else {
             goClient.templatedHost = true;
@@ -139,7 +140,7 @@ export class clientAdapter {
       // as not all client method params might be uniform.
       goClient.parameters = new Array<go.Parameter>(...parent.parameters);
     } else {
-      throw new Error(`uninstantiable client ${sdkClient.name} has no parent`);
+      throw new DiagnosticError(`uninstantiable client ${sdkClient.name} has no parent`);
     }
     if (sdkClient.children && sdkClient.children.length > 0) {
       for (const child of sdkClient.children) {
@@ -171,7 +172,7 @@ export class clientAdapter {
   private adaptURIParam(sdkParam: tcgc.SdkPathParameter): go.URIParameter {
     const paramType = this.ta.getPossibleType(sdkParam.type, true, false);
     if (!go.isConstantType(paramType) && !go.isPrimitiveType(paramType)) {
-      throw new Error(`unexpected URI parameter type ${go.getTypeDeclaration(paramType)}`);
+      throw new DiagnosticError(`unexpected URI parameter type ${go.getTypeDeclaration(paramType)}`);
     }
     // TODO: follow up with tcgc if serializedName should actually be optional
     return new go.URIParameter(sdkParam.name, sdkParam.serializedName ? sdkParam.serializedName : sdkParam.name, paramType,
@@ -227,7 +228,7 @@ export class clientAdapter {
         }).join('.');
       }
     } else {
-      throw new Error(`method kind ${sdkMethod.kind} NYI`);
+      throw new DiagnosticError(`method kind ${sdkMethod.kind} NYI`);
     }
 
     method.docs.summary = sdkMethod.summary;
@@ -270,7 +271,7 @@ export class clientAdapter {
       method.optionalParamsGroup.docs.summary = createOptionsTypeDescription(optionalParamsGroupName, this.getMethodNameForDocComment(method));
       method.responseEnvelope = this.adaptResponseEnvelope(sdkMethod, method);
     } else {
-      throw new Error('NYI');
+      throw new DiagnosticError('NYI');
     }
 
     // find the api version param to use for the doc comment.
@@ -346,7 +347,7 @@ export class clientAdapter {
       }
 
       if (!opParam) {
-        throw new Error(`didn't find operation parameter for method ${sdkMethod.name} parameter ${param.name}`);
+        throw new DiagnosticError(`didn't find operation parameter for method ${sdkMethod.name} parameter ${param.name}`);
       }
 
       if (opParam.kind === 'header' && opParam.serializedName.match(/^content-type$/i) && param.type.kind === 'constant') {
@@ -387,7 +388,7 @@ export class clientAdapter {
               }
             }
             if (!serializedName) {
-              throw new Error(`didn't find body model property for spread parameter ${param.name}`);
+              throw new DiagnosticError(`didn't find body model property for spread parameter ${param.name}`);
             }
             adaptedParam = new go.PartialBodyParameter(param.name, serializedName, contentType, this.ta.getPossibleType(param.type, true, true), paramKind, byVal);
             break;
@@ -400,7 +401,7 @@ export class clientAdapter {
             }
             break;
           default:
-            throw new Error(`unhandled spread param content type ${contentType}`);
+            throw new DiagnosticError(`unhandled spread param content type ${contentType}`);
         }
       } else {
         adaptedParam = this.adaptMethodParameter(opParam, optionalGroup);
@@ -417,7 +418,7 @@ export class clientAdapter {
       if (adaptedParam.kind !== 'required' && adaptedParam.kind !== 'literal') {
         // add optional method param to the options param group
         if (!optionalGroup) {
-          throw new Error(`optional parameter ${param.name} has no optional parameter group`);
+          throw new DiagnosticError(`optional parameter ${param.name} has no optional parameter group`);
         }
         adaptedParam.group = optionalGroup;
         optionalGroup.params.push(adaptedParam);
@@ -484,7 +485,7 @@ export class clientAdapter {
         case 'query':
           return new go.QueryParameter(param.name, param.serializedName, true, paramType, 'literal', true, 'method');
         default:
-          throw new Error(`unhandled param kind ${param.kind} for API version param`);
+          throw new DiagnosticError(`unhandled param kind ${param.kind} for API version param`);
       }
     }
 
@@ -524,12 +525,12 @@ export class clientAdapter {
     } else if (param.kind === 'header') {
       if (param.collectionFormat) {
         if (param.collectionFormat === 'multi' || param.collectionFormat === 'form') {
-          throw new Error('unexpected collection format multi for HeaderCollectionParameter');
+          throw new DiagnosticError('unexpected collection format multi for HeaderCollectionParameter');
         }
         // TODO: is hard-coded false for element type by value correct?
         const type = this.ta.getPossibleType(param.type, true, false);
         if (!go.isSliceType(type)) {
-          throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${param.name}`);
+          throw new DiagnosticError(`unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${param.name}`);
         }
         adaptedParam = new go.HeaderCollectionParameter(paramName, param.serializedName, type, param.collectionFormat === 'simple' ? 'csv' : param.collectionFormat, paramKind, byVal, location);
       } else {
@@ -539,12 +540,12 @@ export class clientAdapter {
       adaptedParam = new go.PathParameter(paramName, param.serializedName, !param.allowReserved, this.adaptPathParameterType(param.type), paramKind, byVal, location);
     } else if (param.kind === 'cookie') {
       // TODO: currently we don't have Azure service using cookie parameter. need to add support if needed in the future.
-      throw new Error('could not support cookie parameter');
+      throw new DiagnosticError('could not support cookie parameter');
     } else {
       if (param.collectionFormat) {
         const type = this.ta.getPossibleType(param.type, true, false);
         if (!go.isSliceType(type)) {
-          throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${param.name}`);
+          throw new DiagnosticError(`unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${param.name}`);
         }
         // TODO: unencoded query param
         adaptedParam = new go.QueryCollectionParameter(paramName, param.serializedName, true, type, param.collectionFormat === 'simple' ? 'csv' : (param.collectionFormat === 'form' ? 'multi' : param.collectionFormat), paramKind, byVal, location);
@@ -645,7 +646,7 @@ export class clientAdapter {
         break;
       }
       if (!foundResp) {
-        throw new Error(`didn't find HTTP response for kind ${sdkResponseType.kind} in method ${method.name}`);
+        throw new DiagnosticError(`didn't find HTTP response for kind ${sdkResponseType.kind} in method ${method.name}`);
       }
     }
 
@@ -663,13 +664,13 @@ export class clientAdapter {
         }
       }
       if (!modelType) {
-        throw new Error(`didn't find model type name ${sdkResponseType.name} for response envelope ${respEnv.name}`);
+        throw new DiagnosticError(`didn't find model type name ${sdkResponseType.name} for response envelope ${respEnv.name}`);
       }
       if (go.isPolymorphicType(modelType)) {
         respEnv.result = new go.PolymorphicResult(modelType.interface);
       } else {
         if (contentType !== 'JSON' && contentType !== 'XML') {
-          throw new Error(`unexpected content type ${contentType} for model ${modelType.name}`);
+          throw new DiagnosticError(`unexpected content type ${contentType} for model ${modelType.name}`);
         }
         respEnv.result = new go.ModelResult(modelType, contentType);
       }
@@ -678,7 +679,7 @@ export class clientAdapter {
     } else {
       const resultType = this.ta.getPossibleType(sdkResponseType, false, false);
       if (go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isQualifiedType(resultType)) {
-        throw new Error(`invalid monomorphic result type ${go.getTypeDeclaration(resultType)}`);
+        throw new DiagnosticError(`invalid monomorphic result type ${go.getTypeDeclaration(resultType)}`);
       }
       respEnv.result = new go.MonomorphicResult(this.recursiveTypeName(sdkResponseType, false), contentType, resultType, isTypePassedByValue(sdkResponseType));
     }
@@ -774,7 +775,7 @@ export class clientAdapter {
     // for header params, we never pass the element type by pointer
     const type = this.ta.getPossibleType(sdkType, forParam, false);
     if (go.isInterfaceType(type) || go.isMapType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
-      throw new Error(`unexpected header parameter type ${sdkType.kind}`);
+      throw new DiagnosticError(`unexpected header parameter type ${sdkType.kind}`);
     }
     return type;
   }
@@ -782,7 +783,7 @@ export class clientAdapter {
   private adaptPathParameterType(sdkType: tcgc.SdkType): go.PathParameterType {
     const type = this.ta.getPossibleType(sdkType, false, false);
     if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
-      throw new Error(`unexpected path parameter type ${sdkType.kind}`);
+      throw new DiagnosticError(`unexpected path parameter type ${sdkType.kind}`);
     }
     return type;
   }
@@ -790,7 +791,7 @@ export class clientAdapter {
   private adaptQueryParameterType(sdkType: tcgc.SdkType): go.QueryParameterType {
     const type = this.ta.getPossibleType(sdkType, false, false);
     if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
-      throw new Error(`unexpected query parameter type ${sdkType.kind}`);
+      throw new DiagnosticError(`unexpected query parameter type ${sdkType.kind}`);
     } else if (go.isSliceType(type)) {
       type.elementTypeByValue = true;
     }
@@ -807,7 +808,7 @@ export class clientAdapter {
     } else if (param.clientDefaultValue) {
       const adaptedType = this.ta.getPossibleType(param.type, false, false);
       if (!go.isLiteralValueType(adaptedType)) {
-        throw new Error(`unsupported client side default type ${go.getTypeDeclaration(adaptedType)} for parameter ${param.name}`);
+        throw new DiagnosticError(`unsupported client side default type ${go.getTypeDeclaration(adaptedType)} for parameter ${param.name}`);
       }
       return new go.ClientSideDefault(new go.LiteralValue(adaptedType, param.clientDefaultValue));
     } else if (param.optional) {
@@ -828,7 +829,7 @@ export class clientAdapter {
           }
           const goParams = paramMapping.get(param.parameter);
           if (!goParams) {
-            throw new Error(`can not find go param for example param ${param.parameter.name}`);
+            throw new DiagnosticError(`can not find go param for example param ${param.parameter.name}`);
           }
           if (goParams.length > 1) {
             // spread case
@@ -857,7 +858,7 @@ export class clientAdapter {
           for (const header of response.headers) {
             const goHeader = method.responseEnvelope.headers.find(h => h.headerName === header.header.serializedName);
             if (!goHeader) {
-              throw new Error(`can not find go header for example header ${header.header.serializedName}`);
+              throw new DiagnosticError(`can not find go header for example header ${header.header.serializedName}`);
             }
             goExample.responseEnvelope.headers.push(new go.ResponseHeaderExample(goHeader, this.adaptExampleType(header.value, goHeader.type)));
           }
@@ -926,7 +927,7 @@ export class clientAdapter {
         }
         break;
       case 'union':
-        throw new Error('go could not support union for now');
+        throw new DiagnosticError('go could not support union for now');
       case 'model':
         if (go.isModelType(goType) || go.isInterfaceType(goType)) {
           let concreteType: go.ModelType | go.PolymorphicType | undefined;
@@ -936,7 +937,7 @@ export class clientAdapter {
             concreteType = goType;
           }
           if (concreteType === undefined) {
-            throw new Error(`can not find concrete type for example type ${exampleType.type.name}`);
+            throw new DiagnosticError(`can not find concrete type for example type ${exampleType.type.name}`);
           }
           const ret = new go.StructExample(concreteType);
           for (const [k, v] of Object.entries(exampleType.value)) {
@@ -953,7 +954,7 @@ export class clientAdapter {
         }
         break;
     }
-    throw new Error(`can not map go type into example type ${exampleType.kind}`);
+    throw new DiagnosticError(`can not map go type into example type ${exampleType.kind}`);
   }
 }
 

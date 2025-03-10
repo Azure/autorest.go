@@ -121,7 +121,7 @@ const libDef = {
     'expected-error': {
       severity: 'error',
       messages: {
-        default: paramMessage`Unable to generate Go client code from the provided TypeSpec. Please check the error log for more details. If the issue persists, open an issue at https://github.com/microsoft/typespec with the relevant information.${'stack'}`,
+        default: paramMessage`Unable to generate Go client code from the provided TypeSpec. Please check the error stack log for more details. If the issue persists, open an issue at https://github.com/microsoft/typespec with the relevant information.${'stack'}`,
       },
     }
   },
