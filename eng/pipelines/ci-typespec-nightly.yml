@@ -24,8 +24,8 @@ jobs:
         GoVersion: "1.21.4"
     - script: |
           npm install -g @typespec/compiler@next
-          npx @azure-tools/typespec-bump-deps /packages/typespec-go/package.json --add-npm-overrides
+          npx @azure-tools/typespec-bump-deps packages/typespec-go/package.json --add-npm-overrides
           echo "typespec-go/package.json"
-          cat /packages/typespec-go/package.json
+          cat packages/typespec-go/package.json
       displayName: 'Bump TypeSpec Dependencies to dev'
     - template: /eng/pipelines/templates/steps/build-test-typespec.yaml
