@@ -3,6 +3,7 @@
 *  Licensed under the MIT License. See License.txt in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
+import { DiagnosticError } from './error.js';
 import { MethodExample } from './examples.js';
 import * as pkg from './package.js';
 import * as param from './param.js';
@@ -176,7 +177,7 @@ export function newClientOptions(modelType: pkg.CodeModelType, clientName: strin
 export class Method implements Method {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     if (statusCodes.length === 0) {
-      throw new Error('statusCodes cannot be empty');
+      throw new DiagnosticError('statusCodes cannot be empty');
     }
     this.apiVersions = new Array<string>();
     this.client = client;
@@ -254,7 +255,7 @@ export class LROPageableMethod extends Method implements LROPageableMethod {
 export class NextPageMethod implements NextPageMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>) {
     if (statusCodes.length === 0) {
-      throw new Error('statusCodes cannot be empty');
+      throw new DiagnosticError('statusCodes cannot be empty');
     }
     this.apiVersions = new Array<string>();
     this.client = client;
