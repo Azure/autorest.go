@@ -4,6 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import * as client from './client.js';
+import { DiagnosticError } from './error.js';
 import * as param from './param.js';
 import * as type from './type.js';
 
@@ -157,7 +158,7 @@ export function getResultPossibleType(resultType: ResultType): type.PossibleType
   } else if (isModelResult(resultType)) {
     return resultType.modelType;
   } else {
-    throw new Error(`unhandled result type ${resultType}`);
+    throw new DiagnosticError(`unhandled result type ${resultType}`);
   }
 }
 

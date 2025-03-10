@@ -21,10 +21,31 @@ import { generateServerFactory } from '../../codegen.go/src/fake/factory.js';
 import { generateXMLAdditionalPropsHelpers } from '../../codegen.go/src/xmlAdditionalProps.js';
 import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
-import { EmitContext } from '@typespec/compiler';
+import { EmitContext, NoTarget } from '@typespec/compiler';
 import 'source-map-support/register.js';
+import { reportDiagnostic } from './lib.js';
+import { DiagnosticError } from '../../codegen.go/src/error.js';
 
 export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
+  try {
+    await generate(context);
+  } catch (error: any) {
+    if (error instanceof DiagnosticError) {
+      const errStackStart = '========================================= error stack start ================================================';
+      const errStackEnd = '========================================= error stack end ================================================';
+      const errStack = error.stack ? `\n${errStackStart}\n${error.stack}\n${errStackEnd}` : '';
+      reportDiagnostic(context.program, {
+        code: 'expected-error',
+        target: NoTarget,
+        format: { stack: errStack },
+      });
+    } else {
+      throw error;
+    }
+  }
+}
+
+async function generate(context: EmitContext<GoEmitterOptions>) {
   const codeModel = await tcgcToGoCodeModel(context);
   await mkdir(context.emitterOutputDir, {recursive: true});
 
@@ -47,7 +68,6 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
       filePrefix += '_';
     }
   }
-
   const clientFactory = await generateClientFactory(codeModel);
   if (clientFactory.length > 0) {
     writeFile(`${context.emitterOutputDir}/${filePrefix}client_factory.go`, clientFactory);
