@@ -21,7 +21,7 @@ func TestBooleanValueClientGet(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewArrayBooleanValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
-	require.Equal(t, []bool{true, false}, resp.Value)
+	require.Equal(t, []bool{true, false}, resp.BoolArray)
 }
 
 func TestBooleanValueClientPut(t *testing.T) {
@@ -37,7 +37,7 @@ func TestDatetimeValueClientGet(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewArrayDatetimeValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
-	require.EqualValues(t, []time.Time{time.Date(2022, time.August, 26, 18, 38, 0, 0, time.UTC)}, resp.Value)
+	require.EqualValues(t, []time.Time{time.Date(2022, time.August, 26, 18, 38, 0, 0, time.UTC)}, resp.TimeArray)
 }
 
 func TestDatetimeValueClientPut(t *testing.T) {
@@ -53,7 +53,7 @@ func TestDurationValueClientGet(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewArrayDurationValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
-	require.EqualValues(t, []string{"P123DT22H14M12.011S"}, resp.Value)
+	require.EqualValues(t, []string{"P123DT22H14M12.011S"}, resp.StringArray)
 }
 
 func TestDurationValueClientPut(t *testing.T) {
@@ -69,7 +69,7 @@ func TestFloat32ValueClientGet(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewArrayFloat32ValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
-	require.EqualValues(t, []float32{43.125}, resp.Value)
+	require.EqualValues(t, []float32{43.125}, resp.Float32Array)
 }
 
 func TestFloat32ValueClientPut(t *testing.T) {
@@ -85,7 +85,7 @@ func TestInt32ValueClientGet(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewArrayInt32ValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
-	require.EqualValues(t, []int32{1, 2}, resp.Value)
+	require.EqualValues(t, []int32{1, 2}, resp.Int32Array)
 }
 
 func TestInt32ValueClientPut(t *testing.T) {
@@ -101,7 +101,7 @@ func TestInt64ValueClientGet(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewArrayInt64ValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
-	require.EqualValues(t, []int64{9007199254740991, -9007199254740991}, resp.Value)
+	require.EqualValues(t, []int64{9007199254740991, -9007199254740991}, resp.Int64Array)
 }
 
 func TestInt64ValueClientPut(t *testing.T) {
@@ -124,7 +124,7 @@ func TestModelValueClientGet(t *testing.T) {
 		{
 			Property: to.Ptr("world"),
 		},
-	}, resp.Value)
+	}, resp.InnerModelArray)
 }
 
 func TestModelValueClientPut(t *testing.T) {
@@ -147,7 +147,7 @@ func TestNullableFloatValueClientGet(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewArrayNullableFloatValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
-	require.EqualValues(t, []*float32{to.Ptr[float32](1.25), nil, to.Ptr[float32](3)}, resp.Value)
+	require.EqualValues(t, []*float32{to.Ptr[float32](1.25), nil, to.Ptr[float32](3)}, resp.Float32Array)
 }
 
 func TestNullableFloatValueClientPut(t *testing.T) {
@@ -163,7 +163,7 @@ func TestStringValueClientGet(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewArrayStringValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
-	require.EqualValues(t, []string{"hello", ""}, resp.Value)
+	require.EqualValues(t, []string{"hello", ""}, resp.StringArray)
 }
 
 func TestStringValueClientPut(t *testing.T) {
@@ -179,7 +179,7 @@ func TestUnknownValueClientGet(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewArrayUnknownValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
-	require.EqualValues(t, []any{float64(1), "hello", nil}, resp.Value)
+	require.EqualValues(t, []any{float64(1), "hello", nil}, resp.InterfaceArray)
 }
 
 func TestUnknownValueClientPut(t *testing.T) {
