@@ -5,7 +5,7 @@
 
 import * as go from '../../codemodel.go/src/index.js';
 import { lt, toSemver } from '@azure-tools/codegen';
-import { DiagnosticError } from './error.js';
+import { DiagnosticError } from '../../codemodel.go/src/error.js';
 
 // Creates the content in go.mod if the --module switch was specified.
 // if there's a preexisting go.mod file, update its specified version of azcore as needed.

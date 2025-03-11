@@ -6,7 +6,7 @@
 import { values } from '@azure-tools/linq';
 import * as helpers from './helpers.js';
 import * as go from '../../codemodel.go/src/index.js';
-import { DiagnosticError } from './error.js';
+import { DiagnosticError } from '../../codemodel.go/src/error.js';
 
 // Creates the content in constants.go
 export async function generateConstants(codeModel: go.CodeModel): Promise<string> {

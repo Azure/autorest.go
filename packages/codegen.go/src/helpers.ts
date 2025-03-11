@@ -7,7 +7,7 @@ import * as go from '../../codemodel.go/src/index.js';
 import { values } from '@azure-tools/linq';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { ImportManager } from './imports.js';
-import { DiagnosticError } from './error.js';
+import { DiagnosticError } from '../../codemodel.go/src/error.js';
 
 // variable to be used to determine comment length when calling comment from @azure-tools
 export const commentLength = 120;

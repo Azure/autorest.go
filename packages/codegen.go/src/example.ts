@@ -8,7 +8,7 @@ import * as go from '../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 import { fixUpMethodName } from './operations.js';
-import { DiagnosticError } from './error.js';
+import { DiagnosticError } from '../../codemodel.go/src/error.js';
 
 // represents the generated content for an example
 export class ExampleContent {

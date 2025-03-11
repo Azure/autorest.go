@@ -7,7 +7,7 @@ import { values } from '@azure-tools/linq';
 import * as go from '../../codemodel.go/src/index.js';
 import { contentPreamble, getSerDeFormat, recursiveUnwrapMapSlice } from './helpers.js';
 import { ImportManager } from './imports.js';
-import { DiagnosticError } from './error.js';
+import { DiagnosticError } from '../../codemodel.go/src/error.js';
 
 // represents the generated content for an operation group
 export class Content {
