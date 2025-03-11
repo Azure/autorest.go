@@ -1,9 +1,14 @@
 parameters:
   GoTestPath: "$(System.DefaultWorkingDirectory)/packages/typespec-go/test"
+  Nightly: false
 
 steps:
   - script: |
-      rush install
+      if [ "${{ parameters.Nightly }}" = "true" ]; then
+        rush update
+      else
+        rush install
+      fi
       rush rebuild -v
     displayName: "Build Emitter Sources"
 
