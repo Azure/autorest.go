@@ -16,7 +16,7 @@ export class ExampleDataRender extends MockTestDataRender {
   public renderData(): void {
     super.renderData();
     let clientFactoryParams: Array<Parameter>;
-    const factoryGatherAllParamsFlag = this.context.testConfig.getValue(Config.factoryGatherAllParams);
+    const factoryGatherAllParamsFlag = this.context.testConfig.getValue(Config.factoryGatherAllParams, true);
     if (factoryGatherAllParamsFlag) {
       clientFactoryParams = this.getAllClientParameters();
     } else {
