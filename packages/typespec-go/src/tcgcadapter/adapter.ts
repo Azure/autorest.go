@@ -53,8 +53,10 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
   if (context.options['slice-elements-byval']) {
     codeModel.options.sliceElementsByval = true;
   }
-  if (context.options['factory-gather-all-params']) {
+  if (context.options['factory-gather-all-params'] === undefined || context.options['factory-gather-all-params'] === true) {
     codeModel.options.factoryGatherAllParams = true;
+  } else {
+      codeModel.options.factoryGatherAllParams = false;
   }
 
   fixStutteringTypeNames(sdkContext.sdkPackage, codeModel, context.options);
