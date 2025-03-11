@@ -57,7 +57,7 @@ func (client *ArrayModelValueClient) getCreateRequest(ctx context.Context, _ *Ar
 // getHandleResponse handles the Get response.
 func (client *ArrayModelValueClient) getHandleResponse(resp *http.Response) (ArrayModelValueClientGetResponse, error) {
 	result := ArrayModelValueClientGetResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.InnerModelArray); err != nil {
 		return ArrayModelValueClientGetResponse{}, err
 	}
 	return result, nil

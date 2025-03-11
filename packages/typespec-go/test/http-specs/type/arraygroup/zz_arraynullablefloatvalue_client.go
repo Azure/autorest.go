@@ -58,7 +58,7 @@ func (client *ArrayNullableFloatValueClient) getCreateRequest(ctx context.Contex
 // getHandleResponse handles the Get response.
 func (client *ArrayNullableFloatValueClient) getHandleResponse(resp *http.Response) (ArrayNullableFloatValueClientGetResponse, error) {
 	result := ArrayNullableFloatValueClientGetResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Float32Array); err != nil {
 		return ArrayNullableFloatValueClientGetResponse{}, err
 	}
 	return result, nil

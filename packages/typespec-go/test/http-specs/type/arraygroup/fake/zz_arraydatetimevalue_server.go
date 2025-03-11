@@ -98,7 +98,7 @@ func (a *ArrayDatetimeValueServerTransport) dispatchGet(req *http.Request) (*htt
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Value, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).TimeArray, req)
 	if err != nil {
 		return nil, err
 	}

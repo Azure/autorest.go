@@ -1,5 +1,11 @@
 # Release History
 
+## 0.4.0 (2025-03-11)
+
+### Breaking Changes
+
+* The monomorphic response field will no longer have the name `Value` in some cases. This is to preserve compatibility with the behavior of the `autorest.go` code generator.
+
 ## 0.3.11 (2025-03-07)
 
 ### Other Changes

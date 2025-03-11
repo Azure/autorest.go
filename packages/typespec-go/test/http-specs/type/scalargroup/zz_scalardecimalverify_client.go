@@ -58,7 +58,7 @@ func (client *ScalarDecimalVerifyClient) prepareVerifyCreateRequest(ctx context.
 // prepareVerifyHandleResponse handles the PrepareVerify response.
 func (client *ScalarDecimalVerifyClient) prepareVerifyHandleResponse(resp *http.Response) (ScalarDecimalVerifyClientPrepareVerifyResponse, error) {
 	result := ScalarDecimalVerifyClientPrepareVerifyResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Float64Array); err != nil {
 		return ScalarDecimalVerifyClientPrepareVerifyResponse{}, err
 	}
 	return result, nil

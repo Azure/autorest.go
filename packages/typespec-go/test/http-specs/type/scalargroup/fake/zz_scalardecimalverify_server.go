@@ -97,7 +97,7 @@ func (s *ScalarDecimalVerifyServerTransport) dispatchPrepareVerify(req *http.Req
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Value, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Float64Array, req)
 	if err != nil {
 		return nil, err
 	}

@@ -8,7 +8,7 @@ import "time"
 
 // ArrayBooleanValueClientGetResponse contains the response from method ArrayBooleanValueClient.Get.
 type ArrayBooleanValueClientGetResponse struct {
-	Value []bool
+	BoolArray []bool
 }
 
 // ArrayBooleanValueClientPutResponse contains the response from method ArrayBooleanValueClient.Put.
@@ -18,7 +18,7 @@ type ArrayBooleanValueClientPutResponse struct {
 
 // ArrayDatetimeValueClientGetResponse contains the response from method ArrayDatetimeValueClient.Get.
 type ArrayDatetimeValueClientGetResponse struct {
-	Value []time.Time
+	TimeArray []time.Time
 }
 
 // ArrayDatetimeValueClientPutResponse contains the response from method ArrayDatetimeValueClient.Put.
@@ -28,7 +28,7 @@ type ArrayDatetimeValueClientPutResponse struct {
 
 // ArrayDurationValueClientGetResponse contains the response from method ArrayDurationValueClient.Get.
 type ArrayDurationValueClientGetResponse struct {
-	Value []string
+	StringArray []string
 }
 
 // ArrayDurationValueClientPutResponse contains the response from method ArrayDurationValueClient.Put.
@@ -38,7 +38,7 @@ type ArrayDurationValueClientPutResponse struct {
 
 // ArrayFloat32ValueClientGetResponse contains the response from method ArrayFloat32ValueClient.Get.
 type ArrayFloat32ValueClientGetResponse struct {
-	Value []float32
+	Float32Array []float32
 }
 
 // ArrayFloat32ValueClientPutResponse contains the response from method ArrayFloat32ValueClient.Put.
@@ -48,7 +48,7 @@ type ArrayFloat32ValueClientPutResponse struct {
 
 // ArrayInt32ValueClientGetResponse contains the response from method ArrayInt32ValueClient.Get.
 type ArrayInt32ValueClientGetResponse struct {
-	Value []int32
+	Int32Array []int32
 }
 
 // ArrayInt32ValueClientPutResponse contains the response from method ArrayInt32ValueClient.Put.
@@ -58,7 +58,7 @@ type ArrayInt32ValueClientPutResponse struct {
 
 // ArrayInt64ValueClientGetResponse contains the response from method ArrayInt64ValueClient.Get.
 type ArrayInt64ValueClientGetResponse struct {
-	Value []int64
+	Int64Array []int64
 }
 
 // ArrayInt64ValueClientPutResponse contains the response from method ArrayInt64ValueClient.Put.
@@ -68,7 +68,7 @@ type ArrayInt64ValueClientPutResponse struct {
 
 // ArrayModelValueClientGetResponse contains the response from method ArrayModelValueClient.Get.
 type ArrayModelValueClientGetResponse struct {
-	Value []InnerModel
+	InnerModelArray []InnerModel
 }
 
 // ArrayModelValueClientPutResponse contains the response from method ArrayModelValueClient.Put.
@@ -78,7 +78,7 @@ type ArrayModelValueClientPutResponse struct {
 
 // ArrayNullableBooleanValueClientGetResponse contains the response from method ArrayNullableBooleanValueClient.Get.
 type ArrayNullableBooleanValueClientGetResponse struct {
-	Value []*bool
+	BoolArray []*bool
 }
 
 // ArrayNullableBooleanValueClientPutResponse contains the response from method ArrayNullableBooleanValueClient.Put.
@@ -88,7 +88,7 @@ type ArrayNullableBooleanValueClientPutResponse struct {
 
 // ArrayNullableFloatValueClientGetResponse contains the response from method ArrayNullableFloatValueClient.Get.
 type ArrayNullableFloatValueClientGetResponse struct {
-	Value []*float32
+	Float32Array []*float32
 }
 
 // ArrayNullableFloatValueClientPutResponse contains the response from method ArrayNullableFloatValueClient.Put.
@@ -98,7 +98,7 @@ type ArrayNullableFloatValueClientPutResponse struct {
 
 // ArrayNullableInt32ValueClientGetResponse contains the response from method ArrayNullableInt32ValueClient.Get.
 type ArrayNullableInt32ValueClientGetResponse struct {
-	Value []*int32
+	Int32Array []*int32
 }
 
 // ArrayNullableInt32ValueClientPutResponse contains the response from method ArrayNullableInt32ValueClient.Put.
@@ -108,7 +108,7 @@ type ArrayNullableInt32ValueClientPutResponse struct {
 
 // ArrayNullableModelValueClientGetResponse contains the response from method ArrayNullableModelValueClient.Get.
 type ArrayNullableModelValueClientGetResponse struct {
-	Value []*InnerModel
+	InnerModelArray []*InnerModel
 }
 
 // ArrayNullableModelValueClientPutResponse contains the response from method ArrayNullableModelValueClient.Put.
@@ -118,7 +118,7 @@ type ArrayNullableModelValueClientPutResponse struct {
 
 // ArrayNullableStringValueClientGetResponse contains the response from method ArrayNullableStringValueClient.Get.
 type ArrayNullableStringValueClientGetResponse struct {
-	Value []*string
+	StringArray []*string
 }
 
 // ArrayNullableStringValueClientPutResponse contains the response from method ArrayNullableStringValueClient.Put.
@@ -128,7 +128,7 @@ type ArrayNullableStringValueClientPutResponse struct {
 
 // ArrayStringValueClientGetResponse contains the response from method ArrayStringValueClient.Get.
 type ArrayStringValueClientGetResponse struct {
-	Value []string
+	StringArray []string
 }
 
 // ArrayStringValueClientPutResponse contains the response from method ArrayStringValueClient.Put.
@@ -138,7 +138,7 @@ type ArrayStringValueClientPutResponse struct {
 
 // ArrayUnknownValueClientGetResponse contains the response from method ArrayUnknownValueClient.Get.
 type ArrayUnknownValueClientGetResponse struct {
-	Value []any
+	InterfaceArray []any
 }
 
 // ArrayUnknownValueClientPutResponse contains the response from method ArrayUnknownValueClient.Put.

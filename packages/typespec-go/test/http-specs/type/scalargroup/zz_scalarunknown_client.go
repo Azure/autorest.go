@@ -57,7 +57,7 @@ func (client *ScalarUnknownClient) getCreateRequest(ctx context.Context, _ *Scal
 // getHandleResponse handles the Get response.
 func (client *ScalarUnknownClient) getHandleResponse(resp *http.Response) (ScalarUnknownClientGetResponse, error) {
 	result := ScalarUnknownClientGetResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Interface); err != nil {
 		return ScalarUnknownClientGetResponse{}, err
 	}
 	return result, nil
