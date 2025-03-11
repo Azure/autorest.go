@@ -10,7 +10,7 @@ import * as go from '../../../codemodel.go/src/index.js';
 import { packageNameFromOutputFolder, trimPackagePrefix } from '../../../naming.go/src/naming.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import { EmitContext } from '@typespec/compiler';
-import { DiagnosticError } from '../../../codegen.go/src/error.js';
+import { DiagnosticError } from '../../../codemodel.go/src/error.js';
 
 const headerText = `Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License. See License.txt in the project root for license information.

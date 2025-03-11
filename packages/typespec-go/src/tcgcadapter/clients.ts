@@ -9,7 +9,7 @@ import * as go from '../../../codemodel.go/src/index.js';
 import { capitalize, createOptionsTypeDescription, createResponseEnvelopeDescription, ensureNameCase, getEscapedReservedName, uncapitalize } from '../../../naming.go/src/naming.js';
 import { GoEmitterOptions } from '../lib.js';
 import { getEndpointType, isTypePassedByValue, typeAdapter } from './types.js';
-import { DiagnosticError } from '../../../codegen.go/src/error.js';
+import { DiagnosticError } from '../../../codemodel.go/src/error.js';
 
 // used to convert SDK clients and their methods to Go code model types
 export class clientAdapter {
