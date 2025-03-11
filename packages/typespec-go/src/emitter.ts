@@ -24,7 +24,7 @@ import { mkdir, readFile, writeFile } from 'fs/promises';
 import { EmitContext, NoTarget } from '@typespec/compiler';
 import 'source-map-support/register.js';
 import { reportDiagnostic } from './lib.js';
-import { DiagnosticError } from '../../codegen.go/src/error.js';
+import { DiagnosticError } from '../../codemodel.go/src/error.js';
 
 export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   try {

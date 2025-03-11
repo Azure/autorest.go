@@ -10,7 +10,7 @@ import * as helpers from '../helpers.js';
 import { ImportManager } from '../imports.js';
 import { fixUpMethodName } from '../operations.js';
 import { generateServerInternal, RequiredHelpers } from './internal.js';
-import { DiagnosticError } from '../error.js';
+import { DiagnosticError } from '../../../codemodel.go/src/error.js';
 
 // contains the generated content for all servers and the required helpers
 export class ServerContent {
