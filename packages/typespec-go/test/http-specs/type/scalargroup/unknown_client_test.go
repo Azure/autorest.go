@@ -19,7 +19,7 @@ func TestUnknownClient_Get(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewScalarUnknownClient().Get(context.Background(), nil)
 	require.NoError(t, err)
-	require.EqualValues(t, "test", resp.Value)
+	require.EqualValues(t, "test", resp.Interface)
 }
 
 func TestUnknownClient_Put(t *testing.T) {

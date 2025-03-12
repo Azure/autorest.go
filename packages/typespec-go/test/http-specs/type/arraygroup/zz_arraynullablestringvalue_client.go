@@ -58,7 +58,7 @@ func (client *ArrayNullableStringValueClient) getCreateRequest(ctx context.Conte
 // getHandleResponse handles the Get response.
 func (client *ArrayNullableStringValueClient) getHandleResponse(resp *http.Response) (ArrayNullableStringValueClientGetResponse, error) {
 	result := ArrayNullableStringValueClientGetResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ArrayNullableStringValueClientGetResponse{}, err
 	}
 	return result, nil

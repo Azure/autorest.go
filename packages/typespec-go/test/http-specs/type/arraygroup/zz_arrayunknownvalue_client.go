@@ -57,7 +57,7 @@ func (client *ArrayUnknownValueClient) getCreateRequest(ctx context.Context, _ *
 // getHandleResponse handles the Get response.
 func (client *ArrayUnknownValueClient) getHandleResponse(resp *http.Response) (ArrayUnknownValueClientGetResponse, error) {
 	result := ArrayUnknownValueClientGetResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceArray); err != nil {
 		return ArrayUnknownValueClientGetResponse{}, err
 	}
 	return result, nil

@@ -57,7 +57,7 @@ func (client *ArrayDurationValueClient) getCreateRequest(ctx context.Context, _ 
 // getHandleResponse handles the Get response.
 func (client *ArrayDurationValueClient) getHandleResponse(resp *http.Response) (ArrayDurationValueClientGetResponse, error) {
 	result := ArrayDurationValueClientGetResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ArrayDurationValueClientGetResponse{}, err
 	}
 	return result, nil

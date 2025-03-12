@@ -31,7 +31,7 @@ type ScalarDecimal128TypeClientResponseBodyResponse struct {
 
 // ScalarDecimal128VerifyClientPrepareVerifyResponse contains the response from method ScalarDecimal128VerifyClient.PrepareVerify.
 type ScalarDecimal128VerifyClientPrepareVerifyResponse struct {
-	Value []float64
+	Float64Array []float64
 }
 
 // ScalarDecimal128VerifyClientVerifyResponse contains the response from method ScalarDecimal128VerifyClient.Verify.
@@ -56,7 +56,7 @@ type ScalarDecimalTypeClientResponseBodyResponse struct {
 
 // ScalarDecimalVerifyClientPrepareVerifyResponse contains the response from method ScalarDecimalVerifyClient.PrepareVerify.
 type ScalarDecimalVerifyClientPrepareVerifyResponse struct {
-	Value []float64
+	Float64Array []float64
 }
 
 // ScalarDecimalVerifyClientVerifyResponse contains the response from method ScalarDecimalVerifyClient.Verify.
@@ -76,7 +76,7 @@ type ScalarStringClientPutResponse struct {
 
 // ScalarUnknownClientGetResponse contains the response from method ScalarUnknownClient.Get.
 type ScalarUnknownClientGetResponse struct {
-	Value any
+	Interface any
 }
 
 // ScalarUnknownClientPutResponse contains the response from method ScalarUnknownClient.Put.

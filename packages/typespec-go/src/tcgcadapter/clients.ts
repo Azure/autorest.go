@@ -680,10 +680,74 @@ export class clientAdapter {
       if (go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isQualifiedType(resultType)) {
         throw new Error(`invalid monomorphic result type ${go.getTypeDeclaration(resultType)}`);
       }
-      respEnv.result = new go.MonomorphicResult('Value', contentType, resultType, isTypePassedByValue(sdkResponseType));
+      respEnv.result = new go.MonomorphicResult(this.recursiveTypeName(sdkResponseType, false), contentType, resultType, isTypePassedByValue(sdkResponseType));
     }
 
     return respEnv;
+  }
+
+  /**
+   * creates the monomorphic response field name based on its type.
+   * 
+   * for unknown, use Interface or RawJSON if setting is enabled
+   * for basic type, map of basic type, map of UDTs, enum, use Value
+   * for array of basic type, array of UDTs, use xxxArray
+   * 
+   * @param type the type for which to create a name
+   * @param fromArray indicates if there was recursion from a parent array
+   * @returns the name
+   */
+  private recursiveTypeName(type: tcgc.SdkType, fromArray: boolean): string {
+    if (!fromArray) {
+      switch (type.kind) {
+        case 'array':
+          return `${this.recursiveTypeName(type.valueType, true)}Array`;
+        case 'nullable':
+          return this.recursiveTypeName(type.type, false);
+        case 'unknown':
+          return this.ta.codeModel.options.rawJSONAsBytes ? 'RawJSON' : 'Interface';
+        default:
+          return 'Value';
+      }
+    }
+
+    switch (type.kind) {
+      case 'array':
+        return `${this.recursiveTypeName(type.valueType, true)}Array`;
+      case 'boolean':
+        return 'Bool';
+      case 'bytes':
+        return 'ByteArray';
+      case 'enum':
+        return type.name;
+      case 'utcDateTime':
+      case 'offsetDateTime':
+        return 'Time';
+      case 'decimal':
+      case 'decimal128':
+        return 'Float64';
+      case 'dict':
+        return `MapOf${this.recursiveTypeName(type.valueType, fromArray)}`;
+      case 'float32':
+      case 'float64':
+      case 'int16':
+      case 'int32':
+      case 'int64':
+      case 'int8':
+        return capitalize(type.kind);
+      case 'model':
+        return type.name;
+      case 'nullable':
+        return this.recursiveTypeName(type.type, fromArray);
+      case 'duration':
+      case 'string':
+      case 'url':
+        return 'String';
+      case 'unknown':
+        return this.ta.codeModel.options.rawJSONAsBytes ? 'RawJSON' : 'Interface';
+      default:
+        throw new Error(`unhandled monomorphic response type kind ${type.kind}`);
+    }
   }
 
   private adaptParameterGroup(paramGroup: go.ParameterGroup): go.StructType {

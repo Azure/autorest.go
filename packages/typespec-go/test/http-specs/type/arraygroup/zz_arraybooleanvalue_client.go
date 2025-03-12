@@ -57,7 +57,7 @@ func (client *ArrayBooleanValueClient) getCreateRequest(ctx context.Context, _ *
 // getHandleResponse handles the Get response.
 func (client *ArrayBooleanValueClient) getHandleResponse(resp *http.Response) (ArrayBooleanValueClientGetResponse, error) {
 	result := ArrayBooleanValueClientGetResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.BoolArray); err != nil {
 		return ArrayBooleanValueClientGetResponse{}, err
 	}
 	return result, nil

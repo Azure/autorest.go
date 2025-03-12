@@ -19,7 +19,7 @@ func TestDecimal128VerifyClient_PrepareVerify(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewScalarDecimal128VerifyClient().PrepareVerify(context.Background(), nil)
 	require.NoError(t, err)
-	require.EqualValues(t, []float64{0.1, 0.1, 0.1}, resp.Value)
+	require.EqualValues(t, []float64{0.1, 0.1, 0.1}, resp.Float64Array)
 }
 
 func TestDecimal128VerifyClient_Verify(t *testing.T) {

@@ -57,7 +57,7 @@ func (client *ArrayInt64ValueClient) getCreateRequest(ctx context.Context, _ *Ar
 // getHandleResponse handles the Get response.
 func (client *ArrayInt64ValueClient) getHandleResponse(resp *http.Response) (ArrayInt64ValueClientGetResponse, error) {
 	result := ArrayInt64ValueClientGetResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Int64Array); err != nil {
 		return ArrayInt64ValueClientGetResponse{}, err
 	}
 	return result, nil

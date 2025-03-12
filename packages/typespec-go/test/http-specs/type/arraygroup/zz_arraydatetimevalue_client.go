@@ -66,7 +66,7 @@ func (client *ArrayDatetimeValueClient) getHandleResponse(resp *http.Response) (
 	for i := 0; i < len(aux); i++ {
 		cp[i] = (time.Time)(aux[i])
 	}
-	result.Value = cp
+	result.TimeArray = cp
 	return result, nil
 }
 
