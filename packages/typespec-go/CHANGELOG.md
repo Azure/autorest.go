@@ -1,5 +1,11 @@
 # Release History
 
+## 0.4.1 (unreleased)
+
+### Other Changes
+
+* Updated to the latest tcgc.
+
 ## 0.4.0 (2025-03-12)
 
 ### Breaking Changes

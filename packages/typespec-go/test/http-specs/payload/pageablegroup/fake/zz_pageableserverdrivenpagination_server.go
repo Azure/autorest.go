@@ -13,10 +13,15 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"net/http"
 	"pageablegroup"
+	"strings"
+	"sync"
 )
 
 // PageableServerDrivenPaginationServer is a fake server for instances of the pageablegroup.PageableServerDrivenPaginationClient type.
 type PageableServerDrivenPaginationServer struct {
+	// PageableServerDrivenPaginationContinuationTokenServer contains the fakes for client PageableServerDrivenPaginationContinuationTokenClient
+	PageableServerDrivenPaginationContinuationTokenServer PageableServerDrivenPaginationContinuationTokenServer
+
 	// NewLinkPager is the fake for method PageableServerDrivenPaginationClient.NewLinkPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewLinkPager func(options *pageablegroup.PageableServerDrivenPaginationClientLinkOptions) (resp azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientLinkResponse])
@@ -35,8 +40,10 @@ func NewPageableServerDrivenPaginationServerTransport(srv *PageableServerDrivenP
 // PageableServerDrivenPaginationServerTransport connects instances of pageablegroup.PageableServerDrivenPaginationClient to instances of PageableServerDrivenPaginationServer.
 // Don't use this type directly, use NewPageableServerDrivenPaginationServerTransport instead.
 type PageableServerDrivenPaginationServerTransport struct {
-	srv          *PageableServerDrivenPaginationServer
-	newLinkPager *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientLinkResponse]]
+	srv                                                     *PageableServerDrivenPaginationServer
+	trMu                                                    sync.Mutex
+	trPageableServerDrivenPaginationContinuationTokenServer *PageableServerDrivenPaginationContinuationTokenServerTransport
+	newLinkPager                                            *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientLinkResponse]]
 }
 
 // Do implements the policy.Transporter interface for PageableServerDrivenPaginationServerTransport.
@@ -47,7 +54,27 @@ func (p *PageableServerDrivenPaginationServerTransport) Do(req *http.Request) (*
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	if client := method[:strings.Index(method, ".")]; client != "PageableServerDrivenPaginationClient" {
+		return p.dispatchToClientFake(req, client)
+	}
 	return p.dispatchToMethodFake(req, method)
+}
+
+func (p *PageableServerDrivenPaginationServerTransport) dispatchToClientFake(req *http.Request, client string) (*http.Response, error) {
+	var resp *http.Response
+	var err error
+
+	switch client {
+	case "PageableServerDrivenPaginationContinuationTokenClient":
+		initServer(&p.trMu, &p.trPageableServerDrivenPaginationContinuationTokenServer, func() *PageableServerDrivenPaginationContinuationTokenServerTransport {
+			return NewPageableServerDrivenPaginationContinuationTokenServerTransport(&p.srv.PageableServerDrivenPaginationContinuationTokenServer)
+		})
+		resp, err = p.trPageableServerDrivenPaginationContinuationTokenServer.Do(req)
+	default:
+		err = fmt.Errorf("unhandled client %s", client)
+	}
+
+	return resp, err
 }
 
 func (p *PageableServerDrivenPaginationServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
