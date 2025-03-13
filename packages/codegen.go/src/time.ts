@@ -7,7 +7,7 @@ import { values } from '@azure-tools/linq';
 import * as go from '../../codemodel.go/src/index.js';
 import { contentPreamble, getSerDeFormat, recursiveUnwrapMapSlice } from './helpers.js';
 import { ImportManager } from './imports.js';
-import { DiagnosticError } from '../../codemodel.go/src/error.js';
+import { CodegenError } from './errors.js';
 
 // represents the generated content for an operation group
 export class Content {
@@ -47,7 +47,7 @@ export async function generateTimeHelpers(codeModel: go.CodeModel, packageName?:
         needsUnixTimeHelper = true;
         break;
       default:
-        throw new DiagnosticError(`unhandled date-time format ${dateTimeFormat}`);
+        throw new CodegenError('InternalError', `unhandled date-time format ${dateTimeFormat}`);
     }
   };
 

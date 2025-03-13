@@ -7,7 +7,7 @@ import * as go from '../../codemodel.go/src/index.js';
 import { values } from '@azure-tools/linq';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { ImportManager } from './imports.js';
-import { DiagnosticError } from '../../codemodel.go/src/error.js';
+import { CodegenError } from './errors.js';
 
 // variable to be used to determine comment length when calling comment from @azure-tools
 export const commentLength = 120;
@@ -212,7 +212,7 @@ export function formatParamValue(param: go.FormBodyParameter | go.HeaderParamete
   let paramName = getParamName(param);
   if (go.isFormBodyCollectionParameter(param) || go.isHeaderCollectionParameter(param) || go.isPathCollectionParameter(param) || go.isQueryCollectionParameter(param)) {
     if (param.collectionFormat === 'multi') {
-      throw new DiagnosticError('multi collection format should have been previously handled');
+      throw new CodegenError('InternalError', 'multi collection format should have been previously handled');
     }
     const emitConvertOver = function(paramName: string, format: string): string {
       const encodedVar = `encoded${capitalize(paramName)}`;
@@ -262,7 +262,7 @@ export function getDelimiterForCollectionFormat(cf: go.CollectionFormat): string
     case 'tsv':
       return '\\t';
     default:
-      throw new DiagnosticError(`unhandled CollectionFormat ${cf}`);
+      throw new CodegenError('InternalError', `unhandled CollectionFormat ${cf}`);
   }
 }
 
@@ -371,7 +371,7 @@ export function hasSchemaResponse(method: go.Method): boolean {
 export function getResultFieldName(method: go.Method): string {
   const result = method.responseEnvelope.result;
   if (!result) {
-    throw new DiagnosticError(`missing result for method ${method.name}`);
+    throw new CodegenError('InternalError', `missing result for method ${method.name}`);
   } else if (go.isAnyResult(result) || go.isBinaryResult(result) || go.isHeadAsBooleanResult(result) || go.isMonomorphicResult(result)) {
     return result.fieldName;
   } else if (go.isPolymorphicResult(result)) {
@@ -379,7 +379,7 @@ export function getResultFieldName(method: go.Method): string {
   } else if (go.isModelResult(result)) {
     return result.modelType.name;
   } else {
-    throw new DiagnosticError(`unhandled result type for method ${method.client.name}.${method.name}`);
+    throw new CodegenError('InternalError', `unhandled result type for method ${method.client.name}.${method.name}`);
   }
 }
 
@@ -521,7 +521,7 @@ export function formatStatusCode(statusCode: number): string {
     case 511:
       return 'http.StatusNetworkAuthenticationRequired';
     default:
-      throw new DiagnosticError(`unhandled status code ${statusCode}`);
+      throw new CodegenError('InternalError', `unhandled status code ${statusCode}`);
   }
 }
 
@@ -610,7 +610,7 @@ export function getParentImport(codeModel: go.CodeModel): string {
   } else if (codeModel.options.containingModule) {
     return codeModel.options.containingModule + '/' + clientPkg;
   } else {
-    throw new DiagnosticError('unable to determine containing module for fakes. specify either the module or containing-module switch');
+    throw new CodegenError('InvalidArgument', 'unable to determine containing module for fakes. specify either the module or containing-module switch');
   }
 }
 

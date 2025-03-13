@@ -118,11 +118,29 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
 const libDef = {
   name: '@azure-tools/typespec-go',
   diagnostics: {
-    'expected-error': {
+    'InternalError': {
       severity: 'error',
       messages: {
-        default: paramMessage`Unable to generate Go client code from the provided TypeSpec. Please check the error stack log for more details. If the issue persists, open an issue at https://github.com/microsoft/typespec with the relevant information.${'stack'}`,
-      },
+        default: paramMessage`The emitter encountered an internal error during preprocessing. Please open an issue at https://github.com/Azure/autorest.go/issues and include the complete error message.\n${'stack'}`
+      }
+    },
+    'InvalidArgument': {
+      severity: 'error',
+      messages: {
+        default: 'Invalid arguments were passed to the emitter.'
+      }
+    },
+    'NameCollision': {
+      severity: 'error',
+      messages: {
+        default: 'The emitter automatically renamed one or more types which resulted in a type name collision. Please update the client.tsp to rename the type(s) to avoid the collision.'
+      }
+    },
+    'UnsupportedTsp': {
+      severity: 'error',
+      messages: {
+        default: paramMessage`The emitter encountered a TypeSpec definition that is currently not supported.\n${'stack'}`
+      }
     }
   },
   emitter: {

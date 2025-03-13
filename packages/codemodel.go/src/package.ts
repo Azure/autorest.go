@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import * as client from './client.js';
-import { DiagnosticError } from './error.js';
+import { CodeModelError } from './errors.js';
 import * as result from './result.js';
 import * as type from './type.js';
 
@@ -110,10 +110,10 @@ export class Options implements Options {
 export class Module implements Module {
   constructor(name: string, version: string) {
     if (name.match(/\/v\d+$/)) {
-      throw new DiagnosticError('module name must not contain major version suffix');
+      throw new CodeModelError('module name must not contain major version suffix');
     }
     if (!version.match(/^(\d+\.\d+\.\d+(?:-beta\.\d+)?)?$/)) {
-      throw new DiagnosticError(`module version ${version} must be in the format major.minor.patch[-beta.N]`);
+      throw new CodeModelError(`module version ${version} must be in the format major.minor.patch[-beta.N]`);
     }
     // if the module's major version is greater than one, add a major version suffix to the module name
     const majorVersion = version.substring(0, version.indexOf('.'));

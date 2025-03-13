@@ -9,7 +9,7 @@ import * as go from '../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 import { getStar } from './models.js';
-import { DiagnosticError } from '../../codemodel.go/src/error.js';
+import { CodegenError } from './errors.js';
 
 export interface ResponsesSerDe {
   responses: string;
@@ -104,7 +104,7 @@ function generateUnmarshaller(respEnv: go.ResponseEnvelope, imports: ImportManag
     imports.add('encoding/json');
     unmarshaller += `\treturn json.Unmarshal(data, &${receiver}.${monomorphicRes.fieldName})\n`;
   } else {
-    throw new DiagnosticError(`unhandled case for response envelope ${respEnv.name}`);
+    throw new CodegenError('InternalError', `unhandled case for response envelope ${respEnv.name}`);
   }
   unmarshaller += '}\n\n';
   return unmarshaller;

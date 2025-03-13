@@ -8,7 +8,7 @@ import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
-import { DiagnosticError } from '../../codemodel.go/src/error.js';
+import { CodegenError } from './errors.js';
 
 // represents the generated content for an operation group
 export class OperationGroupContent {
@@ -65,7 +65,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
         }
       }
       if (!accessorMethod) {
-        throw new DiagnosticError(`didn't find accessor method for client ${client.name} on parent client ${client.parent.name}`);
+        throw new CodegenError('InternalError', `didn't find accessor method for client ${client.name} on parent client ${client.parent.name}`);
       }
       clientText += `[${client.parent.name}.${accessorMethod}] instead.\n`;
     } else {
@@ -112,7 +112,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     clientText += '}\n\n';
 
     if (azureARM && optionalParams.length > 0) {
-      throw new DiagnosticError('optional client parameters for ARM is not supported');
+      throw new CodegenError('UnsupportedTsp', 'optional client parameters for ARM is not supported');
     }
 
     // generate client constructors
@@ -284,7 +284,7 @@ function formatHeaderResponseValue(headerResp: go.HeaderResponse | go.HeaderMapR
       text += '\t}\n';
       return text;
     } else {
-      throw new DiagnosticError(`unhandled primitive type ${headerResp.type.typeName}`);
+      throw new CodegenError('InternalError', `unhandled primitive type ${headerResp.type.typeName}`);
     }
   } else if (go.isTimeType(headerResp.type)) {
     imports.add('time');
@@ -315,7 +315,7 @@ function formatHeaderResponseValue(headerResp: go.HeaderResponse | go.HeaderMapR
     text += '\t}\n';
     return text;
   } else {
-    throw new DiagnosticError(`unsupported header type ${go.getTypeDeclaration(headerResp.type)}`);
+    throw new CodegenError('InternalError', `unsupported header type ${go.getTypeDeclaration(headerResp.type)}`);
   }
   text += '\t\tif err != nil {\n';
   text += `\t\t\treturn ${zeroResp}, err\n`;
@@ -557,7 +557,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     // swagger defines a host, use its const
     hostParam = '\thost';
   } else {
-    throw new DiagnosticError(`no host or endpoint defined for method ${client.name}.${method.name}`);
+    throw new CodegenError('InternalError', `no host or endpoint defined for method ${client.name}.${method.name}`);
   }
   const hasPathParams = values(method.parameters).where((each: go.Parameter) => { return go.isPathParameter(each); }).any();
   // storage needs the client.u to be the source-of-truth for the full path.
@@ -610,7 +610,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
   // helper to build nil checks for param groups
   const emitParamGroupCheck = function (param: go.Parameter): string {
     if (!param.group) {
-      throw new DiagnosticError(`emitParamGroupCheck called for ungrouped parameter ${param.name}`);
+      throw new CodegenError('InternalError', `emitParamGroupCheck called for ungrouped parameter ${param.name}`);
     }
     let client = '';
     if (param.location === 'client') {
@@ -1065,7 +1065,7 @@ function generateResponseUnmarshaller(method: go.Method, type: go.PossibleType, 
     unmarshallerText += `\t${unmarshalTarget} = &txt\n`;
   } else {
     // the remaining formats should have been handled elsewhere
-    throw new DiagnosticError(`unhandled format ${format} for operation ${method.client.name}.${method.name}`);
+    throw new CodegenError('InternalError', `unhandled format ${format} for operation ${method.client.name}.${method.name}`);
   }
   return unmarshallerText;
 }
@@ -1132,7 +1132,7 @@ function createProtocolResponse(client: go.Client, method: go.Method, imports: I
     addHeaders(method.responseEnvelope.headers);
     text += generateResponseUnmarshaller(method, result.modelType, result.format, `result.${helpers.getResultFieldName(method)}`);
   } else {
-    throw new DiagnosticError(`unhandled result type for ${client.name}.${method.name}`);
+    throw new CodegenError('InternalError', `unhandled result type for ${client.name}.${method.name}`);
   }
 
   text += '\treturn result, nil\n';
@@ -1198,7 +1198,7 @@ function generateReturnsInfo(method: go.Method, apiType: 'api' | 'op' | 'handler
       case 'handler':
         // we only have a handler for operations that return a schema
         if (!go.isPageableMethod(method)) {
-          throw new DiagnosticError(`handler being generated for non-pageable LRO ${method.name} which is unexpected`);
+          throw new CodegenError('InternalError', `handler being generated for non-pageable LRO ${method.name} which is unexpected`);
         }
         break;
       case 'op':
@@ -1270,7 +1270,7 @@ function generateLROBeginMethod(client: go.Client, method: go.LROMethod, imports
         finalStateVia = 'runtime.FinalStateViaOpLocation';
         break;
       default:
-        throw new DiagnosticError(`unhandled final-state-via value ${finalStateVia}`);
+        throw new CodegenError('InternalError', `unhandled final-state-via value ${finalStateVia}`);
     }
   }
 

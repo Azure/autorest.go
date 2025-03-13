@@ -5,7 +5,7 @@
 
 import * as go from '../../codemodel.go/src/index.js';
 import { lt, toSemver } from '@azure-tools/codegen';
-import { DiagnosticError } from '../../codemodel.go/src/error.js';
+import { CodegenError } from './errors.js';
 
 // Creates the content in go.mod if the --module switch was specified.
 // if there's a preexisting go.mod file, update its specified version of azcore as needed.
@@ -14,7 +14,7 @@ export async function generateGoModFile(codeModel: go.CodeModel, existingGoMod?:
     if (!existingGoMod) {
       return '';
     }
-    throw new DiagnosticError('--module and --module-version are required when go.mod exists');
+    throw new CodegenError('InvalidArgument', '--module and --module-version are required when go.mod exists');
   }
   const modName = codeModel.options.module.name;
 
@@ -25,7 +25,7 @@ export async function generateGoModFile(codeModel: go.CodeModel, existingGoMod?:
     // when matching versions, we need to handle beta, non-beta, and pseudo versions
     // 1.2.3-beta.1, 1.2.3, 0.22.1-0.20220315231014-ed309e73db6b
     if (!codeModel.options.azcoreVersion.match(/^\d+\.\d+\.\d+(?:-[a-zA-Z0-9_.-]+)?$/)) {
-      throw new DiagnosticError(`azcore version ${version} must be in the format major.minor.patch[-beta.N]`);
+      throw new CodegenError('InvalidArgument', `azcore version ${version} must be in the format major.minor.patch[-beta.N]`);
     }
     version = codeModel.options.azcoreVersion;
   }
@@ -44,7 +44,7 @@ export async function generateGoModFile(codeModel: go.CodeModel, existingGoMod?:
   const match = existingGoMod.match(/github\.com\/Azure\/azure-sdk-for-go\/sdk\/azcore\s+v(\d+\.\d+\.\d+(?:-[a-zA-Z0-9_.-]+)?)/);
   if (match) {
     if (match.length < 2) {
-      throw new DiagnosticError('returned matches were less than expected');
+      throw new CodegenError('InternalError', 'returned matches were less than expected');
     }
     const existingVer = toSemver(match[1]);
     const specifiedVer = toSemver(version);

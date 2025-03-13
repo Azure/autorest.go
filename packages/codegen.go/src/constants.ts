@@ -6,7 +6,7 @@
 import { values } from '@azure-tools/linq';
 import * as helpers from './helpers.js';
 import * as go from '../../codemodel.go/src/index.js';
-import { DiagnosticError } from '../../codemodel.go/src/error.js';
+import { CodegenError } from './errors.js';
 
 // Creates the content in constants.go
 export async function generateConstants(codeModel: go.CodeModel): Promise<string> {
@@ -21,7 +21,7 @@ export async function generateConstants(codeModel: go.CodeModel): Promise<string
   // data-plane clients must manage their own constants for these values
   if (codeModel.type === 'azure-arm') {
     if (!codeModel.options.module) {
-      throw new DiagnosticError('--module and --module-version are required parameters when --azure-arm is set');
+      throw new CodegenError('InvalidArgument', '--module and --module-version are required parameters when --azure-arm is set');
     }
     text += 'const (\n';
     // strip off any major version suffix

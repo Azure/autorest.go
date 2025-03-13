@@ -10,7 +10,7 @@ import * as helpers from '../helpers.js';
 import { ImportManager } from '../imports.js';
 import { fixUpMethodName } from '../operations.js';
 import { generateServerInternal, RequiredHelpers } from './internal.js';
-import { DiagnosticError } from '../../../codemodel.go/src/error.js';
+import { CodegenError } from '../errors.js';
 
 // contains the generated content for all servers and the required helpers
 export class ServerContent {
@@ -483,7 +483,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
           parsingCode = `\t\t\t${parseResults} := strconv.ParseInt(string(content), 10, ${helpers.getBitSizeForNumber(typeName)})\n`;
           break;
         default:
-          throw new DiagnosticError(`unhandled multipart parameter primitive type ${typeName}`);
+          throw new CodegenError('InternalError', `unhandled multipart parameter primitive type ${typeName}`);
       }
       parsingCode += `\t\t\tif ${parseErr} != nil {\n\t\t\t\treturn nil, ${parseErr}\n\t\t\t}\n`;
       return parsingCode;
@@ -542,7 +542,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
             assignedValue = 'string(content)';
             break;
           default:
-            throw new DiagnosticError(`unhandled multipart parameter primitive type ${type.typeName}`);
+            throw new CodegenError('InternalError', `unhandled multipart parameter primitive type ${type.typeName}`);
         }
       } else if (isMultipartContentType(type)) {
         imports.add('bytes');
@@ -567,10 +567,10 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
           imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
           assignedValue = `append(${paramVar}, streaming.NopCloser(bytes.NewReader(content)))`;
         } else {
-          throw new DiagnosticError(`uhandled multipart parameter array element type ${go.getTypeDeclaration(type.elementType)}`);
+          throw new CodegenError('InternalError', `uhandled multipart parameter array element type ${go.getTypeDeclaration(type.elementType)}`);
         }
       } else {
-        throw new DiagnosticError(`uhandled multipart parameter type ${go.getTypeDeclaration(type)}`);
+        throw new CodegenError('InternalError', `uhandled multipart parameter type ${go.getTypeDeclaration(type)}`);
       }
       if (assignedValue) {
         caseContent += `\t\t\t${paramVar} = ${assignedValue}\n`;
@@ -615,7 +615,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
         } else if (go.isPrimitiveType(param.type) && param.type.typeName === 'string') {
           assignedValue = 'req.FormValue(key)';
         } else {
-          throw new DiagnosticError(`uhandled form parameter type ${go.getTypeDeclaration(param.type)}`);
+          throw new CodegenError('InternalError', `uhandled form parameter type ${go.getTypeDeclaration(param.type)}`);
         }
         content += `\t\t\t${param.name} = ${assignedValue}\n`;
       }
@@ -932,7 +932,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
         } else if (go.isTimeType(param.type.elementType)) {
           elementFormat = param.type.elementType.dateTimeFormat;
         } else {
-          throw new DiagnosticError(`unhandled element type ${go.getTypeDeclaration(param.type.elementType)}`);
+          throw new CodegenError('InternalError', `unhandled element type ${go.getTypeDeclaration(param.type.elementType)}`);
         }
 
         let toType = go.getTypeDeclaration(param.type.elementType);
@@ -979,7 +979,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
             content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
           }
         } else {
-          throw new DiagnosticError(`unhandled element format ${elementFormat}`);
+          throw new CodegenError('InternalError', `unhandled element format ${elementFormat}`);
         }
         // TODO: remove cast in some cases
         content += `\t\t${paramVar}[i] = ${toType}(${fromVar})\n\t}\n`;
@@ -1236,7 +1236,7 @@ function getRawParamValue(param: go.Parameter): string {
   } else if (go.isURIParameter(param)) {
     return 'req.URL.Host';
   } else {
-    throw new DiagnosticError(`unhandled parameter ${param.name}`);
+    throw new CodegenError('InternalError', `unhandled parameter ${param.name}`);
   }
 }
 
