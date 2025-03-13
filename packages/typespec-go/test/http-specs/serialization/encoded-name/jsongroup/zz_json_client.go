@@ -6,7 +6,7 @@ package jsongroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// JSONClient - Projection
+// JSONClient - Encoded names
 // Don't use this type directly, use a constructor function instead.
 type JSONClient struct {
 	internal *azcore.Client

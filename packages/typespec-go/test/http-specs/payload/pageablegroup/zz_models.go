@@ -17,3 +17,25 @@ type Pet struct {
 	// REQUIRED
 	Name *string
 }
+
+type RequestHeaderResponseBodyResponse struct {
+	// REQUIRED
+	Pets      []*Pet
+	NextToken *string
+}
+
+type RequestHeaderResponseHeaderResponse struct {
+	// REQUIRED
+	Pets []*Pet
+}
+
+type RequestQueryResponseBodyResponse struct {
+	// REQUIRED
+	Pets      []*Pet
+	NextToken *string
+}
+
+type RequestQueryResponseHeaderResponse struct {
+	// REQUIRED
+	Pets []*Pet
+}

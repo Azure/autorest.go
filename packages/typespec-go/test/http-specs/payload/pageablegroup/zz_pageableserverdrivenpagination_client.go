@@ -18,6 +18,13 @@ type PageableServerDrivenPaginationClient struct {
 	internal *azcore.Client
 }
 
+// NewPageableServerDrivenPaginationContinuationTokenClient creates a new instance of [PageableServerDrivenPaginationContinuationTokenClient].
+func (client *PageableServerDrivenPaginationClient) NewPageableServerDrivenPaginationContinuationTokenClient() *PageableServerDrivenPaginationContinuationTokenClient {
+	return &PageableServerDrivenPaginationContinuationTokenClient{
+		internal: client.internal,
+	}
+}
+
 //   - options - PageableServerDrivenPaginationClientLinkOptions contains the optional parameters for the PageableServerDrivenPaginationClient.NewLinkPager
 //     method.
 func (client *PageableServerDrivenPaginationClient) NewLinkPager(options *PageableServerDrivenPaginationClientLinkOptions) *runtime.Pager[PageableServerDrivenPaginationClientLinkResponse] {

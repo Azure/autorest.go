@@ -9,3 +9,35 @@ package pageablegroup
 type PageableServerDrivenPaginationClientLinkOptions struct {
 	// placeholder for future optional parameters
 }
+
+// PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions contains the optional parameters
+// for the PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderResponseBodyPager method.
+type PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions struct {
+	Bar        *string
+	Foo        *string
+	TokenParam *string
+}
+
+// PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions contains the optional parameters
+// for the PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderResponseHeaderPager method.
+type PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions struct {
+	Bar        *string
+	Foo        *string
+	TokenParam *string
+}
+
+// PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyOptions contains the optional parameters for
+// the PageableServerDrivenPaginationContinuationTokenClient.NewRequestQueryResponseBodyPager method.
+type PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyOptions struct {
+	Bar        *string
+	Foo        *string
+	TokenParam *string
+}
+
+// PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderOptions contains the optional parameters
+// for the PageableServerDrivenPaginationContinuationTokenClient.NewRequestQueryResponseHeaderPager method.
+type PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderOptions struct {
+	Bar        *string
+	Foo        *string
+	TokenParam *string
+}
