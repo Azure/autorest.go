@@ -2,6 +2,10 @@
 
 ## 0.4.1 (unreleased)
 
+### Bugs Fixed
+
+* Unsupported tsp constructs and other errors are now reported as a diagnostic error instead of an unhandled exception.
+
 ### Other Changes
 
 * Updated to the latest tcgc.

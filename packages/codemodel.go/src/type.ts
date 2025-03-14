@@ -3,6 +3,8 @@
 *  Licensed under the MIT License. See License.txt in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
+import { CodeModelError } from "./errors.js";
+
 // Docs contains the values used in doc comment generation.
 export interface Docs {
   // the high level summary
@@ -288,7 +290,7 @@ export function getLiteralValueTypeName(literal: LiteralValueType): string {
   } else if (isTimeType(literal)) {
     return 'time.Time';
   } else {
-    throw new Error(`unhandled LiteralValueType ${getTypeDeclaration(literal)}`);
+    throw new CodeModelError(`unhandled LiteralValueType ${getTypeDeclaration(literal)}`);
   }
 }
 
@@ -326,7 +328,7 @@ export function getTypeDeclaration(type: PossibleType, pkgName?: string): string
   } else if (isTimeType(type)) {
     return 'time.Time';
   } else {
-    throw new Error(`unhandled type ${typeof(type)}`);
+    throw new CodeModelError(`unhandled type ${typeof(type)}`);
   }
 }
 
