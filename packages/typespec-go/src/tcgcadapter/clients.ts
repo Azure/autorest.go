@@ -173,7 +173,7 @@ export class clientAdapter {
   private adaptURIParam(sdkParam: tcgc.SdkPathParameter): go.URIParameter {
     const paramType = this.ta.getPossibleType(sdkParam.type, true, false);
     if (!go.isConstantType(paramType) && !go.isPrimitiveType(paramType)) {
-      throw new AdapterError('UnsupportedTsp', `unsupported URI parameter type ${go.getTypeDeclaration(paramType)}`, sdkParam.__raw!.node);
+      throw new AdapterError('UnsupportedTsp', `unsupported URI parameter type ${go.getTypeDeclaration(paramType)}`, sdkParam.__raw?.node ?? NoTarget);
     }
     // TODO: follow up with tcgc if serializedName should actually be optional
     return new go.URIParameter(sdkParam.name, sdkParam.serializedName ? sdkParam.serializedName : sdkParam.name, paramType,
@@ -229,7 +229,7 @@ export class clientAdapter {
         }).join('.');
       }
     } else {
-      throw new AdapterError('UnsupportedTsp', `unsupported method kind ${sdkMethod.kind}`, sdkMethod.__raw!.node);
+      throw new AdapterError('UnsupportedTsp', `unsupported method kind ${sdkMethod.kind}`, sdkMethod.__raw?.node ?? NoTarget);
     }
 
     method.docs.summary = sdkMethod.summary;
@@ -272,7 +272,7 @@ export class clientAdapter {
       method.optionalParamsGroup.docs.summary = createOptionsTypeDescription(optionalParamsGroupName, this.getMethodNameForDocComment(method));
       method.responseEnvelope = this.adaptResponseEnvelope(sdkMethod, method);
     } else {
-      throw new AdapterError('UnsupportedTsp', `unsupported method kind ${sdkMethod.kind}`, sdkMethod.__raw!.node);
+      throw new AdapterError('UnsupportedTsp', `unsupported method kind ${sdkMethod.kind}`, sdkMethod.__raw?.node ?? NoTarget);
     }
 
     // find the api version param to use for the doc comment.
@@ -348,7 +348,7 @@ export class clientAdapter {
       }
 
       if (!opParam) {
-        throw new AdapterError('InternalError', `didn't find operation parameter for method ${sdkMethod.name} parameter ${param.name}`, sdkMethod.__raw!.node);
+        throw new AdapterError('InternalError', `didn't find operation parameter for method ${sdkMethod.name} parameter ${param.name}`, sdkMethod.__raw?.node ?? NoTarget);
       }
 
       if (opParam.kind === 'header' && opParam.serializedName.match(/^content-type$/i) && param.type.kind === 'constant') {
@@ -389,7 +389,7 @@ export class clientAdapter {
               }
             }
             if (!serializedName) {
-              throw new AdapterError('InternalError', `didn't find body model property for spread parameter ${param.name}`, param.__raw!.node);
+              throw new AdapterError('InternalError', `didn't find body model property for spread parameter ${param.name}`, param.__raw?.node ?? NoTarget);
             }
             adaptedParam = new go.PartialBodyParameter(param.name, serializedName, contentType, this.ta.getPossibleType(param.type, true, true), paramKind, byVal);
             break;
@@ -402,7 +402,7 @@ export class clientAdapter {
             }
             break;
           default:
-            throw new AdapterError('UnsupportedTsp', `unsupported spread param content type ${contentType}`, opParam.__raw!.node);
+            throw new AdapterError('UnsupportedTsp', `unsupported spread param content type ${contentType}`, opParam.__raw?.node ?? NoTarget);
         }
       } else {
         adaptedParam = this.adaptMethodParameter(opParam, optionalGroup);
@@ -419,7 +419,7 @@ export class clientAdapter {
       if (adaptedParam.kind !== 'required' && adaptedParam.kind !== 'literal') {
         // add optional method param to the options param group
         if (!optionalGroup) {
-          throw new AdapterError('InternalError', `optional parameter ${param.name} has no optional parameter group`, param.__raw!.node);
+          throw new AdapterError('InternalError', `optional parameter ${param.name} has no optional parameter group`, param.__raw?.node ?? NoTarget);
         }
         adaptedParam.group = optionalGroup;
         optionalGroup.params.push(adaptedParam);
@@ -486,7 +486,7 @@ export class clientAdapter {
         case 'query':
           return new go.QueryParameter(param.name, param.serializedName, true, paramType, 'literal', true, 'method');
         default:
-          throw new AdapterError('UnsupportedTsp', `unsupported API version param kind ${param.kind}`, param.__raw!.node);
+          throw new AdapterError('UnsupportedTsp', `unsupported API version param kind ${param.kind}`, param.__raw?.node ?? NoTarget);
       }
     }
 
@@ -526,12 +526,12 @@ export class clientAdapter {
     } else if (param.kind === 'header') {
       if (param.collectionFormat) {
         if (param.collectionFormat === 'multi' || param.collectionFormat === 'form') {
-          throw new AdapterError('InternalError', `unexpected collection format ${param.collectionFormat} for HeaderCollectionParameter`, param.__raw!.node);
+          throw new AdapterError('InternalError', `unexpected collection format ${param.collectionFormat} for HeaderCollectionParameter`, param.__raw?.node ?? NoTarget);
         }
         // TODO: is hard-coded false for element type by value correct?
         const type = this.ta.getPossibleType(param.type, true, false);
         if (!go.isSliceType(type)) {
-          throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${param.name}`, param.__raw!.node);
+          throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${param.name}`, param.__raw?.node ?? NoTarget);
         }
         adaptedParam = new go.HeaderCollectionParameter(paramName, param.serializedName, type, param.collectionFormat === 'simple' ? 'csv' : param.collectionFormat, paramKind, byVal, location);
       } else {
@@ -541,12 +541,12 @@ export class clientAdapter {
       adaptedParam = new go.PathParameter(paramName, param.serializedName, !param.allowReserved, this.adaptPathParameterType(param.type), paramKind, byVal, location);
     } else if (param.kind === 'cookie') {
       // TODO: currently we don't have Azure service using cookie parameter. need to add support if needed in the future.
-      throw new AdapterError('UnsupportedTsp', 'unsupported parameter type cookie', param.__raw!.node);
+      throw new AdapterError('UnsupportedTsp', 'unsupported parameter type cookie', param.__raw?.node ?? NoTarget);
     } else {
       if (param.collectionFormat) {
         const type = this.ta.getPossibleType(param.type, true, false);
         if (!go.isSliceType(type)) {
-          throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${param.name}`, param.__raw!.node);
+          throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${param.name}`, param.__raw?.node ?? NoTarget);
         }
         // TODO: unencoded query param
         adaptedParam = new go.QueryCollectionParameter(paramName, param.serializedName, true, type, param.collectionFormat === 'simple' ? 'csv' : (param.collectionFormat === 'form' ? 'multi' : param.collectionFormat), paramKind, byVal, location);
@@ -647,7 +647,7 @@ export class clientAdapter {
         break;
       }
       if (!foundResp) {
-        throw new AdapterError('InternalError', `didn't find HTTP response for kind ${sdkResponseType.kind} in method ${method.name}`, sdkResponseType.__raw!.node!);
+        throw new AdapterError('InternalError', `didn't find HTTP response for kind ${sdkResponseType.kind} in method ${method.name}`, sdkResponseType.__raw?.node ?? NoTarget);
       }
     }
 
@@ -665,7 +665,7 @@ export class clientAdapter {
         }
       }
       if (!modelType) {
-        throw new AdapterError('InternalError', `didn't find model type name ${sdkResponseType.name} for response envelope ${respEnv.name}`, sdkResponseType.__raw!.node!);
+        throw new AdapterError('InternalError', `didn't find model type name ${sdkResponseType.name} for response envelope ${respEnv.name}`, sdkResponseType.__raw?.node ?? NoTarget);
       }
       if (go.isPolymorphicType(modelType)) {
         respEnv.result = new go.PolymorphicResult(modelType.interface);
@@ -680,7 +680,7 @@ export class clientAdapter {
     } else {
       const resultType = this.ta.getPossibleType(sdkResponseType, false, false);
       if (go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isQualifiedType(resultType)) {
-        throw new AdapterError('InternalError', `invalid monomorphic result type ${go.getTypeDeclaration(resultType)}`, sdkResponseType.__raw!.node!);
+        throw new AdapterError('InternalError', `invalid monomorphic result type ${go.getTypeDeclaration(resultType)}`, sdkResponseType.__raw?.node ?? NoTarget);
       }
       respEnv.result = new go.MonomorphicResult(this.recursiveTypeName(sdkResponseType, false), contentType, resultType, isTypePassedByValue(sdkResponseType));
     }
@@ -776,7 +776,7 @@ export class clientAdapter {
     // for header params, we never pass the element type by pointer
     const type = this.ta.getPossibleType(sdkType, forParam, false);
     if (go.isInterfaceType(type) || go.isMapType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
-      throw new AdapterError('InternalError', `unexpected header parameter type ${sdkType.kind}`, sdkType.__raw!.node!);
+      throw new AdapterError('InternalError', `unexpected header parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
     }
     return type;
   }
@@ -784,7 +784,7 @@ export class clientAdapter {
   private adaptPathParameterType(sdkType: tcgc.SdkType): go.PathParameterType {
     const type = this.ta.getPossibleType(sdkType, false, false);
     if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
-      throw new AdapterError('InternalError', `unexpected path parameter type ${sdkType.kind}`, sdkType.__raw!.node!);
+      throw new AdapterError('InternalError', `unexpected path parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
     }
     return type;
   }
@@ -792,7 +792,7 @@ export class clientAdapter {
   private adaptQueryParameterType(sdkType: tcgc.SdkType): go.QueryParameterType {
     const type = this.ta.getPossibleType(sdkType, false, false);
     if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
-      throw new AdapterError('InternalError', `unexpected query parameter type ${sdkType.kind}`, sdkType.__raw!.node!);
+      throw new AdapterError('InternalError', `unexpected query parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
     } else if (go.isSliceType(type)) {
       type.elementTypeByValue = true;
     }
@@ -809,7 +809,7 @@ export class clientAdapter {
     } else if (param.clientDefaultValue) {
       const adaptedType = this.ta.getPossibleType(param.type, false, false);
       if (!go.isLiteralValueType(adaptedType)) {
-        throw new AdapterError('InternalError', `unexpected client side default type ${go.getTypeDeclaration(adaptedType)} for parameter ${param.name}`, param.__raw!.node);
+        throw new AdapterError('InternalError', `unexpected client side default type ${go.getTypeDeclaration(adaptedType)} for parameter ${param.name}`, param.__raw?.node ?? NoTarget);
       }
       return new go.ClientSideDefault(new go.LiteralValue(adaptedType, param.clientDefaultValue));
     } else if (param.optional) {
