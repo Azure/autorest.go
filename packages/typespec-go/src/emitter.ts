@@ -5,6 +5,7 @@
 
 import { GoEmitterOptions } from './lib.js';
 import { tcgcToGoCodeModel } from './tcgcadapter/adapter.js';
+import { AdapterError } from './tcgcadapter/errors.js';
 import { generateClientFactory } from '../../codegen.go/src/clientFactory.js';
 import { generateConstants } from '../../codegen.go/src/constants.js';
 import { generateExamples } from '../../codegen.go/src/example.js';
@@ -19,12 +20,67 @@ import { generateTimeHelpers } from '../../codegen.go/src/time.js';
 import { generateServers } from '../../codegen.go/src/fake/servers.js';
 import { generateServerFactory } from '../../codegen.go/src/fake/factory.js';
 import { generateXMLAdditionalPropsHelpers } from '../../codegen.go/src/xmlAdditionalProps.js';
+import { CodeModelError } from '../../codemodel.go/src/errors.js';
 import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
-import { EmitContext } from '@typespec/compiler';
+import { EmitContext, NoTarget } from '@typespec/compiler';
 import 'source-map-support/register.js';
+import { reportDiagnostic } from './lib.js';
+import { CodegenError } from '../../codegen.go/src/errors.js';
 
 export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
+  try {
+    await generate(context);
+  } catch (error: any) {
+    if (error instanceof AdapterError) {
+      reportDiagnostic(context.program, {
+        code: error.code,
+        target: error.target,
+        format: {
+          stack: error.stack ? truncateStack(error.stack, 'tcgcToGoCodeModel') : 'Stack trace unavailable\n',
+        },
+      });
+    } else if (error instanceof CodeModelError) {
+      reportDiagnostic(context.program, {
+        code: error.code,
+        target: NoTarget,
+        format: {
+          stack: error.stack ? truncateStack(error.stack, 'tcgcToGoCodeModel') : 'Stack trace unavailable\n',
+        },
+      });
+    } else if (error instanceof CodegenError) {
+      reportDiagnostic(context.program, {
+        code: error.code,
+        target: NoTarget,
+        format: {
+          stack: error.stack ? truncateStack(error.stack, 'generate(') : 'Stack trace unavailable\n',
+        },
+      });
+    } else {
+      throw error;
+    }
+  }
+}
+
+/**
+ * drop frames after the specified frame.
+ * 
+ * @param stack the stack to truncate
+ * @returns the truncated stack
+ */
+function truncateStack(stack: string, finalFrame: string): string {
+  const lines = stack.split('\n');
+  stack = '';
+  for (const line of lines) {
+    stack += `${line}\n`;
+    if (line.includes(finalFrame)) {
+      break;
+    }
+  }
+  return stack;
+}
+
+async function generate(context: EmitContext<GoEmitterOptions>) {
   const codeModel = await tcgcToGoCodeModel(context);
   await mkdir(context.emitterOutputDir, {recursive: true});
 
@@ -47,7 +103,6 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
       filePrefix += '_';
     }
   }
-
   const clientFactory = await generateClientFactory(codeModel);
   if (clientFactory.length > 0) {
     writeFile(`${context.emitterOutputDir}/${filePrefix}client_factory.go`, clientFactory);

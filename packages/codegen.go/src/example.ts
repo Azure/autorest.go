@@ -8,6 +8,7 @@ import * as go from '../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 import { fixUpMethodName } from './operations.js';
+import { CodegenError } from './errors.js';
 
 // represents the generated content for an example
 export class ExampleContent {
@@ -416,7 +417,7 @@ function generateFakeExample(goType: go.PossibleType, name?: string): go.Example
         return new go.NumberExample(goType.values[0].value as number, goType);
     }
   }
-  throw new Error(`do not support to fake example for none primitive type: ${goType}`);
+  throw new CodegenError('InternalError', `fake example does not support non primitive type: ${go.getTypeDeclaration(goType)}`);
 }
 
 function escapeString(str: string): string {

@@ -4,12 +4,13 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { clientAdapter } from './clients.js';
+import { AdapterError } from './errors.js';
 import { typeAdapter } from './types.js';
 import { GoEmitterOptions } from '../lib.js';
 import * as go from '../../../codemodel.go/src/index.js';
 import { packageNameFromOutputFolder, trimPackagePrefix } from '../../../naming.go/src/naming.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
-import { EmitContext } from '@typespec/compiler';
+import { EmitContext, NoTarget } from '@typespec/compiler';
 
 const headerText = `Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License. See License.txt in the project root for license information.
@@ -45,7 +46,7 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
   if (context.options.module && context.options['module-version']) {
     codeModel.options.module = new go.Module(context.options.module, context.options['module-version']);
   } else if (context.options.module || context.options['module-version']) {
-    throw new Error('--module and --module-version must both or neither be set');
+    throw new AdapterError('InvalidArgument', '--module and --module-version must both or neither be set', NoTarget);
   }
   if (context.options['rawjson-as-bytes']) {
     codeModel.options.rawJSONAsBytes = true;
@@ -155,6 +156,6 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
   }
 
   if (collisions.length > 0) {
-    throw new Error(collisions.join('\n'));
+    throw new AdapterError('NameCollision', collisions.join('\n'), NoTarget);
   }
 }

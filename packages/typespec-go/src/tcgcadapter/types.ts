@@ -10,6 +10,7 @@ import * as tsp from '@typespec/compiler';
 import * as http from '@typespec/http';
 import * as go from '../../../codemodel.go/src/index.js';
 import * as naming from '../../../naming.go/src/naming.js';
+import { AdapterError } from '../tcgcadapter/errors.js';
 
 // used to convert SDK types to Go code model types
 export class typeAdapter {
@@ -232,7 +233,7 @@ export class typeAdapter {
           case 'string':
             return this.getBuiltInType(type.wireType);
           default:
-            throw new Error(`unhandled duration wireType.kind ${type.wireType.kind}`);
+            throw new AdapterError('UnsupportedTsp', `unsupported duration wire format kind ${type.wireType.kind}`, type.wireType.__raw?.node ?? tsp.NoTarget);
         }
       }
       case 'model':
@@ -243,7 +244,7 @@ export class typeAdapter {
       case 'nullable':
         return this.getPossibleType(type.type, elementTypeByValue, substituteDiscriminator);
       default:
-        throw new Error(`unhandled property kind ${type.kind}`);
+        throw new AdapterError('UnsupportedTsp', `unsupported type kind ${type.kind}`, type.__raw?.node ?? tsp.NoTarget);
     }
   }
 
@@ -429,7 +430,7 @@ export class typeAdapter {
       
       }
       default:
-        throw new Error(`unhandled property kind ${type.kind}`);
+        throw new AdapterError('UnsupportedTsp', `unsupported type kind ${type.kind}`, type.__raw?.node ?? tsp.NoTarget);
     }
   }
 
@@ -443,7 +444,7 @@ export class typeAdapter {
     if (constType) {
       return <go.ConstantType>constType;
     }
-    constType = new go.ConstantType(constTypeName, getPrimitiveType(enumType.valueType.kind), `Possible${constTypeName}Values`);
+    constType = new go.ConstantType(constTypeName, getPrimitiveType(enumType.valueType), `Possible${constTypeName}Values`);
     constType.values = this.getConstantValues(constType, enumType.values);
     constType.docs.summary = enumType.summary;
     constType.docs.description = enumType.doc;
@@ -453,10 +454,10 @@ export class typeAdapter {
 
   private getInterfaceType(model: tcgc.SdkModelType, parent?: go.InterfaceType): go.InterfaceType {
     if (model.name.length === 0) {
-      throw new Error('unnamed model');
+      throw new AdapterError('InternalError', 'unnamed model', tsp.NoTarget);
     }
     if (!model.discriminatedSubtypes) {
-      throw new Error(`type ${model.name} isn't a discriminator root`);
+      throw new AdapterError('InternalError', `type ${model.name} isn't a discriminator root`, model.__raw?.node ?? tsp.NoTarget);
     }
     let ifaceName = naming.createPolymorphicInterfaceName(naming.ensureNameCase(model.name));
     if (model.access === 'internal') {
@@ -476,7 +477,7 @@ export class typeAdapter {
       }
     }
     if (!discriminatorField) {
-      throw new Error(`failed to find discriminator field for type ${model.name}`);
+      throw new AdapterError('InternalError', `failed to find discriminator field for type ${model.name}`, tsp.NoTarget);
     }
     iface = new go.InterfaceType(ifaceName, discriminatorField);
     if (parent) {
@@ -524,7 +525,7 @@ export class typeAdapter {
           parent = parent.baseModel;
         }
         if (!iface) {
-          throw new Error(`failed to find discriminator interface name for type ${model.name}`);
+          throw new AdapterError('InternalError', `failed to find discriminator interface name for type ${model.name}`, tsp.NoTarget);
         }
 
         // find the discriminator property and create the discriminator literal based on it
@@ -566,13 +567,13 @@ export class typeAdapter {
       case 'enumvalue':
         return this.getLiteralValue(sdkProp.type);
       default:
-        throw new Error(`unhandled kind ${sdkProp.type.kind} for discriminator property ${sdkProp.name}`);
+        throw new AdapterError('UnsupportedTsp', `unsupported type kind ${sdkProp.type.kind} for discriminator property ${sdkProp.name}`, sdkProp.__raw?.node ?? tsp.NoTarget);
     }
   }
 
   private getModelField(prop: tcgc.SdkModelPropertyType, modelType: tcgc.SdkModelType): go.ModelField {
     if (prop.kind !== 'path' && prop.kind !== 'property') {
-      throw new Error(`unexpected kind ${prop.kind} for property ${prop.name} in model ${modelType.name}`);
+      throw new AdapterError('UnsupportedTsp', `unsupported kind ${prop.kind} for property ${prop.name} in model ${modelType.name}`, prop.__raw?.node ?? tsp.NoTarget);
     }
     const annotations = new go.ModelFieldAnnotations(prop.optional === false, false, false, false);
     // for multipart/form data containing models, default to fields not being pointer-to-type as we
@@ -660,7 +661,7 @@ export class typeAdapter {
       }
       const constValue = this.constValues.get(valueName);
       if (!constValue) {
-        throw new Error(`failed to find const value for ${constType.name} in enum ${constType.enumType.name}`);
+        throw new AdapterError('InternalError', `failed to find const value for ${constType.name} in enum ${constType.enumType.name}`, constType.__raw?.node ?? tsp.NoTarget);
       }
       literalConst = new go.LiteralValue(this.getConstantType(constType.enumType), constValue);
       this.types.set(keyName, literalConst);
@@ -752,9 +753,9 @@ export class typeAdapter {
         return literalString;
       }
       default:
-        throw new Error(`unsupported kind ${constType.valueType.kind} for LiteralValue`);
+        throw new AdapterError('UnsupportedTsp', `unsupported kind ${constType.valueType.kind} for LiteralValue`, constType.valueType.__raw?.node ?? tsp.NoTarget);
     }
-  
+
     // TODO: tcgc doesn't support duration as a literal value
   }
 }
@@ -775,8 +776,8 @@ export function getEndpointType(param: tcgc.SdkEndpointParameter) {
   return endpointType;
 }
 
-function getPrimitiveType(kind: tcgc.SdkBuiltInKinds): 'bool' | 'float32' | 'float64' | 'int32' | 'int64' | 'string' {
-  switch (kind) {
+function getPrimitiveType(type: tcgc.SdkBuiltInType): 'bool' | 'float32' | 'float64' | 'int32' | 'int64' | 'string' {
+  switch (type.kind) {
     case 'boolean':
       return 'bool';
     case 'float32':
@@ -784,9 +785,9 @@ function getPrimitiveType(kind: tcgc.SdkBuiltInKinds): 'bool' | 'float32' | 'flo
     case 'int32':
     case 'int64':
     case 'string':
-      return kind;
+      return type.kind;
     default:
-      throw new Error(`unhandled tcgc.SdkBuiltInKinds: ${kind}`);
+      throw new AdapterError('UnsupportedTsp', `unhandled tcgc.SdkBuiltInKinds: ${type.kind}`, type.__raw?.node ?? tsp.NoTarget);
   }
 }
 
@@ -826,7 +827,7 @@ function recursiveKeyName(root: string, obj: tcgc.SdkType, substituteDiscriminat
       return recursiveKeyName(root, obj.type, substituteDiscriminator);
     case 'plainTime':
       if (obj.encode !== 'rfc3339') {
-        throw new Error(`unsupported time encoding ${obj.encode}`);
+        throw new AdapterError('UnsupportedTsp', `unsupported time encoding ${obj.encode}`, obj.__raw?.node ?? tsp.NoTarget);
       }
       return `${root}-timeRFC3339`;
     default:
