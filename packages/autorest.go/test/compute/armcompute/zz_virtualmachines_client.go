@@ -809,8 +809,10 @@ func (client *VirtualMachinesClient) NewListPager(resourceGroupName string, opti
 		Fetcher: func(ctx context.Context, page *VirtualMachinesClientListResponse) (VirtualMachinesClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualMachinesClient.NewListPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -872,8 +874,10 @@ func (client *VirtualMachinesClient) NewListAllPager(options *VirtualMachinesCli
 		Fetcher: func(ctx context.Context, page *VirtualMachinesClientListAllResponse) (VirtualMachinesClientListAllResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualMachinesClient.NewListAllPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listAllCreateRequest(ctx, options)
@@ -1000,8 +1004,10 @@ func (client *VirtualMachinesClient) NewListByLocationPager(location string, opt
 		Fetcher: func(ctx context.Context, page *VirtualMachinesClientListByLocationResponse) (VirtualMachinesClientListByLocationResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualMachinesClient.NewListByLocationPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByLocationCreateRequest(ctx, location, options)

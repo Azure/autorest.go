@@ -266,8 +266,10 @@ func (client *ManagersClient) NewListPager(resourceGroupName string, options *Ma
 		Fetcher: func(ctx context.Context, page *ManagersClientListResponse) (ManagersClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ManagersClient.NewListPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -331,8 +333,10 @@ func (client *ManagersClient) NewListBySubscriptionPager(options *ManagersClient
 		Fetcher: func(ctx context.Context, page *ManagersClientListBySubscriptionResponse) (ManagersClientListBySubscriptionResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ManagersClient.NewListBySubscriptionPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listBySubscriptionCreateRequest(ctx, options)

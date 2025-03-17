@@ -309,8 +309,10 @@ func (client *SSHPublicKeysClient) NewListByResourceGroupPager(resourceGroupName
 		Fetcher: func(ctx context.Context, page *SSHPublicKeysClientListByResourceGroupResponse) (SSHPublicKeysClientListByResourceGroupResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SSHPublicKeysClient.NewListByResourceGroupPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
@@ -369,8 +371,10 @@ func (client *SSHPublicKeysClient) NewListBySubscriptionPager(options *SSHPublic
 		Fetcher: func(ctx context.Context, page *SSHPublicKeysClientListBySubscriptionResponse) (SSHPublicKeysClientListBySubscriptionResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SSHPublicKeysClient.NewListBySubscriptionPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listBySubscriptionCreateRequest(ctx, options)

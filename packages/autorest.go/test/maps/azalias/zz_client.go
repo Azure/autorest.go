@@ -230,8 +230,10 @@ func (client *Client) NewListPager(headerEnums []IntEnum, queryEnum IntEnum, opt
 		Fetcher: func(ctx context.Context, page *ListResponseEnvelope) (ListResponseEnvelope, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewListPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, headerEnums, queryEnum, options)
@@ -300,7 +302,7 @@ func (client *Client) BeginListLRO(ctx context.Context, options *BeginListLROOpt
 				return client.listLROCreateRequest(ctx, options)
 			}, &runtime.FetcherForNextLinkOptions{
 				NextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {
-					return client.listLRONextCreateRequest(ctx, encodedNextLink)
+					return client.listLRONextCreateRequest(ctx, encodedNextLink, nextLink)
 				},
 			})
 			if err != nil {
@@ -386,14 +388,16 @@ func (client *Client) NewListWithSharedNextOnePager(options *ListWithSharedNextO
 		Fetcher: func(ctx context.Context, page *ListWithSharedNextOneResponse) (ListWithSharedNextOneResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewListWithSharedNextOnePager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listWithSharedNextOneCreateRequest(ctx, options)
 			}, &runtime.FetcherForNextLinkOptions{
 				NextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {
-					return client.listWithSharedNextCreateRequest(ctx, encodedNextLink)
+					return client.listWithSharedNextCreateRequest(ctx, encodedNextLink, nextLink)
 				},
 			})
 			if err != nil {
@@ -439,14 +443,16 @@ func (client *Client) NewListWithSharedNextTwoPager(options *ListWithSharedNextT
 		Fetcher: func(ctx context.Context, page *ListWithSharedNextTwoResponse) (ListWithSharedNextTwoResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewListWithSharedNextTwoPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listWithSharedNextTwoCreateRequest(ctx, options)
 			}, &runtime.FetcherForNextLinkOptions{
 				NextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {
-					return client.listWithSharedNextCreateRequest(ctx, encodedNextLink)
+					return client.listWithSharedNextCreateRequest(ctx, encodedNextLink, nextLink)
 				},
 			})
 			if err != nil {
@@ -605,7 +611,7 @@ func (client *Client) uploadFormCreateRequest(ctx context.Context, requiredStrin
 }
 
 // listLRONextCreateRequest creates the listLRONextCreateRequest request.
-func (client *Client) listLRONextCreateRequest(ctx context.Context, nextLink string) (*policy.Request, error) {
+func (client *Client) listLRONextCreateRequest(ctx context.Context, nextLink string, nextLink *string) (*policy.Request, error) {
 	host := "https://{geography}.atlas.microsoft.com"
 	host = strings.ReplaceAll(host, "{geography}", string(client.geography))
 	urlPath := "/paged"
@@ -619,7 +625,7 @@ func (client *Client) listLRONextCreateRequest(ctx context.Context, nextLink str
 }
 
 // listWithSharedNextCreateRequest creates the listWithSharedNextCreateRequest request.
-func (client *Client) listWithSharedNextCreateRequest(ctx context.Context, nextLink string) (*policy.Request, error) {
+func (client *Client) listWithSharedNextCreateRequest(ctx context.Context, nextLink string, nextLink *string) (*policy.Request, error) {
 	host := "https://{geography}.atlas.microsoft.com"
 	host = strings.ReplaceAll(host, "{geography}", string(client.geography))
 	urlPath := "/listWithSharedNext"

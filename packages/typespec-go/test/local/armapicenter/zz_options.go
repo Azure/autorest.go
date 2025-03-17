@@ -41,6 +41,9 @@ type APIDefinitionsClientHeadOptions struct {
 
 // APIDefinitionsClientListOptions contains the optional parameters for the APIDefinitionsClient.NewListPager method.
 type APIDefinitionsClientListOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// OData filter parameter.
 	Filter *string
 }
@@ -67,6 +70,9 @@ type APIVersionsClientHeadOptions struct {
 
 // APIVersionsClientListOptions contains the optional parameters for the APIVersionsClient.NewListPager method.
 type APIVersionsClientListOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// OData filter parameter.
 	Filter *string
 }
@@ -93,6 +99,9 @@ type ApisClientHeadOptions struct {
 
 // ApisClientListOptions contains the optional parameters for the ApisClient.NewListPager method.
 type ApisClientListOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// OData filter parameter.
 	Filter *string
 }
@@ -110,11 +119,15 @@ type DeletedServicesClientGetOptions struct {
 // DeletedServicesClientListBySubscriptionOptions contains the optional parameters for the DeletedServicesClient.NewListBySubscriptionPager
 // method.
 type DeletedServicesClientListBySubscriptionOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // DeletedServicesClientListOptions contains the optional parameters for the DeletedServicesClient.NewListPager method.
 type DeletedServicesClientListOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// OData filter parameter.
 	Filter *string
 }
@@ -141,6 +154,9 @@ type DeploymentsClientHeadOptions struct {
 
 // DeploymentsClientListOptions contains the optional parameters for the DeploymentsClient.NewListPager method.
 type DeploymentsClientListOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// OData filter parameter.
 	Filter *string
 }
@@ -167,6 +183,9 @@ type EnvironmentsClientHeadOptions struct {
 
 // EnvironmentsClientListOptions contains the optional parameters for the EnvironmentsClient.NewListPager method.
 type EnvironmentsClientListOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// OData filter parameter.
 	Filter *string
 }
@@ -194,13 +213,17 @@ type MetadataSchemasClientHeadOptions struct {
 
 // MetadataSchemasClientListOptions contains the optional parameters for the MetadataSchemasClient.NewListPager method.
 type MetadataSchemasClientListOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// OData filter parameter.
 	Filter *string
 }
 
 // OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ServicesClientBeginExportMetadataSchemaOptions contains the optional parameters for the ServicesClient.BeginExportMetadataSchema
@@ -228,13 +251,15 @@ type ServicesClientGetOptions struct {
 // ServicesClientListByResourceGroupOptions contains the optional parameters for the ServicesClient.NewListByResourceGroupPager
 // method.
 type ServicesClientListByResourceGroupOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ServicesClientListBySubscriptionOptions contains the optional parameters for the ServicesClient.NewListBySubscriptionPager
 // method.
 type ServicesClientListBySubscriptionOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ServicesClientUpdateOptions contains the optional parameters for the ServicesClient.Update method.
@@ -264,6 +289,9 @@ type WorkspacesClientHeadOptions struct {
 
 // WorkspacesClientListOptions contains the optional parameters for the WorkspacesClient.NewListPager method.
 type WorkspacesClientListOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// OData filter parameter.
 	Filter *string
 }
