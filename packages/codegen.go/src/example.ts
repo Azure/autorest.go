@@ -417,7 +417,7 @@ function generateFakeExample(goType: go.PossibleType, name?: string): go.Example
         return new go.NumberExample(goType.values[0].value as number, goType);
     }
   }
-  throw new CodegenError('InternalError', `do not support to fake example for none primitive type: ${go.getTypeDeclaration(goType)}`);
+  throw new CodegenError('InternalError', `fake example does not support non primitive type: ${go.getTypeDeclaration(goType)}`);
 }
 
 function escapeString(str: string): string {
