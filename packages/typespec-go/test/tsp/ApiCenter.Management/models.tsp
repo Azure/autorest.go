@@ -232,7 +232,7 @@ union EnvironmentServerType {
 @doc("The properties of the service.")
 model ServiceProperties {
   @doc("Provisioning state of the service.")
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   provisioningState?: ProvisioningState;
 
   @added(Versions.v2024_03_15_preview)
@@ -310,7 +310,7 @@ model ApiProperties {
   summary?: string;
 
   @doc("Current lifecycle stage of the API.")
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   lifecycleStage?: LifecycleStage;
 
   @doc("Terms of service for the API.")
@@ -415,7 +415,7 @@ model ApiDefinitionProperties {
   description?: string;
 
   @doc("API specification details.")
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   specification?: ApiDefinitionPropertiesSpecification;
 }
 

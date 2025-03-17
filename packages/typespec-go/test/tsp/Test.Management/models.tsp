@@ -4,7 +4,7 @@ model BodyRootProperties {
   description?: string;
 
   @doc("Status of the current operation on trusted signing account.")
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   provisioningState?: ProvisioningState;
 }
 

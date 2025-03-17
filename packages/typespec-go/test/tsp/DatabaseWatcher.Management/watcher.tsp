@@ -9,7 +9,7 @@ import "./sqlVmTarget.tsp";
 import "./sharedPrivateLinkResource.tsp";
 
 #suppress "@azure-tools/typespec-azure-resource-manager/arm-common-types-version" "Using invalid versions of ManagedIdentity"
-@service({
+@service(#{
   title: "Microsoft.DatabaseWatcher",
 })
 @versioned(Microsoft.DatabaseWatcher.Versions)
@@ -56,10 +56,10 @@ model WatcherProperties {
   datastore?: Datastore;
 
   @doc("The monitoring collection status of the watcher.")
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   status?: WatcherStatus;
 
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @doc("The provisioning state of the resource watcher.")
   provisioningState?: DatabaseWatcherProvisioningState;
 

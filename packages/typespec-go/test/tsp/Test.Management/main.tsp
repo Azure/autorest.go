@@ -13,7 +13,7 @@ using TypeSpec.Versioning;
 
 @doc("Test resource provider api.")
 @armProviderNamespace("Microsoft.Test")
-@service({
+#{
   title: "TestClient",
 })
 @versioned(Versions)
