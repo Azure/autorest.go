@@ -49,7 +49,6 @@ extends:
             steps:
               - template: /eng/pipelines/templates/steps/set-env.yaml
                 parameters:
-                  NodeVersion: "18.x"
                   GoVersion: "1.21.4"
 
               - template: /eng/pipelines/templates/steps/build-test-gotest.yaml
