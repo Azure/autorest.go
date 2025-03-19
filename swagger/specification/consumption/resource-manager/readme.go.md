@@ -16,7 +16,6 @@ module: github.com/Azure/azure-sdk-for-go/$(module-name)
 output-folder: $(go-sdk-folder)/$(module-name)
 azure-arm: true
 clear-output-folder: false
-module-version: 0.0.1
 ```
 
 ### Go multi-api
