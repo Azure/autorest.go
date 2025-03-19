@@ -261,7 +261,7 @@ function generate(moduleName, input, outputDir, perTestOptions) {
         // print any output or error from the tsp compile command
         logResult(error, stdout, stderr);
         // format on success
-        if (error === null && stderr === '') {
+        if (error === null) {
           execSync('gofmt -w .', { cwd: fullOutputDir});
         }
       });

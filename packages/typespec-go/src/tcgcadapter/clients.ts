@@ -279,9 +279,11 @@ export class clientAdapter {
     // we can't use sdkMethod.apiVersions as that includes all
     // of the api versions supported by the service.
     for (const opParam of sdkMethod.operation.parameters) {
-      if (opParam.isApiVersionParam && opParam.clientDefaultValue) {
-        method.apiVersions.push(<string>opParam.clientDefaultValue);
-        break;
+      for (const methodParam of opParam.correspondingMethodParams) {
+        if (methodParam.kind === 'apiVersion' && methodParam.clientDefaultValue) {
+          method.apiVersions.push(<string>methodParam.clientDefaultValue);
+          break;
+        }
       }
     }
 
@@ -474,7 +476,13 @@ export class clientAdapter {
   }
 
   private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter, optionalGroup?: go.ParameterGroup): go.Parameter {
-    if (param.isApiVersionParam && param.clientDefaultValue) {
+    let isApiVersionParam = false;
+    for (const methodParam of param.correspondingMethodParams) {
+      if (methodParam.kind === 'apiVersion' && methodParam.clientDefaultValue) {
+        isApiVersionParam = true;
+      }
+    }
+    if (isApiVersionParam) {
       // we emit the api version param inline as a literal, never as a param.
       // the ClientOptions.APIVersion setting is used to change the version.
       const paramType = new go.LiteralValue(new go.PrimitiveType('string'), param.clientDefaultValue);
@@ -824,7 +832,14 @@ export class clientAdapter {
       for (const example of sdkMethod.operation.examples) {
         const goExample = new go.MethodExample(example.name, {summary: example.description}, example.filePath);
         for (const param of example.parameters) {
-          if (param.parameter.isApiVersionParam && param.parameter.clientDefaultValue) {
+          let isApiVersionParam = false;
+          for (const methodParam of param.parameter.correspondingMethodParams) {
+            if (methodParam.kind === 'apiVersion' && methodParam.clientDefaultValue) {
+              isApiVersionParam = true;
+              break;
+            }
+          }
+          if (isApiVersionParam) {
             // skip the api-version param as it's not a formal parameter
             continue;
           }

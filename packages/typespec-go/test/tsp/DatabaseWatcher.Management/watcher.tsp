@@ -145,7 +145,7 @@ interface Watchers {
   @armResourceAction(Watcher)
   @extension(
     "x-ms-long-running-operation-options",
-    {
+    #{
       `final-state-via`: "azure-async-operation",
     }
   )
@@ -161,7 +161,7 @@ interface Watchers {
   @extension("x-ms-long-running-operation", true)
   @extension(
     "x-ms-long-running-operation-options",
-    {
+    #{
       `final-state-via`: "azure-async-operation",
     }
   )

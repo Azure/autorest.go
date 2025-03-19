@@ -34,7 +34,7 @@ interface MongoClusters {
     LroHeaders = Azure.Core.Foundations.RetryAfterHeader
   >;
   /** Updates an existing mongo cluster. The request body can contain one to many of the properties present in the normal mongo cluster definition. */
-  @parameterVisibility
+  @patch(#{ implicitOptionality: false })
   update is ArmCustomPatchAsync<
     MongoCluster,
     Azure.ResourceManager.Foundations.ResourceUpdateModel<
@@ -128,7 +128,7 @@ model MongoClusterProperties {
   publicNetworkAccess?: PublicNetworkAccess;
 
   /** The list of node group specs in the cluster. */
-  @extension("x-ms-identifiers", [])
+  @extension("x-ms-identifiers", #[])
   @removed(Versions.v2024_07_01)
   nodeGroupSpecs?: NodeGroupSpec[];
 
@@ -249,7 +249,7 @@ model BackupProperties {
 model ListConnectionStringsResult {
   /** An array that contains the connection strings for a mongo cluster. */
   @visibility(Lifecycle.Read)
-  @extension("x-ms-identifiers", [])
+  @extension("x-ms-identifiers", #[])
   connectionStrings?: ConnectionString[];
 }
 

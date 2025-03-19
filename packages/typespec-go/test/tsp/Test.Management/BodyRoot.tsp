@@ -9,8 +9,8 @@ using Azure.ResourceManager;
 using TypeSpec.Http;
 using TypeSpec.OpenAPI;
 
+@armProviderNamespace
 namespace Microsoft.Test;
-
 @doc("Body root resource.")
 model BodyRoot is TrackedResource<BodyRootProperties> {
   @doc("Body root resource name.")

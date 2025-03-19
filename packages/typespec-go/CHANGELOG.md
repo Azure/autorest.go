@@ -8,7 +8,7 @@
 
 ### Other Changes
 
-* Updated to the latest tcgc.
+* Updated to the latest tsp toolset.
 
 ## 0.4.0 (2025-03-12)
 
