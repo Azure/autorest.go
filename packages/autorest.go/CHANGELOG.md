@@ -1,5 +1,11 @@
 # Release History
 
+## 4.0.0-prebiew.72 (unreleased)
+
+### Other Changes
+
+* Changed the default value of the `--factory-gather-all-params` switch from `false` to `true`.
+
 ## 4.0.0-preview.71 (2025-03-25)
 
 ### Other Changes

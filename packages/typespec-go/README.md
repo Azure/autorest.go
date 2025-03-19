@@ -76,5 +76,5 @@ options:
     - key: factory-gather-all-params
         type: boolean
         nullable: true
-        description: When true, the NewClientFactory constructor gathers all parameters or only common parameters of clients. The default is false.
+        description: When true, the `NewClientFactory` constructor will gather all parameters of clients. When false, the `NewClientFactory` constructor will only gather common parameters of clients. The default value is true.
 ```

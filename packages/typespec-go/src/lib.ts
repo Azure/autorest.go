@@ -108,8 +108,9 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
     },
     'factory-gather-all-params': {
       type: 'boolean',
+      default: true,
       nullable: true,
-      description: 'When true, the NewClientFactory constructor gathers all parameters or only common parameters of clients. The default is false.',
+      description: 'When true, the `NewClientFactory` constructor gathers all parameters. When false, it only gathers common parameters of clients. The default is true.',
     },
   },
   required: [],
