@@ -210,7 +210,7 @@ importers:
         version: 0.5.21
     devDependencies:
       '@azure-tools/azure-http-specs':
-        specifier: ~0.1.0-alpha.7
+        specifier: ~0.1.0-alpha.9
         version: 0.1.0-alpha.9(@azure-tools/typespec-azure-core@0.53.0)(@types/node@18.19.68)(@typespec/compiler@0.67.1)(@typespec/http@0.67.1)(@typespec/rest@0.67.1)(@typespec/streams@0.67.1)(@typespec/versioning@0.67.1)(@typespec/xml@0.67.1)
       '@azure-tools/typespec-autorest':
         specifier: '>=0.53.0 <1.0.0'

@@ -83,7 +83,7 @@ func (r *ReturnTypeChangedFromServerTransport) dispatchTest(req *http.Request) (
 	if r.srv.Test == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Test not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[string](req)
+	body, err := server.UnmarshalRequestAsText(req)
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func (r *ReturnTypeChangedFromServerTransport) dispatchTest(req *http.Request) (
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Value, req)
+	resp, err := server.MarshalResponseAsText(respContent, server.GetResponse(respr).Value, req)
 	if err != nil {
 		return nil, err
 	}

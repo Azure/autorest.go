@@ -50,6 +50,7 @@ func ExampleSharedPrivateLinkResourcesClient_BeginCreate() {
 	// 			RequestMessage: to.Ptr("request message"),
 	// 			DNSZone: to.Ptr("ec3ae9d410ba"),
 	// 			Status: to.Ptr(armdatabasewatcher.SharedPrivateLinkResourceStatusPending),
+	// 			ProvisioningState: to.Ptr(Completed),
 	// 		},
 	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.DatabaseWatcher/watchers/databasemo3ej9ih/sharedPrivateLinkResources/monitoringh22eed"),
 	// 		Name: to.Ptr("monitoringh22eed"),
@@ -113,6 +114,7 @@ func ExampleSharedPrivateLinkResourcesClient_Get() {
 	// 			RequestMessage: to.Ptr("request message"),
 	// 			DNSZone: to.Ptr("ec3ae9d410ba"),
 	// 			Status: to.Ptr(armdatabasewatcher.SharedPrivateLinkResourceStatusPending),
+	// 			ProvisioningState: to.Ptr(Completed),
 	// 		},
 	// 		ID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.DatabaseWatcher/watchers/databasemo3ej9ih/sharedPrivateLinkResources/monitoringh22eed"),
 	// 		Name: to.Ptr("monitoringh22eed"),
@@ -164,6 +166,7 @@ func ExampleSharedPrivateLinkResourcesClient_NewListByWatcherPager() {
 		// 					RequestMessage: to.Ptr("request message"),
 		// 					DNSZone: to.Ptr("ec3ae9d410ba"),
 		// 					Status: to.Ptr(armdatabasewatcher.SharedPrivateLinkResourceStatusPending),
+		// 					ProvisioningState: to.Ptr(Completed),
 		// 				},
 		// 				SystemData: &armdatabasewatcher.SystemData{
 		// 					CreatedBy: to.Ptr("enbpvlpqbwd"),

@@ -97,7 +97,7 @@ func (s *ScalarBooleanServerTransport) dispatchGet(req *http.Request) (*http.Res
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Value, req)
+	resp, err := server.MarshalResponseAsText(respContent, server.GetResponse(respr).Value, req)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +108,7 @@ func (s *ScalarBooleanServerTransport) dispatchPut(req *http.Request) (*http.Res
 	if s.srv.Put == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Put not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[bool](req)
+	body, err := server.UnmarshalRequestAsText(req)
 	if err != nil {
 		return nil, err
 	}

@@ -150,6 +150,7 @@ func ExampleWatchersClient_Get() {
 	// 			ProvisioningState: to.Ptr(armdatabasewatcher.DatabaseWatcherProvisioningStateSucceeded),
 	// 		},
 	// 		Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+	// 			Type: to.Ptr(SystemAssignedIdentity),
 	// 			UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
 	// 			},
 	// 			PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
@@ -206,6 +207,7 @@ func ExampleWatchersClient_NewListByResourceGroupPager() {
 		// 				Tags: map[string]*string{
 		// 				},
 		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					Type: to.Ptr(SystemAssignedIdentity),
 		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
 		// 					},
 		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
@@ -254,6 +256,7 @@ func ExampleWatchersClient_NewListByResourceGroupPager() {
 		// 					},
 		// 				},
 		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					Type: to.Ptr(SystemAssignedIdentity),
 		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
 		// 					},
 		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
@@ -290,6 +293,7 @@ func ExampleWatchersClient_NewListByResourceGroupPager() {
 		// 					},
 		// 				},
 		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					Type: to.Ptr(SystemAssignedIdentity),
 		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
 		// 					},
 		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
@@ -326,6 +330,7 @@ func ExampleWatchersClient_NewListByResourceGroupPager() {
 		// 					},
 		// 				},
 		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					Type: to.Ptr(SystemAssignedIdentity),
 		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
 		// 					},
 		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
@@ -362,6 +367,7 @@ func ExampleWatchersClient_NewListByResourceGroupPager() {
 		// 					},
 		// 				},
 		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					Type: to.Ptr(SystemAssignedIdentity),
 		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
 		// 					},
 		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
@@ -406,6 +412,7 @@ func ExampleWatchersClient_NewListByResourceGroupPager() {
 		// 					},
 		// 				},
 		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					Type: to.Ptr(SystemAssignedIdentity),
 		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
 		// 					},
 		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
@@ -434,6 +441,7 @@ func ExampleWatchersClient_NewListByResourceGroupPager() {
 		// 					},
 		// 				},
 		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					Type: to.Ptr(SystemAssignedIdentity),
 		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
 		// 					},
 		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
@@ -535,6 +543,7 @@ func ExampleWatchersClient_NewListBySubscriptionPager() {
 		// 					},
 		// 				},
 		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					Type: to.Ptr(SystemAssignedIdentity),
 		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
 		// 					},
 		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
@@ -571,6 +580,7 @@ func ExampleWatchersClient_NewListBySubscriptionPager() {
 		// 					},
 		// 				},
 		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					Type: to.Ptr(SystemAssignedIdentity),
 		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
 		// 					},
 		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
@@ -607,6 +617,7 @@ func ExampleWatchersClient_NewListBySubscriptionPager() {
 		// 					},
 		// 				},
 		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					Type: to.Ptr(SystemAssignedIdentity),
 		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
 		// 					},
 		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
@@ -643,6 +654,7 @@ func ExampleWatchersClient_NewListBySubscriptionPager() {
 		// 					},
 		// 				},
 		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					Type: to.Ptr(SystemAssignedIdentity),
 		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
 		// 					},
 		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
@@ -687,6 +699,7 @@ func ExampleWatchersClient_NewListBySubscriptionPager() {
 		// 					},
 		// 				},
 		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					Type: to.Ptr(SystemAssignedIdentity),
 		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
 		// 					},
 		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),
@@ -715,6 +728,7 @@ func ExampleWatchersClient_NewListBySubscriptionPager() {
 		// 					},
 		// 				},
 		// 				Identity: &armdatabasewatcher.ManagedServiceIdentityV4{
+		// 					Type: to.Ptr(SystemAssignedIdentity),
 		// 					UserAssignedIdentities: map[string]*armdatabasewatcher.UserAssignedIdentity{
 		// 					},
 		// 					PrincipalID: to.Ptr("6f53185c-ea09-4fc3-9075-318dec805303"),

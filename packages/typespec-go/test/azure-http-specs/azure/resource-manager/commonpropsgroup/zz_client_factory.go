@@ -32,6 +32,14 @@ func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, 
 	}, nil
 }
 
+// NewErrorClient creates a new instance of ErrorClient.
+func (c *ClientFactory) NewErrorClient() *ErrorClient {
+	return &ErrorClient{
+		subscriptionID: c.subscriptionID,
+		internal:       c.internal,
+	}
+}
+
 // NewManagedIdentityClient creates a new instance of ManagedIdentityClient.
 func (c *ClientFactory) NewManagedIdentityClient() *ManagedIdentityClient {
 	return &ManagedIdentityClient{

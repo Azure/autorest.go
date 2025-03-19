@@ -93,7 +93,8 @@ type BytesRequestBodyClientOctetStreamResponse struct {
 
 // BytesResponseBodyClientBase64Response contains the response from method BytesResponseBodyClient.Base64.
 type BytesResponseBodyClientBase64Response struct {
-	Value []byte
+	// Body contains the streaming response.
+	Body io.ReadCloser
 }
 
 // BytesResponseBodyClientBase64URLResponse contains the response from method BytesResponseBodyClient.Base64URL.
@@ -110,7 +111,8 @@ type BytesResponseBodyClientCustomContentTypeResponse struct {
 
 // BytesResponseBodyClientDefaultResponse contains the response from method BytesResponseBodyClient.Default.
 type BytesResponseBodyClientDefaultResponse struct {
-	Value []byte
+	// Body contains the streaming response.
+	Body io.ReadCloser
 }
 
 // BytesResponseBodyClientOctetStreamResponse contains the response from method BytesResponseBodyClient.OctetStream.

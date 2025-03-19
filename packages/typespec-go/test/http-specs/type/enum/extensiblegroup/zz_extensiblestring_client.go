@@ -9,7 +9,9 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"net/http"
+	"strings"
 )
 
 // ExtensibleStringClient contains the methods for the ExtensibleString group.
@@ -51,16 +53,19 @@ func (client *ExtensibleStringClient) getKnownValueCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Accept"] = []string{"text/plain"}
 	return req, nil
 }
 
 // getKnownValueHandleResponse handles the GetKnownValue response.
 func (client *ExtensibleStringClient) getKnownValueHandleResponse(resp *http.Response) (ExtensibleStringClientGetKnownValueResponse, error) {
 	result := ExtensibleStringClientGetKnownValueResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+	body, err := runtime.Payload(resp)
+	if err != nil {
 		return ExtensibleStringClientGetKnownValueResponse{}, err
 	}
+	txt := string(body)
+	result.Value = &txt
 	return result, nil
 }
 
@@ -97,16 +102,19 @@ func (client *ExtensibleStringClient) getUnknownValueCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Accept"] = []string{"text/plain"}
 	return req, nil
 }
 
 // getUnknownValueHandleResponse handles the GetUnknownValue response.
 func (client *ExtensibleStringClient) getUnknownValueHandleResponse(resp *http.Response) (ExtensibleStringClientGetUnknownValueResponse, error) {
 	result := ExtensibleStringClientGetUnknownValueResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+	body, err := runtime.Payload(resp)
+	if err != nil {
 		return ExtensibleStringClientGetUnknownValueResponse{}, err
 	}
+	txt := string(body)
+	result.Value = &txt
 	return result, nil
 }
 
@@ -142,8 +150,9 @@ func (client *ExtensibleStringClient) putKnownValueCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	body := streaming.NopCloser(strings.NewReader(body))
+	req.Raw().Header["Content-Type"] = []string{"text/plain"}
+	if err := req.SetBody(body, "text/plain"); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -181,8 +190,9 @@ func (client *ExtensibleStringClient) putUnknownValueCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	body := streaming.NopCloser(strings.NewReader(body))
+	req.Raw().Header["Content-Type"] = []string{"text/plain"}
+	if err := req.SetBody(body, "text/plain"); err != nil {
 		return nil, err
 	}
 	return req, nil

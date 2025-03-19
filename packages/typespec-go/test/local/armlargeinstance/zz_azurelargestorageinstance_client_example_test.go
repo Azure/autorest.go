@@ -34,6 +34,7 @@ func ExampleAzureLargeStorageInstanceClient_Create() {
 				OfferingType: to.Ptr("EPIC"),
 				StorageType:  to.Ptr("FC"),
 				Generation:   to.Ptr("Gen4"),
+				HardwareType: to.Ptr(NetApp),
 				WorkloadType: to.Ptr("ODB"),
 				StorageBillingProperties: &armlargeinstance.StorageBillingProperties{
 					BillingMode: to.Ptr("PAYG"),
@@ -72,6 +73,7 @@ func ExampleAzureLargeStorageInstanceClient_Create() {
 	// 				OfferingType: to.Ptr("EPIC"),
 	// 				StorageType: to.Ptr("FC"),
 	// 				Generation: to.Ptr("Gen4"),
+	// 				HardwareType: to.Ptr(NetApp),
 	// 				WorkloadType: to.Ptr("ODB"),
 	// 				StorageBillingProperties: &armlargeinstance.StorageBillingProperties{
 	// 					BillingMode: to.Ptr("PAYG"),
@@ -147,6 +149,7 @@ func ExampleAzureLargeStorageInstanceClient_Get() {
 	// 				OfferingType: to.Ptr("EPIC"),
 	// 				StorageType: to.Ptr("FC"),
 	// 				Generation: to.Ptr("Gen4"),
+	// 				HardwareType: to.Ptr(NetApp),
 	// 				WorkloadType: to.Ptr("ODB"),
 	// 				StorageBillingProperties: &armlargeinstance.StorageBillingProperties{
 	// 					BillingMode: to.Ptr("PAYG"),
@@ -206,6 +209,7 @@ func ExampleAzureLargeStorageInstanceClient_NewListByResourceGroupPager() {
 		// 						OfferingType: to.Ptr("EPIC"),
 		// 						StorageType: to.Ptr("FC"),
 		// 						Generation: to.Ptr("Gen4"),
+		// 						HardwareType: to.Ptr(NetApp),
 		// 						WorkloadType: to.Ptr("ODB"),
 		// 						StorageBillingProperties: &armlargeinstance.StorageBillingProperties{
 		// 							BillingMode: to.Ptr("PAYG"),
@@ -237,6 +241,7 @@ func ExampleAzureLargeStorageInstanceClient_NewListByResourceGroupPager() {
 		// 						OfferingType: to.Ptr("EPIC"),
 		// 						StorageType: to.Ptr("NFS"),
 		// 						Generation: to.Ptr("Gen4"),
+		// 						HardwareType: to.Ptr(NetApp),
 		// 						WorkloadType: to.Ptr("Cogito"),
 		// 						StorageBillingProperties: &armlargeinstance.StorageBillingProperties{
 		// 							BillingMode: to.Ptr("RI"),
@@ -299,6 +304,7 @@ func ExampleAzureLargeStorageInstanceClient_NewListBySubscriptionPager() {
 		// 						OfferingType: to.Ptr("EPIC"),
 		// 						StorageType: to.Ptr("FC"),
 		// 						Generation: to.Ptr("Gen4"),
+		// 						HardwareType: to.Ptr(NetApp),
 		// 						WorkloadType: to.Ptr("ODB"),
 		// 						StorageBillingProperties: &armlargeinstance.StorageBillingProperties{
 		// 							BillingMode: to.Ptr("PAYG"),
@@ -330,6 +336,7 @@ func ExampleAzureLargeStorageInstanceClient_NewListBySubscriptionPager() {
 		// 						OfferingType: to.Ptr("EPIC"),
 		// 						StorageType: to.Ptr("NFS"),
 		// 						Generation: to.Ptr("Gen4"),
+		// 						HardwareType: to.Ptr(NetApp),
 		// 						WorkloadType: to.Ptr("Cogito"),
 		// 						StorageBillingProperties: &armlargeinstance.StorageBillingProperties{
 		// 							BillingMode: to.Ptr("RI"),
@@ -390,6 +397,7 @@ func ExampleAzureLargeStorageInstanceClient_Update_azureLargeStorageInstanceUpda
 	// 				OfferingType: to.Ptr("EPIC"),
 	// 				StorageType: to.Ptr("FC"),
 	// 				Generation: to.Ptr("Gen4"),
+	// 				HardwareType: to.Ptr(NetApp),
 	// 				WorkloadType: to.Ptr("ODB"),
 	// 				StorageBillingProperties: &armlargeinstance.StorageBillingProperties{
 	// 					BillingMode: to.Ptr("PAYG"),
@@ -444,6 +452,7 @@ func ExampleAzureLargeStorageInstanceClient_Update_azureLargeStorageInstanceDele
 	// 				OfferingType: to.Ptr("EPIC"),
 	// 				StorageType: to.Ptr("FC"),
 	// 				Generation: to.Ptr("Gen4"),
+	// 				HardwareType: to.Ptr(NetApp),
 	// 				WorkloadType: to.Ptr("ODB"),
 	// 				StorageBillingProperties: &armlargeinstance.StorageBillingProperties{
 	// 					BillingMode: to.Ptr("PAYG"),

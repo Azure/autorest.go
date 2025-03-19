@@ -9,7 +9,9 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"net/http"
+	"strings"
 )
 
 // NamingUnionEnumClient contains the methods for the NamingUnionEnum group.
@@ -50,8 +52,9 @@ func (client *NamingUnionEnumClient) unionEnumMemberNameCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	body := streaming.NopCloser(strings.NewReader(body))
+	req.Raw().Header["Content-Type"] = []string{"text/plain"}
+	if err := req.SetBody(body, "text/plain"); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -89,8 +92,9 @@ func (client *NamingUnionEnumClient) unionEnumNameCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	body := streaming.NopCloser(strings.NewReader(body))
+	req.Raw().Header["Content-Type"] = []string{"text/plain"}
+	if err := req.SetBody(body, "text/plain"); err != nil {
 		return nil, err
 	}
 	return req, nil

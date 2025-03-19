@@ -9,7 +9,9 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"net/http"
+	"strings"
 )
 
 // ScalarBooleanClient contains the methods for the ScalarBoolean group.
@@ -50,16 +52,19 @@ func (client *ScalarBooleanClient) getCreateRequest(ctx context.Context, _ *Scal
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Accept"] = []string{"text/plain"}
 	return req, nil
 }
 
 // getHandleResponse handles the Get response.
 func (client *ScalarBooleanClient) getHandleResponse(resp *http.Response) (ScalarBooleanClientGetResponse, error) {
 	result := ScalarBooleanClientGetResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+	body, err := runtime.Payload(resp)
+	if err != nil {
 		return ScalarBooleanClientGetResponse{}, err
 	}
+	txt := string(body)
+	result.Value = &txt
 	return result, nil
 }
 
@@ -95,8 +100,9 @@ func (client *ScalarBooleanClient) putCreateRequest(ctx context.Context, body bo
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	body := streaming.NopCloser(strings.NewReader(body))
+	req.Raw().Header["Content-Type"] = []string{"text/plain"}
+	if err := req.SetBody(body, "text/plain"); err != nil {
 		return nil, err
 	}
 	return req, nil

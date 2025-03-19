@@ -9,7 +9,9 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"net/http"
+	"strings"
 )
 
 // ScalarAzureLocationScalarClient contains the methods for the ScalarAzureLocationScalar group.
@@ -51,16 +53,19 @@ func (client *ScalarAzureLocationScalarClient) getCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Accept"] = []string{"text/plain"}
 	return req, nil
 }
 
 // getHandleResponse handles the Get response.
 func (client *ScalarAzureLocationScalarClient) getHandleResponse(resp *http.Response) (ScalarAzureLocationScalarClientGetResponse, error) {
 	result := ScalarAzureLocationScalarClientGetResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+	body, err := runtime.Payload(resp)
+	if err != nil {
 		return ScalarAzureLocationScalarClientGetResponse{}, err
 	}
+	txt := string(body)
+	result.Value = &txt
 	return result, nil
 }
 
@@ -185,8 +190,9 @@ func (client *ScalarAzureLocationScalarClient) putCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	body := streaming.NopCloser(strings.NewReader(body))
+	req.Raw().Header["Content-Type"] = []string{"text/plain"}
+	if err := req.SetBody(body, "text/plain"); err != nil {
 		return nil, err
 	}
 	return req, nil

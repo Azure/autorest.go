@@ -40,8 +40,7 @@ func (client *BytesResponseBodyClient) Base64(ctx context.Context, options *Byte
 		err = runtime.NewResponseError(httpResp)
 		return BytesResponseBodyClientBase64Response{}, err
 	}
-	resp, err := client.base64HandleResponse(httpResp)
-	return resp, err
+	return BytesResponseBodyClientBase64Response{Body: httpResp.Body}, nil
 }
 
 // base64CreateRequest creates the Base64 request.
@@ -51,17 +50,9 @@ func (client *BytesResponseBodyClient) base64CreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
+	runtime.SkipBodyDownload(req)
+	req.Raw().Header["Accept"] = []string{"application/octet-stream"}
 	return req, nil
-}
-
-// base64HandleResponse handles the Base64 response.
-func (client *BytesResponseBodyClient) base64HandleResponse(resp *http.Response) (BytesResponseBodyClientBase64Response, error) {
-	result := BytesResponseBodyClientBase64Response{}
-	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return BytesResponseBodyClientBase64Response{}, err
-	}
-	return result, nil
 }
 
 // Base64URL -
@@ -97,16 +88,19 @@ func (client *BytesResponseBodyClient) base64URLCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Accept"] = []string{"text/plain"}
 	return req, nil
 }
 
 // base64URLHandleResponse handles the Base64URL response.
 func (client *BytesResponseBodyClient) base64URLHandleResponse(resp *http.Response) (BytesResponseBodyClientBase64URLResponse, error) {
 	result := BytesResponseBodyClientBase64URLResponse{}
-	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64URLFormat); err != nil {
+	body, err := runtime.Payload(resp)
+	if err != nil {
 		return BytesResponseBodyClientBase64URLResponse{}, err
 	}
+	txt := string(body)
+	result.Value = &txt
 	return result, nil
 }
 
@@ -179,8 +173,7 @@ func (client *BytesResponseBodyClient) Default(ctx context.Context, options *Byt
 		err = runtime.NewResponseError(httpResp)
 		return BytesResponseBodyClientDefaultResponse{}, err
 	}
-	resp, err := client.defaultHandleResponse(httpResp)
-	return resp, err
+	return BytesResponseBodyClientDefaultResponse{Body: httpResp.Body}, nil
 }
 
 // defaultCreateRequest creates the Default request.
@@ -190,17 +183,9 @@ func (client *BytesResponseBodyClient) defaultCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
+	runtime.SkipBodyDownload(req)
+	req.Raw().Header["Accept"] = []string{"application/octet-stream"}
 	return req, nil
-}
-
-// defaultHandleResponse handles the Default response.
-func (client *BytesResponseBodyClient) defaultHandleResponse(resp *http.Response) (BytesResponseBodyClientDefaultResponse, error) {
-	result := BytesResponseBodyClientDefaultResponse{}
-	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return BytesResponseBodyClientDefaultResponse{}, err
-	}
-	return result, nil
 }
 
 // OctetStream -

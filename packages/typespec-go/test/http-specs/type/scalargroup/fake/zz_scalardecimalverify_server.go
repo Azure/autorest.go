@@ -108,7 +108,7 @@ func (s *ScalarDecimalVerifyServerTransport) dispatchVerify(req *http.Request) (
 	if s.srv.Verify == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Verify not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[float64](req)
+	body, err := server.UnmarshalRequestAsText(req)
 	if err != nil {
 		return nil, err
 	}

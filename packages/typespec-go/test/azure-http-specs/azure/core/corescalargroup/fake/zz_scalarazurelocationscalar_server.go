@@ -116,7 +116,7 @@ func (s *ScalarAzureLocationScalarServerTransport) dispatchGet(req *http.Request
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Value, req)
+	resp, err := server.MarshalResponseAsText(respContent, server.GetResponse(respr).Value, req)
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +169,7 @@ func (s *ScalarAzureLocationScalarServerTransport) dispatchPut(req *http.Request
 	if s.srv.Put == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Put not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[string](req)
+	body, err := server.UnmarshalRequestAsText(req)
 	if err != nil {
 		return nil, err
 	}

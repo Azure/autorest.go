@@ -9,6 +9,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"net/http"
 	"strings"
 )
@@ -57,9 +58,10 @@ func (client *ReturnTypeChangedFromClient) testCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	req.Raw().Header["Accept"] = []string{"text/plain"}
+	body := streaming.NopCloser(strings.NewReader(body))
+	req.Raw().Header["Content-Type"] = []string{"text/plain"}
+	if err := req.SetBody(body, "text/plain"); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -68,8 +70,11 @@ func (client *ReturnTypeChangedFromClient) testCreateRequest(ctx context.Context
 // testHandleResponse handles the Test response.
 func (client *ReturnTypeChangedFromClient) testHandleResponse(resp *http.Response) (ReturnTypeChangedFromClientTestResponse, error) {
 	result := ReturnTypeChangedFromClientTestResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+	body, err := runtime.Payload(resp)
+	if err != nil {
 		return ReturnTypeChangedFromClientTestResponse{}, err
 	}
+	txt := string(body)
+	result.Value = &txt
 	return result, nil
 }

@@ -125,6 +125,52 @@ func (client *UsageModelInOperationClient) modelInReadOnlyPropertyHandleResponse
 	return result, nil
 }
 
+// OrphanModelSerializable - Serialize the 'OrphanModel' as request body.
+// Expected body parameter:
+// ```json
+// {
+// "name": "name",
+// "desc": "desc"
+// }
+// ```
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - UsageModelInOperationClientOrphanModelSerializableOptions contains the optional parameters for the UsageModelInOperationClient.OrphanModelSerializable
+//     method.
+func (client *UsageModelInOperationClient) OrphanModelSerializable(ctx context.Context, body any, options *UsageModelInOperationClientOrphanModelSerializableOptions) (UsageModelInOperationClientOrphanModelSerializableResponse, error) {
+	var err error
+	const operationName = "UsageModelInOperationClient.OrphanModelSerializable"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.orphanModelSerializableCreateRequest(ctx, body, options)
+	if err != nil {
+		return UsageModelInOperationClientOrphanModelSerializableResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return UsageModelInOperationClientOrphanModelSerializableResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return UsageModelInOperationClientOrphanModelSerializableResponse{}, err
+	}
+	return UsageModelInOperationClientOrphanModelSerializableResponse{}, nil
+}
+
+// orphanModelSerializableCreateRequest creates the OrphanModelSerializable request.
+func (client *UsageModelInOperationClient) orphanModelSerializableCreateRequest(ctx context.Context, body any, _ *UsageModelInOperationClientOrphanModelSerializableOptions) (*policy.Request, error) {
+	urlPath := "/azure/client-generator-core/usage/orphanModelSerializable"
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
 // OutputToInputOutput - Expected response body:
 // ```json
 // {

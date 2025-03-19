@@ -115,7 +115,10 @@ func (b *BytesResponseBodyServerTransport) dispatchBase64(req *http.Request) (*h
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsByteArray(respContent, server.GetResponse(respr).Value, runtime.Base64StdFormat, req)
+	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
+		Body:        server.GetResponse(respr).Body,
+		ContentType: req.Header.Get("Content-Type"),
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -178,7 +181,10 @@ func (b *BytesResponseBodyServerTransport) dispatchDefault(req *http.Request) (*
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsByteArray(respContent, server.GetResponse(respr).Value, runtime.Base64StdFormat, req)
+	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
+		Body:        server.GetResponse(respr).Body,
+		ContentType: req.Header.Get("Content-Type"),
+	})
 	if err != nil {
 		return nil, err
 	}
