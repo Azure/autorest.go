@@ -1,6 +1,6 @@
 {
   "name": "@autorest/go",
-  "version": "4.0.0-preview.70",
+  "version": "4.0.0-preview.71",
   "description": "AutoRest Go Generator",
   "main": "dist/autorest.go/src/main.js",
   "type": "module",
