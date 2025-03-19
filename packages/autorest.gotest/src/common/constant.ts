@@ -22,6 +22,7 @@ export enum Config {
   sendExampleId = 'testmodeler.mock.send-example-id',
   verifyResponse = 'testmodeler.mock.verify-response',
   skipLint = 'gotest.skip-lint',
+  factoryGatherAllParams = 'factory-gather-all-params',
 }
 
 export const configDefaults = {
@@ -36,4 +37,5 @@ export const configDefaults = {
   [Config.exampleFilePrefix]: '',
   [Config.testFilePrefix]: '',
   [Config.skipLint]: false,
+  [Config.factoryGatherAllParams]: true,
 };

@@ -12,7 +12,7 @@ var err error
         {%- set example = step.exampleModel %}
         {%- set clientVariable = jsFunc.lowerFirst(example.operationGroup.language.go.clientName) %}
         {%- if allVariables.indexOf(clientVariable)<0 %}
-    {{clientVariable}} := testsuite.clientFactory.{{example.operationGroup.language.go.clientCtorName}}()
+    {{clientVariable}} := testsuite.clientFactory.{{example.operationGroup.language.go.clientCtorName}}({{jsFunc.getParamsValue(example.factoryClientParametersOutput) + ", " if example.factoryClientParametersOutput.length>0 else ""}})
         {%- set _ = allVariables.push(clientVariable) %}
         {%- endif %}
     {%- endif %}

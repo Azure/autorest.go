@@ -25,6 +25,7 @@ export class GoExampleModel extends ExampleModel {
   isMultiRespOperation: boolean;
   methodParametersOutput: Array<ParameterOutput>;
   clientParametersOutput: Array<ParameterOutput>;
+  factoryClientParametersOutput: Array<ParameterOutput>;
   returnInfo: Array<string>;
   checkResponse: boolean;
   responseOutput: string;
