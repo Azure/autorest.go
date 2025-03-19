@@ -140,7 +140,7 @@ const armdatabasewatcher = pkgRoot + 'test/tsp/DatabaseWatcher.Management';
 generate('armdatabasewatcher', armdatabasewatcher, 'test/local/armdatabasewatcher', ['fix-const-stuttering=false', `examples-directory=${armdatabasewatcher}/examples`, 'generate-samples=true']);
 
 const armloadtestservice = pkgRoot + 'test/tsp/LoadTestService.Management';
-generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice', ['factory-gather-all-params=true', `examples-directory=${armloadtestservice}/examples`, 'generate-samples=true']);
+generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice', [`examples-directory=${armloadtestservice}/examples`, 'generate-samples=true', 'factory-gather-all-params=true']);
 
 const armdevopsinfrastructure = pkgRoot + 'test/tsp/Microsoft.DevOpsInfrastructure';
 generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/local/armdevopsinfrastructure', [`examples-directory=${armdevopsinfrastructure}/examples`, 'generate-samples=true']);
@@ -295,8 +295,11 @@ function logResult(error, stdout, stderr) {
   if (stdout !== '') {
     console.log('stdout: ' + stdout);
   }
+  // typespec compiler prints compiler progress to stderr
+  // but it's not an error, so we use console.log
+  // to print it out.
   if (stderr !== '') {
-    console.error('\x1b[91m%s\x1b[0m', 'stderr: ' + stderr);
+    console.log('stderr: ' + stderr);
   }
   if (error !== null) {
     console.error('\x1b[91m%s\x1b[0m', 'exec error: ' + error);
