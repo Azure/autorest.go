@@ -134,7 +134,7 @@ func (testsuite *FakeTestSuite) Test{{exampleGroup.operationGroup.language.go.na
     }
 
     {% if loop.first %}
-    client := testsuite.clientFactory.{{example.operationGroup.language.go.clientCtorName}}()
+    client := testsuite.clientFactory.{{example.operationGroup.language.go.clientCtorName}}({{jsFunc.getParamsValue(example.factoryClientParametersOutput) + ", " if example.factoryClientParametersOutput.length>0 else ""}})
     {%- endif %}
     {%- if example.returnInfo.length == 2 %}
         {%- if example.isLRO %}

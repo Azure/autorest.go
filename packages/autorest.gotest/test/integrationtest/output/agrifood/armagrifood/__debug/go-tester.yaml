@@ -8925,6 +8925,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -9064,6 +9065,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -9226,6 +9228,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -9388,6 +9391,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -9447,6 +9451,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             isPageable: *ref_375
@@ -9610,6 +9615,7 @@ testModel:
                   language: *ref_330
                 parameter: *ref_126
             clientParametersOutput: []
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             isPageable: *ref_399
@@ -10400,6 +10406,7 @@ testModel:
                   language: *ref_330
                 parameter: *ref_126
             clientParametersOutput: []
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -11184,6 +11191,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -11343,6 +11351,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -11620,6 +11629,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: true
             isMultiRespOperation: false
             methodParameters:
@@ -11802,6 +11812,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: true
             isMultiRespOperation: false
             methodParameters:
@@ -12053,6 +12064,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -12105,6 +12117,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             isPageable: *ref_444
@@ -12263,6 +12276,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             isPageable: *ref_449
@@ -12428,6 +12442,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -12501,6 +12516,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -12579,6 +12595,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -12644,6 +12661,7 @@ testModel:
                   language: *ref_330
                 parameter: *ref_126
             clientParametersOutput: []
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             isPageable: *ref_477
@@ -13035,6 +13053,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -13203,6 +13222,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -13337,6 +13357,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: true
             isMultiRespOperation: false
             methodParameters:
@@ -13398,6 +13419,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             isPageable: *ref_507
@@ -13642,6 +13664,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             isPageable: *ref_518
@@ -13760,6 +13783,7 @@ testModel:
             clientParametersOutput:
               - paramName: subscriptionID
                 paramOutput: '"11111111-2222-3333-4444-555555555555"'
+            factoryClientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             methodParameters:

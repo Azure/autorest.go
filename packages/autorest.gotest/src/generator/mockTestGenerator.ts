@@ -22,10 +22,13 @@ import { ExampleParameter, ExampleValue } from '@autorest/testmodeler/dist/src/c
 import { GoExampleModel, GoMockTestDefinitionModel, ParameterOutput } from '../common/model';
 import { GoHelper } from '../util/goHelper';
 import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
-import { generateReturnsInfo, getAPIParametersSig, getClientParametersSig, getSchemaResponse } from '../util/codegenBridge';
-import { isLROOperation, isMultiRespOperation, isPageableOperation } from '../common/helpers';
+import { generateReturnsInfo, getAPIParametersSig, getClientParametersSig, getParametersSig, getSchemaResponse } from '../util/codegenBridge';
+import { isLROOperation, isMultiRespOperation, isPageableOperation, sortParametersByRequired } from '../common/helpers';
 import _ = require('lodash');
+import { values } from '@azure-tools/linq';
 export class MockTestDataRender extends BaseDataRender {
+  public clientFactoryParams: Array<Parameter>;
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public skipPropertyFunc = (exampleValue: ExampleValue): boolean => {
     // skip any null value
@@ -72,8 +75,24 @@ export class MockTestDataRender extends BaseDataRender {
     this.replaceValueFunc = (rawValue: any): any => {
       return rawValue;
     };
+    let clientFactoryParams: Array<Parameter>;
+    const factoryGatherAllParamsFlag = this.context.testConfig.getValue(Config.factoryGatherAllParams, true);
+    if (factoryGatherAllParamsFlag) {
+      clientFactoryParams = this.getAllClientParameters();
+    } else {
+      clientFactoryParams = this.getCommonClientParameters();
+    }
+    this.clientFactoryParams = clientFactoryParams;
+    const factoryClientParameters = new Array<Parameter>();
+    for (const clientParam of values(<Array<Parameter>>(example.operationGroup.language.go?.clientParams || []))) {
+      if (clientFactoryParams.filter((cp) => cp.language.go!.name === clientParam.language.go!.name).length > 0) {
+        continue;
+      }
+      factoryClientParameters.push(clientParam);
+    }
     example.methodParametersOutput = this.toParametersOutput(getAPIParametersSig(op), example.methodParameters);
     example.clientParametersOutput = this.toParametersOutput(getClientParametersSig(example.operationGroup), example.clientParameters, true);
+    example.factoryClientParametersOutput = this.toParametersOutput(getParametersSig(factoryClientParameters), example.clientParameters, true);
     example.returnInfo = generateReturnsInfo(op, 'op');
     const schemaResponse = getSchemaResponse(<any>op);
     if (example.isPageable) {
@@ -144,6 +163,58 @@ export class MockTestDataRender extends BaseDataRender {
         }
       }
     }
+  }
+
+  private getCommonClientParameters(): Array<Parameter> {
+    const paramCount = new Map<string, { uses: number; param: Parameter }>();
+    let numClients = 0; // track client count since we might skip some
+    for (const group of this.context.codeModel.operationGroups) {
+      const clientName = group.language.go!.clientName;
+      // special cases: some ARM clients always don't contain any parameters (OperationsClient will be depracated in the future)
+      if (clientName.match(/^OperationsClient$/)) {
+        continue;
+      }
+      numClients++;
+      if (group.language.go!.clientParams) {
+        const clientParams = <Array<Parameter>>group.language.go!.clientParams;
+        for (const clientParam of clientParams) {
+          let entry = paramCount.get(clientParam.language.go!.name);
+          if (!entry) {
+            entry = { uses: 0, param: clientParam };
+            paramCount.set(clientParam.language.go!.name, entry);
+          }
+
+          ++entry.uses;
+        }
+      }
+    }
+    // for each param, if its usage count is equal to the
+    // number of clients, then it's common to all clients
+    const commonClientParams = new Array<Parameter>();
+    for (const entry of paramCount.values()) {
+      if (entry.uses === numClients) {
+        commonClientParams.push(entry.param);
+      }
+    }
+    commonClientParams.sort(sortParametersByRequired);
+    return commonClientParams;
+  }
+
+  private getAllClientParameters(): Array<Parameter> {
+    const allClientParams = new Array<Parameter>();
+    for (const group of this.context.codeModel.operationGroups) {
+      if (group.language.go!.clientParams) {
+        const clientParams = <Array<Parameter>>group.language.go!.clientParams;
+        for (const clientParam of clientParams) {
+          if (allClientParams.filter((cp) => cp.language.go!.name === clientParam.language.go!.name).length > 0) {
+            continue;
+          }
+          allClientParams.push(clientParam);
+        }
+      }
+    }
+    allClientParams.sort(sortParametersByRequired);
+    return allClientParams;
   }
 
   // get GO code of all parameters for one operation invoke

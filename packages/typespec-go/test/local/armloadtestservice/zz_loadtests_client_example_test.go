@@ -19,11 +19,11 @@ func ExampleLoadTestsClient_BeginCreateOrUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewLoadTestsClient().BeginCreateOrUpdate(ctx, "dummyrg", "myLoadTest", armloadtestservice.LoadTestResource{
+	poller, err := clientFactory.NewLoadTestsClient("00000000-0000-0000-0000-000000000000").BeginCreateOrUpdate(ctx, "dummyrg", "myLoadTest", armloadtestservice.LoadTestResource{
 		Location: to.Ptr("westus"),
 		Tags: map[string]*string{
 			"Team": to.Ptr("Dev Exp"),
@@ -106,11 +106,11 @@ func ExampleLoadTestsClient_BeginDelete() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewLoadTestsClient().BeginDelete(ctx, "dummyrg", "myLoadTest", nil)
+	poller, err := clientFactory.NewLoadTestsClient("00000000-0000-0000-0000-000000000000").BeginDelete(ctx, "dummyrg", "myLoadTest", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -127,11 +127,11 @@ func ExampleLoadTestsClient_Get() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewLoadTestsClient().Get(ctx, "dummyrg", "myLoadTest", nil)
+	res, err := clientFactory.NewLoadTestsClient("00000000-0000-0000-0000-000000000000").Get(ctx, "dummyrg", "myLoadTest", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -171,11 +171,11 @@ func ExampleLoadTestsClient_NewListByResourceGroupPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewLoadTestsClient().NewListByResourceGroupPager("dummyrg", nil)
+	pager := clientFactory.NewLoadTestsClient("00000000-0000-0000-0000-000000000000").NewListByResourceGroupPager("dummyrg", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -224,11 +224,11 @@ func ExampleLoadTestsClient_NewListBySubscriptionPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewLoadTestsClient().NewListBySubscriptionPager(nil)
+	pager := clientFactory.NewLoadTestsClient("00000000-0000-0000-0000-000000000000").NewListBySubscriptionPager(nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -277,11 +277,11 @@ func ExampleLoadTestsClient_NewOutboundNetworkDependenciesEndpointsPager() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewLoadTestsClient().NewOutboundNetworkDependenciesEndpointsPager("default-azureloadtest-japaneast", "sampleloadtest", nil)
+	pager := clientFactory.NewLoadTestsClient("00000000-0000-0000-0000-000000000000").NewOutboundNetworkDependenciesEndpointsPager("default-azureloadtest-japaneast", "sampleloadtest", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -400,11 +400,11 @@ func ExampleLoadTestsClient_BeginUpdate() {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewLoadTestsClient().BeginUpdate(ctx, "dummyrg", "myLoadTest", armloadtestservice.LoadTestResourceUpdate{
+	poller, err := clientFactory.NewLoadTestsClient("00000000-0000-0000-0000-000000000000").BeginUpdate(ctx, "dummyrg", "myLoadTest", armloadtestservice.LoadTestResourceUpdate{
 		Tags: map[string]*string{
 			"Team":     to.Ptr("Dev Exp"),
 			"Division": to.Ptr("LT"),

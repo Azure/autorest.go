@@ -5,6 +5,7 @@
 ### Bugs Fixed
 
 * Unsupported tsp constructs and other errors are now reported as a diagnostic error instead of an unhandled exception.
+* Changed the default value of the `--factory-gather-all-params` switch from `false` to `true`.
 
 ### Other Changes
 
