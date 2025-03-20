@@ -249,7 +249,7 @@ importers:
         specifier: '>=0.67.1 <1.0.0'
         version: 0.67.1(@typespec/compiler@0.67.1)(@typespec/streams@0.67.1)
       '@typespec/http-specs':
-        specifier: ~0.1.0-alpha.14
+        specifier: ~0.1.0-alpha.15-dev.3
         version: 0.1.0-alpha.15-dev.3(@types/node@18.19.68)(@typespec/compiler@0.67.1)(@typespec/http@0.67.1)(@typespec/rest@0.67.1)(@typespec/streams@0.67.1)(@typespec/versioning@0.67.1)(@typespec/xml@0.67.1)
       '@typespec/openapi':
         specifier: '>=0.67.1 <1.0.0'
