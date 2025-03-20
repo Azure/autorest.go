@@ -28,7 +28,7 @@ func ExampleServicesClient_CreateOrUpdate() {
 		Tags:       map[string]*string{},
 		Location:   to.Ptr("East US"),
 		Identity: &armapicenter.ManagedServiceIdentity{
-			Type: to.Ptr(SystemAssigned, UserAssigned),
+			Type: to.Ptr(armapicenter.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
 			UserAssignedIdentities: map[string]*armapicenter.UserAssignedIdentity{
 				"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ManagedIdentity/userAssignedIdentities/contoso-identity": &armapicenter.UserAssignedIdentity{},
 			},
@@ -52,7 +52,7 @@ func ExampleServicesClient_CreateOrUpdate() {
 	// 		},
 	// 		Location: to.Ptr("East US"),
 	// 		Identity: &armapicenter.ManagedServiceIdentity{
-	// 			Type: to.Ptr(SystemAssigned, UserAssigned),
+	// 			Type: to.Ptr(armapicenter.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
 	// 			PrincipalID: to.Ptr("00000000-0000-0000-0000-000000000000"),
 	// 			TenantID: to.Ptr("00000000-0000-0000-0000-000000000000"),
 	// 			UserAssignedIdentities: map[string]*armapicenter.UserAssignedIdentity{
@@ -114,7 +114,7 @@ func ExampleServicesClient_BeginExportMetadataSchema() {
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.ServicesClientExportMetadataSchemaResponse{
 	// 	MetadataSchemaExportResult: &armapicenter.MetadataSchemaExportResult{
-	// 		Format: to.Ptr(json-schema),
+	// 		Format: to.Ptr(armapicenter.MetadataSchemaExportFormat("json-schema")),
 	// 		Value: to.Ptr("{\"type\":\"object\",\"properties\":{ ... }}"),
 	// 	},
 	// }
@@ -150,7 +150,7 @@ func ExampleServicesClient_Get() {
 	// 		},
 	// 		Location: to.Ptr("East US"),
 	// 		Identity: &armapicenter.ManagedServiceIdentity{
-	// 			Type: to.Ptr(SystemAssigned, UserAssigned),
+	// 			Type: to.Ptr(armapicenter.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
 	// 			PrincipalID: to.Ptr("00000000-0000-0000-0000-000000000000"),
 	// 			TenantID: to.Ptr("00000000-0000-0000-0000-000000000000"),
 	// 			UserAssignedIdentities: map[string]*armapicenter.UserAssignedIdentity{
@@ -200,7 +200,7 @@ func ExampleServicesClient_NewListByResourceGroupPager() {
 		// 				},
 		// 				Location: to.Ptr("East US"),
 		// 				Identity: &armapicenter.ManagedServiceIdentity{
-		// 					Type: to.Ptr(SystemAssigned, UserAssigned),
+		// 					Type: to.Ptr(armapicenter.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
 		// 					PrincipalID: to.Ptr("00000000-0000-0000-0000-000000000000"),
 		// 					TenantID: to.Ptr("00000000-0000-0000-0000-000000000000"),
 		// 					UserAssignedIdentities: map[string]*armapicenter.UserAssignedIdentity{
@@ -253,7 +253,7 @@ func ExampleServicesClient_NewListBySubscriptionPager() {
 		// 				},
 		// 				Location: to.Ptr("East US"),
 		// 				Identity: &armapicenter.ManagedServiceIdentity{
-		// 					Type: to.Ptr(SystemAssigned, UserAssigned),
+		// 					Type: to.Ptr(armapicenter.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
 		// 					PrincipalID: to.Ptr("00000000-0000-0000-0000-000000000000"),
 		// 					TenantID: to.Ptr("00000000-0000-0000-0000-000000000000"),
 		// 					UserAssignedIdentities: map[string]*armapicenter.UserAssignedIdentity{
@@ -284,7 +284,7 @@ func ExampleServicesClient_Update() {
 	res, err := clientFactory.NewServicesClient().Update(ctx, "contoso-resources", "contoso", armapicenter.ServiceUpdate{
 		Tags: map[string]*string{},
 		Identity: &armapicenter.ManagedServiceIdentity{
-			Type: to.Ptr(SystemAssigned, UserAssigned),
+			Type: to.Ptr(armapicenter.ManagedServiceIdentityType("SystemAssigned, UserAssigned")),
 			UserAssignedIdentities: map[string]*armapicenter.UserAssignedIdentity{
 				"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ManagedIdentity/userAssignedIdentities/contoso-identity": &armapicenter.UserAssignedIdentity{},
 			},
@@ -308,7 +308,7 @@ func ExampleServicesClient_Update() {
 	// 		},
 	// 		Location: to.Ptr("East US"),
 	// 		Identity: &armapicenter.ManagedServiceIdentity{
-	// 			Type: to.Ptr(SystemAssigned, UserAssigned),
+	// 			Type: to.Ptr(armapicenter.ManagedServiceIdentityType("SystemAssigned, UserAssigned")),
 	// 			PrincipalID: to.Ptr("00000000-0000-0000-0000-000000000000"),
 	// 			TenantID: to.Ptr("00000000-0000-0000-0000-000000000000"),
 	// 			UserAssignedIdentities: map[string]*armapicenter.UserAssignedIdentity{
