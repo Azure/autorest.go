@@ -29,7 +29,6 @@
 
 * Added switch `generate-samples` to control example code generation.
 * Deprecated `generate-examples`, use `generate-samples` instead.
-* Changed the default value of the `--factory-gather-all-params` switch from `false` to `true`.
 
 ## 0.3.10 (2025-03-06)
 
