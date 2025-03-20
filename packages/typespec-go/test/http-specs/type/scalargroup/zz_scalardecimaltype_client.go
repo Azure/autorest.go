@@ -9,10 +9,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"net/http"
 	"strconv"
-	"strings"
 )
 
 // ScalarDecimalTypeClient - Decimal type
@@ -53,9 +51,8 @@ func (client *ScalarDecimalTypeClient) requestBodyCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	body := streaming.NopCloser(strings.NewReader(body))
-	req.Raw().Header["Content-Type"] = []string{"text/plain"}
-	if err := req.SetBody(body, "text/plain"); err != nil {
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -132,18 +129,18 @@ func (client *ScalarDecimalTypeClient) responseBodyCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Accept"] = []string{"text/plain"}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
 // responseBodyHandleResponse handles the ResponseBody response.
 func (client *ScalarDecimalTypeClient) responseBodyHandleResponse(resp *http.Response) (ScalarDecimalTypeClientResponseBodyResponse, error) {
 	result := ScalarDecimalTypeClientResponseBodyResponse{}
-	body, err := runtime.Payload(resp)
-	if err != nil {
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return ScalarDecimalTypeClientResponseBodyResponse{}, err
 	}
-	txt := string(body)
-	result.Value = &txt
 	return result, nil
 }

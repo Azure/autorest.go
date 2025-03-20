@@ -20,11 +20,11 @@ import (
 type BytesRequestBodyServer struct {
 	// Base64 is the fake for method BytesRequestBodyClient.Base64
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Base64 func(ctx context.Context, value io.ReadSeekCloser, options *bytesgroup.BytesRequestBodyClientBase64Options) (resp azfake.Responder[bytesgroup.BytesRequestBodyClientBase64Response], errResp azfake.ErrorResponder)
+	Base64 func(ctx context.Context, value []byte, options *bytesgroup.BytesRequestBodyClientBase64Options) (resp azfake.Responder[bytesgroup.BytesRequestBodyClientBase64Response], errResp azfake.ErrorResponder)
 
 	// Base64URL is the fake for method BytesRequestBodyClient.Base64URL
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Base64URL func(ctx context.Context, value io.ReadSeekCloser, options *bytesgroup.BytesRequestBodyClientBase64URLOptions) (resp azfake.Responder[bytesgroup.BytesRequestBodyClientBase64URLResponse], errResp azfake.ErrorResponder)
+	Base64URL func(ctx context.Context, value []byte, options *bytesgroup.BytesRequestBodyClientBase64URLOptions) (resp azfake.Responder[bytesgroup.BytesRequestBodyClientBase64URLResponse], errResp azfake.ErrorResponder)
 
 	// CustomContentType is the fake for method BytesRequestBodyClient.CustomContentType
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -108,7 +108,11 @@ func (b *BytesRequestBodyServerTransport) dispatchBase64(req *http.Request) (*ht
 	if b.srv.Base64 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Base64 not implemented")}
 	}
-	respr, errRespr := b.srv.Base64(req.Context(), req.Body.(io.ReadSeekCloser), nil)
+	body, err := server.UnmarshalRequestAsByteArray(req, runtime.Base64StdFormat)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := b.srv.Base64(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -127,7 +131,11 @@ func (b *BytesRequestBodyServerTransport) dispatchBase64URL(req *http.Request) (
 	if b.srv.Base64URL == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Base64URL not implemented")}
 	}
-	respr, errRespr := b.srv.Base64URL(req.Context(), req.Body.(io.ReadSeekCloser), nil)
+	body, err := server.UnmarshalRequestAsByteArray(req, runtime.Base64URLFormat)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := b.srv.Base64URL(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

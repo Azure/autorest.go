@@ -109,9 +109,12 @@ func (e *ExtensibleStringServerTransport) dispatchGetKnownValue(req *http.Reques
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsText(respContent, server.GetResponse(respr).Value, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Value, req)
 	if err != nil {
 		return nil, err
+	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("content-type", "application/json")
 	}
 	return resp, nil
 }
@@ -128,9 +131,12 @@ func (e *ExtensibleStringServerTransport) dispatchGetUnknownValue(req *http.Requ
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsText(respContent, server.GetResponse(respr).Value, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Value, req)
 	if err != nil {
 		return nil, err
+	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("content-type", "application/json")
 	}
 	return resp, nil
 }
@@ -139,7 +145,7 @@ func (e *ExtensibleStringServerTransport) dispatchPutKnownValue(req *http.Reques
 	if e.srv.PutKnownValue == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutKnownValue not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsText(req)
+	body, err := server.UnmarshalRequestAsJSON[extensiblegroup.DaysOfWeekExtensibleEnum](req)
 	if err != nil {
 		return nil, err
 	}
@@ -162,7 +168,7 @@ func (e *ExtensibleStringServerTransport) dispatchPutUnknownValue(req *http.Requ
 	if e.srv.PutUnknownValue == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutUnknownValue not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsText(req)
+	body, err := server.UnmarshalRequestAsJSON[extensiblegroup.DaysOfWeekExtensibleEnum](req)
 	if err != nil {
 		return nil, err
 	}

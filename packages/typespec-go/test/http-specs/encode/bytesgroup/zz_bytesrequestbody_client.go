@@ -22,7 +22,7 @@ type BytesRequestBodyClient struct {
 // Base64 -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BytesRequestBodyClientBase64Options contains the optional parameters for the BytesRequestBodyClient.Base64 method.
-func (client *BytesRequestBodyClient) Base64(ctx context.Context, value io.ReadSeekCloser, options *BytesRequestBodyClientBase64Options) (BytesRequestBodyClientBase64Response, error) {
+func (client *BytesRequestBodyClient) Base64(ctx context.Context, value []byte, options *BytesRequestBodyClientBase64Options) (BytesRequestBodyClientBase64Response, error) {
 	var err error
 	const operationName = "BytesRequestBodyClient.Base64"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -44,14 +44,14 @@ func (client *BytesRequestBodyClient) Base64(ctx context.Context, value io.ReadS
 }
 
 // base64CreateRequest creates the Base64 request.
-func (client *BytesRequestBodyClient) base64CreateRequest(ctx context.Context, value io.ReadSeekCloser, _ *BytesRequestBodyClientBase64Options) (*policy.Request, error) {
+func (client *BytesRequestBodyClient) base64CreateRequest(ctx context.Context, value []byte, _ *BytesRequestBodyClientBase64Options) (*policy.Request, error) {
 	urlPath := "/encode/bytes/body/request/base64"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/octet-stream"}
-	if err := req.SetBody(value, "application/octet-stream"); err != nil {
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsByteArray(req, value, runtime.Base64StdFormat); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -61,7 +61,7 @@ func (client *BytesRequestBodyClient) base64CreateRequest(ctx context.Context, v
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BytesRequestBodyClientBase64URLOptions contains the optional parameters for the BytesRequestBodyClient.Base64URL
 //     method.
-func (client *BytesRequestBodyClient) Base64URL(ctx context.Context, value io.ReadSeekCloser, options *BytesRequestBodyClientBase64URLOptions) (BytesRequestBodyClientBase64URLResponse, error) {
+func (client *BytesRequestBodyClient) Base64URL(ctx context.Context, value []byte, options *BytesRequestBodyClientBase64URLOptions) (BytesRequestBodyClientBase64URLResponse, error) {
 	var err error
 	const operationName = "BytesRequestBodyClient.Base64URL"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -83,14 +83,14 @@ func (client *BytesRequestBodyClient) Base64URL(ctx context.Context, value io.Re
 }
 
 // base64URLCreateRequest creates the Base64URL request.
-func (client *BytesRequestBodyClient) base64URLCreateRequest(ctx context.Context, value io.ReadSeekCloser, _ *BytesRequestBodyClientBase64URLOptions) (*policy.Request, error) {
+func (client *BytesRequestBodyClient) base64URLCreateRequest(ctx context.Context, value []byte, _ *BytesRequestBodyClientBase64URLOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/body/request/base64url"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/octet-stream"}
-	if err := req.SetBody(value, "application/octet-stream"); err != nil {
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsByteArray(req, value, runtime.Base64URLFormat); err != nil {
 		return nil, err
 	}
 	return req, nil

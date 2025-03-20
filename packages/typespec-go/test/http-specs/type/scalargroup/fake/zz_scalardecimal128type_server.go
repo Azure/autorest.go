@@ -97,7 +97,7 @@ func (s *ScalarDecimal128TypeServerTransport) dispatchRequestBody(req *http.Requ
 	if s.srv.RequestBody == nil {
 		return nil, &nonRetriableError{errors.New("fake for method RequestBody not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsText(req)
+	body, err := server.UnmarshalRequestAsJSON[float64](req)
 	if err != nil {
 		return nil, err
 	}
@@ -156,9 +156,12 @@ func (s *ScalarDecimal128TypeServerTransport) dispatchResponseBody(req *http.Req
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsText(respContent, server.GetResponse(respr).Value, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Value, req)
 	if err != nil {
 		return nil, err
+	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("content-type", "application/json")
 	}
 	return resp, nil
 }

@@ -9,9 +9,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"net/http"
-	"strings"
 )
 
 // ScalarDecimal128VerifyClient - Decimal128 type verification
@@ -98,9 +96,8 @@ func (client *ScalarDecimal128VerifyClient) verifyCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	body := streaming.NopCloser(strings.NewReader(body))
-	req.Raw().Header["Content-Type"] = []string{"text/plain"}
-	if err := req.SetBody(body, "text/plain"); err != nil {
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
 	return req, nil

@@ -89,7 +89,7 @@ func (n *NamingUnionEnumServerTransport) dispatchUnionEnumMemberName(req *http.R
 	if n.srv.UnionEnumMemberName == nil {
 		return nil, &nonRetriableError{errors.New("fake for method UnionEnumMemberName not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsText(req)
+	body, err := server.UnmarshalRequestAsJSON[naminggroup.ExtensibleEnum](req)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ func (n *NamingUnionEnumServerTransport) dispatchUnionEnumName(req *http.Request
 	if n.srv.UnionEnumName == nil {
 		return nil, &nonRetriableError{errors.New("fake for method UnionEnumName not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsText(req)
+	body, err := server.UnmarshalRequestAsJSON[naminggroup.ClientExtensibleEnum](req)
 	if err != nil {
 		return nil, err
 	}

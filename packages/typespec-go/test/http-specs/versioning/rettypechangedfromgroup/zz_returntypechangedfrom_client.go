@@ -58,7 +58,7 @@ func (client *ReturnTypeChangedFromClient) testCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Accept"] = []string{"text/plain"}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	body := streaming.NopCloser(strings.NewReader(body))
 	req.Raw().Header["Content-Type"] = []string{"text/plain"}
 	if err := req.SetBody(body, "text/plain"); err != nil {
@@ -70,11 +70,11 @@ func (client *ReturnTypeChangedFromClient) testCreateRequest(ctx context.Context
 // testHandleResponse handles the Test response.
 func (client *ReturnTypeChangedFromClient) testHandleResponse(resp *http.Response) (ReturnTypeChangedFromClientTestResponse, error) {
 	result := ReturnTypeChangedFromClientTestResponse{}
-	body, err := runtime.Payload(resp)
-	if err != nil {
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return ReturnTypeChangedFromClientTestResponse{}, err
 	}
-	txt := string(body)
-	result.Value = &txt
 	return result, nil
 }

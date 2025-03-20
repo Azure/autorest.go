@@ -6,7 +6,8 @@ package corescalargroup
 
 // ScalarAzureLocationScalarClientGetResponse contains the response from method ScalarAzureLocationScalarClient.Get.
 type ScalarAzureLocationScalarClientGetResponse struct {
-	Value *string
+	ContentType *string
+	Value       *string
 }
 
 // ScalarAzureLocationScalarClientHeaderResponse contains the response from method ScalarAzureLocationScalarClient.Header.
