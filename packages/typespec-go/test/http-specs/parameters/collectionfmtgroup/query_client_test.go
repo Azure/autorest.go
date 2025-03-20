@@ -45,11 +45,3 @@ func TestQueryClient_Ssv(t *testing.T) {
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
-
-func TestQueryClient_Tsv(t *testing.T) {
-	client, err := collectionfmtgroup.NewCollectionFormatClient(nil)
-	require.NoError(t, err)
-	resp, err := client.NewCollectionFormatQueryClient().Tsv(context.Background(), []string{"blue", "red", "green"}, nil)
-	require.NoError(t, err)
-	require.Zero(t, resp)
-}
