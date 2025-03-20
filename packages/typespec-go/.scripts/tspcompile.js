@@ -84,7 +84,7 @@ const azureHttpSpecsGroup = {
   //'traitsgroup': ['azure/core/traits'], // requires union support
   'pageablegroup': ['azure/payload/pageable'],
   'commonpropsgroup': ['azure/resource-manager/common-properties'],
-  'resources': ['azure/resource-manager/resources'],
+  'resources': ['azure/resource-manager/resources', 'factory-gather-all-params=false'],
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
   'naminggroup': ['client/naming'],
   'defaultgroup': ['client/structure/default/client.tsp'],
