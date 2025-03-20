@@ -12,23 +12,20 @@ import (
 // ClientFactory is a client factory used to create any client in this module.
 // Don't use this type directly, use NewClientFactory instead.
 type ClientFactory struct {
-	subscriptionID string
-	internal       *arm.Client
+	internal *arm.Client
 }
 
 // NewClientFactory creates a new instance of ClientFactory with the specified values.
 // The parameter values will be propagated to any client created from this factory.
-//   - subscriptionID - The ID of the target subscription. The value must be an UUID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
+func NewClientFactory(credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
 	internal, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	return &ClientFactory{
-		subscriptionID: subscriptionID,
-		internal:       internal,
+		internal: internal,
 	}, nil
 }
 
@@ -40,33 +37,33 @@ func (c *ClientFactory) NewExtensionsResourcesClient() *ExtensionsResourcesClien
 }
 
 // NewLocationResourcesClient creates a new instance of LocationResourcesClient.
-func (c *ClientFactory) NewLocationResourcesClient() *LocationResourcesClient {
+func (c *ClientFactory) NewLocationResourcesClient(subscriptionID string) *LocationResourcesClient {
 	return &LocationResourcesClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewNestedClient creates a new instance of NestedClient.
-func (c *ClientFactory) NewNestedClient() *NestedClient {
+func (c *ClientFactory) NewNestedClient(subscriptionID string) *NestedClient {
 	return &NestedClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewSingletonClient creates a new instance of SingletonClient.
-func (c *ClientFactory) NewSingletonClient() *SingletonClient {
+func (c *ClientFactory) NewSingletonClient(subscriptionID string) *SingletonClient {
 	return &SingletonClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
 
 // NewTopLevelClient creates a new instance of TopLevelClient.
-func (c *ClientFactory) NewTopLevelClient() *TopLevelClient {
+func (c *ClientFactory) NewTopLevelClient(subscriptionID string) *TopLevelClient {
 	return &TopLevelClient{
-		subscriptionID: c.subscriptionID,
+		subscriptionID: subscriptionID,
 		internal:       c.internal,
 	}
 }
