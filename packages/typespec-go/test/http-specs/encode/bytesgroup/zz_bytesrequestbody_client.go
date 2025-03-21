@@ -139,7 +139,7 @@ func (client *BytesRequestBodyClient) customContentTypeCreateRequest(ctx context
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BytesRequestBodyClientDefaultOptions contains the optional parameters for the BytesRequestBodyClient.Default
 //     method.
-func (client *BytesRequestBodyClient) Default(ctx context.Context, value []byte, options *BytesRequestBodyClientDefaultOptions) (BytesRequestBodyClientDefaultResponse, error) {
+func (client *BytesRequestBodyClient) Default(ctx context.Context, value io.ReadSeekCloser, options *BytesRequestBodyClientDefaultOptions) (BytesRequestBodyClientDefaultResponse, error) {
 	var err error
 	const operationName = "BytesRequestBodyClient.Default"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -161,14 +161,14 @@ func (client *BytesRequestBodyClient) Default(ctx context.Context, value []byte,
 }
 
 // defaultCreateRequest creates the Default request.
-func (client *BytesRequestBodyClient) defaultCreateRequest(ctx context.Context, value []byte, _ *BytesRequestBodyClientDefaultOptions) (*policy.Request, error) {
+func (client *BytesRequestBodyClient) defaultCreateRequest(ctx context.Context, value io.ReadSeekCloser, _ *BytesRequestBodyClientDefaultOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/body/request/default"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsByteArray(req, value, runtime.Base64StdFormat); err != nil {
+	req.Raw().Header["Content-Type"] = []string{"application/octet-stream"}
+	if err := req.SetBody(value, "application/octet-stream"); err != nil {
 		return nil, err
 	}
 	return req, nil

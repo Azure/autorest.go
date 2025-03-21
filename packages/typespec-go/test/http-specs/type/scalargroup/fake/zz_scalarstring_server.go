@@ -101,6 +101,9 @@ func (s *ScalarStringServerTransport) dispatchGet(req *http.Request) (*http.Resp
 	if err != nil {
 		return nil, err
 	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("content-type", "application/json")
+	}
 	return resp, nil
 }
 

@@ -32,7 +32,7 @@ type BytesRequestBodyServer struct {
 
 	// Default is the fake for method BytesRequestBodyClient.Default
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Default func(ctx context.Context, value []byte, options *bytesgroup.BytesRequestBodyClientDefaultOptions) (resp azfake.Responder[bytesgroup.BytesRequestBodyClientDefaultResponse], errResp azfake.ErrorResponder)
+	Default func(ctx context.Context, value io.ReadSeekCloser, options *bytesgroup.BytesRequestBodyClientDefaultOptions) (resp azfake.Responder[bytesgroup.BytesRequestBodyClientDefaultResponse], errResp azfake.ErrorResponder)
 
 	// OctetStream is the fake for method BytesRequestBodyClient.OctetStream
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -173,11 +173,7 @@ func (b *BytesRequestBodyServerTransport) dispatchDefault(req *http.Request) (*h
 	if b.srv.Default == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Default not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsByteArray(req, runtime.Base64StdFormat)
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := b.srv.Default(req.Context(), body, nil)
+	respr, errRespr := b.srv.Default(req.Context(), req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

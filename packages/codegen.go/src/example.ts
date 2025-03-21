@@ -304,7 +304,12 @@ function getConstantValue(codeModel: go.CodeModel, type: go.ConstantType, value:
       return `${codeModel.packageName}.${constantValue.name}`
     }
   }
-  return `${value}`;
+  switch (type.type) {
+    case 'string':
+      return `${codeModel.packageName}.${type.name}("${value}")`;
+    default:
+      return `${codeModel.packageName}.${type.name}(${value})`;
+  }
 }
 
 function getTimeValue(type: go.TimeType, value: any, imports?: ImportManager): string {

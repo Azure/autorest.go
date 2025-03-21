@@ -104,7 +104,7 @@ interface AzureLargeInstances {
 @OpenAPI.extension("x-ms-long-running-operation", true)
 @OpenAPI.extension(
   "x-ms-long-running-operation-options",
-  {
+  #{
     `final-state-via`: "location",
   }
 )

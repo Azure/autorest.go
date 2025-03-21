@@ -14,6 +14,11 @@ type UsageModelInOperationClientModelInReadOnlyPropertyResponse struct {
 	RoundTripModel
 }
 
+// UsageModelInOperationClientOrphanModelSerializableResponse contains the response from method UsageModelInOperationClient.OrphanModelSerializable.
+type UsageModelInOperationClientOrphanModelSerializableResponse struct {
+	// placeholder for future response values
+}
+
 // UsageModelInOperationClientOutputToInputOutputResponse contains the response from method UsageModelInOperationClient.OutputToInputOutput.
 type UsageModelInOperationClientOutputToInputOutputResponse struct {
 	// Usage override to roundtrip.

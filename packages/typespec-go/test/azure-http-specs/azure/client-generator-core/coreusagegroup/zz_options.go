@@ -16,6 +16,12 @@ type UsageModelInOperationClientModelInReadOnlyPropertyOptions struct {
 	// placeholder for future optional parameters
 }
 
+// UsageModelInOperationClientOrphanModelSerializableOptions contains the optional parameters for the UsageModelInOperationClient.OrphanModelSerializable
+// method.
+type UsageModelInOperationClientOrphanModelSerializableOptions struct {
+	// placeholder for future optional parameters
+}
+
 // UsageModelInOperationClientOutputToInputOutputOptions contains the optional parameters for the UsageModelInOperationClient.OutputToInputOutput
 // method.
 type UsageModelInOperationClientOutputToInputOutputOptions struct {

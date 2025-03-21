@@ -13,7 +13,7 @@ using Azure.ResourceManager;
 
 @armCommonTypesVersion(CommonTypes.Versions.v5)
 @armProviderNamespace
-@service({
+@service(#{
   title: "Managed DevOps Infrastructure",
 })
 @versioned(Versions)
@@ -73,7 +73,7 @@ model GitHubOrganizationProfile extends OrganizationProfile {
   kind: "GitHub";
 
   @doc("The list of GitHub organizations/repositories the pool should be present in.")
-  @extension("x-ms-identifiers", [])
+  @extension("x-ms-identifiers", #[])
   organizations: GitHubOrganization[];
 }
 @doc("Defines a GitHub organization")
@@ -91,7 +91,7 @@ model AzureDevOpsOrganizationProfile extends OrganizationProfile {
   kind: "AzureDevOps";
 
   @doc("The list of Azure DevOps organizations the pool should be present in.")
-  @extension("x-ms-identifiers", [])
+  @extension("x-ms-identifiers", #[])
   organizations: Organization[];
 
   @doc("The type of permission which determines which accounts are admins on the Azure DevOps pool.")
@@ -146,7 +146,7 @@ model VmssFabricProfile extends FabricProfile {
   sku: DevOpsAzureSku;
 
   @doc("The VM images of the machines in the pool.")
-  @extension("x-ms-identifiers", [])
+  @extension("x-ms-identifiers", #[])
   images: PoolImage[];
 
   @doc("The OS profile of the machines in the pool.")
@@ -171,7 +171,7 @@ model StorageProfile {
   osDiskStorageAccountType?: OsDiskStorageAccountType;
 
   @doc("A list of empty data disks to attach.")
-  @extension("x-ms-identifiers", [])
+  @extension("x-ms-identifiers", #[])
   dataDisks?: DataDisk[];
 }
 
@@ -408,7 +408,7 @@ interface Pools {
     Pool,
     LroHeaders = Azure.Core.Foundations.RetryAfterHeader
   >;
-  @parameterVisibility
+  @patch(#{ implicitOptionality: false })
   update is ArmCustomPatchAsync<
     Pool,
     Azure.ResourceManager.Foundations.ResourceUpdateModel<Pool, PoolProperties>
@@ -425,7 +425,7 @@ model ResourceDetailsObject is ProxyResource<ResourceDetailsObjectProperties> {
   @doc("The name of the resource.")
   @key("resourceName")
   @segment("resources")
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @path
   name: string;
 }
@@ -579,7 +579,7 @@ model ResourceSkuLocationInfo {
   zones: string[];
 
   @doc("Gets details of capabilities available to a SKU in specific zones.")
-  @extension("x-ms-identifiers", [])
+  @extension("x-ms-identifiers", #[])
   zoneDetails: ResourceSkuZoneDetails[];
 }
 
@@ -589,7 +589,7 @@ model ResourceSkuZoneDetails {
   name: string[];
 
   @doc("A list of capabilities that are available for the SKU in the specified list of zones.")
-  @extension("x-ms-identifiers", [])
+  @extension("x-ms-identifiers", #[])
   capabilities: ResourceSkuCapabilities[];
 }
 
@@ -600,7 +600,7 @@ model ResourceSku is ProxyResource<ResourceSkuProperties> {
   @doc("The name of the SKU.")
   @key("skuName")
   @segment("skus")
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @path
   name: string;
 }
@@ -624,15 +624,15 @@ model ResourceSkuProperties {
   locations: azureLocation[];
 
   @doc("A list of locations and availability zones in those locations where the SKU is available")
-  @extension("x-ms-identifiers", [])
+  @extension("x-ms-identifiers", #[])
   locationInfo: ResourceSkuLocationInfo[];
 
   @doc("Name value pairs to describe the capability.")
-  @extension("x-ms-identifiers", [])
+  @extension("x-ms-identifiers", #[])
   capabilities: ResourceSkuCapabilities[];
 
   @doc("The restrictions of the SKU.")
-  @extension("x-ms-identifiers", [])
+  @extension("x-ms-identifiers", #[])
   restrictions: ResourceSkuRestrictions[];
 }
 
@@ -645,7 +645,6 @@ model Location is ProxyResource<LocationProperties> {
   @path
   @segment("locations")
   @doc("Name of the location.")
-  @visibility("public")
   name: string;
 }
 
@@ -678,7 +677,7 @@ interface SubscriptionUsages {
 @parentResource(Location)
 model Quota {
   @doc("The name of the quota.")
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   name?: QuotaName;
 
   @doc("Fully qualified ARM resource id")
@@ -712,7 +711,7 @@ model Image is ProxyResource<ImageProperties> {
   @path
   @segment("images")
   @doc("Name of the image.")
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   name: string;
 }
 
@@ -727,7 +726,7 @@ model ImageVersion is ProxyResource<ImageVersionProperties> {
   @doc("The name of the image version.")
   @key("imageVersionName")
   @segment("versions")
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @path
   name: string;
 }

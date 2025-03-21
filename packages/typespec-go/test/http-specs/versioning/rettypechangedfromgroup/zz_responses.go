@@ -6,5 +6,6 @@ package rettypechangedfromgroup
 
 // ReturnTypeChangedFromClientTestResponse contains the response from method ReturnTypeChangedFromClient.Test.
 type ReturnTypeChangedFromClientTestResponse struct {
-	Value *string
+	ContentType *string
+	Value       *string
 }

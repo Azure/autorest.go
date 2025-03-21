@@ -6,6 +6,39 @@ package commonpropsgroup
 
 import "time"
 
+// ConfidentialResource - Concrete tracked resource types can be created by aliasing this type using a specific property type.
+type ConfidentialResource struct {
+	// REQUIRED; The geo-location where the resource lives
+	Location *string
+
+	// The resource-specific properties for this resource.
+	Properties *ConfidentialResourceProperties
+
+	// Resource tags.
+	Tags map[string]*string
+
+	// READ-ONLY; The name of the ConfidentialResource
+	Name *string
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+// ConfidentialResourceProperties - Confidential Resource Properties.
+type ConfidentialResourceProperties struct {
+	// REQUIRED
+	Username *string
+
+	// READ-ONLY; The status of the last operation.
+	ProvisioningState *string
+}
+
 // ManagedIdentityTrackedResource - Concrete tracked resource types can be created by aliasing this type using a specific
 // property type.
 type ManagedIdentityTrackedResource struct {

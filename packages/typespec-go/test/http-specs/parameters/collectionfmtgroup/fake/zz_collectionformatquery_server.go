@@ -33,10 +33,6 @@ type CollectionFormatQueryServer struct {
 	// Ssv is the fake for method CollectionFormatQueryClient.Ssv
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Ssv func(ctx context.Context, colors []string, options *collectionfmtgroup.CollectionFormatQueryClientSsvOptions) (resp azfake.Responder[collectionfmtgroup.CollectionFormatQueryClientSsvResponse], errResp azfake.ErrorResponder)
-
-	// Tsv is the fake for method CollectionFormatQueryClient.Tsv
-	// HTTP status codes to indicate success: http.StatusNoContent
-	Tsv func(ctx context.Context, colors []string, options *collectionfmtgroup.CollectionFormatQueryClientTsvOptions) (resp azfake.Responder[collectionfmtgroup.CollectionFormatQueryClientTsvResponse], errResp azfake.ErrorResponder)
 }
 
 // NewCollectionFormatQueryServerTransport creates a new instance of CollectionFormatQueryServerTransport with the provided implementation.
@@ -83,8 +79,6 @@ func (c *CollectionFormatQueryServerTransport) dispatchToMethodFake(req *http.Re
 				res.resp, res.err = c.dispatchPipes(req)
 			case "CollectionFormatQueryClient.Ssv":
 				res.resp, res.err = c.dispatchSsv(req)
-			case "CollectionFormatQueryClient.Tsv":
-				res.resp, res.err = c.dispatchTsv(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
 			}
@@ -191,30 +185,6 @@ func (c *CollectionFormatQueryServerTransport) dispatchSsv(req *http.Request) (*
 		return nil, err
 	}
 	respr, errRespr := c.srv.Ssv(req.Context(), splitHelper(colorsParam, " "), nil)
-	if respErr := server.GetError(errRespr, req); respErr != nil {
-		return nil, respErr
-	}
-	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
-	}
-	resp, err := server.NewResponse(respContent, req, nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (c *CollectionFormatQueryServerTransport) dispatchTsv(req *http.Request) (*http.Response, error) {
-	if c.srv.Tsv == nil {
-		return nil, &nonRetriableError{errors.New("fake for method Tsv not implemented")}
-	}
-	qp := req.URL.Query()
-	colorsParam, err := url.QueryUnescape(qp.Get("colors"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := c.srv.Tsv(req.Context(), splitHelper(colorsParam, "\t"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

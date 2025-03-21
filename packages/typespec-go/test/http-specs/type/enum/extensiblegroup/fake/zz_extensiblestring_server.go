@@ -113,6 +113,9 @@ func (e *ExtensibleStringServerTransport) dispatchGetKnownValue(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("content-type", "application/json")
+	}
 	return resp, nil
 }
 
@@ -131,6 +134,9 @@ func (e *ExtensibleStringServerTransport) dispatchGetUnknownValue(req *http.Requ
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Value, req)
 	if err != nil {
 		return nil, err
+	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("content-type", "application/json")
 	}
 	return resp, nil
 }

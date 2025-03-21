@@ -11,7 +11,7 @@
       "tags": {},
       "location": "East US",
       "identity": {
-        "type": "SystemAssigned, UserAssigned",
+        "type": "SystemAssigned,UserAssigned",
         "userAssignedIdentities": {
           "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ManagedIdentity/userAssignedIdentities/contoso-identity": {}
         }
@@ -30,7 +30,7 @@
         "tags": {},
         "location": "East US",
         "identity": {
-          "type": "SystemAssigned, UserAssigned",
+          "type": "SystemAssigned,UserAssigned",
           "principalId": "00000000-0000-0000-0000-000000000000",
           "tenantId": "00000000-0000-0000-0000-000000000000",
           "userAssignedIdentities": {
@@ -53,7 +53,7 @@
         "tags": {},
         "location": "East US",
         "identity": {
-          "type": "SystemAssigned, UserAssigned",
+          "type": "SystemAssigned,UserAssigned",
           "principalId": "00000000-0000-0000-0000-000000000000",
           "tenantId": "00000000-0000-0000-0000-000000000000",
           "userAssignedIdentities": {

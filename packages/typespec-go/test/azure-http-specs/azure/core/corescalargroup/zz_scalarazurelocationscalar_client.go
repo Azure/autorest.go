@@ -58,6 +58,9 @@ func (client *ScalarAzureLocationScalarClient) getCreateRequest(ctx context.Cont
 // getHandleResponse handles the Get response.
 func (client *ScalarAzureLocationScalarClient) getHandleResponse(resp *http.Response) (ScalarAzureLocationScalarClientGetResponse, error) {
 	result := ScalarAzureLocationScalarClientGetResponse{}
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return ScalarAzureLocationScalarClientGetResponse{}, err
 	}

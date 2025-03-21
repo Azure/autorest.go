@@ -405,7 +405,7 @@ model KeyAttributes {
    * softDelete data retention days. Value should be >=7 and <=90 when softDelete
    * enabled, otherwise 0.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   recoverableDays?: int32;
 
   /**
@@ -414,7 +414,7 @@ model KeyAttributes {
    * a privileged user; otherwise, only the system can purge the key, at the end of
    * the retention interval.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   recoveryLevel?: string; // DeletionRecoveryLevel, but this should be treated as an opaque string.
 
   /**
@@ -426,7 +426,7 @@ model KeyAttributes {
   /**
    * The underlying HSM Platform.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   hsmPlatform?: string;
 }
 
@@ -456,14 +456,14 @@ model Attributes {
   /**
    * Creation time in UTC.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @encode("unixTimestamp", int32)
   created?: utcDateTime;
 
   /**
    * Last updated time in UTC.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @encode("unixTimestamp", int32)
   updated?: utcDateTime;
 }
@@ -515,7 +515,7 @@ model KeyBundle {
    * True if the key's lifetime is managed by key vault. If this is a key backing a
    * certificate, then managed will be true.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   managed?: boolean;
 
   /**
@@ -634,7 +634,7 @@ model KeyVaultError {
   /**
    * The key vault server error.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   error?: Error;
 }
 
@@ -645,19 +645,19 @@ model Error {
   /**
    * The error code.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   code?: string;
 
   /**
    * The error message.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   message?: string;
 
   /**
    * The key vault server error.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @encodedName("application/json", "innererror")
   innerError?: Error;
 }
@@ -709,14 +709,14 @@ model DeletedKeyBundle {
   /**
    * The time when the key is scheduled to be purged, in UTC
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @encode("unixTimestamp", int32)
   scheduledPurgeDate?: utcDateTime;
 
   /**
    * The time when the key was deleted, in UTC
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @encode("unixTimestamp", int32)
   deletedDate?: utcDateTime;
 }
@@ -759,14 +759,14 @@ model KeyListResult {
    * A response message containing a list of keys in the key vault along with a link to the next page of keys.
    */
   @items
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   value?: KeyItem[];
 
   /**
    * The URL to get the next set of keys.
    */
   @nextLink
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   nextLink?: string;
 }
 
@@ -793,7 +793,7 @@ model KeyItem {
    * True if the key's lifetime is managed by key vault. If this is a key backing a
    * certificate, then managed will be true.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   managed?: boolean;
 }
 
@@ -804,7 +804,7 @@ model BackupKeyResult {
   /**
    * The backup blob containing the backed up key.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @encode("base64url")
   value?: bytes;
 }
@@ -866,13 +866,13 @@ model KeyOperationResult {
   /**
    * Key identifier
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   kid?: string;
 
   /**
    * The result of the operation.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @encodedName("application/json", "value")
   @encode("base64url")
   result?: bytes;
@@ -881,7 +881,7 @@ model KeyOperationResult {
    * Cryptographically random, non-repeating initialization vector for symmetric
    * algorithms.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @encode("base64url")
   iv?: bytes;
 
@@ -889,7 +889,7 @@ model KeyOperationResult {
    * The tag to authenticate when performing decryption with an authenticated
    * algorithm.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @encodedName("application/json", "tag")
   @encode("base64url")
   authenticationTag?: bytes;
@@ -898,7 +898,7 @@ model KeyOperationResult {
    * Additional data to authenticate but not encrypt/decrypt when using
    * authenticated crypto algorithms.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @encodedName("application/json", "aad")
   @encode("base64url")
   additionalAuthenticatedData?: bytes;
@@ -954,7 +954,7 @@ model KeyVerifyResult {
   /**
    * True if the signature is verified, otherwise false.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   value?: boolean;
 }
 
@@ -987,7 +987,7 @@ model KeyReleaseResult {
   /**
    * A signed object containing the released key.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   value?: string;
 }
 
@@ -1001,14 +1001,14 @@ model DeletedKeyListResult {
    * deleted keys.
    */
   @items
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   value?: DeletedKeyItem[];
 
   /**
    * The URL to get the next set of deleted keys.
    */
   @nextLink
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   nextLink?: string;
 }
 
@@ -1027,14 +1027,14 @@ model DeletedKeyItem {
   /**
    * The time when the key is scheduled to be purged, in UTC
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @encode("unixTimestamp", int32)
   scheduledPurgeDate?: utcDateTime;
 
   /**
    * The time when the key was deleted, in UTC
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @encode("unixTimestamp", int32)
   deletedDate?: utcDateTime;
 }
@@ -1046,7 +1046,7 @@ model KeyRotationPolicy {
   /**
    * The key policy id.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   id?: string;
 
   /**
@@ -1120,14 +1120,14 @@ model KeyRotationPolicyAttributes {
   /**
    * The key rotation policy created time in UTC.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @encode("unixTimestamp", int32)
   created?: utcDateTime;
 
   /**
    * The key rotation policy's last updated time in UTC.
    */
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   @encode("unixTimestamp", int32)
   updated?: utcDateTime;
 }

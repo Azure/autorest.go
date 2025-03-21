@@ -28,8 +28,3 @@ type CollectionFormatQueryClientPipesResponse struct {
 type CollectionFormatQueryClientSsvResponse struct {
 	// placeholder for future response values
 }
-
-// CollectionFormatQueryClientTsvResponse contains the response from method CollectionFormatQueryClient.Tsv.
-type CollectionFormatQueryClientTsvResponse struct {
-	// placeholder for future response values
-}

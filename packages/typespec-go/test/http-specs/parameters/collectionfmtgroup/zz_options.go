@@ -28,8 +28,3 @@ type CollectionFormatQueryClientPipesOptions struct {
 type CollectionFormatQueryClientSsvOptions struct {
 	// placeholder for future optional parameters
 }
-
-// CollectionFormatQueryClientTsvOptions contains the optional parameters for the CollectionFormatQueryClient.Tsv method.
-type CollectionFormatQueryClientTsvOptions struct {
-	// placeholder for future optional parameters
-}

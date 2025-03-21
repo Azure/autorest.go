@@ -57,6 +57,9 @@ func (client *ScalarBooleanClient) getCreateRequest(ctx context.Context, _ *Scal
 // getHandleResponse handles the Get response.
 func (client *ScalarBooleanClient) getHandleResponse(resp *http.Response) (ScalarBooleanClientGetResponse, error) {
 	result := ScalarBooleanClientGetResponse{}
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return ScalarBooleanClientGetResponse{}, err
 	}

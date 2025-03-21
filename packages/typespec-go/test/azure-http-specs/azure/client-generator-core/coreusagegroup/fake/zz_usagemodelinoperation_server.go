@@ -25,6 +25,10 @@ type UsageModelInOperationServer struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	ModelInReadOnlyProperty func(ctx context.Context, body coreusagegroup.RoundTripModel, options *coreusagegroup.UsageModelInOperationClientModelInReadOnlyPropertyOptions) (resp azfake.Responder[coreusagegroup.UsageModelInOperationClientModelInReadOnlyPropertyResponse], errResp azfake.ErrorResponder)
 
+	// OrphanModelSerializable is the fake for method UsageModelInOperationClient.OrphanModelSerializable
+	// HTTP status codes to indicate success: http.StatusNoContent
+	OrphanModelSerializable func(ctx context.Context, body any, options *coreusagegroup.UsageModelInOperationClientOrphanModelSerializableOptions) (resp azfake.Responder[coreusagegroup.UsageModelInOperationClientOrphanModelSerializableResponse], errResp azfake.ErrorResponder)
+
 	// OutputToInputOutput is the fake for method UsageModelInOperationClient.OutputToInputOutput
 	// HTTP status codes to indicate success: http.StatusOK
 	OutputToInputOutput func(ctx context.Context, options *coreusagegroup.UsageModelInOperationClientOutputToInputOutputOptions) (resp azfake.Responder[coreusagegroup.UsageModelInOperationClientOutputToInputOutputResponse], errResp azfake.ErrorResponder)
@@ -70,6 +74,8 @@ func (u *UsageModelInOperationServerTransport) dispatchToMethodFake(req *http.Re
 				res.resp, res.err = u.dispatchInputToInputOutput(req)
 			case "UsageModelInOperationClient.ModelInReadOnlyProperty":
 				res.resp, res.err = u.dispatchModelInReadOnlyProperty(req)
+			case "UsageModelInOperationClient.OrphanModelSerializable":
+				res.resp, res.err = u.dispatchOrphanModelSerializable(req)
 			case "UsageModelInOperationClient.OutputToInputOutput":
 				res.resp, res.err = u.dispatchOutputToInputOutput(req)
 			default:
@@ -131,6 +137,29 @@ func (u *UsageModelInOperationServerTransport) dispatchModelInReadOnlyProperty(r
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).RoundTripModel, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (u *UsageModelInOperationServerTransport) dispatchOrphanModelSerializable(req *http.Request) (*http.Response, error) {
+	if u.srv.OrphanModelSerializable == nil {
+		return nil, &nonRetriableError{errors.New("fake for method OrphanModelSerializable not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[any](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := u.srv.OrphanModelSerializable(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
 	if err != nil {
 		return nil, err
 	}

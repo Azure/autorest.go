@@ -136,6 +136,9 @@ func (client *ScalarDecimal128TypeClient) responseBodyCreateRequest(ctx context.
 // responseBodyHandleResponse handles the ResponseBody response.
 func (client *ScalarDecimal128TypeClient) responseBodyHandleResponse(resp *http.Response) (ScalarDecimal128TypeClientResponseBodyResponse, error) {
 	result := ScalarDecimal128TypeClientResponseBodyResponse{}
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return ScalarDecimal128TypeClientResponseBodyResponse{}, err
 	}

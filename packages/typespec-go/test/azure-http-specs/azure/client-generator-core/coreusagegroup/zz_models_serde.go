@@ -41,7 +41,8 @@ func (i *InputModel) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type OrphanModel.
 func (o OrphanModel) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populate(objectMap, "name", o.Name)
+	populate(objectMap, "desc", o.Description)
+	populate(objectMap, "name", o.ModelName)
 	return json.Marshal(objectMap)
 }
 
@@ -54,8 +55,11 @@ func (o *OrphanModel) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "desc":
+			err = unpopulate(val, "Description", &o.Description)
+			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, "Name", &o.Name)
+			err = unpopulate(val, "ModelName", &o.ModelName)
 			delete(rawMsg, key)
 		}
 		if err != nil {
