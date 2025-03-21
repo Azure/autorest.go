@@ -83,7 +83,7 @@ func (r *ReturnTypeChangedFromServerTransport) dispatchTest(req *http.Request) (
 	if r.srv.Test == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Test not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsText(req)
+	body, err := server.UnmarshalRequestAsJSON[string](req)
 	if err != nil {
 		return nil, err
 	}

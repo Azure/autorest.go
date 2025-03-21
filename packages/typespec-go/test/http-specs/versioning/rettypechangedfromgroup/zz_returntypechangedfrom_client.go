@@ -9,7 +9,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"net/http"
 	"strings"
 )
@@ -59,9 +58,8 @@ func (client *ReturnTypeChangedFromClient) testCreateRequest(ctx context.Context
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	body := streaming.NopCloser(strings.NewReader(body))
-	req.Raw().Header["Content-Type"] = []string{"text/plain"}
-	if err := req.SetBody(body, "text/plain"); err != nil {
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
 	return req, nil

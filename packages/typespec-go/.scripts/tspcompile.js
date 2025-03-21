@@ -67,7 +67,7 @@ const httpSpecsGroup = {
   'madeoptionalgroup': ['versioning/madeOptional'],
   //'removedgroup': ['versioning/removed'], // requires union support
   //'renamedfromgroup': ['versioning/renamedFrom'], // requires union support
-  //'rettypechangedfromgroup': ['versioning/returnTypeChangedFrom'], // fixed: https://github.com/microsoft/typespec/pull/6528
+  'rettypechangedfromgroup': ['versioning/returnTypeChangedFrom'],
   'typechangedfromgroup': ['versioning/typeChangedFrom']
 };
 

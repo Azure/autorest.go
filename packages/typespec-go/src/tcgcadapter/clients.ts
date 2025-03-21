@@ -119,7 +119,7 @@ export class clientAdapter {
             }
           }
           continue;
-        } else if (param.kind === 'method' || param.kind === 'apiVersion') {
+        } else if (param.kind === 'method') {
           // some client params, notably api-version, can be explicitly
           // defined in the operation signature:
           // e.g. op withQueryApiVersion(@query("api-version") apiVersion: string)
