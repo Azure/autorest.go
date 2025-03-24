@@ -68,7 +68,8 @@ const httpSpecsGroup = {
   //'removedgroup': ['versioning/removed'], // requires union support
   //'renamedfromgroup': ['versioning/renamedFrom'], // requires union support
   'rettypechangedfromgroup': ['versioning/returnTypeChangedFrom'],
-  'typechangedfromgroup': ['versioning/typeChangedFrom']
+  'typechangedfromgroup': ['versioning/typeChangedFrom'],
+  'jsonlgroup': ['streaming/jsonl']
 };
 
 const azureHttpSpecsGroup = {
