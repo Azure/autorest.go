@@ -521,8 +521,10 @@ func (client *PageBlobClient) NewGetPageRangesPager(containerName string, blob s
 		},
 		Fetcher: func(ctx context.Context, page *PageBlobClientGetPageRangesResponse) (PageBlobClientGetPageRangesResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextMarker != nil {
 				nextLink = *page.NextMarker
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getPageRangesCreateRequest(ctx, containerName, blob, comp, options, leaseAccessConditions, modifiedAccessConditions)
@@ -655,8 +657,10 @@ func (client *PageBlobClient) NewGetPageRangesDiffPager(containerName string, bl
 		},
 		Fetcher: func(ctx context.Context, page *PageBlobClientGetPageRangesDiffResponse) (PageBlobClientGetPageRangesDiffResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextMarker != nil {
 				nextLink = *page.NextMarker
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getPageRangesDiffCreateRequest(ctx, containerName, blob, comp, options, leaseAccessConditions, modifiedAccessConditions)

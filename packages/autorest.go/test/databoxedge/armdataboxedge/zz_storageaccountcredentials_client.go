@@ -265,8 +265,10 @@ func (client *StorageAccountCredentialsClient) NewListByDataBoxEdgeDevicePager(d
 		Fetcher: func(ctx context.Context, page *StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse) (StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "StorageAccountCredentialsClient.NewListByDataBoxEdgeDevicePager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)

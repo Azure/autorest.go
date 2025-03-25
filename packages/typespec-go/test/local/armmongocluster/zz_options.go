@@ -25,7 +25,8 @@ type FirewallRulesClientGetOptions struct {
 // FirewallRulesClientListByMongoClusterOptions contains the optional parameters for the FirewallRulesClient.NewListByMongoClusterPager
 // method.
 type FirewallRulesClientListByMongoClusterOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // MongoClustersClientBeginCreateOrUpdateOptions contains the optional parameters for the MongoClustersClient.BeginCreateOrUpdate
@@ -67,7 +68,8 @@ type MongoClustersClientGetOptions struct {
 // MongoClustersClientListByResourceGroupOptions contains the optional parameters for the MongoClustersClient.NewListByResourceGroupPager
 // method.
 type MongoClustersClientListByResourceGroupOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // MongoClustersClientListConnectionStringsOptions contains the optional parameters for the MongoClustersClient.ListConnectionStrings
@@ -78,12 +80,14 @@ type MongoClustersClientListConnectionStringsOptions struct {
 
 // MongoClustersClientListOptions contains the optional parameters for the MongoClustersClient.NewListPager method.
 type MongoClustersClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PrivateEndpointConnectionsClientBeginCreateOptions contains the optional parameters for the PrivateEndpointConnectionsClient.BeginCreate
@@ -109,16 +113,19 @@ type PrivateEndpointConnectionsClientGetOptions struct {
 // PrivateEndpointConnectionsClientListByMongoClusterOptions contains the optional parameters for the PrivateEndpointConnectionsClient.NewListByMongoClusterPager
 // method.
 type PrivateEndpointConnectionsClientListByMongoClusterOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PrivateLinksClientListByMongoClusterOptions contains the optional parameters for the PrivateLinksClient.NewListByMongoClusterPager
 // method.
 type PrivateLinksClientListByMongoClusterOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ReplicasClientListByParentOptions contains the optional parameters for the ReplicasClient.NewListByParentPager method.
 type ReplicasClientListByParentOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }

@@ -954,8 +954,10 @@ func (client *ContainerClient) NewListBlobFlatSegmentPager(containerName string,
 		},
 		Fetcher: func(ctx context.Context, page *ContainerClientListBlobFlatSegmentResponse) (ContainerClientListBlobFlatSegmentResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextMarker != nil {
 				nextLink = *page.NextMarker
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listBlobFlatSegmentCreateRequest(ctx, containerName, restype, comp, options)
@@ -1053,8 +1055,10 @@ func (client *ContainerClient) NewListBlobHierarchySegmentPager(containerName st
 		},
 		Fetcher: func(ctx context.Context, page *ContainerClientListBlobHierarchySegmentResponse) (ContainerClientListBlobHierarchySegmentResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextMarker != nil {
 				nextLink = *page.NextMarker
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listBlobHierarchySegmentCreateRequest(ctx, containerName, restype, comp, delimiter, options)
