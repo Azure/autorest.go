@@ -72,7 +72,7 @@
     "@typespec/sse": ">=0.67.1 <1.0.0"
   },
   "peerDependencies": {
-    "@azure-tools/typespec-client-generator-core": ">=0.53.0 <1.0.0",
+    "@azure-tools/typespec-client-generator-core": ">=0.53.1 <1.0.0",
     "@typespec/compiler": ">=0.67.1 <1.0.0",
     "@typespec/http": ">=0.67.1 <1.0.0"
   },
