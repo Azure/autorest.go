@@ -386,3 +386,4 @@ tempoutput
 junit.xml
 
 cadl-ranch-coverage.json
+spec-coverage.json

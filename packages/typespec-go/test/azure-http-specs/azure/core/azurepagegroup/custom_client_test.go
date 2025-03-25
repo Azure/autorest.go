@@ -30,7 +30,7 @@ func TestPageClient_NewListWithCustomPageModelPager(t *testing.T) {
 				Name: to.Ptr("Madge"),
 				Etag: to.Ptr[azcore.ETag]("11bdc430-65e8-45ad-81d9-8ffa60d55b59"),
 			},
-		}, page.UserListResults.Items)
+		}, page.Items)
 		pages++
 	}
 	require.EqualValues(t, 1, pages)

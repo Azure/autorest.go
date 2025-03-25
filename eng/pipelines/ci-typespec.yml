@@ -32,7 +32,7 @@ extends:
       - stage: "TypeSpec_Go_CI"
         jobs:
           - job: "TypeSpec_Go_CI"
-            displayName: "Run TypeSpec Go CI Checks - go1.21"
+            displayName: "Run TypeSpec Go CI Checks"
 
             variables:
               - template: /eng/pipelines/templates/variables/image.yml
@@ -44,7 +44,4 @@ extends:
 
             steps:
               - template: /eng/pipelines/templates/steps/set-env.yaml
-                parameters:
-                  GoVersion: "1.21.4"
-
               - template: /eng/pipelines/templates/steps/build-test-typespec.yaml

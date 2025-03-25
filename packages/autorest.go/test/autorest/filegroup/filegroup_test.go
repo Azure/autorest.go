@@ -6,7 +6,7 @@ package filegroup
 import (
 	"context"
 	"generatortests"
-	"io/ioutil"
+	"io"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
@@ -37,7 +37,7 @@ func TestGetEmptyFile(t *testing.T) {
 	if result.Body == nil {
 		t.Fatal("unexpected nil response body")
 	}
-	result.Body.Close()
+	require.NoError(t, result.Body.Close())
 }
 
 func TestGetFile(t *testing.T) {
@@ -47,9 +47,9 @@ func TestGetFile(t *testing.T) {
 	if result.Body == nil {
 		t.Fatal("unexpected nil response body")
 	}
-	b, err := ioutil.ReadAll(result.Body)
+	b, err := io.ReadAll(result.Body)
 	require.NoError(t, err)
-	result.Body.Close()
+	require.NoError(t, result.Body.Close())
 	if l := len(b); l != 8725 {
 		t.Fatalf("unexpected byte count: want 8725, got %d", l)
 	}
@@ -63,9 +63,9 @@ func TestGetFileLarge(t *testing.T) {
 	if result.Body == nil {
 		t.Fatal("unexpected nil response body")
 	}
-	b, err := ioutil.ReadAll(result.Body)
+	b, err := io.ReadAll(result.Body)
 	require.NoError(t, err)
-	result.Body.Close()
+	require.NoError(t, result.Body.Close())
 	const size = 3000 * 1024 * 1024
 	if l := len(b); l != size {
 		t.Fatalf("unexpected byte count: want %d, got %d", size, l)

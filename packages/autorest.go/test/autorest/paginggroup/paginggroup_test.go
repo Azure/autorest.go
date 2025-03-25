@@ -89,7 +89,7 @@ func TestGetMultiplePagesFailure(t *testing.T) {
 			}
 			break
 		}
-		if len(page.ProductResult.Values) == 0 {
+		if len(page.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -366,7 +366,7 @@ func TestGetWithQueryParams(t *testing.T) {
 		page, err := pager.NextPage(context.Background())
 		require.NoError(t, err)
 		require.NotZero(t, page)
-		require.NotEmpty(t, page.ProductResult.Values)
+		require.NotEmpty(t, page.Values)
 		count++
 	}
 	if r := cmp.Diff(count, 2); r != "" {
@@ -382,7 +382,7 @@ func TestPageWithMaxPageSize(t *testing.T) {
 		page, err := pager.NextPage(context.Background())
 		require.NoError(t, err)
 		require.NotZero(t, page)
-		require.Empty(t, page.ProductResult.Values)
+		require.Empty(t, page.Values)
 		count++
 	}
 	require.EqualValues(t, 1, count)
