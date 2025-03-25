@@ -44,5 +44,4 @@ extends:
 
             steps:
               - template: /eng/pipelines/templates/steps/set-env.yaml
-                parameters:
               - template: /eng/pipelines/templates/steps/build-test-typespec.yaml
