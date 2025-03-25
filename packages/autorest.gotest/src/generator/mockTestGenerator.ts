@@ -77,7 +77,7 @@ export class MockTestDataRender extends BaseDataRender {
     };
     const factoryGatherAllParamsFlag = this.context.testConfig.getValue(Config.factoryGatherAllParams, true);
     if (factoryGatherAllParamsFlag) {
-      this.clientFactoryParams= this.getAllClientParameters();
+      this.clientFactoryParams = this.getAllClientParameters();
     } else {
       this.clientFactoryParams = this.getCommonClientParameters();
     }
