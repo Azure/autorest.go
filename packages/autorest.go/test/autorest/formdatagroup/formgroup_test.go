@@ -6,7 +6,6 @@ package formdatagroup
 import (
 	"context"
 	"io"
-	"io/ioutil"
 	"strings"
 	"testing"
 
@@ -20,7 +19,7 @@ func TestUploadFile(t *testing.T) {
 	s := strings.NewReader("the data")
 	resp, err := client.UploadFile(context.Background(), streaming.NopCloser(s), "sample", nil)
 	require.NoError(t, err)
-	b, err := ioutil.ReadAll(resp.Body)
+	b, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
 	if string(b) != "the data" {
 		t.Fatalf("unexpected result %s", string(b))
@@ -33,7 +32,7 @@ func TestUploadFileViaBody(t *testing.T) {
 	s := strings.NewReader("the data")
 	resp, err := client.UploadFileViaBody(context.Background(), streaming.NopCloser(s), nil)
 	require.NoError(t, err)
-	b, err := ioutil.ReadAll(resp.Body)
+	b, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
 	if string(b) != "the data" {
 		t.Fatalf("unexpected result %s", string(b))
@@ -51,7 +50,7 @@ func TestUploadFiles(t *testing.T) {
 		streaming.NopCloser(s2),
 	}, nil)
 	require.NoError(t, err)
-	b, err := ioutil.ReadAll(resp.Body)
+	b, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
 	if string(b) != "the data" {
 		t.Fatalf("unexpected result %s", string(b))

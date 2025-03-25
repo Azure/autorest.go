@@ -1,5 +1,12 @@
 # Release History
 
+## 4.0.0-preview.71 (unreleased)
+
+### Other Changes
+
+* Upgraded default `azcore` version to `v1.17.1`.
+  * NOTE: this also requires updating the `go` directive in `go.mod` files to version `1.23.0`.
+
 ## 4.0.0-preview.70 (2025-02-21)
 
 ### Other Changes

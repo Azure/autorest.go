@@ -9,6 +9,8 @@
 ### Other Changes
 
 * Updated to the latest tsp toolset.
+* Upgraded default `azcore` version to `v1.17.1`.
+  * NOTE: this also requires updating the `go` directive in `go.mod` files to version `1.23.0`.
 
 ## 0.4.0 (2025-03-12)
 
