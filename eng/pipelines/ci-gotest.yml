@@ -36,7 +36,7 @@ extends:
       - stage: "AutoRest_Go_CI"
         jobs:
           - job: "AutoRest_Go_CI"
-            displayName: "Run AutoRest CI Checks - go1.21"
+            displayName: "Run AutoRest CI Checks"
 
             variables:
               - template: /eng/pipelines/templates/variables/image.yml
@@ -48,7 +48,4 @@ extends:
 
             steps:
               - template: /eng/pipelines/templates/steps/set-env.yaml
-                parameters:
-                  GoVersion: "1.21.4"
-
               - template: /eng/pipelines/templates/steps/build-test-gotest.yaml

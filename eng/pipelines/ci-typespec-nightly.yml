@@ -20,8 +20,6 @@ jobs:
     os: linux
   steps:
     - template: /eng/pipelines/templates/steps/set-env.yaml
-      parameters:
-        GoVersion: "1.21.4"
     - script: |
           npm install -g @typespec/compiler@next
           npx @azure-tools/typespec-bump-deps packages/typespec-go/package.json --add-npm-overrides
