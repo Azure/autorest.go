@@ -1,6 +1,6 @@
 # Release History
 
-## 4.0.0-preview.71 (unreleased)
+## 4.0.0-preview.71 (2025-03-25)
 
 ### Other Changes
 
