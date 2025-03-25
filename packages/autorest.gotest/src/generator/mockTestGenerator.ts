@@ -75,17 +75,15 @@ export class MockTestDataRender extends BaseDataRender {
     this.replaceValueFunc = (rawValue: any): any => {
       return rawValue;
     };
-    let clientFactoryParams: Array<Parameter>;
     const factoryGatherAllParamsFlag = this.context.testConfig.getValue(Config.factoryGatherAllParams, true);
     if (factoryGatherAllParamsFlag) {
-      clientFactoryParams = this.getAllClientParameters();
+      this.clientFactoryParams= this.getAllClientParameters();
     } else {
-      clientFactoryParams = this.getCommonClientParameters();
+      this.clientFactoryParams = this.getCommonClientParameters();
     }
-    this.clientFactoryParams = clientFactoryParams;
     const factoryClientParameters = new Array<Parameter>();
     for (const clientParam of values(<Array<Parameter>>(example.operationGroup.language.go?.clientParams || []))) {
-      if (clientFactoryParams.filter((cp) => cp.language.go!.name === clientParam.language.go!.name).length > 0) {
+      if (this.clientFactoryParams.filter((cp) => cp.language.go!.name === clientParam.language.go!.name).length > 0) {
         continue;
       }
       factoryClientParameters.push(clientParam);
