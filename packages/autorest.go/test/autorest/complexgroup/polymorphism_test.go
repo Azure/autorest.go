@@ -146,10 +146,10 @@ func TestPolymorphismGetComplicated(t *testing.T) {
 	}); r != "" {
 		t.Fatal(r)
 	}
-	if r := cmp.Diff(result.SalmonClassification.GetSalmon(), &expectedSalmon); r != "" {
+	if r := cmp.Diff(result.GetSalmon(), &expectedSalmon); r != "" {
 		t.Fatal(r)
 	}
-	if r := cmp.Diff(result.SalmonClassification.GetFish(), &expectedFish); r != "" {
+	if r := cmp.Diff(result.GetFish(), &expectedFish); r != "" {
 		t.Fatal(r)
 	}
 }
