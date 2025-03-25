@@ -146,7 +146,6 @@ func TestRequestBodyClientCustomContentType(t *testing.T) {
 	pngFile, err := os.OpenFile("../../../../node_modules/@typespec/http-specs/assets/image.png", os.O_RDONLY, 0)
 	require.NoError(t, err)
 	resp, err := client.NewBytesRequestBodyClient().CustomContentType(context.Background(), pngFile, nil)
-	require.NoError(t, pngFile.Close())
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -157,7 +156,6 @@ func TestRequestBodyClientDefault(t *testing.T) {
 	pngFile, err := os.OpenFile("../../../../node_modules/@typespec/http-specs/assets/image.png", os.O_RDONLY, 0)
 	require.NoError(t, err)
 	resp, err := client.NewBytesRequestBodyClient().Default(context.Background(), pngFile, nil)
-	require.NoError(t, pngFile.Close())
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -168,7 +166,6 @@ func TestRequestBodyClientOctetStream(t *testing.T) {
 	pngFile, err := os.OpenFile("../../../../node_modules/@typespec/http-specs/assets/image.png", os.O_RDONLY, 0)
 	require.NoError(t, err)
 	resp, err := client.NewBytesRequestBodyClient().OctetStream(context.Background(), pngFile, nil)
-	require.NoError(t, pngFile.Close())
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
