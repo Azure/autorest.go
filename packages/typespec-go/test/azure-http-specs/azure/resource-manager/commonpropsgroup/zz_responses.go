@@ -4,6 +4,18 @@
 
 package commonpropsgroup
 
+// ErrorClientCreateForUserDefinedErrorResponse contains the response from method ErrorClient.CreateForUserDefinedError.
+type ErrorClientCreateForUserDefinedErrorResponse struct {
+	// Concrete tracked resource types can be created by aliasing this type using a specific property type.
+	ConfidentialResource
+}
+
+// ErrorClientGetForPredefinedErrorResponse contains the response from method ErrorClient.GetForPredefinedError.
+type ErrorClientGetForPredefinedErrorResponse struct {
+	// Concrete tracked resource types can be created by aliasing this type using a specific property type.
+	ConfidentialResource
+}
+
 // ManagedIdentityClientCreateWithSystemAssignedResponse contains the response from method ManagedIdentityClient.CreateWithSystemAssigned.
 type ManagedIdentityClientCreateWithSystemAssignedResponse struct {
 	// Concrete tracked resource types can be created by aliasing this type using a specific property type.

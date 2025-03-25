@@ -15,7 +15,7 @@ using TypeSpec.Versioning;
 
 @doc("Code Signing resource provider api.")
 @armProviderNamespace("Microsoft.CodeSigning")
-@service({
+@service(#{
   title: "CodeSigningManagementClient",
 })
 @versioned(Versions)

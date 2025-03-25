@@ -232,7 +232,7 @@ union EnvironmentServerType {
 @doc("The properties of the service.")
 model ServiceProperties {
   @doc("Provisioning state of the service.")
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   provisioningState?: ProvisioningState;
 
   @added(Versions.v2024_03_15_preview)
@@ -262,7 +262,7 @@ model MetadataSchemaProperties {
   schema: string;
 
   @doc("The assignees")
-  @extension("x-ms-identifiers", [])
+  @extension("x-ms-identifiers", #[])
   assignedTo?: MetadataAssignment[];
 }
 
@@ -310,7 +310,7 @@ model ApiProperties {
   summary?: string;
 
   @doc("Current lifecycle stage of the API.")
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   lifecycleStage?: LifecycleStage;
 
   @doc("Terms of service for the API.")
@@ -318,11 +318,11 @@ model ApiProperties {
 
   @doc("The set of external documentation")
   @maxItems(20)
-  @extension("x-ms-identifiers", [])
+  @extension("x-ms-identifiers", #[])
   externalDocumentation?: ExternalDocumentation[];
 
   @doc("The set of contacts")
-  @extension("x-ms-identifiers", [])
+  @extension("x-ms-identifiers", #[])
   contacts?: Contact[];
 
   @doc("The license information for the API.")
@@ -415,7 +415,7 @@ model ApiDefinitionProperties {
   description?: string;
 
   @doc("API specification details.")
-  @visibility("read")
+  @visibility(Lifecycle.Read)
   specification?: ApiDefinitionPropertiesSpecification;
 }
 

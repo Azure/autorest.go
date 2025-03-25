@@ -68,6 +68,9 @@ func (client *ReturnTypeChangedFromClient) testCreateRequest(ctx context.Context
 // testHandleResponse handles the Test response.
 func (client *ReturnTypeChangedFromClient) testHandleResponse(resp *http.Response) (ReturnTypeChangedFromClientTestResponse, error) {
 	result := ReturnTypeChangedFromClientTestResponse{}
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return ReturnTypeChangedFromClientTestResponse{}, err
 	}

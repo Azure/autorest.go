@@ -2,7 +2,7 @@ import "@azure-tools/typespec-client-generator-core";
 
 using Azure.ClientGenerator.Core;
 
-@service({
+@service(#{
   title: "ModelsOnly",
 })
 namespace ModelsOnly;

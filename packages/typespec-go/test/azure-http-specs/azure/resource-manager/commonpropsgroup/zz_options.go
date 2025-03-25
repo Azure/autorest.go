@@ -4,6 +4,17 @@
 
 package commonpropsgroup
 
+// ErrorClientCreateForUserDefinedErrorOptions contains the optional parameters for the ErrorClient.CreateForUserDefinedError
+// method.
+type ErrorClientCreateForUserDefinedErrorOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ErrorClientGetForPredefinedErrorOptions contains the optional parameters for the ErrorClient.GetForPredefinedError method.
+type ErrorClientGetForPredefinedErrorOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ManagedIdentityClientCreateWithSystemAssignedOptions contains the optional parameters for the ManagedIdentityClient.CreateWithSystemAssigned
 // method.
 type ManagedIdentityClientCreateWithSystemAssignedOptions struct {

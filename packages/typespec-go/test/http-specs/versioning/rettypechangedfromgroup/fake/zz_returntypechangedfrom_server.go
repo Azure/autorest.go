@@ -99,6 +99,9 @@ func (r *ReturnTypeChangedFromServerTransport) dispatchTest(req *http.Request) (
 	if err != nil {
 		return nil, err
 	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("content-type", "application/json")
+	}
 	return resp, nil
 }
 

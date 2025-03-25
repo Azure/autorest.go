@@ -6,7 +6,7 @@ using Azure.ClientGenerator.Core;
 using Azure.Core;
 using TypeSpec.Http;
 
-@service({
+@service(#{
   title: "Internal Pager",
 })
 namespace Microsoft.Internal.Pager;

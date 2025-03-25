@@ -58,6 +58,9 @@ func (client *FixedStringClient) getKnownValueCreateRequest(ctx context.Context,
 // getKnownValueHandleResponse handles the GetKnownValue response.
 func (client *FixedStringClient) getKnownValueHandleResponse(resp *http.Response) (FixedStringClientGetKnownValueResponse, error) {
 	result := FixedStringClientGetKnownValueResponse{}
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return FixedStringClientGetKnownValueResponse{}, err
 	}

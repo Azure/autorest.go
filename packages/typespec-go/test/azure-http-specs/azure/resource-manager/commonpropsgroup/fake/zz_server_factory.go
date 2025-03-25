@@ -15,6 +15,9 @@ import (
 
 // ServerFactory is a fake server for instances of the commonpropsgroup.ClientFactory type.
 type ServerFactory struct {
+	// ErrorServer contains the fakes for client ErrorClient
+	ErrorServer ErrorServer
+
 	// ManagedIdentityServer contains the fakes for client ManagedIdentityClient
 	ManagedIdentityServer ManagedIdentityServer
 }
@@ -33,6 +36,7 @@ func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
 type ServerFactoryTransport struct {
 	srv                     *ServerFactory
 	trMu                    sync.Mutex
+	trErrorServer           *ErrorServerTransport
 	trManagedIdentityServer *ManagedIdentityServerTransport
 }
 
@@ -49,6 +53,9 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	var err error
 
 	switch client {
+	case "ErrorClient":
+		initServer(s, &s.trErrorServer, func() *ErrorServerTransport { return NewErrorServerTransport(&s.srv.ErrorServer) })
+		resp, err = s.trErrorServer.Do(req)
 	case "ManagedIdentityClient":
 		initServer(s, &s.trManagedIdentityServer, func() *ManagedIdentityServerTransport {
 			return NewManagedIdentityServerTransport(&s.srv.ManagedIdentityServer)
