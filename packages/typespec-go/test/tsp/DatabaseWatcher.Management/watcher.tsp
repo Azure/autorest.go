@@ -47,7 +47,7 @@ model Watcher is TrackedResource<WatcherProperties> {
   @segment("watchers")
   name: string;
 
-  ...Legacy.ManagedServiceIdentityV4Property;
+  ... Azure.ResourceManager.Legacy.ManagedServiceIdentityV4Property;
 }
 
 @doc("The RP specific properties of the resource.")
