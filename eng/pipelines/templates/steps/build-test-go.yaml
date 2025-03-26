@@ -49,7 +49,7 @@ steps:
         }
       }
       exit $exit
-    displayName: "Build"
+    displayName: "Build - go$(GoVersion)"
 
   - pwsh: |
       $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
@@ -116,11 +116,11 @@ steps:
       pushd ./packages/autorest.go/node_modules/@microsoft.azure/autorest.testserver
       npm stop
       popd
-    displayName: "Run Acceptance Tests"
+    displayName: "Run Acceptance Tests - go$(GoVersion)"
     timeoutInMinutes: 10
 
   - pwsh: npm test
-    displayName: "Run Unit Tests"
+    displayName: "Run Unit Tests - go$(GoVersion)"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
 
   - task: PublishTestResults@2

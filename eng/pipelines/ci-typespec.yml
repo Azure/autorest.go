@@ -32,7 +32,7 @@ extends:
       - stage: "TypeSpec_Go_CI"
         jobs:
           - job: "TypeSpec_Go_CI"
-            displayName: "Run TypeSpec Go CI Checks - $(GoVersion)"
+            displayName: "Run TypeSpec Go CI Checks - "
 
             variables:
               - template: /eng/pipelines/templates/variables/globals.yml

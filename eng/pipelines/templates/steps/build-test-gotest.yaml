@@ -12,7 +12,7 @@ steps:
   - script: |
       export PATH=$PATH:$HOME/go/bin
       npm test
-    displayName: "Run Tests"
+    displayName: "Run Tests - go$(GoVersion)"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.gotest
 
   - task: PublishTestResults@2

@@ -11,6 +11,7 @@ pr: none
 
 jobs:
 - job: Go_Nightly_Build
+  displayName: "Run TypeSpec Go CI Checks - "
 
   variables:
     - template: /eng/pipelines/templates/variables/globals.yml
