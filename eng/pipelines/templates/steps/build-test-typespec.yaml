@@ -65,7 +65,7 @@ steps:
         popd
       }
       rush spector --stop
-    displayName: "Run All Tests"
+    displayName: "Run All Tests - go$(GoVersion)"
     timeoutInMinutes: 10
 
   - task: PublishTestResults@2

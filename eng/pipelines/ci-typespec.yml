@@ -32,15 +32,23 @@ extends:
       - stage: "TypeSpec_Go_CI"
         jobs:
           - job: "TypeSpec_Go_CI"
-            displayName: "Run TypeSpec Go CI Checks"
+            displayName: "Run TypeSpec Go CI Checks - "
 
             variables:
+              - template: /eng/pipelines/templates/variables/globals.yml
               - template: /eng/pipelines/templates/variables/image.yml
 
             pool:
               name: "$(LINUXNEXTPOOL)"
               image: "$(LINUXNEXTVMIMAGE)"
               os: linux
+
+            strategy:
+              matrix:
+                GoVersionLatest:
+                  GoVersion: $(GoVersionLatest)
+                GoVersionPrevious:
+                  GoVersion: $(GoVersionPrevious)
 
             steps:
               - template: /eng/pipelines/templates/steps/set-env.yaml

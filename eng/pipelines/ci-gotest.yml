@@ -36,15 +36,23 @@ extends:
       - stage: "AutoRest_Go_CI"
         jobs:
           - job: "AutoRest_Go_CI"
-            displayName: "Run AutoRest CI Checks"
+            displayName: "Run AutoRest CI Checks - "
 
             variables:
+              - template: /eng/pipelines/templates/variables/globals.yml
               - template: /eng/pipelines/templates/variables/image.yml
 
             pool:
               name: "$(LINUXNEXTPOOL)"
               image: "$(LINUXNEXTVMIMAGE)"
               os: linux
+
+            strategy:
+              matrix:
+                GoVersionLatest:
+                  GoVersion: $(GoVersionLatest)
+                GoVersionPrevious:
+                  GoVersion: $(GoVersionPrevious)
 
             steps:
               - template: /eng/pipelines/templates/steps/set-env.yaml

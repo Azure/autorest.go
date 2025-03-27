@@ -11,13 +11,26 @@ pr: none
 
 jobs:
 - job: Go_Nightly_Build
-  timeoutInMinutes: 120
+  displayName: "Run TypeSpec Go CI Checks - "
+
   variables:
+    - template: /eng/pipelines/templates/variables/globals.yml
     - template: /eng/pipelines/templates/variables/image.yml
+
   pool:
     name: "$(LINUXNEXTPOOL)"
     image: "$(LINUXNEXTVMIMAGE)"
     os: linux
+
+  strategy:
+    matrix:
+      GoVersionLatest:
+        GoVersion: $(GoVersionLatest)
+      GoVersionPrevious:
+        GoVersion: $(GoVersionPrevious)
+
+  timeoutInMinutes: 120
+
   steps:
     - template: /eng/pipelines/templates/steps/set-env.yaml
     - script: |

@@ -1,7 +1,7 @@
 parameters:
-  NodeVersion: "20.x"
-  GoVersion: "1.24.1"
-  GoLintCLIVersion: 'v1.64.6'
+  NodeVersion: "$(NodeVersion)"
+  GoVersion: "$(GoVersion)"
+  GoLintCLIVersion: "$(GoLintCLIVersion)"
 
 steps:
   - task: NodeTool@0
