@@ -84,7 +84,7 @@ const azureHttpSpecsGroup = {
   //'traitsgroup': ['azure/core/traits'], // requires union support
   'pageablegroup': ['azure/payload/pageable'],
   'commonpropsgroup': ['azure/resource-manager/common-properties'],
-  'resources': ['azure/resource-manager/resources'],
+  'resources': ['azure/resource-manager/resources', 'factory-gather-all-params=false'],
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
   'naminggroup': ['client/naming'],
   'defaultgroup': ['client/structure/default/client.tsp'],
@@ -141,7 +141,7 @@ const armdatabasewatcher = pkgRoot + 'test/tsp/DatabaseWatcher.Management';
 generate('armdatabasewatcher', armdatabasewatcher, 'test/local/armdatabasewatcher', ['fix-const-stuttering=false', `examples-directory=${armdatabasewatcher}/examples`, 'generate-samples=true']);
 
 const armloadtestservice = pkgRoot + 'test/tsp/LoadTestService.Management';
-generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice', [`examples-directory=${armloadtestservice}/examples`, 'generate-samples=true', 'factory-gather-all-params=true']);
+generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice', [`examples-directory=${armloadtestservice}/examples`, 'generate-samples=true', 'factory-gather-all-params=false']);
 
 const armdevopsinfrastructure = pkgRoot + 'test/tsp/Microsoft.DevOpsInfrastructure';
 generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/local/armdevopsinfrastructure', [`examples-directory=${armdevopsinfrastructure}/examples`, 'generate-samples=true']);

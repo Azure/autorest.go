@@ -29,6 +29,15 @@ export function getClientParametersSig(group: OperationGroup): Array<[string, st
   return params;
 }
 
+export function getParametersSig(params: Array<Parameter>): Array<[string, string, Parameter]> {
+  const result = [];
+
+  for (const parameter of values(<Array<Parameter>>(params || []))) {
+    result.push([parameter.language.go.name, formatParameterTypeName(parameter), parameter]);
+  }
+  return result;
+}
+
 // homo structured with generateReturnsInfo() in autorest.go
 export function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): Array<string> {
   let returnType = getResponseEnvelopeName(op);
