@@ -152,12 +152,7 @@ export class clientAdapter {
       }
     }
     for (const sdkMethod of sdkClient.methods) {
-      if (sdkMethod.kind === 'clientaccessor') {
-        // skip this for now as SdkClientAccessor has been deprecated
-        continue;
-      } else {
-        this.adaptMethod(sdkMethod, goClient);
-      }
+      this.adaptMethod(sdkMethod, goClient);
     }
 
     if (this.ta.codeModel.type === 'azure-arm' && goClient.clientAccessors.length > 0 && goClient.methods.length === 0) {
@@ -822,7 +817,7 @@ export class clientAdapter {
   private adaptHttpOperationExamples(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method, paramMapping: Map<tcgc.SdkHttpParameter, Array<go.Parameter>>) {
     if (sdkMethod.operation.examples) {
       for (const example of sdkMethod.operation.examples) {
-        const goExample = new go.MethodExample(example.name, {summary: example.description}, example.filePath);
+        const goExample = new go.MethodExample(example.name, {summary: example.doc}, example.filePath);
         for (const param of example.parameters) {
           if (param.parameter.isApiVersionParam && param.parameter.clientDefaultValue) {
             // skip the api-version param as it's not a formal parameter
