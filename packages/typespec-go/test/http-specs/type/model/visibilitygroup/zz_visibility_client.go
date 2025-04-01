@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strconv"
 )
 
 // VisibilityClient - Illustrates models with visibility properties.
@@ -59,13 +60,13 @@ func (client *VisibilityClient) deleteModelCreateRequest(ctx context.Context, in
 // GetModel -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - VisibilityClientGetModelOptions contains the optional parameters for the VisibilityClient.GetModel method.
-func (client *VisibilityClient) GetModel(ctx context.Context, input VisibilityModel, options *VisibilityClientGetModelOptions) (VisibilityClientGetModelResponse, error) {
+func (client *VisibilityClient) GetModel(ctx context.Context, queryProp int32, options *VisibilityClientGetModelOptions) (VisibilityClientGetModelResponse, error) {
 	var err error
 	const operationName = "VisibilityClient.GetModel"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getModelCreateRequest(ctx, input, options)
+	req, err := client.getModelCreateRequest(ctx, queryProp, options)
 	if err != nil {
 		return VisibilityClientGetModelResponse{}, err
 	}
@@ -82,17 +83,16 @@ func (client *VisibilityClient) GetModel(ctx context.Context, input VisibilityMo
 }
 
 // getModelCreateRequest creates the GetModel request.
-func (client *VisibilityClient) getModelCreateRequest(ctx context.Context, input VisibilityModel, _ *VisibilityClientGetModelOptions) (*policy.Request, error) {
+func (client *VisibilityClient) getModelCreateRequest(ctx context.Context, queryProp int32, _ *VisibilityClientGetModelOptions) (*policy.Request, error) {
 	urlPath := "/type/model/visibility"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("queryProp", strconv.FormatInt(int64(queryProp), 10))
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, input); err != nil {
-		return nil, err
-	}
 	return req, nil
 }
 
@@ -106,13 +106,13 @@ func (client *VisibilityClient) getModelHandleResponse(resp *http.Response) (Vis
 }
 
 // - options - VisibilityClientHeadModelOptions contains the optional parameters for the VisibilityClient.HeadModel method.
-func (client *VisibilityClient) HeadModel(ctx context.Context, input VisibilityModel, options *VisibilityClientHeadModelOptions) (VisibilityClientHeadModelResponse, error) {
+func (client *VisibilityClient) HeadModel(ctx context.Context, queryProp int32, options *VisibilityClientHeadModelOptions) (VisibilityClientHeadModelResponse, error) {
 	var err error
 	const operationName = "VisibilityClient.HeadModel"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.headModelCreateRequest(ctx, input, options)
+	req, err := client.headModelCreateRequest(ctx, queryProp, options)
 	if err != nil {
 		return VisibilityClientHeadModelResponse{}, err
 	}
@@ -128,16 +128,15 @@ func (client *VisibilityClient) HeadModel(ctx context.Context, input VisibilityM
 }
 
 // headModelCreateRequest creates the HeadModel request.
-func (client *VisibilityClient) headModelCreateRequest(ctx context.Context, input VisibilityModel, _ *VisibilityClientHeadModelOptions) (*policy.Request, error) {
+func (client *VisibilityClient) headModelCreateRequest(ctx context.Context, queryProp int32, _ *VisibilityClientHeadModelOptions) (*policy.Request, error) {
 	urlPath := "/type/model/visibility"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, input); err != nil {
-		return nil, err
-	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("queryProp", strconv.FormatInt(int64(queryProp), 10))
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 

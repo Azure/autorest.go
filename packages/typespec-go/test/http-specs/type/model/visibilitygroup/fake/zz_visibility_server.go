@@ -12,6 +12,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
+	"strconv"
 	"visibilitygroup"
 )
 
@@ -23,11 +25,11 @@ type VisibilityServer struct {
 
 	// GetModel is the fake for method VisibilityClient.GetModel
 	// HTTP status codes to indicate success: http.StatusOK
-	GetModel func(ctx context.Context, input visibilitygroup.VisibilityModel, options *visibilitygroup.VisibilityClientGetModelOptions) (resp azfake.Responder[visibilitygroup.VisibilityClientGetModelResponse], errResp azfake.ErrorResponder)
+	GetModel func(ctx context.Context, queryProp int32, options *visibilitygroup.VisibilityClientGetModelOptions) (resp azfake.Responder[visibilitygroup.VisibilityClientGetModelResponse], errResp azfake.ErrorResponder)
 
 	// HeadModel is the fake for method VisibilityClient.HeadModel
 	// HTTP status codes to indicate success: http.StatusOK
-	HeadModel func(ctx context.Context, input visibilitygroup.VisibilityModel, options *visibilitygroup.VisibilityClientHeadModelOptions) (resp azfake.Responder[visibilitygroup.VisibilityClientHeadModelResponse], errResp azfake.ErrorResponder)
+	HeadModel func(ctx context.Context, queryProp int32, options *visibilitygroup.VisibilityClientHeadModelOptions) (resp azfake.Responder[visibilitygroup.VisibilityClientHeadModelResponse], errResp azfake.ErrorResponder)
 
 	// PatchModel is the fake for method VisibilityClient.PatchModel
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -142,11 +144,22 @@ func (v *VisibilityServerTransport) dispatchGetModel(req *http.Request) (*http.R
 	if v.srv.GetModel == nil {
 		return nil, &nonRetriableError{errors.New("fake for method GetModel not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[visibilitygroup.VisibilityModel](req)
+	qp := req.URL.Query()
+	queryPropUnescaped, err := url.QueryUnescape(qp.Get("queryProp"))
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.GetModel(req.Context(), body, nil)
+	queryPropParam, err := parseWithCast(queryPropUnescaped, func(v string) (int32, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
+		}
+		return int32(p), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := v.srv.GetModel(req.Context(), queryPropParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -165,11 +178,22 @@ func (v *VisibilityServerTransport) dispatchHeadModel(req *http.Request) (*http.
 	if v.srv.HeadModel == nil {
 		return nil, &nonRetriableError{errors.New("fake for method HeadModel not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[visibilitygroup.VisibilityModel](req)
+	qp := req.URL.Query()
+	queryPropUnescaped, err := url.QueryUnescape(qp.Get("queryProp"))
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.HeadModel(req.Context(), body, nil)
+	queryPropParam, err := parseWithCast(queryPropUnescaped, func(v string) (int32, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
+		}
+		return int32(p), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := v.srv.HeadModel(req.Context(), queryPropParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

@@ -319,6 +319,13 @@ export class clientAdapter {
       // operation param. each param corresponds to a field within the operation param.
       let opParam = values(allOpParams).where((opParam: OperationParamType) => {
         return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType) => {
+          if (param.type.kind === 'model') {
+            for (const property of param.type.properties) {
+              if (property === methodParam) {
+                return true;
+              }
+            }
+          }
           return methodParam === param;
         }).any();
       }).first();
