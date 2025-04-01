@@ -43,7 +43,7 @@ export class clientAdapter {
   }
 
   private recursiveAdaptClient(sdkClient: tcgc.SdkClientType<tcgc.SdkHttpOperation>, parent?: go.Client): go.Client | undefined {
-    if (sdkClient.methods.length === 0) {
+    if (sdkClient.methods.length === 0 && (sdkClient.children === undefined || sdkClient.children.length === 0)) {
       // skip generating empty clients
       return undefined;
     }

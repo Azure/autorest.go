@@ -99,6 +99,10 @@ export class typeAdapter {
           // TODO: follow up with tcgc to see if we can remove the entry.
           continue;
         }
+        if (prop.kind === 'query') {
+          // skip query params for now, wait for confirming visibility behavior
+          continue;
+        }
         const field = this.getModelField(prop, modelType.tcgc);
         modelType.go.fields.push(field);
       }
