@@ -28,9 +28,7 @@ func TestVisibilityClientDeleteModel(t *testing.T) {
 func TestVisibilityClientGetModel(t *testing.T) {
 	client, err := visibilitygroup.NewVisibilityClient(nil)
 	require.NoError(t, err)
-	resp, err := client.GetModel(context.Background(), visibilitygroup.VisibilityModel{
-		QueryProp: to.Ptr[int32](123),
-	}, nil)
+	resp, err := client.GetModel(context.Background(), 123, nil)
 	require.NoError(t, err)
 	require.EqualValues(t, visibilitygroup.VisibilityModel{
 		ReadProp: to.Ptr("abc"),
@@ -40,9 +38,7 @@ func TestVisibilityClientGetModel(t *testing.T) {
 func TestVisibilityClientHeadModel(t *testing.T) {
 	client, err := visibilitygroup.NewVisibilityClient(nil)
 	require.NoError(t, err)
-	resp, err := client.HeadModel(context.Background(), visibilitygroup.VisibilityModel{
-		QueryProp: to.Ptr[int32](123),
-	}, nil)
+	resp, err := client.HeadModel(context.Background(), 123, nil)
 	require.NoError(t, err)
 	require.True(t, resp.Success)
 }

@@ -11,6 +11,33 @@ import (
 	"reflect"
 )
 
+// MarshalJSON implements the json.Marshaller interface for type ActionParameterBody.
+func (a ActionParameterBody) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "action", a.Action)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ActionParameterBody.
+func (a *ActionParameterBody) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", a, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "action":
+			err = unpopulate(val, "Action", &a.Action)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", a, err)
+		}
+	}
+	return nil
+}
+
 // MarshalJSON implements the json.Marshaller interface for type ActionRequest.
 func (a ActionRequest) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
