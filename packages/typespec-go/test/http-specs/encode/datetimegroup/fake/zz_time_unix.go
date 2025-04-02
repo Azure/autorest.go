@@ -7,8 +7,6 @@ package fake
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"reflect"
 	"time"
 )
 
@@ -29,28 +27,4 @@ func (t *timeUnix) UnmarshalJSON(data []byte) error {
 
 func (t timeUnix) String() string {
 	return fmt.Sprintf("%d", time.Time(t).Unix())
-}
-
-func populateTimeUnix(m map[string]any, k string, t *time.Time) {
-	if t == nil {
-		return
-	} else if azcore.IsNullValue(t) {
-		m[k] = nil
-		return
-	} else if reflect.ValueOf(t).IsNil() {
-		return
-	}
-	m[k] = (*timeUnix)(t)
-}
-
-func unpopulateTimeUnix(data json.RawMessage, fn string, t **time.Time) error {
-	if data == nil || string(data) == "null" {
-		return nil
-	}
-	var aux timeUnix
-	if err := json.Unmarshal(data, &aux); err != nil {
-		return fmt.Errorf("struct field %s: %v", fn, err)
-	}
-	*t = (*time.Time)(&aux)
-	return nil
 }
