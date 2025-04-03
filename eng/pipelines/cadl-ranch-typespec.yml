@@ -11,6 +11,7 @@ pr: none
 variables:
   - name: spector
     value: $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@typespec/spector/node_modules/.bin/tsp-spector
+  - template: /eng/pipelines/templates/variables/globals.yml
 
 steps:
   - template: /eng/pipelines/templates/steps/set-env.yaml
