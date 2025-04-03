@@ -13,6 +13,13 @@ variables:
     value: $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@typespec/spector/node_modules/.bin/tsp-spector
   - template: /eng/pipelines/templates/variables/globals.yml
 
+strategy:
+  matrix:
+    GoVersionLatest:
+      GoVersion: $(GoVersionLatest)
+    GoVersionPrevious:
+      GoVersion: $(GoVersionPrevious)
+
 steps:
   - template: /eng/pipelines/templates/steps/set-env.yaml
 
