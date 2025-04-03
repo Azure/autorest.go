@@ -43,7 +43,7 @@ export class clientAdapter {
   }
 
   private recursiveAdaptClient(sdkClient: tcgc.SdkClientType<tcgc.SdkHttpOperation>, parent?: go.Client): go.Client | undefined {
-    if (sdkClient.methods.length === 0) {
+    if (sdkClient.methods.length === 0 && (sdkClient.children === undefined || sdkClient.children.length === 0)) {
       // skip generating empty clients
       return undefined;
     }
@@ -152,12 +152,7 @@ export class clientAdapter {
       }
     }
     for (const sdkMethod of sdkClient.methods) {
-      if (sdkMethod.kind === 'clientaccessor') {
-        // skip this for now as SdkClientAccessor has been deprecated
-        continue;
-      } else {
-        this.adaptMethod(sdkMethod, goClient);
-      }
+      this.adaptMethod(sdkMethod, goClient);
     }
 
     if (this.ta.codeModel.type === 'azure-arm' && goClient.clientAccessors.length > 0 && goClient.methods.length === 0) {
@@ -324,6 +319,13 @@ export class clientAdapter {
       // operation param. each param corresponds to a field within the operation param.
       let opParam = values(allOpParams).where((opParam: OperationParamType) => {
         return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType) => {
+          if (param.type.kind === 'model') {
+            for (const property of param.type.properties) {
+              if (property === methodParam) {
+                return true;
+              }
+            }
+          }
           return methodParam === param;
         }).any();
       }).first();
@@ -822,7 +824,7 @@ export class clientAdapter {
   private adaptHttpOperationExamples(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method, paramMapping: Map<tcgc.SdkHttpParameter, Array<go.Parameter>>) {
     if (sdkMethod.operation.examples) {
       for (const example of sdkMethod.operation.examples) {
-        const goExample = new go.MethodExample(example.name, {summary: example.description}, example.filePath);
+        const goExample = new go.MethodExample(example.name, {summary: example.doc}, example.filePath);
         for (const param of example.parameters) {
           if (param.parameter.isApiVersionParam && param.parameter.clientDefaultValue) {
             // skip the api-version param as it's not a formal parameter

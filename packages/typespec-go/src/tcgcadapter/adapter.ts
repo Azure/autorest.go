@@ -96,10 +96,7 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
       }
     }
     for (const sdkMethod of client.methods) {
-      if (sdkMethod.kind === 'clientaccessor') {
-        // skip this for now as SdkClientAccessor has been deprecated
-        continue;
-      } else if (sdkMethod.kind !== 'paging') {
+      if (sdkMethod.kind !== 'paging') {
         continue;
       }
 

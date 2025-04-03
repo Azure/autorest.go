@@ -6,6 +6,11 @@ package armtest
 
 import "time"
 
+type ActionParameterBody struct {
+	// REQUIRED
+	Action *ActionRequest
+}
+
 // ActionRequest - The request of the action.
 type ActionRequest struct {
 	// REQUIRED; The prop of the action.

@@ -110,7 +110,7 @@ func (client *BytesResponseBodyClient) base64URLHandleResponse(resp *http.Respon
 	if val := resp.Header.Get("content-type"); val != "" {
 		result.ContentType = &val
 	}
-	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
+	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64URLFormat); err != nil {
 		return BytesResponseBodyClientBase64URLResponse{}, err
 	}
 	return result, nil

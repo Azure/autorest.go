@@ -158,7 +158,7 @@ func (client *PageClient) NewListWithParametersPager(bodyInput ListItemInputBody
 // listWithParametersCreateRequest creates the ListWithParameters request.
 func (client *PageClient) listWithParametersCreateRequest(ctx context.Context, bodyInput ListItemInputBody, options *PageClientListWithParametersOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/page/parameters"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
