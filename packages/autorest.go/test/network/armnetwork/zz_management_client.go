@@ -201,8 +201,10 @@ func (client *ManagementClient) NewDisconnectActiveSessionsPager(resourceGroupNa
 		Fetcher: func(ctx context.Context, page *ManagementClientDisconnectActiveSessionsResponse) (ManagementClientDisconnectActiveSessionsResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ManagementClient.NewDisconnectActiveSessionsPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.disconnectActiveSessionsCreateRequest(ctx, resourceGroupName, bastionHostName, sessionIDs, options)
@@ -515,8 +517,10 @@ func (client *ManagementClient) NewGetBastionShareableLinkPager(resourceGroupNam
 		Fetcher: func(ctx context.Context, page *ManagementClientGetBastionShareableLinkResponse) (ManagementClientGetBastionShareableLinkResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ManagementClient.NewGetBastionShareableLinkPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getBastionShareableLinkCreateRequest(ctx, resourceGroupName, bastionHostName, bslRequest, options)

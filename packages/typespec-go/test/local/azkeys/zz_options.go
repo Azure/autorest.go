@@ -36,6 +36,9 @@ type KeyVaultClientGetDeletedKeyOptions struct {
 
 // KeyVaultClientGetDeletedKeysOptions contains the optional parameters for the KeyVaultClient.NewGetDeletedKeysPager method.
 type KeyVaultClientGetDeletedKeysOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Maximum number of results to return in a page. If not specified the service
 	// will return up to 25 results.
 	Maxresults *int32
@@ -54,6 +57,9 @@ type KeyVaultClientGetKeyRotationPolicyOptions struct {
 
 // KeyVaultClientGetKeyVersionsOptions contains the optional parameters for the KeyVaultClient.NewGetKeyVersionsPager method.
 type KeyVaultClientGetKeyVersionsOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Maximum number of results to return in a page. If not specified the service
 	// will return up to 25 results.
 	Maxresults *int32
@@ -61,6 +67,9 @@ type KeyVaultClientGetKeyVersionsOptions struct {
 
 // KeyVaultClientGetKeysOptions contains the optional parameters for the KeyVaultClient.NewGetKeysPager method.
 type KeyVaultClientGetKeysOptions struct {
+	// Resumes the paging operation from the provided link.
+	NextLink string
+
 	// Maximum number of results to return in a page. If not specified the service
 	// will return up to 25 results.
 	Maxresults *int32

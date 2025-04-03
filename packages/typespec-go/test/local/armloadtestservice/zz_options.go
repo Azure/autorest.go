@@ -22,7 +22,8 @@ type LoadTestMappingsClientGetOptions struct {
 
 // LoadTestMappingsClientListOptions contains the optional parameters for the LoadTestMappingsClient.NewListPager method.
 type LoadTestMappingsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // LoadTestMappingsClientUpdateOptions contains the optional parameters for the LoadTestMappingsClient.Update method.
@@ -50,7 +51,8 @@ type LoadTestProfileMappingsClientGetOptions struct {
 // LoadTestProfileMappingsClientListOptions contains the optional parameters for the LoadTestProfileMappingsClient.NewListPager
 // method.
 type LoadTestProfileMappingsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // LoadTestProfileMappingsClientUpdateOptions contains the optional parameters for the LoadTestProfileMappingsClient.Update
@@ -86,24 +88,28 @@ type LoadTestsClientGetOptions struct {
 // LoadTestsClientListByResourceGroupOptions contains the optional parameters for the LoadTestsClient.NewListByResourceGroupPager
 // method.
 type LoadTestsClientListByResourceGroupOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // LoadTestsClientListBySubscriptionOptions contains the optional parameters for the LoadTestsClient.NewListBySubscriptionPager
 // method.
 type LoadTestsClientListBySubscriptionOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // LoadTestsClientOutboundNetworkDependenciesEndpointsOptions contains the optional parameters for the LoadTestsClient.NewOutboundNetworkDependenciesEndpointsPager
 // method.
 type LoadTestsClientOutboundNetworkDependenciesEndpointsOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // QuotasClientCheckAvailabilityOptions contains the optional parameters for the QuotasClient.CheckAvailability method.
@@ -118,5 +124,6 @@ type QuotasClientGetOptions struct {
 
 // QuotasClientListOptions contains the optional parameters for the QuotasClient.NewListPager method.
 type QuotasClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }

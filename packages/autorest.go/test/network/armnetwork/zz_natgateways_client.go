@@ -278,8 +278,10 @@ func (client *NatGatewaysClient) NewListPager(resourceGroupName string, options 
 		Fetcher: func(ctx context.Context, page *NatGatewaysClientListResponse) (NatGatewaysClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "NatGatewaysClient.NewListPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -336,8 +338,10 @@ func (client *NatGatewaysClient) NewListAllPager(options *NatGatewaysClientListA
 		Fetcher: func(ctx context.Context, page *NatGatewaysClientListAllResponse) (NatGatewaysClientListAllResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "NatGatewaysClient.NewListAllPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listAllCreateRequest(ctx, options)
