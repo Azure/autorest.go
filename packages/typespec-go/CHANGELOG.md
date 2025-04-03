@@ -3,6 +3,8 @@
 ## 0.4.2 (unreleased)
 
 ### Other Changes
+
+* Updated to the latest tsp toolset.
 * Changed the default value of the `--factory-gather-all-params` switch from `false` to `true`.
 
 ## 0.4.1 (2025-03-25)
