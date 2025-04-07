@@ -1,6 +1,6 @@
 # Release History
 
-## 4.0.0-prebiew.72 (unreleased)
+## 4.0.0-preview.72 (unreleased)
 
 ### Other Changes
 

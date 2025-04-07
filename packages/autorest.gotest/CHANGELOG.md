@@ -1,6 +1,13 @@
 # Change Log - @autorest/gotest
 
-This log was last generated on Mon, 22 Apr 2024 09:31:17 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Apr 2025 02:41:10 GMT and should not be manually modified.
+
+## 4.7.4
+Mon, 07 Apr 2025 02:41:10 GMT
+
+### Patches
+
+- Added switch `--factory-gather-all-params` to control the `NewClientFactory` constructor parameters. This switch allows gathering either only common parameters of clients or all parameters of clients. The default value is `True`.
 
 ## 4.7.3
 Mon, 22 Apr 2024 09:31:17 GMT
