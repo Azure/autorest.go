@@ -214,8 +214,10 @@ func (client *NotebookClient) NewGetNotebookSummaryByWorkSpacePager(options *Not
 		},
 		Fetcher: func(ctx context.Context, page *NotebookClientGetNotebookSummaryByWorkSpaceResponse) (NotebookClientGetNotebookSummaryByWorkSpaceResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getNotebookSummaryByWorkSpaceCreateRequest(ctx, options)
@@ -263,8 +265,10 @@ func (client *NotebookClient) NewGetNotebooksByWorkspacePager(options *NotebookC
 		},
 		Fetcher: func(ctx context.Context, page *NotebookClientGetNotebooksByWorkspaceResponse) (NotebookClientGetNotebooksByWorkspaceResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getNotebooksByWorkspaceCreateRequest(ctx, options)

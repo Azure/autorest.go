@@ -1314,8 +1314,10 @@ func (client *Client) NewGetCertificateIssuersPager(vaultBaseURL string, options
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetCertificateIssuersResponse) (ClientGetCertificateIssuersResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getCertificateIssuersCreateRequest(ctx, vaultBaseURL, options)
@@ -1482,8 +1484,10 @@ func (client *Client) NewGetCertificateVersionsPager(vaultBaseURL string, certif
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetCertificateVersionsResponse) (ClientGetCertificateVersionsResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getCertificateVersionsCreateRequest(ctx, vaultBaseURL, certificateName, options)
@@ -1541,8 +1545,10 @@ func (client *Client) NewGetCertificatesPager(vaultBaseURL string, options *Clie
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetCertificatesResponse) (ClientGetCertificatesResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getCertificatesCreateRequest(ctx, vaultBaseURL, options)
@@ -1658,8 +1664,10 @@ func (client *Client) NewGetDeletedCertificatesPager(vaultBaseURL string, option
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetDeletedCertificatesResponse) (ClientGetDeletedCertificatesResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getDeletedCertificatesCreateRequest(ctx, vaultBaseURL, options)
@@ -1775,8 +1783,10 @@ func (client *Client) NewGetDeletedKeysPager(vaultBaseURL string, options *Clien
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetDeletedKeysResponse) (ClientGetDeletedKeysResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getDeletedKeysCreateRequest(ctx, vaultBaseURL, options)
@@ -1893,8 +1903,10 @@ func (client *Client) NewGetDeletedSasDefinitionsPager(vaultBaseURL string, stor
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetDeletedSasDefinitionsResponse) (ClientGetDeletedSasDefinitionsResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getDeletedSasDefinitionsCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
@@ -2007,8 +2019,10 @@ func (client *Client) NewGetDeletedSecretsPager(vaultBaseURL string, options *Cl
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetDeletedSecretsResponse) (ClientGetDeletedSecretsResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getDeletedSecretsCreateRequest(ctx, vaultBaseURL, options)
@@ -2119,8 +2133,10 @@ func (client *Client) NewGetDeletedStorageAccountsPager(vaultBaseURL string, opt
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetDeletedStorageAccountsResponse) (ClientGetDeletedStorageAccountsResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getDeletedStorageAccountsCreateRequest(ctx, vaultBaseURL, options)
@@ -2236,8 +2252,10 @@ func (client *Client) NewGetKeyVersionsPager(vaultBaseURL string, keyName string
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetKeyVersionsResponse) (ClientGetKeyVersionsResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getKeyVersionsCreateRequest(ctx, vaultBaseURL, keyName, options)
@@ -2297,8 +2315,10 @@ func (client *Client) NewGetKeysPager(vaultBaseURL string, options *ClientGetKey
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetKeysResponse) (ClientGetKeysResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getKeysCreateRequest(ctx, vaultBaseURL, options)
@@ -2413,8 +2433,10 @@ func (client *Client) NewGetSasDefinitionsPager(vaultBaseURL string, storageAcco
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetSasDefinitionsResponse) (ClientGetSasDefinitionsResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getSasDefinitionsCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
@@ -2534,8 +2556,10 @@ func (client *Client) NewGetSecretVersionsPager(vaultBaseURL string, secretName 
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetSecretVersionsResponse) (ClientGetSecretVersionsResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getSecretVersionsCreateRequest(ctx, vaultBaseURL, secretName, options)
@@ -2594,8 +2618,10 @@ func (client *Client) NewGetSecretsPager(vaultBaseURL string, options *ClientGet
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetSecretsResponse) (ClientGetSecretsResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getSecretsCreateRequest(ctx, vaultBaseURL, options)
@@ -2703,8 +2729,10 @@ func (client *Client) NewGetStorageAccountsPager(vaultBaseURL string, options *C
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetStorageAccountsResponse) (ClientGetStorageAccountsResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getStorageAccountsCreateRequest(ctx, vaultBaseURL, options)

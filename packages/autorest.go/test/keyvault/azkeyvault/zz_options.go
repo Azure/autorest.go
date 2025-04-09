@@ -133,6 +133,9 @@ type ClientGetCertificateIssuersOptions struct {
 	// and also return a nextLink. Clients should not make any assumptions on the minimum number of results per page, and should
 	// enumerate all pages until the nextLink becomes null.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ClientGetCertificateOperationOptions contains the optional parameters for the Client.GetCertificateOperation method.
@@ -159,6 +162,9 @@ type ClientGetCertificateVersionsOptions struct {
 	// and also return a nextLink. Clients should not make any assumptions on the minimum number of results per page, and should
 	// enumerate all pages until the nextLink becomes null.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ClientGetCertificatesOptions contains the optional parameters for the Client.NewGetCertificatesPager method.
@@ -173,6 +179,9 @@ type ClientGetCertificatesOptions struct {
 	// and also return a nextLink. Clients should not make any assumptions on the minimum number of results per page, and should
 	// enumerate all pages until the nextLink becomes null.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ClientGetDeletedCertificateOptions contains the optional parameters for the Client.GetDeletedCertificate method.
@@ -192,6 +201,9 @@ type ClientGetDeletedCertificatesOptions struct {
 	// and also return a nextLink. Clients should not make any assumptions on the minimum number of results per page, and should
 	// enumerate all pages until the nextLink becomes null.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ClientGetDeletedKeyOptions contains the optional parameters for the Client.GetDeletedKey method.
@@ -208,6 +220,9 @@ type ClientGetDeletedKeysOptions struct {
 	// and also return a nextLink. Clients should not make any assumptions on the minimum number of results per page, and should
 	// enumerate all pages until the nextLink becomes null.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ClientGetDeletedSasDefinitionOptions contains the optional parameters for the Client.GetDeletedSasDefinition method.
@@ -225,6 +240,9 @@ type ClientGetDeletedSasDefinitionsOptions struct {
 	// and also return a nextLink. Clients should not make any assumptions on the minimum number of results per page, and should
 	// enumerate all pages until the nextLink becomes null.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ClientGetDeletedSecretOptions contains the optional parameters for the Client.GetDeletedSecret method.
@@ -241,6 +259,9 @@ type ClientGetDeletedSecretsOptions struct {
 	// and also return a nextLink. Clients should not make any assumptions on the minimum number of results per page, and should
 	// enumerate all pages until the nextLink becomes null.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ClientGetDeletedStorageAccountOptions contains the optional parameters for the Client.GetDeletedStorageAccount method.
@@ -258,6 +279,9 @@ type ClientGetDeletedStorageAccountsOptions struct {
 	// and also return a nextLink. Clients should not make any assumptions on the minimum number of results per page, and should
 	// enumerate all pages until the nextLink becomes null.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ClientGetKeyOptions contains the optional parameters for the Client.GetKey method.
@@ -274,6 +298,9 @@ type ClientGetKeyVersionsOptions struct {
 	// and also return a nextLink. Clients should not make any assumptions on the minimum number of results per page, and should
 	// enumerate all pages until the nextLink becomes null.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ClientGetKeysOptions contains the optional parameters for the Client.NewGetKeysPager method.
@@ -285,6 +312,9 @@ type ClientGetKeysOptions struct {
 	// and also return a nextLink. Clients should not make any assumptions on the minimum number of results per page, and should
 	// enumerate all pages until the nextLink becomes null.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ClientGetSasDefinitionOptions contains the optional parameters for the Client.GetSasDefinition method.
@@ -301,6 +331,9 @@ type ClientGetSasDefinitionsOptions struct {
 	// and also return a nextLink. Clients should not make any assumptions on the minimum number of results per page, and should
 	// enumerate all pages until the nextLink becomes null.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ClientGetSecretOptions contains the optional parameters for the Client.GetSecret method.
@@ -317,6 +350,9 @@ type ClientGetSecretVersionsOptions struct {
 	// and also return a nextLink. Clients should not make any assumptions on the minimum number of results per page, and should
 	// enumerate all pages until the nextLink becomes null.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ClientGetSecretsOptions contains the optional parameters for the Client.NewGetSecretsPager method.
@@ -328,6 +364,9 @@ type ClientGetSecretsOptions struct {
 	// and also return a nextLink. Clients should not make any assumptions on the minimum number of results per page, and should
 	// enumerate all pages until the nextLink becomes null.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ClientGetStorageAccountOptions contains the optional parameters for the Client.GetStorageAccount method.
@@ -344,6 +383,9 @@ type ClientGetStorageAccountsOptions struct {
 	// and also return a nextLink. Clients should not make any assumptions on the minimum number of results per page, and should
 	// enumerate all pages until the nextLink becomes null.
 	Maxresults *int32
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ClientImportCertificateOptions contains the optional parameters for the Client.ImportCertificate method.
@@ -576,6 +618,9 @@ type RoleAssignmentsClientListForScopeOptions struct {
 	// eq {id} to return all role assignments at, above or below the
 	// scope for the specified principal.
 	Filter *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // RoleDefinitionsClientCreateOrUpdateOptions contains the optional parameters for the RoleDefinitionsClient.CreateOrUpdate
@@ -598,4 +643,7 @@ type RoleDefinitionsClientGetOptions struct {
 type RoleDefinitionsClientListOptions struct {
 	// The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well.
 	Filter *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }

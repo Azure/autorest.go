@@ -595,8 +595,10 @@ func (client *InterfacesClient) NewListPager(resourceGroupName string, options *
 		Fetcher: func(ctx context.Context, page *InterfacesClientListResponse) (InterfacesClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfacesClient.NewListPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -653,8 +655,10 @@ func (client *InterfacesClient) NewListAllPager(options *InterfacesClientListAll
 		Fetcher: func(ctx context.Context, page *InterfacesClientListAllResponse) (InterfacesClientListAllResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfacesClient.NewListAllPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listAllCreateRequest(ctx, options)
@@ -710,8 +714,10 @@ func (client *InterfacesClient) NewListCloudServiceNetworkInterfacesPager(resour
 		Fetcher: func(ctx context.Context, page *InterfacesClientListCloudServiceNetworkInterfacesResponse) (InterfacesClientListCloudServiceNetworkInterfacesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfacesClient.NewListCloudServiceNetworkInterfacesPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCloudServiceNetworkInterfacesCreateRequest(ctx, resourceGroupName, cloudServiceName, options)
@@ -777,8 +783,10 @@ func (client *InterfacesClient) NewListCloudServiceRoleInstanceNetworkInterfaces
 		Fetcher: func(ctx context.Context, page *InterfacesClientListCloudServiceRoleInstanceNetworkInterfacesResponse) (InterfacesClientListCloudServiceRoleInstanceNetworkInterfacesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfacesClient.NewListCloudServiceRoleInstanceNetworkInterfacesPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCloudServiceRoleInstanceNetworkInterfacesCreateRequest(ctx, resourceGroupName, cloudServiceName, roleInstanceName, options)
@@ -926,8 +934,10 @@ func (client *InterfacesClient) NewListVirtualMachineScaleSetIPConfigurationsPag
 		Fetcher: func(ctx context.Context, page *InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse) (InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfacesClient.NewListVirtualMachineScaleSetIPConfigurationsPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listVirtualMachineScaleSetIPConfigurationsCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, options)
@@ -1002,8 +1012,10 @@ func (client *InterfacesClient) NewListVirtualMachineScaleSetNetworkInterfacesPa
 		Fetcher: func(ctx context.Context, page *InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse) (InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfacesClient.NewListVirtualMachineScaleSetNetworkInterfacesPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listVirtualMachineScaleSetNetworkInterfacesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, options)
@@ -1069,8 +1081,10 @@ func (client *InterfacesClient) NewListVirtualMachineScaleSetVMNetworkInterfaces
 		Fetcher: func(ctx context.Context, page *InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse) (InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfacesClient.NewListVirtualMachineScaleSetVMNetworkInterfacesPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listVirtualMachineScaleSetVMNetworkInterfacesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, options)
