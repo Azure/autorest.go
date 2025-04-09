@@ -141,7 +141,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
         }
 
         if (go.isLROMethod(method)) {
-          exampleText += `\tpoller, err := ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}, ${methodOptionalParametersText.split('\n').join('\n\t')})\n`
+          exampleText += `\tpoller, err := ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`
           exampleText += `\tif err != nil {\n`;
           exampleText += `\t\tlog.Fatalf("failed to finish the request: %v", err)\n`;
           exampleText += `\t}\n`;
@@ -153,7 +153,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
         } else if (go.isPageableMethod(method)) {
           exampleText += `\tpager := ${clientRef}.${fixUpMethodName(method)}(${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`
         } else {
-          exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}, ${methodOptionalParametersText.split('\n').join('\n\t')})\n`
+          exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`
           exampleText += `\tif err != nil {\n`;
           exampleText += `\t\tlog.Fatalf("failed to finish the request: %v", err)\n`;
           exampleText += `\t}\n`;
