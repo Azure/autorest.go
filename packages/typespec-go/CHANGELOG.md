@@ -1,5 +1,11 @@
 # Release History
 
+## 0.4.3 (2025-04-09)
+
+### Bugs Fixed
+
+* Add length check for method prameters to fix generated example test code.
+
 ## 0.4.2 (2025-04-03)
 
 ### Other Changes
