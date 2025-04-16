@@ -51,51 +51,79 @@ export async function generateTimeHelpers(codeModel: go.CodeModel, packageName?:
     }
   };
 
-  // find the required helpers. we must check params, response envelopes, and models
-
-  for (const client of codeModel.clients) {
-    for (const method of client.methods) {
-      for (const param of method.parameters) {
-        const unwrappedParam = recursiveUnwrapMapSlice(param.type);
-        if (!go.isTimeType(unwrappedParam)) {
-          continue;
-        }
-        // for body params, the helpers are always required.
-        // for header/path/query params, the conversion happens in place. the only
-        // exceptions are for timeRFC3339 and timeUnix
-        // TODO: clean this up when moving to DateTime type in azcore
-        if (go.isBodyParameter(param) || (unwrappedParam.dateTimeFormat === 'timeRFC3339' || unwrappedParam.dateTimeFormat === 'timeUnix')) {
-          setHelper(unwrappedParam.dateTimeFormat);
-        }
-      }
-    }
-  }
-
-  for (const respEnv of codeModel.responseEnvelopes) {
-    if (!respEnv.result || !go.isMonomorphicResult(respEnv.result) || respEnv.result.format !== 'JSON') {
-      continue;
-    }
-    const unwrappedResult = recursiveUnwrapMapSlice(respEnv.result.monomorphicType);
-    if (!go.isTimeType(unwrappedResult)) {
-      continue;
-    }
-    setHelper(unwrappedResult.dateTimeFormat);
-  }
-
   // needsSerDeHelpers is only required when time.Time is a struct field
   let needsSerDeHelpers = false;
 
-  for (const model of codeModel.models) {
-    for (const field of values(model.fields)) {
-      const unwrappedField = recursiveUnwrapMapSlice(field.type);
-      if (!go.isTimeType(unwrappedField)) {
+  // find the required helpers.
+  // for most packages, we must check params, response envelopes, and models
+  // for fakes, we check a subset
+  if (packageName !== 'fake') {
+    for (const client of codeModel.clients) {
+      for (const method of client.methods) {
+        for (const param of method.parameters) {
+          const unwrappedParam = recursiveUnwrapMapSlice(param.type);
+          if (!go.isTimeType(unwrappedParam)) {
+            continue;
+          }
+          // for body params, the helpers are always required.
+          // for header/path/query params, the conversion happens in place. the only
+          // exceptions are for timeRFC3339 and timeUnix
+          // TODO: clean this up when moving to DateTime type in azcore
+          if (go.isBodyParameter(param) || unwrappedParam.dateTimeFormat === 'timeRFC3339' || unwrappedParam.dateTimeFormat === 'timeUnix') {
+            setHelper(unwrappedParam.dateTimeFormat);
+          }
+        }
+      }
+    }
+
+    for (const model of codeModel.models) {
+      for (const field of values(model.fields)) {
+        const unwrappedField = recursiveUnwrapMapSlice(field.type);
+        if (!go.isTimeType(unwrappedField)) {
+          continue;
+        }
+        if (getSerDeFormat(model, codeModel) === 'JSON') {
+          // needsSerDeHelpers helpers are for JSON only
+          needsSerDeHelpers = true;
+        }
+        setHelper(unwrappedField.dateTimeFormat);
+      }
+    }
+
+    for (const respEnv of codeModel.responseEnvelopes) {
+      if (!respEnv.result || !go.isMonomorphicResult(respEnv.result) || respEnv.result.format !== 'JSON') {
         continue;
       }
-      if (getSerDeFormat(model, codeModel) === 'JSON') {
-        // needsSerDeHelpers helpers are for JSON only
-        needsSerDeHelpers = true;
+      const unwrappedResult = recursiveUnwrapMapSlice(respEnv.result.monomorphicType);
+      if (!go.isTimeType(unwrappedResult)) {
+        continue;
       }
-      setHelper(unwrappedField.dateTimeFormat);
+      setHelper(unwrappedResult.dateTimeFormat);
+    }
+  } else {
+	// for fakes, only need to check the if the body params are of type time.Time.
+	// otherwise, the conversion happens in place
+    for (const client of codeModel.clients) {
+      for (const method of client.methods) {
+        for (const param of method.parameters) {
+          if (go.isBodyParameter(param) && go.isTimeType(param.type)) {
+            setHelper(param.type.dateTimeFormat);
+          }
+        }
+      }
+    }
+
+    for (const respEnv of codeModel.responseEnvelopes) {
+      for (const header of respEnv.headers) {
+        // for header/path/query params, the conversion happens in place. the only
+        // exceptions are for timeRFC3339 and timeUnix
+        if (go.isTimeType(header.type) && (header.type.dateTimeFormat === 'timeRFC3339' || header.type.dateTimeFormat === 'timeUnix')) {
+          setHelper(header.type.dateTimeFormat);
+        }
+      }
+      if (respEnv.result && go.isMonomorphicResult(respEnv.result) && go.isTimeType(respEnv.result.monomorphicType)) {
+        setHelper(respEnv.result.monomorphicType.dateTimeFormat);
+      }
     }
   }
 
