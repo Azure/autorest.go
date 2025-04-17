@@ -1,5 +1,11 @@
 # Release History
 
+## 0.4.4 (Unreleased)
+
+### Bugs Fixed
+
+* For fakes, unnecessary time helper files are no longer generated.
+
 ## 0.4.3 (2025-04-09)
 
 ### Bugs Fixed

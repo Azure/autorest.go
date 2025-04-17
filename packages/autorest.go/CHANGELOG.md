@@ -2,6 +2,10 @@
 
 ## 4.0.0-preview.72 (unreleased)
 
+### Bugs Fixed
+
+* For fakes, unnecessary time helper files are no longer generated.
+
 ### Other Changes
 
 * Changed the default value of the `--factory-gather-all-params` switch from `false` to `true`.
