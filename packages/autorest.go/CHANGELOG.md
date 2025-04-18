@@ -1,6 +1,10 @@
 # Release History
 
-## 4.0.0-preview.72 (unreleased)
+## 4.0.0-preview.72 (2025-04-18)
+
+### Bugs Fixed
+
+* For fakes, unnecessary time helper files are no longer generated.
 
 ### Other Changes
 
