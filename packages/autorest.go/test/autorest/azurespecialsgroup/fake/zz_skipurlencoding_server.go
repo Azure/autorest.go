@@ -125,7 +125,7 @@ func (s *SkipURLEncodingServerTransport) dispatchGetMethodPathValid(req *http.Re
 	const regexStr = `/azurespecials/skipUrlEncoding/method/path/valid/(?P<unencodedPathParam>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	unencodedPathParamParam, err := url.PathUnescape(matches[regex.SubexpIndex("unencodedPathParam")])
@@ -233,7 +233,7 @@ func (s *SkipURLEncodingServerTransport) dispatchGetPathValid(req *http.Request)
 	const regexStr = `/azurespecials/skipUrlEncoding/path/path/valid/(?P<unencodedPathParam>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	unencodedPathParamParam, err := url.PathUnescape(matches[regex.SubexpIndex("unencodedPathParam")])

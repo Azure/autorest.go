@@ -254,7 +254,7 @@ func (p *ParameterGroupingServerTransport) dispatchPostRequired(req *http.Reques
 	const regexStr = `/parameterGrouping/postRequired/(?P<path>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()

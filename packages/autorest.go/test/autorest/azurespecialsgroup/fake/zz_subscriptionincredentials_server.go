@@ -112,7 +112,7 @@ func (s *SubscriptionInCredentialsServerTransport) dispatchPostMethodGlobalNotPr
 	const regexStr = `/azurespecials/subscriptionId/method/string/none/path/globalNotProvided/1234-5678-9012-3456/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.PostMethodGlobalNotProvidedValid(req.Context(), nil)
@@ -137,7 +137,7 @@ func (s *SubscriptionInCredentialsServerTransport) dispatchPostMethodGlobalNull(
 	const regexStr = `/azurespecials/subscriptionId/method/string/none/path/global/null/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.PostMethodGlobalNull(req.Context(), nil)
@@ -162,7 +162,7 @@ func (s *SubscriptionInCredentialsServerTransport) dispatchPostMethodGlobalValid
 	const regexStr = `/azurespecials/subscriptionId/method/string/none/path/global/1234-5678-9012-3456/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.PostMethodGlobalValid(req.Context(), nil)
@@ -187,7 +187,7 @@ func (s *SubscriptionInCredentialsServerTransport) dispatchPostPathGlobalValid(r
 	const regexStr = `/azurespecials/subscriptionId/path/string/none/path/global/1234-5678-9012-3456/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.PostPathGlobalValid(req.Context(), nil)
@@ -212,7 +212,7 @@ func (s *SubscriptionInCredentialsServerTransport) dispatchPostSwaggerGlobalVali
 	const regexStr = `/azurespecials/subscriptionId/swagger/string/none/path/global/1234-5678-9012-3456/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := s.srv.PostSwaggerGlobalValid(req.Context(), nil)

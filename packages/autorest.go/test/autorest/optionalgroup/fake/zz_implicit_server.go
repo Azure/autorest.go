@@ -152,7 +152,7 @@ func (i *ImplicitServerTransport) dispatchGetRequiredGlobalPath(req *http.Reques
 	const regexStr = `/reqopt/global/required/path/(?P<required_global-path>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := i.srv.GetRequiredGlobalPath(req.Context(), nil)
@@ -196,7 +196,7 @@ func (i *ImplicitServerTransport) dispatchGetRequiredPath(req *http.Request) (*h
 	const regexStr = `/reqopt/implicit/required/path/(?P<pathParameter>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	pathParameterParam, err := url.PathUnescape(matches[regex.SubexpIndex("pathParameter")])

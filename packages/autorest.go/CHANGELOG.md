@@ -1,5 +1,11 @@
 # Release History
 
+## 4.0.0-preview.73 (unreleased)
+
+### Other Changes
+
+* Length check for `regexp` matches includes full match.
+
 ## 4.0.0-preview.72 (2025-04-18)
 
 ### Bugs Fixed

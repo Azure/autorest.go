@@ -138,7 +138,7 @@ func (s *SpreadModelServerTransport) dispatchSpreadCompositeRequest(req *http.Re
 	const regexStr = `/parameters/spread/model/composite-request/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[spreadgroup.BodyParameter](req)
@@ -171,7 +171,7 @@ func (s *SpreadModelServerTransport) dispatchSpreadCompositeRequestMix(req *http
 	const regexStr = `/parameters/spread/model/composite-request-mix/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	type partialBodyParams struct {
@@ -230,7 +230,7 @@ func (s *SpreadModelServerTransport) dispatchSpreadCompositeRequestWithoutBody(r
 	const regexStr = `/parameters/spread/model/composite-request-without-body/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])

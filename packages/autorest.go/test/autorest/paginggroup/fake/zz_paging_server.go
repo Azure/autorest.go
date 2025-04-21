@@ -503,7 +503,7 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFragmentNextLinkPager
 		const regexStr = `/paging/multiple/fragment/(?P<tenant>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 1 {
+		if len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
@@ -545,7 +545,7 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFragmentWithGroupingN
 		const regexStr = `/paging/multiple/fragmentwithgrouping/(?P<tenant>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 1 {
+		if len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
@@ -704,7 +704,7 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesWithOffsetPager(req *
 		const regexStr = `/paging/multiple/withpath/(?P<offset>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 1 {
+		if len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		clientRequestIDParam := getOptional(getHeaderValue(req.Header, "client-request-id"))

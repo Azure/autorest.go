@@ -236,7 +236,7 @@ func (k *KeyVaultServerTransport) dispatchBackupKey(req *http.Request) (*http.Re
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/backup`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
@@ -265,7 +265,7 @@ func (k *KeyVaultServerTransport) dispatchCreateKey(req *http.Request) (*http.Re
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/create`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyCreateParameters](req)
@@ -298,7 +298,7 @@ func (k *KeyVaultServerTransport) dispatchDecrypt(req *http.Request) (*http.Resp
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/decrypt`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyOperationsParameters](req)
@@ -335,7 +335,7 @@ func (k *KeyVaultServerTransport) dispatchDeleteKey(req *http.Request) (*http.Re
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
@@ -364,7 +364,7 @@ func (k *KeyVaultServerTransport) dispatchEncrypt(req *http.Request) (*http.Resp
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/encrypt`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyOperationsParameters](req)
@@ -401,7 +401,7 @@ func (k *KeyVaultServerTransport) dispatchGetDeletedKey(req *http.Request) (*htt
 	const regexStr = `/deletedkeys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
@@ -478,7 +478,7 @@ func (k *KeyVaultServerTransport) dispatchGetKey(req *http.Request) (*http.Respo
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
@@ -511,7 +511,7 @@ func (k *KeyVaultServerTransport) dispatchGetKeyRotationPolicy(req *http.Request
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/rotationpolicy`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
@@ -542,7 +542,7 @@ func (k *KeyVaultServerTransport) dispatchNewGetKeyVersionsPager(req *http.Reque
 		const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/versions`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 1 {
+		if len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
@@ -669,7 +669,7 @@ func (k *KeyVaultServerTransport) dispatchImportKey(req *http.Request) (*http.Re
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyImportParameters](req)
@@ -702,7 +702,7 @@ func (k *KeyVaultServerTransport) dispatchPurgeDeletedKey(req *http.Request) (*h
 	const regexStr = `/deletedkeys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
@@ -731,7 +731,7 @@ func (k *KeyVaultServerTransport) dispatchRecoverDeletedKey(req *http.Request) (
 	const regexStr = `/deletedkeys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/recover`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
@@ -760,7 +760,7 @@ func (k *KeyVaultServerTransport) dispatchRelease(req *http.Request) (*http.Resp
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/release`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyReleaseParameters](req)
@@ -820,7 +820,7 @@ func (k *KeyVaultServerTransport) dispatchRotateKey(req *http.Request) (*http.Re
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/rotate`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
@@ -849,7 +849,7 @@ func (k *KeyVaultServerTransport) dispatchSign(req *http.Request) (*http.Respons
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/sign`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[azkeys.KeySignParameters](req)
@@ -886,7 +886,7 @@ func (k *KeyVaultServerTransport) dispatchUnwrapKey(req *http.Request) (*http.Re
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/unwrapkey`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyOperationsParameters](req)
@@ -923,7 +923,7 @@ func (k *KeyVaultServerTransport) dispatchUpdateKey(req *http.Request) (*http.Re
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyUpdateParameters](req)
@@ -960,7 +960,7 @@ func (k *KeyVaultServerTransport) dispatchUpdateKeyRotationPolicy(req *http.Requ
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/rotationpolicy`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyRotationPolicy](req)
@@ -993,7 +993,7 @@ func (k *KeyVaultServerTransport) dispatchVerify(req *http.Request) (*http.Respo
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/verify`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyVerifyParameters](req)
@@ -1030,7 +1030,7 @@ func (k *KeyVaultServerTransport) dispatchWrapKey(req *http.Request) (*http.Resp
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/wrapkey`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyOperationsParameters](req)

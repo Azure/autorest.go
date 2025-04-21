@@ -204,7 +204,7 @@ func (c *ContainerRegistryServerTransport) dispatchCreateManifest(req *http.Requ
 	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/manifests/(?P<reference>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[azacr.Manifest](req)
@@ -253,7 +253,7 @@ func (c *ContainerRegistryServerTransport) dispatchDeleteManifest(req *http.Requ
 	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/manifests/(?P<reference>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
@@ -286,7 +286,7 @@ func (c *ContainerRegistryServerTransport) dispatchDeleteRepository(req *http.Re
 	const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
@@ -315,7 +315,7 @@ func (c *ContainerRegistryServerTransport) dispatchDeleteTag(req *http.Request) 
 	const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/_tags/(?P<reference>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
@@ -348,7 +348,7 @@ func (c *ContainerRegistryServerTransport) dispatchGetManifest(req *http.Request
 	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/manifests/(?P<reference>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
@@ -388,7 +388,7 @@ func (c *ContainerRegistryServerTransport) dispatchGetManifestProperties(req *ht
 	const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/_manifests/(?P<digest>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
@@ -423,7 +423,7 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetManifestsPager(req *htt
 		const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/_manifests`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 1 {
+		if len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
@@ -491,7 +491,7 @@ func (c *ContainerRegistryServerTransport) dispatchGetProperties(req *http.Reque
 	const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
@@ -574,7 +574,7 @@ func (c *ContainerRegistryServerTransport) dispatchGetTagProperties(req *http.Re
 	const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/_tags/(?P<reference>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
@@ -609,7 +609,7 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetTagsPager(req *http.Req
 		const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/_tags`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 1 {
+		if len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
@@ -683,7 +683,7 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateManifestProperties(req 
 	const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/_manifests/(?P<digest>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[azacr.ManifestWriteableProperties](req)
@@ -720,7 +720,7 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateProperties(req *http.Re
 	const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[azacr.RepositoryWriteableProperties](req)
@@ -753,7 +753,7 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateTagAttributes(req *http
 	const regexStr = `/acr/v1/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/_tags/(?P<reference>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[azacr.TagWriteableProperties](req)

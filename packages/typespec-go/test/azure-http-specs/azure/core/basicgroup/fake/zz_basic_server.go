@@ -130,7 +130,7 @@ func (b *BasicServerTransport) dispatchCreateOrReplace(req *http.Request) (*http
 	const regexStr = `/azure/core/basic/users/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[basicgroup.User](req)
@@ -173,7 +173,7 @@ func (b *BasicServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.
 	const regexStr = `/azure/core/basic/users/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[basicgroup.User](req)
@@ -216,7 +216,7 @@ func (b *BasicServerTransport) dispatchDelete(req *http.Request) (*http.Response
 	const regexStr = `/azure/core/basic/users/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	idUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("id")])
@@ -255,7 +255,7 @@ func (b *BasicServerTransport) dispatchExport(req *http.Request) (*http.Response
 	const regexStr = `/azure/core/basic/users/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+):export`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
@@ -323,7 +323,7 @@ func (b *BasicServerTransport) dispatchGet(req *http.Request) (*http.Response, e
 	const regexStr = `/azure/core/basic/users/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	idUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("id")])
