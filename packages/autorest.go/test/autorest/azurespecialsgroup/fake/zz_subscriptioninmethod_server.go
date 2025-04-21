@@ -107,7 +107,7 @@ func (s *SubscriptionInMethodServerTransport) dispatchPostMethodLocalNull(req *h
 	const regexStr = `/azurespecials/subscriptionId/method/string/none/path/local/null/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
@@ -136,7 +136,7 @@ func (s *SubscriptionInMethodServerTransport) dispatchPostMethodLocalValid(req *
 	const regexStr = `/azurespecials/subscriptionId/method/string/none/path/local/1234-5678-9012-3456/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
@@ -165,7 +165,7 @@ func (s *SubscriptionInMethodServerTransport) dispatchPostPathLocalValid(req *ht
 	const regexStr = `/azurespecials/subscriptionId/path/string/none/path/local/1234-5678-9012-3456/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
@@ -194,7 +194,7 @@ func (s *SubscriptionInMethodServerTransport) dispatchPostSwaggerLocalValid(req 
 	const regexStr = `/azurespecials/subscriptionId/swagger/string/none/path/local/1234-5678-9012-3456/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])

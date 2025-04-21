@@ -107,7 +107,7 @@ func (p *PathItemsServerTransport) dispatchGetAllWithValues(req *http.Request) (
 	const regexStr = `/pathitem/nullable/globalStringPath/(?P<globalStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/pathItemStringPath/(?P<pathItemStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/localStringPath/(?P<localStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/globalStringQuery/pathItemStringQuery/localStringQuery`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 3 {
+	if len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
@@ -158,7 +158,7 @@ func (p *PathItemsServerTransport) dispatchGetGlobalAndLocalQueryNull(req *http.
 	const regexStr = `/pathitem/nullable/globalStringPath/(?P<globalStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/pathItemStringPath/(?P<pathItemStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/localStringPath/(?P<localStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/null/pathItemStringQuery/null`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 3 {
+	if len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
@@ -209,7 +209,7 @@ func (p *PathItemsServerTransport) dispatchGetGlobalQueryNull(req *http.Request)
 	const regexStr = `/pathitem/nullable/globalStringPath/(?P<globalStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/pathItemStringPath/(?P<pathItemStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/localStringPath/(?P<localStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/null/pathItemStringQuery/localStringQuery`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 3 {
+	if len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
@@ -260,7 +260,7 @@ func (p *PathItemsServerTransport) dispatchGetLocalPathItemQueryNull(req *http.R
 	const regexStr = `/pathitem/nullable/globalStringPath/(?P<globalStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/pathItemStringPath/(?P<pathItemStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/localStringPath/(?P<localStringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/globalStringQuery/null/null`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 3 {
+	if len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()

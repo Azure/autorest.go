@@ -115,7 +115,7 @@ func (b *BgpPeersServerTransport) dispatchBeginCreateOrUpdate(req *http.Request)
 		const regexStr = `/(?P<resourceUri>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.KubernetesRuntime/bgpPeers/(?P<bgpPeerName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 2 {
+		if len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		body, err := server.UnmarshalRequestAsJSON[armcontainerorchestratorruntime.BgpPeer](req)
@@ -161,7 +161,7 @@ func (b *BgpPeersServerTransport) dispatchDelete(req *http.Request) (*http.Respo
 	const regexStr = `/(?P<resourceUri>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.KubernetesRuntime/bgpPeers/(?P<bgpPeerName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	resourceURIParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceUri")])
@@ -194,7 +194,7 @@ func (b *BgpPeersServerTransport) dispatchGet(req *http.Request) (*http.Response
 	const regexStr = `/(?P<resourceUri>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.KubernetesRuntime/bgpPeers/(?P<bgpPeerName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	resourceURIParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceUri")])
@@ -229,7 +229,7 @@ func (b *BgpPeersServerTransport) dispatchNewListPager(req *http.Request) (*http
 		const regexStr = `/(?P<resourceUri>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.KubernetesRuntime/bgpPeers`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 1 {
+		if len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		resourceURIParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceUri")])

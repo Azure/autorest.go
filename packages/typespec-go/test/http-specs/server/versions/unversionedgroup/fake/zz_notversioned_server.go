@@ -100,7 +100,7 @@ func (n *NotVersionedServerTransport) dispatchWithPathAPIVersion(req *http.Reque
 	const regexStr = `/server/versions/not-versioned/with-path-api-version/(?P<apiVersion>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	apiVersionParam, err := url.PathUnescape(matches[regex.SubexpIndex("apiVersion")])

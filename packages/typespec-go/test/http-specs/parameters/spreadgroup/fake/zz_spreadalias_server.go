@@ -138,7 +138,7 @@ func (s *SpreadAliasServerTransport) dispatchSpreadAsRequestParameter(req *http.
 	const regexStr = `/parameters/spread/alias/request-parameter/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	type partialBodyParams struct {
@@ -174,7 +174,7 @@ func (s *SpreadAliasServerTransport) dispatchSpreadParameterWithInnerAlias(req *
 	const regexStr = `/parameters/spread/alias/inner-alias-parameter/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	type partialBodyParams struct {
@@ -211,7 +211,7 @@ func (s *SpreadAliasServerTransport) dispatchSpreadParameterWithInnerModel(req *
 	const regexStr = `/parameters/spread/alias/inner-model-parameter/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	type partialBodyParams struct {
@@ -247,7 +247,7 @@ func (s *SpreadAliasServerTransport) dispatchSpreadWithMultipleParameters(req *h
 	const regexStr = `/parameters/spread/alias/multiple-parameters/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	type partialBodyParams struct {

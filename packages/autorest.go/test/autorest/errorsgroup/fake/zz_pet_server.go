@@ -101,7 +101,7 @@ func (p *PetServerTransport) dispatchDoSomething(req *http.Request) (*http.Respo
 	const regexStr = `/errorStatusCodes/Pets/doSomething/(?P<whatAction>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	whatActionParam, err := url.PathUnescape(matches[regex.SubexpIndex("whatAction")])
@@ -130,7 +130,7 @@ func (p *PetServerTransport) dispatchGetPetByID(req *http.Request) (*http.Respon
 	const regexStr = `/errorStatusCodes/Pets/(?P<petId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/GetPet`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	petIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("petId")])

@@ -416,7 +416,9 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     content += `\tconst regexStr = \`${createPathParamsRegex(method)}\`\n`;
     content += '\tregex := regexp.MustCompile(regexStr)\n';
     content += '\tmatches := regex.FindStringSubmatch(req.URL.EscapedPath())\n';
-    content += `\tif matches == nil || len(matches) < ${numPathParams} {\n`;
+    // the total number of matches is the number of capture groups
+    // plus the full match. so we add + 1 to include the full match.
+    content += `\tif len(matches) < ${numPathParams + 1} {\n`;
     content += '\t\treturn nil, fmt.Errorf("failed to parse path %s", req.URL.Path)\n\t}\n';
   }
   if (values(method.parameters).where((each: go.Parameter) => { return go.isQueryParameter(each) && each.location === 'method' && !go.isLiteralParameter(each); }).any()) {

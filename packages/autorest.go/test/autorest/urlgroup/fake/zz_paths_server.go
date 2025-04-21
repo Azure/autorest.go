@@ -248,7 +248,7 @@ func (p *PathsServerTransport) dispatchArrayCSVInPath(req *http.Request) (*http.
 	const regexStr = `/paths/array/ArrayPath1%2cbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%2c%2c/(?P<arrayPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	arrayPathParam, err := url.PathUnescape(matches[regex.SubexpIndex("arrayPath")])
@@ -277,7 +277,7 @@ func (p *PathsServerTransport) dispatchBase64URL(req *http.Request) (*http.Respo
 	const regexStr = `/paths/string/bG9yZW0/(?P<base64UrlPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	base64URLPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("base64UrlPath")])
@@ -329,7 +329,7 @@ func (p *PathsServerTransport) dispatchByteMultiByte(req *http.Request) (*http.R
 	const regexStr = `/paths/byte/multibyte/(?P<bytePath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	bytePathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("bytePath")])
@@ -362,7 +362,7 @@ func (p *PathsServerTransport) dispatchByteNull(req *http.Request) (*http.Respon
 	const regexStr = `/paths/byte/null/(?P<bytePath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	bytePathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("bytePath")])
@@ -395,7 +395,7 @@ func (p *PathsServerTransport) dispatchDateNull(req *http.Request) (*http.Respon
 	const regexStr = `/paths/date/null/(?P<datePath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	datePathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("datePath")])
@@ -428,7 +428,7 @@ func (p *PathsServerTransport) dispatchDateTimeNull(req *http.Request) (*http.Re
 	const regexStr = `/paths/datetime/null/(?P<dateTimePath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	dateTimePathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("dateTimePath")])
@@ -537,7 +537,7 @@ func (p *PathsServerTransport) dispatchEnumNull(req *http.Request) (*http.Respon
 	const regexStr = `/paths/string/null/(?P<enumPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	enumPathParam, err := parseWithCast(matches[regex.SubexpIndex("enumPath")], func(v string) (urlgroup.URIColor, error) {
@@ -572,7 +572,7 @@ func (p *PathsServerTransport) dispatchEnumValid(req *http.Request) (*http.Respo
 	const regexStr = `/paths/enum/green%20color/(?P<enumPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	enumPathParam, err := parseWithCast(matches[regex.SubexpIndex("enumPath")], func(v string) (urlgroup.URIColor, error) {
@@ -778,7 +778,7 @@ func (p *PathsServerTransport) dispatchStringNull(req *http.Request) (*http.Resp
 	const regexStr = `/paths/string/null/(?P<stringPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	stringPathParam, err := url.PathUnescape(matches[regex.SubexpIndex("stringPath")])
@@ -864,7 +864,7 @@ func (p *PathsServerTransport) dispatchUnixTimeURL(req *http.Request) (*http.Res
 	const regexStr = `/paths/int/1460505600/(?P<unixTimeUrlPath>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	unixTimeURLPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("unixTimeUrlPath")])

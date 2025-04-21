@@ -6,6 +6,10 @@
 
 * For fakes, unnecessary time helper files are no longer generated.
 
+### Other Changes
+
+* Length check for `regexp` matches includes full match.
+
 ## 0.4.3 (2025-04-09)
 
 ### Bugs Fixed

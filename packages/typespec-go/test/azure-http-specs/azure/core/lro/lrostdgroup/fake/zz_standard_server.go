@@ -110,7 +110,7 @@ func (s *StandardServerTransport) dispatchBeginCreateOrReplace(req *http.Request
 		const regexStr = `/azure/core/lro/standard/users/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 1 {
+		if len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		body, err := server.UnmarshalRequestAsJSON[lrostdgroup.User](req)
@@ -154,7 +154,7 @@ func (s *StandardServerTransport) dispatchBeginDelete(req *http.Request) (*http.
 		const regexStr = `/azure/core/lro/standard/users/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 1 {
+		if len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
@@ -194,7 +194,7 @@ func (s *StandardServerTransport) dispatchBeginExport(req *http.Request) (*http.
 		const regexStr = `/azure/core/lro/standard/users/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+):export`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 1 {
+		if len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()

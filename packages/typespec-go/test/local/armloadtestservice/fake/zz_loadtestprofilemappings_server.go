@@ -117,7 +117,7 @@ func (l *LoadTestProfileMappingsServerTransport) dispatchCreateOrUpdate(req *htt
 	const regexStr = `/(?P<resourceUri>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTestProfileMappings/(?P<loadTestProfileMappingName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[armloadtestservice.LoadTestProfileMappingResource](req)
@@ -154,7 +154,7 @@ func (l *LoadTestProfileMappingsServerTransport) dispatchDelete(req *http.Reques
 	const regexStr = `/(?P<resourceUri>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTestProfileMappings/(?P<loadTestProfileMappingName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	resourceURIParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceUri")])
@@ -187,7 +187,7 @@ func (l *LoadTestProfileMappingsServerTransport) dispatchGet(req *http.Request) 
 	const regexStr = `/(?P<resourceUri>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTestProfileMappings/(?P<loadTestProfileMappingName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	resourceURIParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceUri")])
@@ -222,7 +222,7 @@ func (l *LoadTestProfileMappingsServerTransport) dispatchNewListPager(req *http.
 		const regexStr = `/(?P<resourceUri>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTestProfileMappings`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 1 {
+		if len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		resourceURIParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceUri")])
@@ -257,7 +257,7 @@ func (l *LoadTestProfileMappingsServerTransport) dispatchUpdate(req *http.Reques
 	const regexStr = `/(?P<resourceUri>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTestProfileMappings/(?P<loadTestProfileMappingName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	body, err := server.UnmarshalRequestAsJSON[armloadtestservice.LoadTestProfileMappingResourceUpdate](req)

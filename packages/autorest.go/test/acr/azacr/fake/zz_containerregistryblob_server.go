@@ -151,7 +151,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCancelUpload(req *http.Re
 	const regexStr = `/(?P<nextBlobUuidLink>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("nextBlobUuidLink")])
@@ -180,7 +180,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCheckBlobExists(req *http
 	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/blobs/(?P<digest>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
@@ -219,7 +219,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCheckChunkExists(req *htt
 	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/blobs/(?P<digest>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
@@ -258,7 +258,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCompleteUpload(req *http.
 	const regexStr = `/(?P<nextBlobUuidLink>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
@@ -301,7 +301,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchDeleteBlob(req *http.Requ
 	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/blobs/(?P<digest>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
@@ -340,7 +340,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetBlob(req *http.Request
 	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/blobs/(?P<digest>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
@@ -382,7 +382,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetChunk(req *http.Reques
 	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/blobs/(?P<digest>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 2 {
+	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
@@ -424,7 +424,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetUploadStatus(req *http
 	const regexStr = `/(?P<nextBlobUuidLink>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("nextBlobUuidLink")])
@@ -459,7 +459,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchMountBlob(req *http.Reque
 	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/blobs/uploads/`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
@@ -506,7 +506,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchStartUpload(req *http.Req
 	const regexStr = `/v2/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/blobs/uploads/`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
@@ -544,7 +544,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchUploadChunk(req *http.Req
 	const regexStr = `/(?P<nextBlobUuidLink>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
+	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("nextBlobUuidLink")])
