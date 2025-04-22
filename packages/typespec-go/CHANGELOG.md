@@ -1,6 +1,6 @@
 # Release History
 
-## 0.4.4 (Unreleased)
+## 0.4.4 (2025-04-22)
 
 ### Bugs Fixed
 
@@ -9,6 +9,7 @@
 ### Other Changes
 
 * Length check for `regexp` matches includes full match.
+* Updated to latest tcgc.
 
 ## 0.4.3 (2025-04-09)
 
