@@ -21,6 +21,11 @@ type PageClientListWithParametersResponse struct {
 	PagedUser
 }
 
+// PageClientWithParameterizedNextLinkResponse contains the response from method PageClient.NewWithParameterizedNextLinkPager.
+type PageClientWithParameterizedNextLinkResponse struct {
+	ParameterizedNextLinkPagingResult
+}
+
 // PageTwoModelsAsPageItemClientListFirstItemResponse contains the response from method PageTwoModelsAsPageItemClient.NewListFirstItemPager.
 type PageTwoModelsAsPageItemClientListFirstItemResponse struct {
 	// Paged collection of FirstItem items

@@ -14,6 +14,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"sync"
 )
@@ -34,6 +35,10 @@ type PageServer struct {
 	// NewListWithParametersPager is the fake for method PageClient.NewListWithParametersPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewListWithParametersPager func(bodyInput azurepagegroup.ListItemInputBody, options *azurepagegroup.PageClientListWithParametersOptions) (resp azfake.PagerResponder[azurepagegroup.PageClientListWithParametersResponse])
+
+	// NewWithParameterizedNextLinkPager is the fake for method PageClient.NewWithParameterizedNextLinkPager
+	// HTTP status codes to indicate success: http.StatusOK
+	NewWithParameterizedNextLinkPager func(selectParam string, options *azurepagegroup.PageClientWithParameterizedNextLinkOptions) (resp azfake.PagerResponder[azurepagegroup.PageClientWithParameterizedNextLinkResponse])
 }
 
 // NewPageServerTransport creates a new instance of PageServerTransport with the provided implementation.
@@ -41,22 +46,24 @@ type PageServer struct {
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPageServerTransport(srv *PageServer) *PageServerTransport {
 	return &PageServerTransport{
-		srv:                             srv,
-		newListWithCustomPageModelPager: newTracker[azfake.PagerResponder[azurepagegroup.PageClientListWithCustomPageModelResponse]](),
-		newListWithPagePager:            newTracker[azfake.PagerResponder[azurepagegroup.PageClientListWithPageResponse]](),
-		newListWithParametersPager:      newTracker[azfake.PagerResponder[azurepagegroup.PageClientListWithParametersResponse]](),
+		srv:                               srv,
+		newListWithCustomPageModelPager:   newTracker[azfake.PagerResponder[azurepagegroup.PageClientListWithCustomPageModelResponse]](),
+		newListWithPagePager:              newTracker[azfake.PagerResponder[azurepagegroup.PageClientListWithPageResponse]](),
+		newListWithParametersPager:        newTracker[azfake.PagerResponder[azurepagegroup.PageClientListWithParametersResponse]](),
+		newWithParameterizedNextLinkPager: newTracker[azfake.PagerResponder[azurepagegroup.PageClientWithParameterizedNextLinkResponse]](),
 	}
 }
 
 // PageServerTransport connects instances of azurepagegroup.PageClient to instances of PageServer.
 // Don't use this type directly, use NewPageServerTransport instead.
 type PageServerTransport struct {
-	srv                             *PageServer
-	trMu                            sync.Mutex
-	trPageTwoModelsAsPageItemServer *PageTwoModelsAsPageItemServerTransport
-	newListWithCustomPageModelPager *tracker[azfake.PagerResponder[azurepagegroup.PageClientListWithCustomPageModelResponse]]
-	newListWithPagePager            *tracker[azfake.PagerResponder[azurepagegroup.PageClientListWithPageResponse]]
-	newListWithParametersPager      *tracker[azfake.PagerResponder[azurepagegroup.PageClientListWithParametersResponse]]
+	srv                               *PageServer
+	trMu                              sync.Mutex
+	trPageTwoModelsAsPageItemServer   *PageTwoModelsAsPageItemServerTransport
+	newListWithCustomPageModelPager   *tracker[azfake.PagerResponder[azurepagegroup.PageClientListWithCustomPageModelResponse]]
+	newListWithPagePager              *tracker[azfake.PagerResponder[azurepagegroup.PageClientListWithPageResponse]]
+	newListWithParametersPager        *tracker[azfake.PagerResponder[azurepagegroup.PageClientListWithParametersResponse]]
+	newWithParameterizedNextLinkPager *tracker[azfake.PagerResponder[azurepagegroup.PageClientWithParameterizedNextLinkResponse]]
 }
 
 // Do implements the policy.Transporter interface for PageServerTransport.
@@ -108,6 +115,8 @@ func (p *PageServerTransport) dispatchToMethodFake(req *http.Request, method str
 				res.resp, res.err = p.dispatchNewListWithPagePager(req)
 			case "PageClient.NewListWithParametersPager":
 				res.resp, res.err = p.dispatchNewListWithParametersPager(req)
+			case "PageClient.NewWithParameterizedNextLinkPager":
+				res.resp, res.err = p.dispatchNewWithParameterizedNextLinkPager(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
 			}
@@ -220,6 +229,52 @@ func (p *PageServerTransport) dispatchNewListWithParametersPager(req *http.Reque
 	}
 	if !server.PagerResponderMore(newListWithParametersPager) {
 		p.newListWithParametersPager.remove(req)
+	}
+	return resp, nil
+}
+
+func (p *PageServerTransport) dispatchNewWithParameterizedNextLinkPager(req *http.Request) (*http.Response, error) {
+	if p.srv.NewWithParameterizedNextLinkPager == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NewWithParameterizedNextLinkPager not implemented")}
+	}
+	newWithParameterizedNextLinkPager := p.newWithParameterizedNextLinkPager.get(req)
+	if newWithParameterizedNextLinkPager == nil {
+		qp := req.URL.Query()
+		includePendingUnescaped, err := url.QueryUnescape(qp.Get("includePending"))
+		if err != nil {
+			return nil, err
+		}
+		includePendingParam, err := parseOptional(includePendingUnescaped, strconv.ParseBool)
+		if err != nil {
+			return nil, err
+		}
+		selectParamParam, err := url.QueryUnescape(qp.Get("select"))
+		if err != nil {
+			return nil, err
+		}
+		var options *azurepagegroup.PageClientWithParameterizedNextLinkOptions
+		if includePendingParam != nil {
+			options = &azurepagegroup.PageClientWithParameterizedNextLinkOptions{
+				IncludePending: includePendingParam,
+			}
+		}
+		resp := p.srv.NewWithParameterizedNextLinkPager(selectParamParam, options)
+		newWithParameterizedNextLinkPager = &resp
+		p.newWithParameterizedNextLinkPager.add(req, newWithParameterizedNextLinkPager)
+		server.PagerResponderInjectNextLinks(newWithParameterizedNextLinkPager, req, func(page *azurepagegroup.PageClientWithParameterizedNextLinkResponse, createLink func() string) {
+			page.NextLink = to.Ptr(createLink())
+		})
+	}
+	resp, err := server.PagerResponderNext(newWithParameterizedNextLinkPager, req)
+	if err != nil {
+		return nil, err
+	}
+	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newWithParameterizedNextLinkPager.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+	}
+	if !server.PagerResponderMore(newWithParameterizedNextLinkPager) {
+		p.newWithParameterizedNextLinkPager.remove(req)
 	}
 	return resp, nil
 }

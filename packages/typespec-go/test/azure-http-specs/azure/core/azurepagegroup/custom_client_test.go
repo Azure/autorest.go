@@ -79,3 +79,36 @@ func TestPageClient_NewListWithParametersPager(t *testing.T) {
 	}
 	require.EqualValues(t, 1, pages)
 }
+
+/*func TestPageClient_NewWithParameterizedNextLinkPager(t *testing.T) {
+	client, err := azurepagegroup.NewPageClient(nil)
+	require.NoError(t, err)
+	pager := client.NewWithParameterizedNextLinkPager("name", &azurepagegroup.PageClientWithParameterizedNextLinkOptions{
+		IncludePending: to.Ptr(true),
+	})
+	pages := 0
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		require.NoError(t, err)
+		pages++
+		switch pages {
+		case 1:
+			require.EqualValues(t, []*azurepagegroup.User{
+				{
+					ID:   to.Ptr[int32](1),
+					Name: to.Ptr("User1"),
+				},
+			}, page.Values)
+		case 2:
+			require.EqualValues(t, []*azurepagegroup.User{
+				{
+					ID:   to.Ptr[int32](2),
+					Name: to.Ptr("User2"),
+				},
+			}, page.Values)
+		default:
+			t.Fatalf("unexpected page number %d", pages)
+		}
+	}
+	require.EqualValues(t, 2, pages)
+}*/
