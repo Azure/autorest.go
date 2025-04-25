@@ -32,7 +32,7 @@ func TestJsonMergePatchClient_CreateResource(t *testing.T) {
 			},
 		},
 		IntValue:   to.Ptr[int32](1),
-		FloatValue: to.Ptr[float32](1.1),
+		FloatValue: to.Ptr[float32](1.25),
 		InnerModel: &jmergepatchgroup.InnerModel{
 			Name:        to.Ptr("InnerMadge"),
 			Description: to.Ptr("innerDesc"),
@@ -60,7 +60,7 @@ func TestJsonMergePatchClient_CreateResource(t *testing.T) {
 			},
 		},
 		IntValue:   to.Ptr[int32](1),
-		FloatValue: to.Ptr[float32](1.1),
+		FloatValue: to.Ptr[float32](1.25),
 		InnerModel: &jmergepatchgroup.InnerModel{
 			Name:        to.Ptr("InnerMadge"),
 			Description: to.Ptr("innerDesc"),
