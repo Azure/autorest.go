@@ -45,6 +45,14 @@ type PagedUser struct {
 	NextLink *string
 }
 
+type ParameterizedNextLinkPagingResult struct {
+	// REQUIRED
+	NextLink *string
+
+	// REQUIRED
+	Values []*User
+}
+
 // SecondItem - Second item.
 type SecondItem struct {
 	// READ-ONLY; The name of the item.

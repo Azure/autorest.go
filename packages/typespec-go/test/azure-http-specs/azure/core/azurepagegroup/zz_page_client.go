@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strconv"
 )
 
 // PageClient - Illustrates bodies templated with Azure Core with paging support
@@ -181,6 +182,58 @@ func (client *PageClient) listWithParametersHandleResponse(resp *http.Response) 
 	result := PageClientListWithParametersResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PagedUser); err != nil {
 		return PageClientListWithParametersResponse{}, err
+	}
+	return result, nil
+}
+
+// NewWithParameterizedNextLinkPager - List with parameterized next link that re-injects parameters.
+//   - options - PageClientWithParameterizedNextLinkOptions contains the optional parameters for the PageClient.NewWithParameterizedNextLinkPager
+//     method.
+func (client *PageClient) NewWithParameterizedNextLinkPager(selectParam string, options *PageClientWithParameterizedNextLinkOptions) *runtime.Pager[PageClientWithParameterizedNextLinkResponse] {
+	return runtime.NewPager(runtime.PagingHandler[PageClientWithParameterizedNextLinkResponse]{
+		More: func(page PageClientWithParameterizedNextLinkResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *PageClientWithParameterizedNextLinkResponse) (PageClientWithParameterizedNextLinkResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageClient.NewWithParameterizedNextLinkPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.withParameterizedNextLinkCreateRequest(ctx, selectParam, options)
+			}, nil)
+			if err != nil {
+				return PageClientWithParameterizedNextLinkResponse{}, err
+			}
+			return client.withParameterizedNextLinkHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// withParameterizedNextLinkCreateRequest creates the WithParameterizedNextLink request.
+func (client *PageClient) withParameterizedNextLinkCreateRequest(ctx context.Context, selectParam string, options *PageClientWithParameterizedNextLinkOptions) (*policy.Request, error) {
+	urlPath := "/azure/core/page/with-parameterized-next-link"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	if options != nil && options.IncludePending != nil {
+		reqQP.Set("includePending", strconv.FormatBool(*options.IncludePending))
+	}
+	reqQP.Set("select", selectParam)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// withParameterizedNextLinkHandleResponse handles the WithParameterizedNextLink response.
+func (client *PageClient) withParameterizedNextLinkHandleResponse(resp *http.Response) (PageClientWithParameterizedNextLinkResponse, error) {
+	result := PageClientWithParameterizedNextLinkResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ParameterizedNextLinkPagingResult); err != nil {
+		return PageClientWithParameterizedNextLinkResponse{}, err
 	}
 	return result, nil
 }
