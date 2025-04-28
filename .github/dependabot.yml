@@ -6,3 +6,7 @@ updates:
       - /packages/typespec-go/test
     schedule:
       interval: daily
+    gropus:
+      all-tests:
+        patterns:
+          - "*"
