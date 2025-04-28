@@ -1,0 +1,8 @@
+version: 2
+updates:
+  - package-ecosystem: gomod
+    directories:
+      - /packages/autorest.go/test
+      - /packages/typespec-go/test
+    schedule:
+      interval: daily
