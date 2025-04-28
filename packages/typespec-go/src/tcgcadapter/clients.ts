@@ -540,6 +540,10 @@ export class clientAdapter {
         adaptedParam = new go.HeaderParameter(paramName, param.serializedName, this.adaptHeaderType(param.type, true), paramKind, byVal, location);
       }
     } else if (param.kind === 'path') {
+      if (param.optional) {
+        // TODO: Optional path parameter only used for key vault. need to add support in the future.
+        throw new AdapterError('UnsupportedTsp', `unexpected optional path parameter ${param.name}`, param.__raw?.node ?? NoTarget);
+      }
       adaptedParam = new go.PathParameter(paramName, param.serializedName, !param.allowReserved, this.adaptPathParameterType(param.type), paramKind, byVal, location);
     } else if (param.kind === 'cookie') {
       // TODO: currently we don't have Azure service using cookie parameter. need to add support if needed in the future.
