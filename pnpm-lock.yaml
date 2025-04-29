@@ -250,6 +250,7 @@ importers:
         version: 0.5.21
     devDependencies:
       '@azure-tools/azure-http-specs':
+<<<<<<< HEAD:pnpm-lock.yaml
         specifier: 0.1.0-alpha.15
         version: 0.1.0-alpha.15(ced2f71f9e8418c36c46b74260e39fc3)
       '@azure-tools/typespec-autorest':
@@ -264,10 +265,33 @@ importers:
       '@azure-tools/typespec-client-generator-core':
         specifier: 0.55.0
         version: 0.55.0(048cafb07e86ff1a1a195c7e9d7f7cfb)
+=======
+        specifier: 0.1.0-alpha.16-dev.3
+        version: 0.1.0-alpha.16-dev.3(@azure-tools/typespec-azure-core@0.56.0-dev.1)(@types/node@18.19.68)(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/rest@0.70.0-dev.0)(@typespec/streams@0.70.0-dev.0)(@typespec/versioning@0.70.0-dev.0)(@typespec/xml@0.70.0-dev.0)
+      '@azure-tools/typespec-autorest':
+        specifier: 0.56.0-dev.2
+        version: 0.56.0-dev.2(@azure-tools/typespec-azure-core@0.56.0-dev.1)(@azure-tools/typespec-azure-resource-manager@0.56.0-dev.1)(@azure-tools/typespec-client-generator-core@0.56.0-dev.4)(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/openapi@1.0.0-rc.2-dev.0)(@typespec/rest@0.70.0-dev.0)(@typespec/versioning@0.70.0-dev.0)
+      '@azure-tools/typespec-azure-core':
+        specifier: 0.56.0-dev.1
+        version: 0.56.0-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/rest@0.70.0-dev.0)
+      '@azure-tools/typespec-azure-resource-manager':
+        specifier: 0.56.0-dev.1
+        version: 0.56.0-dev.1(@azure-tools/typespec-azure-core@0.56.0-dev.1)(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/openapi@1.0.0-rc.2-dev.0)(@typespec/rest@0.70.0-dev.0)(@typespec/versioning@0.70.0-dev.0)
+      '@azure-tools/typespec-client-generator-core':
+        specifier: 0.56.0-dev.4
+        version: 0.56.0-dev.4(@azure-tools/typespec-azure-core@0.56.0-dev.1)(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/events@0.70.0-dev.0)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/openapi@1.0.0-rc.2-dev.0)(@typespec/rest@0.70.0-dev.0)(@typespec/sse@0.70.0-dev.0)(@typespec/streams@0.70.0-dev.0)(@typespec/versioning@0.70.0-dev.0)(@typespec/xml@0.70.0-dev.0)
+      '@types/jest':
+        specifier: ~26.0.24
+        version: 26.0.24
+      '@types/js-yaml':
+        specifier: ~4.0.6
+        version: 4.0.9
+>>>>>>> a44b5647 (upgrade tsp toolset):common/config/rush/pnpm-lock.yaml
       '@types/node':
         specifier: 'catalog:'
         version: 20.17.32
       '@typespec/compiler':
+<<<<<<< HEAD:pnpm-lock.yaml
         specifier: 1.0.0-rc.1
         version: 1.0.0-rc.1(@types/node@20.17.32)
       '@typespec/events':
@@ -285,10 +309,30 @@ importers:
       '@typespec/rest':
         specifier: 0.69.0
         version: 0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))))
+=======
+        specifier: 1.0.0-rc.2-dev.9
+        version: 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+      '@typespec/events':
+        specifier: 0.70.0-dev.0
+        version: 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+      '@typespec/http':
+        specifier: 1.0.0-rc.2-dev.1
+        version: 1.0.0-rc.2-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/streams@0.70.0-dev.0)
+      '@typespec/http-specs':
+        specifier: 0.1.0-alpha.21-dev.2
+        version: 0.1.0-alpha.21-dev.2(@types/node@18.19.68)(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/rest@0.70.0-dev.0)(@typespec/streams@0.70.0-dev.0)(@typespec/versioning@0.70.0-dev.0)(@typespec/xml@0.70.0-dev.0)
+      '@typespec/openapi':
+        specifier: 1.0.0-rc.2-dev.0
+        version: 1.0.0-rc.2-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)
+      '@typespec/rest':
+        specifier: 0.70.0-dev.0
+        version: 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)
+>>>>>>> a44b5647 (upgrade tsp toolset):common/config/rush/pnpm-lock.yaml
       '@typespec/spector':
         specifier: 0.1.0-alpha.12
         version: 0.1.0-alpha.12(@types/node@20.17.32)(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))
       '@typespec/sse':
+<<<<<<< HEAD:pnpm-lock.yaml
         specifier: 0.69.0
         version: 0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/events@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))
       '@typespec/streams':
@@ -306,6 +350,19 @@ importers:
       '@vitest/ui':
         specifier: 'catalog:'
         version: 3.1.2(vitest@3.1.2)
+=======
+        specifier: 0.70.0-dev.0
+        version: 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/events@0.70.0-dev.0)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/streams@0.70.0-dev.0)
+      '@typespec/streams':
+        specifier: 0.70.0-dev.0
+        version: 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+      '@typespec/versioning':
+        specifier: 0.70.0-dev.0
+        version: 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+      '@typespec/xml':
+        specifier: 0.70.0-dev.0
+        version: 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+>>>>>>> a44b5647 (upgrade tsp toolset):common/config/rush/pnpm-lock.yaml
       eslint:
         specifier: 'catalog:'
         version: 9.25.1
@@ -365,13 +422,19 @@ packages:
     resolution: {integrity: sha512-X1C7XdyCuo50ch9FzKtTvmK18FgDxxf1Bbt3cSoknQqeDaRegHSSCO+zByq2YA4NvUzKXeZ1engh29IDxZXgpQ==}
     engines: {node: '>=10.12.0'}
 
+<<<<<<< HEAD:pnpm-lock.yaml
   '@azure-tools/azure-http-specs@0.1.0-alpha.15':
     resolution: {integrity: sha512-IddzhwJbfYMpCnFpVGvRt59djtku/npf4G4OMY6b6SU0sj6fN+CEg7jT4E3u29apxaKM9hwH90rHus2dHsQMag==}
+=======
+  /@azure-tools/azure-http-specs@0.1.0-alpha.16-dev.3(@azure-tools/typespec-azure-core@0.56.0-dev.1)(@types/node@18.19.68)(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/rest@0.70.0-dev.0)(@typespec/streams@0.70.0-dev.0)(@typespec/versioning@0.70.0-dev.0)(@typespec/xml@0.70.0-dev.0):
+    resolution: {integrity: sha512-puSwWklBUYgTNGW0GjFvWaE08jThQ8EC0iZ14JKrF4CfbxUjawxX82CLxUvrGNF2YtxvQa0BAoNZNZCo+qN8vQ==}
+>>>>>>> a44b5647 (upgrade tsp toolset):common/config/rush/pnpm-lock.yaml
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@azure-tools/typespec-azure-core': ^0.55.0
+      '@azure-tools/typespec-azure-core': ^0.55.0 || >=0.56.0-dev <0.56.0
       '@typespec/compiler': ^1.0.0-rc.1
       '@typespec/http': ^1.0.0-rc.1
+<<<<<<< HEAD:pnpm-lock.yaml
       '@typespec/rest': ^0.69.0
       '@typespec/versioning': ^0.69.0
       '@typespec/xml': ^0.69.0
@@ -5868,6 +5931,20 @@ snapshots:
       '@typespec/spector': 0.1.0-alpha.12(@types/node@20.17.32)(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))
       '@typespec/versioning': 0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))
       '@typespec/xml': 0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))
+=======
+      '@typespec/rest': ^0.69.0 || >=0.70.0-dev <0.70.0
+      '@typespec/versioning': ^0.69.0 || >=0.70.0-dev <0.70.0
+      '@typespec/xml': ^0.69.0 || >=0.70.0-dev <0.70.0
+    dependencies:
+      '@azure-tools/typespec-azure-core': 0.56.0-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/rest@0.70.0-dev.0)
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+      '@typespec/http': 1.0.0-rc.2-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/streams@0.70.0-dev.0)
+      '@typespec/rest': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)
+      '@typespec/spec-api': 0.1.0-alpha.4-dev.0
+      '@typespec/spector': 0.1.0-alpha.12(@types/node@18.19.68)(@typespec/streams@0.70.0-dev.0)
+      '@typespec/versioning': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+      '@typespec/xml': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+>>>>>>> a44b5647 (upgrade tsp toolset):common/config/rush/pnpm-lock.yaml
     transitivePeerDependencies:
       - '@types/node'
       - '@typespec/streams'
@@ -5902,6 +5979,7 @@ snapshots:
 
   '@azure-tools/tasks@3.0.255': {}
 
+<<<<<<< HEAD:pnpm-lock.yaml
   '@azure-tools/typespec-autorest@0.55.0(b2ea4ec03afb203e9d927f6b524f7baa)':
     dependencies:
       '@azure-tools/typespec-azure-core': 0.55.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))))(@typespec/rest@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))))
@@ -5927,9 +6005,65 @@ snapshots:
       '@typespec/openapi': 1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))))
       '@typespec/rest': 0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))))
       '@typespec/versioning': 0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))
+=======
+  /@azure-tools/typespec-autorest@0.56.0-dev.2(@azure-tools/typespec-azure-core@0.56.0-dev.1)(@azure-tools/typespec-azure-resource-manager@0.56.0-dev.1)(@azure-tools/typespec-client-generator-core@0.56.0-dev.4)(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/openapi@1.0.0-rc.2-dev.0)(@typespec/rest@0.70.0-dev.0)(@typespec/versioning@0.70.0-dev.0):
+    resolution: {integrity: sha512-PmIlNlys2RLPzhFdab8p6RyGRY2z3clrXM1/tCCagpv9hfwvyNmukkL3RzG9LegLIcdpSqmWalSmNLp8QUTYrg==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@azure-tools/typespec-azure-core': ^0.55.0 || >=0.56.0-dev <0.56.0
+      '@azure-tools/typespec-azure-resource-manager': ^0.55.0 || >=0.56.0-dev <0.56.0
+      '@azure-tools/typespec-client-generator-core': ^0.55.0 || >=0.56.0-dev <0.56.0
+      '@typespec/compiler': ^1.0.0-rc.1
+      '@typespec/http': ^1.0.0-rc.1
+      '@typespec/openapi': ^1.0.0-rc.1
+      '@typespec/rest': ^0.69.0 || >=0.70.0-dev <0.70.0
+      '@typespec/versioning': ^0.69.0 || >=0.70.0-dev <0.70.0
+    dependencies:
+      '@azure-tools/typespec-azure-core': 0.56.0-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/rest@0.70.0-dev.0)
+      '@azure-tools/typespec-azure-resource-manager': 0.56.0-dev.1(@azure-tools/typespec-azure-core@0.56.0-dev.1)(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/openapi@1.0.0-rc.2-dev.0)(@typespec/rest@0.70.0-dev.0)(@typespec/versioning@0.70.0-dev.0)
+      '@azure-tools/typespec-client-generator-core': 0.56.0-dev.4(@azure-tools/typespec-azure-core@0.56.0-dev.1)(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/events@0.70.0-dev.0)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/openapi@1.0.0-rc.2-dev.0)(@typespec/rest@0.70.0-dev.0)(@typespec/sse@0.70.0-dev.0)(@typespec/streams@0.70.0-dev.0)(@typespec/versioning@0.70.0-dev.0)(@typespec/xml@0.70.0-dev.0)
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+      '@typespec/http': 1.0.0-rc.2-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/streams@0.70.0-dev.0)
+      '@typespec/openapi': 1.0.0-rc.2-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)
+      '@typespec/rest': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)
+      '@typespec/versioning': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+    dev: true
+
+  /@azure-tools/typespec-azure-core@0.56.0-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/rest@0.70.0-dev.0):
+    resolution: {integrity: sha512-vfJBAGnv5x9u7FHzkQX8sZ5bResYh9MY0Tw3+Zx0HDG3YK3YSue6C1x5G+0Vdgy6AEqXjLhAuDn6rouBa2IqkQ==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@typespec/compiler': ^1.0.0-rc.1
+      '@typespec/http': ^1.0.0-rc.1
+      '@typespec/rest': ^0.69.0 || >=0.70.0-dev <0.70.0
+    dependencies:
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+      '@typespec/http': 1.0.0-rc.2-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/streams@0.70.0-dev.0)
+      '@typespec/rest': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)
+    dev: true
+
+  /@azure-tools/typespec-azure-resource-manager@0.56.0-dev.1(@azure-tools/typespec-azure-core@0.56.0-dev.1)(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/openapi@1.0.0-rc.2-dev.0)(@typespec/rest@0.70.0-dev.0)(@typespec/versioning@0.70.0-dev.0):
+    resolution: {integrity: sha512-PRHntbmfv1w85h//wyQICWQFcKLvwELAtwiqbul8mANzB17fIz5ShsVA6M15TzZked0P43TqBtbIPSLN2mVn7g==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@azure-tools/typespec-azure-core': ^0.55.0 || >=0.56.0-dev <0.56.0
+      '@typespec/compiler': ^1.0.0-rc.1
+      '@typespec/http': ^1.0.0-rc.1
+      '@typespec/openapi': ^1.0.0-rc.1
+      '@typespec/rest': ^0.69.0 || >=0.70.0-dev <0.70.0
+      '@typespec/versioning': ^0.69.0 || >=0.70.0-dev <0.70.0
+    dependencies:
+      '@azure-tools/typespec-azure-core': 0.56.0-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/rest@0.70.0-dev.0)
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+      '@typespec/http': 1.0.0-rc.2-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/streams@0.70.0-dev.0)
+      '@typespec/openapi': 1.0.0-rc.2-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)
+      '@typespec/rest': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)
+      '@typespec/versioning': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+>>>>>>> a44b5647 (upgrade tsp toolset):common/config/rush/pnpm-lock.yaml
       change-case: 5.4.4
       pluralize: 8.0.0
 
+<<<<<<< HEAD:pnpm-lock.yaml
   '@azure-tools/typespec-client-generator-core@0.55.0(048cafb07e86ff1a1a195c7e9d7f7cfb)':
     dependencies:
       '@azure-tools/typespec-azure-core': 0.55.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))))(@typespec/rest@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))))
@@ -5942,6 +6076,33 @@ snapshots:
       '@typespec/streams': 0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))
       '@typespec/versioning': 0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))
       '@typespec/xml': 0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))
+=======
+  /@azure-tools/typespec-client-generator-core@0.56.0-dev.4(@azure-tools/typespec-azure-core@0.56.0-dev.1)(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/events@0.70.0-dev.0)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/openapi@1.0.0-rc.2-dev.0)(@typespec/rest@0.70.0-dev.0)(@typespec/sse@0.70.0-dev.0)(@typespec/streams@0.70.0-dev.0)(@typespec/versioning@0.70.0-dev.0)(@typespec/xml@0.70.0-dev.0):
+    resolution: {integrity: sha512-/DS3JrVQJD5DHg7cblR2BpOaFgpg+BXKGq16fmyEtxaB3WYTrTu7Fi/XWgYXCPUKXXZ7ajw782yji5AfNLHnlw==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@azure-tools/typespec-azure-core': ^0.55.0 || >=0.56.0-dev <0.56.0
+      '@typespec/compiler': ^1.0.0-rc.1
+      '@typespec/events': ^0.69.0 || >=0.70.0-dev <0.70.0
+      '@typespec/http': ^1.0.0-rc.1
+      '@typespec/openapi': ^1.0.0-rc.1
+      '@typespec/rest': ^0.69.0 || >=0.70.0-dev <0.70.0
+      '@typespec/sse': ^0.69.0 || >=0.70.0-dev <0.70.0
+      '@typespec/streams': ^0.69.0 || >=0.70.0-dev <0.70.0
+      '@typespec/versioning': ^0.69.0 || >=0.70.0-dev <0.70.0
+      '@typespec/xml': ^0.69.0 || >=0.70.0-dev <0.70.0
+    dependencies:
+      '@azure-tools/typespec-azure-core': 0.56.0-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/rest@0.70.0-dev.0)
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+      '@typespec/events': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+      '@typespec/http': 1.0.0-rc.2-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/streams@0.70.0-dev.0)
+      '@typespec/openapi': 1.0.0-rc.2-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)
+      '@typespec/rest': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)
+      '@typespec/sse': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/events@0.70.0-dev.0)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/streams@0.70.0-dev.0)
+      '@typespec/streams': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+      '@typespec/versioning': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+      '@typespec/xml': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+>>>>>>> a44b5647 (upgrade tsp toolset):common/config/rush/pnpm-lock.yaml
       change-case: 5.4.4
       pluralize: 8.0.0
       yaml: 2.7.1
@@ -7254,12 +7415,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+<<<<<<< HEAD:pnpm-lock.yaml
   '@typescript-eslint/visitor-keys@8.31.1':
     dependencies:
       '@typescript-eslint/types': 8.31.1
       eslint-visitor-keys: 4.2.0
 
   '@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)':
+=======
+  /@typespec/compiler@1.0.0-rc.2-dev.9(@types/node@18.19.68):
+    resolution: {integrity: sha512-nTZAO1mxFN9ZD435xdBrB/wvCxQWb17BWL2K6V05Q9D7FzjRoklX+nvVnV9EAeA/vmMEL5kveWBAJZuXxdpB7g==}
+    engines: {node: '>=20.0.0'}
+    hasBin: true
+>>>>>>> a44b5647 (upgrade tsp toolset):common/config/rush/pnpm-lock.yaml
     dependencies:
       '@babel/code-frame': 7.26.2
       '@inquirer/prompts': 7.5.0(@types/node@20.17.32)
@@ -7281,6 +7449,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
+<<<<<<< HEAD:pnpm-lock.yaml
   '@typespec/events@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))':
     dependencies:
       '@typespec/compiler': 1.0.0-rc.1(@types/node@20.17.32)
@@ -7294,12 +7463,41 @@ snapshots:
       '@typespec/spector': 0.1.0-alpha.12(@types/node@20.17.32)(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))
       '@typespec/versioning': 0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))
       '@typespec/xml': 0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))
+=======
+  /@typespec/events@0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9):
+    resolution: {integrity: sha512-YtdW+KPssSkZn7YZaxtNfqx7AYAhpf39lhHmyWxng/NnrPSsOAbJoxu6/LwVEsmEnQyekX8pDNNBCIZKM9lFbA==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@typespec/compiler': ^1.0.0-rc.1
+    dependencies:
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+    dev: true
+
+  /@typespec/http-specs@0.1.0-alpha.21-dev.2(@types/node@18.19.68)(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/rest@0.70.0-dev.0)(@typespec/streams@0.70.0-dev.0)(@typespec/versioning@0.70.0-dev.0)(@typespec/xml@0.70.0-dev.0):
+    resolution: {integrity: sha512-CPqw1pNkpoqVNrG8YpaBf7RRB3GLtS+qL1gZZhPRpy4bsF4yZi3vAQm1S+TKwd5LLnsqy/o0ffGuXFdo8zp/zQ==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      '@typespec/compiler': ^1.0.0-rc.1
+      '@typespec/http': ^1.0.0-rc.1
+      '@typespec/rest': ^0.69.0 || >=0.70.0-dev <0.70.0
+      '@typespec/versioning': ^0.69.0 || >=0.70.0-dev <0.70.0
+      '@typespec/xml': ^0.69.0 || >=0.70.0-dev <0.70.0
+    dependencies:
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+      '@typespec/http': 1.0.0-rc.2-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/streams@0.70.0-dev.0)
+      '@typespec/rest': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)
+      '@typespec/spec-api': 0.1.0-alpha.4-dev.0
+      '@typespec/spector': 0.1.0-alpha.12(@types/node@18.19.68)(@typespec/streams@0.70.0-dev.0)
+      '@typespec/versioning': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+      '@typespec/xml': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+>>>>>>> a44b5647 (upgrade tsp toolset):common/config/rush/pnpm-lock.yaml
       deep-equal: 2.2.3
     transitivePeerDependencies:
       - '@types/node'
       - '@typespec/streams'
       - supports-color
 
+<<<<<<< HEAD:pnpm-lock.yaml
   '@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))':
     dependencies:
       '@typespec/compiler': 1.0.0-rc.1(@types/node@20.17.32)
@@ -7320,6 +7518,54 @@ snapshots:
     dependencies:
       '@typespec/compiler': 1.0.0-rc.1(@types/node@20.17.32)
       '@typespec/http': 1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))
+=======
+  /@typespec/http@1.0.0-rc.2-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/streams@0.70.0-dev.0):
+    resolution: {integrity: sha512-z5xJqWj3OtAkZtcGP3RSfuBJuaUfTRX/72lWqMUkzad8Hdt1s5PFytoZbLkpmDHSnOvlZQoUp2Q1iNI4y/91IA==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@typespec/compiler': ^1.0.0-rc.1
+      '@typespec/streams': ^0.69.0 || >=0.70.0-dev <0.70.0
+    peerDependenciesMeta:
+      '@typespec/streams':
+        optional: true
+    dependencies:
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+      '@typespec/streams': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+    dev: true
+
+  /@typespec/openapi@1.0.0-rc.2-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1):
+    resolution: {integrity: sha512-t54VRsLbpkhQtFYx81Qvf6jP/O9WSuyejBMAVMuYMHEy+ZqQEIEkD9PRym1VS5QlKY8FCWrqH9ntqPFNK42OAQ==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@typespec/compiler': ^1.0.0-rc.1
+      '@typespec/http': ^1.0.0-rc.1
+    dependencies:
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+      '@typespec/http': 1.0.0-rc.2-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/streams@0.70.0-dev.0)
+    dev: true
+
+  /@typespec/rest@0.68.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1):
+    resolution: {integrity: sha512-VJBEpC0MCFPPN6acc5o0fwQm4WMjMEl3aBHE+71XYkagsqb31rYSyfgfBMvHWaEMJV4dVk5T787/q6AWDzEE8g==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@typespec/compiler': ^1.0.0-rc.0
+      '@typespec/http': ^1.0.0-rc.0
+    dependencies:
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+      '@typespec/http': 1.0.0-rc.2-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/streams@0.70.0-dev.0)
+    dev: true
+
+  /@typespec/rest@0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1):
+    resolution: {integrity: sha512-yWHcSddo426/JkfMl2zydMTZSPnuPRxfs7ggp4H42Y+bmTK5m1dhL6MRo2wgn+LjSVIZn1r/YgGGhEkBSuIgKw==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@typespec/compiler': ^1.0.0-rc.1
+      '@typespec/http': ^1.0.0-rc.1
+    dependencies:
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+      '@typespec/http': 1.0.0-rc.2-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/streams@0.70.0-dev.0)
+    dev: true
+>>>>>>> a44b5647 (upgrade tsp toolset):common/config/rush/pnpm-lock.yaml
 
   '@typespec/spec-api@0.1.0-alpha.4':
     dependencies:
@@ -7341,12 +7587,21 @@ snapshots:
     dependencies:
       '@azure/identity': 4.8.0
       '@types/js-yaml': 4.0.9
+<<<<<<< HEAD:pnpm-lock.yaml
       '@typespec/compiler': 1.0.0-rc.1(@types/node@20.17.32)
       '@typespec/http': 1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))
       '@typespec/rest': 0.68.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))))
       '@typespec/spec-api': 0.1.0-alpha.4
       '@typespec/spec-coverage-sdk': 0.1.0-alpha.6
       '@typespec/versioning': 0.68.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))
+=======
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+      '@typespec/http': 1.0.0-rc.2-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/streams@0.70.0-dev.0)
+      '@typespec/rest': 0.68.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/http@1.0.0-rc.2-dev.1)
+      '@typespec/spec-api': 0.1.0-alpha.4-dev.0
+      '@typespec/spec-coverage-sdk': 0.1.0-alpha.5-dev.0
+      '@typespec/versioning': 0.68.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+>>>>>>> a44b5647 (upgrade tsp toolset):common/config/rush/pnpm-lock.yaml
       ajv: 8.17.1
       body-parser: 1.20.3
       deep-equal: 2.2.3
@@ -7365,6 +7620,7 @@ snapshots:
       - '@typespec/streams'
       - supports-color
 
+<<<<<<< HEAD:pnpm-lock.yaml
   '@typespec/sse@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/events@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))':
     dependencies:
       '@typespec/compiler': 1.0.0-rc.1(@types/node@20.17.32)
@@ -7387,6 +7643,58 @@ snapshots:
   '@typespec/xml@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))':
     dependencies:
       '@typespec/compiler': 1.0.0-rc.1(@types/node@20.17.32)
+=======
+  /@typespec/sse@0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/events@0.70.0-dev.0)(@typespec/http@1.0.0-rc.2-dev.1)(@typespec/streams@0.70.0-dev.0):
+    resolution: {integrity: sha512-tiK/qXyN7i5m/msvTWLBZH541Wisg3u7hxyNiHzftW+5ErAUWVu4dSycKwM4UhJUPXo9vjYEFn8KsM+Q627eLw==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@typespec/compiler': ^1.0.0-rc.1
+      '@typespec/events': ^0.69.0 || >=0.70.0-dev <0.70.0
+      '@typespec/http': ^1.0.0-rc.1
+      '@typespec/streams': ^0.69.0 || >=0.70.0-dev <0.70.0
+    dependencies:
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+      '@typespec/events': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+      '@typespec/http': 1.0.0-rc.2-dev.1(@typespec/compiler@1.0.0-rc.2-dev.9)(@typespec/streams@0.70.0-dev.0)
+      '@typespec/streams': 0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9)
+    dev: true
+
+  /@typespec/streams@0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9):
+    resolution: {integrity: sha512-NvxgjCyPjJM24CWgYaIeaIx78vWpVDDDJ153E9ZTd3cAl86IPy/wI76AUh0x5oSNQxHonh/XxS48zSZf0C9eZA==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@typespec/compiler': ^1.0.0-rc.1
+    dependencies:
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+    dev: true
+
+  /@typespec/versioning@0.68.0(@typespec/compiler@1.0.0-rc.2-dev.9):
+    resolution: {integrity: sha512-nsK0hbOeqfsNo1dsP64A4Ks0C/FEk5WJ5LEfgTwvFGdE48mHrj7UJdp58Ps5F6moiR9U20P1rHbo+mE0LDIRvA==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@typespec/compiler': ^1.0.0-rc.0
+    dependencies:
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+    dev: true
+
+  /@typespec/versioning@0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9):
+    resolution: {integrity: sha512-wrfs416cV1+n7FPDXxdBOWHraJJwh5Jf5yoedQo5G9BnbWp7dy3A/L/FSh3J1FyLpQhVQA1IZaEjN4W2kQhx4w==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@typespec/compiler': ^1.0.0-rc.1
+    dependencies:
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+    dev: true
+
+  /@typespec/xml@0.70.0-dev.0(@typespec/compiler@1.0.0-rc.2-dev.9):
+    resolution: {integrity: sha512-TY2qYiG6t/K+OSMrqQF47klUgI4oAmv3pczRTSQQjbGw/KaoxfN+9tgR+58+1tMNOyHOhu0bIJL+3DSg6asoYQ==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@typespec/compiler': ^1.0.0-rc.1
+    dependencies:
+      '@typespec/compiler': 1.0.0-rc.2-dev.9(@types/node@18.19.68)
+    dev: true
+>>>>>>> a44b5647 (upgrade tsp toolset):common/config/rush/pnpm-lock.yaml
 
   '@vitest/coverage-v8@3.1.2(vitest@3.1.2)':
     dependencies:
