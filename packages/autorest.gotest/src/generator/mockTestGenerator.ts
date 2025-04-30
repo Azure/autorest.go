@@ -29,7 +29,6 @@ import { values } from '@azure-tools/linq';
 export class MockTestDataRender extends BaseDataRender {
   public clientFactoryParams: Array<Parameter>;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public skipPropertyFunc = (exampleValue: ExampleValue): boolean => {
     // skip any null value
     if (exampleValue.rawValue === null) {
@@ -37,7 +36,7 @@ export class MockTestDataRender extends BaseDataRender {
     }
     return false;
   };
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   public replaceValueFunc = (rawValue: any, exampleValue: ExampleValue): any => {
     return rawValue;
   };
@@ -230,7 +229,6 @@ export class MockTestDataRender extends BaseDataRender {
   }
 
   // get GO code of single parameter for one operation invoke
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected genParameterOutput(paramName: string, paramType: string, parameter: Parameter | GroupProperty, exampleParameters: Array<ExampleParameter>, isClient = false): string {
     // get corresponding example value of a parameter
     const findExampleParameter = (name: string, param: Parameter): string => {

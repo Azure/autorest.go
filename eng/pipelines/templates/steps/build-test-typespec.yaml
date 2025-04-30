@@ -4,22 +4,26 @@ parameters:
 
 steps:
   - script: |
-      if [ "${{ parameters.Nightly }}" = "true" ]; then
-        rush update
-      else
-        rush install
-      fi
-      rush rebuild -v
+      pnpm install
+      pnpm build
     displayName: "Build Emitter Sources"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
 
   - script: |
-      npm run eslint
+      pnpm eslint
     displayName: "Run Lint"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
 
   - script: |
-      rush tspcompile --verbose
-      rush modtidy 2>&1
+      export currentVersion=$(node -p -e "require('./package.json').version")
+      pnpm pack
+      npm install -g azure-tools-typespec-go-$currentVersion.tgz
+    displayName: "Create and install npm tarball"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
+
+  - script: |
+      pnpm tspcompile --emitter-installed --verbose
+      pnpm -w modtidy $pwd 2>&1
       git add -A .
       git diff --staged -w 1>&2
     displayName: "Regenerate TypeSpec Tests"
@@ -56,7 +60,7 @@ steps:
     displayName: "Lint Generated Content"
 
   - pwsh: |
-      rush spector --start
+      pnpm spector --start
       $testDirs = ($(System.DefaultWorkingDirectory)/eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
       foreach ($td in $testDirs) {
         pushd $td
@@ -64,9 +68,10 @@ steps:
         go test -run "^Test" -v | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml
         popd
       }
-      rush spector --stop
+      pnpm spector --stop
     displayName: "Run All Tests - go$(GoVersion)"
     timeoutInMinutes: 10
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
 
   - task: PublishTestResults@2
     inputs:

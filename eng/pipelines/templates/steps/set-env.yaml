@@ -2,6 +2,7 @@ parameters:
   NodeVersion: "$(NodeVersion)"
   GoVersion: "$(GoVersion)"
   GoLintCLIVersion: "$(GoLintCLIVersion)"
+  pnpmStorePath: $(Pipeline.Workspace)/.pnpm-store
 
 steps:
   - task: NodeTool@0
@@ -14,9 +15,28 @@ steps:
       version: "${{ parameters.GoVersion }}"
     displayName: "Select Go Version"
 
+  - task: Cache@2
+    inputs:
+      key: 'pnpm | "$(Agent.OS)" | $(System.DefaultWorkingDirectory)/pnpm-lock.yaml'
+      path: ${{ parameters.pnpmStorePath }}
+    displayName: Cache pnpm store
+
   - script: |
-      cd $(Build.SourcesDirectory)
-      npm install -g "@microsoft/rush"
-      rush update
+      npm i -g corepack@latest
+      corepack enable
+      corepack prepare pnpm@latest-9 --activate
+    displayName: Install pnpm
+
+  - script: pnpm config set store-dir ${{ parameters.pnpmStorePath }}
+    displayName: Setup pnpm cache dir
+
+  - script: |
+      echo "Node:"
+      node -v
+      echo "Pnpm:"
+      pnpm -v
+    displayName: Log tool versions used
+
+  - script: |
       npm install -g autorest
-    displayName: "Prepare Generator Environment"
+    displayName: "Install Latest Autorest"
