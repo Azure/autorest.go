@@ -1,0 +1,17 @@
+{
+  "name": "@autorest.go/monorepo",
+  "version": "0.0.1",
+  "private": true,
+  "packageManager": "pnpm@9.11.0",
+  "type": "module",
+  "scripts": {
+    "build:all": "pnpm -r build",
+    "modtidy": "node .scripts/modtidy.js",
+    "buildvet": "node .scripts/buildvet.js",
+    "gogetu": "node .scripts/gogetu.js",
+    "gotest": "node .scripts/gotest.js"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:"
+  }
+}

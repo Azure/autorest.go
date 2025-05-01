@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ObjectSchema, Parameter, SchemaType } from '@autorest/codemodel';
+import { ObjectSchema, SchemaType } from '@autorest/codemodel';
 import { ExampleModel, MockTestDefinitionModel } from '@autorest/testmodeler/dist/src/core/model';
 import { camelCase, trimEnd } from 'lodash';
 import { Config } from '../common/constant';

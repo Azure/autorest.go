@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as _ from 'lodash';
-import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
 
 export class GoHelper {
   public static addPackage(type: string, packageName: string) {

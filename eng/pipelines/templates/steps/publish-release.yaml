@@ -15,7 +15,7 @@ steps:
       }
       cd packages/${{ parameters.PackagePath }}
       npm version --no-git-tag-version $currentVersion
-      npm pack
+      pnpm pack
       npm install -g ${{ parameters.PackageFileName }}-$currentVersion.tgz
       if ($LASTEXITCODE) {
         exit $LASTEXITCODE

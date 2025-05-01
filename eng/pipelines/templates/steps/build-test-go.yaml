@@ -3,24 +3,28 @@ parameters:
 
 steps:
   - script: |
-      rush install
-      rush rebuild -v
+      pnpm install
+      pnpm build
     displayName: "Build Generator Sources"
-
-  - script: |
-      npm run eslint
-    displayName: "Run Lint"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
 
-  - script: npm pack
-    displayName: "Create npm tarball"
+  - script: |
+      pnpm eslint
+    displayName: "Run Lint"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
 
   - script: |
       export currentVersion=$(node -p -e "require('./package.json').version")
-      rush regenerate --use-package=$(System.DefaultWorkingDirectory)/packages/autorest.go/autorest-go-$currentVersion.tgz
+      pnpm pack
+      npm install -g autorest-go-$currentVersion.tgz
+    displayName: "Create and install npm tarball"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
+
+  - script: |
+      export currentVersion=$(node -p -e "require('./package.json').version")
+      pnpm regenerate --use-package=$(System.DefaultWorkingDirectory)/packages/autorest.go/autorest-go-$currentVersion.tgz
       cd test
-      rush modtidy 2>&1
+      pnpm -w modtidy $pwd 2>&1
       git add -A .
       git diff --staged -w 1>&2
     displayName: "Regenerate Autorest Tests"
@@ -119,7 +123,7 @@ steps:
     displayName: "Run Acceptance Tests - go$(GoVersion)"
     timeoutInMinutes: 10
 
-  - pwsh: npm test
+  - pwsh: pnpm test
     displayName: "Run Unit Tests - go$(GoVersion)"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
 
