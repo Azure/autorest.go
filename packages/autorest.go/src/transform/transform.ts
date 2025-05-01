@@ -158,8 +158,8 @@ function getDiscriminatorSchema(schema: m4.ObjectSchema): m4.Schema {
   const discriminatorInterface = schema.language.go!.discriminatorInterface;
   if (!discriminatorSchemas.has(discriminatorInterface)) {
     const discriminatorSchema = new m4.ObjectSchema(discriminatorInterface, 'discriminated type');
-    discriminatorSchema.language.go! = discriminatorSchema.language.default;
-    discriminatorSchema.language.go!.discriminatorInterface = discriminatorInterface;
+    discriminatorSchema.language.go = discriminatorSchema.language.default;
+    discriminatorSchema.language.go.discriminatorInterface = discriminatorInterface;
     // copy over fields from the original
     discriminatorSchema.discriminator = schema.discriminator;
     discriminatorSchema.children = schema.children;
@@ -196,14 +196,14 @@ function recursiveSubstitueDiscriminator(item: m4.Schema): m4.Schema {
   }
   if (helpers.isArraySchema(item)) {
     discriminatorSchema = new m4.ArraySchema(strings.Name, strings.Desc, recursiveSubstitueDiscriminator(item.elementType));
-    discriminatorSchema.language.go! = discriminatorSchema.language.default;
-    discriminatorSchema.language.go!.elementIsPtr = false;
+    discriminatorSchema.language.go = discriminatorSchema.language.default;
+    discriminatorSchema.language.go.elementIsPtr = false;
     discriminatorSchemas.set(strings.Name, discriminatorSchema);
     return discriminatorSchema;
   } else if (helpers.isDictionarySchema(item)) {
     discriminatorSchema = new m4.DictionarySchema(strings.Name, strings.Desc, recursiveSubstitueDiscriminator(item.elementType));
-    discriminatorSchema.language.go! = discriminatorSchema.language.default;
-    discriminatorSchema.language.go!.elementIsPtr = false;
+    discriminatorSchema.language.go = discriminatorSchema.language.default;
+    discriminatorSchema.language.go.elementIsPtr = false;
     discriminatorSchemas.set(strings.Name, discriminatorSchema);
     return discriminatorSchema;
   }
@@ -241,7 +241,7 @@ function recursiveBuildDiscriminatorStrings(item: m4.Schema): DiscriminatorStrin
 
 const dictionaryElementAnySchema = new m4.AnySchema('any schema for maps');
 dictionaryElementAnySchema.language.go = dictionaryElementAnySchema.language.default;
-dictionaryElementAnySchema.language.go!.name = 'any';
+dictionaryElementAnySchema.language.go.name = 'any';
 
 function schemaTypeToGoType(codeModel: m4.CodeModel, schema: m4.Schema, type: 'Property' | 'InBody' | 'HeaderParam' | 'PathParam' | 'QueryParam'): string {
   const rawJSONAsBytes = <boolean>codeModel.language.go!.rawJSONAsBytes;
@@ -262,7 +262,7 @@ function schemaTypeToGoType(codeModel: m4.CodeModel, schema: m4.Schema, type: 'P
       return 'string';
     case m4.SchemaType.Array: {
       const arraySchema = <m4.ArraySchema>schema;
-      const arrayElem = <m4.Schema>arraySchema.elementType;
+      const arrayElem = arraySchema.elementType;
       if (rawJSONAsBytes && (arrayElem.type === m4.SchemaType.Any || arrayElem.type === m4.SchemaType.AnyObject)) {
         schema.language.go!.rawJSONAsBytes = rawJSONAsBytes;
         // propagate the setting to the element type
@@ -321,7 +321,7 @@ function schemaTypeToGoType(codeModel: m4.CodeModel, schema: m4.Schema, type: 'P
       return 'time.Time';
     case m4.SchemaType.Dictionary: {
       const dictSchema = <m4.DictionarySchema>schema;
-      const dictElem = <m4.Schema>dictSchema.elementType;
+      const dictElem = dictSchema.elementType;
       if (rawJSONAsBytes && (dictElem.type === m4.SchemaType.Any || dictElem.type === m4.SchemaType.AnyObject)) {
         dictSchema.elementType = dictionaryElementAnySchema;
         return `map[string]${dictionaryElementAnySchema.language.go!.name}`;
@@ -702,7 +702,7 @@ function createGroupProperty(name: string, description: string, groupedClientPar
   const gp = new m4.GroupProperty(name, description, schema);
   gp.language.go = gp.language.default;
   if (groupedClientParams) {
-    gp.language.go!.groupedClientParams = true;
+    gp.language.go.groupedClientParams = true;
   }
   return gp;
 }
@@ -912,7 +912,7 @@ function createResponseEnvelope(codeModel: m4.CodeModel, group: m4.OperationGrou
     respEnv.properties.push(binaryProp);
     respEnv.language.go!.resultProp = binaryProp;
   }
-  if ((<Array<m4.Property>>respEnv.properties).length === 0) {
+  if (respEnv.properties.length === 0) {
     // if we get here it means the operation doesn't return anything. we set
     // this to undefined to simplify detection of an empty response envelope
     respEnv.properties = undefined;
@@ -938,28 +938,28 @@ function newObject(name: string, desc: string): m4.ObjectSchema {
 function newAny(desc: string): m4.AnySchema {
   const any = new m4.AnySchema(desc);
   any.language.go = any.language.default;
-  any.language.go!.name = 'any';
+  any.language.go.name = 'any';
   return any;
 }
 
 function newBoolean(name: string, desc: string): m4.BooleanSchema {
   const bool = new m4.BooleanSchema(name, desc);
   bool.language.go = bool.language.default;
-  bool.language.go!.name = 'bool';
+  bool.language.go.name = 'bool';
   return bool;
 }
 
 function newBinary(desc: string): m4.BinarySchema {
   const binary = new m4.BinarySchema(desc);
   binary.language.go = binary.language.default;
-  binary.language.go!.name = 'io.ReadCloser';
+  binary.language.go.name = 'io.ReadCloser';
   return binary;
 }
 
 function newString(name: string, desc: string): m4.StringSchema {
   const string = new m4.StringSchema(name, desc);
   string.language.go = string.language.default;
-  string.language.go!.name = 'string';
+  string.language.go.name = 'string';
   return string;
 }
 
@@ -974,7 +974,7 @@ function newProperty(name: string, desc: string, schema: m4.Schema): m4.Property
 
 function newParameter(name: string, desc: string, schema: m4.Schema): m4.Parameter {
   const param = new m4.Parameter(name, desc, schema);
-  param.language.go! = param.language.default;
+  param.language.go = param.language.default;
   param.implementation = m4.ImplementationLocation.Method;
   return param;
 }
@@ -1020,7 +1020,7 @@ function recursiveTypeName(schema: m4.Schema): string {
       return 'Object';
     case m4.SchemaType.Array: {
       const arraySchema = <m4.ArraySchema>schema;
-      const arrayElem = <m4.Schema>arraySchema.elementType;
+      const arrayElem = arraySchema.elementType;
       return `${recursiveTypeName(arrayElem)}Array`;
     }
     case m4.SchemaType.Boolean:
@@ -1037,7 +1037,7 @@ function recursiveTypeName(schema: m4.Schema): string {
       return 'Time';
     case m4.SchemaType.Dictionary: {
       const dictSchema = <m4.DictionarySchema>schema;
-      const dictElem = <m4.Schema>dictSchema.elementType;
+      const dictElem = dictSchema.elementType;
       return `MapOf${recursiveTypeName(dictElem)}`;
     }
     case m4.SchemaType.Integer:
@@ -1100,9 +1100,9 @@ function getRootDiscriminator(obj: m4.ObjectSchema): m4.ObjectSchema {
 // returns the set of enum values used for discriminators
 function getDiscriminatorEnums(obj: m4.ObjectSchema): Array<m4.ChoiceValue> | undefined {
   if (obj.discriminator?.property.schema.type === m4.SchemaType.Choice) {
-    return (<m4.ChoiceSchema>obj.discriminator!.property.schema).choices;
+    return (<m4.ChoiceSchema>obj.discriminator.property.schema).choices;
   } else if (obj.discriminator?.property.schema.type === m4.SchemaType.SealedChoice) {
-    return (<m4.SealedChoiceSchema>obj.discriminator!.property.schema).choices;
+    return (<m4.SealedChoiceSchema>obj.discriminator.property.schema).choices;
   }
   return undefined;
 }
@@ -1194,7 +1194,7 @@ function iterateOperations(model: m4.CodeModel, referencedTypes: Set<m4.Schema>)
       }
       // Such odata definition is not used directly in operation. But it seems the model is a detailed definition for some string param. Reserve for now.
       if (op.extensions?.['x-ms-odata']) {
-        const schemaParts = op.extensions['x-ms-odata'].split('/');
+        const schemaParts = (<string>op.extensions['x-ms-odata']).split('/');
         const schema = values(model.schemas.objects).where((o) => o.language.default.name === schemaParts[schemaParts.length - 1]).first();
         if (schema) {
           dfsSchema(schema, referencedTypes);

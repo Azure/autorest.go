@@ -90,9 +90,9 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
   if (existsSync(goModFile)) {
     existingGoMod = (await readFile(goModFile)).toString();
   }
-  const gomod = await generateGoModFile(codeModel, existingGoMod!);
+  const gomod = await generateGoModFile(codeModel, existingGoMod);
   if (gomod.length > 0) {
-    writeFile(goModFile, gomod);
+    await writeFile(goModFile, gomod);
   }
 
   let filePrefix = '';
@@ -105,25 +105,25 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
   }
   const clientFactory = await generateClientFactory(codeModel);
   if (clientFactory.length > 0) {
-    writeFile(`${context.emitterOutputDir}/${filePrefix}client_factory.go`, clientFactory);
+    await writeFile(`${context.emitterOutputDir}/${filePrefix}client_factory.go`, clientFactory);
   }
 
   const constants = await generateConstants(codeModel);
   if (constants.length > 0) {
-    writeFile(`${context.emitterOutputDir}/${filePrefix}constants.go`, constants);
+    await writeFile(`${context.emitterOutputDir}/${filePrefix}constants.go`, constants);
   }
 
   const interfaces = await generateInterfaces(codeModel);
   if (interfaces.length > 0) {
-    writeFile(`${context.emitterOutputDir}/${filePrefix}interfaces.go`, interfaces);
+    await writeFile(`${context.emitterOutputDir}/${filePrefix}interfaces.go`, interfaces);
   }
 
   const models = await generateModels(codeModel);
   if (models.models.length > 0) {
-    writeFile(`${context.emitterOutputDir}/${filePrefix}models.go`, models.models);
+    await writeFile(`${context.emitterOutputDir}/${filePrefix}models.go`, models.models);
   }
   if (models.serDe.length > 0) {
-    writeFile(`${context.emitterOutputDir}/${filePrefix}models_serde.go`, models.serDe);
+    await writeFile(`${context.emitterOutputDir}/${filePrefix}models_serde.go`, models.serDe);
   }
 
   const operations = await generateOperations(codeModel);
@@ -135,7 +135,7 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
     if (fileName !== 'client') {
       fileName = fileName.substring(0, fileName.length-6) + '_client';
     }
-    writeFile(`${context.emitterOutputDir}/${filePrefix}${fileName}.go`, op.content);
+    await writeFile(`${context.emitterOutputDir}/${filePrefix}${fileName}.go`, op.content);
   }
 
   if (codeModel.options.generateExamples) {
@@ -150,36 +150,36 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
         fileName = fileName.substring(0, fileName.length - 6) + '_client';
       }
       fileName += '_example_test';
-      writeFile(`${context.emitterOutputDir}/${filePrefix}${fileName}.go`, example.content);
+      await writeFile(`${context.emitterOutputDir}/${filePrefix}${fileName}.go`, example.content);
     }
   }
 
   const options = await generateOptions(codeModel);
   if (options.length > 0) {
-    writeFile(`${context.emitterOutputDir}/${filePrefix}options.go`, options);
+    await writeFile(`${context.emitterOutputDir}/${filePrefix}options.go`, options);
   }
 
   const polymorphics = await generatePolymorphicHelpers(codeModel);
   if (polymorphics.length > 0) {
-    writeFile(`${context.emitterOutputDir}/${filePrefix}polymorphic_helpers.go`, polymorphics);
+    await writeFile(`${context.emitterOutputDir}/${filePrefix}polymorphic_helpers.go`, polymorphics);
   }
 
   const responses = await generateResponses(codeModel);
   if (responses.responses.length > 0) {
-    writeFile(`${context.emitterOutputDir}/${filePrefix}responses.go`, responses.responses);
+    await writeFile(`${context.emitterOutputDir}/${filePrefix}responses.go`, responses.responses);
   }
   if (responses.serDe.length > 0) {
-    writeFile(`${context.emitterOutputDir}/${filePrefix}responses_serde.go`, responses.serDe);
+    await writeFile(`${context.emitterOutputDir}/${filePrefix}responses_serde.go`, responses.serDe);
   }
 
   const timeHelpers = await generateTimeHelpers(codeModel);
   for (const helper of timeHelpers) {
-    writeFile(`${context.emitterOutputDir}/${filePrefix}${helper.name.toLowerCase()}.go`, helper.content);
+    await writeFile(`${context.emitterOutputDir}/${filePrefix}${helper.name.toLowerCase()}.go`, helper.content);
   }
 
   const xmlAddlProps = await generateXMLAdditionalPropsHelpers(codeModel);
   if (xmlAddlProps.length > 0) {
-    writeFile(`${context.emitterOutputDir}/${filePrefix}xml_helper.go`, xmlAddlProps);
+    await writeFile(`${context.emitterOutputDir}/${filePrefix}xml_helper.go`, xmlAddlProps);
   }
 
   if (codeModel.options.generateFakes) {
@@ -195,24 +195,24 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
         if (fileName !== 'server') {
           fileName = fileName.substring(0, fileName.length-6) + '_server';
         }
-        writeFile(`${fakesDir}/${filePrefix}${fileName}.go`, op.content);
+        await writeFile(`${fakesDir}/${filePrefix}${fileName}.go`, op.content);
       }
 
       const serverFactory = generateServerFactory(codeModel);
       if (serverFactory.length > 0) {
-        writeFile(`${fakesDir}/${filePrefix}server_factory.go`, serverFactory);
+        await writeFile(`${fakesDir}/${filePrefix}server_factory.go`, serverFactory);
       }
 
-      writeFile(`${fakesDir}/${filePrefix}internal.go`, serverContent.internals);
+      await writeFile(`${fakesDir}/${filePrefix}internal.go`, serverContent.internals);
 
       const timeHelpers = await generateTimeHelpers(codeModel, 'fake');
       for (const helper of timeHelpers) {
-        writeFile(`${fakesDir}/${filePrefix}${helper.name.toLowerCase()}.go`, helper.content);
+        await writeFile(`${fakesDir}/${filePrefix}${helper.name.toLowerCase()}.go`, helper.content);
       }
 
       const polymorphics = await generatePolymorphicHelpers(codeModel, 'fake');
       if (polymorphics.length > 0) {
-        writeFile(`${fakesDir}/${filePrefix}polymorphic_helpers.go`, polymorphics);
+        await writeFile(`${fakesDir}/${filePrefix}polymorphic_helpers.go`, polymorphics);
       }
     }
   }

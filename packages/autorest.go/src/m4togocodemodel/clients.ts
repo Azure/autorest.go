@@ -234,7 +234,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
   } else if (!resultProp.language.go!.embeddedType) {
     const resultType = adaptPossibleType(resultProp.schema);
     if (go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isQualifiedType(resultType)) {
-      throw new Error(`invalid monomorphic result type ${resultType}`);
+      throw new Error(`invalid monomorphic result type ${go.getTypeDeclaration(resultType)}`);
     }
     respEnv.result = new go.MonomorphicResult(resultProp.language.go!.name, adaptResultFormat(helpers.getSchemaResponse(op)!.protocol), resultType, resultProp.language.go!.byValue);
     respEnv.result.xml = adaptXMLInfo(resultProp.schema);
@@ -271,7 +271,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
   }
 
   if (hasDescription(resultProp.language.go!)) {
-      respEnv.result!.docs.description = resultProp.language.go!.description;
+    respEnv.result.docs.description = resultProp.language.go!.description;
   }
 
   return respEnv;

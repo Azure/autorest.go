@@ -407,7 +407,7 @@ export class clientAdapter {
             throw new AdapterError('UnsupportedTsp', `unsupported spread param content type ${contentType}`, opParam.__raw?.node ?? NoTarget);
         }
       } else {
-        adaptedParam = this.adaptMethodParameter(opParam, optionalGroup);
+        adaptedParam = this.adaptMethodParameter(opParam);
       }
 
       adaptedParam.docs.summary = param.summary;
@@ -450,7 +450,7 @@ export class clientAdapter {
         // we must check via param name and not reference equality. this is because a client param
         // can be used in multiple ways. e.g. a client param "apiVersion" that's used as a path param
         // in one method and a query param in another.
-        if (!method.client.parameters.find((v: go.Parameter, i: number, o: Array<go.Parameter>) => {
+        if (!method.client.parameters.find((v: go.Parameter) => {
           return v.name === adaptedParam.name;
         })) {
           method.client.parameters.push(adaptedParam);
@@ -475,7 +475,7 @@ export class clientAdapter {
     return contentType;
   }
 
-  private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter, optionalGroup?: go.ParameterGroup): go.Parameter {
+  private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter): go.Parameter {
     if (param.isApiVersionParam && param.clientDefaultValue) {
       // we emit the api version param inline as a literal, never as a param.
       // the ClientOptions.APIVersion setting is used to change the version.
@@ -950,7 +950,7 @@ export class clientAdapter {
           if (exampleType.additionalPropertiesValue) {
             ret.additionalProperties = {};
             for (const [k, v] of Object.entries(exampleType.additionalPropertiesValue)) {
-              ret.additionalProperties[k] = this.adaptExampleType(v, concreteType.fields.find(f => f.annotations.isAdditionalProperties)!.type!);
+              ret.additionalProperties[k] = this.adaptExampleType(v, concreteType.fields.find(f => f.annotations.isAdditionalProperties)!.type);
             }
           }
           return ret;

@@ -49,7 +49,7 @@ export class typeAdapter {
         // tcgc creates some unnamed models for spread params.
         // we don't use these so just skip them.
         continue;
-      } else if (modelType.access === 'internal' && (modelType.usage & tcgc.UsageFlags.Spread) === tcgc.UsageFlags.Spread) {
+      } else if (modelType.access === 'internal' && <tcgc.UsageFlags>(modelType.usage & tcgc.UsageFlags.Spread) === tcgc.UsageFlags.Spread) {
         // we don't use the internal models for spread params
         continue;
       } else if ((modelType.usage & tcgc.UsageFlags.Input) === 0 && (modelType.usage & tcgc.UsageFlags.Output) === 0) {
@@ -257,7 +257,7 @@ export class typeAdapter {
     }
     datetime = new go.TimeType(encoding, utc);
     this.types.set(encoding, datetime);
-    return <go.TimeType>datetime;
+    return datetime;
   }
 
   // returns the Go code model type for an io.ReadSeekCloser
@@ -507,7 +507,7 @@ export class typeAdapter {
       usage |= go.UsageFlags.Output;
     }
 
-    const annotations = new go.ModelAnnotations(false, (model.usage & tcgc.UsageFlags.MultipartFormData) === tcgc.UsageFlags.MultipartFormData);
+    const annotations = new go.ModelAnnotations(false, <tcgc.UsageFlags>(model.usage & tcgc.UsageFlags.MultipartFormData) === tcgc.UsageFlags.MultipartFormData);
     if (model.discriminatedSubtypes || model.discriminatorValue) {
       let iface: go.InterfaceType | undefined;
       let discriminatorLiteral: go.LiteralValue | undefined;
@@ -579,7 +579,7 @@ export class typeAdapter {
     const annotations = new go.ModelFieldAnnotations(prop.optional === false, false, false, false);
     // for multipart/form data containing models, default to fields not being pointer-to-type as we
     // don't have to deal with JSON patch shenanigans. only the optional fields will be pointer-to-type.
-    const isMultipartFormData = (modelType.usage & tcgc.UsageFlags.MultipartFormData) === tcgc.UsageFlags.MultipartFormData;
+    const isMultipartFormData = <tcgc.UsageFlags>(modelType.usage & tcgc.UsageFlags.MultipartFormData) === tcgc.UsageFlags.MultipartFormData;
     let fieldByValue = isMultipartFormData ? true : isTypePassedByValue(prop.type);
     if (isMultipartFormData && prop.kind === 'property' && prop.optional) {
       fieldByValue = false;

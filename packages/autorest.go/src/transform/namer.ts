@@ -173,12 +173,13 @@ export async function namer(session: Session<CodeModel>) {
     if (obj.discriminator) {
       // if this is a discriminator add the interface name
       details.discriminatorInterface = createPolymorphicInterfaceName(details.name);
-      details.discriminatorTypes = new Array<string>();
-      details.discriminatorTypes.push('*' + details.name);
+      const discriminatorTypes = new Array<string>();
+      discriminatorTypes.push('*' + details.name);
       for (const child of values(obj.discriminator.all)) {
-        details.discriminatorTypes.push('*' + child.language.go!.name);
+        discriminatorTypes.push('*' + child.language.go!.name);
       }
-      (<Array<string>>details.discriminatorTypes).sort();
+      discriminatorTypes.sort();
+      details.discriminatorTypes = discriminatorTypes;
     }
     for (const prop of values(obj.properties)) {
       const details = <Language>prop.language.go;
@@ -217,7 +218,7 @@ export async function namer(session: Session<CodeModel>) {
     }
     group.language.go!.clientName = group.language.go!.name;
     // don't generate a name like FooClientClient
-    if (!group.language.go!.clientName.endsWith('Client')) {
+    if (!(<string>group.language.go!.clientName).endsWith('Client')) {
       group.language.go!.clientName = `${group.language.go!.name}Client`;
     }
     clientNames.add(group.language.go!.clientName);

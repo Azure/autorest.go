@@ -45,7 +45,7 @@ export function isBinaryResponse(resp: m4.Response): resp is m4.BinaryResponse {
 
 // returns true if the operation is pageable
 export function isPageableOperation(op: m4.Operation): boolean {
-  return op.language.go!.paging;
+  return op.language.go!.paging !== undefined;
 }
 
 // returns true if the operation is a long-running operation
@@ -189,7 +189,7 @@ export function formatConstantValue(schema: m4.ConstantSchema): string {
   } else if (schema.valueType.type === m4.SchemaType.String) {
     return `"${schema.value.value}"`;
   }
-  return schema.value.value;
+  return <string>schema.value.value;
 }
 
 // aggregate the properties from the provided type and its parent types
