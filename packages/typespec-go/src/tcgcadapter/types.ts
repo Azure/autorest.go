@@ -900,11 +900,11 @@ export function adaptXMLInfo(decorators: Array<tcgc.DecoratorInfo>, field?: go.M
 
   const handleName = (decorator: tcgc.DecoratorInfo): void => {
     if (field) {
-      xmlInfo.name = decorator.arguments['name'];
+      xmlInfo.name = <string>decorator.arguments['name'];
     } else {
       // when applied to a model, it means the model's XML element
       // node has a different name than the model.
-      xmlInfo.wrapper = decorator.arguments['name'];
+      xmlInfo.wrapper = <string>decorator.arguments['name'];
     }
   };
 

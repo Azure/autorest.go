@@ -3,6 +3,10 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *  --------------------------------------------------------------------------------------------  */
 
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
 import { Session } from '@autorest/extension-base';
 import { ChoiceSchema, CodeModel, HttpHeader, HttpMethod, Language, SealedChoiceSchema } from '@autorest/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
@@ -302,7 +306,7 @@ export async function namer(session: Session<CodeModel>) {
   return session;
 }
 
-function cloneLanguageInfo(graph: any) {
+function cloneLanguageInfo(graph: CodeModel) {
   // make sure recursively that every language field has Go language info
   for (const { index, instance } of visitor(graph)) {
     if (index === 'language' && instance.default && !instance.go) {

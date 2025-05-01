@@ -31,7 +31,7 @@ import { CodegenError } from '../../codegen.go/src/errors.js';
 export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   try {
     await generate(context);
-  } catch (error: any) {
+  } catch (error) {
     if (error instanceof AdapterError) {
       reportDiagnostic(context.program, {
         code: error.code,

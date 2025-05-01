@@ -215,7 +215,7 @@ export class clientAdapter {
       method = new go.LROMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
       const lroOptions = this.hasDecorator('Azure.Core.@useFinalStateVia', sdkMethod.decorators);
       if (lroOptions) {
-        (<go.LROMethod>method).finalStateVia = lroOptions['finalState'];
+        (<go.LROMethod>method).finalStateVia = <go.FinalStateVia>lroOptions['finalState'];
       }
       if (sdkMethod.lroMetadata.finalResponse?.resultSegments) {
         // 'resultSegments' is designed for furture extensibility, currently only has one segment
@@ -233,6 +233,7 @@ export class clientAdapter {
     this.populateMethod(sdkMethod, method);
   }
 
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   private hasDecorator(name: string, decorators: Array<tcgc.DecoratorInfo>): Record<string, any> | undefined {
     for (const decorator of decorators) {
       if (decorator.name === name) {
@@ -935,6 +936,7 @@ export class clientAdapter {
         if (go.isModelType(goType) || go.isInterfaceType(goType)) {
           let concreteType: go.ModelType | go.PolymorphicType | undefined;
           if (go.isInterfaceType(goType)) {
+            /* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */
             concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue)!;
           } else {
             concreteType = goType;
