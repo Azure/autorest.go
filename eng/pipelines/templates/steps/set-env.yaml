@@ -24,7 +24,7 @@ steps:
   - script: |
       npm i -g corepack@latest
       corepack enable
-      corepack prepare pnpm@latest-9 --activate
+      corepack prepare pnpm@latest-10 --activate
     displayName: Install pnpm
 
   - script: pnpm config set store-dir ${{ parameters.pnpmStorePath }}
