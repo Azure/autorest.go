@@ -3,6 +3,10 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
 import * as m4 from '@autorest/codemodel';
 import { KnownMediaType } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
@@ -137,8 +141,6 @@ function adaptQueryParameterType(schema: m4.Schema): go.QueryParameterType {
   const type = adaptPossibleType(schema);
   if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isQualifiedType(type)) {
     throw new Error(`unexpected query parameter type ${schema.type}`);
-  } else if (go.isSliceType(type)) {
-    type.elementTypeByValue = true;
   }
   return type;
 }
@@ -234,7 +236,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
   } else if (!resultProp.language.go!.embeddedType) {
     const resultType = adaptPossibleType(resultProp.schema);
     if (go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isQualifiedType(resultType)) {
-      throw new Error(`invalid monomorphic result type ${resultType}`);
+      throw new Error(`invalid monomorphic result type ${go.getTypeDeclaration(resultType)}`);
     }
     respEnv.result = new go.MonomorphicResult(resultProp.language.go!.name, adaptResultFormat(helpers.getSchemaResponse(op)!.protocol), resultType, resultProp.language.go!.byValue);
     respEnv.result.xml = adaptXMLInfo(resultProp.schema);
@@ -271,7 +273,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
   }
 
   if (hasDescription(resultProp.language.go!)) {
-      respEnv.result!.docs.description = resultProp.language.go!.description;
+    respEnv.result.docs.description = resultProp.language.go!.description;
   }
 
   return respEnv;

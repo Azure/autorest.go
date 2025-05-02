@@ -102,8 +102,10 @@ export interface MethodNaming {
   responseMethod: string;
 }
 
+export type FinalStateVia = 'azure-async-operation' | 'location' | 'operation-location' | 'original-uri';
+
 export interface LROMethod extends Method {
-  finalStateVia?: 'azure-async-operation' | 'location' | 'operation-location' | 'original-uri';
+  finalStateVia?: FinalStateVia;
 
   isLRO: true;
 

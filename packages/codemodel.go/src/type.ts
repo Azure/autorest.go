@@ -158,6 +158,7 @@ export type LiteralValueType = BytesType | ConstantType | PrimitiveType | TimeTy
 export interface LiteralValue {
   type: LiteralValueType;
 
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   literal: any;
 }
 
@@ -376,8 +377,10 @@ export class ConstantValue implements ConstantValue {
 }
 
 export class LiteralValue implements LiteralValue {
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   constructor(type: LiteralValueType, literal: any) {
     this.type = type;
+    /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
     this.literal = literal;
   }
 }
