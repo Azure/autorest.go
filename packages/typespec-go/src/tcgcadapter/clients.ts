@@ -796,8 +796,6 @@ export class clientAdapter {
     const type = this.ta.getPossibleType(sdkType, false, false);
     if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
       throw new AdapterError('InternalError', `unexpected query parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
-    } else if (go.isSliceType(type)) {
-      type.elementTypeByValue = true;
     }
     return type;
   }

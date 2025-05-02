@@ -141,8 +141,6 @@ function adaptQueryParameterType(schema: m4.Schema): go.QueryParameterType {
   const type = adaptPossibleType(schema);
   if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isQualifiedType(type)) {
     throw new Error(`unexpected query parameter type ${schema.type}`);
-  } else if (go.isSliceType(type)) {
-    type.elementTypeByValue = true;
   }
   return type;
 }

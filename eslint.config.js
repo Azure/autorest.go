@@ -26,13 +26,6 @@ export default tseslint.config([
           SwitchCase: 1,
         },
       ],
-      'no-dupe-else-if': 'off',
-      '@typescript-eslint/no-empty-object-type': [
-        'error',
-        {
-          allowInterfaces: 'with-single-extends',
-        },
-      ],
       '@typescript-eslint/no-floating-promises': 'error',
       '@typescript-eslint/no-unsafe-declaration-merging': 'off',
     },
