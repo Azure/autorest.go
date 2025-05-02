@@ -44,9 +44,15 @@ importers:
 
   .:
     devDependencies:
+      '@eslint/js':
+        specifier: 'catalog:'
+        version: 9.25.1
       '@types/node':
         specifier: 'catalog:'
         version: 20.17.32
+      typescript-eslint:
+        specifier: 'catalog:'
+        version: 8.31.1(eslint@9.25.1)(typescript@5.8.3)
 
   packages/autorest.go:
     dependencies:
@@ -95,7 +101,7 @@ importers:
         version: 20.17.32
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 3.1.2(vitest@3.1.2(@types/node@20.17.32)(@vitest/ui@3.1.2)(jsdom@16.7.0)(yaml@2.7.1))
+        version: 3.1.2(vitest@3.1.2)
       '@vitest/ui':
         specifier: 'catalog:'
         version: 3.1.2(vitest@3.1.2)
@@ -245,19 +251,19 @@ importers:
     devDependencies:
       '@azure-tools/azure-http-specs':
         specifier: 0.1.0-alpha.15
-        version: 0.1.0-alpha.15(jxxb2ugbvypzx23vvvyveu3t4m)
+        version: 0.1.0-alpha.15(ced2f71f9e8418c36c46b74260e39fc3)
       '@azure-tools/typespec-autorest':
         specifier: 0.55.0
-        version: 0.55.0(xdd2eglgrs5gbepiuqy3lgjzky)
+        version: 0.55.0(b2ea4ec03afb203e9d927f6b524f7baa)
       '@azure-tools/typespec-azure-core':
         specifier: 0.55.0
         version: 0.55.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))))(@typespec/rest@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))))
       '@azure-tools/typespec-azure-resource-manager':
         specifier: 0.55.0
-        version: 0.55.0(xx6iz3h2oz3wwemdvb4d3ykdvy)
+        version: 0.55.0(e67ed373a40207652777e26d5f9339ab)
       '@azure-tools/typespec-client-generator-core':
         specifier: 0.55.0
-        version: 0.55.0(hnnzugeo5cxzvsdvrzbpdscm7e)
+        version: 0.55.0(048cafb07e86ff1a1a195c7e9d7f7cfb)
       '@types/node':
         specifier: 'catalog:'
         version: 20.17.32
@@ -296,7 +302,7 @@ importers:
         version: 0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))
       '@vitest/coverage-v8':
         specifier: 'catalog:'
-        version: 3.1.2(vitest@3.1.2(@types/node@20.17.32)(@vitest/ui@3.1.2)(jsdom@16.7.0)(yaml@2.7.1))
+        version: 3.1.2(vitest@3.1.2)
       '@vitest/ui':
         specifier: 'catalog:'
         version: 3.1.2(vitest@3.1.2)
@@ -5852,7 +5858,7 @@ snapshots:
       '@azure-tools/tasks': 3.0.255
       proper-lockfile: 2.0.1
 
-  '@azure-tools/azure-http-specs@0.1.0-alpha.15(jxxb2ugbvypzx23vvvyveu3t4m)':
+  '@azure-tools/azure-http-specs@0.1.0-alpha.15(ced2f71f9e8418c36c46b74260e39fc3)':
     dependencies:
       '@azure-tools/typespec-azure-core': 0.55.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))))(@typespec/rest@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))))
       '@typespec/compiler': 1.0.0-rc.1(@types/node@20.17.32)
@@ -5896,11 +5902,11 @@ snapshots:
 
   '@azure-tools/tasks@3.0.255': {}
 
-  '@azure-tools/typespec-autorest@0.55.0(xdd2eglgrs5gbepiuqy3lgjzky)':
+  '@azure-tools/typespec-autorest@0.55.0(b2ea4ec03afb203e9d927f6b524f7baa)':
     dependencies:
       '@azure-tools/typespec-azure-core': 0.55.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))))(@typespec/rest@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))))
-      '@azure-tools/typespec-azure-resource-manager': 0.55.0(xx6iz3h2oz3wwemdvb4d3ykdvy)
-      '@azure-tools/typespec-client-generator-core': 0.55.0(hnnzugeo5cxzvsdvrzbpdscm7e)
+      '@azure-tools/typespec-azure-resource-manager': 0.55.0(e67ed373a40207652777e26d5f9339ab)
+      '@azure-tools/typespec-client-generator-core': 0.55.0(048cafb07e86ff1a1a195c7e9d7f7cfb)
       '@typespec/compiler': 1.0.0-rc.1(@types/node@20.17.32)
       '@typespec/http': 1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))
       '@typespec/openapi': 1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))))
@@ -5913,7 +5919,7 @@ snapshots:
       '@typespec/http': 1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))
       '@typespec/rest': 0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))))
 
-  '@azure-tools/typespec-azure-resource-manager@0.55.0(xx6iz3h2oz3wwemdvb4d3ykdvy)':
+  '@azure-tools/typespec-azure-resource-manager@0.55.0(e67ed373a40207652777e26d5f9339ab)':
     dependencies:
       '@azure-tools/typespec-azure-core': 0.55.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))))(@typespec/rest@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))))
       '@typespec/compiler': 1.0.0-rc.1(@types/node@20.17.32)
@@ -5924,7 +5930,7 @@ snapshots:
       change-case: 5.4.4
       pluralize: 8.0.0
 
-  '@azure-tools/typespec-client-generator-core@0.55.0(hnnzugeo5cxzvsdvrzbpdscm7e)':
+  '@azure-tools/typespec-client-generator-core@0.55.0(048cafb07e86ff1a1a195c7e9d7f7cfb)':
     dependencies:
       '@azure-tools/typespec-azure-core': 0.55.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))))(@typespec/rest@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/http@1.0.0-rc.1(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32))(@typespec/streams@0.69.0(@typespec/compiler@1.0.0-rc.1(@types/node@20.17.32)))))
       '@typespec/compiler': 1.0.0-rc.1(@types/node@20.17.32)
@@ -7382,7 +7388,7 @@ snapshots:
     dependencies:
       '@typespec/compiler': 1.0.0-rc.1(@types/node@20.17.32)
 
-  '@vitest/coverage-v8@3.1.2(vitest@3.1.2(@types/node@20.17.32)(@vitest/ui@3.1.2)(jsdom@16.7.0)(yaml@2.7.1))':
+  '@vitest/coverage-v8@3.1.2(vitest@3.1.2)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 1.0.2

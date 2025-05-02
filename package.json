@@ -2,7 +2,7 @@
   "name": "@autorest.go/monorepo",
   "version": "0.0.1",
   "private": true,
-  "packageManager": "pnpm@9.11.0",
+  "packageManager": "pnpm@10.10.0",
   "type": "module",
   "scripts": {
     "build:all": "pnpm -r build",
@@ -12,6 +12,8 @@
     "gotest": "node .scripts/gotest.js"
   },
   "devDependencies": {
-    "@types/node": "catalog:"
+    "@eslint/js": "catalog:",
+    "@types/node": "catalog:",
+    "typescript-eslint": "catalog:"
   }
 }
