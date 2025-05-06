@@ -4,11 +4,7 @@ parameters:
 
 steps:
   - script: |
-      if [ "${{ parameters.Nightly }}" = "true" ]; then
-        pnpm update
-      else
-        pnpm install
-      fi
+      pnpm install
       pnpm build
     displayName: "Build Emitter Sources"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
