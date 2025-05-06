@@ -24,7 +24,7 @@ This guide outlines the getting started steps to contributing to these generator
 ## Prerequisites
 
 - Install [Node.js](https://nodejs.org/download/)
-- Install [rush](https://rushjs.io/pages/intro/get_started/)
+- Install [pnpm](https://pnpm.io/installation/)
 - Install [Go](https://go.dev/doc/install)
 
 ## Step 1: Clone the repo
@@ -42,13 +42,19 @@ Once you have the code locally, you can build it.
 First, update all dependencies.
 
 ```terminal
-rush update
+pnpm update
 ```
 
 Then, build the code.
 
 ```terminal
-rush build
+pnpm build
+```
+
+To rebuild the entire codebase, run this from the root of the repo:
+
+```terminal
+pnpm -r build
 ```
 
 ## Step 3: Regenerate tests and samples
@@ -58,25 +64,25 @@ After making changes, build the code again, then run a regeneration command to s
 ### For autorest.go
 
 ```terminal
-rush regenerate
+pnpm regenerate
 ```
 
 To regenerate a specific test:
 
 ```terminal
-rush regenerate --filter TestName
+pnpm regenerate --filter TestName
 ```
 
 ### For typespec-go
 
 ```terminal
-rush tspcompile
+pnpm tspcompile
 ```
 
 To regenerate a specific test:
 
 ```terminal
-rush tspcompile --filter TestName
+pnpm tspcompile --filter TestName
 ```
 
 ## Step 4: Test your changes
@@ -86,9 +92,9 @@ Verify changes made result in the output you expect.
 For typespec-go, you can run tests using spector.
 
 ```terminal
-rush spector --start
+pnpm spector --start
 ~ run tests~
-rush spector --stop
+pnpm spector --stop
 ```
 
 ### Debug
@@ -100,18 +106,18 @@ To debug the code generator:
 
 ### Built in commands
 
-There are a number of custom rush commands to help with development. See the `.scripts` folder for more.
+There are a number of custom pnpm commands to help with development. See the `.scripts` folder for more.
 
 To run `go build` and `go vet` on every generated module:
 
 ```terminal
-rush buildvet
+pnpm buildvet
 ```
 
 To run `go mod tidy` on every generated module:
 
 ```terminal
-rush modtidy
+pnpm modtidy
 ```
 
 ## Step 5: Make a PR
