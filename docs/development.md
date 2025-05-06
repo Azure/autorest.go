@@ -39,10 +39,10 @@ git clone https://github.com/<your-github-username>/autorest.go.git
 
 Once you have the code locally, you can build it.
 
-First, update all dependencies.
+First, install all dependencies.
 
 ```terminal
-pnpm update
+pnpm install
 ```
 
 Then, build the code.
@@ -70,7 +70,7 @@ pnpm regenerate
 To regenerate a specific test:
 
 ```terminal
-pnpm regenerate --filter TestName
+pnpm regenerate --filter=TestName
 ```
 
 ### For typespec-go
@@ -82,7 +82,7 @@ pnpm tspcompile
 To regenerate a specific test:
 
 ```terminal
-pnpm tspcompile --filter TestName
+pnpm tspcompile --filter=TestName
 ```
 
 ## Step 4: Test your changes
