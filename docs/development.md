@@ -106,18 +106,18 @@ To debug the code generator:
 
 ### Built in commands
 
-There are a number of custom pnpm commands to help with development. See the `.scripts` folder for more.
+There are a number of custom pnpm commands to help with development. See the `.scripts` folder for more. Add the `-r` switch for the script to apply to every package.
 
 To run `go build` and `go vet` on every generated module:
 
 ```terminal
-pnpm buildvet
+pnpm -r buildvet
 ```
 
 To run `go mod tidy` on every generated module:
 
 ```terminal
-pnpm modtidy
+pnpm -r modtidy
 ```
 
 ## Step 5: Make a PR
