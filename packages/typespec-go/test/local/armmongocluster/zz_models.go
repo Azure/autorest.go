@@ -146,7 +146,9 @@ type MongoCluster struct {
 	Type *string
 }
 
-// Operation - Details of a REST API operation, returned from the Resource Provider Operations API
+// Operation - REST API Operation
+//
+// Details of a REST API operation, returned from the Resource Provider Operations API
 type Operation struct {
 	// Localized display information for this particular operation.
 	Display *OperationDisplay
@@ -195,9 +197,9 @@ type OperationListResult struct {
 	NextLink *string
 }
 
-// PrivateEndpoint - The Private Endpoint resource.
+// PrivateEndpoint - The private endpoint resource.
 type PrivateEndpoint struct {
-	// READ-ONLY; The resource identifier for private endpoint
+	// READ-ONLY; The resource identifier of the private endpoint
 	ID *string
 }
 
