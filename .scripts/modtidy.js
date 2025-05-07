@@ -9,7 +9,7 @@ let dir = process.cwd();
 
 // check if a directory was specified
 let args = process.argv.slice(2);
-if (args) {
+if (args.length > 0) {
   dir = args[0];
 }
 
