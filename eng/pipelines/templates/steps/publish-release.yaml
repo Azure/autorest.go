@@ -20,17 +20,17 @@ steps:
       if ($LASTEXITCODE) {
         exit $LASTEXITCODE
       }
-      npx publish-release `
-        --token $(azuresdk-github-pat) `
-        --repo autorest.go `
-        --owner azure `
-        --name "${{ parameters.ReleaseName }}" `
-        --tag v$currentVersion `
-        --notes="$releaseNotes" `
-        --prerelease `
-        --editRelease false `
-        --assets ${{ parameters.PackageFileName }}-$currentVersion.tgz `
-        --target_commitish $(Build.SourceBranchName);
+      # npx publish-release `
+      #   --token $(azuresdk-github-pat) `
+      #   --repo autorest.go `
+      #   --owner azure `
+      #   --name "${{ parameters.ReleaseName }}" `
+      #   --tag v$currentVersion `
+      #   --notes="$releaseNotes" `
+      #   --prerelease `
+      #   --editRelease false `
+      #   --assets ${{ parameters.PackageFileName }}-$currentVersion.tgz `
+      #   --target_commitish $(Build.SourceBranchName);
     displayName: "Publish GitHub Release ${{ parameters.PackagePath }}"
 
   - ${{ if ne(parameters.PublishDevVersion, true) }}:
