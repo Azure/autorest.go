@@ -1,5 +1,11 @@
 # Release History
 
+## 0.4.6 (2025-05-07)
+
+### Bugs Fixed
+
+* Fix dependencies
+
 ## 0.4.5 (2025-05-07)
 
 ### Other Changes
