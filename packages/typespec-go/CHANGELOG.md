@@ -6,6 +6,10 @@
 
 * Fix dependencies
 
+### Other Changes
+
+* Updated to latest tcgc.
+
 ## 0.4.5 (2025-05-07)
 
 ### Other Changes
