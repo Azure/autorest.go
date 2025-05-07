@@ -1688,8 +1688,8 @@ packages:
     resolution: {integrity: sha512-Gz/Sm64+Sq/vklJu1tt9t+4R2lvnud8NbTD/ZfpZtMiUX7YeVpCA8j6NSW8ptwcoLL+NmYANwqP8DV0q/bwl2w==}
     engines: {node: '>=18.0.0'}
 
-  '@typespec/versioning@0.70.0-dev.2':
-    resolution: {integrity: sha512-qLgFpWNICISMxCmozLLvvlAjQPuc58RdCo2aki845qEcc/zUUAf6YAu7zMJC3gHkKooun2bN4mprifnjfi8EFg==}
+  '@typespec/versioning@0.69.0':
+    resolution: {integrity: sha512-RqSd4Ee2O/6LdcQg2YfLgbsB6up0N8MGKFIxQ8PwE3z3l4lJju3chBMyBZxTxhaV293j7oUZr6+2CvfqwX2IWw==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       '@typespec/compiler': ^1.0.0-rc.1
