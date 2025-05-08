@@ -17,4 +17,4 @@ export async function main() {
   await pluginHost.run();
 }
 
-main();
+await main();

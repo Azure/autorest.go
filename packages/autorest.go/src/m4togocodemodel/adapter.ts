@@ -3,6 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 import * as m4 from '@autorest/codemodel';
 import { serialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
@@ -39,14 +41,14 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
     
     const codeModel = new go.CodeModel(info, type, session.model.language.go!.packageName, options);
     if (session.model.language.go!.host) {
-      codeModel.host = session.model.language.go!.host;
+      codeModel.host = <string>session.model.language.go!.host;
     }
     if (session.model.language.go!.module && session.model.language.go!.moduleVersion) {
       codeModel.options.module = new go.Module(session.model.language.go!.module, session.model.language.go!.moduleVersion);
     } else if (session.model.language.go!.module || session.model.language.go!.moduleVersion) {
       throw new Error('--module and --module-version must both or neither be set');
     } else if (session.model.language.go!.containingModule !== '') {
-      codeModel.options.containingModule = session.model.language.go!.containingModule;
+      codeModel.options.containingModule = <string>session.model.language.go!.containingModule;
     }
     adaptConstantTypes(session.model, codeModel);
     adaptInterfaceTypes(session.model, codeModel);

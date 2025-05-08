@@ -215,7 +215,7 @@ export class clientAdapter {
       method = new go.LROMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
       const lroOptions = this.hasDecorator('Azure.Core.@useFinalStateVia', sdkMethod.decorators);
       if (lroOptions) {
-        (<go.LROMethod>method).finalStateVia = lroOptions['finalState'];
+        (<go.LROMethod>method).finalStateVia = <go.FinalStateVia>lroOptions['finalState'];
       }
       if (sdkMethod.lroMetadata.finalResponse?.resultSegments) {
         // 'resultSegments' is designed for furture extensibility, currently only has one segment
@@ -233,6 +233,7 @@ export class clientAdapter {
     this.populateMethod(sdkMethod, method);
   }
 
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   private hasDecorator(name: string, decorators: Array<tcgc.DecoratorInfo>): Record<string, any> | undefined {
     for (const decorator of decorators) {
       if (decorator.name === name) {
@@ -407,7 +408,7 @@ export class clientAdapter {
             throw new AdapterError('UnsupportedTsp', `unsupported spread param content type ${contentType}`, opParam.__raw?.node ?? NoTarget);
         }
       } else {
-        adaptedParam = this.adaptMethodParameter(opParam, optionalGroup);
+        adaptedParam = this.adaptMethodParameter(opParam);
       }
 
       adaptedParam.docs.summary = param.summary;
@@ -450,7 +451,7 @@ export class clientAdapter {
         // we must check via param name and not reference equality. this is because a client param
         // can be used in multiple ways. e.g. a client param "apiVersion" that's used as a path param
         // in one method and a query param in another.
-        if (!method.client.parameters.find((v: go.Parameter, i: number, o: Array<go.Parameter>) => {
+        if (!method.client.parameters.find((v: go.Parameter) => {
           return v.name === adaptedParam.name;
         })) {
           method.client.parameters.push(adaptedParam);
@@ -475,7 +476,7 @@ export class clientAdapter {
     return contentType;
   }
 
-  private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter, optionalGroup?: go.ParameterGroup): go.Parameter {
+  private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter): go.Parameter {
     if (param.isApiVersionParam && param.clientDefaultValue) {
       // we emit the api version param inline as a literal, never as a param.
       // the ClientOptions.APIVersion setting is used to change the version.
@@ -795,8 +796,6 @@ export class clientAdapter {
     const type = this.ta.getPossibleType(sdkType, false, false);
     if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
       throw new AdapterError('InternalError', `unexpected query parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
-    } else if (go.isSliceType(type)) {
-      type.elementTypeByValue = true;
     }
     return type;
   }
@@ -935,6 +934,7 @@ export class clientAdapter {
         if (go.isModelType(goType) || go.isInterfaceType(goType)) {
           let concreteType: go.ModelType | go.PolymorphicType | undefined;
           if (go.isInterfaceType(goType)) {
+            /* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */
             concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue)!;
           } else {
             concreteType = goType;
@@ -950,7 +950,7 @@ export class clientAdapter {
           if (exampleType.additionalPropertiesValue) {
             ret.additionalProperties = {};
             for (const [k, v] of Object.entries(exampleType.additionalPropertiesValue)) {
-              ret.additionalProperties[k] = this.adaptExampleType(v, concreteType.fields.find(f => f.annotations.isAdditionalProperties)!.type!);
+              ret.additionalProperties[k] = this.adaptExampleType(v, concreteType.fields.find(f => f.annotations.isAdditionalProperties)!.type);
             }
           }
           return ret;

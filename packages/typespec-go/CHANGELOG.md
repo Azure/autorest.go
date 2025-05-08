@@ -1,5 +1,21 @@
 # Release History
 
+## 0.4.6 (2025-05-07)
+
+### Bugs Fixed
+
+* Fix dependencies
+
+### Other Changes
+
+* Updated to latest tcgc.
+
+## 0.4.5 (2025-05-07)
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
+
 ## 0.4.4 (2025-04-25)
 
 ### Bugs Fixed

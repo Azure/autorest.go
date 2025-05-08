@@ -1,17 +1,18 @@
 steps:
   - script: |
-      rush install
-      rush rebuild -v
+      pnpm install
+      pnpm build
     displayName: "Build Generator Sources"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.gotest
 
   - script: |
-      npm run eslint
+      pnpm eslint
     displayName: "Run Lint"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.gotest
 
   - script: |
       export PATH=$PATH:$HOME/go/bin
-      npm test
+      pnpm test
     displayName: "Run Tests - go$(GoVersion)"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.gotest
 

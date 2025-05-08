@@ -3,6 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 import * as m4 from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import * as go from '../../../codemodel.go/src/index.js';
@@ -86,7 +88,7 @@ export function adaptModel(obj: m4.ObjectSchema): go.ModelType | go.PolymorphicT
     let ifaceName: string | undefined;
     if (obj.language.go!.discriminatorInterface) {
       // only discriminators define the discriminatorInterface
-      ifaceName = obj.language.go!.discriminatorInterface;
+      ifaceName = <string>obj.language.go!.discriminatorInterface;
     } else {
       // get it from the parent which must be a discriminator.
       // there are cases where a type might have multiple parents
@@ -94,7 +96,7 @@ export function adaptModel(obj: m4.ObjectSchema): go.ModelType | go.PolymorphicT
       // (e.g. KerberosKeytabCredentials type in machine learning)
       for (const parent of values( obj.parents?.immediate)) {
         if (parent.language.go!.discriminatorInterface) {
-          ifaceName = parent.language.go!.discriminatorInterface;
+          ifaceName = <string>parent.language.go!.discriminatorInterface;
           break;
         }
       }
@@ -138,7 +140,7 @@ function adaptUsage(obj: m4.ObjectSchema): go.UsageFlags {
 
 function getDiscriminatorLiteral(discriminatorValue: string): go.LiteralValue {
   const createLiteralValue = function(type: go.LiteralValueType, value: string | go.ConstantValue): go.LiteralValue {
-    let valueKey: any;
+    let valueKey: go.ConstantValueValueTypes;
     if (typeof value === 'string') {
       valueKey = value;
     } else {
@@ -256,7 +258,7 @@ export function adaptXMLInfo(obj: m4.Schema): go.XMLInfo | undefined {
     }
   }
   if (obj.language.go!.xmlWrapperName) {
-    xmlInfo.wrapper = obj.language.go!.xmlWrapperName;
+    xmlInfo.wrapper = <string | undefined>obj.language.go!.xmlWrapperName;
     includeXMLField = true;
   }
 
