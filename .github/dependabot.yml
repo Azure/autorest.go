@@ -10,3 +10,18 @@ updates:
       all-tests:
         patterns:
           - "*"
+  - package-ecosystem: "npm"
+    directories:
+      - "/packages/typespec-go"
+    schedule:
+      interval: "daily"
+    ignore:
+      # Updated manually to align with minimum supported Node version
+      - dependency-name: "@types/node"
+    groups:
+      typespec:
+        patterns:
+          - "*azure-tools/azure-http-specs"
+          - "*typespec*"
+    # Leave the constraint if the original constraint allows the new version, otherwise, bump the constraint.
+    versioning-strategy: increase-if-necessary
