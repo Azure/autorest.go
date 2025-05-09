@@ -177,6 +177,10 @@ generate('internalpager', internalpager, 'test/local/internalpager', ['generate-
 const armoracledatabase = pkgRoot + 'test/tsp/Oracle.Database.Management';
 generate('armoracledatabase', armoracledatabase, 'test/local/armoracledatabase', [`examples-directory=${armoracledatabase}/examples`, 'generate-samples=true']);
 
+const armhealthbot = pkgRoot + 'test/tsp/Healthbot.Management';
+generate('armhealthbot', armhealthbot, 'test/local/armhealthbot', [`examples-directory=${armhealthbot}/examples`, 'generate-samples=true']);
+
+
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
 
