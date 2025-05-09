@@ -279,13 +279,16 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
     }
     if (example.additionalProperties) {
       const additionalPropertiesField = example.type.fields.find(f => f.annotations.isAdditionalProperties)!;
-      const isAdditionalPropertiesFieldByValue = additionalPropertiesField.byValue ?? false;
+      if (!go.isMapType(additionalPropertiesField.type)) {
+        throw new CodegenError('InternalError', `additional properties field type should be map type`);
+      }
+      const isAdditionalPropertiesFieldByValue = additionalPropertiesField.type.valueTypeByValue ?? false;
       const isAdditionalPropertiesPolymorphic = go.isInterfaceType(additionalPropertiesField.type);
-      exampleText += `${indent}\t${additionalPropertiesField.name}: map[string]${getRef(additionalPropertiesField.byValue)}${go.getTypeDeclaration(additionalPropertiesField.type, codeModel.packageName)}{\n`;
+      exampleText += `${indent}\t${additionalPropertiesField.name}: ${getRef(additionalPropertiesField.byValue)}${go.getTypeDeclaration(additionalPropertiesField.type, codeModel.packageName)}{\n`;
       for (const key in example.additionalProperties) {
         exampleText += `${indent}\t"${key}": ${getExampleValue(codeModel, example.additionalProperties[key], indent + '\t', imports, isAdditionalPropertiesFieldByValue && !isAdditionalPropertiesPolymorphic).slice(indent.length + 1)},\n`;
       }
-      exampleText += `${indent}}\n`;
+      exampleText += `${indent}},\n`;
     }
     exampleText += `${indent}}`;
     return exampleText;

@@ -950,7 +950,12 @@ export class clientAdapter {
           if (exampleType.additionalPropertiesValue) {
             ret.additionalProperties = {};
             for (const [k, v] of Object.entries(exampleType.additionalPropertiesValue)) {
-              ret.additionalProperties[k] = this.adaptExampleType(v, concreteType.fields.find(f => f.annotations.isAdditionalProperties)!.type);
+              const filed = concreteType.fields.find(f => f.annotations.isAdditionalProperties)!;
+              if (go.isMapType(filed.type)) {
+                ret.additionalProperties[k] = this.adaptExampleType(v, filed.type.valueType);
+              } else {
+                throw new AdapterError('InternalError', `additional properties field type should be map type`, NoTarget);
+              }
             }
           }
           return ret;
