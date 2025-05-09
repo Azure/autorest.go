@@ -2,14 +2,14 @@
   "parameters": {
     "api-version": "2024-02-01",
     "botName": "samplebotname",
-    "identity": {
-      "type": "SystemAssigned, UserAssigned",
-      "userAssignedIdentities": {
-        "/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi": {},
-        "/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi2": {}
-      }
-    },
-    "parameters": {
+    "properties": {
+      "identity": {
+        "type": "SystemAssigned, UserAssigned",
+        "userAssignedIdentities": {
+          "/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi": {},
+          "/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi2": {}
+        }
+      },
       "sku": {
         "name": "F0"
       }

@@ -7,6 +7,7 @@ package armhealthbot_test
 import (
 	"armhealthbot"
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
 )
@@ -22,7 +23,21 @@ func ExampleHealthBotsClient_BeginCreate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewHealthBotsClient().BeginCreate(ctx, "healthbotClient", "samplebotname", nil)
+	poller, err := clientFactory.NewHealthBotsClient().BeginCreate(ctx, "healthbotClient", "samplebotname", armhealthbot.HealthBot{
+		Identity: &armhealthbot.Identity{
+			Type: to.Ptr(armhealthbot.ResourceIdentityTypeSystemAssignedUserAssigned),
+			UserAssignedIdentities: &armhealthbot.UserAssignedIdentityMap{
+				AdditionalProperties: map[string]*armhealthbot.UserAssignedIdentity{
+					"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi":  &armhealthbot.UserAssignedIdentity{},
+					"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi2": &armhealthbot.UserAssignedIdentity{},
+				},
+			},
+		},
+		Location: to.Ptr("East US"),
+		SKU: &armhealthbot.SKU{
+			Name: to.Ptr(armhealthbot.SKUNameF0),
+		},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -43,12 +58,12 @@ func ExampleHealthBotsClient_BeginCreate() {
 	// 			PrincipalID: to.Ptr("principalId"),
 	// 			TenantID: to.Ptr("tenantId"),
 	// 			UserAssignedIdentities: &armhealthbot.UserAssignedIdentityMap{
-	// 				AdditionalProperties: map[string]map[string]*armhealthbot.UserAssignedIdentity{
-	// 				"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi": armhealthbot.UserAssignedIdentity{
+	// 				AdditionalProperties: map[string]*armhealthbot.UserAssignedIdentity{
+	// 				"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi": &armhealthbot.UserAssignedIdentity{
 	// 				},
-	// 				"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi2": armhealthbot.UserAssignedIdentity{
+	// 				"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi2": &armhealthbot.UserAssignedIdentity{
 	// 				},
-	// 			}
+	// 			},
 	// 			},
 	// 		},
 	// 		Location: to.Ptr("East US"),
@@ -124,12 +139,12 @@ func ExampleHealthBotsClient_Get() {
 	// 			PrincipalID: to.Ptr("principalId"),
 	// 			TenantID: to.Ptr("tenantId"),
 	// 			UserAssignedIdentities: &armhealthbot.UserAssignedIdentityMap{
-	// 				AdditionalProperties: map[string]map[string]*armhealthbot.UserAssignedIdentity{
-	// 				"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi": armhealthbot.UserAssignedIdentity{
+	// 				AdditionalProperties: map[string]*armhealthbot.UserAssignedIdentity{
+	// 				"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi": &armhealthbot.UserAssignedIdentity{
 	// 				},
-	// 				"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi2": armhealthbot.UserAssignedIdentity{
+	// 				"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi2": &armhealthbot.UserAssignedIdentity{
 	// 				},
-	// 			}
+	// 			},
 	// 			},
 	// 		},
 	// 		Location: to.Ptr("East US"),
@@ -185,12 +200,12 @@ func ExampleHealthBotsClient_NewListPager() {
 		// 					PrincipalID: to.Ptr("principalId"),
 		// 					TenantID: to.Ptr("tenantId"),
 		// 					UserAssignedIdentities: &armhealthbot.UserAssignedIdentityMap{
-		// 						AdditionalProperties: map[string]map[string]*armhealthbot.UserAssignedIdentity{
-		// 						"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi": armhealthbot.UserAssignedIdentity{
+		// 						AdditionalProperties: map[string]*armhealthbot.UserAssignedIdentity{
+		// 						"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi": &armhealthbot.UserAssignedIdentity{
 		// 						},
-		// 						"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi2": armhealthbot.UserAssignedIdentity{
+		// 						"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi2": &armhealthbot.UserAssignedIdentity{
 		// 						},
-		// 					}
+		// 					},
 		// 					},
 		// 				},
 		// 				Location: to.Ptr("East US"),
@@ -269,12 +284,12 @@ func ExampleHealthBotsClient_NewListByResourceGroupPager() {
 		// 					PrincipalID: to.Ptr("principalId"),
 		// 					TenantID: to.Ptr("tenantId"),
 		// 					UserAssignedIdentities: &armhealthbot.UserAssignedIdentityMap{
-		// 						AdditionalProperties: map[string]map[string]*armhealthbot.UserAssignedIdentity{
-		// 						"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi": armhealthbot.UserAssignedIdentity{
+		// 						AdditionalProperties: map[string]*armhealthbot.UserAssignedIdentity{
+		// 						"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi": &armhealthbot.UserAssignedIdentity{
 		// 						},
-		// 						"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi2": armhealthbot.UserAssignedIdentity{
+		// 						"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi2": &armhealthbot.UserAssignedIdentity{
 		// 						},
-		// 					}
+		// 					},
 		// 					},
 		// 				},
 		// 				Location: to.Ptr("East US"),
@@ -374,7 +389,11 @@ func ExampleHealthBotsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewHealthBotsClient().BeginUpdate(ctx, "healthbotClient", "samplebotname", nil)
+	poller, err := clientFactory.NewHealthBotsClient().BeginUpdate(ctx, "healthbotClient", "samplebotname", armhealthbot.UpdateParameters{
+		SKU: &armhealthbot.SKU{
+			Name: to.Ptr(armhealthbot.SKUNameF0),
+		},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

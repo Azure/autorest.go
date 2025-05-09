@@ -132,56 +132,56 @@ function should_generate(name) {
   return true
 }
 
-const armcodesigning = pkgRoot + 'test/tsp/CodeSigning.Management';
-generate('armcodesigning', armcodesigning, 'test/local/armcodesigning', [`examples-directory=${armcodesigning}/examples`, 'generate-samples=true']);
+// const armcodesigning = pkgRoot + 'test/tsp/CodeSigning.Management';
+// generate('armcodesigning', armcodesigning, 'test/local/armcodesigning', [`examples-directory=${armcodesigning}/examples`, 'generate-samples=true']);
 
-const armapicenter = pkgRoot +  'test/tsp/ApiCenter.Management';
-generate('armapicenter', armapicenter, 'test/local/armapicenter', [`examples-directory=${armapicenter}/examples`, 'generate-samples=true']);
+// const armapicenter = pkgRoot +  'test/tsp/ApiCenter.Management';
+// generate('armapicenter', armapicenter, 'test/local/armapicenter', [`examples-directory=${armapicenter}/examples`, 'generate-samples=true']);
 
-const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
-generate('armlargeinstance', armlargeinstance, 'test/local/armlargeinstance', ['stutter=AzureLargeInstance', `examples-directory=${armlargeinstance}/examples`, 'generate-samples=true']);
+// const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
+// generate('armlargeinstance', armlargeinstance, 'test/local/armlargeinstance', ['stutter=AzureLargeInstance', `examples-directory=${armlargeinstance}/examples`, 'generate-samples=true']);
 
-const armdatabasewatcher = pkgRoot + 'test/tsp/DatabaseWatcher.Management';
-generate('armdatabasewatcher', armdatabasewatcher, 'test/local/armdatabasewatcher', ['fix-const-stuttering=false', `examples-directory=${armdatabasewatcher}/examples`, 'generate-samples=true']);
+// const armdatabasewatcher = pkgRoot + 'test/tsp/DatabaseWatcher.Management';
+// generate('armdatabasewatcher', armdatabasewatcher, 'test/local/armdatabasewatcher', ['fix-const-stuttering=false', `examples-directory=${armdatabasewatcher}/examples`, 'generate-samples=true']);
 
-const armloadtestservice = pkgRoot + 'test/tsp/LoadTestService.Management';
-generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice', [`examples-directory=${armloadtestservice}/examples`, 'generate-samples=true', 'factory-gather-all-params=false']);
+// const armloadtestservice = pkgRoot + 'test/tsp/LoadTestService.Management';
+// generate('armloadtestservice', armloadtestservice, 'test/local/armloadtestservice', [`examples-directory=${armloadtestservice}/examples`, 'generate-samples=true', 'factory-gather-all-params=false']);
 
-const armdevopsinfrastructure = pkgRoot + 'test/tsp/Microsoft.DevOpsInfrastructure';
-generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/local/armdevopsinfrastructure', [`examples-directory=${armdevopsinfrastructure}/examples`, 'generate-samples=true']);
+// const armdevopsinfrastructure = pkgRoot + 'test/tsp/Microsoft.DevOpsInfrastructure';
+// generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/local/armdevopsinfrastructure', [`examples-directory=${armdevopsinfrastructure}/examples`, 'generate-samples=true']);
 
-const armrandom = pkgRoot + 'test/tsp/Random.Management';
-generate('armrandom', armrandom, 'test/local/armrandom');
+// const armrandom = pkgRoot + 'test/tsp/Random.Management';
+// generate('armrandom', armrandom, 'test/local/armrandom');
 
-const armcommunitymanagement = pkgRoot + 'test/tsp/Community.Management';
-generate('armcommunitymanagement', armcommunitymanagement, 'test/local/armcommunitymanagement', [`examples-directory=${armcommunitymanagement}/examples`, 'generate-samples=true']);
+// const armcommunitymanagement = pkgRoot + 'test/tsp/Community.Management';
+// generate('armcommunitymanagement', armcommunitymanagement, 'test/local/armcommunitymanagement', [`examples-directory=${armcommunitymanagement}/examples`, 'generate-samples=true']);
 
-const armmongocluster = pkgRoot + 'test/tsp/MongoCluster.Management';
-generate('armmongocluster', armmongocluster, 'test/local/armmongocluster', [`examples-directory=${armmongocluster}/examples`, 'generate-samples=true']);
+// const armmongocluster = pkgRoot + 'test/tsp/MongoCluster.Management';
+// generate('armmongocluster', armmongocluster, 'test/local/armmongocluster', [`examples-directory=${armmongocluster}/examples`, 'generate-samples=true']);
 
-const armcontainerorchestratorruntime = pkgRoot + 'test/tsp/KubernetesRuntime.Management';
-generate('armcontainerorchestratorruntime', armcontainerorchestratorruntime, 'test/local/armcontainerorchestratorruntime', [`examples-directory=${armcontainerorchestratorruntime}/examples`, 'generate-samples=true']);
+// const armcontainerorchestratorruntime = pkgRoot + 'test/tsp/KubernetesRuntime.Management';
+// generate('armcontainerorchestratorruntime', armcontainerorchestratorruntime, 'test/local/armcontainerorchestratorruntime', [`examples-directory=${armcontainerorchestratorruntime}/examples`, 'generate-samples=true']);
 
-const azmodelsonly = pkgRoot + 'test/tsp/ModelsOnlyWithBaseTypes';
-generate('azmodelsonly', azmodelsonly, 'test/local/azmodelsonly');
+// const azmodelsonly = pkgRoot + 'test/tsp/ModelsOnlyWithBaseTypes';
+// generate('azmodelsonly', azmodelsonly, 'test/local/azmodelsonly');
 
-const azkeys = pkgRoot + 'test/tsp/KeyVault.Keys';
-generate('azkeys', azkeys, 'test/local/azkeys');
+// const azkeys = pkgRoot + 'test/tsp/KeyVault.Keys';
+// generate('azkeys', azkeys, 'test/local/azkeys');
 
-const armtest = pkgRoot + 'test/tsp/Test.Management';
-generate('armtest', armtest, 'test/local/armtest');
+// const armtest = pkgRoot + 'test/tsp/Test.Management';
+// generate('armtest', armtest, 'test/local/armtest');
 
-const internalpager = pkgRoot + 'test/tsp/Internal.Pager';
-generate('internalpager', internalpager, 'test/local/internalpager', ['generate-fakes=false']);
+// const internalpager = pkgRoot + 'test/tsp/Internal.Pager';
+// generate('internalpager', internalpager, 'test/local/internalpager', ['generate-fakes=false']);
 
-const armoracledatabase = pkgRoot + 'test/tsp/Oracle.Database.Management';
-generate('armoracledatabase', armoracledatabase, 'test/local/armoracledatabase', [`examples-directory=${armoracledatabase}/examples`, 'generate-samples=true']);
+// const armoracledatabase = pkgRoot + 'test/tsp/Oracle.Database.Management';
+// generate('armoracledatabase', armoracledatabase, 'test/local/armoracledatabase', [`examples-directory=${armoracledatabase}/examples`, 'generate-samples=true']);
 
 const armhealthbot = pkgRoot + 'test/tsp/Healthbot.Management';
 generate('armhealthbot', armhealthbot, 'test/local/armhealthbot', [`examples-directory=${armhealthbot}/examples`, 'generate-samples=true']);
 
-loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
-loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
+// loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
+// loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
 
 function loopSpec(group, root, prefix) {
   for (const module in group) {
