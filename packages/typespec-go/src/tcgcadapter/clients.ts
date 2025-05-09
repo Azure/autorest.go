@@ -954,7 +954,7 @@ export class clientAdapter {
               if (go.isMapType(filed.type)) {
                 ret.additionalProperties[k] = this.adaptExampleType(v, filed.type.valueType);
               } else {
-                throw new AdapterError('InternalError', `unexpected additional properties type: ${filed.type}`, NoTarget);
+                throw new AdapterError('InternalError', `additional properties field type should be map type`, NoTarget);
               }
             }
           }

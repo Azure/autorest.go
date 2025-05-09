@@ -280,7 +280,7 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
     if (example.additionalProperties) {
       const additionalPropertiesField = example.type.fields.find(f => f.annotations.isAdditionalProperties)!;
       if (!go.isMapType(additionalPropertiesField.type)) {
-        throw new CodegenError('InternalError', `unexpected additional properties type:  ${additionalPropertiesField.type}`);
+        throw new CodegenError('InternalError', `additional properties field type should be map type`);
       }
       const isAdditionalPropertiesFieldByValue = additionalPropertiesField.type.valueTypeByValue ?? false;
       const isAdditionalPropertiesPolymorphic = go.isInterfaceType(additionalPropertiesField.type);
