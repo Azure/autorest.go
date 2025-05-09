@@ -8,10 +8,10 @@
         "userAssignedIdentities": {
           "/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi": {},
           "/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi2": {}
+        },
+        "sku": {
+          "name": "F0"
         }
-      },
-      "sku": {
-        "name": "F0"
       }
     },
     "resourceGroupName": "healthbotClient",
