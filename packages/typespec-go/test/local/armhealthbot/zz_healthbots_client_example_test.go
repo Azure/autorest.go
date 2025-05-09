@@ -390,14 +390,8 @@ func ExampleHealthBotsClient_BeginUpdate() {
 		log.Fatalf("failed to create client: %v", err)
 	}
 	poller, err := clientFactory.NewHealthBotsClient().BeginUpdate(ctx, "healthbotClient", "samplebotname", armhealthbot.UpdateParameters{
-		Identity: &armhealthbot.Identity{
-			Type: to.Ptr(armhealthbot.ResourceIdentityTypeSystemAssignedUserAssigned),
-			UserAssignedIdentities: &armhealthbot.UserAssignedIdentityMap{
-				AdditionalProperties: map[string]*armhealthbot.UserAssignedIdentity{
-					"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi":  &armhealthbot.UserAssignedIdentity{},
-					"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi2": &armhealthbot.UserAssignedIdentity{},
-				},
-			},
+		SKU: &armhealthbot.SKU{
+			Name: to.Ptr(armhealthbot.SKUNameF0),
 		},
 	}, nil)
 	if err != nil {
