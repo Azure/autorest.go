@@ -180,7 +180,6 @@ generate('armoracledatabase', armoracledatabase, 'test/local/armoracledatabase',
 const armhealthbot = pkgRoot + 'test/tsp/Healthbot.Management';
 generate('armhealthbot', armhealthbot, 'test/local/armhealthbot', [`examples-directory=${armhealthbot}/examples`, 'generate-samples=true']);
 
-
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
 
