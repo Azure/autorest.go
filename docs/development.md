@@ -47,14 +47,10 @@ pnpm install
 
 Then, build the code.
 
+To build a specific package, navigate to that directory and run the command from there.
+
 ```terminal
 pnpm build
-```
-
-To rebuild the entire codebase, run this from the root of the repo:
-
-```terminal
-pnpm -r build
 ```
 
 ## Step 3: Regenerate tests and samples
@@ -62,6 +58,8 @@ pnpm -r build
 After making changes, build the code again, then run a regeneration command to see how your change has affected client code generation.
 
 ### For autorest.go
+
+From the `autorest.go/packages/autorest.go` directory, run the following command:
 
 ```terminal
 pnpm regenerate
@@ -74,6 +72,8 @@ pnpm regenerate --filter=TestName
 ```
 
 ### For typespec-go
+
+From the `autorest.go/packages/typespec-go` directory, run the following command:
 
 ```terminal
 pnpm tspcompile
@@ -106,18 +106,18 @@ To debug the code generator:
 
 ### Built in commands
 
-There are a number of custom pnpm commands to help with development. See the `.scripts` folder for more. Add the `-r` switch for the script to apply to every package.
+There are a number of custom pnpm commands to help with development. See the `.scripts` folder for more. Add the `-w` switch for the script to apply to every package.
 
 To run `go build` and `go vet` on every generated module:
 
 ```terminal
-pnpm -r buildvet
+pnpm -w buildvet
 ```
 
 To run `go mod tidy` on every generated module:
 
 ```terminal
-pnpm -r modtidy
+pnpm -w modtidy
 ```
 
 ## Step 5: Make a PR
