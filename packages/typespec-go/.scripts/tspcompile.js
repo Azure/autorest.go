@@ -180,6 +180,10 @@ generate('armoracledatabase', armoracledatabase, 'test/local/armoracledatabase',
 const armhealthbot = pkgRoot + 'test/tsp/Healthbot.Management';
 generate('armhealthbot', armhealthbot, 'test/local/armhealthbot', [`examples-directory=${armhealthbot}/examples`, 'generate-samples=true']);
 
+const armhardwaresecuritymodules = pkgRoot + 'test/tsp/HardwareSecurityModules.Management';
+generate('armhardwaresecuritymodules', armhardwaresecuritymodules, 'test/local/armhardwaresecuritymodules', [`examples-directory=${armhardwaresecuritymodules}/examples`, 'generate-samples=true']);
+
+
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
 
@@ -277,7 +281,7 @@ function generate(moduleName, input, outputDir, perTestOptions) {
         }
       });
     } catch (err) {
-      console.error(err.output.toString());
+      console.error(err);
     } finally {
       sem.leave();
     }
