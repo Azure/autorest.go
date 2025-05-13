@@ -9,7 +9,7 @@
         "/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi2": {}
       }
     },
-    "properties": {
+    "parameters": {
       "sku": {
         "name": "F0"
       }
