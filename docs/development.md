@@ -106,7 +106,9 @@ To debug the code generator:
 
 ### Built in commands
 
-There are a number of custom pnpm commands to help with development. See the `.scripts` folder for more. Add the `-w` switch for the script to apply to every package.
+There are a number of custom pnpm commands to help with development. See the `.scripts` folder for more. Add the -w switch when executing the script from a directory other than the repo root.
+
+NOTE: by default, the script will run against the entire repo. To limit its scope, pass a directory argument. E.g. when working from the /packages/autorest.go directory, to execute modtidy for only go.mod files under /packages/autorest.go, execute pnpm -w modtidy $pwd
 
 To run `go build` and `go vet` on every generated module:
 
