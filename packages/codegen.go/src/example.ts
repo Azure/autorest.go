@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { camelCase } from '@azure-tools/codegen';
+import { camelCase, capitalize } from '@azure-tools/codegen';
 import * as go from '../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
@@ -135,8 +135,8 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
 
         let methodOptionalParametersText = 'nil';
         if (methodOptionalParameters.length > 0) {
-          methodOptionalParametersText = `&${method.optionalParamsGroup.groupName}{\n`;
-          methodOptionalParametersText += methodOptionalParameters.map(p => `${p.parameter.name}: ${getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)}`).join(',\n');
+          methodOptionalParametersText = `&${codeModel.packageName}.${method.optionalParamsGroup.groupName}{\n`;
+          methodOptionalParametersText += methodOptionalParameters.map(p => `${capitalize(p.parameter.name)}: ${getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)}`).join(',\n');
           methodOptionalParametersText += `}`;
         }
 

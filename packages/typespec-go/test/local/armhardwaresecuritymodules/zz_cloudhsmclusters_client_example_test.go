@@ -23,8 +23,8 @@ func ExampleCloudHsmClustersClient_BeginBackup() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewCloudHsmClustersClient().BeginBackup(ctx, "rgcloudhsm", "chsm1", &CloudHsmClustersClientBeginBackupOptions{
-		backupRequestProperties: &armhardwaresecuritymodules.BackupRequestProperties{
+	poller, err := clientFactory.NewCloudHsmClustersClient().BeginBackup(ctx, "rgcloudhsm", "chsm1", &armhardwaresecuritymodules.CloudHsmClustersClientBeginBackupOptions{
+		BackupRequestProperties: &armhardwaresecuritymodules.BackupRequestProperties{
 			AzureStorageBlobContainerURI: to.Ptr("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"),
 			Token:                        to.Ptr("se=2018-02-01T00%3A00Z&spr=https&sv=2017-04-17&sr=b&sig=REDACTED"),
 		}})
@@ -646,8 +646,8 @@ func ExampleCloudHsmClustersClient_BeginValidateBackupProperties() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewCloudHsmClustersClient().BeginValidateBackupProperties(ctx, "rgcloudhsm", "chsm1", &CloudHsmClustersClientBeginValidateBackupPropertiesOptions{
-		backupRequestProperties: &armhardwaresecuritymodules.BackupRequestProperties{
+	poller, err := clientFactory.NewCloudHsmClustersClient().BeginValidateBackupProperties(ctx, "rgcloudhsm", "chsm1", &armhardwaresecuritymodules.CloudHsmClustersClientBeginValidateBackupPropertiesOptions{
+		BackupRequestProperties: &armhardwaresecuritymodules.BackupRequestProperties{
 			AzureStorageBlobContainerURI: to.Ptr("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"),
 			Token:                        to.Ptr("se=2018-02-01T00%3A00Z&spr=https&sv=2017-04-17&sr=b&sig=REDACTED"),
 		}})
@@ -676,8 +676,8 @@ func ExampleCloudHsmClustersClient_BeginValidateRestoreProperties() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewCloudHsmClustersClient().BeginValidateRestoreProperties(ctx, "rgcloudhsm", "chsm1", &CloudHsmClustersClientBeginValidateRestorePropertiesOptions{
-		restoreRequestProperties: &armhardwaresecuritymodules.RestoreRequestProperties{
+	poller, err := clientFactory.NewCloudHsmClustersClient().BeginValidateRestoreProperties(ctx, "rgcloudhsm", "chsm1", &armhardwaresecuritymodules.CloudHsmClustersClientBeginValidateRestorePropertiesOptions{
+		RestoreRequestProperties: &armhardwaresecuritymodules.RestoreRequestProperties{
 			AzureStorageBlobContainerURI: to.Ptr("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"),
 			BackupID:                     to.Ptr("backupId"),
 		}})
