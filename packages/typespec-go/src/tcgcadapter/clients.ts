@@ -623,6 +623,11 @@ export class clientAdapter {
       return respEnv;
     }
 
+    if (sdkResponseType.kind === 'nullable') {
+      // unwrap the nullable type, this will only happen for operations with two responses and one of them does not have a body
+      sdkResponseType = sdkResponseType.type;
+    }
+
     // for paged methods, tcgc models the method response type as an Array<T>.
     // however, we want the synthesized paged response envelope as that's what Go returns.
     if (sdkMethod.kind === 'paging') {
