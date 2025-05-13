@@ -6,6 +6,7 @@
 
 * Fix wrong example type mapping for discriminated types.
 - Fix wrong nullable response type handling logic.
+- Fix example generation logic for optional method parameters.
 
 ### Other Changes
 
