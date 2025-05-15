@@ -960,7 +960,9 @@ func (client *PathsClient) stringURLEncodedCreateRequest(ctx context.Context, _ 
 	return req, nil
 }
 
-// StringURLNonEncoded - https://tools.ietf.org/html/rfc3986#appendix-A 'path' accept any 'pchar' not encoded
+// StringURLNonEncoded - Get 'begin!*'();:@&=+$,end
+//
+// https://tools.ietf.org/html/rfc3986#appendix-A 'path' accept any 'pchar' not encoded
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0

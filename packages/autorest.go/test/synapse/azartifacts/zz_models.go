@@ -1214,7 +1214,9 @@ type AsanaLinkedServiceTypeProperties struct {
 	EncryptedCredential any
 }
 
-// AutoPauseProperties - Auto-pausing properties of a Big Data pool powered by Apache Spark
+// AutoPauseProperties - Spark pool auto-pausing properties
+//
+// Auto-pausing properties of a Big Data pool powered by Apache Spark
 type AutoPauseProperties struct {
 	// Number of minutes of idle time before the Big Data pool is automatically paused.
 	DelayInMinutes *int32
@@ -1223,7 +1225,9 @@ type AutoPauseProperties struct {
 	Enabled *bool
 }
 
-// AutoScaleProperties - Auto-scaling properties of a Big Data pool powered by Apache Spark
+// AutoScaleProperties - Spark pool auto-scaling properties
+//
+// Auto-scaling properties of a Big Data pool powered by Apache Spark
 type AutoScaleProperties struct {
 	// Whether automatic scaling is enabled for the Big Data pool.
 	Enabled *bool
@@ -5419,7 +5423,9 @@ type BigDataPoolResourceInfo struct {
 	Type *string
 }
 
-// BigDataPoolResourceInfoListResult - Collection of Big Data pool information
+// BigDataPoolResourceInfoListResult - Collection of Big Data pools
+//
+// Collection of Big Data pool information
 type BigDataPoolResourceInfoListResult struct {
 	// Link to the next page of results
 	NextLink *string
@@ -5428,7 +5434,9 @@ type BigDataPoolResourceInfoListResult struct {
 	Value []*BigDataPoolResourceInfo
 }
 
-// BigDataPoolResourceProperties - Properties of a Big Data pool powered by Apache Spark
+// BigDataPoolResourceProperties - Spark pool properties
+//
+// Properties of a Big Data pool powered by Apache Spark
 type BigDataPoolResourceProperties struct {
 	// Auto-pausing properties
 	AutoPause *AutoPauseProperties
@@ -10007,7 +10015,9 @@ type ErrorAdditionalInfo struct {
 	Type *string
 }
 
-// ErrorContract - Contains details when the response code indicates an error.
+// ErrorContract - Error details.
+//
+// Contains details when the response code indicates an error.
 type ErrorContract struct {
 	// The error details.
 	Error *ErrorResponse
@@ -14728,7 +14738,9 @@ type KqlScriptsResourceCollectionResponse struct {
 	Value    []*KqlScriptResource
 }
 
-// LibraryInfo - Library/package information of a Big Data pool powered by Apache Spark
+// LibraryInfo - Information about a library/package created at the workspace level.
+//
+// Library/package information of a Big Data pool powered by Apache Spark
 type LibraryInfo struct {
 	// Storage blob container name.
 	ContainerName *string
@@ -14761,7 +14773,9 @@ type LibraryListResponse struct {
 	NextLink *string
 }
 
-// LibraryRequirements - Library requirements for a Big Data pool powered by Apache Spark
+// LibraryRequirements - Spark pool library version requirements
+//
+// Library requirements for a Big Data pool powered by Apache Spark
 type LibraryRequirements struct {
 	// The library requirements.
 	Content *string
@@ -20759,7 +20773,9 @@ type SQLPool struct {
 	Type *string
 }
 
-// SQLPoolInfoListResult - List of SQL pools
+// SQLPoolInfoListResult - SQL pool collection
+//
+// List of SQL pools
 type SQLPoolInfoListResult struct {
 	// Link to the next page of results
 	NextLink *string
@@ -20777,7 +20793,9 @@ type SQLPoolReference struct {
 	Type *SQLPoolReferenceType
 }
 
-// SQLPoolResourceProperties - Properties of a SQL Analytics pool
+// SQLPoolResourceProperties - SQL pool properties
+//
+// Properties of a SQL Analytics pool
 type SQLPoolResourceProperties struct {
 	// Collation mode
 	Collation *string
@@ -24867,6 +24885,8 @@ type SparkBatchJobState struct {
 	TerminatedAt *time.Time
 }
 
+// SparkConfiguration - Information about a SparkConfiguration created at the workspace level.
+//
 // SparkConfiguration Artifact information
 type SparkConfiguration struct {
 	// REQUIRED; SparkConfiguration configs.

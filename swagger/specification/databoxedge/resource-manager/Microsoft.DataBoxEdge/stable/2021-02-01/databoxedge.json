@@ -2072,7 +2072,7 @@
         "tags": [
           "MonitoringConfig"
         ],
-        "summary": "Gets a  metric configuration of a role.",
+        "summary": "Gets a metric configuration of a role.",
         "operationId": "MonitoringConfig_Get",
         "parameters": [
           {

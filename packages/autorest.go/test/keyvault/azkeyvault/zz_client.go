@@ -23,8 +23,10 @@ type Client struct {
 	internal *azcore.Client
 }
 
-// BackupCertificate - Requests that a backup of the specified certificate be downloaded to the client. All versions of the
-// certificate will be downloaded. This operation requires the certificates/backup permission.
+// BackupCertificate - Backs up the specified certificate.
+//
+// Requests that a backup of the specified certificate be downloaded to the client. All versions of the certificate will be
+// downloaded. This operation requires the certificates/backup permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -78,8 +80,10 @@ func (client *Client) backupCertificateHandleResponse(resp *http.Response) (Clie
 	return result, nil
 }
 
-// BackupKey - The Key Backup operation exports a key from Azure Key Vault in a protected form. Note that this operation does
-// NOT return key material in a form that can be used outside the Azure Key Vault system,
+// BackupKey - Requests that a backup of the specified key be downloaded to the client.
+//
+// The Key Backup operation exports a key from Azure Key Vault in a protected form. Note that this operation does NOT return
+// key material in a form that can be used outside the Azure Key Vault system,
 // the returned key material is either protected to a Azure Key Vault HSM or to Azure Key Vault itself. The intent of this
 // operation is to allow a client to GENERATE a key in one Azure Key Vault
 // instance, BACKUP the key, and then RESTORE it into another Azure Key Vault instance. The BACKUP operation may be used to
@@ -141,8 +145,10 @@ func (client *Client) backupKeyHandleResponse(resp *http.Response) (ClientBackup
 	return result, nil
 }
 
-// BackupSecret - Requests that a backup of the specified secret be downloaded to the client. All versions of the secret will
-// be downloaded. This operation requires the secrets/backup permission.
+// BackupSecret - Backs up the specified secret.
+//
+// Requests that a backup of the specified secret be downloaded to the client. All versions of the secret will be downloaded.
+// This operation requires the secrets/backup permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -196,8 +202,10 @@ func (client *Client) backupSecretHandleResponse(resp *http.Response) (ClientBac
 	return result, nil
 }
 
-// BackupStorageAccount - Requests that a backup of the specified storage account be downloaded to the client. This operation
-// requires the storage/backup permission.
+// BackupStorageAccount - Backs up the specified storage account.
+//
+// Requests that a backup of the specified storage account be downloaded to the client. This operation requires the storage/backup
+// permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -251,8 +259,9 @@ func (client *Client) backupStorageAccountHandleResponse(resp *http.Response) (C
 	return result, nil
 }
 
-// CreateCertificate - If this is the first version, the certificate resource is created. This operation requires the certificates/create
-// permission.
+// CreateCertificate - Creates a new certificate.
+//
+// If this is the first version, the certificate resource is created. This operation requires the certificates/create permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -310,8 +319,10 @@ func (client *Client) createCertificateHandleResponse(resp *http.Response) (Clie
 	return result, nil
 }
 
-// CreateKey - The create key operation can be used to create any key type in Azure Key Vault. If the named key already exists,
-// Azure Key Vault creates a new version of the key. It requires the keys/create
+// CreateKey - Creates a new key, stores it, then returns key parameters and attributes to the client.
+//
+// The create key operation can be used to create any key type in Azure Key Vault. If the named key already exists, Azure
+// Key Vault creates a new version of the key. It requires the keys/create
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
@@ -370,8 +381,10 @@ func (client *Client) createKeyHandleResponse(resp *http.Response) (ClientCreate
 	return result, nil
 }
 
-// Decrypt - The DECRYPT operation decrypts a well-formed block of ciphertext using the target encryption key and specified
-// algorithm. This operation is the reverse of the ENCRYPT operation; only a single block of
+// Decrypt - Decrypts a single block of encrypted data.
+//
+// The DECRYPT operation decrypts a well-formed block of ciphertext using the target encryption key and specified algorithm.
+// This operation is the reverse of the ENCRYPT operation; only a single block of
 // data may be decrypted, the size of this block is dependent on the target key and the algorithm to be used. The DECRYPT
 // operation applies to asymmetric and symmetric keys stored in Azure Key Vault
 // since it uses the private portion of the key. This operation requires the keys/decrypt permission.
@@ -437,8 +450,10 @@ func (client *Client) decryptHandleResponse(resp *http.Response) (ClientDecryptR
 	return result, nil
 }
 
-// DeleteCertificate - Deletes all versions of a certificate object along with its associated policy. Delete certificate cannot
-// be used to remove individual versions of a certificate object. This operation requires the
+// DeleteCertificate - Deletes a certificate from a specified key vault.
+//
+// Deletes all versions of a certificate object along with its associated policy. Delete certificate cannot be used to remove
+// individual versions of a certificate object. This operation requires the
 // certificates/delete permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
@@ -493,8 +508,10 @@ func (client *Client) deleteCertificateHandleResponse(resp *http.Response) (Clie
 	return result, nil
 }
 
-// DeleteCertificateContacts - Deletes the certificate contacts for a specified key vault certificate. This operation requires
-// the certificates/managecontacts permission.
+// DeleteCertificateContacts - Deletes the certificate contacts for a specified key vault.
+//
+// Deletes the certificate contacts for a specified key vault certificate. This operation requires the certificates/managecontacts
+// permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -544,8 +561,10 @@ func (client *Client) deleteCertificateContactsHandleResponse(resp *http.Respons
 	return result, nil
 }
 
-// DeleteCertificateIssuer - The DeleteCertificateIssuer operation permanently removes the specified certificate issuer from
-// the vault. This operation requires the certificates/manageissuers/deleteissuers permission.
+// DeleteCertificateIssuer - Deletes the specified certificate issuer.
+//
+// The DeleteCertificateIssuer operation permanently removes the specified certificate issuer from the vault. This operation
+// requires the certificates/manageissuers/deleteissuers permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -600,8 +619,10 @@ func (client *Client) deleteCertificateIssuerHandleResponse(resp *http.Response)
 	return result, nil
 }
 
-// DeleteCertificateOperation - Deletes the creation operation for a specified certificate that is in the process of being
-// created. The certificate is no longer created. This operation requires the certificates/update permission.
+// DeleteCertificateOperation - Deletes the creation operation for a specific certificate.
+//
+// Deletes the creation operation for a specified certificate that is in the process of being created. The certificate is
+// no longer created. This operation requires the certificates/update permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -656,8 +677,10 @@ func (client *Client) deleteCertificateOperationHandleResponse(resp *http.Respon
 	return result, nil
 }
 
-// DeleteKey - The delete key operation cannot be used to remove individual versions of a key. This operation removes the
-// cryptographic material associated with the key, which means the key is not usable for
+// DeleteKey - Deletes a key of any type from storage in Azure Key Vault.
+//
+// The delete key operation cannot be used to remove individual versions of a key. This operation removes the cryptographic
+// material associated with the key, which means the key is not usable for
 // Sign/Verify, Wrap/Unwrap or Encrypt/Decrypt operations. This operation requires the keys/delete permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
@@ -772,8 +795,10 @@ func (client *Client) deleteSasDefinitionHandleResponse(resp *http.Response) (Cl
 	return result, nil
 }
 
-// DeleteSecret - The DELETE operation applies to any secret stored in Azure Key Vault. DELETE cannot be applied to an individual
-// version of a secret. This operation requires the secrets/delete permission.
+// DeleteSecret - Deletes a secret from a specified key vault.
+//
+// The DELETE operation applies to any secret stored in Azure Key Vault. DELETE cannot be applied to an individual version
+// of a secret. This operation requires the secrets/delete permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -881,8 +906,10 @@ func (client *Client) deleteStorageAccountHandleResponse(resp *http.Response) (C
 	return result, nil
 }
 
-// Encrypt - The ENCRYPT operation encrypts an arbitrary sequence of bytes using an encryption key that is stored in Azure
-// Key Vault. Note that the ENCRYPT operation only supports a single block of data, the size
+// Encrypt - Encrypts an arbitrary sequence of bytes using an encryption key that is stored in a key vault.
+//
+// The ENCRYPT operation encrypts an arbitrary sequence of bytes using an encryption key that is stored in Azure Key Vault.
+// Note that the ENCRYPT operation only supports a single block of data, the size
 // of which is dependent on the target key and the encryption algorithm to be used. The ENCRYPT operation is only strictly
 // necessary for symmetric keys stored in Azure Key Vault since protection with an
 // asymmetric key can be performed using public portion of the key. This operation is supported for asymmetric keys as a convenience
@@ -1135,7 +1162,9 @@ func (client *Client) fullRestoreOperationCreateRequest(ctx context.Context, vau
 	return req, nil
 }
 
-// GetCertificate - Gets information about a specific certificate. This operation requires the certificates/get permission.
+// GetCertificate - Gets information about a certificate.
+//
+// Gets information about a specific certificate. This operation requires the certificates/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -1195,8 +1224,10 @@ func (client *Client) getCertificateHandleResponse(resp *http.Response) (ClientG
 	return result, nil
 }
 
-// GetCertificateContacts - The GetCertificateContacts operation returns the set of certificate contact resources in the specified
-// key vault. This operation requires the certificates/managecontacts permission.
+// GetCertificateContacts - Lists the certificate contacts for a specified key vault.
+//
+// The GetCertificateContacts operation returns the set of certificate contact resources in the specified key vault. This
+// operation requires the certificates/managecontacts permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -1245,8 +1276,10 @@ func (client *Client) getCertificateContactsHandleResponse(resp *http.Response) 
 	return result, nil
 }
 
-// GetCertificateIssuer - The GetCertificateIssuer operation returns the specified certificate issuer resources in the specified
-// key vault. This operation requires the certificates/manageissuers/getissuers permission.
+// GetCertificateIssuer - Lists the specified certificate issuer.
+//
+// The GetCertificateIssuer operation returns the specified certificate issuer resources in the specified key vault. This
+// operation requires the certificates/manageissuers/getissuers permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -1300,8 +1333,10 @@ func (client *Client) getCertificateIssuerHandleResponse(resp *http.Response) (C
 	return result, nil
 }
 
-// NewGetCertificateIssuersPager - The GetCertificateIssuers operation returns the set of certificate issuer resources in
-// the specified key vault. This operation requires the certificates/manageissuers/getissuers permission.
+// NewGetCertificateIssuersPager - List certificate issuers for a specified key vault.
+//
+// The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified key vault. This operation
+// requires the certificates/manageissuers/getissuers permission.
 //
 // Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
@@ -1356,8 +1391,9 @@ func (client *Client) getCertificateIssuersHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
-// GetCertificateOperation - Gets the creation operation associated with a specified certificate. This operation requires
-// the certificates/get permission.
+// GetCertificateOperation - Gets the creation operation of a certificate.
+//
+// Gets the creation operation associated with a specified certificate. This operation requires the certificates/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -1412,8 +1448,10 @@ func (client *Client) getCertificateOperationHandleResponse(resp *http.Response)
 	return result, nil
 }
 
-// GetCertificatePolicy - The GetCertificatePolicy operation returns the specified certificate policy resources in the specified
-// key vault. This operation requires the certificates/get permission.
+// GetCertificatePolicy - Lists the policy for a certificate.
+//
+// The GetCertificatePolicy operation returns the specified certificate policy resources in the specified key vault. This
+// operation requires the certificates/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -1467,8 +1505,10 @@ func (client *Client) getCertificatePolicyHandleResponse(resp *http.Response) (C
 	return result, nil
 }
 
-// NewGetCertificateVersionsPager - The GetCertificateVersions operation returns the versions of a certificate in the specified
-// key vault. This operation requires the certificates/list permission.
+// NewGetCertificateVersionsPager - List the versions of a certificate.
+//
+// The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires
+// the certificates/list permission.
 //
 // Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
@@ -1528,8 +1568,10 @@ func (client *Client) getCertificateVersionsHandleResponse(resp *http.Response) 
 	return result, nil
 }
 
-// NewGetCertificatesPager - The GetCertificates operation returns the set of certificates resources in the specified key
-// vault. This operation requires the certificates/list permission.
+// NewGetCertificatesPager - List certificates in a specified key vault
+//
+// The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires
+// the certificates/list permission.
 //
 // Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
@@ -1586,8 +1628,10 @@ func (client *Client) getCertificatesHandleResponse(resp *http.Response) (Client
 	return result, nil
 }
 
-// GetDeletedCertificate - The GetDeletedCertificate operation retrieves the deleted certificate information plus its attributes,
-// such as retention interval, scheduled permanent deletion and the current deletion recovery level.
+// GetDeletedCertificate - Retrieves information about the specified deleted certificate.
+//
+// The GetDeletedCertificate operation retrieves the deleted certificate information plus its attributes, such as retention
+// interval, scheduled permanent deletion and the current deletion recovery level.
 // This operation requires the certificates/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
@@ -1642,8 +1686,10 @@ func (client *Client) getDeletedCertificateHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
-// NewGetDeletedCertificatesPager - The GetDeletedCertificates operation retrieves the certificates in the current vault which
-// are in a deleted state and ready for recovery or purging. This operation includes deletion-specific
+// NewGetDeletedCertificatesPager - Lists the deleted certificates in the specified vault currently available for recovery.
+//
+// The GetDeletedCertificates operation retrieves the certificates in the current vault which are in a deleted state and ready
+// for recovery or purging. This operation includes deletion-specific
 // information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete
 // enabled vaults.
 //
@@ -1703,8 +1749,10 @@ func (client *Client) getDeletedCertificatesHandleResponse(resp *http.Response) 
 	return result, nil
 }
 
-// GetDeletedKey - The Get Deleted Key operation is applicable for soft-delete enabled vaults. While the operation can be
-// invoked on any vault, it will return an error if invoked on a non soft-delete enabled vault. This
+// GetDeletedKey - Gets the public part of a deleted key.
+//
+// The Get Deleted Key operation is applicable for soft-delete enabled vaults. While the operation can be invoked on any vault,
+// it will return an error if invoked on a non soft-delete enabled vault. This
 // operation requires the keys/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
@@ -1759,8 +1807,10 @@ func (client *Client) getDeletedKeyHandleResponse(resp *http.Response) (ClientGe
 	return result, nil
 }
 
-// NewGetDeletedKeysPager - Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public
-// part of a deleted key. This operation includes deletion-specific information. The Get Deleted Keys
+// NewGetDeletedKeysPager - Lists the deleted keys in the specified vault.
+//
+// Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public part of a deleted key.
+// This operation includes deletion-specific information. The Get Deleted Keys
 // operation is applicable for vaults enabled for soft-delete. While the operation can be invoked on any vault, it will return
 // an error if invoked on a non soft-delete enabled vault. This operation
 // requires the keys/list permission.
@@ -1817,8 +1867,10 @@ func (client *Client) getDeletedKeysHandleResponse(resp *http.Response) (ClientG
 	return result, nil
 }
 
-// GetDeletedSasDefinition - The Get Deleted SAS Definition operation returns the specified deleted SAS definition along with
-// its attributes. This operation requires the storage/getsas permission.
+// GetDeletedSasDefinition - Gets the specified deleted sas definition.
+//
+// The Get Deleted SAS Definition operation returns the specified deleted SAS definition along with its attributes. This operation
+// requires the storage/getsas permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -1878,8 +1930,10 @@ func (client *Client) getDeletedSasDefinitionHandleResponse(resp *http.Response)
 	return result, nil
 }
 
-// NewGetDeletedSasDefinitionsPager - The Get Deleted Sas Definitions operation returns the SAS definitions that have been
-// deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission.
+// NewGetDeletedSasDefinitionsPager - Lists deleted SAS definitions for the specified vault and storage account.
+//
+// The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete.
+// This operation requires the storage/listsas permission.
 //
 // Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
@@ -1939,8 +1993,10 @@ func (client *Client) getDeletedSasDefinitionsHandleResponse(resp *http.Response
 	return result, nil
 }
 
-// GetDeletedSecret - The Get Deleted Secret operation returns the specified deleted secret along with its attributes. This
-// operation requires the secrets/get permission.
+// GetDeletedSecret - Gets the specified deleted secret.
+//
+// The Get Deleted Secret operation returns the specified deleted secret along with its attributes. This operation requires
+// the secrets/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -1994,8 +2050,10 @@ func (client *Client) getDeletedSecretHandleResponse(resp *http.Response) (Clien
 	return result, nil
 }
 
-// NewGetDeletedSecretsPager - The Get Deleted Secrets operation returns the secrets that have been deleted for a vault enabled
-// for soft-delete. This operation requires the secrets/list permission.
+// NewGetDeletedSecretsPager - Lists deleted secrets for the specified vault.
+//
+// The Get Deleted Secrets operation returns the secrets that have been deleted for a vault enabled for soft-delete. This
+// operation requires the secrets/list permission.
 //
 // Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
@@ -2049,8 +2107,10 @@ func (client *Client) getDeletedSecretsHandleResponse(resp *http.Response) (Clie
 	return result, nil
 }
 
-// GetDeletedStorageAccount - The Get Deleted Storage Account operation returns the specified deleted storage account along
-// with its attributes. This operation requires the storage/get permission.
+// GetDeletedStorageAccount - Gets the specified deleted storage account.
+//
+// The Get Deleted Storage Account operation returns the specified deleted storage account along with its attributes. This
+// operation requires the storage/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -2105,8 +2165,10 @@ func (client *Client) getDeletedStorageAccountHandleResponse(resp *http.Response
 	return result, nil
 }
 
-// NewGetDeletedStorageAccountsPager - The Get Deleted Storage Accounts operation returns the storage accounts that have been
-// deleted for a vault enabled for soft-delete. This operation requires the storage/list permission.
+// NewGetDeletedStorageAccountsPager - Lists deleted storage accounts for the specified vault.
+//
+// The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for
+// soft-delete. This operation requires the storage/list permission.
 //
 // Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
@@ -2161,8 +2223,10 @@ func (client *Client) getDeletedStorageAccountsHandleResponse(resp *http.Respons
 	return result, nil
 }
 
-// GetKey - The get key operation is applicable to all key types. If the requested key is symmetric, then no key material
-// is released in the response. This operation requires the keys/get permission.
+// GetKey - Gets the public part of a stored key.
+//
+// The get key operation is applicable to all key types. If the requested key is symmetric, then no key material is released
+// in the response. This operation requires the keys/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -2222,8 +2286,9 @@ func (client *Client) getKeyHandleResponse(resp *http.Response) (ClientGetKeyRes
 	return result, nil
 }
 
-// NewGetKeyVersionsPager - The full key identifier, attributes, and tags are provided in the response. This operation requires
-// the keys/list permission.
+// NewGetKeyVersionsPager - Retrieves a list of individual key versions with the same key name.
+//
+// The full key identifier, attributes, and tags are provided in the response. This operation requires the keys/list permission.
 //
 // Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
@@ -2282,8 +2347,10 @@ func (client *Client) getKeyVersionsHandleResponse(resp *http.Response) (ClientG
 	return result, nil
 }
 
-// NewGetKeysPager - Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public part
-// of a stored key. The LIST operation is applicable to all key types, however only the base key
+// NewGetKeysPager - List keys in the specified vault.
+//
+// Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public part of a stored key.
+// The LIST operation is applicable to all key types, however only the base key
 // identifier, attributes, and tags are provided in the response. Individual versions of a key are not listed in the response.
 // This operation requires the keys/list permission.
 //
@@ -2459,8 +2526,9 @@ func (client *Client) getSasDefinitionsHandleResponse(resp *http.Response) (Clie
 	return result, nil
 }
 
-// GetSecret - The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get
-// permission.
+// GetSecret - Get a specified secret from a given key vault.
+//
+// The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -2520,8 +2588,10 @@ func (client *Client) getSecretHandleResponse(resp *http.Response) (ClientGetSec
 	return result, nil
 }
 
-// NewGetSecretVersionsPager - The full secret identifier and attributes are provided in the response. No values are returned
-// for the secrets. This operations requires the secrets/list permission.
+// NewGetSecretVersionsPager - List all versions of the specified secret.
+//
+// The full secret identifier and attributes are provided in the response. No values are returned for the secrets. This operations
+// requires the secrets/list permission.
 //
 // Generated from API version 7.2
 //   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
@@ -2580,8 +2650,10 @@ func (client *Client) getSecretVersionsHandleResponse(resp *http.Response) (Clie
 	return result, nil
 }
 
-// NewGetSecretsPager - The Get Secrets operation is applicable to the entire vault. However, only the base secret identifier
-// and its attributes are provided in the response. Individual secret versions are not listed in the
+// NewGetSecretsPager - List secrets in a specified key vault.
+//
+// The Get Secrets operation is applicable to the entire vault. However, only the base secret identifier and its attributes
+// are provided in the response. Individual secret versions are not listed in the
 // response. This operation requires the secrets/list permission.
 //
 // Generated from API version 7.2
@@ -2745,8 +2817,10 @@ func (client *Client) getStorageAccountsHandleResponse(resp *http.Response) (Cli
 	return result, nil
 }
 
-// ImportCertificate - Imports an existing valid certificate, containing a private key, into Azure Key Vault. The certificate
-// to be imported can be in either PFX or PEM format. If the certificate is in PEM format the PEM
+// ImportCertificate - Imports a certificate into a specified key vault.
+//
+// Imports an existing valid certificate, containing a private key, into Azure Key Vault. The certificate to be imported can
+// be in either PFX or PEM format. If the certificate is in PEM format the PEM
 // file must contain the key as well as x509 certificates. This operation requires the certificates/import permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
@@ -2805,8 +2879,10 @@ func (client *Client) importCertificateHandleResponse(resp *http.Response) (Clie
 	return result, nil
 }
 
-// ImportKey - The import key operation may be used to import any key type into an Azure Key Vault. If the named key already
-// exists, Azure Key Vault creates a new version of the key. This operation requires the
+// ImportKey - Imports an externally created key, stores it, and returns key parameters and attributes to the client.
+//
+// The import key operation may be used to import any key type into an Azure Key Vault. If the named key already exists, Azure
+// Key Vault creates a new version of the key. This operation requires the
 // keys/import permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
@@ -2865,8 +2941,10 @@ func (client *Client) importKeyHandleResponse(resp *http.Response) (ClientImport
 	return result, nil
 }
 
-// MergeCertificate - The MergeCertificate operation performs the merging of a certificate or certificate chain with a key
-// pair currently available in the service. This operation requires the certificates/create
+// MergeCertificate - Merges a certificate or a certificate chain with a key pair existing on the server.
+//
+// The MergeCertificate operation performs the merging of a certificate or certificate chain with a key pair currently available
+// in the service. This operation requires the certificates/create
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
@@ -2925,8 +3003,10 @@ func (client *Client) mergeCertificateHandleResponse(resp *http.Response) (Clien
 	return result, nil
 }
 
-// PurgeDeletedCertificate - The PurgeDeletedCertificate operation performs an irreversible deletion of the specified certificate,
-// without possibility for recovery. The operation is not available if the recovery level does not
+// PurgeDeletedCertificate - Permanently deletes the specified deleted certificate.
+//
+// The PurgeDeletedCertificate operation performs an irreversible deletion of the specified certificate, without possibility
+// for recovery. The operation is not available if the recovery level does not
 // specify 'Purgeable'. This operation requires the certificate/purge permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
@@ -2972,8 +3052,10 @@ func (client *Client) purgeDeletedCertificateCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// PurgeDeletedKey - The Purge Deleted Key operation is applicable for soft-delete enabled vaults. While the operation can
-// be invoked on any vault, it will return an error if invoked on a non soft-delete enabled vault.
+// PurgeDeletedKey - Permanently deletes the specified key.
+//
+// The Purge Deleted Key operation is applicable for soft-delete enabled vaults. While the operation can be invoked on any
+// vault, it will return an error if invoked on a non soft-delete enabled vault.
 // This operation requires the keys/purge permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
@@ -3018,8 +3100,10 @@ func (client *Client) purgeDeletedKeyCreateRequest(ctx context.Context, vaultBas
 	return req, nil
 }
 
-// PurgeDeletedSecret - The purge deleted secret operation removes the secret permanently, without the possibility of recovery.
-// This operation can only be enabled on a soft-delete enabled vault. This operation requires the
+// PurgeDeletedSecret - Permanently deletes the specified secret.
+//
+// The purge deleted secret operation removes the secret permanently, without the possibility of recovery. This operation
+// can only be enabled on a soft-delete enabled vault. This operation requires the
 // secrets/purge permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
@@ -3064,8 +3148,10 @@ func (client *Client) purgeDeletedSecretCreateRequest(ctx context.Context, vault
 	return req, nil
 }
 
-// PurgeDeletedStorageAccount - The purge deleted storage account operation removes the secret permanently, without the possibility
-// of recovery. This operation can only be performed on a soft-delete enabled vault. This operation
+// PurgeDeletedStorageAccount - Permanently deletes the specified storage account.
+//
+// The purge deleted storage account operation removes the secret permanently, without the possibility of recovery. This operation
+// can only be performed on a soft-delete enabled vault. This operation
 // requires the storage/purge permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
@@ -3111,8 +3197,10 @@ func (client *Client) purgeDeletedStorageAccountCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// RecoverDeletedCertificate - The RecoverDeletedCertificate operation performs the reversal of the Delete operation. The
-// operation is applicable in vaults enabled for soft-delete, and must be issued during the retention interval
+// RecoverDeletedCertificate - Recovers the deleted certificate back to its current version under /certificates.
+//
+// The RecoverDeletedCertificate operation performs the reversal of the Delete operation. The operation is applicable in vaults
+// enabled for soft-delete, and must be issued during the retention interval
 // (available in the deleted certificate's attributes). This operation requires the certificates/recover permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
@@ -3168,8 +3256,10 @@ func (client *Client) recoverDeletedCertificateHandleResponse(resp *http.Respons
 	return result, nil
 }
 
-// RecoverDeletedKey - The Recover Deleted Key operation is applicable for deleted keys in soft-delete enabled vaults. It
-// recovers the deleted key back to its latest version under /keys. An attempt to recover an non-deleted
+// RecoverDeletedKey - Recovers the deleted key to its latest version.
+//
+// The Recover Deleted Key operation is applicable for deleted keys in soft-delete enabled vaults. It recovers the deleted
+// key back to its latest version under /keys. An attempt to recover an non-deleted
 // key will return an error. Consider this the inverse of the delete operation on soft-delete enabled vaults. This operation
 // requires the keys/recover permission.
 // If the operation fails it returns an *azcore.ResponseError type.
@@ -3225,8 +3315,10 @@ func (client *Client) recoverDeletedKeyHandleResponse(resp *http.Response) (Clie
 	return result, nil
 }
 
-// RecoverDeletedSasDefinition - Recovers the deleted SAS definition for the specified storage account. This operation can
-// only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission.
+// RecoverDeletedSasDefinition - Recovers the deleted SAS definition.
+//
+// Recovers the deleted SAS definition for the specified storage account. This operation can only be performed on a soft-delete
+// enabled vault. This operation requires the storage/recover permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -3286,8 +3378,10 @@ func (client *Client) recoverDeletedSasDefinitionHandleResponse(resp *http.Respo
 	return result, nil
 }
 
-// RecoverDeletedSecret - Recovers the deleted secret in the specified vault. This operation can only be performed on a soft-delete
-// enabled vault. This operation requires the secrets/recover permission.
+// RecoverDeletedSecret - Recovers the deleted secret to the latest version.
+//
+// Recovers the deleted secret in the specified vault. This operation can only be performed on a soft-delete enabled vault.
+// This operation requires the secrets/recover permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -3341,8 +3435,10 @@ func (client *Client) recoverDeletedSecretHandleResponse(resp *http.Response) (C
 	return result, nil
 }
 
-// RecoverDeletedStorageAccount - Recovers the deleted storage account in the specified vault. This operation can only be
-// performed on a soft-delete enabled vault. This operation requires the storage/recover permission.
+// RecoverDeletedStorageAccount - Recovers the deleted storage account.
+//
+// Recovers the deleted storage account in the specified vault. This operation can only be performed on a soft-delete enabled
+// vault. This operation requires the storage/recover permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -3457,8 +3553,9 @@ func (client *Client) regenerateStorageAccountKeyHandleResponse(resp *http.Respo
 	return result, nil
 }
 
-// RestoreCertificate - Restores a backed up certificate, and all its versions, to a vault. This operation requires the certificates/restore
-// permission.
+// RestoreCertificate - Restores a backed up certificate to a vault.
+//
+// Restores a backed up certificate, and all its versions, to a vault. This operation requires the certificates/restore permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -3511,8 +3608,10 @@ func (client *Client) restoreCertificateHandleResponse(resp *http.Response) (Cli
 	return result, nil
 }
 
-// RestoreKey - Imports a previously backed up key into Azure Key Vault, restoring the key, its key identifier, attributes
-// and access control policies. The RESTORE operation may be used to import a previously backed
+// RestoreKey - Restores a backed up key to a vault.
+//
+// Imports a previously backed up key into Azure Key Vault, restoring the key, its key identifier, attributes and access control
+// policies. The RESTORE operation may be used to import a previously backed
 // up key. Individual versions of a key cannot be restored. The key is restored in its entirety with the same key name as
 // it had when it was backed up. If the key name is not available in the target Key
 // Vault, the RESTORE operation will be rejected. While the key name is retained during restore, the final key identifier
@@ -3572,8 +3671,9 @@ func (client *Client) restoreKeyHandleResponse(resp *http.Response) (ClientResto
 	return result, nil
 }
 
-// RestoreSecret - Restores a backed up secret, and all its versions, to a vault. This operation requires the secrets/restore
-// permission.
+// RestoreSecret - Restores a backed up secret to a vault.
+//
+// Restores a backed up secret, and all its versions, to a vault. This operation requires the secrets/restore permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -3680,7 +3780,9 @@ func (client *Client) restoreStatusHandleResponse(resp *http.Response) (ClientRe
 	return result, nil
 }
 
-// RestoreStorageAccount - Restores a backed up storage account to a vault. This operation requires the storage/restore permission.
+// RestoreStorageAccount - Restores a backed up storage account to a vault.
+//
+// Restores a backed up storage account to a vault. This operation requires the storage/restore permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -3803,8 +3905,9 @@ func (client *Client) selectiveKeyRestoreOperationCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// SetCertificateContacts - Sets the certificate contacts for the specified key vault. This operation requires the certificates/managecontacts
-// permission.
+// SetCertificateContacts - Sets the certificate contacts for the specified key vault.
+//
+// Sets the certificate contacts for the specified key vault. This operation requires the certificates/managecontacts permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -3857,8 +3960,10 @@ func (client *Client) setCertificateContactsHandleResponse(resp *http.Response) 
 	return result, nil
 }
 
-// SetCertificateIssuer - The SetCertificateIssuer operation adds or updates the specified certificate issuer. This operation
-// requires the certificates/setissuers permission.
+// SetCertificateIssuer - Sets the specified certificate issuer.
+//
+// The SetCertificateIssuer operation adds or updates the specified certificate issuer. This operation requires the certificates/setissuers
+// permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -3980,8 +4085,10 @@ func (client *Client) setSasDefinitionHandleResponse(resp *http.Response) (Clien
 	return result, nil
 }
 
-// SetSecret - The SET operation adds a secret to the Azure Key Vault. If the named secret already exists, Azure Key Vault
-// creates a new version of that secret. This operation requires the secrets/set permission.
+// SetSecret - Sets a secret in a specified key vault.
+//
+// The SET operation adds a secret to the Azure Key Vault. If the named secret already exists, Azure Key Vault creates a new
+// version of that secret. This operation requires the secrets/set permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -4097,8 +4204,10 @@ func (client *Client) setStorageAccountHandleResponse(resp *http.Response) (Clie
 	return result, nil
 }
 
-// Sign - The SIGN operation is applicable to asymmetric and symmetric keys stored in Azure Key Vault since this operation
-// uses the private portion of the key. This operation requires the keys/sign permission.
+// Sign - Creates a signature from a digest using the specified key.
+//
+// The SIGN operation is applicable to asymmetric and symmetric keys stored in Azure Key Vault since this operation uses the
+// private portion of the key. This operation requires the keys/sign permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -4161,8 +4270,10 @@ func (client *Client) signHandleResponse(resp *http.Response) (ClientSignRespons
 	return result, nil
 }
 
-// UnwrapKey - The UNWRAP operation supports decryption of a symmetric key using the target key encryption key. This operation
-// is the reverse of the WRAP operation. The UNWRAP operation applies to asymmetric and
+// UnwrapKey - Unwraps a symmetric key using the specified key that was initially used for wrapping that key.
+//
+// The UNWRAP operation supports decryption of a symmetric key using the target key encryption key. This operation is the
+// reverse of the WRAP operation. The UNWRAP operation applies to asymmetric and
 // symmetric keys stored in Azure Key Vault since it uses the private portion of the key. This operation requires the keys/unwrapKey
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
@@ -4227,8 +4338,10 @@ func (client *Client) unwrapKeyHandleResponse(resp *http.Response) (ClientUnwrap
 	return result, nil
 }
 
-// UpdateCertificate - The UpdateCertificate operation applies the specified update on the given certificate; the only elements
-// updated are the certificate's attributes. This operation requires the certificates/update
+// UpdateCertificate - Updates the specified attributes associated with the given certificate.
+//
+// The UpdateCertificate operation applies the specified update on the given certificate; the only elements updated are the
+// certificate's attributes. This operation requires the certificates/update
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
@@ -4292,8 +4405,10 @@ func (client *Client) updateCertificateHandleResponse(resp *http.Response) (Clie
 	return result, nil
 }
 
-// UpdateCertificateIssuer - The UpdateCertificateIssuer operation performs an update on the specified certificate issuer
-// entity. This operation requires the certificates/setissuers permission.
+// UpdateCertificateIssuer - Updates the specified certificate issuer.
+//
+// The UpdateCertificateIssuer operation performs an update on the specified certificate issuer entity. This operation requires
+// the certificates/setissuers permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -4352,8 +4467,9 @@ func (client *Client) updateCertificateIssuerHandleResponse(resp *http.Response)
 	return result, nil
 }
 
-// UpdateCertificateOperation - Updates a certificate creation operation that is already in progress. This operation requires
-// the certificates/update permission.
+// UpdateCertificateOperation - Updates a certificate operation.
+//
+// Updates a certificate creation operation that is already in progress. This operation requires the certificates/update permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -4412,8 +4528,10 @@ func (client *Client) updateCertificateOperationHandleResponse(resp *http.Respon
 	return result, nil
 }
 
-// UpdateCertificatePolicy - Set specified members in the certificate policy. Leave others as null. This operation requires
-// the certificates/update permission.
+// UpdateCertificatePolicy - Updates the policy for a certificate.
+//
+// Set specified members in the certificate policy. Leave others as null. This operation requires the certificates/update
+// permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -4472,8 +4590,11 @@ func (client *Client) updateCertificatePolicyHandleResponse(resp *http.Response)
 	return result, nil
 }
 
-// UpdateKey - In order to perform this operation, the key must already exist in the Key Vault. Note: The cryptographic material
-// of a key itself cannot be changed. This operation requires the keys/update permission.
+// UpdateKey - The update key operation changes specified attributes of a stored key and can be applied to any key type and
+// key version stored in Azure Key Vault.
+//
+// In order to perform this operation, the key must already exist in the Key Vault. Note: The cryptographic material of a
+// key itself cannot be changed. This operation requires the keys/update permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 7.2
@@ -4600,8 +4721,10 @@ func (client *Client) updateSasDefinitionHandleResponse(resp *http.Response) (Cl
 	return result, nil
 }
 
-// UpdateSecret - The UPDATE operation changes specified attributes of an existing stored secret. Attributes that are not
-// specified in the request are left unchanged. The value of a secret itself cannot be changed.
+// UpdateSecret - Updates the attributes associated with a specified secret in a given key vault.
+//
+// The UPDATE operation changes specified attributes of an existing stored secret. Attributes that are not specified in the
+// request are left unchanged. The value of a secret itself cannot be changed.
 // This operation requires the secrets/set permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
@@ -4724,8 +4847,10 @@ func (client *Client) updateStorageAccountHandleResponse(resp *http.Response) (C
 	return result, nil
 }
 
-// Verify - The VERIFY operation is applicable to symmetric keys stored in Azure Key Vault. VERIFY is not strictly necessary
-// for asymmetric keys stored in Azure Key Vault since signature verification can be
+// Verify - Verifies a signature using a specified key.
+//
+// The VERIFY operation is applicable to symmetric keys stored in Azure Key Vault. VERIFY is not strictly necessary for asymmetric
+// keys stored in Azure Key Vault since signature verification can be
 // performed using the public portion of the key but this operation is supported as a convenience for callers that only have
 // a key-reference and not the public portion of the key. This operation requires
 // the keys/verify permission.
@@ -4791,8 +4916,10 @@ func (client *Client) verifyHandleResponse(resp *http.Response) (ClientVerifyRes
 	return result, nil
 }
 
-// WrapKey - The WRAP operation supports encryption of a symmetric key using a key encryption key that has previously been
-// stored in an Azure Key Vault. The WRAP operation is only strictly necessary for symmetric
+// WrapKey - Wraps a symmetric key using a specified key.
+//
+// The WRAP operation supports encryption of a symmetric key using a key encryption key that has previously been stored in
+// an Azure Key Vault. The WRAP operation is only strictly necessary for symmetric
 // keys stored in Azure Key Vault since protection with an asymmetric key can be performed using the public portion of the
 // key. This operation is supported for asymmetric keys as a convenience for
 // callers that have a key-reference but do not have access to the public key material. This operation requires the keys/wrapKey

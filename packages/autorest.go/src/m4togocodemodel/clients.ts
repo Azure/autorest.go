@@ -99,6 +99,9 @@ function adaptNextPageMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, client
 
 function populateMethod(op: m4.Operation, method: go.Method | go.NextPageMethod, m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
   if (go.isMethod(method)) {
+    if (helpers.hasSummary(op.language.go!)) {
+      method.docs.summary = <string>op.language.go!.summary;
+    }
     if (hasDescription(op.language.go!)) {
       method.docs.description = op.language.go!.description;
     }
@@ -214,6 +217,9 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
       } else {
         headerResp = new go.HeaderResponse(prop.language.go!.name, adaptHeaderType(prop.schema, false), prop.language.go!.fromHeader, prop.language.go!.byValue);
       }
+      if (helpers.hasSummary(prop.language.go!)) {
+        headerResp.docs.summary = <string>prop.language.go!.summary;
+      }
       if (hasDescription(prop.language.go!)) {
         headerResp.docs.description = prop.language.go!.description;
       }
@@ -272,6 +278,9 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
     throw new Error(`unhandled result type for operation ${op.language.go!.name}`);
   }
 
+  if (helpers.hasSummary(resultProp.language.go!)) {
+    respEnv.result.docs.summary = <string>resultProp.language.go!.summary;
+  }
   if (hasDescription(resultProp.language.go!)) {
     respEnv.result.docs.description = resultProp.language.go!.description;
   }
@@ -424,6 +433,9 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
     }
   }
 
+  if (helpers.hasSummary(param.language.go!)) {
+    adaptedParam.docs.summary = <string>param.language.go!.summary;
+  }
   if (hasDescription(param.language.go!)) {
     adaptedParam.docs.description = param.language.go!.description;
   }

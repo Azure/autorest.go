@@ -225,3 +225,21 @@ export function recursiveUnwrapArrayDictionary(item: m4.ArraySchema | m4.Diction
   }
   return item.elementType;
 }
+
+// returns true if the language contains a summary
+export function hasSummary(lang: m4.Language): boolean {
+  if (lang.summary === undefined || (<string>lang.summary).length === 0 || (<string>lang.summary).startsWith('MISSING')) {
+    return false;
+  } else if (lang.summary === lang.name) {
+    // if the summary is the same as the name then omit it as it's just clutter
+    return false;
+  } else if (lang.name.toUpperCase().includes((<string>lang.summary).replace(/\s/g, '').toUpperCase())) {
+    // if the summary is the type name (or a subset of it) as individual words omit it (more clutter).
+    // e.g. type name is "ThisIsAType" and the summary is "This Is A Type".
+    return false;
+  }
+
+  // NOTE: when there's only a summary in the swagger, autorest (or M4) copies this to
+  // the description. so if the summary and description are the same, omit the summary.
+  return lang.summary !== lang.description;
+}

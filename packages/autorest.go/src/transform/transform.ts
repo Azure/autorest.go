@@ -61,9 +61,14 @@ async function process(session: Session<m4.CodeModel>) {
   }
   // fix up struct field types
   for (const obj of values(session.model.schemas.objects)) {
+    let hasSummary = false;
+    if (helpers.hasSummary(obj.language.go!) && !(<string>obj.language.go!.summary).startsWith(obj.language.go!.name)) {
+      obj.language.go!.summary = `${obj.language.go!.name} - ${obj.language.go!.summary}`;
+      hasSummary = true;
+    }
     if (obj.language.go!.description) {
       obj.language.go!.description = parseComments(obj.language.go!.description);
-      if (!obj.language.go!.description.startsWith(obj.language.go!.name)) {
+      if (!hasSummary && !obj.language.go!.description.startsWith(obj.language.go!.name)) {
         obj.language.go!.description = `${obj.language.go!.name} - ${obj.language.go!.description}`;
       }
     }

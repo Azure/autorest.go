@@ -5317,7 +5317,9 @@ type ExpressRouteLinkListResult struct {
 	Value []*ExpressRouteLink
 }
 
-// ExpressRouteLinkMacSecConfig - ExpressRouteLink Mac Security Configuration.
+// ExpressRouteLinkMacSecConfig - Definition of ExpressRouteLink Mac Security configuration.
+//
+// ExpressRouteLink Mac Security Configuration.
 type ExpressRouteLinkMacSecConfig struct {
 	// Keyvault Secret Identifier URL containing Mac security CAK key.
 	CakSecretIdentifier *string
@@ -5332,7 +5334,9 @@ type ExpressRouteLinkMacSecConfig struct {
 	SciState *ExpressRouteLinkMacSecSciState
 }
 
-// ExpressRouteLinkPropertiesFormat - Properties specific to ExpressRouteLink resources.
+// ExpressRouteLinkPropertiesFormat - ExpressRouteLink Resource Properties
+//
+// Properties specific to ExpressRouteLink resources.
 type ExpressRouteLinkPropertiesFormat struct {
 	// Administrative state of the physical port.
 	AdminState *ExpressRouteLinkAdminState
@@ -5479,7 +5483,9 @@ type ExpressRoutePortPropertiesFormat struct {
 	ResourceGUID *string
 }
 
-// ExpressRoutePortsLocation - Definition of the ExpressRoutePorts peering location resource.
+// ExpressRoutePortsLocation - ExpressRoutePorts Peering Location
+//
+// Definition of the ExpressRoutePorts peering location resource.
 type ExpressRoutePortsLocation struct {
 	// Resource ID.
 	ID *string
@@ -12104,7 +12110,9 @@ type VirtualAppliancePropertiesFormat struct {
 	VirtualApplianceSites []*SubResource
 }
 
-// VirtualApplianceSKU - Definition of the NetworkVirtualApplianceSkus resource.
+// VirtualApplianceSKU - Available NetworkVirtualApplianceSkus
+//
+// Definition of the NetworkVirtualApplianceSkus resource.
 type VirtualApplianceSKU struct {
 	// Resource ID.
 	ID *string
@@ -12128,7 +12136,9 @@ type VirtualApplianceSKU struct {
 	Type *string
 }
 
-// VirtualApplianceSKUInstances - List of available Sku and instances.
+// VirtualApplianceSKUInstances - Network Virtual Appliance Sku Instances
+//
+// List of available Sku and instances.
 type VirtualApplianceSKUInstances struct {
 	// READ-ONLY; Instance Count.
 	InstanceCount *int32
@@ -12158,7 +12168,9 @@ type VirtualApplianceSKUProperties struct {
 	Vendor *string
 }
 
-// VirtualApplianceSKUPropertiesFormat - Properties specific to NetworkVirtualApplianceSkus.
+// VirtualApplianceSKUPropertiesFormat - Network Virtual Appliance Sku Properties
+//
+// Properties specific to NetworkVirtualApplianceSkus.
 type VirtualApplianceSKUPropertiesFormat struct {
 	// The list of scale units available.
 	AvailableScaleUnits []*VirtualApplianceSKUInstances

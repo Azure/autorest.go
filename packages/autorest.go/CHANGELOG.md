@@ -5,6 +5,7 @@
 ### Other Changes
 
 * Length check for `regexp` matches includes full match.
+* Include summary in doc comments.
 
 ## 4.0.0-preview.72 (2025-04-18)
 

@@ -7,6 +7,7 @@
 
 import * as m4 from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
+import * as helpers from '../transform/helpers.js';
 import * as go from '../../../codemodel.go/src/index.js';
 
 // returns true if the language contains a description
@@ -25,6 +26,9 @@ export function adaptConstantType(choice: m4.ChoiceSchema | m4.SealedChoiceSchem
   }
   constType = new go.ConstantType(choice.language.go!.name, adaptPrimitiveType(choice.choiceType.language.go!.name), choice.language.go!.possibleValuesFunc);
   constType.values = adaptConstantValue(constType, choice.choices);
+  if (helpers.hasSummary(choice.language.go!)) {
+    constType.docs.summary = <string>choice.language.go!.summary;
+  }
   if (hasDescription(choice.language.go!)) {
     constType.docs.description = choice.language.go!.description;
   }
@@ -38,6 +42,9 @@ function adaptConstantValue(type: go.ConstantType, choices: Array<m4.ChoiceValue
     let value = constValues.get(choice.language.go!.name);
     if (!value) {
       value = new go.ConstantValue(choice.language.go!.name, type, choice.value);
+      if (helpers.hasSummary(choice.language.go!)) {
+        value.docs.summary = <string>choice.language.go!.summary;
+      }
       if (hasDescription(choice.language.go!)) {
         value.docs.description = choice.language.go!.description;
       }
@@ -118,6 +125,9 @@ export function adaptModel(obj: m4.ObjectSchema): go.ModelType | go.PolymorphicT
     // polymorphic types don't have XMLInfo
     modelType.xml = adaptXMLInfo(obj);
   }
+  if (helpers.hasSummary(obj.language.go!)) {
+    modelType.docs.summary = <string>obj.language.go!.summary;
+  }
   if (hasDescription(obj.language.go!)) {
     modelType.docs.description = obj.language.go!.description;
   }
@@ -180,6 +190,9 @@ export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.Mod
   }
   const annotations = new go.ModelFieldAnnotations(required, prop.readOnly === true, prop.language.go!.isAdditionalProperties === true, prop.isDiscriminator === true);
   const field = new go.ModelField(prop.language.go!.name, fieldType, prop.language.go!.byValue === true, prop.serializedName, annotations);
+  if (helpers.hasSummary(prop.language.go!)) {
+    field.docs.summary = <string>prop.language.go!.summary;
+  }
   if (hasDescription(prop.language.go!)) {
     field.docs.description = prop.language.go!.description;
   }
