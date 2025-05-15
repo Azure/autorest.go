@@ -22,7 +22,9 @@ type ComplexModelClient struct {
 	internal *azcore.Client
 }
 
-// Create - Resets products.
+// Create - Create products
+//
+// Resets products.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2014-04-01-preview
@@ -86,8 +88,10 @@ func (client *ComplexModelClient) createHandleResponse(resp *http.Response) (Com
 	return result, nil
 }
 
-// List - The Products endpoint returns information about the Uber products offered at a given location. The response includes
-// the display name and other details about each product, and lists the products in
+// List - Product Types
+//
+// The Products endpoint returns information about the Uber products offered at a given location. The response includes the
+// display name and other details about each product, and lists the products in
 // the proper display order.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
@@ -144,7 +148,9 @@ func (client *ComplexModelClient) listHandleResponse(resp *http.Response) (Compl
 	return result, nil
 }
 
-// Update - Resets products.
+// Update - Update products
+//
+// Resets products.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2014-04-01-preview

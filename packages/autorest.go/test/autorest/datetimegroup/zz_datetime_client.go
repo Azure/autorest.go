@@ -667,8 +667,9 @@ func (client *DatetimeClient) getUTCUppercaseMaxDateTimeHandleResponse(resp *htt
 	return result, nil
 }
 
-// GetUTCUppercaseMaxDateTime7Digits - This is against the recommendation that asks for 3 digits, but allow to test what happens
-// in that scenario
+// GetUTCUppercaseMaxDateTime7Digits - Get max datetime value 9999-12-31T23:59:59.9999999Z
+//
+// This is against the recommendation that asks for 3 digits, but allow to test what happens in that scenario
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
@@ -977,8 +978,9 @@ func (client *DatetimeClient) putUTCMaxDateTimeCreateRequest(ctx context.Context
 	return req, nil
 }
 
-// PutUTCMaxDateTime7Digits - This is against the recommendation that asks for 3 digits, but allow to test what happens in
-// that scenario
+// PutUTCMaxDateTime7Digits - Put max datetime value 9999-12-31T23:59:59.9999999Z
+//
+// This is against the recommendation that asks for 3 digits, but allow to test what happens in that scenario
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
