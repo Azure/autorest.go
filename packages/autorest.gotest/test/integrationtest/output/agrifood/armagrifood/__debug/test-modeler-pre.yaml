@@ -3364,10 +3364,10 @@ schemas:
                   summary: REST API Operation
                 go:
                   name: Operation
-                  description: Operation - Details of a REST API operation, returned from the Resource Provider Operations API
+                  description: Details of a REST API operation, returned from the Resource Provider Operations API
                   marshallingFormat: json
                   namespace: ''
-                  summary: REST API Operation
+                  summary: Operation - REST API Operation
               protocol: {}
             extensions:
               x-ms-identifiers:
