@@ -69,7 +69,8 @@ const httpSpecsGroup = {
   //'renamedfromgroup': ['versioning/renamedFrom'], // requires union support
   'rettypechangedfromgroup': ['versioning/returnTypeChangedFrom'],
   'typechangedfromgroup': ['versioning/typeChangedFrom'],
-  'jsonlgroup': ['streaming/jsonl']
+  'jsonlgroup': ['streaming/jsonl'],
+  'statuscoderangegroup': ['response/status-code-range']
 };
 
 const azureHttpSpecsGroup = {
