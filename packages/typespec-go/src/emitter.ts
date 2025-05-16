@@ -20,6 +20,7 @@ import { generateTimeHelpers } from '../../codegen.go/src/time.js';
 import { generateServers } from '../../codegen.go/src/fake/servers.js';
 import { generateServerFactory } from '../../codegen.go/src/fake/factory.js';
 import { generateXMLAdditionalPropsHelpers } from '../../codegen.go/src/xmlAdditionalProps.js';
+import { generateMetadataFile } from '../../codegen.go/src/metadata.js';
 import { CodeModelError } from '../../codemodel.go/src/errors.js';
 import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
@@ -93,6 +94,11 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
   const gomod = await generateGoModFile(codeModel, existingGoMod);
   if (gomod.length > 0) {
     await writeFile(goModFile, gomod);
+  }
+
+  const metedata = await generateMetadataFile(codeModel);
+  if (metedata.length > 0 ) {
+    await writeFile(`${context.emitterOutputDir}/_metadata.json`, metedata)
   }
 
   let filePrefix = '';

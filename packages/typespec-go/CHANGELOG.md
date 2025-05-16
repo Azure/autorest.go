@@ -1,5 +1,11 @@
 # Release History
 
+## 0.4.8 (unreleased)
+
+### Other Changes
+
+* Generate metatata file.
+
 ## 0.4.7 (2025-05-13)
 
 ### Bugs Fixed
