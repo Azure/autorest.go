@@ -71,7 +71,7 @@ const httpSpecsGroup = {
   'typechangedfromgroup': ['versioning/typeChangedFrom'],
   'jsonlgroup': ['streaming/jsonl'],
   'statuscoderangegroup': ['response/status-code-range'],
-  'routesgroup': ['routes/main.tsp']
+  'routegroup': ['routes/main.tsp']
 };
 
 const azureHttpSpecsGroup = {
