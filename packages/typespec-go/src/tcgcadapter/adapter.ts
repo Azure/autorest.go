@@ -44,9 +44,10 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
   }
 
   const codeModel = new go.CodeModel(info, codeModelType, packageNameFromOutputFolder(context.emitterOutputDir), options);
+  const emitterVersion = JSON.stringify(require('../../package.json').version) 
   codeModel.metadata = {
     ...sdkContext.sdkPackage.metadata,
-    emitterVersion: LIB_VERSION,
+    emitterVersion: emitterVersion,
   };
   if (context.options.module && context.options['module-version']) {
     codeModel.options.module = new go.Module(context.options.module, context.options['module-version']);
