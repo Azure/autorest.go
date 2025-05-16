@@ -5,8 +5,7 @@
 
 import * as go from '../../codemodel.go/src/index.js';
 
-// Creates the content in go.mod if the --module switch was specified.
-// if there's a preexisting go.mod file, update its specified version of azcore as needed.
+// Creates the content in _metadata.json
 export async function generateMetadataFile(codeModel: go.CodeModel): Promise<string> {
     // Return the formatted JSON string
     return JSON.stringify(codeModel.metadata, null, 2);
