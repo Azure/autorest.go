@@ -25,7 +25,8 @@
     "clean-cmd": "if exist dist rmdir /s /q dist && exit 0 || exit 0 ",
     "clean-bash": "rm nul && rm -rf dist && exit 0 || exit 0",
     "tspcompile": "node .scripts/tspcompile.js",
-    "spector": "node .scripts/spector.js"
+    "spector": "node .scripts/spector.js",
+    "prebuild": "node -p \"'export const LIB_VERSION = ' + JSON.stringify(require('./package.json').version) + ';'\" > src/version.ts"
   },
   "files": [
     "dist/**",
