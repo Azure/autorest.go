@@ -82,7 +82,6 @@ function truncateStack(stack: string, finalFrame: string): string {
 }
 
 async function generate(context: EmitContext<GoEmitterOptions>) {
-
   const codeModel = await tcgcToGoCodeModel(context);
   await mkdir(context.emitterOutputDir, {recursive: true});
 
