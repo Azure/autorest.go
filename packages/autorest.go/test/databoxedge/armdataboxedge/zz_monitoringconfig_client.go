@@ -265,8 +265,10 @@ func (client *MonitoringConfigClient) NewListPager(deviceName string, roleName s
 		Fetcher: func(ctx context.Context, page *MonitoringConfigClientListResponse) (MonitoringConfigClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "MonitoringConfigClient.NewListPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)

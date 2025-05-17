@@ -601,8 +601,10 @@ func (client *P2SVPNGatewaysClient) NewListPager(options *P2SVPNGatewaysClientLi
 		Fetcher: func(ctx context.Context, page *P2SVPNGatewaysClientListResponse) (P2SVPNGatewaysClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "P2SVPNGatewaysClient.NewListPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, options)
@@ -657,8 +659,10 @@ func (client *P2SVPNGatewaysClient) NewListByResourceGroupPager(resourceGroupNam
 		Fetcher: func(ctx context.Context, page *P2SVPNGatewaysClientListByResourceGroupResponse) (P2SVPNGatewaysClientListByResourceGroupResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "P2SVPNGatewaysClient.NewListByResourceGroupPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

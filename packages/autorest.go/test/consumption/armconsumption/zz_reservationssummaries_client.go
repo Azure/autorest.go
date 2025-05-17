@@ -54,8 +54,10 @@ func (client *ReservationsSummariesClient) NewListPager(scope string, grain Data
 		},
 		Fetcher: func(ctx context.Context, page *ReservationsSummariesClientListResponse) (ReservationsSummariesClientListResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, scope, grain, options)
@@ -122,8 +124,10 @@ func (client *ReservationsSummariesClient) NewListByReservationOrderPager(reserv
 		},
 		Fetcher: func(ctx context.Context, page *ReservationsSummariesClientListByReservationOrderResponse) (ReservationsSummariesClientListByReservationOrderResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByReservationOrderCreateRequest(ctx, reservationOrderID, grain, options)
@@ -182,8 +186,10 @@ func (client *ReservationsSummariesClient) NewListByReservationOrderAndReservati
 		},
 		Fetcher: func(ctx context.Context, page *ReservationsSummariesClientListByReservationOrderAndReservationResponse) (ReservationsSummariesClientListByReservationOrderAndReservationResponse, error) {
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByReservationOrderAndReservationCreateRequest(ctx, reservationOrderID, reservationID, grain, options)

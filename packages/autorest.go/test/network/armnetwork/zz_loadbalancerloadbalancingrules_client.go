@@ -126,8 +126,10 @@ func (client *LoadBalancerLoadBalancingRulesClient) NewListPager(resourceGroupNa
 		Fetcher: func(ctx context.Context, page *LoadBalancerLoadBalancingRulesClientListResponse) (LoadBalancerLoadBalancingRulesClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LoadBalancerLoadBalancingRulesClient.NewListPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)

@@ -230,8 +230,10 @@ func (client *ExtensionsResourcesClient) NewListByScopePager(resourceURI string,
 		Fetcher: func(ctx context.Context, page *ExtensionsResourcesClientListByScopeResponse) (ExtensionsResourcesClientListByScopeResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ExtensionsResourcesClient.NewListByScopePager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByScopeCreateRequest(ctx, resourceURI, options)

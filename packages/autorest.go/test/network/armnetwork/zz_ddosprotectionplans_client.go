@@ -276,8 +276,10 @@ func (client *DdosProtectionPlansClient) NewListPager(options *DdosProtectionPla
 		Fetcher: func(ctx context.Context, page *DdosProtectionPlansClientListResponse) (DdosProtectionPlansClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DdosProtectionPlansClient.NewListPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, options)
@@ -332,8 +334,10 @@ func (client *DdosProtectionPlansClient) NewListByResourceGroupPager(resourceGro
 		Fetcher: func(ctx context.Context, page *DdosProtectionPlansClientListByResourceGroupResponse) (DdosProtectionPlansClientListByResourceGroupResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DdosProtectionPlansClient.NewListByResourceGroupPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

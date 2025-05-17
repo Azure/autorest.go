@@ -61,17 +61,22 @@ type GetScriptOptions struct {
 type ListOptions struct {
 	GroupBy    []LogMetricsGroupBy
 	HeaderEnum *IntEnum
+
+	// Resumes the paging operation from the provided link.
+	NextLink   string
 	QueryEnums []IntEnum
 }
 
 // ListWithSharedNextOneOptions contains the optional parameters for the Client.NewListWithSharedNextOnePager method.
 type ListWithSharedNextOneOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ListWithSharedNextTwoOptions contains the optional parameters for the Client.NewListWithSharedNextTwoPager method.
 type ListWithSharedNextTwoOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
