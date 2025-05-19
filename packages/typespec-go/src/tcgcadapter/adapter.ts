@@ -12,8 +12,6 @@ import { packageNameFromOutputFolder, trimPackagePrefix } from '../../../naming.
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import { EmitContext, NoTarget } from '@typespec/compiler';
 import { createRequire } from 'module';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
 
 const headerText = `Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License. See License.txt in the project root for license information.
@@ -47,8 +45,7 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
 
   const codeModel = new go.CodeModel(info, codeModelType, packageNameFromOutputFolder(context.emitterOutputDir), options);
   
-  const __dirname = dirname(fileURLToPath(import.meta.url));
-  const packageJson = createRequire(import.meta.url)(join(__dirname, '../../package.json')) as Record<string, never>;
+  const packageJson = createRequire(import.meta.url)('../../../../package.json') as Record<string, never>;
   codeModel.metadata = {
     ...sdkContext.sdkPackage.metadata,
     emitterVersion: packageJson['version']
