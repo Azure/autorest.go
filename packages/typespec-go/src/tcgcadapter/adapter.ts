@@ -45,8 +45,7 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
 
   const codeModel = new go.CodeModel(info, codeModelType, packageNameFromOutputFolder(context.emitterOutputDir), options);
   
-  const require = createRequire(import.meta.url);
-  const packageJson = require('../../package.json') as Record<string, never>;
+  const packageJson = createRequire(import.meta.url)('../../package.json') as Record<string, never>;
   codeModel.metadata = {
     ...sdkContext.sdkPackage.metadata,
     emitterVersion: packageJson['version']
