@@ -21,11 +21,7 @@ steps:
   - script: |
       export currentVersion=$(node -p -e "require('./package.json').version")
       pnpm pack
-      if [ "${{ parameters.Nightly }}" = "true" ]; then
-        npm install -g azure-tools-typespec-go-$currentVersion.tgz --legacy-peer-deps
-      else
-        npm install -g azure-tools-typespec-go-$currentVersion.tgz
-      fi
+      npm install -g azure-tools-typespec-go-$currentVersion.tgz
     displayName: "Create and install npm tarball"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
 
