@@ -50,7 +50,7 @@
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.17",
     "@azure-tools/typespec-autorest": "0.56.0",
-    "@azure-tools/typespec-azure-core": "0.56.0",
+    "@azure-tools/typespec-azure-core": ">=0.56.0 <1.0.0",
     "@azure-tools/typespec-azure-resource-manager": "0.56.0",
     "@azure-tools/typespec-client-generator-core": "0.56.2",
     "@types/node": "catalog:",
