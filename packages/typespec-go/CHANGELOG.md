@@ -4,7 +4,7 @@
 
 ### Other Changes
 
-* Generate metatata file.
+* Generate metadata file.
 
 ## 0.4.7 (2025-05-13)
 
