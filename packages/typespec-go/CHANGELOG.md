@@ -1,5 +1,11 @@
 # Release History
 
+## 0.4.8 (2025-05-20)
+
+### Other Changes
+
+* Generate metadata file.
+
 ## 0.4.7 (2025-05-13)
 
 ### Bugs Fixed
