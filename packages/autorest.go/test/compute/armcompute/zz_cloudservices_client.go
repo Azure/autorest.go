@@ -423,8 +423,10 @@ func (client *CloudServicesClient) NewListPager(resourceGroupName string, option
 		Fetcher: func(ctx context.Context, page *CloudServicesClientListResponse) (CloudServicesClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "CloudServicesClient.NewListPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -484,8 +486,10 @@ func (client *CloudServicesClient) NewListAllPager(options *CloudServicesClientL
 		Fetcher: func(ctx context.Context, page *CloudServicesClientListAllResponse) (CloudServicesClientListAllResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "CloudServicesClient.NewListAllPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listAllCreateRequest(ctx, options)

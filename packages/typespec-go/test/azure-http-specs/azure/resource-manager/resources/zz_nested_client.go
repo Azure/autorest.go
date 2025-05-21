@@ -289,8 +289,10 @@ func (client *NestedClient) NewListByTopLevelTrackedResourcePager(resourceGroupN
 		Fetcher: func(ctx context.Context, page *NestedClientListByTopLevelTrackedResourceResponse) (NestedClientListByTopLevelTrackedResourceResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "NestedClient.NewListByTopLevelTrackedResourcePager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByTopLevelTrackedResourceCreateRequest(ctx, resourceGroupName, topLevelTrackedResourceName, options)

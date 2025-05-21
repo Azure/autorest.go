@@ -430,8 +430,10 @@ func (client *ContainerRegistryClient) NewGetManifestsPager(name string, options
 		Fetcher: func(ctx context.Context, page *ContainerRegistryClientGetManifestsResponse) (ContainerRegistryClientGetManifestsResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ContainerRegistryClient.NewGetManifestsPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.Link != nil {
 				nextLink = *page.Link
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getManifestsCreateRequest(ctx, name, options)
@@ -553,8 +555,10 @@ func (client *ContainerRegistryClient) NewGetRepositoriesPager(options *Containe
 		Fetcher: func(ctx context.Context, page *ContainerRegistryClientGetRepositoriesResponse) (ContainerRegistryClientGetRepositoriesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ContainerRegistryClient.NewGetRepositoriesPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.Link != nil {
 				nextLink = *page.Link
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getRepositoriesCreateRequest(ctx, options)
@@ -675,8 +679,10 @@ func (client *ContainerRegistryClient) NewGetTagsPager(name string, options *Con
 		Fetcher: func(ctx context.Context, page *ContainerRegistryClientGetTagsResponse) (ContainerRegistryClientGetTagsResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ContainerRegistryClient.NewGetTagsPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.Link != nil {
 				nextLink = *page.Link
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.getTagsCreateRequest(ctx, name, options)

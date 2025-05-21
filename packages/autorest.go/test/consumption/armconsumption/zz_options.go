@@ -48,7 +48,8 @@ type BudgetsClientGetOptions struct {
 
 // BudgetsClientListOptions contains the optional parameters for the BudgetsClient.NewListPager method.
 type BudgetsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ChargesClientListOptions contains the optional parameters for the ChargesClient.List method.
@@ -77,7 +78,8 @@ type CreditsClientGetOptions struct {
 
 // EventsClientListOptions contains the optional parameters for the EventsClient.NewListPager method.
 type EventsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ForecastsClientListOptions contains the optional parameters for the ForecastsClient.NewListPager method.
@@ -86,11 +88,15 @@ type ForecastsClientListOptions struct {
 	// supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently
 	// support 'ne', 'or', or 'not'.
 	Filter *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // LotsClientListOptions contains the optional parameters for the LotsClient.NewListPager method.
 type LotsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // MarketplacesClientListOptions contains the optional parameters for the MarketplacesClient.NewListPager method.
@@ -99,6 +105,9 @@ type MarketplacesClientListOptions struct {
 	// properties/instanceName or properties/instanceId. The filter supports
 	// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'.
 	Filter *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 
 	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element,
 	// the value of the nextLink element will include a skiptoken parameter that
@@ -111,7 +120,8 @@ type MarketplacesClientListOptions struct {
 
 // OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PriceSheetClientGetByBillingPeriodOptions contains the optional parameters for the PriceSheetClient.GetByBillingPeriod
@@ -162,6 +172,9 @@ type ReservationRecommendationsClientListOptions struct {
 	// values ['Last7Days', 'Last30Days', 'Last60Days'] and default value
 	// 'Last7Days'.
 	Filter *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ReservationTransactionsClientListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.NewListByBillingProfilePager
@@ -170,6 +183,9 @@ type ReservationTransactionsClientListByBillingProfileOptions struct {
 	// Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports
 	// 'le' and 'ge'
 	Filter *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ReservationTransactionsClientListOptions contains the optional parameters for the ReservationTransactionsClient.NewListPager
@@ -178,18 +194,23 @@ type ReservationTransactionsClientListOptions struct {
 	// Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports
 	// 'le' and 'ge'
 	Filter *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ReservationsDetailsClientListByReservationOrderAndReservationOptions contains the optional parameters for the ReservationsDetailsClient.NewListByReservationOrderAndReservationPager
 // method.
 type ReservationsDetailsClientListByReservationOrderAndReservationOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ReservationsDetailsClientListByReservationOrderOptions contains the optional parameters for the ReservationsDetailsClient.NewListByReservationOrderPager
 // method.
 type ReservationsDetailsClientListByReservationOrderOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ReservationsDetailsClientListOptions contains the optional parameters for the ReservationsDetailsClient.NewListPager method.
@@ -200,6 +221,9 @@ type ReservationsDetailsClientListOptions struct {
 	// Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le'
 	// and 'ge'. Not applicable when querying with billing profile
 	Filter *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 
 	// Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation
 	ReservationID *string
@@ -216,6 +240,9 @@ type ReservationsDetailsClientListOptions struct {
 type ReservationsSummariesClientListByReservationOrderAndReservationOptions struct {
 	// Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and 'ge'
 	Filter *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ReservationsSummariesClientListByReservationOrderOptions contains the optional parameters for the ReservationsSummariesClient.NewListByReservationOrderPager
@@ -223,6 +250,9 @@ type ReservationsSummariesClientListByReservationOrderAndReservationOptions stru
 type ReservationsSummariesClientListByReservationOrderOptions struct {
 	// Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and 'ge'
 	Filter *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ReservationsSummariesClientListOptions contains the optional parameters for the ReservationsSummariesClient.NewListPager
@@ -234,6 +264,9 @@ type ReservationsSummariesClientListOptions struct {
 	// The properties/UsageDate for start date and end date. The filter supports 'le' and 'ge'. Not required when querying with
 	// billing profile
 	Filter *string
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 
 	// Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation
 	ReservationID *string
@@ -265,6 +298,9 @@ type UsageDetailsClientListOptions struct {
 
 	// Allows to select different type of cost/usage records.
 	Metric *Metrictype
+
+	// Resumes the paging operation from the provided link.
+	NextLink string
 
 	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element,
 	// the value of the nextLink element will include a skiptoken parameter that

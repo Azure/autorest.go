@@ -7,12 +7,14 @@ package armdevopsinfrastructure
 // ImageVersionsClientListByImageOptions contains the optional parameters for the ImageVersionsClient.NewListByImagePager
 // method.
 type ImageVersionsClientListByImageOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PoolsClientBeginCreateOrUpdateOptions contains the optional parameters for the PoolsClient.BeginCreateOrUpdate method.
@@ -41,27 +43,32 @@ type PoolsClientGetOptions struct {
 // PoolsClientListByResourceGroupOptions contains the optional parameters for the PoolsClient.NewListByResourceGroupPager
 // method.
 type PoolsClientListByResourceGroupOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // PoolsClientListBySubscriptionOptions contains the optional parameters for the PoolsClient.NewListBySubscriptionPager method.
 type PoolsClientListBySubscriptionOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // ResourceDetailsClientListByPoolOptions contains the optional parameters for the ResourceDetailsClient.NewListByPoolPager
 // method.
 type ResourceDetailsClientListByPoolOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // SKUClientListByLocationOptions contains the optional parameters for the SKUClient.NewListByLocationPager method.
 type SKUClientListByLocationOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }
 
 // SubscriptionUsagesClientUsagesOptions contains the optional parameters for the SubscriptionUsagesClient.NewUsagesPager
 // method.
 type SubscriptionUsagesClientUsagesOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the paging operation from the provided link.
+	NextLink string
 }

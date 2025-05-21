@@ -274,8 +274,10 @@ func (client *PoolsClient) NewListByResourceGroupPager(resourceGroupName string,
 		Fetcher: func(ctx context.Context, page *PoolsClientListByResourceGroupResponse) (PoolsClientListByResourceGroupResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PoolsClient.NewListByResourceGroupPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
@@ -333,8 +335,10 @@ func (client *PoolsClient) NewListBySubscriptionPager(options *PoolsClientListBy
 		Fetcher: func(ctx context.Context, page *PoolsClientListBySubscriptionResponse) (PoolsClientListBySubscriptionResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PoolsClient.NewListBySubscriptionPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NextLink != nil {
 				nextLink = *page.NextLink
+			} else if options != nil && options.NextLink != "" {
+				nextLink = options.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listBySubscriptionCreateRequest(ctx, options)
