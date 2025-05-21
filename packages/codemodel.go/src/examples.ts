@@ -5,7 +5,7 @@
 
 import * as param from './param.js';
 import * as result from './result.js';
-import { BytesType, ConstantType, Docs, LiteralValue, MapType, ModelType, PolymorphicType, PossibleType, PrimitiveType, SliceType, TimeType } from './type.js';
+import { BytesType, ConstantType, Docs, LiteralValue, MapType, ModelType, PolymorphicType, PossibleType, PrimitiveType, SliceType, TimeType, QualifiedType} from './type.js';
 
 // MethodExample is an example for a method. This code model part is for example or test generation.
 export interface MethodExample {
@@ -38,7 +38,7 @@ export interface ResponseHeaderExample {
   value: ExampleType;
 }
 
-export type ExampleType = StringExample | NumberExample | BooleanExample | NullExample | AnyExample | ArrayExample | DictionaryExample | StructExample;
+export type ExampleType = StringExample | NumberExample | BooleanExample | NullExample | AnyExample | ArrayExample | DictionaryExample | StructExample | QualifiedExample;
 
 export interface StringExample {
   kind: 'string';
@@ -87,6 +87,14 @@ export interface StructExample {
   value: Record<string, ExampleType>;
   additionalProperties?: Record<string, ExampleType>;
   type: ModelType | PolymorphicType;
+}
+
+export interface QualifiedExample {
+  kind: 'qualified';
+  value: any;
+  type: QualifiedType;
+  packageName: string;
+  exportName: string;
 }
 
 export class MethodExample implements MethodExample {
@@ -180,5 +188,15 @@ export class StructExample implements StructExample {
     this.kind = 'model';
     this.type = type;
     this.value = {};
+  }
+}
+
+export class QualifiedExample implements QualifiedExample {
+  constructor(type: QualifiedType, value: any) {
+    this.kind = 'qualified';
+    this.type = type;
+    this.packageName = type.packageName;
+    this.exportName = type.exportName;
+    this.value = value;
   }
 }
