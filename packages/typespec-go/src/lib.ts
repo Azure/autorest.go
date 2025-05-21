@@ -27,7 +27,7 @@ export interface GoEmitterOptions {
   'generate-samples'?: boolean;
 }
 
-const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
+export const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
   type: 'object',
   additionalProperties: true,
   properties: {
@@ -116,7 +116,7 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
   required: [],
 };
 
-const libDef = {
+export const libDef = {
   name: '@azure-tools/typespec-go',
   diagnostics: {
     'InternalError': {
