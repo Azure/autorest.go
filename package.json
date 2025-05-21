@@ -15,5 +15,9 @@
     "@eslint/js": "catalog:",
     "@types/node": "catalog:",
     "typescript-eslint": "catalog:"
+  },
+  "dependencies": {
+    "jsonpath-plus": "10.2.0",
+    "semver": "7.5.2"
   }
 }

@@ -43,6 +43,13 @@ catalogs:
 importers:
 
   .:
+    dependencies:
+      jsonpath-plus:
+        specifier: 10.2.0
+        version: 10.2.0
+      semver:
+        specifier: 7.5.2
+        version: 7.5.2
     devDependencies:
       '@eslint/js':
         specifier: 'catalog:'
@@ -144,6 +151,9 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
+      cross-spawn:
+        specifier: 7.0.5
+        version: 7.0.5
       jest-junit:
         specifier: ^16.0.0
         version: 16.0.0
@@ -153,6 +163,9 @@ importers:
       jsonpath:
         specifier: ^1.1.1
         version: 1.1.1
+      jsonpath-plus:
+        specifier: 10.2.0
+        version: 10.2.0
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -165,9 +178,18 @@ importers:
       oav:
         specifier: 3.0.3
         version: 3.0.3(openapi-types@12.1.3)(tslib@2.8.1)
+      path-to-regexp:
+        specifier: 6.3.0
+        version: 6.3.0
       reflect-metadata:
         specifier: ~0.2.2
         version: 0.2.2
+      semver:
+        specifier: 7.5.2
+        version: 7.5.2
+      ws:
+        specifier: 7.5.10
+        version: 7.5.10
     devDependencies:
       '@types/jest':
         specifier: ~29.5.14
@@ -2377,6 +2399,10 @@ packages:
     engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
     hasBin: true
 
+  cross-spawn@7.0.5:
+    resolution: {integrity: sha512-ZVJrKKYunU38/76t0RMOulHOnUcbU9GbpWKAOZ0mhjr7CX6FVrH+4FrAapSOekrgFQ3f/8gwMEuIft0aKq6Hug==}
+    engines: {node: '>= 8'}
+
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
@@ -3900,6 +3926,11 @@ packages:
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
 
+  jsonpath-plus@10.2.0:
+    resolution: {integrity: sha512-T9V+8iNYKFL2n2rF+w02LBOT2JjDnTjioaNFrxRy0Bv1y/hNsqR/EBK7Ojy2ythRHwmz2cRIls+9JitQGZC/sw==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+
   jsonpath-plus@10.3.0:
     resolution: {integrity: sha512-8TNmfeTCk2Le33A3vRRwtuworG/L5RrgMvdjhKZxvyShO+mBu2fP50OWUjRLNtvw344DdDarFh9buFAZs5ujeA==}
     engines: {node: '>=18.0.0'}
@@ -4907,6 +4938,11 @@ packages:
 
   semver@7.3.5:
     resolution: {integrity: sha512-PoeGJYh8HK4BTO/a9Tf6ZG3veo/A7ZVsYrSA6J8ny9nb3B1VrpkuN+z9OE5wfE5p6H4LchYZsegiQgbJD94ZFQ==}
+    engines: {node: '>=10'}
+    hasBin: true
+
+  semver@7.5.2:
+    resolution: {integrity: sha512-SoftuTROv/cRjCze/scjGyiDtcUyxw1rgYQSZY7XTmtR5hX+dm76iDbTH8TkLPHCQmlbQVSSbNZCPM2hb0knnQ==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -5962,13 +5998,13 @@ snapshots:
     dependencies:
       '@azure-tools/async-io': 3.0.254
       js-yaml: 4.1.0
-      semver: 7.7.1
+      semver: 7.5.2
 
   '@azure-tools/codegen@2.9.2':
     dependencies:
       '@azure-tools/async-io': 3.0.254
       js-yaml: 4.0.0
-      semver: 7.7.1
+      semver: 7.5.2
 
   '@azure-tools/linq@3.1.263': {}
 
@@ -7013,7 +7049,7 @@ snapshots:
     dependencies:
       content-type: 1.0.5
       cors: 2.8.5
-      cross-spawn: 7.0.6
+      cross-spawn: 7.0.5
       eventsource: 3.0.6
       express: 5.1.0
       express-rate-limit: 7.5.0(express@5.1.0)
@@ -8346,7 +8382,13 @@ snapshots:
 
   cross-env@7.0.3:
     dependencies:
-      cross-spawn: 7.0.6
+      cross-spawn: 7.0.5
+
+  cross-spawn@7.0.5:
+    dependencies:
+      path-key: 3.1.1
+      shebang-command: 2.0.0
+      which: 2.0.2
 
   cross-spawn@7.0.6:
     dependencies:
@@ -8933,7 +8975,7 @@ snapshots:
 
   execa@5.1.1:
     dependencies:
-      cross-spawn: 7.0.6
+      cross-spawn: 7.0.5
       get-stream: 6.0.1
       human-signals: 2.1.0
       is-stream: 2.0.1
@@ -9168,7 +9210,7 @@ snapshots:
 
   foreground-child@2.0.0:
     dependencies:
-      cross-spawn: 7.0.6
+      cross-spawn: 7.0.5
       signal-exit: 3.0.7
 
   foreground-child@3.3.1:
@@ -9766,7 +9808,7 @@ snapshots:
   istanbul-lib-processinfo@2.0.3:
     dependencies:
       archy: 1.0.0
-      cross-spawn: 7.0.6
+      cross-spawn: 7.0.5
       istanbul-lib-coverage: 3.2.2
       p-map: 3.0.0
       rimraf: 3.0.2
@@ -10309,6 +10351,12 @@ snapshots:
       universalify: 2.0.1
     optionalDependencies:
       graceful-fs: 4.2.11
+
+  jsonpath-plus@10.2.0:
+    dependencies:
+      '@jsep-plugin/assignment': 1.3.0(jsep@1.4.0)
+      '@jsep-plugin/regex': 1.0.4(jsep@1.4.0)
+      jsep: 1.4.0
 
   jsonpath-plus@10.3.0:
     dependencies:
@@ -11473,6 +11521,10 @@ snapshots:
     dependencies:
       lru-cache: 6.0.0
 
+  semver@7.5.2:
+    dependencies:
+      lru-cache: 6.0.0
+
   semver@7.6.3: {}
 
   semver@7.7.1: {}
@@ -11792,7 +11844,7 @@ snapshots:
       mime: 2.6.0
       qs: 6.14.0
       readable-stream: 3.6.2
-      semver: 7.7.1
+      semver: 7.5.2
     transitivePeerDependencies:
       - supports-color
 
