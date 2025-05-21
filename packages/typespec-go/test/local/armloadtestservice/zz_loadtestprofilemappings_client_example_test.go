@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
+	"time"
 )
 
 // Generated from example definition: 2023-12-01-preview/LoadTestProfileMappings_CreateOrUpdate.json
@@ -36,7 +37,7 @@ func ExampleLoadTestProfileMappingsClient_CreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armloadtestservice.LoadTestProfileMappingsClientCreateOrUpdateResponse{
-	// 	LoadTestProfileMappingResource: &armloadtestservice.LoadTestProfileMappingResource{
+	// 	LoadTestProfileMappingResource: armloadtestservice.LoadTestProfileMappingResource{
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.Web/sites/sitename/providers/Microsoft.LoadTestService/loadTestProfileMappings/myLoadTestProfileMapping"),
 	// 		Name: to.Ptr("myLoadTestProfileMapping"),
 	// 		Type: to.Ptr("Microsoft.LoadTestService/loadTestProfileMappings"),
@@ -98,7 +99,7 @@ func ExampleLoadTestProfileMappingsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armloadtestservice.LoadTestProfileMappingsClientGetResponse{
-	// 	LoadTestProfileMappingResource: &armloadtestservice.LoadTestProfileMappingResource{
+	// 	LoadTestProfileMappingResource: armloadtestservice.LoadTestProfileMappingResource{
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.Web/sites/sitename/providers/Microsoft.LoadTestService/loadTestProfileMappings/myLoadTestProfileMapping"),
 	// 		Name: to.Ptr("myLoadTestProfileMapping"),
 	// 		Type: to.Ptr("Microsoft.LoadTestService/loadTestProfileMappings"),
@@ -189,7 +190,7 @@ func ExampleLoadTestProfileMappingsClient_Update() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armloadtestservice.LoadTestProfileMappingsClientUpdateResponse{
-	// 	LoadTestProfileMappingResource: &armloadtestservice.LoadTestProfileMappingResource{
+	// 	LoadTestProfileMappingResource: armloadtestservice.LoadTestProfileMappingResource{
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.Web/sites/sitename/providers/Microsoft.LoadTestService/loadTestProfileMappings/myLoadTestProfileMapping"),
 	// 		Name: to.Ptr("myLoadTestProfileMapping"),
 	// 		Type: to.Ptr("Microsoft.LoadTestService/loadTestProfileMappings"),

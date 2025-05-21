@@ -41,7 +41,7 @@ func ExampleServicesClient_CreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.ServicesClientCreateOrUpdateResponse{
-	// 	Service: &armapicenter.Service{
+	// 	Service: armapicenter.Service{
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso"),
 	// 		Type: to.Ptr("Microsoft.ApiCenter/services"),
 	// 		Name: to.Ptr("contoso"),
@@ -113,7 +113,7 @@ func ExampleServicesClient_BeginExportMetadataSchema() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.ServicesClientExportMetadataSchemaResponse{
-	// 	MetadataSchemaExportResult: &armapicenter.MetadataSchemaExportResult{
+	// 	MetadataSchemaExportResult: armapicenter.MetadataSchemaExportResult{
 	// 		Format: to.Ptr(armapicenter.MetadataSchemaExportFormat("json-schema")),
 	// 		Value: to.Ptr("{\"type\":\"object\",\"properties\":{ ... }}"),
 	// 	},
@@ -139,7 +139,7 @@ func ExampleServicesClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.ServicesClientGetResponse{
-	// 	Service: &armapicenter.Service{
+	// 	Service: armapicenter.Service{
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso"),
 	// 		Type: to.Ptr("Microsoft.ApiCenter/services"),
 	// 		Name: to.Ptr("contoso"),
@@ -297,7 +297,7 @@ func ExampleServicesClient_Update() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.ServicesClientUpdateResponse{
-	// 	Service: &armapicenter.Service{
+	// 	Service: armapicenter.Service{
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso"),
 	// 		Type: to.Ptr("Microsoft.ApiCenter/services"),
 	// 		Name: to.Ptr("contoso"),
