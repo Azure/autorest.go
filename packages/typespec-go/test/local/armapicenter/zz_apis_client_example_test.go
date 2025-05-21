@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
+	"time"
 )
 
 // Generated from example definition: 2024-03-15-preview/Apis_CreateOrUpdate.json
@@ -51,7 +52,7 @@ func ExampleApisClient_CreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.ApisClientCreateOrUpdateResponse{
-	// 	API: &armapicenter.API{
+	// 	API: armapicenter.API{
 	// 		Type: to.Ptr("Microsoft.ApiCenter/services/apis"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/workspaces/default/apis/echo-api"),
 	// 		Name: to.Ptr("echo-api"),
@@ -124,7 +125,7 @@ func ExampleApisClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.ApisClientGetResponse{
-	// 	API: &armapicenter.API{
+	// 	API: armapicenter.API{
 	// 		Type: to.Ptr("Microsoft.ApiCenter/services/apis"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/workspaces/default/apis/echo-api"),
 	// 		Name: to.Ptr("public"),

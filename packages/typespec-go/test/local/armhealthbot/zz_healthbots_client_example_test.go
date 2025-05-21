@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
+	"time"
 )
 
 // Generated from example definition: 2024-02-01/ResourceCreationPut.json
@@ -49,7 +50,7 @@ func ExampleHealthBotsClient_BeginCreate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armhealthbot.HealthBotsClientCreateResponse{
-	// 	HealthBot: &armhealthbot.HealthBot{
+	// 	HealthBot: armhealthbot.HealthBot{
 	// 		Name: to.Ptr("samplebotname"),
 	// 		Type: to.Ptr("Microsoft.HealthBot/healthBots"),
 	// 		ID: to.Ptr("/subscriptions/subscription-id/resourceGroups/OneResourceGroupName/providers/Microsoft.HealthBot/healthBots/samplebotname"),
@@ -130,7 +131,7 @@ func ExampleHealthBotsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armhealthbot.HealthBotsClientGetResponse{
-	// 	HealthBot: &armhealthbot.HealthBot{
+	// 	HealthBot: armhealthbot.HealthBot{
 	// 		Name: to.Ptr("samplebotname"),
 	// 		Type: to.Ptr("Microsoft.HealthBot/healthBots"),
 	// 		ID: to.Ptr("/subscriptions/subscription-id/resourceGroups/OneResourceGroupName/providers/Microsoft.HealthBot/healthBots/samplebotname"),
@@ -333,7 +334,7 @@ func ExampleHealthBotsClient_ListSecrets() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armhealthbot.HealthBotsClientListSecretsResponse{
-	// 	KeysResponse: &armhealthbot.KeysResponse{
+	// 	KeysResponse: armhealthbot.KeysResponse{
 	// 		Secrets: []*armhealthbot.Key{
 	// 			{
 	// 				KeyName: to.Ptr("APP_SECRET"),
@@ -371,7 +372,7 @@ func ExampleHealthBotsClient_RegenerateAPIJwtSecret() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armhealthbot.HealthBotsClientRegenerateAPIJwtSecretResponse{
-	// 	Key: &armhealthbot.Key{
+	// 	Key: armhealthbot.Key{
 	// 		KeyName: to.Ptr("API_JWT_SECRET"),
 	// 		Value: to.Ptr("XXXXX"),
 	// 	},

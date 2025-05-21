@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
+	"time"
 )
 
 // Generated from example definition: 2024-07-19-preview/Watchers_CreateOrUpdate_MaximumSet_Gen.json
@@ -54,7 +55,7 @@ func ExampleWatchersClient_BeginCreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armdatabasewatcher.WatchersClientCreateOrUpdateResponse{
-	// 	Watcher: &armdatabasewatcher.Watcher{
+	// 	Watcher: armdatabasewatcher.Watcher{
 	// 		Properties: &armdatabasewatcher.WatcherProperties{
 	// 			Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
 	// 			DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
@@ -134,7 +135,7 @@ func ExampleWatchersClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armdatabasewatcher.WatchersClientGetResponse{
-	// 	Watcher: &armdatabasewatcher.Watcher{
+	// 	Watcher: armdatabasewatcher.Watcher{
 	// 		Properties: &armdatabasewatcher.WatcherProperties{
 	// 			Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
 	// 			DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),
@@ -844,7 +845,7 @@ func ExampleWatchersClient_BeginUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armdatabasewatcher.WatchersClientUpdateResponse{
-	// 	Watcher: &armdatabasewatcher.Watcher{
+	// 	Watcher: armdatabasewatcher.Watcher{
 	// 		Properties: &armdatabasewatcher.WatcherProperties{
 	// 			Status: to.Ptr(armdatabasewatcher.WatcherStatusStarting),
 	// 			DefaultAlertRuleIdentityResourceID: to.Ptr("/subscriptions/469DD77C-C8DB-47B7-B9E1-72D29F8C878B/resourceGroups/rgWatcher/providers/Microsoft.ManagedIdentity/userAssignedIdentities/3pmtest"),

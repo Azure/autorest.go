@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
+	"time"
 )
 
 // Generated from example definition: 2023-11-01/CommunityTrainings_Create.json
@@ -60,7 +61,7 @@ func ExampleCommunityTrainingsClient_BeginCreate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcommunitymanagement.CommunityTrainingsClientCreateResponse{
-	// 	CommunityTraining: &armcommunitymanagement.CommunityTraining{
+	// 	CommunityTraining: armcommunitymanagement.CommunityTraining{
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgCommunityTraining/providers/Microsoft.Community/communityTrainings/ctApplication"),
 	// 		Name: to.Ptr("ctApplication"),
 	// 		Type: to.Ptr("Microsoft.Community/communityTrainings"),
@@ -147,7 +148,7 @@ func ExampleCommunityTrainingsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcommunitymanagement.CommunityTrainingsClientGetResponse{
-	// 	CommunityTraining: &armcommunitymanagement.CommunityTraining{
+	// 	CommunityTraining: armcommunitymanagement.CommunityTraining{
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgCommunityTraining/providers/Microsoft.Community/communityTrainings/ctApplication"),
 	// 		Name: to.Ptr("ctApplication"),
 	// 		Type: to.Ptr("Microsoft.Community/communityTrainings"),
@@ -371,7 +372,7 @@ func ExampleCommunityTrainingsClient_BeginUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcommunitymanagement.CommunityTrainingsClientUpdateResponse{
-	// 	CommunityTraining: &armcommunitymanagement.CommunityTraining{
+	// 	CommunityTraining: armcommunitymanagement.CommunityTraining{
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgCommunityTraining/providers/Microsoft.Community/communityTrainings/ctApplication"),
 	// 		Name: to.Ptr("ctApplication"),
 	// 		Type: to.Ptr("Microsoft.Community/communityTrainings"),

@@ -4,7 +4,10 @@
 
 package armhardwaresecuritymodules
 
-import "time"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"time"
+)
 
 // APIEntityReference - The API entity reference.
 type APIEntityReference struct {
@@ -403,14 +406,14 @@ type PrivateEndpoint struct {
 
 // PrivateEndpointConnection - The private endpoint connection resource.
 type PrivateEndpointConnection struct {
-	// READ-ONLY; Name of the private endpoint connection associated with the Cloud HSM Cluster.
-	Name *string
-
-	// Modified whenever there is a change in the state of private endpoint connection.
-	Etag *string
-
 	// Resource properties.
 	Properties *PrivateEndpointConnectionProperties
+
+	// READ-ONLY; The entity tag for this resource.
+	Etag *azcore.ETag
+
+	// READ-ONLY; Name of the private endpoint connection associated with the Cloud HSM Cluster.
+	Name *string
 
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string

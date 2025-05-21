@@ -178,9 +178,9 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
           exampleText += `\t\t// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.\n`;
           exampleText += `\t\t// page = ${codeModel.packageName}.${example.responseEnvelope?.response.name}{\n`;
           for (const header of example.responseEnvelope?.headers ?? []) {
-            exampleText += `\t\t// \t${header.header.fieldName}: ${getExampleValue(codeModel, header.value, '', undefined, true).split('\n').join('\n\t\t// \t')}\n`;
+            exampleText += `\t\t// \t${header.header.fieldName}: ${getExampleValue(codeModel, header.value, '', imports, true).split('\n').join('\n\t\t// \t')}\n`;
           }
-          exampleText += `\t\t// \t${(example.responseEnvelope?.result.type as go.ModelType).name}: ${getExampleValue(codeModel, example.responseEnvelope?.result!, '', undefined, true).split('\n').join('\n\t\t// \t')},\n`;
+          exampleText += `\t\t// \t${(example.responseEnvelope?.result.type as go.ModelType).name}: ${getExampleValue(codeModel, example.responseEnvelope?.result!, '', imports, true).split('\n').join('\n\t\t// \t')},\n`;
           exampleText += '\t\t// }\n';
           exampleText += `\t}\n`;
         } else if (checkResponse) {
@@ -192,10 +192,10 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
           exampleText += `\t// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.\n`;
           exampleText += `\t// res = ${codeModel.packageName}.${example.responseEnvelope?.response.name}{\n`;
           for (const header of example.responseEnvelope?.headers ?? []) {
-            exampleText += `\t// \t${header.header.fieldName}: ${getExampleValue(codeModel, header.value, '', undefined, true).split('\n').join('\n\t// \t')}\n`;
+            exampleText += `\t// \t${header.header.fieldName}: ${getExampleValue(codeModel, header.value, '', imports, true).split('\n').join('\n\t// \t')}\n`;
           }
           if (example.responseEnvelope?.result) {
-            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.ModelType).name}: ${getExampleValue(codeModel, example.responseEnvelope.result, '').split('\n').join('\n\t// \t')},\n`;
+            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.ModelType).name}: ${getExampleValue(codeModel, example.responseEnvelope.result, '', imports, true).split('\n').join('\n\t// \t')},\n`;
           }
           exampleText += '\t// }\n';
         }
@@ -228,6 +228,9 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
       exampleText = getConstantValue(codeModel, example.type.type, example.type.literal.value);
     }
     return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
+  } else if (example.kind === 'qualified') {
+    imports?.add(example.type.packageName);
+    return `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}(${jsonToGo(example.value, '')})`;
   } else if (example.kind === 'number') {
     let exampleText = `${example.value}`;
     if (go.isConstantType(example.type)) {
