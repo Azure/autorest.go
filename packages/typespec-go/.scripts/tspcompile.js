@@ -278,6 +278,7 @@ function generate(moduleName, input, outputDir, perTestOptions) {
         // format on success
         if (error === null) {
           execSync('gofmt -w .', { cwd: fullOutputDir});
+          execSync('goimports -w .', { cwd: fullOutputDir});
         }
       });
     } catch (err) {
