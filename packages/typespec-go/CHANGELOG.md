@@ -1,5 +1,12 @@
 # Release History
 
+## 0.4.9 (2025-05-23)
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
+* Refine `NameCollision` diagnostic.
+
 ## 0.4.8 (2025-05-20)
 
 ### Other Changes

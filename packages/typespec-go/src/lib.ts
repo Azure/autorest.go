@@ -134,7 +134,7 @@ const libDef = {
     'NameCollision': {
       severity: 'error',
       messages: {
-        default: 'The emitter automatically renamed one or more types which resulted in a type name collision. Please update the client.tsp to rename the type(s) to avoid the collision.'
+        default: paramMessage`The emitter automatically renamed one or more types which resulted in a type name collision. Please update the client.tsp to rename the type(s) to avoid the collision.\n${'stack'}`
       }
     },
     'UnsupportedTsp': {
