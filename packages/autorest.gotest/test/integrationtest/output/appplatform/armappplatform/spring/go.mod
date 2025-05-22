@@ -1,6 +1,6 @@
 module github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/appplatform/armappplatform/spring
 
-go 1.18
+go 1.23.0
 
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.18.0
