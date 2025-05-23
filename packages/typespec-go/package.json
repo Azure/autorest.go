@@ -5,8 +5,7 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/typespec-go/src/index.d.js",
-      "default": "./dist/typespec-go/src/index.js"
+      "import": "./dist/typespec-go/src/index.js"
     }
   },
   "directories": {
