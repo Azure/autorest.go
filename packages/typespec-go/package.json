@@ -3,14 +3,12 @@
   "version": "0.4.8",
   "description": "TypeSpec emitter for Go SDKs",
   "type": "module",
-  "main": "dist/typespec-go/src/index.js",
   "exports": {
     ".": {
       "types": "./dist/typespec-go/src/index.d.js",
       "default": "./dist/typespec-go/src/index.js"
     }
   },
-  "tspMain": "dist/typespec-go/src/index.js",
   "directories": {
     "doc": "docs"
   },
