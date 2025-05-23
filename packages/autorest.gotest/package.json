@@ -55,14 +55,19 @@
     "@types/nunjucks": "^3.2.6",
     "autorest": "^3.7.1",
     "cross-env": "^7.0.3",
+    "cross-spawn": "7.0.5",
     "jest-junit": "^16.0.0",
     "js-yaml": "~4.1.0",
     "jsonpath": "^1.1.1",
+    "jsonpath-plus": "10.2.0",
     "lodash": "^4.17.21",
     "node-yaml": "^4.0.1",
     "nunjucks": "^3.2.3",
     "oav": "3.0.3",
-    "reflect-metadata": "~0.2.2"
+    "path-to-regexp": "6.3.0",
+    "reflect-metadata": "~0.2.2",
+    "semver": "7.5.2",
+    "ws": "7.5.10"
   },
   "files": [
     "dist",
