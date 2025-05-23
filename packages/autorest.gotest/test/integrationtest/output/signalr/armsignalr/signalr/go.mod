@@ -1,4 +1,4 @@
-module github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/signalr/armsignalr/signalr 
+module github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/signalr/armsignalr/signalr
 
 go 1.23.0
 

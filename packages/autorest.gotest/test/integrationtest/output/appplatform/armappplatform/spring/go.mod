@@ -1,4 +1,4 @@
-module github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/appplatform/armappplatform/spring 
+module github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/appplatform/armappplatform/spring
 
 go 1.23.0
 
