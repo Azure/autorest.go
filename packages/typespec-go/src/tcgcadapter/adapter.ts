@@ -11,6 +11,7 @@ import * as go from '../../../codemodel.go/src/index.js';
 import { packageNameFromOutputFolder, trimPackagePrefix } from '../../../naming.go/src/naming.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import { EmitContext, NoTarget } from '@typespec/compiler';
+import { createRequire } from 'module';
 
 const headerText = `Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License. See License.txt in the project root for license information.
@@ -43,6 +44,13 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
   }
 
   const codeModel = new go.CodeModel(info, codeModelType, packageNameFromOutputFolder(context.emitterOutputDir), options);
+  
+  const packageJson = createRequire(import.meta.url)('../../../../package.json') as Record<string, never>;
+  codeModel.metadata = {
+    ...sdkContext.sdkPackage.metadata,
+    emitterVersion: packageJson['version']
+  };
+  
   if (context.options.module && context.options['module-version']) {
     codeModel.options.module = new go.Module(context.options.module, context.options['module-version']);
   } else if (context.options.module || context.options['module-version']) {

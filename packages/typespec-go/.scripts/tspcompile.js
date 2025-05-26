@@ -178,6 +178,13 @@ generate('internalpager', internalpager, 'test/local/internalpager', ['generate-
 const armoracledatabase = pkgRoot + 'test/tsp/Oracle.Database.Management';
 generate('armoracledatabase', armoracledatabase, 'test/local/armoracledatabase', [`examples-directory=${armoracledatabase}/examples`, 'generate-samples=true']);
 
+const armhealthbot = pkgRoot + 'test/tsp/Healthbot.Management';
+generate('armhealthbot', armhealthbot, 'test/local/armhealthbot', [`examples-directory=${armhealthbot}/examples`, 'generate-samples=true']);
+
+const armhardwaresecuritymodules = pkgRoot + 'test/tsp/HardwareSecurityModules.Management';
+generate('armhardwaresecuritymodules', armhardwaresecuritymodules, 'test/local/armhardwaresecuritymodules', [`examples-directory=${armhardwaresecuritymodules}/examples`, 'generate-samples=true']);
+
+
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
 
@@ -275,7 +282,16 @@ function generate(moduleName, input, outputDir, perTestOptions) {
         }
       });
     } catch (err) {
-      console.error(err.output.toString());
+      console.error('An error occurred:');  
+      if (err.message) {
+        console.error('Message:', err.message);  
+      }
+      if (err.stack) {
+        console.error('Stack:', err.stack);  
+      }
+      if (err.output) {
+        console.error('Output:', err.output.toString());  
+      }
     } finally {
       sem.leave();
     }

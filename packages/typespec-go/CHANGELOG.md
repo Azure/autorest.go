@@ -1,5 +1,23 @@
 # Release History
 
+## 0.4.8 (2025-05-20)
+
+### Other Changes
+
+* Generate metadata file.
+
+## 0.4.7 (2025-05-13)
+
+### Bugs Fixed
+
+* Fix wrong example type mapping for discriminated types.
+- Fix wrong nullable response type handling logic.
+- Fix example generation logic for optional method parameters.
+
+### Other Changes
+
+* Updated to latest tcgc.
+
 ## 0.4.6 (2025-05-07)
 
 ### Bugs Fixed

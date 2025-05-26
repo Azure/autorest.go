@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { camelCase } from '@azure-tools/codegen';
+import { camelCase, capitalize } from '@azure-tools/codegen';
 import * as go from '../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
@@ -135,8 +135,8 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
 
         let methodOptionalParametersText = 'nil';
         if (methodOptionalParameters.length > 0) {
-          methodOptionalParametersText = `&${method.optionalParamsGroup.groupName}{\n`;
-          methodOptionalParametersText += methodOptionalParameters.map(p => `${p.parameter.name}: ${getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)}`).join(',\n');
+          methodOptionalParametersText = `&${codeModel.packageName}.${method.optionalParamsGroup.groupName}{\n`;
+          methodOptionalParametersText += methodOptionalParameters.map(p => `${capitalize(p.parameter.name)}: ${getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)}`).join(',\n');
           methodOptionalParametersText += `}`;
         }
 
@@ -279,13 +279,16 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
     }
     if (example.additionalProperties) {
       const additionalPropertiesField = example.type.fields.find(f => f.annotations.isAdditionalProperties)!;
-      const isAdditionalPropertiesFieldByValue = additionalPropertiesField.byValue ?? false;
+      if (!go.isMapType(additionalPropertiesField.type)) {
+        throw new CodegenError('InternalError', `additional properties field type should be map type`);
+      }
+      const isAdditionalPropertiesFieldByValue = additionalPropertiesField.type.valueTypeByValue ?? false;
       const isAdditionalPropertiesPolymorphic = go.isInterfaceType(additionalPropertiesField.type);
-      exampleText += `${indent}\t${additionalPropertiesField.name}: map[string]${getRef(additionalPropertiesField.byValue)}${go.getTypeDeclaration(additionalPropertiesField.type, codeModel.packageName)}{\n`;
+      exampleText += `${indent}\t${additionalPropertiesField.name}: ${getRef(additionalPropertiesField.byValue)}${go.getTypeDeclaration(additionalPropertiesField.type, codeModel.packageName)}{\n`;
       for (const key in example.additionalProperties) {
         exampleText += `${indent}\t"${key}": ${getExampleValue(codeModel, example.additionalProperties[key], indent + '\t', imports, isAdditionalPropertiesFieldByValue && !isAdditionalPropertiesPolymorphic).slice(indent.length + 1)},\n`;
       }
-      exampleText += `${indent}}\n`;
+      exampleText += `${indent}},\n`;
     }
     exampleText += `${indent}}`;
     return exampleText;

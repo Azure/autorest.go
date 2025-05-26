@@ -623,6 +623,11 @@ export class clientAdapter {
       return respEnv;
     }
 
+    if (sdkResponseType.kind === 'nullable') {
+      // unwrap the nullable type, this will only happen for operations with two responses and one of them does not have a body
+      sdkResponseType = sdkResponseType.type;
+    }
+
     // for paged methods, tcgc models the method response type as an Array<T>.
     // however, we want the synthesized paged response envelope as that's what Go returns.
     if (sdkMethod.kind === 'paging') {
@@ -950,7 +955,12 @@ export class clientAdapter {
           if (exampleType.additionalPropertiesValue) {
             ret.additionalProperties = {};
             for (const [k, v] of Object.entries(exampleType.additionalPropertiesValue)) {
-              ret.additionalProperties[k] = this.adaptExampleType(v, concreteType.fields.find(f => f.annotations.isAdditionalProperties)!.type);
+              const filed = concreteType.fields.find(f => f.annotations.isAdditionalProperties)!;
+              if (go.isMapType(filed.type)) {
+                ret.additionalProperties[k] = this.adaptExampleType(v, filed.type.valueType);
+              } else {
+                throw new AdapterError('InternalError', `additional properties field type should be map type`, NoTarget);
+              }
             }
           }
           return ret;
