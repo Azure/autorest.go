@@ -30,7 +30,6 @@ const httpSpecsGroup = {
   'bodyoptionalgroup': ['parameters/body-optionality'],
   'collectionfmtgroup': ['parameters/collection-format'],
   'spreadgroup': ['parameters/spread'],
-  'parametersgroup': ['parameters/path'],
   'contentneggroup': ['payload/content-negotiation'],
   'jmergepatchgroup': ['payload/json-merge-patch'],
   'mediatypegroup': ['payload/media-type'],
