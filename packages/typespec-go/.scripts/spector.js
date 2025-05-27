@@ -3,7 +3,6 @@
 import { execSync } from 'child_process';
 
 const nodeModulesRoot = execSync('git rev-parse --show-toplevel').toString().trim() + '/packages/typespec-go/node_modules/';
-const spector = nodeModulesRoot + '@typespec/spector/node_modules/.bin/tsp-spector';
 const httpSpecs = nodeModulesRoot + '@typespec/http-specs/specs';
 const azureHttpSpecs = nodeModulesRoot + '@azure-tools/azure-http-specs/specs';
 
@@ -33,6 +32,6 @@ if (switches.length === 0) {
   throw new Error('missing arg: [--start] [--stop]');
 }
 
-const cmdLine = spector + ' ' + switches.join(' ');
+const cmdLine = 'npx tsp-spector ' + switches.join(' ');
 console.log(cmdLine);
 execSync(cmdLine, execSyncOptions);

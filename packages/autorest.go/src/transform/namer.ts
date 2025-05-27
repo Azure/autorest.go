@@ -3,6 +3,10 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *  --------------------------------------------------------------------------------------------  */
 
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
 import { Session } from '@autorest/extension-base';
 import { ChoiceSchema, CodeModel, HttpHeader, HttpMethod, Language, SealedChoiceSchema } from '@autorest/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
@@ -173,12 +177,13 @@ export async function namer(session: Session<CodeModel>) {
     if (obj.discriminator) {
       // if this is a discriminator add the interface name
       details.discriminatorInterface = createPolymorphicInterfaceName(details.name);
-      details.discriminatorTypes = new Array<string>();
-      details.discriminatorTypes.push('*' + details.name);
+      const discriminatorTypes = new Array<string>();
+      discriminatorTypes.push('*' + details.name);
       for (const child of values(obj.discriminator.all)) {
-        details.discriminatorTypes.push('*' + child.language.go!.name);
+        discriminatorTypes.push('*' + child.language.go!.name);
       }
-      (<Array<string>>details.discriminatorTypes).sort();
+      discriminatorTypes.sort();
+      details.discriminatorTypes = discriminatorTypes;
     }
     for (const prop of values(obj.properties)) {
       const details = <Language>prop.language.go;
@@ -217,7 +222,7 @@ export async function namer(session: Session<CodeModel>) {
     }
     group.language.go!.clientName = group.language.go!.name;
     // don't generate a name like FooClientClient
-    if (!group.language.go!.clientName.endsWith('Client')) {
+    if (!(<string>group.language.go!.clientName).endsWith('Client')) {
       group.language.go!.clientName = `${group.language.go!.name}Client`;
     }
     clientNames.add(group.language.go!.clientName);
@@ -301,7 +306,7 @@ export async function namer(session: Session<CodeModel>) {
   return session;
 }
 
-function cloneLanguageInfo(graph: any) {
+function cloneLanguageInfo(graph: CodeModel) {
   // make sure recursively that every language field has Go language info
   for (const { index, instance } of visitor(graph)) {
     if (index === 'language' && instance.default && !instance.go) {

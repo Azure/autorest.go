@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 import { exec, execSync } from 'child_process';
 import { existsSync, opendirSync, unlinkSync } from 'fs';
-import semaphore from '../../../.scripts/semaphore.js';
+import { semaphore } from '../../../.scripts/semaphore.js';
 
 // limit to 8 concurrent builds
 const sem = semaphore(8);
@@ -96,21 +96,25 @@ const azureHttpSpecsGroup = {
   'srvdrivennewgroup': ['resiliency/srv-driven'],
 };
 
-// any new args must also be added to autorest.go\common\config\rush\command-line.json
+// default to using the locally built emitter
+let emitter = pkgRoot;
 const args = process.argv.slice(2);
 var filter = undefined;
 const switches = [];
 for (var i = 0 ; i < args.length; i += 1) {
+  const filterArg = args[i].match(/--filter=(?<filter>\w+)/);
+  if (filterArg) {
+    filter = filterArg.groups['filter'];
+    continue;
+  }
+
   switch (args[i]) {
-    case '--debugger':
-      switches.push('--debugger');
-      break;
-    case '--filter':
-      filter = args[i + 1]
-      i += 1
-      break;
     case '--verbose':
       switches.push('--verbose');
+      break;
+    case '--emitter-installed':
+      // the emitter has been installed so use that one instead
+      emitter = '@azure-tools/typespec-go';
       break;
     default:
       break;
@@ -173,6 +177,13 @@ generate('internalpager', internalpager, 'test/local/internalpager', ['generate-
 
 const armoracledatabase = pkgRoot + 'test/tsp/Oracle.Database.Management';
 generate('armoracledatabase', armoracledatabase, 'test/local/armoracledatabase', [`examples-directory=${armoracledatabase}/examples`, 'generate-samples=true']);
+
+const armhealthbot = pkgRoot + 'test/tsp/Healthbot.Management';
+generate('armhealthbot', armhealthbot, 'test/local/armhealthbot', [`examples-directory=${armhealthbot}/examples`, 'generate-samples=true']);
+
+const armhardwaresecuritymodules = pkgRoot + 'test/tsp/HardwareSecurityModules.Management';
+generate('armhardwaresecuritymodules', armhardwaresecuritymodules, 'test/local/armhardwaresecuritymodules', [`examples-directory=${armhardwaresecuritymodules}/examples`, 'generate-samples=true']);
+
 
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
@@ -257,7 +268,7 @@ function generate(moduleName, input, outputDir, perTestOptions) {
       if (switches.includes('--debugger')) {
         options.push(`--option="@azure-tools/typespec-go.debugger=true"`);
       }
-      const command = `node ${compiler} compile ${input} --emit=${pkgRoot} ${options.join(' ')}`;
+      const command = `node ${compiler} compile ${input} --emit=${emitter} ${options.join(' ')}`;
       if (switches.includes('--verbose')) {
         console.log(command);
       }
@@ -271,7 +282,16 @@ function generate(moduleName, input, outputDir, perTestOptions) {
         }
       });
     } catch (err) {
-      console.error(err.output.toString());
+      console.error('An error occurred:');  
+      if (err.message) {
+        console.error('Message:', err.message);  
+      }
+      if (err.stack) {
+        console.error('Stack:', err.stack);  
+      }
+      if (err.output) {
+        console.error('Output:', err.output.toString());  
+      }
     } finally {
       sem.leave();
     }

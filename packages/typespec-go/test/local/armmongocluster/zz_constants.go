@@ -182,7 +182,7 @@ type PrivateEndpointServiceConnectionStatus string
 const (
 	// PrivateEndpointServiceConnectionStatusApproved - Connection approved
 	PrivateEndpointServiceConnectionStatusApproved PrivateEndpointServiceConnectionStatus = "Approved"
-	// PrivateEndpointServiceConnectionStatusPending - Connectionaiting for approval or rejection
+	// PrivateEndpointServiceConnectionStatusPending - Connection waiting for approval or rejection
 	PrivateEndpointServiceConnectionStatusPending PrivateEndpointServiceConnectionStatus = "Pending"
 	// PrivateEndpointServiceConnectionStatusRejected - Connection Rejected
 	PrivateEndpointServiceConnectionStatusRejected PrivateEndpointServiceConnectionStatus = "Rejected"

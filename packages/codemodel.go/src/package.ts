@@ -39,6 +39,9 @@ export interface CodeModel {
 
   // all of the interfaces for discriminated types (interfaces.go file)
   interfaceTypes: Array<type.InterfaceType>;
+
+  // metadata of the package
+  metadata?: {};
 }
 
 export type CodeModelType = 'azure-arm' | 'data-plane';

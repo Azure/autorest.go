@@ -1,6 +1,6 @@
 {
   "name": "@azure-tools/typespec-go",
-  "version": "0.4.4",
+  "version": "0.4.8",
   "description": "TypeSpec emitter for Go SDKs",
   "type": "module",
   "main": "dist/typespec-go/src/index.js",
@@ -12,17 +12,20 @@
     "doc": "docs"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=20.0.0"
   },
   "scripts": {
     "eslint-fix": "eslint  . --fix --ext .ts",
     "eslint": "eslint  . --ext .ts",
     "build": "tsc -p .",
     "watch": "tsc -p . --watch",
-    "test": "jest --ci --passWithNoTests",
+    "prepare": "npm run build",
+    "test": "vitest run --pass-with-no-tests",
     "clean": "ver > nul 2>&1 nul && npm run --silent clean-cmd || npm run --silent clean-bash",
     "clean-cmd": "if exist dist rmdir /s /q dist && exit 0 || exit 0 ",
-    "clean-bash": "rm nul && rm -rf dist && exit 0 || exit 0"
+    "clean-bash": "rm nul && rm -rf dist && exit 0 || exit 0",
+    "tspcompile": "node .scripts/tspcompile.js",
+    "spector": "node .scripts/spector.js"
   },
   "files": [
     "dist/**",
@@ -45,41 +48,38 @@
   "homepage": "https://github.com/Azure/autorest.go#readme",
   "readme": "https://github.com/Azure/autorest.go/blob/main/readme.md",
   "devDependencies": {
-    "@azure-tools/azure-http-specs": "0.1.0-alpha.15",
-    "@azure-tools/typespec-autorest": "0.55.0",
-    "@azure-tools/typespec-azure-core": "0.55.0",
-    "@azure-tools/typespec-azure-resource-manager": "0.55.0",
-    "@azure-tools/typespec-client-generator-core": "0.55.0",
-    "@types/jest": "~26.0.24",
-    "@types/js-yaml": "~4.0.6",
-    "@types/node": "^18.16.3",
-    "@typescript-eslint/eslint-plugin": "~4.1.1",
-    "@typescript-eslint/parser": "~4.1.1",
-    "@typespec/compiler": "1.0.0-rc.1",
-    "@typespec/events": "0.69.0",
-    "@typespec/http": "1.0.0-rc.1",
-    "@typespec/http-specs": "0.1.0-alpha.20",
-    "@typespec/openapi": "1.0.0-rc.1",
-    "@typespec/rest": "0.69.0",
-    "@typespec/spector": "0.1.0-alpha.12",
-    "@typespec/sse": "0.69.0",
-    "@typespec/streams": "0.69.0",
-    "@typespec/versioning": "0.69.0",
-    "@typespec/xml": "0.69.0",
-    "eslint": "~6.6.0",
-    "jest": "~27.0.6",
-    "ts-jest": "~27.0.4",
-    "typescript": "~5.1.3"
+    "@azure-tools/azure-http-specs": "0.1.0-alpha.17",
+    "@azure-tools/typespec-autorest": "0.56.0",
+    "@azure-tools/typespec-azure-core": "0.56.0",
+    "@azure-tools/typespec-azure-resource-manager": "0.56.0",
+    "@azure-tools/typespec-client-generator-core": "0.56.2",
+    "@types/node": "catalog:",
+    "@typespec/compiler": "1.0.0",
+    "@typespec/events": "0.70.0",
+    "@typespec/http": "1.0.0",
+    "@typespec/http-specs": "0.1.0-alpha.22",
+    "@typespec/openapi": "1.0.0",
+    "@typespec/rest": "0.70.0",
+    "@typespec/spector": "0.1.0-alpha.13",
+    "@typespec/sse": "0.70.0",
+    "@typespec/streams": "0.70.0",
+    "@typespec/versioning": "0.70.0",
+    "@typespec/xml": "0.70.0",
+    "@vitest/coverage-v8": "catalog:",
+    "@vitest/ui": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@azure-tools/typespec-client-generator-core": "0.55.0",
-    "@typespec/compiler": "^1.0.0-rc.1",
-    "@typespec/http": "^1.0.0-rc.1"
+    "@azure-tools/typespec-client-generator-core": "0.56.2",
+    "@typespec/compiler": "^1.0.0",
+    "@typespec/http": "^1.0.0"
   },
   "dependencies": {
-    "@azure-tools/codegen": "~2.9.2",
-    "@azure-tools/linq": "~3.1.0",
-    "js-yaml": "~4.1.0",
+    "@azure-tools/codegen": "catalog:",
+    "@azure-tools/linq": "catalog:",
     "source-map-support": "0.5.21"
   }
 }
