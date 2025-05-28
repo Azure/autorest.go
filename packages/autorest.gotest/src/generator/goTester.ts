@@ -10,8 +10,6 @@ import { ExampleCodeGenerator, ExampleDataRender } from './exampleGenerator';
 import { GenerateContext } from './generateContext';
 import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
 import { MockTestCodeGenerator, MockTestDataRender } from './mockTestGenerator';
-import { SampleCodeGenerator, SampleDataRender } from './sampleGenerator';
-import { ScenarioTestCodeGenerator, ScenarioTestDataRender } from './scenarioTestGenerator';
 import { TestCodeModeler } from '@autorest/testmodeler/dist/src/core/model';
 import { TestConfig } from '@autorest/testmodeler/dist/src/common/testConfig';
 import { FakeDataRender, FakeTestCodeGenerator } from './fakeTestGenerator';
@@ -56,18 +54,6 @@ export async function processRequest(host: AutorestExtensionHost): Promise<void>
     exampleDataRender.renderData();
     const exampleCodeGenerator = new ExampleCodeGenerator(context);
     exampleCodeGenerator.generateCode(extraParam);
-  }
-  if (config.getValue(Config.generateScenarioTest)) {
-    const scenarioTestDataRender = new ScenarioTestDataRender(context);
-    scenarioTestDataRender.renderData();
-    const scenarioTestCodeGenerator = new ScenarioTestCodeGenerator(context);
-    scenarioTestCodeGenerator.generateCode(extraParam);
-  }
-  if (config.getValue(Config.generateSdkSample)) {
-    const sampleDataRender = new SampleDataRender(context);
-    sampleDataRender.renderData();
-    const sampleCodeGenerator = new SampleCodeGenerator(context);
-    sampleCodeGenerator.generateCode(extraParam);
   }
   if (config.getValue(Config.generateFakeTest)) {
     const fakeDataRender = new FakeDataRender(context);
