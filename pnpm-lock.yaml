@@ -248,19 +248,19 @@ importers:
     devDependencies:
       '@azure-tools/azure-http-specs':
         specifier: 0.1.0-alpha.17
-        version: 0.1.0-alpha.17(xzra6zensqba4f3cufli435mui)
+        version: 0.1.0-alpha.17(400913b4214d342927b259c2fec4fae4)
       '@azure-tools/typespec-autorest':
         specifier: 0.56.0
-        version: 0.56.0(i3dhur426ndgxwskuv7v3mcvrm)
+        version: 0.56.0(ee9b561720b599e4a922dd6c56099bc8)
       '@azure-tools/typespec-azure-core':
         specifier: 0.56.0
         version: 0.56.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/http@1.0.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/streams@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40))))(@typespec/rest@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/http@1.0.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/streams@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40)))))
       '@azure-tools/typespec-azure-resource-manager':
         specifier: 0.56.0
-        version: 0.56.0(ona4u4adfxlqz6utumgenhh434)
+        version: 0.56.0(a74ba9764c2492841aa14a90f838face)
       '@azure-tools/typespec-client-generator-core':
         specifier: 0.56.2
-        version: 0.56.2(wlf3e7s4oki3tqlulp3ju5weha)
+        version: 0.56.2(f9ea4af644c584c071ae00e2bd278144)
       '@types/node':
         specifier: 'catalog:'
         version: 20.17.40
@@ -320,6 +320,12 @@ importers:
         version: 3.1.3(@types/node@20.17.40)(@vitest/ui@3.1.3)(jsdom@16.7.0)(yaml@2.7.1)
 
 packages:
+
+  '@alloy-js/core@0.15.0':
+    resolution: {integrity: sha512-GfQZqaUqGBGFeFJbA9H7Iu+IJQiEQ2B3Hjh5C1N2YclEg5vtjSAb/pdqJ5x2BTqOq2iUCpFOJ44pJy5mhS116Q==}
+
+  '@alloy-js/typescript@0.15.0':
+    resolution: {integrity: sha512-dALRXFY6h3i3i4Xv6ym+ejmgerxP6HcCECAhTC7CZJ4zNY9fHDhjqfxScsEaFrbalpib4JMX8wceO47l4CIFTw==}
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -862,6 +868,9 @@ packages:
     resolution: {integrity: sha512-ZAoA40rNMPwSm+AeHpCq8STiNAwzWLJuP8Xv4CHIc9wv/PSuExjMrmjfYNj682vW0OOiZ1HKxzvjQr9XZIisQA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  '@gerrit0/mini-shiki@3.4.2':
+    resolution: {integrity: sha512-3jXo5bNjvvimvdbIhKGfFxSnKCX+MA8wzHv55ptzk/cx8wOzT+BRcYgj8aFN3yTiTs+zvQQiaZFr7Jce1ZG3fw==}
+
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
     engines: {node: '>=18.18.0'}
@@ -1239,6 +1248,21 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@shikijs/engine-oniguruma@3.4.2':
+    resolution: {integrity: sha512-zcZKMnNndgRa3ORja6Iemsr3DrLtkX3cAF7lTJkdMB6v9alhlBsX9uNiCpqofNrXOvpA3h6lHcLJxgCIhVOU5Q==}
+
+  '@shikijs/langs@3.4.2':
+    resolution: {integrity: sha512-H6azIAM+OXD98yztIfs/KH5H4PU39t+SREhmM8LaNXyUrqj2mx+zVkr8MWYqjceSjDw9I1jawm1WdFqU806rMA==}
+
+  '@shikijs/themes@3.4.2':
+    resolution: {integrity: sha512-qAEuAQh+brd8Jyej2UDDf+b4V2g1Rm8aBIdvt32XhDPrHvDkEnpb7Kzc9hSuHUxz0Iuflmq7elaDuQAP9bHIhg==}
+
+  '@shikijs/types@3.4.2':
+    resolution: {integrity: sha512-zHC1l7L+eQlDXLnxvM9R91Efh2V4+rN3oMVS2swCBssbj2U/FBwybD1eeLaq8yl/iwT+zih8iUbTBCgGZOYlVg==}
+
+  '@shikijs/vscode-textmate@10.0.2':
+    resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
+
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
 
@@ -1318,6 +1342,9 @@ packages:
 
   '@types/triple-beam@1.3.5':
     resolution: {integrity: sha512-6WaYesThRMCl19iryMYP7/x2OVgCtbIVflDGFpWnb9irXI3UjYE4AzmYuiUKY1AJstGijoY+MgUszMgRxIYTYw==}
+
+  '@types/unist@3.0.3':
+    resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
 
   '@types/yargs-parser@21.0.3':
     resolution: {integrity: sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ==}
@@ -1880,6 +1907,10 @@ packages:
   clean-stack@4.2.0:
     resolution: {integrity: sha512-LYv6XPxoyODi36Dp976riBtSY27VmFo+MKqEU9QCCWyTrdEPDog+RWA7xQWHi6Vbp61j5c4cdzzX1NidnwtUWg==}
     engines: {node: '>=12'}
+
+  cli-table3@0.6.5:
+    resolution: {integrity: sha512-+W/5efTR7y5HRD7gACw9yQjqMVvEMLBHmboM/kPWam+H+Hmyrgjh6YncVKK122YZkXrLudzTuAukUw9FnMf7IQ==}
+    engines: {node: 10.* || >= 12.*}
 
   cli-width@4.1.0:
     resolution: {integrity: sha512-ouuZd4/dm2Sw5Gmqy6bGyNNNe1qt9RpmxveLSO7KcgsTnU7RXfsw+/bukWGo1abgBiMAic068rclZsO4IWmmxQ==}
@@ -3170,6 +3201,9 @@ packages:
   lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
 
+  linkify-it@5.0.0:
+    resolution: {integrity: sha512-5aHCbzQRADcdP+ATqnDuhhJ/MRIqDkZX5pyjFHRRysS8vZ5AbqGEoFIb6pYHPZ+L/OC2Lc+xT8uHVVR5CAK/wQ==}
+
   locate-path@3.0.0:
     resolution: {integrity: sha512-7AO748wWnIhNqAuaty2ZWHkQHRSNfPVIsPIfwEOWO22AmaoVrWavlOcMR5nzTLNYvp36X220/maaRsrec1G65A==}
     engines: {node: '>=6'}
@@ -4236,8 +4270,8 @@ packages:
     peerDependencies:
       typedoc: 0.28.x
 
-  typedoc@0.28.4:
-    resolution: {integrity: sha512-xKvKpIywE1rnqqLgjkoq0F3wOqYaKO9nV6YkkSat6IxOWacUCc/7Es0hR3OPmkIqkPoEn7U3x+sYdG72rstZQA==}
+  typedoc@0.28.5:
+    resolution: {integrity: sha512-5PzUddaA9FbaarUzIsEc4wNXCiO4Ot3bJNeMF2qKpYlTmM9TTaSHQ7162w756ERCkXER/+o2purRG6YOAv6EMA==}
     engines: {node: '>= 18', pnpm: '>= 10'}
     hasBin: true
     peerDependencies:
@@ -4254,6 +4288,9 @@ packages:
     resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
     engines: {node: '>=14.17'}
     hasBin: true
+
+  uc.micro@2.1.0:
+    resolution: {integrity: sha512-ARDJmphmdvUk6Glw7y9DQ2bFkKBHwQHLi2lsaH6PPmz/Ka9sFOBsBluozhDltWmnv9u/cF6Rt87znRTPV+yp/A==}
 
   underscore@1.12.1:
     resolution: {integrity: sha512-hEQt0+ZLDVUMhebKxL4x1BTtDY7bavVofhZ9KZ4aI26X9SRaE+Y3m83XUL1UP2jn8ynjndwCCpEHdUG+9pP1Tw==}
@@ -4593,6 +4630,20 @@ packages:
 
 snapshots:
 
+  '@alloy-js/core@0.15.0':
+    dependencies:
+      '@vue/reactivity': 3.5.14
+      cli-table3: 0.6.5
+      pathe: 2.0.3
+      picocolors: 1.1.1
+      prettier: 3.5.3
+
+  '@alloy-js/typescript@0.15.0':
+    dependencies:
+      '@alloy-js/core': 0.15.0
+      change-case: 5.4.4
+      pathe: 2.0.3
+
   '@ampproject/remapping@2.3.0':
     dependencies:
       '@jridgewell/gen-mapping': 0.3.8
@@ -4616,7 +4667,7 @@ snapshots:
       '@azure-tools/tasks': 3.0.255
       proper-lockfile: 2.0.1
 
-  '@azure-tools/azure-http-specs@0.1.0-alpha.17(xzra6zensqba4f3cufli435mui)':
+  '@azure-tools/azure-http-specs@0.1.0-alpha.17(400913b4214d342927b259c2fec4fae4)':
     dependencies:
       '@azure-tools/typespec-azure-core': 0.56.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/http@1.0.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/streams@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40))))(@typespec/rest@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/http@1.0.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/streams@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40)))))
       '@typespec/compiler': 1.0.0(@types/node@20.17.40)
@@ -4647,11 +4698,11 @@ snapshots:
 
   '@azure-tools/tasks@3.0.255': {}
 
-  '@azure-tools/typespec-autorest@0.56.0(i3dhur426ndgxwskuv7v3mcvrm)':
+  '@azure-tools/typespec-autorest@0.56.0(ee9b561720b599e4a922dd6c56099bc8)':
     dependencies:
       '@azure-tools/typespec-azure-core': 0.56.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/http@1.0.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/streams@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40))))(@typespec/rest@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/http@1.0.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/streams@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40)))))
-      '@azure-tools/typespec-azure-resource-manager': 0.56.0(ona4u4adfxlqz6utumgenhh434)
-      '@azure-tools/typespec-client-generator-core': 0.56.2(wlf3e7s4oki3tqlulp3ju5weha)
+      '@azure-tools/typespec-azure-resource-manager': 0.56.0(a74ba9764c2492841aa14a90f838face)
+      '@azure-tools/typespec-client-generator-core': 0.56.2(f9ea4af644c584c071ae00e2bd278144)
       '@typespec/compiler': 1.0.0(@types/node@20.17.40)
       '@typespec/http': 1.0.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/streams@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40)))
       '@typespec/openapi': 1.0.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/http@1.0.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/streams@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40))))
@@ -4664,7 +4715,7 @@ snapshots:
       '@typespec/http': 1.0.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/streams@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40)))
       '@typespec/rest': 0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/http@1.0.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/streams@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40))))
 
-  '@azure-tools/typespec-azure-resource-manager@0.56.0(ona4u4adfxlqz6utumgenhh434)':
+  '@azure-tools/typespec-azure-resource-manager@0.56.0(a74ba9764c2492841aa14a90f838face)':
     dependencies:
       '@azure-tools/typespec-azure-core': 0.56.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/http@1.0.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/streams@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40))))(@typespec/rest@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/http@1.0.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/streams@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40)))))
       '@typespec/compiler': 1.0.0(@types/node@20.17.40)
@@ -4675,7 +4726,7 @@ snapshots:
       change-case: 5.4.4
       pluralize: 8.0.0
 
-  '@azure-tools/typespec-client-generator-core@0.56.2(wlf3e7s4oki3tqlulp3ju5weha)':
+  '@azure-tools/typespec-client-generator-core@0.56.2(f9ea4af644c584c071ae00e2bd278144)':
     dependencies:
       '@azure-tools/typespec-azure-core': 0.56.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/http@1.0.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/streams@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40))))(@typespec/rest@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/http@1.0.0(@typespec/compiler@1.0.0(@types/node@20.17.40))(@typespec/streams@0.70.0(@typespec/compiler@1.0.0(@types/node@20.17.40)))))
       '@typespec/compiler': 1.0.0(@types/node@20.17.40)
@@ -5176,6 +5227,14 @@ snapshots:
       '@eslint/core': 0.13.0
       levn: 0.4.1
 
+  '@gerrit0/mini-shiki@3.4.2':
+    dependencies:
+      '@shikijs/engine-oniguruma': 3.4.2
+      '@shikijs/langs': 3.4.2
+      '@shikijs/themes': 3.4.2
+      '@shikijs/types': 3.4.2
+      '@shikijs/vscode-textmate': 10.0.2
+
   '@humanfs/core@0.19.1': {}
 
   '@humanfs/node@0.16.6':
@@ -5629,6 +5688,26 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.40.1':
     optional: true
 
+  '@shikijs/engine-oniguruma@3.4.2':
+    dependencies:
+      '@shikijs/types': 3.4.2
+      '@shikijs/vscode-textmate': 10.0.2
+
+  '@shikijs/langs@3.4.2':
+    dependencies:
+      '@shikijs/types': 3.4.2
+
+  '@shikijs/themes@3.4.2':
+    dependencies:
+      '@shikijs/types': 3.4.2
+
+  '@shikijs/types@3.4.2':
+    dependencies:
+      '@shikijs/vscode-textmate': 10.0.2
+      '@types/hast': 3.0.4
+
+  '@shikijs/vscode-textmate@10.0.2': {}
+
   '@sinclair/typebox@0.27.8': {}
 
   '@sindresorhus/merge-streams@2.3.0': {}
@@ -5713,6 +5792,8 @@ snapshots:
   '@types/stack-utils@2.0.3': {}
 
   '@types/triple-beam@1.3.5': {}
+
+  '@types/unist@3.0.3': {}
 
   '@types/yargs-parser@21.0.3': {}
 
@@ -6006,8 +6087,8 @@ snapshots:
       '@typespec/compiler': 1.0.0(@types/node@20.17.40)
       picocolors: 1.1.1
       prettier: 3.5.3
-      typedoc: 0.28.4(typescript@5.8.3)
-      typedoc-plugin-markdown: 4.6.3(typedoc@0.28.4(typescript@5.8.3))
+      typedoc: 0.28.5(typescript@5.8.3)
+      typedoc-plugin-markdown: 4.6.3(typedoc@0.28.5(typescript@5.8.3))
       yaml: 2.7.1
       yargs: 17.7.2
     transitivePeerDependencies:
@@ -6436,6 +6517,12 @@ snapshots:
   clean-stack@4.2.0:
     dependencies:
       escape-string-regexp: 5.0.0
+
+  cli-table3@0.6.5:
+    dependencies:
+      string-width: 4.2.3
+    optionalDependencies:
+      '@colors/colors': 1.5.0
 
   cli-width@4.1.0: {}
 
@@ -8064,6 +8151,10 @@ snapshots:
 
   lines-and-columns@1.2.4: {}
 
+  linkify-it@5.0.0:
+    dependencies:
+      uc.micro: 2.1.0
+
   locate-path@3.0.0:
     dependencies:
       p-locate: 3.0.0
@@ -9109,6 +9200,19 @@ snapshots:
 
   typedarray@0.0.6: {}
 
+  typedoc-plugin-markdown@4.6.3(typedoc@0.28.5(typescript@5.8.3)):
+    dependencies:
+      typedoc: 0.28.5(typescript@5.8.3)
+
+  typedoc@0.28.5(typescript@5.8.3):
+    dependencies:
+      '@gerrit0/mini-shiki': 3.4.2
+      lunr: 2.3.9
+      markdown-it: 14.1.0
+      minimatch: 9.0.5
+      typescript: 5.8.3
+      yaml: 2.7.1
+
   typescript-eslint@8.32.0(eslint@9.26.0)(typescript@5.8.3):
     dependencies:
       '@typescript-eslint/eslint-plugin': 8.32.0(@typescript-eslint/parser@8.32.0(eslint@9.26.0)(typescript@5.8.3))(eslint@9.26.0)(typescript@5.8.3)
@@ -9120,6 +9224,8 @@ snapshots:
       - supports-color
 
   typescript@5.8.3: {}
+
+  uc.micro@2.1.0: {}
 
   underscore@1.12.1: {}
 
