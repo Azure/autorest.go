@@ -381,14 +381,14 @@ function jsonToGo(value: any, indent: string): string {
     if (value === null) {
       return `${indent}nil`;
     } else if (Array.isArray(value)) {
-      let result = `${indent}any{\n`;
+      let result = `${indent}[]any{\n`;
       for (const item of value) {
         result += `${jsonToGo(item, indent + '\t')},\n`;
       }
       result += `${indent}}`;
       return result;
     } else {
-      let result = `map[string]any{\n`;
+      let result = `${indent}map[string]any{\n`;
       for (const key in value) {
         result += `${indent}\t"${key}": ${jsonToGo(value[key], indent + '\t').slice(indent.length + 1)},\n`;
       }
