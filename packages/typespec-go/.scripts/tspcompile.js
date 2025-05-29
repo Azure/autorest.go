@@ -183,6 +183,8 @@ generate('armhealthbot', armhealthbot, 'test/local/armhealthbot', [`examples-dir
 const armhardwaresecuritymodules = pkgRoot + 'test/tsp/HardwareSecurityModules.Management';
 generate('armhardwaresecuritymodules', armhardwaresecuritymodules, 'test/local/armhardwaresecuritymodules', [`examples-directory=${armhardwaresecuritymodules}/examples`, 'generate-samples=true']);
 
+const armcomputeschedule = pkgRoot + 'test/tsp/ComputeSchedule.Management';
+generate('armcomputeschedule', armcomputeschedule, 'test/local/armcomputeschedule', [`examples-directory=${armcomputeschedule}/examples`, 'generate-samples=true']);
 
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
