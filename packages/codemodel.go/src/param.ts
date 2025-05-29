@@ -5,15 +5,67 @@
 
 import * as type from './type.js';
 
-// required - the parameter is required
-// optional - the parameter is optional
-// literal - there is no formal parameter, the value is emitted directly in the code (e.g. the Accept header parameter)
-// flag - the value is a literal and emitted in the code, but sent IFF the flag param is not nil (i.e. an optional LiteralValue)
-// ClientSideDefault - the parameter has an emitted default value that's sent if one isn't specified (implies optional)
-export type ParameterKind = 'required' | 'optional' | 'literal' | 'flag' | ClientSideDefault;
+export type BodyFormat = 'JSON' | 'XML' | 'Text' | 'binary';
 
+// parameter is sent in the HTTP request body
+export interface BodyParameter extends Parameter {
+  bodyFormat: BodyFormat;
+
+  // "application/text" etc...
+  contentType: string;
+
+  xml?: type.XMLInfo;
+}
+
+// ClientSideDefault is used to represent parameters that have a default value on the client side
 export interface ClientSideDefault {
   defaultValue: type.LiteralValue;
+}
+
+export type CollectionFormat = 'csv' | 'ssv' | 'tsv' | 'pipes';
+
+export type ExtendedCollectionFormat = CollectionFormat | 'multi';
+
+export interface FormBodyCollectionParameter extends Parameter {
+  formDataName: string;
+
+  type: type.SliceType;
+
+  collectionFormat: ExtendedCollectionFormat;
+}
+
+export interface FormBodyParameter extends Parameter {
+  formDataName: string;
+}
+
+export interface HeaderCollectionParameter extends Parameter {
+  headerName: string;
+
+  type: type.SliceType;
+
+  collectionFormat: CollectionFormat;
+}
+
+// this is a special type to support x-ms-header-collection-prefix (i.e. storage)
+export interface HeaderMapParameter extends Parameter {
+  headerName: string;
+
+  type: type.MapType;
+
+  collectionPrefix: string;
+}
+
+// parameter is sent via an HTTP header
+export interface HeaderParameter extends Parameter {
+  headerName: string;
+
+  type: HeaderType;
+}
+
+export type HeaderType = type.BytesType | type.ConstantType | type.PrimitiveType | type.TimeType | type.LiteralValue;
+
+export interface MultipartFormBodyParameter extends Parameter {
+  multipartForm: true;
 }
 
 // Parameter is a parameter for a client method
@@ -35,9 +87,12 @@ export interface Parameter {
   location: ParameterLocation;
 }
 
-export function isClientSideDefault(kind: ParameterKind): kind is ClientSideDefault {
-  return (<ClientSideDefault>kind).defaultValue !== undefined;
-}
+// required - the parameter is required
+// optional - the parameter is optional
+// literal - there is no formal parameter, the value is emitted directly in the code (e.g. the Accept header parameter)
+// flag - the value is a literal and emitted in the code, but sent IFF the flag param is not nil (i.e. an optional LiteralValue)
+// ClientSideDefault - the parameter has an emitted default value that's sent if one isn't specified (implies optional)
+export type ParameterKind = 'required' | 'optional' | 'literal' | 'flag' | ClientSideDefault;
 
 export type ParameterLocation = 'client' | 'method';
 
@@ -58,43 +113,14 @@ export interface ParameterGroup {
   params: Array<Parameter>;
 }
 
-export type HeaderType = type.BytesType | type.ConstantType | type.PrimitiveType | type.TimeType | type.LiteralValue;
+// PartialBodyParameter is a field within a struct type sent in the body
+export interface PartialBodyParameter extends Parameter {
+  // the name of the field over the wire
+  serializedName: string;
 
-// parameter is sent via an HTTP header
-export interface HeaderParameter extends Parameter {
-  headerName: string;
+  format: 'JSON' | 'XML';
 
-  type: HeaderType;
-}
-
-export type CollectionFormat = 'csv' | 'ssv' | 'tsv' | 'pipes';
-
-export interface HeaderCollectionParameter extends Parameter {
-  headerName: string;
-
-  type: type.SliceType;
-
-  collectionFormat: CollectionFormat;
-}
-
-// this is a special type to support x-ms-header-collection-prefix (i.e. storage)
-export interface HeaderMapParameter extends Parameter {
-  headerName: string;
-
-  type: type.MapType;
-
-  collectionPrefix: string;
-}
-
-export type PathParameterType = type.BytesType | type.ConstantType | type.PrimitiveType | type.TimeType | type.LiteralValue;
-
-// parameter is a segment in a path
-export interface PathParameter extends Parameter {
-  pathSegment: string;
-
-  type: PathParameterType;
-
-  isEncoded: boolean;
+  xml?: type.XMLInfo;
 }
 
 export interface PathCollectionParameter extends Parameter {
@@ -107,18 +133,16 @@ export interface PathCollectionParameter extends Parameter {
   collectionFormat: CollectionFormat;
 }
 
-export type QueryParameterType = type.BytesType | type.ConstantType | type.PrimitiveType | type.TimeType | type.LiteralValue;
+// parameter is a segment in a path
+export interface PathParameter extends Parameter {
+  pathSegment: string;
 
-// parameter is sent via an HTTP query parameter
-export interface QueryParameter extends Parameter {
-  queryParameter: string;
-
-  type: QueryParameterType;
+  type: PathParameterType;
 
   isEncoded: boolean;
 }
 
-export type ExtendedCollectionFormat = CollectionFormat | 'multi';
+export type PathParameterType = type.BytesType | type.ConstantType | type.PrimitiveType | type.TimeType | type.LiteralValue;
 
 export interface QueryCollectionParameter extends Parameter {
   queryParameter: string;
@@ -130,7 +154,20 @@ export interface QueryCollectionParameter extends Parameter {
   collectionFormat: ExtendedCollectionFormat;
 }
 
-export type URIParameterType = type.ConstantType | type.PrimitiveType;
+// parameter is sent via an HTTP query parameter
+export interface QueryParameter extends Parameter {
+  queryParameter: string;
+
+  type: QueryParameterType;
+
+  isEncoded: boolean;
+}
+
+export type QueryParameterType = type.BytesType | type.ConstantType | type.PrimitiveType | type.TimeType | type.LiteralValue;
+
+export interface ResumeTokenParameter extends Parameter {
+  isResumeToken: true;
+}
 
 // parameter is a segment in the host
 export interface URIParameter extends Parameter {
@@ -139,50 +176,14 @@ export interface URIParameter extends Parameter {
   type: URIParameterType;
 }
 
-export type BodyFormat = 'JSON' | 'XML' | 'Text' | 'binary';
-
-// parameter is sent in the HTTP request body
-export interface BodyParameter extends Parameter {
-  bodyFormat: BodyFormat;
-
-  // "application/text" etc...
-  contentType: string;
-
-  xml?: type.XMLInfo;
-}
-
-// PartialBodyParameter is a field within a struct type sent in the body
-export interface PartialBodyParameter extends Parameter {
-  // the name of the field over the wire
-  serializedName: string;
-
-  format: 'JSON' | 'XML';
-
-  xml?: type.XMLInfo;
-}
-
-export interface FormBodyParameter extends Parameter {
-  formDataName: string;
-}
-
-export interface FormBodyCollectionParameter extends Parameter {
-  formDataName: string;
-
-  type: type.SliceType;
-
-  collectionFormat: ExtendedCollectionFormat;
-}
-
-export interface MultipartFormBodyParameter extends Parameter {
-  multipartForm: true;
-}
-
-export interface ResumeTokenParameter extends Parameter {
-  isResumeToken: true;
-}
+export type URIParameterType = type.ConstantType | type.PrimitiveType;
 
 export function isBodyParameter(param: Parameter): param is BodyParameter {
   return (<BodyParameter>param).bodyFormat !== undefined;
+}
+
+export function isClientSideDefault(kind: ParameterKind): kind is ClientSideDefault {
+  return (<ClientSideDefault>kind).defaultValue !== undefined;
 }
 
 export function isPartialBodyParameter(param: Parameter): param is PartialBodyParameter {
@@ -278,18 +279,9 @@ export class BodyParameter extends Parameter implements BodyParameter {
   }
 }
 
-export class PartialBodyParameter extends Parameter implements PartialBodyParameter{
-  constructor(name: string, serializedName: string, format: 'JSON' | 'XML', type: type.PossibleType, kind: ParameterKind, byValue: boolean) {
-    super(name, type, kind, byValue, 'method');
-    this.format = format;
-    this.serializedName = serializedName;
-  }
-}
-
-export class FormBodyParameter extends Parameter implements FormBodyParameter {
-  constructor(name: string, formDataName: string, type: type.PossibleType, kind: ParameterKind, byValue: boolean) {
-    super(name, type, kind, byValue, 'method');
-    this.formDataName = formDataName;
+export class ClientSideDefault implements ClientSideDefault {
+  constructor(defaultValue: type.LiteralValue) {
+    this.defaultValue = defaultValue;
   }
 }
 
@@ -301,17 +293,10 @@ export class FormBodyCollectionParameter extends Parameter implements FormBodyCo
   }
 }
 
-export class MultipartFormBodyParameter extends Parameter implements MultipartFormBodyParameter {
-  constructor(name: string, type: type.PossibleType, kind: ParameterKind, byValue: boolean) {
+export class FormBodyParameter extends Parameter implements FormBodyParameter {
+  constructor(name: string, formDataName: string, type: type.PossibleType, kind: ParameterKind, byValue: boolean) {
     super(name, type, kind, byValue, 'method');
-    this.multipartForm = true;
-  }
-}
-
-export class HeaderParameter extends Parameter implements HeaderParameter {
-  constructor(name: string, headerName: string, type: HeaderType, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
-    super(name, type, kind, byValue, location);
-    this.headerName = headerName;
+    this.formDataName = formDataName;
   }
 }
 
@@ -331,11 +316,37 @@ export class HeaderMapParameter extends Parameter implements HeaderMapParameter 
   }
 }
 
-export class PathParameter extends Parameter implements PathParameter {
-  constructor(name: string, pathSegment: string, isEncoded: boolean, type: PathParameterType, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
+export class HeaderParameter extends Parameter implements HeaderParameter {
+  constructor(name: string, headerName: string, type: HeaderType, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
     super(name, type, kind, byValue, location);
-    this.pathSegment = pathSegment;
-    this.isEncoded = isEncoded;
+    this.headerName = headerName;
+  }
+}
+
+export class MultipartFormBodyParameter extends Parameter implements MultipartFormBodyParameter {
+  constructor(name: string, type: type.PossibleType, kind: ParameterKind, byValue: boolean) {
+    super(name, type, kind, byValue, 'method');
+    this.multipartForm = true;
+  }
+}
+
+export class ParameterGroup implements ParameterGroup {
+  constructor(name: string, groupName: string, required: boolean, location: ParameterLocation) {
+    this.groupName = groupName;
+    this.location = location;
+    this.name = name;
+    // params is required but must be populated post construction
+    this.params = new Array<Parameter>();
+    this.required = required;
+    this.docs = {};
+  }
+}
+
+export class PartialBodyParameter extends Parameter implements PartialBodyParameter{
+  constructor(name: string, serializedName: string, format: 'JSON' | 'XML', type: type.PossibleType, kind: ParameterKind, byValue: boolean) {
+    super(name, type, kind, byValue, 'method');
+    this.format = format;
+    this.serializedName = serializedName;
   }
 }
 
@@ -348,10 +359,10 @@ export class PathCollectionParameter extends Parameter implements PathCollection
   }
 }
 
-export class QueryParameter extends Parameter implements QueryParameter {
-  constructor(name: string, queryParam: string, isEncoded: boolean, type: QueryParameterType, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
+export class PathParameter extends Parameter implements PathParameter {
+  constructor(name: string, pathSegment: string, isEncoded: boolean, type: PathParameterType, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
     super(name, type, kind, byValue, location);
-    this.queryParameter = queryParam;
+    this.pathSegment = pathSegment;
     this.isEncoded = isEncoded;
   }
 }
@@ -365,10 +376,11 @@ export class QueryCollectionParameter extends Parameter implements QueryCollecti
   }
 }
 
-export class URIParameter extends Parameter implements URIParameter {
-  constructor(name: string, uriPathSegment: string, type: type.ConstantType | type.PrimitiveType, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
+export class QueryParameter extends Parameter implements QueryParameter {
+  constructor(name: string, queryParam: string, isEncoded: boolean, type: QueryParameterType, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
     super(name, type, kind, byValue, location);
-    this.uriPathSegment = uriPathSegment;
+    this.queryParameter = queryParam;
+    this.isEncoded = isEncoded;
   }
 }
 
@@ -380,20 +392,9 @@ export class ResumeTokenParameter extends Parameter implements ResumeTokenParame
   }
 }
 
-export class ClientSideDefault implements ClientSideDefault {
-  constructor(defaultValue: type.LiteralValue) {
-    this.defaultValue = defaultValue;
-  }
-}
-
-export class ParameterGroup implements ParameterGroup {
-  constructor(name: string, groupName: string, required: boolean, location: ParameterLocation) {
-    this.groupName = groupName;
-    this.location = location;
-    this.name = name;
-    // params is required but must be populated post construction
-    this.params = new Array<Parameter>();
-    this.required = required;
-    this.docs = {};
+export class URIParameter extends Parameter implements URIParameter {
+  constructor(name: string, uriPathSegment: string, type: type.ConstantType | type.PrimitiveType, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
+    super(name, type, kind, byValue, location);
+    this.uriPathSegment = uriPathSegment;
   }
 }
