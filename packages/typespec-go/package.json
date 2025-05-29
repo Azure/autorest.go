@@ -1,6 +1,6 @@
 {
   "name": "@azure-tools/typespec-go",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "description": "TypeSpec emitter for Go SDKs",
   "type": "module",
   "exports": {
@@ -49,10 +49,10 @@
   "homepage": "https://github.com/Azure/autorest.go#readme",
   "readme": "https://github.com/Azure/autorest.go/blob/main/readme.md",
   "devDependencies": {
-    "@azure-tools/azure-http-specs": "0.1.0-alpha.17",
+    "@azure-tools/azure-http-specs": "0.1.0-alpha.18",
     "@azure-tools/typespec-autorest": "0.56.0",
     "@azure-tools/typespec-azure-core": "0.56.0",
-    "@azure-tools/typespec-azure-resource-manager": "0.56.0",
+    "@azure-tools/typespec-azure-resource-manager": "0.56.2",
     "@azure-tools/typespec-client-generator-core": "0.56.2",
     "@types/node": "catalog:",
     "@typespec/compiler": "1.0.0",
