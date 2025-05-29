@@ -45,6 +45,15 @@ export interface Client {
 
 export type ClientOptions = param.ParameterGroup | param.Parameter;
 
+// ClientAccessor is a client method that returns a sub-client instance.
+export interface ClientAccessor {
+  // the name of the client accessor method
+  name: string;
+
+  // the client returned by the accessor method
+  subClient: Client;
+}
+
 // represents a client constructor function
 export interface Constructor {
   name: string;
@@ -53,13 +62,20 @@ export interface Constructor {
   parameters: Array<param.Parameter>;
 }
 
-// ClientAccessor is a client method that returns a sub-client instance.
-export interface ClientAccessor {
-  // the name of the client accessor method
-  name: string;
+export type FinalStateVia = 'azure-async-operation' | 'location' | 'operation-location' | 'original-uri';
 
-  // the client returned by the accessor method
-  subClient: Client;
+export type HTTPMethod = 'delete' | 'get' | 'head' | 'patch' | 'post' | 'put';
+
+export interface LROMethod extends Method {
+  finalStateVia?: FinalStateVia;
+
+  isLRO: true;
+
+  operationLocationResultPath?: string;
+}
+
+export interface LROPageableMethod extends LROMethod, PageableMethod {
+  // no new fields are added
 }
 
 // Method is a method on a client
@@ -91,8 +107,6 @@ export interface Method {
   examples: Array<MethodExample>;
 }
 
-export type HTTPMethod = 'delete' | 'get' | 'head' | 'patch' | 'post' | 'put';
-
 export interface MethodNaming {
   // this is the name of the internal method for consumption by LROs/paging methods.
   internalMethod: string;
@@ -100,24 +114,6 @@ export interface MethodNaming {
   requestMethod: string;
 
   responseMethod: string;
-}
-
-export type FinalStateVia = 'azure-async-operation' | 'location' | 'operation-location' | 'original-uri';
-
-export interface LROMethod extends Method {
-  finalStateVia?: FinalStateVia;
-
-  isLRO: true;
-
-  operationLocationResultPath?: string;
-}
-
-export interface PageableMethod extends Method {
-  nextLinkName?: string;
-
-  nextPageMethod?: NextPageMethod;
-
-  isPageable: true;
 }
 
 // NextPageMethod is the internal method used for fetching the next page for a PageableMethod.
@@ -143,8 +139,12 @@ export interface NextPageMethod {
   isNextPageMethod: true;
 }
 
-export interface LROPageableMethod extends LROMethod, PageableMethod {
-  // no new fields are added
+export interface PageableMethod extends Method {
+  nextLinkName?: string;
+
+  nextPageMethod?: NextPageMethod;
+
+  isPageable: true;
 }
 
 export function isMethod(method: Method | NextPageMethod): method is Method {
@@ -210,13 +210,6 @@ export class Client implements Client {
   }
 }
 
-export class Constructor implements Constructor {
-  constructor(name: string) {
-    this.name = name;
-    this.parameters = new Array<param.Parameter>();
-  }
-}
-
 export class ClientAccessor implements ClientAccessor {
   constructor(name: string, subClient: Client) {
     this.name = name;
@@ -224,11 +217,10 @@ export class ClientAccessor implements ClientAccessor {
   }
 }
 
-export class MethodNaming implements MethodNaming {
-  constructor(internalMethod: string, requestMethod: string, responseMethod: string) {
-    this.internalMethod = internalMethod;
-    this.requestMethod = requestMethod;
-    this.responseMethod = responseMethod;
+export class Constructor implements Constructor {
+  constructor(name: string) {
+    this.name = name;
+    this.parameters = new Array<param.Parameter>();
   }
 }
 
@@ -239,18 +231,19 @@ export class LROMethod extends Method implements LROMethod {
   }
 }
 
-export class PageableMethod extends Method implements PageableMethod {
-  constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
-    super(name, client, httpPath, httpMethod, statusCodes, naming);
-    this.isPageable = true;
-  }
-}
-
 export class LROPageableMethod extends Method implements LROPageableMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     super(name, client, httpPath, httpMethod, statusCodes, naming);
     this.isLRO = true;
     this.isPageable = true;
+  }
+}
+
+export class MethodNaming implements MethodNaming {
+  constructor(internalMethod: string, requestMethod: string, responseMethod: string) {
+    this.internalMethod = internalMethod;
+    this.requestMethod = requestMethod;
+    this.responseMethod = responseMethod;
   }
 }
 
@@ -267,5 +260,12 @@ export class NextPageMethod implements NextPageMethod {
     this.isNextPageMethod = true;
     this.name = name;
     this.parameters = new Array<param.Parameter>();
+  }
+}
+
+export class PageableMethod extends Method implements PageableMethod {
+  constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
+    super(name, client, httpPath, httpMethod, statusCodes, naming);
+    this.isPageable = true;
   }
 }
