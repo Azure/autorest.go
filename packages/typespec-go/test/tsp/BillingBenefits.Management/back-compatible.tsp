@@ -34,3 +34,7 @@ using Microsoft.BillingBenefits;
 
 @@clientName(Discounts.create::parameters.resource, "body");
 @@clientName(Discounts.update::parameters.properties, "body");
+
+@@clientName(DiscountTypeProductFamily, "ProductFamilyDiscountTypeProperties", "go");
+@@clientName(DiscountTypeProduct, "ProductDiscountTypeProperties", "go");
+@@clientName(DiscountTypeProductSku, "ProductSkuDiscountTypeProperties", "go");

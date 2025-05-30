@@ -16,7 +16,7 @@ type DiscountPropertiesClassification interface {
 // DiscountTypePropertiesClassification provides polymorphic access to related types.
 // Call the interface's GetDiscountTypeProperties() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
-// - *DiscountTypeProduct, *DiscountTypeProductFamily, *DiscountTypeProductSKU, *DiscountTypeProperties
+// - *DiscountTypeProperties, *ProductDiscountTypeProperties, *ProductFamilyDiscountTypeProperties, *ProductSKUDiscountTypeProperties
 type DiscountTypePropertiesClassification interface {
 	// GetDiscountTypeProperties returns the DiscountTypeProperties content of the underlying type.
 	GetDiscountTypeProperties() *DiscountTypeProperties

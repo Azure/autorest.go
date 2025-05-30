@@ -40,11 +40,11 @@ func unmarshalDiscountTypePropertiesClassification(rawMsg json.RawMessage) (Disc
 	var b DiscountTypePropertiesClassification
 	switch m["discountType"] {
 	case string(DiscountTypeProductFamily):
-		b = &DiscountTypeProductFamily{}
+		b = &ProductFamilyDiscountTypeProperties{}
 	case string(DiscountTypeProduct):
-		b = &DiscountTypeProduct{}
+		b = &ProductDiscountTypeProperties{}
 	case string(DiscountTypeSKU):
-		b = &DiscountTypeProductSKU{}
+		b = &ProductSKUDiscountTypeProperties{}
 	default:
 		b = &DiscountTypeProperties{}
 	}

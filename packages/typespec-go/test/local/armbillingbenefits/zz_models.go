@@ -172,132 +172,6 @@ type DiscountProperties struct {
 // GetDiscountProperties implements the DiscountPropertiesClassification interface for type DiscountProperties.
 func (d *DiscountProperties) GetDiscountProperties() *DiscountProperties { return d }
 
-// DiscountTypeProduct - Discount type properties including product family name and product id.
-type DiscountTypeProduct struct {
-	// REQUIRED; The customer action on which the discount is applied. Supported values are Purchase, Consume, and Renew. Validation:
-	// Required, one of supported values.
-	ApplyDiscountOn *ApplyDiscountOn
-
-	// CONSTANT; Defines the type of discount. Supported values are ProductFamily, Product, Sku, CustomPrice, and CustomPriceMultiCurrency.
-	// Field has constant value DiscountTypeProduct, any specified value is ignored.
-	DiscountType *DiscountType
-
-	// Array of conditions for the discount. Validation: Optional. Maximum length is 1000.
-	Conditions []*ConditionsItem
-
-	// The discount combination rule when there are multiple applicable custom prices. Validation: Required. Supported values
-	// are Stackable and BestOf.
-	DiscountCombinationRule *DiscountCombinationRule
-
-	// Discount percentage provided for the customer. Validation: Required unless this is a price rule.
-	DiscountPercentage *float64
-
-	// Set only in price guarantee scenario.
-	PriceGuaranteeProperties *PriceGuaranteeProperties
-
-	// Product family for which the discount is given. Validation: Optional
-	ProductFamilyName *string
-
-	// Product ID for which the discount is given. Validation: Optional. No specific format, example: DZH318Z09V6F
-	ProductID *string
-}
-
-// GetDiscountTypeProperties implements the DiscountTypePropertiesClassification interface for type DiscountTypeProduct.
-func (d *DiscountTypeProduct) GetDiscountTypeProperties() *DiscountTypeProperties {
-	return &DiscountTypeProperties{
-		ApplyDiscountOn:          d.ApplyDiscountOn,
-		Conditions:               d.Conditions,
-		DiscountCombinationRule:  d.DiscountCombinationRule,
-		DiscountPercentage:       d.DiscountPercentage,
-		DiscountType:             d.DiscountType,
-		PriceGuaranteeProperties: d.PriceGuaranteeProperties,
-	}
-}
-
-// DiscountTypeProductFamily - Discount type properties including product family name
-type DiscountTypeProductFamily struct {
-	// REQUIRED; The customer action on which the discount is applied. Supported values are Purchase, Consume, and Renew. Validation:
-	// Required, one of supported values.
-	ApplyDiscountOn *ApplyDiscountOn
-
-	// CONSTANT; Defines the type of discount. Supported values are ProductFamily, Product, Sku, CustomPrice, and CustomPriceMultiCurrency.
-	// Field has constant value DiscountTypeProductFamily, any specified value is ignored.
-	DiscountType *DiscountType
-
-	// Array of conditions for the discount. Validation: Optional. Maximum length is 1000.
-	Conditions []*ConditionsItem
-
-	// The discount combination rule when there are multiple applicable custom prices. Validation: Required. Supported values
-	// are Stackable and BestOf.
-	DiscountCombinationRule *DiscountCombinationRule
-
-	// Discount percentage provided for the customer. Validation: Required unless this is a price rule.
-	DiscountPercentage *float64
-
-	// Set only in price guarantee scenario.
-	PriceGuaranteeProperties *PriceGuaranteeProperties
-
-	// Product family for which the discount is given. Validation: Optional
-	ProductFamilyName *string
-}
-
-// GetDiscountTypeProperties implements the DiscountTypePropertiesClassification interface for type DiscountTypeProductFamily.
-func (d *DiscountTypeProductFamily) GetDiscountTypeProperties() *DiscountTypeProperties {
-	return &DiscountTypeProperties{
-		ApplyDiscountOn:          d.ApplyDiscountOn,
-		Conditions:               d.Conditions,
-		DiscountCombinationRule:  d.DiscountCombinationRule,
-		DiscountPercentage:       d.DiscountPercentage,
-		DiscountType:             d.DiscountType,
-		PriceGuaranteeProperties: d.PriceGuaranteeProperties,
-	}
-}
-
-// DiscountTypeProductSKU - Discount type properties including product family name, product id, and sku id.
-type DiscountTypeProductSKU struct {
-	// REQUIRED; The customer action on which the discount is applied. Supported values are Purchase, Consume, and Renew. Validation:
-	// Required, one of supported values.
-	ApplyDiscountOn *ApplyDiscountOn
-
-	// CONSTANT; Defines the type of discount. Supported values are ProductFamily, Product, Sku, CustomPrice, and CustomPriceMultiCurrency.
-	// Field has constant value DiscountTypeSKU, any specified value is ignored.
-	DiscountType *DiscountType
-
-	// Array of conditions for the discount. Validation: Optional. Maximum length is 1000.
-	Conditions []*ConditionsItem
-
-	// The discount combination rule when there are multiple applicable custom prices. Validation: Required. Supported values
-	// are Stackable and BestOf.
-	DiscountCombinationRule *DiscountCombinationRule
-
-	// Discount percentage provided for the customer. Validation: Required unless this is a price rule.
-	DiscountPercentage *float64
-
-	// Set only in price guarantee scenario.
-	PriceGuaranteeProperties *PriceGuaranteeProperties
-
-	// Product family for which the discount is given. Validation: Optional
-	ProductFamilyName *string
-
-	// Product ID for which the discount is given. Validation: Optional. No specific format, example: DZH318Z09V6F
-	ProductID *string
-
-	// ResourceSku for the given discount. Validation: Optional.
-	SKUID *string
-}
-
-// GetDiscountTypeProperties implements the DiscountTypePropertiesClassification interface for type DiscountTypeProductSKU.
-func (d *DiscountTypeProductSKU) GetDiscountTypeProperties() *DiscountTypeProperties {
-	return &DiscountTypeProperties{
-		ApplyDiscountOn:          d.ApplyDiscountOn,
-		Conditions:               d.Conditions,
-		DiscountCombinationRule:  d.DiscountCombinationRule,
-		DiscountPercentage:       d.DiscountPercentage,
-		DiscountType:             d.DiscountType,
-		PriceGuaranteeProperties: d.PriceGuaranteeProperties,
-	}
-}
-
 // DiscountTypeProperties - This defines the conditions for a given discount type.
 type DiscountTypeProperties struct {
 	// REQUIRED; The customer action on which the discount is applied. Supported values are Purchase, Consume, and Renew. Validation:
@@ -590,6 +464,132 @@ type PriceGuaranteeProperties struct {
 
 	// Supported values: Protected, Locked
 	PricingPolicy *PricingPolicy
+}
+
+// ProductDiscountTypeProperties - Discount type properties including product family name and product id.
+type ProductDiscountTypeProperties struct {
+	// REQUIRED; The customer action on which the discount is applied. Supported values are Purchase, Consume, and Renew. Validation:
+	// Required, one of supported values.
+	ApplyDiscountOn *ApplyDiscountOn
+
+	// CONSTANT; Defines the type of discount. Supported values are ProductFamily, Product, Sku, CustomPrice, and CustomPriceMultiCurrency.
+	// Field has constant value DiscountTypeProduct, any specified value is ignored.
+	DiscountType *DiscountType
+
+	// Array of conditions for the discount. Validation: Optional. Maximum length is 1000.
+	Conditions []*ConditionsItem
+
+	// The discount combination rule when there are multiple applicable custom prices. Validation: Required. Supported values
+	// are Stackable and BestOf.
+	DiscountCombinationRule *DiscountCombinationRule
+
+	// Discount percentage provided for the customer. Validation: Required unless this is a price rule.
+	DiscountPercentage *float64
+
+	// Set only in price guarantee scenario.
+	PriceGuaranteeProperties *PriceGuaranteeProperties
+
+	// Product family for which the discount is given. Validation: Optional
+	ProductFamilyName *string
+
+	// Product ID for which the discount is given. Validation: Optional. No specific format, example: DZH318Z09V6F
+	ProductID *string
+}
+
+// GetDiscountTypeProperties implements the DiscountTypePropertiesClassification interface for type ProductDiscountTypeProperties.
+func (p *ProductDiscountTypeProperties) GetDiscountTypeProperties() *DiscountTypeProperties {
+	return &DiscountTypeProperties{
+		ApplyDiscountOn:          p.ApplyDiscountOn,
+		Conditions:               p.Conditions,
+		DiscountCombinationRule:  p.DiscountCombinationRule,
+		DiscountPercentage:       p.DiscountPercentage,
+		DiscountType:             p.DiscountType,
+		PriceGuaranteeProperties: p.PriceGuaranteeProperties,
+	}
+}
+
+// ProductFamilyDiscountTypeProperties - Discount type properties including product family name
+type ProductFamilyDiscountTypeProperties struct {
+	// REQUIRED; The customer action on which the discount is applied. Supported values are Purchase, Consume, and Renew. Validation:
+	// Required, one of supported values.
+	ApplyDiscountOn *ApplyDiscountOn
+
+	// CONSTANT; Defines the type of discount. Supported values are ProductFamily, Product, Sku, CustomPrice, and CustomPriceMultiCurrency.
+	// Field has constant value DiscountTypeProductFamily, any specified value is ignored.
+	DiscountType *DiscountType
+
+	// Array of conditions for the discount. Validation: Optional. Maximum length is 1000.
+	Conditions []*ConditionsItem
+
+	// The discount combination rule when there are multiple applicable custom prices. Validation: Required. Supported values
+	// are Stackable and BestOf.
+	DiscountCombinationRule *DiscountCombinationRule
+
+	// Discount percentage provided for the customer. Validation: Required unless this is a price rule.
+	DiscountPercentage *float64
+
+	// Set only in price guarantee scenario.
+	PriceGuaranteeProperties *PriceGuaranteeProperties
+
+	// Product family for which the discount is given. Validation: Optional
+	ProductFamilyName *string
+}
+
+// GetDiscountTypeProperties implements the DiscountTypePropertiesClassification interface for type ProductFamilyDiscountTypeProperties.
+func (p *ProductFamilyDiscountTypeProperties) GetDiscountTypeProperties() *DiscountTypeProperties {
+	return &DiscountTypeProperties{
+		ApplyDiscountOn:          p.ApplyDiscountOn,
+		Conditions:               p.Conditions,
+		DiscountCombinationRule:  p.DiscountCombinationRule,
+		DiscountPercentage:       p.DiscountPercentage,
+		DiscountType:             p.DiscountType,
+		PriceGuaranteeProperties: p.PriceGuaranteeProperties,
+	}
+}
+
+// ProductSKUDiscountTypeProperties - Discount type properties including product family name, product id, and sku id.
+type ProductSKUDiscountTypeProperties struct {
+	// REQUIRED; The customer action on which the discount is applied. Supported values are Purchase, Consume, and Renew. Validation:
+	// Required, one of supported values.
+	ApplyDiscountOn *ApplyDiscountOn
+
+	// CONSTANT; Defines the type of discount. Supported values are ProductFamily, Product, Sku, CustomPrice, and CustomPriceMultiCurrency.
+	// Field has constant value DiscountTypeSKU, any specified value is ignored.
+	DiscountType *DiscountType
+
+	// Array of conditions for the discount. Validation: Optional. Maximum length is 1000.
+	Conditions []*ConditionsItem
+
+	// The discount combination rule when there are multiple applicable custom prices. Validation: Required. Supported values
+	// are Stackable and BestOf.
+	DiscountCombinationRule *DiscountCombinationRule
+
+	// Discount percentage provided for the customer. Validation: Required unless this is a price rule.
+	DiscountPercentage *float64
+
+	// Set only in price guarantee scenario.
+	PriceGuaranteeProperties *PriceGuaranteeProperties
+
+	// Product family for which the discount is given. Validation: Optional
+	ProductFamilyName *string
+
+	// Product ID for which the discount is given. Validation: Optional. No specific format, example: DZH318Z09V6F
+	ProductID *string
+
+	// ResourceSku for the given discount. Validation: Optional.
+	SKUID *string
+}
+
+// GetDiscountTypeProperties implements the DiscountTypePropertiesClassification interface for type ProductSKUDiscountTypeProperties.
+func (p *ProductSKUDiscountTypeProperties) GetDiscountTypeProperties() *DiscountTypeProperties {
+	return &DiscountTypeProperties{
+		ApplyDiscountOn:          p.ApplyDiscountOn,
+		Conditions:               p.Conditions,
+		DiscountCombinationRule:  p.DiscountCombinationRule,
+		DiscountPercentage:       p.DiscountPercentage,
+		DiscountType:             p.DiscountType,
+		PriceGuaranteeProperties: p.PriceGuaranteeProperties,
+	}
 }
 
 type PurchaseRequest struct {

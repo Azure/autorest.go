@@ -75,7 +75,7 @@ func ExampleDiscountsClient_BeginCreate() {
 	// 			BillingAccountResourceID: to.Ptr("/providers/Microsoft.Billing/billingAccounts/20000000-1000-0000-0000-000000000000:20000000-0000-3000-0000-000000000000_2019-05-31"),
 	// 			BillingProfileResourceID: to.Ptr("/providers/Microsoft.Billing/billingAccounts/20000000-1000-0000-0000-000000000000:20000000-0000-3000-0000-000000000000_2019-05-31/billingProfiles/KPSV-DWNE-BG7-TGB"),
 	// 			CustomerResourceID: to.Ptr("/providers/Microsoft.Billing/billingAccounts/20000000-1000-0000-0000-000000000000:20000000-0000-3000-0000-000000000000_2019-05-31/customers/40000000-0000-0000-0000-000000000000"),
-	// 			DiscountTypeProperties: &armbillingbenefits.DiscountTypeProductSKU{
+	// 			DiscountTypeProperties: &armbillingbenefits.ProductSKUDiscountTypeProperties{
 	// 				ApplyDiscountOn: to.Ptr(armbillingbenefits.ApplyDiscountOnPurchase),
 	// 				Conditions: []*armbillingbenefits.ConditionsItem{
 	// 					{
