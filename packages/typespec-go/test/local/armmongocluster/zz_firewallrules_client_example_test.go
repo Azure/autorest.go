@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
-	"time"
 )
 
 // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleCreate.json
@@ -41,7 +40,7 @@ func ExampleFirewallRulesClient_BeginCreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.FirewallRulesClientCreateOrUpdateResponse{
-	// 	FirewallRule: armmongocluster.FirewallRule{
+	// 	FirewallRule: &armmongocluster.FirewallRule{
 	// 		ID: to.Ptr("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster/firewallRules/rule1"),
 	// 		Name: to.Ptr("rule1"),
 	// 		Type: to.Ptr("/Microsoft.DocumentDB/mongoClusters/firewallRules"),
@@ -102,7 +101,7 @@ func ExampleFirewallRulesClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.FirewallRulesClientGetResponse{
-	// 	FirewallRule: armmongocluster.FirewallRule{
+	// 	FirewallRule: &armmongocluster.FirewallRule{
 	// 		ID: to.Ptr("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster/firewallRules/rule1"),
 	// 		Name: to.Ptr("rule1"),
 	// 		Type: to.Ptr("/Microsoft.DocumentDB/mongoClusters/firewallRules"),

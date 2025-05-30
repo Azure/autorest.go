@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
-	"time"
 )
 
 // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionPut.json
@@ -43,7 +42,7 @@ func ExamplePrivateEndpointConnectionsClient_BeginCreate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.PrivateEndpointConnectionsClientCreateResponse{
-	// 	PrivateEndpointConnectionResource: armmongocluster.PrivateEndpointConnectionResource{
+	// 	PrivateEndpointConnectionResource: &armmongocluster.PrivateEndpointConnectionResource{
 	// 		Name: to.Ptr("pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"),
 	// 		ID: to.Ptr("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster/privateEndpointConnections/pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"),
 	// 		Type: to.Ptr("Microsoft.DocumentDB/mongoClusters/privateEndpointConnections"),
@@ -113,7 +112,7 @@ func ExamplePrivateEndpointConnectionsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.PrivateEndpointConnectionsClientGetResponse{
-	// 	PrivateEndpointConnectionResource: armmongocluster.PrivateEndpointConnectionResource{
+	// 	PrivateEndpointConnectionResource: &armmongocluster.PrivateEndpointConnectionResource{
 	// 		Name: to.Ptr("pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"),
 	// 		ID: to.Ptr("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster/privateEndpointConnections/pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"),
 	// 		Type: to.Ptr("Microsoft.DocumentDB/mongoClusters/privateEndpointConnections"),

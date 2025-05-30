@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
-	"time"
 )
 
 // Generated from example definition: 2023-12-01-preview/LoadTestMappings_CreateOrUpdate.json
@@ -38,7 +37,7 @@ func ExampleLoadTestMappingsClient_CreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armloadtestservice.LoadTestMappingsClientCreateOrUpdateResponse{
-	// 	LoadTestMappingResource: armloadtestservice.LoadTestMappingResource{
+	// 	LoadTestMappingResource: &armloadtestservice.LoadTestMappingResource{
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.Web/sites/sitename/providers/Microsoft.LoadTestService/loadTestMappings/myLoadTestMapping"),
 	// 		Name: to.Ptr("myLoadTestMapping"),
 	// 		Type: to.Ptr("Microsoft.LoadTestService/loadTestMappings"),
@@ -100,7 +99,7 @@ func ExampleLoadTestMappingsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armloadtestservice.LoadTestMappingsClientGetResponse{
-	// 	LoadTestMappingResource: armloadtestservice.LoadTestMappingResource{
+	// 	LoadTestMappingResource: &armloadtestservice.LoadTestMappingResource{
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.Web/sites/sitename/providers/Microsoft.LoadTestService/loadTestMappings/myLoadTestMapping"),
 	// 		Name: to.Ptr("myLoadTestMapping"),
 	// 		Type: to.Ptr("Microsoft.LoadTestService/loadTestMappings"),
@@ -191,7 +190,7 @@ func ExampleLoadTestMappingsClient_Update() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armloadtestservice.LoadTestMappingsClientUpdateResponse{
-	// 	LoadTestMappingResource: armloadtestservice.LoadTestMappingResource{
+	// 	LoadTestMappingResource: &armloadtestservice.LoadTestMappingResource{
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.Web/sites/sitename/providers/Microsoft.LoadTestService/loadTestMappings/myLoadTestMapping"),
 	// 		Name: to.Ptr("myLoadTestMapping"),
 	// 		Type: to.Ptr("Microsoft.LoadTestService/loadTestMappings"),

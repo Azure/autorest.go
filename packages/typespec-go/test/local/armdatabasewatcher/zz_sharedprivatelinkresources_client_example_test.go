@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
-	"time"
 )
 
 // Generated from example definition: 2024-07-19-preview/SharedPrivateLinkResources_Create_MaximumSet_Gen.json
@@ -44,7 +43,7 @@ func ExampleSharedPrivateLinkResourcesClient_BeginCreate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armdatabasewatcher.SharedPrivateLinkResourcesClientCreateResponse{
-	// 	SharedPrivateLinkResource: armdatabasewatcher.SharedPrivateLinkResource{
+	// 	SharedPrivateLinkResource: &armdatabasewatcher.SharedPrivateLinkResource{
 	// 		Properties: &armdatabasewatcher.SharedPrivateLinkResourceProperties{
 	// 			PrivateLinkResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.KeyVault/vaults/kvmo3ej9ih"),
 	// 			GroupID: to.Ptr("vault"),
@@ -108,7 +107,7 @@ func ExampleSharedPrivateLinkResourcesClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armdatabasewatcher.SharedPrivateLinkResourcesClientGetResponse{
-	// 	SharedPrivateLinkResource: armdatabasewatcher.SharedPrivateLinkResource{
+	// 	SharedPrivateLinkResource: &armdatabasewatcher.SharedPrivateLinkResource{
 	// 		Properties: &armdatabasewatcher.SharedPrivateLinkResourceProperties{
 	// 			PrivateLinkResourceID: to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest-ddat4p/providers/Microsoft.KeyVault/vaults/kvmo3ej9ih"),
 	// 			GroupID: to.Ptr("vault"),

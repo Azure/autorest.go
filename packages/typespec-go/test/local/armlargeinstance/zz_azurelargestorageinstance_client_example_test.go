@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
-	"time"
 )
 
 // Generated from example definition: 2024-08-01-preview/AzureLargeStorageInstance_Create.json
@@ -51,7 +50,7 @@ func ExampleAzureLargeStorageInstanceClient_Create() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armlargeinstance.AzureLargeStorageInstanceClientCreateResponse{
-	// 	AzureLargeStorageInstance: armlargeinstance.AzureLargeStorageInstance{
+	// 	AzureLargeStorageInstance: &armlargeinstance.AzureLargeStorageInstance{
 	// 		ID: to.Ptr("/subscriptions/f0f4887f-d13c-4943-a8ba-d7da28d2a3fd/resourceGroups/myResourceGroup/providers/Microsoft.AzureLargeInstance/AzureLargeStorageInstances/myAzureLargeStorageInstance"),
 	// 		Location: to.Ptr("westus2"),
 	// 		Name: to.Ptr("myAzureLargeStorageInstance"),
@@ -127,7 +126,7 @@ func ExampleAzureLargeStorageInstanceClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armlargeinstance.AzureLargeStorageInstanceClientGetResponse{
-	// 	AzureLargeStorageInstance: armlargeinstance.AzureLargeStorageInstance{
+	// 	AzureLargeStorageInstance: &armlargeinstance.AzureLargeStorageInstance{
 	// 		ID: to.Ptr("/subscriptions/f0f4887f-d13c-4943-a8ba-d7da28d2a3fd/resourceGroups/myResourceGroup/providers/Microsoft.AzureLargeInstance/AzureLargeStorageInstances/myAzureLargeStorageInstance"),
 	// 		Location: to.Ptr("westus2"),
 	// 		Name: to.Ptr("myAzureLargeStorageInstance"),
@@ -375,7 +374,7 @@ func ExampleAzureLargeStorageInstanceClient_Update_azureLargeStorageInstanceUpda
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armlargeinstance.AzureLargeStorageInstanceClientUpdateResponse{
-	// 	AzureLargeStorageInstance: armlargeinstance.AzureLargeStorageInstance{
+	// 	AzureLargeStorageInstance: &armlargeinstance.AzureLargeStorageInstance{
 	// 		ID: to.Ptr("/subscriptions/f0f4887f-d13c-4943-a8ba-d7da28d2a3fd/resourceGroups/myResourceGroup/providers/Microsoft.AzureLargeInstance/AzureLargeStorageInstances/myAzureLargeStorageInstance"),
 	// 		Location: to.Ptr("westus2"),
 	// 		Name: to.Ptr("myAzureLargeStorageInstance"),
@@ -431,7 +430,7 @@ func ExampleAzureLargeStorageInstanceClient_Update_azureLargeStorageInstanceDele
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armlargeinstance.AzureLargeStorageInstanceClientUpdateResponse{
-	// 	AzureLargeStorageInstance: armlargeinstance.AzureLargeStorageInstance{
+	// 	AzureLargeStorageInstance: &armlargeinstance.AzureLargeStorageInstance{
 	// 		ID: to.Ptr("/subscriptions/f0f4887f-d13c-4943-a8ba-d7da28d2a3fd/resourceGroups/myResourceGroup/providers/Microsoft.AzureLargeInstance/AzureLargeStorageInstances/myAzureLargeStorageInstance"),
 	// 		Location: to.Ptr("westus2"),
 	// 		Name: to.Ptr("myAzureLargeStorageInstance"),
