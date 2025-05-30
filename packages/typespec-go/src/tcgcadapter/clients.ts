@@ -941,6 +941,10 @@ export class clientAdapter {
           if (go.isInterfaceType(goType)) {
             /* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */
             concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue)!;
+            if (concreteType === undefined) {
+              // can't find the sub type of a discriminated type, fallback to the base type
+              concreteType = goType.rootType;
+            }
           } else {
             concreteType = goType;
           }
