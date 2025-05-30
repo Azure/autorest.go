@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
-	"time"
 )
 
 // Generated from example definition: 2024-06-30-preview/CloudHsmCluster_Create_Backup_MaximumSet_Gen.json
@@ -62,7 +61,7 @@ func ExampleCloudHsmClustersClient_CloudHsmClusterBackupStatusGet() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armhardwaresecuritymodules.CloudHsmClustersClientCloudHsmClusterBackupStatusGetResponse{
-	// 	BackupResult: armhardwaresecuritymodules.BackupResult{
+	// 	BackupResult: &armhardwaresecuritymodules.BackupResult{
 	// 		Properties: &armhardwaresecuritymodules.BackupResultProperties{
 	// 			AzureStorageBlobContainerURI: to.Ptr("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"),
 	// 			EndTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2022-09-12T12:00:00.0000000Z"); return t}()),
@@ -94,7 +93,7 @@ func ExampleCloudHsmClustersClient_CloudHsmClusterRestoreStatusGet() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armhardwaresecuritymodules.CloudHsmClustersClientCloudHsmClusterRestoreStatusGetResponse{
-	// 	RestoreResult: armhardwaresecuritymodules.RestoreResult{
+	// 	RestoreResult: &armhardwaresecuritymodules.RestoreResult{
 	// 		Properties: &armhardwaresecuritymodules.BackupRestoreBaseResultProperties{
 	// 			EndTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2022-09-12T12:00:00.0000000Z"); return t}()),
 	// 			JobID: to.Ptr("572a45927fc240e1ac075de27371680b"),
@@ -148,7 +147,7 @@ func ExampleCloudHsmClustersClient_BeginCreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armhardwaresecuritymodules.CloudHsmClustersClientCreateOrUpdateResponse{
-	// 	CloudHsmCluster: armhardwaresecuritymodules.CloudHsmCluster{
+	// 	CloudHsmCluster: &armhardwaresecuritymodules.CloudHsmCluster{
 	// 		Name: to.Ptr("chsm1"),
 	// 		Type: to.Ptr("Microsoft.HardwareSecurityModules/cloudHsmClusters"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgcloudhsm/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/chsm1"),
@@ -229,7 +228,7 @@ func ExampleCloudHsmClustersClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armhardwaresecuritymodules.CloudHsmClustersClientGetResponse{
-	// 	CloudHsmCluster: armhardwaresecuritymodules.CloudHsmCluster{
+	// 	CloudHsmCluster: &armhardwaresecuritymodules.CloudHsmCluster{
 	// 		Name: to.Ptr("chsm1"),
 	// 		Type: to.Ptr("Microsoft.HardwareSecurityModules/cloudHsmClusters"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgcloudhsm/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/chsm1"),
@@ -594,7 +593,7 @@ func ExampleCloudHsmClustersClient_BeginUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armhardwaresecuritymodules.CloudHsmClustersClientUpdateResponse{
-	// 	CloudHsmCluster: armhardwaresecuritymodules.CloudHsmCluster{
+	// 	CloudHsmCluster: &armhardwaresecuritymodules.CloudHsmCluster{
 	// 		Name: to.Ptr("chsm1"),
 	// 		Type: to.Ptr("Microsoft.HardwareSecurityModules/cloudHsmClusters"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgcloudhsm/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/chsm1"),

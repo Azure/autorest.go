@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
-	"time"
 )
 
 // Generated from example definition: 2023-12-01-preview/LoadTests_CreateOrUpdate.json
@@ -57,7 +56,7 @@ func ExampleLoadTestsClient_BeginCreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armloadtestservice.LoadTestsClientCreateOrUpdateResponse{
-	// 	LoadTestResource: armloadtestservice.LoadTestResource{
+	// 	LoadTestResource: &armloadtestservice.LoadTestResource{
 	// 		Location: to.Ptr("westus"),
 	// 		Identity: &armloadtestservice.ManagedServiceIdentity{
 	// 			Type: to.Ptr(armloadtestservice.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
@@ -140,7 +139,7 @@ func ExampleLoadTestsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armloadtestservice.LoadTestsClientGetResponse{
-	// 	LoadTestResource: armloadtestservice.LoadTestResource{
+	// 	LoadTestResource: &armloadtestservice.LoadTestResource{
 	// 		Location: to.Ptr("westus"),
 	// 		Properties: &armloadtestservice.LoadTestProperties{
 	// 			Description: to.Ptr("This is new load test resource"),

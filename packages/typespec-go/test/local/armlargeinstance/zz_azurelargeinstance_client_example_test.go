@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
-	"time"
 )
 
 // Generated from example definition: 2024-08-01-preview/AzureLargeInstance_Create.json
@@ -64,7 +63,7 @@ func ExampleAzureLargeInstanceClient_Create() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armlargeinstance.AzureLargeInstanceClientCreateResponse{
-	// 	AzureLargeInstance: armlargeinstance.AzureLargeInstance{
+	// 	AzureLargeInstance: &armlargeinstance.AzureLargeInstance{
 	// 		ID: to.Ptr("/subscriptions/f0f4887f-d13c-4943-a8ba-d7da28d2a3fd/resourceGroups/myResourceGroup/providers/Microsoft.AzureLargeInstance/AzureLargeInstances/myALInstance"),
 	// 		Name: to.Ptr("myALInstance"),
 	// 		Type: to.Ptr("Microsoft.AzureLargeInstance/AzureLargeInstances"),
@@ -153,7 +152,7 @@ func ExampleAzureLargeInstanceClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armlargeinstance.AzureLargeInstanceClientGetResponse{
-	// 	AzureLargeInstance: armlargeinstance.AzureLargeInstance{
+	// 	AzureLargeInstance: &armlargeinstance.AzureLargeInstance{
 	// 		ID: to.Ptr("/subscriptions/f0f4887f-d13c-4943-a8ba-d7da28d2a3fd/resourceGroups/myResourceGroup/providers/Microsoft.AzureLargeInstance/AzureLargeInstances/myAzureLargeInstance"),
 	// 		Location: to.Ptr("westus2"),
 	// 		Name: to.Ptr("myAzureLargeInstance"),
@@ -486,7 +485,7 @@ func ExampleAzureLargeInstanceClient_BeginShutdown() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armlargeinstance.AzureLargeInstanceClientShutdownResponse{
-	// 	OperationStatusResult: armlargeinstance.OperationStatusResult{
+	// 	OperationStatusResult: &armlargeinstance.OperationStatusResult{
 	// 		Name: to.Ptr("00000000-0000-0000-0000-000000000001"),
 	// 		Status: to.Ptr("InProgress"),
 	// 		StartTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-08-04T21:17:24.9052926Z"); return t}()),
@@ -521,7 +520,7 @@ func ExampleAzureLargeInstanceClient_BeginStart() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armlargeinstance.AzureLargeInstanceClientStartResponse{
-	// 	OperationStatusResult: armlargeinstance.OperationStatusResult{
+	// 	OperationStatusResult: &armlargeinstance.OperationStatusResult{
 	// 		Name: to.Ptr("00000000-0000-0000-0000-000000000001"),
 	// 		Status: to.Ptr("InProgress"),
 	// 		StartTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-08-04T21:17:24.9052926Z"); return t}()),
@@ -556,7 +555,7 @@ func ExampleAzureLargeInstanceClient_Update_azureLargeInstanceUpdateTag() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armlargeinstance.AzureLargeInstanceClientUpdateResponse{
-	// 	AzureLargeInstance: armlargeinstance.AzureLargeInstance{
+	// 	AzureLargeInstance: &armlargeinstance.AzureLargeInstance{
 	// 		ID: to.Ptr("/subscriptions/f0f4887f-d13c-4943-a8ba-d7da28d2a3fd/resourceGroups/myResourceGroup/providers/Microsoft.AzureLargeInstance/AzureLargeInstances/myALInstance"),
 	// 		Name: to.Ptr("myALInstance"),
 	// 		Type: to.Ptr("Microsoft.AzureLargeInstance/AzureLargeInstances"),
@@ -625,7 +624,7 @@ func ExampleAzureLargeInstanceClient_Update_azureLargeInstanceDeleteTag() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armlargeinstance.AzureLargeInstanceClientUpdateResponse{
-	// 	AzureLargeInstance: armlargeinstance.AzureLargeInstance{
+	// 	AzureLargeInstance: &armlargeinstance.AzureLargeInstance{
 	// 		ID: to.Ptr("/subscriptions/f0f4887f-d13c-4943-a8ba-d7da28d2a3fd/resourceGroups/myResourceGroup/providers/Microsoft.AzureLargeInstance/AzureLargeInstances/myALInstance"),
 	// 		Name: to.Ptr("myALInstance"),
 	// 		Type: to.Ptr("Microsoft.AzureLargeInstance/AzureLargeInstances"),

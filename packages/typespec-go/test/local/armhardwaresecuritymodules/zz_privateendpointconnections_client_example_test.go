@@ -7,11 +7,9 @@ package armhardwaresecuritymodules_test
 import (
 	"armhardwaresecuritymodules"
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
-	"time"
 )
 
 // Generated from example definition: 2024-06-30-preview/CloudHsmClusterPrivateEndpointConnection_Create_MaximumSet_Gen.json
@@ -40,7 +38,7 @@ func ExamplePrivateEndpointConnectionsClient_Create() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armhardwaresecuritymodules.PrivateEndpointConnectionsClientCreateResponse{
-	// 	PrivateEndpointConnection: armhardwaresecuritymodules.PrivateEndpointConnection{
+	// 	PrivateEndpointConnection: &armhardwaresecuritymodules.PrivateEndpointConnection{
 	// 		Name: to.Ptr("sample-pec"),
 	// 		Type: to.Ptr("Microsoft.HardwareSecurityModules/cloudHsmClusters/privateEndpointConnections"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgcloudhsm/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/chsm1/privateEndpointConnections/sample-pec"),
@@ -107,7 +105,7 @@ func ExamplePrivateEndpointConnectionsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armhardwaresecuritymodules.PrivateEndpointConnectionsClientGetResponse{
-	// 	PrivateEndpointConnection: armhardwaresecuritymodules.PrivateEndpointConnection{
+	// 	PrivateEndpointConnection: &armhardwaresecuritymodules.PrivateEndpointConnection{
 	// 		Name: to.Ptr("sample-pec"),
 	// 		Type: to.Ptr("Microsoft.HardwareSecurityModules/cloudHsmClusters/privateEndpointConnections"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgcloudhsm/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/chsm1/privateEndpointConnections/sample-pec"),

@@ -41,7 +41,7 @@ func ExampleQuotasClient_CheckAvailability() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armloadtestservice.QuotasClientCheckAvailabilityResponse{
-	// 	CheckQuotaAvailabilityResponse: armloadtestservice.CheckQuotaAvailabilityResponse{
+	// 	CheckQuotaAvailabilityResponse: &armloadtestservice.CheckQuotaAvailabilityResponse{
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.LoadTestService/locations/westus/quotas/testQuotaBucket"),
 	// 		Name: to.Ptr("testQuotaBucket"),
 	// 		Type: to.Ptr("Microsoft.LoadTestService/locations/quotas"),
@@ -72,7 +72,7 @@ func ExampleQuotasClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armloadtestservice.QuotasClientGetResponse{
-	// 	QuotaResource: armloadtestservice.QuotaResource{
+	// 	QuotaResource: &armloadtestservice.QuotaResource{
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.LoadTestService/locations/westus/quotas/testQuotaBucket"),
 	// 		Name: to.Ptr("testQuotaBucket"),
 	// 		Type: to.Ptr("Microsoft.LoadTestService/locations/quotas"),

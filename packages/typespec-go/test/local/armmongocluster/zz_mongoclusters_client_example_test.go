@@ -35,7 +35,7 @@ func ExampleMongoClustersClient_CheckNameAvailability_checksAndConfirmsTheMongoC
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.MongoClustersClientCheckNameAvailabilityResponse{
-	// 	CheckNameAvailabilityResponse: armmongocluster.CheckNameAvailabilityResponse{
+	// 	CheckNameAvailabilityResponse: &armmongocluster.CheckNameAvailabilityResponse{
 	// 		NameAvailable: to.Ptr(true),
 	// 	},
 	// }
@@ -63,7 +63,7 @@ func ExampleMongoClustersClient_CheckNameAvailability_checksAndReturnsThatTheMon
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.MongoClustersClientCheckNameAvailabilityResponse{
-	// 	CheckNameAvailabilityResponse: armmongocluster.CheckNameAvailabilityResponse{
+	// 	CheckNameAvailabilityResponse: &armmongocluster.CheckNameAvailabilityResponse{
 	// 		NameAvailable: to.Ptr(false),
 	// 		Reason: to.Ptr(armmongocluster.CheckNameAvailabilityReasonAlreadyExists),
 	// 		Message: to.Ptr("Cluster name 'existingmongocluster' is already in use."),
@@ -115,7 +115,7 @@ func ExampleMongoClustersClient_BeginCreateOrUpdate_createsANewMongoClusterResou
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.MongoClustersClientCreateOrUpdateResponse{
-	// 	MongoCluster: armmongocluster.MongoCluster{
+	// 	MongoCluster: &armmongocluster.MongoCluster{
 	// 		ID: to.Ptr("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster"),
 	// 		Name: to.Ptr("myMongoCluster"),
 	// 		Type: to.Ptr("/Microsoft.DocumentDB/mongoClusters"),
@@ -194,7 +194,7 @@ func ExampleMongoClustersClient_BeginCreateOrUpdate_createsAReplicaMongoClusterR
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.MongoClustersClientCreateOrUpdateResponse{
-	// 	MongoCluster: armmongocluster.MongoCluster{
+	// 	MongoCluster: &armmongocluster.MongoCluster{
 	// 		ID: to.Ptr("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myReplicaMongoCluster"),
 	// 		Name: to.Ptr("myReplicaMongoCluster"),
 	// 		Type: to.Ptr("/Microsoft.DocumentDB/mongoClusters"),
@@ -268,7 +268,7 @@ func ExampleMongoClustersClient_BeginCreateOrUpdate_createsAMongoClusterResource
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.MongoClustersClientCreateOrUpdateResponse{
-	// 	MongoCluster: armmongocluster.MongoCluster{
+	// 	MongoCluster: &armmongocluster.MongoCluster{
 	// 		ID: to.Ptr("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster"),
 	// 		Name: to.Ptr("myMongoCluster"),
 	// 		Type: to.Ptr("/Microsoft.DocumentDB/mongoClusters"),
@@ -347,7 +347,7 @@ func ExampleMongoClustersClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.MongoClustersClientGetResponse{
-	// 	MongoCluster: armmongocluster.MongoCluster{
+	// 	MongoCluster: &armmongocluster.MongoCluster{
 	// 		ID: to.Ptr("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster"),
 	// 		Name: to.Ptr("myMongoCluster"),
 	// 		Type: to.Ptr("/Microsoft.DocumentDB/mongoClusters"),
@@ -677,7 +677,7 @@ func ExampleMongoClustersClient_ListConnectionStrings() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.MongoClustersClientListConnectionStringsResponse{
-	// 	ListConnectionStringsResult: armmongocluster.ListConnectionStringsResult{
+	// 	ListConnectionStringsResult: &armmongocluster.ListConnectionStringsResult{
 	// 		ConnectionStrings: []*armmongocluster.ConnectionString{
 	// 			{
 	// 				ConnectionString: to.Ptr("mongodb+srv://<user>:<password>@myMongoCluster.mongocluster.cosmos.azure.com"),
@@ -741,7 +741,7 @@ func ExampleMongoClustersClient_BeginUpdate_updatesTheDiskSizeOnAMongoClusterRes
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.MongoClustersClientUpdateResponse{
-	// 	MongoCluster: armmongocluster.MongoCluster{
+	// 	MongoCluster: &armmongocluster.MongoCluster{
 	// 		ID: to.Ptr("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster"),
 	// 		Name: to.Ptr("myMongoCluster"),
 	// 		Type: to.Ptr("/Microsoft.DocumentDB/mongoClusters"),
@@ -815,7 +815,7 @@ func ExampleMongoClustersClient_BeginUpdate_disablesPublicNetworkAccessOnAMongoC
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.MongoClustersClientUpdateResponse{
-	// 	MongoCluster: armmongocluster.MongoCluster{
+	// 	MongoCluster: &armmongocluster.MongoCluster{
 	// 		ID: to.Ptr("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster"),
 	// 		Name: to.Ptr("myMongoCluster"),
 	// 		Type: to.Ptr("/Microsoft.DocumentDB/mongoClusters"),
@@ -918,7 +918,7 @@ func ExampleMongoClustersClient_BeginUpdate_resetsTheAdministratorLoginPassword(
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.MongoClustersClientUpdateResponse{
-	// 	MongoCluster: armmongocluster.MongoCluster{
+	// 	MongoCluster: &armmongocluster.MongoCluster{
 	// 		ID: to.Ptr("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster"),
 	// 		Name: to.Ptr("myMongoCluster"),
 	// 		Type: to.Ptr("/Microsoft.DocumentDB/mongoClusters"),
@@ -1009,7 +1009,7 @@ func ExampleMongoClustersClient_BeginUpdate_updatesAMongoClusterResource() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.MongoClustersClientUpdateResponse{
-	// 	MongoCluster: armmongocluster.MongoCluster{
+	// 	MongoCluster: &armmongocluster.MongoCluster{
 	// 		ID: to.Ptr("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster"),
 	// 		Name: to.Ptr("myMongoCluster"),
 	// 		Type: to.Ptr("/Microsoft.DocumentDB/mongoClusters"),
