@@ -7,6 +7,32 @@ import * as param from './param.js';
 import * as result from './result.js';
 import { BytesType, ConstantType, Docs, LiteralValue, MapType, ModelType, PolymorphicType, PossibleType, PrimitiveType, SliceType, TimeType } from './type.js';
 
+export type ExampleType = AnyExample | ArrayExample | BooleanExample | DictionaryExample | NullExample | NumberExample | StringExample | StructExample;
+
+export interface AnyExample {
+  kind: 'any';
+  value: any;
+  type: PossibleType;
+}
+
+export interface ArrayExample {
+  kind: 'array';
+  value: Array<ExampleType>;
+  type: SliceType;
+}
+
+export interface BooleanExample {
+  kind: 'boolean';
+  value: boolean;
+  type: ConstantType | LiteralValue | PrimitiveType;
+}
+
+export interface DictionaryExample {
+  kind: 'dictionary';
+  value: Record<string, ExampleType>;
+  type: MapType;
+}
+
 // MethodExample is an example for a method. This code model part is for example or test generation.
 export interface MethodExample {
   name: string;
@@ -20,6 +46,18 @@ export interface MethodExample {
   optionalParamsGroup: Array<ParameterExample>;
 
   responseEnvelope?: ResponseEnvelopeExample;
+}
+
+export interface NullExample {
+  kind: 'null';
+  value: null;
+  type: PossibleType;
+}
+
+export interface NumberExample {
+  kind: 'number';
+  value: number;
+  type: ConstantType | LiteralValue | TimeType | PrimitiveType;
 }
 
 export interface ParameterExample {
@@ -38,48 +76,10 @@ export interface ResponseHeaderExample {
   value: ExampleType;
 }
 
-export type ExampleType = StringExample | NumberExample | BooleanExample | NullExample | AnyExample | ArrayExample | DictionaryExample | StructExample;
-
 export interface StringExample {
   kind: 'string';
   value: string;
   type: ConstantType | BytesType | LiteralValue | TimeType | PrimitiveType;
-}
-
-export interface NumberExample {
-  kind: 'number';
-  value: number;
-  type: ConstantType | LiteralValue | TimeType | PrimitiveType;
-}
-
-export interface BooleanExample {
-  kind: 'boolean';
-  value: boolean;
-  type: ConstantType | LiteralValue | PrimitiveType;
-}
-
-export interface NullExample {
-  kind: 'null';
-  value: null;
-  type: PossibleType;
-}
-
-export interface AnyExample {
-  kind: 'any';
-  value: any;
-  type: PossibleType;
-}
-
-export interface ArrayExample {
-  kind: 'array';
-  value: Array<ExampleType>;
-  type: SliceType;
-}
-
-export interface DictionaryExample {
-  kind: 'dictionary';
-  value: Record<string, ExampleType>;
-  type: MapType;
 }
 
 export interface StructExample {
@@ -89,6 +89,41 @@ export interface StructExample {
   type: ModelType | PolymorphicType;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+export class AnyExample implements AnyExample {
+  constructor(value: any) {
+    this.kind = 'any';
+    this.value = value;
+    this.type = new PrimitiveType('any');
+  }
+}
+
+export class ArrayExample implements ArrayExample {
+  constructor(type: SliceType) {
+    this.kind = 'array';
+    this.type = type;
+    this.value = [];
+  }
+}
+
+export class BooleanExample implements BooleanExample {
+  constructor(value: boolean, type: ConstantType | LiteralValue | PrimitiveType) {
+    this.kind = 'boolean';
+    this.value = value;
+    this.type = type;
+  }
+}
+
+export class DictionaryExample implements DictionaryExample {
+  constructor(type: MapType) {
+    this.kind = 'dictionary';
+    this.type = type;
+    this.value = {};
+  }
+}
+
 export class MethodExample implements MethodExample {
   constructor(name: string, docs: Docs, filePath: string) {
     this.name = name;
@@ -96,6 +131,21 @@ export class MethodExample implements MethodExample {
     this.filePath = filePath;
     this.parameters = [];
     this.optionalParamsGroup = [];
+  }
+}
+
+export class NullExample implements NullExample {
+  constructor(type: PossibleType) {
+    this.kind = 'null';
+    this.type = type;
+  }
+}
+
+export class NumberExample implements NumberExample {
+  constructor(value: number, type: ConstantType | LiteralValue | TimeType | PrimitiveType) {
+    this.kind = 'number';
+    this.value = value;
+    this.type = type;
   }
 }
 
@@ -125,53 +175,6 @@ export class StringExample implements StringExample {
     this.kind = 'string';
     this.value = value;
     this.type = type;
-  }
-}
-
-export class NumberExample implements NumberExample {
-  constructor(value: number, type: ConstantType | LiteralValue | TimeType | PrimitiveType) {
-    this.kind = 'number';
-    this.value = value;
-    this.type = type;
-  }
-}
-
-export class BooleanExample implements BooleanExample {
-  constructor(value: boolean, type: ConstantType | LiteralValue | PrimitiveType) {
-    this.kind = 'boolean';
-    this.value = value;
-    this.type = type;
-  }
-}
-
-export class NullExample implements NullExample {
-  constructor(type: PossibleType) {
-    this.kind = 'null';
-    this.type = type;
-  }
-}
-
-export class AnyExample implements AnyExample {
-  constructor(value: any) {
-    this.kind = 'any';
-    this.value = value;
-    this.type = new PrimitiveType('any');
-  }
-}
-
-export class ArrayExample implements ArrayExample {
-  constructor(type: SliceType) {
-    this.kind = 'array';
-    this.type = type;
-    this.value = [];
-  }
-}
-
-export class DictionaryExample implements DictionaryExample {
-  constructor(type: MapType) {
-    this.kind = 'dictionary';
-    this.type = type;
-    this.value = {};
   }
 }
 

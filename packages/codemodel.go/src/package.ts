@@ -51,6 +51,14 @@ export interface Info {
   title: string;
 }
 
+export interface Module {
+  // the full module path excluding any major version suffix
+  name: string;
+  
+  // the semantic version x.y.z[-beta.N]
+  version: string;
+}
+
 // Options contains global options set on the CodeModel.
 export interface Options {
   headerText: string;
@@ -83,50 +91,8 @@ export interface Options {
   factoryGatherAllParams: boolean;
 }
 
-export interface Module {
-  // the full module path excluding any major version suffix
-  name: string;
-  
-  // the semantic version x.y.z[-beta.N]
-  version: string;
-}
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-export class Info implements Info {
-  constructor(title: string) {
-    this.title = title;
-  }
-}
-
-export class Options implements Options {
-  constructor(headerText: string, generateFakes: boolean, injectSpans: boolean, disallowUnknownFields: boolean, generateExamples: boolean) {
-    this.headerText = headerText;
-    this.generateFakes = generateFakes;
-    this.injectSpans = injectSpans;
-    this.disallowUnknownFields = disallowUnknownFields;
-    this.generateExamples = generateExamples;
-  }
-}
-
-export class Module implements Module {
-  constructor(name: string, version: string) {
-    if (name.match(/\/v\d+$/)) {
-      throw new CodeModelError('module name must not contain major version suffix');
-    }
-    if (!version.match(/^(\d+\.\d+\.\d+(?:-beta\.\d+)?)?$/)) {
-      throw new CodeModelError(`module version ${version} must be in the format major.minor.patch[-beta.N]`);
-    }
-    // if the module's major version is greater than one, add a major version suffix to the module name
-    const majorVersion = version.substring(0, version.indexOf('.'));
-    if (Number(majorVersion) > 1) {
-      name += '/v' + majorVersion;
-    }
-    this.name = name;
-    this.version = version;
-  }
-}
 
 export class CodeModel implements CodeModel {
   constructor(info: Info, type: CodeModelType, packageName: string, options: Options) {
@@ -182,5 +148,39 @@ export class CodeModel implements CodeModel {
         method.httpStatusCodes.sort();
       }
     }
+  }
+}
+
+export class Info implements Info {
+  constructor(title: string) {
+    this.title = title;
+  }
+}
+
+export class Module implements Module {
+  constructor(name: string, version: string) {
+    if (name.match(/\/v\d+$/)) {
+      throw new CodeModelError('module name must not contain major version suffix');
+    }
+    if (!version.match(/^(\d+\.\d+\.\d+(?:-beta\.\d+)?)?$/)) {
+      throw new CodeModelError(`module version ${version} must be in the format major.minor.patch[-beta.N]`);
+    }
+    // if the module's major version is greater than one, add a major version suffix to the module name
+    const majorVersion = version.substring(0, version.indexOf('.'));
+    if (Number(majorVersion) > 1) {
+      name += '/v' + majorVersion;
+    }
+    this.name = name;
+    this.version = version;
+  }
+}
+
+export class Options implements Options {
+  constructor(headerText: string, generateFakes: boolean, injectSpans: boolean, disallowUnknownFields: boolean, generateExamples: boolean) {
+    this.headerText = headerText;
+    this.generateFakes = generateFakes;
+    this.injectSpans = injectSpans;
+    this.disallowUnknownFields = disallowUnknownFields;
+    this.generateExamples = generateExamples;
   }
 }
