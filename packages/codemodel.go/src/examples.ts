@@ -7,7 +7,7 @@ import * as param from './param.js';
 import * as result from './result.js';
 import { BytesType, ConstantType, Docs, LiteralValue, MapType, ModelType, PolymorphicType, PossibleType, PrimitiveType, SliceType, TimeType } from './type.js';
 
-export type ExampleType = StringExample | NumberExample | BooleanExample | NullExample | AnyExample | ArrayExample | DictionaryExample | StructExample;
+export type ExampleType = AnyExample | ArrayExample | BooleanExample | DictionaryExample | NullExample | NumberExample | StringExample | StructExample;
 
 export interface AnyExample {
   kind: 'any';
