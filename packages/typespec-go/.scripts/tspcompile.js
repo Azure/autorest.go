@@ -79,7 +79,7 @@ const azureHttpSpecsGroup = {
   'basicgroup': ['azure/core/basic'],
   'lrorpcgroup': ['azure/core/lro/rpc'],
   'lrostdgroup': ['azure/core/lro/standard'],
-  'azurepagegroup': ['azure/core/page'],
+  //'azurepagegroup': ['azure/core/page'], // requires paging with re-injection support
   'corescalargroup': ['azure/core/scalar'],
   //'traitsgroup': ['azure/core/traits'], // requires union support
   'pageablegroup': ['azure/payload/pageable'],
