@@ -8,57 +8,46 @@ package coreinitializationgroup
 
 import (
 	"context"
-	"errors"
 	"testing"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/stretchr/testify/require"
 )
 
-func TestServiceChildClient_DeleteStandalone_Success(t *testing.T) {
-	// Arrange
+func TestServiceChildClient_DeleteStandalone(t *testing.T) {
 	blobName := "testblob"
 	serviceClient, err := NewServiceClient(nil)
 	require.NoError(t, err)
 	client := serviceClient.NewServiceChildClient()
-
-	// Act
 	resp, err := client.DeleteStandalone(context.Background(), blobName, nil)
-
-	// Assert
 	require.NoError(t, err)
 	require.Equal(t, ServiceChildClientDeleteStandaloneResponse{}, resp)
-}
-
-func TestServiceChildClient_DeleteStandalone_EmptyBlobName(t *testing.T) {
-	serviceClient, err := NewServiceClient(nil)
-	require.NoError(t, err)
-	client := serviceClient.NewServiceChildClient()
-
 	_, err = client.DeleteStandalone(context.Background(), "", nil)
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "parameter blobName cannot be empty")
 }
 
-func TestServiceChildClient_DeleteStandalone_ErrorFromPipeline(t *testing.T) {
+func TestServiceChildClient_GetStandalone(t *testing.T) {
 	blobName := "testblob"
 	serviceClient, err := NewServiceClient(nil)
 	require.NoError(t, err)
 	client := serviceClient.NewServiceChildClient()
-
-	_, err = client.DeleteStandalone(context.Background(), blobName, nil)
+	resp, err := client.GetStandalone(context.Background(), blobName, nil)
+	require.NoError(t, err)
+	require.Equal(t, ServiceChildClientGetStandaloneResponse{}, resp)
+	_, err = client.GetStandalone(context.Background(), "", nil)
 	require.Error(t, err)
-	require.Contains(t, err.Error(), "pipeline error")
+	require.Contains(t, err.Error(), "parameter blobName cannot be empty")
 }
 
-func TestServiceChildClient_DeleteStandalone_Non204Status(t *testing.T) {
+func TestServiceChildClient_WithQuery(t *testing.T) {
 	blobName := "testblob"
 	serviceClient, err := NewServiceClient(nil)
 	require.NoError(t, err)
 	client := serviceClient.NewServiceChildClient()
-
-	_, err = client.DeleteStandalone(context.Background(), blobName, nil)
+	resp, err := client.WithQuery(context.Background(), blobName, nil)
+	require.NoError(t, err)
+	require.Equal(t, ServiceChildClientWithQueryResponse{}, resp)
+	_, err = client.WithQuery(context.Background(), "", nil)
 	require.Error(t, err)
-	var respErr *azcore.ResponseError
-	require.True(t, errors.As(err, &respErr))
+	require.Contains(t, err.Error(), "parameter blobName cannot be empty")
 }

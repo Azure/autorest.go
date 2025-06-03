@@ -18,3 +18,11 @@ func TestUnionAuthGroupClient_ValidKey(t *testing.T) {
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
+
+func TestUnionAuthGroupClient_ValidToken(t *testing.T) {
+	client, err := unionauthgroup.NewunionauthgroupClient(nil)
+	require.NoError(t, err)
+	resp, err := client.ValidToken(context.Background(), &unionauthgroup.UnionClientValidTokenOptions{})
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}

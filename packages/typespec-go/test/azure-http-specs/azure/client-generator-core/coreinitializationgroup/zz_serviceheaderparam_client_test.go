@@ -20,20 +20,11 @@ func TestServiceHeaderParamClient_WithBody_Success(t *testing.T) {
 	require.Equal(t, ServiceHeaderParamClientWithBodyResponse{}, resp)
 }
 
-func TestServiceHeaderParamClient_WithBody_ErrorOnRequest(t *testing.T) {
+func TestServiceHeaderParamClient_WithQuery(t *testing.T) {
 	serviceClient, err := NewServiceClient(nil)
 	require.NoError(t, err)
 	client := serviceClient.NewServiceHeaderParamClient()
 
-	_, err = client.WithBody(context.Background(), "sample", Input{}, nil)
-	require.Error(t, err)
-}
-
-func TestServiceHeaderParamClient_WithBody_Non204Status(t *testing.T) {
-	serviceClient, err := NewServiceClient(nil)
-	require.NoError(t, err)
-	client := serviceClient.NewServiceHeaderParamClient()
-
-	_, err = client.WithBody(context.Background(), "sample", Input{}, nil)
+	_, err = client.WithQuery(context.Background(), "name-01","id-01", &ServiceHeaderParamClientWithQueryOptions{})
 	require.Error(t, err)
 }

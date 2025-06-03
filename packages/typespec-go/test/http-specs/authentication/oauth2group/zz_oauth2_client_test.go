@@ -18,3 +18,11 @@ func TestOauth2GroupClient_Invalid(t *testing.T) {
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
+
+func TestOauth2GroupClient_Valid(t *testing.T) {
+	client, err := oauth2group.NewOauth2groupClient(nil)
+	require.NoError(t, err)
+	resp, err := client.Valid(context.Background(), &oauth2group.OAuth2ClientValidOptions{})
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
