@@ -1,28 +1,27 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package statuscoderangegroup_test
+package jsonlgroup
 
 import (
 	"context"
-	"statuscoderangegroup"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
-func TestStatusCodeRangeGroupClient_ErrorResponseStatusCode404(t *testing.T) {
-	client, err := statuscoderangegroup.NewStatusCodeRangeGrouppClient(nil)
+func TestJsonlBasicClient_Receive(t *testing.T) {
+	client, err := NewJsonlGroupClient(nil)
 	require.NoError(t, err)
-	resp, err := client.ErrorResponseStatusCode404(context.Background(), &statuscoderangegroup.StatusCodeRangeClientErrorResponseStatusCode404Options{})
+	resp, err := client.Receive(context.Background(), &JsonlBasicClientReceiveOptions{
+	})
 	require.NoError(t, err)
-	require.Zero(t, resp)
+	require.NotNil(t, resp.ContentType)
 }
 
-func TestStatusCodeRangeGroupClient_ErrorResponseStatusCodeInRange(t *testing.T) {
-	client, err := statuscoderangegroup.NewStatusCodeRangeGrouppClient(nil)
+func TestJsonlBasicClient_Send(t *testing.T) {
+	client, err := NewJsonlGroupClient(nil)
 	require.NoError(t, err)
-	resp, err := client.ErrorResponseStatusCodeInRange(context.Background(), &statuscoderangegroup.StatusCodeRangeClientErrorResponseStatusCodeInRangeOptions{})
+	_, err = client.Send(context.Background(), nil)
 	require.NoError(t, err)
-	require.Zero(t, resp)
 }
