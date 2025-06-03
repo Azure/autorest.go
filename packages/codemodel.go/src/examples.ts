@@ -93,8 +93,6 @@ export interface QualifiedExample {
   kind: 'qualified';
   value: any;
   type: QualifiedType;
-  packageName: string;
-  exportName: string;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -198,8 +196,6 @@ export class QualifiedExample implements QualifiedExample {
   constructor(type: QualifiedType, value: any) {
     this.kind = 'qualified';
     this.type = type;
-    this.packageName = type.packageName;
-    this.exportName = type.exportName;
     this.value = value;
   }
 }
