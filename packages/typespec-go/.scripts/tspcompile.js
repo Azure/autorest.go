@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 import { exec, execSync } from 'child_process';
-import { existsSync, opendirSync, unlinkSync } from 'fs';
+import { existsSync, opendirSync, unlinkSync, readFileSync, writeFileSync } from 'fs';
 import { semaphore } from '../../../.scripts/semaphore.js';
 
 // limit to 8 concurrent builds
@@ -191,6 +191,8 @@ generate('armhealthbot', armhealthbot, 'test/local/armhealthbot', [`examples-dir
 const armhardwaresecuritymodules = pkgRoot + 'test/tsp/HardwareSecurityModules.Management';
 generate('armhardwaresecuritymodules', armhardwaresecuritymodules, 'test/local/armhardwaresecuritymodules', [`examples-directory=${armhardwaresecuritymodules}/examples`, 'generate-samples=true']);
 
+const armcomputeschedule = pkgRoot + 'test/tsp/ComputeSchedule.Management';
+generate('armcomputeschedule', armcomputeschedule, 'test/local/armcomputeschedule', [`examples-directory=${armcomputeschedule}/examples`, 'generate-samples=true']);
 
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
@@ -286,6 +288,13 @@ function generate(moduleName, input, outputDir, perTestOptions) {
         // format on success
         if (error === null) {
           execSync('gofmt -w .', { cwd: fullOutputDir});
+          // Force emitter version to a constant in _metadata.json to avoid unnecessary version drift in committed files
+          const metadataPath = `${fullOutputDir}/_metadata.json`;
+          if (existsSync(metadataPath)) {
+            const metadata = JSON.parse(readFileSync(metadataPath, 'utf8'));
+            metadata.emitterVersion = '0.0.0';
+            writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
+          }
         }
       });
     } catch (err) {
