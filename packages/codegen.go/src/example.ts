@@ -228,9 +228,6 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
       exampleText = getConstantValue(codeModel, example.type.type, example.type.literal.value);
     }
     return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
-  } else if (example.kind === 'qualified') {
-    imports?.add(example.type.packageName);
-    return `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}(${jsonToGo(example.value, '')})`;
   } else if (example.kind === 'number') {
     let exampleText = `${example.value}`;
     if (go.isConstantType(example.type)) {
@@ -295,6 +292,17 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
     }
     exampleText += `${indent}}`;
     return exampleText;
+  } else if (example.kind === 'qualified') {
+    imports?.add(example.type.packageName);
+    if (example.type.exportName === 'ETag') {
+      return `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}(${jsonToGo(example.value, '')})`;
+    } else if (example.type.exportName === 'MultipartContent') {
+      // TODO: handle MultipartContent, currently just return nil
+      return `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}(nil)`;
+    } else if (example.type.exportName === 'ReadSeekCloser') {
+      // TODO: handle ReadSeekCloser, currently just return nil
+      return `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}(nil)`;
+    }
   }
   return '';
 }
