@@ -13,8 +13,7 @@ import (
 func TestJsonlBasicClient_Receive(t *testing.T) {
 	client, err := NewJsonlGroupClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Receive(context.Background(), &JsonlBasicClientReceiveOptions{
-	})
+	resp, err := client.Receive(context.Background(), &JsonlBasicClientReceiveOptions{})
 	require.NoError(t, err)
 	require.NotNil(t, resp.ContentType)
 }

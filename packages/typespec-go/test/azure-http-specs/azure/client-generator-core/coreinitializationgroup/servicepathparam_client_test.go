@@ -24,7 +24,6 @@ func TestServicePathParamClient_DeleteStandalone(t *testing.T) {
 	assert.Error(t, err)
 }
 
-
 func TestServicePathParamClient_GetStandalone(t *testing.T) {
 	serviceClient, err := NewServiceClient(nil)
 	require.NoError(t, err)

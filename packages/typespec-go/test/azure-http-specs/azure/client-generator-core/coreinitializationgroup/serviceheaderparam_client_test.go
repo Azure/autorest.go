@@ -25,6 +25,6 @@ func TestServiceHeaderParamClient_WithQuery(t *testing.T) {
 	require.NoError(t, err)
 	client := serviceClient.NewServiceHeaderParamClient()
 
-	_, err = client.WithQuery(context.Background(), "name-01","id-01", &ServiceHeaderParamClientWithQueryOptions{})
+	_, err = client.WithQuery(context.Background(), "name-01", "id-01", &ServiceHeaderParamClientWithQueryOptions{})
 	require.Error(t, err)
 }
