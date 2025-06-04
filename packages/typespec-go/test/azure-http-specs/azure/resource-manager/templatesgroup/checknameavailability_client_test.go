@@ -35,6 +35,7 @@ func TestCheckNameAvailabilityClient_CheckGlobal_Success(t *testing.T) {
 	})
 	require.NoError(t, err)
 	client, err := NewCheckNameAvailabilityClient(getEnv("AZURE_SUBSCRIPTION_ID", "00000000-0000-0000-0000-000000000000"), cred, nil)
+	require.NoError(t, err)
 	body := CheckNameAvailabilityRequest{Name: toPtr("testName")}
 	resp, err := client.CheckGlobal(context.Background(), body, nil)
 	require.NoError(t, err)
@@ -48,6 +49,7 @@ func TestCheckNameAvailabilityClient_CheckGlobal_ErrorStatus(t *testing.T) {
 	})
 	require.NoError(t, err)
 	client, err := NewCheckNameAvailabilityClient(getEnv("AZURE_SUBSCRIPTION_ID", "00000000-0000-0000-0000-000000000000"), cred, nil)
+	require.NoError(t, err)
 	body := CheckNameAvailabilityRequest{Name: toPtr("badName")}
 	_, err = client.CheckGlobal(context.Background(), body, nil)
 	require.Error(t, err)
@@ -67,6 +69,7 @@ func TestCheckNameAvailabilityClient_CheckLocal_Success(t *testing.T) {
 	})
 	require.NoError(t, err)
 	client, err := NewCheckNameAvailabilityClient(getEnv("AZURE_SUBSCRIPTION_ID", "00000000-0000-0000-0000-000000000000"), cred, nil)
+	require.NoError(t, err)
 	body := CheckNameAvailabilityRequest{Name: toPtr("existingName")}
 	resp, err := client.CheckLocal(context.Background(), "eastus", body, nil)
 	require.NoError(t, err)
