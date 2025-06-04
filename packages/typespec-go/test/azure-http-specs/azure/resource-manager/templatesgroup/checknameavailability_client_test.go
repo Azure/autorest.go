@@ -83,6 +83,7 @@ func TestCheckNameAvailabilityClient_CheckLocal_ErrorStatus(t *testing.T) {
 	})
 	require.NoError(t, err)
 	client, err := NewCheckNameAvailabilityClient(getEnv("AZURE_SUBSCRIPTION_ID", "00000000-0000-0000-0000-000000000000"), cred, nil)
+	require.NoError(t, err)
 	body := CheckNameAvailabilityRequest{Name: toPtr("conflictName")}
 	_, err = client.CheckLocal(context.Background(), "westus", body, nil)
 	require.Error(t, err)
