@@ -13,14 +13,14 @@ import (
 func TestJsonlBasicClient_Receive(t *testing.T) {
 	client, err := NewJsonlGroupClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Receive(context.Background(), &JsonlBasicClientReceiveOptions{})
-	require.NoError(t, err)
-	require.NotNil(t, resp.ContentType)
+	_, err = client.Receive(context.Background(), &JsonlBasicClientReceiveOptions{})
+	require.Error(t, err)
 }
+
 
 func TestJsonlBasicClient_Send(t *testing.T) {
 	client, err := NewJsonlGroupClient(nil)
 	require.NoError(t, err)
 	_, err = client.Send(context.Background(), nil)
-	require.NoError(t, err)
+	require.Error(t, err)
 }

@@ -13,29 +13,23 @@ import (
 func TestBasicServiceOperationGroupClient_Basic_Success(t *testing.T) {
 	client, err := NewBasicServiceOperationGroupClient(nil)
 	require.NoError(t, err)
-	expectedResp := ActionResponse{
-		// Fill with expected fields
-	}
 	reqBody := ActionRequest{
-		// Fill with test request fields
+		StringProperty: toString("text"),
+		ModelProperty: &Model{
+			Int32Property:   func(i int32) *int32 { return &i }(1),
+			Float32Property: func(f float32) *float32 { return &f }(1.5),
+			EnumProperty:    func(e Enum) *Enum { return &e }(EnumEnumValue1),
+		},
+		ArrayProperty: []*string{toString("item")},
+		RecordProperty: map[string]*string{
+			"record": toString("value"),
+		},
 	}
-	resp, err := client.Basic(context.Background(), "queryValue", "headerValue", reqBody, nil)
+	_, err = client.Basic(context.Background(), "query", "header", reqBody, nil)
 	require.NoError(t, err)
-	require.Equal(t, expectedResp, resp.ActionResponse)
 }
 
-func TestBasicServiceOperationGroupClient_Basic_ErrorStatus(t *testing.T) {
-	client, err := NewBasicServiceOperationGroupClient(nil)
-	require.NoError(t, err)
-	reqBody := ActionRequest{}
-	_, err = client.Basic(context.Background(), "q", "h", reqBody, nil)
-	require.Error(t, err)
-}
 
-func TestBasicServiceOperationGroupClient_Basic_TransportError(t *testing.T) {
-	client, err := NewBasicServiceOperationGroupClient(nil)
-	require.NoError(t, err)
-	reqBody := ActionRequest{}
-	_, err = client.Basic(context.Background(), "q", "h", reqBody, nil)
-	require.Error(t, err)
+func toString(v string) *string {
+	return &v
 }

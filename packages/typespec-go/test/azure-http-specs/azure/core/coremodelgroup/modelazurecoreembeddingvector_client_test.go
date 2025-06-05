@@ -5,49 +5,39 @@ package coremodelgroup
 
 import (
 	"context"
-	"encoding/json"
-	"io"
-	"net/http"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
-func TestModelAzureCoreEmbeddingVectorClient_postCreateRequest(t *testing.T) {
-	client := &ModelAzureCoreEmbeddingVectorClient{}
-	ctx := context.Background()
 
-	// Prepare a sample AzureEmbeddingModel
-	body := AzureEmbeddingModel{
-		// Fill with sample data as per the model definition
-		Embedding: []*int32{toInt32Ptr(1), toInt32Ptr(2), toInt32Ptr(3)},
-	}
-
-	req, err := client.postCreateRequest(ctx, body, nil)
+func TestModelAzureCoreEmbeddingVectorClient_Get(t *testing.T) {
+	expected := []*int32{toInt32(0), toInt32(1), toInt32(2), toInt32(3), toInt32(4)}
+	client, err := NewModelAzureCoreEmbeddingVectorClient(nil)
 	require.NoError(t, err)
-	require.NotNil(t, req)
 
-	// Check method and URL
-	rawReq := req.Raw()
-	require.Equal(t, http.MethodPost, rawReq.Method)
-	require.Contains(t, rawReq.URL.Path, "/azure/core/model/embeddingVector")
-
-	// Check headers
-	require.Equal(t, "application/json", rawReq.Header.Get("Accept"))
-	require.Equal(t, "application/json", rawReq.Header.Get("Content-Type"))
-
-	// Check body
-	b, err := io.ReadAll(rawReq.Body)
+	resp, err := client.Get(context.Background(), nil)
 	require.NoError(t, err)
-	defer rawReq.Body.Close()
-
-	var got AzureEmbeddingModel
-	err = json.Unmarshal(b, &got)
-	require.NoError(t, err)
-	require.Equal(t, body, got)
+	require.Equal(t, expected, resp.Int32Array)
 }
 
-// Helper to get *int32
-func toInt32Ptr(v int32) *int32 {
+func TestModelAzureCoreEmbeddingVectorClient_Post(t *testing.T) {
+	input := AzureEmbeddingModel{Embedding: []*int32{toInt32(0), toInt32(1), toInt32(2), toInt32(3), toInt32(4)}}
+	client, err := NewModelAzureCoreEmbeddingVectorClient(nil)
+	require.NoError(t, err)
+	resp, err := client.Post(context.Background(), input, nil)
+	require.NoError(t, err)
+	require.Len(t, resp.AzureEmbeddingModel.Embedding, 5)
+}
+
+func TestModelAzureCoreEmbeddingVectorClient_Put(t *testing.T) {
+	expected := []*int32{toInt32(0), toInt32(1), toInt32(2), toInt32(3), toInt32(4)}
+	client, err := NewModelAzureCoreEmbeddingVectorClient(nil)
+	require.NoError(t, err)
+	_, err = client.Put(context.Background(), expected, nil)
+	require.NoError(t, err)
+}
+
+func toInt32(v int32) *int32 {
 	return &v
 }

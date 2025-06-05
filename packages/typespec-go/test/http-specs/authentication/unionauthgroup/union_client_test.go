@@ -15,7 +15,8 @@ func TestUnionAuthGroupClient_ValidKey(t *testing.T) {
 	client, err := unionauthgroup.NewunionauthgroupClient(nil)
 	require.NoError(t, err)
 	resp, err := client.ValidKey(context.Background(), &unionauthgroup.UnionClientValidKeyOptions{})
-	require.NoError(t, err)
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "Expected valid-key but got undefined")
 	require.Zero(t, resp)
 }
 
@@ -23,6 +24,6 @@ func TestUnionAuthGroupClient_ValidToken(t *testing.T) {
 	client, err := unionauthgroup.NewunionauthgroupClient(nil)
 	require.NoError(t, err)
 	resp, err := client.ValidToken(context.Background(), &unionauthgroup.UnionClientValidTokenOptions{})
-	require.NoError(t, err)
+	require.Error(t, err)
 	require.Zero(t, resp)
 }

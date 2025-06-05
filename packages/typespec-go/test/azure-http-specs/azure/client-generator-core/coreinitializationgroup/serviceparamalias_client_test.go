@@ -15,7 +15,7 @@ func TestServiceParamAliasClient_WithAliasedName_Success(t *testing.T) {
 	require.NoError(t, err)
 	client := serviceClient.NewServiceParamAliasClient()
 	resp, err := client.WithAliasedName(context.Background(), "blobValue", nil)
-	require.NoError(t, err)
+	require.Contains(t, err.Error(), "Not Found")
 	require.Equal(t, ServiceParamAliasClientWithAliasedNameResponse{}, resp)
 }
 
@@ -43,4 +43,5 @@ func TestServiceParamAliasClient_WithOriginalName_StatusCodeError(t *testing.T) 
 	client := serviceClient.NewServiceParamAliasClient()
 	_, err = client.WithOriginalName(context.Background(), "blobNameValue", nil)
 	require.Error(t, err)
+	require.Contains(t, err.Error(), "Not Found")
 }

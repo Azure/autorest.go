@@ -14,9 +14,11 @@ func TestServiceMixedParamsClient_WithBody(t *testing.T) {
 	serviceClient, err := NewServiceClient(nil)
 	require.NoError(t, err)
 	client := serviceClient.NewServiceMixedParamsClient()
-
-	body := WithBodyRequest{}
-	resp, err := client.WithBody(context.Background(), "name1", "region1", body, nil)
+	name :="test-name"
+	body := WithBodyRequest{
+		Name: &name,
+	}
+	resp, err := client.WithBody(context.Background(), "test-name-value", "us-west", body, nil)
 	require.NoError(t, err)
 	require.Equal(t, ServiceMixedParamsClientWithBodyResponse{}, resp)
 }
@@ -26,7 +28,7 @@ func TestServiceMixedParamsClient_WithQuery(t *testing.T) {
 	require.NoError(t, err)
 	client := serviceClient.NewServiceMixedParamsClient()
 
-	resp, err := client.WithQuery(context.Background(), "name1", "region1", "id1", nil)
+	resp, err := client.WithQuery(context.Background(), "test-name-value", "us-west", "test-id", nil)
 	require.NoError(t, err)
 	require.Equal(t, ServiceMixedParamsClientWithQueryResponse{}, resp)
 }

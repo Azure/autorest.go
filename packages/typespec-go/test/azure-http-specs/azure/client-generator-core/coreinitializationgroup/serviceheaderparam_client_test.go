@@ -14,8 +14,8 @@ func TestServiceHeaderParamClient_WithBody_Success(t *testing.T) {
 	serviceClient, err := NewServiceClient(nil)
 	require.NoError(t, err)
 	client := serviceClient.NewServiceHeaderParamClient()
-
-	resp, err := client.WithBody(context.Background(), "sample", Input{}, nil)
+	name := "test-name"
+	resp, err := client.WithBody(context.Background(), "test-name-value", Input{Name: &name}, nil)
 	require.NoError(t, err)
 	require.Equal(t, ServiceHeaderParamClientWithBodyResponse{}, resp)
 }
@@ -25,6 +25,6 @@ func TestServiceHeaderParamClient_WithQuery(t *testing.T) {
 	require.NoError(t, err)
 	client := serviceClient.NewServiceHeaderParamClient()
 
-	_, err = client.WithQuery(context.Background(), "name-01", "id-01", &ServiceHeaderParamClientWithQueryOptions{})
-	require.Error(t, err)
+	_, err = client.WithQuery(context.Background(), "test-name-value", "test-id", &ServiceHeaderParamClientWithQueryOptions{})
+	require.NoError(t, err)
 }

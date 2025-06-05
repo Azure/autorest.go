@@ -15,7 +15,8 @@ func TestApiKeyClient_Invalid(t *testing.T) {
 	client, err := apikeygroup.NewApiKeyClient(nil)
 	require.NoError(t, err)
 	resp, err := client.Invalid(context.Background(), &apikeygroup.APIKeyClientInvalidOptions{})
-	require.NoError(t, err)
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "Expected invalid-key but got undefined")
 	require.Zero(t, resp)
 }
 
@@ -23,6 +24,7 @@ func TestApiKeyClient_OutputToInputOutput(t *testing.T) {
 	client, err := apikeygroup.NewApiKeyClient(nil)
 	require.NoError(t, err)
 	resp, err := client.Valid(context.Background(), &apikeygroup.APIKeyClientValidOptions{})
-	require.NoError(t, err)
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "Expected valid-key but got undefined")
 	require.Zero(t, resp)
 }

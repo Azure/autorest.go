@@ -14,8 +14,8 @@ func TestServiceMultipleParamsClient_WithBody(t *testing.T) {
 	serviceClient, err := NewServiceClient(nil)
 	require.NoError(t, err)
 	client := serviceClient.NewServiceMultipleParamsClient()
-
-	resp, err := client.WithBody(context.Background(), "name1", "region1", Input{}, nil)
+	name :="test-name"
+	resp, err := client.WithBody(context.Background(), "test-name-value", "us-west", Input{Name: &name}, nil)
 	require.NoError(t, err)
 	require.Equal(t, ServiceMultipleParamsClientWithBodyResponse{}, resp)
 }
@@ -25,7 +25,7 @@ func TestServiceMultipleParamsClient_WithQuery(t *testing.T) {
 	require.NoError(t, err)
 	client := serviceClient.NewServiceMultipleParamsClient()
 
-	resp, err := client.WithQuery(context.Background(), "name1", "region1", "id1", nil)
+	resp, err := client.WithQuery(context.Background(), "test-name-value", "us-west", "test-id", nil)
 	require.NoError(t, err)
 	require.Equal(t, ServiceMultipleParamsClientWithQueryResponse{}, resp)
 }
