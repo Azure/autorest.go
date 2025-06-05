@@ -5,8 +5,8 @@
 package fake
 
 import (
+	"clientinitializationgroup"
 	"context"
-	"coreinitializationgroup"
 	"errors"
 	"fmt"
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
@@ -17,25 +17,25 @@ import (
 	"regexp"
 )
 
-// ServiceParamAliasServer is a fake server for instances of the coreinitializationgroup.ServiceParamAliasClient type.
+// ServiceParamAliasServer is a fake server for instances of the clientinitializationgroup.ServiceParamAliasClient type.
 type ServiceParamAliasServer struct {
 	// WithAliasedName is the fake for method ServiceParamAliasClient.WithAliasedName
 	// HTTP status codes to indicate success: http.StatusNoContent
-	WithAliasedName func(ctx context.Context, blob string, options *coreinitializationgroup.ServiceParamAliasClientWithAliasedNameOptions) (resp azfake.Responder[coreinitializationgroup.ServiceParamAliasClientWithAliasedNameResponse], errResp azfake.ErrorResponder)
+	WithAliasedName func(ctx context.Context, blob string, options *clientinitializationgroup.ServiceParamAliasClientWithAliasedNameOptions) (resp azfake.Responder[clientinitializationgroup.ServiceParamAliasClientWithAliasedNameResponse], errResp azfake.ErrorResponder)
 
 	// WithOriginalName is the fake for method ServiceParamAliasClient.WithOriginalName
 	// HTTP status codes to indicate success: http.StatusNoContent
-	WithOriginalName func(ctx context.Context, blobName string, options *coreinitializationgroup.ServiceParamAliasClientWithOriginalNameOptions) (resp azfake.Responder[coreinitializationgroup.ServiceParamAliasClientWithOriginalNameResponse], errResp azfake.ErrorResponder)
+	WithOriginalName func(ctx context.Context, blobName string, options *clientinitializationgroup.ServiceParamAliasClientWithOriginalNameOptions) (resp azfake.Responder[clientinitializationgroup.ServiceParamAliasClientWithOriginalNameResponse], errResp azfake.ErrorResponder)
 }
 
 // NewServiceParamAliasServerTransport creates a new instance of ServiceParamAliasServerTransport with the provided implementation.
-// The returned ServiceParamAliasServerTransport instance is connected to an instance of coreinitializationgroup.ServiceParamAliasClient via the
+// The returned ServiceParamAliasServerTransport instance is connected to an instance of clientinitializationgroup.ServiceParamAliasClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewServiceParamAliasServerTransport(srv *ServiceParamAliasServer) *ServiceParamAliasServerTransport {
 	return &ServiceParamAliasServerTransport{srv: srv}
 }
 
-// ServiceParamAliasServerTransport connects instances of coreinitializationgroup.ServiceParamAliasClient to instances of ServiceParamAliasServer.
+// ServiceParamAliasServerTransport connects instances of clientinitializationgroup.ServiceParamAliasClient to instances of ServiceParamAliasServer.
 // Don't use this type directly, use NewServiceParamAliasServerTransport instead.
 type ServiceParamAliasServerTransport struct {
 	srv *ServiceParamAliasServer

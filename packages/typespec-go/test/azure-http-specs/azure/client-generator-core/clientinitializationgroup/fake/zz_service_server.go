@@ -13,7 +13,7 @@ import (
 	"sync"
 )
 
-// ServiceServer is a fake server for instances of the coreinitializationgroup.ServiceClient type.
+// ServiceServer is a fake server for instances of the clientinitializationgroup.ServiceClient type.
 type ServiceServer struct {
 	// ServiceChildServer contains the fakes for client ServiceChildClient
 	ServiceChildServer ServiceChildServer
@@ -35,13 +35,13 @@ type ServiceServer struct {
 }
 
 // NewServiceServerTransport creates a new instance of ServiceServerTransport with the provided implementation.
-// The returned ServiceServerTransport instance is connected to an instance of coreinitializationgroup.ServiceClient via the
+// The returned ServiceServerTransport instance is connected to an instance of clientinitializationgroup.ServiceClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewServiceServerTransport(srv *ServiceServer) *ServiceServerTransport {
 	return &ServiceServerTransport{srv: srv}
 }
 
-// ServiceServerTransport connects instances of coreinitializationgroup.ServiceClient to instances of ServiceServer.
+// ServiceServerTransport connects instances of clientinitializationgroup.ServiceClient to instances of ServiceServer.
 // Don't use this type directly, use NewServiceServerTransport instead.
 type ServiceServerTransport struct {
 	srv                           *ServiceServer

@@ -5,8 +5,8 @@
 package fake
 
 import (
+	"clientinitializationgroup"
 	"context"
-	"coreinitializationgroup"
 	"errors"
 	"fmt"
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
@@ -17,36 +17,36 @@ import (
 	"regexp"
 )
 
-// ServiceChildServer is a fake server for instances of the coreinitializationgroup.ServiceChildClient type.
-type ServiceChildServer struct {
-	// DeleteStandalone is the fake for method ServiceChildClient.DeleteStandalone
+// ServicePathParamServer is a fake server for instances of the clientinitializationgroup.ServicePathParamClient type.
+type ServicePathParamServer struct {
+	// DeleteStandalone is the fake for method ServicePathParamClient.DeleteStandalone
 	// HTTP status codes to indicate success: http.StatusNoContent
-	DeleteStandalone func(ctx context.Context, blobName string, options *coreinitializationgroup.ServiceChildClientDeleteStandaloneOptions) (resp azfake.Responder[coreinitializationgroup.ServiceChildClientDeleteStandaloneResponse], errResp azfake.ErrorResponder)
+	DeleteStandalone func(ctx context.Context, blobName string, options *clientinitializationgroup.ServicePathParamClientDeleteStandaloneOptions) (resp azfake.Responder[clientinitializationgroup.ServicePathParamClientDeleteStandaloneResponse], errResp azfake.ErrorResponder)
 
-	// GetStandalone is the fake for method ServiceChildClient.GetStandalone
+	// GetStandalone is the fake for method ServicePathParamClient.GetStandalone
 	// HTTP status codes to indicate success: http.StatusOK
-	GetStandalone func(ctx context.Context, blobName string, options *coreinitializationgroup.ServiceChildClientGetStandaloneOptions) (resp azfake.Responder[coreinitializationgroup.ServiceChildClientGetStandaloneResponse], errResp azfake.ErrorResponder)
+	GetStandalone func(ctx context.Context, blobName string, options *clientinitializationgroup.ServicePathParamClientGetStandaloneOptions) (resp azfake.Responder[clientinitializationgroup.ServicePathParamClientGetStandaloneResponse], errResp azfake.ErrorResponder)
 
-	// WithQuery is the fake for method ServiceChildClient.WithQuery
+	// WithQuery is the fake for method ServicePathParamClient.WithQuery
 	// HTTP status codes to indicate success: http.StatusNoContent
-	WithQuery func(ctx context.Context, blobName string, options *coreinitializationgroup.ServiceChildClientWithQueryOptions) (resp azfake.Responder[coreinitializationgroup.ServiceChildClientWithQueryResponse], errResp azfake.ErrorResponder)
+	WithQuery func(ctx context.Context, blobName string, options *clientinitializationgroup.ServicePathParamClientWithQueryOptions) (resp azfake.Responder[clientinitializationgroup.ServicePathParamClientWithQueryResponse], errResp azfake.ErrorResponder)
 }
 
-// NewServiceChildServerTransport creates a new instance of ServiceChildServerTransport with the provided implementation.
-// The returned ServiceChildServerTransport instance is connected to an instance of coreinitializationgroup.ServiceChildClient via the
+// NewServicePathParamServerTransport creates a new instance of ServicePathParamServerTransport with the provided implementation.
+// The returned ServicePathParamServerTransport instance is connected to an instance of clientinitializationgroup.ServicePathParamClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewServiceChildServerTransport(srv *ServiceChildServer) *ServiceChildServerTransport {
-	return &ServiceChildServerTransport{srv: srv}
+func NewServicePathParamServerTransport(srv *ServicePathParamServer) *ServicePathParamServerTransport {
+	return &ServicePathParamServerTransport{srv: srv}
 }
 
-// ServiceChildServerTransport connects instances of coreinitializationgroup.ServiceChildClient to instances of ServiceChildServer.
-// Don't use this type directly, use NewServiceChildServerTransport instead.
-type ServiceChildServerTransport struct {
-	srv *ServiceChildServer
+// ServicePathParamServerTransport connects instances of clientinitializationgroup.ServicePathParamClient to instances of ServicePathParamServer.
+// Don't use this type directly, use NewServicePathParamServerTransport instead.
+type ServicePathParamServerTransport struct {
+	srv *ServicePathParamServer
 }
 
-// Do implements the policy.Transporter interface for ServiceChildServerTransport.
-func (s *ServiceChildServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for ServicePathParamServerTransport.
+func (s *ServicePathParamServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
@@ -56,23 +56,23 @@ func (s *ServiceChildServerTransport) Do(req *http.Request) (*http.Response, err
 	return s.dispatchToMethodFake(req, method)
 }
 
-func (s *ServiceChildServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (s *ServicePathParamServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
 	defer close(resultChan)
 
 	go func() {
 		var intercepted bool
 		var res result
-		if serviceChildServerTransportInterceptor != nil {
-			res.resp, res.err, intercepted = serviceChildServerTransportInterceptor.Do(req)
+		if servicePathParamServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = servicePathParamServerTransportInterceptor.Do(req)
 		}
 		if !intercepted {
 			switch method {
-			case "ServiceChildClient.DeleteStandalone":
+			case "ServicePathParamClient.DeleteStandalone":
 				res.resp, res.err = s.dispatchDeleteStandalone(req)
-			case "ServiceChildClient.GetStandalone":
+			case "ServicePathParamClient.GetStandalone":
 				res.resp, res.err = s.dispatchGetStandalone(req)
-			case "ServiceChildClient.WithQuery":
+			case "ServicePathParamClient.WithQuery":
 				res.resp, res.err = s.dispatchWithQuery(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
@@ -93,11 +93,11 @@ func (s *ServiceChildServerTransport) dispatchToMethodFake(req *http.Request, me
 	}
 }
 
-func (s *ServiceChildServerTransport) dispatchDeleteStandalone(req *http.Request) (*http.Response, error) {
+func (s *ServicePathParamServerTransport) dispatchDeleteStandalone(req *http.Request) (*http.Response, error) {
 	if s.srv.DeleteStandalone == nil {
 		return nil, &nonRetriableError{errors.New("fake for method DeleteStandalone not implemented")}
 	}
-	const regexStr = `/azure/client-generator-core/client-initialization/child-client/(?P<blobName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/azure/client-generator-core/client-initialization/path/(?P<blobName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -122,11 +122,11 @@ func (s *ServiceChildServerTransport) dispatchDeleteStandalone(req *http.Request
 	return resp, nil
 }
 
-func (s *ServiceChildServerTransport) dispatchGetStandalone(req *http.Request) (*http.Response, error) {
+func (s *ServicePathParamServerTransport) dispatchGetStandalone(req *http.Request) (*http.Response, error) {
 	if s.srv.GetStandalone == nil {
 		return nil, &nonRetriableError{errors.New("fake for method GetStandalone not implemented")}
 	}
-	const regexStr = `/azure/client-generator-core/client-initialization/child-client/(?P<blobName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/get-standalone`
+	const regexStr = `/azure/client-generator-core/client-initialization/path/(?P<blobName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/get-standalone`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -151,11 +151,11 @@ func (s *ServiceChildServerTransport) dispatchGetStandalone(req *http.Request) (
 	return resp, nil
 }
 
-func (s *ServiceChildServerTransport) dispatchWithQuery(req *http.Request) (*http.Response, error) {
+func (s *ServicePathParamServerTransport) dispatchWithQuery(req *http.Request) (*http.Response, error) {
 	if s.srv.WithQuery == nil {
 		return nil, &nonRetriableError{errors.New("fake for method WithQuery not implemented")}
 	}
-	const regexStr = `/azure/client-generator-core/client-initialization/child-client/(?P<blobName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/with-query`
+	const regexStr = `/azure/client-generator-core/client-initialization/path/(?P<blobName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/with-query`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -171,9 +171,9 @@ func (s *ServiceChildServerTransport) dispatchWithQuery(req *http.Request) (*htt
 		return nil, err
 	}
 	formatParamParam := getOptional(formatParamUnescaped)
-	var options *coreinitializationgroup.ServiceChildClientWithQueryOptions
+	var options *clientinitializationgroup.ServicePathParamClientWithQueryOptions
 	if formatParamParam != nil {
-		options = &coreinitializationgroup.ServiceChildClientWithQueryOptions{
+		options = &clientinitializationgroup.ServicePathParamClientWithQueryOptions{
 			FormatParam: formatParamParam,
 		}
 	}
@@ -192,8 +192,8 @@ func (s *ServiceChildServerTransport) dispatchWithQuery(req *http.Request) (*htt
 	return resp, nil
 }
 
-// set this to conditionally intercept incoming requests to ServiceChildServerTransport
-var serviceChildServerTransportInterceptor interface {
+// set this to conditionally intercept incoming requests to ServicePathParamServerTransport
+var servicePathParamServerTransportInterceptor interface {
 	// Do returns true if the server transport should use the returned response/error
 	Do(*http.Request) (*http.Response, error, bool)
 }

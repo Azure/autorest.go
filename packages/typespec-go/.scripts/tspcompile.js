@@ -77,7 +77,7 @@ const azureHttpSpecsGroup = {
   'accessgroup': ['azure/client-generator-core/access'],
   'flattengroup': ['azure/client-generator-core/flatten-property'],
   'coreusagegroup': ['azure/client-generator-core/usage'],
-  'coreinitializationgroup': ['azure/client-generator-core/client-initialization'],
+  'clientinitializationgroup': ['azure/client-generator-core/client-initialization'],
   'apiversionheadergroup' : ['azure/client-generator-core/api-version/header'],
   'apiversionpathgroup' : ['azure/client-generator-core/api-version/path'],
   'apiversionquerygroup' : ['azure/client-generator-core/api-version/query'],

@@ -5,8 +5,8 @@
 package fake
 
 import (
+	"clientinitializationgroup"
 	"context"
-	"coreinitializationgroup"
 	"errors"
 	"fmt"
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
@@ -16,25 +16,25 @@ import (
 	"net/url"
 )
 
-// ServiceHeaderParamServer is a fake server for instances of the coreinitializationgroup.ServiceHeaderParamClient type.
+// ServiceHeaderParamServer is a fake server for instances of the clientinitializationgroup.ServiceHeaderParamClient type.
 type ServiceHeaderParamServer struct {
 	// WithBody is the fake for method ServiceHeaderParamClient.WithBody
 	// HTTP status codes to indicate success: http.StatusNoContent
-	WithBody func(ctx context.Context, name string, body coreinitializationgroup.Input, options *coreinitializationgroup.ServiceHeaderParamClientWithBodyOptions) (resp azfake.Responder[coreinitializationgroup.ServiceHeaderParamClientWithBodyResponse], errResp azfake.ErrorResponder)
+	WithBody func(ctx context.Context, name string, body clientinitializationgroup.Input, options *clientinitializationgroup.ServiceHeaderParamClientWithBodyOptions) (resp azfake.Responder[clientinitializationgroup.ServiceHeaderParamClientWithBodyResponse], errResp azfake.ErrorResponder)
 
 	// WithQuery is the fake for method ServiceHeaderParamClient.WithQuery
 	// HTTP status codes to indicate success: http.StatusNoContent
-	WithQuery func(ctx context.Context, name string, id string, options *coreinitializationgroup.ServiceHeaderParamClientWithQueryOptions) (resp azfake.Responder[coreinitializationgroup.ServiceHeaderParamClientWithQueryResponse], errResp azfake.ErrorResponder)
+	WithQuery func(ctx context.Context, name string, id string, options *clientinitializationgroup.ServiceHeaderParamClientWithQueryOptions) (resp azfake.Responder[clientinitializationgroup.ServiceHeaderParamClientWithQueryResponse], errResp azfake.ErrorResponder)
 }
 
 // NewServiceHeaderParamServerTransport creates a new instance of ServiceHeaderParamServerTransport with the provided implementation.
-// The returned ServiceHeaderParamServerTransport instance is connected to an instance of coreinitializationgroup.ServiceHeaderParamClient via the
+// The returned ServiceHeaderParamServerTransport instance is connected to an instance of clientinitializationgroup.ServiceHeaderParamClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewServiceHeaderParamServerTransport(srv *ServiceHeaderParamServer) *ServiceHeaderParamServerTransport {
 	return &ServiceHeaderParamServerTransport{srv: srv}
 }
 
-// ServiceHeaderParamServerTransport connects instances of coreinitializationgroup.ServiceHeaderParamClient to instances of ServiceHeaderParamServer.
+// ServiceHeaderParamServerTransport connects instances of clientinitializationgroup.ServiceHeaderParamClient to instances of ServiceHeaderParamServer.
 // Don't use this type directly, use NewServiceHeaderParamServerTransport instead.
 type ServiceHeaderParamServerTransport struct {
 	srv *ServiceHeaderParamServer
@@ -90,7 +90,7 @@ func (s *ServiceHeaderParamServerTransport) dispatchWithBody(req *http.Request) 
 	if s.srv.WithBody == nil {
 		return nil, &nonRetriableError{errors.New("fake for method WithBody not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[coreinitializationgroup.Input](req)
+	body, err := server.UnmarshalRequestAsJSON[clientinitializationgroup.Input](req)
 	if err != nil {
 		return nil, err
 	}

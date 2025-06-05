@@ -26,7 +26,7 @@ func TestModelAzureCoreEmbeddingVectorClient_Post(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.Post(context.Background(), input, nil)
 	require.NoError(t, err)
-	require.Len(t, resp.AzureEmbeddingModel.Embedding, 5)
+	require.Equal(t, len(resp.AzureEmbeddingModel.Embedding), 5)
 }
 
 func TestModelAzureCoreEmbeddingVectorClient_Put(t *testing.T) {

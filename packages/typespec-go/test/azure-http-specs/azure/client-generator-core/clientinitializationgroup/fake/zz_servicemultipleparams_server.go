@@ -5,8 +5,8 @@
 package fake
 
 import (
+	"clientinitializationgroup"
 	"context"
-	"coreinitializationgroup"
 	"errors"
 	"fmt"
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
@@ -16,32 +16,32 @@ import (
 	"net/url"
 )
 
-// ServiceMixedParamsServer is a fake server for instances of the coreinitializationgroup.ServiceMixedParamsClient type.
-type ServiceMixedParamsServer struct {
-	// WithBody is the fake for method ServiceMixedParamsClient.WithBody
+// ServiceMultipleParamsServer is a fake server for instances of the clientinitializationgroup.ServiceMultipleParamsClient type.
+type ServiceMultipleParamsServer struct {
+	// WithBody is the fake for method ServiceMultipleParamsClient.WithBody
 	// HTTP status codes to indicate success: http.StatusNoContent
-	WithBody func(ctx context.Context, name string, region string, body coreinitializationgroup.WithBodyRequest, options *coreinitializationgroup.ServiceMixedParamsClientWithBodyOptions) (resp azfake.Responder[coreinitializationgroup.ServiceMixedParamsClientWithBodyResponse], errResp azfake.ErrorResponder)
+	WithBody func(ctx context.Context, name string, region string, body clientinitializationgroup.Input, options *clientinitializationgroup.ServiceMultipleParamsClientWithBodyOptions) (resp azfake.Responder[clientinitializationgroup.ServiceMultipleParamsClientWithBodyResponse], errResp azfake.ErrorResponder)
 
-	// WithQuery is the fake for method ServiceMixedParamsClient.WithQuery
+	// WithQuery is the fake for method ServiceMultipleParamsClient.WithQuery
 	// HTTP status codes to indicate success: http.StatusNoContent
-	WithQuery func(ctx context.Context, name string, region string, id string, options *coreinitializationgroup.ServiceMixedParamsClientWithQueryOptions) (resp azfake.Responder[coreinitializationgroup.ServiceMixedParamsClientWithQueryResponse], errResp azfake.ErrorResponder)
+	WithQuery func(ctx context.Context, name string, region string, id string, options *clientinitializationgroup.ServiceMultipleParamsClientWithQueryOptions) (resp azfake.Responder[clientinitializationgroup.ServiceMultipleParamsClientWithQueryResponse], errResp azfake.ErrorResponder)
 }
 
-// NewServiceMixedParamsServerTransport creates a new instance of ServiceMixedParamsServerTransport with the provided implementation.
-// The returned ServiceMixedParamsServerTransport instance is connected to an instance of coreinitializationgroup.ServiceMixedParamsClient via the
+// NewServiceMultipleParamsServerTransport creates a new instance of ServiceMultipleParamsServerTransport with the provided implementation.
+// The returned ServiceMultipleParamsServerTransport instance is connected to an instance of clientinitializationgroup.ServiceMultipleParamsClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewServiceMixedParamsServerTransport(srv *ServiceMixedParamsServer) *ServiceMixedParamsServerTransport {
-	return &ServiceMixedParamsServerTransport{srv: srv}
+func NewServiceMultipleParamsServerTransport(srv *ServiceMultipleParamsServer) *ServiceMultipleParamsServerTransport {
+	return &ServiceMultipleParamsServerTransport{srv: srv}
 }
 
-// ServiceMixedParamsServerTransport connects instances of coreinitializationgroup.ServiceMixedParamsClient to instances of ServiceMixedParamsServer.
-// Don't use this type directly, use NewServiceMixedParamsServerTransport instead.
-type ServiceMixedParamsServerTransport struct {
-	srv *ServiceMixedParamsServer
+// ServiceMultipleParamsServerTransport connects instances of clientinitializationgroup.ServiceMultipleParamsClient to instances of ServiceMultipleParamsServer.
+// Don't use this type directly, use NewServiceMultipleParamsServerTransport instead.
+type ServiceMultipleParamsServerTransport struct {
+	srv *ServiceMultipleParamsServer
 }
 
-// Do implements the policy.Transporter interface for ServiceMixedParamsServerTransport.
-func (s *ServiceMixedParamsServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for ServiceMultipleParamsServerTransport.
+func (s *ServiceMultipleParamsServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
@@ -51,21 +51,21 @@ func (s *ServiceMixedParamsServerTransport) Do(req *http.Request) (*http.Respons
 	return s.dispatchToMethodFake(req, method)
 }
 
-func (s *ServiceMixedParamsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (s *ServiceMultipleParamsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
 	defer close(resultChan)
 
 	go func() {
 		var intercepted bool
 		var res result
-		if serviceMixedParamsServerTransportInterceptor != nil {
-			res.resp, res.err, intercepted = serviceMixedParamsServerTransportInterceptor.Do(req)
+		if serviceMultipleParamsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = serviceMultipleParamsServerTransportInterceptor.Do(req)
 		}
 		if !intercepted {
 			switch method {
-			case "ServiceMixedParamsClient.WithBody":
+			case "ServiceMultipleParamsClient.WithBody":
 				res.resp, res.err = s.dispatchWithBody(req)
-			case "ServiceMixedParamsClient.WithQuery":
+			case "ServiceMultipleParamsClient.WithQuery":
 				res.resp, res.err = s.dispatchWithQuery(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
@@ -86,12 +86,12 @@ func (s *ServiceMixedParamsServerTransport) dispatchToMethodFake(req *http.Reque
 	}
 }
 
-func (s *ServiceMixedParamsServerTransport) dispatchWithBody(req *http.Request) (*http.Response, error) {
+func (s *ServiceMultipleParamsServerTransport) dispatchWithBody(req *http.Request) (*http.Response, error) {
 	if s.srv.WithBody == nil {
 		return nil, &nonRetriableError{errors.New("fake for method WithBody not implemented")}
 	}
 	qp := req.URL.Query()
-	body, err := server.UnmarshalRequestAsJSON[coreinitializationgroup.WithBodyRequest](req)
+	body, err := server.UnmarshalRequestAsJSON[clientinitializationgroup.Input](req)
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +114,7 @@ func (s *ServiceMixedParamsServerTransport) dispatchWithBody(req *http.Request) 
 	return resp, nil
 }
 
-func (s *ServiceMixedParamsServerTransport) dispatchWithQuery(req *http.Request) (*http.Response, error) {
+func (s *ServiceMultipleParamsServerTransport) dispatchWithQuery(req *http.Request) (*http.Response, error) {
 	if s.srv.WithQuery == nil {
 		return nil, &nonRetriableError{errors.New("fake for method WithQuery not implemented")}
 	}
@@ -142,8 +142,8 @@ func (s *ServiceMixedParamsServerTransport) dispatchWithQuery(req *http.Request)
 	return resp, nil
 }
 
-// set this to conditionally intercept incoming requests to ServiceMixedParamsServerTransport
-var serviceMixedParamsServerTransportInterceptor interface {
+// set this to conditionally intercept incoming requests to ServiceMultipleParamsServerTransport
+var serviceMultipleParamsServerTransportInterceptor interface {
 	// Do returns true if the server transport should use the returned response/error
 	Do(*http.Request) (*http.Response, error, bool)
 }

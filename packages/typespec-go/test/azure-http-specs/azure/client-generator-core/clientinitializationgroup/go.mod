@@ -1,4 +1,4 @@
-module coreinitializationgroup
+module clientinitializationgroup
 
 go 1.23.0
 
