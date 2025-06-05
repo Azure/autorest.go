@@ -4,7 +4,6 @@
 package templatesgroup
 
 import (
-	"os"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
@@ -22,8 +21,8 @@ func TestNewCheckNameAvailabilityClient_CheckGlobal(t *testing.T) {
 
 func TestNewCheckNameAvailabilityClient_CheckLocal(t *testing.T) {
 	body := CheckNameAvailabilityRequest{
-		Name: to.Ptr(getEnv("CHECK_NAME_AVAILABILITY_NAME", "checkName")),
-		Type: to.Ptr(getEnv("CHECK_NAME_AVAILABILITY_TYPE", "Microsoft.Web/site")),
+		Name: to.Ptr("checkName"),
+		Type: to.Ptr("Microsoft.Web/site"),
 	}
 	_, err := clientFactory.NewCheckNameAvailabilityClient().CheckLocal(ctx, locationExpected, body, nil)
 	require.NoError(t, err)
