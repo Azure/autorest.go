@@ -14,7 +14,7 @@ import (
 )
 
 func TestQueryClient_QueryAPIVersion(t *testing.T) {
-	client,err := NewQueryClient(nil)
+	client, err := NewQueryClient(nil)
 	require.NoError(t, err)
 	version := "2025-01-01"
 	resp, err := client.QueryAPIVersion(context.Background(), version, nil)

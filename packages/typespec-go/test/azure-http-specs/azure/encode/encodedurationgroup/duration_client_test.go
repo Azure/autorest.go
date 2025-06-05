@@ -13,7 +13,7 @@ import (
 func TestDurationClient_DurationConstant(t *testing.T) {
 	client, err := NewDurationClient(nil)
 	require.NoError(t, err)
-	input :="1.02:59:59.5000000"
+	input := "1.02:59:59.5000000"
 	body := DurationModel{
 		Input: &input,
 	}

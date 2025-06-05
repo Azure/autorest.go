@@ -10,7 +10,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-
 func TestModelAzureCoreEmbeddingVectorClient_Get(t *testing.T) {
 	expected := []*int32{toInt32(0), toInt32(1), toInt32(2), toInt32(3), toInt32(4)}
 	client, err := NewModelAzureCoreEmbeddingVectorClient(nil)

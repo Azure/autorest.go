@@ -14,7 +14,7 @@ import (
 )
 
 func TestHeaderClient_HeaderAPIVersion(t *testing.T) {
-	client,err := NewHeaderClient(nil)
+	client, err := NewHeaderClient(nil)
 	require.NoError(t, err)
 	version := "2025-01-01"
 	resp, err := client.HeaderAPIVersion(context.Background(), version, nil)

@@ -14,7 +14,7 @@ func TestServiceMixedParamsClient_WithBody(t *testing.T) {
 	serviceClient, err := NewServiceClient(nil)
 	require.NoError(t, err)
 	client := serviceClient.NewServiceMixedParamsClient()
-	name :="test-name"
+	name := "test-name"
 	body := WithBodyRequest{
 		Name: &name,
 	}

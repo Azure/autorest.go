@@ -17,7 +17,6 @@ func TestJsonlBasicClient_Receive(t *testing.T) {
 	require.Error(t, err)
 }
 
-
 func TestJsonlBasicClient_Send(t *testing.T) {
 	client, err := NewJsonlGroupClient(nil)
 	require.NoError(t, err)

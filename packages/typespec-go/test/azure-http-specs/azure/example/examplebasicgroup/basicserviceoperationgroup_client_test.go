@@ -29,7 +29,6 @@ func TestBasicServiceOperationGroupClient_Basic_Success(t *testing.T) {
 	require.NoError(t, err)
 }
 
-
 func toString(v string) *string {
 	return &v
 }

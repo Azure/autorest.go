@@ -14,7 +14,7 @@ func TestServiceMultipleParamsClient_WithBody(t *testing.T) {
 	serviceClient, err := NewServiceClient(nil)
 	require.NoError(t, err)
 	client := serviceClient.NewServiceMultipleParamsClient()
-	name :="test-name"
+	name := "test-name"
 	resp, err := client.WithBody(context.Background(), "test-name-value", "us-west", Input{Name: &name}, nil)
 	require.NoError(t, err)
 	require.Equal(t, ServiceMultipleParamsClientWithBodyResponse{}, resp)

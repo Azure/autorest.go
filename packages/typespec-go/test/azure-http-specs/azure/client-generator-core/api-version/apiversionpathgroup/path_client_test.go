@@ -14,7 +14,7 @@ import (
 )
 
 func TestPathClient_PathAPIVersion(t *testing.T) {
-	client,err := NewPathClient(nil)
+	client, err := NewPathClient(nil)
 	require.NoError(t, err)
 	version := "2025-01-01"
 	resp, err := client.PathAPIVersion(context.Background(), version, nil)
