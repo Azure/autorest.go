@@ -297,11 +297,11 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
     if (example.type.exportName === 'ETag') {
       return `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}(${jsonToGo(example.value, '')})`;
     } else if (example.type.exportName === 'MultipartContent') {
-      // TODO: handle MultipartContent, currently just return nil
-      return `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}(nil)`;
+      // TODO: support MultipartContent
+      throw new CodegenError('InternalError', `MultipartContent example type is not supported yet`);
     } else if (example.type.exportName === 'ReadSeekCloser') {
-      // TODO: handle ReadSeekCloser, currently just return nil
-      return `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}(nil)`;
+      // TODO: support MultipartContent
+      throw new CodegenError('InternalError', `ReadSeekCloser example type is not supported yet`);
     }
   }
   return '';

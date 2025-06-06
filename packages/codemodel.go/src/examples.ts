@@ -5,9 +5,9 @@
 
 import * as param from './param.js';
 import * as result from './result.js';
-import { BytesType, ConstantType, Docs, LiteralValue, MapType, ModelType, PolymorphicType, PossibleType, PrimitiveType, SliceType, TimeType, QualifiedType} from './type.js';
+import { BytesType, ConstantType, Docs, LiteralValue, MapType, ModelType, PolymorphicType, PossibleType, PrimitiveType, QualifiedType, SliceType, TimeType } from './type.js';
 
-export type ExampleType = AnyExample | ArrayExample | BooleanExample | DictionaryExample | NullExample | NumberExample | StringExample | StructExample | QualifiedExample;
+export type ExampleType = AnyExample | ArrayExample | BooleanExample | DictionaryExample | NullExample | NumberExample | QualifiedExample| StringExample | StructExample;
 
 export interface AnyExample {
   kind: 'any';
@@ -65,6 +65,12 @@ export interface ParameterExample {
   value: ExampleType;
 }
 
+export interface QualifiedExample {
+  kind: 'qualified';
+  value: any;
+  type: QualifiedType;
+}
+
 export interface ResponseEnvelopeExample {
   response: result.ResponseEnvelope;
   headers: Array<ResponseHeaderExample>;
@@ -87,12 +93,6 @@ export interface StructExample {
   value: Record<string, ExampleType>;
   additionalProperties?: Record<string, ExampleType>;
   type: ModelType | PolymorphicType;
-}
-
-export interface QualifiedExample {
-  kind: 'qualified';
-  value: any;
-  type: QualifiedType;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,6 +162,14 @@ export class ParameterExample implements ParameterExample {
   }
 }
 
+export class QualifiedExample implements QualifiedExample {
+  constructor(type: QualifiedType, value: any) {
+    this.kind = 'qualified';
+    this.type = type;
+    this.value = value;
+  }
+}
+
 export class ResponseEnvelopeExample implements ResponseEnvelopeExample {
   constructor(response: result.ResponseEnvelope) {
     this.response = response;
@@ -189,13 +197,5 @@ export class StructExample implements StructExample {
     this.kind = 'model';
     this.type = type;
     this.value = {};
-  }
-}
-
-export class QualifiedExample implements QualifiedExample {
-  constructor(type: QualifiedType, value: any) {
-    this.kind = 'qualified';
-    this.type = type;
-    this.value = value;
   }
 }
