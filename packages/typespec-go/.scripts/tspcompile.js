@@ -196,6 +196,9 @@ generate('armhardwaresecuritymodules', armhardwaresecuritymodules, 'test/local/a
 const armcomputeschedule = pkgRoot + 'test/tsp/ComputeSchedule.Management';
 generate('armcomputeschedule', armcomputeschedule, 'test/local/armcomputeschedule', [`examples-directory=${armcomputeschedule}/examples`, 'generate-samples=true']);
 
+const armbillingbenefits = pkgRoot + 'test/tsp/BillingBenefits.Management';
+generate('armbillingbenefits', armbillingbenefits, 'test/local/armbillingbenefits', [`examples-directory=${armbillingbenefits}/examples`, 'generate-samples=true']);
+
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
 
