@@ -302,6 +302,8 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
     } else if (example.type.exportName === 'ReadSeekCloser') {
       // TODO: support MultipartContent
       throw new CodegenError('InternalError', `ReadSeekCloser example type is not supported yet`);
+    } else {
+      throw new CodegenError('InternalError', `qualified example type ${example.type.exportName} is not supported yet`);
     }
   }
   return '';
