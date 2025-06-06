@@ -7,11 +7,12 @@ import (
 	"context"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
 func TestModelAzureCoreEmbeddingVectorClient_Get(t *testing.T) {
-	expected := []*int32{toInt32(0), toInt32(1), toInt32(2), toInt32(3), toInt32(4)}
+	expected := []*int32{to.Ptr(int32(0)), to.Ptr(int32(1)), to.Ptr(int32(2)), to.Ptr(int32(3)), to.Ptr(int32(4))}
 	client, err := NewModelAzureCoreEmbeddingVectorClient(nil)
 	require.NoError(t, err)
 
@@ -21,7 +22,7 @@ func TestModelAzureCoreEmbeddingVectorClient_Get(t *testing.T) {
 }
 
 func TestModelAzureCoreEmbeddingVectorClient_Post(t *testing.T) {
-	input := AzureEmbeddingModel{Embedding: []*int32{toInt32(0), toInt32(1), toInt32(2), toInt32(3), toInt32(4)}}
+	input := AzureEmbeddingModel{Embedding: []*int32{to.Ptr(int32(0)), to.Ptr(int32(1)), to.Ptr(int32(2)), to.Ptr(int32(3)), to.Ptr(int32(4))}}
 	client, err := NewModelAzureCoreEmbeddingVectorClient(nil)
 	require.NoError(t, err)
 	resp, err := client.Post(context.Background(), input, nil)
@@ -30,13 +31,9 @@ func TestModelAzureCoreEmbeddingVectorClient_Post(t *testing.T) {
 }
 
 func TestModelAzureCoreEmbeddingVectorClient_Put(t *testing.T) {
-	expected := []*int32{toInt32(0), toInt32(1), toInt32(2), toInt32(3), toInt32(4)}
+	expected := []*int32{to.Ptr(int32(0)), to.Ptr(int32(1)), to.Ptr(int32(2)), to.Ptr(int32(3)), to.Ptr(int32(4))}
 	client, err := NewModelAzureCoreEmbeddingVectorClient(nil)
 	require.NoError(t, err)
 	_, err = client.Put(context.Background(), expected, nil)
 	require.NoError(t, err)
-}
-
-func toInt32(v int32) *int32 {
-	return &v
 }
