@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 import { execSync } from 'child_process';
-import { opendirSync } from 'fs';
+import { opendirSync, existsSync } from 'fs';
 import { join } from 'path';
 
 // default to the root of the repo
@@ -16,6 +16,12 @@ if (args.length > 0) {
 recursiveUpdateGoMod(dir);
 
 function recursiveUpdateGoMod(cur) {
+    // console.log('Checking directory: ' + cur);
+    if (!existsSync(cur)) {
+        // Directory does not exist, skip
+        // console.log('Directory does not exist: ' + cur);
+        return;
+    }
     const dir = opendirSync(cur);
     while (true) {
         const dirEnt = dir.readSync()
