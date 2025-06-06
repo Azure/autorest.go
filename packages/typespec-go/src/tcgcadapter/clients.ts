@@ -206,6 +206,9 @@ export class clientAdapter {
     if (sdkMethod.kind === 'basic') {
       method = new go.Method(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
     } else if (sdkMethod.kind === 'paging') {
+      if (sdkMethod.pagingMetadata.nextLinkReInjectedParametersSegments !== undefined && sdkMethod.pagingMetadata.nextLinkReInjectedParametersSegments.length > 0) {
+        throw new AdapterError('UnsupportedTsp', `paging with re-injected parameters is not supported`, sdkMethod.__raw?.node ?? NoTarget);
+      }
       method = new go.PageableMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
       if (sdkMethod.nextLinkPath) {
         // TODO: handle nested next link
