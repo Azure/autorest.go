@@ -897,6 +897,9 @@ export class clientAdapter {
         if (go.isConstantType(goType) || go.isBytesType(goType) || go.isLiteralValue(goType) || go.isTimeType(goType) || go.isPrimitiveType(goType)) {
           return new go.StringExample(exampleType.value, goType);
         }
+        if (go.isQualifiedType(goType)) {
+          return new go.QualifiedExample(goType, exampleType.value);
+        }
         break;
       case 'number':
         if (go.isConstantType(goType) || go.isLiteralValue(goType) || go.isTimeType(goType) || go.isPrimitiveType(goType)) {

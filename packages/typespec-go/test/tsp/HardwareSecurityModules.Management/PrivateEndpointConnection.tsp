@@ -9,6 +9,7 @@ using TypeSpec.Rest;
 using Azure.ResourceManager;
 using TypeSpec.Http;
 using TypeSpec.OpenAPI;
+using Azure.Core;
 
 namespace Microsoft.HardwareSecurityModules;
 /**
@@ -27,7 +28,7 @@ model PrivateEndpointConnection
    * Modified whenever there is a change in the state of private endpoint connection.
    */
   #suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-invalid-envelope-property" "For backward compatibility"
-  etag?: string;
+  ...EtagProperty;
 }
 
 @armResourceOperations

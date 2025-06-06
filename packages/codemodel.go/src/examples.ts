@@ -5,9 +5,9 @@
 
 import * as param from './param.js';
 import * as result from './result.js';
-import { BytesType, ConstantType, Docs, LiteralValue, MapType, ModelType, PolymorphicType, PossibleType, PrimitiveType, SliceType, TimeType } from './type.js';
+import { BytesType, ConstantType, Docs, LiteralValue, MapType, ModelType, PolymorphicType, PossibleType, PrimitiveType, QualifiedType, SliceType, TimeType } from './type.js';
 
-export type ExampleType = AnyExample | ArrayExample | BooleanExample | DictionaryExample | NullExample | NumberExample | StringExample | StructExample;
+export type ExampleType = AnyExample | ArrayExample | BooleanExample | DictionaryExample | NullExample | NumberExample | QualifiedExample| StringExample | StructExample;
 
 export interface AnyExample {
   kind: 'any';
@@ -63,6 +63,12 @@ export interface NumberExample {
 export interface ParameterExample {
   parameter: param.Parameter;
   value: ExampleType;
+}
+
+export interface QualifiedExample {
+  kind: 'qualified';
+  value: any;
+  type: QualifiedType;
 }
 
 export interface ResponseEnvelopeExample {
@@ -152,6 +158,14 @@ export class NumberExample implements NumberExample {
 export class ParameterExample implements ParameterExample {
   constructor(parameter: param.Parameter, value: ExampleType) {
     this.parameter = parameter;
+    this.value = value;
+  }
+}
+
+export class QualifiedExample implements QualifiedExample {
+  constructor(type: QualifiedType, value: any) {
+    this.kind = 'qualified';
+    this.type = type;
     this.value = value;
   }
 }

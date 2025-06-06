@@ -292,6 +292,19 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
     }
     exampleText += `${indent}}`;
     return exampleText;
+  } else if (example.kind === 'qualified') {
+    imports?.add(example.type.packageName);
+    if (example.type.exportName === 'ETag') {
+      return `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}(${jsonToGo(example.value, '')})`;
+    } else if (example.type.exportName === 'MultipartContent') {
+      // TODO: support MultipartContent
+      throw new CodegenError('InternalError', `MultipartContent example type is not supported yet`);
+    } else if (example.type.exportName === 'ReadSeekCloser') {
+      // TODO: support MultipartContent
+      throw new CodegenError('InternalError', `ReadSeekCloser example type is not supported yet`);
+    } else {
+      throw new CodegenError('InternalError', `qualified example type ${example.type.exportName} is not supported yet`);
+    }
   }
   return '';
 }
