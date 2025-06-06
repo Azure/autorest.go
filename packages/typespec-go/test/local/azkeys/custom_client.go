@@ -8,12 +8,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewKeyVaultClient(vaultURL string, options *azcore.ClientOptions) (*KeyVaultClient, error) {
+func NewClient(vaultURL string, options *azcore.ClientOptions) (*Client, error) {
 	client, err := azcore.NewClient("azkeys", "v0.1.0", runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &KeyVaultClient{
+	return &Client{
 		internal:     client,
 		vaultBaseUrl: vaultURL,
 	}, nil
