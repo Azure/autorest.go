@@ -53,11 +53,11 @@
     "@azure-tools/typespec-autorest": "0.56.0",
     "@azure-tools/typespec-azure-core": "0.56.0",
     "@azure-tools/typespec-azure-resource-manager": "0.56.2",
-    "@azure-tools/typespec-client-generator-core": "0.56.2",
+    "@azure-tools/typespec-client-generator-core": "0.56.4",
     "@types/node": "catalog:",
     "@typespec/compiler": "1.0.0",
     "@typespec/events": "0.70.0",
-    "@typespec/http": "1.0.0",
+    "@typespec/http": "1.0.1",
     "@typespec/http-specs": "0.1.0-alpha.22",
     "@typespec/openapi": "1.0.0",
     "@typespec/rest": "0.70.0",
@@ -77,7 +77,7 @@
   "peerDependencies": {
     "@azure-tools/typespec-client-generator-core": "0.56.2",
     "@typespec/compiler": "^1.0.0",
-    "@typespec/http": "^1.0.0"
+    "@typespec/http": "^1.0.1"
   },
   "dependencies": {
     "@azure-tools/codegen": "catalog:",
