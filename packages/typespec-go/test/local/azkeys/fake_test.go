@@ -19,13 +19,13 @@ import (
 func TestFakeBackupKey(t *testing.T) {
 	const fakeKeyName = "fakeKey"
 	fakeKeyBlob := []byte{1, 2, 3}
-	server := fake.KeyVaultServer{
-		BackupKey: func(ctx context.Context, keyName string, options *azkeys.KeyVaultClientBackupKeyOptions) (resp azfake.Responder[azkeys.KeyVaultClientBackupKeyResponse], errResp azfake.ErrorResponder) {
+	server := fake.Server{
+		BackupKey: func(ctx context.Context, keyName string, options *azkeys.BackupKeyOptions) (resp azfake.Responder[azkeys.BackupKeyResponse], errResp azfake.ErrorResponder) {
 			if keyName != fakeKeyName {
 				errResp.SetError(fmt.Errorf("bad fake key name %s", keyName))
 				return
 			}
-			resp.SetResponse(http.StatusOK, azkeys.KeyVaultClientBackupKeyResponse{
+			resp.SetResponse(http.StatusOK, azkeys.BackupKeyResponse{
 				BackupKeyResult: azkeys.BackupKeyResult{
 					Value: fakeKeyBlob,
 				},
@@ -34,8 +34,8 @@ func TestFakeBackupKey(t *testing.T) {
 		},
 	}
 
-	client, err := azkeys.NewKeyVaultClient("https://contoso.com/fake/vault", &azcore.ClientOptions{
-		Transport: fake.NewKeyVaultServerTransport(&server),
+	client, err := azkeys.NewClient("https://contoso.com/fake/vault", &azcore.ClientOptions{
+		Transport: fake.NewServerTransport(&server),
 	})
 	require.NoError(t, err)
 

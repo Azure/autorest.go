@@ -16,200 +16,199 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
-	"strconv"
 )
 
-// KeyVaultServer is a fake server for instances of the azkeys.KeyVaultClient type.
-type KeyVaultServer struct {
-	// BackupKey is the fake for method KeyVaultClient.BackupKey
+// Server is a fake server for instances of the azkeys.Client type.
+type Server struct {
+	// BackupKey is the fake for method Client.BackupKey
 	// HTTP status codes to indicate success: http.StatusOK
-	BackupKey func(ctx context.Context, keyName string, options *azkeys.KeyVaultClientBackupKeyOptions) (resp azfake.Responder[azkeys.KeyVaultClientBackupKeyResponse], errResp azfake.ErrorResponder)
+	BackupKey func(ctx context.Context, keyName string, options *azkeys.BackupKeyOptions) (resp azfake.Responder[azkeys.BackupKeyResponse], errResp azfake.ErrorResponder)
 
-	// CreateKey is the fake for method KeyVaultClient.CreateKey
+	// CreateKey is the fake for method Client.CreateKey
 	// HTTP status codes to indicate success: http.StatusOK
-	CreateKey func(ctx context.Context, keyName string, parameters azkeys.KeyCreateParameters, options *azkeys.KeyVaultClientCreateKeyOptions) (resp azfake.Responder[azkeys.KeyVaultClientCreateKeyResponse], errResp azfake.ErrorResponder)
+	CreateKey func(ctx context.Context, keyName string, parameters azkeys.CreateKeyParameters, options *azkeys.CreateKeyOptions) (resp azfake.Responder[azkeys.CreateKeyResponse], errResp azfake.ErrorResponder)
 
-	// Decrypt is the fake for method KeyVaultClient.Decrypt
+	// Decrypt is the fake for method Client.Decrypt
 	// HTTP status codes to indicate success: http.StatusOK
-	Decrypt func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.KeyOperationsParameters, options *azkeys.KeyVaultClientDecryptOptions) (resp azfake.Responder[azkeys.KeyVaultClientDecryptResponse], errResp azfake.ErrorResponder)
+	Decrypt func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.KeyOperationParameters, options *azkeys.DecryptOptions) (resp azfake.Responder[azkeys.DecryptResponse], errResp azfake.ErrorResponder)
 
-	// DeleteKey is the fake for method KeyVaultClient.DeleteKey
+	// DeleteKey is the fake for method Client.DeleteKey
 	// HTTP status codes to indicate success: http.StatusOK
-	DeleteKey func(ctx context.Context, keyName string, options *azkeys.KeyVaultClientDeleteKeyOptions) (resp azfake.Responder[azkeys.KeyVaultClientDeleteKeyResponse], errResp azfake.ErrorResponder)
+	DeleteKey func(ctx context.Context, keyName string, options *azkeys.DeleteKeyOptions) (resp azfake.Responder[azkeys.DeleteKeyResponse], errResp azfake.ErrorResponder)
 
-	// Encrypt is the fake for method KeyVaultClient.Encrypt
+	// Encrypt is the fake for method Client.Encrypt
 	// HTTP status codes to indicate success: http.StatusOK
-	Encrypt func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.KeyOperationsParameters, options *azkeys.KeyVaultClientEncryptOptions) (resp azfake.Responder[azkeys.KeyVaultClientEncryptResponse], errResp azfake.ErrorResponder)
+	Encrypt func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.KeyOperationParameters, options *azkeys.EncryptOptions) (resp azfake.Responder[azkeys.EncryptResponse], errResp azfake.ErrorResponder)
 
-	// GetDeletedKey is the fake for method KeyVaultClient.GetDeletedKey
+	// GetDeletedKey is the fake for method Client.GetDeletedKey
 	// HTTP status codes to indicate success: http.StatusOK
-	GetDeletedKey func(ctx context.Context, keyName string, options *azkeys.KeyVaultClientGetDeletedKeyOptions) (resp azfake.Responder[azkeys.KeyVaultClientGetDeletedKeyResponse], errResp azfake.ErrorResponder)
+	GetDeletedKey func(ctx context.Context, keyName string, options *azkeys.GetDeletedKeyOptions) (resp azfake.Responder[azkeys.GetDeletedKeyResponse], errResp azfake.ErrorResponder)
 
-	// NewGetDeletedKeysPager is the fake for method KeyVaultClient.NewGetDeletedKeysPager
+	// GetKey is the fake for method Client.GetKey
 	// HTTP status codes to indicate success: http.StatusOK
-	NewGetDeletedKeysPager func(options *azkeys.KeyVaultClientGetDeletedKeysOptions) (resp azfake.PagerResponder[azkeys.KeyVaultClientGetDeletedKeysResponse])
+	GetKey func(ctx context.Context, keyName string, keyVersion string, options *azkeys.GetKeyOptions) (resp azfake.Responder[azkeys.GetKeyResponse], errResp azfake.ErrorResponder)
 
-	// GetKey is the fake for method KeyVaultClient.GetKey
+	// GetKeyRotationPolicy is the fake for method Client.GetKeyRotationPolicy
 	// HTTP status codes to indicate success: http.StatusOK
-	GetKey func(ctx context.Context, keyName string, keyVersion string, options *azkeys.KeyVaultClientGetKeyOptions) (resp azfake.Responder[azkeys.KeyVaultClientGetKeyResponse], errResp azfake.ErrorResponder)
+	GetKeyRotationPolicy func(ctx context.Context, keyName string, options *azkeys.GetKeyRotationPolicyOptions) (resp azfake.Responder[azkeys.GetKeyRotationPolicyResponse], errResp azfake.ErrorResponder)
 
-	// GetKeyRotationPolicy is the fake for method KeyVaultClient.GetKeyRotationPolicy
+	// GetRandomBytes is the fake for method Client.GetRandomBytes
 	// HTTP status codes to indicate success: http.StatusOK
-	GetKeyRotationPolicy func(ctx context.Context, keyName string, options *azkeys.KeyVaultClientGetKeyRotationPolicyOptions) (resp azfake.Responder[azkeys.KeyVaultClientGetKeyRotationPolicyResponse], errResp azfake.ErrorResponder)
+	GetRandomBytes func(ctx context.Context, parameters azkeys.GetRandomBytesParameters, options *azkeys.GetRandomBytesOptions) (resp azfake.Responder[azkeys.GetRandomBytesResponse], errResp azfake.ErrorResponder)
 
-	// NewGetKeyVersionsPager is the fake for method KeyVaultClient.NewGetKeyVersionsPager
+	// ImportKey is the fake for method Client.ImportKey
 	// HTTP status codes to indicate success: http.StatusOK
-	NewGetKeyVersionsPager func(keyName string, options *azkeys.KeyVaultClientGetKeyVersionsOptions) (resp azfake.PagerResponder[azkeys.KeyVaultClientGetKeyVersionsResponse])
+	ImportKey func(ctx context.Context, keyName string, parameters azkeys.ImportKeyParameters, options *azkeys.ImportKeyOptions) (resp azfake.Responder[azkeys.ImportKeyResponse], errResp azfake.ErrorResponder)
 
-	// NewGetKeysPager is the fake for method KeyVaultClient.NewGetKeysPager
+	// NewListDeletedKeyPropertiesPager is the fake for method Client.NewListDeletedKeyPropertiesPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewGetKeysPager func(options *azkeys.KeyVaultClientGetKeysOptions) (resp azfake.PagerResponder[azkeys.KeyVaultClientGetKeysResponse])
+	NewListDeletedKeyPropertiesPager func(options *azkeys.ListDeletedKeyPropertiesOptions) (resp azfake.PagerResponder[azkeys.ListDeletedKeyPropertiesResponse])
 
-	// GetRandomBytes is the fake for method KeyVaultClient.GetRandomBytes
+	// NewListKeyPropertiesPager is the fake for method Client.NewListKeyPropertiesPager
 	// HTTP status codes to indicate success: http.StatusOK
-	GetRandomBytes func(ctx context.Context, parameters azkeys.GetRandomBytesRequest, options *azkeys.KeyVaultClientGetRandomBytesOptions) (resp azfake.Responder[azkeys.KeyVaultClientGetRandomBytesResponse], errResp azfake.ErrorResponder)
+	NewListKeyPropertiesPager func(options *azkeys.ListKeyPropertiesOptions) (resp azfake.PagerResponder[azkeys.ListKeyPropertiesResponse])
 
-	// ImportKey is the fake for method KeyVaultClient.ImportKey
+	// NewListKeyPropertiesVersionsPager is the fake for method Client.NewListKeyPropertiesVersionsPager
 	// HTTP status codes to indicate success: http.StatusOK
-	ImportKey func(ctx context.Context, keyName string, parameters azkeys.KeyImportParameters, options *azkeys.KeyVaultClientImportKeyOptions) (resp azfake.Responder[azkeys.KeyVaultClientImportKeyResponse], errResp azfake.ErrorResponder)
+	NewListKeyPropertiesVersionsPager func(keyName string, options *azkeys.ListKeyPropertiesVersionsOptions) (resp azfake.PagerResponder[azkeys.ListKeyPropertiesVersionsResponse])
 
-	// PurgeDeletedKey is the fake for method KeyVaultClient.PurgeDeletedKey
+	// PurgeDeletedKey is the fake for method Client.PurgeDeletedKey
 	// HTTP status codes to indicate success: http.StatusNoContent
-	PurgeDeletedKey func(ctx context.Context, keyName string, options *azkeys.KeyVaultClientPurgeDeletedKeyOptions) (resp azfake.Responder[azkeys.KeyVaultClientPurgeDeletedKeyResponse], errResp azfake.ErrorResponder)
+	PurgeDeletedKey func(ctx context.Context, keyName string, options *azkeys.PurgeDeletedKeyOptions) (resp azfake.Responder[azkeys.PurgeDeletedKeyResponse], errResp azfake.ErrorResponder)
 
-	// RecoverDeletedKey is the fake for method KeyVaultClient.RecoverDeletedKey
+	// RecoverDeletedKey is the fake for method Client.RecoverDeletedKey
 	// HTTP status codes to indicate success: http.StatusOK
-	RecoverDeletedKey func(ctx context.Context, keyName string, options *azkeys.KeyVaultClientRecoverDeletedKeyOptions) (resp azfake.Responder[azkeys.KeyVaultClientRecoverDeletedKeyResponse], errResp azfake.ErrorResponder)
+	RecoverDeletedKey func(ctx context.Context, keyName string, options *azkeys.RecoverDeletedKeyOptions) (resp azfake.Responder[azkeys.RecoverDeletedKeyResponse], errResp azfake.ErrorResponder)
 
-	// Release is the fake for method KeyVaultClient.Release
+	// Release is the fake for method Client.Release
 	// HTTP status codes to indicate success: http.StatusOK
-	Release func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.KeyReleaseParameters, options *azkeys.KeyVaultClientReleaseOptions) (resp azfake.Responder[azkeys.KeyVaultClientReleaseResponse], errResp azfake.ErrorResponder)
+	Release func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.ReleaseParameters, options *azkeys.ReleaseOptions) (resp azfake.Responder[azkeys.ReleaseResponse], errResp azfake.ErrorResponder)
 
-	// RestoreKey is the fake for method KeyVaultClient.RestoreKey
+	// RestoreKey is the fake for method Client.RestoreKey
 	// HTTP status codes to indicate success: http.StatusOK
-	RestoreKey func(ctx context.Context, parameters azkeys.KeyRestoreParameters, options *azkeys.KeyVaultClientRestoreKeyOptions) (resp azfake.Responder[azkeys.KeyVaultClientRestoreKeyResponse], errResp azfake.ErrorResponder)
+	RestoreKey func(ctx context.Context, parameters azkeys.RestoreKeyParameters, options *azkeys.RestoreKeyOptions) (resp azfake.Responder[azkeys.RestoreKeyResponse], errResp azfake.ErrorResponder)
 
-	// RotateKey is the fake for method KeyVaultClient.RotateKey
+	// RotateKey is the fake for method Client.RotateKey
 	// HTTP status codes to indicate success: http.StatusOK
-	RotateKey func(ctx context.Context, keyName string, options *azkeys.KeyVaultClientRotateKeyOptions) (resp azfake.Responder[azkeys.KeyVaultClientRotateKeyResponse], errResp azfake.ErrorResponder)
+	RotateKey func(ctx context.Context, keyName string, options *azkeys.RotateKeyOptions) (resp azfake.Responder[azkeys.RotateKeyResponse], errResp azfake.ErrorResponder)
 
-	// Sign is the fake for method KeyVaultClient.Sign
+	// Sign is the fake for method Client.Sign
 	// HTTP status codes to indicate success: http.StatusOK
-	Sign func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.KeySignParameters, options *azkeys.KeyVaultClientSignOptions) (resp azfake.Responder[azkeys.KeyVaultClientSignResponse], errResp azfake.ErrorResponder)
+	Sign func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.SignParameters, options *azkeys.SignOptions) (resp azfake.Responder[azkeys.SignResponse], errResp azfake.ErrorResponder)
 
-	// UnwrapKey is the fake for method KeyVaultClient.UnwrapKey
+	// UnwrapKey is the fake for method Client.UnwrapKey
 	// HTTP status codes to indicate success: http.StatusOK
-	UnwrapKey func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.KeyOperationsParameters, options *azkeys.KeyVaultClientUnwrapKeyOptions) (resp azfake.Responder[azkeys.KeyVaultClientUnwrapKeyResponse], errResp azfake.ErrorResponder)
+	UnwrapKey func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.KeyOperationParameters, options *azkeys.UnwrapKeyOptions) (resp azfake.Responder[azkeys.UnwrapKeyResponse], errResp azfake.ErrorResponder)
 
-	// UpdateKey is the fake for method KeyVaultClient.UpdateKey
+	// UpdateKey is the fake for method Client.UpdateKey
 	// HTTP status codes to indicate success: http.StatusOK
-	UpdateKey func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.KeyUpdateParameters, options *azkeys.KeyVaultClientUpdateKeyOptions) (resp azfake.Responder[azkeys.KeyVaultClientUpdateKeyResponse], errResp azfake.ErrorResponder)
+	UpdateKey func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.UpdateKeyParameters, options *azkeys.UpdateKeyOptions) (resp azfake.Responder[azkeys.UpdateKeyResponse], errResp azfake.ErrorResponder)
 
-	// UpdateKeyRotationPolicy is the fake for method KeyVaultClient.UpdateKeyRotationPolicy
+	// UpdateKeyRotationPolicy is the fake for method Client.UpdateKeyRotationPolicy
 	// HTTP status codes to indicate success: http.StatusOK
-	UpdateKeyRotationPolicy func(ctx context.Context, keyName string, keyRotationPolicy azkeys.KeyRotationPolicy, options *azkeys.KeyVaultClientUpdateKeyRotationPolicyOptions) (resp azfake.Responder[azkeys.KeyVaultClientUpdateKeyRotationPolicyResponse], errResp azfake.ErrorResponder)
+	UpdateKeyRotationPolicy func(ctx context.Context, keyName string, keyRotationPolicy azkeys.KeyRotationPolicy, options *azkeys.UpdateKeyRotationPolicyOptions) (resp azfake.Responder[azkeys.UpdateKeyRotationPolicyResponse], errResp azfake.ErrorResponder)
 
-	// Verify is the fake for method KeyVaultClient.Verify
+	// Verify is the fake for method Client.Verify
 	// HTTP status codes to indicate success: http.StatusOK
-	Verify func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.KeyVerifyParameters, options *azkeys.KeyVaultClientVerifyOptions) (resp azfake.Responder[azkeys.KeyVaultClientVerifyResponse], errResp azfake.ErrorResponder)
+	Verify func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.VerifyParameters, options *azkeys.VerifyOptions) (resp azfake.Responder[azkeys.VerifyResponse], errResp azfake.ErrorResponder)
 
-	// WrapKey is the fake for method KeyVaultClient.WrapKey
+	// WrapKey is the fake for method Client.WrapKey
 	// HTTP status codes to indicate success: http.StatusOK
-	WrapKey func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.KeyOperationsParameters, options *azkeys.KeyVaultClientWrapKeyOptions) (resp azfake.Responder[azkeys.KeyVaultClientWrapKeyResponse], errResp azfake.ErrorResponder)
+	WrapKey func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.KeyOperationParameters, options *azkeys.WrapKeyOptions) (resp azfake.Responder[azkeys.WrapKeyResponse], errResp azfake.ErrorResponder)
 }
 
-// NewKeyVaultServerTransport creates a new instance of KeyVaultServerTransport with the provided implementation.
-// The returned KeyVaultServerTransport instance is connected to an instance of azkeys.KeyVaultClient via the
+// NewServerTransport creates a new instance of ServerTransport with the provided implementation.
+// The returned ServerTransport instance is connected to an instance of azkeys.Client via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewKeyVaultServerTransport(srv *KeyVaultServer) *KeyVaultServerTransport {
-	return &KeyVaultServerTransport{
-		srv:                    srv,
-		newGetDeletedKeysPager: newTracker[azfake.PagerResponder[azkeys.KeyVaultClientGetDeletedKeysResponse]](),
-		newGetKeyVersionsPager: newTracker[azfake.PagerResponder[azkeys.KeyVaultClientGetKeyVersionsResponse]](),
-		newGetKeysPager:        newTracker[azfake.PagerResponder[azkeys.KeyVaultClientGetKeysResponse]](),
+func NewServerTransport(srv *Server) *ServerTransport {
+	return &ServerTransport{
+		srv:                               srv,
+		newListDeletedKeyPropertiesPager:  newTracker[azfake.PagerResponder[azkeys.ListDeletedKeyPropertiesResponse]](),
+		newListKeyPropertiesPager:         newTracker[azfake.PagerResponder[azkeys.ListKeyPropertiesResponse]](),
+		newListKeyPropertiesVersionsPager: newTracker[azfake.PagerResponder[azkeys.ListKeyPropertiesVersionsResponse]](),
 	}
 }
 
-// KeyVaultServerTransport connects instances of azkeys.KeyVaultClient to instances of KeyVaultServer.
-// Don't use this type directly, use NewKeyVaultServerTransport instead.
-type KeyVaultServerTransport struct {
-	srv                    *KeyVaultServer
-	newGetDeletedKeysPager *tracker[azfake.PagerResponder[azkeys.KeyVaultClientGetDeletedKeysResponse]]
-	newGetKeyVersionsPager *tracker[azfake.PagerResponder[azkeys.KeyVaultClientGetKeyVersionsResponse]]
-	newGetKeysPager        *tracker[azfake.PagerResponder[azkeys.KeyVaultClientGetKeysResponse]]
+// ServerTransport connects instances of azkeys.Client to instances of Server.
+// Don't use this type directly, use NewServerTransport instead.
+type ServerTransport struct {
+	srv                               *Server
+	newListDeletedKeyPropertiesPager  *tracker[azfake.PagerResponder[azkeys.ListDeletedKeyPropertiesResponse]]
+	newListKeyPropertiesPager         *tracker[azfake.PagerResponder[azkeys.ListKeyPropertiesResponse]]
+	newListKeyPropertiesVersionsPager *tracker[azfake.PagerResponder[azkeys.ListKeyPropertiesVersionsResponse]]
 }
 
-// Do implements the policy.Transporter interface for KeyVaultServerTransport.
-func (k *KeyVaultServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for ServerTransport.
+func (s *ServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
-	return k.dispatchToMethodFake(req, method)
+	return s.dispatchToMethodFake(req, method)
 }
 
-func (k *KeyVaultServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
 	defer close(resultChan)
 
 	go func() {
 		var intercepted bool
 		var res result
-		if keyVaultServerTransportInterceptor != nil {
-			res.resp, res.err, intercepted = keyVaultServerTransportInterceptor.Do(req)
+		if serverTransportInterceptor != nil {
+			res.resp, res.err, intercepted = serverTransportInterceptor.Do(req)
 		}
 		if !intercepted {
 			switch method {
-			case "KeyVaultClient.BackupKey":
-				res.resp, res.err = k.dispatchBackupKey(req)
-			case "KeyVaultClient.CreateKey":
-				res.resp, res.err = k.dispatchCreateKey(req)
-			case "KeyVaultClient.Decrypt":
-				res.resp, res.err = k.dispatchDecrypt(req)
-			case "KeyVaultClient.DeleteKey":
-				res.resp, res.err = k.dispatchDeleteKey(req)
-			case "KeyVaultClient.Encrypt":
-				res.resp, res.err = k.dispatchEncrypt(req)
-			case "KeyVaultClient.GetDeletedKey":
-				res.resp, res.err = k.dispatchGetDeletedKey(req)
-			case "KeyVaultClient.NewGetDeletedKeysPager":
-				res.resp, res.err = k.dispatchNewGetDeletedKeysPager(req)
-			case "KeyVaultClient.GetKey":
-				res.resp, res.err = k.dispatchGetKey(req)
-			case "KeyVaultClient.GetKeyRotationPolicy":
-				res.resp, res.err = k.dispatchGetKeyRotationPolicy(req)
-			case "KeyVaultClient.NewGetKeyVersionsPager":
-				res.resp, res.err = k.dispatchNewGetKeyVersionsPager(req)
-			case "KeyVaultClient.NewGetKeysPager":
-				res.resp, res.err = k.dispatchNewGetKeysPager(req)
-			case "KeyVaultClient.GetRandomBytes":
-				res.resp, res.err = k.dispatchGetRandomBytes(req)
-			case "KeyVaultClient.ImportKey":
-				res.resp, res.err = k.dispatchImportKey(req)
-			case "KeyVaultClient.PurgeDeletedKey":
-				res.resp, res.err = k.dispatchPurgeDeletedKey(req)
-			case "KeyVaultClient.RecoverDeletedKey":
-				res.resp, res.err = k.dispatchRecoverDeletedKey(req)
-			case "KeyVaultClient.Release":
-				res.resp, res.err = k.dispatchRelease(req)
-			case "KeyVaultClient.RestoreKey":
-				res.resp, res.err = k.dispatchRestoreKey(req)
-			case "KeyVaultClient.RotateKey":
-				res.resp, res.err = k.dispatchRotateKey(req)
-			case "KeyVaultClient.Sign":
-				res.resp, res.err = k.dispatchSign(req)
-			case "KeyVaultClient.UnwrapKey":
-				res.resp, res.err = k.dispatchUnwrapKey(req)
-			case "KeyVaultClient.UpdateKey":
-				res.resp, res.err = k.dispatchUpdateKey(req)
-			case "KeyVaultClient.UpdateKeyRotationPolicy":
-				res.resp, res.err = k.dispatchUpdateKeyRotationPolicy(req)
-			case "KeyVaultClient.Verify":
-				res.resp, res.err = k.dispatchVerify(req)
-			case "KeyVaultClient.WrapKey":
-				res.resp, res.err = k.dispatchWrapKey(req)
+			case "Client.BackupKey":
+				res.resp, res.err = s.dispatchBackupKey(req)
+			case "Client.CreateKey":
+				res.resp, res.err = s.dispatchCreateKey(req)
+			case "Client.Decrypt":
+				res.resp, res.err = s.dispatchDecrypt(req)
+			case "Client.DeleteKey":
+				res.resp, res.err = s.dispatchDeleteKey(req)
+			case "Client.Encrypt":
+				res.resp, res.err = s.dispatchEncrypt(req)
+			case "Client.GetDeletedKey":
+				res.resp, res.err = s.dispatchGetDeletedKey(req)
+			case "Client.GetKey":
+				res.resp, res.err = s.dispatchGetKey(req)
+			case "Client.GetKeyRotationPolicy":
+				res.resp, res.err = s.dispatchGetKeyRotationPolicy(req)
+			case "Client.GetRandomBytes":
+				res.resp, res.err = s.dispatchGetRandomBytes(req)
+			case "Client.ImportKey":
+				res.resp, res.err = s.dispatchImportKey(req)
+			case "Client.NewListDeletedKeyPropertiesPager":
+				res.resp, res.err = s.dispatchNewListDeletedKeyPropertiesPager(req)
+			case "Client.NewListKeyPropertiesPager":
+				res.resp, res.err = s.dispatchNewListKeyPropertiesPager(req)
+			case "Client.NewListKeyPropertiesVersionsPager":
+				res.resp, res.err = s.dispatchNewListKeyPropertiesVersionsPager(req)
+			case "Client.PurgeDeletedKey":
+				res.resp, res.err = s.dispatchPurgeDeletedKey(req)
+			case "Client.RecoverDeletedKey":
+				res.resp, res.err = s.dispatchRecoverDeletedKey(req)
+			case "Client.Release":
+				res.resp, res.err = s.dispatchRelease(req)
+			case "Client.RestoreKey":
+				res.resp, res.err = s.dispatchRestoreKey(req)
+			case "Client.RotateKey":
+				res.resp, res.err = s.dispatchRotateKey(req)
+			case "Client.Sign":
+				res.resp, res.err = s.dispatchSign(req)
+			case "Client.UnwrapKey":
+				res.resp, res.err = s.dispatchUnwrapKey(req)
+			case "Client.UpdateKey":
+				res.resp, res.err = s.dispatchUpdateKey(req)
+			case "Client.UpdateKeyRotationPolicy":
+				res.resp, res.err = s.dispatchUpdateKeyRotationPolicy(req)
+			case "Client.Verify":
+				res.resp, res.err = s.dispatchVerify(req)
+			case "Client.WrapKey":
+				res.resp, res.err = s.dispatchWrapKey(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
 			}
@@ -229,8 +228,8 @@ func (k *KeyVaultServerTransport) dispatchToMethodFake(req *http.Request, method
 	}
 }
 
-func (k *KeyVaultServerTransport) dispatchBackupKey(req *http.Request) (*http.Response, error) {
-	if k.srv.BackupKey == nil {
+func (s *ServerTransport) dispatchBackupKey(req *http.Request) (*http.Response, error) {
+	if s.srv.BackupKey == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BackupKey not implemented")}
 	}
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/backup`
@@ -243,7 +242,7 @@ func (k *KeyVaultServerTransport) dispatchBackupKey(req *http.Request) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.BackupKey(req.Context(), keyNameParam, nil)
+	respr, errRespr := s.srv.BackupKey(req.Context(), keyNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -258,8 +257,8 @@ func (k *KeyVaultServerTransport) dispatchBackupKey(req *http.Request) (*http.Re
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchCreateKey(req *http.Request) (*http.Response, error) {
-	if k.srv.CreateKey == nil {
+func (s *ServerTransport) dispatchCreateKey(req *http.Request) (*http.Response, error) {
+	if s.srv.CreateKey == nil {
 		return nil, &nonRetriableError{errors.New("fake for method CreateKey not implemented")}
 	}
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/create`
@@ -268,7 +267,7 @@ func (k *KeyVaultServerTransport) dispatchCreateKey(req *http.Request) (*http.Re
 	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyCreateParameters](req)
+	body, err := server.UnmarshalRequestAsJSON[azkeys.CreateKeyParameters](req)
 	if err != nil {
 		return nil, err
 	}
@@ -276,7 +275,7 @@ func (k *KeyVaultServerTransport) dispatchCreateKey(req *http.Request) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.CreateKey(req.Context(), keyNameParam, body, nil)
+	respr, errRespr := s.srv.CreateKey(req.Context(), keyNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -291,8 +290,8 @@ func (k *KeyVaultServerTransport) dispatchCreateKey(req *http.Request) (*http.Re
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchDecrypt(req *http.Request) (*http.Response, error) {
-	if k.srv.Decrypt == nil {
+func (s *ServerTransport) dispatchDecrypt(req *http.Request) (*http.Response, error) {
+	if s.srv.Decrypt == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Decrypt not implemented")}
 	}
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/decrypt`
@@ -301,7 +300,7 @@ func (k *KeyVaultServerTransport) dispatchDecrypt(req *http.Request) (*http.Resp
 	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyOperationsParameters](req)
+	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyOperationParameters](req)
 	if err != nil {
 		return nil, err
 	}
@@ -313,7 +312,7 @@ func (k *KeyVaultServerTransport) dispatchDecrypt(req *http.Request) (*http.Resp
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.Decrypt(req.Context(), keyNameParam, keyVersionParam, body, nil)
+	respr, errRespr := s.srv.Decrypt(req.Context(), keyNameParam, keyVersionParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -328,8 +327,8 @@ func (k *KeyVaultServerTransport) dispatchDecrypt(req *http.Request) (*http.Resp
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchDeleteKey(req *http.Request) (*http.Response, error) {
-	if k.srv.DeleteKey == nil {
+func (s *ServerTransport) dispatchDeleteKey(req *http.Request) (*http.Response, error) {
+	if s.srv.DeleteKey == nil {
 		return nil, &nonRetriableError{errors.New("fake for method DeleteKey not implemented")}
 	}
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
@@ -342,7 +341,7 @@ func (k *KeyVaultServerTransport) dispatchDeleteKey(req *http.Request) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.DeleteKey(req.Context(), keyNameParam, nil)
+	respr, errRespr := s.srv.DeleteKey(req.Context(), keyNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -350,15 +349,15 @@ func (k *KeyVaultServerTransport) dispatchDeleteKey(req *http.Request) (*http.Re
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).DeletedKeyBundle, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).DeletedKey, req)
 	if err != nil {
 		return nil, err
 	}
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchEncrypt(req *http.Request) (*http.Response, error) {
-	if k.srv.Encrypt == nil {
+func (s *ServerTransport) dispatchEncrypt(req *http.Request) (*http.Response, error) {
+	if s.srv.Encrypt == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Encrypt not implemented")}
 	}
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/encrypt`
@@ -367,7 +366,7 @@ func (k *KeyVaultServerTransport) dispatchEncrypt(req *http.Request) (*http.Resp
 	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyOperationsParameters](req)
+	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyOperationParameters](req)
 	if err != nil {
 		return nil, err
 	}
@@ -379,7 +378,7 @@ func (k *KeyVaultServerTransport) dispatchEncrypt(req *http.Request) (*http.Resp
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.Encrypt(req.Context(), keyNameParam, keyVersionParam, body, nil)
+	respr, errRespr := s.srv.Encrypt(req.Context(), keyNameParam, keyVersionParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -394,8 +393,8 @@ func (k *KeyVaultServerTransport) dispatchEncrypt(req *http.Request) (*http.Resp
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchGetDeletedKey(req *http.Request) (*http.Response, error) {
-	if k.srv.GetDeletedKey == nil {
+func (s *ServerTransport) dispatchGetDeletedKey(req *http.Request) (*http.Response, error) {
+	if s.srv.GetDeletedKey == nil {
 		return nil, &nonRetriableError{errors.New("fake for method GetDeletedKey not implemented")}
 	}
 	const regexStr = `/deletedkeys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
@@ -408,7 +407,7 @@ func (k *KeyVaultServerTransport) dispatchGetDeletedKey(req *http.Request) (*htt
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.GetDeletedKey(req.Context(), keyNameParam, nil)
+	respr, errRespr := s.srv.GetDeletedKey(req.Context(), keyNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -416,63 +415,15 @@ func (k *KeyVaultServerTransport) dispatchGetDeletedKey(req *http.Request) (*htt
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).DeletedKeyBundle, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).DeletedKey, req)
 	if err != nil {
 		return nil, err
 	}
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchNewGetDeletedKeysPager(req *http.Request) (*http.Response, error) {
-	if k.srv.NewGetDeletedKeysPager == nil {
-		return nil, &nonRetriableError{errors.New("fake for method NewGetDeletedKeysPager not implemented")}
-	}
-	newGetDeletedKeysPager := k.newGetDeletedKeysPager.get(req)
-	if newGetDeletedKeysPager == nil {
-		qp := req.URL.Query()
-		maxresultsUnescaped, err := url.QueryUnescape(qp.Get("maxresults"))
-		if err != nil {
-			return nil, err
-		}
-		maxresultsParam, err := parseOptional(maxresultsUnescaped, func(v string) (int32, error) {
-			p, parseErr := strconv.ParseInt(v, 10, 32)
-			if parseErr != nil {
-				return 0, parseErr
-			}
-			return int32(p), nil
-		})
-		if err != nil {
-			return nil, err
-		}
-		var options *azkeys.KeyVaultClientGetDeletedKeysOptions
-		if maxresultsParam != nil {
-			options = &azkeys.KeyVaultClientGetDeletedKeysOptions{
-				Maxresults: maxresultsParam,
-			}
-		}
-		resp := k.srv.NewGetDeletedKeysPager(options)
-		newGetDeletedKeysPager = &resp
-		k.newGetDeletedKeysPager.add(req, newGetDeletedKeysPager)
-		server.PagerResponderInjectNextLinks(newGetDeletedKeysPager, req, func(page *azkeys.KeyVaultClientGetDeletedKeysResponse, createLink func() string) {
-			page.NextLink = to.Ptr(createLink())
-		})
-	}
-	resp, err := server.PagerResponderNext(newGetDeletedKeysPager, req)
-	if err != nil {
-		return nil, err
-	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
-		k.newGetDeletedKeysPager.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
-	}
-	if !server.PagerResponderMore(newGetDeletedKeysPager) {
-		k.newGetDeletedKeysPager.remove(req)
-	}
-	return resp, nil
-}
-
-func (k *KeyVaultServerTransport) dispatchGetKey(req *http.Request) (*http.Response, error) {
-	if k.srv.GetKey == nil {
+func (s *ServerTransport) dispatchGetKey(req *http.Request) (*http.Response, error) {
+	if s.srv.GetKey == nil {
 		return nil, &nonRetriableError{errors.New("fake for method GetKey not implemented")}
 	}
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
@@ -489,7 +440,7 @@ func (k *KeyVaultServerTransport) dispatchGetKey(req *http.Request) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.GetKey(req.Context(), keyNameParam, keyVersionParam, nil)
+	respr, errRespr := s.srv.GetKey(req.Context(), keyNameParam, keyVersionParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -504,8 +455,8 @@ func (k *KeyVaultServerTransport) dispatchGetKey(req *http.Request) (*http.Respo
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchGetKeyRotationPolicy(req *http.Request) (*http.Response, error) {
-	if k.srv.GetKeyRotationPolicy == nil {
+func (s *ServerTransport) dispatchGetKeyRotationPolicy(req *http.Request) (*http.Response, error) {
+	if s.srv.GetKeyRotationPolicy == nil {
 		return nil, &nonRetriableError{errors.New("fake for method GetKeyRotationPolicy not implemented")}
 	}
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/rotationpolicy`
@@ -518,7 +469,7 @@ func (k *KeyVaultServerTransport) dispatchGetKeyRotationPolicy(req *http.Request
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.GetKeyRotationPolicy(req.Context(), keyNameParam, nil)
+	respr, errRespr := s.srv.GetKeyRotationPolicy(req.Context(), keyNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -533,121 +484,15 @@ func (k *KeyVaultServerTransport) dispatchGetKeyRotationPolicy(req *http.Request
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchNewGetKeyVersionsPager(req *http.Request) (*http.Response, error) {
-	if k.srv.NewGetKeyVersionsPager == nil {
-		return nil, &nonRetriableError{errors.New("fake for method NewGetKeyVersionsPager not implemented")}
-	}
-	newGetKeyVersionsPager := k.newGetKeyVersionsPager.get(req)
-	if newGetKeyVersionsPager == nil {
-		const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/versions`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if len(matches) < 2 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
-		}
-		qp := req.URL.Query()
-		keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
-		if err != nil {
-			return nil, err
-		}
-		maxresultsUnescaped, err := url.QueryUnescape(qp.Get("maxresults"))
-		if err != nil {
-			return nil, err
-		}
-		maxresultsParam, err := parseOptional(maxresultsUnescaped, func(v string) (int32, error) {
-			p, parseErr := strconv.ParseInt(v, 10, 32)
-			if parseErr != nil {
-				return 0, parseErr
-			}
-			return int32(p), nil
-		})
-		if err != nil {
-			return nil, err
-		}
-		var options *azkeys.KeyVaultClientGetKeyVersionsOptions
-		if maxresultsParam != nil {
-			options = &azkeys.KeyVaultClientGetKeyVersionsOptions{
-				Maxresults: maxresultsParam,
-			}
-		}
-		resp := k.srv.NewGetKeyVersionsPager(keyNameParam, options)
-		newGetKeyVersionsPager = &resp
-		k.newGetKeyVersionsPager.add(req, newGetKeyVersionsPager)
-		server.PagerResponderInjectNextLinks(newGetKeyVersionsPager, req, func(page *azkeys.KeyVaultClientGetKeyVersionsResponse, createLink func() string) {
-			page.NextLink = to.Ptr(createLink())
-		})
-	}
-	resp, err := server.PagerResponderNext(newGetKeyVersionsPager, req)
-	if err != nil {
-		return nil, err
-	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
-		k.newGetKeyVersionsPager.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
-	}
-	if !server.PagerResponderMore(newGetKeyVersionsPager) {
-		k.newGetKeyVersionsPager.remove(req)
-	}
-	return resp, nil
-}
-
-func (k *KeyVaultServerTransport) dispatchNewGetKeysPager(req *http.Request) (*http.Response, error) {
-	if k.srv.NewGetKeysPager == nil {
-		return nil, &nonRetriableError{errors.New("fake for method NewGetKeysPager not implemented")}
-	}
-	newGetKeysPager := k.newGetKeysPager.get(req)
-	if newGetKeysPager == nil {
-		qp := req.URL.Query()
-		maxresultsUnescaped, err := url.QueryUnescape(qp.Get("maxresults"))
-		if err != nil {
-			return nil, err
-		}
-		maxresultsParam, err := parseOptional(maxresultsUnescaped, func(v string) (int32, error) {
-			p, parseErr := strconv.ParseInt(v, 10, 32)
-			if parseErr != nil {
-				return 0, parseErr
-			}
-			return int32(p), nil
-		})
-		if err != nil {
-			return nil, err
-		}
-		var options *azkeys.KeyVaultClientGetKeysOptions
-		if maxresultsParam != nil {
-			options = &azkeys.KeyVaultClientGetKeysOptions{
-				Maxresults: maxresultsParam,
-			}
-		}
-		resp := k.srv.NewGetKeysPager(options)
-		newGetKeysPager = &resp
-		k.newGetKeysPager.add(req, newGetKeysPager)
-		server.PagerResponderInjectNextLinks(newGetKeysPager, req, func(page *azkeys.KeyVaultClientGetKeysResponse, createLink func() string) {
-			page.NextLink = to.Ptr(createLink())
-		})
-	}
-	resp, err := server.PagerResponderNext(newGetKeysPager, req)
-	if err != nil {
-		return nil, err
-	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
-		k.newGetKeysPager.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
-	}
-	if !server.PagerResponderMore(newGetKeysPager) {
-		k.newGetKeysPager.remove(req)
-	}
-	return resp, nil
-}
-
-func (k *KeyVaultServerTransport) dispatchGetRandomBytes(req *http.Request) (*http.Response, error) {
-	if k.srv.GetRandomBytes == nil {
+func (s *ServerTransport) dispatchGetRandomBytes(req *http.Request) (*http.Response, error) {
+	if s.srv.GetRandomBytes == nil {
 		return nil, &nonRetriableError{errors.New("fake for method GetRandomBytes not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[azkeys.GetRandomBytesRequest](req)
+	body, err := server.UnmarshalRequestAsJSON[azkeys.GetRandomBytesParameters](req)
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.GetRandomBytes(req.Context(), body, nil)
+	respr, errRespr := s.srv.GetRandomBytes(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -662,8 +507,8 @@ func (k *KeyVaultServerTransport) dispatchGetRandomBytes(req *http.Request) (*ht
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchImportKey(req *http.Request) (*http.Response, error) {
-	if k.srv.ImportKey == nil {
+func (s *ServerTransport) dispatchImportKey(req *http.Request) (*http.Response, error) {
+	if s.srv.ImportKey == nil {
 		return nil, &nonRetriableError{errors.New("fake for method ImportKey not implemented")}
 	}
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
@@ -672,7 +517,7 @@ func (k *KeyVaultServerTransport) dispatchImportKey(req *http.Request) (*http.Re
 	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyImportParameters](req)
+	body, err := server.UnmarshalRequestAsJSON[azkeys.ImportKeyParameters](req)
 	if err != nil {
 		return nil, err
 	}
@@ -680,7 +525,7 @@ func (k *KeyVaultServerTransport) dispatchImportKey(req *http.Request) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.ImportKey(req.Context(), keyNameParam, body, nil)
+	respr, errRespr := s.srv.ImportKey(req.Context(), keyNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -695,8 +540,99 @@ func (k *KeyVaultServerTransport) dispatchImportKey(req *http.Request) (*http.Re
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchPurgeDeletedKey(req *http.Request) (*http.Response, error) {
-	if k.srv.PurgeDeletedKey == nil {
+func (s *ServerTransport) dispatchNewListDeletedKeyPropertiesPager(req *http.Request) (*http.Response, error) {
+	if s.srv.NewListDeletedKeyPropertiesPager == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NewListDeletedKeyPropertiesPager not implemented")}
+	}
+	newListDeletedKeyPropertiesPager := s.newListDeletedKeyPropertiesPager.get(req)
+	if newListDeletedKeyPropertiesPager == nil {
+		resp := s.srv.NewListDeletedKeyPropertiesPager(nil)
+		newListDeletedKeyPropertiesPager = &resp
+		s.newListDeletedKeyPropertiesPager.add(req, newListDeletedKeyPropertiesPager)
+		server.PagerResponderInjectNextLinks(newListDeletedKeyPropertiesPager, req, func(page *azkeys.ListDeletedKeyPropertiesResponse, createLink func() string) {
+			page.NextLink = to.Ptr(createLink())
+		})
+	}
+	resp, err := server.PagerResponderNext(newListDeletedKeyPropertiesPager, req)
+	if err != nil {
+		return nil, err
+	}
+	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		s.newListDeletedKeyPropertiesPager.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+	}
+	if !server.PagerResponderMore(newListDeletedKeyPropertiesPager) {
+		s.newListDeletedKeyPropertiesPager.remove(req)
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchNewListKeyPropertiesPager(req *http.Request) (*http.Response, error) {
+	if s.srv.NewListKeyPropertiesPager == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NewListKeyPropertiesPager not implemented")}
+	}
+	newListKeyPropertiesPager := s.newListKeyPropertiesPager.get(req)
+	if newListKeyPropertiesPager == nil {
+		resp := s.srv.NewListKeyPropertiesPager(nil)
+		newListKeyPropertiesPager = &resp
+		s.newListKeyPropertiesPager.add(req, newListKeyPropertiesPager)
+		server.PagerResponderInjectNextLinks(newListKeyPropertiesPager, req, func(page *azkeys.ListKeyPropertiesResponse, createLink func() string) {
+			page.NextLink = to.Ptr(createLink())
+		})
+	}
+	resp, err := server.PagerResponderNext(newListKeyPropertiesPager, req)
+	if err != nil {
+		return nil, err
+	}
+	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		s.newListKeyPropertiesPager.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+	}
+	if !server.PagerResponderMore(newListKeyPropertiesPager) {
+		s.newListKeyPropertiesPager.remove(req)
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchNewListKeyPropertiesVersionsPager(req *http.Request) (*http.Response, error) {
+	if s.srv.NewListKeyPropertiesVersionsPager == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NewListKeyPropertiesVersionsPager not implemented")}
+	}
+	newListKeyPropertiesVersionsPager := s.newListKeyPropertiesVersionsPager.get(req)
+	if newListKeyPropertiesVersionsPager == nil {
+		const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/versions`
+		regex := regexp.MustCompile(regexStr)
+		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+		if len(matches) < 2 {
+			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+		}
+		keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+		if err != nil {
+			return nil, err
+		}
+		resp := s.srv.NewListKeyPropertiesVersionsPager(keyNameParam, nil)
+		newListKeyPropertiesVersionsPager = &resp
+		s.newListKeyPropertiesVersionsPager.add(req, newListKeyPropertiesVersionsPager)
+		server.PagerResponderInjectNextLinks(newListKeyPropertiesVersionsPager, req, func(page *azkeys.ListKeyPropertiesVersionsResponse, createLink func() string) {
+			page.NextLink = to.Ptr(createLink())
+		})
+	}
+	resp, err := server.PagerResponderNext(newListKeyPropertiesVersionsPager, req)
+	if err != nil {
+		return nil, err
+	}
+	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		s.newListKeyPropertiesVersionsPager.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+	}
+	if !server.PagerResponderMore(newListKeyPropertiesVersionsPager) {
+		s.newListKeyPropertiesVersionsPager.remove(req)
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchPurgeDeletedKey(req *http.Request) (*http.Response, error) {
+	if s.srv.PurgeDeletedKey == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PurgeDeletedKey not implemented")}
 	}
 	const regexStr = `/deletedkeys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
@@ -709,7 +645,7 @@ func (k *KeyVaultServerTransport) dispatchPurgeDeletedKey(req *http.Request) (*h
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.PurgeDeletedKey(req.Context(), keyNameParam, nil)
+	respr, errRespr := s.srv.PurgeDeletedKey(req.Context(), keyNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -724,8 +660,8 @@ func (k *KeyVaultServerTransport) dispatchPurgeDeletedKey(req *http.Request) (*h
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchRecoverDeletedKey(req *http.Request) (*http.Response, error) {
-	if k.srv.RecoverDeletedKey == nil {
+func (s *ServerTransport) dispatchRecoverDeletedKey(req *http.Request) (*http.Response, error) {
+	if s.srv.RecoverDeletedKey == nil {
 		return nil, &nonRetriableError{errors.New("fake for method RecoverDeletedKey not implemented")}
 	}
 	const regexStr = `/deletedkeys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/recover`
@@ -738,7 +674,7 @@ func (k *KeyVaultServerTransport) dispatchRecoverDeletedKey(req *http.Request) (
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.RecoverDeletedKey(req.Context(), keyNameParam, nil)
+	respr, errRespr := s.srv.RecoverDeletedKey(req.Context(), keyNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -753,8 +689,8 @@ func (k *KeyVaultServerTransport) dispatchRecoverDeletedKey(req *http.Request) (
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchRelease(req *http.Request) (*http.Response, error) {
-	if k.srv.Release == nil {
+func (s *ServerTransport) dispatchRelease(req *http.Request) (*http.Response, error) {
+	if s.srv.Release == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Release not implemented")}
 	}
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/release`
@@ -763,7 +699,7 @@ func (k *KeyVaultServerTransport) dispatchRelease(req *http.Request) (*http.Resp
 	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyReleaseParameters](req)
+	body, err := server.UnmarshalRequestAsJSON[azkeys.ReleaseParameters](req)
 	if err != nil {
 		return nil, err
 	}
@@ -775,7 +711,7 @@ func (k *KeyVaultServerTransport) dispatchRelease(req *http.Request) (*http.Resp
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.Release(req.Context(), keyNameParam, keyVersionParam, body, nil)
+	respr, errRespr := s.srv.Release(req.Context(), keyNameParam, keyVersionParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -790,15 +726,15 @@ func (k *KeyVaultServerTransport) dispatchRelease(req *http.Request) (*http.Resp
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchRestoreKey(req *http.Request) (*http.Response, error) {
-	if k.srv.RestoreKey == nil {
+func (s *ServerTransport) dispatchRestoreKey(req *http.Request) (*http.Response, error) {
+	if s.srv.RestoreKey == nil {
 		return nil, &nonRetriableError{errors.New("fake for method RestoreKey not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyRestoreParameters](req)
+	body, err := server.UnmarshalRequestAsJSON[azkeys.RestoreKeyParameters](req)
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.RestoreKey(req.Context(), body, nil)
+	respr, errRespr := s.srv.RestoreKey(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -813,8 +749,8 @@ func (k *KeyVaultServerTransport) dispatchRestoreKey(req *http.Request) (*http.R
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchRotateKey(req *http.Request) (*http.Response, error) {
-	if k.srv.RotateKey == nil {
+func (s *ServerTransport) dispatchRotateKey(req *http.Request) (*http.Response, error) {
+	if s.srv.RotateKey == nil {
 		return nil, &nonRetriableError{errors.New("fake for method RotateKey not implemented")}
 	}
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/rotate`
@@ -827,7 +763,7 @@ func (k *KeyVaultServerTransport) dispatchRotateKey(req *http.Request) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.RotateKey(req.Context(), keyNameParam, nil)
+	respr, errRespr := s.srv.RotateKey(req.Context(), keyNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -842,8 +778,8 @@ func (k *KeyVaultServerTransport) dispatchRotateKey(req *http.Request) (*http.Re
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchSign(req *http.Request) (*http.Response, error) {
-	if k.srv.Sign == nil {
+func (s *ServerTransport) dispatchSign(req *http.Request) (*http.Response, error) {
+	if s.srv.Sign == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Sign not implemented")}
 	}
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/sign`
@@ -852,7 +788,7 @@ func (k *KeyVaultServerTransport) dispatchSign(req *http.Request) (*http.Respons
 	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[azkeys.KeySignParameters](req)
+	body, err := server.UnmarshalRequestAsJSON[azkeys.SignParameters](req)
 	if err != nil {
 		return nil, err
 	}
@@ -864,7 +800,7 @@ func (k *KeyVaultServerTransport) dispatchSign(req *http.Request) (*http.Respons
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.Sign(req.Context(), keyNameParam, keyVersionParam, body, nil)
+	respr, errRespr := s.srv.Sign(req.Context(), keyNameParam, keyVersionParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -879,8 +815,8 @@ func (k *KeyVaultServerTransport) dispatchSign(req *http.Request) (*http.Respons
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchUnwrapKey(req *http.Request) (*http.Response, error) {
-	if k.srv.UnwrapKey == nil {
+func (s *ServerTransport) dispatchUnwrapKey(req *http.Request) (*http.Response, error) {
+	if s.srv.UnwrapKey == nil {
 		return nil, &nonRetriableError{errors.New("fake for method UnwrapKey not implemented")}
 	}
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/unwrapkey`
@@ -889,7 +825,7 @@ func (k *KeyVaultServerTransport) dispatchUnwrapKey(req *http.Request) (*http.Re
 	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyOperationsParameters](req)
+	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyOperationParameters](req)
 	if err != nil {
 		return nil, err
 	}
@@ -901,7 +837,7 @@ func (k *KeyVaultServerTransport) dispatchUnwrapKey(req *http.Request) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.UnwrapKey(req.Context(), keyNameParam, keyVersionParam, body, nil)
+	respr, errRespr := s.srv.UnwrapKey(req.Context(), keyNameParam, keyVersionParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -916,8 +852,8 @@ func (k *KeyVaultServerTransport) dispatchUnwrapKey(req *http.Request) (*http.Re
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchUpdateKey(req *http.Request) (*http.Response, error) {
-	if k.srv.UpdateKey == nil {
+func (s *ServerTransport) dispatchUpdateKey(req *http.Request) (*http.Response, error) {
+	if s.srv.UpdateKey == nil {
 		return nil, &nonRetriableError{errors.New("fake for method UpdateKey not implemented")}
 	}
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
@@ -926,7 +862,7 @@ func (k *KeyVaultServerTransport) dispatchUpdateKey(req *http.Request) (*http.Re
 	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyUpdateParameters](req)
+	body, err := server.UnmarshalRequestAsJSON[azkeys.UpdateKeyParameters](req)
 	if err != nil {
 		return nil, err
 	}
@@ -938,7 +874,7 @@ func (k *KeyVaultServerTransport) dispatchUpdateKey(req *http.Request) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.UpdateKey(req.Context(), keyNameParam, keyVersionParam, body, nil)
+	respr, errRespr := s.srv.UpdateKey(req.Context(), keyNameParam, keyVersionParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -953,8 +889,8 @@ func (k *KeyVaultServerTransport) dispatchUpdateKey(req *http.Request) (*http.Re
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchUpdateKeyRotationPolicy(req *http.Request) (*http.Response, error) {
-	if k.srv.UpdateKeyRotationPolicy == nil {
+func (s *ServerTransport) dispatchUpdateKeyRotationPolicy(req *http.Request) (*http.Response, error) {
+	if s.srv.UpdateKeyRotationPolicy == nil {
 		return nil, &nonRetriableError{errors.New("fake for method UpdateKeyRotationPolicy not implemented")}
 	}
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/rotationpolicy`
@@ -971,7 +907,7 @@ func (k *KeyVaultServerTransport) dispatchUpdateKeyRotationPolicy(req *http.Requ
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.UpdateKeyRotationPolicy(req.Context(), keyNameParam, body, nil)
+	respr, errRespr := s.srv.UpdateKeyRotationPolicy(req.Context(), keyNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -986,8 +922,8 @@ func (k *KeyVaultServerTransport) dispatchUpdateKeyRotationPolicy(req *http.Requ
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchVerify(req *http.Request) (*http.Response, error) {
-	if k.srv.Verify == nil {
+func (s *ServerTransport) dispatchVerify(req *http.Request) (*http.Response, error) {
+	if s.srv.Verify == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Verify not implemented")}
 	}
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/verify`
@@ -996,7 +932,7 @@ func (k *KeyVaultServerTransport) dispatchVerify(req *http.Request) (*http.Respo
 	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyVerifyParameters](req)
+	body, err := server.UnmarshalRequestAsJSON[azkeys.VerifyParameters](req)
 	if err != nil {
 		return nil, err
 	}
@@ -1008,7 +944,7 @@ func (k *KeyVaultServerTransport) dispatchVerify(req *http.Request) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.Verify(req.Context(), keyNameParam, keyVersionParam, body, nil)
+	respr, errRespr := s.srv.Verify(req.Context(), keyNameParam, keyVersionParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -1023,8 +959,8 @@ func (k *KeyVaultServerTransport) dispatchVerify(req *http.Request) (*http.Respo
 	return resp, nil
 }
 
-func (k *KeyVaultServerTransport) dispatchWrapKey(req *http.Request) (*http.Response, error) {
-	if k.srv.WrapKey == nil {
+func (s *ServerTransport) dispatchWrapKey(req *http.Request) (*http.Response, error) {
+	if s.srv.WrapKey == nil {
 		return nil, &nonRetriableError{errors.New("fake for method WrapKey not implemented")}
 	}
 	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/wrapkey`
@@ -1033,7 +969,7 @@ func (k *KeyVaultServerTransport) dispatchWrapKey(req *http.Request) (*http.Resp
 	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyOperationsParameters](req)
+	body, err := server.UnmarshalRequestAsJSON[azkeys.KeyOperationParameters](req)
 	if err != nil {
 		return nil, err
 	}
@@ -1045,7 +981,7 @@ func (k *KeyVaultServerTransport) dispatchWrapKey(req *http.Request) (*http.Resp
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := k.srv.WrapKey(req.Context(), keyNameParam, keyVersionParam, body, nil)
+	respr, errRespr := s.srv.WrapKey(req.Context(), keyNameParam, keyVersionParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -1060,8 +996,8 @@ func (k *KeyVaultServerTransport) dispatchWrapKey(req *http.Request) (*http.Resp
 	return resp, nil
 }
 
-// set this to conditionally intercept incoming requests to KeyVaultServerTransport
-var keyVaultServerTransportInterceptor interface {
+// set this to conditionally intercept incoming requests to ServerTransport
+var serverTransportInterceptor interface {
 	// Do returns true if the server transport should use the returned response/error
 	Do(*http.Request) (*http.Response, error, bool)
 }
