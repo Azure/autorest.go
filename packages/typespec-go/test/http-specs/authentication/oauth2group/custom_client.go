@@ -12,7 +12,16 @@ import (
 )
 
 func NewOauth2groupClient(options *azcore.ClientOptions) (*OAuth2Client, error) {
-	internal, err := azcore.NewClient("oauth2group", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient("oauth2group", "v0.1.0", runtime.PipelineOptions{
+		APIVersion: runtime.APIVersionOptions{
+			Location: runtime.APIVersionLocationQueryParam,
+			Name:     "api-version",
+		},
+		AllowedHeaders: []string{"authorization"},
+		Tracing: runtime.TracingOptions{
+			Namespace: "Microsoft.KeyVault",
+		},
+	}, options)
 	if err != nil {
 		return nil, err
 	}

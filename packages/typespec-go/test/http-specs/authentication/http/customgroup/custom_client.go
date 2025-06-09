@@ -12,7 +12,16 @@ import (
 )
 
 func NewCustomClient(options *azcore.ClientOptions) (*CustomClient, error) {
-	internal, err := azcore.NewClient("customgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient("customgroup", "v0.1.0", runtime.PipelineOptions{
+		APIVersion: runtime.APIVersionOptions{
+			Location: runtime.APIVersionLocationQueryParam,
+			Name:     "api-version",
+		},
+		AllowedHeaders: []string{"authorization"},
+		Tracing: runtime.TracingOptions{
+			Namespace: "Microsoft.KeyVault",
+		},
+	}, options)
 	if err != nil {
 		return nil, err
 	}

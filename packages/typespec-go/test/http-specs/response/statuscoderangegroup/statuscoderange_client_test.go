@@ -14,14 +14,15 @@ import (
 func TestStatusCodeRangeGroupClient_ErrorResponseStatusCode404(t *testing.T) {
 	client, err := statuscoderangegroup.NewStatusCodeRangeGrouppClient(nil)
 	require.NoError(t, err)
-	_, err = client.ErrorResponseStatusCode404(context.Background(), &statuscoderangegroup.StatusCodeRangeClientErrorResponseStatusCode404Options{})
+	resp, err := client.ErrorResponseStatusCode404(context.Background(), &statuscoderangegroup.StatusCodeRangeClientErrorResponseStatusCode404Options{})
 	require.Error(t, err)
+	require.Equal(t, statuscoderangegroup.StatusCodeRangeClientErrorResponseStatusCode404Response{}, resp)
 }
 
 func TestStatusCodeRangeGroupClient_ErrorResponseStatusCodeInRange(t *testing.T) {
 	client, err := statuscoderangegroup.NewStatusCodeRangeGrouppClient(nil)
 	require.NoError(t, err)
-	_, err = client.ErrorResponseStatusCodeInRange(context.Background(), &statuscoderangegroup.StatusCodeRangeClientErrorResponseStatusCodeInRangeOptions{})
+	resp, err := client.ErrorResponseStatusCodeInRange(context.Background(), &statuscoderangegroup.StatusCodeRangeClientErrorResponseStatusCodeInRangeOptions{})
 	require.Error(t, err)
-
+	require.Equal(t, statuscoderangegroup.StatusCodeRangeClientErrorResponseStatusCodeInRangeResponse{}, resp)
 }

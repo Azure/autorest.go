@@ -15,8 +15,10 @@ func TestNewCheckNameAvailabilityClient_CheckGlobal(t *testing.T) {
 		Name: to.Ptr("checkName"),
 		Type: to.Ptr("Microsoft.Web/site"),
 	}
-	_, err := clientFactory.NewCheckNameAvailabilityClient().CheckGlobal(ctx, body, nil)
+	resp, err := clientFactory.NewCheckNameAvailabilityClient().CheckGlobal(ctx, body, nil)
 	require.NoError(t, err)
+	require.Equal(t, CheckNameAvailabilityClientCheckGlobalResponse{}, resp)
+	require.Equal(t, true, resp.CheckNameAvailabilityResponse.NameAvailable)
 }
 
 func TestNewCheckNameAvailabilityClient_CheckLocal(t *testing.T) {
@@ -24,6 +26,8 @@ func TestNewCheckNameAvailabilityClient_CheckLocal(t *testing.T) {
 		Name: to.Ptr("checkName"),
 		Type: to.Ptr("Microsoft.Web/site"),
 	}
-	_, err := clientFactory.NewCheckNameAvailabilityClient().CheckLocal(ctx, locationExpected, body, nil)
+	resp, err := clientFactory.NewCheckNameAvailabilityClient().CheckLocal(ctx, locationExpected, body, nil)
 	require.NoError(t, err)
+	require.Equal(t, CheckNameAvailabilityClientCheckLocalResponse{}, resp)
+	require.Equal(t, true, resp.CheckNameAvailabilityResponse.NameAvailable)
 }

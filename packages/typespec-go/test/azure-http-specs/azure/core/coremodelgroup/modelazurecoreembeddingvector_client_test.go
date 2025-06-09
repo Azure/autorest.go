@@ -12,13 +12,13 @@ import (
 )
 
 func TestModelAzureCoreEmbeddingVectorClient_Get(t *testing.T) {
-	expected := []*int32{to.Ptr(int32(0)), to.Ptr(int32(1)), to.Ptr(int32(2)), to.Ptr(int32(3)), to.Ptr(int32(4))}
+	input := []*int32{to.Ptr(int32(0)), to.Ptr(int32(1)), to.Ptr(int32(2)), to.Ptr(int32(3)), to.Ptr(int32(4))}
 	client, err := NewModelAzureCoreEmbeddingVectorClient(nil)
 	require.NoError(t, err)
 
 	resp, err := client.Get(context.Background(), nil)
 	require.NoError(t, err)
-	require.Equal(t, expected, resp.Int32Array)
+	require.Equal(t, input, resp.Int32Array)
 }
 
 func TestModelAzureCoreEmbeddingVectorClient_Post(t *testing.T) {
@@ -27,13 +27,13 @@ func TestModelAzureCoreEmbeddingVectorClient_Post(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.Post(context.Background(), input, nil)
 	require.NoError(t, err)
-	require.Equal(t, len(resp.AzureEmbeddingModel.Embedding), 5)
+	require.Equal(t, 5, len(resp.AzureEmbeddingModel.Embedding))
 }
 
 func TestModelAzureCoreEmbeddingVectorClient_Put(t *testing.T) {
-	expected := []*int32{to.Ptr(int32(0)), to.Ptr(int32(1)), to.Ptr(int32(2)), to.Ptr(int32(3)), to.Ptr(int32(4))}
+	input := []*int32{to.Ptr(int32(0)), to.Ptr(int32(1)), to.Ptr(int32(2)), to.Ptr(int32(3)), to.Ptr(int32(4))}
 	client, err := NewModelAzureCoreEmbeddingVectorClient(nil)
 	require.NoError(t, err)
-	_, err = client.Put(context.Background(), expected, nil)
+	_, err = client.Put(context.Background(), input, nil)
 	require.NoError(t, err)
 }

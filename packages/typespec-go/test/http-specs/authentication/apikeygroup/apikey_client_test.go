@@ -6,25 +6,33 @@ package apikeygroup_test
 import (
 	"apikeygroup"
 	"context"
+	"net/http"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/stretchr/testify/require"
 )
 
 func TestApiKeyClient_Invalid(t *testing.T) {
 	client, err := apikeygroup.NewApiKeyClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Invalid(context.Background(), &apikeygroup.APIKeyClientInvalidOptions{})
+	contextWithAPIKey := context.Background()
+	headers := http.Header{}
+	headers.Set("x-ms-api-key", "invalid-key")
+	ctx := policy.WithHTTPHeader(contextWithAPIKey, headers)
+	resp, err := client.Invalid(ctx, &apikeygroup.APIKeyClientInvalidOptions{})
 	require.Error(t, err)
-	require.Contains(t, err.Error(), "Expected invalid-key but got undefined")
 	require.Zero(t, resp)
 }
 
 func TestApiKeyClient_OutputToInputOutput(t *testing.T) {
 	client, err := apikeygroup.NewApiKeyClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Valid(context.Background(), &apikeygroup.APIKeyClientValidOptions{})
-	require.Error(t, err)
-	require.Contains(t, err.Error(), "Expected valid-key but got undefined")
+	contextWithAPIKey := context.Background()
+	headers := http.Header{}
+	headers.Set("x-ms-api-key", "valid-key")
+	ctx := policy.WithHTTPHeader(contextWithAPIKey, headers)
+	resp, err := client.Valid(ctx, &apikeygroup.APIKeyClientValidOptions{})
+	require.NoError(t, err)
 	require.Zero(t, resp)
 }
