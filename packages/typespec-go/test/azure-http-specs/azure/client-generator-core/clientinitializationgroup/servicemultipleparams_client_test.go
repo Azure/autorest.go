@@ -7,6 +7,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
@@ -14,8 +15,7 @@ func TestServiceMultipleParamsClient_WithBody(t *testing.T) {
 	serviceClient, err := NewServiceClient(nil)
 	require.NoError(t, err)
 	client := serviceClient.NewServiceMultipleParamsClient()
-	name := "test-name"
-	resp, err := client.WithBody(context.Background(), "test-name-value", "us-west", Input{Name: &name}, nil)
+	resp, err := client.WithBody(context.Background(), "test-name-value", "us-west", Input{Name: to.Ptr("test-name")}, nil)
 	require.NoError(t, err)
 	require.Equal(t, ServiceMultipleParamsClientWithBodyResponse{}, resp)
 }
