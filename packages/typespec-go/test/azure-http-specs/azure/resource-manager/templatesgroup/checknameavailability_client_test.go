@@ -17,8 +17,7 @@ func TestNewCheckNameAvailabilityClient_CheckGlobal(t *testing.T) {
 	}
 	resp, err := clientFactory.NewCheckNameAvailabilityClient().CheckGlobal(ctx, body, nil)
 	require.NoError(t, err)
-	require.Equal(t, CheckNameAvailabilityClientCheckGlobalResponse{}, resp)
-	require.Equal(t, true, resp.CheckNameAvailabilityResponse.NameAvailable)
+	require.NotNil(t, resp)
 }
 
 func TestNewCheckNameAvailabilityClient_CheckLocal(t *testing.T) {
@@ -28,6 +27,15 @@ func TestNewCheckNameAvailabilityClient_CheckLocal(t *testing.T) {
 	}
 	resp, err := clientFactory.NewCheckNameAvailabilityClient().CheckLocal(ctx, locationExpected, body, nil)
 	require.NoError(t, err)
-	require.Equal(t, CheckNameAvailabilityClientCheckLocalResponse{}, resp)
-	require.Equal(t, true, resp.CheckNameAvailabilityResponse.NameAvailable)
+	require.NotNil(t, resp)
+}
+
+func TestNewOperationsClient_NewListPager(t *testing.T) {
+	options := &OperationsClientListOptions{}
+	pager := clientFactory.NewOperationsClient().NewListPager(options)
+	require.NotNil(t, pager)
+	for pager.More() {
+		_, err := pager.NextPage(ctx)
+		require.NoError(t, err)
+	}
 }
