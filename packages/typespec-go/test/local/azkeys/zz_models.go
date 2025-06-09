@@ -12,8 +12,36 @@ type BackupKeyResult struct {
 	Value []byte
 }
 
-// DeletedKeyBundle - A DeletedKeyBundle consisting of a WebKey plus its Attributes and deletion info
-type DeletedKeyBundle struct {
+// CreateKeyParameters - The key create parameters.
+type CreateKeyParameters struct {
+	// REQUIRED; The type of key to create. For valid values, see JsonWebKeyType.
+	Kty *KeyType
+
+	// Elliptic curve name. For valid values, see JsonWebKeyCurveName.
+	Curve *CurveName
+
+	// The attributes of a key managed by the key vault service.
+	KeyAttributes *KeyAttributes
+
+	// Json web key operations. For more information on possible key operations, see
+	// JsonWebKeyOperation.
+	KeyOps []*KeyOperation
+
+	// The key size in bits. For example: 2048, 3072, or 4096 for RSA.
+	KeySize *int32
+
+	// The public exponent for a RSA key.
+	PublicExponent *int32
+
+	// The policy rules under which the key can be exported.
+	ReleasePolicy *KeyReleasePolicy
+
+	// Application specific metadata in the form of key-value pairs.
+	Tags map[string]*string
+}
+
+// DeletedKey - A DeletedKeyBundle consisting of a WebKey plus its Attributes and deletion info
+type DeletedKey struct {
 	// The key management attributes.
 	Attributes *KeyAttributes
 
@@ -40,14 +68,14 @@ type DeletedKeyBundle struct {
 	ScheduledPurgeDate *time.Time
 }
 
-// DeletedKeyItem - The deleted key item containing the deleted key metadata and information about
+// DeletedKeyProperties - The deleted key item containing the deleted key metadata and information about
 // deletion.
-type DeletedKeyItem struct {
+type DeletedKeyProperties struct {
 	// The key management attributes.
 	Attributes *KeyAttributes
 
 	// Key identifier.
-	Kid *string
+	KID *string
 
 	// The url of the recovery object, used to identify and recover the deleted key.
 	RecoveryID *string
@@ -66,35 +94,53 @@ type DeletedKeyItem struct {
 	ScheduledPurgeDate *time.Time
 }
 
-// DeletedKeyListResult - A list of keys that have been deleted in this vault.
-type DeletedKeyListResult struct {
+// DeletedKeyPropertiesListResult - A list of keys that have been deleted in this vault.
+type DeletedKeyPropertiesListResult struct {
 	// READ-ONLY; The URL to get the next set of deleted keys.
 	NextLink *string
 
 	// READ-ONLY; A response message containing a list of deleted keys in the key vault along with a link to the next page of
 	// deleted keys.
-	Value []*DeletedKeyItem
+	Value []*DeletedKeyProperties
 }
 
-// GetRandomBytesRequest - The get random bytes request object.
-type GetRandomBytesRequest struct {
+// GetRandomBytesParameters - The get random bytes request object.
+type GetRandomBytesParameters struct {
 	// REQUIRED; The requested number of random bytes.
 	Count *int32
+}
+
+// ImportKeyParameters - The key import parameters.
+type ImportKeyParameters struct {
+	// REQUIRED; The Json web key
+	Key *JSONWebKey
+
+	// Whether to import as a hardware key (HSM) or software key.
+	HSM *bool
+
+	// The key management attributes.
+	KeyAttributes *KeyAttributes
+
+	// The policy rules under which the key can be exported.
+	ReleasePolicy *KeyReleasePolicy
+
+	// Application specific metadata in the form of key-value pairs.
+	Tags map[string]*string
 }
 
 // JSONWebKey - As of http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18
 type JSONWebKey struct {
 	// Elliptic curve name. For valid values, see JsonWebKeyCurveName.
-	Crv *JSONWebKeyCurveName
+	Crv *CurveName
 
 	// RSA private exponent, or the D component of an EC private key.
 	D []byte
 
 	// RSA private key parameter.
-	Dp []byte
+	DP []byte
 
 	// RSA private key parameter.
-	Dq []byte
+	DQ []byte
 
 	// RSA public exponent.
 	E []byte
@@ -102,16 +148,16 @@ type JSONWebKey struct {
 	// Symmetric key.
 	K []byte
 
+	// Key identifier.
+	KID *string
+
 	// Json web key operations. For more information on possible key operations, see
 	// JsonWebKeyOperation.
 	KeyOps []*string
 
-	// Key identifier.
-	Kid *string
-
 	// JsonWebKey Key Type (kty), as defined in
 	// https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40.
-	Kty *JSONWebKeyType
+	Kty *KeyType
 
 	// RSA modulus.
 	N []byte
@@ -123,7 +169,7 @@ type JSONWebKey struct {
 	Q []byte
 
 	// RSA private key parameter.
-	Qi []byte
+	QI []byte
 
 	// Protected Key, used with 'Bring Your Own Key'.
 	T []byte
@@ -154,7 +200,7 @@ type KeyAttributes struct {
 	Created *time.Time
 
 	// READ-ONLY; The underlying HSM Platform.
-	HsmPlatform *string
+	HSMPlatform *string
 
 	// READ-ONLY; softDelete data retention days. Value should be >=7 and <=90 when softDelete
 	// enabled, otherwise 0.
@@ -189,75 +235,25 @@ type KeyBundle struct {
 	Managed *bool
 }
 
-// KeyCreateParameters - The key create parameters.
-type KeyCreateParameters struct {
-	// REQUIRED; The type of key to create. For valid values, see JsonWebKeyType.
-	Kty *JSONWebKeyType
+// KeyOperationParameters - The key operations parameters.
+type KeyOperationParameters struct {
+	// REQUIRED; algorithm identifier
+	Algorithm *EncryptionAlgorithm
 
-	// Elliptic curve name. For valid values, see JsonWebKeyCurveName.
-	Curve *JSONWebKeyCurveName
+	// REQUIRED; The value to operate on.
+	Value []byte
 
-	// The attributes of a key managed by the key vault service.
-	KeyAttributes *KeyAttributes
+	// Additional data to authenticate but not encrypt/decrypt when using
+	// authenticated crypto algorithms.
+	AdditionalAuthenticatedData []byte
 
-	// Json web key operations. For more information on possible key operations, see
-	// JsonWebKeyOperation.
-	KeyOps []*JSONWebKeyOperation
+	// The tag to authenticate when performing decryption with an authenticated
+	// algorithm.
+	AuthenticationTag []byte
 
-	// The key size in bits. For example: 2048, 3072, or 4096 for RSA.
-	KeySize *int32
-
-	// The public exponent for a RSA key.
-	PublicExponent *int32
-
-	// The policy rules under which the key can be exported.
-	ReleasePolicy *KeyReleasePolicy
-
-	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string
-}
-
-// KeyImportParameters - The key import parameters.
-type KeyImportParameters struct {
-	// REQUIRED; The Json web key
-	Key *JSONWebKey
-
-	// Whether to import as a hardware key (HSM) or software key.
-	Hsm *bool
-
-	// The key management attributes.
-	KeyAttributes *KeyAttributes
-
-	// The policy rules under which the key can be exported.
-	ReleasePolicy *KeyReleasePolicy
-
-	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string
-}
-
-// KeyItem - The key item containing key metadata.
-type KeyItem struct {
-	// The key management attributes.
-	Attributes *KeyAttributes
-
-	// Key identifier.
-	Kid *string
-
-	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string
-
-	// READ-ONLY; True if the key's lifetime is managed by key vault. If this is a key backing a
-	// certificate, then managed will be true.
-	Managed *bool
-}
-
-// KeyListResult - The key list result.
-type KeyListResult struct {
-	// READ-ONLY; The URL to get the next set of keys.
-	NextLink *string
-
-	// READ-ONLY; A response message containing a list of keys in the key vault along with a link to the next page of keys.
-	Value []*KeyItem
+	// Cryptographically random, non-repeating initialization vector for symmetric
+	// algorithms.
+	IV []byte
 }
 
 // KeyOperationResult - The key operation result.
@@ -272,46 +268,38 @@ type KeyOperationResult struct {
 
 	// READ-ONLY; Cryptographically random, non-repeating initialization vector for symmetric
 	// algorithms.
-	Iv []byte
+	IV []byte
 
 	// READ-ONLY; Key identifier
-	Kid *string
+	KID *string
 
 	// READ-ONLY; The result of the operation.
 	Result []byte
 }
 
-// KeyOperationsParameters - The key operations parameters.
-type KeyOperationsParameters struct {
-	// REQUIRED; algorithm identifier
-	Algorithm *JSONWebKeyEncryptionAlgorithm
+// KeyProperties - The key item containing key metadata.
+type KeyProperties struct {
+	// The key management attributes.
+	Attributes *KeyAttributes
 
-	// REQUIRED; The value to operate on.
-	Value []byte
+	// Key identifier.
+	KID *string
 
-	// Additional data to authenticate but not encrypt/decrypt when using
-	// authenticated crypto algorithms.
-	AAD []byte
+	// Application specific metadata in the form of key-value pairs.
+	Tags map[string]*string
 
-	// Cryptographically random, non-repeating initialization vector for symmetric
-	// algorithms.
-	Iv []byte
-
-	// The tag to authenticate when performing decryption with an authenticated
-	// algorithm.
-	Tag []byte
+	// READ-ONLY; True if the key's lifetime is managed by key vault. If this is a key backing a
+	// certificate, then managed will be true.
+	Managed *bool
 }
 
-// KeyReleaseParameters - The release key parameters.
-type KeyReleaseParameters struct {
-	// REQUIRED; The attestation assertion for the target of the key release.
-	TargetAttestationToken *string
+// KeyPropertiesListResult - The key list result.
+type KeyPropertiesListResult struct {
+	// READ-ONLY; The URL to get the next set of keys.
+	NextLink *string
 
-	// The encryption algorithm to use to protected the exported key material
-	Enc *KeyEncryptionAlgorithm
-
-	// A client provided nonce for freshness.
-	Nonce *string
+	// READ-ONLY; A response message containing a list of keys in the key vault along with a link to the next page of keys.
+	Value []*KeyProperties
 }
 
 // KeyReleasePolicy - The policy rules under which the key can be exported.
@@ -334,12 +322,6 @@ type KeyReleaseResult struct {
 	Value *string
 }
 
-// KeyRestoreParameters - The key restore parameters.
-type KeyRestoreParameters struct {
-	// REQUIRED; The backup blob associated with a key bundle.
-	KeyBundleBackup []byte
-}
-
 // KeyRotationPolicy - Management policy for a key.
 type KeyRotationPolicy struct {
 	// The key rotation policy attributes.
@@ -349,7 +331,7 @@ type KeyRotationPolicy struct {
 	// preview, lifetimeActions can only have two items at maximum: one for rotate,
 	// one for notify. Notification time would be default to 30 days before expiry and
 	// it is not configurable.
-	LifetimeActions []*LifetimeActions
+	LifetimeActions []*LifetimeAction
 
 	// READ-ONLY; The key policy id.
 	ID *string
@@ -369,63 +351,24 @@ type KeyRotationPolicyAttributes struct {
 	Updated *time.Time
 }
 
-// KeySignParameters - The key operations parameters.
-type KeySignParameters struct {
-	// REQUIRED; The signing/verification algorithm identifier. For more information on possible
-	// algorithm types, see JsonWebKeySignatureAlgorithm.
-	Algorithm *JSONWebKeySignatureAlgorithm
-
-	// REQUIRED; The value to operate on.
-	Value []byte
-}
-
-// KeyUpdateParameters - The key update parameters.
-type KeyUpdateParameters struct {
-	// The attributes of a key managed by the key vault service.
-	KeyAttributes *KeyAttributes
-
-	// Json web key operations. For more information on possible key operations, see
-	// JsonWebKeyOperation.
-	KeyOps []*JSONWebKeyOperation
-
-	// The policy rules under which the key can be exported.
-	ReleasePolicy *KeyReleasePolicy
-
-	// Application specific metadata in the form of key-value pairs.
-	Tags map[string]*string
-}
-
-// KeyVerifyParameters - The key verify parameters.
-type KeyVerifyParameters struct {
-	// REQUIRED; The signing/verification algorithm. For more information on possible algorithm
-	// types, see JsonWebKeySignatureAlgorithm.
-	Algorithm *JSONWebKeySignatureAlgorithm
-
-	// REQUIRED; The digest used for signing.
-	Digest []byte
-
-	// REQUIRED; The signature to be verified.
-	Signature []byte
-}
-
 // KeyVerifyResult - The key verify result.
 type KeyVerifyResult struct {
 	// READ-ONLY; True if the signature is verified, otherwise false.
 	Value *bool
 }
 
-// LifetimeActions - Action and its trigger that will be performed by Key Vault over the lifetime of
+// LifetimeAction - Action and its trigger that will be performed by Key Vault over the lifetime of
 // a key.
-type LifetimeActions struct {
+type LifetimeAction struct {
 	// The action that will be executed.
-	Action *LifetimeActionsType
+	Action *LifetimeActionType
 
 	// The condition that will execute the action.
-	Trigger *LifetimeActionsTrigger
+	Trigger *LifetimeActionTrigger
 }
 
-// LifetimeActionsTrigger - A condition to be satisfied for an action to be executed.
-type LifetimeActionsTrigger struct {
+// LifetimeActionTrigger - A condition to be satisfied for an action to be executed.
+type LifetimeActionTrigger struct {
 	// Time after creation to attempt to rotate. It only applies to rotate. It will be
 	// in ISO 8601 duration format. Example: 90 days : "P90D"
 	TimeAfterCreate *string
@@ -435,8 +378,8 @@ type LifetimeActionsTrigger struct {
 	TimeBeforeExpiry *string
 }
 
-// LifetimeActionsType - The action that will be executed.
-type LifetimeActionsType struct {
+// LifetimeActionType - The action that will be executed.
+type LifetimeActionType struct {
 	// The type of the action. The value should be compared case-insensitively.
 	Type *KeyRotationPolicyAction
 }
@@ -445,4 +388,61 @@ type LifetimeActionsType struct {
 type RandomBytes struct {
 	// REQUIRED; The bytes encoded as a base64url string.
 	Value []byte
+}
+
+// ReleaseParameters - The release key parameters.
+type ReleaseParameters struct {
+	// REQUIRED; The attestation assertion for the target of the key release.
+	TargetAttestationToken *string
+
+	// The encryption algorithm to use to protected the exported key material
+	Algorithm *KeyEncryptionAlgorithm
+
+	// A client provided nonce for freshness.
+	Nonce *string
+}
+
+// RestoreKeyParameters - The key restore parameters.
+type RestoreKeyParameters struct {
+	// REQUIRED; The backup blob associated with a key bundle.
+	KeyBackup []byte
+}
+
+// SignParameters - The key operations parameters.
+type SignParameters struct {
+	// REQUIRED; The signing/verification algorithm identifier. For more information on possible
+	// algorithm types, see JsonWebKeySignatureAlgorithm.
+	Algorithm *SignatureAlgorithm
+
+	// REQUIRED; The value to operate on.
+	Value []byte
+}
+
+// UpdateKeyParameters - The key update parameters.
+type UpdateKeyParameters struct {
+	// The attributes of a key managed by the key vault service.
+	KeyAttributes *KeyAttributes
+
+	// Json web key operations. For more information on possible key operations, see
+	// JsonWebKeyOperation.
+	KeyOps []*KeyOperation
+
+	// The policy rules under which the key can be exported.
+	ReleasePolicy *KeyReleasePolicy
+
+	// Application specific metadata in the form of key-value pairs.
+	Tags map[string]*string
+}
+
+// VerifyParameters - The key verify parameters.
+type VerifyParameters struct {
+	// REQUIRED; The signing/verification algorithm. For more information on possible algorithm
+	// types, see JsonWebKeySignatureAlgorithm.
+	Algorithm *SignatureAlgorithm
+
+	// REQUIRED; The digest used for signing.
+	Digest []byte
+
+	// REQUIRED; The signature to be verified.
+	Signature []byte
 }

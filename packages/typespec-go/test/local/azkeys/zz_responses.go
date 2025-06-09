@@ -4,145 +4,145 @@
 
 package azkeys
 
-// KeyVaultClientBackupKeyResponse contains the response from method KeyVaultClient.BackupKey.
-type KeyVaultClientBackupKeyResponse struct {
+// BackupKeyResponse contains the response from method Client.BackupKey.
+type BackupKeyResponse struct {
 	// The backup key result, containing the backup blob.
 	BackupKeyResult
 }
 
-// KeyVaultClientCreateKeyResponse contains the response from method KeyVaultClient.CreateKey.
-type KeyVaultClientCreateKeyResponse struct {
+// CreateKeyResponse contains the response from method Client.CreateKey.
+type CreateKeyResponse struct {
 	// A KeyBundle consisting of a WebKey plus its attributes.
 	KeyBundle
 }
 
-// KeyVaultClientDecryptResponse contains the response from method KeyVaultClient.Decrypt.
-type KeyVaultClientDecryptResponse struct {
+// DecryptResponse contains the response from method Client.Decrypt.
+type DecryptResponse struct {
 	// The key operation result.
 	KeyOperationResult
 }
 
-// KeyVaultClientDeleteKeyResponse contains the response from method KeyVaultClient.DeleteKey.
-type KeyVaultClientDeleteKeyResponse struct {
+// DeleteKeyResponse contains the response from method Client.DeleteKey.
+type DeleteKeyResponse struct {
 	// A DeletedKeyBundle consisting of a WebKey plus its Attributes and deletion info
-	DeletedKeyBundle
+	DeletedKey
 }
 
-// KeyVaultClientEncryptResponse contains the response from method KeyVaultClient.Encrypt.
-type KeyVaultClientEncryptResponse struct {
+// EncryptResponse contains the response from method Client.Encrypt.
+type EncryptResponse struct {
 	// The key operation result.
 	KeyOperationResult
 }
 
-// KeyVaultClientGetDeletedKeyResponse contains the response from method KeyVaultClient.GetDeletedKey.
-type KeyVaultClientGetDeletedKeyResponse struct {
+// GetDeletedKeyResponse contains the response from method Client.GetDeletedKey.
+type GetDeletedKeyResponse struct {
 	// A DeletedKeyBundle consisting of a WebKey plus its Attributes and deletion info
-	DeletedKeyBundle
+	DeletedKey
 }
 
-// KeyVaultClientGetDeletedKeysResponse contains the response from method KeyVaultClient.NewGetDeletedKeysPager.
-type KeyVaultClientGetDeletedKeysResponse struct {
-	// A list of keys that have been deleted in this vault.
-	DeletedKeyListResult
-}
-
-// KeyVaultClientGetKeyResponse contains the response from method KeyVaultClient.GetKey.
-type KeyVaultClientGetKeyResponse struct {
+// GetKeyResponse contains the response from method Client.GetKey.
+type GetKeyResponse struct {
 	// A KeyBundle consisting of a WebKey plus its attributes.
 	KeyBundle
 }
 
-// KeyVaultClientGetKeyRotationPolicyResponse contains the response from method KeyVaultClient.GetKeyRotationPolicy.
-type KeyVaultClientGetKeyRotationPolicyResponse struct {
+// GetKeyRotationPolicyResponse contains the response from method Client.GetKeyRotationPolicy.
+type GetKeyRotationPolicyResponse struct {
 	// Management policy for a key.
 	KeyRotationPolicy
 }
 
-// KeyVaultClientGetKeyVersionsResponse contains the response from method KeyVaultClient.NewGetKeyVersionsPager.
-type KeyVaultClientGetKeyVersionsResponse struct {
-	// The key list result.
-	KeyListResult
-}
-
-// KeyVaultClientGetKeysResponse contains the response from method KeyVaultClient.NewGetKeysPager.
-type KeyVaultClientGetKeysResponse struct {
-	// The key list result.
-	KeyListResult
-}
-
-// KeyVaultClientGetRandomBytesResponse contains the response from method KeyVaultClient.GetRandomBytes.
-type KeyVaultClientGetRandomBytesResponse struct {
+// GetRandomBytesResponse contains the response from method Client.GetRandomBytes.
+type GetRandomBytesResponse struct {
 	// The get random bytes response object containing the bytes.
 	RandomBytes
 }
 
-// KeyVaultClientImportKeyResponse contains the response from method KeyVaultClient.ImportKey.
-type KeyVaultClientImportKeyResponse struct {
+// ImportKeyResponse contains the response from method Client.ImportKey.
+type ImportKeyResponse struct {
 	// A KeyBundle consisting of a WebKey plus its attributes.
 	KeyBundle
 }
 
-// KeyVaultClientPurgeDeletedKeyResponse contains the response from method KeyVaultClient.PurgeDeletedKey.
-type KeyVaultClientPurgeDeletedKeyResponse struct {
+// ListDeletedKeyPropertiesResponse contains the response from method Client.NewListDeletedKeyPropertiesPager.
+type ListDeletedKeyPropertiesResponse struct {
+	// A list of keys that have been deleted in this vault.
+	DeletedKeyPropertiesListResult
+}
+
+// ListKeyPropertiesResponse contains the response from method Client.NewListKeyPropertiesPager.
+type ListKeyPropertiesResponse struct {
+	// The key list result.
+	KeyPropertiesListResult
+}
+
+// ListKeyPropertiesVersionsResponse contains the response from method Client.NewListKeyPropertiesVersionsPager.
+type ListKeyPropertiesVersionsResponse struct {
+	// The key list result.
+	KeyPropertiesListResult
+}
+
+// PurgeDeletedKeyResponse contains the response from method Client.PurgeDeletedKey.
+type PurgeDeletedKeyResponse struct {
 	// placeholder for future response values
 }
 
-// KeyVaultClientRecoverDeletedKeyResponse contains the response from method KeyVaultClient.RecoverDeletedKey.
-type KeyVaultClientRecoverDeletedKeyResponse struct {
+// RecoverDeletedKeyResponse contains the response from method Client.RecoverDeletedKey.
+type RecoverDeletedKeyResponse struct {
 	// A KeyBundle consisting of a WebKey plus its attributes.
 	KeyBundle
 }
 
-// KeyVaultClientReleaseResponse contains the response from method KeyVaultClient.Release.
-type KeyVaultClientReleaseResponse struct {
+// ReleaseResponse contains the response from method Client.Release.
+type ReleaseResponse struct {
 	// The release result, containing the released key.
 	KeyReleaseResult
 }
 
-// KeyVaultClientRestoreKeyResponse contains the response from method KeyVaultClient.RestoreKey.
-type KeyVaultClientRestoreKeyResponse struct {
+// RestoreKeyResponse contains the response from method Client.RestoreKey.
+type RestoreKeyResponse struct {
 	// A KeyBundle consisting of a WebKey plus its attributes.
 	KeyBundle
 }
 
-// KeyVaultClientRotateKeyResponse contains the response from method KeyVaultClient.RotateKey.
-type KeyVaultClientRotateKeyResponse struct {
+// RotateKeyResponse contains the response from method Client.RotateKey.
+type RotateKeyResponse struct {
 	// A KeyBundle consisting of a WebKey plus its attributes.
 	KeyBundle
 }
 
-// KeyVaultClientSignResponse contains the response from method KeyVaultClient.Sign.
-type KeyVaultClientSignResponse struct {
+// SignResponse contains the response from method Client.Sign.
+type SignResponse struct {
 	// The key operation result.
 	KeyOperationResult
 }
 
-// KeyVaultClientUnwrapKeyResponse contains the response from method KeyVaultClient.UnwrapKey.
-type KeyVaultClientUnwrapKeyResponse struct {
+// UnwrapKeyResponse contains the response from method Client.UnwrapKey.
+type UnwrapKeyResponse struct {
 	// The key operation result.
 	KeyOperationResult
 }
 
-// KeyVaultClientUpdateKeyResponse contains the response from method KeyVaultClient.UpdateKey.
-type KeyVaultClientUpdateKeyResponse struct {
+// UpdateKeyResponse contains the response from method Client.UpdateKey.
+type UpdateKeyResponse struct {
 	// A KeyBundle consisting of a WebKey plus its attributes.
 	KeyBundle
 }
 
-// KeyVaultClientUpdateKeyRotationPolicyResponse contains the response from method KeyVaultClient.UpdateKeyRotationPolicy.
-type KeyVaultClientUpdateKeyRotationPolicyResponse struct {
+// UpdateKeyRotationPolicyResponse contains the response from method Client.UpdateKeyRotationPolicy.
+type UpdateKeyRotationPolicyResponse struct {
 	// Management policy for a key.
 	KeyRotationPolicy
 }
 
-// KeyVaultClientVerifyResponse contains the response from method KeyVaultClient.Verify.
-type KeyVaultClientVerifyResponse struct {
+// VerifyResponse contains the response from method Client.Verify.
+type VerifyResponse struct {
 	// The key verify result.
 	KeyVerifyResult
 }
 
-// KeyVaultClientWrapKeyResponse contains the response from method KeyVaultClient.WrapKey.
-type KeyVaultClientWrapKeyResponse struct {
+// WrapKeyResponse contains the response from method Client.WrapKey.
+type WrapKeyResponse struct {
 	// The key operation result.
 	KeyOperationResult
 }

@@ -12,14 +12,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
-	"strconv"
 	"strings"
 )
 
-// KeyVaultClient - The key vault client performs cryptographic key operations and vault operations
+// Client - The key vault client performs cryptographic key operations and vault operations
 // against the Key Vault service.
 // Don't use this type directly, use a constructor function instead.
-type KeyVaultClient struct {
+type Client struct {
 	internal     *azcore.Client
 	vaultBaseUrl string
 }
@@ -43,31 +42,31 @@ type KeyVaultClient struct {
 //
 // Generated from API version 7.6-preview.1
 //   - keyName - The name of the key.
-//   - options - KeyVaultClientBackupKeyOptions contains the optional parameters for the KeyVaultClient.BackupKey method.
-func (client *KeyVaultClient) BackupKey(ctx context.Context, keyName string, options *KeyVaultClientBackupKeyOptions) (KeyVaultClientBackupKeyResponse, error) {
+//   - options - BackupKeyOptions contains the optional parameters for the Client.BackupKey method.
+func (client *Client) BackupKey(ctx context.Context, keyName string, options *BackupKeyOptions) (BackupKeyResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.BackupKey"
+	const operationName = "Client.BackupKey"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.backupKeyCreateRequest(ctx, keyName, options)
 	if err != nil {
-		return KeyVaultClientBackupKeyResponse{}, err
+		return BackupKeyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientBackupKeyResponse{}, err
+		return BackupKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientBackupKeyResponse{}, err
+		return BackupKeyResponse{}, err
 	}
 	resp, err := client.backupKeyHandleResponse(httpResp)
 	return resp, err
 }
 
 // backupKeyCreateRequest creates the BackupKey request.
-func (client *KeyVaultClient) backupKeyCreateRequest(ctx context.Context, keyName string, _ *KeyVaultClientBackupKeyOptions) (*policy.Request, error) {
+func (client *Client) backupKeyCreateRequest(ctx context.Context, keyName string, _ *BackupKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/{key-name}/backup"
@@ -87,10 +86,10 @@ func (client *KeyVaultClient) backupKeyCreateRequest(ctx context.Context, keyNam
 }
 
 // backupKeyHandleResponse handles the BackupKey response.
-func (client *KeyVaultClient) backupKeyHandleResponse(resp *http.Response) (KeyVaultClientBackupKeyResponse, error) {
-	result := KeyVaultClientBackupKeyResponse{}
+func (client *Client) backupKeyHandleResponse(resp *http.Response) (BackupKeyResponse, error) {
+	result := BackupKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BackupKeyResult); err != nil {
-		return KeyVaultClientBackupKeyResponse{}, err
+		return BackupKeyResponse{}, err
 	}
 	return result, nil
 }
@@ -109,31 +108,31 @@ func (client *KeyVaultClient) backupKeyHandleResponse(resp *http.Response) (KeyV
 //     the service. The value provided should not include personally identifiable or
 //     sensitive information.
 //   - parameters - The parameters to create a key.
-//   - options - KeyVaultClientCreateKeyOptions contains the optional parameters for the KeyVaultClient.CreateKey method.
-func (client *KeyVaultClient) CreateKey(ctx context.Context, keyName string, parameters KeyCreateParameters, options *KeyVaultClientCreateKeyOptions) (KeyVaultClientCreateKeyResponse, error) {
+//   - options - CreateKeyOptions contains the optional parameters for the Client.CreateKey method.
+func (client *Client) CreateKey(ctx context.Context, keyName string, parameters CreateKeyParameters, options *CreateKeyOptions) (CreateKeyResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.CreateKey"
+	const operationName = "Client.CreateKey"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createKeyCreateRequest(ctx, keyName, parameters, options)
 	if err != nil {
-		return KeyVaultClientCreateKeyResponse{}, err
+		return CreateKeyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientCreateKeyResponse{}, err
+		return CreateKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientCreateKeyResponse{}, err
+		return CreateKeyResponse{}, err
 	}
 	resp, err := client.createKeyHandleResponse(httpResp)
 	return resp, err
 }
 
 // createKeyCreateRequest creates the CreateKey request.
-func (client *KeyVaultClient) createKeyCreateRequest(ctx context.Context, keyName string, parameters KeyCreateParameters, _ *KeyVaultClientCreateKeyOptions) (*policy.Request, error) {
+func (client *Client) createKeyCreateRequest(ctx context.Context, keyName string, parameters CreateKeyParameters, _ *CreateKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/{key-name}/create"
@@ -157,10 +156,10 @@ func (client *KeyVaultClient) createKeyCreateRequest(ctx context.Context, keyNam
 }
 
 // createKeyHandleResponse handles the CreateKey response.
-func (client *KeyVaultClient) createKeyHandleResponse(resp *http.Response) (KeyVaultClientCreateKeyResponse, error) {
-	result := KeyVaultClientCreateKeyResponse{}
+func (client *Client) createKeyHandleResponse(resp *http.Response) (CreateKeyResponse, error) {
+	result := CreateKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
-		return KeyVaultClientCreateKeyResponse{}, err
+		return CreateKeyResponse{}, err
 	}
 	return result, nil
 }
@@ -184,31 +183,31 @@ func (client *KeyVaultClient) createKeyHandleResponse(resp *http.Response) (KeyV
 //   - keyName - The name of the key.
 //   - keyVersion - The version of the key.
 //   - parameters - The parameters for the decryption operation.
-//   - options - KeyVaultClientDecryptOptions contains the optional parameters for the KeyVaultClient.Decrypt method.
-func (client *KeyVaultClient) Decrypt(ctx context.Context, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientDecryptOptions) (KeyVaultClientDecryptResponse, error) {
+//   - options - DecryptOptions contains the optional parameters for the Client.Decrypt method.
+func (client *Client) Decrypt(ctx context.Context, keyName string, keyVersion string, parameters KeyOperationParameters, options *DecryptOptions) (DecryptResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.Decrypt"
+	const operationName = "Client.Decrypt"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.decryptCreateRequest(ctx, keyName, keyVersion, parameters, options)
 	if err != nil {
-		return KeyVaultClientDecryptResponse{}, err
+		return DecryptResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientDecryptResponse{}, err
+		return DecryptResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientDecryptResponse{}, err
+		return DecryptResponse{}, err
 	}
 	resp, err := client.decryptHandleResponse(httpResp)
 	return resp, err
 }
 
 // decryptCreateRequest creates the Decrypt request.
-func (client *KeyVaultClient) decryptCreateRequest(ctx context.Context, keyName string, keyVersion string, parameters KeyOperationsParameters, _ *KeyVaultClientDecryptOptions) (*policy.Request, error) {
+func (client *Client) decryptCreateRequest(ctx context.Context, keyName string, keyVersion string, parameters KeyOperationParameters, _ *DecryptOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/{key-name}/{key-version}/decrypt"
@@ -236,10 +235,10 @@ func (client *KeyVaultClient) decryptCreateRequest(ctx context.Context, keyName 
 }
 
 // decryptHandleResponse handles the Decrypt response.
-func (client *KeyVaultClient) decryptHandleResponse(resp *http.Response) (KeyVaultClientDecryptResponse, error) {
-	result := KeyVaultClientDecryptResponse{}
+func (client *Client) decryptHandleResponse(resp *http.Response) (DecryptResponse, error) {
+	result := DecryptResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
-		return KeyVaultClientDecryptResponse{}, err
+		return DecryptResponse{}, err
 	}
 	return result, nil
 }
@@ -254,31 +253,31 @@ func (client *KeyVaultClient) decryptHandleResponse(resp *http.Response) (KeyVau
 //
 // Generated from API version 7.6-preview.1
 //   - keyName - The name of the key to delete.
-//   - options - KeyVaultClientDeleteKeyOptions contains the optional parameters for the KeyVaultClient.DeleteKey method.
-func (client *KeyVaultClient) DeleteKey(ctx context.Context, keyName string, options *KeyVaultClientDeleteKeyOptions) (KeyVaultClientDeleteKeyResponse, error) {
+//   - options - DeleteKeyOptions contains the optional parameters for the Client.DeleteKey method.
+func (client *Client) DeleteKey(ctx context.Context, keyName string, options *DeleteKeyOptions) (DeleteKeyResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.DeleteKey"
+	const operationName = "Client.DeleteKey"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.deleteKeyCreateRequest(ctx, keyName, options)
 	if err != nil {
-		return KeyVaultClientDeleteKeyResponse{}, err
+		return DeleteKeyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientDeleteKeyResponse{}, err
+		return DeleteKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientDeleteKeyResponse{}, err
+		return DeleteKeyResponse{}, err
 	}
 	resp, err := client.deleteKeyHandleResponse(httpResp)
 	return resp, err
 }
 
 // deleteKeyCreateRequest creates the DeleteKey request.
-func (client *KeyVaultClient) deleteKeyCreateRequest(ctx context.Context, keyName string, _ *KeyVaultClientDeleteKeyOptions) (*policy.Request, error) {
+func (client *Client) deleteKeyCreateRequest(ctx context.Context, keyName string, _ *DeleteKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/{key-name}"
@@ -298,10 +297,10 @@ func (client *KeyVaultClient) deleteKeyCreateRequest(ctx context.Context, keyNam
 }
 
 // deleteKeyHandleResponse handles the DeleteKey response.
-func (client *KeyVaultClient) deleteKeyHandleResponse(resp *http.Response) (KeyVaultClientDeleteKeyResponse, error) {
-	result := KeyVaultClientDeleteKeyResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKeyBundle); err != nil {
-		return KeyVaultClientDeleteKeyResponse{}, err
+func (client *Client) deleteKeyHandleResponse(resp *http.Response) (DeleteKeyResponse, error) {
+	result := DeleteKeyResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKey); err != nil {
+		return DeleteKeyResponse{}, err
 	}
 	return result, nil
 }
@@ -324,31 +323,31 @@ func (client *KeyVaultClient) deleteKeyHandleResponse(resp *http.Response) (KeyV
 //   - keyName - The name of the key.
 //   - keyVersion - The version of the key.
 //   - parameters - The parameters for the encryption operation.
-//   - options - KeyVaultClientEncryptOptions contains the optional parameters for the KeyVaultClient.Encrypt method.
-func (client *KeyVaultClient) Encrypt(ctx context.Context, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientEncryptOptions) (KeyVaultClientEncryptResponse, error) {
+//   - options - EncryptOptions contains the optional parameters for the Client.Encrypt method.
+func (client *Client) Encrypt(ctx context.Context, keyName string, keyVersion string, parameters KeyOperationParameters, options *EncryptOptions) (EncryptResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.Encrypt"
+	const operationName = "Client.Encrypt"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.encryptCreateRequest(ctx, keyName, keyVersion, parameters, options)
 	if err != nil {
-		return KeyVaultClientEncryptResponse{}, err
+		return EncryptResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientEncryptResponse{}, err
+		return EncryptResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientEncryptResponse{}, err
+		return EncryptResponse{}, err
 	}
 	resp, err := client.encryptHandleResponse(httpResp)
 	return resp, err
 }
 
 // encryptCreateRequest creates the Encrypt request.
-func (client *KeyVaultClient) encryptCreateRequest(ctx context.Context, keyName string, keyVersion string, parameters KeyOperationsParameters, _ *KeyVaultClientEncryptOptions) (*policy.Request, error) {
+func (client *Client) encryptCreateRequest(ctx context.Context, keyName string, keyVersion string, parameters KeyOperationParameters, _ *EncryptOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/{key-name}/{key-version}/encrypt"
@@ -376,10 +375,10 @@ func (client *KeyVaultClient) encryptCreateRequest(ctx context.Context, keyName 
 }
 
 // encryptHandleResponse handles the Encrypt response.
-func (client *KeyVaultClient) encryptHandleResponse(resp *http.Response) (KeyVaultClientEncryptResponse, error) {
-	result := KeyVaultClientEncryptResponse{}
+func (client *Client) encryptHandleResponse(resp *http.Response) (EncryptResponse, error) {
+	result := EncryptResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
-		return KeyVaultClientEncryptResponse{}, err
+		return EncryptResponse{}, err
 	}
 	return result, nil
 }
@@ -394,31 +393,31 @@ func (client *KeyVaultClient) encryptHandleResponse(resp *http.Response) (KeyVau
 //
 // Generated from API version 7.6-preview.1
 //   - keyName - The name of the key.
-//   - options - KeyVaultClientGetDeletedKeyOptions contains the optional parameters for the KeyVaultClient.GetDeletedKey method.
-func (client *KeyVaultClient) GetDeletedKey(ctx context.Context, keyName string, options *KeyVaultClientGetDeletedKeyOptions) (KeyVaultClientGetDeletedKeyResponse, error) {
+//   - options - GetDeletedKeyOptions contains the optional parameters for the Client.GetDeletedKey method.
+func (client *Client) GetDeletedKey(ctx context.Context, keyName string, options *GetDeletedKeyOptions) (GetDeletedKeyResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.GetDeletedKey"
+	const operationName = "Client.GetDeletedKey"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getDeletedKeyCreateRequest(ctx, keyName, options)
 	if err != nil {
-		return KeyVaultClientGetDeletedKeyResponse{}, err
+		return GetDeletedKeyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientGetDeletedKeyResponse{}, err
+		return GetDeletedKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientGetDeletedKeyResponse{}, err
+		return GetDeletedKeyResponse{}, err
 	}
 	resp, err := client.getDeletedKeyHandleResponse(httpResp)
 	return resp, err
 }
 
 // getDeletedKeyCreateRequest creates the GetDeletedKey request.
-func (client *KeyVaultClient) getDeletedKeyCreateRequest(ctx context.Context, keyName string, _ *KeyVaultClientGetDeletedKeyOptions) (*policy.Request, error) {
+func (client *Client) getDeletedKeyCreateRequest(ctx context.Context, keyName string, _ *GetDeletedKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/deletedkeys/{key-name}"
@@ -438,73 +437,10 @@ func (client *KeyVaultClient) getDeletedKeyCreateRequest(ctx context.Context, ke
 }
 
 // getDeletedKeyHandleResponse handles the GetDeletedKey response.
-func (client *KeyVaultClient) getDeletedKeyHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedKeyResponse, error) {
-	result := KeyVaultClientGetDeletedKeyResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKeyBundle); err != nil {
-		return KeyVaultClientGetDeletedKeyResponse{}, err
-	}
-	return result, nil
-}
-
-// NewGetDeletedKeysPager - Lists the deleted keys in the specified vault.
-//
-// Retrieves a list of the keys in the Key Vault as JSON Web Key structures that
-// contain the public part of a deleted key. This operation includes
-// deletion-specific information. The Get Deleted Keys operation is applicable for
-// vaults enabled for soft-delete. While the operation can be invoked on any
-// vault, it will return an error if invoked on a non soft-delete enabled vault.
-// This operation requires the keys/list permission.
-//
-// Generated from API version 7.6-preview.1
-//   - options - KeyVaultClientGetDeletedKeysOptions contains the optional parameters for the KeyVaultClient.NewGetDeletedKeysPager
-//     method.
-func (client *KeyVaultClient) NewGetDeletedKeysPager(options *KeyVaultClientGetDeletedKeysOptions) *runtime.Pager[KeyVaultClientGetDeletedKeysResponse] {
-	return runtime.NewPager(runtime.PagingHandler[KeyVaultClientGetDeletedKeysResponse]{
-		More: func(page KeyVaultClientGetDeletedKeysResponse) bool {
-			return page.NextLink != nil && len(*page.NextLink) > 0
-		},
-		Fetcher: func(ctx context.Context, page *KeyVaultClientGetDeletedKeysResponse) (KeyVaultClientGetDeletedKeysResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "KeyVaultClient.NewGetDeletedKeysPager")
-			nextLink := ""
-			if page != nil {
-				nextLink = *page.NextLink
-			}
-			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
-				return client.getDeletedKeysCreateRequest(ctx, options)
-			}, nil)
-			if err != nil {
-				return KeyVaultClientGetDeletedKeysResponse{}, err
-			}
-			return client.getDeletedKeysHandleResponse(resp)
-		},
-		Tracer: client.internal.Tracer(),
-	})
-}
-
-// getDeletedKeysCreateRequest creates the GetDeletedKeys request.
-func (client *KeyVaultClient) getDeletedKeysCreateRequest(ctx context.Context, options *KeyVaultClientGetDeletedKeysOptions) (*policy.Request, error) {
-	host := "{vaultBaseUrl}"
-	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
-	urlPath := "/deletedkeys"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "7.6-preview.1")
-	if options != nil && options.Maxresults != nil {
-		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
-	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, nil
-}
-
-// getDeletedKeysHandleResponse handles the GetDeletedKeys response.
-func (client *KeyVaultClient) getDeletedKeysHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedKeysResponse, error) {
-	result := KeyVaultClientGetDeletedKeysResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKeyListResult); err != nil {
-		return KeyVaultClientGetDeletedKeysResponse{}, err
+func (client *Client) getDeletedKeyHandleResponse(resp *http.Response) (GetDeletedKeyResponse, error) {
+	result := GetDeletedKeyResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKey); err != nil {
+		return GetDeletedKeyResponse{}, err
 	}
 	return result, nil
 }
@@ -521,31 +457,31 @@ func (client *KeyVaultClient) getDeletedKeysHandleResponse(resp *http.Response) 
 //   - keyVersion - Adding the version parameter retrieves a specific version of a key. This URI
 //     fragment is optional. If not specified, the latest version of the key is
 //     returned.
-//   - options - KeyVaultClientGetKeyOptions contains the optional parameters for the KeyVaultClient.GetKey method.
-func (client *KeyVaultClient) GetKey(ctx context.Context, keyName string, keyVersion string, options *KeyVaultClientGetKeyOptions) (KeyVaultClientGetKeyResponse, error) {
+//   - options - GetKeyOptions contains the optional parameters for the Client.GetKey method.
+func (client *Client) GetKey(ctx context.Context, keyName string, keyVersion string, options *GetKeyOptions) (GetKeyResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.GetKey"
+	const operationName = "Client.GetKey"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getKeyCreateRequest(ctx, keyName, keyVersion, options)
 	if err != nil {
-		return KeyVaultClientGetKeyResponse{}, err
+		return GetKeyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientGetKeyResponse{}, err
+		return GetKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientGetKeyResponse{}, err
+		return GetKeyResponse{}, err
 	}
 	resp, err := client.getKeyHandleResponse(httpResp)
 	return resp, err
 }
 
 // getKeyCreateRequest creates the GetKey request.
-func (client *KeyVaultClient) getKeyCreateRequest(ctx context.Context, keyName string, keyVersion string, _ *KeyVaultClientGetKeyOptions) (*policy.Request, error) {
+func (client *Client) getKeyCreateRequest(ctx context.Context, keyName string, keyVersion string, _ *GetKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/{key-name}/{key-version}"
@@ -569,10 +505,10 @@ func (client *KeyVaultClient) getKeyCreateRequest(ctx context.Context, keyName s
 }
 
 // getKeyHandleResponse handles the GetKey response.
-func (client *KeyVaultClient) getKeyHandleResponse(resp *http.Response) (KeyVaultClientGetKeyResponse, error) {
-	result := KeyVaultClientGetKeyResponse{}
+func (client *Client) getKeyHandleResponse(resp *http.Response) (GetKeyResponse, error) {
+	result := GetKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
-		return KeyVaultClientGetKeyResponse{}, err
+		return GetKeyResponse{}, err
 	}
 	return result, nil
 }
@@ -585,32 +521,31 @@ func (client *KeyVaultClient) getKeyHandleResponse(resp *http.Response) (KeyVaul
 //
 // Generated from API version 7.6-preview.1
 //   - keyName - The name of the key in a given key vault.
-//   - options - KeyVaultClientGetKeyRotationPolicyOptions contains the optional parameters for the KeyVaultClient.GetKeyRotationPolicy
-//     method.
-func (client *KeyVaultClient) GetKeyRotationPolicy(ctx context.Context, keyName string, options *KeyVaultClientGetKeyRotationPolicyOptions) (KeyVaultClientGetKeyRotationPolicyResponse, error) {
+//   - options - GetKeyRotationPolicyOptions contains the optional parameters for the Client.GetKeyRotationPolicy method.
+func (client *Client) GetKeyRotationPolicy(ctx context.Context, keyName string, options *GetKeyRotationPolicyOptions) (GetKeyRotationPolicyResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.GetKeyRotationPolicy"
+	const operationName = "Client.GetKeyRotationPolicy"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getKeyRotationPolicyCreateRequest(ctx, keyName, options)
 	if err != nil {
-		return KeyVaultClientGetKeyRotationPolicyResponse{}, err
+		return GetKeyRotationPolicyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientGetKeyRotationPolicyResponse{}, err
+		return GetKeyRotationPolicyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientGetKeyRotationPolicyResponse{}, err
+		return GetKeyRotationPolicyResponse{}, err
 	}
 	resp, err := client.getKeyRotationPolicyHandleResponse(httpResp)
 	return resp, err
 }
 
 // getKeyRotationPolicyCreateRequest creates the GetKeyRotationPolicy request.
-func (client *KeyVaultClient) getKeyRotationPolicyCreateRequest(ctx context.Context, keyName string, _ *KeyVaultClientGetKeyRotationPolicyOptions) (*policy.Request, error) {
+func (client *Client) getKeyRotationPolicyCreateRequest(ctx context.Context, keyName string, _ *GetKeyRotationPolicyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/{key-name}/rotationpolicy"
@@ -630,135 +565,10 @@ func (client *KeyVaultClient) getKeyRotationPolicyCreateRequest(ctx context.Cont
 }
 
 // getKeyRotationPolicyHandleResponse handles the GetKeyRotationPolicy response.
-func (client *KeyVaultClient) getKeyRotationPolicyHandleResponse(resp *http.Response) (KeyVaultClientGetKeyRotationPolicyResponse, error) {
-	result := KeyVaultClientGetKeyRotationPolicyResponse{}
+func (client *Client) getKeyRotationPolicyHandleResponse(resp *http.Response) (GetKeyRotationPolicyResponse, error) {
+	result := GetKeyRotationPolicyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyRotationPolicy); err != nil {
-		return KeyVaultClientGetKeyRotationPolicyResponse{}, err
-	}
-	return result, nil
-}
-
-// NewGetKeyVersionsPager - Retrieves a list of individual key versions with the same key name.
-//
-// The full key identifier, attributes, and tags are provided in the response.
-// This operation requires the keys/list permission.
-//
-// Generated from API version 7.6-preview.1
-//   - keyName - The name of the key.
-//   - options - KeyVaultClientGetKeyVersionsOptions contains the optional parameters for the KeyVaultClient.NewGetKeyVersionsPager
-//     method.
-func (client *KeyVaultClient) NewGetKeyVersionsPager(keyName string, options *KeyVaultClientGetKeyVersionsOptions) *runtime.Pager[KeyVaultClientGetKeyVersionsResponse] {
-	return runtime.NewPager(runtime.PagingHandler[KeyVaultClientGetKeyVersionsResponse]{
-		More: func(page KeyVaultClientGetKeyVersionsResponse) bool {
-			return page.NextLink != nil && len(*page.NextLink) > 0
-		},
-		Fetcher: func(ctx context.Context, page *KeyVaultClientGetKeyVersionsResponse) (KeyVaultClientGetKeyVersionsResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "KeyVaultClient.NewGetKeyVersionsPager")
-			nextLink := ""
-			if page != nil {
-				nextLink = *page.NextLink
-			}
-			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
-				return client.getKeyVersionsCreateRequest(ctx, keyName, options)
-			}, nil)
-			if err != nil {
-				return KeyVaultClientGetKeyVersionsResponse{}, err
-			}
-			return client.getKeyVersionsHandleResponse(resp)
-		},
-		Tracer: client.internal.Tracer(),
-	})
-}
-
-// getKeyVersionsCreateRequest creates the GetKeyVersions request.
-func (client *KeyVaultClient) getKeyVersionsCreateRequest(ctx context.Context, keyName string, options *KeyVaultClientGetKeyVersionsOptions) (*policy.Request, error) {
-	host := "{vaultBaseUrl}"
-	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
-	urlPath := "/keys/{key-name}/versions"
-	if keyName == "" {
-		return nil, errors.New("parameter keyName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{key-name}", url.PathEscape(keyName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "7.6-preview.1")
-	if options != nil && options.Maxresults != nil {
-		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
-	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, nil
-}
-
-// getKeyVersionsHandleResponse handles the GetKeyVersions response.
-func (client *KeyVaultClient) getKeyVersionsHandleResponse(resp *http.Response) (KeyVaultClientGetKeyVersionsResponse, error) {
-	result := KeyVaultClientGetKeyVersionsResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.KeyListResult); err != nil {
-		return KeyVaultClientGetKeyVersionsResponse{}, err
-	}
-	return result, nil
-}
-
-// NewGetKeysPager - List keys in the specified vault.
-//
-// Retrieves a list of the keys in the Key Vault as JSON Web Key structures that
-// contain the public part of a stored key. The LIST operation is applicable to
-// all key types, however only the base key identifier, attributes, and tags are
-// provided in the response. Individual versions of a key are not listed in the
-// response. This operation requires the keys/list permission.
-//
-// Generated from API version 7.6-preview.1
-//   - options - KeyVaultClientGetKeysOptions contains the optional parameters for the KeyVaultClient.NewGetKeysPager method.
-func (client *KeyVaultClient) NewGetKeysPager(options *KeyVaultClientGetKeysOptions) *runtime.Pager[KeyVaultClientGetKeysResponse] {
-	return runtime.NewPager(runtime.PagingHandler[KeyVaultClientGetKeysResponse]{
-		More: func(page KeyVaultClientGetKeysResponse) bool {
-			return page.NextLink != nil && len(*page.NextLink) > 0
-		},
-		Fetcher: func(ctx context.Context, page *KeyVaultClientGetKeysResponse) (KeyVaultClientGetKeysResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "KeyVaultClient.NewGetKeysPager")
-			nextLink := ""
-			if page != nil {
-				nextLink = *page.NextLink
-			}
-			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
-				return client.getKeysCreateRequest(ctx, options)
-			}, nil)
-			if err != nil {
-				return KeyVaultClientGetKeysResponse{}, err
-			}
-			return client.getKeysHandleResponse(resp)
-		},
-		Tracer: client.internal.Tracer(),
-	})
-}
-
-// getKeysCreateRequest creates the GetKeys request.
-func (client *KeyVaultClient) getKeysCreateRequest(ctx context.Context, options *KeyVaultClientGetKeysOptions) (*policy.Request, error) {
-	host := "{vaultBaseUrl}"
-	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
-	urlPath := "/keys"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "7.6-preview.1")
-	if options != nil && options.Maxresults != nil {
-		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
-	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, nil
-}
-
-// getKeysHandleResponse handles the GetKeys response.
-func (client *KeyVaultClient) getKeysHandleResponse(resp *http.Response) (KeyVaultClientGetKeysResponse, error) {
-	result := KeyVaultClientGetKeysResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.KeyListResult); err != nil {
-		return KeyVaultClientGetKeysResponse{}, err
+		return GetKeyRotationPolicyResponse{}, err
 	}
 	return result, nil
 }
@@ -770,31 +580,31 @@ func (client *KeyVaultClient) getKeysHandleResponse(resp *http.Response) (KeyVau
 //
 // Generated from API version 7.6-preview.1
 //   - parameters - The request object to get random bytes.
-//   - options - KeyVaultClientGetRandomBytesOptions contains the optional parameters for the KeyVaultClient.GetRandomBytes method.
-func (client *KeyVaultClient) GetRandomBytes(ctx context.Context, parameters GetRandomBytesRequest, options *KeyVaultClientGetRandomBytesOptions) (KeyVaultClientGetRandomBytesResponse, error) {
+//   - options - GetRandomBytesOptions contains the optional parameters for the Client.GetRandomBytes method.
+func (client *Client) GetRandomBytes(ctx context.Context, parameters GetRandomBytesParameters, options *GetRandomBytesOptions) (GetRandomBytesResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.GetRandomBytes"
+	const operationName = "Client.GetRandomBytes"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getRandomBytesCreateRequest(ctx, parameters, options)
 	if err != nil {
-		return KeyVaultClientGetRandomBytesResponse{}, err
+		return GetRandomBytesResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientGetRandomBytesResponse{}, err
+		return GetRandomBytesResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientGetRandomBytesResponse{}, err
+		return GetRandomBytesResponse{}, err
 	}
 	resp, err := client.getRandomBytesHandleResponse(httpResp)
 	return resp, err
 }
 
 // getRandomBytesCreateRequest creates the GetRandomBytes request.
-func (client *KeyVaultClient) getRandomBytesCreateRequest(ctx context.Context, parameters GetRandomBytesRequest, _ *KeyVaultClientGetRandomBytesOptions) (*policy.Request, error) {
+func (client *Client) getRandomBytesCreateRequest(ctx context.Context, parameters GetRandomBytesParameters, _ *GetRandomBytesOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/rng"
@@ -814,10 +624,10 @@ func (client *KeyVaultClient) getRandomBytesCreateRequest(ctx context.Context, p
 }
 
 // getRandomBytesHandleResponse handles the GetRandomBytes response.
-func (client *KeyVaultClient) getRandomBytesHandleResponse(resp *http.Response) (KeyVaultClientGetRandomBytesResponse, error) {
-	result := KeyVaultClientGetRandomBytesResponse{}
+func (client *Client) getRandomBytesHandleResponse(resp *http.Response) (GetRandomBytesResponse, error) {
+	result := GetRandomBytesResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RandomBytes); err != nil {
-		return KeyVaultClientGetRandomBytesResponse{}, err
+		return GetRandomBytesResponse{}, err
 	}
 	return result, nil
 }
@@ -835,31 +645,31 @@ func (client *KeyVaultClient) getRandomBytesHandleResponse(resp *http.Response) 
 //     purpose of running the service. The value provided should not include
 //     personally identifiable or sensitive information.
 //   - parameters - The parameters to import a key.
-//   - options - KeyVaultClientImportKeyOptions contains the optional parameters for the KeyVaultClient.ImportKey method.
-func (client *KeyVaultClient) ImportKey(ctx context.Context, keyName string, parameters KeyImportParameters, options *KeyVaultClientImportKeyOptions) (KeyVaultClientImportKeyResponse, error) {
+//   - options - ImportKeyOptions contains the optional parameters for the Client.ImportKey method.
+func (client *Client) ImportKey(ctx context.Context, keyName string, parameters ImportKeyParameters, options *ImportKeyOptions) (ImportKeyResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.ImportKey"
+	const operationName = "Client.ImportKey"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.importKeyCreateRequest(ctx, keyName, parameters, options)
 	if err != nil {
-		return KeyVaultClientImportKeyResponse{}, err
+		return ImportKeyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientImportKeyResponse{}, err
+		return ImportKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientImportKeyResponse{}, err
+		return ImportKeyResponse{}, err
 	}
 	resp, err := client.importKeyHandleResponse(httpResp)
 	return resp, err
 }
 
 // importKeyCreateRequest creates the ImportKey request.
-func (client *KeyVaultClient) importKeyCreateRequest(ctx context.Context, keyName string, parameters KeyImportParameters, _ *KeyVaultClientImportKeyOptions) (*policy.Request, error) {
+func (client *Client) importKeyCreateRequest(ctx context.Context, keyName string, parameters ImportKeyParameters, _ *ImportKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/{key-name}"
@@ -883,10 +693,189 @@ func (client *KeyVaultClient) importKeyCreateRequest(ctx context.Context, keyNam
 }
 
 // importKeyHandleResponse handles the ImportKey response.
-func (client *KeyVaultClient) importKeyHandleResponse(resp *http.Response) (KeyVaultClientImportKeyResponse, error) {
-	result := KeyVaultClientImportKeyResponse{}
+func (client *Client) importKeyHandleResponse(resp *http.Response) (ImportKeyResponse, error) {
+	result := ImportKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
-		return KeyVaultClientImportKeyResponse{}, err
+		return ImportKeyResponse{}, err
+	}
+	return result, nil
+}
+
+// NewListDeletedKeyPropertiesPager - Lists the deleted keys in the specified vault.
+//
+// Retrieves a list of the keys in the Key Vault as JSON Web Key structures that
+// contain the public part of a deleted key. This operation includes
+// deletion-specific information. The Get Deleted Keys operation is applicable for
+// vaults enabled for soft-delete. While the operation can be invoked on any
+// vault, it will return an error if invoked on a non soft-delete enabled vault.
+// This operation requires the keys/list permission.
+//
+// Generated from API version 7.6-preview.1
+//   - options - ListDeletedKeyPropertiesOptions contains the optional parameters for the Client.NewListDeletedKeyPropertiesPager
+//     method.
+func (client *Client) NewListDeletedKeyPropertiesPager(options *ListDeletedKeyPropertiesOptions) *runtime.Pager[ListDeletedKeyPropertiesResponse] {
+	return runtime.NewPager(runtime.PagingHandler[ListDeletedKeyPropertiesResponse]{
+		More: func(page ListDeletedKeyPropertiesResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *ListDeletedKeyPropertiesResponse) (ListDeletedKeyPropertiesResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewListDeletedKeyPropertiesPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listDeletedKeyPropertiesCreateRequest(ctx, options)
+			}, nil)
+			if err != nil {
+				return ListDeletedKeyPropertiesResponse{}, err
+			}
+			return client.listDeletedKeyPropertiesHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// listDeletedKeyPropertiesCreateRequest creates the ListDeletedKeyProperties request.
+func (client *Client) listDeletedKeyPropertiesCreateRequest(ctx context.Context, _ *ListDeletedKeyPropertiesOptions) (*policy.Request, error) {
+	host := "{vaultBaseUrl}"
+	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
+	urlPath := "/deletedkeys"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "7.6-preview.1")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// listDeletedKeyPropertiesHandleResponse handles the ListDeletedKeyProperties response.
+func (client *Client) listDeletedKeyPropertiesHandleResponse(resp *http.Response) (ListDeletedKeyPropertiesResponse, error) {
+	result := ListDeletedKeyPropertiesResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKeyPropertiesListResult); err != nil {
+		return ListDeletedKeyPropertiesResponse{}, err
+	}
+	return result, nil
+}
+
+// NewListKeyPropertiesPager - List keys in the specified vault.
+//
+// Retrieves a list of the keys in the Key Vault as JSON Web Key structures that
+// contain the public part of a stored key. The LIST operation is applicable to
+// all key types, however only the base key identifier, attributes, and tags are
+// provided in the response. Individual versions of a key are not listed in the
+// response. This operation requires the keys/list permission.
+//
+// Generated from API version 7.6-preview.1
+//   - options - ListKeyPropertiesOptions contains the optional parameters for the Client.NewListKeyPropertiesPager method.
+func (client *Client) NewListKeyPropertiesPager(options *ListKeyPropertiesOptions) *runtime.Pager[ListKeyPropertiesResponse] {
+	return runtime.NewPager(runtime.PagingHandler[ListKeyPropertiesResponse]{
+		More: func(page ListKeyPropertiesResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *ListKeyPropertiesResponse) (ListKeyPropertiesResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewListKeyPropertiesPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listKeyPropertiesCreateRequest(ctx, options)
+			}, nil)
+			if err != nil {
+				return ListKeyPropertiesResponse{}, err
+			}
+			return client.listKeyPropertiesHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// listKeyPropertiesCreateRequest creates the ListKeyProperties request.
+func (client *Client) listKeyPropertiesCreateRequest(ctx context.Context, _ *ListKeyPropertiesOptions) (*policy.Request, error) {
+	host := "{vaultBaseUrl}"
+	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
+	urlPath := "/keys"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "7.6-preview.1")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// listKeyPropertiesHandleResponse handles the ListKeyProperties response.
+func (client *Client) listKeyPropertiesHandleResponse(resp *http.Response) (ListKeyPropertiesResponse, error) {
+	result := ListKeyPropertiesResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.KeyPropertiesListResult); err != nil {
+		return ListKeyPropertiesResponse{}, err
+	}
+	return result, nil
+}
+
+// NewListKeyPropertiesVersionsPager - Retrieves a list of individual key versions with the same key name.
+//
+// The full key identifier, attributes, and tags are provided in the response.
+// This operation requires the keys/list permission.
+//
+// Generated from API version 7.6-preview.1
+//   - keyName - The name of the key.
+//   - options - ListKeyPropertiesVersionsOptions contains the optional parameters for the Client.NewListKeyPropertiesVersionsPager
+//     method.
+func (client *Client) NewListKeyPropertiesVersionsPager(keyName string, options *ListKeyPropertiesVersionsOptions) *runtime.Pager[ListKeyPropertiesVersionsResponse] {
+	return runtime.NewPager(runtime.PagingHandler[ListKeyPropertiesVersionsResponse]{
+		More: func(page ListKeyPropertiesVersionsResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *ListKeyPropertiesVersionsResponse) (ListKeyPropertiesVersionsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewListKeyPropertiesVersionsPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listKeyPropertiesVersionsCreateRequest(ctx, keyName, options)
+			}, nil)
+			if err != nil {
+				return ListKeyPropertiesVersionsResponse{}, err
+			}
+			return client.listKeyPropertiesVersionsHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// listKeyPropertiesVersionsCreateRequest creates the ListKeyPropertiesVersions request.
+func (client *Client) listKeyPropertiesVersionsCreateRequest(ctx context.Context, keyName string, _ *ListKeyPropertiesVersionsOptions) (*policy.Request, error) {
+	host := "{vaultBaseUrl}"
+	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
+	urlPath := "/keys/{key-name}/versions"
+	if keyName == "" {
+		return nil, errors.New("parameter keyName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{key-name}", url.PathEscape(keyName))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "7.6-preview.1")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// listKeyPropertiesVersionsHandleResponse handles the ListKeyPropertiesVersions response.
+func (client *Client) listKeyPropertiesVersionsHandleResponse(resp *http.Response) (ListKeyPropertiesVersionsResponse, error) {
+	result := ListKeyPropertiesVersionsResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.KeyPropertiesListResult); err != nil {
+		return ListKeyPropertiesVersionsResponse{}, err
 	}
 	return result, nil
 }
@@ -901,31 +890,30 @@ func (client *KeyVaultClient) importKeyHandleResponse(resp *http.Response) (KeyV
 //
 // Generated from API version 7.6-preview.1
 //   - keyName - The name of the key
-//   - options - KeyVaultClientPurgeDeletedKeyOptions contains the optional parameters for the KeyVaultClient.PurgeDeletedKey
-//     method.
-func (client *KeyVaultClient) PurgeDeletedKey(ctx context.Context, keyName string, options *KeyVaultClientPurgeDeletedKeyOptions) (KeyVaultClientPurgeDeletedKeyResponse, error) {
+//   - options - PurgeDeletedKeyOptions contains the optional parameters for the Client.PurgeDeletedKey method.
+func (client *Client) PurgeDeletedKey(ctx context.Context, keyName string, options *PurgeDeletedKeyOptions) (PurgeDeletedKeyResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.PurgeDeletedKey"
+	const operationName = "Client.PurgeDeletedKey"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.purgeDeletedKeyCreateRequest(ctx, keyName, options)
 	if err != nil {
-		return KeyVaultClientPurgeDeletedKeyResponse{}, err
+		return PurgeDeletedKeyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientPurgeDeletedKeyResponse{}, err
+		return PurgeDeletedKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientPurgeDeletedKeyResponse{}, err
+		return PurgeDeletedKeyResponse{}, err
 	}
-	return KeyVaultClientPurgeDeletedKeyResponse{}, nil
+	return PurgeDeletedKeyResponse{}, nil
 }
 
 // purgeDeletedKeyCreateRequest creates the PurgeDeletedKey request.
-func (client *KeyVaultClient) purgeDeletedKeyCreateRequest(ctx context.Context, keyName string, _ *KeyVaultClientPurgeDeletedKeyOptions) (*policy.Request, error) {
+func (client *Client) purgeDeletedKeyCreateRequest(ctx context.Context, keyName string, _ *PurgeDeletedKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/deletedkeys/{key-name}"
@@ -955,32 +943,31 @@ func (client *KeyVaultClient) purgeDeletedKeyCreateRequest(ctx context.Context, 
 //
 // Generated from API version 7.6-preview.1
 //   - keyName - The name of the deleted key.
-//   - options - KeyVaultClientRecoverDeletedKeyOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedKey
-//     method.
-func (client *KeyVaultClient) RecoverDeletedKey(ctx context.Context, keyName string, options *KeyVaultClientRecoverDeletedKeyOptions) (KeyVaultClientRecoverDeletedKeyResponse, error) {
+//   - options - RecoverDeletedKeyOptions contains the optional parameters for the Client.RecoverDeletedKey method.
+func (client *Client) RecoverDeletedKey(ctx context.Context, keyName string, options *RecoverDeletedKeyOptions) (RecoverDeletedKeyResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.RecoverDeletedKey"
+	const operationName = "Client.RecoverDeletedKey"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.recoverDeletedKeyCreateRequest(ctx, keyName, options)
 	if err != nil {
-		return KeyVaultClientRecoverDeletedKeyResponse{}, err
+		return RecoverDeletedKeyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientRecoverDeletedKeyResponse{}, err
+		return RecoverDeletedKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientRecoverDeletedKeyResponse{}, err
+		return RecoverDeletedKeyResponse{}, err
 	}
 	resp, err := client.recoverDeletedKeyHandleResponse(httpResp)
 	return resp, err
 }
 
 // recoverDeletedKeyCreateRequest creates the RecoverDeletedKey request.
-func (client *KeyVaultClient) recoverDeletedKeyCreateRequest(ctx context.Context, keyName string, _ *KeyVaultClientRecoverDeletedKeyOptions) (*policy.Request, error) {
+func (client *Client) recoverDeletedKeyCreateRequest(ctx context.Context, keyName string, _ *RecoverDeletedKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/deletedkeys/{key-name}/recover"
@@ -1000,10 +987,10 @@ func (client *KeyVaultClient) recoverDeletedKeyCreateRequest(ctx context.Context
 }
 
 // recoverDeletedKeyHandleResponse handles the RecoverDeletedKey response.
-func (client *KeyVaultClient) recoverDeletedKeyHandleResponse(resp *http.Response) (KeyVaultClientRecoverDeletedKeyResponse, error) {
-	result := KeyVaultClientRecoverDeletedKeyResponse{}
+func (client *Client) recoverDeletedKeyHandleResponse(resp *http.Response) (RecoverDeletedKeyResponse, error) {
+	result := RecoverDeletedKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
-		return KeyVaultClientRecoverDeletedKeyResponse{}, err
+		return RecoverDeletedKeyResponse{}, err
 	}
 	return result, nil
 }
@@ -1018,31 +1005,31 @@ func (client *KeyVaultClient) recoverDeletedKeyHandleResponse(resp *http.Respons
 //   - keyName - The name of the key to get.
 //   - keyVersion - Adding the version parameter retrieves a specific version of a key.
 //   - parameters - The parameters for the key release operation.
-//   - options - KeyVaultClientReleaseOptions contains the optional parameters for the KeyVaultClient.Release method.
-func (client *KeyVaultClient) Release(ctx context.Context, keyName string, keyVersion string, parameters KeyReleaseParameters, options *KeyVaultClientReleaseOptions) (KeyVaultClientReleaseResponse, error) {
+//   - options - ReleaseOptions contains the optional parameters for the Client.Release method.
+func (client *Client) Release(ctx context.Context, keyName string, keyVersion string, parameters ReleaseParameters, options *ReleaseOptions) (ReleaseResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.Release"
+	const operationName = "Client.Release"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.releaseCreateRequest(ctx, keyName, keyVersion, parameters, options)
 	if err != nil {
-		return KeyVaultClientReleaseResponse{}, err
+		return ReleaseResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientReleaseResponse{}, err
+		return ReleaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientReleaseResponse{}, err
+		return ReleaseResponse{}, err
 	}
 	resp, err := client.releaseHandleResponse(httpResp)
 	return resp, err
 }
 
 // releaseCreateRequest creates the Release request.
-func (client *KeyVaultClient) releaseCreateRequest(ctx context.Context, keyName string, keyVersion string, parameters KeyReleaseParameters, _ *KeyVaultClientReleaseOptions) (*policy.Request, error) {
+func (client *Client) releaseCreateRequest(ctx context.Context, keyName string, keyVersion string, parameters ReleaseParameters, _ *ReleaseOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/{key-name}/{key-version}/release"
@@ -1070,10 +1057,10 @@ func (client *KeyVaultClient) releaseCreateRequest(ctx context.Context, keyName 
 }
 
 // releaseHandleResponse handles the Release response.
-func (client *KeyVaultClient) releaseHandleResponse(resp *http.Response) (KeyVaultClientReleaseResponse, error) {
-	result := KeyVaultClientReleaseResponse{}
+func (client *Client) releaseHandleResponse(resp *http.Response) (ReleaseResponse, error) {
+	result := ReleaseResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyReleaseResult); err != nil {
-		return KeyVaultClientReleaseResponse{}, err
+		return ReleaseResponse{}, err
 	}
 	return result, nil
 }
@@ -1096,31 +1083,31 @@ func (client *KeyVaultClient) releaseHandleResponse(resp *http.Response) (KeyVau
 //
 // Generated from API version 7.6-preview.1
 //   - parameters - The parameters to restore the key.
-//   - options - KeyVaultClientRestoreKeyOptions contains the optional parameters for the KeyVaultClient.RestoreKey method.
-func (client *KeyVaultClient) RestoreKey(ctx context.Context, parameters KeyRestoreParameters, options *KeyVaultClientRestoreKeyOptions) (KeyVaultClientRestoreKeyResponse, error) {
+//   - options - RestoreKeyOptions contains the optional parameters for the Client.RestoreKey method.
+func (client *Client) RestoreKey(ctx context.Context, parameters RestoreKeyParameters, options *RestoreKeyOptions) (RestoreKeyResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.RestoreKey"
+	const operationName = "Client.RestoreKey"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.restoreKeyCreateRequest(ctx, parameters, options)
 	if err != nil {
-		return KeyVaultClientRestoreKeyResponse{}, err
+		return RestoreKeyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientRestoreKeyResponse{}, err
+		return RestoreKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientRestoreKeyResponse{}, err
+		return RestoreKeyResponse{}, err
 	}
 	resp, err := client.restoreKeyHandleResponse(httpResp)
 	return resp, err
 }
 
 // restoreKeyCreateRequest creates the RestoreKey request.
-func (client *KeyVaultClient) restoreKeyCreateRequest(ctx context.Context, parameters KeyRestoreParameters, _ *KeyVaultClientRestoreKeyOptions) (*policy.Request, error) {
+func (client *Client) restoreKeyCreateRequest(ctx context.Context, parameters RestoreKeyParameters, _ *RestoreKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/restore"
@@ -1140,10 +1127,10 @@ func (client *KeyVaultClient) restoreKeyCreateRequest(ctx context.Context, param
 }
 
 // restoreKeyHandleResponse handles the RestoreKey response.
-func (client *KeyVaultClient) restoreKeyHandleResponse(resp *http.Response) (KeyVaultClientRestoreKeyResponse, error) {
-	result := KeyVaultClientRestoreKeyResponse{}
+func (client *Client) restoreKeyHandleResponse(resp *http.Response) (RestoreKeyResponse, error) {
+	result := RestoreKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
-		return KeyVaultClientRestoreKeyResponse{}, err
+		return RestoreKeyResponse{}, err
 	}
 	return result, nil
 }
@@ -1158,31 +1145,31 @@ func (client *KeyVaultClient) restoreKeyHandleResponse(resp *http.Response) (Key
 // Generated from API version 7.6-preview.1
 //   - keyName - The name of key to be rotated. The system will generate a new version in the
 //     specified key.
-//   - options - KeyVaultClientRotateKeyOptions contains the optional parameters for the KeyVaultClient.RotateKey method.
-func (client *KeyVaultClient) RotateKey(ctx context.Context, keyName string, options *KeyVaultClientRotateKeyOptions) (KeyVaultClientRotateKeyResponse, error) {
+//   - options - RotateKeyOptions contains the optional parameters for the Client.RotateKey method.
+func (client *Client) RotateKey(ctx context.Context, keyName string, options *RotateKeyOptions) (RotateKeyResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.RotateKey"
+	const operationName = "Client.RotateKey"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.rotateKeyCreateRequest(ctx, keyName, options)
 	if err != nil {
-		return KeyVaultClientRotateKeyResponse{}, err
+		return RotateKeyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientRotateKeyResponse{}, err
+		return RotateKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientRotateKeyResponse{}, err
+		return RotateKeyResponse{}, err
 	}
 	resp, err := client.rotateKeyHandleResponse(httpResp)
 	return resp, err
 }
 
 // rotateKeyCreateRequest creates the RotateKey request.
-func (client *KeyVaultClient) rotateKeyCreateRequest(ctx context.Context, keyName string, _ *KeyVaultClientRotateKeyOptions) (*policy.Request, error) {
+func (client *Client) rotateKeyCreateRequest(ctx context.Context, keyName string, _ *RotateKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/{key-name}/rotate"
@@ -1202,10 +1189,10 @@ func (client *KeyVaultClient) rotateKeyCreateRequest(ctx context.Context, keyNam
 }
 
 // rotateKeyHandleResponse handles the RotateKey response.
-func (client *KeyVaultClient) rotateKeyHandleResponse(resp *http.Response) (KeyVaultClientRotateKeyResponse, error) {
-	result := KeyVaultClientRotateKeyResponse{}
+func (client *Client) rotateKeyHandleResponse(resp *http.Response) (RotateKeyResponse, error) {
+	result := RotateKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
-		return KeyVaultClientRotateKeyResponse{}, err
+		return RotateKeyResponse{}, err
 	}
 	return result, nil
 }
@@ -1221,31 +1208,31 @@ func (client *KeyVaultClient) rotateKeyHandleResponse(resp *http.Response) (KeyV
 //   - keyName - The name of the key.
 //   - keyVersion - The version of the key.
 //   - parameters - The parameters for the signing operation.
-//   - options - KeyVaultClientSignOptions contains the optional parameters for the KeyVaultClient.Sign method.
-func (client *KeyVaultClient) Sign(ctx context.Context, keyName string, keyVersion string, parameters KeySignParameters, options *KeyVaultClientSignOptions) (KeyVaultClientSignResponse, error) {
+//   - options - SignOptions contains the optional parameters for the Client.Sign method.
+func (client *Client) Sign(ctx context.Context, keyName string, keyVersion string, parameters SignParameters, options *SignOptions) (SignResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.Sign"
+	const operationName = "Client.Sign"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.signCreateRequest(ctx, keyName, keyVersion, parameters, options)
 	if err != nil {
-		return KeyVaultClientSignResponse{}, err
+		return SignResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientSignResponse{}, err
+		return SignResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientSignResponse{}, err
+		return SignResponse{}, err
 	}
 	resp, err := client.signHandleResponse(httpResp)
 	return resp, err
 }
 
 // signCreateRequest creates the Sign request.
-func (client *KeyVaultClient) signCreateRequest(ctx context.Context, keyName string, keyVersion string, parameters KeySignParameters, _ *KeyVaultClientSignOptions) (*policy.Request, error) {
+func (client *Client) signCreateRequest(ctx context.Context, keyName string, keyVersion string, parameters SignParameters, _ *SignOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/{key-name}/{key-version}/sign"
@@ -1273,10 +1260,10 @@ func (client *KeyVaultClient) signCreateRequest(ctx context.Context, keyName str
 }
 
 // signHandleResponse handles the Sign response.
-func (client *KeyVaultClient) signHandleResponse(resp *http.Response) (KeyVaultClientSignResponse, error) {
-	result := KeyVaultClientSignResponse{}
+func (client *Client) signHandleResponse(resp *http.Response) (SignResponse, error) {
+	result := SignResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
-		return KeyVaultClientSignResponse{}, err
+		return SignResponse{}, err
 	}
 	return result, nil
 }
@@ -1295,31 +1282,31 @@ func (client *KeyVaultClient) signHandleResponse(resp *http.Response) (KeyVaultC
 //   - keyName - The name of the key.
 //   - keyVersion - The version of the key.
 //   - parameters - The parameters for the key operation.
-//   - options - KeyVaultClientUnwrapKeyOptions contains the optional parameters for the KeyVaultClient.UnwrapKey method.
-func (client *KeyVaultClient) UnwrapKey(ctx context.Context, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientUnwrapKeyOptions) (KeyVaultClientUnwrapKeyResponse, error) {
+//   - options - UnwrapKeyOptions contains the optional parameters for the Client.UnwrapKey method.
+func (client *Client) UnwrapKey(ctx context.Context, keyName string, keyVersion string, parameters KeyOperationParameters, options *UnwrapKeyOptions) (UnwrapKeyResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.UnwrapKey"
+	const operationName = "Client.UnwrapKey"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.unwrapKeyCreateRequest(ctx, keyName, keyVersion, parameters, options)
 	if err != nil {
-		return KeyVaultClientUnwrapKeyResponse{}, err
+		return UnwrapKeyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientUnwrapKeyResponse{}, err
+		return UnwrapKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientUnwrapKeyResponse{}, err
+		return UnwrapKeyResponse{}, err
 	}
 	resp, err := client.unwrapKeyHandleResponse(httpResp)
 	return resp, err
 }
 
 // unwrapKeyCreateRequest creates the UnwrapKey request.
-func (client *KeyVaultClient) unwrapKeyCreateRequest(ctx context.Context, keyName string, keyVersion string, parameters KeyOperationsParameters, _ *KeyVaultClientUnwrapKeyOptions) (*policy.Request, error) {
+func (client *Client) unwrapKeyCreateRequest(ctx context.Context, keyName string, keyVersion string, parameters KeyOperationParameters, _ *UnwrapKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/{key-name}/{key-version}/unwrapkey"
@@ -1347,10 +1334,10 @@ func (client *KeyVaultClient) unwrapKeyCreateRequest(ctx context.Context, keyNam
 }
 
 // unwrapKeyHandleResponse handles the UnwrapKey response.
-func (client *KeyVaultClient) unwrapKeyHandleResponse(resp *http.Response) (KeyVaultClientUnwrapKeyResponse, error) {
-	result := KeyVaultClientUnwrapKeyResponse{}
+func (client *Client) unwrapKeyHandleResponse(resp *http.Response) (UnwrapKeyResponse, error) {
+	result := UnwrapKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
-		return KeyVaultClientUnwrapKeyResponse{}, err
+		return UnwrapKeyResponse{}, err
 	}
 	return result, nil
 }
@@ -1367,31 +1354,31 @@ func (client *KeyVaultClient) unwrapKeyHandleResponse(resp *http.Response) (KeyV
 //   - keyName - The name of key to update.
 //   - keyVersion - The version of the key to update.
 //   - parameters - The parameters of the key to update.
-//   - options - KeyVaultClientUpdateKeyOptions contains the optional parameters for the KeyVaultClient.UpdateKey method.
-func (client *KeyVaultClient) UpdateKey(ctx context.Context, keyName string, keyVersion string, parameters KeyUpdateParameters, options *KeyVaultClientUpdateKeyOptions) (KeyVaultClientUpdateKeyResponse, error) {
+//   - options - UpdateKeyOptions contains the optional parameters for the Client.UpdateKey method.
+func (client *Client) UpdateKey(ctx context.Context, keyName string, keyVersion string, parameters UpdateKeyParameters, options *UpdateKeyOptions) (UpdateKeyResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.UpdateKey"
+	const operationName = "Client.UpdateKey"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateKeyCreateRequest(ctx, keyName, keyVersion, parameters, options)
 	if err != nil {
-		return KeyVaultClientUpdateKeyResponse{}, err
+		return UpdateKeyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientUpdateKeyResponse{}, err
+		return UpdateKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientUpdateKeyResponse{}, err
+		return UpdateKeyResponse{}, err
 	}
 	resp, err := client.updateKeyHandleResponse(httpResp)
 	return resp, err
 }
 
 // updateKeyCreateRequest creates the UpdateKey request.
-func (client *KeyVaultClient) updateKeyCreateRequest(ctx context.Context, keyName string, keyVersion string, parameters KeyUpdateParameters, _ *KeyVaultClientUpdateKeyOptions) (*policy.Request, error) {
+func (client *Client) updateKeyCreateRequest(ctx context.Context, keyName string, keyVersion string, parameters UpdateKeyParameters, _ *UpdateKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/{key-name}/{key-version}"
@@ -1419,10 +1406,10 @@ func (client *KeyVaultClient) updateKeyCreateRequest(ctx context.Context, keyNam
 }
 
 // updateKeyHandleResponse handles the UpdateKey response.
-func (client *KeyVaultClient) updateKeyHandleResponse(resp *http.Response) (KeyVaultClientUpdateKeyResponse, error) {
-	result := KeyVaultClientUpdateKeyResponse{}
+func (client *Client) updateKeyHandleResponse(resp *http.Response) (UpdateKeyResponse, error) {
+	result := UpdateKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
-		return KeyVaultClientUpdateKeyResponse{}, err
+		return UpdateKeyResponse{}, err
 	}
 	return result, nil
 }
@@ -1436,32 +1423,31 @@ func (client *KeyVaultClient) updateKeyHandleResponse(resp *http.Response) (KeyV
 // Generated from API version 7.6-preview.1
 //   - keyName - The name of the key in the given vault.
 //   - keyRotationPolicy - The policy for the key.
-//   - options - KeyVaultClientUpdateKeyRotationPolicyOptions contains the optional parameters for the KeyVaultClient.UpdateKeyRotationPolicy
-//     method.
-func (client *KeyVaultClient) UpdateKeyRotationPolicy(ctx context.Context, keyName string, keyRotationPolicy KeyRotationPolicy, options *KeyVaultClientUpdateKeyRotationPolicyOptions) (KeyVaultClientUpdateKeyRotationPolicyResponse, error) {
+//   - options - UpdateKeyRotationPolicyOptions contains the optional parameters for the Client.UpdateKeyRotationPolicy method.
+func (client *Client) UpdateKeyRotationPolicy(ctx context.Context, keyName string, keyRotationPolicy KeyRotationPolicy, options *UpdateKeyRotationPolicyOptions) (UpdateKeyRotationPolicyResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.UpdateKeyRotationPolicy"
+	const operationName = "Client.UpdateKeyRotationPolicy"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateKeyRotationPolicyCreateRequest(ctx, keyName, keyRotationPolicy, options)
 	if err != nil {
-		return KeyVaultClientUpdateKeyRotationPolicyResponse{}, err
+		return UpdateKeyRotationPolicyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientUpdateKeyRotationPolicyResponse{}, err
+		return UpdateKeyRotationPolicyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientUpdateKeyRotationPolicyResponse{}, err
+		return UpdateKeyRotationPolicyResponse{}, err
 	}
 	resp, err := client.updateKeyRotationPolicyHandleResponse(httpResp)
 	return resp, err
 }
 
 // updateKeyRotationPolicyCreateRequest creates the UpdateKeyRotationPolicy request.
-func (client *KeyVaultClient) updateKeyRotationPolicyCreateRequest(ctx context.Context, keyName string, keyRotationPolicy KeyRotationPolicy, _ *KeyVaultClientUpdateKeyRotationPolicyOptions) (*policy.Request, error) {
+func (client *Client) updateKeyRotationPolicyCreateRequest(ctx context.Context, keyName string, keyRotationPolicy KeyRotationPolicy, _ *UpdateKeyRotationPolicyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/{key-name}/rotationpolicy"
@@ -1485,10 +1471,10 @@ func (client *KeyVaultClient) updateKeyRotationPolicyCreateRequest(ctx context.C
 }
 
 // updateKeyRotationPolicyHandleResponse handles the UpdateKeyRotationPolicy response.
-func (client *KeyVaultClient) updateKeyRotationPolicyHandleResponse(resp *http.Response) (KeyVaultClientUpdateKeyRotationPolicyResponse, error) {
-	result := KeyVaultClientUpdateKeyRotationPolicyResponse{}
+func (client *Client) updateKeyRotationPolicyHandleResponse(resp *http.Response) (UpdateKeyRotationPolicyResponse, error) {
+	result := UpdateKeyRotationPolicyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyRotationPolicy); err != nil {
-		return KeyVaultClientUpdateKeyRotationPolicyResponse{}, err
+		return UpdateKeyRotationPolicyResponse{}, err
 	}
 	return result, nil
 }
@@ -1507,31 +1493,31 @@ func (client *KeyVaultClient) updateKeyRotationPolicyHandleResponse(resp *http.R
 //   - keyName - The name of the key.
 //   - keyVersion - The version of the key.
 //   - parameters - The parameters for verify operations.
-//   - options - KeyVaultClientVerifyOptions contains the optional parameters for the KeyVaultClient.Verify method.
-func (client *KeyVaultClient) Verify(ctx context.Context, keyName string, keyVersion string, parameters KeyVerifyParameters, options *KeyVaultClientVerifyOptions) (KeyVaultClientVerifyResponse, error) {
+//   - options - VerifyOptions contains the optional parameters for the Client.Verify method.
+func (client *Client) Verify(ctx context.Context, keyName string, keyVersion string, parameters VerifyParameters, options *VerifyOptions) (VerifyResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.Verify"
+	const operationName = "Client.Verify"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.verifyCreateRequest(ctx, keyName, keyVersion, parameters, options)
 	if err != nil {
-		return KeyVaultClientVerifyResponse{}, err
+		return VerifyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientVerifyResponse{}, err
+		return VerifyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientVerifyResponse{}, err
+		return VerifyResponse{}, err
 	}
 	resp, err := client.verifyHandleResponse(httpResp)
 	return resp, err
 }
 
 // verifyCreateRequest creates the Verify request.
-func (client *KeyVaultClient) verifyCreateRequest(ctx context.Context, keyName string, keyVersion string, parameters KeyVerifyParameters, _ *KeyVaultClientVerifyOptions) (*policy.Request, error) {
+func (client *Client) verifyCreateRequest(ctx context.Context, keyName string, keyVersion string, parameters VerifyParameters, _ *VerifyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/{key-name}/{key-version}/verify"
@@ -1559,10 +1545,10 @@ func (client *KeyVaultClient) verifyCreateRequest(ctx context.Context, keyName s
 }
 
 // verifyHandleResponse handles the Verify response.
-func (client *KeyVaultClient) verifyHandleResponse(resp *http.Response) (KeyVaultClientVerifyResponse, error) {
-	result := KeyVaultClientVerifyResponse{}
+func (client *Client) verifyHandleResponse(resp *http.Response) (VerifyResponse, error) {
+	result := VerifyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyVerifyResult); err != nil {
-		return KeyVaultClientVerifyResponse{}, err
+		return VerifyResponse{}, err
 	}
 	return result, nil
 }
@@ -1582,31 +1568,31 @@ func (client *KeyVaultClient) verifyHandleResponse(resp *http.Response) (KeyVaul
 //   - keyName - The name of the key.
 //   - keyVersion - The version of the key.
 //   - parameters - The parameters for wrap operation.
-//   - options - KeyVaultClientWrapKeyOptions contains the optional parameters for the KeyVaultClient.WrapKey method.
-func (client *KeyVaultClient) WrapKey(ctx context.Context, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientWrapKeyOptions) (KeyVaultClientWrapKeyResponse, error) {
+//   - options - WrapKeyOptions contains the optional parameters for the Client.WrapKey method.
+func (client *Client) WrapKey(ctx context.Context, keyName string, keyVersion string, parameters KeyOperationParameters, options *WrapKeyOptions) (WrapKeyResponse, error) {
 	var err error
-	const operationName = "KeyVaultClient.WrapKey"
+	const operationName = "Client.WrapKey"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.wrapKeyCreateRequest(ctx, keyName, keyVersion, parameters, options)
 	if err != nil {
-		return KeyVaultClientWrapKeyResponse{}, err
+		return WrapKeyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return KeyVaultClientWrapKeyResponse{}, err
+		return WrapKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return KeyVaultClientWrapKeyResponse{}, err
+		return WrapKeyResponse{}, err
 	}
 	resp, err := client.wrapKeyHandleResponse(httpResp)
 	return resp, err
 }
 
 // wrapKeyCreateRequest creates the WrapKey request.
-func (client *KeyVaultClient) wrapKeyCreateRequest(ctx context.Context, keyName string, keyVersion string, parameters KeyOperationsParameters, _ *KeyVaultClientWrapKeyOptions) (*policy.Request, error) {
+func (client *Client) wrapKeyCreateRequest(ctx context.Context, keyName string, keyVersion string, parameters KeyOperationParameters, _ *WrapKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", client.vaultBaseUrl)
 	urlPath := "/keys/{key-name}/{key-version}/wrapkey"
@@ -1634,10 +1620,10 @@ func (client *KeyVaultClient) wrapKeyCreateRequest(ctx context.Context, keyName 
 }
 
 // wrapKeyHandleResponse handles the WrapKey response.
-func (client *KeyVaultClient) wrapKeyHandleResponse(resp *http.Response) (KeyVaultClientWrapKeyResponse, error) {
-	result := KeyVaultClientWrapKeyResponse{}
+func (client *Client) wrapKeyHandleResponse(resp *http.Response) (WrapKeyResponse, error) {
+	result := WrapKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
-		return KeyVaultClientWrapKeyResponse{}, err
+		return WrapKeyResponse{}, err
 	}
 	return result, nil
 }
