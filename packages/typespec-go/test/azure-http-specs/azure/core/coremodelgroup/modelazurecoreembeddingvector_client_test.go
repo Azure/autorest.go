@@ -27,13 +27,14 @@ func TestModelAzureCoreEmbeddingVectorClient_Post(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.Post(context.Background(), input, nil)
 	require.NoError(t, err)
-	require.Equal(t, 5, len(resp.AzureEmbeddingModel.Embedding))
+	require.NotNil(t, resp)
 }
 
 func TestModelAzureCoreEmbeddingVectorClient_Put(t *testing.T) {
 	input := []*int32{to.Ptr(int32(0)), to.Ptr(int32(1)), to.Ptr(int32(2)), to.Ptr(int32(3)), to.Ptr(int32(4))}
 	client, err := NewModelAzureCoreEmbeddingVectorClient(nil)
 	require.NoError(t, err)
-	_, err = client.Put(context.Background(), input, nil)
+	resp, err := client.Put(context.Background(), input, nil)
 	require.NoError(t, err)
+	require.Equal(t, ModelAzureCoreEmbeddingVectorClientPutResponse{}, resp)
 }

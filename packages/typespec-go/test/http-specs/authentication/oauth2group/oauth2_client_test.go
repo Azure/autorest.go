@@ -18,6 +18,7 @@ func TestOauth2GroupClient_Invalid(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.Invalid(context.Background(), &oauth2group.OAuth2ClientInvalidOptions{})
 	require.Error(t, err)
+	require.Contains(t, err.Error(), "invalid-grant")
 	require.Zero(t, resp)
 }
 

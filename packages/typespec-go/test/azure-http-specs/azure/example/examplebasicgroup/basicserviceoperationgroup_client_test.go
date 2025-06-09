@@ -17,9 +17,9 @@ func TestBasicServiceOperationGroupClient_Basic_Success(t *testing.T) {
 	reqBody := ActionRequest{
 		StringProperty: to.Ptr("text"),
 		ModelProperty: &Model{
-			Int32Property:   func(i int32) *int32 { return &i }(1),
-			Float32Property: func(f float32) *float32 { return &f }(1.5),
-			EnumProperty:    func(e Enum) *Enum { return &e }(EnumEnumValue1),
+			Int32Property:   to.Ptr(int32(1)),
+			Float32Property: to.Ptr(float32(1.5)),
+			EnumProperty:    to.Ptr(EnumEnumValue1),
 		},
 		ArrayProperty: []*string{to.Ptr("item")},
 		RecordProperty: map[string]*string{

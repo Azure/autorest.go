@@ -16,6 +16,7 @@ func TestStatusCodeRangeGroupClient_ErrorResponseStatusCode404(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.ErrorResponseStatusCode404(context.Background(), &statuscoderangegroup.StatusCodeRangeClientErrorResponseStatusCode404Options{})
 	require.Error(t, err)
+	require.Contains(t, err.Error(), "404 Not Found")
 	require.Equal(t, statuscoderangegroup.StatusCodeRangeClientErrorResponseStatusCode404Response{}, resp)
 }
 
