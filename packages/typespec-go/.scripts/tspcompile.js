@@ -284,7 +284,7 @@ function generate(moduleName, input, outputDir, perTestOptions) {
         if (error === null) {
           execSync('gofmt -w .', { cwd: fullOutputDir});
           // Force emitter version to a constant in _metadata.json to avoid unnecessary version drift in committed files
-          const metadataPath = `${fullOutputDir}/_metadata.json`;
+          const metadataPath = `${fullOutputDir}/testdata/_metadata.json`;
           if (existsSync(metadataPath)) {
             const metadata = JSON.parse(readFileSync(metadataPath, 'utf8'));
             metadata.emitterVersion = '0.0.0';
