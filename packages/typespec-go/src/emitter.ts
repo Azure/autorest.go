@@ -96,11 +96,11 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
     await writeFile(goModFile, gomod);
   }
 
-  const metedata = generateMetadataFile(codeModel);
-  if (metedata.length > 0 ) {
+  const metadata = generateMetadataFile(codeModel);
+  if (metadata.length > 0 ) {
     const metedataDir = context.emitterOutputDir + '/testdata';
     await mkdir(metedataDir, {recursive: true});
-    await writeFile(`${metedataDir}/_metadata.json`, metedata)
+    await writeFile(`${metedataDir}/_metadata.json`, metadata)
   }
 
   let filePrefix = '';
