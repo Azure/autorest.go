@@ -1,5 +1,19 @@
 # Release History
 
+## 0.4.12 (2025-06-11)
+
+### Features Add
+
+* Added support for handling qualified type in example mapping.
+
+### Bugs Fixed
+
+* Fix wrong example mapping for discriminated type.
+
+### Other Changes
+
+* Throw error when paging with re-injection parameters.
+
 ## 0.4.11 (2025-06-09)
 
 ### Other Changes
