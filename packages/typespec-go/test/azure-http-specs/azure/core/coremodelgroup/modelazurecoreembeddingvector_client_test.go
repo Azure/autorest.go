@@ -28,6 +28,8 @@ func TestModelAzureCoreEmbeddingVectorClient_Post(t *testing.T) {
 	resp, err := client.Post(context.Background(), input, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
+	expected := AzureEmbeddingModel{Embedding: []*int32{to.Ptr(int32(5)), to.Ptr(int32(6)), to.Ptr(int32(7)), to.Ptr(int32(8)), to.Ptr(int32(9))}}
+	require.Equal(t, expected, resp.AzureEmbeddingModel)
 }
 
 func TestModelAzureCoreEmbeddingVectorClient_Put(t *testing.T) {

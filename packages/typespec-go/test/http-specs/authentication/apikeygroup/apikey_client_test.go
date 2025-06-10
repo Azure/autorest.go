@@ -22,6 +22,7 @@ func TestApiKeyClient_Invalid(t *testing.T) {
 	ctx := policy.WithHTTPHeader(contextWithAPIKey, headers)
 	resp, err := client.Invalid(ctx, &apikeygroup.APIKeyClientInvalidOptions{})
 	require.Error(t, err)
+	require.Contains(t, err.Error(), "403 Forbidden")
 	require.Contains(t, err.Error(), "invalid-api-key")
 	require.Zero(t, resp)
 }
