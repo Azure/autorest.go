@@ -6,11 +6,11 @@ package armhardwaresecuritymodules
 
 // CloudHsmClustersClientBeginBackupOptions contains the optional parameters for the CloudHsmClustersClient.BeginBackup method.
 type CloudHsmClustersClientBeginBackupOptions struct {
-	// Resumes the long-running operation from the provided token.
-	ResumeToken string
-
 	// The content of the action request
 	BackupRequestProperties *BackupRequestProperties
+
+	// Resumes the long-running operation from the provided token.
+	ResumeToken string
 }
 
 // CloudHsmClustersClientBeginCreateOrUpdateOptions contains the optional parameters for the CloudHsmClustersClient.BeginCreateOrUpdate
@@ -42,21 +42,21 @@ type CloudHsmClustersClientBeginUpdateOptions struct {
 // CloudHsmClustersClientBeginValidateBackupPropertiesOptions contains the optional parameters for the CloudHsmClustersClient.BeginValidateBackupProperties
 // method.
 type CloudHsmClustersClientBeginValidateBackupPropertiesOptions struct {
-	// Resumes the long-running operation from the provided token.
-	ResumeToken string
-
 	// The content of the action request
 	BackupRequestProperties *BackupRequestProperties
+
+	// Resumes the long-running operation from the provided token.
+	ResumeToken string
 }
 
 // CloudHsmClustersClientBeginValidateRestorePropertiesOptions contains the optional parameters for the CloudHsmClustersClient.BeginValidateRestoreProperties
 // method.
 type CloudHsmClustersClientBeginValidateRestorePropertiesOptions struct {
-	// Resumes the long-running operation from the provided token.
-	ResumeToken string
-
 	// The content of the action request
 	RestoreRequestProperties *RestoreRequestProperties
+
+	// Resumes the long-running operation from the provided token.
+	ResumeToken string
 }
 
 // CloudHsmClustersClientCloudHsmClusterBackupStatusGetOptions contains the optional parameters for the CloudHsmClustersClient.CloudHsmClusterBackupStatusGet
