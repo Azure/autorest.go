@@ -1,5 +1,11 @@
 # Release History
 
+## 0.4.12 (unreleased)
+
+### Other Changes
+
+* Moved the `_metadata.json` file to the `testdata` subdirectory.
+
 ## 0.4.11 (2025-06-09)
 
 ### Other Changes
