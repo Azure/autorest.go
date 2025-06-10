@@ -900,6 +900,9 @@ export class clientAdapter {
         if (go.isConstantType(goType) || go.isBytesType(goType) || go.isLiteralValue(goType) || go.isTimeType(goType) || go.isPrimitiveType(goType)) {
           return new go.StringExample(exampleType.value, goType);
         }
+        if (go.isQualifiedType(goType)) {
+          return new go.QualifiedExample(goType, exampleType.value);
+        }
         break;
       case 'number':
         if (go.isConstantType(goType) || go.isLiteralValue(goType) || go.isTimeType(goType) || go.isPrimitiveType(goType)) {
@@ -944,6 +947,10 @@ export class clientAdapter {
           if (go.isInterfaceType(goType)) {
             /* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */
             concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue)!;
+            if (concreteType === undefined) {
+              // can't find the sub type of a discriminated type, fallback to the base type
+              concreteType = goType.rootType;
+            }
           } else {
             concreteType = goType;
           }

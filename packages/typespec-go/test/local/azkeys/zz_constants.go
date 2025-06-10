@@ -4,217 +4,94 @@
 
 package azkeys
 
-// JSONWebKeyCurveName - Elliptic curve name. For valid values, see JsonWebKeyCurveName.
-type JSONWebKeyCurveName string
+// CurveName - Elliptic curve name. For valid values, see JsonWebKeyCurveName.
+type CurveName string
 
 const (
-	// JSONWebKeyCurveNameP256 - The NIST P-256 elliptic curve, AKA SECG curve SECP256R1.
-	JSONWebKeyCurveNameP256 JSONWebKeyCurveName = "P-256"
-	// JSONWebKeyCurveNameP256K - The SECG SECP256K1 elliptic curve.
-	JSONWebKeyCurveNameP256K JSONWebKeyCurveName = "P-256K"
-	// JSONWebKeyCurveNameP384 - The NIST P-384 elliptic curve, AKA SECG curve SECP384R1.
-	JSONWebKeyCurveNameP384 JSONWebKeyCurveName = "P-384"
-	// JSONWebKeyCurveNameP521 - The NIST P-521 elliptic curve, AKA SECG curve SECP521R1.
-	JSONWebKeyCurveNameP521 JSONWebKeyCurveName = "P-521"
+	// CurveNameP256 - The NIST P-256 elliptic curve, AKA SECG curve SECP256R1.
+	CurveNameP256 CurveName = "P-256"
+	// CurveNameP256K - The SECG SECP256K1 elliptic curve.
+	CurveNameP256K CurveName = "P-256K"
+	// CurveNameP384 - The NIST P-384 elliptic curve, AKA SECG curve SECP384R1.
+	CurveNameP384 CurveName = "P-384"
+	// CurveNameP521 - The NIST P-521 elliptic curve, AKA SECG curve SECP521R1.
+	CurveNameP521 CurveName = "P-521"
 )
 
-// PossibleJSONWebKeyCurveNameValues returns the possible values for the JSONWebKeyCurveName const type.
-func PossibleJSONWebKeyCurveNameValues() []JSONWebKeyCurveName {
-	return []JSONWebKeyCurveName{
-		JSONWebKeyCurveNameP256,
-		JSONWebKeyCurveNameP256K,
-		JSONWebKeyCurveNameP384,
-		JSONWebKeyCurveNameP521,
+// PossibleCurveNameValues returns the possible values for the CurveName const type.
+func PossibleCurveNameValues() []CurveName {
+	return []CurveName{
+		CurveNameP256,
+		CurveNameP256K,
+		CurveNameP384,
+		CurveNameP521,
 	}
 }
 
-// JSONWebKeyEncryptionAlgorithm - An algorithm used for encryption and decryption.
-type JSONWebKeyEncryptionAlgorithm string
+// EncryptionAlgorithm - An algorithm used for encryption and decryption.
+type EncryptionAlgorithm string
 
 const (
-	// JSONWebKeyEncryptionAlgorithmA128CBC - 128-bit AES-CBC.
-	JSONWebKeyEncryptionAlgorithmA128CBC JSONWebKeyEncryptionAlgorithm = "A128CBC"
-	// JSONWebKeyEncryptionAlgorithmA128CBCPAD - 128-bit AES-CBC with PKCS padding.
-	JSONWebKeyEncryptionAlgorithmA128CBCPAD JSONWebKeyEncryptionAlgorithm = "A128CBCPAD"
-	// JSONWebKeyEncryptionAlgorithmA128GCM - 128-bit AES-GCM.
-	JSONWebKeyEncryptionAlgorithmA128GCM JSONWebKeyEncryptionAlgorithm = "A128GCM"
-	// JSONWebKeyEncryptionAlgorithmA128KW - 128-bit AES key wrap.
-	JSONWebKeyEncryptionAlgorithmA128KW JSONWebKeyEncryptionAlgorithm = "A128KW"
-	// JSONWebKeyEncryptionAlgorithmA192CBC - 192-bit AES-CBC.
-	JSONWebKeyEncryptionAlgorithmA192CBC JSONWebKeyEncryptionAlgorithm = "A192CBC"
-	// JSONWebKeyEncryptionAlgorithmA192CBCPAD - 192-bit AES-CBC with PKCS padding.
-	JSONWebKeyEncryptionAlgorithmA192CBCPAD JSONWebKeyEncryptionAlgorithm = "A192CBCPAD"
-	// JSONWebKeyEncryptionAlgorithmA192GCM - 192-bit AES-GCM.
-	JSONWebKeyEncryptionAlgorithmA192GCM JSONWebKeyEncryptionAlgorithm = "A192GCM"
-	// JSONWebKeyEncryptionAlgorithmA192KW - 192-bit AES key wrap.
-	JSONWebKeyEncryptionAlgorithmA192KW JSONWebKeyEncryptionAlgorithm = "A192KW"
-	// JSONWebKeyEncryptionAlgorithmA256CBC - 256-bit AES-CBC.
-	JSONWebKeyEncryptionAlgorithmA256CBC JSONWebKeyEncryptionAlgorithm = "A256CBC"
-	// JSONWebKeyEncryptionAlgorithmA256CBCPAD - 256-bit AES-CBC with PKCS padding.
-	JSONWebKeyEncryptionAlgorithmA256CBCPAD JSONWebKeyEncryptionAlgorithm = "A256CBCPAD"
-	// JSONWebKeyEncryptionAlgorithmA256GCM - 256-bit AES-GCM.
-	JSONWebKeyEncryptionAlgorithmA256GCM JSONWebKeyEncryptionAlgorithm = "A256GCM"
-	// JSONWebKeyEncryptionAlgorithmA256KW - 256-bit AES key wrap.
-	JSONWebKeyEncryptionAlgorithmA256KW JSONWebKeyEncryptionAlgorithm = "A256KW"
-	// JSONWebKeyEncryptionAlgorithmCKMAESKEYWRAP - CKM AES key wrap.
-	JSONWebKeyEncryptionAlgorithmCKMAESKEYWRAP JSONWebKeyEncryptionAlgorithm = "CKM_AES_KEY_WRAP"
-	// JSONWebKeyEncryptionAlgorithmCKMAESKEYWRAPPAD - CKM AES key wrap with padding.
-	JSONWebKeyEncryptionAlgorithmCKMAESKEYWRAPPAD JSONWebKeyEncryptionAlgorithm = "CKM_AES_KEY_WRAP_PAD"
-	// JSONWebKeyEncryptionAlgorithmRSA15 - RSAES-PKCS1-V1_5 key encryption, as described in https://tools.ietf.org/html/rfc3447.
-	JSONWebKeyEncryptionAlgorithmRSA15 JSONWebKeyEncryptionAlgorithm = "RSA1_5"
-	// JSONWebKeyEncryptionAlgorithmRSAOAEP - RSAES using Optimal Asymmetric Encryption Padding (OAEP), as described in
+	// EncryptionAlgorithmA128CBC - 128-bit AES-CBC.
+	EncryptionAlgorithmA128CBC EncryptionAlgorithm = "A128CBC"
+	// EncryptionAlgorithmA128CBCPAD - 128-bit AES-CBC with PKCS padding.
+	EncryptionAlgorithmA128CBCPAD EncryptionAlgorithm = "A128CBCPAD"
+	// EncryptionAlgorithmA128GCM - 128-bit AES-GCM.
+	EncryptionAlgorithmA128GCM EncryptionAlgorithm = "A128GCM"
+	// EncryptionAlgorithmA128KW - 128-bit AES key wrap.
+	EncryptionAlgorithmA128KW EncryptionAlgorithm = "A128KW"
+	// EncryptionAlgorithmA192CBC - 192-bit AES-CBC.
+	EncryptionAlgorithmA192CBC EncryptionAlgorithm = "A192CBC"
+	// EncryptionAlgorithmA192CBCPAD - 192-bit AES-CBC with PKCS padding.
+	EncryptionAlgorithmA192CBCPAD EncryptionAlgorithm = "A192CBCPAD"
+	// EncryptionAlgorithmA192GCM - 192-bit AES-GCM.
+	EncryptionAlgorithmA192GCM EncryptionAlgorithm = "A192GCM"
+	// EncryptionAlgorithmA192KW - 192-bit AES key wrap.
+	EncryptionAlgorithmA192KW EncryptionAlgorithm = "A192KW"
+	// EncryptionAlgorithmA256CBC - 256-bit AES-CBC.
+	EncryptionAlgorithmA256CBC EncryptionAlgorithm = "A256CBC"
+	// EncryptionAlgorithmA256CBCPAD - 256-bit AES-CBC with PKCS padding.
+	EncryptionAlgorithmA256CBCPAD EncryptionAlgorithm = "A256CBCPAD"
+	// EncryptionAlgorithmA256GCM - 256-bit AES-GCM.
+	EncryptionAlgorithmA256GCM EncryptionAlgorithm = "A256GCM"
+	// EncryptionAlgorithmA256KW - 256-bit AES key wrap.
+	EncryptionAlgorithmA256KW EncryptionAlgorithm = "A256KW"
+	// EncryptionAlgorithmCKMAESKEYWRAP - CKM AES key wrap.
+	EncryptionAlgorithmCKMAESKEYWRAP EncryptionAlgorithm = "CKM_AES_KEY_WRAP"
+	// EncryptionAlgorithmCKMAESKEYWRAPPAD - CKM AES key wrap with padding.
+	EncryptionAlgorithmCKMAESKEYWRAPPAD EncryptionAlgorithm = "CKM_AES_KEY_WRAP_PAD"
+	// EncryptionAlgorithmRSA15 - RSAES-PKCS1-V1_5 key encryption, as described in https://tools.ietf.org/html/rfc3447.
+	EncryptionAlgorithmRSA15 EncryptionAlgorithm = "RSA1_5"
+	// EncryptionAlgorithmRSAOAEP - RSAES using Optimal Asymmetric Encryption Padding (OAEP), as described in
 	// https://tools.ietf.org/html/rfc3447, with the default parameters specified by
 	// RFC 3447 in Section A.2.1. Those default parameters are using a hash function
 	// of SHA-1 and a mask generation function of MGF1 with SHA-1.
-	JSONWebKeyEncryptionAlgorithmRSAOAEP JSONWebKeyEncryptionAlgorithm = "RSA-OAEP"
-	// JSONWebKeyEncryptionAlgorithmRSAOAEP256 - RSAES using Optimal Asymmetric Encryption Padding with a hash function of SHA-256
+	EncryptionAlgorithmRSAOAEP EncryptionAlgorithm = "RSA-OAEP"
+	// EncryptionAlgorithmRSAOAEP256 - RSAES using Optimal Asymmetric Encryption Padding with a hash function of SHA-256
 	// and a mask generation function of MGF1 with SHA-256.
-	JSONWebKeyEncryptionAlgorithmRSAOAEP256 JSONWebKeyEncryptionAlgorithm = "RSA-OAEP-256"
+	EncryptionAlgorithmRSAOAEP256 EncryptionAlgorithm = "RSA-OAEP-256"
 )
 
-// PossibleJSONWebKeyEncryptionAlgorithmValues returns the possible values for the JSONWebKeyEncryptionAlgorithm const type.
-func PossibleJSONWebKeyEncryptionAlgorithmValues() []JSONWebKeyEncryptionAlgorithm {
-	return []JSONWebKeyEncryptionAlgorithm{
-		JSONWebKeyEncryptionAlgorithmA128CBC,
-		JSONWebKeyEncryptionAlgorithmA128CBCPAD,
-		JSONWebKeyEncryptionAlgorithmA128GCM,
-		JSONWebKeyEncryptionAlgorithmA128KW,
-		JSONWebKeyEncryptionAlgorithmA192CBC,
-		JSONWebKeyEncryptionAlgorithmA192CBCPAD,
-		JSONWebKeyEncryptionAlgorithmA192GCM,
-		JSONWebKeyEncryptionAlgorithmA192KW,
-		JSONWebKeyEncryptionAlgorithmA256CBC,
-		JSONWebKeyEncryptionAlgorithmA256CBCPAD,
-		JSONWebKeyEncryptionAlgorithmA256GCM,
-		JSONWebKeyEncryptionAlgorithmA256KW,
-		JSONWebKeyEncryptionAlgorithmCKMAESKEYWRAP,
-		JSONWebKeyEncryptionAlgorithmCKMAESKEYWRAPPAD,
-		JSONWebKeyEncryptionAlgorithmRSA15,
-		JSONWebKeyEncryptionAlgorithmRSAOAEP,
-		JSONWebKeyEncryptionAlgorithmRSAOAEP256,
-	}
-}
-
-// JSONWebKeyOperation - JSON web key operations. For more information, see JsonWebKeyOperation.
-type JSONWebKeyOperation string
-
-const (
-	// JSONWebKeyOperationDecrypt - Indicates that the key can be used to decrypt.
-	JSONWebKeyOperationDecrypt JSONWebKeyOperation = "decrypt"
-	// JSONWebKeyOperationEncrypt - Indicates that the key can be used to encrypt.
-	JSONWebKeyOperationEncrypt JSONWebKeyOperation = "encrypt"
-	// JSONWebKeyOperationExport - Indicates that the private component of the key can be exported.
-	JSONWebKeyOperationExport JSONWebKeyOperation = "export"
-	// JSONWebKeyOperationImport - Indicates that the key can be imported during creation.
-	JSONWebKeyOperationImport JSONWebKeyOperation = "import"
-	// JSONWebKeyOperationSign - Indicates that the key can be used to sign.
-	JSONWebKeyOperationSign JSONWebKeyOperation = "sign"
-	// JSONWebKeyOperationUnwrapKey - Indicates that the key can be used to unwrap another key.
-	JSONWebKeyOperationUnwrapKey JSONWebKeyOperation = "unwrapKey"
-	// JSONWebKeyOperationVerify - Indicates that the key can be used to verify.
-	JSONWebKeyOperationVerify JSONWebKeyOperation = "verify"
-	// JSONWebKeyOperationWrapKey - Indicates that the key can be used to wrap another key.
-	JSONWebKeyOperationWrapKey JSONWebKeyOperation = "wrapKey"
-)
-
-// PossibleJSONWebKeyOperationValues returns the possible values for the JSONWebKeyOperation const type.
-func PossibleJSONWebKeyOperationValues() []JSONWebKeyOperation {
-	return []JSONWebKeyOperation{
-		JSONWebKeyOperationDecrypt,
-		JSONWebKeyOperationEncrypt,
-		JSONWebKeyOperationExport,
-		JSONWebKeyOperationImport,
-		JSONWebKeyOperationSign,
-		JSONWebKeyOperationUnwrapKey,
-		JSONWebKeyOperationVerify,
-		JSONWebKeyOperationWrapKey,
-	}
-}
-
-// JSONWebKeySignatureAlgorithm - The signing/verification algorithm identifier. For more information on possible
-// algorithm types, see JsonWebKeySignatureAlgorithm.
-type JSONWebKeySignatureAlgorithm string
-
-const (
-	// JSONWebKeySignatureAlgorithmES256 - ECDSA using P-256 and SHA-256, as described in
-	// https://tools.ietf.org/html/rfc7518.
-	JSONWebKeySignatureAlgorithmES256 JSONWebKeySignatureAlgorithm = "ES256"
-	// JSONWebKeySignatureAlgorithmES256K - ECDSA using P-256K and SHA-256, as described in
-	// https://tools.ietf.org/html/rfc7518
-	JSONWebKeySignatureAlgorithmES256K JSONWebKeySignatureAlgorithm = "ES256K"
-	// JSONWebKeySignatureAlgorithmES384 - ECDSA using P-384 and SHA-384, as described in
-	// https://tools.ietf.org/html/rfc7518
-	JSONWebKeySignatureAlgorithmES384 JSONWebKeySignatureAlgorithm = "ES384"
-	// JSONWebKeySignatureAlgorithmES512 - ECDSA using P-521 and SHA-512, as described in
-	// https://tools.ietf.org/html/rfc7518
-	JSONWebKeySignatureAlgorithmES512 JSONWebKeySignatureAlgorithm = "ES512"
-	// JSONWebKeySignatureAlgorithmPS256 - RSASSA-PSS using SHA-256 and MGF1 with SHA-256, as described in
-	// https://tools.ietf.org/html/rfc7518
-	JSONWebKeySignatureAlgorithmPS256 JSONWebKeySignatureAlgorithm = "PS256"
-	// JSONWebKeySignatureAlgorithmPS384 - RSASSA-PSS using SHA-384 and MGF1 with SHA-384, as described in
-	// https://tools.ietf.org/html/rfc7518
-	JSONWebKeySignatureAlgorithmPS384 JSONWebKeySignatureAlgorithm = "PS384"
-	// JSONWebKeySignatureAlgorithmPS512 - RSASSA-PSS using SHA-512 and MGF1 with SHA-512, as described in
-	// https://tools.ietf.org/html/rfc7518
-	JSONWebKeySignatureAlgorithmPS512 JSONWebKeySignatureAlgorithm = "PS512"
-	// JSONWebKeySignatureAlgorithmRS256 - RSASSA-PKCS1-v1_5 using SHA-256, as described in
-	// https://tools.ietf.org/html/rfc7518
-	JSONWebKeySignatureAlgorithmRS256 JSONWebKeySignatureAlgorithm = "RS256"
-	// JSONWebKeySignatureAlgorithmRS384 - RSASSA-PKCS1-v1_5 using SHA-384, as described in
-	// https://tools.ietf.org/html/rfc7518
-	JSONWebKeySignatureAlgorithmRS384 JSONWebKeySignatureAlgorithm = "RS384"
-	// JSONWebKeySignatureAlgorithmRS512 - RSASSA-PKCS1-v1_5 using SHA-512, as described in
-	// https://tools.ietf.org/html/rfc7518
-	JSONWebKeySignatureAlgorithmRS512 JSONWebKeySignatureAlgorithm = "RS512"
-	// JSONWebKeySignatureAlgorithmRSNULL - Reserved
-	JSONWebKeySignatureAlgorithmRSNULL JSONWebKeySignatureAlgorithm = "RSNULL"
-)
-
-// PossibleJSONWebKeySignatureAlgorithmValues returns the possible values for the JSONWebKeySignatureAlgorithm const type.
-func PossibleJSONWebKeySignatureAlgorithmValues() []JSONWebKeySignatureAlgorithm {
-	return []JSONWebKeySignatureAlgorithm{
-		JSONWebKeySignatureAlgorithmES256,
-		JSONWebKeySignatureAlgorithmES256K,
-		JSONWebKeySignatureAlgorithmES384,
-		JSONWebKeySignatureAlgorithmES512,
-		JSONWebKeySignatureAlgorithmPS256,
-		JSONWebKeySignatureAlgorithmPS384,
-		JSONWebKeySignatureAlgorithmPS512,
-		JSONWebKeySignatureAlgorithmRS256,
-		JSONWebKeySignatureAlgorithmRS384,
-		JSONWebKeySignatureAlgorithmRS512,
-		JSONWebKeySignatureAlgorithmRSNULL,
-	}
-}
-
-// JSONWebKeyType - JsonWebKey Key Type (kty), as defined in
-// https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40.
-type JSONWebKeyType string
-
-const (
-	// JSONWebKeyTypeEC - Elliptic Curve.
-	JSONWebKeyTypeEC JSONWebKeyType = "EC"
-	// JSONWebKeyTypeECHSM - Elliptic Curve with a private key which is stored in the HSM.
-	JSONWebKeyTypeECHSM JSONWebKeyType = "EC-HSM"
-	// JSONWebKeyTypeOct - Octet sequence (used to represent symmetric keys)
-	JSONWebKeyTypeOct JSONWebKeyType = "oct"
-	// JSONWebKeyTypeOctHSM - Octet sequence (used to represent symmetric keys) which is stored the HSM.
-	JSONWebKeyTypeOctHSM JSONWebKeyType = "oct-HSM"
-	// JSONWebKeyTypeRSA - RSA (https://tools.ietf.org/html/rfc3447)
-	JSONWebKeyTypeRSA JSONWebKeyType = "RSA"
-	// JSONWebKeyTypeRSAHSM - RSA with a private key which is stored in the HSM.
-	JSONWebKeyTypeRSAHSM JSONWebKeyType = "RSA-HSM"
-)
-
-// PossibleJSONWebKeyTypeValues returns the possible values for the JSONWebKeyType const type.
-func PossibleJSONWebKeyTypeValues() []JSONWebKeyType {
-	return []JSONWebKeyType{
-		JSONWebKeyTypeEC,
-		JSONWebKeyTypeECHSM,
-		JSONWebKeyTypeOct,
-		JSONWebKeyTypeOctHSM,
-		JSONWebKeyTypeRSA,
-		JSONWebKeyTypeRSAHSM,
+// PossibleEncryptionAlgorithmValues returns the possible values for the EncryptionAlgorithm const type.
+func PossibleEncryptionAlgorithmValues() []EncryptionAlgorithm {
+	return []EncryptionAlgorithm{
+		EncryptionAlgorithmA128CBC,
+		EncryptionAlgorithmA128CBCPAD,
+		EncryptionAlgorithmA128GCM,
+		EncryptionAlgorithmA128KW,
+		EncryptionAlgorithmA192CBC,
+		EncryptionAlgorithmA192CBCPAD,
+		EncryptionAlgorithmA192GCM,
+		EncryptionAlgorithmA192KW,
+		EncryptionAlgorithmA256CBC,
+		EncryptionAlgorithmA256CBCPAD,
+		EncryptionAlgorithmA256GCM,
+		EncryptionAlgorithmA256KW,
+		EncryptionAlgorithmCKMAESKEYWRAP,
+		EncryptionAlgorithmCKMAESKEYWRAPPAD,
+		EncryptionAlgorithmRSA15,
+		EncryptionAlgorithmRSAOAEP,
+		EncryptionAlgorithmRSAOAEP256,
 	}
 }
 
@@ -239,6 +116,42 @@ func PossibleKeyEncryptionAlgorithmValues() []KeyEncryptionAlgorithm {
 	}
 }
 
+// KeyOperation - JSON web key operations. For more information, see JsonWebKeyOperation.
+type KeyOperation string
+
+const (
+	// KeyOperationDecrypt - Indicates that the key can be used to decrypt.
+	KeyOperationDecrypt KeyOperation = "decrypt"
+	// KeyOperationEncrypt - Indicates that the key can be used to encrypt.
+	KeyOperationEncrypt KeyOperation = "encrypt"
+	// KeyOperationExport - Indicates that the private component of the key can be exported.
+	KeyOperationExport KeyOperation = "export"
+	// KeyOperationImport - Indicates that the key can be imported during creation.
+	KeyOperationImport KeyOperation = "import"
+	// KeyOperationSign - Indicates that the key can be used to sign.
+	KeyOperationSign KeyOperation = "sign"
+	// KeyOperationUnwrapKey - Indicates that the key can be used to unwrap another key.
+	KeyOperationUnwrapKey KeyOperation = "unwrapKey"
+	// KeyOperationVerify - Indicates that the key can be used to verify.
+	KeyOperationVerify KeyOperation = "verify"
+	// KeyOperationWrapKey - Indicates that the key can be used to wrap another key.
+	KeyOperationWrapKey KeyOperation = "wrapKey"
+)
+
+// PossibleKeyOperationValues returns the possible values for the KeyOperation const type.
+func PossibleKeyOperationValues() []KeyOperation {
+	return []KeyOperation{
+		KeyOperationDecrypt,
+		KeyOperationEncrypt,
+		KeyOperationExport,
+		KeyOperationImport,
+		KeyOperationSign,
+		KeyOperationUnwrapKey,
+		KeyOperationVerify,
+		KeyOperationWrapKey,
+	}
+}
+
 // KeyRotationPolicyAction - The type of the action. The value should be compared case-insensitively.
 type KeyRotationPolicyAction string
 
@@ -254,5 +167,92 @@ func PossibleKeyRotationPolicyActionValues() []KeyRotationPolicyAction {
 	return []KeyRotationPolicyAction{
 		KeyRotationPolicyActionNotify,
 		KeyRotationPolicyActionRotate,
+	}
+}
+
+// KeyType - JsonWebKey Key Type (kty), as defined in
+// https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40.
+type KeyType string
+
+const (
+	// KeyTypeEC - Elliptic Curve.
+	KeyTypeEC KeyType = "EC"
+	// KeyTypeECHSM - Elliptic Curve with a private key which is stored in the HSM.
+	KeyTypeECHSM KeyType = "EC-HSM"
+	// KeyTypeOct - Octet sequence (used to represent symmetric keys)
+	KeyTypeOct KeyType = "oct"
+	// KeyTypeOctHSM - Octet sequence (used to represent symmetric keys) which is stored the HSM.
+	KeyTypeOctHSM KeyType = "oct-HSM"
+	// KeyTypeRSA - RSA (https://tools.ietf.org/html/rfc3447)
+	KeyTypeRSA KeyType = "RSA"
+	// KeyTypeRSAHSM - RSA with a private key which is stored in the HSM.
+	KeyTypeRSAHSM KeyType = "RSA-HSM"
+)
+
+// PossibleKeyTypeValues returns the possible values for the KeyType const type.
+func PossibleKeyTypeValues() []KeyType {
+	return []KeyType{
+		KeyTypeEC,
+		KeyTypeECHSM,
+		KeyTypeOct,
+		KeyTypeOctHSM,
+		KeyTypeRSA,
+		KeyTypeRSAHSM,
+	}
+}
+
+// SignatureAlgorithm - The signing/verification algorithm identifier. For more information on possible
+// algorithm types, see JsonWebKeySignatureAlgorithm.
+type SignatureAlgorithm string
+
+const (
+	// SignatureAlgorithmES256 - ECDSA using P-256 and SHA-256, as described in
+	// https://tools.ietf.org/html/rfc7518.
+	SignatureAlgorithmES256 SignatureAlgorithm = "ES256"
+	// SignatureAlgorithmES256K - ECDSA using P-256K and SHA-256, as described in
+	// https://tools.ietf.org/html/rfc7518
+	SignatureAlgorithmES256K SignatureAlgorithm = "ES256K"
+	// SignatureAlgorithmES384 - ECDSA using P-384 and SHA-384, as described in
+	// https://tools.ietf.org/html/rfc7518
+	SignatureAlgorithmES384 SignatureAlgorithm = "ES384"
+	// SignatureAlgorithmES512 - ECDSA using P-521 and SHA-512, as described in
+	// https://tools.ietf.org/html/rfc7518
+	SignatureAlgorithmES512 SignatureAlgorithm = "ES512"
+	// SignatureAlgorithmPS256 - RSASSA-PSS using SHA-256 and MGF1 with SHA-256, as described in
+	// https://tools.ietf.org/html/rfc7518
+	SignatureAlgorithmPS256 SignatureAlgorithm = "PS256"
+	// SignatureAlgorithmPS384 - RSASSA-PSS using SHA-384 and MGF1 with SHA-384, as described in
+	// https://tools.ietf.org/html/rfc7518
+	SignatureAlgorithmPS384 SignatureAlgorithm = "PS384"
+	// SignatureAlgorithmPS512 - RSASSA-PSS using SHA-512 and MGF1 with SHA-512, as described in
+	// https://tools.ietf.org/html/rfc7518
+	SignatureAlgorithmPS512 SignatureAlgorithm = "PS512"
+	// SignatureAlgorithmRS256 - RSASSA-PKCS1-v1_5 using SHA-256, as described in
+	// https://tools.ietf.org/html/rfc7518
+	SignatureAlgorithmRS256 SignatureAlgorithm = "RS256"
+	// SignatureAlgorithmRS384 - RSASSA-PKCS1-v1_5 using SHA-384, as described in
+	// https://tools.ietf.org/html/rfc7518
+	SignatureAlgorithmRS384 SignatureAlgorithm = "RS384"
+	// SignatureAlgorithmRS512 - RSASSA-PKCS1-v1_5 using SHA-512, as described in
+	// https://tools.ietf.org/html/rfc7518
+	SignatureAlgorithmRS512 SignatureAlgorithm = "RS512"
+	// SignatureAlgorithmRSNULL - Reserved
+	SignatureAlgorithmRSNULL SignatureAlgorithm = "RSNULL"
+)
+
+// PossibleSignatureAlgorithmValues returns the possible values for the SignatureAlgorithm const type.
+func PossibleSignatureAlgorithmValues() []SignatureAlgorithm {
+	return []SignatureAlgorithm{
+		SignatureAlgorithmES256,
+		SignatureAlgorithmES256K,
+		SignatureAlgorithmES384,
+		SignatureAlgorithmES512,
+		SignatureAlgorithmPS256,
+		SignatureAlgorithmPS384,
+		SignatureAlgorithmPS512,
+		SignatureAlgorithmRS256,
+		SignatureAlgorithmRS384,
+		SignatureAlgorithmRS512,
+		SignatureAlgorithmRSNULL,
 	}
 }

@@ -165,8 +165,8 @@ generate('armcontainerorchestratorruntime', armcontainerorchestratorruntime, 'te
 const azmodelsonly = pkgRoot + 'test/tsp/ModelsOnlyWithBaseTypes';
 generate('azmodelsonly', azmodelsonly, 'test/local/azmodelsonly');
 
-const azkeys = pkgRoot + 'test/tsp/KeyVault.Keys';
-generate('azkeys', azkeys, 'test/local/azkeys');
+const azkeys = pkgRoot + 'test/tsp/KeyVault.Keys/client.tsp';
+generate('azkeys', azkeys, 'test/local/azkeys', ['single-client=true']);
 
 const armtest = pkgRoot + 'test/tsp/Test.Management';
 generate('armtest', armtest, 'test/local/armtest');
@@ -185,6 +185,9 @@ generate('armhardwaresecuritymodules', armhardwaresecuritymodules, 'test/local/a
 
 const armcomputeschedule = pkgRoot + 'test/tsp/ComputeSchedule.Management';
 generate('armcomputeschedule', armcomputeschedule, 'test/local/armcomputeschedule', [`examples-directory=${armcomputeschedule}/examples`, 'generate-samples=true']);
+
+const armbillingbenefits = pkgRoot + 'test/tsp/BillingBenefits.Management';
+generate('armbillingbenefits', armbillingbenefits, 'test/local/armbillingbenefits', [`examples-directory=${armbillingbenefits}/examples`, 'generate-samples=true']);
 
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')

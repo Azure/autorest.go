@@ -1,6 +1,3 @@
-//go:build go1.18
-// +build go1.18
-
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
@@ -141,6 +138,21 @@ func TestModelValueClientPut(t *testing.T) {
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
+func TestNullableBooleanValueClientGet(t *testing.T) {
+	client, err := arraygroup.NewArrayClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewArrayNullableBooleanValueClient().Get(context.Background(), nil)
+	require.NoError(t, err)
+	require.EqualValues(t, []*bool{to.Ptr(true), nil, to.Ptr(false)}, resp.BoolArray)
+}
+
+func TestNullableBooleanValueClientPut(t *testing.T) {
+	client, err := arraygroup.NewArrayClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewArrayNullableBooleanValueClient().Put(context.Background(), []*bool{to.Ptr(true), nil, to.Ptr(false)}, nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
 
 func TestNullableFloatValueClientGet(t *testing.T) {
 	client, err := arraygroup.NewArrayClient(nil)
@@ -154,6 +166,54 @@ func TestNullableFloatValueClientPut(t *testing.T) {
 	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
 	resp, err := client.NewArrayNullableFloatValueClient().Put(context.Background(), []*float32{to.Ptr[float32](1.25), nil, to.Ptr[float32](3)}, nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
+
+func TestNullableInt32ValueClientGet(t *testing.T) {
+	client, err := arraygroup.NewArrayClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewArrayNullableInt32ValueClient().Get(context.Background(), nil)
+	require.NoError(t, err)
+	require.EqualValues(t, []*int32{to.Ptr[int32](1), nil, to.Ptr[int32](3)}, resp.Int32Array)
+}
+
+func TestNullableInt32ValueClientPut(t *testing.T) {
+	client, err := arraygroup.NewArrayClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewArrayNullableInt32ValueClient().Put(context.Background(), []*int32{to.Ptr[int32](1), nil, to.Ptr[int32](3)}, nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
+
+func TestNullableModelValueClientGet(t *testing.T) {
+	client, err := arraygroup.NewArrayClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewArrayNullableModelValueClient().Get(context.Background(), nil)
+	require.NoError(t, err)
+	require.EqualValues(t, []*arraygroup.InnerModel{{Property: to.Ptr("hello")}, nil, {Property: to.Ptr("world")}}, resp.InnerModelArray)
+}
+
+func TestNullableModelValueClientPut(t *testing.T) {
+	client, err := arraygroup.NewArrayClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewArrayNullableModelValueClient().Put(context.Background(), []*arraygroup.InnerModel{{Property: to.Ptr("hello")}, nil, {Property: to.Ptr("world")}}, nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
+
+func TestNullableStringValueClientGet(t *testing.T) {
+	client, err := arraygroup.NewArrayClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewArrayNullableStringValueClient().Get(context.Background(), nil)
+	require.NoError(t, err)
+	require.EqualValues(t, []*string{to.Ptr("hello"), nil, to.Ptr("world")}, resp.StringArray)
+}
+
+func TestNullableStringValueClientPut(t *testing.T) {
+	client, err := arraygroup.NewArrayClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewArrayNullableModelValueClient().Put(context.Background(), []*arraygroup.InnerModel{{Property: to.Ptr("hello")}, nil, {Property: to.Ptr("world")}}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
