@@ -99,12 +99,12 @@ func TestBasicClient_NewListPager(t *testing.T) {
 	client, err := basicgroup.NewBasicClient(nil)
 	require.NoError(t, err)
 	pager := client.NewListPager(&basicgroup.BasicClientListOptions{
-		Top:         to.Ptr[int32](5),
-		Skip:        to.Ptr[int32](10),
-		Orderby:     []string{"id"},
-		Filter:      to.Ptr("id lt 10"),
-		SelectParam: []string{"id", "orders", "etag"},
-		Expand:      []string{"orders"},
+		Top:     to.Ptr[int32](5),
+		Skip:    to.Ptr[int32](10),
+		Orderby: []string{"id"},
+		Filter:  to.Ptr("id lt 10"),
+		Select:  []string{"id", "orders", "etag"},
+		Expand:  []string{"orders"},
 	})
 	pages := 0
 	for pager.More() {
