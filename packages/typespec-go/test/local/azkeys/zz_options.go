@@ -4,130 +4,122 @@
 
 package azkeys
 
-// KeyVaultClientBackupKeyOptions contains the optional parameters for the KeyVaultClient.BackupKey method.
-type KeyVaultClientBackupKeyOptions struct {
+// BackupKeyOptions contains the optional parameters for the Client.BackupKey method.
+type BackupKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientCreateKeyOptions contains the optional parameters for the KeyVaultClient.CreateKey method.
-type KeyVaultClientCreateKeyOptions struct {
+// CreateKeyOptions contains the optional parameters for the Client.CreateKey method.
+type CreateKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientDecryptOptions contains the optional parameters for the KeyVaultClient.Decrypt method.
-type KeyVaultClientDecryptOptions struct {
+// DecryptOptions contains the optional parameters for the Client.Decrypt method.
+type DecryptOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientDeleteKeyOptions contains the optional parameters for the KeyVaultClient.DeleteKey method.
-type KeyVaultClientDeleteKeyOptions struct {
+// DeleteKeyOptions contains the optional parameters for the Client.DeleteKey method.
+type DeleteKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientEncryptOptions contains the optional parameters for the KeyVaultClient.Encrypt method.
-type KeyVaultClientEncryptOptions struct {
+// EncryptOptions contains the optional parameters for the Client.Encrypt method.
+type EncryptOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientGetDeletedKeyOptions contains the optional parameters for the KeyVaultClient.GetDeletedKey method.
-type KeyVaultClientGetDeletedKeyOptions struct {
+// GetDeletedKeyOptions contains the optional parameters for the Client.GetDeletedKey method.
+type GetDeletedKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientGetDeletedKeysOptions contains the optional parameters for the KeyVaultClient.NewGetDeletedKeysPager method.
-type KeyVaultClientGetDeletedKeysOptions struct {
-	// Maximum number of results to return in a page. If not specified the service
-	// will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientGetKeyOptions contains the optional parameters for the KeyVaultClient.GetKey method.
-type KeyVaultClientGetKeyOptions struct {
+// GetKeyOptions contains the optional parameters for the Client.GetKey method.
+type GetKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientGetKeyRotationPolicyOptions contains the optional parameters for the KeyVaultClient.GetKeyRotationPolicy
-// method.
-type KeyVaultClientGetKeyRotationPolicyOptions struct {
+// GetKeyRotationPolicyOptions contains the optional parameters for the Client.GetKeyRotationPolicy method.
+type GetKeyRotationPolicyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientGetKeyVersionsOptions contains the optional parameters for the KeyVaultClient.NewGetKeyVersionsPager method.
-type KeyVaultClientGetKeyVersionsOptions struct {
-	// Maximum number of results to return in a page. If not specified the service
-	// will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientGetKeysOptions contains the optional parameters for the KeyVaultClient.NewGetKeysPager method.
-type KeyVaultClientGetKeysOptions struct {
-	// Maximum number of results to return in a page. If not specified the service
-	// will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientGetRandomBytesOptions contains the optional parameters for the KeyVaultClient.GetRandomBytes method.
-type KeyVaultClientGetRandomBytesOptions struct {
+// GetRandomBytesOptions contains the optional parameters for the Client.GetRandomBytes method.
+type GetRandomBytesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientImportKeyOptions contains the optional parameters for the KeyVaultClient.ImportKey method.
-type KeyVaultClientImportKeyOptions struct {
+// ImportKeyOptions contains the optional parameters for the Client.ImportKey method.
+type ImportKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientPurgeDeletedKeyOptions contains the optional parameters for the KeyVaultClient.PurgeDeletedKey method.
-type KeyVaultClientPurgeDeletedKeyOptions struct {
+// ListDeletedKeyPropertiesOptions contains the optional parameters for the Client.NewListDeletedKeyPropertiesPager method.
+type ListDeletedKeyPropertiesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientRecoverDeletedKeyOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedKey method.
-type KeyVaultClientRecoverDeletedKeyOptions struct {
+// ListKeyPropertiesOptions contains the optional parameters for the Client.NewListKeyPropertiesPager method.
+type ListKeyPropertiesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientReleaseOptions contains the optional parameters for the KeyVaultClient.Release method.
-type KeyVaultClientReleaseOptions struct {
+// ListKeyPropertiesVersionsOptions contains the optional parameters for the Client.NewListKeyPropertiesVersionsPager method.
+type ListKeyPropertiesVersionsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientRestoreKeyOptions contains the optional parameters for the KeyVaultClient.RestoreKey method.
-type KeyVaultClientRestoreKeyOptions struct {
+// PurgeDeletedKeyOptions contains the optional parameters for the Client.PurgeDeletedKey method.
+type PurgeDeletedKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientRotateKeyOptions contains the optional parameters for the KeyVaultClient.RotateKey method.
-type KeyVaultClientRotateKeyOptions struct {
+// RecoverDeletedKeyOptions contains the optional parameters for the Client.RecoverDeletedKey method.
+type RecoverDeletedKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientSignOptions contains the optional parameters for the KeyVaultClient.Sign method.
-type KeyVaultClientSignOptions struct {
+// ReleaseOptions contains the optional parameters for the Client.Release method.
+type ReleaseOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientUnwrapKeyOptions contains the optional parameters for the KeyVaultClient.UnwrapKey method.
-type KeyVaultClientUnwrapKeyOptions struct {
+// RestoreKeyOptions contains the optional parameters for the Client.RestoreKey method.
+type RestoreKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientUpdateKeyOptions contains the optional parameters for the KeyVaultClient.UpdateKey method.
-type KeyVaultClientUpdateKeyOptions struct {
+// RotateKeyOptions contains the optional parameters for the Client.RotateKey method.
+type RotateKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientUpdateKeyRotationPolicyOptions contains the optional parameters for the KeyVaultClient.UpdateKeyRotationPolicy
-// method.
-type KeyVaultClientUpdateKeyRotationPolicyOptions struct {
+// SignOptions contains the optional parameters for the Client.Sign method.
+type SignOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientVerifyOptions contains the optional parameters for the KeyVaultClient.Verify method.
-type KeyVaultClientVerifyOptions struct {
+// UnwrapKeyOptions contains the optional parameters for the Client.UnwrapKey method.
+type UnwrapKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientWrapKeyOptions contains the optional parameters for the KeyVaultClient.WrapKey method.
-type KeyVaultClientWrapKeyOptions struct {
+// UpdateKeyOptions contains the optional parameters for the Client.UpdateKey method.
+type UpdateKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// UpdateKeyRotationPolicyOptions contains the optional parameters for the Client.UpdateKeyRotationPolicy method.
+type UpdateKeyRotationPolicyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// VerifyOptions contains the optional parameters for the Client.Verify method.
+type VerifyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// WrapKeyOptions contains the optional parameters for the Client.WrapKey method.
+type WrapKeyOptions struct {
 	// placeholder for future optional parameters
 }
