@@ -418,14 +418,14 @@ func (b *BasicServerTransport) dispatchNewListPager(req *http.Request) (*http.Re
 			return nil, err
 		}
 		filterParam := getOptional(filterUnescaped)
-		selectParamEscaped := qp["select"]
-		selectParamParam := make([]string, len(selectParamEscaped))
-		for i, v := range selectParamEscaped {
+		selectEscaped := qp["select"]
+		selectParam := make([]string, len(selectEscaped))
+		for i, v := range selectEscaped {
 			u, unescapeErr := url.QueryUnescape(v)
 			if unescapeErr != nil {
 				return nil, unescapeErr
 			}
-			selectParamParam[i] = u
+			selectParam[i] = u
 		}
 		expandEscaped := qp["expand"]
 		expandParam := make([]string, len(expandEscaped))
@@ -437,14 +437,14 @@ func (b *BasicServerTransport) dispatchNewListPager(req *http.Request) (*http.Re
 			expandParam[i] = u
 		}
 		var options *basicgroup.BasicClientListOptions
-		if topParam != nil || skipParam != nil || maxpagesizeParam != nil || len(orderbyParam) > 0 || filterParam != nil || len(selectParamParam) > 0 || len(expandParam) > 0 {
+		if topParam != nil || skipParam != nil || maxpagesizeParam != nil || len(orderbyParam) > 0 || filterParam != nil || len(selectParam) > 0 || len(expandParam) > 0 {
 			options = &basicgroup.BasicClientListOptions{
 				Top:         topParam,
 				Skip:        skipParam,
 				Maxpagesize: maxpagesizeParam,
 				Orderby:     orderbyParam,
 				Filter:      filterParam,
-				SelectParam: selectParamParam,
+				Select:      selectParam,
 				Expand:      expandParam,
 			}
 		}
