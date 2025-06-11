@@ -29,15 +29,15 @@ steps:
     displayName: "Create and install npm tarball"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
 
-  - ${{ if eq(parameters.Nightly, false) }}:
-    - script: |
-        pnpm tspcompile --emitter-installed --verbose
-        pnpm -w modtidy $pwd 2>&1
+  - script: |
+      pnpm tspcompile --emitter-installed --verbose
+      pnpm -w modtidy $pwd 2>&1
+      if [ "${{ parameters.Nightly }}" = "flase" ]; then
         git add -A .
         git diff --staged -w 1>&2
-      displayName: "Regenerate TypeSpec Tests"
-      workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go/test
-      failOnStderr: true
+    displayName: "Regenerate TypeSpec Tests"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go/test
+    failOnStderr: true
 
   - script: |
       set -e
