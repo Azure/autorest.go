@@ -35,6 +35,7 @@ steps:
       if [ "${{ parameters.Nightly }}" = "flase" ]; then
         git add -A .
         git diff --staged -w 1>&2
+      fi
     displayName: "Regenerate TypeSpec Tests"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go/test
     failOnStderr: true
