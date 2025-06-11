@@ -4,7 +4,7 @@
 
 ### Features Add
 
-* Added support for handling qualified type in example mapping.
+* Added support for qualified type in example mapping.
 
 ### Bugs Fixed
 
