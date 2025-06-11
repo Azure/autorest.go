@@ -26,7 +26,7 @@ export interface Client {
   constructors: Array<Constructor>;
 
   // contains client methods. can be empty
-  methods: Array<Method | LROMethod | PageableMethod | LROPageableMethod>;
+  methods: Array<MethodType>;
 
   // contains any client accessor methods. can be empty
   clientAccessors: Array<ClientAccessor>;
@@ -66,20 +66,89 @@ export type FinalStateVia = 'azure-async-operation' | 'location' | 'operation-lo
 
 export type HTTPMethod = 'delete' | 'get' | 'head' | 'patch' | 'post' | 'put';
 
-export interface LROMethod extends Method {
-  finalStateVia?: FinalStateVia;
+export type MethodType = LROMethod | LROPageableMethod | Method | PageableMethod;
 
-  isLRO: true;
+export interface LROMethod extends LROMethodBase {
+  kind: 'lroMethod';
+}
+
+export interface LROPageableMethod extends LROMethodBase, PageableMethodBase {
+  kind: 'lroPageableMethod';
+}
+
+// Method is a method on a client
+export interface Method extends MethodBase {
+  kind: 'method';
+}
+
+export interface MethodNaming {
+  // this is the name of the internal method for consumption by LROs/paging methods.
+  internalMethod: string;
+
+  requestMethod: string;
+
+  responseMethod: string;
+}
+
+// NextPageMethod is the internal method used for fetching the next page for a PageableMethod.
+// It's unique from a regular Method as it's not exported and has no optional params/response envelope.
+// thus, it's not included in the array of methods for a client.
+export interface NextPageMethod {
+  kind: 'nextPageMethod';
+
+  name: string;
+ 
+  httpPath: string;
+
+  httpMethod: HTTPMethod;
+
+  // any modeled parameters
+  parameters: Array<param.Parameter>;
+
+  // the complete list of successful HTTP status codes
+  httpStatusCodes: Array<number>;
+
+  client: Client;
+
+  apiVersions: Array<string>;
+}
+
+export interface PageableMethod extends PageableMethodBase {
+  kind: 'pageableMethod';
+}
+
+export function isLROMethod(method: MethodType): method is LROMethod | LROPageableMethod {
+  return method.kind === 'lroMethod' || method.kind === 'lroPageableMethod';
+}
+
+export function isPageableMethod(method: MethodType): method is LROPageableMethod | PageableMethod {
+  return method.kind === 'lroPageableMethod' || method.kind === 'pageableMethod';
+}
+
+export function newClientOptions(modelType: pkg.CodeModelType, clientName: string): ClientOptions {
+  let options: ClientOptions;
+  if (modelType === 'azure-arm') {
+    options = new param.Parameter('options', new type.QualifiedType('ClientOptions', 'github.com/Azure/azure-sdk-for-go/sdk/azcore/arm'), 'optional', false, 'client');
+    options.docs.summary = 'pass nil to accept the default values.';
+  } else {
+    const optionsTypeName = `${clientName}Options`;
+    options = new param.ParameterGroup('options', optionsTypeName, false, 'client');
+    options.docs.summary = `${optionsTypeName} contains the optional values for creating a [${clientName}]`;
+  }
+  return options;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// base types
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+interface LROMethodBase extends MethodBase {
+  finalStateVia?: FinalStateVia;
 
   operationLocationResultPath?: string;
 }
 
-export interface LROPageableMethod extends LROMethod, PageableMethod {
-  // no new fields are added
-}
-
-// Method is a method on a client
-export interface Method {
+interface MethodBase {
   name: string;
 
   docs: type.Docs;
@@ -107,76 +176,7 @@ export interface Method {
   examples: Array<MethodExample>;
 }
 
-export interface MethodNaming {
-  // this is the name of the internal method for consumption by LROs/paging methods.
-  internalMethod: string;
-
-  requestMethod: string;
-
-  responseMethod: string;
-}
-
-// NextPageMethod is the internal method used for fetching the next page for a PageableMethod.
-// It's unique from a regular Method as it's not exported and has no optional params/response envelope.
-// thus, it's not included in the array of methods for a client.
-export interface NextPageMethod {
-  name: string;
- 
-  httpPath: string;
-
-  httpMethod: HTTPMethod;
-
-  // any modeled parameters
-  parameters: Array<param.Parameter>;
-
-  // the complete list of successful HTTP status codes
-  httpStatusCodes: Array<number>;
-
-  client: Client;
-
-  apiVersions: Array<string>;
-
-  isNextPageMethod: true;
-}
-
-export interface PageableMethod extends Method {
-  nextLinkName?: string;
-
-  nextPageMethod?: NextPageMethod;
-
-  isPageable: true;
-}
-
-export function isMethod(method: Method | NextPageMethod): method is Method {
-  return (<NextPageMethod>method).isNextPageMethod === undefined;
-}
-
-export function isLROMethod(method: Method | LROMethod | PageableMethod): method is LROMethod {
-  return (<LROMethod>method).isLRO === true;
-}
-
-export function isPageableMethod(method: Method | LROMethod | PageableMethod): method is PageableMethod {
-  return (<PageableMethod>method).isPageable === true;
-}
-
-export function newClientOptions(modelType: pkg.CodeModelType, clientName: string): ClientOptions {
-  let options: ClientOptions;
-  if (modelType === 'azure-arm') {
-    options = new param.Parameter('options', new type.QualifiedType('ClientOptions', 'github.com/Azure/azure-sdk-for-go/sdk/azcore/arm'), 'optional', false, 'client');
-    options.docs.summary = 'pass nil to accept the default values.';
-  } else {
-    const optionsTypeName = `${clientName}Options`;
-    options = new param.ParameterGroup('options', optionsTypeName, false, 'client');
-    options.docs.summary = `${optionsTypeName} contains the optional values for creating a [${clientName}]`;
-  }
-  return options;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// base types
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-export class Method implements Method {
+class MethodBase implements MethodBase {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     if (statusCodes.length === 0) {
       throw new CodeModelError('statusCodes cannot be empty');
@@ -194,6 +194,12 @@ export class Method implements Method {
   }
 }
 
+interface PageableMethodBase extends MethodBase {
+  nextLinkName?: string;
+
+  nextPageMethod?: NextPageMethod;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -203,7 +209,7 @@ export class Client implements Client {
     this.templatedHost = false;
     this.constructors = new Array<Constructor>();
     this.docs = docs;
-    this.methods = new Array<Method>();
+    this.methods = new Array<MethodType>();
     this.clientAccessors = new Array<ClientAccessor>();
     this.parameters = new Array<param.Parameter>();
     this.options = options;
@@ -224,18 +230,24 @@ export class Constructor implements Constructor {
   }
 }
 
-export class LROMethod extends Method implements LROMethod {
+export class LROMethod extends MethodBase implements LROMethodBase {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     super(name, client, httpPath, httpMethod, statusCodes, naming);
-    this.isLRO = true;
+    this.kind = 'lroMethod';
   }
 }
 
-export class LROPageableMethod extends Method implements LROPageableMethod {
+export class LROPageableMethod extends MethodBase implements LROPageableMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     super(name, client, httpPath, httpMethod, statusCodes, naming);
-    this.isLRO = true;
-    this.isPageable = true;
+    this.kind = 'lroPageableMethod';
+  }
+}
+
+export class Method extends MethodBase implements Method {
+  constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
+    super(name, client, httpPath, httpMethod, statusCodes, naming);
+    this.kind = 'method';
   }
 }
 
@@ -252,20 +264,20 @@ export class NextPageMethod implements NextPageMethod {
     if (statusCodes.length === 0) {
       throw new CodeModelError('statusCodes cannot be empty');
     }
+    this.kind = 'nextPageMethod';
     this.apiVersions = new Array<string>();
     this.client = client;
     this.httpMethod = httpMethod;
     this.httpPath = httpPath;
     this.httpStatusCodes = statusCodes;
-    this.isNextPageMethod = true;
     this.name = name;
     this.parameters = new Array<param.Parameter>();
   }
 }
 
-export class PageableMethod extends Method implements PageableMethod {
+export class PageableMethod extends MethodBase implements PageableMethodBase {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     super(name, client, httpPath, httpMethod, statusCodes, naming);
-    this.isPageable = true;
+    this.kind = 'pageableMethod';
   }
 }

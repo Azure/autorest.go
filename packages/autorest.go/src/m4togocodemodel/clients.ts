@@ -97,8 +97,8 @@ function adaptNextPageMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, client
   return nextPageMethod;
 }
 
-function populateMethod(op: m4.Operation, method: go.Method | go.NextPageMethod, m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
-  if (go.isMethod(method)) {
+function populateMethod(op: m4.Operation, method: go.MethodType | go.NextPageMethod, m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
+  if (method.kind !== 'nextPageMethod') {
     if (hasDescription(op.language.go!)) {
       method.docs.description = op.language.go!.description;
     }
@@ -186,7 +186,7 @@ function adaptMethodLocation(location?: m4.ImplementationLocation): go.Parameter
   }
 }
 
-function adaptMethodParameters(op: m4.Operation, method: go.Method | go.NextPageMethod) {
+function adaptMethodParameters(op: m4.Operation, method: go.MethodType | go.NextPageMethod) {
   if (!op.parameters) {
     return;
   }
@@ -197,7 +197,7 @@ function adaptMethodParameters(op: m4.Operation, method: go.Method | go.NextPage
   }
 }
 
-function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel, op: m4.Operation, forMethod: go.Method): go.ResponseEnvelope {
+function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel, op: m4.Operation, forMethod: go.MethodType): go.ResponseEnvelope {
   const respEnvSchema = <m4.ObjectSchema>op.language.go!.responseEnv;
   const respEnv = new go.ResponseEnvelope(respEnvSchema.language.go!.name, {description: respEnvSchema.language.go!.description}, forMethod);
 

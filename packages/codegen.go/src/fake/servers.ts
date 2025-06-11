@@ -42,7 +42,7 @@ export function getServerName(client: go.Client): string {
   return capitalize(client.name.replace(/[C|c]lient$/, 'Server'));
 }
 
-function isMethodInternal(method: go.Method): boolean {
+function isMethodInternal(method: go.MethodType): boolean {
   return !!method.name.match(/^[a-z]{1}/);
 }
 
@@ -71,7 +71,7 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     content += `type ${serverName} struct{\n`;
 
     // we might remove some operations from the list
-    const finalMethods = new Array<go.Method>();
+    const finalMethods = new Array<go.MethodType>();
     let countLROs = 0;
     let countPagers = 0;
 
@@ -97,16 +97,21 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
 
       let serverResponse: string;
 
-      if (go.isLROMethod(method)) {
-        let respType = `${clientPkg}.${method.responseEnvelope.name}`;
-        if (go.isPageableMethod(method)) {
-          respType = `azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]`;
-        }
-        serverResponse = `resp azfake.PollerResponder[${respType}], errResp azfake.ErrorResponder`;
-      } else if (go.isPageableMethod(method)) {
-        serverResponse = `resp azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]`;
-      } else {
-        serverResponse = `resp azfake.Responder[${clientPkg}.${method.responseEnvelope.name}], errResp azfake.ErrorResponder`;
+      switch (method.kind) {
+        case 'lroMethod':
+        case 'lroPageableMethod':
+          let respType = `${clientPkg}.${method.responseEnvelope.name}`;
+          if (method.kind === 'lroPageableMethod') {
+            respType = `azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]`;
+          }
+          serverResponse = `resp azfake.PollerResponder[${respType}], errResp azfake.ErrorResponder`;
+          break;
+        case 'method':
+          serverResponse = `resp azfake.Responder[${clientPkg}.${method.responseEnvelope.name}], errResp azfake.ErrorResponder`;
+          break;
+        case 'pageableMethod':
+          serverResponse = `resp azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]`;
+          break;
       }
 
       const operationName = fixUpMethodName(method);
@@ -134,10 +139,14 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
       }
       content += `\t${operationName} func(${getAPIParametersSig(method, imports, clientPkg)}) (${serverResponse})\n\n`;
       finalMethods.push(method);
-      if (go.isLROMethod(method)) {
-        ++countLROs;
-      } else if (go.isPageableMethod(method)) {
-        ++countPagers;
+      switch (method.kind) {
+        case 'lroMethod':
+        case 'lroPageableMethod':
+          ++countLROs;
+          break;
+        case 'pageableMethod':
+          ++countPagers;
+          break;
       }
     }
 
@@ -157,15 +166,19 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
       content += `\treturn &${serverTransport}{\n\t\tsrv: srv,\n`;
       for (const method of values(finalMethods)) {
         let respType = `${clientPkg}.${method.responseEnvelope.name}`;
-        if (go.isLROMethod(method)) {
-          if (go.isPageableMethod(method)) {
-            respType = `azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]`;
-          }
-          requiredHelpers.tracker = true;
-          content += `\t\t${uncapitalize(fixUpMethodName(method))}: newTracker[azfake.PollerResponder[${respType}]](),\n`;
-        } else if (go.isPageableMethod(method)) {
-          requiredHelpers.tracker = true;
-          content += `\t\t${uncapitalize(fixUpMethodName(method))}: newTracker[azfake.PagerResponder[${respType}]](),\n`;
+        switch (method.kind) {
+          case 'lroMethod':
+          case 'lroPageableMethod':
+            if (method.kind === 'lroPageableMethod') {
+              respType = `azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]`;
+            }
+            requiredHelpers.tracker = true;
+            content += `\t\t${uncapitalize(fixUpMethodName(method))}: newTracker[azfake.PollerResponder[${respType}]](),\n`;
+            break;
+          case 'pageableMethod':
+            requiredHelpers.tracker = true;
+            content += `\t\t${uncapitalize(fixUpMethodName(method))}: newTracker[azfake.PagerResponder[${respType}]](),\n`;
+            break;
         }
       }
       content += '\t}\n}\n\n';
@@ -190,15 +203,19 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     for (const method of values(finalMethods)) {
       // create state machines for any pager/poller operations
       let respType = `${clientPkg}.${method.responseEnvelope.name}`;
-      if (go.isLROMethod(method)) {
-        if (go.isPageableMethod(method)) {
-          respType = `azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]`;
-        }
-        requiredHelpers.tracker = true;
-        content += `\t${uncapitalize(fixUpMethodName(method))} *tracker[azfake.PollerResponder[${respType}]]\n`;
-      } else if (go.isPageableMethod(method)) {
-        requiredHelpers.tracker = true;
-        content += `\t${uncapitalize(fixUpMethodName(method))} *tracker[azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]]\n`;
+      switch (method.kind) {
+        case 'lroMethod':
+        case 'lroPageableMethod':
+          if (method.kind === 'lroPageableMethod') {
+            respType = `azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]`;
+          }
+          requiredHelpers.tracker = true;
+          content += `\t${uncapitalize(fixUpMethodName(method))} *tracker[azfake.PollerResponder[${respType}]]\n`;
+          break;
+        case 'pageableMethod':
+          requiredHelpers.tracker = true;
+          content += `\t${uncapitalize(fixUpMethodName(method))} *tracker[azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]]\n`;
+          break;
       }
     }
     content += '}\n\n';
@@ -232,7 +249,7 @@ function getTransportInterceptorVarName(client: go.Client): string {
 const dispatchMethodFake = 'dispatchToMethodFake';
 const dispatchToClientFake = 'dispatchToClientFake';
 
-function generateServerTransportDo(serverTransport: string, client: go.Client, finalSubClients: Array<go.Client>, finalMethods: Array<go.Method>): string {
+function generateServerTransportDo(serverTransport: string, client: go.Client, finalSubClients: Array<go.Client>, finalMethods: Array<go.MethodType>): string {
   const receiverName = serverTransport[0].toLowerCase();
   let content = `// Do implements the policy.Transporter interface for ${serverTransport}.\n`;
   content += `func (${receiverName} *${serverTransport}) Do(req *http.Request) (*http.Response, error) {\n`;
@@ -278,7 +295,7 @@ function generateServerTransportClientDispatch(serverTransport: string, subClien
   return content;
 }
 
-function generateServerTransportMethodDispatch(serverTransport: string, client: go.Client, finalMethods: Array<go.Method>): string {
+function generateServerTransportMethodDispatch(serverTransport: string, client: go.Client, finalMethods: Array<go.MethodType>): string {
   if (finalMethods.length === 0) {
     return '';
   }
@@ -320,7 +337,7 @@ function generateServerTransportMethodDispatch(serverTransport: string, client: 
   return content;
 }
 
-function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport: string, finalMethods: Array<go.Method>, imports: ImportManager): string {
+function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport: string, finalMethods: Array<go.MethodType>, imports: ImportManager): string {
   if (finalMethods.length === 0) {
     return '';
   }
@@ -336,71 +353,79 @@ function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport
     content += `\tif ${receiverName}.srv.${fixUpMethodName(method)} == nil {\n`;
     content += `\t\treturn nil, &nonRetriableError{errors.New("fake for method ${fixUpMethodName(method)} not implemented")}\n\t}\n`;
 
-    if (go.isLROMethod(method)) {
-      // must check LRO before pager as you can have paged LROs
-      content += dispatchForLROBody(codeModel.packageName, receiverName, method, imports);
-    } else if (go.isPageableMethod(method)) {
-      content += dispatchForPagerBody(codeModel.packageName, receiverName, method, imports);
-    } else {
-      content += dispatchForOperationBody(codeModel.packageName, receiverName, method, imports);
-      content += '\trespContent := server.GetResponseContent(respr)\n';
-      const formattedStatusCodes = helpers.formatStatusCodes(method.httpStatusCodes);
-      content += `\tif !contains([]int{${formattedStatusCodes}}, respContent.HTTPStatus) {\n`;
-      content += `\t\treturn nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", respContent.HTTPStatus)}\n\t}\n`;
-      if (!method.responseEnvelope.result || go.isHeadAsBooleanResult(method.responseEnvelope.result)) {
-        content += '\tresp, err := server.NewResponse(respContent, req, nil)\n';
-      } else if (go.isAnyResult(method.responseEnvelope.result)) {
-        content += `\tresp, err := server.MarshalResponseAs${method.responseEnvelope.result.format}(respContent, server.GetResponse(respr).${getResultFieldName(method.responseEnvelope.result)}, req)\n`;
-      } else if (go.isBinaryResult(method.responseEnvelope.result)) {
-        content += '\tresp, err := server.NewResponse(respContent, req, &server.ResponseOptions{\n';
-        content += `\t\tBody: server.GetResponse(respr).${getResultFieldName(method.responseEnvelope.result)},\n`;
-        content += '\t\tContentType: req.Header.Get("Content-Type"),\n';
-        content += '\t})\n';
-      } else if (go.isMonomorphicResult(method.responseEnvelope.result)) {
-        if (go.isBytesType(method.responseEnvelope.result.monomorphicType)) {
-          const encoding = method.responseEnvelope.result.monomorphicType.encoding;
-          content += `\tresp, err := server.MarshalResponseAsByteArray(respContent, server.GetResponse(respr).${getResultFieldName(method.responseEnvelope.result)}, runtime.Base64${encoding}Format, req)\n`;
-        } else if (go.isSliceType(method.responseEnvelope.result.monomorphicType) && method.responseEnvelope.result.monomorphicType.rawJSONAsBytes) {
-          imports.add('bytes');
-          imports.add('io');
+    switch (method.kind) {
+      case 'lroMethod':
+      case 'lroPageableMethod':
+        // must check LRO before pager as you can have paged LROs
+        content += dispatchForLROBody(codeModel.packageName, receiverName, method, imports);
+        break;
+      case 'method': {
+        content += dispatchForOperationBody(codeModel.packageName, receiverName, method, imports);
+        content += '\trespContent := server.GetResponseContent(respr)\n';
+        const formattedStatusCodes = helpers.formatStatusCodes(method.httpStatusCodes);
+        content += `\tif !contains([]int{${formattedStatusCodes}}, respContent.HTTPStatus) {\n`;
+        content += `\t\treturn nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", respContent.HTTPStatus)}\n\t}\n`;
+        if (!method.responseEnvelope.result || go.isHeadAsBooleanResult(method.responseEnvelope.result)) {
+          content += '\tresp, err := server.NewResponse(respContent, req, nil)\n';
+        } else if (go.isAnyResult(method.responseEnvelope.result)) {
+          content += `\tresp, err := server.MarshalResponseAs${method.responseEnvelope.result.format}(respContent, server.GetResponse(respr).${getResultFieldName(method.responseEnvelope.result)}, req)\n`;
+        } else if (go.isBinaryResult(method.responseEnvelope.result)) {
           content += '\tresp, err := server.NewResponse(respContent, req, &server.ResponseOptions{\n';
-          content += '\t\tBody: io.NopCloser(bytes.NewReader(server.GetResponse(respr).RawJSON)),\n';
-          content += '\t\tContentType: "application/json",\n\t})\n';
-        } else {
-          let respField = `.${getResultFieldName(method.responseEnvelope.result)}`;
-          if (method.responseEnvelope.result.format === 'XML' && go.isSliceType(method.responseEnvelope.result.monomorphicType)) {
-            // for XML array responses we use the response type directly as it has the necessary XML tag for proper marshalling
-            respField = '';
+          content += `\t\tBody: server.GetResponse(respr).${getResultFieldName(method.responseEnvelope.result)},\n`;
+          content += '\t\tContentType: req.Header.Get("Content-Type"),\n';
+          content += '\t})\n';
+        } else if (go.isMonomorphicResult(method.responseEnvelope.result)) {
+          if (go.isBytesType(method.responseEnvelope.result.monomorphicType)) {
+            const encoding = method.responseEnvelope.result.monomorphicType.encoding;
+            content += `\tresp, err := server.MarshalResponseAsByteArray(respContent, server.GetResponse(respr).${getResultFieldName(method.responseEnvelope.result)}, runtime.Base64${encoding}Format, req)\n`;
+          } else if (go.isSliceType(method.responseEnvelope.result.monomorphicType) && method.responseEnvelope.result.monomorphicType.rawJSONAsBytes) {
+            imports.add('bytes');
+            imports.add('io');
+            content += '\tresp, err := server.NewResponse(respContent, req, &server.ResponseOptions{\n';
+            content += '\t\tBody: io.NopCloser(bytes.NewReader(server.GetResponse(respr).RawJSON)),\n';
+            content += '\t\tContentType: "application/json",\n\t})\n';
+          } else {
+            let respField = `.${getResultFieldName(method.responseEnvelope.result)}`;
+            if (method.responseEnvelope.result.format === 'XML' && go.isSliceType(method.responseEnvelope.result.monomorphicType)) {
+              // for XML array responses we use the response type directly as it has the necessary XML tag for proper marshalling
+              respField = '';
+            }
+            let responseField = `server.GetResponse(respr)${respField}`;
+            if (go.isTimeType(method.responseEnvelope.result.monomorphicType)) {
+              responseField = `(*${method.responseEnvelope.result.monomorphicType.dateTimeFormat})(${responseField})`;
+            }
+            content += `\tresp, err := server.MarshalResponseAs${method.responseEnvelope.result.format}(respContent, ${responseField}, req)\n`;
           }
-          let responseField = `server.GetResponse(respr)${respField}`;
-          if (go.isTimeType(method.responseEnvelope.result.monomorphicType)) {
-            responseField = `(*${method.responseEnvelope.result.monomorphicType.dateTimeFormat})(${responseField})`;
-          }
+        } else if (go.isModelResult(method.responseEnvelope.result) || go.isPolymorphicResult(method.responseEnvelope.result)) {
+          const respField = `.${getResultFieldName(method.responseEnvelope.result)}`;
+          const responseField = `server.GetResponse(respr)${respField}`;
           content += `\tresp, err := server.MarshalResponseAs${method.responseEnvelope.result.format}(respContent, ${responseField}, req)\n`;
         }
-      } else if (go.isModelResult(method.responseEnvelope.result) || go.isPolymorphicResult(method.responseEnvelope.result)) {
-        const respField = `.${getResultFieldName(method.responseEnvelope.result)}`;
-        const responseField = `server.GetResponse(respr)${respField}`;
-        content += `\tresp, err := server.MarshalResponseAs${method.responseEnvelope.result.format}(respContent, ${responseField}, req)\n`;
-      }
 
-      content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+        content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
 
-      // propagate any header response values into the *http.Response
-      for (const header of values(method.responseEnvelope.headers)) {
-        if (go.isHeaderMapResponse(header)) {
-          content += `\tfor k, v := range server.GetResponse(respr).${header.fieldName} {\n`;
-          content += '\t\tif v != nil {\n';
-          content += `\t\t\tresp.Header.Set("${header.collectionPrefix}"+k, *v)\n`;
-          content += '\t\t}\n';
-          content += '\t}\n';
-        } else {
-          content += `\tif val := server.GetResponse(respr).${header.fieldName}; val != nil {\n`;
-          content += `\t\tresp.Header.Set("${header.headerName}", ${helpers.formatValue('val', header.type, imports, true)})\n\t}\n`;
+        // propagate any header response values into the *http.Response
+        for (const header of values(method.responseEnvelope.headers)) {
+          if (go.isHeaderMapResponse(header)) {
+            content += `\tfor k, v := range server.GetResponse(respr).${header.fieldName} {\n`;
+            content += '\t\tif v != nil {\n';
+            content += `\t\t\tresp.Header.Set("${header.collectionPrefix}"+k, *v)\n`;
+            content += '\t\t}\n';
+            content += '\t}\n';
+          } else {
+            content += `\tif val := server.GetResponse(respr).${header.fieldName}; val != nil {\n`;
+            content += `\t\tresp.Header.Set("${header.headerName}", ${helpers.formatValue('val', header.type, imports, true)})\n\t}\n`;
+          }
         }
-      }
 
-      content += '\treturn resp, nil\n';
+        content += '\treturn resp, nil\n';
+        break;
+      }
+      case 'pageableMethod':
+        content += dispatchForPagerBody(codeModel.packageName, receiverName, method, imports);
+        break;
+      default:
+        method satisfies never;
     }
     content += '}\n\n';
   }
@@ -408,7 +433,7 @@ function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport
   return content;
 }
 
-function dispatchForOperationBody(clientPkg: string, receiverName: string, method: go.Method, imports: ImportManager): string {
+function dispatchForOperationBody(clientPkg: string, receiverName: string, method: go.MethodType, imports: ImportManager): string {
   const numPathParams = values(method.parameters).where((each: go.Parameter) => { return go.isPathParameter(each) && !go.isLiteralParameter(each); }).count();
   let content = '';
   if (numPathParams > 0) {
@@ -680,7 +705,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
   }
 
   const apiCall = `:= ${receiverName}.srv.${fixUpMethodName(method)}(${populateApiParams(clientPkg, method, result.params, imports)})`;
-  if (go.isPageableMethod(method) && !go.isLROMethod(method)) {
+  if (method.kind === 'pageableMethod') {
     content += `resp ${apiCall}\n`;
     return content;
   }
@@ -690,23 +715,26 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
   return content;
 }
 
-function getMethodStatusCodes(method: go.Method): Array<number> {
+function getMethodStatusCodes(method: go.MethodType): Array<number> {
   // NOTE: don't modify the original array!
   const statusCodes = Array.from(method.httpStatusCodes);
-  if (go.isLROMethod(method)) {
-    if (!statusCodes.includes(200)) {
-      // pollers always include 200 as an acceptible status code so we emulate that here
-      statusCodes.unshift(200);
-    }
-    if (!method.responseEnvelope.result && !statusCodes.includes(204)) {
-      // also include 204 if the LRO doesn't return a body
-      statusCodes.push(204);
-    }
+  switch (method.kind) {
+    case 'lroMethod':
+    case 'lroPageableMethod':
+      if (!statusCodes.includes(200)) {
+        // pollers always include 200 as an acceptible status code so we emulate that here
+        statusCodes.unshift(200);
+      }
+      if (!method.responseEnvelope.result && !statusCodes.includes(204)) {
+        // also include 204 if the LRO doesn't return a body
+        statusCodes.push(204);
+      }
+      break;
   }
   return statusCodes;
 }
 
-function dispatchForLROBody(clientPkg: string, receiverName: string, method: go.Method, imports: ImportManager): string {
+function dispatchForLROBody(clientPkg: string, receiverName: string, method: go.MethodType, imports: ImportManager): string {
   const operationName = fixUpMethodName(method);
   const localVarName = uncapitalize(operationName);
   const operationStateMachine = `${receiverName}.${uncapitalize(operationName)}`;
@@ -766,7 +794,7 @@ function sanitizeRegexpCaptureGroupName(name: string): string {
   return name.replace('-', '_');
 }
 
-function createPathParamsRegex(method: go.Method): string {
+function createPathParamsRegex(method: go.MethodType): string {
   // "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}"
   // each path param will replaced with a regex capture.
   // note that some path params are optional.
@@ -800,7 +828,7 @@ interface parseResult {
 
 // parses header/path/query params as required.
 // returns the parsing code and the params that contain the parsed values.
-function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, imports: ImportManager): parseResult {
+function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, imports: ImportManager): parseResult {
   let content = '';
   const paramValues = new Map<string, string>();
 
@@ -1170,14 +1198,14 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
 }
 
 // works in conjunction with parseHeaderPathQueryParams
-function populateApiParams(clientPkg: string, method: go.Method, paramValues: Map<string, string>, imports: ImportManager): string {
+function populateApiParams(clientPkg: string, method: go.MethodType, paramValues: Map<string, string>, imports: ImportManager): string {
   // FooOperation(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], qp.Get("api-version"), nil)
   // this assumes that our caller has created matches and qp as required
   const params = new Array<string>();
 
   // for non-paged APIs, first param is always the context. use the one
   // from the HTTP request. be careful to properly handle paged LROs
-  if (go.isLROMethod(method) || !go.isPageableMethod(method)) {
+  if (method.kind !== 'pageableMethod') {
     params.push('req.Context()');
   }
 
@@ -1303,10 +1331,10 @@ function consolidateHostParams(params: Array<go.Parameter>): Array<go.Parameter>
 }
 
 // copied from generator/operations.ts but with a slight tweak to consolidate host parameters
-function getAPIParametersSig(method: go.Method, imports: ImportManager, pkgName?: string): string {
+function getAPIParametersSig(method: go.MethodType, imports: ImportManager, pkgName?: string): string {
   const methodParams = helpers.getMethodParameters(method, consolidateHostParams);
   const params = new Array<string>();
-  if (!go.isPageableMethod(method) || go.isLROMethod(method)) {
+  if (method.kind !== 'pageableMethod') {
     imports.add('context');
     params.push('ctx context.Context');
   }
