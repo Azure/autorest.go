@@ -13,6 +13,7 @@
 ### Other Changes
 
 * Throw error when paging with re-injection parameters.
+* Moved the `_metadata.json` file to the `testdata` subdirectory.
 
 ## 0.4.11 (2025-06-09)
 
