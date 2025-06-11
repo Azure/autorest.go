@@ -176,6 +176,12 @@ interface MethodBase {
   examples: Array<MethodExample>;
 }
 
+interface PageableMethodBase extends MethodBase {
+  nextLinkName?: string;
+
+  nextPageMethod?: NextPageMethod;
+}
+
 class MethodBase implements MethodBase {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     if (statusCodes.length === 0) {
@@ -192,12 +198,6 @@ class MethodBase implements MethodBase {
     this.examples = [];
     this.docs = {};
   }
-}
-
-interface PageableMethodBase extends MethodBase {
-  nextLinkName?: string;
-
-  nextPageMethod?: NextPageMethod;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
