@@ -230,7 +230,7 @@ export class Constructor implements Constructor {
   }
 }
 
-export class LROMethod extends MethodBase implements LROMethodBase {
+export class LROMethod extends MethodBase implements LROMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     super(name, client, httpPath, httpMethod, statusCodes, naming);
     this.kind = 'lroMethod';
@@ -275,7 +275,7 @@ export class NextPageMethod implements NextPageMethod {
   }
 }
 
-export class PageableMethod extends MethodBase implements PageableMethodBase {
+export class PageableMethod extends MethodBase implements PageableMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     super(name, client, httpPath, httpMethod, statusCodes, naming);
     this.kind = 'pageableMethod';
