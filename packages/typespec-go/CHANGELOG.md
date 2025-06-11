@@ -14,6 +14,7 @@
 
 * Throw error when paging with re-injection parameters.
 * Moved the `_metadata.json` file to the `testdata` subdirectory.
+* Updated to the latest tsp toolset.
 
 ## 0.4.11 (2025-06-09)
 
