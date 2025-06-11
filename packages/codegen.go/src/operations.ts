@@ -1070,7 +1070,7 @@ function generateResponseUnmarshaller(method: go.MethodType, type: go.PossibleTy
   return unmarshallerText;
 }
 
-function createProtocolResponse(client: go.Client, method: go.MethodType, imports: ImportManager): string {
+function createProtocolResponse(client: go.Client, method: go.Method | go.LROPageableMethod | go.PageableMethod, imports: ImportManager): string {
   if (!needsResponseHandler(method)) {
     return '';
   }

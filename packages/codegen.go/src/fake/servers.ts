@@ -734,7 +734,7 @@ function getMethodStatusCodes(method: go.MethodType): Array<number> {
   return statusCodes;
 }
 
-function dispatchForLROBody(clientPkg: string, receiverName: string, method: go.MethodType, imports: ImportManager): string {
+function dispatchForLROBody(clientPkg: string, receiverName: string, method: go.LROMethod | go.LROPageableMethod, imports: ImportManager): string {
   const operationName = fixUpMethodName(method);
   const localVarName = uncapitalize(operationName);
   const operationStateMachine = `${receiverName}.${uncapitalize(operationName)}`;
