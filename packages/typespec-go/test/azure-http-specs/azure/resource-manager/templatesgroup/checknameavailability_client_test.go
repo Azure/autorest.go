@@ -18,6 +18,9 @@ func TestNewCheckNameAvailabilityClient_CheckGlobal(t *testing.T) {
 	resp, err := clientFactory.NewCheckNameAvailabilityClient().CheckGlobal(ctx, body, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
+	require.Equal(t, false, *resp.NameAvailable)
+	require.Equal(t, CheckNameAvailabilityReason("AlreadyExists"), *resp.Reason)
+	require.Equal(t, "Hostname 'checkName' already exists. Please select a different name.", *resp.Message)
 }
 
 func TestNewCheckNameAvailabilityClient_CheckLocal(t *testing.T) {
@@ -28,6 +31,9 @@ func TestNewCheckNameAvailabilityClient_CheckLocal(t *testing.T) {
 	resp, err := clientFactory.NewCheckNameAvailabilityClient().CheckLocal(ctx, locationExpected, body, nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
+	require.Equal(t, false, *resp.NameAvailable)
+	require.Equal(t, CheckNameAvailabilityReason("AlreadyExists"), *resp.Reason)
+	require.Equal(t, "Hostname 'checkName' already exists. Please select a different name.", *resp.Message)
 }
 
 func TestNewOperationsClient_NewListPager(t *testing.T) {
