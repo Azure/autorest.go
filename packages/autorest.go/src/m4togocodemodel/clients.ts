@@ -29,7 +29,7 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
     for (const op of values(group.operations)) {
       const httpPath = <string>op.requests![0].protocol.http!.path;
       const httpMethod = op.requests![0].protocol.http!.method;
-      let method: go.Method | go.LROMethod | go.LROPageableMethod | go.PageableMethod;
+      let method: go.MethodType;
       const naming = adaptMethodNaming(op);
 
       if (helpers.isLROOperation(op) && helpers.isPageableOperation(op)) {
