@@ -142,7 +142,7 @@ export interface ResponseEnvelope {
   // any modeled response headers
   headers: Array<HeaderResponse | HeaderMapResponse>;
 
-  method: client.Method | client.LROMethod | client.PageableMethod | client.LROPageableMethod;
+  method: client.MethodType;
 }
 
 export type ResultFormat = 'JSON' | 'XML' | 'Text';
@@ -272,7 +272,7 @@ export class PolymorphicResult implements PolymorphicResult {
 }
 
 export class ResponseEnvelope implements ResponseEnvelope {
-  constructor(name: string, docs: type.Docs, forMethod: client.Method) {
+  constructor(name: string, docs: type.Docs, forMethod: client.MethodType) {
     this.docs = docs;
     this.headers = new Array<HeaderResponse | HeaderMapResponse>();
     this.method = forMethod;

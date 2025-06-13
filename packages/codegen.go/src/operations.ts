@@ -142,7 +142,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
       }
       opText += generateOperation(client, method, imports, codeModel.options.injectSpans, codeModel.options.generateFakes);
       opText += createProtocolRequest(azureARM, client, method, imports);
-      if (!go.isLROMethod(method) || go.isPageableMethod(method)) {
+      if (method.kind !== 'lroMethod') {
         // LRO responses are handled elsewhere, with the exception of pageable LROs
         opText += createProtocolResponse(client, method, imports);
       }
@@ -325,7 +325,7 @@ function formatHeaderResponseValue(headerResp: go.HeaderResponse | go.HeaderMapR
   return text;
 }
 
-function getZeroReturnValue(method: go.Method, apiType: 'api' | 'op' | 'handler'): string {
+function getZeroReturnValue(method: go.MethodType, apiType: 'api' | 'op' | 'handler'): string {
   let returnType = `${method.responseEnvelope.name}{}`;
   if (go.isLROMethod(method)) {
     if (apiType === 'api' || apiType === 'op') {
@@ -337,7 +337,7 @@ function getZeroReturnValue(method: go.Method, apiType: 'api' | 'op' | 'handler'
   return returnType;
 }
 
-function emitPagerDefinition(client: go.Client, method: go.PageableMethod, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
+function emitPagerDefinition(client: go.Client, method: go.LROPageableMethod | go.PageableMethod, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
   imports.add('context');
   let text = `runtime.NewPager(runtime.PagingHandler[${method.responseEnvelope.name}]{\n`;
   text += `\t\tMore: func(page ${method.responseEnvelope.name}) bool {\n`;
@@ -356,7 +356,7 @@ function emitPagerDefinition(client: go.Client, method: go.PageableMethod, impor
   }
   if (method.nextLinkName) {
     let nextLinkVar: string;
-    if (!go.isLROMethod(method)) {
+    if (method.kind === 'pageableMethod') {
       text += '\t\t\tnextLink := ""\n';
       nextLinkVar = 'nextLink';
       text += '\t\t\tif page != nil {\n';
@@ -418,7 +418,7 @@ function genApiVersionDoc(apiVersions: Array<string>): string {
   return `//\n// Generated from API version ${apiVersions.join(', ')}\n`;
 }
 
-function genRespErrorDoc(method: go.Method): string {
+function genRespErrorDoc(method: go.MethodType): string {
   if (!(method.responseEnvelope.result && go.isHeadAsBooleanResult(method.responseEnvelope.result)) && !go.isPageableMethod(method)) {
     // when head-as-boolean is enabled, no error is returned for 4xx status codes.
     // pager constructors don't return an error
@@ -427,11 +427,11 @@ function genRespErrorDoc(method: go.Method): string {
   return '';
 }
 
-function generateOperation(client: go.Client, method: go.Method, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
+function generateOperation(client: go.Client, method: go.MethodType, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
   const params = getAPIParametersSig(method, imports);
   const returns = generateReturnsInfo(method, 'op');
   let methodName = method.name;
-  if(go.isPageableMethod(method) && !go.isLROMethod(method)) {
+  if(method.kind === 'pageableMethod') {
     methodName = fixUpMethodName(method);
   }
   let text = '';
@@ -456,7 +456,7 @@ function generateOperation(client: go.Client, method: go.Method, imports: Import
   }
   text += `func (client *${client.name}) ${methodName}(${params}) (${returns.join(', ')}) {\n`;
   const reqParams = helpers.getCreateRequestParameters(method);
-  if (go.isPageableMethod(method) && !go.isLROMethod(method)) {
+  if (method.kind === 'pageableMethod') {
     text += '\treturn ';
     text += emitPagerDefinition(client, method, imports, injectSpans, generateFakes);
     text += '}\n\n';
@@ -508,9 +508,9 @@ function generateOperation(client: go.Client, method: go.Method, imports: Import
   return text;
 }
 
-function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.Method | go.NextPageMethod, imports: ImportManager): string {
+function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.MethodType | go.NextPageMethod, imports: ImportManager): string {
   let name = method.name;
-  if (go.isMethod(method)) {
+  if (method.kind !== 'nextPageMethod') {
     name = method.naming.requestMethod;
   }
 
@@ -710,7 +710,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     imports.add('strings');
     text += '\treq.Raw().URL.RawQuery = strings.Join(unencodedParams, "&")\n';
   }
-  if (go.isMethod(method) && method.responseEnvelope.result && go.isBinaryResult(method.responseEnvelope.result)) {
+  if (method.kind !== 'nextPageMethod' && method.responseEnvelope.result && go.isBinaryResult(method.responseEnvelope.result)) {
     // skip auto-body downloading for binary stream responses
     text += '\truntime.SkipBodyDownload(req)\n';
   }
@@ -1000,11 +1000,11 @@ function isArrayOfDateTimeForMarshalling(paramType: go.PossibleType): { format: 
 
 // returns true if the method requires a response handler.
 // this is used to unmarshal the response body, parse response headers, or both.
-function needsResponseHandler(method: go.Method): boolean {
+function needsResponseHandler(method: go.MethodType): boolean {
   return helpers.hasSchemaResponse(method) || method.responseEnvelope.headers.length > 0;
 }
 
-function generateResponseUnmarshaller(method: go.Method, type: go.PossibleType, format: go.ResultFormat, unmarshalTarget: string): string {
+function generateResponseUnmarshaller(method: go.MethodType, type: go.PossibleType, format: go.ResultFormat, unmarshalTarget: string): string {
   let unmarshallerText = '';
   const zeroValue = getZeroReturnValue(method, 'handler');
   if (go.isTimeType(type)) {
@@ -1070,7 +1070,7 @@ function generateResponseUnmarshaller(method: go.Method, type: go.PossibleType, 
   return unmarshallerText;
 }
 
-function createProtocolResponse(client: go.Client, method: go.Method, imports: ImportManager): string {
+function createProtocolResponse(client: go.Client, method: go.Method | go.LROPageableMethod | go.PageableMethod, imports: ImportManager): string {
   if (!needsResponseHandler(method)) {
     return '';
   }
@@ -1165,10 +1165,10 @@ function isMapOfDateTime(paramType: go.PossibleType): string | undefined {
 
 // returns the parameters for the public API
 // e.g. "ctx context.Context, i int, s string"
-function getAPIParametersSig(method: go.Method, imports: ImportManager, pkgName?: string): string {
+function getAPIParametersSig(method: go.MethodType, imports: ImportManager, pkgName?: string): string {
   const methodParams = helpers.getMethodParameters(method);
   const params = new Array<string>();
-  if (!go.isPageableMethod(method) || go.isLROMethod(method)) {
+  if (method.kind !== 'pageableMethod') {
     imports.add('context');
     params.push('ctx context.Context');
   }
@@ -1184,39 +1184,43 @@ function getAPIParametersSig(method: go.Method, imports: ImportManager, pkgName?
 //   api - for the API definition
 //    op - for the operation
 // handler - for the response handler
-function generateReturnsInfo(method: go.Method, apiType: 'api' | 'op' | 'handler'): Array<string> {
+function generateReturnsInfo(method: go.MethodType, apiType: 'api' | 'op' | 'handler'): Array<string> {
   let returnType = method.responseEnvelope.name;
-  if (go.isLROMethod(method)) {
-    switch (apiType) {
-      case 'api':
-        if (go.isPageableMethod(method)) {
-          returnType = `*runtime.Poller[*runtime.Pager[${returnType}]]`;
-        } else {
-          returnType = `*runtime.Poller[${returnType}]`;
-        }
-        break;
-      case 'handler':
-        // we only have a handler for operations that return a schema
-        if (!go.isPageableMethod(method)) {
-          throw new CodegenError('InternalError', `handler being generated for non-pageable LRO ${method.name} which is unexpected`);
-        }
-        break;
-      case 'op':
-        returnType = '*http.Response';
-        break;
-    }
-  } else if (go.isPageableMethod(method)) {
-    switch (apiType) {
-      case 'api':
-      case 'op':
-        // pager operations don't return an error
-        return [`*runtime.Pager[${returnType}]`];
-    }
+  switch (method.kind) {
+    case 'lroMethod':
+    case 'lroPageableMethod':
+      switch (apiType) {
+        case 'api':
+          if (method.kind === 'lroPageableMethod') {
+            returnType = `*runtime.Poller[*runtime.Pager[${returnType}]]`;
+          } else {
+            returnType = `*runtime.Poller[${returnType}]`;
+          }
+          break;
+        case 'handler':
+          // we only have a handler for operations that return a schema
+          if (method.kind !== 'lroPageableMethod') {
+            throw new CodegenError('InternalError', `handler being generated for non-pageable LRO ${method.name} which is unexpected`);
+          }
+          break;
+        case 'op':
+          returnType = '*http.Response';
+          break;
+      }
+      break;
+    case 'pageableMethod':
+      switch (apiType) {
+        case 'api':
+        case 'op':
+          // pager operations don't return an error
+          return [`*runtime.Pager[${returnType}]`];
+      }
+      break;
   }
   return [returnType, 'error'];
 }
 
-function generateLROBeginMethod(client: go.Client, method: go.LROMethod, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
+function generateLROBeginMethod(client: go.Client, method: go.LROMethod | go.LROPageableMethod, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
   const params = getAPIParametersSig(method, imports);
   const returns = generateReturnsInfo(method, 'api');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
@@ -1234,7 +1238,7 @@ function generateLROBeginMethod(client: go.Client, method: go.LROMethod, imports
   text += `func (client *${client.name}) ${fixUpMethodName(method)}(${params}) (${returns.join(', ')}) {\n`;
   let pollerType = 'nil';
   let pollerTypeParam = `[${method.responseEnvelope.name}]`;
-  if (go.isPageableMethod(method)) {
+  if (method.kind === 'lroPageableMethod') {
     // for paged LROs, we construct a pager and pass it to the LRO ctor.
     pollerTypeParam = `[*runtime.Pager${pollerTypeParam}]`;
     pollerType = '&pager';
@@ -1329,21 +1333,24 @@ function generateLROBeginMethod(client: go.Client, method: go.LROMethod, imports
   return text;
 }
 
-export function fixUpMethodName(method: go.Method): string {
-  if (go.isLROMethod(method)) {
-    return `Begin${method.name}`;
-  }
-  if (go.isPageableMethod(method)) {
-    let N = 'N';
-    let name = method.name;
-    if (method.name[0] !== method.name[0].toUpperCase()) {
-      // the method isn't exported; don't export the pager ctor
-      N = 'n';
-      // ensure correct casing of the emitted function name e.g.,
-      // "listThings" -> "newListThingsPager"
-      name = name[0].toUpperCase() + name.substring(1);
+export function fixUpMethodName(method: go.MethodType): string {
+  switch (method.kind) {
+    case 'lroMethod':
+    case 'lroPageableMethod':
+      return `Begin${method.name}`;
+    case 'pageableMethod': {
+      let N = 'N';
+      let name = method.name;
+      if (method.name[0] !== method.name[0].toUpperCase()) {
+        // the method isn't exported; don't export the pager ctor
+        N = 'n';
+        // ensure correct casing of the emitted function name e.g.,
+        // "listThings" -> "newListThingsPager"
+        name = name[0].toUpperCase() + name.substring(1);
+      }
+      return `${N}ew${name}Pager`;
     }
-    return `${N}ew${name}Pager`;
+    case 'method':
+      return method.name;
   }
-  return method.name;
 }

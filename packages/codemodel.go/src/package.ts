@@ -142,7 +142,7 @@ export class CodeModel implements CodeModel {
   
     this.clients.sort((a: client.Client, b: client.Client) => { return sortAscending(a.name, b.name); });
     for (const client of this.clients) {
-      client.methods.sort((a: client.Method, b: client.Method) => { return sortAscending(a.name, b.name); });
+      client.methods.sort((a: client.MethodType, b: client.MethodType) => { return sortAscending(a.name, b.name); });
       client.clientAccessors.sort((a: client.ClientAccessor, b: client.ClientAccessor) => { return sortAscending(a.name, b.name); });
       for (const method of client.methods) {
         method.httpStatusCodes.sort();
