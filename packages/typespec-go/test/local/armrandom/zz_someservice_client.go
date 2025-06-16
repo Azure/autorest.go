@@ -33,6 +33,58 @@ func NewSomeServiceClient(credential azcore.TokenCredential, options *arm.Client
 	return client, nil
 }
 
+// CheckTrialAvailability - Return trial status for subscription by region
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - SomeServiceClientCheckTrialAvailabilityOptions contains the optional parameters for the SomeServiceClient.CheckTrialAvailability
+//     method.
+func (client *SomeServiceClient) CheckTrialAvailability(ctx context.Context, options *SomeServiceClientCheckTrialAvailabilityOptions) (SomeServiceClientCheckTrialAvailabilityResponse, error) {
+	var err error
+	const operationName = "SomeServiceClient.CheckTrialAvailability"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.checkTrialAvailabilityCreateRequest(ctx, options)
+	if err != nil {
+		return SomeServiceClientCheckTrialAvailabilityResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return SomeServiceClientCheckTrialAvailabilityResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return SomeServiceClientCheckTrialAvailabilityResponse{}, err
+	}
+	resp, err := client.checkTrialAvailabilityHandleResponse(httpResp)
+	return resp, err
+}
+
+// checkTrialAvailabilityCreateRequest creates the CheckTrialAvailability request.
+func (client *SomeServiceClient) checkTrialAvailabilityCreateRequest(ctx context.Context, options *SomeServiceClientCheckTrialAvailabilityOptions) (*policy.Request, error) {
+	req, err := runtime.NewRequest(ctx, http.MethodPost, client.internal.Endpoint())
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	if options != nil && options.SKU != nil {
+		req.Raw().Header["Content-Type"] = []string{"application/json"}
+		if err := runtime.MarshalAsJSON(req, *options.SKU); err != nil {
+			return nil, err
+		}
+		return req, nil
+	}
+	return req, nil
+}
+
+// checkTrialAvailabilityHandleResponse handles the CheckTrialAvailability response.
+func (client *SomeServiceClient) checkTrialAvailabilityHandleResponse(resp *http.Response) (SomeServiceClientCheckTrialAvailabilityResponse, error) {
+	result := SomeServiceClientCheckTrialAvailabilityResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Trial); err != nil {
+		return SomeServiceClientCheckTrialAvailabilityResponse{}, err
+	}
+	return result, nil
+}
+
 // NewListThingsPager - Misc test APIs
 //
 // Generated from API version 2024-03-01

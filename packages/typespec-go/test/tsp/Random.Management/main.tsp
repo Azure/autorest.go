@@ -36,6 +36,14 @@ interface SomeService {
   listThings(
     ...ApiVersionParameter,
   ): ThingsListResult | ErrorResponse;
+
+  @doc("Return trial status for subscription by region")
+  @armResourceAction(Location)
+  checkTrialAvailability(
+    @doc("Optionally, check for a specific SKU")
+    @bodyRoot
+    sku?: Azure.ResourceManager.Foundations.Sku,
+  ): ArmResponse<Trial> | ErrorResponse;
 }
 
 @doc("List of made up things")
@@ -69,4 +77,58 @@ model FakeInfo {
 
   @doc("Some integer value")
   someNumber: int32;
+}
+
+@doc("A location resource")
+@subscriptionResource
+model Location is ProxyResource<LocationProperties> {
+  #suppress "@azure-tools/typespec-azure-core/no-private-usage" "Legacy DO NOT EVER COPY THIS"
+  @doc("A location in a subscription")
+  @pattern("^[-\\w\\._]+$")
+  @key("location")
+  @path
+  @segment("locations")
+  @Azure.ResourceManager.CommonTypes.Private.armCommonParameter(
+    "LocationParameter",
+    Azure.ResourceManager.CommonTypes.Versions.v5
+  )
+  name: string;
+}
+
+@doc("The properties of a location resource")
+model LocationProperties {
+  @doc("The provisioning state of the resource.")
+  @visibility(Lifecycle.Read)
+  provisioningState?: LocationProvisioningState;
+}
+
+@doc("location provisioning state")
+union LocationProvisioningState {
+  string,
+  ResourceProvisioningState,
+}
+
+@doc("Subscription trial availability")
+model Trial {
+  @doc("Trial status")
+  @visibility(Lifecycle.Read)
+  status?: TrialStatus;
+
+  @doc("Number of trial hosts available")
+  @visibility(Lifecycle.Read)
+  availableHosts?: int32;
+}
+
+@doc("trial status")
+union TrialStatus {
+  string,
+
+  @doc("is available")
+  TrialAvailable: "TrialAvailable",
+
+  @doc("is used")
+  TrialUsed: "TrialUsed",
+
+  @doc("is disabled")
+  TrialDisabled: "TrialDisabled",
 }
