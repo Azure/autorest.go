@@ -176,7 +176,7 @@ export class clientAdapter {
   }
 
   private adaptMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, goClient: go.Client) {
-    let method: go.Method | go.LROMethod | go.LROPageableMethod | go.PageableMethod;
+    let method: go.MethodType;
     const naming = new go.MethodNaming(getEscapedReservedName(uncapitalize(ensureNameCase(sdkMethod.name)), 'Operation'), ensureNameCase(`${sdkMethod.name}CreateRequest`, true),
       ensureNameCase(`${sdkMethod.name}HandleResponse`, true));
 
