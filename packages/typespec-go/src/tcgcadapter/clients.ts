@@ -176,7 +176,7 @@ export class clientAdapter {
   }
 
   private adaptMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, goClient: go.Client) {
-    let method: go.Method | go.LROMethod | go.LROPageableMethod | go.PageableMethod;
+    let method: go.MethodType;
     const naming = new go.MethodNaming(getEscapedReservedName(uncapitalize(ensureNameCase(sdkMethod.name)), 'Operation'), ensureNameCase(`${sdkMethod.name}CreateRequest`, true),
       ensureNameCase(`${sdkMethod.name}HandleResponse`, true));
 
@@ -212,17 +212,17 @@ export class clientAdapter {
       method = new go.PageableMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
       if (sdkMethod.nextLinkPath) {
         // TODO: handle nested next link
-        (<go.PageableMethod>method).nextLinkName = capitalize(ensureNameCase(sdkMethod.nextLinkPath));
+        method.nextLinkName = capitalize(ensureNameCase(sdkMethod.nextLinkPath));
       }
     } else if (sdkMethod.kind === 'lro') {
       method = new go.LROMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
       const lroOptions = this.hasDecorator('Azure.Core.@useFinalStateVia', sdkMethod.decorators);
       if (lroOptions) {
-        (<go.LROMethod>method).finalStateVia = <go.FinalStateVia>lroOptions['finalState'];
+        method.finalStateVia = <go.FinalStateVia>lroOptions['finalState'];
       }
       if (sdkMethod.lroMetadata.finalResponse?.resultSegments) {
         // 'resultSegments' is designed for furture extensibility, currently only has one segment
-        (<go.LROMethod>method).operationLocationResultPath = sdkMethod.lroMetadata.finalResponse.resultSegments.map((segment) => {
+        method.operationLocationResultPath = sdkMethod.lroMetadata.finalResponse.resultSegments.map((segment) => {
           return (<tcgc.SdkBodyModelPropertyType>segment).serializationOptions.json?.name;
         }).join('.');
       }
@@ -246,33 +246,33 @@ export class clientAdapter {
     return undefined;
   }
 
-  private populateMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod) {
-    if (go.isMethod(method)) {
-      let prefix = method.client.name;
-      if (this.opts['single-client']) {
-        prefix = '';
-      }
-      if (go.isLROMethod(method)) {
-        prefix += 'Begin';
-      }
-      let optionalParamsGroupName = `${prefix}${method.name}Options`;
-      if (sdkMethod.access === 'internal') {
-        optionalParamsGroupName = uncapitalize(optionalParamsGroupName);
-      }
-      let optsGroupName = 'options';
-      // if there's an existing parameter with the name options then pick something else
-      for (const param of sdkMethod.parameters) {
-        if (param.name === optsGroupName) {
-          optsGroupName = 'opts';
-          break;
-        }
-      }
-      method.optionalParamsGroup = new go.ParameterGroup(optsGroupName, optionalParamsGroupName, false, 'method');
-      method.optionalParamsGroup.docs.summary = createOptionsTypeDescription(optionalParamsGroupName, this.getMethodNameForDocComment(method));
-      method.responseEnvelope = this.adaptResponseEnvelope(sdkMethod, method);
-    } else {
+  private populateMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType | go.NextPageMethod) {
+    if (method.kind === 'nextPageMethod') {
       throw new AdapterError('UnsupportedTsp', `unsupported method kind ${sdkMethod.kind}`, sdkMethod.__raw?.node ?? NoTarget);
     }
+
+    let prefix = method.client.name;
+    if (this.opts['single-client']) {
+      prefix = '';
+    }
+    if (go.isLROMethod(method)) {
+      prefix += 'Begin';
+    }
+    let optionalParamsGroupName = `${prefix}${method.name}Options`;
+    if (sdkMethod.access === 'internal') {
+      optionalParamsGroupName = uncapitalize(optionalParamsGroupName);
+    }
+    let optsGroupName = 'options';
+    // if there's an existing parameter with the name options then pick something else
+    for (const param of sdkMethod.parameters) {
+      if (param.name === optsGroupName) {
+        optsGroupName = 'opts';
+        break;
+      }
+    }
+    method.optionalParamsGroup = new go.ParameterGroup(optsGroupName, optionalParamsGroupName, false, 'method');
+    method.optionalParamsGroup.docs.summary = createOptionsTypeDescription(optionalParamsGroupName, this.getMethodNameForDocComment(method));
+    method.responseEnvelope = this.adaptResponseEnvelope(sdkMethod, method);
 
     // find the api version param to use for the doc comment.
     // we can't use sdkMethod.apiVersions as that includes all
@@ -294,11 +294,11 @@ export class clientAdapter {
     }
   }
 
-  private adaptMethodParameters(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod): Map<tcgc.SdkHttpParameter, Array<go.Parameter>> {
+  private adaptMethodParameters(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType | go.NextPageMethod): Map<tcgc.SdkHttpParameter, Array<go.Parameter>> {
     const paramMapping = new Map<tcgc.SdkHttpParameter, Array<go.Parameter>>();
 
     let optionalGroup: go.ParameterGroup | undefined;
-    if (go.isMethod(method)) {
+    if (method.kind !== 'nextPageMethod') {
       // NextPageMethods don't have optional params
       optionalGroup = method.optionalParamsGroup;
       if (go.isLROMethod(method)) {
@@ -570,17 +570,24 @@ export class clientAdapter {
     return adaptedParam;
   }
 
-  private getMethodNameForDocComment(method: go.Method): string {
-    let methodName = method.name;
-    if (go.isLROMethod(method)) {
-      methodName = `Begin${methodName}`;
-    } else if (go.isPageableMethod(method)) {
-      methodName = `New${methodName}Pager`;
+  private getMethodNameForDocComment(method: go.MethodType): string {
+    let methodName: string;
+    switch (method.kind) {
+      case 'lroMethod':
+      case 'lroPageableMethod':
+        methodName = `Begin${method.name}`;
+        break;
+      case 'method':
+        methodName = method.name;
+        break;
+      case 'pageableMethod':
+        methodName = `New${method.name}Pager`;
+        break;
     }
     return `${method.client.name}.${methodName}`;
   }
 
-  private adaptResponseEnvelope(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method): go.ResponseEnvelope {
+  private adaptResponseEnvelope(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType): go.ResponseEnvelope {
     // TODO: add Envelope suffix if name collides with existing type
     let prefix = method.client.name;
     if (this.opts['single-client']) {
@@ -828,7 +835,7 @@ export class clientAdapter {
     }
   }
 
-  private adaptHttpOperationExamples(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method, paramMapping: Map<tcgc.SdkHttpParameter, Array<go.Parameter>>) {
+  private adaptHttpOperationExamples(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType, paramMapping: Map<tcgc.SdkHttpParameter, Array<go.Parameter>>) {
     if (sdkMethod.operation.examples) {
       for (const example of sdkMethod.operation.examples) {
         const goExample = new go.MethodExample(example.name, {summary: example.doc}, example.filePath);

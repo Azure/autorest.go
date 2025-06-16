@@ -29,32 +29,32 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
     for (const op of values(group.operations)) {
       const httpPath = <string>op.requests![0].protocol.http!.path;
       const httpMethod = op.requests![0].protocol.http!.method;
-      let method: go.Method | go.LROMethod | go.LROPageableMethod | go.PageableMethod;
+      let method: go.MethodType;
       const naming = adaptMethodNaming(op);
 
       if (helpers.isLROOperation(op) && helpers.isPageableOperation(op)) {
         method = new go.LROPageableMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
-        (<go.LROPageableMethod>method).finalStateVia = (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']);
-        (<go.LROPageableMethod>method).nextLinkName = op.language.go!.paging.nextLinkName;
+        method.finalStateVia = (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']);
+        method.nextLinkName = op.language.go!.paging.nextLinkName;
         if (op.language.go!.paging.nextLinkOperation) {
           // adapt the next link operation
           const nextPageMethod = new go.NextPageMethod(op.language.go!.paging.nextLinkOperation.language.go.name, client, httpPath, httpMethod, getStatusCodes(op.language.go!.paging.nextLinkOperation));
           populateMethod(op.language.go!.paging.nextLinkOperation, nextPageMethod, m4CodeModel, codeModel);
-          (<go.LROPageableMethod>method).nextPageMethod = nextPageMethod;
+          method.nextPageMethod = nextPageMethod;
         }
       } else if (helpers.isLROOperation(op)) {
         method = new go.LROMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
-        (<go.LROMethod>method).finalStateVia = (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']);
+        method.finalStateVia = (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']);
       } else if (helpers.isPageableOperation(op)) {
         if (op.language.go!.paging.isNextOp) {
           continue;
         }
         method = new go.PageableMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
-        (<go.PageableMethod>method).nextLinkName = op.language.go!.paging.nextLinkName;
+        method.nextLinkName = op.language.go!.paging.nextLinkName;
         if (op.language.go!.paging.nextLinkOperation) {
           // adapt the next link operation
           const nextPageMethod = adaptNextPageMethod(op, m4CodeModel, client, codeModel);
-          (<go.PageableMethod>method).nextPageMethod = nextPageMethod;
+          method.nextPageMethod = nextPageMethod;
         }
       } else {
         method = new go.Method(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
@@ -97,8 +97,8 @@ function adaptNextPageMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, client
   return nextPageMethod;
 }
 
-function populateMethod(op: m4.Operation, method: go.Method | go.NextPageMethod, m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
-  if (go.isMethod(method)) {
+function populateMethod(op: m4.Operation, method: go.MethodType | go.NextPageMethod, m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
+  if (method.kind !== 'nextPageMethod') {
     if (hasDescription(op.language.go!)) {
       method.docs.description = op.language.go!.description;
     }
@@ -186,7 +186,7 @@ function adaptMethodLocation(location?: m4.ImplementationLocation): go.Parameter
   }
 }
 
-function adaptMethodParameters(op: m4.Operation, method: go.Method | go.NextPageMethod) {
+function adaptMethodParameters(op: m4.Operation, method: go.MethodType | go.NextPageMethod) {
   if (!op.parameters) {
     return;
   }
@@ -197,7 +197,7 @@ function adaptMethodParameters(op: m4.Operation, method: go.Method | go.NextPage
   }
 }
 
-function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel, op: m4.Operation, forMethod: go.Method): go.ResponseEnvelope {
+function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel, op: m4.Operation, forMethod: go.MethodType): go.ResponseEnvelope {
   const respEnvSchema = <m4.ObjectSchema>op.language.go!.responseEnv;
   const respEnv = new go.ResponseEnvelope(respEnvSchema.language.go!.name, {description: respEnvSchema.language.go!.description}, forMethod);
 
