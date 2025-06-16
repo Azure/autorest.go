@@ -809,7 +809,7 @@ function createPathParamsRegex(method: go.MethodType): string {
     }
     const toReplace = `{${param.pathSegment}}`;
     let replaceWith = `(?P<${sanitizeRegexpCaptureGroupName(param.pathSegment)}>[!#&$-;=?-\\[\\]_a-zA-Z0-9~%@]+)`;
-    if (param.kind === 'optional' || param.kind === 'flag') {
+    if (param.style === 'optional' || param.style === 'flag') {
       replaceWith += '?';
     }
     urlPath = urlPath.replace(toReplace, replaceWith);

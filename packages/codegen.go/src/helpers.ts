@@ -68,7 +68,7 @@ export function formatParameterTypeName(param: go.Parameter | go.ParameterGroup,
 }
 
 export function parameterByValue(param: go.Parameter): boolean {
-  return go.isRequiredParameter(param) || (param.location === 'client' && go.isClientSideDefault(param.kind))
+  return go.isRequiredParameter(param) || (param.location === 'client' && go.isClientSideDefault(param.style))
 }
 
 // sorts parameters by their required state, ordering required before optional
@@ -194,7 +194,7 @@ export function getParamName(param: go.Parameter): string {
     paramName = `client.${paramName}`;
   }
   // client parameters with default values aren't emitted as pointer-to-type
-  if (!go.isRequiredParameter(param) && !(param.location === 'client' && go.isClientSideDefault(param.kind)) && !(isParameter(param) && param.byValue)) {
+  if (!go.isRequiredParameter(param) && !(param.location === 'client' && go.isClientSideDefault(param.style)) && !(isParameter(param) && param.byValue)) {
     paramName = `*${paramName}`;
   }
   return paramName;
