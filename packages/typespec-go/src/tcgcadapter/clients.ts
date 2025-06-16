@@ -369,6 +369,7 @@ export class clientAdapter {
       let adaptedParam: go.Parameter;
       if (opParam.kind === 'body' && opParam.type.kind === 'model' && opParam.type.kind !== param.type.kind) {
         const paramStyle = this.adaptParameterStyle(param);
+        const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');
         const byVal = isTypePassedByValue(param.type);
         const contentType = this.adaptContentType(opParam.defaultContentType);
         const getSerializedNameFromProperty = function(property: tcgc.SdkBodyModelPropertyType): string | undefined {
@@ -397,14 +398,14 @@ export class clientAdapter {
             if (!serializedName) {
               throw new AdapterError('InternalError', `didn't find body model property for spread parameter ${param.name}`, param.__raw?.node ?? NoTarget);
             }
-            adaptedParam = new go.PartialBodyParameter(param.name, serializedName, contentType, this.ta.getPossibleType(param.type, true, true), paramStyle, byVal);
+            adaptedParam = new go.PartialBodyParameter(paramName, serializedName, contentType, this.ta.getPossibleType(param.type, true, true), paramStyle, byVal);
             break;
           }
           case 'binary':
             if (opParam.defaultContentType.match(/multipart/i)) {
-              adaptedParam = new go.MultipartFormBodyParameter(param.name, this.ta.getReadSeekCloser(false), paramStyle, byVal);
+              adaptedParam = new go.MultipartFormBodyParameter(paramName, this.ta.getReadSeekCloser(false), paramStyle, byVal);
             } else {
-              adaptedParam = new go.BodyParameter(param.name, contentType, `"${opParam.defaultContentType}"`, this.ta.getReadSeekCloser(false), paramStyle, byVal);
+              adaptedParam = new go.BodyParameter(paramName, contentType, `"${opParam.defaultContentType}"`, this.ta.getReadSeekCloser(false), paramStyle, byVal);
             }
             break;
           default:
@@ -512,8 +513,8 @@ export class clientAdapter {
     }
 
     let adaptedParam: go.Parameter;
-    const paramName = getEscapedReservedName(ensureNameCase(param.name, true), 'Param');
     const paramStyle = this.adaptParameterStyle(param);
+    const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');
     const byVal = isTypePassedByValue(param.type);
 
     if (param.kind === 'body') {
@@ -739,7 +740,8 @@ export class clientAdapter {
       case 'bytes':
         return 'ByteArray';
       case 'enum':
-        return type.name;
+      case 'model':
+        return ensureNameCase(type.name);
       case 'utcDateTime':
       case 'offsetDateTime':
         return 'Time';
@@ -755,8 +757,6 @@ export class clientAdapter {
       case 'int64':
       case 'int8':
         return capitalize(type.kind);
-      case 'model':
-        return type.name;
       case 'nullable':
         return this.recursiveTypeName(type.type, fromArray);
       case 'duration':

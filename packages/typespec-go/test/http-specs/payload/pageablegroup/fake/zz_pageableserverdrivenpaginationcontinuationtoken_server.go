@@ -114,7 +114,7 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 	newRequestHeaderResponseBodyPager := p.newRequestHeaderResponseBodyPager.get(req)
 	if newRequestHeaderResponseBodyPager == nil {
 		qp := req.URL.Query()
-		tokenParamParam := getOptional(getHeaderValue(req.Header, "token"))
+		tokenParam := getOptional(getHeaderValue(req.Header, "token"))
 		fooParam := getOptional(getHeaderValue(req.Header, "foo"))
 		barUnescaped, err := url.QueryUnescape(qp.Get("bar"))
 		if err != nil {
@@ -122,11 +122,11 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 		}
 		barParam := getOptional(barUnescaped)
 		var options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions
-		if tokenParamParam != nil || fooParam != nil || barParam != nil {
+		if tokenParam != nil || fooParam != nil || barParam != nil {
 			options = &pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions{
-				TokenParam: tokenParamParam,
-				Foo:        fooParam,
-				Bar:        barParam,
+				Token: tokenParam,
+				Foo:   fooParam,
+				Bar:   barParam,
 			}
 		}
 		resp := p.srv.NewRequestHeaderResponseBodyPager(options)
@@ -154,7 +154,7 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 	newRequestHeaderResponseHeaderPager := p.newRequestHeaderResponseHeaderPager.get(req)
 	if newRequestHeaderResponseHeaderPager == nil {
 		qp := req.URL.Query()
-		tokenParamParam := getOptional(getHeaderValue(req.Header, "token"))
+		tokenParam := getOptional(getHeaderValue(req.Header, "token"))
 		fooParam := getOptional(getHeaderValue(req.Header, "foo"))
 		barUnescaped, err := url.QueryUnescape(qp.Get("bar"))
 		if err != nil {
@@ -162,11 +162,11 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 		}
 		barParam := getOptional(barUnescaped)
 		var options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions
-		if tokenParamParam != nil || fooParam != nil || barParam != nil {
+		if tokenParam != nil || fooParam != nil || barParam != nil {
 			options = &pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions{
-				TokenParam: tokenParamParam,
-				Foo:        fooParam,
-				Bar:        barParam,
+				Token: tokenParam,
+				Foo:   fooParam,
+				Bar:   barParam,
 			}
 		}
 		resp := p.srv.NewRequestHeaderResponseHeaderPager(options)
@@ -194,11 +194,11 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 	newRequestQueryResponseBodyPager := p.newRequestQueryResponseBodyPager.get(req)
 	if newRequestQueryResponseBodyPager == nil {
 		qp := req.URL.Query()
-		tokenParamUnescaped, err := url.QueryUnescape(qp.Get("token"))
+		tokenUnescaped, err := url.QueryUnescape(qp.Get("token"))
 		if err != nil {
 			return nil, err
 		}
-		tokenParamParam := getOptional(tokenParamUnescaped)
+		tokenParam := getOptional(tokenUnescaped)
 		fooParam := getOptional(getHeaderValue(req.Header, "foo"))
 		barUnescaped, err := url.QueryUnescape(qp.Get("bar"))
 		if err != nil {
@@ -206,11 +206,11 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 		}
 		barParam := getOptional(barUnescaped)
 		var options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyOptions
-		if tokenParamParam != nil || fooParam != nil || barParam != nil {
+		if tokenParam != nil || fooParam != nil || barParam != nil {
 			options = &pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyOptions{
-				TokenParam: tokenParamParam,
-				Foo:        fooParam,
-				Bar:        barParam,
+				Token: tokenParam,
+				Foo:   fooParam,
+				Bar:   barParam,
 			}
 		}
 		resp := p.srv.NewRequestQueryResponseBodyPager(options)
@@ -238,11 +238,11 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 	newRequestQueryResponseHeaderPager := p.newRequestQueryResponseHeaderPager.get(req)
 	if newRequestQueryResponseHeaderPager == nil {
 		qp := req.URL.Query()
-		tokenParamUnescaped, err := url.QueryUnescape(qp.Get("token"))
+		tokenUnescaped, err := url.QueryUnescape(qp.Get("token"))
 		if err != nil {
 			return nil, err
 		}
-		tokenParamParam := getOptional(tokenParamUnescaped)
+		tokenParam := getOptional(tokenUnescaped)
 		fooParam := getOptional(getHeaderValue(req.Header, "foo"))
 		barUnescaped, err := url.QueryUnescape(qp.Get("bar"))
 		if err != nil {
@@ -250,11 +250,11 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 		}
 		barParam := getOptional(barUnescaped)
 		var options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderOptions
-		if tokenParamParam != nil || fooParam != nil || barParam != nil {
+		if tokenParam != nil || fooParam != nil || barParam != nil {
 			options = &pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderOptions{
-				TokenParam: tokenParamParam,
-				Foo:        fooParam,
-				Bar:        barParam,
+				Token: tokenParam,
+				Foo:   fooParam,
+				Bar:   barParam,
 			}
 		}
 		resp := p.srv.NewRequestQueryResponseHeaderPager(options)

@@ -4,6 +4,12 @@
 
 package armrandom
 
+// SomeServiceClientCheckTrialAvailabilityResponse contains the response from method SomeServiceClient.CheckTrialAvailability.
+type SomeServiceClientCheckTrialAvailabilityResponse struct {
+	// Subscription trial availability
+	Trial
+}
+
 // SomeServiceClientListThingsResponse contains the response from method SomeServiceClient.NewListThingsPager.
 type SomeServiceClientListThingsResponse struct {
 	// List of made up things

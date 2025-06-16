@@ -49,7 +49,7 @@ type BasicClientListOptions struct {
 	Orderby []string
 
 	// Select the specified fields to be included in the response.
-	SelectParam []string
+	Select []string
 
 	// The number of result items to skip.
 	Skip *int32

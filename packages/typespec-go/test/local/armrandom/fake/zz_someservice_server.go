@@ -6,6 +6,7 @@ package fake
 
 import (
 	"armrandom"
+	"context"
 	"errors"
 	"fmt"
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
@@ -13,10 +14,15 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"net/http"
+	"reflect"
 )
 
 // SomeServiceServer is a fake server for instances of the armrandom.SomeServiceClient type.
 type SomeServiceServer struct {
+	// CheckTrialAvailability is the fake for method SomeServiceClient.CheckTrialAvailability
+	// HTTP status codes to indicate success: http.StatusOK
+	CheckTrialAvailability func(ctx context.Context, options *armrandom.SomeServiceClientCheckTrialAvailabilityOptions) (resp azfake.Responder[armrandom.SomeServiceClientCheckTrialAvailabilityResponse], errResp azfake.ErrorResponder)
+
 	// NewListThingsPager is the fake for method SomeServiceClient.NewListThingsPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewListThingsPager func(options *armrandom.SomeServiceClientListThingsOptions) (resp azfake.PagerResponder[armrandom.SomeServiceClientListThingsResponse])
@@ -62,6 +68,8 @@ func (s *SomeServiceServerTransport) dispatchToMethodFake(req *http.Request, met
 		}
 		if !intercepted {
 			switch method {
+			case "SomeServiceClient.CheckTrialAvailability":
+				res.resp, res.err = s.dispatchCheckTrialAvailability(req)
 			case "SomeServiceClient.NewListThingsPager":
 				res.resp, res.err = s.dispatchNewListThingsPager(req)
 			default:
@@ -81,6 +89,35 @@ func (s *SomeServiceServerTransport) dispatchToMethodFake(req *http.Request, met
 	case res := <-resultChan:
 		return res.resp, res.err
 	}
+}
+
+func (s *SomeServiceServerTransport) dispatchCheckTrialAvailability(req *http.Request) (*http.Response, error) {
+	if s.srv.CheckTrialAvailability == nil {
+		return nil, &nonRetriableError{errors.New("fake for method CheckTrialAvailability not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[armrandom.SKU](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *armrandom.SomeServiceClientCheckTrialAvailabilityOptions
+	if !reflect.ValueOf(body).IsZero() {
+		options = &armrandom.SomeServiceClientCheckTrialAvailabilityOptions{
+			SKU: &body,
+		}
+	}
+	respr, errRespr := s.srv.CheckTrialAvailability(req.Context(), options)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Trial, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (s *SomeServiceServerTransport) dispatchNewListThingsPager(req *http.Request) (*http.Response, error) {

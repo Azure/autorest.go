@@ -1,5 +1,11 @@
 # Release History
 
+## 0.5.0 (unreleased)
+
+### Breaking Changes
+
+* Fixed field names for optional parameters and monomorphic responses to align with `autorest.go` code generator.
+
 ## 0.4.12 (2025-06-11)
 
 ### Features Add
