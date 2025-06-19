@@ -44,11 +44,11 @@ func TestServicePathParamClient_WithQuery(t *testing.T) {
 	serviceClient, err := NewServiceClient(nil)
 	require.NoError(t, err)
 	client := serviceClient.NewServicePathParamClient()
-	_, err = client.WithQuery(context.Background(), "blob1", &ServicePathParamClientWithQueryOptions{FormatParam: to.Ptr("text")})
+	_, err = client.WithQuery(context.Background(), "blob1", &ServicePathParamClientWithQueryOptions{Format: to.Ptr("text")})
 	require.Contains(t, err.Error(), "Not Found")
 	_, err = client.WithQuery(context.Background(), "", nil)
 	assert.Error(t, err)
 	assert.Equal(t, "parameter blobName cannot be empty", err.Error())
-	_, err = client.WithQuery(context.Background(), "sample-blob", &ServicePathParamClientWithQueryOptions{FormatParam: to.Ptr("text")})
+	_, err = client.WithQuery(context.Background(), "sample-blob", &ServicePathParamClientWithQueryOptions{Format: to.Ptr("text")})
 	assert.NoError(t, err)
 }
