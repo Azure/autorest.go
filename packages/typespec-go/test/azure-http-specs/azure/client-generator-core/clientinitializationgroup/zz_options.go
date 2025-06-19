@@ -17,7 +17,7 @@ type ServiceChildClientGetStandaloneOptions struct {
 
 // ServiceChildClientWithQueryOptions contains the optional parameters for the ServiceChildClient.WithQuery method.
 type ServiceChildClientWithQueryOptions struct {
-	FormatParam *string
+	Format *string
 }
 
 // ServiceHeaderParamClientWithBodyOptions contains the optional parameters for the ServiceHeaderParamClient.WithBody method.
@@ -78,5 +78,5 @@ type ServicePathParamClientGetStandaloneOptions struct {
 
 // ServicePathParamClientWithQueryOptions contains the optional parameters for the ServicePathParamClient.WithQuery method.
 type ServicePathParamClientWithQueryOptions struct {
-	FormatParam *string
+	Format *string
 }

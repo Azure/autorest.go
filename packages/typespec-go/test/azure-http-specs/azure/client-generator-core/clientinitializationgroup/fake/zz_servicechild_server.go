@@ -166,15 +166,15 @@ func (s *ServiceChildServerTransport) dispatchWithQuery(req *http.Request) (*htt
 	if err != nil {
 		return nil, err
 	}
-	formatParamUnescaped, err := url.QueryUnescape(qp.Get("format"))
+	formatUnescaped, err := url.QueryUnescape(qp.Get("format"))
 	if err != nil {
 		return nil, err
 	}
-	formatParamParam := getOptional(formatParamUnescaped)
+	formatParam := getOptional(formatUnescaped)
 	var options *clientinitializationgroup.ServiceChildClientWithQueryOptions
-	if formatParamParam != nil {
+	if formatParam != nil {
 		options = &clientinitializationgroup.ServiceChildClientWithQueryOptions{
-			FormatParam: formatParamParam,
+			Format: formatParam,
 		}
 	}
 	respr, errRespr := s.srv.WithQuery(req.Context(), blobNameParam, options)

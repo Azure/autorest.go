@@ -146,8 +146,8 @@ func (client *ServiceChildClient) withQueryCreateRequest(ctx context.Context, bl
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	if options != nil && options.FormatParam != nil {
-		reqQP.Set("format", *options.FormatParam)
+	if options != nil && options.Format != nil {
+		reqQP.Set("format", *options.Format)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil

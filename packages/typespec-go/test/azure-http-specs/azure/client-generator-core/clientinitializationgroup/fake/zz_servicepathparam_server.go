@@ -166,15 +166,15 @@ func (s *ServicePathParamServerTransport) dispatchWithQuery(req *http.Request) (
 	if err != nil {
 		return nil, err
 	}
-	formatParamUnescaped, err := url.QueryUnescape(qp.Get("format"))
+	formatUnescaped, err := url.QueryUnescape(qp.Get("format"))
 	if err != nil {
 		return nil, err
 	}
-	formatParamParam := getOptional(formatParamUnescaped)
+	formatParam := getOptional(formatUnescaped)
 	var options *clientinitializationgroup.ServicePathParamClientWithQueryOptions
-	if formatParamParam != nil {
+	if formatParam != nil {
 		options = &clientinitializationgroup.ServicePathParamClientWithQueryOptions{
-			FormatParam: formatParamParam,
+			Format: formatParam,
 		}
 	}
 	respr, errRespr := s.srv.WithQuery(req.Context(), blobNameParam, options)
