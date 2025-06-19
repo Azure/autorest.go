@@ -29,32 +29,32 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
     for (const op of values(group.operations)) {
       const httpPath = <string>op.requests![0].protocol.http!.path;
       const httpMethod = op.requests![0].protocol.http!.method;
-      let method: go.Method | go.LROMethod | go.LROPageableMethod | go.PageableMethod;
+      let method: go.MethodType;
       const naming = adaptMethodNaming(op);
 
       if (helpers.isLROOperation(op) && helpers.isPageableOperation(op)) {
         method = new go.LROPageableMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
-        (<go.LROPageableMethod>method).finalStateVia = (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']);
-        (<go.LROPageableMethod>method).nextLinkName = op.language.go!.paging.nextLinkName;
+        method.finalStateVia = (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']);
+        method.nextLinkName = op.language.go!.paging.nextLinkName;
         if (op.language.go!.paging.nextLinkOperation) {
           // adapt the next link operation
           const nextPageMethod = new go.NextPageMethod(op.language.go!.paging.nextLinkOperation.language.go.name, client, httpPath, httpMethod, getStatusCodes(op.language.go!.paging.nextLinkOperation));
           populateMethod(op.language.go!.paging.nextLinkOperation, nextPageMethod, m4CodeModel, codeModel);
-          (<go.LROPageableMethod>method).nextPageMethod = nextPageMethod;
+          method.nextPageMethod = nextPageMethod;
         }
       } else if (helpers.isLROOperation(op)) {
         method = new go.LROMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
-        (<go.LROMethod>method).finalStateVia = (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']);
+        method.finalStateVia = (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']);
       } else if (helpers.isPageableOperation(op)) {
         if (op.language.go!.paging.isNextOp) {
           continue;
         }
         method = new go.PageableMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
-        (<go.PageableMethod>method).nextLinkName = op.language.go!.paging.nextLinkName;
+        method.nextLinkName = op.language.go!.paging.nextLinkName;
         if (op.language.go!.paging.nextLinkOperation) {
           // adapt the next link operation
           const nextPageMethod = adaptNextPageMethod(op, m4CodeModel, client, codeModel);
-          (<go.PageableMethod>method).nextPageMethod = nextPageMethod;
+          method.nextPageMethod = nextPageMethod;
         }
       } else {
         method = new go.Method(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
@@ -97,8 +97,8 @@ function adaptNextPageMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, client
   return nextPageMethod;
 }
 
-function populateMethod(op: m4.Operation, method: go.Method | go.NextPageMethod, m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
-  if (go.isMethod(method)) {
+function populateMethod(op: m4.Operation, method: go.MethodType | go.NextPageMethod, m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
+  if (method.kind !== 'nextPageMethod') {
     if (hasDescription(op.language.go!)) {
       method.docs.description = op.language.go!.description;
     }
@@ -164,7 +164,7 @@ function adaptClient(type: go.CodeModelType, group: m4.OperationGroup): go.Clien
   if (group.language.go!.hostParams) {
     for (const hostParam of values(<Array<m4.Parameter>>group.language.go!.hostParams)) {
       const uriParam = new go.URIParameter(hostParam.language.go!.name, hostParam.language.go!.serializedName, adaptURIPrameterType(hostParam.schema),
-        adaptParameterKind(hostParam), hostParam.language.go!.byValue, adaptMethodLocation(hostParam.implementation));
+        adaptParameterStyle(hostParam), hostParam.language.go!.byValue, adaptMethodLocation(hostParam.implementation));
       client.parameters.push(uriParam);
     }
   }
@@ -186,7 +186,7 @@ function adaptMethodLocation(location?: m4.ImplementationLocation): go.Parameter
   }
 }
 
-function adaptMethodParameters(op: m4.Operation, method: go.Method | go.NextPageMethod) {
+function adaptMethodParameters(op: m4.Operation, method: go.MethodType | go.NextPageMethod) {
   if (!op.parameters) {
     return;
   }
@@ -197,7 +197,7 @@ function adaptMethodParameters(op: m4.Operation, method: go.Method | go.NextPage
   }
 }
 
-function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel, op: m4.Operation, forMethod: go.Method): go.ResponseEnvelope {
+function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel, op: m4.Operation, forMethod: go.MethodType): go.ResponseEnvelope {
   const respEnvSchema = <m4.ObjectSchema>op.language.go!.responseEnv;
   const respEnv = new go.ResponseEnvelope(respEnvSchema.language.go!.name, {description: respEnvSchema.language.go!.description}, forMethod);
 
@@ -315,6 +315,8 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
     location = 'client';
   }
 
+  const style = adaptParameterStyle(param);
+
   switch (param.protocol.http?.in) {
     case 'body': {
       if (!op.requests![0].protocol.http!.mediaTypes) {
@@ -331,22 +333,21 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
         }
       }
       const bodyType = adaptPossibleType(param.schema);
-      const placement = adaptParameterKind(param);
       if (op.requests![0].protocol.http!.knownMediaType === KnownMediaType.Form) {
         const collectionFormat = adaptCollectionFormat(param);
         if (collectionFormat) {
           if (!go.isSliceType(bodyType)) {
             throw new Error(`unexpected type ${go.getTypeDeclaration(bodyType)} for FormBodyCollectionParameter ${param.language.go!.name}`);
           }
-          adaptedParam = new go.FormBodyCollectionParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, collectionFormat, placement, param.language.go!.byValue);
+          adaptedParam = new go.FormBodyCollectionParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, collectionFormat, style, param.language.go!.byValue);
         } else {
-          adaptedParam = new go.FormBodyParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, placement, param.language.go!.byValue);
+          adaptedParam = new go.FormBodyParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, style, param.language.go!.byValue);
         }
       } else if (op.requests![0].protocol.http!.knownMediaType === KnownMediaType.Multipart) {
-        adaptedParam = new go.MultipartFormBodyParameter(param.language.go!.name, bodyType, placement, param.language.go!.byValue);
+        adaptedParam = new go.MultipartFormBodyParameter(param.language.go!.name, bodyType, style, param.language.go!.byValue);
       } else {
         const format = adaptBodyFormat(op.requests![0].protocol);
-        adaptedParam = new go.BodyParameter(param.language.go!.name, format, contentType, bodyType, placement, param.language.go!.byValue);
+        adaptedParam = new go.BodyParameter(param.language.go!.name, format, contentType, bodyType, style, param.language.go!.byValue);
         (<go.BodyParameter>adaptedParam).xml = adaptXMLInfo(param.schema);
       }
 
@@ -359,18 +360,18 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
         if (!go.isMapType(headerType)) {
           throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderMapParameter ${param.language.go!.name}`);
         }
-        adaptedParam = new go.HeaderMapParameter(param.language.go!.name, param.language.go!.serializedName, headerType, param.schema.language.go!.headerCollectionPrefix, adaptParameterKind(param),
+        adaptedParam = new go.HeaderMapParameter(param.language.go!.name, param.language.go!.serializedName, headerType, param.schema.language.go!.headerCollectionPrefix, style,
           param.language.go!.byValue, location);
       } else if (collectionFormat) {
         const headerType = adaptPossibleType(param.schema, true);
         if (!go.isSliceType(headerType)) {
           throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderCollectionParameter ${param.language.go!.name}`);
         }
-        adaptedParam = new go.HeaderCollectionParameter(param.language.go!.name, param.language.go!.serializedName, headerType, collectionFormat, adaptParameterKind(param),
+        adaptedParam = new go.HeaderCollectionParameter(param.language.go!.name, param.language.go!.serializedName, headerType, collectionFormat, style,
           param.language.go!.byValue, location);
       } else {
         adaptedParam = new go.HeaderParameter(param.language.go!.name, param.language.go!.serializedName, adaptHeaderType(param.schema, true),
-          adaptParameterKind(param), param.language.go!.byValue, location);
+          style, param.language.go!.byValue, location);
       }
       break;
     }
@@ -382,10 +383,10 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
           throw new Error(`unexpected type ${go.getTypeDeclaration(pathType)} for PathCollectionParameter ${param.language.go!.name}`);
         }
         adaptedParam = new go.PathCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          pathType, collectionFormat, adaptParameterKind(param), param.language.go!.byValue, location);
+          pathType, collectionFormat, style, param.language.go!.byValue, location);
       } else {
         adaptedParam = new go.PathParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          adaptPathParameterType(param.schema), adaptParameterKind(param), param.language.go!.byValue, location);
+          adaptPathParameterType(param.schema), style, param.language.go!.byValue, location);
       }
       break;
     }
@@ -397,16 +398,16 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
           throw new Error(`unexpected type ${go.getTypeDeclaration(queryType)} for QueryCollectionParameter ${param.language.go!.name}`);
         }
         adaptedParam = new go.QueryCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          queryType, collectionFormat, adaptParameterKind(param), param.language.go!.byValue, location);
+          queryType, collectionFormat, style, param.language.go!.byValue, location);
       } else {
         adaptedParam = new go.QueryParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          adaptQueryParameterType(param.schema), adaptParameterKind(param), param.language.go!.byValue, location);
+          adaptQueryParameterType(param.schema), style, param.language.go!.byValue, location);
       }
       break;
     }
     case 'uri':
       adaptedParam = new go.URIParameter(param.language.go!.name, param.language.go!.serializedName, adaptURIPrameterType(param.schema),
-        adaptParameterKind(param), param.language.go!.byValue, adaptParameterlocation(param));
+        style, param.language.go!.byValue, adaptParameterlocation(param));
       break;
     default: {
       if (param.protocol.http?.in) {
@@ -417,9 +418,8 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
         adaptedParam = new go.ResumeTokenParameter();
       } else {
         const type = adaptPossibleType(param.schema);
-        const placement = adaptParameterKind(param);
         const paramLoc = adaptParameterlocation(param);
-        adaptedParam = new go.Parameter(param.language.go!.name, type, placement, param.language.go!.byValue, paramLoc);
+        adaptedParam = new go.Parameter(param.language.go!.name, type, style, param.language.go!.byValue, paramLoc);
       }
     }
   }
@@ -439,7 +439,7 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
     if (values(paramGroup.params).where((each: go.Parameter) => { return each.name === adaptedParam.name; }).count() === 0) {
       paramGroup.params.push(adaptedParam);
     }
-    if (adaptedParam.kind === 'required') {
+    if (adaptedParam.style === 'required') {
       // if at least one param within a group is required then the group must be required.
       // however, it's possible that the param group was initially created from a non-required
       // param. so we need to be sure to update it as required.
@@ -508,7 +508,7 @@ function adaptParameterlocation(param: m4.Parameter): go.ParameterLocation {
   }
 }
 
-function adaptParameterKind(param: m4.Parameter): go.ParameterKind {
+function adaptParameterStyle(param: m4.Parameter): go.ParameterStyle {
   if (param.clientDefaultValue) {
     const adaptedType = adaptPossibleType(param.schema);
     if (!go.isLiteralValueType(adaptedType)) {

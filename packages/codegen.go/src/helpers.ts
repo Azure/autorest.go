@@ -68,7 +68,7 @@ export function formatParameterTypeName(param: go.Parameter | go.ParameterGroup,
 }
 
 export function parameterByValue(param: go.Parameter): boolean {
-  return go.isRequiredParameter(param) || (param.location === 'client' && go.isClientSideDefault(param.kind))
+  return go.isRequiredParameter(param) || (param.location === 'client' && go.isClientSideDefault(param.style))
 }
 
 // sorts parameters by their required state, ordering required before optional
@@ -98,7 +98,7 @@ export function sortParametersByRequired(a: go.Parameter | go.ParameterGroup, b:
 
 // returns the parameters for the internal request creator method.
 // e.g. "i int, s string"
-export function getCreateRequestParametersSig(method: go.Method | go.NextPageMethod): string {
+export function getCreateRequestParametersSig(method: go.MethodType | go.NextPageMethod): string {
   const methodParams = getMethodParameters(method);
   const params = new Array<string>();
   params.push('ctx context.Context');
@@ -116,7 +116,7 @@ export function getCreateRequestParametersSig(method: go.Method | go.NextPageMet
 
 // returns the parameter names for an operation (excludes the param types).
 // e.g. "i, s"
-export function getCreateRequestParameters(method: go.Method): string {
+export function getCreateRequestParameters(method: go.MethodType): string {
   // NOTE: keep in sync with getCreateRequestParametersSig
   const methodParams = getMethodParameters(method);
   const params = new Array<string>();
@@ -128,7 +128,7 @@ export function getCreateRequestParameters(method: go.Method): string {
 }
 
 // returns the complete collection of method parameters
-export function getMethodParameters(method: go.Method | go.NextPageMethod, paramsFilter?: (p: Array<go.Parameter>) => Array<go.Parameter>): Array<go.Parameter | go.ParameterGroup> {
+export function getMethodParameters(method: go.MethodType | go.NextPageMethod, paramsFilter?: (p: Array<go.Parameter>) => Array<go.Parameter>): Array<go.Parameter | go.ParameterGroup> {
   const params = new Array<go.Parameter>();
   const paramGroups = new Array<go.ParameterGroup>();
   let methodParams = method.parameters;
@@ -167,7 +167,7 @@ export function getMethodParameters(method: go.Method | go.NextPageMethod, param
     return 1;
   });
   // add the optional param group last if it's not already in the list.
-  if (go.isMethod(method)) {
+  if (method.kind !== 'nextPageMethod') {
     if (!values(paramGroups).any(gp => { return gp.groupName === method.optionalParamsGroup.groupName; })) {
       paramGroups.push(method.optionalParamsGroup);
     }
@@ -194,7 +194,7 @@ export function getParamName(param: go.Parameter): string {
     paramName = `client.${paramName}`;
   }
   // client parameters with default values aren't emitted as pointer-to-type
-  if (!go.isRequiredParameter(param) && !(param.location === 'client' && go.isClientSideDefault(param.kind)) && !(isParameter(param) && param.byValue)) {
+  if (!go.isRequiredParameter(param) && !(param.location === 'client' && go.isClientSideDefault(param.style)) && !(isParameter(param) && param.byValue)) {
     paramName = `*${paramName}`;
   }
   return paramName;
@@ -359,7 +359,7 @@ export function formatLiteralValue(value: go.LiteralValue, withCast: boolean): s
 }
 
 // returns true if at least one of the responses has a schema
-export function hasSchemaResponse(method: go.Method): boolean {
+export function hasSchemaResponse(method: go.MethodType): boolean {
   const result = method.responseEnvelope.result;
   if (!result) {
     return false;
@@ -368,7 +368,7 @@ export function hasSchemaResponse(method: go.Method): boolean {
 }
 
 // returns the name of the response field within the response envelope
-export function getResultFieldName(method: go.Method): string {
+export function getResultFieldName(method: go.MethodType): string {
   const result = method.responseEnvelope.result;
   if (!result) {
     throw new CodegenError('InternalError', `missing result for method ${method.name}`);

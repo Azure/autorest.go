@@ -401,8 +401,8 @@ func (client *BasicClient) listCreateRequest(ctx context.Context, options *Basic
 			reqQP.Add("orderby", qv)
 		}
 	}
-	if options != nil && options.SelectParam != nil {
-		for _, qv := range options.SelectParam {
+	if options != nil && options.Select != nil {
+		for _, qv := range options.Select {
 			reqQP.Add("select", qv)
 		}
 	}

@@ -8,3 +8,49 @@ const (
 	moduleName    = "armrandom"
 	moduleVersion = "v0.1.0"
 )
+
+// SKUTier - This field is required to be implemented by the Resource Provider if the service has more than one tier, but
+// is not required on a PUT.
+type SKUTier string
+
+const (
+	// SKUTierBasic - The Basic service tier.
+	SKUTierBasic SKUTier = "Basic"
+	// SKUTierFree - The Free service tier.
+	SKUTierFree SKUTier = "Free"
+	// SKUTierPremium - The Premium service tier.
+	SKUTierPremium SKUTier = "Premium"
+	// SKUTierStandard - The Standard service tier.
+	SKUTierStandard SKUTier = "Standard"
+)
+
+// PossibleSKUTierValues returns the possible values for the SKUTier const type.
+func PossibleSKUTierValues() []SKUTier {
+	return []SKUTier{
+		SKUTierBasic,
+		SKUTierFree,
+		SKUTierPremium,
+		SKUTierStandard,
+	}
+}
+
+// TrialStatus - trial status
+type TrialStatus string
+
+const (
+	// TrialStatusTrialAvailable - is available
+	TrialStatusTrialAvailable TrialStatus = "TrialAvailable"
+	// TrialStatusTrialDisabled - is disabled
+	TrialStatusTrialDisabled TrialStatus = "TrialDisabled"
+	// TrialStatusTrialUsed - is used
+	TrialStatusTrialUsed TrialStatus = "TrialUsed"
+)
+
+// PossibleTrialStatusValues returns the possible values for the TrialStatus const type.
+func PossibleTrialStatusValues() []TrialStatus {
+	return []TrialStatus{
+		TrialStatusTrialAvailable,
+		TrialStatusTrialDisabled,
+		TrialStatusTrialUsed,
+	}
+}
