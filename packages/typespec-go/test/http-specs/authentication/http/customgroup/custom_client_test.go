@@ -22,6 +22,8 @@ func TestCustomClient_Invalid_SharedAccessKey(t *testing.T) {
 	ctx := policy.WithHTTPHeader(ctxInit, headers)
 	resp, err := client.Invalid(ctx, nil)
 	require.Error(t, err)
+	require.Contains(t, err.Error(), "invalid-api-key")
+	require.Contains(t, err.Error(), "403 Forbidden")
 	require.Zero(t, resp)
 }
 
