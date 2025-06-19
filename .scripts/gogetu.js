@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 import { execSync } from 'child_process';
-import { opendirSync, existsSync } from 'fs';
+import { opendirSync } from 'fs';
 import { join } from 'path';
 
 // default to the root of the repo
