@@ -16,12 +16,6 @@ if (args.length > 0) {
 recursiveUpdateGoMod(dir);
 
 function recursiveUpdateGoMod(cur) {
-    // console.log('Checking directory: ' + cur);
-    if (!existsSync(cur)) {
-        // Directory does not exist, skip
-        // console.log('Directory does not exist: ' + cur);
-        return;
-    }
     const dir = opendirSync(cur);
     while (true) {
         const dirEnt = dir.readSync()
