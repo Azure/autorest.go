@@ -53,7 +53,7 @@
     "@azure-tools/typespec-autorest": "0.57.0",
     "@azure-tools/typespec-azure-core": "0.57.0",
     "@azure-tools/typespec-azure-resource-manager": "0.57.0",
-    "@azure-tools/typespec-client-generator-core": "0.57.0",
+    "@azure-tools/typespec-client-generator-core": "0.57.1",
     "@types/node": "catalog:",
     "@typespec/compiler": "1.1.0",
     "@typespec/events": "0.71.0",
@@ -75,7 +75,7 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@azure-tools/typespec-client-generator-core": "0.57.0",
+    "@azure-tools/typespec-client-generator-core": "0.57.1",
     "@typespec/compiler": "^1.1.0",
     "@typespec/http": "^1.1.0"
   },
