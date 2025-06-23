@@ -69,18 +69,17 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
     }
 
     for (const respEnv of values(codeModel.responseEnvelopes)) {
-      if (!respEnv.result) {
-        continue;
-      }
-
-      if (go.isMonomorphicResult(respEnv.result)) {
-        if (go.isMapType(respEnv.result.monomorphicType)) {
-          trackDisciminator(respEnv.result.monomorphicType.valueType);
-        } else if (go.isSliceType(respEnv.result.monomorphicType)) {
-          trackDisciminator(respEnv.result.monomorphicType.elementType);
-        }
-      } else if (go.isPolymorphicResult(respEnv.result)) {
-        trackDisciminator(respEnv.result.interfaceType);
+      switch (respEnv.result?.kind) {
+        case 'monomorphicResult':
+          if (go.isMapType(respEnv.result.monomorphicType)) {
+            trackDisciminator(respEnv.result.monomorphicType.valueType);
+          } else if (go.isSliceType(respEnv.result.monomorphicType)) {
+            trackDisciminator(respEnv.result.monomorphicType.elementType);
+          }
+          break;
+        case 'polymorphicResult':
+          trackDisciminator(respEnv.result.interfaceType);
+          break;
       }
     }
   }

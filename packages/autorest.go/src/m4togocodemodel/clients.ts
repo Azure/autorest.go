@@ -204,15 +204,15 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
   // add any headers
   for (const prop of values(respEnvSchema.properties)) {
     if (prop.language.go!.fromHeader) {
-      let headerResp: go.HeaderResponse | go.HeaderMapResponse;
+      let headerResp: go.HeaderScalarResponse | go.HeaderMapResponse;
       if (prop.schema.language.go!.headerCollectionPrefix) {
         const headerType = adaptPossibleType(prop.schema, false);
         if (!go.isMapType(headerType)) {
           throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderMapResponse ${prop.language.go!.name}`);
         }
-        headerResp = new go.HeaderMapResponse(prop.language.go!.name, headerType, prop.schema.language.go!.headerCollectionPrefix, prop.language.go!.fromHeader, prop.language.go!.byValue);
+        headerResp = new go.HeaderMapResponse(prop.language.go!.name, headerType, prop.schema.language.go!.headerCollectionPrefix);
       } else {
-        headerResp = new go.HeaderResponse(prop.language.go!.name, adaptHeaderScalarType(prop.schema, false), prop.language.go!.fromHeader, prop.language.go!.byValue);
+        headerResp = new go.HeaderScalarResponse(prop.language.go!.name, adaptHeaderScalarType(prop.schema, false), prop.language.go!.fromHeader, prop.language.go!.byValue);
       }
       if (hasDescription(prop.language.go!)) {
         headerResp.docs.description = prop.language.go!.description;
@@ -230,7 +230,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
   if (helpers.isMultiRespOperation(op)) {
     respEnv.result = adaptAnyResult(op);
   } else if (resultProp.schema.type === m4.SchemaType.Binary) {
-    respEnv.result = new go.BinaryResult(resultProp.language.go!.name, 'binary');
+    respEnv.result = new go.BinaryResult(resultProp.language.go!.name);
   } else if (m4CodeModel.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head') {
     respEnv.result = new go.HeadAsBooleanResult(resultProp.language.go!.name);
   } else if (!resultProp.language.go!.embeddedType) {

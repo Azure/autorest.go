@@ -117,7 +117,7 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
       const operationName = fixUpMethodName(method);
       content += `\t// ${operationName} is the fake for method ${client.name}.${operationName}\n`;
       const successCodes = new Array<string>();
-      if (method.responseEnvelope.result && go.isAnyResult(method.responseEnvelope.result)) {
+      if (method.responseEnvelope.result?.kind === 'anyResult') {
         for (const httpStatus of getMethodStatusCodes(method)) {
           const result = method.responseEnvelope.result.httpStatusCodeType[httpStatus];
           if (!result) {
@@ -365,16 +365,16 @@ function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport
         const formattedStatusCodes = helpers.formatStatusCodes(method.httpStatusCodes);
         content += `\tif !contains([]int{${formattedStatusCodes}}, respContent.HTTPStatus) {\n`;
         content += `\t\treturn nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", respContent.HTTPStatus)}\n\t}\n`;
-        if (!method.responseEnvelope.result || go.isHeadAsBooleanResult(method.responseEnvelope.result)) {
+        if (!method.responseEnvelope.result || method.responseEnvelope.result.kind === 'headAsBooleanResult') {
           content += '\tresp, err := server.NewResponse(respContent, req, nil)\n';
-        } else if (go.isAnyResult(method.responseEnvelope.result)) {
+        } else if (method.responseEnvelope.result.kind === 'anyResult') {
           content += `\tresp, err := server.MarshalResponseAs${method.responseEnvelope.result.format}(respContent, server.GetResponse(respr).${getResultFieldName(method.responseEnvelope.result)}, req)\n`;
-        } else if (go.isBinaryResult(method.responseEnvelope.result)) {
+        } else if (method.responseEnvelope.result.kind === 'binaryResult') {
           content += '\tresp, err := server.NewResponse(respContent, req, &server.ResponseOptions{\n';
           content += `\t\tBody: server.GetResponse(respr).${getResultFieldName(method.responseEnvelope.result)},\n`;
           content += '\t\tContentType: req.Header.Get("Content-Type"),\n';
           content += '\t})\n';
-        } else if (go.isMonomorphicResult(method.responseEnvelope.result)) {
+        } else if (method.responseEnvelope.result.kind === 'monomorphicResult') {
           if (go.isBytesType(method.responseEnvelope.result.monomorphicType)) {
             const encoding = method.responseEnvelope.result.monomorphicType.encoding;
             content += `\tresp, err := server.MarshalResponseAsByteArray(respContent, server.GetResponse(respr).${getResultFieldName(method.responseEnvelope.result)}, runtime.Base64${encoding}Format, req)\n`;
@@ -396,7 +396,7 @@ function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport
             }
             content += `\tresp, err := server.MarshalResponseAs${method.responseEnvelope.result.format}(respContent, ${responseField}, req)\n`;
           }
-        } else if (go.isModelResult(method.responseEnvelope.result) || go.isPolymorphicResult(method.responseEnvelope.result)) {
+        } else if (method.responseEnvelope.result.kind === 'modelResult' || method.responseEnvelope.result.kind === 'polymorphicResult') {
           const respField = `.${getResultFieldName(method.responseEnvelope.result)}`;
           const responseField = `server.GetResponse(respr)${respField}`;
           content += `\tresp, err := server.MarshalResponseAs${method.responseEnvelope.result.format}(respContent, ${responseField}, req)\n`;
@@ -406,10 +406,10 @@ function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport
 
         // propagate any header response values into the *http.Response
         for (const header of values(method.responseEnvelope.headers)) {
-          if (go.isHeaderMapResponse(header)) {
+          if (header.kind === 'headerMapResponse') {
             content += `\tfor k, v := range server.GetResponse(respr).${header.fieldName} {\n`;
             content += '\t\tif v != nil {\n';
-            content += `\t\t\tresp.Header.Set("${header.collectionPrefix}"+k, *v)\n`;
+            content += `\t\t\tresp.Header.Set("${header.headerName}"+k, *v)\n`;
             content += '\t\t}\n';
             content += '\t}\n';
           } else {
@@ -1355,12 +1355,14 @@ function getAPIParametersSig(method: go.MethodType, imports: ImportManager, pkgN
 
 // copied from generator/helpers.ts but without the XML-specific stuff
 function getResultFieldName(result: go.AnyResult | go.BinaryResult | go.MonomorphicResult | go.PolymorphicResult | go.ModelResult): string {
-  if (go.isAnyResult(result)) {
-    return result.fieldName;
-  } else if (go.isModelResult(result)) {
-    return result.modelType.name;
-  } else if (go.isPolymorphicResult(result)) {
-    return result.interfaceType.name;
+  switch (result.kind) {
+    case 'anyResult':
+      return result.fieldName;
+    case 'modelResult':
+      return result.modelType.name;
+    case 'polymorphicResult':
+      return result.interfaceType.name;
+    default:
+      return result.fieldName;
   }
-  return result.fieldName;
 }

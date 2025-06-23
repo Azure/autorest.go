@@ -57,7 +57,7 @@ export async function generateResponses(codeModel: go.CodeModel): Promise<Respon
 
 function generateMarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
   let text = '';
-  if (go.isLROMethod(respEnv.method) && respEnv.result && go.isPolymorphicResult(respEnv.result)) {
+  if (go.isLROMethod(respEnv.method) && respEnv.result?.kind === 'polymorphicResult') {
     // fakes require a custom marshaller for polymorphics results so that the data is in the correct shape.
     // without it, the response envelope type name is the outer type which is incorrect.
     imports.add('encoding/json');
@@ -76,9 +76,9 @@ function generateUnmarshaller(respEnv: go.ResponseEnvelope, imports: ImportManag
   let polymorphicRes: go.PolymorphicResult | undefined;
   // in addition, if it's an LRO operation that returns a scalar, we will also need one
   let monomorphicRes: go.MonomorphicResult | undefined;
-  if (respEnv.result && go.isPolymorphicResult(respEnv.result)) {
+  if (respEnv.result?.kind === 'polymorphicResult') {
     polymorphicRes = respEnv.result;
-  } else if (go.isLROMethod(respEnv.method) && respEnv.result && go.isMonomorphicResult(respEnv.result)) {
+  } else if (go.isLROMethod(respEnv.method) && respEnv.result?.kind === 'monomorphicResult') {
     monomorphicRes = respEnv.result;
   }
 
@@ -125,17 +125,17 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
     let first = true;
 
     if (respEnv.result) {
-      if (go.isModelResult(respEnv.result) || go.isPolymorphicResult(respEnv.result)) {
+      if (respEnv.result.kind === 'modelResult' || respEnv.result.kind === 'polymorphicResult') {
         // anonymously embedded type always goes first
         text += helpers.formatDocComment(respEnv.result.docs);
-        text += `\t${go.getTypeDeclaration(go.getResultPossibleType(respEnv.result))}\n`;
+        text += `\t${go.getTypeDeclaration(go.getResultType(respEnv.result))}\n`;
         first = false;
       } else {
-        const type = go.getResultPossibleType(respEnv.result);
+        const type = go.getResultType(respEnv.result);
         imports.addImportForType(type);
 
         let tag = '';
-        if (go.isMonomorphicResult(respEnv.result) && respEnv.result.format === 'XML') {
+        if (respEnv.result.kind === 'monomorphicResult' && respEnv.result.format === 'XML') {
           // only emit tags for XML; JSON uses custom marshallers/unmarshallers
           if (respEnv.result.xml?.wraps) {
             tag = ` \`xml:"${respEnv.result.xml.wraps}"\``;
@@ -144,13 +144,22 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
           }
         }
 
-        fields.push({docs: respEnv.result.docs, field: `\t${respEnv.result.fieldName} ${getStar(respEnv.result.byValue)}${go.getTypeDeclaration(type)}${tag}\n`});
+        let byValue = true;
+        if (respEnv.result.kind === 'monomorphicResult') {
+          byValue = respEnv.result.byValue;
+        }
+
+        fields.push({docs: respEnv.result.docs, field: `\t${respEnv.result.fieldName} ${getStar(byValue)}${go.getTypeDeclaration(type)}${tag}\n`});
       }
     }
 
     for (const header of values(respEnv.headers)) {
       imports.addImportForType(header.type);
-      fields.push({docs: header.docs, field: `\t${header.fieldName} ${getStar(header.byValue)}${go.getTypeDeclaration(header.type)}\n`});
+      let byValue = true;
+      if (header.kind === 'headerScalarResponse') {
+        byValue = header.byValue;
+      }
+      fields.push({docs: header.docs, field: `\t${header.fieldName} ${getStar(byValue)}${go.getTypeDeclaration(header.type)}\n`});
     }
 
     fields.sort((a: {desc?: string, field: string}, b: {desc?: string, field: string}) => { return helpers.sortAscending(a.field, b.field); });

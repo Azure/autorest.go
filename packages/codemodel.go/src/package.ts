@@ -137,7 +137,7 @@ export class CodeModel implements CodeModel {
   
     this.responseEnvelopes.sort((a: result.ResponseEnvelope, b: result.ResponseEnvelope) => { return sortAscending(a.name, b.name); });
     for (const respEnv of this.responseEnvelopes) {
-      respEnv.headers.sort((a: result.HeaderResponse | result.HeaderMapResponse, b: result.HeaderResponse | result.HeaderMapResponse) => { return sortAscending(a.fieldName, b.fieldName); });
+      respEnv.headers.sort((a: result.HeaderScalarResponse | result.HeaderMapResponse, b: result.HeaderScalarResponse | result.HeaderMapResponse) => { return sortAscending(a.fieldName, b.fieldName); });
     }
   
     this.clients.sort((a: client.Client, b: client.Client) => { return sortAscending(a.name, b.name); });

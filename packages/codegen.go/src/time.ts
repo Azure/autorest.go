@@ -91,7 +91,7 @@ export async function generateTimeHelpers(codeModel: go.CodeModel, packageName?:
     }
 
     for (const respEnv of codeModel.responseEnvelopes) {
-      if (!respEnv.result || !go.isMonomorphicResult(respEnv.result) || respEnv.result.format !== 'JSON') {
+      if (!respEnv.result || respEnv.result.kind !== 'monomorphicResult' || respEnv.result.format !== 'JSON') {
         continue;
       }
       const unwrappedResult = recursiveUnwrapMapSlice(respEnv.result.monomorphicType);
@@ -121,7 +121,7 @@ export async function generateTimeHelpers(codeModel: go.CodeModel, packageName?:
           setHelper(header.type.dateTimeFormat);
         }
       }
-      if (respEnv.result && go.isMonomorphicResult(respEnv.result) && go.isTimeType(respEnv.result.monomorphicType)) {
+      if (respEnv.result?.kind === 'monomorphicResult' && go.isTimeType(respEnv.result.monomorphicType)) {
         setHelper(respEnv.result.monomorphicType.dateTimeFormat);
       }
     }
