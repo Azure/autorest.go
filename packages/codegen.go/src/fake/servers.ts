@@ -434,11 +434,12 @@ function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport
 }
 
 function dispatchForOperationBody(clientPkg: string, receiverName: string, method: go.MethodType, imports: ImportManager): string {
-  const numPathParams = values(method.parameters).where((each: go.Parameter) => { return go.isPathParameter(each) && !go.isLiteralParameter(each); }).count();
+  const methodParamGroups = helpers.getMethodParamGroups(method);
+  const numPathParams = values(methodParamGroups.pathParams).where((each: go.PathParameter) => { return !go.isLiteralParameter(each); }).count();
   let content = '';
   if (numPathParams > 0) {
     imports.add('regexp');
-    content += `\tconst regexStr = \`${createPathParamsRegex(method)}\`\n`;
+    content += `\tconst regexStr = \`${createPathParamsRegex(method, methodParamGroups.pathParams)}\`\n`;
     content += '\tregex := regexp.MustCompile(regexStr)\n';
     content += '\tmatches := regex.FindStringSubmatch(req.URL.EscapedPath())\n';
     // the total number of matches is the number of capture groups
@@ -446,31 +447,69 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     content += `\tif len(matches) < ${numPathParams + 1} {\n`;
     content += '\t\treturn nil, fmt.Errorf("failed to parse path %s", req.URL.Path)\n\t}\n';
   }
-  if (values(method.parameters).where((each: go.Parameter) => { return go.isQueryParameter(each) && each.location === 'method' && !go.isLiteralParameter(each); }).any()) {
+
+  const allQueryParams = methodParamGroups.encodedQueryParams.concat(methodParamGroups.unencodedQueryParams);
+  if (values(allQueryParams).where((each: go.QueryParameter) => { return each.location === 'method' && !go.isLiteralParameter(each); }).any()) {
     content += '\tqp := req.URL.Query()\n';
   }
 
-  const bodyParam = <go.BodyParameter | undefined>values(method.parameters).where((each: go.Parameter) => {
-    return go.isBodyParameter(each) || go.isFormBodyParameter(each) || go.isMultipartFormBodyParameter(each) || go.isPartialBodyParameter(each);
-  }).first();
+  // note that these are mutually exclusive
+  const bodyParam = methodParamGroups.bodyParam;
+  const formBodyParams = methodParamGroups.formBodyParams;
+  const multipartBodyParams = methodParamGroups.multipartBodyParams;
+  const partialBodyParams = methodParamGroups.partialBodyParams;
 
-  if (!bodyParam) {
-    // no body, just headers and/or query params
-  } else if (go.isMultipartFormBodyParameter(bodyParam)) {
+  if (bodyParam) {
+    switch (bodyParam.bodyFormat) {
+      case 'JSON':
+      case 'XML':
+        if (bodyParam && !go.isLiteralParameter(bodyParam)) {
+          imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
+          if (go.isBytesType(bodyParam.type)) {
+            content += `\tbody, err := server.UnmarshalRequestAsByteArray(req, runtime.Base64${bodyParam.type.encoding}Format)\n`;
+            content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+          } else if (go.isSliceType(bodyParam.type) && bodyParam.type.rawJSONAsBytes) {
+            content += '\tbody, err := io.ReadAll(req.Body)\n';
+            content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+            content += '\treq.Body.Close()\n';
+          } else if (go.isInterfaceType(bodyParam.type)) {
+            requiredHelpers.readRequestBody = true;
+            content += '\traw, err := readRequestBody(req)\n';
+            content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+            content += `\tbody, err := unmarshal${bodyParam.type.name}(raw)\n`;
+            content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+          } else {
+            let bodyTypeName = go.getTypeDeclaration(bodyParam.type, clientPkg);
+            if (go.isTimeType(bodyParam.type)) {
+              bodyTypeName = bodyParam.type.dateTimeFormat;
+            }
+            content += `\tbody, err := server.UnmarshalRequestAs${bodyParam.bodyFormat}[${bodyTypeName}](req)\n`;
+            content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+          }
+        }
+        break;
+      case 'Text':
+        if (bodyParam && !go.isLiteralParameter(bodyParam)) {
+          imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
+          content += '\tbody, err := server.UnmarshalRequestAsText(req)\n';
+          content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+        }
+        break;
+    }
+    // nothing to do for binary media type
+  } else if (multipartBodyParams.length > 0) {
     imports.add('io');
     imports.add('mime');
     imports.add('mime/multipart');
     content += '\t_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))\n';
     content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     content += '\treader := multipart.NewReader(req.Body, params["boundary"])\n';
-    for (const param of values(method.parameters)) {
-      if (go.isMultipartFormBodyParameter(param)) {
-        let pkgPrefix = '';
-        if (go.isConstantType(param.type) || go.isModelType(param.type)) {
-          pkgPrefix = clientPkg + '.';
-        }
-        content += `\tvar ${param.name} ${pkgPrefix}${go.getTypeDeclaration(param.type)}\n`;
+    for (const param of multipartBodyParams) {
+      let pkgPrefix = '';
+      if (go.isConstantType(param.type) || go.isModelType(param.type)) {
+        pkgPrefix = clientPkg + '.';
       }
+      content += `\tvar ${param.name} ${pkgPrefix}${go.getTypeDeclaration(param.type)}\n`;
     }
 
     content += '\tfor {\n';
@@ -605,94 +644,52 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
       return caseContent;
     };
 
-    for (const param of values(method.parameters)) {
-      if (go.isMultipartFormBodyParameter(param)) {
-        if (go.isModelType(param.type)) {
-          for (const field of param.type.fields) {
-            content += emitCase(field.serializedName, `${param.name}.${field.name}`, field.type);
-          }
-        } else {
-          content += emitCase(param.name, param.name, param.type);
+    for (const param of multipartBodyParams) {
+      if (go.isModelType(param.type)) {
+        for (const field of param.type.fields) {
+          content += emitCase(field.serializedName, `${param.name}.${field.name}`, field.type);
         }
+      } else {
+        content += emitCase(param.name, param.name, param.type);
       }
     }
 
     content += '\t\tdefault:\n\t\t\treturn nil, fmt.Errorf("unexpected part %s", fn)\n';
     content += '\t\t}\n'; // end switch
     content += '\t}\n'; // end for
-  } else if (go.isFormBodyParameter(bodyParam)) {
-    for (const param of values(method.parameters)) {
-      if (go.isFormBodyParameter(param)) {
-        let pkgPrefix = '';
-        if (go.isConstantType(param.type)) {
-          pkgPrefix = clientPkg + '.';
-        }
-        content += `\tvar ${param.name} ${pkgPrefix}${go.getTypeDeclaration(param.type)}\n`;
+  } else if (formBodyParams.length > 0) {
+    for (const param of formBodyParams) {
+      let pkgPrefix = '';
+      if (go.isConstantType(param.type)) {
+        pkgPrefix = clientPkg + '.';
       }
+      content += `\tvar ${param.name} ${pkgPrefix}${go.getTypeDeclaration(param.type)}\n`;
     }
     content += '\tif err := req.ParseForm(); err != nil {\n\t\treturn nil, &nonRetriableError{fmt.Errorf("failed parsing form data: %v", err)}\n\t}\n';
     content += '\tfor key := range req.Form {\n';
     content += '\t\tswitch key {\n';
-    for (const param of values(method.parameters)) {
-      if (go.isFormBodyParameter(param)) {
-        content += `\t\tcase "${param.formDataName}":\n`;
-        let assignedValue: string;
-        if (go.isConstantType(param.type)) {
-          assignedValue = `${go.getTypeDeclaration(param.type, clientPkg)}(req.FormValue(key))`;
-        } else if (go.isPrimitiveType(param.type) && param.type.typeName === 'string') {
-          assignedValue = 'req.FormValue(key)';
-        } else {
-          throw new CodegenError('InternalError', `uhandled form parameter type ${go.getTypeDeclaration(param.type)}`);
-        }
-        content += `\t\t\t${param.name} = ${assignedValue}\n`;
+    for (const param of formBodyParams) {
+      content += `\t\tcase "${param.formDataName}":\n`;
+      let assignedValue: string;
+      if (go.isConstantType(param.type)) {
+        assignedValue = `${go.getTypeDeclaration(param.type, clientPkg)}(req.FormValue(key))`;
+      } else if (go.isPrimitiveType(param.type) && param.type.typeName === 'string') {
+        assignedValue = 'req.FormValue(key)';
+      } else {
+        throw new CodegenError('InternalError', `uhandled form parameter type ${go.getTypeDeclaration(param.type)}`);
       }
+      content += `\t\t\t${param.name} = ${assignedValue}\n`;
     }
     content += '\t\t}\n'; // end switch
     content += '\t}\n'; // end for
-  } else if (bodyParam.bodyFormat === 'binary') {
-    // nothing to do for binary media type
-  } else if (bodyParam.bodyFormat === 'Text') {
-    if (bodyParam && !go.isLiteralParameter(bodyParam)) {
-      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
-      content += '\tbody, err := server.UnmarshalRequestAsText(req)\n';
-      content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-    }
-  } else if (bodyParam.bodyFormat === 'JSON' || bodyParam.bodyFormat === 'XML') {
-    if (bodyParam && !go.isLiteralParameter(bodyParam)) {
-      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
-      if (go.isBytesType(bodyParam.type)) {
-        content += `\tbody, err := server.UnmarshalRequestAsByteArray(req, runtime.Base64${bodyParam.type.encoding}Format)\n`;
-        content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-      } else if (go.isSliceType(bodyParam.type) && bodyParam.type.rawJSONAsBytes) {
-        content += '\tbody, err := io.ReadAll(req.Body)\n';
-        content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-        content += '\treq.Body.Close()\n';
-      } else if (go.isInterfaceType(bodyParam.type)) {
-        requiredHelpers.readRequestBody = true;
-        content += '\traw, err := readRequestBody(req)\n';
-        content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-        content += `\tbody, err := unmarshal${bodyParam.type.name}(raw)\n`;
-        content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-      } else {
-        let bodyTypeName = go.getTypeDeclaration(bodyParam.type, clientPkg);
-        if (go.isTimeType(bodyParam.type)) {
-          bodyTypeName = bodyParam.type.dateTimeFormat;
-        }
-        content += `\tbody, err := server.UnmarshalRequestAs${bodyParam.bodyFormat}[${bodyTypeName}](req)\n`;
-        content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-      }
-    }
-  }
-
-  const partialBodyParams = values(method.parameters).where((param: go.Parameter) => { return go.isPartialBodyParameter(param); }).toArray();
-  if (partialBodyParams.length > 0) {
+  } else if (partialBodyParams.length > 0) {
     // construct the partial body params type and unmarshal it
     content += '\ttype partialBodyParams struct {\n';
-    for (const partialBodyParam of <Array<go.PartialBodyParameter>>partialBodyParams) {
+    for (const partialBodyParam of partialBodyParams) {
       content += `\t\t${capitalize(partialBodyParam.name)} ${helpers.star(partialBodyParam)}${go.getTypeDeclaration(partialBodyParam.type)} \`json:"${partialBodyParam.serializedName}"\`\n`;
     }
     content += '\t}\n';
-    content += `\tbody, err := server.UnmarshalRequestAs${(<Array<go.PartialBodyParameter>>partialBodyParams)[0].format}[partialBodyParams](req)\n`;
+    content += `\tbody, err := server.UnmarshalRequestAs${partialBodyParams[0].format}[partialBodyParams](req)\n`;
     content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
   }
 
@@ -700,7 +697,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
   content += result.content;
 
   // translate each partial body param to its field within the unmarshalled body
-  for (const partialBodyParam of <Array<go.PartialBodyParameter>>partialBodyParams) {
+  for (const partialBodyParam of partialBodyParams) {
     result.params.set(partialBodyParam.name, `${helpers.star(partialBodyParam)}body.${capitalize(partialBodyParam.name)}`);
   }
 
@@ -794,7 +791,7 @@ function sanitizeRegexpCaptureGroupName(name: string): string {
   return name.replace('-', '_');
 }
 
-function createPathParamsRegex(method: go.MethodType): string {
+function createPathParamsRegex(method: go.MethodType, pathParams: Array<go.PathParameter>): string {
   // "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}"
   // each path param will replaced with a regex capture.
   // note that some path params are optional.
@@ -803,10 +800,7 @@ function createPathParamsRegex(method: go.MethodType): string {
   // per RFC3986, these are the pchars that also double as regex tokens
   // . $ * + ()
   urlPath = urlPath.replace(/([.$*+()])/g, '\\$1');
-  for (const param of values(method.parameters)) {
-    if (!go.isPathParameter(param)) {
-      continue;
-    }
+  for (const param of pathParams) {
     const toReplace = `{${param.pathSegment}}`;
     let replaceWith = `(?P<${sanitizeRegexpCaptureGroupName(param.pathSegment)}>[!#&$-;=?-\\[\\]_a-zA-Z0-9~%@]+)`;
     if (param.style === 'optional' || param.style === 'flag') {
@@ -832,7 +826,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
   let content = '';
   const paramValues = new Map<string, string>();
 
-  const createLocalVariableName = function (param: go.Parameter, suffix: string): string {
+  const createLocalVariableName = function (param: go.MethodParameter, suffix: string): string {
     const paramName = `${uncapitalize(param.name)}${suffix}`;
     paramValues.set(param.name, paramName);
     return paramName;
@@ -855,14 +849,14 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
 
   // track the param groups that need to be instantiated/populated.
   // we track the params separately as it might be a subset of ParameterGroup.params
-  const paramGroups = new Map<go.ParameterGroup, Array<go.Parameter>>();
+  const paramGroups = new Map<go.ParameterGroup, Array<go.MethodParameter>>();
 
   for (const param of values(consolidateHostParams(method.parameters))) {
     if (param.location === 'client' || go.isLiteralParameter(param)) {
       // client params and parameter literals aren't passed to APIs
       continue;
     }
-    if (go.isResumeTokenParameter(param)) {
+    if (param.kind === 'resumeTokenParam') {
       // skip the ResumeToken param as we don't send that back to the caller
       continue;
     }
@@ -870,16 +864,22 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
     // NOTE: param group check must happen before skipping body params.
     // this is to handle the case where the body param is grouped/optional
     if (param.group) {
-      if (!paramGroups.has(param.group)) {
-        paramGroups.set(param.group, new Array<go.Parameter>());
+      let params = paramGroups.get(param.group);
+      if (!params) {
+        params = new Array<go.MethodParameter>();
+        paramGroups.set(param.group, params);
       }
-      const params = paramGroups.get(param.group);
-      params!.push(param);
+      params.push(param);
     }
 
-    if (go.isBodyParameter(param) || go.isFormBodyParameter(param) || go.isMultipartFormBodyParameter(param) || go.isPartialBodyParameter(param)) {
-      // body params will be unmarshalled, no need for parsing.
-      continue;
+    switch (param.kind) {
+      case 'bodyParam':
+      case 'formBodyCollectionParam':
+      case 'formBodyScalarParam':
+      case 'multipartFormBodyParam':
+      case 'partialBodyParam':
+        // body params will be unmarshalled, no need for parsing.
+        continue;
     }
 
     // paramValue is initialized with the "raw" source value.
@@ -891,7 +891,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
 
     // path/query params might be escaped, so we need to unescape them first.
     // must handle query collections first as it's a superset of query param.
-    if (go.isQueryCollectionParameter(param) && param.collectionFormat === 'multi') {
+    if (param.kind === 'queryCollectionParam' && param.collectionFormat === 'multi') {
       imports.add('net/url');
       const escapedParam = createLocalVariableName(param, 'Escaped');
       content += `\t${escapedParam} := ${paramValue}\n`;
@@ -941,7 +941,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
     }
 
     // parse params as required
-    if (go.isHeaderCollectionParameter(param) || go.isPathCollectionParameter(param) || go.isQueryCollectionParameter(param)) {
+    if (param.kind === 'headerCollectionParam' || param.kind === 'pathCollectionParam' || param.kind === 'queryCollectionParam') {
       // any element type other than string will require some form of conversion/parsing
       if (!(go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string')) {
         if (param.collectionFormat !== 'multi') {
@@ -1098,7 +1098,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
         content += `\t${createLocalVariableName(param, 'Param')}, err := ${emitNumericConversion(paramValue, param.type.typeName)}\n`;
       }
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-    } else if (go.isHeaderMapParameter(param)) {
+    } else if (param.kind === 'headerMapParam') {
       imports.add('strings');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
       const localVar = createLocalVariableName(param, 'Param');
@@ -1162,7 +1162,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
         // check array before body in case the body is just an array
         if (go.isSliceType(param.type)) {
           paramNilCheck.push(`len(${getFinalParamValue(clientPkg, param, paramValues)}) > 0`);
-        } else if (go.isBodyParameter(param)) {
+        } else if (param.kind === 'bodyParam') {
           if (param.bodyFormat === 'binary') {
             imports.add('io');
             paramNilCheck.push('req.Body != nil');
@@ -1170,7 +1170,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
             imports.add('reflect');
             paramNilCheck.push('!reflect.ValueOf(body).IsZero()');
           }
-        } else if (go.isFormBodyParameter(param) || go.isMultipartFormBodyParameter(param)) {
+        } else if (go.isFormBodyParameter(param) || param.kind === 'multipartFormBodyParam') {
           imports.add('reflect');
           paramNilCheck.push(`!reflect.ValueOf(${param.name}).IsZero()`);
         } else {
@@ -1181,7 +1181,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
       content += `\t\t${uncapitalize(paramGroup.name)} = &${clientPkg}.${paramGroup.groupName}{\n`;
       for (const param of values(params)) {
         let byRef = '&';
-        if (param.byValue || (!go.isRequiredParameter(param) && !go.isBodyParameter(param) && !go.isFormBodyParameter(param) && !go.isMultipartFormBodyParameter(param))) {
+        if (param.byValue || (!go.isRequiredParameter(param) && param.kind !== 'bodyParam' && !go.isFormBodyParameter(param) && param.kind !== 'multipartFormBodyParam')) {
           byRef = '';
         }
         content += `\t\t\t${capitalize(param.name)}: ${byRef}${getFinalParamValue(clientPkg, param, paramValues)},\n`;
@@ -1211,10 +1211,10 @@ function populateApiParams(clientPkg: string, method: go.MethodType, paramValues
 
   // now create the API call sig
   for (const param of values(helpers.getMethodParameters(method, consolidateHostParams))) {
-    if (helpers.isParameterGroup(param)) {
+    if (param.kind === 'paramGroup') {
       if (param.groupName === method.optionalParamsGroup.groupName) {
         // this is the optional params type. in some cases we just pass nil
-        const countParams = values(param.params).where((each: go.Parameter) => { return !go.isResumeTokenParameter(each); }).count();
+        const countParams = values(param.params).where((each: go.MethodParameter) => { return each.kind !== 'resumeTokenParam'; }).count();
         if (countParams === 0) {
           // if the options param is empty or only contains the resume token param just pass nil
           params.push('nil');
@@ -1235,43 +1235,48 @@ function populateApiParams(clientPkg: string, method: go.MethodType, paramValues
 
 // getRawParamValue returns the "raw" value for the specified parameter.
 // depending on the type, the value might require parsing before it can be passed to the fake.
-function getRawParamValue(param: go.Parameter): string {
-  if (go.isFormBodyParameter(param) || go.isMultipartFormBodyParameter(param) || go.isPartialBodyParameter(param)) {
-    // multipart form data values have been read and assigned
-    // to local params with the same name. must check this first
-    // as it's a superset of other cases that follow.
-    return param.name;
-  } else if (go.isPathParameter(param)) {
-    // path params are in the matches slice
-    return `matches[regex.SubexpIndex("${sanitizeRegexpCaptureGroupName(param.pathSegment)}")]`;
-  } else if (go.isQueryParameter(param)) {
-    // use qp
-    if (go.isQueryCollectionParameter(param) && param.collectionFormat === 'multi') {
-      return `qp["${param.queryParameter}"]`;
-    }
-    return `qp.Get("${param.queryParameter}")`;
-  } else if (go.isHeaderParameter(param)) {
-    if (go.isHeaderMapParameter(param)) {
+function getRawParamValue(param: go.MethodParameter): string {
+  switch (param.kind) {
+    case 'bodyParam':
+      if (param.bodyFormat === 'binary') {
+        return 'req.Body.(io.ReadSeekCloser)';
+      }
+      // JSON/XML/text bodies have been deserialized into a local named body
+      return 'body';
+    case 'formBodyCollectionParam':
+    case 'formBodyScalarParam':
+    case 'multipartFormBodyParam':
+    case 'partialBodyParam':
+      // multipart form data values have been read and assigned
+      // to local params with the same name.
+      return param.name;
+    case 'headerCollectionParam':
+    case 'headerScalarParam':
+      // use req
+      requiredHelpers.getHeaderValue = true;
+      return `getHeaderValue(req.Header, "${param.headerName}")`;
+    case 'headerMapParam':
       return 'req.Header';
-    }
-    // use req
-    requiredHelpers.getHeaderValue = true;
-    return `getHeaderValue(req.Header, "${param.headerName}")`;
-  } else if (go.isBodyParameter(param)) {
-    if (param.bodyFormat === 'binary') {
-      return 'req.Body.(io.ReadSeekCloser)';
-    }
-    // JSON/XML/text bodies have been deserialized into a local named body
-    return 'body';
-  } else if (go.isURIParameter(param)) {
-    return 'req.URL.Host';
-  } else {
-    throw new CodegenError('InternalError', `unhandled parameter ${param.name}`);
+    case 'pathCollectionParam':
+    case 'pathScalarParam':
+      // path params are in the matches slice
+      return `matches[regex.SubexpIndex("${sanitizeRegexpCaptureGroupName(param.pathSegment)}")]`;
+    case 'queryCollectionParam':
+    case 'queryScalarParam':
+      // use qp
+      if (param.kind === 'queryCollectionParam' && param.collectionFormat === 'multi') {
+        return `qp["${param.queryParameter}"]`;
+      }
+      return `qp.Get("${param.queryParameter}")`;
+    case 'uriParam':
+      return 'req.URL.Host';
+    default:
+      throw new CodegenError('InternalError', `unhandled parameter ${param.name}`);
   }
 }
 
 // getFinalParamValue returns the "final" value of param to be passed to the fake.
-function getFinalParamValue(clientPkg: string, param: go.Parameter, paramValues: Map<string, string>): string {
+function getFinalParamValue(clientPkg: string, param: go.MethodParameter, paramValues: Map<string, string>): string {
   let paramValue = paramValues.get(param.name);
   if (!paramValue) {
     // the param didn't require parsing so the "raw" value can be used
@@ -1280,12 +1285,12 @@ function getFinalParamValue(clientPkg: string, param: go.Parameter, paramValues:
 
   // there are a few corner-cases that require some fix-ups
 
-  if ((go.isBodyParameter(param) || go.isFormBodyParameter(param) || go.isFormBodyCollectionParameter(param) || go.isMultipartFormBodyParameter(param)) && go.isTimeType(param.type)) {
+  if ((param.kind === 'bodyParam' || go.isFormBodyParameter(param) || param.kind === 'multipartFormBodyParam') && go.isTimeType(param.type)) {
     // time types in the body have been unmarshalled into our time helpers thus require a cast to time.Time
     return `time.Time(${paramValue})`;
   } else if (go.isRequiredParameter(param)) {
     // optional params are always in their "final" form
-    if (go.isHeaderCollectionParameter(param) || go.isPathCollectionParameter(param) || go.isQueryCollectionParameter(param)) {
+    if (param.kind === 'headerCollectionParam' || param.kind === 'pathCollectionParam' || param.kind === 'queryCollectionParam') {
       // for required params that are collections of strings, we split them inline.
       // not necessary for optional params as they're already in slice format.
       if (param.collectionFormat !== 'multi' && go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
@@ -1296,7 +1301,7 @@ function getFinalParamValue(clientPkg: string, param: go.Parameter, paramValues:
       // since headers aren't escaped, we cast required, string-based enums inline
       return `${go.getTypeDeclaration(param.type, clientPkg)}(${paramValue})`;
     }
-  } else if (go.isPartialBodyParameter(param)) {
+  } else if (param.kind === 'partialBodyParam') {
     // use the value from the unmarshaled, intermediate struct type
     return `body.${capitalize(param.name)}`;
   }
@@ -1309,17 +1314,17 @@ function getFinalParamValue(clientPkg: string, param: go.Parameter, paramValues:
 // e.g. host := "{vault}{secret}{dnsSuffix}" becomes http://contososecret.com
 // there's no way to reliably split the host back up into its constituent parameters.
 // so we just pass the full value as a single host parameter.
-function consolidateHostParams(params: Array<go.Parameter>): Array<go.Parameter> {
-  if (!values(params).where((each: go.Parameter) => { return go.isURIParameter(each); }).any()) {
+function consolidateHostParams(params: Array<go.MethodParameter>): Array<go.MethodParameter> {
+  if (!values(params).where((each: go.MethodParameter) => { return each.kind === 'uriParam'; }).any()) {
     // no host params
     return params;
   }
 
   // consolidate multiple host params into a single "host" param
-  const consolidatedParams = new Array<go.Parameter>();
+  const consolidatedParams = new Array<go.MethodParameter>();
   let hostParamAdded = false;
   for (const param of values(params)) {
-    if (!go.isURIParameter(param)) {
+    if (param.kind !== 'uriParam') {
       consolidatedParams.push(param);
     } else if (!hostParamAdded) {
       consolidatedParams.push(param);
@@ -1340,7 +1345,7 @@ function getAPIParametersSig(method: go.MethodType, imports: ImportManager, pkgN
   }
   for (const methodParam of values(methodParams)) {
     let paramName = uncapitalize(methodParam.name);
-    if (helpers.isParameter(methodParam) && go.isURIParameter(methodParam)) {
+    if (methodParam.kind === 'uriParam') {
       paramName = 'host';
     }
     params.push(`${paramName} ${helpers.formatParameterTypeName(methodParam, pkgName)}`);

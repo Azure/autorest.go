@@ -20,12 +20,12 @@ export class clientAdapter {
   // track all of the client and parameter group params across all operations
   // as not every option might contain them, and parameter groups can be shared
   // across multiple operations
-  private clientParams: Map<string, go.Parameter>;
+  private clientParams: Map<string, go.MethodParameter>;
 
   constructor(ta: typeAdapter, opts: GoEmitterOptions) {
     this.ta = ta;
     this.opts = opts;
-    this.clientParams = new Map<string, go.Parameter>();
+    this.clientParams = new Map<string, go.MethodParameter>();
   }
 
   // converts all clients and their methods to Go code model types.
@@ -139,7 +139,7 @@ export class clientAdapter {
       // make a copy of the client params. this is to prevent
       // client method params from being shared across clients
       // as not all client method params might be uniform.
-      goClient.parameters = new Array<go.Parameter>(...parent.parameters);
+      goClient.parameters = new Array<go.ClientParameter>(...parent.parameters);
     } else {
       throw new AdapterError('InternalError', `uninstantiable client ${sdkClient.name} has no parent`, NoTarget);
     }
@@ -294,8 +294,8 @@ export class clientAdapter {
     }
   }
 
-  private adaptMethodParameters(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType | go.NextPageMethod): Map<tcgc.SdkHttpParameter, Array<go.Parameter>> {
-    const paramMapping = new Map<tcgc.SdkHttpParameter, Array<go.Parameter>>();
+  private adaptMethodParameters(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType | go.NextPageMethod): Map<tcgc.SdkHttpParameter, Array<go.MethodParameter>> {
+    const paramMapping = new Map<tcgc.SdkHttpParameter, Array<go.MethodParameter>>();
 
     let optionalGroup: go.ParameterGroup | undefined;
     if (method.kind !== 'nextPageMethod') {
@@ -366,7 +366,7 @@ export class clientAdapter {
         opParam.optional = false;
       }
 
-      let adaptedParam: go.Parameter;
+      let adaptedParam: go.MethodParameter;
       if (opParam.kind === 'body' && opParam.type.kind === 'model' && opParam.type.kind !== param.type.kind) {
         const paramStyle = this.adaptParameterStyle(param);
         const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');
@@ -419,7 +419,7 @@ export class clientAdapter {
       adaptedParam.docs.description = param.doc;
       method.parameters.push(adaptedParam);
       if (!paramMapping.has(opParam)) {
-        paramMapping.set(opParam, new Array<go.Parameter>());
+        paramMapping.set(opParam, new Array<go.MethodParameter>());
       }
       paramMapping.get(opParam)?.push(adaptedParam);
 
@@ -442,7 +442,7 @@ export class clientAdapter {
         adaptedParam.docs.description = opParam.doc;
         method.parameters.unshift(adaptedParam);
         if (!paramMapping.has(opParam)) {
-          paramMapping.set(opParam, new Array<go.Parameter>());
+          paramMapping.set(opParam, new Array<go.MethodParameter>());
         }
         paramMapping.get(opParam)?.push(adaptedParam);
 
@@ -455,7 +455,7 @@ export class clientAdapter {
         // we must check via param name and not reference equality. this is because a client param
         // can be used in multiple ways. e.g. a client param "apiVersion" that's used as a path param
         // in one method and a query param in another.
-        if (!method.client.parameters.find((v: go.Parameter) => {
+        if (!method.client.parameters.find((v: go.ClientParameter) => {
           return v.name === adaptedParam.name;
         })) {
           method.client.parameters.push(adaptedParam);
@@ -480,18 +480,18 @@ export class clientAdapter {
     return contentType;
   }
 
-  private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter): go.Parameter {
+  private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter): go.MethodParameter {
     if (param.isApiVersionParam && param.clientDefaultValue) {
       // we emit the api version param inline as a literal, never as a param.
       // the ClientOptions.APIVersion setting is used to change the version.
       const paramType = new go.LiteralValue(new go.PrimitiveType('string'), param.clientDefaultValue);
       switch (param.kind) {
         case 'header':
-          return new go.HeaderParameter(param.name, param.serializedName, paramType, 'literal', true, 'method');
+          return new go.HeaderScalarParameter(param.name, param.serializedName, paramType, 'literal', true, 'method');
         case 'path':
-          return new go.PathParameter(param.name, param.serializedName, true, paramType, 'literal', true, 'method');
+          return new go.PathScalarParameter(param.name, param.serializedName, true, paramType, 'literal', true, 'method');
         case 'query':
-          return new go.QueryParameter(param.name, param.serializedName, true, paramType, 'literal', true, 'method');
+          return new go.QueryScalarParameter(param.name, param.serializedName, true, paramType, 'literal', true, 'method');
         default:
           throw new AdapterError('UnsupportedTsp', `unsupported API version param kind ${param.kind}`, param.__raw?.node ?? NoTarget);
       }
@@ -512,7 +512,7 @@ export class clientAdapter {
       location = 'client';
     }
 
-    let adaptedParam: go.Parameter;
+    let adaptedParam: go.MethodParameter;
     const paramStyle = this.adaptParameterStyle(param);
     const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');
     const byVal = isTypePassedByValue(param.type);
@@ -542,10 +542,10 @@ export class clientAdapter {
         }
         adaptedParam = new go.HeaderCollectionParameter(paramName, param.serializedName, type, param.collectionFormat === 'simple' ? 'csv' : param.collectionFormat, paramStyle, byVal, location);
       } else {
-        adaptedParam = new go.HeaderParameter(paramName, param.serializedName, this.adaptHeaderType(param.type, true), paramStyle, byVal, location);
+        adaptedParam = new go.HeaderScalarParameter(paramName, param.serializedName, this.adaptHeaderScalarType(param.type, true), paramStyle, byVal, location);
       }
     } else if (param.kind === 'path') {
-      adaptedParam = new go.PathParameter(paramName, param.serializedName, !param.allowReserved, this.adaptPathParameterType(param.type), paramStyle, byVal, location);
+      adaptedParam = new go.PathScalarParameter(paramName, param.serializedName, !param.allowReserved, this.adaptPathScalarParameterType(param.type), paramStyle, byVal, location);
     } else if (param.kind === 'cookie') {
       // TODO: currently we don't have Azure service using cookie parameter. need to add support if needed in the future.
       throw new AdapterError('UnsupportedTsp', 'unsupported parameter type cookie', param.__raw?.node ?? NoTarget);
@@ -559,7 +559,7 @@ export class clientAdapter {
         adaptedParam = new go.QueryCollectionParameter(paramName, param.serializedName, true, type, param.collectionFormat === 'simple' ? 'csv' : (param.collectionFormat === 'form' ? 'multi' : param.collectionFormat), paramStyle, byVal, location);
       } else {
         // TODO: unencoded query param
-        adaptedParam = new go.QueryParameter(paramName, param.serializedName, true, this.adaptQueryParameterType(param.type), paramStyle, byVal, location);
+        adaptedParam = new go.QueryScalarParameter(paramName, param.serializedName, true, this.adaptQueryScalarParameterType(param.type), paramStyle, byVal, location);
       }
     }
 
@@ -613,7 +613,7 @@ export class clientAdapter {
         }
 
         // TODO: x-ms-header-collection-prefix
-        const headerResp = new go.HeaderResponse(ensureNameCase(httpHeader.serializedName), this.adaptHeaderType(httpHeader.type, false), httpHeader.serializedName, isTypePassedByValue(httpHeader.type));
+        const headerResp = new go.HeaderResponse(ensureNameCase(httpHeader.serializedName), this.adaptHeaderScalarType(httpHeader.type, false), httpHeader.serializedName, isTypePassedByValue(httpHeader.type));
         headerResp.docs.summary = httpHeader.summary;
         headerResp.docs.description = httpHeader.doc;
         respEnv.headers.push(headerResp);
@@ -790,7 +790,7 @@ export class clientAdapter {
     return structType;
   }
 
-  private adaptHeaderType(sdkType: tcgc.SdkType, forParam: boolean): go.HeaderType {
+  private adaptHeaderScalarType(sdkType: tcgc.SdkType, forParam: boolean): go.HeaderScalarType {
     // for header params, we never pass the element type by pointer
     const type = this.ta.getPossibleType(sdkType, forParam, false);
     if (go.isInterfaceType(type) || go.isMapType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
@@ -799,7 +799,7 @@ export class clientAdapter {
     return type;
   }
 
-  private adaptPathParameterType(sdkType: tcgc.SdkType): go.PathParameterType {
+  private adaptPathScalarParameterType(sdkType: tcgc.SdkType): go.PathScalarParameterType {
     const type = this.ta.getPossibleType(sdkType, false, false);
     if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
       throw new AdapterError('InternalError', `unexpected path parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
@@ -807,7 +807,7 @@ export class clientAdapter {
     return type;
   }
 
-  private adaptQueryParameterType(sdkType: tcgc.SdkType): go.QueryParameterType {
+  private adaptQueryScalarParameterType(sdkType: tcgc.SdkType): go.QueryScalarParameterType {
     const type = this.ta.getPossibleType(sdkType, false, false);
     if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
       throw new AdapterError('InternalError', `unexpected query parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
@@ -835,7 +835,7 @@ export class clientAdapter {
     }
   }
 
-  private adaptHttpOperationExamples(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType, paramMapping: Map<tcgc.SdkHttpParameter, Array<go.Parameter>>) {
+  private adaptHttpOperationExamples(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType, paramMapping: Map<tcgc.SdkHttpParameter, Array<go.MethodParameter>>) {
     if (sdkMethod.operation.examples) {
       for (const example of sdkMethod.operation.examples) {
         const goExample = new go.MethodExample(example.name, {summary: example.doc}, example.filePath);

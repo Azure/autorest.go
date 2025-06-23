@@ -3,6 +3,7 @@
 *  Licensed under the MIT License. See License.txt in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
+import * as client from './client.js';
 import * as param from './param.js';
 import * as result from './result.js';
 import { BytesType, ConstantType, Docs, LiteralValue, MapType, ModelType, PolymorphicType, PossibleType, PrimitiveType, QualifiedType, SliceType, TimeType } from './type.js';
@@ -61,7 +62,7 @@ export interface NumberExample {
 }
 
 export interface ParameterExample {
-  parameter: param.Parameter;
+  parameter: client.ClientParameter;
   value: ExampleType;
 }
 
@@ -156,7 +157,7 @@ export class NumberExample implements NumberExample {
 }
 
 export class ParameterExample implements ParameterExample {
-  constructor(parameter: param.Parameter, value: ExampleType) {
+  constructor(parameter: param.MethodParameter, value: ExampleType) {
     this.parameter = parameter;
     this.value = value;
   }

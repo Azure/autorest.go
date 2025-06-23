@@ -77,7 +77,7 @@ export interface HeaderResponse {
 
   docs: type.Docs;
 
-  type: param.HeaderType;
+  type: param.HeaderScalarType;
 
   byValue: boolean;
 
@@ -236,7 +236,7 @@ export class HeaderMapResponse implements HeaderMapResponse {
 }
 
 export class HeaderResponse implements HeaderResponse {
-  constructor(fieldName: string, type: param.HeaderType, headerName: string, byValue: boolean) {
+  constructor(fieldName: string, type: param.HeaderScalarType, headerName: string, byValue: boolean) {
     this.fieldName = fieldName;
     this.type = type;
     this.byValue = byValue;

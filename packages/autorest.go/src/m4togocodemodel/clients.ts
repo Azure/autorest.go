@@ -19,7 +19,7 @@ import { OperationNaming } from '../transform/namer.js';
 // track all of the client and parameter group params across all operations
 // as not every option might contain them, and parameter groups can be shared
 // across multiple operations
-const clientParams = new Map<string, go.Parameter>();
+const clientParams = new Map<string, go.MethodParameter>();
 const paramGroups = new Map<string, go.ParameterGroup>();
 
 export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
@@ -120,7 +120,7 @@ function populateMethod(op: m4.Operation, method: go.MethodType | go.NextPageMet
   }
 }
 
-function adaptHeaderType(schema: m4.Schema, forParam: boolean): go.HeaderType {
+function adaptHeaderScalarType(schema: m4.Schema, forParam: boolean): go.HeaderScalarType {
   // for header params, we never pass the element type by pointer
   const type = adaptPossibleType(schema, forParam);
   if (go.isInterfaceType(type) || go.isMapType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
@@ -129,7 +129,7 @@ function adaptHeaderType(schema: m4.Schema, forParam: boolean): go.HeaderType {
   return type;
 }
 
-function adaptPathParameterType(schema: m4.Schema): go.PathParameterType {
+function adaptPathScalarParameterType(schema: m4.Schema): go.PathScalarParameterType {
   const type = adaptPossibleType(schema);
   if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isQualifiedType(type)) {
     throw new Error(`unexpected path parameter type ${schema.type}`);
@@ -137,7 +137,7 @@ function adaptPathParameterType(schema: m4.Schema): go.PathParameterType {
   return type;
 }
 
-function adaptQueryParameterType(schema: m4.Schema): go.QueryParameterType {
+function adaptQueryScalarParameterType(schema: m4.Schema): go.QueryScalarParameterType {
   const type = adaptPossibleType(schema);
   if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isQualifiedType(type)) {
     throw new Error(`unexpected query parameter type ${schema.type}`);
@@ -212,7 +212,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
         }
         headerResp = new go.HeaderMapResponse(prop.language.go!.name, headerType, prop.schema.language.go!.headerCollectionPrefix, prop.language.go!.fromHeader, prop.language.go!.byValue);
       } else {
-        headerResp = new go.HeaderResponse(prop.language.go!.name, adaptHeaderType(prop.schema, false), prop.language.go!.fromHeader, prop.language.go!.byValue);
+        headerResp = new go.HeaderResponse(prop.language.go!.name, adaptHeaderScalarType(prop.schema, false), prop.language.go!.fromHeader, prop.language.go!.byValue);
       }
       if (hasDescription(prop.language.go!)) {
         headerResp.docs.description = prop.language.go!.description;
@@ -302,8 +302,8 @@ function getStatusCodes(op: m4.Operation): Array<number> {
   return statusCodes;
 }
 
-function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Parameter {
-  let adaptedParam: go.Parameter;
+function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodParameter {
+  let adaptedParam: go.MethodParameter;
   let location: go.ParameterLocation = 'method';
   if (param.implementation === m4.ImplementationLocation.Client) {
     // check if we've already adapted this client parameter
@@ -341,14 +341,14 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
           }
           adaptedParam = new go.FormBodyCollectionParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, collectionFormat, style, param.language.go!.byValue);
         } else {
-          adaptedParam = new go.FormBodyParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, style, param.language.go!.byValue);
+          adaptedParam = new go.FormBodyScalarParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, style, param.language.go!.byValue);
         }
       } else if (op.requests![0].protocol.http!.knownMediaType === KnownMediaType.Multipart) {
         adaptedParam = new go.MultipartFormBodyParameter(param.language.go!.name, bodyType, style, param.language.go!.byValue);
       } else {
         const format = adaptBodyFormat(op.requests![0].protocol);
         adaptedParam = new go.BodyParameter(param.language.go!.name, format, contentType, bodyType, style, param.language.go!.byValue);
-        (<go.BodyParameter>adaptedParam).xml = adaptXMLInfo(param.schema);
+        adaptedParam.xml = adaptXMLInfo(param.schema);
       }
 
       break;
@@ -370,7 +370,7 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
         adaptedParam = new go.HeaderCollectionParameter(param.language.go!.name, param.language.go!.serializedName, headerType, collectionFormat, style,
           param.language.go!.byValue, location);
       } else {
-        adaptedParam = new go.HeaderParameter(param.language.go!.name, param.language.go!.serializedName, adaptHeaderType(param.schema, true),
+        adaptedParam = new go.HeaderScalarParameter(param.language.go!.name, param.language.go!.serializedName, adaptHeaderScalarType(param.schema, true),
           style, param.language.go!.byValue, location);
       }
       break;
@@ -385,8 +385,8 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
         adaptedParam = new go.PathCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
           pathType, collectionFormat, style, param.language.go!.byValue, location);
       } else {
-        adaptedParam = new go.PathParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          adaptPathParameterType(param.schema), style, param.language.go!.byValue, location);
+        adaptedParam = new go.PathScalarParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
+          adaptPathScalarParameterType(param.schema), style, param.language.go!.byValue, location);
       }
       break;
     }
@@ -400,8 +400,8 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
         adaptedParam = new go.QueryCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
           queryType, collectionFormat, style, param.language.go!.byValue, location);
       } else {
-        adaptedParam = new go.QueryParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          adaptQueryParameterType(param.schema), style, param.language.go!.byValue, location);
+        adaptedParam = new go.QueryScalarParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
+          adaptQueryScalarParameterType(param.schema), style, param.language.go!.byValue, location);
       }
       break;
     }
@@ -417,9 +417,7 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
       if (param.language.go!.isResumeToken) {
         adaptedParam = new go.ResumeTokenParameter();
       } else {
-        const type = adaptPossibleType(param.schema);
-        const paramLoc = adaptParameterlocation(param);
-        adaptedParam = new go.Parameter(param.language.go!.name, type, style, param.language.go!.byValue, paramLoc);
+        throw new Error(`unknown parameter in operation ${op.language.go!.name}`);
       }
     }
   }
@@ -436,7 +434,7 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
   if (param.language.go!.paramGroup) {
     const paramGroup = findOrAdaptParamsGroup(param);
     // parameter groups can be shared across methods so don't add any duplicate parameters
-    if (values(paramGroup.params).where((each: go.Parameter) => { return each.name === adaptedParam.name; }).count() === 0) {
+    if (values(paramGroup.params).where((each: go.MethodParameter) => { return each.name === adaptedParam.name; }).count() === 0) {
       paramGroup.params.push(adaptedParam);
     }
     if (adaptedParam.style === 'required') {
