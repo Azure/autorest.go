@@ -19,14 +19,14 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
   // the list of packages to import
   const imports = new ImportManager();
 
-  let clientFactoryParams:  Array<go.Parameter>;
+  let clientFactoryParams:  Array<go.ClientParameter>;
   if (codeModel.options.factoryGatherAllParams) {
     clientFactoryParams =  helpers.getAllClientParameters(codeModel);
   } else {
     clientFactoryParams = helpers.getCommonClientParameters(codeModel);
   }
 
-  const clientFactoryParamsMap = new Map<string, go.Parameter>();
+  const clientFactoryParamsMap = new Map<string, go.ClientParameter>();
   for (const param of clientFactoryParams) {
     clientFactoryParamsMap.set(param.name, param);
   }
@@ -67,8 +67,8 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
 
   // add new sub client method for all operation groups
   for (const client of codeModel.clients) {
-    const clientPrivateParams = new Array<go.Parameter>();
-    const clientCommonParams = new Array<go.Parameter>();
+    const clientPrivateParams = new Array<go.ClientParameter>();
+    const clientCommonParams = new Array<go.ClientParameter>();
     for (const param of client.parameters) {
       if (clientFactoryParamsMap.has(param.name)) {
         clientCommonParams.push(param);

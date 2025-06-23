@@ -22,7 +22,7 @@ export interface Client {
   options: ClientOptions;
 
   /** constructor params that are persisted as fields on the client, can be empty */
-  parameters: Array<param.Parameter>;
+  parameters: Array<ClientParameter>;
 
   /** all the constructors for this client, can be empty */
   constructors: Array<Constructor>;
@@ -50,6 +50,9 @@ export interface Client {
 /** the possible types used for the client options type */
 export type ClientOptions = param.ParameterGroup | param.Parameter;
 
+/** the possible client parameter types */
+export type ClientParameter = param.MethodParameter | param.Parameter;
+
 /** a client method that returns a sub-client instance */
 export interface ClientAccessor {
   /** the name of the client accessor method */
@@ -65,7 +68,7 @@ export interface Constructor {
   name: string;
 
   /** the modeled parameters. can be empty */
-  parameters: Array<param.Parameter>;
+  parameters: Array<ClientParameter>;
 }
 
 /** the possible values defining the "final state via" behavior for LROs */
@@ -122,7 +125,7 @@ export interface NextPageMethod {
   httpMethod: HTTPMethod;
 
   /** any modeled parameters */
-  parameters: Array<param.Parameter>;
+  parameters: Array<param.MethodParameter>;
 
   /** the complete list of successful HTTP status codes */
   httpStatusCodes: Array<number>;
@@ -186,7 +189,7 @@ interface MethodBase {
   httpMethod: HTTPMethod;
 
   /** any modeled parameters. the ones we add to the generated code (context.Context etc) aren't included here */
-  parameters: Array<param.Parameter>;
+  parameters: Array<param.MethodParameter>;
 
   /** the method options type for this methoid */
   optionalParamsGroup: param.ParameterGroup;
@@ -227,7 +230,7 @@ class MethodBase implements MethodBase {
     this.httpStatusCodes = statusCodes;
     this.name = name;
     this.naming = naming;
-    this.parameters = new Array<param.Parameter>();
+    this.parameters = new Array<param.MethodParameter>();
     this.examples = [];
     this.docs = {};
   }
@@ -244,7 +247,7 @@ export class Client implements Client {
     this.docs = docs;
     this.methods = new Array<MethodType>();
     this.clientAccessors = new Array<ClientAccessor>();
-    this.parameters = new Array<param.Parameter>();
+    this.parameters = new Array<ClientParameter>();
     this.options = options;
   }
 }
@@ -259,7 +262,7 @@ export class ClientAccessor implements ClientAccessor {
 export class Constructor implements Constructor {
   constructor(name: string) {
     this.name = name;
-    this.parameters = new Array<param.Parameter>();
+    this.parameters = new Array<ClientParameter>();
   }
 }
 
@@ -304,7 +307,7 @@ export class NextPageMethod implements NextPageMethod {
     this.httpPath = httpPath;
     this.httpStatusCodes = statusCodes;
     this.name = name;
-    this.parameters = new Array<param.Parameter>();
+    this.parameters = new Array<param.MethodParameter>();
   }
 }
 

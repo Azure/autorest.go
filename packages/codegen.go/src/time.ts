@@ -69,7 +69,7 @@ export async function generateTimeHelpers(codeModel: go.CodeModel, packageName?:
           // for header/path/query params, the conversion happens in place. the only
           // exceptions are for timeRFC3339 and timeUnix
           // TODO: clean this up when moving to DateTime type in azcore
-          if (go.isBodyParameter(param) || unwrappedParam.dateTimeFormat === 'timeRFC3339' || unwrappedParam.dateTimeFormat === 'timeUnix') {
+          if (param.kind === 'bodyParam' || unwrappedParam.dateTimeFormat === 'timeRFC3339' || unwrappedParam.dateTimeFormat === 'timeUnix') {
             setHelper(unwrappedParam.dateTimeFormat);
           }
         }
@@ -106,7 +106,7 @@ export async function generateTimeHelpers(codeModel: go.CodeModel, packageName?:
     for (const client of codeModel.clients) {
       for (const method of client.methods) {
         for (const param of method.parameters) {
-          if (go.isBodyParameter(param) && go.isTimeType(param.type)) {
+          if (param.kind === 'bodyParam' && go.isTimeType(param.type)) {
             setHelper(param.type.dateTimeFormat);
           }
         }

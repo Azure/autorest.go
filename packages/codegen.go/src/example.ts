@@ -43,13 +43,13 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
       imports.add(codeModel.options.module!.name);
     }
 
-    let clientFactoryParams = new Array<go.Parameter>();
+    let clientFactoryParams = new Array<go.ClientParameter>();
     if (codeModel.options.factoryGatherAllParams) {
       clientFactoryParams =  helpers.getAllClientParameters(codeModel);
     } else {
       clientFactoryParams = helpers.getCommonClientParameters(codeModel);
     }
-    const clientFactoryParamsMap = new Map<string, go.Parameter>();
+    const clientFactoryParamsMap = new Map<string, go.ClientParameter>();
     for (const param of clientFactoryParams) {
       clientFactoryParamsMap.set(param.name, param);
     }
