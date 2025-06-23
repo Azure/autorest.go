@@ -719,7 +719,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     if (headerParam.kind === 'headerMapParam') {
       let headerText = `${prefix}for k, v := range ${helpers.getParamName(headerParam)} {\n`;
       headerText += `${prefix}\tif v != nil {\n`;
-      headerText += `${prefix}\t\treq.Raw().Header["${headerParam.collectionPrefix}"+k] = []string{*v}\n`;
+      headerText += `${prefix}\t\treq.Raw().Header["${headerParam.headerName}"+k] = []string{*v}\n`;
       headerText += `${prefix}}\n`;
       headerText += `${prefix}}\n`;
       return headerText;

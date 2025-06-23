@@ -360,7 +360,7 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
         if (!go.isMapType(headerType)) {
           throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderMapParameter ${param.language.go!.name}`);
         }
-        adaptedParam = new go.HeaderMapParameter(param.language.go!.name, param.language.go!.serializedName, headerType, param.schema.language.go!.headerCollectionPrefix, style,
+        adaptedParam = new go.HeaderMapParameter(param.language.go!.name, param.schema.language.go!.headerCollectionPrefix, headerType, style,
           param.language.go!.byValue, location);
       } else if (collectionFormat) {
         const headerType = adaptPossibleType(param.schema, true);

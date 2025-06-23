@@ -1104,7 +1104,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
       const localVar = createLocalVariableName(param, 'Param');
       content += `\tvar ${localVar} map[string]*string\n`;
       content += `\tfor hh := range ${paramValue} {\n`;
-      const headerPrefix = param.collectionPrefix;
+      const headerPrefix = param.headerName;
       requiredHelpers.getHeaderValue = true;
       content += `\t\tif len(hh) > len("${headerPrefix}") && strings.EqualFold(hh[:len("x-ms-meta-")], "${headerPrefix}") {\n`;
       content += `\t\t\tif ${localVar} == nil {\n\t\t\t\t${localVar} = map[string]*string{}\n\t\t\t}\n`;

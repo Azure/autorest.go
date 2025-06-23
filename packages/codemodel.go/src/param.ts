@@ -93,14 +93,11 @@ export interface HeaderCollectionParameter extends ParameterBase {
 export interface HeaderMapParameter extends ParameterBase {
   kind: 'headerMapParam';
 
-  /** the header in the HTTP request */
+  /** the header prefix for each header name in type */
   headerName: string;
 
   /** the type of the param */
   type: type.MapType;
-
-  /** the header prefix for each header name in type */
-  collectionPrefix: string;
 }
 
 /** a value that goes in a HTTP header */
@@ -393,11 +390,10 @@ export class HeaderCollectionParameter extends ParameterBase implements HeaderCo
 }
 
 export class HeaderMapParameter extends ParameterBase implements HeaderMapParameter {
-  constructor(name: string, headerName: string, type: type.MapType, collectionPrefix: string, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
+  constructor(name: string, headerName: string, type: type.MapType, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
     super(name, type, style, byValue, location);
     this.kind = 'headerMapParam';
     this.headerName = headerName;
-    this.collectionPrefix = collectionPrefix;
   }
 }
 
