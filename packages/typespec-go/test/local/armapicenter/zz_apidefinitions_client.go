@@ -123,7 +123,8 @@ func (client *APIDefinitionsClient) createOrUpdateCreateRequest(ctx context.Cont
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *APIDefinitionsClient) createOrUpdateHandleResponse(resp *http.Response) (APIDefinitionsClientCreateOrUpdateResponse, error) {
 	result := APIDefinitionsClientCreateOrUpdateResponse{}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.APIDefinition); err != nil {
@@ -380,7 +381,8 @@ func (client *APIDefinitionsClient) getCreateRequest(ctx context.Context, resour
 // getHandleResponse handles the Get response.
 func (client *APIDefinitionsClient) getHandleResponse(resp *http.Response) (APIDefinitionsClientGetResponse, error) {
 	result := APIDefinitionsClientGetResponse{}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.APIDefinition); err != nil {

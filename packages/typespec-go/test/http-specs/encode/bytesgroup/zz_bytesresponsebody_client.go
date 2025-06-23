@@ -58,7 +58,8 @@ func (client *BytesResponseBodyClient) base64CreateRequest(ctx context.Context, 
 // base64HandleResponse handles the Base64 response.
 func (client *BytesResponseBodyClient) base64HandleResponse(resp *http.Response) (BytesResponseBodyClientBase64Response, error) {
 	result := BytesResponseBodyClientBase64Response{}
-	if val := resp.Header.Get("content-type"); val != "" {
+	if vals, ok := resp.Header["content-type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
@@ -107,7 +108,8 @@ func (client *BytesResponseBodyClient) base64URLCreateRequest(ctx context.Contex
 // base64URLHandleResponse handles the Base64URL response.
 func (client *BytesResponseBodyClient) base64URLHandleResponse(resp *http.Response) (BytesResponseBodyClientBase64URLResponse, error) {
 	result := BytesResponseBodyClientBase64URLResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
+	if vals, ok := resp.Header["content-type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64URLFormat); err != nil {
@@ -157,7 +159,8 @@ func (client *BytesResponseBodyClient) customContentTypeCreateRequest(ctx contex
 // customContentTypeHandleResponse handles the CustomContentType response.
 func (client *BytesResponseBodyClient) customContentTypeHandleResponse(resp *http.Response) (BytesResponseBodyClientCustomContentTypeResponse, error) {
 	result := BytesResponseBodyClientCustomContentTypeResponse{Body: resp.Body}
-	if val := resp.Header.Get("content-type"); val != "" {
+	if vals, ok := resp.Header["content-type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
 	return result, nil
@@ -241,7 +244,8 @@ func (client *BytesResponseBodyClient) octetStreamCreateRequest(ctx context.Cont
 // octetStreamHandleResponse handles the OctetStream response.
 func (client *BytesResponseBodyClient) octetStreamHandleResponse(resp *http.Response) (BytesResponseBodyClientOctetStreamResponse, error) {
 	result := BytesResponseBodyClientOctetStreamResponse{Body: resp.Body}
-	if val := resp.Header.Get("content-type"); val != "" {
+	if vals, ok := resp.Header["content-type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
 	return result, nil

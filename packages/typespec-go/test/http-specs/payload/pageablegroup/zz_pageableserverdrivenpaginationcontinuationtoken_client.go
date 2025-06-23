@@ -127,7 +127,8 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) requestHead
 // requestHeaderResponseHeaderHandleResponse handles the RequestHeaderResponseHeader response.
 func (client *PageableServerDrivenPaginationContinuationTokenClient) requestHeaderResponseHeaderHandleResponse(resp *http.Response) (PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse, error) {
 	result := PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse{}
-	if val := resp.Header.Get("next-token"); val != "" {
+	if vals, ok := resp.Header["next-token"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.NextToken = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RequestHeaderResponseHeaderResponse); err != nil {
@@ -244,7 +245,8 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) requestQuer
 // requestQueryResponseHeaderHandleResponse handles the RequestQueryResponseHeader response.
 func (client *PageableServerDrivenPaginationContinuationTokenClient) requestQueryResponseHeaderHandleResponse(resp *http.Response) (PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderResponse, error) {
 	result := PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderResponse{}
-	if val := resp.Header.Get("next-token"); val != "" {
+	if vals, ok := resp.Header["next-token"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.NextToken = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RequestQueryResponseHeaderResponse); err != nil {

@@ -144,10 +144,12 @@ func (client *AppendBlobClient) appendBlockCreateRequest(ctx context.Context, co
 // appendBlockHandleResponse handles the AppendBlock response.
 func (client *AppendBlobClient) appendBlockHandleResponse(resp *http.Response) (AppendBlobClientAppendBlockResponse, error) {
 	result := AppendBlobClientAppendBlockResponse{}
-	if val := resp.Header.Get("x-ms-blob-append-offset"); val != "" {
+	if vals, ok := resp.Header["x-ms-blob-append-offset"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.BlobAppendOffset = &val
 	}
-	if val := resp.Header.Get("x-ms-blob-committed-block-count"); val != "" {
+	if vals, ok := resp.Header["x-ms-blob-committed-block-count"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
 		blobCommittedBlockCount := int32(blobCommittedBlockCount32)
 		if err != nil {
@@ -155,53 +157,64 @@ func (client *AppendBlobClient) appendBlockHandleResponse(resp *http.Response) (
 		}
 		result.BlobCommittedBlockCount = &blobCommittedBlockCount
 	}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Content-MD5"); val != "" {
+	if vals, ok := resp.Header["Content-MD5"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return AppendBlobClientAppendBlockResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return AppendBlobClientAppendBlockResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
+	if vals, ok := resp.Header["x-ms-encryption-key-sha256"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.EncryptionKeySHA256 = &val
 	}
-	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
+	if vals, ok := resp.Header["x-ms-encryption-scope"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.EncryptionScope = &val
 	}
-	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-server-encrypted"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
 			return AppendBlobClientAppendBlockResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
-	if val := resp.Header.Get("Last-Modified"); val != "" {
+	if vals, ok := resp.Header["Last-Modified"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return AppendBlobClientAppendBlockResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
-	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
+	if vals, ok := resp.Header["x-ms-content-crc64"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return AppendBlobClientAppendBlockResponse{}, err
@@ -349,10 +362,12 @@ func (client *AppendBlobClient) appendBlockFromURLCreateRequest(ctx context.Cont
 // appendBlockFromURLHandleResponse handles the AppendBlockFromURL response.
 func (client *AppendBlobClient) appendBlockFromURLHandleResponse(resp *http.Response) (AppendBlobClientAppendBlockFromURLResponse, error) {
 	result := AppendBlobClientAppendBlockFromURLResponse{}
-	if val := resp.Header.Get("x-ms-blob-append-offset"); val != "" {
+	if vals, ok := resp.Header["x-ms-blob-append-offset"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.BlobAppendOffset = &val
 	}
-	if val := resp.Header.Get("x-ms-blob-committed-block-count"); val != "" {
+	if vals, ok := resp.Header["x-ms-blob-committed-block-count"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
 		blobCommittedBlockCount := int32(blobCommittedBlockCount32)
 		if err != nil {
@@ -360,50 +375,60 @@ func (client *AppendBlobClient) appendBlockFromURLHandleResponse(resp *http.Resp
 		}
 		result.BlobCommittedBlockCount = &blobCommittedBlockCount
 	}
-	if val := resp.Header.Get("Content-MD5"); val != "" {
+	if vals, ok := resp.Header["Content-MD5"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return AppendBlobClientAppendBlockFromURLResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return AppendBlobClientAppendBlockFromURLResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
+	if vals, ok := resp.Header["x-ms-encryption-key-sha256"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.EncryptionKeySHA256 = &val
 	}
-	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
+	if vals, ok := resp.Header["x-ms-encryption-scope"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.EncryptionScope = &val
 	}
-	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-server-encrypted"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
 			return AppendBlobClientAppendBlockFromURLResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
-	if val := resp.Header.Get("Last-Modified"); val != "" {
+	if vals, ok := resp.Header["Last-Modified"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return AppendBlobClientAppendBlockFromURLResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
-	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
+	if vals, ok := resp.Header["x-ms-content-crc64"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return AppendBlobClientAppendBlockFromURLResponse{}, err
@@ -546,53 +571,64 @@ func (client *AppendBlobClient) createCreateRequest(ctx context.Context, contain
 // createHandleResponse handles the Create response.
 func (client *AppendBlobClient) createHandleResponse(resp *http.Response) (AppendBlobClientCreateResponse, error) {
 	result := AppendBlobClientCreateResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Content-MD5"); val != "" {
+	if vals, ok := resp.Header["Content-MD5"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return AppendBlobClientCreateResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return AppendBlobClientCreateResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
+	if vals, ok := resp.Header["x-ms-encryption-key-sha256"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.EncryptionKeySHA256 = &val
 	}
-	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
+	if vals, ok := resp.Header["x-ms-encryption-scope"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.EncryptionScope = &val
 	}
-	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-server-encrypted"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
 			return AppendBlobClientCreateResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
-	if val := resp.Header.Get("Last-Modified"); val != "" {
+	if vals, ok := resp.Header["Last-Modified"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return AppendBlobClientCreateResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
-	if val := resp.Header.Get("x-ms-version-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-version-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.VersionID = &val
 	}
 	return result, nil
@@ -681,37 +717,44 @@ func (client *AppendBlobClient) sealCreateRequest(ctx context.Context, container
 // sealHandleResponse handles the Seal response.
 func (client *AppendBlobClient) sealHandleResponse(resp *http.Response) (AppendBlobClientSealResponse, error) {
 	result := AppendBlobClientSealResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return AppendBlobClientSealResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("x-ms-blob-sealed"); val != "" {
+	if vals, ok := resp.Header["x-ms-blob-sealed"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		isSealed, err := strconv.ParseBool(val)
 		if err != nil {
 			return AppendBlobClientSealResponse{}, err
 		}
 		result.IsSealed = &isSealed
 	}
-	if val := resp.Header.Get("Last-Modified"); val != "" {
+	if vals, ok := resp.Header["Last-Modified"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return AppendBlobClientSealResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil

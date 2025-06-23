@@ -80,23 +80,28 @@ func (client *Client) createCreateRequest(ctx context.Context, tableProperties P
 // createHandleResponse handles the Create response.
 func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateResponse, error) {
 	result := ClientCreateResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientCreateResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("Preference-Applied"); val != "" {
+	if vals, ok := resp.Header["Preference-Applied"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.PreferenceApplied = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Response); err != nil {
@@ -151,20 +156,24 @@ func (client *Client) deleteCreateRequest(ctx context.Context, table string, opt
 // deleteHandleResponse handles the Delete response.
 func (client *Client) deleteHandleResponse(resp *http.Response) (ClientDeleteResponse, error) {
 	result := ClientDeleteResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientDeleteResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -238,20 +247,24 @@ func (client *Client) deleteEntityCreateRequest(ctx context.Context, table strin
 // deleteEntityHandleResponse handles the DeleteEntity response.
 func (client *Client) deleteEntityHandleResponse(resp *http.Response) (ClientDeleteEntityResponse, error) {
 	result := ClientDeleteEntityResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientDeleteEntityResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -310,20 +323,24 @@ func (client *Client) getAccessPolicyCreateRequest(ctx context.Context, table st
 // getAccessPolicyHandleResponse handles the GetAccessPolicy response.
 func (client *Client) getAccessPolicyHandleResponse(resp *http.Response) (ClientGetAccessPolicyResponse, error) {
 	result := ClientGetAccessPolicyResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientGetAccessPolicyResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
@@ -396,29 +413,36 @@ func (client *Client) insertEntityCreateRequest(ctx context.Context, table strin
 // insertEntityHandleResponse handles the InsertEntity response.
 func (client *Client) insertEntityHandleResponse(resp *http.Response) (ClientInsertEntityResponse, error) {
 	result := ClientInsertEntityResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Content-Type"); val != "" {
+	if vals, ok := resp.Header["Content-Type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientInsertEntityResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("Preference-Applied"); val != "" {
+	if vals, ok := resp.Header["Preference-Applied"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.PreferenceApplied = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
@@ -499,23 +523,28 @@ func (client *Client) mergeEntityCreateRequest(ctx context.Context, table string
 // mergeEntityHandleResponse handles the MergeEntity response.
 func (client *Client) mergeEntityHandleResponse(resp *http.Response) (ClientMergeEntityResponse, error) {
 	result := ClientMergeEntityResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientMergeEntityResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -580,23 +609,28 @@ func (client *Client) queryCreateRequest(ctx context.Context, options *ClientQue
 // queryHandleResponse handles the Query response.
 func (client *Client) queryHandleResponse(resp *http.Response) (ClientQueryResponse, error) {
 	result := ClientQueryResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientQueryResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
-	if val := resp.Header.Get("x-ms-continuation-NextTableName"); val != "" {
+	if vals, ok := resp.Header["x-ms-continuation-NextTableName"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.XMSContinuationNextTableName = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.QueryResponse); err != nil {
@@ -675,26 +709,32 @@ func (client *Client) queryEntitiesCreateRequest(ctx context.Context, table stri
 // queryEntitiesHandleResponse handles the QueryEntities response.
 func (client *Client) queryEntitiesHandleResponse(resp *http.Response) (ClientQueryEntitiesResponse, error) {
 	result := ClientQueryEntitiesResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientQueryEntitiesResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
-	if val := resp.Header.Get("x-ms-continuation-NextPartitionKey"); val != "" {
+	if vals, ok := resp.Header["x-ms-continuation-NextPartitionKey"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.XMSContinuationNextPartitionKey = &val
 	}
-	if val := resp.Header.Get("x-ms-continuation-NextRowKey"); val != "" {
+	if vals, ok := resp.Header["x-ms-continuation-NextRowKey"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.XMSContinuationNextRowKey = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.EntityQueryResponse); err != nil {
@@ -775,29 +815,36 @@ func (client *Client) queryEntityWithPartitionAndRowKeyCreateRequest(ctx context
 // queryEntityWithPartitionAndRowKeyHandleResponse handles the QueryEntityWithPartitionAndRowKey response.
 func (client *Client) queryEntityWithPartitionAndRowKeyHandleResponse(resp *http.Response) (ClientQueryEntityWithPartitionAndRowKeyResponse, error) {
 	result := ClientQueryEntityWithPartitionAndRowKeyResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientQueryEntityWithPartitionAndRowKeyResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
-	if val := resp.Header.Get("x-ms-continuation-NextPartitionKey"); val != "" {
+	if vals, ok := resp.Header["x-ms-continuation-NextPartitionKey"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.XMSContinuationNextPartitionKey = &val
 	}
-	if val := resp.Header.Get("x-ms-continuation-NextRowKey"); val != "" {
+	if vals, ok := resp.Header["x-ms-continuation-NextRowKey"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.XMSContinuationNextRowKey = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
@@ -866,20 +913,24 @@ func (client *Client) setAccessPolicyCreateRequest(ctx context.Context, table st
 // setAccessPolicyHandleResponse handles the SetAccessPolicy response.
 func (client *Client) setAccessPolicyHandleResponse(resp *http.Response) (ClientSetAccessPolicyResponse, error) {
 	result := ClientSetAccessPolicyResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientSetAccessPolicyResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -957,23 +1008,28 @@ func (client *Client) updateEntityCreateRequest(ctx context.Context, table strin
 // updateEntityHandleResponse handles the UpdateEntity response.
 func (client *Client) updateEntityHandleResponse(resp *http.Response) (ClientUpdateEntityResponse, error) {
 	result := ClientUpdateEntityResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ClientUpdateEntityResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil

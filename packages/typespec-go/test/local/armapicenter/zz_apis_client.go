@@ -112,7 +112,8 @@ func (client *ApisClient) createOrUpdateCreateRequest(ctx context.Context, resou
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *ApisClient) createOrUpdateHandleResponse(resp *http.Response) (ApisClientCreateOrUpdateResponse, error) {
 	result := ApisClientCreateOrUpdateResponse{}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.API); err != nil {
@@ -253,7 +254,8 @@ func (client *ApisClient) getCreateRequest(ctx context.Context, resourceGroupNam
 // getHandleResponse handles the Get response.
 func (client *ApisClient) getHandleResponse(resp *http.Response) (ApisClientGetResponse, error) {
 	result := ApisClientGetResponse{}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.API); err != nil {

@@ -291,7 +291,8 @@ func (client *NamingClient) responseCreateRequest(ctx context.Context, _ *Naming
 // responseHandleResponse handles the Response response.
 func (client *NamingClient) responseHandleResponse(resp *http.Response) (NamingClientResponseResponse, error) {
 	result := NamingClientResponseResponse{}
-	if val := resp.Header.Get("default-name"); val != "" {
+	if vals, ok := resp.Header["default-name"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.DefaultName = &val
 	}
 	return result, nil

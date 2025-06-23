@@ -444,7 +444,8 @@ func (client *XMLClient) getHeadersCreateRequest(ctx context.Context, _ *XMLClie
 // getHeadersHandleResponse handles the GetHeaders response.
 func (client *XMLClient) getHeadersHandleResponse(resp *http.Response) (XMLClientGetHeadersResponse, error) {
 	result := XMLClientGetHeadersResponse{}
-	if val := resp.Header.Get("Custom-Header"); val != "" {
+	if vals, ok := resp.Header["Custom-Header"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.CustomHeader = &val
 	}
 	return result, nil

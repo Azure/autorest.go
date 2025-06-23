@@ -187,7 +187,8 @@ func (client *CloudHsmClustersClient) cloudHsmClusterBackupStatusGetCreateReques
 // cloudHsmClusterBackupStatusGetHandleResponse handles the CloudHsmClusterBackupStatusGet response.
 func (client *CloudHsmClustersClient) cloudHsmClusterBackupStatusGetHandleResponse(resp *http.Response) (CloudHsmClustersClientCloudHsmClusterBackupStatusGetResponse, error) {
 	result := CloudHsmClustersClientCloudHsmClusterBackupStatusGetResponse{}
-	if val := resp.Header.Get("Retry-After"); val != "" {
+	if vals, ok := resp.Header["Retry-After"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		retryAfter32, err := strconv.ParseInt(val, 10, 32)
 		retryAfter := int32(retryAfter32)
 		if err != nil {
@@ -265,7 +266,8 @@ func (client *CloudHsmClustersClient) cloudHsmClusterRestoreStatusGetCreateReque
 // cloudHsmClusterRestoreStatusGetHandleResponse handles the CloudHsmClusterRestoreStatusGet response.
 func (client *CloudHsmClustersClient) cloudHsmClusterRestoreStatusGetHandleResponse(resp *http.Response) (CloudHsmClustersClientCloudHsmClusterRestoreStatusGetResponse, error) {
 	result := CloudHsmClustersClientCloudHsmClusterRestoreStatusGetResponse{}
-	if val := resp.Header.Get("Retry-After"); val != "" {
+	if vals, ok := resp.Header["Retry-After"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		retryAfter32, err := strconv.ParseInt(val, 10, 32)
 		retryAfter := int32(retryAfter32)
 		if err != nil {

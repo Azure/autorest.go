@@ -103,7 +103,8 @@ func (client *HTTPRedirectsClient) get300CreateRequest(ctx context.Context, _ *H
 // get300HandleResponse handles the Get300 response.
 func (client *HTTPRedirectsClient) get300HandleResponse(resp *http.Response) (HTTPRedirectsClientGet300Response, error) {
 	result := HTTPRedirectsClientGet300Response{}
-	if val := resp.Header.Get("Location"); val != "" {
+	if vals, ok := resp.Header["Location"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Location = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
@@ -263,7 +264,8 @@ func (client *HTTPRedirectsClient) head300CreateRequest(ctx context.Context, _ *
 // head300HandleResponse handles the Head300 response.
 func (client *HTTPRedirectsClient) head300HandleResponse(resp *http.Response) (HTTPRedirectsClientHead300Response, error) {
 	result := HTTPRedirectsClientHead300Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}
-	if val := resp.Header.Get("Location"); val != "" {
+	if vals, ok := resp.Header["Location"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Location = &val
 	}
 	return result, nil
@@ -460,7 +462,8 @@ func (client *HTTPRedirectsClient) patch302CreateRequest(ctx context.Context, _ 
 // patch302HandleResponse handles the Patch302 response.
 func (client *HTTPRedirectsClient) patch302HandleResponse(resp *http.Response) (HTTPRedirectsClientPatch302Response, error) {
 	result := HTTPRedirectsClientPatch302Response{}
-	if val := resp.Header.Get("Location"); val != "" {
+	if vals, ok := resp.Header["Location"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Location = &val
 	}
 	return result, nil
@@ -554,7 +557,8 @@ func (client *HTTPRedirectsClient) post303CreateRequest(ctx context.Context, opt
 // post303HandleResponse handles the Post303 response.
 func (client *HTTPRedirectsClient) post303HandleResponse(resp *http.Response) (HTTPRedirectsClientPost303Response, error) {
 	result := HTTPRedirectsClientPost303Response{}
-	if val := resp.Header.Get("Location"); val != "" {
+	if vals, ok := resp.Header["Location"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Location = &val
 	}
 	return result, nil
@@ -648,7 +652,8 @@ func (client *HTTPRedirectsClient) put301CreateRequest(ctx context.Context, _ *H
 // put301HandleResponse handles the Put301 response.
 func (client *HTTPRedirectsClient) put301HandleResponse(resp *http.Response) (HTTPRedirectsClientPut301Response, error) {
 	result := HTTPRedirectsClientPut301Response{}
-	if val := resp.Header.Get("Location"); val != "" {
+	if vals, ok := resp.Header["Location"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Location = &val
 	}
 	return result, nil

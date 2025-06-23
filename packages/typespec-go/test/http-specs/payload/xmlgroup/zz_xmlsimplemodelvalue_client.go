@@ -57,7 +57,8 @@ func (client *XMLSimpleModelValueClient) getCreateRequest(ctx context.Context, _
 // getHandleResponse handles the Get response.
 func (client *XMLSimpleModelValueClient) getHandleResponse(resp *http.Response) (XMLSimpleModelValueClientGetResponse, error) {
 	result := XMLSimpleModelValueClientGetResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
+	if vals, ok := resp.Header["content-type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.SimpleModel); err != nil {

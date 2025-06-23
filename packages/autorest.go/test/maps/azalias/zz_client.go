@@ -117,7 +117,8 @@ func (client *Client) createCreateRequest(ctx context.Context, headerBools []boo
 // createHandleResponse handles the Create response.
 func (client *Client) createHandleResponse(resp *http.Response) (CreateResponse, error) {
 	result := CreateResponse{}
-	if val := resp.Header.Get("Access-Control-Expose-Headers"); val != "" {
+	if vals, ok := resp.Header["Access-Control-Expose-Headers"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.AccessControlExposeHeaders = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AliasesCreateResponse); err != nil {

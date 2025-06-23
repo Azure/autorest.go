@@ -58,7 +58,8 @@ func (client *ExtensibleStringClient) getKnownValueCreateRequest(ctx context.Con
 // getKnownValueHandleResponse handles the GetKnownValue response.
 func (client *ExtensibleStringClient) getKnownValueHandleResponse(resp *http.Response) (ExtensibleStringClientGetKnownValueResponse, error) {
 	result := ExtensibleStringClientGetKnownValueResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
+	if vals, ok := resp.Header["content-type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
@@ -107,7 +108,8 @@ func (client *ExtensibleStringClient) getUnknownValueCreateRequest(ctx context.C
 // getUnknownValueHandleResponse handles the GetUnknownValue response.
 func (client *ExtensibleStringClient) getUnknownValueHandleResponse(resp *http.Response) (ExtensibleStringClientGetUnknownValueResponse, error) {
 	result := ExtensibleStringClientGetUnknownValueResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
+	if vals, ok := resp.Header["content-type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {

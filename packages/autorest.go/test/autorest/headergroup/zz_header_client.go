@@ -686,7 +686,8 @@ func (client *HeaderClient) responseBoolCreateRequest(ctx context.Context, scena
 // responseBoolHandleResponse handles the ResponseBool response.
 func (client *HeaderClient) responseBoolHandleResponse(resp *http.Response) (HeaderClientResponseBoolResponse, error) {
 	result := HeaderClientResponseBoolResponse{}
-	if val := resp.Header.Get("value"); val != "" {
+	if vals, ok := resp.Header["value"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		value, err := strconv.ParseBool(val)
 		if err != nil {
 			return HeaderClientResponseBoolResponse{}, err
@@ -739,7 +740,8 @@ func (client *HeaderClient) responseByteCreateRequest(ctx context.Context, scena
 // responseByteHandleResponse handles the ResponseByte response.
 func (client *HeaderClient) responseByteHandleResponse(resp *http.Response) (HeaderClientResponseByteResponse, error) {
 	result := HeaderClientResponseByteResponse{}
-	if val := resp.Header.Get("value"); val != "" {
+	if vals, ok := resp.Header["value"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		value, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return HeaderClientResponseByteResponse{}, err
@@ -792,7 +794,8 @@ func (client *HeaderClient) responseDateCreateRequest(ctx context.Context, scena
 // responseDateHandleResponse handles the ResponseDate response.
 func (client *HeaderClient) responseDateHandleResponse(resp *http.Response) (HeaderClientResponseDateResponse, error) {
 	result := HeaderClientResponseDateResponse{}
-	if val := resp.Header.Get("value"); val != "" {
+	if vals, ok := resp.Header["value"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		value, err := time.Parse("2006-01-02", val)
 		if err != nil {
 			return HeaderClientResponseDateResponse{}, err
@@ -845,7 +848,8 @@ func (client *HeaderClient) responseDatetimeCreateRequest(ctx context.Context, s
 // responseDatetimeHandleResponse handles the ResponseDatetime response.
 func (client *HeaderClient) responseDatetimeHandleResponse(resp *http.Response) (HeaderClientResponseDatetimeResponse, error) {
 	result := HeaderClientResponseDatetimeResponse{}
-	if val := resp.Header.Get("value"); val != "" {
+	if vals, ok := resp.Header["value"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		value, err := time.Parse(time.RFC3339Nano, val)
 		if err != nil {
 			return HeaderClientResponseDatetimeResponse{}, err
@@ -900,7 +904,8 @@ func (client *HeaderClient) responseDatetimeRFC1123CreateRequest(ctx context.Con
 // responseDatetimeRFC1123HandleResponse handles the ResponseDatetimeRFC1123 response.
 func (client *HeaderClient) responseDatetimeRFC1123HandleResponse(resp *http.Response) (HeaderClientResponseDatetimeRFC1123Response, error) {
 	result := HeaderClientResponseDatetimeRFC1123Response{}
-	if val := resp.Header.Get("value"); val != "" {
+	if vals, ok := resp.Header["value"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		value, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return HeaderClientResponseDatetimeRFC1123Response{}, err
@@ -953,7 +958,8 @@ func (client *HeaderClient) responseDoubleCreateRequest(ctx context.Context, sce
 // responseDoubleHandleResponse handles the ResponseDouble response.
 func (client *HeaderClient) responseDoubleHandleResponse(resp *http.Response) (HeaderClientResponseDoubleResponse, error) {
 	result := HeaderClientResponseDoubleResponse{}
-	if val := resp.Header.Get("value"); val != "" {
+	if vals, ok := resp.Header["value"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		value, err := strconv.ParseFloat(val, 64)
 		if err != nil {
 			return HeaderClientResponseDoubleResponse{}, err
@@ -1006,7 +1012,8 @@ func (client *HeaderClient) responseDurationCreateRequest(ctx context.Context, s
 // responseDurationHandleResponse handles the ResponseDuration response.
 func (client *HeaderClient) responseDurationHandleResponse(resp *http.Response) (HeaderClientResponseDurationResponse, error) {
 	result := HeaderClientResponseDurationResponse{}
-	if val := resp.Header.Get("value"); val != "" {
+	if vals, ok := resp.Header["value"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Value = &val
 	}
 	return result, nil
@@ -1055,7 +1062,8 @@ func (client *HeaderClient) responseEnumCreateRequest(ctx context.Context, scena
 // responseEnumHandleResponse handles the ResponseEnum response.
 func (client *HeaderClient) responseEnumHandleResponse(resp *http.Response) (HeaderClientResponseEnumResponse, error) {
 	result := HeaderClientResponseEnumResponse{}
-	if val := resp.Header.Get("value"); val != "" {
+	if vals, ok := resp.Header["value"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Value = (*GreyscaleColors)(&val)
 	}
 	return result, nil
@@ -1103,7 +1111,8 @@ func (client *HeaderClient) responseExistingKeyCreateRequest(ctx context.Context
 // responseExistingKeyHandleResponse handles the ResponseExistingKey response.
 func (client *HeaderClient) responseExistingKeyHandleResponse(resp *http.Response) (HeaderClientResponseExistingKeyResponse, error) {
 	result := HeaderClientResponseExistingKeyResponse{}
-	if val := resp.Header.Get("User-Agent"); val != "" {
+	if vals, ok := resp.Header["User-Agent"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.UserAgent = &val
 	}
 	return result, nil
@@ -1152,7 +1161,8 @@ func (client *HeaderClient) responseFloatCreateRequest(ctx context.Context, scen
 // responseFloatHandleResponse handles the ResponseFloat response.
 func (client *HeaderClient) responseFloatHandleResponse(resp *http.Response) (HeaderClientResponseFloatResponse, error) {
 	result := HeaderClientResponseFloatResponse{}
-	if val := resp.Header.Get("value"); val != "" {
+	if vals, ok := resp.Header["value"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		value32, err := strconv.ParseFloat(val, 32)
 		value := float32(value32)
 		if err != nil {
@@ -1206,7 +1216,8 @@ func (client *HeaderClient) responseIntegerCreateRequest(ctx context.Context, sc
 // responseIntegerHandleResponse handles the ResponseInteger response.
 func (client *HeaderClient) responseIntegerHandleResponse(resp *http.Response) (HeaderClientResponseIntegerResponse, error) {
 	result := HeaderClientResponseIntegerResponse{}
-	if val := resp.Header.Get("value"); val != "" {
+	if vals, ok := resp.Header["value"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		value32, err := strconv.ParseInt(val, 10, 32)
 		value := int32(value32)
 		if err != nil {
@@ -1260,7 +1271,8 @@ func (client *HeaderClient) responseLongCreateRequest(ctx context.Context, scena
 // responseLongHandleResponse handles the ResponseLong response.
 func (client *HeaderClient) responseLongHandleResponse(resp *http.Response) (HeaderClientResponseLongResponse, error) {
 	result := HeaderClientResponseLongResponse{}
-	if val := resp.Header.Get("value"); val != "" {
+	if vals, ok := resp.Header["value"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		value, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return HeaderClientResponseLongResponse{}, err
@@ -1312,7 +1324,8 @@ func (client *HeaderClient) responseProtectedKeyCreateRequest(ctx context.Contex
 // responseProtectedKeyHandleResponse handles the ResponseProtectedKey response.
 func (client *HeaderClient) responseProtectedKeyHandleResponse(resp *http.Response) (HeaderClientResponseProtectedKeyResponse, error) {
 	result := HeaderClientResponseProtectedKeyResponse{}
-	if val := resp.Header.Get("Content-Type"); val != "" {
+	if vals, ok := resp.Header["Content-Type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
 	return result, nil
@@ -1361,7 +1374,8 @@ func (client *HeaderClient) responseStringCreateRequest(ctx context.Context, sce
 // responseStringHandleResponse handles the ResponseString response.
 func (client *HeaderClient) responseStringHandleResponse(resp *http.Response) (HeaderClientResponseStringResponse, error) {
 	result := HeaderClientResponseStringResponse{}
-	if val := resp.Header.Get("value"); val != "" {
+	if vals, ok := resp.Header["value"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Value = &val
 	}
 	return result, nil

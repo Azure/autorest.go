@@ -102,33 +102,40 @@ func (client *ContainerClient) acquireLeaseCreateRequest(ctx context.Context, co
 // acquireLeaseHandleResponse handles the AcquireLease response.
 func (client *ContainerClient) acquireLeaseHandleResponse(resp *http.Response) (ContainerClientAcquireLeaseResponse, error) {
 	result := ContainerClientAcquireLeaseResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientAcquireLeaseResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("Last-Modified"); val != "" {
+	if vals, ok := resp.Header["Last-Modified"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientAcquireLeaseResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
-	if val := resp.Header.Get("x-ms-lease-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-lease-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.LeaseID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -203,27 +210,32 @@ func (client *ContainerClient) breakLeaseCreateRequest(ctx context.Context, cont
 // breakLeaseHandleResponse handles the BreakLease response.
 func (client *ContainerClient) breakLeaseHandleResponse(resp *http.Response) (ContainerClientBreakLeaseResponse, error) {
 	result := ContainerClientBreakLeaseResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientBreakLeaseResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("Last-Modified"); val != "" {
+	if vals, ok := resp.Header["Last-Modified"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientBreakLeaseResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
-	if val := resp.Header.Get("x-ms-lease-time"); val != "" {
+	if vals, ok := resp.Header["x-ms-lease-time"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		leaseTime32, err := strconv.ParseInt(val, 10, 32)
 		leaseTime := int32(leaseTime32)
 		if err != nil {
@@ -231,10 +243,12 @@ func (client *ContainerClient) breakLeaseHandleResponse(resp *http.Response) (Co
 		}
 		result.LeaseTime = &leaseTime
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -312,33 +326,40 @@ func (client *ContainerClient) changeLeaseCreateRequest(ctx context.Context, con
 // changeLeaseHandleResponse handles the ChangeLease response.
 func (client *ContainerClient) changeLeaseHandleResponse(resp *http.Response) (ContainerClientChangeLeaseResponse, error) {
 	result := ContainerClientChangeLeaseResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientChangeLeaseResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("Last-Modified"); val != "" {
+	if vals, ok := resp.Header["Last-Modified"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientChangeLeaseResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
-	if val := resp.Header.Get("x-ms-lease-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-lease-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.LeaseID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -417,30 +438,36 @@ func (client *ContainerClient) createCreateRequest(ctx context.Context, containe
 // createHandleResponse handles the Create response.
 func (client *ContainerClient) createHandleResponse(resp *http.Response) (ContainerClientCreateResponse, error) {
 	result := ContainerClientCreateResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientCreateResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("Last-Modified"); val != "" {
+	if vals, ok := resp.Header["Last-Modified"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientCreateResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -513,20 +540,24 @@ func (client *ContainerClient) deleteCreateRequest(ctx context.Context, containe
 // deleteHandleResponse handles the Delete response.
 func (client *ContainerClient) deleteHandleResponse(resp *http.Response) (ContainerClientDeleteResponse, error) {
 	result := ContainerClientDeleteResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientDeleteResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -602,20 +633,24 @@ func (client *ContainerClient) filterBlobsCreateRequest(ctx context.Context, con
 // filterBlobsHandleResponse handles the FilterBlobs response.
 func (client *ContainerClient) filterBlobsHandleResponse(resp *http.Response) (ContainerClientFilterBlobsResponse, error) {
 	result := ContainerClientFilterBlobsResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientFilterBlobsResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.FilterBlobSegment); err != nil {
@@ -687,33 +722,40 @@ func (client *ContainerClient) getAccessPolicyCreateRequest(ctx context.Context,
 // getAccessPolicyHandleResponse handles the GetAccessPolicy response.
 func (client *ContainerClient) getAccessPolicyHandleResponse(resp *http.Response) (ContainerClientGetAccessPolicyResponse, error) {
 	result := ContainerClientGetAccessPolicyResponse{}
-	if val := resp.Header.Get("x-ms-blob-public-access"); val != "" {
+	if vals, ok := resp.Header["x-ms-blob-public-access"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.BlobPublicAccess = (*PublicAccessType)(&val)
 	}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientGetAccessPolicyResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("Last-Modified"); val != "" {
+	if vals, ok := resp.Header["Last-Modified"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientGetAccessPolicyResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
@@ -774,26 +816,32 @@ func (client *ContainerClient) getAccountInfoCreateRequest(ctx context.Context, 
 // getAccountInfoHandleResponse handles the GetAccountInfo response.
 func (client *ContainerClient) getAccountInfoHandleResponse(resp *http.Response) (ContainerClientGetAccountInfoResponse, error) {
 	result := ContainerClientGetAccountInfoResponse{}
-	if val := resp.Header.Get("x-ms-account-kind"); val != "" {
+	if vals, ok := resp.Header["x-ms-account-kind"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.AccountKind = (*AccountKind)(&val)
 	}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientGetAccountInfoResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-sku-name"); val != "" {
+	if vals, ok := resp.Header["x-ms-sku-name"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.SKUName = (*SKUName)(&val)
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -859,67 +907,80 @@ func (client *ContainerClient) getPropertiesCreateRequest(ctx context.Context, c
 // getPropertiesHandleResponse handles the GetProperties response.
 func (client *ContainerClient) getPropertiesHandleResponse(resp *http.Response) (ContainerClientGetPropertiesResponse, error) {
 	result := ContainerClientGetPropertiesResponse{}
-	if val := resp.Header.Get("x-ms-blob-public-access"); val != "" {
+	if vals, ok := resp.Header["x-ms-blob-public-access"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.BlobPublicAccess = (*PublicAccessType)(&val)
 	}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientGetPropertiesResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("x-ms-default-encryption-scope"); val != "" {
+	if vals, ok := resp.Header["x-ms-default-encryption-scope"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.DefaultEncryptionScope = &val
 	}
-	if val := resp.Header.Get("x-ms-deny-encryption-scope-override"); val != "" {
+	if vals, ok := resp.Header["x-ms-deny-encryption-scope-override"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		denyEncryptionScopeOverride, err := strconv.ParseBool(val)
 		if err != nil {
 			return ContainerClientGetPropertiesResponse{}, err
 		}
 		result.DenyEncryptionScopeOverride = &denyEncryptionScopeOverride
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("x-ms-has-immutability-policy"); val != "" {
+	if vals, ok := resp.Header["x-ms-has-immutability-policy"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		hasImmutabilityPolicy, err := strconv.ParseBool(val)
 		if err != nil {
 			return ContainerClientGetPropertiesResponse{}, err
 		}
 		result.HasImmutabilityPolicy = &hasImmutabilityPolicy
 	}
-	if val := resp.Header.Get("x-ms-has-legal-hold"); val != "" {
+	if vals, ok := resp.Header["x-ms-has-legal-hold"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		hasLegalHold, err := strconv.ParseBool(val)
 		if err != nil {
 			return ContainerClientGetPropertiesResponse{}, err
 		}
 		result.HasLegalHold = &hasLegalHold
 	}
-	if val := resp.Header.Get("x-ms-immutable-storage-with-versioning-enabled"); val != "" {
+	if vals, ok := resp.Header["x-ms-immutable-storage-with-versioning-enabled"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		isImmutableStorageWithVersioningEnabled, err := strconv.ParseBool(val)
 		if err != nil {
 			return ContainerClientGetPropertiesResponse{}, err
 		}
 		result.IsImmutableStorageWithVersioningEnabled = &isImmutableStorageWithVersioningEnabled
 	}
-	if val := resp.Header.Get("Last-Modified"); val != "" {
+	if vals, ok := resp.Header["Last-Modified"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientGetPropertiesResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
-	if val := resp.Header.Get("x-ms-lease-duration"); val != "" {
+	if vals, ok := resp.Header["x-ms-lease-duration"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.LeaseDuration = (*LeaseDurationType)(&val)
 	}
-	if val := resp.Header.Get("x-ms-lease-state"); val != "" {
+	if vals, ok := resp.Header["x-ms-lease-state"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.LeaseState = (*LeaseStateType)(&val)
 	}
-	if val := resp.Header.Get("x-ms-lease-status"); val != "" {
+	if vals, ok := resp.Header["x-ms-lease-status"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.LeaseStatus = (*LeaseStatusType)(&val)
 	}
 	for hh := range resp.Header {
@@ -927,13 +988,15 @@ func (client *ContainerClient) getPropertiesHandleResponse(resp *http.Response) 
 			if result.Metadata == nil {
 				result.Metadata = map[string]*string{}
 			}
-			result.Metadata[hh[len("x-ms-meta-"):]] = to.Ptr(resp.Header.Get(hh))
+			result.Metadata[hh[len("x-ms-meta-"):]] = to.Ptr(resp.Header[hh][0])
 		}
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -1010,23 +1073,28 @@ func (client *ContainerClient) listBlobFlatSegmentCreateRequest(ctx context.Cont
 // listBlobFlatSegmentHandleResponse handles the ListBlobFlatSegment response.
 func (client *ContainerClient) listBlobFlatSegmentHandleResponse(resp *http.Response) (ContainerClientListBlobFlatSegmentResponse, error) {
 	result := ContainerClientListBlobFlatSegmentResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Content-Type"); val != "" {
+	if vals, ok := resp.Header["Content-Type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientListBlobFlatSegmentResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ListBlobsFlatSegmentResponse); err != nil {
@@ -1110,23 +1178,28 @@ func (client *ContainerClient) listBlobHierarchySegmentCreateRequest(ctx context
 // listBlobHierarchySegmentHandleResponse handles the ListBlobHierarchySegment response.
 func (client *ContainerClient) listBlobHierarchySegmentHandleResponse(resp *http.Response) (ContainerClientListBlobHierarchySegmentResponse, error) {
 	result := ContainerClientListBlobHierarchySegmentResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Content-Type"); val != "" {
+	if vals, ok := resp.Header["Content-Type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientListBlobHierarchySegmentResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ListBlobsHierarchySegmentResponse); err != nil {
@@ -1203,30 +1276,36 @@ func (client *ContainerClient) releaseLeaseCreateRequest(ctx context.Context, co
 // releaseLeaseHandleResponse handles the ReleaseLease response.
 func (client *ContainerClient) releaseLeaseHandleResponse(resp *http.Response) (ContainerClientReleaseLeaseResponse, error) {
 	result := ContainerClientReleaseLeaseResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientReleaseLeaseResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("Last-Modified"); val != "" {
+	if vals, ok := resp.Header["Last-Modified"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientReleaseLeaseResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -1294,20 +1373,24 @@ func (client *ContainerClient) renameCreateRequest(ctx context.Context, containe
 // renameHandleResponse handles the Rename response.
 func (client *ContainerClient) renameHandleResponse(resp *http.Response) (ContainerClientRenameResponse, error) {
 	result := ContainerClientRenameResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientRenameResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -1381,33 +1464,40 @@ func (client *ContainerClient) renewLeaseCreateRequest(ctx context.Context, cont
 // renewLeaseHandleResponse handles the RenewLease response.
 func (client *ContainerClient) renewLeaseHandleResponse(resp *http.Response) (ContainerClientRenewLeaseResponse, error) {
 	result := ContainerClientRenewLeaseResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientRenewLeaseResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("Last-Modified"); val != "" {
+	if vals, ok := resp.Header["Last-Modified"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientRenewLeaseResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
-	if val := resp.Header.Get("x-ms-lease-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-lease-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.LeaseID = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -1476,20 +1566,24 @@ func (client *ContainerClient) restoreCreateRequest(ctx context.Context, contain
 // restoreHandleResponse handles the Restore response.
 func (client *ContainerClient) restoreHandleResponse(resp *http.Response) (ContainerClientRestoreResponse, error) {
 	result := ContainerClientRestoreResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientRestoreResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -1578,30 +1672,36 @@ func (client *ContainerClient) setAccessPolicyCreateRequest(ctx context.Context,
 // setAccessPolicyHandleResponse handles the SetAccessPolicy response.
 func (client *ContainerClient) setAccessPolicyHandleResponse(resp *http.Response) (ContainerClientSetAccessPolicyResponse, error) {
 	result := ContainerClientSetAccessPolicyResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientSetAccessPolicyResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("Last-Modified"); val != "" {
+	if vals, ok := resp.Header["Last-Modified"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientSetAccessPolicyResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -1679,30 +1779,36 @@ func (client *ContainerClient) setMetadataCreateRequest(ctx context.Context, con
 // setMetadataHandleResponse handles the SetMetadata response.
 func (client *ContainerClient) setMetadataHandleResponse(resp *http.Response) (ContainerClientSetMetadataResponse, error) {
 	result := ContainerClientSetMetadataResponse{}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-client-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ClientRequestID = &val
 	}
-	if val := resp.Header.Get("Date"); val != "" {
+	if vals, ok := resp.Header["Date"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientSetMetadataResponse{}, err
 		}
 		result.Date = &date
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
-	if val := resp.Header.Get("Last-Modified"); val != "" {
+	if vals, ok := resp.Header["Last-Modified"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ContainerClientSetMetadataResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil
@@ -1775,13 +1881,16 @@ func (client *ContainerClient) submitBatchCreateRequest(ctx context.Context, con
 // submitBatchHandleResponse handles the SubmitBatch response.
 func (client *ContainerClient) submitBatchHandleResponse(resp *http.Response) (ContainerClientSubmitBatchResponse, error) {
 	result := ContainerClientSubmitBatchResponse{Body: resp.Body}
-	if val := resp.Header.Get("Content-Type"); val != "" {
+	if vals, ok := resp.Header["Content-Type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+	if vals, ok := resp.Header["x-ms-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.RequestID = &val
 	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
+	if vals, ok := resp.Header["x-ms-version"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Version = &val
 	}
 	return result, nil

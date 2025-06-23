@@ -118,17 +118,20 @@ func (client *ContainerRegistryClient) createManifestCreateRequest(ctx context.C
 // createManifestHandleResponse handles the CreateManifest response.
 func (client *ContainerRegistryClient) createManifestHandleResponse(resp *http.Response) (ContainerRegistryClientCreateManifestResponse, error) {
 	result := ContainerRegistryClientCreateManifestResponse{}
-	if val := resp.Header.Get("Content-Length"); val != "" {
+	if vals, ok := resp.Header["Content-Length"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return ContainerRegistryClientCreateManifestResponse{}, err
 		}
 		result.ContentLength = &contentLength
 	}
-	if val := resp.Header.Get("Docker-Content-Digest"); val != "" {
+	if vals, ok := resp.Header["Docker-Content-Digest"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.DockerContentDigest = &val
 	}
-	if val := resp.Header.Get("Location"); val != "" {
+	if vals, ok := resp.Header["Location"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Location = &val
 	}
 	body, err := runtime.Payload(resp)
@@ -475,7 +478,8 @@ func (client *ContainerRegistryClient) getManifestsCreateRequest(ctx context.Con
 // getManifestsHandleResponse handles the GetManifests response.
 func (client *ContainerRegistryClient) getManifestsHandleResponse(resp *http.Response) (ContainerRegistryClientGetManifestsResponse, error) {
 	result := ContainerRegistryClientGetManifestsResponse{}
-	if val := resp.Header.Get("Link"); val != "" {
+	if vals, ok := resp.Header["Link"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Link = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Manifests); err != nil {
@@ -591,7 +595,8 @@ func (client *ContainerRegistryClient) getRepositoriesCreateRequest(ctx context.
 // getRepositoriesHandleResponse handles the GetRepositories response.
 func (client *ContainerRegistryClient) getRepositoriesHandleResponse(resp *http.Response) (ContainerRegistryClientGetRepositoriesResponse, error) {
 	result := ContainerRegistryClientGetRepositoriesResponse{}
-	if val := resp.Header.Get("Link"); val != "" {
+	if vals, ok := resp.Header["Link"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Link = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Repositories); err != nil {
@@ -723,7 +728,8 @@ func (client *ContainerRegistryClient) getTagsCreateRequest(ctx context.Context,
 // getTagsHandleResponse handles the GetTags response.
 func (client *ContainerRegistryClient) getTagsHandleResponse(resp *http.Response) (ContainerRegistryClientGetTagsResponse, error) {
 	result := ContainerRegistryClientGetTagsResponse{}
-	if val := resp.Header.Get("Link"); val != "" {
+	if vals, ok := resp.Header["Link"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Link = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TagList); err != nil {

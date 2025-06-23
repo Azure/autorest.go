@@ -60,7 +60,8 @@ func (client *DatetimeResponseHeaderClient) defaultCreateRequest(ctx context.Con
 // defaultHandleResponse handles the Default response.
 func (client *DatetimeResponseHeaderClient) defaultHandleResponse(resp *http.Response) (DatetimeResponseHeaderClientDefaultResponse, error) {
 	result := DatetimeResponseHeaderClientDefaultResponse{}
-	if val := resp.Header.Get("value"); val != "" {
+	if vals, ok := resp.Header["value"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		value, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return DatetimeResponseHeaderClientDefaultResponse{}, err
@@ -109,7 +110,8 @@ func (client *DatetimeResponseHeaderClient) rfc3339CreateRequest(ctx context.Con
 // rfc3339HandleResponse handles the RFC3339 response.
 func (client *DatetimeResponseHeaderClient) rfc3339HandleResponse(resp *http.Response) (DatetimeResponseHeaderClientRFC3339Response, error) {
 	result := DatetimeResponseHeaderClientRFC3339Response{}
-	if val := resp.Header.Get("value"); val != "" {
+	if vals, ok := resp.Header["value"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		value, err := time.Parse(time.RFC3339Nano, val)
 		if err != nil {
 			return DatetimeResponseHeaderClientRFC3339Response{}, err
@@ -158,7 +160,8 @@ func (client *DatetimeResponseHeaderClient) rfc7231CreateRequest(ctx context.Con
 // rfc7231HandleResponse handles the RFC7231 response.
 func (client *DatetimeResponseHeaderClient) rfc7231HandleResponse(resp *http.Response) (DatetimeResponseHeaderClientRFC7231Response, error) {
 	result := DatetimeResponseHeaderClientRFC7231Response{}
-	if val := resp.Header.Get("value"); val != "" {
+	if vals, ok := resp.Header["value"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		value, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return DatetimeResponseHeaderClientRFC7231Response{}, err
@@ -207,7 +210,8 @@ func (client *DatetimeResponseHeaderClient) unixTimestampCreateRequest(ctx conte
 // unixTimestampHandleResponse handles the UnixTimestamp response.
 func (client *DatetimeResponseHeaderClient) unixTimestampHandleResponse(resp *http.Response) (DatetimeResponseHeaderClientUnixTimestampResponse, error) {
 	result := DatetimeResponseHeaderClientUnixTimestampResponse{}
-	if val := resp.Header.Get("value"); val != "" {
+	if vals, ok := resp.Header["value"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		sec, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return DatetimeResponseHeaderClientUnixTimestampResponse{}, err

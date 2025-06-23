@@ -247,13 +247,13 @@ function formatHeaderResponseValue(headerResp: go.HeaderScalarResponse | go.Head
     text += `\t\t\tif ${respObj}.${headerResp.fieldName} == nil {\n`;
     text += `\t\t\t\t${respObj}.${headerResp.fieldName} = map[string]*string{}\n`;
     text += '\t\t\t}\n';
-    text += `\t\t\t${respObj}.${headerResp.fieldName}[hh[len("${headerPrefix}"):]] = to.Ptr(resp.Header.Get(hh))\n`;
+    text += `\t\t\t${respObj}.${headerResp.fieldName}[hh[len("${headerPrefix}"):]] = to.Ptr(resp.Header[hh][0])\n`;
     text += '\t\t}\n';
     text += '\t}\n';
     return text;
   }
-
-  let text = `\tif val := resp.Header.Get("${headerResp.headerName}"); val != "" {\n`;
+  let text = `\tif vals, ok := resp.Header["${headerResp.headerName}"]; ok && len(vals) > 0 && vals[0] != "" {\n`;
+  text += `\t\tval := vals[0]\n`;
   let name = uncapitalize(headerResp.fieldName);
   let byRef = '&';
   if (go.isConstantType(headerResp.type)) {

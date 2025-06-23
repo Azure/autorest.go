@@ -112,7 +112,8 @@ func (client *GroupsClient) createOrUpdateCreateRequest(ctx context.Context, res
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *GroupsClient) createOrUpdateHandleResponse(resp *http.Response) (GroupsClientCreateOrUpdateResponse, error) {
 	result := GroupsClientCreateOrUpdateResponse{}
-	if val := resp.Header.Get("ETag"); val != "" {
+	if vals, ok := resp.Header["ETag"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ETag = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Group); err != nil {

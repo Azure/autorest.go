@@ -58,7 +58,8 @@ func (client *XMLModelWithDictionaryValueClient) getCreateRequest(ctx context.Co
 // getHandleResponse handles the Get response.
 func (client *XMLModelWithDictionaryValueClient) getHandleResponse(resp *http.Response) (XMLModelWithDictionaryValueClientGetResponse, error) {
 	result := XMLModelWithDictionaryValueClientGetResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
+	if vals, ok := resp.Header["content-type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ModelWithDictionary); err != nil {

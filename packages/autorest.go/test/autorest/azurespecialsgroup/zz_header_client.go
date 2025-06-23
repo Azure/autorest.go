@@ -63,7 +63,8 @@ func (client *HeaderClient) customNamedRequestIDCreateRequest(ctx context.Contex
 // customNamedRequestIDHandleResponse handles the CustomNamedRequestID response.
 func (client *HeaderClient) customNamedRequestIDHandleResponse(resp *http.Response) (HeaderClientCustomNamedRequestIDResponse, error) {
 	result := HeaderClientCustomNamedRequestIDResponse{}
-	if val := resp.Header.Get("foo-request-id"); val != "" {
+	if vals, ok := resp.Header["foo-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.FooRequestID = &val
 	}
 	return result, nil
@@ -112,7 +113,8 @@ func (client *HeaderClient) customNamedRequestIDHeadCreateRequest(ctx context.Co
 // customNamedRequestIDHeadHandleResponse handles the CustomNamedRequestIDHead response.
 func (client *HeaderClient) customNamedRequestIDHeadHandleResponse(resp *http.Response) (HeaderClientCustomNamedRequestIDHeadResponse, error) {
 	result := HeaderClientCustomNamedRequestIDHeadResponse{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}
-	if val := resp.Header.Get("foo-request-id"); val != "" {
+	if vals, ok := resp.Header["foo-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.FooRequestID = &val
 	}
 	return result, nil
@@ -164,7 +166,8 @@ func (client *HeaderClient) customNamedRequestIDParamGroupingCreateRequest(ctx c
 // customNamedRequestIDParamGroupingHandleResponse handles the CustomNamedRequestIDParamGrouping response.
 func (client *HeaderClient) customNamedRequestIDParamGroupingHandleResponse(resp *http.Response) (HeaderClientCustomNamedRequestIDParamGroupingResponse, error) {
 	result := HeaderClientCustomNamedRequestIDParamGroupingResponse{}
-	if val := resp.Header.Get("foo-request-id"); val != "" {
+	if vals, ok := resp.Header["foo-request-id"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.FooRequestID = &val
 	}
 	return result, nil

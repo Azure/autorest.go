@@ -58,7 +58,8 @@ func (client *XMLModelWithUnwrappedArrayValueClient) getCreateRequest(ctx contex
 // getHandleResponse handles the Get response.
 func (client *XMLModelWithUnwrappedArrayValueClient) getHandleResponse(resp *http.Response) (XMLModelWithUnwrappedArrayValueClientGetResponse, error) {
 	result := XMLModelWithUnwrappedArrayValueClientGetResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
+	if vals, ok := resp.Header["content-type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ModelWithUnwrappedArray); err != nil {

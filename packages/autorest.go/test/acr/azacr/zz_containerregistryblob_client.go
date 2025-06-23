@@ -118,14 +118,16 @@ func (client *ContainerRegistryBlobClient) checkBlobExistsCreateRequest(ctx cont
 // checkBlobExistsHandleResponse handles the CheckBlobExists response.
 func (client *ContainerRegistryBlobClient) checkBlobExistsHandleResponse(resp *http.Response) (ContainerRegistryBlobClientCheckBlobExistsResponse, error) {
 	result := ContainerRegistryBlobClientCheckBlobExistsResponse{}
-	if val := resp.Header.Get("Content-Length"); val != "" {
+	if vals, ok := resp.Header["Content-Length"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return ContainerRegistryBlobClientCheckBlobExistsResponse{}, err
 		}
 		result.ContentLength = &contentLength
 	}
-	if val := resp.Header.Get("Docker-Content-Digest"); val != "" {
+	if vals, ok := resp.Header["Docker-Content-Digest"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.DockerContentDigest = &val
 	}
 	return result, nil
@@ -185,14 +187,16 @@ func (client *ContainerRegistryBlobClient) checkChunkExistsCreateRequest(ctx con
 // checkChunkExistsHandleResponse handles the CheckChunkExists response.
 func (client *ContainerRegistryBlobClient) checkChunkExistsHandleResponse(resp *http.Response) (ContainerRegistryBlobClientCheckChunkExistsResponse, error) {
 	result := ContainerRegistryBlobClientCheckChunkExistsResponse{}
-	if val := resp.Header.Get("Content-Length"); val != "" {
+	if vals, ok := resp.Header["Content-Length"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return ContainerRegistryBlobClientCheckChunkExistsResponse{}, err
 		}
 		result.ContentLength = &contentLength
 	}
-	if val := resp.Header.Get("Content-Range"); val != "" {
+	if vals, ok := resp.Header["Content-Range"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentRange = &val
 	}
 	return result, nil
@@ -251,13 +255,16 @@ func (client *ContainerRegistryBlobClient) completeUploadCreateRequest(ctx conte
 // completeUploadHandleResponse handles the CompleteUpload response.
 func (client *ContainerRegistryBlobClient) completeUploadHandleResponse(resp *http.Response) (ContainerRegistryBlobClientCompleteUploadResponse, error) {
 	result := ContainerRegistryBlobClientCompleteUploadResponse{}
-	if val := resp.Header.Get("Docker-Content-Digest"); val != "" {
+	if vals, ok := resp.Header["Docker-Content-Digest"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.DockerContentDigest = &val
 	}
-	if val := resp.Header.Get("Location"); val != "" {
+	if vals, ok := resp.Header["Location"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Location = &val
 	}
-	if val := resp.Header.Get("Range"); val != "" {
+	if vals, ok := resp.Header["Range"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Range = &val
 	}
 	return result, nil
@@ -316,7 +323,8 @@ func (client *ContainerRegistryBlobClient) deleteBlobCreateRequest(ctx context.C
 // deleteBlobHandleResponse handles the DeleteBlob response.
 func (client *ContainerRegistryBlobClient) deleteBlobHandleResponse(resp *http.Response) (ContainerRegistryBlobClientDeleteBlobResponse, error) {
 	result := ContainerRegistryBlobClientDeleteBlobResponse{Body: resp.Body}
-	if val := resp.Header.Get("Docker-Content-Digest"); val != "" {
+	if vals, ok := resp.Header["Docker-Content-Digest"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.DockerContentDigest = &val
 	}
 	return result, nil
@@ -375,14 +383,16 @@ func (client *ContainerRegistryBlobClient) getBlobCreateRequest(ctx context.Cont
 // getBlobHandleResponse handles the GetBlob response.
 func (client *ContainerRegistryBlobClient) getBlobHandleResponse(resp *http.Response) (ContainerRegistryBlobClientGetBlobResponse, error) {
 	result := ContainerRegistryBlobClientGetBlobResponse{Body: resp.Body}
-	if val := resp.Header.Get("Content-Length"); val != "" {
+	if vals, ok := resp.Header["Content-Length"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return ContainerRegistryBlobClientGetBlobResponse{}, err
 		}
 		result.ContentLength = &contentLength
 	}
-	if val := resp.Header.Get("Docker-Content-Digest"); val != "" {
+	if vals, ok := resp.Header["Docker-Content-Digest"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.DockerContentDigest = &val
 	}
 	return result, nil
@@ -445,14 +455,16 @@ func (client *ContainerRegistryBlobClient) getChunkCreateRequest(ctx context.Con
 // getChunkHandleResponse handles the GetChunk response.
 func (client *ContainerRegistryBlobClient) getChunkHandleResponse(resp *http.Response) (ContainerRegistryBlobClientGetChunkResponse, error) {
 	result := ContainerRegistryBlobClientGetChunkResponse{Body: resp.Body}
-	if val := resp.Header.Get("Content-Length"); val != "" {
+	if vals, ok := resp.Header["Content-Length"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return ContainerRegistryBlobClientGetChunkResponse{}, err
 		}
 		result.ContentLength = &contentLength
 	}
-	if val := resp.Header.Get("Content-Range"); val != "" {
+	if vals, ok := resp.Header["Content-Range"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentRange = &val
 	}
 	return result, nil
@@ -503,10 +515,12 @@ func (client *ContainerRegistryBlobClient) getUploadStatusCreateRequest(ctx cont
 // getUploadStatusHandleResponse handles the GetUploadStatus response.
 func (client *ContainerRegistryBlobClient) getUploadStatusHandleResponse(resp *http.Response) (ContainerRegistryBlobClientGetUploadStatusResponse, error) {
 	result := ContainerRegistryBlobClientGetUploadStatusResponse{}
-	if val := resp.Header.Get("Docker-Upload-UUID"); val != "" {
+	if vals, ok := resp.Header["Docker-Upload-UUID"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.DockerUploadUUID = &val
 	}
-	if val := resp.Header.Get("Range"); val != "" {
+	if vals, ok := resp.Header["Range"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Range = &val
 	}
 	return result, nil
@@ -565,13 +579,16 @@ func (client *ContainerRegistryBlobClient) mountBlobCreateRequest(ctx context.Co
 // mountBlobHandleResponse handles the MountBlob response.
 func (client *ContainerRegistryBlobClient) mountBlobHandleResponse(resp *http.Response) (ContainerRegistryBlobClientMountBlobResponse, error) {
 	result := ContainerRegistryBlobClientMountBlobResponse{}
-	if val := resp.Header.Get("Docker-Content-Digest"); val != "" {
+	if vals, ok := resp.Header["Docker-Content-Digest"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.DockerContentDigest = &val
 	}
-	if val := resp.Header.Get("Docker-Upload-UUID"); val != "" {
+	if vals, ok := resp.Header["Docker-Upload-UUID"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.DockerUploadUUID = &val
 	}
-	if val := resp.Header.Get("Location"); val != "" {
+	if vals, ok := resp.Header["Location"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Location = &val
 	}
 	return result, nil
@@ -624,13 +641,16 @@ func (client *ContainerRegistryBlobClient) startUploadCreateRequest(ctx context.
 // startUploadHandleResponse handles the StartUpload response.
 func (client *ContainerRegistryBlobClient) startUploadHandleResponse(resp *http.Response) (ContainerRegistryBlobClientStartUploadResponse, error) {
 	result := ContainerRegistryBlobClientStartUploadResponse{}
-	if val := resp.Header.Get("Docker-Upload-UUID"); val != "" {
+	if vals, ok := resp.Header["Docker-Upload-UUID"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.DockerUploadUUID = &val
 	}
-	if val := resp.Header.Get("Location"); val != "" {
+	if vals, ok := resp.Header["Location"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Location = &val
 	}
-	if val := resp.Header.Get("Range"); val != "" {
+	if vals, ok := resp.Header["Range"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Range = &val
 	}
 	return result, nil
@@ -684,13 +704,16 @@ func (client *ContainerRegistryBlobClient) uploadChunkCreateRequest(ctx context.
 // uploadChunkHandleResponse handles the UploadChunk response.
 func (client *ContainerRegistryBlobClient) uploadChunkHandleResponse(resp *http.Response) (ContainerRegistryBlobClientUploadChunkResponse, error) {
 	result := ContainerRegistryBlobClientUploadChunkResponse{}
-	if val := resp.Header.Get("Docker-Upload-UUID"); val != "" {
+	if vals, ok := resp.Header["Docker-Upload-UUID"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.DockerUploadUUID = &val
 	}
-	if val := resp.Header.Get("Location"); val != "" {
+	if vals, ok := resp.Header["Location"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Location = &val
 	}
-	if val := resp.Header.Get("Range"); val != "" {
+	if vals, ok := resp.Header["Range"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.Range = &val
 	}
 	return result, nil

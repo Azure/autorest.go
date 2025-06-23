@@ -59,7 +59,8 @@ func (client *ContentNegotiationSameBodyClient) getAvatarAsJPEGCreateRequest(ctx
 // getAvatarAsJPEGHandleResponse handles the GetAvatarAsJPEG response.
 func (client *ContentNegotiationSameBodyClient) getAvatarAsJPEGHandleResponse(resp *http.Response) (ContentNegotiationSameBodyClientGetAvatarAsJPEGResponse, error) {
 	result := ContentNegotiationSameBodyClientGetAvatarAsJPEGResponse{Body: resp.Body}
-	if val := resp.Header.Get("content-type"); val != "" {
+	if vals, ok := resp.Header["content-type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
 	return result, nil
@@ -106,7 +107,8 @@ func (client *ContentNegotiationSameBodyClient) getAvatarAsPNGCreateRequest(ctx 
 // getAvatarAsPNGHandleResponse handles the GetAvatarAsPNG response.
 func (client *ContentNegotiationSameBodyClient) getAvatarAsPNGHandleResponse(resp *http.Response) (ContentNegotiationSameBodyClientGetAvatarAsPNGResponse, error) {
 	result := ContentNegotiationSameBodyClientGetAvatarAsPNGResponse{Body: resp.Body}
-	if val := resp.Header.Get("content-type"); val != "" {
+	if vals, ok := resp.Header["content-type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
 	return result, nil

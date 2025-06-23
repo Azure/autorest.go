@@ -57,7 +57,8 @@ func (client *JsonlBasicClient) receiveCreateRequest(ctx context.Context, _ *Jso
 // receiveHandleResponse handles the Receive response.
 func (client *JsonlBasicClient) receiveHandleResponse(resp *http.Response) (JsonlBasicClientReceiveResponse, error) {
 	result := JsonlBasicClientReceiveResponse{}
-	if val := resp.Header.Get("content-type"); val != "" {
+	if vals, ok := resp.Header["content-type"]; ok && len(vals) > 0 && vals[0] != "" {
+		val := vals[0]
 		result.ContentType = &val
 	}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
