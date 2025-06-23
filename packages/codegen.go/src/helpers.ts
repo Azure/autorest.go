@@ -38,54 +38,54 @@ export function sortAscending(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0;
 }
 
-export function isParameter(param: go.Parameter | go.ParameterGroup): param is go.Parameter {
-  return (<go.ParameterGroup>param).groupName === undefined;
-}
-
-export function isParameterGroup(param: go.Parameter | go.ParameterGroup): param is go.ParameterGroup {
-  return (<go.ParameterGroup>param).groupName !== undefined;
-}
-
 // returns the type name with possible * prefix
-export function formatParameterTypeName(param: go.Parameter | go.ParameterGroup, pkgName?: string): string {
+export function formatParameterTypeName(param: go.ClientParameter | go.ParameterGroup, pkgName?: string): string {
   let typeName: string;
-  if (isParameterGroup(param)) {
-    typeName = param.groupName;
-    if (pkgName) {
-      typeName = `${pkgName}.${typeName}`;
-    }
-    if (param.required) {
-      return typeName;
-    }
-  } else {
-    typeName = go.getTypeDeclaration(param.type, pkgName);
-    if (parameterByValue(param)) {
-      // client parameters with default values aren't emitted as pointer-to-type
-      return typeName;
-    }
+  switch (param.kind) {
+    case 'paramGroup':
+      typeName = param.groupName;
+      if (pkgName) {
+        typeName = `${pkgName}.${typeName}`;
+      }
+      if (param.required) {
+        return typeName;
+      }
+      break;
+    default:
+      typeName = go.getTypeDeclaration(param.type, pkgName);
+      if (parameterByValue(param)) {
+        // client parameters with default values aren't emitted as pointer-to-type
+        return typeName;
+      }
   }
   return `*${typeName}`;
 }
 
-export function parameterByValue(param: go.Parameter): boolean {
-  return go.isRequiredParameter(param) || (param.location === 'client' && go.isClientSideDefault(param.kind))
+export function parameterByValue(param: go.ClientParameter): boolean {
+  return go.isRequiredParameter(param) || (param.location === 'client' && go.isClientSideDefault(param.style))
 }
 
 // sorts parameters by their required state, ordering required before optional
-export function sortParametersByRequired(a: go.Parameter | go.ParameterGroup, b: go.Parameter | go.ParameterGroup): number {
+export function sortParametersByRequired(a: go.ClientParameter | go.ParameterGroup, b: go.ClientParameter | go.ParameterGroup): number {
   let aRequired = false;
   let bRequired = false;
 
-  if (isParameter(a)) {
-    aRequired = go.isRequiredParameter(a);
-  } else {
-    aRequired = a.required;
+  switch (a.kind) {
+    case 'paramGroup':
+      aRequired = a.required;
+      break;
+    default:
+      aRequired = go.isRequiredParameter(a);
+      break;
   }
 
-  if (isParameter(b)) {
-    bRequired = go.isRequiredParameter(b);
-  } else {
-    bRequired = b.required;
+  switch (b.kind) {
+    case 'paramGroup':
+      bRequired = b.required;
+      break;
+    default:
+      bRequired = go.isRequiredParameter(b);
+      break;
   }
 
   if (aRequired === bRequired) {
@@ -98,7 +98,7 @@ export function sortParametersByRequired(a: go.Parameter | go.ParameterGroup, b:
 
 // returns the parameters for the internal request creator method.
 // e.g. "i int, s string"
-export function getCreateRequestParametersSig(method: go.Method | go.NextPageMethod): string {
+export function getCreateRequestParametersSig(method: go.MethodType | go.NextPageMethod): string {
   const methodParams = getMethodParameters(method);
   const params = new Array<string>();
   params.push('ctx context.Context');
@@ -106,7 +106,7 @@ export function getCreateRequestParametersSig(method: go.Method | go.NextPageMet
     let paramName = uncapitalize(methodParam.name);
     // when creating the method sig for fooCreateRequest, if the options type is empty
     // or only contains the ResumeToken param use _ for the param name to quiet the linter
-    if (isParameterGroup(methodParam) && (methodParam.params.length === 0 || (methodParam.params.length === 1 && go.isResumeTokenParameter(methodParam.params[0])))) {
+    if (methodParam.kind === 'paramGroup' && (methodParam.params.length === 0 || (methodParam.params.length === 1 && methodParam.params[0].kind === 'resumeTokenParam'))) {
       paramName = '_';
     }
     params.push(`${paramName} ${formatParameterTypeName(methodParam)}`);
@@ -116,7 +116,7 @@ export function getCreateRequestParametersSig(method: go.Method | go.NextPageMet
 
 // returns the parameter names for an operation (excludes the param types).
 // e.g. "i, s"
-export function getCreateRequestParameters(method: go.Method): string {
+export function getCreateRequestParameters(method: go.MethodType): string {
   // NOTE: keep in sync with getCreateRequestParametersSig
   const methodParams = getMethodParameters(method);
   const params = new Array<string>();
@@ -128,8 +128,8 @@ export function getCreateRequestParameters(method: go.Method): string {
 }
 
 // returns the complete collection of method parameters
-export function getMethodParameters(method: go.Method | go.NextPageMethod, paramsFilter?: (p: Array<go.Parameter>) => Array<go.Parameter>): Array<go.Parameter | go.ParameterGroup> {
-  const params = new Array<go.Parameter>();
+export function getMethodParameters(method: go.MethodType | go.NextPageMethod, paramsFilter?: (p: Array<go.MethodParameter>) => Array<go.MethodParameter>): Array<go.MethodParameter | go.ParameterGroup> {
+  const params = new Array<go.MethodParameter>();
   const paramGroups = new Array<go.ParameterGroup>();
   let methodParams = method.parameters;
   if (paramsFilter) {
@@ -167,12 +167,12 @@ export function getMethodParameters(method: go.Method | go.NextPageMethod, param
     return 1;
   });
   // add the optional param group last if it's not already in the list.
-  if (go.isMethod(method)) {
+  if (method.kind !== 'nextPageMethod') {
     if (!values(paramGroups).any(gp => { return gp.groupName === method.optionalParamsGroup.groupName; })) {
       paramGroups.push(method.optionalParamsGroup);
     }
   }
-  const combined = new Array<go.Parameter | go.ParameterGroup>();
+  const combined = new Array<go.MethodParameter | go.ParameterGroup>();
   for (const param of params) {
     combined.push(param);
   }
@@ -184,7 +184,7 @@ export function getMethodParameters(method: go.Method | go.NextPageMethod, param
 
 // returns the fully-qualified parameter name.  this is usually just the name
 // but will include the client or optional param group name prefix as required.
-export function getParamName(param: go.Parameter): string {
+export function getParamName(param: go.MethodParameter): string {
   let paramName = param.name;
   // must check paramGroup first as client params can also be grouped
   if (param.group) {
@@ -194,7 +194,7 @@ export function getParamName(param: go.Parameter): string {
     paramName = `client.${paramName}`;
   }
   // client parameters with default values aren't emitted as pointer-to-type
-  if (!go.isRequiredParameter(param) && !(param.location === 'client' && go.isClientSideDefault(param.kind)) && !(isParameter(param) && param.byValue)) {
+  if (!go.isRequiredParameter(param) && !(param.location === 'client' && go.isClientSideDefault(param.style)) && !param.byValue) {
     paramName = `*${paramName}`;
   }
   return paramName;
@@ -208,39 +208,46 @@ export function formatBytesEncoding(enc: go.BytesEncoding): string {
   return 'Std';
 }
 
-export function formatParamValue(param: go.FormBodyParameter | go.HeaderParameter | go.PathParameter | go.QueryParameter, imports: ImportManager): string {
+export function formatParamValue(param: go.MethodParameter, imports: ImportManager): string {
   let paramName = getParamName(param);
-  if (go.isFormBodyCollectionParameter(param) || go.isHeaderCollectionParameter(param) || go.isPathCollectionParameter(param) || go.isQueryCollectionParameter(param)) {
-    if (param.collectionFormat === 'multi') {
-      throw new CodegenError('InternalError', 'multi collection format should have been previously handled');
+  switch (param.kind) {
+    case 'formBodyCollectionParam':
+    case 'headerCollectionParam':
+    case 'pathCollectionParam':
+    case 'queryCollectionParam': {
+      if (param.collectionFormat === 'multi') {
+        throw new CodegenError('InternalError', 'multi collection format should have been previously handled');
+      }
+      const emitConvertOver = function(paramName: string, format: string): string {
+        const encodedVar = `encoded${capitalize(paramName)}`;
+        let content = 'strings.Join(func() []string {\n';
+        content += `\t\t${encodedVar} := make([]string, len(${paramName}))\n`;
+        content += `\t\tfor i := 0; i < len(${paramName}); i++ {\n`;
+        content += `\t\t\t${encodedVar}[i] = ${format}\n\t\t}\n`;
+        content += `\t\treturn ${encodedVar}\n`;
+        content += `\t}(), "${separator}")`;
+        return content;
+      }
+      const separator = getDelimiterForCollectionFormat(param.collectionFormat);
+      if (go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
+        imports.add('strings');
+        return `strings.Join(${paramName}, "${separator}")`;
+      } else if (go.isBytesType(param.type.elementType)) {
+        imports.add('encoding/base64');
+        imports.add('strings');
+        return emitConvertOver(param.name, `base64.${formatBytesEncoding(param.type.elementType.encoding)}Encoding.EncodeToString(${param.name}[i])`);
+      } else if (go.isTimeType(param.type.elementType)) {
+        imports.add('strings');
+        return emitConvertOver(param.name, `${param.type.elementType.dateTimeFormat}(${param.name}[i]).String()`);
+      } else {
+        imports.add('fmt');
+        imports.add('strings');
+        return `strings.Join(strings.Fields(strings.Trim(fmt.Sprint(${paramName}), "[]")), "${separator}")`;
+      }
     }
-    const emitConvertOver = function(paramName: string, format: string): string {
-      const encodedVar = `encoded${capitalize(paramName)}`;
-      let content = 'strings.Join(func() []string {\n';
-      content += `\t\t${encodedVar} := make([]string, len(${paramName}))\n`;
-      content += `\t\tfor i := 0; i < len(${paramName}); i++ {\n`;
-      content += `\t\t\t${encodedVar}[i] = ${format}\n\t\t}\n`;
-      content += `\t\treturn ${encodedVar}\n`;
-      content += `\t}(), "${separator}")`;
-      return content;
-    }
-    const separator = getDelimiterForCollectionFormat(param.collectionFormat);
-    if (go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
-      imports.add('strings');
-      return `strings.Join(${paramName}, "${separator}")`;
-    } else if (go.isBytesType(param.type.elementType)) {
-      imports.add('encoding/base64');
-      imports.add('strings');
-      return emitConvertOver(param.name, `base64.${formatBytesEncoding(param.type.elementType.encoding)}Encoding.EncodeToString(${param.name}[i])`);
-    } else if (go.isTimeType(param.type.elementType)) {
-      imports.add('strings');
-      return emitConvertOver(param.name, `${param.type.elementType.dateTimeFormat}(${param.name}[i]).String()`);
-    } else {
-      imports.add('fmt');
-      imports.add('strings');
-      return `strings.Join(strings.Fields(strings.Trim(fmt.Sprint(${paramName}), "[]")), "${separator}")`;
-    }
-  } else if (go.isTimeType(param.type) && param.type.dateTimeFormat !== 'timeUnix') {
+  }
+
+  if (go.isTimeType(param.type) && param.type.dateTimeFormat !== 'timeUnix') {
     // for most time types we call methods on time.Time which is why we remove the dereference.
     // however, for unix time, we cast to our unixTime helper first so we must keep the dereference.
     if (!go.isRequiredParameter(param) && paramName[0] === '*') {
@@ -359,7 +366,7 @@ export function formatLiteralValue(value: go.LiteralValue, withCast: boolean): s
 }
 
 // returns true if at least one of the responses has a schema
-export function hasSchemaResponse(method: go.Method): boolean {
+export function hasSchemaResponse(method: go.MethodType): boolean {
   const result = method.responseEnvelope.result;
   if (!result) {
     return false;
@@ -368,7 +375,7 @@ export function hasSchemaResponse(method: go.Method): boolean {
 }
 
 // returns the name of the response field within the response envelope
-export function getResultFieldName(method: go.Method): string {
+export function getResultFieldName(method: go.MethodType): string {
   const result = method.responseEnvelope.result;
   if (!result) {
     throw new CodegenError('InternalError', `missing result for method ${method.name}`);
@@ -641,7 +648,7 @@ export function recursiveUnwrapMapSlice(item: go.PossibleType): go.PossibleType 
 }
 
 // returns a * for optional params
-export function star(param: go.Parameter): string {
+export function star(param: go.MethodParameter): string {
   return go.isRequiredParameter(param) || param.byValue ? '' : '*';
 }
 
@@ -689,7 +696,7 @@ export function getSerDeFormat(model: go.ModelType | go.PolymorphicType, codeMod
   for (const client of codeModel.clients) {
     for (const method of client.methods) {
       for (const param of method.parameters) {
-        if (!go.isBodyParameter(param) || (param.bodyFormat !== 'JSON' && param.bodyFormat !== 'XML')) {
+        if (param.kind !== 'bodyParam' || (param.bodyFormat !== 'JSON' && param.bodyFormat !== 'XML')) {
           continue;
         }
 
@@ -727,8 +734,8 @@ export function getSerDeFormat(model: go.ModelType | go.PolymorphicType, codeMod
 }
 
 // return combined client parameters for all the clients
-export function getAllClientParameters(codeModel: go.CodeModel): Array<go.Parameter> {
-  const allClientParams = new Array<go.Parameter>();
+export function getAllClientParameters(codeModel: go.CodeModel): Array<go.ClientParameter> {
+  const allClientParams = new Array<go.ClientParameter>();
   for (const clients of codeModel.clients) {
     for (const clientParam of values(clients.parameters)) {
       if (values(allClientParams).where(param => param.name === clientParam.name).any()) {
@@ -742,8 +749,8 @@ export function getAllClientParameters(codeModel: go.CodeModel): Array<go.Parame
 }
 
 // returns common client parameters for all the clients
-export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.Parameter> {
-  const paramCount = new Map<string, { uses: number, param: go.Parameter }>();
+export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.ClientParameter> {
+  const paramCount = new Map<string, { uses: number, param: go.ClientParameter }>();
   let numClients = 0; // track client count since we might skip some
   for (const clients of codeModel.clients) {
     // special cases: some ARM clients always don't contain any parameters (OperationsClient will be depracated in the future)
@@ -765,7 +772,7 @@ export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.Par
 
   // for each param, if its usage count is equal to the
   // number of clients, then it's common to all clients
-  const commonClientParams = new Array<go.Parameter>();
+  const commonClientParams = new Array<go.ClientParameter>();
   for (const entry of paramCount.values()) {
     if (entry.uses === numClients) {
       commonClientParams.push(entry.param);
@@ -773,4 +780,97 @@ export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.Par
   }
 
   return commonClientParams.sort(sortParametersByRequired);
+}
+
+/**
+ * groups method parameters based on their kind.
+ * note that the body param kinds are mutually exclusive.
+ */
+export interface MethodParamGroups {
+  /** the body parameter if applicable */
+  bodyParam?: go.BodyParameter;
+
+  /** encoded query params. can be empty */
+  encodedQueryParams: Array<go.QueryParameter>;
+
+  /** form body params. can be empty */
+  formBodyParams: Array<go.FormBodyParameter>;
+
+  /** head params. can be empty */
+  headerParams: Array<go.HeaderParameter>;
+
+  /** multipart-form body params. can be empty */
+  multipartBodyParams: Array<go.MultipartFormBodyParameter>;
+
+  /** path params. can be empty */
+  pathParams: Array<go.PathParameter>;
+
+  /** partial body params. can be empty */
+  partialBodyParams: Array<go.PartialBodyParameter>;
+
+  /** unencoded query params. can be empty */
+  unencodedQueryParams: Array<go.QueryParameter>;
+}
+
+/**
+ * enumerates method parameters and returns them based on kinds
+ * 
+ * @param method the method containing the parameters to group
+ * @returns the groups of parameters
+ */
+export function getMethodParamGroups(method: go.MethodType | go.NextPageMethod): MethodParamGroups {
+  let bodyParam: go.BodyParameter | undefined;
+  const encodedQueryParams = new Array<go.QueryParameter>();
+  const formBodyParams = new Array<go.FormBodyParameter>();
+  const headerParams = new Array<go.HeaderParameter>();
+  const multipartBodyParams = new Array<go.MultipartFormBodyParameter>();
+  const pathParams = new Array<go.PathParameter>();
+  const partialBodyParams = new Array<go.PartialBodyParameter>();
+  const unencodedQueryParams = new Array<go.QueryParameter>();
+
+  for (const param of method.parameters) {
+    switch (param.kind) {
+      case 'bodyParam':
+        bodyParam = param;
+        break;
+      case 'formBodyCollectionParam':
+      case 'formBodyScalarParam':
+        formBodyParams.push(param);
+        break;
+      case 'headerCollectionParam':
+      case 'headerMapParam':
+      case 'headerScalarParam':
+        headerParams.push(param);
+        break;
+      case 'multipartFormBodyParam':
+        multipartBodyParams.push(param);
+        break;
+      case 'partialBodyParam':
+        partialBodyParams.push(param);
+        break;
+      case 'pathCollectionParam':
+      case 'pathScalarParam':
+        pathParams.push(param);
+        break;
+      case 'queryCollectionParam':
+      case 'queryScalarParam':
+        if (param.isEncoded) {
+          encodedQueryParams.push(param);
+        } else {
+          unencodedQueryParams.push(param);
+        }
+        break;
+    }
+  }
+
+  return {
+    bodyParam,
+    encodedQueryParams,
+    formBodyParams,
+    headerParams,
+    multipartBodyParams,
+    pathParams,
+    partialBodyParams,
+    unencodedQueryParams,
+  }
 }

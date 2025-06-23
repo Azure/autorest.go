@@ -43,13 +43,13 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
       imports.add(codeModel.options.module!.name);
     }
 
-    let clientFactoryParams = new Array<go.Parameter>();
+    let clientFactoryParams = new Array<go.ClientParameter>();
     if (codeModel.options.factoryGatherAllParams) {
       clientFactoryParams =  helpers.getAllClientParameters(codeModel);
     } else {
       clientFactoryParams = helpers.getCommonClientParameters(codeModel);
     }
-    const clientFactoryParamsMap = new Map<string, go.Parameter>();
+    const clientFactoryParamsMap = new Map<string, go.ClientParameter>();
     for (const param of clientFactoryParams) {
       clientFactoryParamsMap.set(param.name, param);
     }
@@ -140,29 +140,36 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
           methodOptionalParametersText += `}`;
         }
 
-        if (go.isLROMethod(method)) {
-          exampleText += `\tpoller, err := ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`
-          exampleText += `\tif err != nil {\n`;
-          exampleText += `\t\tlog.Fatalf("failed to finish the request: %v", err)\n`;
-          exampleText += `\t}\n`;
+        switch (method.kind) {
+          case 'lroMethod':
+          case 'lroPageableMethod':
+            exampleText += `\tpoller, err := ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
+            exampleText += `\tif err != nil {\n`;
+            exampleText += `\t\tlog.Fatalf("failed to finish the request: %v", err)\n`;
+            exampleText += `\t}\n`;
 
-          exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} poller.PollUntilDone(ctx, nil)\n`
-          exampleText += `\tif err != nil {\n`;
-          exampleText += `\t\tlog.Fatalf("failed to pull the result: %v", err)\n`;
-          exampleText += `\t}\n`;
-        } else if (go.isPageableMethod(method)) {
-          exampleText += `\tpager := ${clientRef}.${fixUpMethodName(method)}(${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`
-        } else {
-          exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`
-          exampleText += `\tif err != nil {\n`;
-          exampleText += `\t\tlog.Fatalf("failed to finish the request: %v", err)\n`;
-          exampleText += `\t}\n`;
+            exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} poller.PollUntilDone(ctx, nil)\n`
+            exampleText += `\tif err != nil {\n`;
+            exampleText += `\t\tlog.Fatalf("failed to pull the result: %v", err)\n`;
+            exampleText += `\t}\n`;
+            break;
+          case 'method':
+            exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
+            exampleText += `\tif err != nil {\n`;
+            exampleText += `\t\tlog.Fatalf("failed to finish the request: %v", err)\n`;
+            exampleText += `\t}\n`;
+            break;
+          case 'pageableMethod':
+            exampleText += `\tpager := ${clientRef}.${fixUpMethodName(method)}(${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
+            break;
+          default:
+            method satisfies never;
         }
 
         // check response
-        if (go.isPageableMethod(method)) {
+        if (method.kind === 'lroPageableMethod' || method.kind === 'pageableMethod') {
           let resultName = 'pager';
-          if (go.isLROMethod(method)) {
+          if (method.kind === 'lroPageableMethod') {
             resultName = 'res';
           }
           const itemType = ((method as go.PageableMethod).responseEnvelope.result as go.ModelResult).modelType.fields.find(f => go.isSliceType(f.type))!;

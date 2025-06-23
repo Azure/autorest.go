@@ -4,6 +4,13 @@
 
 package armrandom
 
+// SomeServiceClientCheckTrialAvailabilityOptions contains the optional parameters for the SomeServiceClient.CheckTrialAvailability
+// method.
+type SomeServiceClientCheckTrialAvailabilityOptions struct {
+	// Optionally, check for a specific SKU
+	SKU *SKU
+}
+
 // SomeServiceClientListThingsOptions contains the optional parameters for the SomeServiceClient.NewListThingsPager method.
 type SomeServiceClientListThingsOptions struct {
 	// placeholder for future optional parameters

@@ -1,10 +1,26 @@
 # Release History
 
-## 0.4.12 (unreleased)
+## 0.5.0 (unreleased)
+
+### Breaking Changes
+
+* Fixed field names for optional parameters and monomorphic responses to align with `autorest.go` code generator.
+
+## 0.4.12 (2025-06-11)
+
+### Features Add
+
+* Added support for qualified type in example mapping.
+
+### Bugs Fixed
+
+* Fix wrong example mapping for discriminated type.
 
 ### Other Changes
 
+* Throw error when paging with re-injection parameters.
 * Moved the `_metadata.json` file to the `testdata` subdirectory.
+* Updated to the latest tsp toolset.
 
 ## 0.4.11 (2025-06-09)
 

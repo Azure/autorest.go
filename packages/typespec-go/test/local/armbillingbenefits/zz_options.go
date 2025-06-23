@@ -105,14 +105,14 @@ type SavingsPlanOperationGroupClientListAllOptions struct {
 	// May be used to sort order by reservation properties.
 	Orderby *string
 
-	// The number of savings plans to skip from the list before returning results
-	Skiptoken *float32
-
 	// To indicate whether to refresh the roll up counts of the savings plans group by provisioning states
 	RefreshSummary *string
 
 	// The selected provisioning state
 	SelectedState *string
+
+	// The number of savings plans to skip from the list before returning results
+	Skiptoken *float32
 
 	// To number of savings plans to return
 	Take *float32
