@@ -43,8 +43,12 @@ func TestNewLroClient_BeginCreateOrReplace(t *testing.T) {
 		},
 	}, nil)
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
+	resp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
+	require.NotNil(t, resp.Order)
+	require.Equal(t, "order1", *resp.Order.Name)
+	require.Equal(t, "Succeeded", *resp.Properties.ProvisioningState)
+
 }
 
 func TestNewLroClient_BeginDelete(t *testing.T) {
@@ -52,6 +56,7 @@ func TestNewLroClient_BeginDelete(t *testing.T) {
 	require.NoError(t, err)
 	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
+
 }
 
 func TestNewLroClient_BeginExport(t *testing.T) {
@@ -60,6 +65,9 @@ func TestNewLroClient_BeginExport(t *testing.T) {
 	}
 	poller, err := clientFactory.NewLroClient().BeginExport(context.Background(), RESOURCE_GROUP_EXPECTED, "order1", body, nil)
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
+	resp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
+	require.NotNil(t, resp.ExportResult)
+	require.NotEmpty(t, resp.ExportResult.Content)
+	require.Equal(t, "order1,product1,1", *resp.ExportResult.Content)
 }
