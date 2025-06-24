@@ -79,7 +79,7 @@ export interface ResponseEnvelopeExample {
 }
 
 export interface ResponseHeaderExample {
-  header: result.HeaderResponse | result.HeaderMapResponse;
+  header: result.HeaderScalarResponse | result.HeaderMapResponse;
   value: ExampleType;
 }
 
@@ -179,7 +179,7 @@ export class ResponseEnvelopeExample implements ResponseEnvelopeExample {
 }
 
 export class ResponseHeaderExample implements ResponseHeaderExample {
-  constructor(header: result.HeaderResponse | result.HeaderMapResponse, value: ExampleType) {
+  constructor(header: result.HeaderScalarResponse | result.HeaderMapResponse, value: ExampleType) {
     this.header = header;
     this.value = value;
   }

@@ -613,7 +613,7 @@ export class clientAdapter {
         }
 
         // TODO: x-ms-header-collection-prefix
-        const headerResp = new go.HeaderResponse(ensureNameCase(httpHeader.serializedName), this.adaptHeaderScalarType(httpHeader.type, false), httpHeader.serializedName, isTypePassedByValue(httpHeader.type));
+        const headerResp = new go.HeaderScalarResponse(ensureNameCase(httpHeader.serializedName), this.adaptHeaderScalarType(httpHeader.type, false), httpHeader.serializedName, isTypePassedByValue(httpHeader.type));
         headerResp.docs.summary = httpHeader.summary;
         headerResp.docs.description = httpHeader.doc;
         respEnv.headers.push(headerResp);
@@ -671,7 +671,7 @@ export class clientAdapter {
     }
 
     if (contentType === 'binary') {
-      respEnv.result = new go.BinaryResult('Body', 'binary');
+      respEnv.result = new go.BinaryResult('Body');
       respEnv.result.docs.summary = 'Body contains the streaming response.';
       return respEnv;
     } else if (sdkResponseType.kind === 'model') {
@@ -883,16 +883,22 @@ export class clientAdapter {
           // to be undefined even though the operation returns a response.
           // TODO: https://github.com/Azure/typespec-azure/issues/1688
           if (response.bodyValue && method.responseEnvelope.result) {
-            if (go.isAnyResult(method.responseEnvelope.result)) {
-              goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.PrimitiveType('any'));
-            } else if (go.isModelResult(method.responseEnvelope.result)) {
-              goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.modelType);
-            } else if (go.isBinaryResult(method.responseEnvelope.result)) {
-              goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.PrimitiveType('byte'));
-            } else if (go.isMonomorphicResult(method.responseEnvelope.result)) {
-              goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.monomorphicType);
-            } else if (go.isPolymorphicResult(method.responseEnvelope.result)) {
-              goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.interfaceType);
+            switch (method.responseEnvelope.result.kind) {
+              case 'anyResult':
+                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.PrimitiveType('any'));
+                break;
+              case 'binaryResult':
+                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.PrimitiveType('byte'));
+                break;
+              case 'modelResult':
+                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.modelType);
+                break;
+              case 'monomorphicResult':
+                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.monomorphicType);
+                break;
+              case 'polymorphicResult':
+                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.interfaceType);
+                break;
             }
           }
         }

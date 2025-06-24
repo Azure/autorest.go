@@ -236,12 +236,12 @@ function createARMClientConstructor(client: go.Client, imports: ImportManager): 
 }
 
 // use this to generate the code that will help process values returned in response headers
-function formatHeaderResponseValue(headerResp: go.HeaderResponse | go.HeaderMapResponse, imports: ImportManager, respObj: string, zeroResp: string): string {
+function formatHeaderResponseValue(headerResp: go.HeaderScalarResponse | go.HeaderMapResponse, imports: ImportManager, respObj: string, zeroResp: string): string {
   // dictionaries are handled slightly different so we do that first
-  if (go.isHeaderMapResponse(headerResp)) {
+  if (headerResp.kind === 'headerMapResponse') {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
     imports.add('strings');
-    const headerPrefix = headerResp.collectionPrefix;
+    const headerPrefix = headerResp.headerName;
     let text = '\tfor hh := range resp.Header {\n';
     text += `\t\tif len(hh) > len("${headerPrefix}") && strings.EqualFold(hh[:len("${headerPrefix}")], "${headerPrefix}") {\n`;
     text += `\t\t\tif ${respObj}.${headerResp.fieldName} == nil {\n`;
@@ -252,6 +252,7 @@ function formatHeaderResponseValue(headerResp: go.HeaderResponse | go.HeaderMapR
     text += '\t}\n';
     return text;
   }
+
   let text = `\tif val := resp.Header.Get("${headerResp.headerName}"); val != "" {\n`;
   let name = uncapitalize(headerResp.fieldName);
   let byRef = '&';
@@ -419,7 +420,7 @@ function genApiVersionDoc(apiVersions: Array<string>): string {
 }
 
 function genRespErrorDoc(method: go.MethodType): string {
-  if (!(method.responseEnvelope.result && go.isHeadAsBooleanResult(method.responseEnvelope.result)) && !go.isPageableMethod(method)) {
+  if (!(method.responseEnvelope.result?.kind === 'headAsBooleanResult') && !go.isPageableMethod(method)) {
     // when head-as-boolean is enabled, no error is returned for 4xx status codes.
     // pager constructors don't return an error
     return '// If the operation fails it returns an *azcore.ResponseError type.\n';
@@ -489,7 +490,7 @@ function generateOperation(client: go.Client, method: go.MethodType, imports: Im
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
   // HAB with headers response is handled in protocol responder
-  if (method.responseEnvelope.result && go.isHeadAsBooleanResult(method.responseEnvelope.result) && method.responseEnvelope.headers.length === 0) {
+  if (method.responseEnvelope.result?.kind === 'headAsBooleanResult' && method.responseEnvelope.headers.length === 0) {
     text += `\treturn ${method.responseEnvelope.name}{${method.responseEnvelope.result.fieldName}: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil\n`;
   } else {
     if (go.isLROMethod(method)) {
@@ -498,7 +499,7 @@ function generateOperation(client: go.Client, method: go.MethodType, imports: Im
       // also cheating here as at present the only param to the responder is an http.Response
       text += `\tresp, err := client.${method.naming.responseMethod}(httpResp)\n`;
       text += '\treturn resp, err\n';
-    } else if (method.responseEnvelope.result && go.isBinaryResult(method.responseEnvelope.result)) {
+    } else if (method.responseEnvelope.result?.kind === 'binaryResult') {
       text += `\treturn ${method.responseEnvelope.name}{${method.responseEnvelope.result.fieldName}: httpResp.Body}, nil\n`;
     } else {
       text += `\treturn ${method.responseEnvelope.name}{}, nil\n`;
@@ -709,7 +710,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     text += '\treq.Raw().URL.RawQuery = strings.Join(unencodedParams, "&")\n';
   }
 
-  if (method.kind !== 'nextPageMethod' && method.responseEnvelope.result && go.isBinaryResult(method.responseEnvelope.result)) {
+  if (method.kind !== 'nextPageMethod' && method.responseEnvelope.result?.kind === 'binaryResult') {
     // skip auto-body downloading for binary stream responses
     text += '\truntime.SkipBodyDownload(req)\n';
   }
@@ -1077,7 +1078,7 @@ function createProtocolResponse(client: go.Client, method: go.Method | go.LROPag
   let text = `${comment(name, '// ')} handles the ${method.name} response.\n`;
   text += `func (client *${client.name}) ${name}(resp *http.Response) (${generateReturnsInfo(method, 'handler').join(', ')}) {\n`;
 
-  const addHeaders = function (headers: Array<go.HeaderResponse | go.HeaderMapResponse>) {
+  const addHeaders = function (headers: Array<go.HeaderScalarResponse | go.HeaderMapResponse>) {
     for (const header of values(headers)) {
       text += formatHeaderResponseValue(header, imports, 'result', `${method.responseEnvelope.name}{}`);
     }
@@ -1088,50 +1089,59 @@ function createProtocolResponse(client: go.Client, method: go.Method | go.LROPag
     // only headers
     text += `\tresult := ${method.responseEnvelope.name}{}\n`;
     addHeaders(method.responseEnvelope.headers);
-  } else if (go.isAnyResult(result)) {
-    imports.add('fmt');
-    text += `\tresult := ${method.responseEnvelope.name}{}\n`;
-    addHeaders(method.responseEnvelope.headers);
-    text += '\tswitch resp.StatusCode {\n';
-    for (const statusCode of method.httpStatusCodes) {
-      text += `\tcase ${helpers.formatStatusCodes([statusCode])}:\n`;
-      const resultType = result.httpStatusCodeType[statusCode];
-      if (!resultType) {
-        // the operation contains a mix of schemas and non-schema responses
-        continue;
-      }
-      text += `\tvar val ${go.getTypeDeclaration(resultType)}\n`;
-      text += generateResponseUnmarshaller(method, resultType, result.format, 'val');
-      text += '\tresult.Value = val\n';
-    }
-    text += '\tdefault:\n';
-    text += `\t\treturn ${getZeroReturnValue(method, 'handler')}, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)\n`;
-    text += '\t}\n';
-  } else if (go.isBinaryResult(result)) {
-    text += `\tresult := ${method.responseEnvelope.name}{${result.fieldName}: resp.Body}\n`;
-    addHeaders(method.responseEnvelope.headers);
-  } else if (go.isHeadAsBooleanResult(result)) { 
-    text += `\tresult := ${method.responseEnvelope.name}{${result.fieldName}: resp.StatusCode >= 200 && resp.StatusCode < 300}\n`;
-    addHeaders(method.responseEnvelope.headers);
-  } else if (go.isMonomorphicResult(result)) {
-    text += `\tresult := ${method.responseEnvelope.name}{}\n`;
-    addHeaders(method.responseEnvelope.headers);
-    let target = `result.${helpers.getResultFieldName(method)}`;
-    // when unmarshalling a wrapped XML array, unmarshal into the response envelope
-    if (result.format === 'XML' && go.isSliceType(result.monomorphicType)) {
-      target = 'result';
-    }
-    text += generateResponseUnmarshaller(method, result.monomorphicType, result.format, target);
-  } else if (go.isPolymorphicResult(result)) {
-    text += `\tresult := ${method.responseEnvelope.name}{}\n`;
-    addHeaders(method.responseEnvelope.headers);
-    text += generateResponseUnmarshaller(method, result.interfaceType, result.format, 'result');
-  } else if (go.isModelResult(result)) {
-    text += `\tresult := ${method.responseEnvelope.name}{}\n`;
-    addHeaders(method.responseEnvelope.headers);
-    text += generateResponseUnmarshaller(method, result.modelType, result.format, `result.${helpers.getResultFieldName(method)}`);
   } else {
-    throw new CodegenError('InternalError', `unhandled result type for ${client.name}.${method.name}`);
+    switch (result.kind) {
+      case 'anyResult':
+        imports.add('fmt');
+        text += `\tresult := ${method.responseEnvelope.name}{}\n`;
+        addHeaders(method.responseEnvelope.headers);
+        text += '\tswitch resp.StatusCode {\n';
+        for (const statusCode of method.httpStatusCodes) {
+          text += `\tcase ${helpers.formatStatusCodes([statusCode])}:\n`;
+          const resultType = result.httpStatusCodeType[statusCode];
+          if (!resultType) {
+            // the operation contains a mix of schemas and non-schema responses
+            continue;
+          }
+          text += `\tvar val ${go.getTypeDeclaration(resultType)}\n`;
+          text += generateResponseUnmarshaller(method, resultType, result.format, 'val');
+          text += '\tresult.Value = val\n';
+        }
+        text += '\tdefault:\n';
+        text += `\t\treturn ${getZeroReturnValue(method, 'handler')}, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)\n`;
+        text += '\t}\n';
+        break;
+      case 'binaryResult':
+        text += `\tresult := ${method.responseEnvelope.name}{${result.fieldName}: resp.Body}\n`;
+        addHeaders(method.responseEnvelope.headers);
+        break;
+      case 'headAsBooleanResult':
+        text += `\tresult := ${method.responseEnvelope.name}{${result.fieldName}: resp.StatusCode >= 200 && resp.StatusCode < 300}\n`;
+        addHeaders(method.responseEnvelope.headers);
+        break;
+      case 'modelResult':
+        text += `\tresult := ${method.responseEnvelope.name}{}\n`;
+        addHeaders(method.responseEnvelope.headers);
+        text += generateResponseUnmarshaller(method, result.modelType, result.format, `result.${helpers.getResultFieldName(method)}`);
+        break;
+      case 'monomorphicResult':
+        text += `\tresult := ${method.responseEnvelope.name}{}\n`;
+        addHeaders(method.responseEnvelope.headers);
+        let target = `result.${helpers.getResultFieldName(method)}`;
+        // when unmarshalling a wrapped XML array, unmarshal into the response envelope
+        if (result.format === 'XML' && go.isSliceType(result.monomorphicType)) {
+          target = 'result';
+        }
+        text += generateResponseUnmarshaller(method, result.monomorphicType, result.format, target);
+        break;
+      case 'polymorphicResult':
+        text += `\tresult := ${method.responseEnvelope.name}{}\n`;
+        addHeaders(method.responseEnvelope.headers);
+        text += generateResponseUnmarshaller(method, result.interfaceType, result.format, 'result');
+        break;
+      default:
+        result satisfies never;
+    }
   }
 
   text += '\treturn result, nil\n';

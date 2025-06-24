@@ -367,11 +367,15 @@ export function formatLiteralValue(value: go.LiteralValue, withCast: boolean): s
 
 // returns true if at least one of the responses has a schema
 export function hasSchemaResponse(method: go.MethodType): boolean {
-  const result = method.responseEnvelope.result;
-  if (!result) {
-    return false;
+  switch (method.responseEnvelope.result?.kind) {
+    case 'anyResult':
+    case 'modelResult':
+    case 'monomorphicResult':
+    case 'polymorphicResult':
+      return true;
+    default:
+      return false;
   }
-  return go.isAnyResult(result) || go.isMonomorphicResult(result) || go.isPolymorphicResult(result) || go.isModelResult(result);
 }
 
 // returns the name of the response field within the response envelope
@@ -379,14 +383,17 @@ export function getResultFieldName(method: go.MethodType): string {
   const result = method.responseEnvelope.result;
   if (!result) {
     throw new CodegenError('InternalError', `missing result for method ${method.name}`);
-  } else if (go.isAnyResult(result) || go.isBinaryResult(result) || go.isHeadAsBooleanResult(result) || go.isMonomorphicResult(result)) {
-    return result.fieldName;
-  } else if (go.isPolymorphicResult(result)) {
-    return result.interfaceType.name;
-  } else if (go.isModelResult(result)) {
-    return result.modelType.name;
-  } else {
-    throw new CodegenError('InternalError', `unhandled result type for method ${method.client.name}.${method.name}`);
+  }
+  switch (result.kind) {
+    case 'anyResult':
+    case 'binaryResult':
+    case 'headAsBooleanResult':
+    case 'monomorphicResult':
+      return result.fieldName;
+    case 'modelResult':
+      return result.modelType.name;
+    case 'polymorphicResult':
+      return result.interfaceType.name;
   }
 }
 
@@ -703,19 +710,26 @@ export function getSerDeFormat(model: go.ModelType | go.PolymorphicType, codeMod
         recursiveWalkModelFields(param.type, param.bodyFormat);
       }
 
-      if (method.responseEnvelope.result) {
-        const resultType = method.responseEnvelope.result;
-        if (go.isAnyResult(resultType) && (resultType.format === 'JSON' || resultType.format === 'XML')) {
-          for (const type of Object.values(resultType.httpStatusCodeType)) {
-            recursiveWalkModelFields(type, resultType.format);
+      const resultType = method.responseEnvelope.result;
+      switch (resultType?.kind) {
+        case 'anyResult':
+          if (resultType.format === 'JSON' || resultType.format === 'XML') {
+            for (const type of Object.values(resultType.httpStatusCodeType)) {
+              recursiveWalkModelFields(type, resultType.format);
+            }
           }
-        } else if (go.isPolymorphicResult(resultType)) {
-          recursiveWalkModelFields(resultType.interfaceType, resultType.format);
-        } else if (go.isModelResult(resultType)) {
+          break;
+        case 'modelResult':
           recursiveWalkModelFields(resultType.modelType, resultType.format);
-        } else if (go.isMonomorphicResult(resultType) && (resultType.format === 'JSON' || resultType.format === 'XML')) {
-          recursiveWalkModelFields(resultType.monomorphicType, resultType.format);
-        }
+          break;
+        case 'monomorphicResult':
+          if (resultType.format === 'JSON' || resultType.format === 'XML') {
+            recursiveWalkModelFields(resultType.monomorphicType, resultType.format);
+          }
+          break;
+        case 'polymorphicResult':
+          recursiveWalkModelFields(resultType.interfaceType, resultType.format);
+          break;
       }
     }
   }
