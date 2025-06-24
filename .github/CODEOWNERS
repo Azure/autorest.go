@@ -2,9 +2,9 @@
 *                             @chlowell @jhendrixMSFT @RickWinter @ArcturusZhang @lirenhe @tadelesh
 
 # codegen (autorest and typespec)
-/packages/autorest.go         @chlowell @jhendrixMSFT @RickWinter
-/packages/codegen.go          @chlowell @jhendrixMSFT @RickWinter
-/packages/codemodel.go        @chlowell @jhendrixMSFT @RickWinter
+/packages/autorest.go         @chlowell @jhendrixMSFT @RickWinter @lirenhe
+/packages/codegen.go          @chlowell @jhendrixMSFT @RickWinter @lirenhe
+/packages/codemodel.go        @chlowell @jhendrixMSFT @RickWinter @lirenhe
 /packages/typespec-go         @chlowell @jhendrixMSFT @RickWinter @lirenhe
 
 # autorest.gotest
