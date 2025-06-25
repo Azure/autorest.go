@@ -18,10 +18,10 @@ const compiler = pkgRoot + 'node_modules/@typespec/compiler/cmd/tsp.js';
 // 'moduleName': [ 'input', 'emitter option 1', 'emitter option N...' ]
 // if no .tsp file is specified in input, it's assumed to be main.tsp
 const httpSpecsGroup = {
-  'apikeygroup': ['authentication/api-key'],     
-  'customgroup': ['authentication/http/custom'], 
-  'oauth2group': ['authentication/oauth2'],      
-  'unionauthgroup': ['authentication/union'],    
+  'apikeygroup': ['authentication/api-key'],     // missing tests
+  'customgroup': ['authentication/http/custom'], // missing tests
+  'oauth2group': ['authentication/oauth2'],      // missing tests
+  'unionauthgroup': ['authentication/union'],    // missing tests
   'bytesgroup': ['encode/bytes'],
   'datetimegroup': ['encode/datetime', 'slice-elements-byval=true'],
   'durationgroup': ['encode/duration'],
@@ -69,8 +69,7 @@ const httpSpecsGroup = {
   //'renamedfromgroup': ['versioning/renamedFrom'], // requires union support
   'rettypechangedfromgroup': ['versioning/returnTypeChangedFrom'],
   'typechangedfromgroup': ['versioning/typeChangedFrom'],
-  'jsonlgroup': ['streaming/jsonl'],
-  'statuscoderangegroup': ['response/status-code-range']
+  'jsonlgroup': ['streaming/jsonl']
 };
 
 const azureHttpSpecsGroup = {
