@@ -32,7 +32,7 @@ steps:
   - script: |
       pnpm tspcompile --emitter-installed --verbose
       pnpm -w modtidy $pwd 2>&1
-      if [ "${{ parameters.Nightly }}" = "flase" ]; then
+      if [ "${{ parameters.Nightly }}" = "false" ]; then
         git add -A .
         git diff --staged -w 1>&2
       fi
