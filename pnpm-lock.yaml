@@ -250,55 +250,55 @@ importers:
         specifier: 0.1.0-alpha.19
         version: 0.1.0-alpha.19(35e31b7a6dace2f04c39ba930604fce8)
       '@azure-tools/typespec-autorest':
-        specifier: ^0.57.0
+        specifier: 0.57.0
         version: 0.57.0(cc210ccd06397d55b588b64f6bd657bf)
       '@azure-tools/typespec-azure-core':
-        specifier: ^0.57.0
+        specifier: 0.57.0
         version: 0.57.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/http@1.1.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/streams@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40))))(@typespec/rest@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/http@1.1.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/streams@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40)))))
       '@azure-tools/typespec-azure-resource-manager':
-        specifier: ^0.57.0
+        specifier: 0.57.0
         version: 0.57.0(c0fd64d3ee00c6b1cfa99545f140196e)
       '@azure-tools/typespec-client-generator-core':
-        specifier: ^0.57.2
+        specifier: 0.57.2
         version: 0.57.2(e58c0365bca02ad337962b045a7d7b0e)
       '@types/node':
         specifier: 'catalog:'
         version: 20.17.40
       '@typespec/compiler':
-        specifier: ^1.1.0
+        specifier: 1.1.0
         version: 1.1.0(@types/node@20.17.40)
       '@typespec/events':
-        specifier: ~0.71.0
+        specifier: 0.71.0
         version: 0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40))
       '@typespec/http':
-        specifier: ^1.1.0
+        specifier: 1.1.0
         version: 1.1.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/streams@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40)))
       '@typespec/http-specs':
         specifier: 0.1.0-alpha.23
         version: 0.1.0-alpha.23(@types/node@20.17.40)(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/http@1.1.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/streams@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40))))(@typespec/rest@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/http@1.1.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/streams@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40)))))(@typespec/streams@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40)))(@typespec/versioning@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40)))(@typespec/xml@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40)))
       '@typespec/openapi':
-        specifier: ^1.1.0
+        specifier: 1.1.0
         version: 1.1.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/http@1.1.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/streams@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40))))
       '@typespec/rest':
-        specifier: ~0.71.0
+        specifier: 0.71.0
         version: 0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/http@1.1.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/streams@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40))))
       '@typespec/spector':
         specifier: 0.1.0-alpha.15
         version: 0.1.0-alpha.15(@types/node@20.17.40)(@typespec/streams@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40)))
       '@typespec/sse':
-        specifier: ~0.71.0
+        specifier: 0.71.0
         version: 0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/events@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40)))(@typespec/http@1.1.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/streams@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40))))(@typespec/streams@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40)))
       '@typespec/streams':
-        specifier: ~0.71.0
+        specifier: 0.71.0
         version: 0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40))
       '@typespec/tspd':
-        specifier: ~0.71.0
+        specifier: 0.71.0
         version: 0.71.0(@types/node@20.17.40)(typescript@5.8.3)
       '@typespec/versioning':
-        specifier: ~0.71.0
+        specifier: 0.71.0
         version: 0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40))
       '@typespec/xml':
-        specifier: ~0.71.0
+        specifier: 0.71.0
         version: 0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40))
       '@vitest/coverage-v8':
         specifier: 'catalog:'
