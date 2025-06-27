@@ -16,7 +16,7 @@ import (
 
 type fakeCredential struct{}
 
-func (mc fakeCredential) GetToken(ctx context.Context, options policy.TokenRequestOptions) (azcore.AccessToken, error) {
+func (mc fakeCredential) GetToken(context.Context, policy.TokenRequestOptions) (azcore.AccessToken, error) {
 	return azcore.AccessToken{Token: "https://security.microsoft.com/.default", ExpiresOn: time.Now().Add(time.Hour)}, nil
 }
 
@@ -42,7 +42,6 @@ func TestOAuth2ClientInvalid(t *testing.T) {
 	})
 	require.NoError(t, err)
 	resp, err := client.Invalid(context.Background(), nil)
-	require.Error(t, err)
 	require.Zero(t, resp)
 	require.ErrorContains(t, err, "403")
 	require.ErrorContains(t, err, "invalid")

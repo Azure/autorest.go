@@ -38,7 +38,6 @@ func TestCustomClientInvalid(t *testing.T) {
 	})
 	require.NoError(t, err)
 	resp, err := client.Invalid(context.Background(), nil)
-	require.Error(t, err)
 	require.Zero(t, resp)
 	require.ErrorContains(t, err, "403")
 	require.ErrorContains(t, err, "invalid-api-key")
