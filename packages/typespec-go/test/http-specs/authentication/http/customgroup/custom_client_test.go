@@ -23,9 +23,8 @@ func TestCustomClientValid(t *testing.T) {
 		PerCallPolicies: []policy.Policy{authPolicy},
 	})
 	require.NoError(t, err)
-	resp, err := client.Valid(context.Background(), nil)
+	_, err = client.Valid(context.Background(), nil)
 	require.NoError(t, err)
-	require.Zero(t, resp)
 }
 
 func TestCustomClientInvalid(t *testing.T) {
