@@ -29,7 +29,7 @@ func TestMain(m *testing.M) {
 		ClientOptions: azcore.ClientOptions{
 			InsecureAllowCredentialWithHTTP: true,
 			PerCallPolicies: []policy.Policy{
-				&cadlranchPolicy{},
+				&spectorPolicy{},
 			},
 		},
 	})
@@ -37,26 +37,26 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-type cadlranchPolicy struct {
+type spectorPolicy struct {
 	useHttps  bool
 	proxyPort int
 }
 
-func (p cadlranchPolicy) scheme() string {
+func (p spectorPolicy) scheme() string {
 	if p.useHttps {
 		return "https"
 	}
 	return "http"
 }
 
-func (p cadlranchPolicy) host() string {
+func (p spectorPolicy) host() string {
 	if p.proxyPort != 0 {
 		return fmt.Sprintf("localhost:%d", p.proxyPort)
 	}
 	return "localhost:3000"
 }
 
-func (p *cadlranchPolicy) Do(req *policy.Request) (*http.Response, error) {
+func (p *spectorPolicy) Do(req *policy.Request) (*http.Response, error) {
 	oriSchema := req.Raw().URL.Scheme
 	oriHost := req.Raw().URL.Host
 
