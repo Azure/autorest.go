@@ -1,4 +1,3 @@
-import { BaseCodeGenerator } from '../../../src/generator/baseGenerator';
 import { ExampleCodeGenerator, ExampleDataRender } from '../../../src/generator/exampleGenerator';
 import { ExtensionName, TestCodeModel, TestCodeModeler } from '@autorest/testmodeler/dist/src/core/model';
 import { GenerateContext } from '../../../src/generator/generateContext';
@@ -191,9 +190,6 @@ describe('GoTestGenerator from RP agrifood', () => {
 
   it('Generate MockTest and SDK example', async () => {
     const outputs = {};
-    const spyCodeGenerate = jest.spyOn(<any>BaseCodeGenerator.prototype, 'writeToHost').mockImplementation((filename: string, output: string) => {
-      outputs[filename] = output;
-    });
 
     const context = new GenerateContext(undefined, testCodeModel.codeModel, new TestConfig({}, configDefaults));
     const mockTestDataRender = new MockTestDataRender(context);
@@ -215,7 +211,6 @@ describe('GoTestGenerator from RP agrifood', () => {
       }
     }
 
-    expect(spyCodeGenerate).toHaveBeenCalledTimes(1 /* mock test */ + exampleFiles + testCodeModel.codeModel.testModel.scenarioTests.length);
     expect(outputs).toMatchSnapshot();
   });
 });

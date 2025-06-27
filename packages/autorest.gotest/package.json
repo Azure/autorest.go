@@ -1,6 +1,6 @@
 {
   "name": "@autorest/gotest",
-  "version": "4.7.4",
+  "version": "4.7.5",
   "description": "Autorest extension for go test generation",
   "main": "dist/src/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "build": "tsc -p . && cpy template ../../dist/src --cwd=src/ --parents",
     "watch": "tsc -p . --watch",
     "prepare": "npm run build",
-    "test": "npm run build",
+    "test": "npm run build && cross-env NODE_ENV=test jest --ci --reporters=default --reporters=jest-junit",
     "unittest": "npm run build && cross-env NODE_ENV=test jest --ci --reporters=default --reporters=jest-junit --config ./jest.unittest.config.js",
     "unittest-update": "npm run build && cross-env NODE_ENV=test jest --ci --reporters=default --reporters=jest-junit --updateSnapshot --config ./jest.unittest.config.js",
     "clean": "ver > nul 2>&1 nul && npm run --silent clean-cmd || npm run --silent clean-bash",
@@ -49,7 +49,7 @@
   "dependencies": {
     "@autorest/codemodel": "catalog:",
     "@autorest/extension-base": "~3.5.2",
-    "@autorest/testmodeler": "2.6.4-ci.e5cceacc3.0",
+    "@autorest/testmodeler": "2.6.4-ci.254802bfc.0",
     "@azure-tools/codegen": "catalog:",
     "@azure-tools/linq": "catalog:",
     "@types/nunjucks": "^3.2.6",

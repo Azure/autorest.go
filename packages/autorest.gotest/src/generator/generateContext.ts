@@ -6,8 +6,8 @@
 import { AutorestExtensionHost } from '@autorest/extension-base';
 import { getModuleNameWithMajorVersion } from '../common/helpers';
 import { ImportManager } from './imports';
-import { TestCodeModel } from '@autorest/testmodeler/dist/src/core/model';
-import { TestConfig } from '@autorest/testmodeler/dist/src/common/testConfig';
+import { TestCodeModel } from '@autorest/testmodeler';
+import { TestConfig } from '@autorest/testmodeler';
 export class GenerateContext {
   public packageName: string;
   public importManager: ImportManager;
