@@ -11,7 +11,7 @@
     "build": "tsc -p . && cpy template ../../dist/src --cwd=src/ --parents",
     "watch": "tsc -p . --watch",
     "prepare": "npm run build",
-    "test": "npm run build && cross-env NODE_ENV=test jest --ci --reporters=default --reporters=jest-junit",
+    "test": "npm run build",
     "unittest": "npm run build && cross-env NODE_ENV=test jest --ci --reporters=default --reporters=jest-junit --config ./jest.unittest.config.js",
     "unittest-update": "npm run build && cross-env NODE_ENV=test jest --ci --reporters=default --reporters=jest-junit --updateSnapshot --config ./jest.unittest.config.js",
     "clean": "ver > nul 2>&1 nul && npm run --silent clean-cmd || npm run --silent clean-bash",
