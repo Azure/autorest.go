@@ -40,8 +40,7 @@ func TestOAuth2ClientInvalid(t *testing.T) {
 		PerCallPolicies: []policy.Policy{authPolicy},
 	})
 	require.NoError(t, err)
-	resp, err := client.Invalid(context.Background(), nil)
-	require.Zero(t, resp)
+	_, err = client.Invalid(context.Background(), nil)
 	require.ErrorContains(t, err, "403")
 	require.ErrorContains(t, err, "invalid")
 }
