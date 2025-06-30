@@ -289,11 +289,11 @@ function formatHeaderResponseValue(headerResp: go.HeaderScalarResponse | go.Head
     }
   } else if (go.isTimeType(headerResp.type)) {
     imports.add('time');
-    if (headerResp.type.dateTimeFormat === 'dateType') {
+    if (headerResp.type.format === 'dateType') {
       text += `\t\t${name}, err := time.Parse("${helpers.dateFormat}", val)\n`;
-    } else if (headerResp.type.dateTimeFormat === 'timeRFC3339') {
+    } else if (headerResp.type.format === 'timeRFC3339') {
       text += `\t\t${name}, err := time.Parse("${helpers.timeRFC3339Format}", val)\n`;
-    } else if (headerResp.type.dateTimeFormat === 'timeUnix') {
+    } else if (headerResp.type.format === 'timeUnix') {
       imports.add('strconv');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
       text += '\t\tsec, err := strconv.ParseInt(val, 10, 64)\n';
@@ -301,7 +301,7 @@ function formatHeaderResponseValue(headerResp: go.HeaderScalarResponse | go.Head
       byRef = '';
     } else {
       let format = helpers.datetimeRFC3339Format;
-      if (headerResp.type.dateTimeFormat === 'dateTimeRFC1123') {
+      if (headerResp.type.format === 'dateTimeRFC1123') {
         format = helpers.datetimeRFC1123Format;
       }
       text += `\t\t${name}, err := time.Parse(${format}, val)\n`;
@@ -802,10 +802,10 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
           addr = '';
         }
         body = `wrapper{${fieldName}: ${addr}${body}}`;
-      } else if (go.isTimeType(bodyParam.type) && bodyParam.type.dateTimeFormat !== 'dateTimeRFC3339') {
+      } else if (go.isTimeType(bodyParam.type) && bodyParam.type.format !== 'dateTimeRFC3339') {
         // wrap the body in the internal time type
         // no need for dateTimeRFC3339 as the JSON marshaler defaults to that.
-        body = `${bodyParam.type.dateTimeFormat}(${body})`;
+        body = `${bodyParam.type.format}(${body})`;
       } else if (isArrayOfDateTimeForMarshalling(bodyParam.type)) {
         const timeInfo = isArrayOfDateTimeForMarshalling(bodyParam.type);
         let elementPtr = '*';
@@ -976,20 +976,20 @@ function getMediaFormat(type: go.PossibleType, mediaType: 'JSON' | 'XML', param:
   return `${marshaller}(${param}${format})`;
 }
 
-function isArrayOfDateTimeForMarshalling(paramType: go.PossibleType): { format: go.DateTimeFormat, elemByVal: boolean } | undefined {
+function isArrayOfDateTimeForMarshalling(paramType: go.PossibleType): { format: go.TimeFormat, elemByVal: boolean } | undefined {
   if (!go.isSliceType(paramType)) {
     return undefined;
   }
   if (!go.isTimeType(paramType.elementType)) {
     return undefined;
   }
-  switch (paramType.elementType.dateTimeFormat) {
+  switch (paramType.elementType.format) {
     case 'dateType':
     case 'dateTimeRFC1123':
     case 'timeRFC3339':
     case 'timeUnix':
       return {
-        format: paramType.elementType.dateTimeFormat,
+        format: paramType.elementType.format,
         elemByVal: paramType.elementTypeByValue
       };
     default:
@@ -1009,7 +1009,7 @@ function generateResponseUnmarshaller(method: go.MethodType, type: go.PossibleTy
   const zeroValue = getZeroReturnValue(method, 'handler');
   if (go.isTimeType(type)) {
     // use the designated time type for unmarshalling
-    unmarshallerText += `\tvar aux *${type.dateTimeFormat}\n`;
+    unmarshallerText += `\tvar aux *${type.format}\n`;
     unmarshallerText += `\tif err := runtime.UnmarshalAs${format}(resp, &aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
@@ -1137,7 +1137,7 @@ function createProtocolResponse(client: go.Client, method: go.Method | go.LROPag
       case 'polymorphicResult':
         text += `\tresult := ${method.responseEnvelope.name}{}\n`;
         addHeaders(method.responseEnvelope.headers);
-        text += generateResponseUnmarshaller(method, result.interfaceType, result.format, 'result');
+        text += generateResponseUnmarshaller(method, result.interface, result.format, 'result');
         break;
       default:
         result satisfies never;
@@ -1149,7 +1149,7 @@ function createProtocolResponse(client: go.Client, method: go.Method | go.LROPag
   return text;
 }
 
-function isArrayOfDateTime(paramType: go.PossibleType): { format: go.DateTimeFormat, elemByVal: boolean } | undefined {
+function isArrayOfDateTime(paramType: go.PossibleType): { format: go.TimeFormat, elemByVal: boolean } | undefined {
   if (!go.isSliceType(paramType)) {
     return undefined;
   }
@@ -1157,7 +1157,7 @@ function isArrayOfDateTime(paramType: go.PossibleType): { format: go.DateTimeFor
     return undefined;
   }
   return {
-    format: paramType.elementType.dateTimeFormat,
+    format: paramType.elementType.format,
     elemByVal: paramType.elementTypeByValue
   };
 }
@@ -1169,7 +1169,7 @@ function isMapOfDateTime(paramType: go.PossibleType): string | undefined {
   if (!go.isTimeType(paramType.valueType)) {
     return undefined;
   }
-  return paramType.valueType.dateTimeFormat;
+  return paramType.valueType.format;
 }
 
 // returns the parameters for the public API

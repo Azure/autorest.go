@@ -484,7 +484,7 @@ export class clientAdapter {
     if (param.isApiVersionParam && param.clientDefaultValue) {
       // we emit the api version param inline as a literal, never as a param.
       // the ClientOptions.APIVersion setting is used to change the version.
-      const paramType = new go.LiteralValue(new go.PrimitiveType('string'), param.clientDefaultValue);
+      const paramType = new go.Literal(new go.Scalar('string'), param.clientDefaultValue);
       switch (param.kind) {
         case 'header':
           return new go.HeaderScalarParameter(param.name, param.serializedName, paramType, 'literal', true, 'method');
@@ -675,7 +675,7 @@ export class clientAdapter {
       respEnv.result.docs.summary = 'Body contains the streaming response.';
       return respEnv;
     } else if (sdkResponseType.kind === 'model') {
-      let modelType: go.ModelType | undefined;
+      let modelType: go.Model | undefined;
       const modelName = ensureNameCase(sdkResponseType.name).toUpperCase();
       for (const model of this.ta.codeModel.models) {
         if (model.name.toUpperCase() === modelName) {
@@ -770,8 +770,8 @@ export class clientAdapter {
     }
   }
 
-  private adaptParameterGroup(paramGroup: go.ParameterGroup): go.StructType {
-    const structType = new go.StructType(paramGroup.groupName);
+  private adaptParameterGroup(paramGroup: go.ParameterGroup): go.Struct {
+    const structType = new go.Struct(paramGroup.groupName);
     structType.docs = paramGroup.docs;
     for (const param of paramGroup.params) {
       if (param.style === 'literal') {
@@ -827,7 +827,7 @@ export class clientAdapter {
       if (!go.isLiteralValueType(adaptedType)) {
         throw new AdapterError('InternalError', `unexpected client side default type ${go.getTypeDeclaration(adaptedType)} for parameter ${param.name}`, param.__raw?.node ?? NoTarget);
       }
-      return new go.ClientSideDefault(new go.LiteralValue(adaptedType, param.clientDefaultValue));
+      return new go.ClientSideDefault(new go.Literal(adaptedType, param.clientDefaultValue));
     } else if (param.optional) {
       return 'optional';
     } else {
@@ -885,10 +885,10 @@ export class clientAdapter {
           if (response.bodyValue && method.responseEnvelope.result) {
             switch (method.responseEnvelope.result.kind) {
               case 'anyResult':
-                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.PrimitiveType('any'));
+                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.Scalar('any'));
                 break;
               case 'binaryResult':
-                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.PrimitiveType('byte'));
+                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.Scalar('byte'));
                 break;
               case 'modelResult':
                 goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.modelType);
@@ -897,7 +897,7 @@ export class clientAdapter {
                 goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.monomorphicType);
                 break;
               case 'polymorphicResult':
-                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.interfaceType);
+                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.interface);
                 break;
             }
           }
@@ -956,7 +956,7 @@ export class clientAdapter {
         throw new AdapterError('UnsupportedTsp', 'unsupported example type kind union', NoTarget);
       case 'model':
         if (go.isModelType(goType) || go.isInterfaceType(goType)) {
-          let concreteType: go.ModelType | go.PolymorphicType | undefined;
+          let concreteType: go.Model | go.PolymorphicModel | undefined;
           if (go.isInterfaceType(goType)) {
             /* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */
             concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue)!;

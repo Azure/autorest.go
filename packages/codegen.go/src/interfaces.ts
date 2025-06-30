@@ -9,14 +9,14 @@ import { contentPreamble, sortAscending } from './helpers.js';
 
 // Creates the content in interfaces.go
 export async function generateInterfaces(codeModel: go.CodeModel): Promise<string> {
-  if (codeModel.interfaceTypes.length === 0) {
+  if (codeModel.interfaces.length === 0) {
     // no polymorphic types
     return '';
   }
 
   let text = contentPreamble(codeModel);
 
-  for (const iface of codeModel.interfaceTypes) {
+  for (const iface of codeModel.interfaces) {
     const methodName = `Get${iface.rootType.name}`;
     text += `// ${iface.name} provides polymorphic access to related types.\n`;
     text += `// Call the interface's ${methodName}() method to access the common type.\n`;

@@ -392,7 +392,7 @@ function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport
             }
             let responseField = `server.GetResponse(respr)${respField}`;
             if (go.isTimeType(method.responseEnvelope.result.monomorphicType)) {
-              responseField = `(*${method.responseEnvelope.result.monomorphicType.dateTimeFormat})(${responseField})`;
+              responseField = `(*${method.responseEnvelope.result.monomorphicType.format})(${responseField})`;
             }
             content += `\tresp, err := server.MarshalResponseAs${method.responseEnvelope.result.format}(respContent, ${responseField}, req)\n`;
           }
@@ -481,7 +481,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
           } else {
             let bodyTypeName = go.getTypeDeclaration(bodyParam.type, clientPkg);
             if (go.isTimeType(bodyParam.type)) {
-              bodyTypeName = bodyParam.type.dateTimeFormat;
+              bodyTypeName = bodyParam.type.format;
             }
             content += `\tbody, err := server.UnmarshalRequestAs${bodyParam.bodyFormat}[${bodyTypeName}](req)\n`;
             content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
@@ -523,7 +523,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     // specify boolTarget if parsing bools happens in place.
     // i.e. the result from the parsing doesn't require further conversion (e.g. casting)
     // otherwise the parsed value is in a local var named parsed.
-    const parsePrimitiveType = function (typeName: go.PrimitiveTypeName, boolTarget?: string): string {
+    const parsePrimitiveType = function (typeName: go.ScalarType, boolTarget?: string): string {
       let parseErr = 'parseErr';
       const parseResults = `parsed, ${parseErr}`;
       let parsingCode = '';
@@ -952,7 +952,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
         }
 
         const paramVar = createLocalVariableName(param, 'Param');
-        let elementFormat: go.PrimitiveTypeName | go.DateTimeFormat | go.BytesEncoding;
+        let elementFormat: go.ScalarType | go.TimeFormat | go.BytesEncoding;
         if (go.isConstantType(param.type.elementType)) {
           elementFormat = param.type.elementType.type;
         } else if (go.isPrimitiveType(param.type.elementType)) {
@@ -960,7 +960,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
         } else if (go.isBytesType(param.type.elementType)) {
           elementFormat = param.type.elementType.encoding;
         } else if (go.isTimeType(param.type.elementType)) {
-          elementFormat = param.type.elementType.dateTimeFormat;
+          elementFormat = param.type.elementType.format;
         } else {
           throw new CodegenError('InternalError', `unhandled element type ${go.getTypeDeclaration(param.type.elementType)}`);
         }
@@ -1034,10 +1034,10 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
       content += `\t${createLocalVariableName(param, 'Param')}, err := base64.${param.type.encoding}Encoding.DecodeString(${paramValue})\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     } else if (go.isTimeType(param.type)) {
-      if (param.type.dateTimeFormat === 'dateType' || param.type.dateTimeFormat === 'timeRFC3339') {
+      if (param.type.format === 'dateType' || param.type.format === 'timeRFC3339') {
         imports.add('time');
         let format = helpers.dateFormat;
-        if (param.type.dateTimeFormat === 'timeRFC3339') {
+        if (param.type.format === 'timeRFC3339') {
           format = helpers.timeRFC3339Format;
         }
         let from = `time.Parse("${format}", ${paramValue})`;
@@ -1047,10 +1047,10 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
         }
         content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
         content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-      } else if (param.type.dateTimeFormat === 'dateTimeRFC1123' || param.type.dateTimeFormat === 'dateTimeRFC3339') {
+      } else if (param.type.format === 'dateTimeRFC1123' || param.type.format === 'dateTimeRFC3339') {
         imports.add('time');
         let format = 'time.RFC3339Nano';
-        if (param.type.dateTimeFormat === 'dateTimeRFC1123') {
+        if (param.type.format === 'dateTimeRFC1123') {
           format = 'time.RFC1123';
         }
         let from = `time.Parse(${format}, ${paramValue})`;
@@ -1361,7 +1361,7 @@ function getResultFieldName(result: go.AnyResult | go.BinaryResult | go.Monomorp
     case 'modelResult':
       return result.modelType.name;
     case 'polymorphicResult':
-      return result.interfaceType.name;
+      return result.interface.name;
     default:
       return result.fieldName;
   }

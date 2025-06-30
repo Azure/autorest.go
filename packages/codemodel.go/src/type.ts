@@ -5,87 +5,86 @@
 
 import { CodeModelError } from "./errors.js";
 
-// PossibleType describes what can be modeled e.g. in an OpenAPI specification
-export type PossibleType = BytesType | ConstantType | InterfaceType | LiteralValue | MapType | ModelType | PolymorphicType | PrimitiveType | SliceType | QualifiedType | TimeType;
+/** Docs contains the values used in doc comment generation. */
+export interface Docs {
+  /** the high level summary */
+  summary?: string;
 
-// BytesType is a base-64 encoded sequence of bytes
-export interface BytesType {
-  encoding: BytesEncoding;
+  /** detailed description */
+  description?: string;
 }
 
-export type BytesEncoding = 'Std' | 'URL';
+/** defines types that go across the wire */
+export type PossibleType = Constant | EncodedBytes | Interface | Literal | Map | Model | PolymorphicModel | QualifiedType | Scalar | Slice | Time;
 
-// Constant describes a const type definition (e.g. type FooType string, i.e. our fake enums)
-export interface ConstantType {
-  name: string;
-
-  docs: Docs;
-
-  type: ConstantTypeTypes;
-
-  values: Array<ConstantValue>;
-
-  valuesFuncName: string;
-}
-
-// ConstantTypeTypes contains the possible underlying type of a const
-export type ConstantTypeTypes = 'bool' | 'float32' | 'float64' | 'int32' | 'int64' | 'string';
-
-// ConstantValue describes a const value definition (e.g. FooTypeValue FooType = "value")
-export interface ConstantValue {
+/** a const type definition */
+export interface Constant {
   name: string;
 
   docs: Docs;
 
   type: ConstantType;
 
-  value: ConstantValueValueTypes;
+  values: Array<ConstantValue>;
+
+  valuesFuncName: string;
 }
 
-export type ConstantValueValueTypes = boolean | number | string;
+/** the underlying type of a const */
+export type ConstantType = 'bool' | 'float32' | 'float64' | 'int32' | 'int64' | 'string';
 
-export type DateTimeFormat = 'dateType' | 'dateTimeRFC1123' | 'dateTimeRFC3339' | 'timeRFC3339' | 'timeUnix';
+/** a const vale definition */
+export interface ConstantValue {
+  name: string;
 
-// Docs contains the values used in doc comment generation.
-export interface Docs {
-  // the high level summary
-  summary?: string;
+  docs: Docs;
 
-  // detailed description
-  description?: string;
+  type: Constant;
+
+  value: ConstantValueType;
 }
+
+export type ConstantValueType = boolean | number | string;
+
+/** a byte slice that's base64 encoded */
+export interface EncodedBytes {
+  /** indicates what kind of base64-encoding to use */
+  encoding: BytesEncoding;
+}
+
+export type BytesEncoding = 'Std' | 'URL';
 
 // InterfaceType represents the interface type for a polymorphic (discriminated) type
-export interface InterfaceType {
+export interface Interface {
   // Name is the name of the interface (e.g. FishClassification)
   name: string;
 
   docs: Docs;
 
   // contains possible concrete type instances (e.g. Flounder, Carp)
-  possibleTypes: Array<PolymorphicType>;
+  possibleTypes: Array<PolymorphicModel>;
 
   // contains the name of the discriminator field in the JSON (e.g. "fishtype")
   discriminatorField: string;
 
   // does this polymorphic type have a parent (e.g. SalmonClassification has parent FishClassification)
-  parent?: InterfaceType;
+  parent?: Interface;
 
   // this is the "root" type in the list of polymorphic types (e.g. Fish for FishClassification)
-  rootType: PolymorphicType;
+  rootType: PolymorphicModel;
 }
 
 // LiteralValue is a literal value (e.g. "foo").
-export interface LiteralValue {
-  type: LiteralValueType;
+export interface Literal {
+  type: LiteralType;
 
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   literal: any;
 }
 
-export type LiteralValueType = BytesType | ConstantType | PrimitiveType | TimeType;
+export type LiteralType = Constant | EncodedBytes | Scalar | Time;
 
-export interface MapType {
+export interface Map {
   valueType: MapValueType;
 
   valueTypeByValue: boolean;
@@ -100,7 +99,7 @@ export interface ModelField extends StructField {
   annotations: ModelFieldAnnotations;
 
   // the value to send over the wire if one isn't specified
-  defaultValue?: LiteralValue;
+  defaultValue?: Literal;
 
   xml?: XMLInfo;
 }
@@ -123,7 +122,7 @@ export interface ModelFieldAnnotations {
 }
 
 // ModelType is a struct that participates in serialization over the wire.
-export interface ModelType extends StructType {
+export interface Model extends Struct {
   fields: Array<ModelField>;
 
   annotations: ModelAnnotations;
@@ -134,29 +133,24 @@ export interface ModelType extends StructType {
 }
 
 // PolymorphicType is a discriminated type
-export interface PolymorphicType extends StructType {
-  fields: Array<ModelField>;
-
-  annotations: ModelAnnotations;
-
-  usage: UsageFlags;
-
+export interface PolymorphicModel extends Model {
   // this denotes the polymorphic interface this type implements
-  interface: InterfaceType;
+  interface: Interface;
 
   // the value in the JSON that indicates what type was sent over the wire (e.g. goblin, salmon, shark)
   // note that for "root" types (Fish), there is no discriminatorValue. however, "sub-root" types (e.g. Salmon)
   // will have this populated.
-  discriminatorValue?: LiteralValue;
+  discriminatorValue?: Literal;
 }
 
-// PrimitiveType is a Go integral type
-export interface PrimitiveType {
-  typeName: PrimitiveTypeName;
+/** a Go scalar type */
+export interface Scalar {
+  typeName: ScalarType;
   encodeAsString: boolean;
 }
 
-export type PrimitiveTypeName = 'any' | 'bool' | 'byte' | 'float32' | 'float64' | 'int8' | 'int16' | 'int32' | 'int64' | 'rune' | 'string' | 'uint8' | 'uint16' | 'uint32' | 'uint64';
+/** the supported Go scalar types */
+export type ScalarType = 'any' | 'bool' | 'byte' | 'float32' | 'float64' | 'int8' | 'int16' | 'int32' | 'int64' | 'rune' | 'string' | 'uint8' | 'uint16' | 'uint32' | 'uint64';
 
 // QualifiedType is a type from some package, e.g. the Go standard library (excluding time.Time)
 export interface QualifiedType {
@@ -167,7 +161,7 @@ export interface QualifiedType {
   packageName: string;
 }
 
-export interface SliceType {
+export interface Slice {
   elementType: SliceElementType;
 
   elementTypeByValue: boolean;
@@ -180,7 +174,7 @@ export type SliceElementType = PossibleType;
 
 // Struct describes a vanilla struct definition (pretty much exclusively used for parameter groups/options bag types)
 // UDTs that are sent/received are modeled as ModelType.
-export interface StructType {
+export interface Struct {
   name: string;
 
   docs: Docs;
@@ -201,11 +195,13 @@ export interface StructField {
 }
 
 // TimeType is a time.Time type from the standard library with a format specifier.
-export interface TimeType {
-  dateTimeFormat: DateTimeFormat;
+export interface Time {
+  format: TimeFormat;
 
   utc: boolean;
 }
+
+export type TimeFormat = 'dateType' | 'dateTimeRFC1123' | 'dateTimeRFC3339' | 'timeRFC3339' | 'timeUnix';
 
 // UsageFlags are bit flags indicating how a model/polymorphic type is used
 export enum UsageFlags {
@@ -233,55 +229,55 @@ export interface XMLInfo {
   text: boolean;
 }
 
-export function isBytesType(type: PossibleType): type is BytesType {
-  return (<BytesType>type).encoding !== undefined;
+export function isBytesType(type: PossibleType): type is EncodedBytes {
+  return (<EncodedBytes>type).encoding !== undefined;
 }
 
-export function isConstantType(type: PossibleType): type is ConstantType {
-  return (<ConstantType>type).values !== undefined;
+export function isConstantType(type: PossibleType): type is Constant {
+  return (<Constant>type).values !== undefined;
 }
 
-export function isLiteralValueType(type: PossibleType): type is LiteralValueType {
+export function isLiteralValueType(type: PossibleType): type is LiteralType {
   return isConstantType(type) || isPrimitiveType(type);
 }
 
-export function isPrimitiveType(type: PossibleType): type is PrimitiveType {
-  return (<PrimitiveType>type).typeName !== undefined;
+export function isPrimitiveType(type: PossibleType): type is Scalar {
+  return (<Scalar>type).typeName !== undefined;
 }
 
 export function isQualifiedType(type: PossibleType): type is QualifiedType {
   return (<QualifiedType>type).exportName !== undefined;
 }
 
-export function isTimeType(type: PossibleType): type is TimeType {
-  return (<TimeType>type).dateTimeFormat !== undefined;
+export function isTimeType(type: PossibleType): type is Time {
+  return (<Time>type).format !== undefined;
 }
 
-export function isMapType(type: PossibleType): type is MapType {
-  return (<MapType>type).valueType !== undefined;
+export function isMapType(type: PossibleType): type is Map {
+  return (<Map>type).valueType !== undefined;
 }
 
-export function isModelType(type: PossibleType): type is ModelType {
-  return (<ModelType>type).fields !== undefined;
+export function isModelType(type: PossibleType): type is Model {
+  return (<Model>type).fields !== undefined;
 }
 
-export function isPolymorphicType(type: PossibleType): type is PolymorphicType {
-  return (<PolymorphicType>type).interface !== undefined;
+export function isPolymorphicType(type: PossibleType): type is PolymorphicModel {
+  return (<PolymorphicModel>type).interface !== undefined;
 }
 
-export function isSliceType(type: PossibleType): type is SliceType {
-  return (<SliceType>type).elementType !== undefined;
+export function isSliceType(type: PossibleType): type is Slice {
+  return (<Slice>type).elementType !== undefined;
 }
 
-export function isInterfaceType(type: PossibleType): type is InterfaceType {
-  return (<InterfaceType>type).possibleTypes !== undefined;
+export function isInterfaceType(type: PossibleType): type is Interface {
+  return (<Interface>type).possibleTypes !== undefined;
 }
 
-export function isLiteralValue(type: PossibleType): type is LiteralValue {
-  return (<LiteralValue>type).literal !== undefined;
+export function isLiteralValue(type: PossibleType): type is Literal {
+  return (<Literal>type).literal !== undefined;
 }
 
-export function getLiteralValueTypeName(literal: LiteralValueType): string {
+export function getLiteralValueTypeName(literal: LiteralType): string {
   if (isBytesType(literal)) {
     return '[]byte';
   } else if (isConstantType(literal)) {
@@ -346,7 +342,7 @@ export class StructField implements StructField {
   }
 }
 
-export class StructType implements StructType {
+export class Struct implements Struct {
   constructor(name: string) {
     this.fields = new Array<StructField>();
     this.name = name;
@@ -354,15 +350,8 @@ export class StructType implements StructType {
   }
 }
 
-// Derived and standalone classes in alphabetical order
-export class BytesType implements BytesType {
-  constructor(encoding: BytesEncoding) {
-    this.encoding = encoding;
-  }
-}
-
-export class ConstantType implements ConstantType {
-  constructor(name: string, type: ConstantTypeTypes, valuesFuncName: string) {
+export class Constant implements Constant {
+  constructor(name: string, type: ConstantType, valuesFuncName: string) {
     this.name = name;
     this.type = type;
     this.values = new Array<ConstantValue>();
@@ -372,7 +361,7 @@ export class ConstantType implements ConstantType {
 }
 
 export class ConstantValue implements ConstantValue {
-  constructor(name: string, type: ConstantType, value: ConstantValueValueTypes) {
+  constructor(name: string, type: Constant, value: ConstantValueType) {
     this.name = name;
     this.type = type;
     this.value = value;
@@ -380,28 +369,34 @@ export class ConstantValue implements ConstantValue {
   }
 }
 
-export class InterfaceType implements InterfaceType {
+export class EncodedBytes implements EncodedBytes {
+  constructor(encoding: BytesEncoding) {
+    this.encoding = encoding;
+  }
+}
+
+export class Interface implements Interface {
   // possibleTypes and rootType are required. however, we have a chicken-and-egg
   // problem as creating a PolymorphicType requires the necessary InterfaceType.
   // so these fields MUST be populated after creating the InterfaceType.
   constructor(name: string, discriminatorField: string) {
     this.name = name;
     this.discriminatorField = discriminatorField;
-    this.possibleTypes = new Array<PolymorphicType>();
+    this.possibleTypes = new Array<PolymorphicModel>();
     this.docs = {};
   }
 }
 
-export class LiteralValue implements LiteralValue {
+export class Literal implements Literal {
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  constructor(type: LiteralValueType, literal: any) {
+  constructor(type: LiteralType, literal: any) {
     this.type = type;
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
     this.literal = literal;
   }
 }
 
-export class MapType implements MapType {
+export class Map implements Map {
   constructor(valueType: MapValueType, valueTypeByValue: boolean) {
     this.valueType = valueType;
     this.valueTypeByValue = valueTypeByValue;
@@ -432,7 +427,7 @@ export class ModelFieldAnnotations implements ModelFieldAnnotations {
   }
 }
 
-export class ModelType extends StructType implements ModelType {
+export class Model extends Struct implements Model {
   constructor(name: string, annotations: ModelAnnotations, usage: UsageFlags) {
     super(name);
     this.annotations = annotations;
@@ -441,18 +436,15 @@ export class ModelType extends StructType implements ModelType {
   }
 }
 
-export class PolymorphicType extends StructType implements PolymorphicType {
-  constructor(name: string, iface: InterfaceType, annotations: ModelAnnotations, usage: UsageFlags) {
-    super(name);
+export class PolymorphicModel extends Model implements PolymorphicModel {
+  constructor(name: string, iface: Interface, annotations: ModelAnnotations, usage: UsageFlags) {
+    super(name, annotations, usage);
     this.interface = iface;
-    this.annotations = annotations;
-    this.usage = usage;
-    this.fields = new Array<ModelField>();
   }
 }
 
-export class PrimitiveType implements PrimitiveType {
-  constructor(typeName: PrimitiveTypeName, encodeAsString?: boolean) {
+export class Scalar implements Scalar {
+  constructor(typeName: ScalarType, encodeAsString?: boolean) {
     this.typeName = typeName;
     this.encodeAsString = encodeAsString ?? false;
   }
@@ -465,16 +457,16 @@ export class QualifiedType implements QualifiedType {
   }
 }
 
-export class SliceType implements SliceType {
+export class Slice implements Slice {
   constructor(elementType: SliceElementType, elementTypeByValue: boolean) {
     this.elementType = elementType;
     this.elementTypeByValue = elementTypeByValue;
   }
 }
 
-export class TimeType implements TimeType {
-  constructor(format: DateTimeFormat, utc: boolean) {
-    this.dateTimeFormat = format;
+export class Time implements Time {
+  constructor(format: TimeFormat, utc: boolean) {
+    this.format = format;
     this.utc = utc;
   }
 }

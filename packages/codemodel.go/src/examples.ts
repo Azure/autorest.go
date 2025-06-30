@@ -6,7 +6,7 @@
 import * as client from './client.js';
 import * as param from './param.js';
 import * as result from './result.js';
-import { BytesType, ConstantType, Docs, LiteralValue, MapType, ModelType, PolymorphicType, PossibleType, PrimitiveType, QualifiedType, SliceType, TimeType } from './type.js';
+import { Constant, Docs, EncodedBytes, Literal, Map, Model, PolymorphicModel, PossibleType, Scalar, QualifiedType, Slice, Time } from './type.js';
 
 export type ExampleType = AnyExample | ArrayExample | BooleanExample | DictionaryExample | NullExample | NumberExample | QualifiedExample| StringExample | StructExample;
 
@@ -19,19 +19,19 @@ export interface AnyExample {
 export interface ArrayExample {
   kind: 'array';
   value: Array<ExampleType>;
-  type: SliceType;
+  type: Slice;
 }
 
 export interface BooleanExample {
   kind: 'boolean';
   value: boolean;
-  type: ConstantType | LiteralValue | PrimitiveType;
+  type: Constant | Literal | Scalar;
 }
 
 export interface DictionaryExample {
   kind: 'dictionary';
   value: Record<string, ExampleType>;
-  type: MapType;
+  type: Map;
 }
 
 // MethodExample is an example for a method. This code model part is for example or test generation.
@@ -58,7 +58,7 @@ export interface NullExample {
 export interface NumberExample {
   kind: 'number';
   value: number;
-  type: ConstantType | LiteralValue | TimeType | PrimitiveType;
+  type: Constant | Literal | Scalar | Time;
 }
 
 export interface ParameterExample {
@@ -86,14 +86,14 @@ export interface ResponseHeaderExample {
 export interface StringExample {
   kind: 'string';
   value: string;
-  type: ConstantType | BytesType | LiteralValue | TimeType | PrimitiveType;
+  type: Constant | EncodedBytes | Literal | Scalar | Time;
 }
 
 export interface StructExample {
   kind: 'model';
   value: Record<string, ExampleType>;
   additionalProperties?: Record<string, ExampleType>;
-  type: ModelType | PolymorphicType;
+  type: Model | PolymorphicModel;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,12 +103,12 @@ export class AnyExample implements AnyExample {
   constructor(value: any) {
     this.kind = 'any';
     this.value = value;
-    this.type = new PrimitiveType('any');
+    this.type = new Scalar('any');
   }
 }
 
 export class ArrayExample implements ArrayExample {
-  constructor(type: SliceType) {
+  constructor(type: Slice) {
     this.kind = 'array';
     this.type = type;
     this.value = [];
@@ -116,7 +116,7 @@ export class ArrayExample implements ArrayExample {
 }
 
 export class BooleanExample implements BooleanExample {
-  constructor(value: boolean, type: ConstantType | LiteralValue | PrimitiveType) {
+  constructor(value: boolean, type: Constant | Literal | Scalar) {
     this.kind = 'boolean';
     this.value = value;
     this.type = type;
@@ -124,7 +124,7 @@ export class BooleanExample implements BooleanExample {
 }
 
 export class DictionaryExample implements DictionaryExample {
-  constructor(type: MapType) {
+  constructor(type: Map) {
     this.kind = 'dictionary';
     this.type = type;
     this.value = {};
@@ -149,7 +149,7 @@ export class NullExample implements NullExample {
 }
 
 export class NumberExample implements NumberExample {
-  constructor(value: number, type: ConstantType | LiteralValue | TimeType | PrimitiveType) {
+  constructor(value: number, type: Constant | Literal | Scalar | Time) {
     this.kind = 'number';
     this.value = value;
     this.type = type;
@@ -186,7 +186,7 @@ export class ResponseHeaderExample implements ResponseHeaderExample {
 }
 
 export class StringExample implements StringExample {
-  constructor(value: string, type: ConstantType | BytesType | LiteralValue | TimeType | PrimitiveType) {
+  constructor(value: string, type: Constant | EncodedBytes | Literal | Scalar | Time) {
     this.kind = 'string';
     this.value = value;
     this.type = type;
@@ -194,7 +194,7 @@ export class StringExample implements StringExample {
 }
 
 export class StructExample implements StructExample {
-  constructor(type: ModelType | PolymorphicType) {
+  constructor(type: Model | PolymorphicModel) {
     this.kind = 'model';
     this.type = type;
     this.value = {};

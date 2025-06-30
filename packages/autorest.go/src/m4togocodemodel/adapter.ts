@@ -116,8 +116,8 @@ function adaptConstantTypes(m4CodeModel: m4.CodeModel, goCodeModel: go.CodeModel
   }
 }
 
-function adaptParameterGroup(paramGroup: go.ParameterGroup): go.StructType {
-  const structType = new go.StructType(paramGroup.groupName);
+function adaptParameterGroup(paramGroup: go.ParameterGroup): go.Struct {
+  const structType = new go.Struct(paramGroup.groupName);
   structType.docs = paramGroup.docs;
   if (paramGroup.params.length > 0) {
     for (const param of values(paramGroup.params)) {
@@ -139,7 +139,7 @@ function adaptParameterGroup(paramGroup: go.ParameterGroup): go.StructType {
 }
 
 interface InterfaceTypeObjectSchema {
-  iface: go.InterfaceType;
+  iface: go.Interface;
   obj: m4.ObjectSchema;
 }
 
@@ -158,21 +158,21 @@ function adaptInterfaceTypes(m4CodeModel: m4.CodeModel, goCodeModel: go.CodeMode
     }
     // we must adapt all InterfaceTypes first. this is because ModelTypes/PolymorphicTypes can
     // contain references to InterfaceTypes and/or cyclic references
-    recursiveAdaptInterfaceType(discriminator, goCodeModel.interfaceTypes, ifaceObjs);
+    recursiveAdaptInterfaceType(discriminator, goCodeModel.interfaces, ifaceObjs);
   }
 
   // now that the InterfaceTypes have been created, we can populate the rootType and possibleTypes
   for (const ifaceObj of values(ifaceObjs)) {
-    ifaceObj.iface.rootType = <go.PolymorphicType>adaptModel(ifaceObj.obj);
-    ifaceObj.iface.possibleTypes = new Array<go.PolymorphicType>();
+    ifaceObj.iface.rootType = <go.PolymorphicModel>adaptModel(ifaceObj.obj);
+    ifaceObj.iface.possibleTypes = new Array<go.PolymorphicModel>();
     for (const disc of values(ifaceObj.obj.discriminator!.all)) {
       const possibleType = adaptModel(<m4.ObjectSchema>disc);
-      ifaceObj.iface.possibleTypes.push(<go.PolymorphicType>possibleType);
+      ifaceObj.iface.possibleTypes.push(<go.PolymorphicModel>possibleType);
     }
   }
 }
 
-function recursiveAdaptInterfaceType(obj: m4.ObjectSchema, ifaces: Array<go.InterfaceType>, ifaceObjs: Array<InterfaceTypeObjectSchema>, parent?: go.InterfaceType) {
+function recursiveAdaptInterfaceType(obj: m4.ObjectSchema, ifaces: Array<go.Interface>, ifaceObjs: Array<InterfaceTypeObjectSchema>, parent?: go.Interface) {
   const iface = adaptInterfaceType(obj, parent);
   if (ifaces.includes(iface)) {
     return;
@@ -189,7 +189,7 @@ function recursiveAdaptInterfaceType(obj: m4.ObjectSchema, ifaces: Array<go.Inte
 }
 
 interface ModelTypeObjectSchema {
-  type: go.ModelType | go.PolymorphicType;
+  type: go.Model | go.PolymorphicModel;
   obj: m4.ObjectSchema;
 }
 

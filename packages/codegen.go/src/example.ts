@@ -187,7 +187,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
           for (const header of example.responseEnvelope?.headers ?? []) {
             exampleText += `\t\t// \t${header.header.fieldName}: ${getExampleValue(codeModel, header.value, '', undefined, true).split('\n').join('\n\t\t// \t')}\n`;
           }
-          exampleText += `\t\t// \t${(example.responseEnvelope?.result.type as go.ModelType).name}: ${getExampleValue(codeModel, example.responseEnvelope?.result!, '', undefined, true).split('\n').join('\n\t\t// \t')},\n`;
+          exampleText += `\t\t// \t${(example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(codeModel, example.responseEnvelope?.result!, '', undefined, true).split('\n').join('\n\t\t// \t')},\n`;
           exampleText += '\t\t// }\n';
           exampleText += `\t}\n`;
         } else if (checkResponse) {
@@ -202,7 +202,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
             exampleText += `\t// \t${header.header.fieldName}: ${getExampleValue(codeModel, header.value, '', undefined, true).split('\n').join('\n\t// \t')}\n`;
           }
           if (example.responseEnvelope?.result) {
-            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.ModelType).name}: ${getExampleValue(codeModel, example.responseEnvelope.result, '').split('\n').join('\n\t// \t')},\n`;
+            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(codeModel, example.responseEnvelope.result, '').split('\n').join('\n\t// \t')},\n`;
           }
           exampleText += '\t// }\n';
         }
@@ -321,7 +321,7 @@ function getRef(byValue: boolean): string {
 
 }
 
-function getConstantValue(codeModel: go.CodeModel, type: go.ConstantType, value: any): string {
+function getConstantValue(codeModel: go.CodeModel, type: go.Constant, value: any): string {
   for (const constantValue of type.values) {
     if (constantValue.value === value) {
       return `${codeModel.packageName}.${constantValue.name}`
@@ -335,18 +335,18 @@ function getConstantValue(codeModel: go.CodeModel, type: go.ConstantType, value:
   }
 }
 
-function getTimeValue(type: go.TimeType, value: any, imports?: ImportManager): string {
-  if (type.dateTimeFormat === 'dateType' || type.dateTimeFormat === 'timeRFC3339') {
+function getTimeValue(type: go.Time, value: any, imports?: ImportManager): string {
+  if (type.format === 'dateType' || type.format === 'timeRFC3339') {
     if (imports) imports.add('time');
     let format = helpers.dateFormat;
-    if (type.dateTimeFormat === 'timeRFC3339') {
+    if (type.format === 'timeRFC3339') {
       format = helpers.timeRFC3339Format;
     }
     return `func() time.Time { t, _ := time.Parse("${format}", "${value}"); return t}()`;
-  } else if (type.dateTimeFormat === 'dateTimeRFC1123' || type.dateTimeFormat === 'dateTimeRFC3339') {
+  } else if (type.format === 'dateTimeRFC1123' || type.format === 'dateTimeRFC3339') {
     if (imports) imports.add('time');
     let format = helpers.datetimeRFC3339Format;
-    if (type.dateTimeFormat === 'dateTimeRFC1123') {
+    if (type.format === 'dateTimeRFC1123') {
       format = helpers.datetimeRFC1123Format;
     }
     return `func() time.Time { t, _ := time.Parse(${format}, "${value}"); return t}()`;

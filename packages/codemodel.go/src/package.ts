@@ -21,24 +21,24 @@ export interface CodeModel {
   options: Options;
 
   // all of the struct model types to generate (models.go file)
-  models: Array<type.ModelType | type.PolymorphicType>;
+  models: Array<type.Model | type.PolymorphicModel>;
 
   // all of the const types to generate (constants.go file)
-  constants: Array<type.ConstantType>;
+  constants: Array<type.Constant>;
 
   // all of the operation groups (i.e. clients and their methods)
   // no clients indicates a models-only build
   clients: Array<client.Client>;
 
   // all of the parameter groups including the options types (options.go file)
-  paramGroups: Array<type.StructType>;
+  paramGroups: Array<type.Struct>;
 
   // all of the response envelopes (responses.go file)
   // no response envelopes indicates a models-only build
   responseEnvelopes: Array<result.ResponseEnvelope>;
 
   // all of the interfaces for discriminated types (interfaces.go file)
-  interfaceTypes: Array<type.InterfaceType>;
+  interfaces: Array<type.Interface>;
 
   // metadata of the package
   metadata?: {};
@@ -97,13 +97,13 @@ export interface Options {
 export class CodeModel implements CodeModel {
   constructor(info: Info, type: CodeModelType, packageName: string, options: Options) {
     this.clients = new Array<client.Client>();
-    this.constants = new Array<type.ConstantType>();
+    this.constants = new Array<type.Constant>();
     this.info = info;
-    this.interfaceTypes = new Array<type.InterfaceType>();
-    this.models = new Array<type.ModelType | type.PolymorphicType>();
+    this.interfaces = new Array<type.Interface>();
+    this.models = new Array<type.Model | type.PolymorphicModel>();
     this.options = options;
     this.packageName = packageName;
-    this.paramGroups = new Array<type.StructType>();
+    this.paramGroups = new Array<type.Struct>();
     this.responseEnvelopes = new Array<result.ResponseEnvelope>();
     this.type = type;
   }
@@ -113,24 +113,24 @@ export class CodeModel implements CodeModel {
       return a < b ? -1 : a > b ? 1 : 0;
     };
 
-    this.constants.sort((a: type.ConstantType, b: type.ConstantType) => { return sortAscending(a.name, b.name); });
+    this.constants.sort((a: type.Constant, b: type.Constant) => { return sortAscending(a.name, b.name); });
     for (const enm of this.constants) {
       enm.values.sort((a: type.ConstantValue, b: type.ConstantValue) => { return sortAscending(a.name, b.name); });
     }
   
-    this.interfaceTypes.sort((a: type.InterfaceType, b: type.InterfaceType) => { return sortAscending(a.name, b.name); });
-    for (const iface of this.interfaceTypes) {
+    this.interfaces.sort((a: type.Interface, b: type.Interface) => { return sortAscending(a.name, b.name); });
+    for (const iface of this.interfaces) {
       // we sort by literal value so that the switch/case statements in polymorphic_helpers.go
       // are ordered by the literal value which can be somewhat different from the model name.
-      iface.possibleTypes.sort((a: type.PolymorphicType, b: type.PolymorphicType) => { return sortAscending(a.discriminatorValue!.literal, b.discriminatorValue!.literal); });
+      iface.possibleTypes.sort((a: type.PolymorphicModel, b: type.PolymorphicModel) => { return sortAscending(a.discriminatorValue!.literal, b.discriminatorValue!.literal); });
     }
   
-    this.models.sort((a: type.ModelType | type.PolymorphicType, b: type.ModelType | type.PolymorphicType) => { return sortAscending(a.name, b.name); });
+    this.models.sort((a: type.Model | type.PolymorphicModel, b: type.Model | type.PolymorphicModel) => { return sortAscending(a.name, b.name); });
     for (const model of this.models) {
       model.fields.sort((a: type.ModelField, b: type.ModelField) => { return sortAscending(a.name, b.name); });
     }
   
-    this.paramGroups.sort((a: type.StructType, b: type.StructType) => { return sortAscending(a.name, b.name); });
+    this.paramGroups.sort((a: type.Struct, b: type.Struct) => { return sortAscending(a.name, b.name); });
     for (const paramGroup of this.paramGroups) {
       paramGroup.fields.sort((a: type.StructField, b: type.StructField) => { return sortAscending(a.name, b.name); });
     }

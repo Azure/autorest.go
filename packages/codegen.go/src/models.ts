@@ -225,7 +225,7 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
   return modelDefs;
 }
 
-function needsXMLDictionaryHelper(modelType: go.ModelType): boolean {
+function needsXMLDictionaryHelper(modelType: go.Model): boolean {
   for (const field of values(modelType.fields)) {
     // additional properties uses an internal wrapper type with its own serde impl
     if (go.isMapType(field.type) && !field.annotations.isAdditionalProperties) {
@@ -235,7 +235,7 @@ function needsXMLDictionaryHelper(modelType: go.ModelType): boolean {
   return false;
 }
 
-function needsXMLArrayMarshalling(modelType: go.ModelType): boolean {
+function needsXMLArrayMarshalling(modelType: go.Model): boolean {
   for (const prop of values(modelType.fields)) {
     if (go.isSliceType(prop.type)) {
       return true;
@@ -245,7 +245,7 @@ function needsXMLArrayMarshalling(modelType: go.ModelType): boolean {
 }
 
 // generates discriminator marker method
-function generateDiscriminatorMarkerMethod(type: go.InterfaceType, modelDef: ModelDef) {
+function generateDiscriminatorMarkerMethod(type: go.Interface, modelDef: ModelDef) {
   const typeName = type.rootType.name;
   const receiver = modelDef.receiverName();
   const interfaceMethod = `Get${typeName}`;
@@ -290,7 +290,7 @@ function generateToMultipartForm(modelDef: ModelDef) {
   modelDef.SerDe.methods.push({ name: 'toMultipartFormData', desc: `toMultipartFormData converts ${modelDef.Name} to multipart/form data.`, text: method });
 }
 
-function generateJSONMarshaller(modelType: go.ModelType | go.PolymorphicType, modelDef: ModelDef, imports: ImportManager) {
+function generateJSONMarshaller(modelType: go.Model | go.PolymorphicModel, modelDef: ModelDef, imports: ImportManager) {
   if (go.isModelType(modelType) && modelType.fields.length === 0) {
     // non-discriminated types without content don't need a custom marshaller.
     // there is a case in network where child is allOf base and child has no properties.
@@ -307,9 +307,9 @@ function generateJSONMarshaller(modelType: go.ModelType | go.PolymorphicType, mo
   modelDef.SerDe.methods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
 }
 
-function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType, modelDef: ModelDef, receiver: string, imports: ImportManager): string {
+function generateJSONMarshallerBody(modelType: go.Model | go.PolymorphicModel, modelDef: ModelDef, receiver: string, imports: ImportManager): string {
   let marshaller = '';
-  let addlProps: go.MapType | undefined;
+  let addlProps: go.Map | undefined;
   for (const field of values(modelType.fields)) {
     if (go.isMapType(field.type) && field.annotations.isAdditionalProperties) {
       addlProps = field.type;
@@ -342,9 +342,9 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
       if (field.type.elementTypeByValue) {
         elementPtr = '';
       }
-      marshaller += `\taux := make([]${elementPtr}${field.type.elementType.dateTimeFormat}, len(${source}), len(${source}))\n`;
+      marshaller += `\taux := make([]${elementPtr}${field.type.elementType.format}, len(${source}), len(${source}))\n`;
       marshaller += `\tfor i := 0; i < len(${source}); i++ {\n`;
-      marshaller += `\t\taux[i] = (${elementPtr}${field.type.elementType.dateTimeFormat})(${source}[i])\n`;
+      marshaller += `\t\taux[i] = (${elementPtr}${field.type.elementType.format})(${source}[i])\n`;
       marshaller += '\t}\n';
       marshaller += `\tpopulate(objectMap, "${field.serializedName}", aux)\n`;
       modelDef.SerDe.needsJSONPopulate = true;
@@ -365,7 +365,7 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
       }
       let populate = 'populate';
       if (go.isTimeType(field.type)) {
-        populate += capitalize(field.type.dateTimeFormat);
+        populate += capitalize(field.type.format);
         modelDef.SerDe.needsJSONPopulate = true;
       } else if (go.isPrimitiveType(field.type) && field.type.typeName === 'any') {
         populate += 'Any';
@@ -392,7 +392,7 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
     marshaller += `\t\tfor key, val := range ${receiver}.AdditionalProperties {\n`;
     let assignment = 'val';
     if (go.isTimeType(addlProps.valueType)) {
-      assignment = `(*${addlProps.valueType.dateTimeFormat})(val)`;
+      assignment = `(*${addlProps.valueType.format})(val)`;
     }
     marshaller += `\t\t\tobjectMap[key] = ${assignment}\n`;
     marshaller += '\t\t}\n';
@@ -401,7 +401,7 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
   return marshaller;
 }
 
-function generateJSONUnmarshaller(modelType: go.ModelType | go.PolymorphicType, modelDef: ModelDef, imports: ImportManager, options: go.Options) {
+function generateJSONUnmarshaller(modelType: go.Model | go.PolymorphicModel, modelDef: ModelDef, imports: ImportManager, options: go.Options) {
   // there's a corner-case where a derived type might not add any new fields (Cookiecuttershark).
   // in this case skip adding the unmarshaller as it's not necessary and doesn't compile.
   if (modelDef.Fields.length === 0) {
@@ -421,8 +421,8 @@ function generateJSONUnmarshaller(modelType: go.ModelType | go.PolymorphicType, 
   modelDef.SerDe.methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });
 }
 
-function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicType, modelDef: ModelDef, receiver: string, imports: ImportManager, options: go.Options): string {
-  const emitAddlProps = function (tab: string, addlProps: go.MapType): string {
+function generateJSONUnmarshallerBody(modelType: go.Model | go.PolymorphicModel, modelDef: ModelDef, receiver: string, imports: ImportManager, options: go.Options): string {
+  const emitAddlProps = function (tab: string, addlProps: go.Map): string {
     let addlPropsText = `${tab}\t\tif ${receiver}.AdditionalProperties == nil {\n`;
     let ref = '';
     if (!addlProps.valueTypeByValue) {
@@ -435,7 +435,7 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
     let assignment = `${ref}aux`;
     if (go.isTimeType(addlProps.valueType)) {
       imports.add('time');
-      auxType = addlProps.valueType.dateTimeFormat!;
+      auxType = addlProps.valueType.format;
       assignment = `(*time.Time)(${assignment})`;
     }
     addlPropsText += `${tab}\t\t\tvar aux ${auxType}\n`;
@@ -449,7 +449,7 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
   unmarshalBody = '\tfor key, val := range rawMsg {\n';
   unmarshalBody += '\t\tvar err error\n';
   unmarshalBody += '\t\tswitch key {\n';
-  let addlProps: go.MapType | undefined;
+  let addlProps: go.Map | undefined;
   for (const field of values(modelType.fields)) {
     if (go.isMapType(field.type) && field.annotations.isAdditionalProperties) {
       addlProps = field.type;
@@ -459,7 +459,7 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
     if (hasDiscriminatorInterface(field.type)) {
       unmarshalBody += generateDiscriminatorUnmarshaller(field, receiver);
     } else if (go.isTimeType(field.type)) {
-      unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(field.type.dateTimeFormat)}(val, "${field.name}", &${receiver}.${field.name})\n`;
+      unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(field.type.format)}(val, "${field.name}", &${receiver}.${field.name})\n`;
       modelDef.SerDe.needsJSONUnpopulate = true;
     } else if (go.isSliceType(field.type) && go.isTimeType(field.type.elementType)) {
       imports.add('time');
@@ -467,7 +467,7 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
       if (field.type.elementTypeByValue) {
         elementPtr = '';
       }
-      unmarshalBody += `\t\t\tvar aux []${elementPtr}${field.type.elementType.dateTimeFormat}\n`;
+      unmarshalBody += `\t\t\tvar aux []${elementPtr}${field.type.elementType.format}\n`;
       unmarshalBody += `\t\t\terr = unpopulate(val, "${field.name}", &aux)\n`;
       unmarshalBody += '\t\t\tfor _, au := range aux {\n';
       unmarshalBody += `\t\t\t\t${receiver}.${field.name} = append(${receiver}.${field.name}, (${elementPtr}time.Time)(au))\n`;
@@ -652,7 +652,7 @@ function recursivePopulateDiscriminator(item: go.PossibleType, receiver: string,
   return text;
 }
 
-function generateXMLMarshaller(modelType: go.ModelType, modelDef: ModelDef, imports: ImportManager) {
+function generateXMLMarshaller(modelType: go.Model, modelDef: ModelDef, imports: ImportManager) {
   // only needed for types with time.Time, maps, or where the XML name doesn't match the type name
   const receiver = modelDef.receiverName();
   const desc = `MarshalXML implements the xml.Marshaller interface for type ${modelDef.Name}.`;
@@ -681,7 +681,7 @@ function generateXMLMarshaller(modelType: go.ModelType, modelDef: ModelDef, impo
   modelDef.SerDe.methods.push({ name: 'MarshalXML', desc: desc, text: text });
 }
 
-function generateXMLUnmarshaller(modelType: go.ModelType, modelDef: ModelDef, imports: ImportManager) {
+function generateXMLUnmarshaller(modelType: go.Model, modelDef: ModelDef, imports: ImportManager) {
   // non-polymorphic case, must be something with time.Time
   const receiver = modelDef.receiverName();
   const desc = `UnmarshalXML implements the xml.Unmarshaller interface for type ${modelDef.Name}.`;
@@ -711,14 +711,14 @@ function generateXMLUnmarshaller(modelType: go.ModelType, modelDef: ModelDef, im
 }
 
 // generates an alias type used by custom XML marshaller/unmarshaller
-function generateAliasType(modelType: go.ModelType, receiver: string, forMarshal: boolean): string {
+function generateAliasType(modelType: go.Model, receiver: string, forMarshal: boolean): string {
   let text = `\ttype alias ${modelType.name}\n`;
   text += '\taux := &struct {\n';
   text += '\t\t*alias\n';
   for (const field of values(modelType.fields)) {
     const sn = getXMLSerialization(field, false);
     if (go.isTimeType(field.type)) {
-      text += `\t\t${field.name} *${field.type.dateTimeFormat} \`xml:"${sn}"\`\n`;
+      text += `\t\t${field.name} *${field.type.format} \`xml:"${sn}"\`\n`;
     } else if (field.annotations.isAdditionalProperties || go.isMapType(field.type)) {
       text += `\t\t${field.name} additionalProperties \`xml:"${sn}"\`\n`;
     } else if (go.isSliceType(field.type)) {
@@ -739,7 +739,7 @@ function generateAliasType(modelType: go.ModelType, receiver: string, forMarshal
       if (!go.isTimeType(field.type)) {
         continue;
       }
-      text += `\t\t${field.name}: (*${field.type.dateTimeFormat})(${receiver}.${field.name}),\n`;
+      text += `\t\t${field.name}: (*${field.type.format})(${receiver}.${field.name}),\n`;
     }
   }
   text += '\t}\n';
