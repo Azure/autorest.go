@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { AutorestExtensionHost } from '@autorest/extension-base';
-import { TestConfig } from '@autorest/testmodeler/dist/src/common/testConfig';
-import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
+import { TestConfig } from '@autorest/testmodeler';
+import { Helper } from '@autorest/testmodeler';
 import * as path from 'path';
 import { Config, configDefaults } from '../common/constant';
 

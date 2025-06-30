@@ -8,10 +8,10 @@ import { AutorestExtensionHost } from '@autorest/extension-base';
 import { Config, configDefaults } from '../common/constant';
 import { ExampleCodeGenerator, ExampleDataRender } from './exampleGenerator';
 import { GenerateContext } from './generateContext';
-import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
+import { Helper } from '@autorest/testmodeler';
 import { MockTestCodeGenerator, MockTestDataRender } from './mockTestGenerator';
-import { TestCodeModeler } from '@autorest/testmodeler/dist/src/core/model';
-import { TestConfig } from '@autorest/testmodeler/dist/src/common/testConfig';
+import { TestCodeModeler } from '@autorest/testmodeler';
+import { TestConfig } from '@autorest/testmodeler';
 import { FakeDataRender, FakeTestCodeGenerator } from './fakeTestGenerator';
 
 export async function processRequest(host: AutorestExtensionHost): Promise<void> {

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { ObjectSchema, SchemaType } from '@autorest/codemodel';
-import { ExampleModel, MockTestDefinitionModel } from '@autorest/testmodeler/dist/src/core/model';
+import { ExampleModel, MockTestDefinitionModel } from '@autorest/testmodeler';
 import { camelCase, trimEnd } from 'lodash';
 import { Config } from '../common/constant';
 import { ParameterOutput } from '../common/model';

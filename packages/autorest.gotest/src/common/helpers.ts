@@ -5,7 +5,7 @@
 
 import { Operation, Parameter, Response, SchemaResponse } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { TestCodeModel } from '@autorest/testmodeler/dist/src/core/model';
+import { TestCodeModel } from '@autorest/testmodeler';
 
 // aggregates the Parameter in op.parameters and the first request
 export function aggregateParameters(op: Operation): Array<Parameter> {
