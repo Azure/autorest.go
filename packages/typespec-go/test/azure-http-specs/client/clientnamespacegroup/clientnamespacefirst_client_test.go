@@ -9,7 +9,7 @@ import (
 
 func TestClientNamespaceFirstClient_GetFirst(t *testing.T) {
 	factory := &ClientNamespaceClient{}
-	client := factory.NewClientNamespaceFirstClient() 
+	client := factory.NewClientNamespaceFirstClient()
 	require.NotNil(t, client)
 	resp, err := client.GetFirst(context.Background(), nil) // Use appropriate context and options
 	require.NoError(t, err)

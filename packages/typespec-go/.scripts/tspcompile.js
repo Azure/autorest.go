@@ -76,7 +76,6 @@ const azureHttpSpecsGroup = {
   'accessgroup': ['azure/client-generator-core/access'],
   'flattengroup': ['azure/client-generator-core/flatten-property'],
   'coreusagegroup': ['azure/client-generator-core/usage'],
-  'coredeserializegroup':['azure/client-generator-core/deserialize-empty-string-as-null'],
   'basicgroup': ['azure/core/basic'],
   'lrorpcgroup': ['azure/core/lro/rpc'],
   'lrostdgroup': ['azure/core/lro/standard'],
