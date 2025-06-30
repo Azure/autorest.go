@@ -88,10 +88,10 @@ schemas:
       language:
         default:
           name: SignalRUsageLimit
-          description: The maximum permitted value for the usage quota. If there is no limit, this value will be -1.
+          description: 'The maximum permitted value for the usage quota. If there is no limit, this value will be -1.'
         go:
           name: int64
-          description: The maximum permitted value for the usage quota. If there is no limit, this value will be -1.
+          description: 'The maximum permitted value for the usage quota. If there is no limit, this value will be -1.'
       protocol: {}
     - &ref_91
       type: integer
@@ -752,10 +752,10 @@ schemas:
       language:
         default:
           name: SignalRFeatureValue
-          description: Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values.
+          description: 'Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values.'
         go:
           name: string
-          description: Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values.
+          description: 'Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values.'
       protocol: {}
     - &ref_101
       type: string
@@ -1707,7 +1707,7 @@ schemas:
           name: SignalRFeatureProperties
           description: Optional properties related to this feature.
         go:
-          name: map[string]*string
+          name: 'map[string]*string'
           description: Optional properties related to this feature.
           elementIsPtr: true
           marshallingFormat: json
@@ -1762,7 +1762,7 @@ schemas:
           name: ManagedIdentityUserAssignedIdentities
           description: Get or set the user assigned identities
         go:
-          name: map[string]*UserAssignedIdentityProperty
+          name: 'map[string]*UserAssignedIdentityProperty'
           description: Get or set the user assigned identities
           elementIsPtr: true
           marshallingFormat: json
@@ -1775,7 +1775,7 @@ schemas:
           name: TrackedResourceTags
           description: Tags of the service which is a list of key value pairs that describe the resource.
         go:
-          name: map[string]*string
+          name: 'map[string]*string'
           description: Tags of the service which is a list of key value pairs that describe the resource.
           elementIsPtr: true
           marshallingFormat: json
@@ -2303,7 +2303,7 @@ schemas:
               description: "The URL the client should use to fetch the next page (per server side paging).\r\nIt's null for now, added for future use."
             go:
               name: NextLink
-              description: The URL the client should use to fetch the next page (per server side paging). It's null for now, added for future use.
+              description: 'The URL the client should use to fetch the next page (per server side paging). It''s null for now, added for future use.'
           protocol: {}
       serializationFormats:
         - json
@@ -2639,10 +2639,10 @@ schemas:
                   language: &ref_518
                     default:
                       name: limit
-                      description: The maximum permitted value for the usage quota. If there is no limit, this value will be -1.
+                      description: 'The maximum permitted value for the usage quota. If there is no limit, this value will be -1.'
                     go:
                       name: Limit
-                      description: The maximum permitted value for the usage quota. If there is no limit, this value will be -1.
+                      description: 'The maximum permitted value for the usage quota. If there is no limit, this value will be -1.'
                   protocol: {}
                 - schema: &ref_52
                     type: object
@@ -2746,7 +2746,7 @@ schemas:
               description: "The URL the client should use to fetch the next page (per server side paging).\r\nIt's null for now, added for future use."
             go:
               name: NextLink
-              description: The URL the client should use to fetch the next page (per server side paging). It's null for now, added for future use.
+              description: 'The URL the client should use to fetch the next page (per server side paging). It''s null for now, added for future use.'
           protocol: {}
       serializationFormats:
         - json
@@ -3653,10 +3653,10 @@ schemas:
                   language: &ref_456
                     default:
                       name: sku
-                      description: The billing information of the resource.(e.g. Free, Standard)
+                      description: 'The billing information of the resource.(e.g. Free, Standard)'
                     go:
                       name: SKU
-                      description: The billing information of the resource.(e.g. Free, Standard)
+                      description: 'The billing information of the resource.(e.g. Free, Standard)'
                   protocol: {}
                 - schema: &ref_123
                     type: object
@@ -3856,10 +3856,10 @@ schemas:
                                 language: &ref_415
                                   default:
                                     name: value
-                                    description: Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values.
+                                    description: 'Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values.'
                                   go:
                                     name: Value
-                                    description: Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values.
+                                    description: 'Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values.'
                                 protocol: {}
                               - schema: *ref_100
                                 required: false
@@ -3881,11 +3881,11 @@ schemas:
                             language:
                               default:
                                 name: SignalRFeature
-                                description: Feature of a resource, which controls the runtime behavior.
+                                description: 'Feature of a resource, which controls the runtime behavior.'
                                 namespace: ''
                               go:
                                 name: Feature
-                                description: Feature of a resource, which controls the runtime behavior.
+                                description: 'Feature of a resource, which controls the runtime behavior.'
                                 hasArrayMap: true
                                 marshallingFormat: json
                                 namespace: ''
@@ -4117,10 +4117,10 @@ schemas:
                                       language: &ref_474
                                         default:
                                           name: auth
-                                          description: Gets or sets the auth settings for an upstream. If not set, no auth is used for upstream messages.
+                                          description: 'Gets or sets the auth settings for an upstream. If not set, no auth is used for upstream messages.'
                                         go:
                                           name: Auth
-                                          description: Gets or sets the auth settings for an upstream. If not set, no auth is used for upstream messages.
+                                          description: 'Gets or sets the auth settings for an upstream. If not set, no auth is used for upstream messages.'
                                       protocol: {}
                                   serializationFormats:
                                     - json
@@ -4145,10 +4145,10 @@ schemas:
                                 language:
                                   default:
                                     name: ServerlessUpstreamSettingsTemplates
-                                    description: Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects.
+                                    description: 'Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects.'
                                   go:
                                     name: '[]*UpstreamTemplate'
-                                    description: Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects.
+                                    description: 'Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects.'
                                     elementIsPtr: true
                                     marshallingFormat: json
                                 protocol: {}
@@ -4156,10 +4156,10 @@ schemas:
                               language: &ref_448
                                 default:
                                   name: templates
-                                  description: Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects.
+                                  description: 'Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects.'
                                 go:
                                   name: Templates
-                                  description: Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects.
+                                  description: 'Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects.'
                                   byValue: true
                               protocol: {}
                           serializationFormats:
@@ -4396,7 +4396,7 @@ schemas:
                             description: "DisableLocalAuth\r\nEnable or disable local auth with AccessKey\r\nWhen set as true, connection with AccessKey=xxx won't work."
                           go:
                             name: DisableLocalAuth
-                            description: DisableLocalAuth Enable or disable local auth with AccessKey When set as true, connection with AccessKey=xxx won't work.
+                            description: 'DisableLocalAuth Enable or disable local auth with AccessKey When set as true, connection with AccessKey=xxx won''t work.'
                         protocol: {}
                       - schema: *ref_115
                         serializedName: disableAadAuth
@@ -4406,7 +4406,7 @@ schemas:
                             description: "DisableLocalAuth\r\nEnable or disable aad auth\r\nWhen set as true, connection with AuthType=aad won't work."
                           go:
                             name: DisableAADAuth
-                            description: DisableLocalAuth Enable or disable aad auth When set as true, connection with AuthType=aad won't work.
+                            description: 'DisableLocalAuth Enable or disable aad auth When set as true, connection with AuthType=aad won''t work.'
                         protocol: {}
                     serializationFormats:
                       - json
@@ -4580,7 +4580,7 @@ schemas:
               description: "The URL the client should use to fetch the next page (per server side paging).\r\nIt's null for now, added for future use."
             go:
               name: NextLink
-              description: The URL the client should use to fetch the next page (per server side paging). It's null for now, added for future use.
+              description: 'The URL the client should use to fetch the next page (per server side paging). It''s null for now, added for future use.'
           protocol: {}
       serializationFormats:
         - json
@@ -4797,7 +4797,7 @@ schemas:
               description: "The URL the client should use to fetch the next page (per server side paging).\r\nIt's null for now, added for future use."
             go:
               name: NextLink
-              description: The URL the client should use to fetch the next page (per server side paging). It's null for now, added for future use.
+              description: 'The URL the client should use to fetch the next page (per server side paging). It''s null for now, added for future use.'
           protocol: {}
       serializationFormats:
         - json
@@ -4949,9 +4949,9 @@ globalParameters:
         in: path
   - &ref_172
     schema: *ref_0
-    clientDefaultValue: https://management.azure.com
+    clientDefaultValue: 'https://management.azure.com'
     implementation: Client
-    origin: modelerfour:synthesized/host
+    origin: 'modelerfour:synthesized/host'
     required: true
     extensions:
       x-ms-skip-url-encoding: true
@@ -4970,7 +4970,7 @@ globalParameters:
   - &ref_173
     schema: *ref_171
     implementation: Client
-    origin: modelerfour:synthesized/api-version
+    origin: 'modelerfour:synthesized/api-version'
     required: true
     language: &ref_369
       default:
@@ -4999,7 +4999,7 @@ operationGroups:
           - parameters:
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -5064,11 +5064,11 @@ operationGroups:
             Operations_List:
               parameters:
                 api-version: 2021-06-01-preview
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Operations_List.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Operations_List.json'
               responses:
                 '200':
                   body:
-                    nextLink: providers/Microsoft.SignalRService?$skipToken={opaqueString}
+                    nextLink: 'providers/Microsoft.SignalRService?$skipToken={opaqueString}'
                     value:
                       - name: Microsoft.SignalRService/SignalR/read
                         display:
@@ -5198,7 +5198,7 @@ operationGroups:
                     style: json
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -5223,7 +5223,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability
+                path: '/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability'
                 method: post
                 knownMediaType: json
                 mediaTypes:
@@ -5275,7 +5275,7 @@ operationGroups:
                   name: mySignalRService
                   type: Microsoft.SignalRService/SignalR
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CheckNameAvailability.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CheckNameAvailability.json'
               responses:
                 '200':
                   body:
@@ -5350,7 +5350,7 @@ operationGroups:
           - parameters:
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -5374,7 +5374,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/signalR
+                path: '/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/signalR'
                 method: get
                 uri: '{$host}'
         signatureParameters: []
@@ -5416,7 +5416,7 @@ operationGroups:
               parameters:
                 api-version: 2021-06-01-preview
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListBySubscription.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListBySubscription.json'
               responses:
                 '200':
                   body:
@@ -5433,8 +5433,8 @@ operationGroups:
                         properties:
                           cors:
                             allowedOrigins:
-                              - https://foo.com
-                              - https://bar.com
+                              - 'https://foo.com'
+                              - 'https://bar.com'
                           disableAadAuth: false
                           disableLocalAuth: false
                           externalIP: 10.0.0.1
@@ -5488,7 +5488,7 @@ operationGroups:
                             clientCertEnabled: true
                           upstream:
                             templates:
-                              - urlTemplate: http://foo.com
+                              - urlTemplate: 'http://foo.com'
                           version: '1.0'
                         sku:
                           name: Standard_S1
@@ -5594,7 +5594,7 @@ operationGroups:
           - parameters:
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -5618,7 +5618,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -5662,7 +5662,7 @@ operationGroups:
                 api-version: 2021-06-01-preview
                 resourceGroupName: myResourceGroup
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListByResourceGroup.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListByResourceGroup.json'
               responses:
                 '200':
                   body:
@@ -5679,8 +5679,8 @@ operationGroups:
                         properties:
                           cors:
                             allowedOrigins:
-                              - https://foo.com
-                              - https://bar.com
+                              - 'https://foo.com'
+                              - 'https://bar.com'
                           disableAadAuth: false
                           disableLocalAuth: false
                           externalIP: 10.0.0.1
@@ -5734,7 +5734,7 @@ operationGroups:
                             clientCertEnabled: true
                           upstream:
                             templates:
-                              - urlTemplate: http://foo.com
+                              - urlTemplate: 'http://foo.com'
                           version: '1.0'
                         sku:
                           name: Standard_S1
@@ -5856,7 +5856,7 @@ operationGroups:
           - parameters:
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -5880,7 +5880,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -5926,7 +5926,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Get.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Get.json'
               responses:
                 '200':
                   body:
@@ -5942,8 +5942,8 @@ operationGroups:
                     properties:
                       cors:
                         allowedOrigins:
-                          - https://foo.com
-                          - https://bar.com
+                          - 'https://foo.com'
+                          - 'https://bar.com'
                       disableAadAuth: false
                       disableLocalAuth: false
                       externalIP: 10.0.0.1
@@ -5997,7 +5997,7 @@ operationGroups:
                         clientCertEnabled: true
                       upstream:
                         templates:
-                          - urlTemplate: http://foo.com
+                          - urlTemplate: 'http://foo.com'
                       version: '1.0'
                     sku:
                       name: Standard_S1
@@ -6167,7 +6167,7 @@ operationGroups:
                     style: json
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -6192,7 +6192,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}'
                 method: put
                 knownMediaType: json
                 mediaTypes:
@@ -6274,8 +6274,8 @@ operationGroups:
                   properties:
                     cors:
                       allowedOrigins:
-                        - https://foo.com
-                        - https://bar.com
+                        - 'https://foo.com'
+                        - 'https://bar.com'
                     disableAadAuth: false
                     disableLocalAuth: false
                     features:
@@ -6308,11 +6308,11 @@ operationGroups:
                         - auth:
                             type: ManagedIdentity
                             managedIdentity:
-                              resource: api://example
+                              resource: 'api://example'
                           categoryPattern: '*'
-                          eventPattern: connect,disconnect
+                          eventPattern: 'connect,disconnect'
                           hubPattern: '*'
-                          urlTemplate: https://example.com/chat/api/connect
+                          urlTemplate: 'https://example.com/chat/api/connect'
                   sku:
                     name: Standard_S1
                     capacity: 1
@@ -6322,7 +6322,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CreateOrUpdate.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CreateOrUpdate.json'
               responses:
                 '200':
                   body:
@@ -6338,8 +6338,8 @@ operationGroups:
                     properties:
                       cors:
                         allowedOrigins:
-                          - https://foo.com
-                          - https://bar.com
+                          - 'https://foo.com'
+                          - 'https://bar.com'
                       disableAadAuth: false
                       disableLocalAuth: false
                       externalIP: 10.0.0.1
@@ -6393,7 +6393,7 @@ operationGroups:
                         clientCertEnabled: true
                       upstream:
                         templates:
-                          - urlTemplate: http://foo.com
+                          - urlTemplate: 'http://foo.com'
                       version: '1.0'
                     sku:
                       name: Standard_S1
@@ -6423,8 +6423,8 @@ operationGroups:
                     properties:
                       cors:
                         allowedOrigins:
-                          - https://foo.com
-                          - https://bar.com
+                          - 'https://foo.com'
+                          - 'https://bar.com'
                       disableAadAuth: false
                       disableLocalAuth: false
                       externalIP: 10.0.0.1
@@ -6478,7 +6478,7 @@ operationGroups:
                         clientCertEnabled: true
                       upstream:
                         templates:
-                          - urlTemplate: http://foo.com
+                          - urlTemplate: 'http://foo.com'
                       version: '1.0'
                     sku:
                       name: Standard_S1
@@ -6495,12 +6495,12 @@ operationGroups:
                     tags:
                       key1: value1
                   headers: &ref_482
-                    Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                    Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                    Azure-AsyncOperation: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...'
+                    Location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...'
                 '202':
                   headers: &ref_483
-                    Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                    Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                    Azure-AsyncOperation: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...'
+                    Location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...'
           x-ms-long-running-operation: true
         language:
           default:
@@ -6624,7 +6624,7 @@ operationGroups:
           - parameters:
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -6648,7 +6648,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}'
                 method: delete
                 uri: '{$host}'
         signatureParameters:
@@ -6712,13 +6712,13 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Delete.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Delete.json'
               responses:
                 '200': {}
                 '202':
                   headers: &ref_487
-                    Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                    Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                    Azure-AsyncOperation: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...'
+                    Location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...'
                 '204': {}
           x-ms-long-running-operation: true
         language:
@@ -6845,7 +6845,7 @@ operationGroups:
                     style: json
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -6870,7 +6870,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}'
                 method: patch
                 knownMediaType: json
                 mediaTypes:
@@ -6937,8 +6937,8 @@ operationGroups:
                   properties:
                     cors:
                       allowedOrigins:
-                        - https://foo.com
-                        - https://bar.com
+                        - 'https://foo.com'
+                        - 'https://bar.com'
                     disableAadAuth: false
                     disableLocalAuth: false
                     features:
@@ -6971,11 +6971,11 @@ operationGroups:
                         - auth:
                             type: ManagedIdentity
                             managedIdentity:
-                              resource: api://example
+                              resource: 'api://example'
                           categoryPattern: '*'
-                          eventPattern: connect,disconnect
+                          eventPattern: 'connect,disconnect'
                           hubPattern: '*'
-                          urlTemplate: https://example.com/chat/api/connect
+                          urlTemplate: 'https://example.com/chat/api/connect'
                   sku:
                     name: Standard_S1
                     capacity: 1
@@ -6986,7 +6986,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Update.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Update.json'
               responses:
                 '200':
                   body:
@@ -7002,8 +7002,8 @@ operationGroups:
                     properties:
                       cors:
                         allowedOrigins:
-                          - https://foo.com
-                          - https://bar.com
+                          - 'https://foo.com'
+                          - 'https://bar.com'
                       disableAadAuth: false
                       disableLocalAuth: false
                       externalIP: 10.0.0.1
@@ -7057,7 +7057,7 @@ operationGroups:
                         clientCertEnabled: true
                       upstream:
                         templates:
-                          - urlTemplate: http://foo.com
+                          - urlTemplate: 'http://foo.com'
                       version: '1.0'
                     sku:
                       name: Standard_S1
@@ -7075,8 +7075,8 @@ operationGroups:
                       key1: value1
                 '202':
                   headers: &ref_493
-                    Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                    Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                    Azure-AsyncOperation: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...'
+                    Location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...'
           x-ms-long-running-operation: true
         language:
           default:
@@ -7162,7 +7162,7 @@ operationGroups:
           - parameters:
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -7186,7 +7186,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/listKeys
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/listKeys'
                 method: post
                 uri: '{$host}'
         signatureParameters:
@@ -7232,7 +7232,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListKeys.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListKeys.json'
               responses:
                 '200':
                   body: {}
@@ -7390,7 +7390,7 @@ operationGroups:
                     style: json
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -7415,7 +7415,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/regenerateKey
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/regenerateKey'
                 method: post
                 knownMediaType: json
                 mediaTypes:
@@ -7468,13 +7468,13 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_RegenerateKey.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_RegenerateKey.json'
               responses:
                 '202':
                   body: {}
                   headers: &ref_504
-                    Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                    Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                    Azure-AsyncOperation: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...'
+                    Location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...'
           x-ms-long-running-operation: true
           x-ms-long-running-operation-options:
             final-state-via: azure-async-operation
@@ -7600,7 +7600,7 @@ operationGroups:
           - parameters:
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -7624,7 +7624,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/restart
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/restart'
                 method: post
                 uri: '{$host}'
         signatureParameters:
@@ -7677,12 +7677,12 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Restart.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Restart.json'
               responses:
                 '202':
                   headers: &ref_508
-                    Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                    Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                    Azure-AsyncOperation: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...'
+                    Location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...'
                 '204': {}
           x-ms-long-running-operation: true
           x-ms-long-running-operation-options:
@@ -7757,7 +7757,7 @@ operationGroups:
           - parameters:
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -7781,7 +7781,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages
+                path: '/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -7825,11 +7825,11 @@ operationGroups:
                 api-version: 2021-06-01-preview
                 location: eastus
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Usages_List.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Usages_List.json'
               responses:
                 '200':
                   body:
-                    nextLink: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults...
+                    nextLink: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults...'
                     value:
                       - name:
                           localizedValue: Usage1
@@ -7967,7 +7967,7 @@ operationGroups:
           - parameters:
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -7991,7 +7991,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/privateEndpointConnections
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/privateEndpointConnections'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -8037,7 +8037,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_List.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_List.json'
               responses:
                 '200':
                   body:
@@ -8182,7 +8182,7 @@ operationGroups:
           - parameters:
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -8206,7 +8206,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -8254,7 +8254,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Get.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Get.json'
               responses:
                 '200':
                   body:
@@ -8408,7 +8408,7 @@ operationGroups:
                     style: json
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -8433,7 +8433,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}'
                 method: put
                 knownMediaType: json
                 mediaTypes:
@@ -8493,7 +8493,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Update.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Update.json'
               responses:
                 '200':
                   body:
@@ -8516,8 +8516,8 @@ operationGroups:
                       lastModifiedBy: string
                       lastModifiedByType: User
                   headers: &ref_541
-                    Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                    Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                    Azure-AsyncOperation: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...'
+                    Location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...'
         language:
           default:
             name: Update
@@ -8672,7 +8672,7 @@ operationGroups:
           - parameters:
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -8696,7 +8696,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}'
                 method: delete
                 uri: '{$host}'
         signatureParameters:
@@ -8762,13 +8762,13 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Delete.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Delete.json'
               responses:
                 '200': {}
                 '202':
                   headers: &ref_546
-                    Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                    Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                    Azure-AsyncOperation: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...'
+                    Location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...'
                 '204': {}
           x-ms-long-running-operation: true
         language:
@@ -8857,7 +8857,7 @@ operationGroups:
           - parameters:
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -8881,7 +8881,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/privateLinkResources
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/privateLinkResources'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -8927,11 +8927,11 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateLinkResources_List.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateLinkResources_List.json'
               responses:
                 '200':
                   body:
-                    nextLink: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults...
+                    nextLink: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults...'
                     value:
                       - name: myPrivateLink
                         type: privateLinkResources
@@ -9070,7 +9070,7 @@ operationGroups:
           - parameters:
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -9094,7 +9094,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/sharedPrivateLinkResources
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/sharedPrivateLinkResources'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -9140,7 +9140,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_List.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_List.json'
               responses:
                 '200':
                   body:
@@ -9276,7 +9276,7 @@ operationGroups:
           - parameters:
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -9300,7 +9300,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -9348,7 +9348,7 @@ operationGroups:
                 resourceName: mySignalRService
                 sharedPrivateLinkResourceName: upstream
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Get.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Get.json'
               responses:
                 '200':
                   body:
@@ -9531,7 +9531,7 @@ operationGroups:
                     style: json
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -9556,7 +9556,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}'
                 method: put
                 knownMediaType: json
                 mediaTypes:
@@ -9629,7 +9629,7 @@ operationGroups:
                 resourceName: mySignalRService
                 sharedPrivateLinkResourceName: upstream
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_CreateOrUpdate.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_CreateOrUpdate.json'
               responses:
                 '200':
                   body:
@@ -9654,8 +9654,8 @@ operationGroups:
                       requestMessage: Please approve
                       status: Approved
                   headers: &ref_590
-                    Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                    Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                    Azure-AsyncOperation: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...'
+                    Location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...'
           x-ms-long-running-operation: true
         language:
           default:
@@ -9795,7 +9795,7 @@ operationGroups:
           - parameters:
               - schema: *ref_174
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -9819,7 +9819,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}'
                 method: delete
                 uri: '{$host}'
         signatureParameters:
@@ -9885,13 +9885,13 @@ operationGroups:
                 resourceName: mySignalRService
                 sharedPrivateLinkResourceName: upstream
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Delete.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Delete.json'
               responses:
                 '200': {}
                 '202':
                   headers: &ref_595
-                    Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                    Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                    Azure-AsyncOperation: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...'
+                    Location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...'
                 '204': {}
           x-ms-long-running-operation: true
         language:
@@ -9938,7 +9938,7 @@ security:
   schemes:
     - type: OAuth2
       scopes:
-        - https://management.azure.com/.default
+        - 'https://management.azure.com/.default'
 testModel:
   mockTest:
     clientFactoryParametersOutput:
@@ -9997,7 +9997,7 @@ testModel:
                   properties:
                     nextLink:
                       schema: *ref_24
-                      rawValue: providers/Microsoft.SignalRService?$skipToken={opaqueString}
+                      rawValue: 'providers/Microsoft.SignalRService?$skipToken={opaqueString}'
                       language: *ref_372
                     value:
                       schema: *ref_152
@@ -10485,9 +10485,9 @@ testModel:
                                       schema: *ref_159
                                       elements:
                                         - schema: *ref_101
-                                          rawValue: https://foo.com
+                                          rawValue: 'https://foo.com'
                                         - schema: *ref_101
-                                          rawValue: https://bar.com
+                                          rawValue: 'https://bar.com'
                                       language: *ref_408
                                   language: *ref_409
                                 disableAadAuth:
@@ -10739,7 +10739,7 @@ testModel:
                                           properties:
                                             urlTemplate:
                                               schema: *ref_105
-                                              rawValue: http://foo.com
+                                              rawValue: 'http://foo.com'
                                               language: *ref_447
                                       language: *ref_448
                                   language: *ref_449
@@ -11161,9 +11161,9 @@ testModel:
                                       schema: *ref_159
                                       elements:
                                         - schema: *ref_101
-                                          rawValue: https://foo.com
+                                          rawValue: 'https://foo.com'
                                         - schema: *ref_101
-                                          rawValue: https://bar.com
+                                          rawValue: 'https://bar.com'
                                       language: *ref_408
                                   language: *ref_409
                                 disableAadAuth:
@@ -11415,7 +11415,7 @@ testModel:
                                           properties:
                                             urlTemplate:
                                               schema: *ref_105
-                                              rawValue: http://foo.com
+                                              rawValue: 'http://foo.com'
                                               language: *ref_447
                                       language: *ref_448
                                   language: *ref_449
@@ -11833,9 +11833,9 @@ testModel:
                               schema: *ref_159
                               elements:
                                 - schema: *ref_101
-                                  rawValue: https://foo.com
+                                  rawValue: 'https://foo.com'
                                 - schema: *ref_101
-                                  rawValue: https://bar.com
+                                  rawValue: 'https://bar.com'
                               language: *ref_408
                           language: *ref_409
                         disableAadAuth:
@@ -12087,7 +12087,7 @@ testModel:
                                   properties:
                                     urlTemplate:
                                       schema: *ref_105
-                                      rawValue: http://foo.com
+                                      rawValue: 'http://foo.com'
                                       language: *ref_447
                               language: *ref_448
                           language: *ref_449
@@ -12226,9 +12226,9 @@ testModel:
                               schema: *ref_159
                               elements:
                                 - schema: *ref_101
-                                  rawValue: https://foo.com
+                                  rawValue: 'https://foo.com'
                                 - schema: *ref_101
-                                  rawValue: https://bar.com
+                                  rawValue: 'https://bar.com'
                               language: *ref_408
                           language: *ref_409
                         disableAadAuth:
@@ -12382,7 +12382,7 @@ testModel:
                                           properties:
                                             resource:
                                               schema: *ref_107
-                                              rawValue: api://example
+                                              rawValue: 'api://example'
                                               language: *ref_472
                                           language: *ref_473
                                       language: *ref_474
@@ -12392,7 +12392,7 @@ testModel:
                                       language: *ref_475
                                     eventPattern:
                                       schema: *ref_103
-                                      rawValue: connect,disconnect
+                                      rawValue: 'connect,disconnect'
                                       language: *ref_476
                                     hubPattern:
                                       schema: *ref_102
@@ -12400,7 +12400,7 @@ testModel:
                                       language: *ref_477
                                     urlTemplate:
                                       schema: *ref_105
-                                      rawValue: https://example.com/chat/api/connect
+                                      rawValue: 'https://example.com/chat/api/connect'
                                       language: *ref_447
                               language: *ref_448
                           language: *ref_449
@@ -12831,9 +12831,9 @@ testModel:
                               schema: *ref_159
                               elements:
                                 - schema: *ref_101
-                                  rawValue: https://foo.com
+                                  rawValue: 'https://foo.com'
                                 - schema: *ref_101
-                                  rawValue: https://bar.com
+                                  rawValue: 'https://bar.com'
                               language: *ref_408
                           language: *ref_409
                         disableAadAuth:
@@ -13085,7 +13085,7 @@ testModel:
                                   properties:
                                     urlTemplate:
                                       schema: *ref_105
-                                      rawValue: http://foo.com
+                                      rawValue: 'http://foo.com'
                                       language: *ref_447
                               language: *ref_448
                           language: *ref_449
@@ -13216,9 +13216,9 @@ testModel:
                               schema: *ref_159
                               elements:
                                 - schema: *ref_101
-                                  rawValue: https://foo.com
+                                  rawValue: 'https://foo.com'
                                 - schema: *ref_101
-                                  rawValue: https://bar.com
+                                  rawValue: 'https://bar.com'
                               language: *ref_408
                           language: *ref_409
                         disableAadAuth:
@@ -13470,7 +13470,7 @@ testModel:
                                   properties:
                                     urlTemplate:
                                       schema: *ref_105
-                                      rawValue: http://foo.com
+                                      rawValue: 'http://foo.com'
                                       language: *ref_447
                               language: *ref_448
                           language: *ref_449
@@ -13671,9 +13671,9 @@ testModel:
                               schema: *ref_159
                               elements:
                                 - schema: *ref_101
-                                  rawValue: https://foo.com
+                                  rawValue: 'https://foo.com'
                                 - schema: *ref_101
-                                  rawValue: https://bar.com
+                                  rawValue: 'https://bar.com'
                               language: *ref_408
                           language: *ref_409
                         disableAadAuth:
@@ -13827,7 +13827,7 @@ testModel:
                                           properties:
                                             resource:
                                               schema: *ref_107
-                                              rawValue: api://example
+                                              rawValue: 'api://example'
                                               language: *ref_472
                                           language: *ref_473
                                       language: *ref_474
@@ -13837,7 +13837,7 @@ testModel:
                                       language: *ref_475
                                     eventPattern:
                                       schema: *ref_103
-                                      rawValue: connect,disconnect
+                                      rawValue: 'connect,disconnect'
                                       language: *ref_476
                                     hubPattern:
                                       schema: *ref_102
@@ -13845,7 +13845,7 @@ testModel:
                                       language: *ref_477
                                     urlTemplate:
                                       schema: *ref_105
-                                      rawValue: https://example.com/chat/api/connect
+                                      rawValue: 'https://example.com/chat/api/connect'
                                       language: *ref_447
                               language: *ref_448
                           language: *ref_449
@@ -14277,9 +14277,9 @@ testModel:
                               schema: *ref_159
                               elements:
                                 - schema: *ref_101
-                                  rawValue: https://foo.com
+                                  rawValue: 'https://foo.com'
                                 - schema: *ref_101
-                                  rawValue: https://bar.com
+                                  rawValue: 'https://bar.com'
                               language: *ref_408
                           language: *ref_409
                         disableAadAuth:
@@ -14531,7 +14531,7 @@ testModel:
                                   properties:
                                     urlTemplate:
                                       schema: *ref_105
-                                      rawValue: http://foo.com
+                                      rawValue: 'http://foo.com'
                                       language: *ref_447
                               language: *ref_448
                           language: *ref_449
@@ -14860,7 +14860,7 @@ testModel:
                   properties:
                     nextLink:
                       schema: *ref_50
-                      rawValue: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults...
+                      rawValue: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults...'
                       language: *ref_512
                     value:
                       schema: *ref_155
@@ -15718,7 +15718,7 @@ testModel:
                   properties:
                     nextLink:
                       schema: *ref_143
-                      rawValue: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults...
+                      rawValue: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults...'
                       language: *ref_551
                     value:
                       schema: *ref_169
@@ -16364,30 +16364,8 @@ testModel:
           steps:
             - type: armTemplateDeployment
               armTemplate: ./peArmTemplate/Generate_Unique_name_template.json
-              armTemplateOutput: |-
-                map[string]any{
-                "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-                "contentVersion": "1.0.0.0",
-                "outputs":map[string]any{
-                "resourceName":map[string]any{
-                "type": "string",
-                "value": "[variables('name').value]",
-                },
-                },
-                "resources":[]any{
-                },
-                "variables":map[string]any{
-                "name":map[string]any{
-                "type": "string",
-                "metadata":map[string]any{
-                "description": "Name of the SignalR service.",
-                },
-                "value": "[concat('sw',uniqueString(resourceGroup().id))]",
-                },
-                },
-                }
               armTemplatePayload:
-                $schema: https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#
+                $schema: 'https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#'
                 contentVersion: 1.0.0.0
                 outputs:
                   resourceName:
@@ -16413,7 +16391,6 @@ testModel:
               exampleFile: ../examples/SignalR_CheckNameAvailability.json
               exampleModel:
                 name: ../examples/SignalR_CheckNameAvailability.json
-                checkResponse: false
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -16425,12 +16402,6 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_384
                     parameter: *ref_182
-                clientParametersOutput:
-                  - paramName: subscriptionID
-                    paramOutput: subscriptionId
-                factoryClientParametersOutput: []
-                isLRO: false
-                isMultiRespOperation: false
                 methodParameters:
                   - exampleValue:
                       schema: *ref_1
@@ -16451,34 +16422,9 @@ testModel:
                           language: *ref_387
                       language: *ref_388
                     parameter: *ref_184
-                methodParametersOutput:
-                  - paramName: ctx
-                    paramOutput: ctx
-                  - paramName: location
-                    paramOutput: location
-                  - paramName: parameters
-                    paramOutput: |-
-                      armsignalr.NameAvailabilityParameters{
-                      Name: to.Ptr(resourceName),
-                      Type: to.Ptr("Microsoft.SignalRService/SignalR"),
-                      }
-                  - paramName: options
-                    paramOutput: nil
-                opName: CheckNameAvailability
                 operation: *ref_389
                 operationGroup: *ref_390
                 originalFile: ''
-                responseOutput: |-
-                  armsignalr.NameAvailability{
-                  Message: to.Ptr("The name is already taken. Please try a different name."),
-                  NameAvailable: to.Ptr(false),
-                  Reason: to.Ptr("AlreadyExists"),
-                  }
-                responseType: NameAvailability
-                responseTypePointer: false
-                returnInfo:
-                  - ClientCheckNameAvailabilityResponse
-                  - error
                 responses:
                   '200':
                     body:
@@ -16526,7 +16472,6 @@ testModel:
               exampleFile: ../examples/SignalR_CreateOrUpdate.json
               exampleModel:
                 name: ../examples/SignalR_CreateOrUpdate.json
-                checkResponse: true
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -16538,12 +16483,6 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_384
                     parameter: *ref_182
-                clientParametersOutput:
-                  - paramName: subscriptionID
-                    paramOutput: subscriptionId
-                factoryClientParametersOutput: []
-                isLRO: true
-                isMultiRespOperation: false
                 methodParameters:
                   - exampleValue:
                       schema: *ref_1
@@ -16600,9 +16539,9 @@ testModel:
                                   schema: *ref_159
                                   elements:
                                     - schema: *ref_101
-                                      rawValue: https://foo.com
+                                      rawValue: 'https://foo.com'
                                     - schema: *ref_101
-                                      rawValue: https://bar.com
+                                      rawValue: 'https://bar.com'
                                   language: *ref_408
                               language: *ref_409
                             disableAadAuth:
@@ -16760,7 +16699,7 @@ testModel:
                                               properties:
                                                 resource:
                                                   schema: *ref_107
-                                                  rawValue: api://example
+                                                  rawValue: 'api://example'
                                                   language: *ref_472
                                               language: *ref_473
                                           language: *ref_474
@@ -16770,7 +16709,7 @@ testModel:
                                           language: *ref_475
                                         eventPattern:
                                           schema: *ref_103
-                                          rawValue: connect,disconnect
+                                          rawValue: 'connect,disconnect'
                                           language: *ref_476
                                         hubPattern:
                                           schema: *ref_102
@@ -16778,7 +16717,7 @@ testModel:
                                           language: *ref_477
                                         urlTemplate:
                                           schema: *ref_105
-                                          rawValue: https://example.com/chat/api/connect
+                                          rawValue: 'https://example.com/chat/api/connect'
                                           language: *ref_447
                                   language: *ref_448
                               language: *ref_449
@@ -16802,342 +16741,9 @@ testModel:
                           language: *ref_456
                       language: *ref_478
                     parameter: *ref_217
-                methodParametersOutput:
-                  - paramName: ctx
-                    paramOutput: ctx
-                  - paramName: resourceGroupName
-                    paramOutput: resourceGroupName
-                  - paramName: resourceName
-                    paramOutput: resourceName
-                  - paramName: parameters
-                    paramOutput: |-
-                      armsignalr.ResourceInfo{
-                      Location: to.Ptr(globalLocation + "-test2"),
-                      Tags: map[string]*string{
-                      "key1": to.Ptr("value1"),
-                      },
-                      Identity: &armsignalr.ManagedIdentity{
-                      Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-                      },
-                      Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-                      Properties: &armsignalr.Properties{
-                      Cors: &armsignalr.CorsSettings{
-                      AllowedOrigins: []*string{
-                      to.Ptr("https://foo.com"),
-                      to.Ptr("https://bar.com")},
-                      },
-                      DisableAADAuth: to.Ptr(false),
-                      DisableLocalAuth: to.Ptr(false),
-                      Features: []*armsignalr.Feature{
-                      {
-                      Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
-                      Properties: map[string]*string{
-                      },
-                      Value: to.Ptr("Serverless"),
-                      },
-                      {
-                      Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-                      Properties: map[string]*string{
-                      },
-                      Value: to.Ptr("True"),
-                      },
-                      {
-                      Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-                      Properties: map[string]*string{
-                      },
-                      Value: to.Ptr("False"),
-                      },
-                      {
-                      Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-                      Properties: map[string]*string{
-                      },
-                      Value: to.Ptr("False"),
-                      }},
-                      NetworkACLs: &armsignalr.NetworkACLs{
-                      DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-                      PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-                      {
-                      Allow: []*armsignalr.SignalRRequestType{
-                      to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-                      Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-                      }},
-                      PublicNetwork: &armsignalr.NetworkACL{
-                      Allow: []*armsignalr.SignalRRequestType{
-                      to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-                      },
-                      },
-                      PublicNetworkAccess: to.Ptr("Enabled"),
-                      PublicPort: to.Ptr[int32](publicPort),
-                      TLS: &armsignalr.TLSSettings{
-                      ClientCertEnabled: to.Ptr(false),
-                      },
-                      Upstream: &armsignalr.ServerlessUpstreamSettings{
-                      Templates: []*armsignalr.UpstreamTemplate{
-                      {
-                      Auth: &armsignalr.UpstreamAuthSettings{
-                      Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
-                      ManagedIdentity: &armsignalr.ManagedIdentitySettings{
-                      Resource: to.Ptr("api://example"),
-                      },
-                      },
-                      CategoryPattern: to.Ptr("*"),
-                      EventPattern: to.Ptr("connect,disconnect"),
-                      HubPattern: to.Ptr("*"),
-                      URLTemplate: to.Ptr("https://example.com/chat/api/connect"),
-                      }},
-                      },
-                      },
-                      SKU: &armsignalr.ResourceSKU{
-                      Name: to.Ptr("Standard_S1"),
-                      Capacity: to.Ptr[int32](1),
-                      Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
-                      },
-                      }
-                  - paramName: options
-                    paramOutput: nil
-                opName: BeginCreateOrUpdate
                 operation: *ref_479
                 operationGroup: *ref_390
                 originalFile: ''
-                pollerType: ClientCreateOrUpdateResponse
-                responseOutput: >-
-                  armsignalr.ResourceInfo{
-
-                  Name: to.Ptr(resourceName),
-
-                  Type: to.Ptr("Microsoft.SignalRService/SignalR"),
-
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.SignalRService/SignalR/" + resourceName),
-
-                  Location: to.Ptr(globalLocation + "-test2" + "-test1"),
-
-                  Tags: map[string]*string{
-
-                  "key1": to.Ptr("value1"),
-
-                  },
-
-                  Identity: &armsignalr.ManagedIdentity{
-
-                  Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-
-                  PrincipalID: to.Ptr(subscriptionId),
-
-                  TenantID: to.Ptr(subscriptionId),
-
-                  },
-
-                  Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-
-                  Properties: &armsignalr.Properties{
-
-                  Cors: &armsignalr.CorsSettings{
-
-                  AllowedOrigins: []*string{
-
-                  to.Ptr("https://foo.com"),
-
-                  to.Ptr("https://bar.com")},
-
-                  },
-
-                  DisableAADAuth: to.Ptr(false),
-
-                  DisableLocalAuth: to.Ptr(false),
-
-                  ExternalIP: to.Ptr("10.0.0.1"),
-
-                  Features: []*armsignalr.Feature{
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("Serverless"),
-
-                  },
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("True"),
-
-                  },
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("False"),
-
-                  },
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("False"),
-
-                  }},
-
-                  HostName: to.Ptr(resourceName + ".service.signalr.net"),
-
-                  NetworkACLs: &armsignalr.NetworkACLs{
-
-                  DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-
-                  PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-
-                  {
-
-                  Allow: []*armsignalr.SignalRRequestType{
-
-                  to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-
-                  Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-
-                  }},
-
-                  PublicNetwork: &armsignalr.NetworkACL{
-
-                  Allow: []*armsignalr.SignalRRequestType{
-
-                  to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-
-                  },
-
-                  },
-
-                  PrivateEndpointConnections: []*armsignalr.PrivateEndpointConnection{
-
-                  {
-
-                  Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-
-                  Type: to.Ptr("Microsoft.SignalRService/SignalR/privateEndpointConnections"),
-
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.SignalRService/SignalR/" + resourceName + "/privateEndpointConnections/" + resourceName +
-                  ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-
-                  Properties: &armsignalr.PrivateEndpointConnectionProperties{
-
-                  PrivateEndpoint: &armsignalr.PrivateEndpoint{
-
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
-
-                  },
-
-                  PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
-
-                  ActionsRequired: to.Ptr("None"),
-
-                  Status: to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
-
-                  },
-
-                  ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
-
-                  },
-
-                  SystemData: &armsignalr.SystemData{
-
-                  CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  CreatedBy: to.Ptr("string"),
-
-                  CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  LastModifiedBy: to.Ptr("string"),
-
-                  LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  },
-
-                  }},
-
-                  ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
-
-                  PublicNetworkAccess: to.Ptr("Enabled"),
-
-                  PublicPort: to.Ptr[int32](publicPort),
-
-                  ServerPort: to.Ptr[int32](443),
-
-                  TLS: &armsignalr.TLSSettings{
-
-                  ClientCertEnabled: to.Ptr(true),
-
-                  },
-
-                  Upstream: &armsignalr.ServerlessUpstreamSettings{
-
-                  Templates: []*armsignalr.UpstreamTemplate{
-
-                  {
-
-                  URLTemplate: to.Ptr("http://foo.com"),
-
-                  }},
-
-                  },
-
-                  Version: to.Ptr("1.0"),
-
-                  },
-
-                  SKU: &armsignalr.ResourceSKU{
-
-                  Name: to.Ptr("Standard_S1"),
-
-                  Capacity: to.Ptr[int32](1),
-
-                  Size: to.Ptr("S1"),
-
-                  Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
-
-                  },
-
-                  SystemData: &armsignalr.SystemData{
-
-                  CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  CreatedBy: to.Ptr("string"),
-
-                  CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  LastModifiedBy: to.Ptr("string"),
-
-                  LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  },
-
-                  }
-                responseType: ResourceInfo
-                responseTypePointer: false
-                returnInfo:
-                  - ClientCreateOrUpdateResponse
-                  - error
                 responses:
                   '200':
                     body:
@@ -17210,9 +16816,9 @@ testModel:
                                   schema: *ref_159
                                   elements:
                                     - schema: *ref_101
-                                      rawValue: https://foo.com
+                                      rawValue: 'https://foo.com'
                                     - schema: *ref_101
-                                      rawValue: https://bar.com
+                                      rawValue: 'https://bar.com'
                                   language: *ref_408
                               language: *ref_409
                             disableAadAuth:
@@ -17464,7 +17070,7 @@ testModel:
                                       properties:
                                         urlTemplate:
                                           schema: *ref_105
-                                          rawValue: http://foo.com
+                                          rawValue: 'http://foo.com'
                                           language: *ref_447
                                   language: *ref_448
                               language: *ref_449
@@ -17595,9 +17201,9 @@ testModel:
                                   schema: *ref_159
                                   elements:
                                     - schema: *ref_101
-                                      rawValue: https://foo.com
+                                      rawValue: 'https://foo.com'
                                     - schema: *ref_101
-                                      rawValue: https://bar.com
+                                      rawValue: 'https://bar.com'
                                   language: *ref_408
                               language: *ref_409
                             disableAadAuth:
@@ -17849,7 +17455,7 @@ testModel:
                                       properties:
                                         urlTemplate:
                                           schema: *ref_105
-                                          rawValue: http://foo.com
+                                          rawValue: 'http://foo.com'
                                           language: *ref_447
                                   language: *ref_448
                               language: *ref_449
@@ -17910,21 +17516,19 @@ testModel:
                           language: *ref_457
                       language: *ref_481
                     headers: &ref_598
-                      Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                      Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                      Azure-AsyncOperation: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...'
+                      Location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...'
                   '202':
                     headers: &ref_599
-                      Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                      Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                      Azure-AsyncOperation: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...'
+                      Location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...'
               isManagementPlane: true
               outputVariables:
                 signalRId:
                   fromResponse: /id
-                  isPtr: true
               outputVariablesModel:
                 signalRId:
                   - type: object
-                    languageName: .ID
                     languages: *ref_398
               parameters:
                 api-version: 2021-06-01-preview
@@ -17936,8 +17540,8 @@ testModel:
                   properties:
                     cors:
                       allowedOrigins:
-                        - https://foo.com
-                        - https://bar.com
+                        - 'https://foo.com'
+                        - 'https://bar.com'
                     disableAadAuth: false
                     disableLocalAuth: false
                     features:
@@ -17971,11 +17575,11 @@ testModel:
                         - auth:
                             type: ManagedIdentity
                             managedIdentity:
-                              resource: api://example
+                              resource: 'api://example'
                           categoryPattern: '*'
-                          eventPattern: connect,disconnect
+                          eventPattern: 'connect,disconnect'
                           hubPattern: '*'
-                          urlTemplate: https://example.com/chat/api/connect
+                          urlTemplate: 'https://example.com/chat/api/connect'
                   sku:
                     name: Standard_S1
                     capacity: 1
@@ -18008,8 +17612,8 @@ testModel:
                     properties:
                       cors:
                         allowedOrigins:
-                          - https://foo.com
-                          - https://bar.com
+                          - 'https://foo.com'
+                          - 'https://bar.com'
                       disableAadAuth: false
                       disableLocalAuth: false
                       externalIP: 10.0.0.1
@@ -18062,7 +17666,7 @@ testModel:
                         clientCertEnabled: true
                       upstream:
                         templates:
-                          - urlTemplate: http://foo.com
+                          - urlTemplate: 'http://foo.com'
                       version: '1.0'
                     sku:
                       name: Standard_S1
@@ -18092,8 +17696,8 @@ testModel:
                     properties:
                       cors:
                         allowedOrigins:
-                          - https://foo.com
-                          - https://bar.com
+                          - 'https://foo.com'
+                          - 'https://bar.com'
                       disableAadAuth: false
                       disableLocalAuth: false
                       externalIP: 10.0.0.1
@@ -18147,7 +17751,7 @@ testModel:
                         clientCertEnabled: true
                       upstream:
                         templates:
-                          - urlTemplate: http://foo.com
+                          - urlTemplate: 'http://foo.com'
                       version: '1.0'
                     sku:
                       name: Standard_S1
@@ -18173,7 +17777,6 @@ testModel:
               exampleFile: ../examples/SignalR_Get.json
               exampleModel:
                 name: ../examples/SignalR_Get.json
-                checkResponse: false
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -18185,12 +17788,6 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_384
                     parameter: *ref_182
-                clientParametersOutput:
-                  - paramName: subscriptionID
-                    paramOutput: subscriptionId
-                factoryClientParametersOutput: []
-                isLRO: false
-                isMultiRespOperation: false
                 methodParameters:
                   - exampleValue:
                       schema: *ref_1
@@ -18202,257 +17799,9 @@ testModel:
                       rawValue: $(resourceName)
                       language: *ref_466
                     parameter: *ref_206
-                methodParametersOutput:
-                  - paramName: ctx
-                    paramOutput: ctx
-                  - paramName: resourceGroupName
-                    paramOutput: resourceGroupName
-                  - paramName: resourceName
-                    paramOutput: resourceName
-                  - paramName: options
-                    paramOutput: nil
-                opName: Get
                 operation: *ref_467
                 operationGroup: *ref_390
                 originalFile: ''
-                responseOutput: >-
-                  armsignalr.ResourceInfo{
-
-                  Name: to.Ptr(resourceName),
-
-                  Type: to.Ptr("Microsoft.SignalRService/SignalR"),
-
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.SignalRService/SignalR/" + resourceName),
-
-                  Location: to.Ptr("eastus"),
-
-                  Tags: map[string]*string{
-
-                  "key1": to.Ptr("value1"),
-
-                  },
-
-                  Identity: &armsignalr.ManagedIdentity{
-
-                  Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-
-                  PrincipalID: to.Ptr(subscriptionId),
-
-                  TenantID: to.Ptr(subscriptionId),
-
-                  },
-
-                  Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-
-                  Properties: &armsignalr.Properties{
-
-                  Cors: &armsignalr.CorsSettings{
-
-                  AllowedOrigins: []*string{
-
-                  to.Ptr("https://foo.com"),
-
-                  to.Ptr("https://bar.com")},
-
-                  },
-
-                  DisableAADAuth: to.Ptr(false),
-
-                  DisableLocalAuth: to.Ptr(false),
-
-                  ExternalIP: to.Ptr("10.0.0.1"),
-
-                  Features: []*armsignalr.Feature{
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("Serverless"),
-
-                  },
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("True"),
-
-                  },
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("False"),
-
-                  },
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("False"),
-
-                  }},
-
-                  HostName: to.Ptr(resourceName + ".service.signalr.net"),
-
-                  NetworkACLs: &armsignalr.NetworkACLs{
-
-                  DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-
-                  PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-
-                  {
-
-                  Allow: []*armsignalr.SignalRRequestType{
-
-                  to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-
-                  Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-
-                  }},
-
-                  PublicNetwork: &armsignalr.NetworkACL{
-
-                  Allow: []*armsignalr.SignalRRequestType{
-
-                  to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-
-                  },
-
-                  },
-
-                  PrivateEndpointConnections: []*armsignalr.PrivateEndpointConnection{
-
-                  {
-
-                  Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-
-                  Type: to.Ptr("Microsoft.SignalRService/SignalR/privateEndpointConnections"),
-
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.SignalRService/SignalR/" + resourceName + "/privateEndpointConnections/" + resourceName +
-                  ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-
-                  Properties: &armsignalr.PrivateEndpointConnectionProperties{
-
-                  PrivateEndpoint: &armsignalr.PrivateEndpoint{
-
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
-
-                  },
-
-                  PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
-
-                  ActionsRequired: to.Ptr("None"),
-
-                  Status: to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
-
-                  },
-
-                  ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
-
-                  },
-
-                  SystemData: &armsignalr.SystemData{
-
-                  CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  CreatedBy: to.Ptr("string"),
-
-                  CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  LastModifiedBy: to.Ptr("string"),
-
-                  LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  },
-
-                  }},
-
-                  ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
-
-                  PublicNetworkAccess: to.Ptr("Enabled"),
-
-                  PublicPort: to.Ptr[int32](443),
-
-                  ServerPort: to.Ptr[int32](443),
-
-                  TLS: &armsignalr.TLSSettings{
-
-                  ClientCertEnabled: to.Ptr(true),
-
-                  },
-
-                  Upstream: &armsignalr.ServerlessUpstreamSettings{
-
-                  Templates: []*armsignalr.UpstreamTemplate{
-
-                  {
-
-                  URLTemplate: to.Ptr("http://foo.com"),
-
-                  }},
-
-                  },
-
-                  Version: to.Ptr("1.0"),
-
-                  },
-
-                  SKU: &armsignalr.ResourceSKU{
-
-                  Name: to.Ptr("Standard_S1"),
-
-                  Capacity: to.Ptr[int32](1),
-
-                  Size: to.Ptr("S1"),
-
-                  Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
-
-                  },
-
-                  SystemData: &armsignalr.SystemData{
-
-                  CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  CreatedBy: to.Ptr("string"),
-
-                  CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  LastModifiedBy: to.Ptr("string"),
-
-                  LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  },
-
-                  }
-                responseType: ResourceInfo
-                responseTypePointer: false
-                returnInfo:
-                  - ClientGetResponse
-                  - error
                 responses:
                   '200':
                     body:
@@ -18525,9 +17874,9 @@ testModel:
                                   schema: *ref_159
                                   elements:
                                     - schema: *ref_101
-                                      rawValue: https://foo.com
+                                      rawValue: 'https://foo.com'
                                     - schema: *ref_101
-                                      rawValue: https://bar.com
+                                      rawValue: 'https://bar.com'
                                   language: *ref_408
                               language: *ref_409
                             disableAadAuth:
@@ -18779,7 +18128,7 @@ testModel:
                                       properties:
                                         urlTemplate:
                                           schema: *ref_105
-                                          rawValue: http://foo.com
+                                          rawValue: 'http://foo.com'
                                           language: *ref_447
                                   language: *ref_448
                               language: *ref_449
@@ -18867,8 +18216,8 @@ testModel:
                     properties:
                       cors:
                         allowedOrigins:
-                          - https://foo.com
-                          - https://bar.com
+                          - 'https://foo.com'
+                          - 'https://bar.com'
                       disableAadAuth: false
                       disableLocalAuth: false
                       externalIP: 10.0.0.1
@@ -18921,7 +18270,7 @@ testModel:
                         clientCertEnabled: true
                       upstream:
                         templates:
-                          - urlTemplate: http://foo.com
+                          - urlTemplate: 'http://foo.com'
                       version: '1.0'
                     sku:
                       name: Standard_S1
@@ -18944,7 +18293,6 @@ testModel:
               exampleFile: ../examples/SignalR_Update.json
               exampleModel:
                 name: ../examples/SignalR_Update.json
-                checkResponse: false
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -18956,12 +18304,6 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_384
                     parameter: *ref_182
-                clientParametersOutput:
-                  - paramName: subscriptionID
-                    paramOutput: subscriptionId
-                factoryClientParametersOutput: []
-                isLRO: true
-                isMultiRespOperation: false
                 methodParameters:
                   - exampleValue:
                       schema: *ref_1
@@ -19021,9 +18363,9 @@ testModel:
                                   schema: *ref_159
                                   elements:
                                     - schema: *ref_101
-                                      rawValue: https://foo.com
+                                      rawValue: 'https://foo.com'
                                     - schema: *ref_101
-                                      rawValue: https://bar.com
+                                      rawValue: 'https://bar.com'
                                   language: *ref_408
                               language: *ref_409
                             disableAadAuth:
@@ -19177,7 +18519,7 @@ testModel:
                                               properties:
                                                 resource:
                                                   schema: *ref_107
-                                                  rawValue: api://example
+                                                  rawValue: 'api://example'
                                                   language: *ref_472
                                               language: *ref_473
                                           language: *ref_474
@@ -19187,7 +18529,7 @@ testModel:
                                           language: *ref_475
                                         eventPattern:
                                           schema: *ref_103
-                                          rawValue: connect,disconnect
+                                          rawValue: 'connect,disconnect'
                                           language: *ref_476
                                         hubPattern:
                                           schema: *ref_102
@@ -19195,7 +18537,7 @@ testModel:
                                           language: *ref_477
                                         urlTemplate:
                                           schema: *ref_105
-                                          rawValue: https://example.com/chat/api/connect
+                                          rawValue: 'https://example.com/chat/api/connect'
                                           language: *ref_447
                                   language: *ref_448
                               language: *ref_449
@@ -19219,342 +18561,9 @@ testModel:
                           language: *ref_456
                       language: *ref_490
                     parameter: *ref_239
-                methodParametersOutput:
-                  - paramName: ctx
-                    paramOutput: ctx
-                  - paramName: resourceGroupName
-                    paramOutput: resourceGroupName
-                  - paramName: resourceName
-                    paramOutput: resourceName
-                  - paramName: parameters
-                    paramOutput: |-
-                      armsignalr.ResourceInfo{
-                      Location: to.Ptr(location),
-                      Tags: map[string]*string{
-                      subscriptionId: to.Ptr(subscriptionId),
-                      "key1": to.Ptr("value1"),
-                      },
-                      Identity: &armsignalr.ManagedIdentity{
-                      Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-                      },
-                      Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-                      Properties: &armsignalr.Properties{
-                      Cors: &armsignalr.CorsSettings{
-                      AllowedOrigins: []*string{
-                      to.Ptr("https://foo.com"),
-                      to.Ptr("https://bar.com")},
-                      },
-                      DisableAADAuth: to.Ptr(false),
-                      DisableLocalAuth: to.Ptr(false),
-                      Features: []*armsignalr.Feature{
-                      {
-                      Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
-                      Properties: map[string]*string{
-                      },
-                      Value: to.Ptr("Serverless"),
-                      },
-                      {
-                      Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-                      Properties: map[string]*string{
-                      },
-                      Value: to.Ptr("True"),
-                      },
-                      {
-                      Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-                      Properties: map[string]*string{
-                      },
-                      Value: to.Ptr("False"),
-                      },
-                      {
-                      Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-                      Properties: map[string]*string{
-                      },
-                      Value: to.Ptr("False"),
-                      }},
-                      NetworkACLs: &armsignalr.NetworkACLs{
-                      DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-                      PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-                      {
-                      Allow: []*armsignalr.SignalRRequestType{
-                      to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-                      Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-                      }},
-                      PublicNetwork: &armsignalr.NetworkACL{
-                      Allow: []*armsignalr.SignalRRequestType{
-                      to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-                      },
-                      },
-                      PublicNetworkAccess: to.Ptr("Enabled"),
-                      TLS: &armsignalr.TLSSettings{
-                      ClientCertEnabled: to.Ptr(false),
-                      },
-                      Upstream: &armsignalr.ServerlessUpstreamSettings{
-                      Templates: []*armsignalr.UpstreamTemplate{
-                      {
-                      Auth: &armsignalr.UpstreamAuthSettings{
-                      Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
-                      ManagedIdentity: &armsignalr.ManagedIdentitySettings{
-                      Resource: to.Ptr("api://example"),
-                      },
-                      },
-                      CategoryPattern: to.Ptr("*"),
-                      EventPattern: to.Ptr("connect,disconnect"),
-                      HubPattern: to.Ptr("*"),
-                      URLTemplate: to.Ptr("https://example.com/chat/api/connect"),
-                      }},
-                      },
-                      },
-                      SKU: &armsignalr.ResourceSKU{
-                      Name: to.Ptr("Standard_S1"),
-                      Capacity: to.Ptr[int32](1),
-                      Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
-                      },
-                      }
-                  - paramName: options
-                    paramOutput: nil
-                opName: BeginUpdate
                 operation: *ref_491
                 operationGroup: *ref_390
                 originalFile: ''
-                pollerType: ClientUpdateResponse
-                responseOutput: >-
-                  armsignalr.ResourceInfo{
-
-                  Name: to.Ptr(resourceName),
-
-                  Type: to.Ptr("Microsoft.SignalRService/SignalR"),
-
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.SignalRService/SignalR/" + resourceName),
-
-                  Location: to.Ptr("eastus"),
-
-                  Tags: map[string]*string{
-
-                  "key1": to.Ptr("value1"),
-
-                  },
-
-                  Identity: &armsignalr.ManagedIdentity{
-
-                  Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-
-                  PrincipalID: to.Ptr(subscriptionId),
-
-                  TenantID: to.Ptr(subscriptionId),
-
-                  },
-
-                  Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-
-                  Properties: &armsignalr.Properties{
-
-                  Cors: &armsignalr.CorsSettings{
-
-                  AllowedOrigins: []*string{
-
-                  to.Ptr("https://foo.com"),
-
-                  to.Ptr("https://bar.com")},
-
-                  },
-
-                  DisableAADAuth: to.Ptr(false),
-
-                  DisableLocalAuth: to.Ptr(false),
-
-                  ExternalIP: to.Ptr("10.0.0.1"),
-
-                  Features: []*armsignalr.Feature{
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("Serverless"),
-
-                  },
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("True"),
-
-                  },
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("False"),
-
-                  },
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("False"),
-
-                  }},
-
-                  HostName: to.Ptr(resourceName + ".service.signalr.net"),
-
-                  NetworkACLs: &armsignalr.NetworkACLs{
-
-                  DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-
-                  PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-
-                  {
-
-                  Allow: []*armsignalr.SignalRRequestType{
-
-                  to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-
-                  Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-
-                  }},
-
-                  PublicNetwork: &armsignalr.NetworkACL{
-
-                  Allow: []*armsignalr.SignalRRequestType{
-
-                  to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-
-                  },
-
-                  },
-
-                  PrivateEndpointConnections: []*armsignalr.PrivateEndpointConnection{
-
-                  {
-
-                  Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-
-                  Type: to.Ptr("Microsoft.SignalRService/SignalR/privateEndpointConnections"),
-
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.SignalRService/SignalR/" + resourceName + "/privateEndpointConnections/" + resourceName +
-                  ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-
-                  Properties: &armsignalr.PrivateEndpointConnectionProperties{
-
-                  PrivateEndpoint: &armsignalr.PrivateEndpoint{
-
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
-
-                  },
-
-                  PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
-
-                  ActionsRequired: to.Ptr("None"),
-
-                  Status: to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
-
-                  },
-
-                  ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
-
-                  },
-
-                  SystemData: &armsignalr.SystemData{
-
-                  CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  CreatedBy: to.Ptr("string"),
-
-                  CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  LastModifiedBy: to.Ptr("string"),
-
-                  LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  },
-
-                  }},
-
-                  ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
-
-                  PublicNetworkAccess: to.Ptr("Enabled"),
-
-                  PublicPort: to.Ptr[int32](443),
-
-                  ServerPort: to.Ptr[int32](443),
-
-                  TLS: &armsignalr.TLSSettings{
-
-                  ClientCertEnabled: to.Ptr(true),
-
-                  },
-
-                  Upstream: &armsignalr.ServerlessUpstreamSettings{
-
-                  Templates: []*armsignalr.UpstreamTemplate{
-
-                  {
-
-                  URLTemplate: to.Ptr("http://foo.com"),
-
-                  }},
-
-                  },
-
-                  Version: to.Ptr("1.0"),
-
-                  },
-
-                  SKU: &armsignalr.ResourceSKU{
-
-                  Name: to.Ptr("Standard_S1"),
-
-                  Capacity: to.Ptr[int32](1),
-
-                  Size: to.Ptr("S1"),
-
-                  Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
-
-                  },
-
-                  SystemData: &armsignalr.SystemData{
-
-                  CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  CreatedBy: to.Ptr("string"),
-
-                  CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  LastModifiedBy: to.Ptr("string"),
-
-                  LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  },
-
-                  }
-                responseType: ResourceInfo
-                responseTypePointer: false
-                returnInfo:
-                  - ClientUpdateResponse
-                  - error
                 responses:
                   '200':
                     body:
@@ -19627,9 +18636,9 @@ testModel:
                                   schema: *ref_159
                                   elements:
                                     - schema: *ref_101
-                                      rawValue: https://foo.com
+                                      rawValue: 'https://foo.com'
                                     - schema: *ref_101
-                                      rawValue: https://bar.com
+                                      rawValue: 'https://bar.com'
                                   language: *ref_408
                               language: *ref_409
                             disableAadAuth:
@@ -19881,7 +18890,7 @@ testModel:
                                       properties:
                                         urlTemplate:
                                           schema: *ref_105
-                                          rawValue: http://foo.com
+                                          rawValue: 'http://foo.com'
                                           language: *ref_447
                                   language: *ref_448
                               language: *ref_449
@@ -19943,8 +18952,8 @@ testModel:
                       language: *ref_492
                   '202':
                     headers: &ref_600
-                      Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                      Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                      Azure-AsyncOperation: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...'
+                      Location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...'
               isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
@@ -19958,8 +18967,8 @@ testModel:
                   properties:
                     cors:
                       allowedOrigins:
-                        - https://foo.com
-                        - https://bar.com
+                        - 'https://foo.com'
+                        - 'https://bar.com'
                     disableAadAuth: false
                     disableLocalAuth: false
                     features:
@@ -19992,11 +19001,11 @@ testModel:
                         - auth:
                             type: ManagedIdentity
                             managedIdentity:
-                              resource: api://example
+                              resource: 'api://example'
                           categoryPattern: '*'
-                          eventPattern: connect,disconnect
+                          eventPattern: 'connect,disconnect'
                           hubPattern: '*'
-                          urlTemplate: https://example.com/chat/api/connect
+                          urlTemplate: 'https://example.com/chat/api/connect'
                   sku:
                     name: Standard_S1
                     capacity: 1
@@ -20027,8 +19036,8 @@ testModel:
                     properties:
                       cors:
                         allowedOrigins:
-                          - https://foo.com
-                          - https://bar.com
+                          - 'https://foo.com'
+                          - 'https://bar.com'
                       disableAadAuth: false
                       disableLocalAuth: false
                       externalIP: 10.0.0.1
@@ -20081,7 +19090,7 @@ testModel:
                         clientCertEnabled: true
                       upstream:
                         templates:
-                          - urlTemplate: http://foo.com
+                          - urlTemplate: 'http://foo.com'
                       version: '1.0'
                     sku:
                       name: Standard_S1
@@ -20106,7 +19115,6 @@ testModel:
               exampleFile: ../examples/SignalR_ListKeys.json
               exampleModel:
                 name: ../examples/SignalR_ListKeys.json
-                checkResponse: false
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -20118,12 +19126,6 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_384
                     parameter: *ref_182
-                clientParametersOutput:
-                  - paramName: subscriptionID
-                    paramOutput: subscriptionId
-                factoryClientParametersOutput: []
-                isLRO: false
-                isMultiRespOperation: false
                 methodParameters:
                   - exampleValue:
                       schema: *ref_1
@@ -20135,27 +19137,9 @@ testModel:
                       rawValue: $(resourceName)
                       language: *ref_495
                     parameter: *ref_248
-                methodParametersOutput:
-                  - paramName: ctx
-                    paramOutput: ctx
-                  - paramName: resourceGroupName
-                    paramOutput: resourceGroupName
-                  - paramName: resourceName
-                    paramOutput: resourceName
-                  - paramName: options
-                    paramOutput: nil
-                opName: ListKeys
                 operation: *ref_496
                 operationGroup: *ref_390
                 originalFile: ''
-                responseOutput: |-
-                  armsignalr.Keys{
-                  }
-                responseType: Keys
-                responseTypePointer: false
-                returnInfo:
-                  - ClientListKeysResponse
-                  - error
                 responses:
                   '200':
                     body:
@@ -20186,7 +19170,6 @@ testModel:
               exampleFile: ../examples/SignalR_RegenerateKey.json
               exampleModel:
                 name: ../examples/SignalR_RegenerateKey.json
-                checkResponse: false
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -20198,12 +19181,6 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_384
                     parameter: *ref_182
-                clientParametersOutput:
-                  - paramName: subscriptionID
-                    paramOutput: subscriptionId
-                factoryClientParametersOutput: []
-                isLRO: true
-                isMultiRespOperation: false
                 methodParameters:
                   - exampleValue:
                       schema: *ref_1
@@ -20225,28 +19202,9 @@ testModel:
                           language: *ref_500
                       language: *ref_501
                     parameter: *ref_261
-                methodParametersOutput:
-                  - paramName: ctx
-                    paramOutput: ctx
-                  - paramName: resourceGroupName
-                    paramOutput: resourceGroupName
-                  - paramName: resourceName
-                    paramOutput: resourceName
-                  - paramName: parameters
-                    paramOutput: |-
-                      armsignalr.RegenerateKeyParameters{
-                      KeyType: to.Ptr(armsignalr.KeyTypePrimary),
-                      }
-                  - paramName: options
-                    paramOutput: nil
-                opName: BeginRegenerateKey
                 operation: *ref_502
                 operationGroup: *ref_390
                 originalFile: ''
-                pollerType: ClientRegenerateKeyResponse
-                returnInfo:
-                  - ClientRegenerateKeyResponse
-                  - error
                 responses:
                   '202':
                     body:
@@ -20255,8 +19213,8 @@ testModel:
                       properties: {}
                       language: *ref_503
                     headers: &ref_601
-                      Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                      Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                      Azure-AsyncOperation: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...'
+                      Location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...'
               isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
@@ -20283,7 +19241,6 @@ testModel:
               exampleFile: ../examples/SignalR_Restart.json
               exampleModel:
                 name: ../examples/SignalR_Restart.json
-                checkResponse: false
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -20295,12 +19252,6 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_384
                     parameter: *ref_182
-                clientParametersOutput:
-                  - paramName: subscriptionID
-                    paramOutput: subscriptionId
-                factoryClientParametersOutput: []
-                isLRO: true
-                isMultiRespOperation: false
                 methodParameters:
                   - exampleValue:
                       schema: *ref_1
@@ -20312,31 +19263,17 @@ testModel:
                       rawValue: $(resourceName)
                       language: *ref_506
                     parameter: *ref_275
-                methodParametersOutput:
-                  - paramName: ctx
-                    paramOutput: ctx
-                  - paramName: resourceGroupName
-                    paramOutput: resourceGroupName
-                  - paramName: resourceName
-                    paramOutput: resourceName
-                  - paramName: options
-                    paramOutput: nil
-                opName: BeginRestart
                 operation: *ref_507
                 operationGroup: *ref_390
                 originalFile: ''
-                pollerType: ClientRestartResponse
-                returnInfo:
-                  - ClientRestartResponse
-                  - error
                 responses:
                   '202':
                     body:
                       rawValue: &ref_603 {}
                       language: *ref_602
                     headers: &ref_604
-                      Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                      Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                      Azure-AsyncOperation: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...'
+                      Location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...'
                   '204': {}
               isManagementPlane: true
               outputVariables: {}
@@ -20363,7 +19300,6 @@ testModel:
               exampleFile: ../examples/Usages_List.json
               exampleModel:
                 name: ../examples/Usages_List.json
-                checkResponse: false
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -20375,57 +19311,15 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_384
                     parameter: *ref_182
-                clientParametersOutput:
-                  - paramName: subscriptionID
-                    paramOutput: subscriptionId
-                factoryClientParametersOutput: []
-                isLRO: false
-                isMultiRespOperation: false
-                isPageable: *ref_522
                 methodParameters:
                   - exampleValue:
                       schema: *ref_1
                       rawValue: $(location)
                       language: *ref_509
                     parameter: *ref_278
-                methodParametersOutput:
-                  - paramName: location
-                    paramOutput: location
-                  - paramName: options
-                    paramOutput: nil
-                opName: NewListPager
                 operation: *ref_510
                 operationGroup: *ref_511
                 originalFile: ''
-                pageableItemName: Value
-                responseOutput: |-
-                  armsignalr.UsageList{
-                  Value: []*armsignalr.Usage{
-                  {
-                  Name: &armsignalr.UsageName{
-                  LocalizedValue: to.Ptr("Usage1"),
-                  Value: to.Ptr("Usage1"),
-                  },
-                  CurrentValue: to.Ptr[int64](0),
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/providers/Microsoft.SignalRService/locations/" + location + "/usages/Usage1"),
-                  Limit: to.Ptr[int64](100),
-                  Unit: to.Ptr("Count"),
-                  },
-                  {
-                  Name: &armsignalr.UsageName{
-                  LocalizedValue: to.Ptr("Usage2"),
-                  Value: to.Ptr("Usage2"),
-                  },
-                  CurrentValue: to.Ptr[int64](0),
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/providers/Microsoft.SignalRService/locations/" + location + "/usages/Usage2"),
-                  Limit: to.Ptr[int64](100),
-                  Unit: to.Ptr("Count"),
-                  }},
-                  }
-                responseType: UsageList
-                responseTypePointer: false
-                returnInfo:
-                  - '*runtime.Pager[UsagesClientListResponse]'
                 responses:
                   '200':
                     body:
@@ -20434,7 +19328,7 @@ testModel:
                       properties:
                         nextLink:
                           schema: *ref_50
-                          rawValue: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults...
+                          rawValue: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults...'
                           language: *ref_512
                         value:
                           schema: *ref_155
@@ -20520,7 +19414,7 @@ testModel:
               responses:
                 '200':
                   body:
-                    nextLink: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults...
+                    nextLink: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults...'
                     value:
                       - name:
                           localizedValue: Usage1
@@ -20543,7 +19437,6 @@ testModel:
               exampleFile: ../examples/SignalR_ListByResourceGroup.json
               exampleModel:
                 name: ../examples/SignalR_ListByResourceGroup.json
-                checkResponse: false
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -20555,272 +19448,15 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_384
                     parameter: *ref_182
-                clientParametersOutput:
-                  - paramName: subscriptionID
-                    paramOutput: subscriptionId
-                factoryClientParametersOutput: []
-                isLRO: false
-                isMultiRespOperation: false
-                isPageable: *ref_464
                 methodParameters:
                   - exampleValue:
                       schema: *ref_1
                       rawValue: $(resourceGroupName)
                       language: *ref_461
                     parameter: *ref_199
-                methodParametersOutput:
-                  - paramName: resourceGroupName
-                    paramOutput: resourceGroupName
-                  - paramName: options
-                    paramOutput: nil
-                opName: NewListByResourceGroupPager
                 operation: *ref_462
                 operationGroup: *ref_390
                 originalFile: ''
-                pageableItemName: Value
-                responseOutput: >-
-                  armsignalr.ResourceInfoList{
-
-                  Value: []*armsignalr.ResourceInfo{
-
-                  {
-
-                  Name: to.Ptr("mySignalRService"),
-
-                  Type: to.Ptr("Microsoft.SignalRService/SignalR"),
-
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.SignalRService/SignalR/mySignalRService"),
-
-                  Location: to.Ptr("eastus"),
-
-                  Tags: map[string]*string{
-
-                  "key1": to.Ptr("value1"),
-
-                  },
-
-                  Identity: &armsignalr.ManagedIdentity{
-
-                  Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-
-                  PrincipalID: to.Ptr(subscriptionId),
-
-                  TenantID: to.Ptr(subscriptionId),
-
-                  },
-
-                  Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-
-                  Properties: &armsignalr.Properties{
-
-                  Cors: &armsignalr.CorsSettings{
-
-                  AllowedOrigins: []*string{
-
-                  to.Ptr("https://foo.com"),
-
-                  to.Ptr("https://bar.com")},
-
-                  },
-
-                  DisableAADAuth: to.Ptr(false),
-
-                  DisableLocalAuth: to.Ptr(false),
-
-                  ExternalIP: to.Ptr("10.0.0.1"),
-
-                  Features: []*armsignalr.Feature{
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("Serverless"),
-
-                  },
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("True"),
-
-                  },
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("False"),
-
-                  },
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("False"),
-
-                  }},
-
-                  HostName: to.Ptr("mysignalrservice.service.signalr.net"),
-
-                  NetworkACLs: &armsignalr.NetworkACLs{
-
-                  DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-
-                  PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-
-                  {
-
-                  Allow: []*armsignalr.SignalRRequestType{
-
-                  to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-
-                  Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-
-                  }},
-
-                  PublicNetwork: &armsignalr.NetworkACL{
-
-                  Allow: []*armsignalr.SignalRRequestType{
-
-                  to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-
-                  },
-
-                  },
-
-                  PrivateEndpointConnections: []*armsignalr.PrivateEndpointConnection{
-
-                  {
-
-                  Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-
-                  Type: to.Ptr("Microsoft.SignalRService/SignalR/privateEndpointConnections"),
-
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName +
-                  "/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-
-                  Properties: &armsignalr.PrivateEndpointConnectionProperties{
-
-                  PrivateEndpoint: &armsignalr.PrivateEndpoint{
-
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
-
-                  },
-
-                  PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
-
-                  ActionsRequired: to.Ptr("None"),
-
-                  Status: to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
-
-                  },
-
-                  ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
-
-                  },
-
-                  SystemData: &armsignalr.SystemData{
-
-                  CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  CreatedBy: to.Ptr("string"),
-
-                  CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  LastModifiedBy: to.Ptr("string"),
-
-                  LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  },
-
-                  }},
-
-                  ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
-
-                  PublicNetworkAccess: to.Ptr("Enabled"),
-
-                  PublicPort: to.Ptr[int32](443),
-
-                  ServerPort: to.Ptr[int32](443),
-
-                  TLS: &armsignalr.TLSSettings{
-
-                  ClientCertEnabled: to.Ptr(true),
-
-                  },
-
-                  Upstream: &armsignalr.ServerlessUpstreamSettings{
-
-                  Templates: []*armsignalr.UpstreamTemplate{
-
-                  {
-
-                  URLTemplate: to.Ptr("http://foo.com"),
-
-                  }},
-
-                  },
-
-                  Version: to.Ptr("1.0"),
-
-                  },
-
-                  SKU: &armsignalr.ResourceSKU{
-
-                  Name: to.Ptr("Standard_S1"),
-
-                  Capacity: to.Ptr[int32](1),
-
-                  Size: to.Ptr("S1"),
-
-                  Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
-
-                  },
-
-                  SystemData: &armsignalr.SystemData{
-
-                  CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  CreatedBy: to.Ptr("string"),
-
-                  CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  LastModifiedBy: to.Ptr("string"),
-
-                  LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  },
-
-                  }},
-
-                  }
-                responseType: ResourceInfoList
-                responseTypePointer: false
-                returnInfo:
-                  - '*runtime.Pager[ClientListByResourceGroupResponse]'
                 responses:
                   '200':
                     body:
@@ -20899,9 +19535,9 @@ testModel:
                                           schema: *ref_159
                                           elements:
                                             - schema: *ref_101
-                                              rawValue: https://foo.com
+                                              rawValue: 'https://foo.com'
                                             - schema: *ref_101
-                                              rawValue: https://bar.com
+                                              rawValue: 'https://bar.com'
                                           language: *ref_408
                                       language: *ref_409
                                     disableAadAuth:
@@ -21153,7 +19789,7 @@ testModel:
                                               properties:
                                                 urlTemplate:
                                                   schema: *ref_105
-                                                  rawValue: http://foo.com
+                                                  rawValue: 'http://foo.com'
                                                   language: *ref_447
                                           language: *ref_448
                                       language: *ref_449
@@ -21242,8 +19878,8 @@ testModel:
                         properties:
                           cors:
                             allowedOrigins:
-                              - https://foo.com
-                              - https://bar.com
+                              - 'https://foo.com'
+                              - 'https://bar.com'
                           disableAadAuth: false
                           disableLocalAuth: false
                           externalIP: 10.0.0.1
@@ -21297,7 +19933,7 @@ testModel:
                             clientCertEnabled: true
                           upstream:
                             templates:
-                              - urlTemplate: http://foo.com
+                              - urlTemplate: 'http://foo.com'
                           version: '1.0'
                         sku:
                           name: Standard_S1
@@ -21320,7 +19956,6 @@ testModel:
               exampleFile: ../examples/SignalR_ListBySubscription.json
               exampleModel:
                 name: ../examples/SignalR_ListBySubscription.json
-                checkResponse: false
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -21332,265 +19967,10 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_384
                     parameter: *ref_182
-                clientParametersOutput:
-                  - paramName: subscriptionID
-                    paramOutput: subscriptionId
-                factoryClientParametersOutput: []
-                isLRO: false
-                isMultiRespOperation: false
-                isPageable: *ref_460
                 methodParameters: []
-                methodParametersOutput:
-                  - paramName: options
-                    paramOutput: nil
-                opName: NewListBySubscriptionPager
                 operation: *ref_395
                 operationGroup: *ref_390
                 originalFile: ''
-                pageableItemName: Value
-                responseOutput: >-
-                  armsignalr.ResourceInfoList{
-
-                  Value: []*armsignalr.ResourceInfo{
-
-                  {
-
-                  Name: to.Ptr("mySignalRService"),
-
-                  Type: to.Ptr("Microsoft.SignalRService/SignalR"),
-
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService"),
-
-                  Location: to.Ptr("eastus"),
-
-                  Tags: map[string]*string{
-
-                  "key1": to.Ptr("value1"),
-
-                  },
-
-                  Identity: &armsignalr.ManagedIdentity{
-
-                  Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-
-                  PrincipalID: to.Ptr(subscriptionId),
-
-                  TenantID: to.Ptr(subscriptionId),
-
-                  },
-
-                  Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-
-                  Properties: &armsignalr.Properties{
-
-                  Cors: &armsignalr.CorsSettings{
-
-                  AllowedOrigins: []*string{
-
-                  to.Ptr("https://foo.com"),
-
-                  to.Ptr("https://bar.com")},
-
-                  },
-
-                  DisableAADAuth: to.Ptr(false),
-
-                  DisableLocalAuth: to.Ptr(false),
-
-                  ExternalIP: to.Ptr("10.0.0.1"),
-
-                  Features: []*armsignalr.Feature{
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("Serverless"),
-
-                  },
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("True"),
-
-                  },
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("False"),
-
-                  },
-
-                  {
-
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-
-                  Properties: map[string]*string{
-
-                  },
-
-                  Value: to.Ptr("False"),
-
-                  }},
-
-                  HostName: to.Ptr("mysignalrservice.service.signalr.net"),
-
-                  NetworkACLs: &armsignalr.NetworkACLs{
-
-                  DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-
-                  PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-
-                  {
-
-                  Allow: []*armsignalr.SignalRRequestType{
-
-                  to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-
-                  Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-
-                  }},
-
-                  PublicNetwork: &armsignalr.NetworkACL{
-
-                  Allow: []*armsignalr.SignalRRequestType{
-
-                  to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-
-                  },
-
-                  },
-
-                  PrivateEndpointConnections: []*armsignalr.PrivateEndpointConnection{
-
-                  {
-
-                  Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-
-                  Type: to.Ptr("Microsoft.SignalRService/SignalR/privateEndpointConnections"),
-
-                  ID: to.Ptr("/subscriptions/" + subscriptionId +
-                  "/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-
-                  Properties: &armsignalr.PrivateEndpointConnectionProperties{
-
-                  PrivateEndpoint: &armsignalr.PrivateEndpoint{
-
-                  ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
-
-                  },
-
-                  PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
-
-                  ActionsRequired: to.Ptr("None"),
-
-                  Status: to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
-
-                  },
-
-                  ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
-
-                  },
-
-                  SystemData: &armsignalr.SystemData{
-
-                  CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  CreatedBy: to.Ptr("string"),
-
-                  CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  LastModifiedBy: to.Ptr("string"),
-
-                  LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  },
-
-                  }},
-
-                  ProvisioningState: to.Ptr(armsignalr.ProvisioningStateSucceeded),
-
-                  PublicNetworkAccess: to.Ptr("Enabled"),
-
-                  PublicPort: to.Ptr[int32](443),
-
-                  ServerPort: to.Ptr[int32](443),
-
-                  TLS: &armsignalr.TLSSettings{
-
-                  ClientCertEnabled: to.Ptr(true),
-
-                  },
-
-                  Upstream: &armsignalr.ServerlessUpstreamSettings{
-
-                  Templates: []*armsignalr.UpstreamTemplate{
-
-                  {
-
-                  URLTemplate: to.Ptr("http://foo.com"),
-
-                  }},
-
-                  },
-
-                  Version: to.Ptr("1.0"),
-
-                  },
-
-                  SKU: &armsignalr.ResourceSKU{
-
-                  Name: to.Ptr("Standard_S1"),
-
-                  Capacity: to.Ptr[int32](1),
-
-                  Size: to.Ptr("S1"),
-
-                  Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
-
-                  },
-
-                  SystemData: &armsignalr.SystemData{
-
-                  CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  CreatedBy: to.Ptr("string"),
-
-                  CreatedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2015-02-03T04:05:06.000Z"); return t}()),
-
-                  LastModifiedBy: to.Ptr("string"),
-
-                  LastModifiedByType: to.Ptr(armsignalr.CreatedByTypeUser),
-
-                  },
-
-                  }},
-
-                  }
-                responseType: ResourceInfoList
-                responseTypePointer: false
-                returnInfo:
-                  - '*runtime.Pager[ClientListBySubscriptionResponse]'
                 responses:
                   '200':
                     body:
@@ -21669,9 +20049,9 @@ testModel:
                                           schema: *ref_159
                                           elements:
                                             - schema: *ref_101
-                                              rawValue: https://foo.com
+                                              rawValue: 'https://foo.com'
                                             - schema: *ref_101
-                                              rawValue: https://bar.com
+                                              rawValue: 'https://bar.com'
                                           language: *ref_408
                                       language: *ref_409
                                     disableAadAuth:
@@ -21923,7 +20303,7 @@ testModel:
                                               properties:
                                                 urlTemplate:
                                                   schema: *ref_105
-                                                  rawValue: http://foo.com
+                                                  rawValue: 'http://foo.com'
                                                   language: *ref_447
                                           language: *ref_448
                                       language: *ref_449
@@ -22011,8 +20391,8 @@ testModel:
                         properties:
                           cors:
                             allowedOrigins:
-                              - https://foo.com
-                              - https://bar.com
+                              - 'https://foo.com'
+                              - 'https://bar.com'
                           disableAadAuth: false
                           disableLocalAuth: false
                           externalIP: 10.0.0.1
@@ -22065,7 +20445,7 @@ testModel:
                             clientCertEnabled: true
                           upstream:
                             templates:
-                              - urlTemplate: http://foo.com
+                              - urlTemplate: 'http://foo.com'
                           version: '1.0'
                         sku:
                           name: Standard_S1
@@ -22088,47 +20468,16 @@ testModel:
               exampleFile: ../examples/Operations_List.json
               exampleModel:
                 name: ../examples/Operations_List.json
-                checkResponse: false
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
                       rawValue: 2021-06-01-preview
                       language: *ref_369
                     parameter: *ref_173
-                clientParametersOutput: []
-                factoryClientParametersOutput: []
-                isLRO: false
-                isMultiRespOperation: false
-                isPageable: *ref_383
                 methodParameters: []
-                methodParametersOutput:
-                  - paramName: options
-                    paramOutput: nil
-                opName: NewListPager
                 operation: *ref_370
                 operationGroup: *ref_371
                 originalFile: ''
-                pageableItemName: Value
-                responseOutput: |-
-                  armsignalr.OperationList{
-                  Value: []*armsignalr.Operation{
-                  {
-                  Name: to.Ptr("Microsoft.SignalRService/SignalR/read"),
-                  Display: &armsignalr.OperationDisplay{
-                  Description: to.Ptr("View the resource settings and configurations in the management portal or through API"),
-                  Operation: to.Ptr("Manage SignalR (read-only)"),
-                  Provider: to.Ptr("Microsoft.SignalRService"),
-                  Resource: to.Ptr("SignalR"),
-                  },
-                  IsDataAction: to.Ptr(false),
-                  Properties: &armsignalr.OperationProperties{
-                  },
-                  }},
-                  }
-                responseType: OperationList
-                responseTypePointer: false
-                returnInfo:
-                  - '*runtime.Pager[OperationsClientListResponse]'
                 responses:
                   '200':
                     body:
@@ -22137,7 +20486,7 @@ testModel:
                       properties:
                         nextLink:
                           schema: *ref_24
-                          rawValue: providers/Microsoft.SignalRService?$skipToken={opaqueString}
+                          rawValue: 'providers/Microsoft.SignalRService?$skipToken={opaqueString}'
                           language: *ref_372
                         value:
                           schema: *ref_152
@@ -22194,7 +20543,7 @@ testModel:
               responses:
                 '200':
                   body:
-                    nextLink: providers/Microsoft.SignalRService?$skipToken={opaqueString}
+                    nextLink: 'providers/Microsoft.SignalRService?$skipToken={opaqueString}'
                     value:
                       - name: Microsoft.SignalRService/SignalR/read
                         display:
@@ -22211,7 +20560,6 @@ testModel:
               exampleFile: ../examples/SignalR_Delete.json
               exampleModel:
                 name: ../examples/SignalR_Delete.json
-                checkResponse: false
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -22223,12 +20571,6 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_384
                     parameter: *ref_182
-                clientParametersOutput:
-                  - paramName: subscriptionID
-                    paramOutput: subscriptionId
-                factoryClientParametersOutput: []
-                isLRO: true
-                isMultiRespOperation: false
                 methodParameters:
                   - exampleValue:
                       schema: *ref_1
@@ -22240,23 +20582,9 @@ testModel:
                       rawValue: $(resourceName)
                       language: *ref_485
                     parameter: *ref_231
-                methodParametersOutput:
-                  - paramName: ctx
-                    paramOutput: ctx
-                  - paramName: resourceGroupName
-                    paramOutput: resourceGroupName
-                  - paramName: resourceName
-                    paramOutput: resourceName
-                  - paramName: options
-                    paramOutput: nil
-                opName: BeginDelete
                 operation: *ref_486
                 operationGroup: *ref_390
                 originalFile: ''
-                pollerType: ClientDeleteResponse
-                returnInfo:
-                  - ClientDeleteResponse
-                  - error
                 responses:
                   '200':
                     body:
@@ -22264,8 +20592,8 @@ testModel:
                       language: *ref_605
                   '202':
                     headers: &ref_607
-                      Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
-                      Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                      Azure-AsyncOperation: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...'
+                      Location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...'
                   '204': {}
               isManagementPlane: true
               outputVariables: {}
@@ -22289,8 +20617,7 @@ testModel:
           variables:
             resourceName:
               type: string
-          variablesOutput:
-            resourceName:
+            signalRId:
               type: string
       scope: ResourceGroup
       secretVariables: []
@@ -22298,23 +20625,13 @@ testModel:
       variables:
         armEndpoint:
           type: string
-          value: https://management.azure.com
+          value: 'https://management.azure.com'
         globalLocation:
           type: string
           value: Global
         publicPort:
           type: int
           value: 6910
-      variablesOutput:
-        armEndpoint:
-          type: string
-          value: '"https://management.azure.com"'
-        globalLocation:
-          type: string
-          value: '"Global"'
-        publicPort:
-          type: int
-          value: '6910'
 language:
   default:
     name: SignalRManagementClient

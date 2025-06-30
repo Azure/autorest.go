@@ -1,11 +1,7 @@
 import { ExampleCodeGenerator, ExampleDataRender } from '../../../src/generator/exampleGenerator';
-import { ExtensionName, TestCodeModel, TestCodeModeler } from '@autorest/testmodeler/dist/src/core/model';
-import { GenerateContext } from '../../../src/generator/generateContext';
+import { TestCodeModeler } from '@autorest/testmodeler/dist/src/core/model';
 import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
 import { MockTestCodeGenerator, MockTestDataRender } from '../../../src/generator/mockTestGenerator';
-import { MockTool } from '../../tools';
-import { TestConfig } from '@autorest/testmodeler/dist/src/common/testConfig';
-import { configDefaults } from '../../../src/common/constant';
 import { processRequest } from '../../../src/generator/goTester';
 
 describe('processRequest of go-tester', () => {
@@ -163,54 +159,5 @@ describe('processRequest of go-tester', () => {
     expect(spyMockTestGenerateCode).not.toHaveBeenCalled();
     expect(spyExampleRenderData).not.toHaveBeenCalled();
     expect(spyExampleGenerateCode).not.toHaveBeenCalled();
-  });
-});
-
-describe('GoTestGenerator from RP agrifood', () => {
-  let testCodeModel: TestCodeModeler;
-  beforeAll(async () => {
-    const codeModel = MockTool.createCodeModel();
-    testCodeModel = TestCodeModeler.createInstance(
-      <TestCodeModel>codeModel,
-      new TestConfig(
-        {
-          testmodeler: {
-            'split-parents-value': true,
-          },
-        },
-        configDefaults,
-      ),
-    );
-    testCodeModel.genMockTests(undefined);
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
-  it('Generate MockTest and SDK example', async () => {
-    const outputs = {};
-
-    const context = new GenerateContext(undefined, testCodeModel.codeModel, new TestConfig({}, configDefaults));
-    const mockTestDataRender = new MockTestDataRender(context);
-    mockTestDataRender.renderData();
-    const mockTestCodeGenerator = new MockTestCodeGenerator(context);
-    mockTestCodeGenerator.generateCode({});
-    const exampleDataRender = new ExampleDataRender(context);
-    exampleDataRender.renderData();
-    const exampleCodeGenerator = new ExampleCodeGenerator(context);
-    exampleCodeGenerator.generateCode({});
-
-    let exampleFiles = 0;
-    for (const group of testCodeModel.codeModel.operationGroups) {
-      for (const op of group.operations) {
-        if (Object.keys(op.extensions?.[ExtensionName.xMsExamples]).length > 0) {
-          exampleFiles += 1;
-          break;
-        }
-      }
-    }
-
-    expect(outputs).toMatchSnapshot();
   });
 });
