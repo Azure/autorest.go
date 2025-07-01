@@ -8,7 +8,7 @@
       "comments": {
         "patch": [
           {
-            "comment": "Added switch `--factory-gather-all-params` to control the `NewClientFactory` constructor parameters. This switch allows gathering either only common parameters of clients or all parameters of clients. The default value is `True`."
+            "comment": "upgrade @autorest/testmodeler for compatible with node20"
           }
         ]
       }
