@@ -367,7 +367,7 @@ function generateJSONMarshallerBody(modelType: go.Model | go.PolymorphicModel, m
       if (go.isTimeType(field.type)) {
         populate += capitalize(field.type.format);
         modelDef.SerDe.needsJSONPopulate = true;
-      } else if (go.isPrimitiveType(field.type) && field.type.typeName === 'any') {
+      } else if (go.isAnyType(field.type)) {
         populate += 'Any';
         modelDef.SerDe.needsJSONPopulateAny = true;
       } else {

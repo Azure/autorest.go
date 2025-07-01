@@ -123,7 +123,7 @@ function populateMethod(op: m4.Operation, method: go.MethodType | go.NextPageMet
 function adaptHeaderScalarType(schema: m4.Schema, forParam: boolean): go.HeaderScalarType {
   // for header params, we never pass the element type by pointer
   const type = adaptPossibleType(schema, forParam);
-  if (go.isInterfaceType(type) || go.isMapType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
+  if (go.isAnyType(type) || go.isInterfaceType(type) || go.isMapType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
     throw new Error(`unexpected header parameter type ${schema.type}`);
   }
   return type;
@@ -131,7 +131,7 @@ function adaptHeaderScalarType(schema: m4.Schema, forParam: boolean): go.HeaderS
 
 function adaptPathScalarParameterType(schema: m4.Schema): go.PathScalarParameterType {
   const type = adaptPossibleType(schema);
-  if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isQualifiedType(type)) {
+  if (go.isAnyType(type) || go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isQualifiedType(type)) {
     throw new Error(`unexpected path parameter type ${schema.type}`);
   }
   return type;
@@ -139,7 +139,7 @@ function adaptPathScalarParameterType(schema: m4.Schema): go.PathScalarParameter
 
 function adaptQueryScalarParameterType(schema: m4.Schema): go.QueryScalarParameterType {
   const type = adaptPossibleType(schema);
-  if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isQualifiedType(type)) {
+  if (go.isAnyType(type) || go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isQualifiedType(type)) {
     throw new Error(`unexpected query parameter type ${schema.type}`);
   }
   return type;
@@ -235,7 +235,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
     respEnv.result = new go.HeadAsBooleanResult(resultProp.language.go!.name);
   } else if (!resultProp.language.go!.embeddedType) {
     const resultType = adaptPossibleType(resultProp.schema);
-    if (go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isQualifiedType(resultType)) {
+    if (go.isAnyType(resultType) || go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isQualifiedType(resultType)) {
       throw new Error(`invalid monomorphic result type ${go.getTypeDeclaration(resultType)}`);
     }
     respEnv.result = new go.MonomorphicResult(resultProp.language.go!.name, adaptResultFormat(helpers.getSchemaResponse(op)!.protocol), resultType, resultProp.language.go!.byValue);

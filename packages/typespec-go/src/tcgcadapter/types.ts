@@ -312,7 +312,7 @@ export class typeAdapter {
         if (anyType) {
           return anyType;
         }
-        anyType = new go.Scalar('any');
+        anyType = new go.Any();
         this.types.set('any', anyType);
         return anyType;
       }
