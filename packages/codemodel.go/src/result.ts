@@ -139,7 +139,7 @@ export interface MonomorphicResult {
 }
 
 /** the possible monomorphic result types */
-export type MonomorphicResultType = type.Constant | type.EncodedBytes | type.Map | type.Scalar | type.Slice | type.String | type.Time;
+export type MonomorphicResultType = type.Any | type.Constant | type.EncodedBytes | type.Map | type.Scalar | type.Slice | type.String | type.Time;
 
 /**
  * used for methods that return a discriminated type.
@@ -192,7 +192,7 @@ export type ResultFormat = 'JSON' | 'XML' | 'Text';
 export function getResultType(result: Result): type.Interface | type.Model | MonomorphicResultType | type.Scalar | type.QualifiedType {
   switch (result.kind) {
     case 'anyResult':
-      return new type.Scalar('any');
+      return new type.Any();
     case 'binaryResult':
       return new type.QualifiedType('ReadCloser', 'io');
     case 'headAsBooleanResult':

@@ -793,7 +793,7 @@ export class clientAdapter {
   private adaptHeaderScalarType(sdkType: tcgc.SdkType, forParam: boolean): go.HeaderScalarType {
     // for header params, we never pass the element type by pointer
     const type = this.ta.getPossibleType(sdkType, forParam, false);
-    if (go.isInterfaceType(type) || go.isMapType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
+    if (go.isAnyType(type) || go.isInterfaceType(type) || go.isMapType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
       throw new AdapterError('InternalError', `unexpected header parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
     }
     return type;
@@ -801,7 +801,7 @@ export class clientAdapter {
 
   private adaptPathScalarParameterType(sdkType: tcgc.SdkType): go.PathScalarParameterType {
     const type = this.ta.getPossibleType(sdkType, false, false);
-    if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
+    if (go.isAnyType(type) || go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
       throw new AdapterError('InternalError', `unexpected path parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
     }
     return type;
@@ -809,7 +809,7 @@ export class clientAdapter {
 
   private adaptQueryScalarParameterType(sdkType: tcgc.SdkType): go.QueryScalarParameterType {
     const type = this.ta.getPossibleType(sdkType, false, false);
-    if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
+    if (go.isAnyType(type) || go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
       throw new AdapterError('InternalError', `unexpected query parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
     }
     return type;
@@ -885,7 +885,7 @@ export class clientAdapter {
           if (response.bodyValue && method.responseEnvelope.result) {
             switch (method.responseEnvelope.result.kind) {
               case 'anyResult':
-                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.Scalar('any'));
+                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.Any());
                 break;
               case 'binaryResult':
                 goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.Scalar('byte'));
@@ -930,7 +930,7 @@ export class clientAdapter {
       case 'null':
         return new go.NullExample(goType);
       case 'unknown':
-        if (go.isPrimitiveType(goType) && goType.typeName === 'any') {
+        if (go.isAnyType(goType)) {
           return new go.AnyExample(exampleType.value);
         }
         break;

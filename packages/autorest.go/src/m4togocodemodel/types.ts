@@ -289,7 +289,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (anyType) {
         return anyType;
       }
-      anyType = new go.Scalar('any');
+      anyType = new go.Any();
       types.set(m4.SchemaType.Any, anyType);
       return anyType;
     }
@@ -309,7 +309,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (anyObject) {
         return anyObject;
       }
-      anyObject = new go.Map(new go.Scalar('any'), true);
+      anyObject = new go.Map(new go.Any(), true);
       types.set(m4.SchemaType.AnyObject, anyObject);
       return anyObject;
     }

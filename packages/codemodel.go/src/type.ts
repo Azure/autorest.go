@@ -15,7 +15,12 @@ export interface Docs {
 }
 
 /** defines types that go across the wire */
-export type PossibleType = Constant | EncodedBytes | Interface | Literal | Map | Model | PolymorphicModel | QualifiedType | Scalar | Slice | String | Time;
+export type PossibleType = Any | Constant | EncodedBytes | Interface | Literal | Map | Model | PolymorphicModel | QualifiedType | Scalar | Slice | String | Time;
+
+/** the Go any type */
+export interface Any {
+  isAny: true;
+}
 
 /** a const type definition */
 export interface Constant {
@@ -150,7 +155,7 @@ export interface Scalar {
 }
 
 /** the supported Go scalar types */
-export type ScalarType = 'any' | 'bool' | 'byte' | 'float32' | 'float64' | 'int8' | 'int16' | 'int32' | 'int64' | 'rune' | 'uint8' | 'uint16' | 'uint32' | 'uint64';
+export type ScalarType = 'bool' | 'byte' | 'float32' | 'float64' | 'int8' | 'int16' | 'int32' | 'int64' | 'rune' | 'uint8' | 'uint16' | 'uint32' | 'uint64';
 
 /** a Go string */
 export interface String {
@@ -234,6 +239,10 @@ export interface XMLInfo {
   text: boolean;
 }
 
+export function isAnyType(type: PossibleType): type is Any {
+  return (<Any>type).isAny !== undefined;
+}
+
 export function isBytesType(type: PossibleType): type is EncodedBytes {
   return (<EncodedBytes>type).encoding !== undefined;
 }
@@ -303,7 +312,9 @@ export function getLiteralValueTypeName(literal: LiteralType): string {
 }
 
 export function getTypeDeclaration(type: PossibleType, pkgName?: string): string {
-  if (isPrimitiveType(type)) {
+  if (isAnyType(type)) {
+    return 'any';
+  } else if (isPrimitiveType(type)) {
     return type.typeName;
   } else if (isQualifiedType(type)) {
     let pkg = type.packageName;
@@ -360,6 +371,12 @@ export class Struct implements Struct {
     this.fields = new Array<StructField>();
     this.name = name;
     this.docs = {};
+  }
+}
+
+export class Any implements Any {
+  constructor() {
+    this.isAny = true;
   }
 }
 

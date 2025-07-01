@@ -365,7 +365,6 @@ function getPointerValue(type: go.PossibleType, valueString: string, byValue: bo
   if (go.isPrimitiveType(type)) {
     let prtType = '';
     switch (type.typeName) {
-      case 'any':
       case `bool`:
       case `byte`:
       case `rune`:
@@ -376,7 +375,7 @@ function getPointerValue(type: go.PossibleType, valueString: string, byValue: bo
     }
     if (imports) imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
     return `to.${prtType}(${valueString})`;
-  } else if (go.isStringType(type)) {
+  } else if (go.isAnyType(type) || go.isStringType(type)) {
     if (imports) imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
     return `to.Ptr(${valueString})`;
   } else if (go.isConstantType(type) || go.isTimeType(type)) {
@@ -422,10 +421,10 @@ function jsonToGo(value: any, indent: string): string {
 }
 
 function generateFakeExample(goType: go.PossibleType, name?: string): go.ExampleType {
-  if (go.isPrimitiveType(goType)) {
+  if (go.isAnyType(goType)) {
+    return new go.NullExample(goType);
+  } else if (go.isPrimitiveType(goType)) {
     switch (goType.typeName) {
-      case 'any':
-        return new go.NullExample(goType);
       case 'bool':
         return new go.BooleanExample(false, goType);
       case 'byte':

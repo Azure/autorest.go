@@ -13,7 +13,7 @@ export type ExampleType = AnyExample | ArrayExample | BooleanExample | Dictionar
 export interface AnyExample {
   kind: 'any';
   value: any;
-  type: type.PossibleType;
+  type: type.Any;
 }
 
 export interface ArrayExample {
@@ -103,7 +103,7 @@ export class AnyExample implements AnyExample {
   constructor(value: any) {
     this.kind = 'any';
     this.value = value;
-    this.type = new type.Scalar('any');
+    this.type = new type.Any();
   }
 }
 
