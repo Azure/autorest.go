@@ -147,7 +147,7 @@ function adaptQueryScalarParameterType(schema: m4.Schema): go.QueryScalarParamet
 
 function adaptURIPrameterType(schema: m4.Schema): go.URIParameterType {
   const type = adaptPossibleType(schema);
-  if (!go.isConstantType(type) && !go.isPrimitiveType(type)) {
+  if (!go.isConstantType(type) && !go.isPrimitiveType(type) && !go.isStringType(type)) {
     throw new Error(`unexpected URI parameter type ${schema.type}`);
   }
   return type;

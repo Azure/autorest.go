@@ -159,7 +159,7 @@ function getDiscriminatorLiteral(discriminatorValue: string): go.Literal {
   let discriminatorLiteral: go.Literal;
   // the discriminatorValue is either a quoted string or a constant (i.e. enum) value
   if (discriminatorValue[0] === '"') {
-    discriminatorLiteral = createLiteralValue(new go.Scalar('string'), discriminatorValue);
+    discriminatorLiteral = createLiteralValue(new go.String(), discriminatorValue);
   } else {
     // find the corresponding constant value
     const value = constValues.get(discriminatorValue);
@@ -318,7 +318,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (stringType) {
         return stringType;
       }
-      stringType = new go.Scalar('string');
+      stringType = new go.String();
       types.set(m4.SchemaType.ArmId, stringType);
       return stringType;
     }
@@ -374,7 +374,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (credType) {
         return credType;
       }
-      credType = new go.Scalar('string');
+      credType = new go.String();
       types.set(m4.SchemaType.Credential, credType);
       return credType;
     }
@@ -406,7 +406,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (duration) {
         return duration;
       }
-      duration = new go.Scalar('string');
+      duration = new go.String();
       types.set(m4.SchemaType.Duration, duration);
       return duration;
     }
@@ -457,7 +457,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (odataType) {
         return odataType;
       }
-      odataType = new go.Scalar('string');
+      odataType = new go.String();
       types.set(m4.SchemaType.ODataQuery, odataType);
       return odataType;
     }
@@ -468,7 +468,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (stringType) {
         return stringType;
       }
-      stringType = new go.Scalar('string');
+      stringType = new go.String();
       types.set(m4.SchemaType.String, stringType);
       return stringType;
     }
@@ -477,7 +477,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (uriType) {
         return uriType;
       }
-      uriType = new go.Scalar('string');
+      uriType = new go.String();
       types.set(m4.SchemaType.Uri, uriType);
       return uriType;
     }
@@ -486,7 +486,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (uuid) {
         return uuid;
       }
-      uuid = new go.Scalar('string');
+      uuid = new go.String();
       types.set(m4.SchemaType.Uuid, uuid);
       return uuid;
     }
@@ -576,7 +576,7 @@ function adaptLiteralValue(constSchema: m4.ConstantSchema): go.Literal {
       if (literalString) {
         return <go.Literal>literalString;
       }
-      literalString = new go.Literal(new go.Scalar('string'), constSchema.value.value);
+      literalString = new go.Literal(new go.String(), constSchema.value.value);
       types.set(keyName, literalString);
       return literalString;
     }

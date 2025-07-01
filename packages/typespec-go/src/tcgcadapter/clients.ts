@@ -167,7 +167,7 @@ export class clientAdapter {
 
   private adaptURIParam(sdkParam: tcgc.SdkPathParameter): go.URIParameter {
     const paramType = this.ta.getPossibleType(sdkParam.type, true, false);
-    if (!go.isConstantType(paramType) && !go.isPrimitiveType(paramType)) {
+    if (!go.isConstantType(paramType) && !go.isPrimitiveType(paramType) && !go.isStringType(paramType)) {
       throw new AdapterError('UnsupportedTsp', `unsupported URI parameter type ${go.getTypeDeclaration(paramType)}`, sdkParam.__raw?.node ?? NoTarget);
     }
     // TODO: follow up with tcgc if serializedName should actually be optional
@@ -484,7 +484,7 @@ export class clientAdapter {
     if (param.isApiVersionParam && param.clientDefaultValue) {
       // we emit the api version param inline as a literal, never as a param.
       // the ClientOptions.APIVersion setting is used to change the version.
-      const paramType = new go.Literal(new go.Scalar('string'), param.clientDefaultValue);
+      const paramType = new go.Literal(new go.String(), param.clientDefaultValue);
       switch (param.kind) {
         case 'header':
           return new go.HeaderScalarParameter(param.name, param.serializedName, paramType, 'literal', true, 'method');
@@ -910,7 +910,7 @@ export class clientAdapter {
   private adaptExampleType(exampleType: tcgc.SdkExampleValue, goType: go.PossibleType): go.ExampleType {
     switch (exampleType.kind) {
       case 'string':
-        if (go.isConstantType(goType) || go.isBytesType(goType) || go.isLiteralValue(goType) || go.isTimeType(goType) || go.isPrimitiveType(goType)) {
+        if (go.isConstantType(goType) || go.isBytesType(goType) || go.isLiteralValue(goType) || go.isTimeType(goType) || go.isStringType(goType)) {
           return new go.StringExample(exampleType.value, goType);
         }
         if (go.isQualifiedType(goType)) {

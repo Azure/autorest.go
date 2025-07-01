@@ -200,7 +200,7 @@ export class typeAdapter {
         if (stringType) {
           return stringType;
         }
-        stringType = new go.Scalar('string');
+        stringType = new go.String();
         this.types.set(stringKey, stringType);
         return stringType;
       }
@@ -415,7 +415,7 @@ export class typeAdapter {
         if (stringType) {
           return stringType;
         }
-        stringType = new go.Scalar('string');
+        stringType = new go.String();
         this.types.set(stringKey, stringType);
         return stringType;
       }
@@ -749,7 +749,7 @@ export class typeAdapter {
         if (literalString) {
           return <go.Literal>literalString;
         }
-        literalString = new go.Literal(new go.Scalar('string'), constType.value);
+        literalString = new go.Literal(new go.String(), constType.value);
         this.types.set(keyName, literalString);
         return literalString;
       }
@@ -924,7 +924,7 @@ export function adaptXMLInfo(decorators: Array<tcgc.DecoratorInfo>, field?: go.M
       case 'TypeSpec.Xml.@unwrapped':
         // unwrapped can only be applied fields
         if (field) {
-          if (go.isPrimitiveType(field.type) && field.type.typeName === 'string') {
+          if (go.isStringType(field.type)) {
             // an unwrapped string means it's text
             xmlInfo.text = true;  
           } else if (go.isSliceType(field.type)) {

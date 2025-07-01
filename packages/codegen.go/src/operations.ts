@@ -280,13 +280,13 @@ function formatHeaderResponseValue(headerResp: go.HeaderScalarResponse | go.Head
       } else {
         text += `\t\t${name}, err := strconv.ParseFloat(val, 64)\n`;
       }
-    } else if (headerResp.type.typeName === 'string') {
-      text += `\t\t${respObj}.${headerResp.fieldName} = &val\n`;
-      text += '\t}\n';
-      return text;
     } else {
       throw new CodegenError('InternalError', `unhandled primitive type ${headerResp.type.typeName}`);
     }
+  } else if (go.isStringType(headerResp.type)) {
+    text += `\t\t${respObj}.${headerResp.fieldName} = &val\n`;
+    text += '\t}\n';
+    return text;
   } else if (go.isTimeType(headerResp.type)) {
     imports.add('time');
     if (headerResp.type.format === 'dateType') {
@@ -591,7 +591,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
         return type.type === 'string';
       };
       // TODO: https://github.com/Azure/autorest.go/issues/1593
-      if (pp.kind === 'pathScalarParam' && ((go.isPrimitiveType(pp.type) && pp.type.typeName === 'string' || choiceIsString(pp.type)) && pp.isEncoded)) {
+      if (pp.kind === 'pathScalarParam' && ((go.isStringType(pp.type) || choiceIsString(pp.type)) && pp.isEncoded)) {
         const paramName = helpers.getParamName(pp);
         imports.add('errors');
         text += `\tif ${paramName} == "" {\n`;
@@ -671,7 +671,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
             imports.add('fmt');
             queryVal = 'fmt.Sprintf("%d", qv)';
           }
-        } else if (go.isPrimitiveType(arrayQP.elementType) && arrayQP.elementType.typeName === 'string') {
+        } else if (go.isStringType(arrayQP.elementType)) {
           queryVal = 'qv';
         } else {
           imports.add('fmt');

@@ -229,7 +229,7 @@ export function formatParamValue(param: go.MethodParameter, imports: ImportManag
         return content;
       }
       const separator = getDelimiterForCollectionFormat(param.collectionFormat);
-      if (go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
+      if (go.isStringType(param.type.elementType)) {
         imports.add('strings');
         return `strings.Join(${paramName}, "${separator}")`;
       } else if (go.isBytesType(param.type.elementType)) {
@@ -338,7 +338,7 @@ export function formatLiteralValue(value: go.Literal, withCast: boolean): string
     return (<go.ConstantValue>value.literal).name;
   } else if (go.isPrimitiveType(value.type)) {
     // if it's a string, we want the uncasted version to include quotes
-    if (!withCast && value.type.typeName !== 'string') {
+    if (!withCast) {
       return `${value.literal}`;
     }
     switch (value.type.typeName) {
@@ -350,15 +350,15 @@ export function formatLiteralValue(value: go.Literal, withCast: boolean): string
         return `int32(${value.literal})`;
       case 'int64':
         return `int64(${value.literal})`;
-      case 'string':
-        if (value.literal[0] === '"') {
-          // string is already quoted
-          return value.literal;
-        }
-        return `"${value.literal}"`;
       default:
         return value.literal;
     }
+  } else if (go.isStringType(value.type)) {
+    if (value.literal[0] === '"') {
+      // string is already quoted
+      return value.literal;
+    }
+    return `"${value.literal}"`;
   } else if (go.isTimeType(value.type)) {
     return `"${value.literal}"`;
   }

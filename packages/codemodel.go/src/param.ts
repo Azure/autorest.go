@@ -112,7 +112,7 @@ export interface HeaderScalarParameter extends ParameterBase {
 }
 
 /** defines the possible types for a scalar header */
-export type HeaderScalarType = type.Constant | type.EncodedBytes | type.Literal | type.Scalar | type.Time;
+export type HeaderScalarType = type.Constant | type.EncodedBytes | type.Literal | type.Scalar | type.String | type.Time;
 
 /** parameter goes in multipart/form body */
 export interface MultipartFormBodyParameter extends ParameterBase {
@@ -207,7 +207,7 @@ export interface PathScalarParameter extends ParameterBase {
 }
 
 /** defines the possible types for a PathScalarParameter */
-export type PathScalarParameterType = type.Constant | type.EncodedBytes | type.Literal | type.Scalar | type.Time;
+export type PathScalarParameterType = type.Constant | type.EncodedBytes | type.Literal | type.Scalar | type.String | type.Time;
 
 /** a collection of values that go in the HTTP query string */
 export interface QueryCollectionParameter extends ParameterBase {
@@ -241,7 +241,7 @@ export interface QueryScalarParameter extends ParameterBase {
 }
 
 /** defines the possible types for a QueryScalarParameter */
-export type QueryScalarParameterType = type.Constant | type.EncodedBytes | type.Literal | type.Scalar | type.Time;
+export type QueryScalarParameterType = type.Constant | type.EncodedBytes | type.Literal | type.Scalar | type.String | type.Time;
 
 /** the synthesized resume token parameter for LROs */
 export interface ResumeTokenParameter extends ParameterBase {
@@ -260,7 +260,7 @@ export interface URIParameter extends ParameterBase {
 }
 
 /** defines the possible types for a URIParameter */
-export type URIParameterType = type.Constant | type.Scalar;
+export type URIParameterType = type.Constant | type.Scalar | type.String;
 
 /** narrows style to a ClientSideDefault within the conditional block */
 export function isClientSideDefault(style: ParameterStyle): style is ClientSideDefault {
@@ -481,14 +481,14 @@ export class QueryScalarParameter extends ParameterBase implements QueryScalarPa
 
 export class ResumeTokenParameter extends ParameterBase implements ResumeTokenParameter {
   constructor() {
-    super('ResumeToken', new type.Scalar('string'), 'optional', true, 'method');
+    super('ResumeToken', new type.String(), 'optional', true, 'method');
     this.kind = 'resumeTokenParam';
     this.docs.summary = 'Resumes the long-running operation from the provided token.';
   }
 }
 
 export class URIParameter extends ParameterBase implements URIParameter {
-  constructor(name: string, uriPathSegment: string, type: type.Constant | type.Scalar, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
+  constructor(name: string, uriPathSegment: string, type: URIParameterType, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
     super(name, type, style, byValue, location);
     this.kind = 'uriParam';
     this.uriPathSegment = uriPathSegment;
