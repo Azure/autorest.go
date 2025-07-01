@@ -238,7 +238,7 @@ export function formatParamValue(param: go.MethodParameter, imports: ImportManag
         return emitConvertOver(param.name, `base64.${formatBytesEncoding(param.type.elementType.encoding)}Encoding.EncodeToString(${param.name}[i])`);
       } else if (go.isTimeType(param.type.elementType)) {
         imports.add('strings');
-        return emitConvertOver(param.name, `${param.type.elementType.dateTimeFormat}(${param.name}[i]).String()`);
+        return emitConvertOver(param.name, `${param.type.elementType.format}(${param.name}[i]).String()`);
       } else {
         imports.add('fmt');
         imports.add('strings');
@@ -247,7 +247,7 @@ export function formatParamValue(param: go.MethodParameter, imports: ImportManag
     }
   }
 
-  if (go.isTimeType(param.type) && param.type.dateTimeFormat !== 'timeUnix') {
+  if (go.isTimeType(param.type) && param.type.format !== 'timeUnix') {
     // for most time types we call methods on time.Time which is why we remove the dereference.
     // however, for unix time, we cast to our unixTime helper first so we must keep the dereference.
     if (!go.isRequiredParameter(param) && paramName[0] === '*') {
@@ -306,16 +306,16 @@ export function formatValue(paramName: string, type: go.PossibleType, imports: I
       return `strconv.FormatFloat(${star}${paramName}, 'f', -1, 64)`;
     }
   } else if (go.isTimeType(type)) {
-    if (type.dateTimeFormat === 'dateType') {
+    if (type.format === 'dateType') {
       return `${paramName}.Format("${dateFormat}")`;
-    } else if (type.dateTimeFormat === 'timeUnix') {
+    } else if (type.format === 'timeUnix') {
       return `timeUnix(${star}${paramName}).String()`;
-    } else if (type.dateTimeFormat === 'timeRFC3339') {
+    } else if (type.format === 'timeRFC3339') {
       return `timeRFC3339(${star}${paramName}).String()`;
     } else {
       imports.add('time');
       let format = datetimeRFC3339Format;
-      if (type.dateTimeFormat === 'dateTimeRFC1123') {
+      if (type.format === 'dateTimeRFC1123') {
         format = datetimeRFC1123Format;
       }
       return `${paramName}.Format(${format})`;
@@ -333,7 +333,7 @@ export function formatValue(paramName: string, type: go.PossibleType, imports: I
 // returns the clientDefaultValue of the specified param.
 // this is usually the value in quotes (i.e. a string) however
 // it could also be a constant.
-export function formatLiteralValue(value: go.LiteralValue, withCast: boolean): string {
+export function formatLiteralValue(value: go.Literal, withCast: boolean): string {
   if (go.isConstantType(value.type)) {
     return (<go.ConstantValue>value.literal).name;
   } else if (go.isPrimitiveType(value.type)) {
@@ -393,7 +393,7 @@ export function getResultFieldName(method: go.MethodType): string {
     case 'modelResult':
       return result.modelType.name;
     case 'polymorphicResult':
-      return result.interfaceType.name;
+      return result.interface.name;
   }
 }
 
@@ -666,7 +666,7 @@ const serDeFormatCache = new Map<string, SerDeFormat>();
 
 // returns the wire format for the named model.
 // at present this assumes the formats to be mutually exclusive.
-export function getSerDeFormat(model: go.ModelType | go.PolymorphicType, codeModel: go.CodeModel): SerDeFormat {
+export function getSerDeFormat(model: go.Model | go.PolymorphicModel, codeModel: go.CodeModel): SerDeFormat {
   let serDeFormat = serDeFormatCache.get(model.name);
   if (serDeFormat) {
     return serDeFormat;
@@ -728,7 +728,7 @@ export function getSerDeFormat(model: go.ModelType | go.PolymorphicType, codeMod
           }
           break;
         case 'polymorphicResult':
-          recursiveWalkModelFields(resultType.interfaceType, resultType.format);
+          recursiveWalkModelFields(resultType.interface, resultType.format);
           break;
       }
     }

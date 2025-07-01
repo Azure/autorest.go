@@ -66,7 +66,7 @@ export interface HeaderMapResponse {
   docs: type.Docs;
 
   /** the type of the response header */
-  type: type.MapType;
+  type: type.Map;
 
   /** the header prefix for each header name in type */
   headerName: string;
@@ -103,7 +103,7 @@ export interface ModelResult {
   docs: type.Docs;
 
   /** the type returned in the response envelope */
-  modelType: type.ModelType;
+  modelType: type.Model;
 
   /** the format in which the result is returned */
   format: ModelResultFormat;
@@ -139,7 +139,7 @@ export interface MonomorphicResult {
 }
 
 /** the possible monomorphic result types */
-export type MonomorphicResultType = type.BytesType | type.ConstantType | type.MapType | type.PrimitiveType | type.SliceType | type.TimeType;
+export type MonomorphicResultType = type.Constant | type.EncodedBytes | type.Map | type.Scalar | type.Slice | type.Time;
 
 /**
  * used for methods that return a discriminated type.
@@ -152,7 +152,7 @@ export interface PolymorphicResult {
   docs: type.Docs;
 
   /** the interface type used for the discriminated union of possible types */
-  interfaceType: type.InterfaceType;
+  interface: type.Interface;
 
   /**
    * the format in which the result is returned.
@@ -189,20 +189,20 @@ export interface ResponseEnvelope {
 export type ResultFormat = 'JSON' | 'XML' | 'Text';
 
 /** returns the underlying type used for the specified result type */
-export function getResultType(result: Result): type.InterfaceType | type.ModelType | MonomorphicResultType | type.PrimitiveType | type.QualifiedType {
+export function getResultType(result: Result): type.Interface | type.Model | MonomorphicResultType | type.Scalar | type.QualifiedType {
   switch (result.kind) {
     case 'anyResult':
-      return new type.PrimitiveType('any');
+      return new type.Scalar('any');
     case 'binaryResult':
       return new type.QualifiedType('ReadCloser', 'io');
     case 'headAsBooleanResult':
-      return new type.PrimitiveType('bool');
+      return new type.Scalar('bool');
     case 'modelResult':
       return result.modelType;
     case 'monomorphicResult':
       return result.monomorphicType;
     case 'polymorphicResult':
-      return result.interfaceType;
+      return result.interface;
   }
 }
 
@@ -236,7 +236,7 @@ export class HeadAsBooleanResult implements HeadAsBooleanResult {
 }
 
 export class HeaderMapResponse implements HeaderMapResponse {
-  constructor(fieldName: string, type: type.MapType, headerName: string) {
+  constructor(fieldName: string, type: type.Map, headerName: string) {
     this.kind = 'headerMapResponse';
     this.fieldName = fieldName;
     this.type = type;
@@ -257,7 +257,7 @@ export class HeaderScalarResponse implements HeaderScalarResponse {
 }
 
 export class ModelResult implements ModelResult {
-  constructor(type: type.ModelType, format: ModelResultFormat) {
+  constructor(type: type.Model, format: ModelResultFormat) {
     this.kind = 'modelResult';
     this.modelType = type;
     this.format = format;
@@ -277,9 +277,9 @@ export class MonomorphicResult implements MonomorphicResult {
 }
 
 export class PolymorphicResult implements PolymorphicResult {
-  constructor(type: type.InterfaceType) {
+  constructor(type: type.Interface) {
     this.kind = 'polymorphicResult';
-    this.interfaceType = type;
+    this.interface = type;
     this.format = 'JSON';
     this.docs = {};
   }

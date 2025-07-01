@@ -41,7 +41,7 @@ export interface BodyParameter extends ParameterBase {
 /** represents parameters that have a default value on the client side */
 export interface ClientSideDefault {
   /** the literal used for the client-side default value */
-  defaultValue: type.LiteralValue;
+  defaultValue: type.Literal;
 }
 
 /** indicates how a collection is formatted on the wire */
@@ -58,7 +58,7 @@ export interface FormBodyCollectionParameter extends ParameterBase {
   formDataName: string;
 
   /** the type of the parameter */
-  type: type.SliceType;
+  type: type.Slice;
 
   /** the format of the collection */
   collectionFormat: ExtendedCollectionFormat;
@@ -80,7 +80,7 @@ export interface HeaderCollectionParameter extends ParameterBase {
   headerName: string;
 
   /** the collection of header param values */
-  type: type.SliceType;
+  type: type.Slice;
 
   /** the format of the collection */
   collectionFormat: CollectionFormat;
@@ -97,7 +97,7 @@ export interface HeaderMapParameter extends ParameterBase {
   headerName: string;
 
   /** the type of the param */
-  type: type.MapType;
+  type: type.Map;
 }
 
 /** a value that goes in a HTTP header */
@@ -112,7 +112,7 @@ export interface HeaderScalarParameter extends ParameterBase {
 }
 
 /** defines the possible types for a scalar header */
-export type HeaderScalarType = type.BytesType | type.ConstantType | type.PrimitiveType | type.TimeType | type.LiteralValue;
+export type HeaderScalarType = type.Constant | type.EncodedBytes | type.Literal | type.Scalar | type.Time;
 
 /** parameter goes in multipart/form body */
 export interface MultipartFormBodyParameter extends ParameterBase {
@@ -183,7 +183,7 @@ export interface PathCollectionParameter extends ParameterBase {
   pathSegment: string;
 
   /** the type of the parameter */
-  type: type.SliceType;
+  type: type.Slice;
 
   /** indicates if the values must be URL encoded */
   isEncoded: boolean;
@@ -207,7 +207,7 @@ export interface PathScalarParameter extends ParameterBase {
 }
 
 /** defines the possible types for a PathScalarParameter */
-export type PathScalarParameterType = type.BytesType | type.ConstantType | type.PrimitiveType | type.TimeType | type.LiteralValue;
+export type PathScalarParameterType = type.Constant | type.EncodedBytes | type.Literal | type.Scalar | type.Time;
 
 /** a collection of values that go in the HTTP query string */
 export interface QueryCollectionParameter extends ParameterBase {
@@ -217,7 +217,7 @@ export interface QueryCollectionParameter extends ParameterBase {
   queryParameter: string;
 
   /** the type of the parameter */
-  type: type.SliceType;
+  type: type.Slice;
 
   /** indicates if the values must be URL encoded */
   isEncoded: boolean;
@@ -241,7 +241,7 @@ export interface QueryScalarParameter extends ParameterBase {
 }
 
 /** defines the possible types for a QueryScalarParameter */
-export type QueryScalarParameterType = type.BytesType | type.ConstantType | type.PrimitiveType | type.TimeType | type.LiteralValue;
+export type QueryScalarParameterType = type.Constant | type.EncodedBytes | type.Literal | type.Scalar | type.Time;
 
 /** the synthesized resume token parameter for LROs */
 export interface ResumeTokenParameter extends ParameterBase {
@@ -260,7 +260,7 @@ export interface URIParameter extends ParameterBase {
 }
 
 /** defines the possible types for a URIParameter */
-export type URIParameterType = type.ConstantType | type.PrimitiveType;
+export type URIParameterType = type.Constant | type.Scalar;
 
 /** narrows style to a ClientSideDefault within the conditional block */
 export function isClientSideDefault(style: ParameterStyle): style is ClientSideDefault {
@@ -358,13 +358,13 @@ export class BodyParameter extends ParameterBase implements BodyParameter {
 }
 
 export class ClientSideDefault implements ClientSideDefault {
-  constructor(defaultValue: type.LiteralValue) {
+  constructor(defaultValue: type.Literal) {
     this.defaultValue = defaultValue;
   }
 }
 
 export class FormBodyCollectionParameter extends ParameterBase implements FormBodyCollectionParameter {
-  constructor(name: string, formDataName: string, type: type.SliceType, collectionFormat: ExtendedCollectionFormat, style: ParameterStyle, byValue: boolean) {
+  constructor(name: string, formDataName: string, type: type.Slice, collectionFormat: ExtendedCollectionFormat, style: ParameterStyle, byValue: boolean) {
     super(name, type, style, byValue, 'method');
     this.kind = 'formBodyCollectionParam';
     this.formDataName = formDataName;
@@ -381,7 +381,7 @@ export class FormBodyScalarParameter extends ParameterBase implements FormBodySc
 }
 
 export class HeaderCollectionParameter extends ParameterBase implements HeaderCollectionParameter {
-  constructor(name: string, headerName: string, type: type.SliceType, collectionFormat: CollectionFormat, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
+  constructor(name: string, headerName: string, type: type.Slice, collectionFormat: CollectionFormat, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
     super(name, type, style, byValue, location);
     this.kind = 'headerCollectionParam';
     this.headerName = headerName;
@@ -390,7 +390,7 @@ export class HeaderCollectionParameter extends ParameterBase implements HeaderCo
 }
 
 export class HeaderMapParameter extends ParameterBase implements HeaderMapParameter {
-  constructor(name: string, headerName: string, type: type.MapType, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
+  constructor(name: string, headerName: string, type: type.Map, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
     super(name, type, style, byValue, location);
     this.kind = 'headerMapParam';
     this.headerName = headerName;
@@ -442,7 +442,7 @@ export class PartialBodyParameter extends ParameterBase implements PartialBodyPa
 }
 
 export class PathCollectionParameter extends ParameterBase implements PathCollectionParameter {
-  constructor(name: string, pathSegment: string, isEncoded: boolean, type: type.SliceType, collectionFormat: CollectionFormat, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
+  constructor(name: string, pathSegment: string, isEncoded: boolean, type: type.Slice, collectionFormat: CollectionFormat, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
     super(name, type, style, byValue, location);
     this.kind = 'pathCollectionParam';
     this.pathSegment = pathSegment;
@@ -461,7 +461,7 @@ export class PathScalarParameter extends ParameterBase implements PathScalarPara
 }
 
 export class QueryCollectionParameter extends ParameterBase implements QueryCollectionParameter {
-  constructor(name: string, queryParam: string, isEncoded: boolean, type: type.SliceType, collectionFormat: ExtendedCollectionFormat, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
+  constructor(name: string, queryParam: string, isEncoded: boolean, type: type.Slice, collectionFormat: ExtendedCollectionFormat, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
     super(name, type, style, byValue, location);
     this.kind = 'queryCollectionParam';
     this.queryParameter = queryParam;
@@ -481,14 +481,14 @@ export class QueryScalarParameter extends ParameterBase implements QueryScalarPa
 
 export class ResumeTokenParameter extends ParameterBase implements ResumeTokenParameter {
   constructor() {
-    super('ResumeToken', new type.PrimitiveType('string'), 'optional', true, 'method');
+    super('ResumeToken', new type.Scalar('string'), 'optional', true, 'method');
     this.kind = 'resumeTokenParam';
     this.docs.summary = 'Resumes the long-running operation from the provided token.';
   }
 }
 
 export class URIParameter extends ParameterBase implements URIParameter {
-  constructor(name: string, uriPathSegment: string, type: type.ConstantType | type.PrimitiveType, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
+  constructor(name: string, uriPathSegment: string, type: type.Constant | type.Scalar, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
     super(name, type, style, byValue, location);
     this.kind = 'uriParam';
     this.uriPathSegment = uriPathSegment;

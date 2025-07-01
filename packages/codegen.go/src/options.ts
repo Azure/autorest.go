@@ -28,7 +28,7 @@ export async function generateOptions(codeModel: go.CodeModel): Promise<string> 
   return optionsText;
 }
 
-function emit(struct: go.StructType, imports: ImportManager): string {
+function emit(struct: go.Struct, imports: ImportManager): string {
   let text = helpers.formatDocComment(struct.docs);
   text += `type ${struct.name} struct {\n`;
 

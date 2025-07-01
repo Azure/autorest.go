@@ -241,8 +241,8 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
     respEnv.result = new go.MonomorphicResult(resultProp.language.go!.name, adaptResultFormat(helpers.getSchemaResponse(op)!.protocol), resultType, resultProp.language.go!.byValue);
     respEnv.result.xml = adaptXMLInfo(resultProp.schema);
   } else if (resultProp.isDiscriminator) {
-    let ifaceResult: go.InterfaceType | undefined;
-    for (const iface of values(codeModel.interfaceTypes)) {
+    let ifaceResult: go.Interface | undefined;
+    for (const iface of values(codeModel.interfaces)) {
       if (iface.name === resultProp.schema.language.go!.name) {
         ifaceResult = iface;
         break;
@@ -253,7 +253,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
     }
     respEnv.result = new go.PolymorphicResult(ifaceResult);
   } else if (helpers.getSchemaResponse(op)) {
-    let modelType: go.ModelType | undefined;
+    let modelType: go.Model | undefined;
     for (const model of codeModel.models) {
       if (model.name === resultProp.schema.language.go!.name) {
         modelType = model;
@@ -512,7 +512,7 @@ function adaptParameterStyle(param: m4.Parameter): go.ParameterStyle {
     if (!go.isLiteralValueType(adaptedType)) {
       throw new Error(`unsupported client side default type ${go.getTypeDeclaration(adaptedType)} for parameter ${param.language.go!.name}`);
     }
-    return new go.ClientSideDefault(new go.LiteralValue(adaptedType, param.clientDefaultValue));
+    return new go.ClientSideDefault(new go.Literal(adaptedType, param.clientDefaultValue));
   } else if (param.schema.type === m4.SchemaType.Constant) {
     if (param.required) {
       return 'literal';

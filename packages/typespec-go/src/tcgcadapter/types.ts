@@ -60,7 +60,7 @@ export class typeAdapter {
       if (modelType.discriminatedSubtypes) {
         // this is a root discriminated type
         const iface = this.getInterfaceType(modelType);
-        this.codeModel.interfaceTypes.push(iface);
+        this.codeModel.interfaces.push(iface);
         ifaceTypes.push({go: iface, tcgc: modelType});
       }
       // TODO: what's the equivalent of x-ms-external?
@@ -82,9 +82,9 @@ export class typeAdapter {
 
     // now that the interface/model types have been generated, we can populate the rootType and possibleTypes
     for (const ifaceType of ifaceTypes) {
-      ifaceType.go.rootType = <go.PolymorphicType>this.getModel(ifaceType.tcgc);
+      ifaceType.go.rootType = <go.PolymorphicModel>this.getModel(ifaceType.tcgc);
       for (const subType of values(ifaceType.tcgc.discriminatedSubtypes)) {
-        const possibleType = <go.PolymorphicType>this.getModel(subType);
+        const possibleType = <go.PolymorphicModel>this.getModel(subType);
         ifaceType.go.possibleTypes.push(possibleType);
       }
     }
@@ -108,7 +108,7 @@ export class typeAdapter {
       }
       if (content.addlProps) {
         const annotations = new go.ModelFieldAnnotations(false, false, true, false);
-        const addlPropsType = new go.MapType(this.getPossibleType(content.addlProps, false, false), isTypePassedByValue(content.addlProps));
+        const addlPropsType = new go.Map(this.getPossibleType(content.addlProps, false, false), isTypePassedByValue(content.addlProps));
         const addlProps = new go.ModelField('AdditionalProperties', addlPropsType, true, '', annotations);
         modelType.go.fields.push(addlProps);
       }
@@ -190,7 +190,7 @@ export class typeAdapter {
         if (arrayType) {
           return arrayType;
         }
-        arrayType = new go.SliceType(this.getPossibleType(elementType, elementTypeByValue, substituteDiscriminator), myElementTypeByValue);
+        arrayType = new go.Slice(this.getPossibleType(elementType, elementTypeByValue, substituteDiscriminator), myElementTypeByValue);
         this.types.set(keyName, arrayType);
         return arrayType;
       }
@@ -200,7 +200,7 @@ export class typeAdapter {
         if (stringType) {
           return stringType;
         }
-        stringType = new go.PrimitiveType('string');
+        stringType = new go.Scalar('string');
         this.types.set(stringKey, stringType);
         return stringType;
       }
@@ -220,7 +220,7 @@ export class typeAdapter {
         if (mapType) {
           return mapType;
         }
-        mapType = new go.MapType(this.getPossibleType(type.valueType, elementTypeByValue, substituteDiscriminator), valueTypeByValue);
+        mapType = new go.Map(this.getPossibleType(type.valueType, elementTypeByValue, substituteDiscriminator), valueTypeByValue);
         this.types.set(keyName, mapType);
         return mapType;
       }
@@ -249,13 +249,13 @@ export class typeAdapter {
     }
   }
 
-  private getTimeType(encode: tsp.DateTimeKnownEncoding, utc: boolean): go.TimeType {
+  private getTimeType(encode: tsp.DateTimeKnownEncoding, utc: boolean): go.Time {
     const encoding = getDateTimeEncoding(encode);
     let datetime = this.types.get(encoding);
     if (datetime) {
-      return <go.TimeType>datetime;
+      return <go.Time>datetime;
     }
-    datetime = new go.TimeType(encoding, utc);
+    datetime = new go.Time(encoding, utc);
     this.types.set(encoding, datetime);
     return datetime;
   }
@@ -270,7 +270,7 @@ export class typeAdapter {
     if (!rsc) {
       rsc = new go.QualifiedType('ReadSeekCloser', 'io');
       if (sliceOf) {
-        rsc = new go.SliceType(rsc, true);
+        rsc = new go.Slice(rsc, true);
       }
       this.types.set(keyName, rsc);
     }
@@ -287,7 +287,7 @@ export class typeAdapter {
     if (!rsc) {
       rsc = new go.QualifiedType('MultipartContent', 'github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
       if (sliceOf) {
-        rsc = new go.SliceType(rsc, true);
+        rsc = new go.Slice(rsc, true);
       }
       this.types.set(keyName, rsc);
     }
@@ -303,7 +303,7 @@ export class typeAdapter {
           if (anyRawJSON) {
             return anyRawJSON;
           }
-          anyRawJSON = new go.SliceType(new go.PrimitiveType('byte'), true);
+          anyRawJSON = new go.Slice(new go.Scalar('byte'), true);
           anyRawJSON.rawJSONAsBytes = true;
           this.types.set(anyRawJSONKey, anyRawJSON);
           return anyRawJSON;
@@ -312,7 +312,7 @@ export class typeAdapter {
         if (anyType) {
           return anyType;
         }
-        anyType = new go.PrimitiveType('any');
+        anyType = new go.Scalar('any');
         this.types.set('any', anyType);
         return anyType;
       }
@@ -322,7 +322,7 @@ export class typeAdapter {
         if (primitiveBool) {
           return primitiveBool;
         }
-        primitiveBool = new go.PrimitiveType('bool');
+        primitiveBool = new go.Scalar('bool');
         this.types.set(boolKey, primitiveBool);
         return primitiveBool;
       }
@@ -334,7 +334,7 @@ export class typeAdapter {
         if (date) {
           return date;
         }
-        date = new go.TimeType('dateType', false);
+        date = new go.Time('dateType', false);
         this.types.set(dateKey, date);
         return date;
       }
@@ -345,7 +345,7 @@ export class typeAdapter {
         if (decimalType) {
           return decimalType;
         }
-        decimalType = new go.PrimitiveType(decimalKey);
+        decimalType = new go.Scalar(decimalKey);
         this.types.set(decimalKey, decimalType);
         return decimalType;
       }
@@ -356,7 +356,7 @@ export class typeAdapter {
         if (float32) {
           return float32;
         }
-        float32 = new go.PrimitiveType(float32Key);
+        float32 = new go.Scalar(float32Key);
         this.types.set(float32Key, float32);
         return float32;
       }
@@ -366,7 +366,7 @@ export class typeAdapter {
         if (float64) {
           return float64;
         }
-        float64 = new go.PrimitiveType(float64Key);
+        float64 = new go.Scalar(float64Key);
         this.types.set(float64Key, float64);
         return float64;
       }
@@ -383,7 +383,7 @@ export class typeAdapter {
         if (intType) {
           return intType;
         }
-        intType = new go.PrimitiveType(type.kind, type.encode === 'string');
+        intType = new go.Scalar(type.kind, type.encode === 'string');
         this.types.set(keyName, intType);
         return intType;
       }
@@ -393,7 +393,7 @@ export class typeAdapter {
         if (int64) {
           return int64;
         }
-        int64 = new go.PrimitiveType('int64', type.encode === 'string');
+        int64 = new go.Scalar('int64', type.encode === 'string');
         this.types.set(safeintkey, int64);
         return int64;
       }
@@ -415,7 +415,7 @@ export class typeAdapter {
         if (stringType) {
           return stringType;
         }
-        stringType = new go.PrimitiveType('string');
+        stringType = new go.Scalar('string');
         this.types.set(stringKey, stringType);
         return stringType;
       }
@@ -425,7 +425,7 @@ export class typeAdapter {
         if (time) {
           return time;
         }
-        time = new go.TimeType(encoding, false);
+        time = new go.Time(encoding, false);
         this.types.set(encoding, time);
         return time;
       
@@ -436,16 +436,16 @@ export class typeAdapter {
   }
 
   // converts an SdkEnumType to a go.ConstantType
-  private getConstantType(enumType: tcgc.SdkEnumType): go.ConstantType {
+  private getConstantType(enumType: tcgc.SdkEnumType): go.Constant {
     let constTypeName = naming.ensureNameCase(enumType.name);
     if (enumType.access === 'internal') {
       constTypeName = naming.getEscapedReservedName(uncapitalize(constTypeName), 'Type');
     }
     let constType = this.types.get(constTypeName);
     if (constType) {
-      return <go.ConstantType>constType;
+      return <go.Constant>constType;
     }
-    constType = new go.ConstantType(constTypeName, getPrimitiveType(enumType.valueType), `Possible${constTypeName}Values`);
+    constType = new go.Constant(constTypeName, getPrimitiveType(enumType.valueType), `Possible${constTypeName}Values`);
     constType.values = this.getConstantValues(constType, enumType.values);
     constType.docs.summary = enumType.summary;
     constType.docs.description = enumType.doc;
@@ -453,7 +453,7 @@ export class typeAdapter {
     return constType;
   }
 
-  private getInterfaceType(model: tcgc.SdkModelType, parent?: go.InterfaceType): go.InterfaceType {
+  private getInterfaceType(model: tcgc.SdkModelType, parent?: go.Interface): go.Interface {
     if (model.name.length === 0) {
       throw new AdapterError('InternalError', 'unnamed model', tsp.NoTarget);
     }
@@ -466,7 +466,7 @@ export class typeAdapter {
     }
     let iface = this.types.get(ifaceName);
     if (iface) {
-      return <go.InterfaceType>iface;
+      return <go.Interface>iface;
     }
     // find the discriminator field
     let discriminatorField: string | undefined;
@@ -480,7 +480,7 @@ export class typeAdapter {
     if (!discriminatorField) {
       throw new AdapterError('InternalError', `failed to find discriminator field for type ${model.name}`, tsp.NoTarget);
     }
-    iface = new go.InterfaceType(ifaceName, discriminatorField);
+    iface = new go.Interface(ifaceName, discriminatorField);
     if (parent) {
       iface.parent = parent;
     }
@@ -489,14 +489,14 @@ export class typeAdapter {
   }
 
   // converts an SdkModelType to a go.ModelType or go.PolymorphicType if the model is polymorphic
-  private getModel(model: tcgc.SdkModelType): go.ModelType | go.PolymorphicType {
+  private getModel(model: tcgc.SdkModelType): go.Model | go.PolymorphicModel {
     let modelName = naming.ensureNameCase(model.name);
     if (model.access === 'internal') {
       modelName = naming.getEscapedReservedName(uncapitalize(modelName), 'Model');
     }
     let modelType = this.types.get(modelName);
     if (modelType) {
-      return <go.ModelType | go.PolymorphicType>modelType;
+      return <go.Model | go.PolymorphicModel>modelType;
     }
   
     let usage = go.UsageFlags.None;
@@ -509,8 +509,8 @@ export class typeAdapter {
 
     const annotations = new go.ModelAnnotations(false, <tcgc.UsageFlags>(model.usage & tcgc.UsageFlags.MultipartFormData) === tcgc.UsageFlags.MultipartFormData);
     if (model.discriminatedSubtypes || model.discriminatorValue) {
-      let iface: go.InterfaceType | undefined;
-      let discriminatorLiteral: go.LiteralValue | undefined;
+      let iface: go.Interface | undefined;
+      let discriminatorLiteral: go.Literal | undefined;
 
       if (model.discriminatedSubtypes) {
         // root type, we can get the InterfaceType directly from it
@@ -538,10 +538,10 @@ export class typeAdapter {
         }
       }
 
-      modelType = new go.PolymorphicType(modelName, iface, annotations, usage);
-      (<go.PolymorphicType>modelType).discriminatorValue = discriminatorLiteral;
+      modelType = new go.PolymorphicModel(modelName, iface, annotations, usage);
+      (<go.PolymorphicModel>modelType).discriminatorValue = discriminatorLiteral;
     } else {
-      modelType = new go.ModelType(modelName, annotations, usage);
+      modelType = new go.Model(modelName, annotations, usage);
       // polymorphic types don't have XMLInfo
       modelType.xml = adaptXMLInfo(model.decorators);
     }
@@ -562,7 +562,7 @@ export class typeAdapter {
     return modelType;
   }
 
-  private getDiscriminatorLiteral(sdkProp: tcgc.SdkBodyModelPropertyType): go.LiteralValue {
+  private getDiscriminatorLiteral(sdkProp: tcgc.SdkBodyModelPropertyType): go.Literal {
     switch (sdkProp.type.kind) {
       case 'constant':
       case 'enumvalue':
@@ -618,7 +618,7 @@ export class typeAdapter {
     return field;
   }
 
-  private getConstantValues(type: go.ConstantType, valueTypes: Array<tcgc.SdkEnumValueType>): Array<go.ConstantValue> {
+  private getConstantValues(type: go.Constant, valueTypes: Array<tcgc.SdkEnumValueType>): Array<go.ConstantValue> {
     const values = new Array<go.ConstantValue>();
     for (const valueType of valueTypes) {
       let valueTypeName = `${type.name}${naming.ensureNameCase(valueType.name)}`;
@@ -637,7 +637,7 @@ export class typeAdapter {
     return values;
   }
 
-  private adaptBytesType(sdkType: tcgc.SdkBuiltInType): go.BytesType {
+  private adaptBytesType(sdkType: tcgc.SdkBuiltInType): go.EncodedBytes {
     let format: go.BytesEncoding = 'Std';
     if (sdkType.encode === 'base64url') {
       format = 'URL';
@@ -645,26 +645,26 @@ export class typeAdapter {
     const keyName = `bytes-${format}`;
     let bytesType = this.types.get(keyName);
     if (bytesType) {
-      return <go.BytesType>bytesType;
+      return <go.EncodedBytes>bytesType;
     }
-    bytesType = new go.BytesType(format);
+    bytesType = new go.EncodedBytes(format);
     this.types.set(keyName, bytesType);
     return bytesType;
   }
 
-  private getLiteralValue(constType: tcgc.SdkConstantType | tcgc.SdkEnumValueType): go.LiteralValue {
+  private getLiteralValue(constType: tcgc.SdkConstantType | tcgc.SdkEnumValueType): go.Literal {
     if (constType.kind === 'enumvalue') {
       const valueName = `${naming.ensureNameCase(constType.enumType.name)}${naming.ensureNameCase(constType.name)}`;
       const keyName = `literal-${valueName}`;
       let literalConst = this.types.get(keyName);
       if (literalConst) {
-        return <go.LiteralValue>literalConst;
+        return <go.Literal>literalConst;
       }
       const constValue = this.constValues.get(valueName);
       if (!constValue) {
         throw new AdapterError('InternalError', `failed to find const value for ${constType.name} in enum ${constType.enumType.name}`, constType.__raw?.node ?? tsp.NoTarget);
       }
-      literalConst = new go.LiteralValue(this.getConstantType(constType.enumType), constValue);
+      literalConst = new go.Literal(this.getConstantType(constType.enumType), constValue);
       this.types.set(keyName, literalConst);
       return literalConst;
     }
@@ -674,9 +674,9 @@ export class typeAdapter {
         const keyName = `literal-boolean-${constType.value}`;
         let literalBool = this.types.get(keyName);
         if (literalBool) {
-          return <go.LiteralValue>literalBool;
+          return <go.Literal>literalBool;
         }
-        literalBool = new go.LiteralValue(new go.PrimitiveType('bool'), constType.value);
+        literalBool = new go.Literal(new go.Scalar('bool'), constType.value);
         this.types.set(keyName, literalBool);
         return literalBool;
       }
@@ -684,9 +684,9 @@ export class typeAdapter {
         const keyName = `literal-bytes-${constType.value}`;
         let literalByteArray = this.types.get(keyName);
         if (literalByteArray) {
-          return <go.LiteralValue>literalByteArray;
+          return <go.Literal>literalByteArray;
         }
-        literalByteArray = new go.LiteralValue(this.adaptBytesType(constType.valueType), constType.value);
+        literalByteArray = new go.Literal(this.adaptBytesType(constType.valueType), constType.value);
         this.types.set(keyName, literalByteArray);
         return literalByteArray;
       }
@@ -695,9 +695,9 @@ export class typeAdapter {
         const keyName = `literal-${constType.valueType.kind}-${constType.value}`;
         let literalDecimal = this.types.get(keyName);
         if (literalDecimal) {
-          return <go.LiteralValue>literalDecimal;
+          return <go.Literal>literalDecimal;
         }
-        literalDecimal = new go.LiteralValue(new go.PrimitiveType('float64'), constType.value);
+        literalDecimal = new go.Literal(new go.Scalar('float64'), constType.value);
         this.types.set(keyName, literalDecimal);
         return literalDecimal;
       }
@@ -725,9 +725,9 @@ export class typeAdapter {
         const keyName = `literal-${constType.valueType.kind}-${constType.value}`;
         let literalInt = this.types.get(keyName);
         if (literalInt) {
-          return <go.LiteralValue>literalInt;
+          return <go.Literal>literalInt;
         }
-        literalInt = new go.LiteralValue(new go.PrimitiveType(constType.valueType.kind), constType.value);
+        literalInt = new go.Literal(new go.Scalar(constType.valueType.kind), constType.value);
         this.types.set(keyName, literalInt);
         return literalInt;
       }
@@ -736,9 +736,9 @@ export class typeAdapter {
         const keyName = `literal-${constType.valueType.kind}-${constType.value}`;
         let literalFloat = this.types.get(keyName);
         if (literalFloat) {
-          return <go.LiteralValue>literalFloat;
+          return <go.Literal>literalFloat;
         }
-        literalFloat = new go.LiteralValue(new go.PrimitiveType(constType.valueType.kind), constType.value);
+        literalFloat = new go.Literal(new go.Scalar(constType.valueType.kind), constType.value);
         this.types.set(keyName, literalFloat);
         return literalFloat;
       }
@@ -747,9 +747,9 @@ export class typeAdapter {
         const keyName = `literal-string-${constType.value}`;
         let literalString = this.types.get(keyName);
         if (literalString) {
-          return <go.LiteralValue>literalString;
+          return <go.Literal>literalString;
         }
-        literalString = new go.LiteralValue(new go.PrimitiveType('string'), constType.value);
+        literalString = new go.Literal(new go.Scalar('string'), constType.value);
         this.types.set(keyName, literalString);
         return literalString;
       }
@@ -792,7 +792,7 @@ function getPrimitiveType(type: tcgc.SdkBuiltInType): 'bool' | 'float32' | 'floa
   }
 }
 
-function getDateTimeEncoding(encoding: tsp.DateTimeKnownEncoding): go.DateTimeFormat {
+function getDateTimeEncoding(encoding: tsp.DateTimeKnownEncoding): go.TimeFormat {
   switch (encoding) {
     case 'rfc3339':
       return 'dateTimeRFC3339';
@@ -846,12 +846,12 @@ export function isTypePassedByValue(type: tcgc.SdkType): boolean {
 }
 
 interface ModelTypeSdkModelType {
-  go: go.ModelType | go.PolymorphicType;
+  go: go.Model | go.PolymorphicModel;
   tcgc: tcgc.SdkModelType;
 }
 
 interface InterfaceTypeSdkModelType {
-  go: go.InterfaceType;
+  go: go.Interface;
   tcgc: tcgc.SdkModelType;
 }
 

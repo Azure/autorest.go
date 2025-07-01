@@ -10,7 +10,7 @@ import { ImportManager } from './imports.js';
 
 // Creates the content in polymorphic_helpers.go
 export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeServerPkg?: string): Promise<string> {
-  if (codeModel.interfaceTypes.length === 0) {
+  if (codeModel.interfaces.length === 0) {
     // no polymorphic types
     return '';
   }
@@ -78,7 +78,7 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
           }
           break;
         case 'polymorphicResult':
-          trackDisciminator(respEnv.result.interfaceType);
+          trackDisciminator(respEnv.result.interface);
           break;
       }
     }
@@ -98,7 +98,7 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
     prefix = `${codeModel.packageName}.`;
   }
 
-  for (const interfaceType of codeModel.interfaceTypes) {
+  for (const interfaceType of codeModel.interfaces) {
     // generate unmarshallers for each discriminator
 
     // scalar unmarshaller

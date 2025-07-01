@@ -18,12 +18,12 @@ export function hasDescription(lang: m4.Language): boolean {
 const types = new Map<string, go.PossibleType>();
 const constValues = new Map<string, go.ConstantValue>();
 
-export function adaptConstantType(choice: m4.ChoiceSchema | m4.SealedChoiceSchema): go.ConstantType {
+export function adaptConstantType(choice: m4.ChoiceSchema | m4.SealedChoiceSchema): go.Constant {
   let constType = types.get(choice.language.go!.name);
   if (constType) {
-    return <go.ConstantType>constType;
+    return <go.Constant>constType;
   }
-  constType = new go.ConstantType(choice.language.go!.name, adaptPrimitiveType(choice.choiceType.language.go!.name), choice.language.go!.possibleValuesFunc);
+  constType = new go.Constant(choice.language.go!.name, adaptPrimitiveType(choice.choiceType.language.go!.name), choice.language.go!.possibleValuesFunc);
   constType.values = adaptConstantValue(constType, choice.choices);
   if (hasDescription(choice.language.go!)) {
     constType.docs.description = choice.language.go!.description;
@@ -32,7 +32,7 @@ export function adaptConstantType(choice: m4.ChoiceSchema | m4.SealedChoiceSchem
   return constType;
 }
 
-function adaptConstantValue(type: go.ConstantType, choices: Array<m4.ChoiceValue>): Array<go.ConstantValue> {
+function adaptConstantValue(type: go.Constant, choices: Array<m4.ChoiceValue>): Array<go.ConstantValue> {
   const values = new Array<go.ConstantValue>();
   for (const choice of choices) {
     let value = constValues.get(choice.language.go!.name);
@@ -62,13 +62,13 @@ function adaptPrimitiveType(name: string): 'bool' | 'float32' | 'float64' | 'int
   }
 }
 
-export function adaptInterfaceType(obj: m4.ObjectSchema, parent?: go.InterfaceType): go.InterfaceType {
+export function adaptInterfaceType(obj: m4.ObjectSchema, parent?: go.Interface): go.Interface {
   let iface = types.get(obj.language.go!.discriminatorInterface);
   if (iface) {
-    return <go.InterfaceType>iface;
+    return <go.Interface>iface;
   }
 
-  iface = new go.InterfaceType(obj.language.go!.discriminatorInterface, obj.discriminator!.property.serializedName);
+  iface = new go.Interface(obj.language.go!.discriminatorInterface, obj.discriminator!.property.serializedName);
   if (parent) {
     iface.parent = parent;
   }
@@ -77,10 +77,10 @@ export function adaptInterfaceType(obj: m4.ObjectSchema, parent?: go.InterfaceTy
   return iface;
 }
 
-export function adaptModel(obj: m4.ObjectSchema): go.ModelType | go.PolymorphicType {
+export function adaptModel(obj: m4.ObjectSchema): go.Model | go.PolymorphicModel {
   let modelType = types.get(obj.language.go!.name);
   if (modelType) {
-    return <go.ModelType | go.PolymorphicType>modelType;
+    return <go.Model | go.PolymorphicModel>modelType;
   }
 
   const annotations = new go.ModelAnnotations(obj.language.go!.omitSerDeMethods, false);
@@ -108,13 +108,13 @@ export function adaptModel(obj: m4.ObjectSchema): go.ModelType | go.PolymorphicT
     if (!iface) {
       throw new Error(`didn't find InterfaceType for discriminator interface ${ifaceName} on type ${obj.language.go!.name}`);
     }
-    modelType = new go.PolymorphicType(obj.language.go!.name, <go.InterfaceType>iface, annotations, adaptUsage(obj));
+    modelType = new go.PolymorphicModel(obj.language.go!.name, <go.Interface>iface, annotations, adaptUsage(obj));
     // only non-root and sub-root discriminators will have a discriminatorValue
     if (obj.discriminatorValue) {
-      (<go.PolymorphicType>modelType).discriminatorValue = getDiscriminatorLiteral(obj.discriminatorValue);
+      (<go.PolymorphicModel>modelType).discriminatorValue = getDiscriminatorLiteral(obj.discriminatorValue);
     }
   } else {
-    modelType = new go.ModelType(obj.language.go!.name, annotations, adaptUsage(obj));
+    modelType = new go.Model(obj.language.go!.name, annotations, adaptUsage(obj));
     // polymorphic types don't have XMLInfo
     modelType.xml = adaptXMLInfo(obj);
   }
@@ -138,9 +138,9 @@ function adaptUsage(obj: m4.ObjectSchema): go.UsageFlags {
   return flags;
 }
 
-function getDiscriminatorLiteral(discriminatorValue: string): go.LiteralValue {
-  const createLiteralValue = function(type: go.LiteralValueType, value: string | go.ConstantValue): go.LiteralValue {
-    let valueKey: go.ConstantValueValueTypes;
+function getDiscriminatorLiteral(discriminatorValue: string): go.Literal {
+  const createLiteralValue = function(type: go.LiteralType, value: string | go.ConstantValue): go.Literal {
+    let valueKey: go.ConstantValueType;
     if (typeof value === 'string') {
       valueKey = value;
     } else {
@@ -149,17 +149,17 @@ function getDiscriminatorLiteral(discriminatorValue: string): go.LiteralValue {
     const keyName = `literal-${go.getTypeDeclaration(type)}-${valueKey}`;
     let literalString = types.get(keyName);
     if (literalString) {
-      return <go.LiteralValue>literalString;
+      return <go.Literal>literalString;
     }
-    literalString = new go.LiteralValue(type, value);
+    literalString = new go.Literal(type, value);
     types.set(keyName, literalString);
     return literalString;
   };
 
-  let discriminatorLiteral: go.LiteralValue;
+  let discriminatorLiteral: go.Literal;
   // the discriminatorValue is either a quoted string or a constant (i.e. enum) value
   if (discriminatorValue[0] === '"') {
-    discriminatorLiteral = createLiteralValue(new go.PrimitiveType('string'), discriminatorValue);
+    discriminatorLiteral = createLiteralValue(new go.Scalar('string'), discriminatorValue);
   } else {
     // find the corresponding constant value
     const value = constValues.get(discriminatorValue);
@@ -196,15 +196,15 @@ export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.Mod
         throw new Error(`didn't find ConstantType for ${field.type.name}`);
       }
       let found = false;
-      for (const val of values((<go.ConstantType>constType).values)) {
+      for (const val of values((<go.Constant>constType).values)) {
         if (val.value === prop.clientDefaultValue) {
           const keyName = `literal-${val.name}`;
           let literalValue = types.get(keyName);
           if (!literalValue) {
-            literalValue = new go.LiteralValue(field.type, val);
+            literalValue = new go.Literal(field.type, val);
             types.set(keyName, literalValue);
           }
-          field.defaultValue = <go.LiteralValue>literalValue;
+          field.defaultValue = <go.Literal>literalValue;
           found = true;
           break;
         }
@@ -216,10 +216,10 @@ export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.Mod
       const keyName = `literal-${go.getTypeDeclaration(field.type)}-${prop.clientDefaultValue}`;
       let literalValue = types.get(keyName);
       if (!literalValue) {
-        literalValue = new go.LiteralValue(field.type, prop.clientDefaultValue);
+        literalValue = new go.Literal(field.type, prop.clientDefaultValue);
         types.set(keyName, literalValue);
       }
-      field.defaultValue = <go.LiteralValue>literalValue;
+      field.defaultValue = <go.Literal>literalValue;
     }
   }
 
@@ -280,7 +280,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
         if (anyRawJSON) {
           return anyRawJSON;
         }
-        anyRawJSON = new go.SliceType(new go.PrimitiveType('byte'), true);
+        anyRawJSON = new go.Slice(new go.Scalar('byte'), true);
         anyRawJSON.rawJSONAsBytes = true;
         types.set(anyRawJSONKey, anyRawJSON);
         return anyRawJSON;
@@ -289,7 +289,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (anyType) {
         return anyType;
       }
-      anyType = new go.PrimitiveType('any');
+      anyType = new go.Scalar('any');
       types.set(m4.SchemaType.Any, anyType);
       return anyType;
     }
@@ -300,7 +300,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
         if (anyObjectRawJSON) {
           return anyObjectRawJSON;
         }
-        anyObjectRawJSON = new go.SliceType(new go.PrimitiveType('byte'), true);
+        anyObjectRawJSON = new go.Slice(new go.Scalar('byte'), true);
         anyObjectRawJSON.rawJSONAsBytes = true;
         types.set(anyObjectRawJSONKey, anyObjectRawJSON);
         return anyObjectRawJSON;
@@ -309,7 +309,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (anyObject) {
         return anyObject;
       }
-      anyObject = new go.MapType(new go.PrimitiveType('any'), true);
+      anyObject = new go.Map(new go.Scalar('any'), true);
       types.set(m4.SchemaType.AnyObject, anyObject);
       return anyObject;
     }
@@ -318,7 +318,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (stringType) {
         return stringType;
       }
-      stringType = new go.PrimitiveType('string');
+      stringType = new go.Scalar('string');
       types.set(m4.SchemaType.ArmId, stringType);
       return stringType;
     }
@@ -332,7 +332,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (arrayType) {
         return arrayType;
       }
-      arrayType = new go.SliceType(adaptPossibleType((<m4.ArraySchema>schema).elementType, elementTypeByValue), myElementTypeByValue);
+      arrayType = new go.Slice(adaptPossibleType((<m4.ArraySchema>schema).elementType, elementTypeByValue), myElementTypeByValue);
       types.set(keyName, arrayType);
       return arrayType;
     }
@@ -350,7 +350,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (primitiveBool) {
         return primitiveBool;
       }
-      primitiveBool = new go.PrimitiveType('bool');
+      primitiveBool = new go.Scalar('bool');
       types.set(m4.SchemaType.Boolean, primitiveBool);
       return primitiveBool;
     }
@@ -361,7 +361,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (rune) {
         return rune;
       }
-      rune = new go.PrimitiveType('rune');
+      rune = new go.Scalar('rune');
       types.set(m4.SchemaType.Char, rune);
       return rune;
     }
@@ -374,7 +374,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (credType) {
         return credType;
       }
-      credType = new go.PrimitiveType('string');
+      credType = new go.Scalar('string');
       types.set(m4.SchemaType.Credential, credType);
       return credType;
     }
@@ -386,7 +386,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (time) {
         return time;
       }
-      time = new go.TimeType(schema.language.go!.internalTimeType, false);
+      time = new go.Time(schema.language.go!.internalTimeType, false);
       types.set(schema.language.go!.internalTimeType, time);
       return time;
     }
@@ -397,7 +397,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (mapType) {
         return mapType;
       }
-      mapType = new go.MapType(adaptPossibleType((<m4.DictionarySchema>schema).elementType, elementTypeByValue), valueTypeByValue);
+      mapType = new go.Map(adaptPossibleType((<m4.DictionarySchema>schema).elementType, elementTypeByValue), valueTypeByValue);
       types.set(keyName, mapType);
       return mapType;
     }
@@ -406,7 +406,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (duration) {
         return duration;
       }
-      duration = new go.PrimitiveType('string');
+      duration = new go.Scalar('string');
       types.set(m4.SchemaType.Duration, duration);
       return duration;
     }
@@ -417,7 +417,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
         if (int32) {
           return int32;
         }
-        int32 = new go.PrimitiveType(int32Key);
+        int32 = new go.Scalar(int32Key);
         types.set(int32Key, int32);
         return int32;
       }
@@ -426,7 +426,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (int64) {
         return int64;
       }
-      int64 = new go.PrimitiveType(int64Key);
+      int64 = new go.Scalar(int64Key);
       types.set(int64Key, int64);
       return int64;
     }
@@ -437,7 +437,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
         if (float32) {
           return float32;
         }
-        float32 = new go.PrimitiveType(float32Key);
+        float32 = new go.Scalar(float32Key);
         types.set(float32Key, float32);
         return float32;
       }
@@ -446,7 +446,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (float64) {
         return float64;
       }
-      float64 = new go.PrimitiveType(float64Key);
+      float64 = new go.Scalar(float64Key);
       types.set(float64Key, float64);
       return float64;
     }
@@ -457,7 +457,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (odataType) {
         return odataType;
       }
-      odataType = new go.PrimitiveType('string');
+      odataType = new go.Scalar('string');
       types.set(m4.SchemaType.ODataQuery, odataType);
       return odataType;
     }
@@ -468,7 +468,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (stringType) {
         return stringType;
       }
-      stringType = new go.PrimitiveType('string');
+      stringType = new go.Scalar('string');
       types.set(m4.SchemaType.String, stringType);
       return stringType;
     }
@@ -477,7 +477,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (uriType) {
         return uriType;
       }
-      uriType = new go.PrimitiveType('string');
+      uriType = new go.Scalar('string');
       types.set(m4.SchemaType.Uri, uriType);
       return uriType;
     }
@@ -486,7 +486,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (uuid) {
         return uuid;
       }
-      uuid = new go.PrimitiveType('string');
+      uuid = new go.Scalar('string');
       types.set(m4.SchemaType.Uuid, uuid);
       return uuid;
     }
@@ -495,15 +495,15 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
   }
 }
 
-function adaptLiteralValue(constSchema: m4.ConstantSchema): go.LiteralValue {
+function adaptLiteralValue(constSchema: m4.ConstantSchema): go.Literal {
   switch (constSchema.valueType.type) {
     case m4.SchemaType.Boolean: {
       const keyName = `literal-${m4.SchemaType.Boolean}-${constSchema.value.value}`;
       let literalBool = types.get(keyName);
       if (literalBool) {
-        return <go.LiteralValue>literalBool;
+        return <go.Literal>literalBool;
       }
-      literalBool = new go.LiteralValue(new go.PrimitiveType('bool'), constSchema.value.value);
+      literalBool = new go.Literal(new go.Scalar('bool'), constSchema.value.value);
       types.set(keyName, literalBool);
       return literalBool;
     }
@@ -511,9 +511,9 @@ function adaptLiteralValue(constSchema: m4.ConstantSchema): go.LiteralValue {
       const keyName = `literal-${m4.SchemaType.ByteArray}-${constSchema.value.value}`;
       let literalByteArray = types.get(keyName);
       if (literalByteArray) {
-        return <go.LiteralValue>literalByteArray;
+        return <go.Literal>literalByteArray;
       }
-      literalByteArray = new go.LiteralValue(adaptBytesType(<m4.ByteArraySchema>constSchema.valueType), constSchema.value.value);
+      literalByteArray = new go.Literal(adaptBytesType(<m4.ByteArraySchema>constSchema.valueType), constSchema.value.value);
       types.set(keyName, literalByteArray);
       return literalByteArray;
     }
@@ -522,9 +522,9 @@ function adaptLiteralValue(constSchema: m4.ConstantSchema): go.LiteralValue {
       const keyName = `literal-${constSchema.language.go!.name}-${constSchema.value.value}`;
       let literalConst = types.get(keyName);
       if (literalConst) {
-        return <go.LiteralValue>literalConst;
+        return <go.Literal>literalConst;
       }
-      literalConst = new go.LiteralValue(adaptConstantType(<m4.ChoiceSchema>constSchema.valueType), constSchema.value.value);
+      literalConst = new go.Literal(adaptConstantType(<m4.ChoiceSchema>constSchema.valueType), constSchema.value.value);
       types.set(keyName, literalConst);
       return literalConst;
     }
@@ -534,9 +534,9 @@ function adaptLiteralValue(constSchema: m4.ConstantSchema): go.LiteralValue {
       const keyName = `literal-${constSchema.valueType.language.go!.internalTimeType}-${constSchema.value.value}`;
       let literalTime = types.get(keyName);
       if (literalTime) {
-        return <go.LiteralValue>literalTime;
+        return <go.Literal>literalTime;
       }
-      literalTime = new go.LiteralValue(new go.TimeType(constSchema.valueType.language.go!.internalTimeType, false), constSchema.value.value);
+      literalTime = new go.Literal(new go.Time(constSchema.valueType.language.go!.internalTimeType, false), constSchema.value.value);
       types.set(keyName, literalTime);
       return literalTime;
     }
@@ -544,12 +544,12 @@ function adaptLiteralValue(constSchema: m4.ConstantSchema): go.LiteralValue {
       const keyName = `literal-int${(<m4.NumberSchema>constSchema.valueType).precision}-${constSchema.value.value}`;
       let literalInt = types.get(keyName);
       if (literalInt) {
-        return <go.LiteralValue>literalInt;
+        return <go.Literal>literalInt;
       }
       if ((<m4.NumberSchema>constSchema.valueType).precision === 32) {
-        literalInt = new go.LiteralValue(new go.PrimitiveType('int32'), constSchema.value.value);
+        literalInt = new go.Literal(new go.Scalar('int32'), constSchema.value.value);
       } else {
-        literalInt = new go.LiteralValue(new go.PrimitiveType('int64'), constSchema.value.value);
+        literalInt = new go.Literal(new go.Scalar('int64'), constSchema.value.value);
       }
       types.set(keyName, literalInt);
       return literalInt;
@@ -558,12 +558,12 @@ function adaptLiteralValue(constSchema: m4.ConstantSchema): go.LiteralValue {
       const keyName = `literal-float${(<m4.NumberSchema>constSchema.valueType).precision}-${constSchema.value.value}`;
       let literalFloat = types.get(keyName);
       if (literalFloat) {
-        return <go.LiteralValue>literalFloat;
+        return <go.Literal>literalFloat;
       }
       if ((<m4.NumberSchema>constSchema.valueType).precision === 32) {
-        literalFloat = new go.LiteralValue(new go.PrimitiveType('float32'), constSchema.value.value);
+        literalFloat = new go.Literal(new go.Scalar('float32'), constSchema.value.value);
       } else {
-        literalFloat = new go.LiteralValue(new go.PrimitiveType('float64'), constSchema.value.value);
+        literalFloat = new go.Literal(new go.Scalar('float64'), constSchema.value.value);
       }
       types.set(keyName, literalFloat);
       return literalFloat;
@@ -574,9 +574,9 @@ function adaptLiteralValue(constSchema: m4.ConstantSchema): go.LiteralValue {
       const keyName = `literal-string-${constSchema.value.value}`;
       let literalString = types.get(keyName);
       if (literalString) {
-        return <go.LiteralValue>literalString;
+        return <go.Literal>literalString;
       }
-      literalString = new go.LiteralValue(new go.PrimitiveType('string'), constSchema.value.value);
+      literalString = new go.Literal(new go.Scalar('string'), constSchema.value.value);
       types.set(keyName, literalString);
       return literalString;
     }
@@ -585,7 +585,7 @@ function adaptLiteralValue(constSchema: m4.ConstantSchema): go.LiteralValue {
   }
 }
 
-function adaptBytesType(schema: m4.ByteArraySchema): go.BytesType {
+function adaptBytesType(schema: m4.ByteArraySchema): go.EncodedBytes {
   let format: go.BytesEncoding = 'Std';
   if (schema.format === 'base64url') {
     format = 'URL';
@@ -593,9 +593,9 @@ function adaptBytesType(schema: m4.ByteArraySchema): go.BytesType {
   const keyName = `${m4.SchemaType.ByteArray}-${format}`;
   let bytesType = types.get(keyName);
   if (bytesType) {
-    return <go.BytesType>bytesType;
+    return <go.EncodedBytes>bytesType;
   }
-  bytesType = new go.BytesType(format);
+  bytesType = new go.EncodedBytes(format);
   types.set(keyName, bytesType);
   return bytesType;
 }
