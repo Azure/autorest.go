@@ -360,9 +360,9 @@ export function getTypeDeclaration(type: PossibleType, pkgName?: string): string
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+// base types
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Base classes first (StructField and StructType are base classes)
 export class StructField implements StructField {
   constructor(name: string, type: PossibleType, byValue: boolean) {
     this.name = name;
@@ -379,6 +379,9 @@ export class Struct implements Struct {
     this.docs = {};
   }
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class Any implements Any {
   constructor() {
@@ -479,6 +482,13 @@ export class PolymorphicModel extends Model implements PolymorphicModel {
   }
 }
 
+export class QualifiedType implements QualifiedType {
+  constructor(exportName: string, packageName: string) {
+    this.exportName = exportName;
+    this.packageName = packageName;
+  }
+}
+
 export class RawJSON implements RawJSON {
   constructor() {
     this.rawJSON = true;
@@ -495,13 +505,6 @@ export class Scalar implements Scalar {
 export class String implements String {
   constructor() {
     this.isString = true;
-  }
-}
-
-export class QualifiedType implements QualifiedType {
-  constructor(exportName: string, packageName: string) {
-    this.exportName = exportName;
-    this.packageName = packageName;
   }
 }
 
