@@ -2,6 +2,18 @@
   "name": "@autorest/gotest",
   "entries": [
     {
+      "version": "4.7.5",
+      "tag": "@autorest/gotest_v4.7.5",
+      "date": "Tue, 01 Jul 2025 05:17:10 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "upgrade @autorest/testmodeler for compatible with node20"
+          }
+        ]
+      }
+    },
+    {
       "version": "4.7.4",
       "tag": "@autorest/gotest_v4.7.4",
       "date": "Mon, 07 Apr 2025 02:41:10 GMT",

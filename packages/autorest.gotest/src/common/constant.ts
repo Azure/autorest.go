@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { configDefaults as baseConfigDefaults } from '@autorest/testmodeler/dist/src/common/constant';
+import { configDefaults as baseConfigDefaults } from '@autorest/testmodeler';
 
 export enum Config {
   exportCodemodel = 'testmodeler.export-codemodel',

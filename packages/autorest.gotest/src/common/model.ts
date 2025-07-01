@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ExampleModel, MockTestDefinitionModel, TestDefinitionModel } from '@autorest/testmodeler/dist/src/core/model';
+import { ExampleModel, MockTestDefinitionModel } from '@autorest/testmodeler';
 
 interface GoFileData {
   packageName: string;
@@ -15,8 +15,6 @@ export class GoMockTestDefinitionModel extends MockTestDefinitionModel implement
   packageName: string;
   imports: string;
 }
-
-export type GoTestDefinition = TestDefinitionModel & GoFileData;
 
 export class GoExampleModel extends ExampleModel {
   opName: string;

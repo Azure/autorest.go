@@ -18,10 +18,10 @@ import {
 } from '@autorest/codemodel';
 import { BaseCodeGenerator, BaseDataRender } from './baseGenerator';
 import { Config } from '../common/constant';
-import { ExampleParameter, ExampleValue } from '@autorest/testmodeler/dist/src/core/model';
+import { ExampleParameter, ExampleValue } from '@autorest/testmodeler';
 import { GoExampleModel, GoMockTestDefinitionModel, ParameterOutput } from '../common/model';
 import { GoHelper } from '../util/goHelper';
-import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
+import { Helper } from '@autorest/testmodeler';
 import { generateReturnsInfo, getAPIParametersSig, getClientParametersSig, getParametersSig, getSchemaResponse } from '../util/codegenBridge';
 import { isLROOperation, isMultiRespOperation, isPageableOperation, sortParametersByRequired } from '../common/helpers';
 import _ = require('lodash');
