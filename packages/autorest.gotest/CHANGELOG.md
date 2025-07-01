@@ -1,6 +1,13 @@
 # Change Log - @autorest/gotest
 
-This log was last generated on Mon, 07 Apr 2025 02:41:10 GMT and should not be manually modified.
+This log was last generated on Tue, 01 Jul 2025 05:17:10 GMT and should not be manually modified.
+
+## 4.7.5
+Tue, 01 Jul 2025 05:17:10 GMT
+
+### Patches
+
+- upgrade @autorest/testmodeler for compatible with node20
 
 ## 4.7.4
 Mon, 07 Apr 2025 02:41:10 GMT
