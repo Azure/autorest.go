@@ -6,39 +6,39 @@
 import * as client from './client.js';
 import * as param from './param.js';
 import * as result from './result.js';
-import { Constant, Docs, EncodedBytes, Literal, Map, Model, PolymorphicModel, PossibleType, Scalar, QualifiedType, Slice, Time } from './type.js';
+import * as type from './type.js';
 
 export type ExampleType = AnyExample | ArrayExample | BooleanExample | DictionaryExample | NullExample | NumberExample | QualifiedExample| StringExample | StructExample;
 
 export interface AnyExample {
   kind: 'any';
   value: any;
-  type: PossibleType;
+  type: type.PossibleType;
 }
 
 export interface ArrayExample {
   kind: 'array';
   value: Array<ExampleType>;
-  type: Slice;
+  type: type.Slice;
 }
 
 export interface BooleanExample {
   kind: 'boolean';
   value: boolean;
-  type: Constant | Literal | Scalar;
+  type: type.Constant | type.Literal | type.Scalar;
 }
 
 export interface DictionaryExample {
   kind: 'dictionary';
   value: Record<string, ExampleType>;
-  type: Map;
+  type: type.Map;
 }
 
 // MethodExample is an example for a method. This code model part is for example or test generation.
 export interface MethodExample {
   name: string;
 
-  docs: Docs;
+  docs: type.Docs;
 
   filePath: string;
 
@@ -52,13 +52,13 @@ export interface MethodExample {
 export interface NullExample {
   kind: 'null';
   value: null;
-  type: PossibleType;
+  type: type.PossibleType;
 }
 
 export interface NumberExample {
   kind: 'number';
   value: number;
-  type: Constant | Literal | Scalar | Time;
+  type: type.Constant | type.Literal | type.Scalar | type.Time;
 }
 
 export interface ParameterExample {
@@ -69,7 +69,7 @@ export interface ParameterExample {
 export interface QualifiedExample {
   kind: 'qualified';
   value: any;
-  type: QualifiedType;
+  type: type.QualifiedType;
 }
 
 export interface ResponseEnvelopeExample {
@@ -86,14 +86,14 @@ export interface ResponseHeaderExample {
 export interface StringExample {
   kind: 'string';
   value: string;
-  type: Constant | EncodedBytes | Literal | Scalar | Time;
+  type: type.Constant | type.EncodedBytes | type.Literal | type.Scalar | type.String | type.Time;
 }
 
 export interface StructExample {
   kind: 'model';
   value: Record<string, ExampleType>;
   additionalProperties?: Record<string, ExampleType>;
-  type: Model | PolymorphicModel;
+  type: type.Model | type.PolymorphicModel;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,12 +103,12 @@ export class AnyExample implements AnyExample {
   constructor(value: any) {
     this.kind = 'any';
     this.value = value;
-    this.type = new Scalar('any');
+    this.type = new type.Scalar('any');
   }
 }
 
 export class ArrayExample implements ArrayExample {
-  constructor(type: Slice) {
+  constructor(type: type.Slice) {
     this.kind = 'array';
     this.type = type;
     this.value = [];
@@ -116,7 +116,7 @@ export class ArrayExample implements ArrayExample {
 }
 
 export class BooleanExample implements BooleanExample {
-  constructor(value: boolean, type: Constant | Literal | Scalar) {
+  constructor(value: boolean, type: type.Constant | type.Literal | type.Scalar) {
     this.kind = 'boolean';
     this.value = value;
     this.type = type;
@@ -124,7 +124,7 @@ export class BooleanExample implements BooleanExample {
 }
 
 export class DictionaryExample implements DictionaryExample {
-  constructor(type: Map) {
+  constructor(type: type.Map) {
     this.kind = 'dictionary';
     this.type = type;
     this.value = {};
@@ -132,7 +132,7 @@ export class DictionaryExample implements DictionaryExample {
 }
 
 export class MethodExample implements MethodExample {
-  constructor(name: string, docs: Docs, filePath: string) {
+  constructor(name: string, docs: type.Docs, filePath: string) {
     this.name = name;
     this.docs = docs;
     this.filePath = filePath;
@@ -142,14 +142,14 @@ export class MethodExample implements MethodExample {
 }
 
 export class NullExample implements NullExample {
-  constructor(type: PossibleType) {
+  constructor(type: type.PossibleType) {
     this.kind = 'null';
     this.type = type;
   }
 }
 
 export class NumberExample implements NumberExample {
-  constructor(value: number, type: Constant | Literal | Scalar | Time) {
+  constructor(value: number, type: type.Constant | type.Literal | type.Scalar | type.Time) {
     this.kind = 'number';
     this.value = value;
     this.type = type;
@@ -164,7 +164,7 @@ export class ParameterExample implements ParameterExample {
 }
 
 export class QualifiedExample implements QualifiedExample {
-  constructor(type: QualifiedType, value: any) {
+  constructor(type: type.QualifiedType, value: any) {
     this.kind = 'qualified';
     this.type = type;
     this.value = value;
@@ -186,7 +186,7 @@ export class ResponseHeaderExample implements ResponseHeaderExample {
 }
 
 export class StringExample implements StringExample {
-  constructor(value: string, type: Constant | EncodedBytes | Literal | Scalar | Time) {
+  constructor(value: string, type: type.Constant | type.EncodedBytes | type.Literal | type.Scalar | type.String | type.Time) {
     this.kind = 'string';
     this.value = value;
     this.type = type;
@@ -194,7 +194,7 @@ export class StringExample implements StringExample {
 }
 
 export class StructExample implements StructExample {
-  constructor(type: Model | PolymorphicModel) {
+  constructor(type: type.Model | type.PolymorphicModel) {
     this.kind = 'model';
     this.type = type;
     this.value = {};

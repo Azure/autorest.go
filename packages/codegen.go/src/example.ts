@@ -369,7 +369,6 @@ function getPointerValue(type: go.PossibleType, valueString: string, byValue: bo
       case `bool`:
       case `byte`:
       case `rune`:
-      case `string`:
         prtType = 'Ptr';
         break;
       default:
@@ -377,6 +376,9 @@ function getPointerValue(type: go.PossibleType, valueString: string, byValue: bo
     }
     if (imports) imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
     return `to.${prtType}(${valueString})`;
+  } else if (go.isStringType(type)) {
+    if (imports) imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
+    return `to.Ptr(${valueString})`;
   } else if (go.isConstantType(type) || go.isTimeType(type)) {
     if (imports) imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
     return `to.Ptr(${valueString})`;
@@ -427,7 +429,6 @@ function generateFakeExample(goType: go.PossibleType, name?: string): go.Example
       case 'bool':
         return new go.BooleanExample(false, goType);
       case 'byte':
-      case 'string':
       case 'rune':
         return new go.StringExample(`<${name ?? 'test'}>`, goType);
       default:
@@ -444,6 +445,8 @@ function generateFakeExample(goType: go.PossibleType, name?: string): go.Example
       default:
         return new go.NumberExample(goType.values[0].value as number, goType);
     }
+  } else if (go.isStringType(goType)) {
+    return new go.StringExample(`<${name ?? 'test'}>`, goType);
   }
   throw new CodegenError('InternalError', `fake example does not support non primitive type: ${go.getTypeDeclaration(goType)}`);
 }

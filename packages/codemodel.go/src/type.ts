@@ -15,7 +15,7 @@ export interface Docs {
 }
 
 /** defines types that go across the wire */
-export type PossibleType = Constant | EncodedBytes | Interface | Literal | Map | Model | PolymorphicModel | QualifiedType | Scalar | Slice | Time;
+export type PossibleType = Constant | EncodedBytes | Interface | Literal | Map | Model | PolymorphicModel | QualifiedType | Scalar | Slice | String | Time;
 
 /** a const type definition */
 export interface Constant {
@@ -82,7 +82,7 @@ export interface Literal {
   literal: any;
 }
 
-export type LiteralType = Constant | EncodedBytes | Scalar | Time;
+export type LiteralType = Constant | EncodedBytes | Scalar | String | Time;
 
 export interface Map {
   valueType: MapValueType;
@@ -150,7 +150,12 @@ export interface Scalar {
 }
 
 /** the supported Go scalar types */
-export type ScalarType = 'any' | 'bool' | 'byte' | 'float32' | 'float64' | 'int8' | 'int16' | 'int32' | 'int64' | 'rune' | 'string' | 'uint8' | 'uint16' | 'uint32' | 'uint64';
+export type ScalarType = 'any' | 'bool' | 'byte' | 'float32' | 'float64' | 'int8' | 'int16' | 'int32' | 'int64' | 'rune' | 'uint8' | 'uint16' | 'uint32' | 'uint64';
+
+/** a Go string */
+export interface String {
+  isString: true;
+}
 
 // QualifiedType is a type from some package, e.g. the Go standard library (excluding time.Time)
 export interface QualifiedType {
@@ -238,7 +243,7 @@ export function isConstantType(type: PossibleType): type is Constant {
 }
 
 export function isLiteralValueType(type: PossibleType): type is LiteralType {
-  return isConstantType(type) || isPrimitiveType(type);
+  return isConstantType(type) || isPrimitiveType(type) || isStringType(type);
 }
 
 export function isPrimitiveType(type: PossibleType): type is Scalar {
@@ -247,6 +252,10 @@ export function isPrimitiveType(type: PossibleType): type is Scalar {
 
 export function isQualifiedType(type: PossibleType): type is QualifiedType {
   return (<QualifiedType>type).exportName !== undefined;
+}
+
+export function isStringType(type: PossibleType): type is String {
+  return (<String>type).isString !== undefined;
 }
 
 export function isTimeType(type: PossibleType): type is Time {
@@ -284,6 +293,8 @@ export function getLiteralValueTypeName(literal: LiteralType): string {
     return literal.name;
   } else if (isPrimitiveType(literal)) {
     return literal.typeName;
+  } else if (isStringType(literal)) {
+    return 'string';
   } else if (isTimeType(literal)) {
     return 'time.Time';
   } else {
@@ -322,6 +333,8 @@ export function getTypeDeclaration(type: PossibleType, pkgName?: string): string
       pointer = '';
     }
     return `[]${pointer}` + getTypeDeclaration(type.elementType, pkgName);
+  } else if (isStringType(type)) {
+    return 'string';
   } else if (isTimeType(type)) {
     return 'time.Time';
   } else {
@@ -447,6 +460,12 @@ export class Scalar implements Scalar {
   constructor(typeName: ScalarType, encodeAsString?: boolean) {
     this.typeName = typeName;
     this.encodeAsString = encodeAsString ?? false;
+  }
+}
+
+export class String implements String {
+  constructor() {
+    this.isString = true;
   }
 }
 

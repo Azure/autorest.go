@@ -604,12 +604,11 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
             caseContent += parsePrimitiveType(type.typeName);
             assignedValue = `${type.typeName}(parsed)`;
             break;
-          case 'string':
-            assignedValue = 'string(content)';
-            break;
           default:
             throw new CodegenError('InternalError', `unhandled multipart parameter primitive type ${type.typeName}`);
         }
+      } else if (go.isStringType(type)) {
+        assignedValue = 'string(content)';
       } else if (isMultipartContentType(type)) {
         imports.add('bytes');
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
@@ -673,7 +672,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
       let assignedValue: string;
       if (go.isConstantType(param.type)) {
         assignedValue = `${go.getTypeDeclaration(param.type, clientPkg)}(req.FormValue(key))`;
-      } else if (go.isPrimitiveType(param.type) && param.type.typeName === 'string') {
+      } else if (go.isStringType(param.type)) {
         assignedValue = 'req.FormValue(key)';
       } else {
         throw new CodegenError('InternalError', `uhandled form parameter type ${go.getTypeDeclaration(param.type)}`);
@@ -896,7 +895,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
       const escapedParam = createLocalVariableName(param, 'Escaped');
       content += `\t${escapedParam} := ${paramValue}\n`;
       let paramVar = createLocalVariableName(param, 'Unescaped');
-      if (go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
+      if (go.isStringType(param.type.elementType)) {
         // by convention, if the value is in its "final form" (i.e. no parsing required)
         // then its var is to have the "Param" suffix. the only case is string, everything
         // else requires some amount of parsing/conversion.
@@ -927,8 +926,8 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
         content += `\t\treturn ${go.getTypeDeclaration(param.type, clientPkg)}(p), nil\n\t})\n`;
       } else {
         if (go.isRequiredParameter(param) &&
-          ((go.isPrimitiveType(param.type) && param.type.typeName === 'string') ||
-            (go.isSliceType(param.type) && go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string'))) {
+          (go.isStringType(param.type) ||
+            (go.isSliceType(param.type) && go.isStringType(param.type.elementType)))) {
           // by convention, if the value is in its "final form" (i.e. no parsing required)
           // then its var is to have the "Param" suffix. the only case is string, everything
           // else requires some amount of parsing/conversion.
@@ -943,7 +942,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
     // parse params as required
     if (param.kind === 'headerCollectionParam' || param.kind === 'pathCollectionParam' || param.kind === 'queryCollectionParam') {
       // any element type other than string will require some form of conversion/parsing
-      if (!(go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string')) {
+      if (!go.isStringType(param.type.elementType)) {
         if (param.collectionFormat !== 'multi') {
           requiredHelpers.splitHelper = true;
           const elementsParam = createLocalVariableName(param, 'Elements');
@@ -952,7 +951,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
         }
 
         const paramVar = createLocalVariableName(param, 'Param');
-        let elementFormat: go.ScalarType | go.TimeFormat | go.BytesEncoding;
+        let elementFormat: go.ScalarType | go.TimeFormat | go.BytesEncoding | 'string';
         if (go.isConstantType(param.type.elementType)) {
           elementFormat = param.type.elementType.type;
         } else if (go.isPrimitiveType(param.type.elementType)) {
@@ -1293,7 +1292,7 @@ function getFinalParamValue(clientPkg: string, param: go.MethodParameter, paramV
     if (param.kind === 'headerCollectionParam' || param.kind === 'pathCollectionParam' || param.kind === 'queryCollectionParam') {
       // for required params that are collections of strings, we split them inline.
       // not necessary for optional params as they're already in slice format.
-      if (param.collectionFormat !== 'multi' && go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
+      if (param.collectionFormat !== 'multi' && go.isStringType(param.type.elementType)) {
         requiredHelpers.splitHelper = true;
         return `splitHelper(${paramValue}, "${helpers.getDelimiterForCollectionFormat(param.collectionFormat)}")`;
       }
