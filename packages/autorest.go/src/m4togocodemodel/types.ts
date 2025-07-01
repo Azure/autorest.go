@@ -280,8 +280,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
         if (anyRawJSON) {
           return anyRawJSON;
         }
-        anyRawJSON = new go.Slice(new go.Scalar('byte'), true);
-        anyRawJSON.rawJSONAsBytes = true;
+        anyRawJSON = new go.RawJSON();
         types.set(anyRawJSONKey, anyRawJSON);
         return anyRawJSON;
       }
@@ -300,8 +299,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
         if (anyObjectRawJSON) {
           return anyObjectRawJSON;
         }
-        anyObjectRawJSON = new go.Slice(new go.Scalar('byte'), true);
-        anyObjectRawJSON.rawJSONAsBytes = true;
+        anyObjectRawJSON = new go.RawJSON();
         types.set(anyObjectRawJSONKey, anyObjectRawJSON);
         return anyObjectRawJSON;
       }

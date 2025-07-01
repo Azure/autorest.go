@@ -303,8 +303,7 @@ export class typeAdapter {
           if (anyRawJSON) {
             return anyRawJSON;
           }
-          anyRawJSON = new go.Slice(new go.Scalar('byte'), true);
-          anyRawJSON.rawJSONAsBytes = true;
+          anyRawJSON = new go.RawJSON();
           this.types.set(anyRawJSONKey, anyRawJSON);
           return anyRawJSON;
         }

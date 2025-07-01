@@ -15,7 +15,7 @@ export interface Docs {
 }
 
 /** defines types that go across the wire */
-export type PossibleType = Any | Constant | EncodedBytes | Interface | Literal | Map | Model | PolymorphicModel | QualifiedType | Scalar | Slice | String | Time;
+export type PossibleType = Any | Constant | EncodedBytes | Interface | Literal | Map | Model | PolymorphicModel | QualifiedType | RawJSON | Scalar | Slice | String | Time;
 
 /** the Go any type */
 export interface Any {
@@ -171,13 +171,15 @@ export interface QualifiedType {
   packageName: string;
 }
 
+/** a byte slice containing raw JSON */
+export interface RawJSON {
+  rawJSON: true;
+}
+
 export interface Slice {
   elementType: SliceElementType;
 
   elementTypeByValue: boolean;
-
-  // this slice is bytes of raw JSON
-  rawJSONAsBytes: boolean;
 }
 
 export type SliceElementType = PossibleType;
@@ -263,6 +265,10 @@ export function isQualifiedType(type: PossibleType): type is QualifiedType {
   return (<QualifiedType>type).exportName !== undefined;
 }
 
+export function isRawJSON(type: PossibleType): type is RawJSON {
+  return (<RawJSON>type).rawJSON !== undefined;
+}
+
 export function isStringType(type: PossibleType): type is String {
   return (<String>type).isString !== undefined;
 }
@@ -328,7 +334,7 @@ export function getTypeDeclaration(type: PossibleType, pkgName?: string): string
       return `${pkgName}.${type.name}`;
     }
     return type.name;
-  } else if (isBytesType(type)) {
+  } else if (isBytesType(type) || isRawJSON(type)) {
     return '[]byte';
   } else if (isLiteralValue(type)) {
     return getTypeDeclaration(type.type, pkgName);
@@ -470,6 +476,12 @@ export class PolymorphicModel extends Model implements PolymorphicModel {
   constructor(name: string, iface: Interface, annotations: ModelAnnotations, usage: UsageFlags) {
     super(name, annotations, usage);
     this.interface = iface;
+  }
+}
+
+export class RawJSON implements RawJSON {
+  constructor() {
+    this.rawJSON = true;
   }
 }
 

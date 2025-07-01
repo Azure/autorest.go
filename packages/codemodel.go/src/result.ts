@@ -139,7 +139,7 @@ export interface MonomorphicResult {
 }
 
 /** the possible monomorphic result types */
-export type MonomorphicResultType = type.Any | type.Constant | type.EncodedBytes | type.Map | type.Scalar | type.Slice | type.String | type.Time;
+export type MonomorphicResultType = type.Any | type.Constant | type.EncodedBytes | type.Map | type.RawJSON | type.Scalar | type.Slice | type.String | type.Time;
 
 /**
  * used for methods that return a discriminated type.
