@@ -196,13 +196,31 @@ export function getResultType(result: Result): type.Interface | type.Model | Mon
     case 'binaryResult':
       return new type.QualifiedType('ReadCloser', 'io');
     case 'headAsBooleanResult':
-      return new type.Scalar('bool');
+      return new type.Scalar('bool', false);
     case 'modelResult':
       return result.modelType;
     case 'monomorphicResult':
       return result.monomorphicType;
     case 'polymorphicResult':
       return result.interface;
+  }
+}
+
+/** narrows type to a MonomorphicResultType within the conditional block */
+export function isMonomorphicResultType(type: type.PossibleType): type is MonomorphicResultType {
+  switch (type.kind) {
+    case 'any':
+    case 'constant':
+    case 'encodedBytes':
+    case 'map':
+    case 'rawJSON':
+    case 'scalar':
+    case 'slice':
+    case 'string':
+    case 'time':
+      return true;
+    default:
+      return false;
   }
 }
 

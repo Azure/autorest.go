@@ -111,7 +111,7 @@ export function adaptModel(obj: m4.ObjectSchema): go.Model | go.PolymorphicModel
     modelType = new go.PolymorphicModel(obj.language.go!.name, <go.Interface>iface, annotations, adaptUsage(obj));
     // only non-root and sub-root discriminators will have a discriminatorValue
     if (obj.discriminatorValue) {
-      (<go.PolymorphicModel>modelType).discriminatorValue = getDiscriminatorLiteral(obj.discriminatorValue);
+      modelType.discriminatorValue = getDiscriminatorLiteral(obj.discriminatorValue);
     }
   } else {
     modelType = new go.Model(obj.language.go!.name, annotations, adaptUsage(obj));
@@ -174,7 +174,7 @@ function getDiscriminatorLiteral(discriminatorValue: string): go.Literal {
 export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.ModelField {
   const fieldType = adaptPossibleType(prop.schema);
   let required = prop.required === true;
-  if (go.isLiteralValue(fieldType)) {
+  if (fieldType.kind === 'literal') {
     // for OpenAPI, literal values are always considered required
     required = true;
   }
@@ -189,7 +189,7 @@ export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.Mod
     if (!go.isLiteralValueType(field.type)) {
       throw new Error(`unsupported default value type ${go.getTypeDeclaration(field.type)} for field ${field.name}`);
     }
-    if (go.isConstantType(field.type)) {
+    if (field.type.kind === 'constant') {
       // find the corresponding ConstantValue
       const constType = types.get(field.type.name);
       if (!constType) {
@@ -348,7 +348,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (primitiveBool) {
         return primitiveBool;
       }
-      primitiveBool = new go.Scalar('bool');
+      primitiveBool = new go.Scalar('bool', false);
       types.set(m4.SchemaType.Boolean, primitiveBool);
       return primitiveBool;
     }
@@ -359,7 +359,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (rune) {
         return rune;
       }
-      rune = new go.Scalar('rune');
+      rune = new go.Scalar('rune', false);
       types.set(m4.SchemaType.Char, rune);
       return rune;
     }
@@ -415,7 +415,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
         if (int32) {
           return int32;
         }
-        int32 = new go.Scalar(int32Key);
+        int32 = new go.Scalar(int32Key, false);
         types.set(int32Key, int32);
         return int32;
       }
@@ -424,7 +424,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (int64) {
         return int64;
       }
-      int64 = new go.Scalar(int64Key);
+      int64 = new go.Scalar(int64Key, false);
       types.set(int64Key, int64);
       return int64;
     }
@@ -435,7 +435,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
         if (float32) {
           return float32;
         }
-        float32 = new go.Scalar(float32Key);
+        float32 = new go.Scalar(float32Key, false);
         types.set(float32Key, float32);
         return float32;
       }
@@ -444,7 +444,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (float64) {
         return float64;
       }
-      float64 = new go.Scalar(float64Key);
+      float64 = new go.Scalar(float64Key, false);
       types.set(float64Key, float64);
       return float64;
     }
@@ -501,7 +501,7 @@ function adaptLiteralValue(constSchema: m4.ConstantSchema): go.Literal {
       if (literalBool) {
         return <go.Literal>literalBool;
       }
-      literalBool = new go.Literal(new go.Scalar('bool'), constSchema.value.value);
+      literalBool = new go.Literal(new go.Scalar('bool', false), constSchema.value.value);
       types.set(keyName, literalBool);
       return literalBool;
     }
@@ -545,9 +545,9 @@ function adaptLiteralValue(constSchema: m4.ConstantSchema): go.Literal {
         return <go.Literal>literalInt;
       }
       if ((<m4.NumberSchema>constSchema.valueType).precision === 32) {
-        literalInt = new go.Literal(new go.Scalar('int32'), constSchema.value.value);
+        literalInt = new go.Literal(new go.Scalar('int32', false), constSchema.value.value);
       } else {
-        literalInt = new go.Literal(new go.Scalar('int64'), constSchema.value.value);
+        literalInt = new go.Literal(new go.Scalar('int64', false), constSchema.value.value);
       }
       types.set(keyName, literalInt);
       return literalInt;
@@ -559,9 +559,9 @@ function adaptLiteralValue(constSchema: m4.ConstantSchema): go.Literal {
         return <go.Literal>literalFloat;
       }
       if ((<m4.NumberSchema>constSchema.valueType).precision === 32) {
-        literalFloat = new go.Literal(new go.Scalar('float32'), constSchema.value.value);
+        literalFloat = new go.Literal(new go.Scalar('float32', false), constSchema.value.value);
       } else {
-        literalFloat = new go.Literal(new go.Scalar('float64'), constSchema.value.value);
+        literalFloat = new go.Literal(new go.Scalar('float64', false), constSchema.value.value);
       }
       types.set(keyName, literalFloat);
       return literalFloat;

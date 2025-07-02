@@ -17,7 +17,7 @@ export async function generateXMLAdditionalPropsHelpers(codeModel: go.CodeModel)
       continue;
     }
     for (const field of model.fields) {
-      if (go.isMapType(field.type)) {
+      if (field.type.kind === 'map') {
         required = true;
         break;
       }

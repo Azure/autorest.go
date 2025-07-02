@@ -172,7 +172,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
           if (method.kind === 'lroPageableMethod') {
             resultName = 'res';
           }
-          const itemType = ((method as go.PageableMethod).responseEnvelope.result as go.ModelResult).modelType.fields.find(f => go.isSliceType(f.type))!;
+          const itemType = ((method as go.PageableMethod).responseEnvelope.result as go.ModelResult).modelType.fields.find(f => f.type.kind === 'slice')!;
           exampleText += `\tfor ${resultName}.More() {\n`;
           exampleText += `\t\tpage, err := ${resultName}.NextPage(ctx)\n`;
           exampleText += `\t\tif err != nil {\n`;
@@ -225,27 +225,30 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
 function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, indent: string, imports?: ImportManager, byValue: boolean = false, inArray: boolean = false): string {
   if (example.kind === 'string') {
     let exampleText = `"${escapeString(example.value)}"`;
-    if (go.isConstantType(example.type)) {
+    if (example.type.kind === 'constant') {
       exampleText = getConstantValue(codeModel, example.type, example.value);
-    } else if (go.isTimeType(example.type)) {
+    } else if (example.type.kind === 'time') {
       exampleText = getTimeValue(example.type, example.value, imports);
-    } else if (go.isBytesType(example.type)) {
+    } else if (example.type.kind === 'encodedBytes') {
       exampleText = `[]byte("${escapeString(example.value)}")`
-    } else if (go.isLiteralValue(example.type) && go.isConstantType(example.type.type)) {
+    } else if (example.type.kind === 'literal' && example.type.type.kind === 'constant') {
       exampleText = getConstantValue(codeModel, example.type.type, example.type.literal.value);
     }
     return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
   } else if (example.kind === 'number') {
     let exampleText = `${example.value}`;
-    if (go.isConstantType(example.type)) {
-      exampleText = `${indent}${getConstantValue(codeModel, example.type, example.value)}`;
-    } else if (go.isTimeType(example.type)) {
-      exampleText = getTimeValue(example.type, example.value, imports);
+    switch (example.type.kind) {
+      case 'constant':
+        exampleText = `${indent}${getConstantValue(codeModel, example.type, example.value)}`;
+        break;
+      case 'time':
+        exampleText = getTimeValue(example.type, example.value, imports);
+        break;
     }
     return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
   } else if (example.kind === 'boolean') {
     let exampleText = `${example.value}`;
-    if (go.isConstantType(example.type)) {
+    if (example.type.kind === 'constant') {
       exampleText = `${indent}${getConstantValue(codeModel, example.type, example.value)}`;
     }
     return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
@@ -257,7 +260,7 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
     const isElementByValue = example.type.elementTypeByValue;
     // if polymorphic, need to add type name in array, so inArray will be set to false
     // if other case, no need to add type name in array, so inArray will be set to true
-    const isElementPolymorphic = go.isInterfaceType(example.type.elementType);
+    const isElementPolymorphic = example.type.elementType.kind === 'interface';
     let exampleText = `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}{\n`;
     for (const element of example.value) {
       exampleText += `${getExampleValue(codeModel, element, indent + '\t', imports, isElementByValue && !isElementPolymorphic, !isElementPolymorphic)},\n`;
@@ -267,7 +270,7 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
   } else if (example.kind === 'dictionary') {
     let exampleText = `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}{\n`;
     const isValueByValue = example.type.valueTypeByValue;
-    const isValuePolymorphic = go.isInterfaceType(example.type.valueType);
+    const isValuePolymorphic = example.type.valueType.kind === 'interface';
     for (const key in example.value) {
       exampleText += `${indent}\t"${key}": ${getExampleValue(codeModel, example.value[key], indent + '\t', imports, isValueByValue && !isValuePolymorphic).slice(indent.length + 1)},\n`;
     }
@@ -281,16 +284,16 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
     for (const field in example.value) {
       const goField = example.type.fields.find(f => f.name === field)!;
       const isFieldByValue = goField.byValue ?? false;
-      const isFieldPolymorphic = go.isInterfaceType(goField.type);
+      const isFieldPolymorphic = goField.type.kind === 'interface';
       exampleText += `${indent}\t${field}: ${getExampleValue(codeModel, example.value[field], indent + '\t', imports, isFieldByValue && !isFieldPolymorphic).slice(indent.length + 1)},\n`;
     }
     if (example.additionalProperties) {
       const additionalPropertiesField = example.type.fields.find(f => f.annotations.isAdditionalProperties)!;
-      if (!go.isMapType(additionalPropertiesField.type)) {
+      if (additionalPropertiesField.type.kind !== 'map') {
         throw new CodegenError('InternalError', `additional properties field type should be map type`);
       }
       const isAdditionalPropertiesFieldByValue = additionalPropertiesField.type.valueTypeByValue ?? false;
-      const isAdditionalPropertiesPolymorphic = go.isInterfaceType(additionalPropertiesField.type);
+      const isAdditionalPropertiesPolymorphic = additionalPropertiesField.type.valueType.kind === 'interface';
       exampleText += `${indent}\t${additionalPropertiesField.name}: ${getRef(additionalPropertiesField.byValue)}${go.getTypeDeclaration(additionalPropertiesField.type, codeModel.packageName)}{\n`;
       for (const key in example.additionalProperties) {
         exampleText += `${indent}\t"${key}": ${getExampleValue(codeModel, example.additionalProperties[key], indent + '\t', imports, isAdditionalPropertiesFieldByValue && !isAdditionalPropertiesPolymorphic).slice(indent.length + 1)},\n`;
@@ -362,30 +365,30 @@ function getPointerValue(type: go.PossibleType, valueString: string, byValue: bo
     return valueString;
   }
 
-  if (go.isPrimitiveType(type)) {
-    let prtType = '';
-    switch (type.typeName) {
-      case `bool`:
-      case `byte`:
-      case `rune`:
-        prtType = 'Ptr';
-        break;
-      default:
-        prtType = `Ptr[${type.typeName}]`;
+  switch (type.kind) {
+    case 'any':
+    case 'constant':
+    case 'literal':
+    case 'string':
+    case 'time':
+      if (imports) imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
+      return `to.Ptr(${valueString})`;
+    case 'scalar': {
+      let prtType = '';
+      switch (type.type) {
+        case `bool`:
+        case `byte`:
+        case `rune`:
+          prtType = 'Ptr';
+          break;
+        default:
+          prtType = `Ptr[${type.type}]`;
+      }
+      if (imports) imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
+      return `to.${prtType}(${valueString})`;
     }
-    if (imports) imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
-    return `to.${prtType}(${valueString})`;
-  } else if (go.isAnyType(type) || go.isStringType(type)) {
-    if (imports) imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
-    return `to.Ptr(${valueString})`;
-  } else if (go.isConstantType(type) || go.isTimeType(type)) {
-    if (imports) imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
-    return `to.Ptr(${valueString})`;
-  } else if (go.isLiteralValue(type)) {
-    if (imports) imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
-    return `to.Ptr(${valueString})`;
-  } else {
-    return `&${valueString}`;
+    default:
+      return `&${valueString}`;
   }
 }
 
@@ -421,33 +424,35 @@ function jsonToGo(value: any, indent: string): string {
 }
 
 function generateFakeExample(goType: go.PossibleType, name?: string): go.ExampleType {
-  if (go.isAnyType(goType)) {
-    return new go.NullExample(goType);
-  } else if (go.isPrimitiveType(goType)) {
-    switch (goType.typeName) {
-      case 'bool':
-        return new go.BooleanExample(false, goType);
-      case 'byte':
-      case 'rune':
-        return new go.StringExample(`<${name ?? 'test'}>`, goType);
-      default:
-        return new go.NumberExample(0, goType);
-    }
-  } else if (go.isLiteralValue(goType)) {
-    return new go.StringExample(goType.literal, goType);
-  } else if (go.isConstantType(goType)) {
-    switch (goType.type) {
-      case 'bool':
-        return new go.BooleanExample(goType.values[0].value as boolean, goType);
-      case 'string':
-        return new go.StringExample(goType.values[0].value as string, goType);
-      default:
-        return new go.NumberExample(goType.values[0].value as number, goType);
-    }
-  } else if (go.isStringType(goType)) {
-    return new go.StringExample(`<${name ?? 'test'}>`, goType);
+  switch (goType.kind) {
+    case 'any':
+      return new go.NullExample(goType);
+    case 'constant':
+      switch (goType.type) {
+        case 'bool':
+          return new go.BooleanExample(goType.values[0].value as boolean, goType);
+        case 'string':
+          return new go.StringExample(goType.values[0].value as string, goType);
+        default:
+          return new go.NumberExample(goType.values[0].value as number, goType);
+      }
+    case 'literal':
+      return new go.StringExample(goType.literal, goType);
+    case 'scalar':
+      switch (goType.type) {
+        case 'bool':
+          return new go.BooleanExample(false, goType);
+        case 'byte':
+        case 'rune':
+          return new go.StringExample(`<${name ?? 'test'}>`, goType);
+        default:
+          return new go.NumberExample(0, goType);
+      }
+    case 'string':
+      return new go.StringExample(`<${name ?? 'test'}>`, goType);
+    default:
+      throw new CodegenError('InternalError', `unhandled fake example kind ${goType.kind}`);
   }
-  throw new CodegenError('InternalError', `fake example does not support non primitive type: ${go.getTypeDeclaration(goType)}`);
 }
 
 function escapeString(str: string): string {
