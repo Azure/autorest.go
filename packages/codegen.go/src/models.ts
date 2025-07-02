@@ -169,7 +169,7 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       }
       if (field.docs.description) {
         descriptionMods.push(field.docs.description);
-      } else if (go.isSliceType(field.type) && field.type.rawJSONAsBytes) {
+      } else if (go.isRawJSON(field.type)) {
         // add a basic description if one isn't available
         descriptionMods.push('The contents of this field are raw JSON.');
       }
@@ -355,7 +355,7 @@ function generateJSONMarshallerBody(modelType: go.Model | go.PolymorphicModel, m
       } else {
         marshaller += `\t${setter}\n`;
       }
-    } else if (go.isSliceType(field.type) && field.type.rawJSONAsBytes) {
+    } else if (go.isRawJSON(field.type)) {
       marshaller += `\tpopulate(objectMap, "${field.serializedName}", json.RawMessage(${receiver}.${field.name}))\n`;
       modelDef.SerDe.needsJSONPopulate = true;
     } else {
@@ -487,7 +487,7 @@ function generateJSONUnmarshallerBody(modelType: go.Model | go.PolymorphicModel,
       unmarshalBody += `\t\t\t\t\terr = runtime.DecodeByteArray(encodedValue[i], &${receiver}.${field.name}[i], runtime.Base64${field.type.elementType.encoding}Format)\n`;
       unmarshalBody += '\t\t\t\t}\n\t\t\t}\n';
       modelDef.SerDe.needsJSONUnpopulate = true;
-    } else if (go.isSliceType(field.type) && field.type.rawJSONAsBytes) {
+    } else if (go.isRawJSON(field.type)) {
       unmarshalBody += '\t\t\tif string(val) != "null" {\n';
       unmarshalBody += `\t\t\t\t${receiver}.${field.name} = val\n\t\t\t}\n`;
     } else if (go.isPrimitiveType(field.type) && (field.type.typeName.startsWith('uint') || field.type.typeName.startsWith('int')) && field.type.encodeAsString) {

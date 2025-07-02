@@ -378,7 +378,7 @@ function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport
           if (go.isBytesType(method.responseEnvelope.result.monomorphicType)) {
             const encoding = method.responseEnvelope.result.monomorphicType.encoding;
             content += `\tresp, err := server.MarshalResponseAsByteArray(respContent, server.GetResponse(respr).${getResultFieldName(method.responseEnvelope.result)}, runtime.Base64${encoding}Format, req)\n`;
-          } else if (go.isSliceType(method.responseEnvelope.result.monomorphicType) && method.responseEnvelope.result.monomorphicType.rawJSONAsBytes) {
+          } else if (go.isRawJSON(method.responseEnvelope.result.monomorphicType)) {
             imports.add('bytes');
             imports.add('io');
             content += '\tresp, err := server.NewResponse(respContent, req, &server.ResponseOptions{\n';
@@ -468,7 +468,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
           if (go.isBytesType(bodyParam.type)) {
             content += `\tbody, err := server.UnmarshalRequestAsByteArray(req, runtime.Base64${bodyParam.type.encoding}Format)\n`;
             content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-          } else if (go.isSliceType(bodyParam.type) && bodyParam.type.rawJSONAsBytes) {
+          } else if (go.isRawJSON(bodyParam.type)) {
             content += '\tbody, err := io.ReadAll(req.Body)\n';
             content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
             content += '\treq.Body.Close()\n';

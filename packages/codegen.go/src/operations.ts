@@ -826,7 +826,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
         body = 'aux';
       }
       let setBody = `runtime.MarshalAs${getMediaFormat(bodyParam.type, bodyParam.bodyFormat, `req, ${body}`)}`;
-      if (go.isSliceType(bodyParam.type) && bodyParam.type.rawJSONAsBytes) {
+      if (go.isRawJSON(bodyParam.type)) {
         imports.add('bytes');
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
         setBody = `req.SetBody(streaming.NopCloser(bytes.NewReader(${body})), "application/${bodyParam.bodyFormat.toLowerCase()}")`;
@@ -1045,7 +1045,7 @@ function generateResponseUnmarshaller(method: go.MethodType, type: go.PossibleTy
     return unmarshallerText;
   }
   if (format === 'JSON' || format === 'XML') {
-    if (go.isSliceType(type) && type.rawJSONAsBytes) {
+    if (go.isRawJSON(type)) {
       unmarshallerText += '\tbody, err := runtime.Payload(resp)\n';
       unmarshallerText += '\tif err != nil {\n';
       unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
