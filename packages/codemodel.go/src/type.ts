@@ -148,20 +148,6 @@ export interface PolymorphicModel extends Model {
   discriminatorValue?: Literal;
 }
 
-/** a Go scalar type */
-export interface Scalar {
-  typeName: ScalarType;
-  encodeAsString: boolean;
-}
-
-/** the supported Go scalar types */
-export type ScalarType = 'bool' | 'byte' | 'float32' | 'float64' | 'int8' | 'int16' | 'int32' | 'int64' | 'rune' | 'uint8' | 'uint16' | 'uint32' | 'uint64';
-
-/** a Go string */
-export interface String {
-  isString: true;
-}
-
 // QualifiedType is a type from some package, e.g. the Go standard library (excluding time.Time)
 export interface QualifiedType {
   // this is the type name minus any package qualifier (e.g. URL)
@@ -176,6 +162,15 @@ export interface RawJSON {
   rawJSON: true;
 }
 
+/** a Go scalar type */
+export interface Scalar {
+  typeName: ScalarType;
+  encodeAsString: boolean;
+}
+
+/** the supported Go scalar types */
+export type ScalarType = 'bool' | 'byte' | 'float32' | 'float64' | 'int8' | 'int16' | 'int32' | 'int64' | 'rune' | 'uint8' | 'uint16' | 'uint32' | 'uint64';
+
 export interface Slice {
   elementType: SliceElementType;
 
@@ -183,6 +178,11 @@ export interface Slice {
 }
 
 export type SliceElementType = PossibleType;
+
+/** a Go string */
+export interface String {
+  isString: true;
+}
 
 // Struct describes a vanilla struct definition (pretty much exclusively used for parameter groups/options bag types)
 // UDTs that are sent/received are modeled as ModelType.
@@ -502,16 +502,16 @@ export class Scalar implements Scalar {
   }
 }
 
-export class String implements String {
-  constructor() {
-    this.isString = true;
-  }
-}
-
 export class Slice implements Slice {
   constructor(elementType: SliceElementType, elementTypeByValue: boolean) {
     this.elementType = elementType;
     this.elementTypeByValue = elementTypeByValue;
+  }
+}
+
+export class String implements String {
+  constructor() {
+    this.isString = true;
   }
 }
 
