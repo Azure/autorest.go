@@ -51,9 +51,9 @@ function emit(struct: go.Struct, imports: ImportManager): string {
       }
 
       let typeName = go.getTypeDeclaration(field.type);
-      if (go.isLiteralValue(field.type)) {
+      if (field.type.kind === 'literal') {
         // for constants we use the underlying type name
-        typeName = go.getLiteralValueTypeName(field.type.type);
+        typeName = go.getLiteralTypeDeclaration(field.type.type);
       }
 
       let pointer = '*';

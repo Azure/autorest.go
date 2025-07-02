@@ -51,14 +51,19 @@ export class ImportManager {
   }
 
   addImportForType(type: go.PossibleType) {
-    if (go.isMapType(type)) {
-      this.addImportForType(type.valueType);
-    } else if (go.isSliceType(type)) {
-      this.addImportForType(type.elementType);
-    } else if (go.isQualifiedType(type)) {
-      this.add(type.packageName);
-    } else if (go.isTimeType(type)) {
-      this.add('time');
+    switch (type.kind) {
+      case 'map':
+        this.addImportForType(type.valueType);
+        break;
+      case 'slice':
+        this.addImportForType(type.elementType);
+        break;
+      case 'qualifiedType':
+        this.add(type.packageName);
+        break;
+      case 'time':
+        this.add('time');
+        break;
     }
   }
 

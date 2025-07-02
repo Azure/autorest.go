@@ -256,68 +256,73 @@ function formatHeaderResponseValue(headerResp: go.HeaderScalarResponse | go.Head
   let text = `\tif val := resp.Header.Get("${headerResp.headerName}"); val != "" {\n`;
   let name = uncapitalize(headerResp.fieldName);
   let byRef = '&';
-  if (go.isConstantType(headerResp.type)) {
-    text += `\t\t${respObj}.${headerResp.fieldName} = (*${headerResp.type.name})(&val)\n`;
-    text += '\t}\n';
-    return text;
-  } else if (go.isPrimitiveType(headerResp.type)) {
-    if (headerResp.type.typeName === 'bool') {
-      imports.add('strconv');
-      text += `\t\t${name}, err := strconv.ParseBool(val)\n`;
-    } else if (headerResp.type.typeName === 'int32' || headerResp.type.typeName === 'int64') {
-      imports.add('strconv');
-      if (headerResp.type.typeName === 'int32') {
-        text += `\t\t${name}32, err := strconv.ParseInt(val, 10, 32)\n`;
-        text += `\t\t${name} := int32(${name}32)\n`;
-      } else {
-        text += `\t\t${name}, err := strconv.ParseInt(val, 10, 64)\n`;
-      }
-    } else if (headerResp.type.typeName === 'float32' || headerResp.type.typeName === 'float64') {
-      imports.add('strconv');
-      if (headerResp.type.typeName === 'float32') {
-        text += `\t\t${name}32, err := strconv.ParseFloat(val, 32)\n`;
-        text += `\t\t${name} := float32(${name}32)\n`;
-      } else {
-        text += `\t\t${name}, err := strconv.ParseFloat(val, 64)\n`;
-      }
-    } else {
-      throw new CodegenError('InternalError', `unhandled primitive type ${headerResp.type.typeName}`);
-    }
-  } else if (go.isStringType(headerResp.type)) {
-    text += `\t\t${respObj}.${headerResp.fieldName} = &val\n`;
-    text += '\t}\n';
-    return text;
-  } else if (go.isTimeType(headerResp.type)) {
-    imports.add('time');
-    if (headerResp.type.format === 'dateType') {
-      text += `\t\t${name}, err := time.Parse("${helpers.dateFormat}", val)\n`;
-    } else if (headerResp.type.format === 'timeRFC3339') {
-      text += `\t\t${name}, err := time.Parse("${helpers.timeRFC3339Format}", val)\n`;
-    } else if (headerResp.type.format === 'timeUnix') {
-      imports.add('strconv');
-      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
-      text += '\t\tsec, err := strconv.ParseInt(val, 10, 64)\n';
-      name = 'to.Ptr(time.Unix(sec, 0))';
+  switch (headerResp.type.kind) {
+    case 'constant':
+      text += `\t\t${respObj}.${headerResp.fieldName} = (*${headerResp.type.name})(&val)\n`;
+      text += '\t}\n';
+      return text;
+    case 'encodedBytes':
+      // a base-64 encoded value in string format
+      imports.add('encoding/base64');
+      text += `\t\t${name}, err := base64.${helpers.formatBytesEncoding(headerResp.type.encoding)}Encoding.DecodeString(val)\n`;
       byRef = '';
-    } else {
-      let format = helpers.datetimeRFC3339Format;
-      if (headerResp.type.format === 'dateTimeRFC1123') {
-        format = helpers.datetimeRFC1123Format;
+      break;
+    case 'literal':
+      text += `\t\t${respObj}.${headerResp.fieldName} = &val\n`;
+      text += '\t}\n';
+      return text;
+    case 'scalar':
+      imports.add('strconv');
+      switch (headerResp.type.type) {
+        case 'bool':
+          text += `\t\t${name}, err := strconv.ParseBool(val)\n`;
+          break;
+        case 'float32':
+          text += `\t\t${name}32, err := strconv.ParseFloat(val, 32)\n`;
+          text += `\t\t${name} := float32(${name}32)\n`;
+          break;
+        case 'float64':
+          text += `\t\t${name}, err := strconv.ParseFloat(val, 64)\n`;
+          break;
+        case 'int32':
+          text += `\t\t${name}32, err := strconv.ParseInt(val, 10, 32)\n`;
+          text += `\t\t${name} := int32(${name}32)\n`;
+          break;
+        case 'int64':
+          text += `\t\t${name}, err := strconv.ParseInt(val, 10, 64)\n`;
+          break;
+        default:
+          throw new CodegenError('InternalError', `unhandled scalar type ${headerResp.type.type}`);
       }
-      text += `\t\t${name}, err := time.Parse(${format}, val)\n`;
-    }
-  } else if (go.isBytesType(headerResp.type)) {
-    // ByteArray is a base-64 encoded value in string format
-    imports.add('encoding/base64');
-    text += `\t\t${name}, err := base64.${helpers.formatBytesEncoding(headerResp.type.encoding)}Encoding.DecodeString(val)\n`;
-    byRef = '';
-  } else if (go.isLiteralValue(headerResp.type)) {
-    text += `\t\t${respObj}.${headerResp.fieldName} = &val\n`;
-    text += '\t}\n';
-    return text;
-  } else {
-    throw new CodegenError('InternalError', `unsupported header type ${go.getTypeDeclaration(headerResp.type)}`);
+      break;
+    case 'string':
+      text += `\t\t${respObj}.${headerResp.fieldName} = &val\n`;
+      text += '\t}\n';
+      return text;
+    case 'time':
+      imports.add('time');
+      switch (headerResp.type.format) {
+        case 'dateTimeRFC1123':
+        case 'dateTimeRFC3339':
+          text += `\t\t${name}, err := time.Parse(${headerResp.type.format === 'dateTimeRFC1123' ? helpers.datetimeRFC1123Format : helpers.datetimeRFC3339Format}, val)\n`;
+          break;
+        case 'dateType':
+          text += `\t\t${name}, err := time.Parse("${helpers.dateFormat}", val)\n`;
+          break;
+        case 'timeRFC3339':
+          text += `\t\t${name}, err := time.Parse("${helpers.timeRFC3339Format}", val)\n`;
+          break;
+        case 'timeUnix':
+          imports.add('strconv');
+          imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
+          text += '\t\tsec, err := strconv.ParseInt(val, 10, 64)\n';
+          name = 'to.Ptr(time.Unix(sec, 0))';
+          byRef = '';
+          break;
+      }
   }
+
+  // NOTE: only cases that required parsing will fall through to here
   text += '\t\tif err != nil {\n';
   text += `\t\t\treturn ${zeroResp}, err\n`;
   text += '\t\t}\n';
@@ -585,13 +590,10 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
       // emit check to ensure path param isn't an empty string.  we only need
       // to do this for params that have an underlying type of string.
       const choiceIsString = function (type: go.PathScalarParameterType): boolean {
-        if (!go.isConstantType(type)) {
-          return false;
-        }
-        return type.type === 'string';
+        return type.kind === 'constant' && type.type === 'string';
       };
       // TODO: https://github.com/Azure/autorest.go/issues/1593
-      if (pp.kind === 'pathScalarParam' && ((go.isStringType(pp.type) || choiceIsString(pp.type)) && pp.isEncoded)) {
+      if (pp.kind === 'pathScalarParam' && ((pp.type.kind === 'string' || choiceIsString(pp.type)) && pp.isEncoded)) {
         const paramName = helpers.getParamName(pp);
         imports.add('errors');
         text += `\tif ${paramName} == "" {\n`;
@@ -659,24 +661,29 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
       let setter: string;
       if (qp.kind === 'queryCollectionParam' && qp.collectionFormat === 'multi') {
         setter = `\tfor _, qv := range ${helpers.getParamName(qp)} {\n`;
+
         // emit a type conversion for the qv based on the array's element type
         let queryVal: string;
         const arrayQP = qp.type;
-        if (go.isConstantType(arrayQP.elementType)) {
-          const ch = arrayQP.elementType;
-          // only string and number types are supported for enums
-          if (ch.type === 'string') {
-            queryVal = 'string(qv)';
-          } else {
+        switch (arrayQP.elementType.kind) {
+          case 'constant':
+            switch (arrayQP.elementType.type) {
+              case 'string':
+                queryVal = 'string(qv)';
+                break;
+              default:
+                imports.add('fmt');
+                queryVal = 'fmt.Sprintf("%d", qv)';
+            }
+            break;
+          case 'string':
+            queryVal = 'qv';
+            break;
+          default:
             imports.add('fmt');
-            queryVal = 'fmt.Sprintf("%d", qv)';
-          }
-        } else if (go.isStringType(arrayQP.elementType)) {
-          queryVal = 'qv';
-        } else {
-          imports.add('fmt');
-          queryVal = 'fmt.Sprintf("%v", qv)';
+            queryVal = 'fmt.Sprintf("%v", qv)';
         }
+
         setter += `\t\treqQP.Add("${qp.queryParameter}", ${queryVal})\n`;
         setter += '\t}';
       } else {
@@ -778,10 +785,10 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     if (bodyParam.bodyFormat === 'JSON' || bodyParam.bodyFormat === 'XML') {
       // default to the body param name
       let body = helpers.getParamName(bodyParam);
-      if (go.isLiteralValue(bodyParam.type)) {
+      if (bodyParam.type.kind === 'literal') {
         // if the value is constant, embed it directly
         body = helpers.formatLiteralValue(bodyParam.type, true);
-      } else if (bodyParam.bodyFormat === 'XML' && go.isSliceType(bodyParam.type)) {
+      } else if (bodyParam.bodyFormat === 'XML' && bodyParam.type.kind === 'slice') {
         // for XML payloads, create a wrapper type if the payload is an array
         imports.add('encoding/xml');
         text += '\ttype wrapper struct {\n';
@@ -792,7 +799,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
         text += `\t\tXMLName xml.Name \`xml:"${tagName}"\`\n`;
         const fieldName = capitalize(bodyParam.name);
         let tag = go.getTypeDeclaration(bodyParam.type.elementType);
-        if (go.isModelType(bodyParam.type.elementType) && bodyParam.type.elementType.xml?.name) {
+        if (bodyParam.type.elementType.kind === 'model' && bodyParam.type.elementType.xml?.name) {
           tag = bodyParam.type.elementType.xml.name;
         }
         text += `\t\t${fieldName} *${go.getTypeDeclaration(bodyParam.type)} \`xml:"${tag}"\`\n`;
@@ -802,7 +809,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
           addr = '';
         }
         body = `wrapper{${fieldName}: ${addr}${body}}`;
-      } else if (go.isTimeType(bodyParam.type) && bodyParam.type.format !== 'dateTimeRFC3339') {
+      } else if (bodyParam.type.kind === 'time' && bodyParam.type.format !== 'dateTimeRFC3339') {
         // wrap the body in the internal time type
         // no need for dateTimeRFC3339 as the JSON marshaler defaults to that.
         body = `${bodyParam.type.format}(${body})`;
@@ -826,7 +833,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
         body = 'aux';
       }
       let setBody = `runtime.MarshalAs${getMediaFormat(bodyParam.type, bodyParam.bodyFormat, `req, ${body}`)}`;
-      if (go.isRawJSON(bodyParam.type)) {
+      if (bodyParam.type.kind === 'rawJSON') {
         imports.add('bytes');
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
         setBody = `req.SetBody(streaming.NopCloser(bytes.NewReader(${body})), "application/${bodyParam.bodyFormat.toLowerCase()}")`;
@@ -895,7 +902,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     text += '\tif err := runtime.MarshalAsJSON(req, body); err != nil {\n\t\treturn nil, err\n\t}\n';
     text += '\treturn req, nil\n';
   } else if (multipartBodyParams.length > 0) {
-    if (multipartBodyParams.length === 1 && go.isModelType(multipartBodyParams[0].type) && multipartBodyParams[0].type.annotations.multipartFormData) {
+    if (multipartBodyParams.length === 1 && multipartBodyParams[0].type.kind === 'model' && multipartBodyParams[0].type.annotations.multipartFormData) {
       text += `\tformData, err := ${multipartBodyParams[0].name}.toMultipartFormData()\n`;
       text += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     } else {
@@ -969,7 +976,7 @@ function emitClientSideDefault(param: go.HeaderCollectionParameter | go.HeaderSc
 function getMediaFormat(type: go.PossibleType, mediaType: 'JSON' | 'XML', param: string): string {
   let marshaller: 'JSON' | 'XML' | 'ByteArray' = mediaType;
   let format = '';
-  if (go.isBytesType(type)) {
+  if (type.kind === 'encodedBytes') {
     marshaller = 'ByteArray';
     format = `, runtime.Base64${type.encoding}Format`;
   }
@@ -977,10 +984,10 @@ function getMediaFormat(type: go.PossibleType, mediaType: 'JSON' | 'XML', param:
 }
 
 function isArrayOfDateTimeForMarshalling(paramType: go.PossibleType): { format: go.TimeFormat, elemByVal: boolean } | undefined {
-  if (!go.isSliceType(paramType)) {
+  if (paramType.kind !== 'slice') {
     return undefined;
   }
-  if (!go.isTimeType(paramType.elementType)) {
+  if (paramType.elementType.kind !== 'time') {
     return undefined;
   }
   switch (paramType.elementType.format) {
@@ -1007,7 +1014,7 @@ function needsResponseHandler(method: go.MethodType): boolean {
 function generateResponseUnmarshaller(method: go.MethodType, type: go.PossibleType, format: go.ResultFormat, unmarshalTarget: string): string {
   let unmarshallerText = '';
   const zeroValue = getZeroReturnValue(method, 'handler');
-  if (go.isTimeType(type)) {
+  if (type.kind === 'time') {
     // use the designated time type for unmarshalling
     unmarshallerText += `\tvar aux *${type.format}\n`;
     unmarshallerText += `\tif err := runtime.UnmarshalAs${format}(resp, &aux); err != nil {\n`;
@@ -1045,7 +1052,7 @@ function generateResponseUnmarshaller(method: go.MethodType, type: go.PossibleTy
     return unmarshallerText;
   }
   if (format === 'JSON' || format === 'XML') {
-    if (go.isRawJSON(type)) {
+    if (type.kind === 'rawJSON') {
       unmarshallerText += '\tbody, err := runtime.Payload(resp)\n';
       unmarshallerText += '\tif err != nil {\n';
       unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
@@ -1129,7 +1136,7 @@ function createProtocolResponse(client: go.Client, method: go.Method | go.LROPag
         addHeaders(method.responseEnvelope.headers);
         let target = `result.${helpers.getResultFieldName(method)}`;
         // when unmarshalling a wrapped XML array, unmarshal into the response envelope
-        if (result.format === 'XML' && go.isSliceType(result.monomorphicType)) {
+        if (result.format === 'XML' && result.monomorphicType.kind === 'slice') {
           target = 'result';
         }
         text += generateResponseUnmarshaller(method, result.monomorphicType, result.format, target);
@@ -1150,10 +1157,10 @@ function createProtocolResponse(client: go.Client, method: go.Method | go.LROPag
 }
 
 function isArrayOfDateTime(paramType: go.PossibleType): { format: go.TimeFormat, elemByVal: boolean } | undefined {
-  if (!go.isSliceType(paramType)) {
+  if (paramType.kind !== 'slice') {
     return undefined;
   }
-  if (!go.isTimeType(paramType.elementType)) {
+  if (paramType.elementType.kind !== 'time') {
     return undefined;
   }
   return {
@@ -1163,10 +1170,10 @@ function isArrayOfDateTime(paramType: go.PossibleType): { format: go.TimeFormat,
 }
 
 function isMapOfDateTime(paramType: go.PossibleType): string | undefined {
-  if (!go.isMapType(paramType)) {
+  if (paramType.kind !== 'map') {
     return undefined;
   }
-  if (!go.isTimeType(paramType.valueType)) {
+  if (paramType.valueType.kind !== 'time') {
     return undefined;
   }
   return paramType.valueType.format;

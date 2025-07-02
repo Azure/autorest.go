@@ -277,14 +277,59 @@ export function isHeaderParameter(param: MethodParameter): param is HeaderParame
   return param.kind === 'headerCollectionParam' || param.kind === 'headerMapParam' || param.kind === 'headerScalarParam';
 }
 
+/** narrows type to a HeaderScalarType within the conditional block */
+export function isHeaderScalarType(type: type.PossibleType): type is HeaderScalarType {
+  switch (type.kind) {
+    case 'constant':
+    case 'encodedBytes':
+    case 'literal':
+    case 'scalar':
+    case 'string':
+    case 'time':
+      return true;
+    default:
+      return false;
+  }
+}
+
 /** narrows param to a PathParameter within the conditional block */
 export function isPathParameter(param: MethodParameter): param is PathParameter {
   return param.kind === 'pathCollectionParam' || param.kind === 'pathScalarParam';
 }
 
+/** narrows type to a PathScalarParameterType within the conditional block */
+export function isPathScalarParameterType(type: type.PossibleType): type is PathScalarParameterType {
+  switch (type.kind) {
+    case 'constant':
+    case 'encodedBytes':
+    case 'literal':
+    case 'scalar':
+    case 'string':
+    case 'time':
+      return true;
+    default:
+      return false;
+  }
+}
+
 /** narrows param to a QueryParameter within the conditional block */
 export function isQueryParameter(param: MethodParameter): param is QueryParameter {
   return param.kind === 'queryCollectionParam' || param.kind === 'queryScalarParam';
+}
+
+/** narrows type to a QueryScalarParameterType within the conditional block */
+export function isQueryScalarParameterType(type: type.PossibleType): type is QueryScalarParameterType {
+  switch (type.kind) {
+    case 'constant':
+    case 'encodedBytes':
+    case 'literal':
+    case 'scalar':
+    case 'string':
+    case 'time':
+      return true;
+    default:
+      return false;
+  }
 }
 
 /** returns true if the param is required */
@@ -294,6 +339,18 @@ export function isRequiredParameter(param: MethodParameter | Parameter): boolean
     return false;
   }
   return param.style === 'required';
+}
+
+/** narrows type to a URIParameterType within the conditional block */
+export function isURIParameterType(type: type.PossibleType): type is URIParameterType {
+  switch (type.kind) {
+    case 'constant':
+    case 'scalar':
+    case 'string':
+      return true;
+    default:
+      return false;
+  }
 }
 
 /** returns true if the param is a literal */

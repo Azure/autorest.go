@@ -321,7 +321,7 @@ export class typeAdapter {
         if (primitiveBool) {
           return primitiveBool;
         }
-        primitiveBool = new go.Scalar('bool');
+        primitiveBool = new go.Scalar('bool', type.encode === 'string');
         this.types.set(boolKey, primitiveBool);
         return primitiveBool;
       }
@@ -344,7 +344,7 @@ export class typeAdapter {
         if (decimalType) {
           return decimalType;
         }
-        decimalType = new go.Scalar(decimalKey);
+        decimalType = new go.Scalar(decimalKey, type.encode === 'string');
         this.types.set(decimalKey, decimalType);
         return decimalType;
       }
@@ -355,7 +355,7 @@ export class typeAdapter {
         if (float32) {
           return float32;
         }
-        float32 = new go.Scalar(float32Key);
+        float32 = new go.Scalar(float32Key, type.encode === 'string');
         this.types.set(float32Key, float32);
         return float32;
       }
@@ -365,7 +365,7 @@ export class typeAdapter {
         if (float64) {
           return float64;
         }
-        float64 = new go.Scalar(float64Key);
+        float64 = new go.Scalar(float64Key, type.encode === 'string');
         this.types.set(float64Key, float64);
         return float64;
       }
@@ -538,7 +538,7 @@ export class typeAdapter {
       }
 
       modelType = new go.PolymorphicModel(modelName, iface, annotations, usage);
-      (<go.PolymorphicModel>modelType).discriminatorValue = discriminatorLiteral;
+      modelType.discriminatorValue = discriminatorLiteral;
     } else {
       modelType = new go.Model(modelName, annotations, usage);
       // polymorphic types don't have XMLInfo
@@ -675,7 +675,7 @@ export class typeAdapter {
         if (literalBool) {
           return <go.Literal>literalBool;
         }
-        literalBool = new go.Literal(new go.Scalar('bool'), constType.value);
+        literalBool = new go.Literal(new go.Scalar('bool', false), constType.value);
         this.types.set(keyName, literalBool);
         return literalBool;
       }
@@ -696,7 +696,7 @@ export class typeAdapter {
         if (literalDecimal) {
           return <go.Literal>literalDecimal;
         }
-        literalDecimal = new go.Literal(new go.Scalar('float64'), constType.value);
+        literalDecimal = new go.Literal(new go.Scalar('float64', false), constType.value);
         this.types.set(keyName, literalDecimal);
         return literalDecimal;
       }
@@ -726,7 +726,7 @@ export class typeAdapter {
         if (literalInt) {
           return <go.Literal>literalInt;
         }
-        literalInt = new go.Literal(new go.Scalar(constType.valueType.kind), constType.value);
+        literalInt = new go.Literal(new go.Scalar(constType.valueType.kind, false), constType.value);
         this.types.set(keyName, literalInt);
         return literalInt;
       }
@@ -737,7 +737,7 @@ export class typeAdapter {
         if (literalFloat) {
           return <go.Literal>literalFloat;
         }
-        literalFloat = new go.Literal(new go.Scalar(constType.valueType.kind), constType.value);
+        literalFloat = new go.Literal(new go.Scalar(constType.valueType.kind, false), constType.value);
         this.types.set(keyName, literalFloat);
         return literalFloat;
       }
@@ -887,12 +887,12 @@ function aggregateProperties(model: tcgc.SdkModelType): {props: Array<tcgc.SdkMo
 export function adaptXMLInfo(decorators: Array<tcgc.DecoratorInfo>, field?: go.ModelField): go.XMLInfo | undefined {
   // if there are no decorators and this isn't a slice
   // type in a model field then do nothing
-  if (decorators.length === 0 && (!field || (!go.isSliceType(field.type)))) {
+  if (decorators.length === 0 && (!field || (field.type.kind !== 'slice'))) {
     return undefined;
   }
 
   const xmlInfo = new go.XMLInfo();
-  if (field && go.isSliceType(field.type)) {
+  if (field && field.type.kind === 'slice') {
     // for tsp, arrays are wrapped by default
     xmlInfo.wraps = go.getTypeDeclaration(field.type.elementType);
   }
@@ -921,15 +921,18 @@ export function adaptXMLInfo(decorators: Array<tcgc.DecoratorInfo>, field?: go.M
         handleName(decorator);
         break;
       case 'TypeSpec.Xml.@unwrapped':
-        // unwrapped can only be applied fields
+        // unwrapped can only be applied to fields
         if (field) {
-          if (go.isStringType(field.type)) {
-            // an unwrapped string means it's text
-            xmlInfo.text = true;  
-          } else if (go.isSliceType(field.type)) {
-            // unwrapped slice. default to using the serialized name
-            xmlInfo.wraps = undefined;
-            xmlInfo.name = field.serializedName;
+          switch (field.type.kind) {
+            case 'slice':
+              // unwrapped slice. default to using the serialized name
+              xmlInfo.wraps = undefined;
+              xmlInfo.name = field.serializedName;
+              break;
+            case 'string':
+              // an unwrapped string means it's text
+              xmlInfo.text = true;  
+              break;
           }
         }
         break;
