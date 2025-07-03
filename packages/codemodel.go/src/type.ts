@@ -3,340 +3,393 @@
 *  Licensed under the MIT License. See License.txt in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { CodeModelError } from "./errors.js";
-
-// PossibleType describes what can be modeled e.g. in an OpenAPI specification
-export type PossibleType = BytesType | ConstantType | InterfaceType | LiteralValue | MapType | ModelType | PolymorphicType | PrimitiveType | SliceType | QualifiedType | TimeType;
-
-// BytesType is a base-64 encoded sequence of bytes
-export interface BytesType {
-  encoding: BytesEncoding;
-}
-
-export type BytesEncoding = 'Std' | 'URL';
-
-// Constant describes a const type definition (e.g. type FooType string, i.e. our fake enums)
-export interface ConstantType {
-  name: string;
-
-  docs: Docs;
-
-  type: ConstantTypeTypes;
-
-  values: Array<ConstantValue>;
-
-  valuesFuncName: string;
-}
-
-// ConstantTypeTypes contains the possible underlying type of a const
-export type ConstantTypeTypes = 'bool' | 'float32' | 'float64' | 'int32' | 'int64' | 'string';
-
-// ConstantValue describes a const value definition (e.g. FooTypeValue FooType = "value")
-export interface ConstantValue {
-  name: string;
-
-  docs: Docs;
-
-  type: ConstantType;
-
-  value: ConstantValueValueTypes;
-}
-
-export type ConstantValueValueTypes = boolean | number | string;
-
-export type DateTimeFormat = 'dateType' | 'dateTimeRFC1123' | 'dateTimeRFC3339' | 'timeRFC3339' | 'timeUnix';
-
-// Docs contains the values used in doc comment generation.
+/** Docs contains the values used in doc comment generation. */
 export interface Docs {
-  // the high level summary
+  /** the high level summary */
   summary?: string;
 
-  // detailed description
+  /** detailed description */
   description?: string;
 }
 
-// InterfaceType represents the interface type for a polymorphic (discriminated) type
-export interface InterfaceType {
-  // Name is the name of the interface (e.g. FishClassification)
-  name: string;
+/** defines types that go across the wire */
+export type PossibleType = Any | Constant | EncodedBytes | Interface | Literal | Map | Model | PolymorphicModel | QualifiedType | RawJSON | Scalar | Slice | String | Time;
 
-  docs: Docs;
-
-  // contains possible concrete type instances (e.g. Flounder, Carp)
-  possibleTypes: Array<PolymorphicType>;
-
-  // contains the name of the discriminator field in the JSON (e.g. "fishtype")
-  discriminatorField: string;
-
-  // does this polymorphic type have a parent (e.g. SalmonClassification has parent FishClassification)
-  parent?: InterfaceType;
-
-  // this is the "root" type in the list of polymorphic types (e.g. Fish for FishClassification)
-  rootType: PolymorphicType;
+/** the Go any type */
+export interface Any {
+  kind: 'any';
 }
 
-// LiteralValue is a literal value (e.g. "foo").
-export interface LiteralValue {
-  type: LiteralValueType;
+/** a const type definition */
+export interface Constant {
+  kind: 'constant';
+
+  /** the const type name */
+  name: string;
+
+  /** any docs for the const type */
+  docs: Docs;
+
+  /** the underlying type of the const */
+  type: ConstantType;
+
+  /** the possible values for this const */
+  values: Array<ConstantValue>;
+
+  /** the name of the func that returns the set of values */
+  valuesFuncName: string;
+}
+
+/** the underlying type of a const */
+export type ConstantType = 'bool' | 'float32' | 'float64' | 'int32' | 'int64' | 'string';
+
+/** a const value definition */
+export interface ConstantValue {
+  kind: 'constantValue';
+
+  /** the const value name */
+  name: string;
+
+  /** any docs for the const value */
+  docs: Docs;
+
+  /** the const to which this value belongs */
+  type: Constant;
+
+  /** the value for this const */
+  value: ConstantValueType;
+}
+
+/** the underlying type of a const value */
+export type ConstantValueType = boolean | number | string;
+
+/** a byte slice that's base64 encoded */
+export interface EncodedBytes {
+  kind: 'encodedBytes';
+
+  /** indicates what kind of base64-encoding to use */
+  encoding: BytesEncoding;
+}
+
+/** the types of base64 encoding */
+export type BytesEncoding = 'Std' | 'URL';
+
+/** a Go interface type used for discriminated types */
+export interface Interface {
+  kind: 'interface';
+
+  /** the name of the interface (e.g. FishClassification) */
+  name: string;
+
+  /** any docs for the interface */
+  docs: Docs;
+
+  /** contains possible concrete type instances (e.g. Flounder, Carp) */
+  possibleTypes: Array<PolymorphicModel>;
+
+  /** contains the name of the discriminator field in the JSON (e.g. "fishtype") */
+  discriminatorField: string;
+
+  /** does this polymorphic type have a parent (e.g. SalmonClassification has parent FishClassification) */
+  parent?: Interface;
+
+  /**  this is the "root" type in the list of polymorphic types (e.g. Fish for FishClassification) */
+  rootType: PolymorphicModel;
+}
+
+/** a literal value (e.g. "foo", 123, true) */
+export interface Literal {
+  kind: 'literal';
+
+  /** the literal's underlying type */
+  type: LiteralType;
 
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  /** the value for this literal */
   literal: any;
 }
 
-export type LiteralValueType = BytesType | ConstantType | PrimitiveType | TimeType;
+/** the possible types of literals */
+export type LiteralType = Constant | EncodedBytes | Scalar | String | Time;
 
-export interface MapType {
+/** a Go map type. note that the key is always a string */
+export interface Map {
+  kind: 'map';
+
+  /** the type of values in the map */
   valueType: MapValueType;
 
+  /** indicates if the map's value type is pointer-to-type or not */
   valueTypeByValue: boolean;
 }
 
+/** the set of map value types */
 export type MapValueType = PossibleType;
 
-// ModelField describes a field within a model
+/** a field within a model */
 export interface ModelField extends StructField {
+  /** the name of the field as it's sent/received over the wire */
   serializedName: string;
 
+  /** metadata for this field */
   annotations: ModelFieldAnnotations;
 
-  // the value to send over the wire if one isn't specified
-  defaultValue?: LiteralValue;
+  /** the value to send over the wire if one isn't specified */
+  defaultValue?: Literal;
 
+  /** any XML metadata */
   xml?: XMLInfo;
 }
 
+/** additional settings for a model type */
 export interface ModelAnnotations {
+  /** when true, serde methods will not be generated */
   omitSerDeMethods: boolean;
 
-  // indicates the model should be converted into multipart/form data
+  /** indicates the model should be converted into multipart/form data */
   multipartFormData: boolean;
 }
 
+/** additional settings for a model field */
 export interface ModelFieldAnnotations {
+  /** the field is required on input and will always be populated on output */
   required: boolean;
 
+  /** the field is read-only and will be populated on output. any set value on input will be ignored */
   readOnly: boolean;
 
+  /** field is JSON additional properties */
   isAdditionalProperties: boolean;
 
+  /** field is the discriminator for a discriminated type */
   isDiscriminator: boolean;
 }
 
-// ModelType is a struct that participates in serialization over the wire.
-export interface ModelType extends StructType {
-  fields: Array<ModelField>;
-
-  annotations: ModelAnnotations;
-
-  usage: UsageFlags;
-
-  xml?: XMLInfo;
+/** a struct that participates in serialization over the wire */
+export interface Model extends ModelBase {
+  kind: 'model';
 }
 
-// PolymorphicType is a discriminated type
-export interface PolymorphicType extends StructType {
-  fields: Array<ModelField>;
+/** a model that's a discriminated type */
+export interface PolymorphicModel extends ModelBase {
+  kind: 'polymorphicModel';
 
-  annotations: ModelAnnotations;
+  /** the polymorphic interface this type implements */
+  interface: Interface;
 
-  usage: UsageFlags;
-
-  // this denotes the polymorphic interface this type implements
-  interface: InterfaceType;
-
-  // the value in the JSON that indicates what type was sent over the wire (e.g. goblin, salmon, shark)
-  // note that for "root" types (Fish), there is no discriminatorValue. however, "sub-root" types (e.g. Salmon)
-  // will have this populated.
-  discriminatorValue?: LiteralValue;
+  /**
+   * the value in the JSON that indicates what type was sent over the wire (e.g. goblin, salmon, shark)
+   * note that for "root" types (Fish), there is no discriminatorValue. however, "sub-root" types (e.g. Salmon)
+   * will have this populated.
+   */
+  discriminatorValue?: Literal;
 }
 
-// PrimitiveType is a Go integral type
-export interface PrimitiveType {
-  typeName: PrimitiveTypeName;
-  encodeAsString: boolean;
-}
-
-export type PrimitiveTypeName = 'any' | 'bool' | 'byte' | 'float32' | 'float64' | 'int8' | 'int16' | 'int32' | 'int64' | 'rune' | 'string' | 'uint8' | 'uint16' | 'uint32' | 'uint64';
-
-// QualifiedType is a type from some package, e.g. the Go standard library (excluding time.Time)
+/** a type from some package, e.g. the Go standard library (excluding time.Time) */
 export interface QualifiedType {
-  // this is the type name minus any package qualifier (e.g. URL)
+  kind: 'qualifiedType';
+
+  /** the type name minus any package qualifier (e.g. URL) */
   exportName: string;
 
-  // the full name of the package to import (e.g. "net/url")
+  /** the full name of the package to import (e.g. "net/url") */
   packageName: string;
 }
 
-export interface SliceType {
-  elementType: SliceElementType;
-
-  elementTypeByValue: boolean;
-
-  // this slice is bytes of raw JSON
-  rawJSONAsBytes: boolean;
+/** a byte slice containing raw JSON */
+export interface RawJSON {
+  kind: 'rawJSON';
 }
 
+/** a Go scalar type */
+export interface Scalar {
+  kind: 'scalar';
+
+  /** the type of scalar */
+  type: ScalarType;
+
+  /** indicates the value is sent/received as a string */
+  encodeAsString: boolean;
+}
+
+/** the supported Go scalar types */
+export type ScalarType = 'bool' | 'byte' | 'float32' | 'float64' | 'int8' | 'int16' | 'int32' | 'int64' | 'rune' | 'uint8' | 'uint16' | 'uint32' | 'uint64';
+
+/** a Go slice */
+export interface Slice {
+  kind: 'slice';
+
+  /** the element type for this slice */
+  elementType: SliceElementType;
+
+  /** indicates if the slice's element type is pointer-to-type or not */
+  elementTypeByValue: boolean;
+}
+
+/** the set of slice element types */
 export type SliceElementType = PossibleType;
 
-// Struct describes a vanilla struct definition (pretty much exclusively used for parameter groups/options bag types)
-// UDTs that are sent/received are modeled as ModelType.
-export interface StructType {
+/** a Go string */
+export interface String {
+  kind: 'string';
+}
+
+/** a vanilla struct definition (pretty much exclusively used for parameter groups/options bag types) */
+export interface Struct {
+  /** the name of the struct */
   name: string;
 
+  /** and docs for this struct */
   docs: Docs;
 
-  // there are only a few corner-cases where a struct has no fields
+  /** the fields in this struct. can be empty */
   fields: Array<StructField>;
 }
 
-// StructField describes a field definition within a struct
+/** a field definition within a struct */
 export interface StructField {
+  /** the name of the field */
   name: string;
 
+  /** and docs for this field */
   docs: Docs;
 
+  /** the field's underlying type */
   type: PossibleType;
 
+  /** indicates if the field is pointer-to-type or not */
   byValue: boolean;
 }
 
-// TimeType is a time.Time type from the standard library with a format specifier.
-export interface TimeType {
-  dateTimeFormat: DateTimeFormat;
+/** a time.Time type from the standard library with a format specifier */
+export interface Time {
+  kind: 'time';
 
+  /** the serde format used */
+  format: TimeFormat;
+
+  /** indicates if the time is always in UTC */
   utc: boolean;
 }
 
-// UsageFlags are bit flags indicating how a model/polymorphic type is used
+/** the set of time serde formats */
+export type TimeFormat = 'dateType' | 'dateTimeRFC1123' | 'dateTimeRFC3339' | 'timeRFC3339' | 'timeUnix';
+
+/** bit flags indicating how a model/polymorphic type is used */
 export enum UsageFlags {
-  // the type is unreferenced
+  /** the type is unreferenced */
   None = 0,
 
-  // the type is received over the wire
+  /** the type is received over the wire */
   Input = 1,
 
-  // the type is sent over the wire
+  /** the type is sent over the wire */
   Output = 2
 }
 
+/** metadata used for XML serde */
 export interface XMLInfo {
+  /** element name to use instead of the default name */
   name?: string;
 
-  // name propagated to the generated wrapper type
+  /** name propagated to the generated wrapper type */
   wrapper? :string;
 
-  // slices only. this is the name of the wrapped type
+  /** slices only. this is the name of the wrapped type */
   wraps?: string;
 
+  /** value is an XML attribute */
   attribute: boolean;
 
+  /** value is raw text */
   text: boolean;
 }
 
-export function isBytesType(type: PossibleType): type is BytesType {
-  return (<BytesType>type).encoding !== undefined;
-}
-
-export function isConstantType(type: PossibleType): type is ConstantType {
-  return (<ConstantType>type).values !== undefined;
-}
-
-export function isLiteralValueType(type: PossibleType): type is LiteralValueType {
-  return isConstantType(type) || isPrimitiveType(type);
-}
-
-export function isPrimitiveType(type: PossibleType): type is PrimitiveType {
-  return (<PrimitiveType>type).typeName !== undefined;
-}
-
-export function isQualifiedType(type: PossibleType): type is QualifiedType {
-  return (<QualifiedType>type).exportName !== undefined;
-}
-
-export function isTimeType(type: PossibleType): type is TimeType {
-  return (<TimeType>type).dateTimeFormat !== undefined;
-}
-
-export function isMapType(type: PossibleType): type is MapType {
-  return (<MapType>type).valueType !== undefined;
-}
-
-export function isModelType(type: PossibleType): type is ModelType {
-  return (<ModelType>type).fields !== undefined;
-}
-
-export function isPolymorphicType(type: PossibleType): type is PolymorphicType {
-  return (<PolymorphicType>type).interface !== undefined;
-}
-
-export function isSliceType(type: PossibleType): type is SliceType {
-  return (<SliceType>type).elementType !== undefined;
-}
-
-export function isInterfaceType(type: PossibleType): type is InterfaceType {
-  return (<InterfaceType>type).possibleTypes !== undefined;
-}
-
-export function isLiteralValue(type: PossibleType): type is LiteralValue {
-  return (<LiteralValue>type).literal !== undefined;
-}
-
-export function getLiteralValueTypeName(literal: LiteralValueType): string {
-  if (isBytesType(literal)) {
-    return '[]byte';
-  } else if (isConstantType(literal)) {
-    return literal.name;
-  } else if (isPrimitiveType(literal)) {
-    return literal.typeName;
-  } else if (isTimeType(literal)) {
-    return 'time.Time';
-  } else {
-    throw new CodeModelError(`unhandled LiteralValueType ${getTypeDeclaration(literal)}`);
+/**
+ * returns the Go type declaration for the specified LiteralType
+ * 
+ * @param literal the type for which to emit the declaration
+ * @returns the Go type declaration
+ */
+export function getLiteralTypeDeclaration(literal: LiteralType): string {
+  switch (literal.kind) {
+    case 'constant':
+      return literal.name;
+    case 'encodedBytes':
+      return '[]byte';
+    case 'scalar':
+      return literal.type;
+    case 'string':
+      return literal.kind;
+    case 'time':
+      return 'time.Time';
   }
 }
 
+/**
+ * returns the Go type declaration for the specified type.
+ * any value in pkgName is prefixed to the underlying type name.
+ * 
+ * @param type the type for which to emit the declaration
+ * @param pkgName optional package name prefix for the type
+ * @returns the Go type declaration
+ */
 export function getTypeDeclaration(type: PossibleType, pkgName?: string): string {
-  if (isPrimitiveType(type)) {
-    return type.typeName;
-  } else if (isQualifiedType(type)) {
-    let pkg = type.packageName;
-    const pathChar = pkg.lastIndexOf('/');
-    if (pathChar) {
-      pkg = pkg.substring(pathChar+1);
+  switch (type.kind) {
+    case 'any':
+    case 'string':
+      return type.kind;
+    case 'constant':
+    case 'interface':
+    case 'model':
+    case 'polymorphicModel':
+      if (pkgName) {
+        return `${pkgName}.${type.name}`;
+      }
+      return type.name;
+    case 'encodedBytes':
+    case 'rawJSON':
+      return '[]byte';
+    case 'literal':
+      return getTypeDeclaration(type.type, pkgName);
+    case 'map':
+      return `map[string]${type.valueTypeByValue ? '' : '*'}` + getTypeDeclaration(type.valueType, pkgName);
+    case 'qualifiedType': {
+      // strip packageName to just the leaf package as required
+      let pkg = type.packageName;
+      const pathChar = pkg.lastIndexOf('/');
+      if (pathChar) {
+        pkg = pkg.substring(pathChar+1);
+      }
+      return pkg + '.' + type.exportName;
     }
-    return pkg + '.' + type.exportName;
-  } else if (isConstantType(type) || isInterfaceType(type) || isModelType(type) || isPolymorphicType(type)) {
-    if (pkgName) {
-      return `${pkgName}.${type.name}`;
-    }
-    return type.name;
-  } else if (isBytesType(type)) {
-    return '[]byte';
-  } else if (isLiteralValue(type)) {
-    return getTypeDeclaration(type.type, pkgName);
-  } else if (isMapType(type)) {
-    let pointer = '*';
-    if (type.valueTypeByValue) {
-      pointer = '';
-    }
-    return `map[string]${pointer}` + getTypeDeclaration(type.valueType, pkgName);
-  } else if (isSliceType(type)) {
-    let pointer = '*';
-    if (type.elementTypeByValue) {
-      pointer = '';
-    }
-    return `[]${pointer}` + getTypeDeclaration(type.elementType, pkgName);
-  } else if (isTimeType(type)) {
-    return 'time.Time';
-  } else {
-    throw new CodeModelError(`unhandled type ${typeof(type)}`);
+    case 'scalar':
+      return type.type;
+    case 'slice':
+      return `[]${type.elementTypeByValue ? '' : '*'}` + getTypeDeclaration(type.elementType, pkgName);
+    case 'time':
+      return 'time.Time';
+  }
+}
+
+/** narrows type to a LiteralType within the conditional block */
+export function isLiteralValueType(type: PossibleType): type is LiteralType {
+  switch (type.kind) {
+    case 'constant':
+    case 'encodedBytes':
+    case 'scalar':
+    case 'string':
+    case 'time':
+      return true;
+    default:
+      return false;
   }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+// base types
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Base classes first (StructField and StructType are base classes)
 export class StructField implements StructField {
   constructor(name: string, type: PossibleType, byValue: boolean) {
     this.name = name;
@@ -346,7 +399,7 @@ export class StructField implements StructField {
   }
 }
 
-export class StructType implements StructType {
+export class Struct implements Struct {
   constructor(name: string) {
     this.fields = new Array<StructField>();
     this.name = name;
@@ -354,15 +407,41 @@ export class StructType implements StructType {
   }
 }
 
-// Derived and standalone classes in alphabetical order
-export class BytesType implements BytesType {
-  constructor(encoding: BytesEncoding) {
-    this.encoding = encoding;
+interface ModelBase extends Struct {
+  /** the fields in this model. can be empty */
+  fields: Array<ModelField>;
+
+  /** any annotations for this model */
+  annotations: ModelAnnotations;
+
+  /** usage flags for this model */
+  usage: UsageFlags;
+
+  /** any XML metadata */
+  xml?: XMLInfo;
+}
+
+class ModelBase extends Struct implements ModelBase {
+  constructor(name: string, annotations: ModelAnnotations, usage: UsageFlags) {
+    super(name);
+    this.annotations = annotations;
+    this.usage = usage;
+    this.fields = new Array<ModelField>();
   }
 }
 
-export class ConstantType implements ConstantType {
-  constructor(name: string, type: ConstantTypeTypes, valuesFuncName: string) {
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+export class Any implements Any {
+  constructor() {
+    this.kind = 'any';
+  }
+}
+
+export class Constant implements Constant {
+  constructor(name: string, type: ConstantType, valuesFuncName: string) {
+    this.kind = 'constant';
     this.name = name;
     this.type = type;
     this.values = new Array<ConstantValue>();
@@ -372,7 +451,8 @@ export class ConstantType implements ConstantType {
 }
 
 export class ConstantValue implements ConstantValue {
-  constructor(name: string, type: ConstantType, value: ConstantValueValueTypes) {
+  constructor(name: string, type: Constant, value: ConstantValueType) {
+    this.kind = 'constantValue';
     this.name = name;
     this.type = type;
     this.value = value;
@@ -380,29 +460,39 @@ export class ConstantValue implements ConstantValue {
   }
 }
 
-export class InterfaceType implements InterfaceType {
+export class EncodedBytes implements EncodedBytes {
+  constructor(encoding: BytesEncoding) {
+    this.kind = 'encodedBytes';
+    this.encoding = encoding;
+  }
+}
+
+export class Interface implements Interface {
   // possibleTypes and rootType are required. however, we have a chicken-and-egg
   // problem as creating a PolymorphicType requires the necessary InterfaceType.
   // so these fields MUST be populated after creating the InterfaceType.
   constructor(name: string, discriminatorField: string) {
+    this.kind = 'interface';
     this.name = name;
     this.discriminatorField = discriminatorField;
-    this.possibleTypes = new Array<PolymorphicType>();
+    this.possibleTypes = new Array<PolymorphicModel>();
     this.docs = {};
   }
 }
 
-export class LiteralValue implements LiteralValue {
+export class Literal implements Literal {
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  constructor(type: LiteralValueType, literal: any) {
+  constructor(type: LiteralType, literal: any) {
+    this.kind = 'literal';
     this.type = type;
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
     this.literal = literal;
   }
 }
 
-export class MapType implements MapType {
+export class Map implements Map {
   constructor(valueType: MapValueType, valueTypeByValue: boolean) {
+    this.kind = 'map';
     this.valueType = valueType;
     this.valueTypeByValue = valueTypeByValue;
   }
@@ -432,49 +522,62 @@ export class ModelFieldAnnotations implements ModelFieldAnnotations {
   }
 }
 
-export class ModelType extends StructType implements ModelType {
+export class Model extends ModelBase implements Model {
   constructor(name: string, annotations: ModelAnnotations, usage: UsageFlags) {
-    super(name);
-    this.annotations = annotations;
-    this.usage = usage;
+    super(name, annotations, usage);
+    this.kind = 'model';
     this.fields = new Array<ModelField>();
   }
 }
 
-export class PolymorphicType extends StructType implements PolymorphicType {
-  constructor(name: string, iface: InterfaceType, annotations: ModelAnnotations, usage: UsageFlags) {
-    super(name);
+export class PolymorphicModel extends ModelBase implements PolymorphicModel {
+  constructor(name: string, iface: Interface, annotations: ModelAnnotations, usage: UsageFlags) {
+    super(name, annotations, usage);
+    this.kind = 'polymorphicModel';
     this.interface = iface;
-    this.annotations = annotations;
-    this.usage = usage;
-    this.fields = new Array<ModelField>();
-  }
-}
-
-export class PrimitiveType implements PrimitiveType {
-  constructor(typeName: PrimitiveTypeName, encodeAsString?: boolean) {
-    this.typeName = typeName;
-    this.encodeAsString = encodeAsString ?? false;
   }
 }
 
 export class QualifiedType implements QualifiedType {
   constructor(exportName: string, packageName: string) {
+    this.kind = 'qualifiedType';
     this.exportName = exportName;
     this.packageName = packageName;
   }
 }
 
-export class SliceType implements SliceType {
+export class RawJSON implements RawJSON {
+  constructor() {
+    this.kind = 'rawJSON';
+  }
+}
+
+export class Scalar implements Scalar {
+  constructor(type: ScalarType, encodeAsString: boolean) {
+    this.kind = 'scalar';
+    this.type = type;
+    this.encodeAsString = encodeAsString;
+  }
+}
+
+export class Slice implements Slice {
   constructor(elementType: SliceElementType, elementTypeByValue: boolean) {
+    this.kind = 'slice';
     this.elementType = elementType;
     this.elementTypeByValue = elementTypeByValue;
   }
 }
 
-export class TimeType implements TimeType {
-  constructor(format: DateTimeFormat, utc: boolean) {
-    this.dateTimeFormat = format;
+export class String implements String {
+  constructor() {
+    this.kind = 'string';
+  }
+}
+
+export class Time implements Time {
+  constructor(format: TimeFormat, utc: boolean) {
+    this.kind = 'time';
+    this.format = format;
     this.utc = utc;
   }
 }

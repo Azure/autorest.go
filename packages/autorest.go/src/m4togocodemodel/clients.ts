@@ -123,34 +123,34 @@ function populateMethod(op: m4.Operation, method: go.MethodType | go.NextPageMet
 function adaptHeaderScalarType(schema: m4.Schema, forParam: boolean): go.HeaderScalarType {
   // for header params, we never pass the element type by pointer
   const type = adaptPossibleType(schema, forParam);
-  if (go.isInterfaceType(type) || go.isMapType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
-    throw new Error(`unexpected header parameter type ${schema.type}`);
+  if (go.isHeaderScalarType(type)) {
+    return type;
   }
-  return type;
+  throw new Error(`unexpected header scalar parameter type ${schema.type}`);
 }
 
 function adaptPathScalarParameterType(schema: m4.Schema): go.PathScalarParameterType {
   const type = adaptPossibleType(schema);
-  if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isQualifiedType(type)) {
-    throw new Error(`unexpected path parameter type ${schema.type}`);
+  if (go.isPathScalarParameterType(type)) {
+    return type;
   }
-  return type;
+  throw new Error(`unexpected path scalar parameter type ${schema.type}`);
 }
 
 function adaptQueryScalarParameterType(schema: m4.Schema): go.QueryScalarParameterType {
   const type = adaptPossibleType(schema);
-  if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isQualifiedType(type)) {
-    throw new Error(`unexpected query parameter type ${schema.type}`);
+  if (go.isQueryScalarParameterType(type)) {
+    return type;
   }
-  return type;
+  throw new Error(`unexpected query scalar parameter type ${schema.type}`);
 }
 
 function adaptURIPrameterType(schema: m4.Schema): go.URIParameterType {
   const type = adaptPossibleType(schema);
-  if (!go.isConstantType(type) && !go.isPrimitiveType(type)) {
-    throw new Error(`unexpected URI parameter type ${schema.type}`);
+  if (go.isURIParameterType(type)) {
+    return type;
   }
-  return type;
+  throw new Error(`unexpected URI parameter type ${schema.type}`);
 }
 
 function adaptClient(type: go.CodeModelType, group: m4.OperationGroup): go.Client {
@@ -207,7 +207,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
       let headerResp: go.HeaderScalarResponse | go.HeaderMapResponse;
       if (prop.schema.language.go!.headerCollectionPrefix) {
         const headerType = adaptPossibleType(prop.schema, false);
-        if (!go.isMapType(headerType)) {
+        if (headerType.kind !== 'map') {
           throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderMapResponse ${prop.language.go!.name}`);
         }
         headerResp = new go.HeaderMapResponse(prop.language.go!.name, headerType, prop.schema.language.go!.headerCollectionPrefix);
@@ -235,14 +235,15 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
     respEnv.result = new go.HeadAsBooleanResult(resultProp.language.go!.name);
   } else if (!resultProp.language.go!.embeddedType) {
     const resultType = adaptPossibleType(resultProp.schema);
-    if (go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isQualifiedType(resultType)) {
-      throw new Error(`invalid monomorphic result type ${go.getTypeDeclaration(resultType)}`);
+    if (go.isMonomorphicResultType(resultType)) {
+      respEnv.result = new go.MonomorphicResult(resultProp.language.go!.name, adaptResultFormat(helpers.getSchemaResponse(op)!.protocol), resultType, resultProp.language.go!.byValue);
+      respEnv.result.xml = adaptXMLInfo(resultProp.schema);
+    } else {
+      throw new Error(`invalid monomorphic result type ${resultType.kind}`);
     }
-    respEnv.result = new go.MonomorphicResult(resultProp.language.go!.name, adaptResultFormat(helpers.getSchemaResponse(op)!.protocol), resultType, resultProp.language.go!.byValue);
-    respEnv.result.xml = adaptXMLInfo(resultProp.schema);
   } else if (resultProp.isDiscriminator) {
-    let ifaceResult: go.InterfaceType | undefined;
-    for (const iface of values(codeModel.interfaceTypes)) {
+    let ifaceResult: go.Interface | undefined;
+    for (const iface of values(codeModel.interfaces)) {
       if (iface.name === resultProp.schema.language.go!.name) {
         ifaceResult = iface;
         break;
@@ -253,9 +254,9 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
     }
     respEnv.result = new go.PolymorphicResult(ifaceResult);
   } else if (helpers.getSchemaResponse(op)) {
-    let modelType: go.ModelType | undefined;
+    let modelType: go.Model | undefined;
     for (const model of codeModel.models) {
-      if (model.name === resultProp.schema.language.go!.name) {
+      if (model.kind === 'model' && model.name === resultProp.schema.language.go!.name) {
         modelType = model;
         break;
       }
@@ -336,7 +337,7 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
       if (op.requests![0].protocol.http!.knownMediaType === KnownMediaType.Form) {
         const collectionFormat = adaptCollectionFormat(param);
         if (collectionFormat) {
-          if (!go.isSliceType(bodyType)) {
+          if (bodyType.kind !== 'slice') {
             throw new Error(`unexpected type ${go.getTypeDeclaration(bodyType)} for FormBodyCollectionParameter ${param.language.go!.name}`);
           }
           adaptedParam = new go.FormBodyCollectionParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, collectionFormat, style, param.language.go!.byValue);
@@ -357,14 +358,14 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
       const collectionFormat = adaptCollectionFormat(param);
       if (param.schema.language.go!.headerCollectionPrefix) {
         const headerType = adaptPossibleType(param.schema, true);
-        if (!go.isMapType(headerType)) {
+        if (headerType.kind !== 'map') {
           throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderMapParameter ${param.language.go!.name}`);
         }
         adaptedParam = new go.HeaderMapParameter(param.language.go!.name, param.schema.language.go!.headerCollectionPrefix, headerType, style,
           param.language.go!.byValue, location);
       } else if (collectionFormat) {
         const headerType = adaptPossibleType(param.schema, true);
-        if (!go.isSliceType(headerType)) {
+        if (headerType.kind !== 'slice') {
           throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderCollectionParameter ${param.language.go!.name}`);
         }
         adaptedParam = new go.HeaderCollectionParameter(param.language.go!.name, param.language.go!.serializedName, headerType, collectionFormat, style,
@@ -379,7 +380,7 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
       const collectionFormat = adaptCollectionFormat(param);
       if (collectionFormat) {
         const pathType = adaptPossibleType(param.schema);
-        if (!go.isSliceType(pathType)) {
+        if (pathType.kind !== 'slice') {
           throw new Error(`unexpected type ${go.getTypeDeclaration(pathType)} for PathCollectionParameter ${param.language.go!.name}`);
         }
         adaptedParam = new go.PathCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
@@ -394,7 +395,7 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
       const collectionFormat = adaptExtendedCollectionFormat(param);
       if (collectionFormat) {
         const queryType = adaptPossibleType(param.schema);
-        if (!go.isSliceType(queryType)) {
+        if (queryType.kind !== 'slice') {
           throw new Error(`unexpected type ${go.getTypeDeclaration(queryType)} for QueryCollectionParameter ${param.language.go!.name}`);
         }
         adaptedParam = new go.QueryCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
@@ -512,7 +513,7 @@ function adaptParameterStyle(param: m4.Parameter): go.ParameterStyle {
     if (!go.isLiteralValueType(adaptedType)) {
       throw new Error(`unsupported client side default type ${go.getTypeDeclaration(adaptedType)} for parameter ${param.language.go!.name}`);
     }
-    return new go.ClientSideDefault(new go.LiteralValue(adaptedType, param.clientDefaultValue));
+    return new go.ClientSideDefault(new go.Literal(adaptedType, param.clientDefaultValue));
   } else if (param.schema.type === m4.SchemaType.Constant) {
     if (param.required) {
       return 'literal';

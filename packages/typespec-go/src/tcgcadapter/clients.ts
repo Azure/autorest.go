@@ -167,12 +167,12 @@ export class clientAdapter {
 
   private adaptURIParam(sdkParam: tcgc.SdkPathParameter): go.URIParameter {
     const paramType = this.ta.getPossibleType(sdkParam.type, true, false);
-    if (!go.isConstantType(paramType) && !go.isPrimitiveType(paramType)) {
-      throw new AdapterError('UnsupportedTsp', `unsupported URI parameter type ${go.getTypeDeclaration(paramType)}`, sdkParam.__raw?.node ?? NoTarget);
+    if (go.isURIParameterType(paramType)) {
+      // TODO: follow up with tcgc if serializedName should actually be optional
+      return new go.URIParameter(sdkParam.name, sdkParam.serializedName ? sdkParam.serializedName : sdkParam.name, paramType,
+        this.adaptParameterStyle(sdkParam), isTypePassedByValue(sdkParam.type) || !sdkParam.optional, 'client');
     }
-    // TODO: follow up with tcgc if serializedName should actually be optional
-    return new go.URIParameter(sdkParam.name, sdkParam.serializedName ? sdkParam.serializedName : sdkParam.name, paramType,
-      this.adaptParameterStyle(sdkParam), isTypePassedByValue(sdkParam.type) || !sdkParam.optional, 'client');
+    throw new AdapterError('UnsupportedTsp', `unsupported URI parameter type ${paramType.kind}`, sdkParam.__raw?.node ?? NoTarget);
   }
 
   private adaptMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, goClient: go.Client) {
@@ -484,7 +484,7 @@ export class clientAdapter {
     if (param.isApiVersionParam && param.clientDefaultValue) {
       // we emit the api version param inline as a literal, never as a param.
       // the ClientOptions.APIVersion setting is used to change the version.
-      const paramType = new go.LiteralValue(new go.PrimitiveType('string'), param.clientDefaultValue);
+      const paramType = new go.Literal(new go.String(), param.clientDefaultValue);
       switch (param.kind) {
         case 'header':
           return new go.HeaderScalarParameter(param.name, param.serializedName, paramType, 'literal', true, 'method');
@@ -537,7 +537,7 @@ export class clientAdapter {
         }
         // TODO: is hard-coded false for element type by value correct?
         const type = this.ta.getPossibleType(param.type, true, false);
-        if (!go.isSliceType(type)) {
+        if (type.kind !== 'slice') {
           throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${param.name}`, param.__raw?.node ?? NoTarget);
         }
         adaptedParam = new go.HeaderCollectionParameter(paramName, param.serializedName, type, param.collectionFormat === 'simple' ? 'csv' : param.collectionFormat, paramStyle, byVal, location);
@@ -552,7 +552,7 @@ export class clientAdapter {
     } else {
       if (param.collectionFormat) {
         const type = this.ta.getPossibleType(param.type, true, false);
-        if (!go.isSliceType(type)) {
+        if (type.kind !== 'slice') {
           throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${param.name}`, param.__raw?.node ?? NoTarget);
         }
         // TODO: unencoded query param
@@ -675,7 +675,7 @@ export class clientAdapter {
       respEnv.result.docs.summary = 'Body contains the streaming response.';
       return respEnv;
     } else if (sdkResponseType.kind === 'model') {
-      let modelType: go.ModelType | undefined;
+      let modelType: go.Model | go.PolymorphicModel | undefined;
       const modelName = ensureNameCase(sdkResponseType.name).toUpperCase();
       for (const model of this.ta.codeModel.models) {
         if (model.name.toUpperCase() === modelName) {
@@ -686,7 +686,7 @@ export class clientAdapter {
       if (!modelType) {
         throw new AdapterError('InternalError', `didn't find model type name ${sdkResponseType.name} for response envelope ${respEnv.name}`, sdkResponseType.__raw?.node ?? NoTarget);
       }
-      if (go.isPolymorphicType(modelType)) {
+      if (modelType.kind === 'polymorphicModel') {
         respEnv.result = new go.PolymorphicResult(modelType.interface);
       } else {
         if (contentType !== 'JSON' && contentType !== 'XML') {
@@ -698,10 +698,11 @@ export class clientAdapter {
       respEnv.result.docs.description = sdkResponseType.doc;
     } else {
       const resultType = this.ta.getPossibleType(sdkResponseType, false, false);
-      if (go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isQualifiedType(resultType)) {
-        throw new AdapterError('InternalError', `invalid monomorphic result type ${go.getTypeDeclaration(resultType)}`, sdkResponseType.__raw?.node ?? NoTarget);
+      if (go.isMonomorphicResultType(resultType)) {
+        respEnv.result = new go.MonomorphicResult(this.recursiveTypeName(sdkResponseType, false), contentType, resultType, isTypePassedByValue(sdkResponseType));
+      } else {
+        throw new AdapterError('InternalError', `invalid monomorphic result type ${resultType.kind}`, sdkResponseType.__raw?.node ?? NoTarget);
       }
-      respEnv.result = new go.MonomorphicResult(this.recursiveTypeName(sdkResponseType, false), contentType, resultType, isTypePassedByValue(sdkResponseType));
     }
 
     return respEnv;
@@ -770,8 +771,8 @@ export class clientAdapter {
     }
   }
 
-  private adaptParameterGroup(paramGroup: go.ParameterGroup): go.StructType {
-    const structType = new go.StructType(paramGroup.groupName);
+  private adaptParameterGroup(paramGroup: go.ParameterGroup): go.Struct {
+    const structType = new go.Struct(paramGroup.groupName);
     structType.docs = paramGroup.docs;
     for (const param of paramGroup.params) {
       if (param.style === 'literal') {
@@ -793,26 +794,26 @@ export class clientAdapter {
   private adaptHeaderScalarType(sdkType: tcgc.SdkType, forParam: boolean): go.HeaderScalarType {
     // for header params, we never pass the element type by pointer
     const type = this.ta.getPossibleType(sdkType, forParam, false);
-    if (go.isInterfaceType(type) || go.isMapType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
-      throw new AdapterError('InternalError', `unexpected header parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
+    if (go.isHeaderScalarType(type)) {
+      return type;
     }
-    return type;
+    throw new AdapterError('InternalError', `unexpected header scalar parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
   }
 
   private adaptPathScalarParameterType(sdkType: tcgc.SdkType): go.PathScalarParameterType {
     const type = this.ta.getPossibleType(sdkType, false, false);
-    if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
-      throw new AdapterError('InternalError', `unexpected path parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
+    if (go.isPathScalarParameterType(type)) {
+      return type;
     }
-    return type;
+    throw new AdapterError('InternalError', `unexpected path scalar parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
   }
 
   private adaptQueryScalarParameterType(sdkType: tcgc.SdkType): go.QueryScalarParameterType {
     const type = this.ta.getPossibleType(sdkType, false, false);
-    if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
-      throw new AdapterError('InternalError', `unexpected query parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
+    if (go.isQueryScalarParameterType(type)) {
+      return type;
     }
-    return type;
+    throw new AdapterError('InternalError', `unexpected query scalar parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
   }
 
   private adaptParameterStyle(param: tcgc.SdkBodyParameter | tcgc.SdkEndpointParameter | tcgc.SdkHeaderParameter | tcgc.SdkMethodParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter): go.ParameterStyle {
@@ -827,7 +828,7 @@ export class clientAdapter {
       if (!go.isLiteralValueType(adaptedType)) {
         throw new AdapterError('InternalError', `unexpected client side default type ${go.getTypeDeclaration(adaptedType)} for parameter ${param.name}`, param.__raw?.node ?? NoTarget);
       }
-      return new go.ClientSideDefault(new go.LiteralValue(adaptedType, param.clientDefaultValue));
+      return new go.ClientSideDefault(new go.Literal(adaptedType, param.clientDefaultValue));
     } else if (param.optional) {
       return 'optional';
     } else {
@@ -885,10 +886,10 @@ export class clientAdapter {
           if (response.bodyValue && method.responseEnvelope.result) {
             switch (method.responseEnvelope.result.kind) {
               case 'anyResult':
-                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.PrimitiveType('any'));
+                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.Any());
                 break;
               case 'binaryResult':
-                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.PrimitiveType('byte'));
+                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.Scalar('byte', false));
                 break;
               case 'modelResult':
                 goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.modelType);
@@ -897,7 +898,7 @@ export class clientAdapter {
                 goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.monomorphicType);
                 break;
               case 'polymorphicResult':
-                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.interfaceType);
+                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.interface);
                 break;
             }
           }
@@ -910,32 +911,43 @@ export class clientAdapter {
   private adaptExampleType(exampleType: tcgc.SdkExampleValue, goType: go.PossibleType): go.ExampleType {
     switch (exampleType.kind) {
       case 'string':
-        if (go.isConstantType(goType) || go.isBytesType(goType) || go.isLiteralValue(goType) || go.isTimeType(goType) || go.isPrimitiveType(goType)) {
-          return new go.StringExample(exampleType.value, goType);
-        }
-        if (go.isQualifiedType(goType)) {
-          return new go.QualifiedExample(goType, exampleType.value);
+        switch (goType.kind) {
+          case 'constant':
+          case 'encodedBytes':
+          case 'literal':
+          case 'string':
+          case 'time':
+            return new go.StringExample(exampleType.value, goType);
+          case 'qualifiedType':
+            return new go.QualifiedExample(goType, exampleType.value);
         }
         break;
       case 'number':
-        if (go.isConstantType(goType) || go.isLiteralValue(goType) || go.isTimeType(goType) || go.isPrimitiveType(goType)) {
-          return new go.NumberExample(exampleType.value, goType);
+        switch (goType.kind) {
+          case 'constant':
+          case 'literal':
+          case 'scalar':
+          case 'time':
+            return new go.NumberExample(exampleType.value, goType);
         }
         break;
       case 'boolean':
-        if (go.isConstantType(goType) || go.isLiteralValue(goType) || go.isPrimitiveType(goType)) {
-          return new go.BooleanExample(exampleType.value, goType);
+        switch (goType.kind) {
+          case 'constant':
+          case 'literal':
+          case 'scalar':
+            return new go.BooleanExample(exampleType.value, goType);
         }
         break;
       case 'null':
         return new go.NullExample(goType);
       case 'unknown':
-        if (go.isPrimitiveType(goType) && goType.typeName === 'any') {
+        if (goType.kind === 'any') {
           return new go.AnyExample(exampleType.value);
         }
         break;
       case 'array':
-        if (go.isSliceType(goType)) {
+        if (goType.kind === 'slice') {
           const ret = new go.ArrayExample(goType);
           for (const v of exampleType.value) {
             ret.value.push(this.adaptExampleType(v, goType.elementType));
@@ -944,7 +956,7 @@ export class clientAdapter {
         }
         break;
       case 'dict':
-        if (go.isMapType(goType)) {
+        if (goType.kind === 'map') {
           const ret = new go.DictionaryExample(goType);
           for (const [k, v] of Object.entries(exampleType.value)) {
             ret.value[k] = this.adaptExampleType(v, goType.valueType);
@@ -955,9 +967,9 @@ export class clientAdapter {
       case 'union':
         throw new AdapterError('UnsupportedTsp', 'unsupported example type kind union', NoTarget);
       case 'model':
-        if (go.isModelType(goType) || go.isInterfaceType(goType)) {
-          let concreteType: go.ModelType | go.PolymorphicType | undefined;
-          if (go.isInterfaceType(goType)) {
+        if (goType.kind === 'interface' || goType.kind === 'model' || goType.kind === 'polymorphicModel') {
+          let concreteType: go.Model | go.PolymorphicModel | undefined;
+          if (goType.kind === 'interface') {
             /* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */
             concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue)!;
             if (concreteType === undefined) {
@@ -979,7 +991,7 @@ export class clientAdapter {
             ret.additionalProperties = {};
             for (const [k, v] of Object.entries(exampleType.additionalPropertiesValue)) {
               const filed = concreteType.fields.find(f => f.annotations.isAdditionalProperties)!;
-              if (go.isMapType(filed.type)) {
+              if (filed.type.kind === 'map') {
                 ret.additionalProperties[k] = this.adaptExampleType(v, filed.type.valueType);
               } else {
                 throw new AdapterError('InternalError', `additional properties field type should be map type`, NoTarget);

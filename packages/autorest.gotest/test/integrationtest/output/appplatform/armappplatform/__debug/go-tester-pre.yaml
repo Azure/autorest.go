@@ -38,10 +38,10 @@ schemas:
       language:
         default:
           name: Boolean
-          description: Indicates whether enable the trace functionality, which will be deprecated since api version 2020-11-01-preview. Please leverage appInsightsInstrumentationKey to indicate if monitoringSettings enabled or not
+          description: 'Indicates whether enable the trace functionality, which will be deprecated since api version 2020-11-01-preview. Please leverage appInsightsInstrumentationKey to indicate if monitoringSettings enabled or not'
         go:
           name: bool
-          description: Indicates whether enable the trace functionality, which will be deprecated since api version 2020-11-01-preview. Please leverage appInsightsInstrumentationKey to indicate if monitoringSettings enabled or not
+          description: 'Indicates whether enable the trace functionality, which will be deprecated since api version 2020-11-01-preview. Please leverage appInsightsInstrumentationKey to indicate if monitoringSettings enabled or not'
       protocol: {}
     - &ref_35
       type: boolean
@@ -120,10 +120,10 @@ schemas:
       language:
         default:
           name: Boolean
-          description: Optional. If set to true, then zero will be returned for time duration where no metric is emitted/published.
+          description: 'Optional. If set to true, then zero will be returned for time duration where no metric is emitted/published.'
         go:
           name: bool
-          description: Optional. If set to true, then zero will be returned for time duration where no metric is emitted/published.
+          description: 'Optional. If set to true, then zero will be returned for time duration where no metric is emitted/published.'
       protocol: {}
     - &ref_198
       type: boolean
@@ -185,10 +185,10 @@ schemas:
       language:
         default:
           name: MonitoringSettingPropertiesAppInsightsSamplingRate
-          description: Indicates the sampling rate of application insight agent, should be in range [0.0, 100.0]
+          description: 'Indicates the sampling rate of application insight agent, should be in range [0.0, 100.0]'
         go:
           name: float64
-          description: Indicates the sampling rate of application insight agent, should be in range [0.0, 100.0]
+          description: 'Indicates the sampling rate of application insight agent, should be in range [0.0, 100.0]'
       protocol: {}
     - &ref_42
       type: integer
@@ -244,10 +244,10 @@ schemas:
       language:
         default:
           name: DeploymentSettingsCpu
-          description: Required CPU, basic tier should be 1, standard tier should be in range (1, 4)
+          description: 'Required CPU, basic tier should be 1, standard tier should be in range (1, 4)'
         go:
           name: int32
-          description: Required CPU, basic tier should be 1, standard tier should be in range (1, 4)
+          description: 'Required CPU, basic tier should be 1, standard tier should be in range (1, 4)'
       protocol: {}
     - &ref_79
       type: integer
@@ -258,10 +258,10 @@ schemas:
       language:
         default:
           name: DeploymentSettingsMemoryInGB
-          description: Required Memory size in GB, basic tier should be in range (1, 2), standard tier should be in range (1, 8)
+          description: 'Required Memory size in GB, basic tier should be in range (1, 2), standard tier should be in range (1, 8)'
         go:
           name: int32
-          description: Required Memory size in GB, basic tier should be in range (1, 2), standard tier should be in range (1, 8)
+          description: 'Required Memory size in GB, basic tier should be in range (1, 2), standard tier should be in range (1, 8)'
       protocol: {}
     - &ref_215
       type: integer
@@ -558,10 +558,10 @@ schemas:
       language:
         default:
           name: CloudErrorBodyMessage
-          description: A message describing the error, intended to be suitable for display in a user interface.
+          description: 'A message describing the error, intended to be suitable for display in a user interface.'
         go:
           name: string
-          description: A message describing the error, intended to be suitable for display in a user interface.
+          description: 'A message describing the error, intended to be suitable for display in a user interface.'
       protocol: {}
     - &ref_129
       type: string
@@ -570,10 +570,10 @@ schemas:
       language:
         default:
           name: CloudErrorBodyTarget
-          description: The target of the particular error. For example, the name of the property in error.
+          description: 'The target of the particular error. For example, the name of the property in error.'
         go:
           name: string
-          description: The target of the particular error. For example, the name of the property in error.
+          description: 'The target of the particular error. For example, the name of the property in error.'
       protocol: {}
     - &ref_131
       type: string
@@ -906,10 +906,10 @@ schemas:
       language:
         default:
           name: MonitoringSettingPropertiesAppInsightsInstrumentationKey
-          description: Target application insight instrumentation key, null or whitespace include empty will disable monitoringSettings
+          description: 'Target application insight instrumentation key, null or whitespace include empty will disable monitoringSettings'
         go:
           name: string
-          description: Target application insight instrumentation key, null or whitespace include empty will disable monitoringSettings
+          description: 'Target application insight instrumentation key, null or whitespace include empty will disable monitoringSettings'
       protocol: {}
     - &ref_34
       type: string
@@ -1019,10 +1019,10 @@ schemas:
       language:
         default:
           name: AppResourceLocation
-          description: The GEO location of the application, always the same with its parent resource
+          description: 'The GEO location of the application, always the same with its parent resource'
         go:
           name: string
-          description: The GEO location of the application, always the same with its parent resource
+          description: 'The GEO location of the application, always the same with its parent resource'
       protocol: {}
     - &ref_152
       type: string
@@ -2357,7 +2357,7 @@ schemas:
             go:
               name: ManagedIdentityTypeUserAssigned
               description: ''
-        - value: SystemAssigned,UserAssigned
+        - value: 'SystemAssigned,UserAssigned'
           language:
             default:
               name: SystemAssignedUserAssigned
@@ -2805,7 +2805,7 @@ schemas:
           name: TrackedResourceTags
           description: Tags of the service which is a list of key value pairs that describe the resource.
         go:
-          name: map[string]*string
+          name: 'map[string]*string'
           description: Tags of the service which is a list of key value pairs that describe the resource.
           elementIsPtr: true
           marshallingFormat: json
@@ -2827,7 +2827,7 @@ schemas:
           name: BindingResourcePropertiesBindingParameters
           description: Binding parameters of the Binding resource
         go:
-          name: map[string]any
+          name: 'map[string]any'
           description: Binding parameters of the Binding resource
           elementIsPtr: false
           marshallingFormat: json
@@ -2840,7 +2840,7 @@ schemas:
           name: DeploymentSettingsEnvironmentVariables
           description: Collection of environment variables
         go:
-          name: map[string]*string
+          name: 'map[string]*string'
           description: Collection of environment variables
           elementIsPtr: true
           marshallingFormat: json
@@ -3460,20 +3460,20 @@ schemas:
                                         language: &ref_953
                                           default:
                                             name: appInsightsInstrumentationKey
-                                            description: Target application insight instrumentation key, null or whitespace include empty will disable monitoringSettings
+                                            description: 'Target application insight instrumentation key, null or whitespace include empty will disable monitoringSettings'
                                           go:
                                             name: AppInsightsInstrumentationKey
-                                            description: Target application insight instrumentation key, null or whitespace include empty will disable monitoringSettings
+                                            description: 'Target application insight instrumentation key, null or whitespace include empty will disable monitoringSettings'
                                         protocol: {}
                                       - schema: *ref_33
                                         serializedName: appInsightsSamplingRate
                                         language: &ref_954
                                           default:
                                             name: appInsightsSamplingRate
-                                            description: Indicates the sampling rate of application insight agent, should be in range [0.0, 100.0]
+                                            description: 'Indicates the sampling rate of application insight agent, should be in range [0.0, 100.0]'
                                           go:
                                             name: AppInsightsSamplingRate
-                                            description: Indicates the sampling rate of application insight agent, should be in range [0.0, 100.0]
+                                            description: 'Indicates the sampling rate of application insight agent, should be in range [0.0, 100.0]'
                                         protocol: {}
                                       - schema: &ref_147
                                           type: object
@@ -3867,10 +3867,10 @@ schemas:
                                   language: &ref_981
                                     default:
                                       name: location
-                                      description: The GEO location of the application, always the same with its parent resource
+                                      description: 'The GEO location of the application, always the same with its parent resource'
                                     go:
                                       name: Location
-                                      description: The GEO location of the application, always the same with its parent resource
+                                      description: 'The GEO location of the application, always the same with its parent resource'
                                   protocol: {}
                               serializationFormats:
                                 - json
@@ -4426,20 +4426,20 @@ schemas:
                                               language: &ref_1168
                                                 default:
                                                   name: cpu
-                                                  description: Required CPU, basic tier should be 1, standard tier should be in range (1, 4)
+                                                  description: 'Required CPU, basic tier should be 1, standard tier should be in range (1, 4)'
                                                 go:
                                                   name: CPU
-                                                  description: Required CPU, basic tier should be 1, standard tier should be in range (1, 4)
+                                                  description: 'Required CPU, basic tier should be 1, standard tier should be in range (1, 4)'
                                               protocol: {}
                                             - schema: *ref_79
                                               serializedName: memoryInGB
                                               language: &ref_1171
                                                 default:
                                                   name: memoryInGB
-                                                  description: Required Memory size in GB, basic tier should be in range (1, 2), standard tier should be in range (1, 8)
+                                                  description: 'Required Memory size in GB, basic tier should be in range (1, 2), standard tier should be in range (1, 8)'
                                                 go:
                                                   name: MemoryInGB
-                                                  description: Required Memory size in GB, basic tier should be in range (1, 2), standard tier should be in range (1, 8)
+                                                  description: 'Required Memory size in GB, basic tier should be in range (1, 2), standard tier should be in range (1, 8)'
                                               protocol: {}
                                             - schema: *ref_80
                                               serializedName: jvmOptions
@@ -5310,20 +5310,20 @@ schemas:
                 language:
                   default:
                     name: message
-                    description: A message describing the error, intended to be suitable for display in a user interface.
+                    description: 'A message describing the error, intended to be suitable for display in a user interface.'
                   go:
                     name: Message
-                    description: A message describing the error, intended to be suitable for display in a user interface.
+                    description: 'A message describing the error, intended to be suitable for display in a user interface.'
                 protocol: {}
               - schema: *ref_129
                 serializedName: target
                 language:
                   default:
                     name: target
-                    description: The target of the particular error. For example, the name of the property in error.
+                    description: 'The target of the particular error. For example, the name of the property in error.'
                   go:
                     name: Target
-                    description: The target of the particular error. For example, the name of the property in error.
+                    description: 'The target of the particular error. For example, the name of the property in error.'
                 protocol: {}
               - schema: &ref_242
                   type: array
@@ -5670,7 +5670,7 @@ schemas:
               description: "URL client should use to fetch the next page (per server side paging).\r\nIt's null for now, added for future use."
             go:
               name: NextLink
-              description: URL client should use to fetch the next page (per server side paging). It's null for now, added for future use.
+              description: 'URL client should use to fetch the next page (per server side paging). It''s null for now, added for future use.'
           protocol: {}
       serializationFormats:
         - json
@@ -5768,7 +5768,7 @@ schemas:
               description: "URL client should use to fetch the next page (per server side paging).\r\nIt's null for now, added for future use."
             go:
               name: NextLink
-              description: URL client should use to fetch the next page (per server side paging). It's null for now, added for future use.
+              description: 'URL client should use to fetch the next page (per server side paging). It''s null for now, added for future use.'
           protocol: {}
       serializationFormats:
         - json
@@ -6108,7 +6108,7 @@ schemas:
               description: "URL client should use to fetch the next page (per server side paging).\r\nIt's null for now, added for future use."
             go:
               name: NextLink
-              description: URL client should use to fetch the next page (per server side paging). It's null for now, added for future use.
+              description: 'URL client should use to fetch the next page (per server side paging). It''s null for now, added for future use.'
           protocol: {}
       serializationFormats:
         - json
@@ -6195,7 +6195,7 @@ schemas:
               description: "URL client should use to fetch the next page (per server side paging).\r\nIt's null for now, added for future use."
             go:
               name: NextLink
-              description: URL client should use to fetch the next page (per server side paging). It's null for now, added for future use.
+              description: 'URL client should use to fetch the next page (per server side paging). It''s null for now, added for future use.'
           protocol: {}
       serializationFormats:
         - json
@@ -6545,10 +6545,10 @@ schemas:
                                       language:
                                         default:
                                           name: fillGapWithZero
-                                          description: Optional. If set to true, then zero will be returned for time duration where no metric is emitted/published.
+                                          description: 'Optional. If set to true, then zero will be returned for time duration where no metric is emitted/published.'
                                         go:
                                           name: FillGapWithZero
-                                          description: Optional. If set to true, then zero will be returned for time duration where no metric is emitted/published.
+                                          description: 'Optional. If set to true, then zero will be returned for time duration where no metric is emitted/published.'
                                       protocol: {}
                                     - schema: &ref_262
                                         type: array
@@ -6762,7 +6762,7 @@ schemas:
               description: "URL client should use to fetch the next page (per server side paging).\r\nIt's null for now, added for future use."
             go:
               name: NextLink
-              description: URL client should use to fetch the next page (per server side paging). It's null for now, added for future use.
+              description: 'URL client should use to fetch the next page (per server side paging). It''s null for now, added for future use.'
           protocol: {}
       serializationFormats:
         - json
@@ -7454,7 +7454,7 @@ schemas:
               description: "URL client should use to fetch the next page (per server side paging).\r\nIt's null for now, added for future use."
             go:
               name: NextLink
-              description: URL client should use to fetch the next page (per server side paging). It's null for now, added for future use.
+              description: 'URL client should use to fetch the next page (per server side paging). It''s null for now, added for future use.'
           protocol: {}
       serializationFormats:
         - json
@@ -7566,9 +7566,9 @@ globalParameters:
         in: path
   - &ref_278
     schema: *ref_0
-    clientDefaultValue: https://management.azure.com
+    clientDefaultValue: 'https://management.azure.com'
     implementation: Client
-    origin: modelerfour:synthesized/host
+    origin: 'modelerfour:synthesized/host'
     required: true
     extensions:
       x-ms-skip-url-encoding: true
@@ -7587,7 +7587,7 @@ globalParameters:
   - &ref_279
     schema: *ref_277
     implementation: Client
-    origin: modelerfour:synthesized/api-version
+    origin: 'modelerfour:synthesized/api-version'
     required: true
     language: &ref_825
       default:
@@ -7649,7 +7649,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -7673,7 +7673,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -7913,7 +7913,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -7938,7 +7938,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}'
                 method: put
                 knownMediaType: json
                 mediaTypes:
@@ -8152,7 +8152,7 @@ operationGroups:
                     networkProfile:
                       appNetworkResourceGroup: my-app-network-rg
                       appSubnetId: /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/apps
-                      serviceCidr: 10.8.0.0/16,10.244.0.0/16,10.245.0.1/16
+                      serviceCidr: '10.8.0.0/16,10.244.0.0/16,10.245.0.1/16'
                       serviceRuntimeNetworkResourceGroup: my-service-runtime-network-rg
                       serviceRuntimeSubnetId: /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/serviceRuntime
                   sku:
@@ -8197,7 +8197,7 @@ operationGroups:
                               - 52.188.47.226
                             port: 9000
                             protocol: TCP
-                        serviceCidr: 10.8.0.0/16,10.244.0.0/16,10.245.0.1/16
+                        serviceCidr: '10.8.0.0/16,10.244.0.0/16,10.245.0.1/16'
                         serviceRuntimeNetworkResourceGroup: my-service-runtime-network-rg
                         serviceRuntimeSubnetId: /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/serviceRuntime
                       provisioningState: Succeeded
@@ -8239,7 +8239,7 @@ operationGroups:
                               - 52.188.47.226
                             port: 9000
                             protocol: TCP
-                        serviceCidr: 10.8.0.0/16,10.244.0.0/16,10.245.0.1/16
+                        serviceCidr: '10.8.0.0/16,10.244.0.0/16,10.245.0.1/16'
                         serviceRuntimeNetworkResourceGroup: my-service-runtime-network-rg
                         serviceRuntimeSubnetId: /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/serviceRuntime
                       provisioningState: Creating
@@ -8281,7 +8281,7 @@ operationGroups:
                               - 52.188.47.226
                             port: 9000
                             protocol: TCP
-                        serviceCidr: 10.8.0.0/16,10.244.0.0/16,10.245.0.1/16
+                        serviceCidr: '10.8.0.0/16,10.244.0.0/16,10.245.0.1/16'
                         serviceRuntimeNetworkResourceGroup: my-service-runtime-network-rg
                         serviceRuntimeSubnetId: /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/serviceRuntime
                       provisioningState: Updating
@@ -8416,7 +8416,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -8440,7 +8440,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}'
                 method: delete
                 uri: '{$host}'
         signatureParameters:
@@ -8497,7 +8497,7 @@ operationGroups:
               responses:
                 '202':
                   headers: &ref_868
-                    location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
+                    location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...'
                 '204': {}
           x-ms-long-running-operation: true
           x-ms-long-running-operation-options:
@@ -8626,7 +8626,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -8651,7 +8651,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}'
                 method: patch
                 knownMediaType: json
                 mediaTypes:
@@ -8895,7 +8895,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -8919,7 +8919,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/listTestKeys
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/listTestKeys'
                 method: post
                 uri: '{$host}'
         signatureParameters:
@@ -8965,7 +8965,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListTestKeys.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListTestKeys.json'
               responses:
                 '200':
                   body:
@@ -9090,7 +9090,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -9115,7 +9115,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/regenerateTestKey
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/regenerateTestKey'
                 method: post
                 knownMediaType: json
                 mediaTypes:
@@ -9168,7 +9168,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_RegenerateTestKey.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_RegenerateTestKey.json'
               responses:
                 '200':
                   body:
@@ -9277,7 +9277,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -9301,7 +9301,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/disableTestEndpoint
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/disableTestEndpoint'
                 method: post
                 uri: '{$host}'
         signatureParameters:
@@ -9343,7 +9343,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_DisableTestEndpoint.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_DisableTestEndpoint.json'
               responses:
                 '200': {}
         language:
@@ -9432,7 +9432,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -9456,7 +9456,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/enableTestEndpoint
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/enableTestEndpoint'
                 method: post
                 uri: '{$host}'
         signatureParameters:
@@ -9502,7 +9502,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_EnableTestEndpoint.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_EnableTestEndpoint.json'
               responses:
                 '200':
                   body:
@@ -9611,7 +9611,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -9636,7 +9636,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/locations/{location}/checkNameAvailability
+                path: '/subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/locations/{location}/checkNameAvailability'
                 method: post
                 knownMediaType: json
                 mediaTypes:
@@ -9688,7 +9688,7 @@ operationGroups:
                   type: Microsoft.AppPlatform/Spring
                 location: eastus
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CheckNameAvailability.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CheckNameAvailability.json'
               responses:
                 '200':
                   body:
@@ -9763,7 +9763,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -9787,7 +9787,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/Spring
+                path: '/subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/Spring'
                 method: get
                 uri: '{$host}'
         signatureParameters: []
@@ -9829,7 +9829,7 @@ operationGroups:
               parameters:
                 api-version: 2020-11-01-preview
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListBySubscription.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListBySubscription.json'
               responses:
                 '200':
                   body:
@@ -9960,7 +9960,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -9984,7 +9984,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -10028,7 +10028,7 @@ operationGroups:
                 api-version: 2020-11-01-preview
                 resourceGroupName: myResourceGroup
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_List.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_List.json'
               responses:
                 '200':
                   body:
@@ -10191,7 +10191,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -10215,7 +10215,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configServers/default
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configServers/default'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -10261,7 +10261,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Get.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Get.json'
               responses:
                 '200':
                   body:
@@ -10274,7 +10274,7 @@ operationGroups:
                           label: master
                           searchPaths:
                             - /
-                          uri: https://github.com/fake-user/fake-repository.git
+                          uri: 'https://github.com/fake-user/fake-repository.git'
                       provisioningState: Succeeded
         language:
           default:
@@ -10430,7 +10430,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -10455,7 +10455,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configServers/default
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configServers/default'
                 method: put
                 knownMediaType: json
                 mediaTypes:
@@ -10525,11 +10525,11 @@ operationGroups:
                         label: master
                         searchPaths:
                           - /
-                        uri: https://github.com/fake-user/fake-repository.git
+                        uri: 'https://github.com/fake-user/fake-repository.git'
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePut.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePut.json'
               responses:
                 '200':
                   body:
@@ -10542,7 +10542,7 @@ operationGroups:
                           label: master
                           searchPaths:
                             - /
-                          uri: https://github.com/fake-user/fake-repository.git
+                          uri: 'https://github.com/fake-user/fake-repository.git'
                       provisioningState: Succeeded
                 '202':
                   body:
@@ -10555,7 +10555,7 @@ operationGroups:
                           label: master
                           searchPaths:
                             - /
-                          uri: https://github.com/fake-user/fake-repository.git
+                          uri: 'https://github.com/fake-user/fake-repository.git'
                       provisioningState: Updating
           x-ms-long-running-operation: true
           x-ms-long-running-operation-options:
@@ -10698,7 +10698,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -10723,7 +10723,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configServers/default
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configServers/default'
                 method: patch
                 knownMediaType: json
                 mediaTypes:
@@ -10793,11 +10793,11 @@ operationGroups:
                         label: master
                         searchPaths:
                           - /
-                        uri: https://github.com/fake-user/fake-repository.git
+                        uri: 'https://github.com/fake-user/fake-repository.git'
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePatch.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePatch.json'
               responses:
                 '200':
                   body:
@@ -10810,7 +10810,7 @@ operationGroups:
                           label: master
                           searchPaths:
                             - /
-                          uri: https://github.com/fake-user/fake-repository.git
+                          uri: 'https://github.com/fake-user/fake-repository.git'
                       provisioningState: Succeeded
                 '202':
                   body:
@@ -10823,7 +10823,7 @@ operationGroups:
                           label: master
                           searchPaths:
                             - /
-                          uri: https://github.com/fake-user/fake-repository.git
+                          uri: 'https://github.com/fake-user/fake-repository.git'
                       provisioningState: Updating
                   headers: &ref_938
                     Azure-AsyncOperation: >-
@@ -10971,7 +10971,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -10996,7 +10996,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configServers/validate
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configServers/validate'
                 method: post
                 knownMediaType: json
                 mediaTypes:
@@ -11064,11 +11064,11 @@ operationGroups:
                     label: master
                     searchPaths:
                       - /
-                    uri: https://github.com/fake-user/fake-repository.git
+                    uri: 'https://github.com/fake-user/fake-repository.git'
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Validate.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Validate.json'
               responses:
                 '200':
                   body:
@@ -11183,7 +11183,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -11207,7 +11207,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/monitoringSettings/default
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/monitoringSettings/default'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -11253,7 +11253,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_Get.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_Get.json'
               responses:
                 '200':
                   body:
@@ -11421,7 +11421,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -11446,7 +11446,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/monitoringSettings/default
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/monitoringSettings/default'
                 method: put
                 knownMediaType: json
                 mediaTypes:
@@ -11517,7 +11517,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePut.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePut.json'
               responses:
                 '200':
                   body:
@@ -11684,7 +11684,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -11709,7 +11709,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/monitoringSettings/default
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/monitoringSettings/default'
                 method: patch
                 knownMediaType: json
                 mediaTypes:
@@ -11780,7 +11780,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePatch.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePatch.json'
               responses:
                 '200':
                   body:
@@ -11964,7 +11964,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -11988,7 +11988,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -12037,7 +12037,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Get.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Get.json'
               responses:
                 '200':
                   body:
@@ -12217,7 +12217,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -12242,7 +12242,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}'
                 method: put
                 knownMediaType: json
                 mediaTypes:
@@ -12340,7 +12340,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_CreateOrUpdate.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_CreateOrUpdate.json'
               responses:
                 '200':
                   body:
@@ -12558,7 +12558,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -12582,7 +12582,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}'
                 method: delete
                 uri: '{$host}'
         signatureParameters:
@@ -12648,7 +12648,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Delete.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Delete.json'
               responses:
                 '200': {}
                 '202': {}
@@ -12796,7 +12796,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -12821,7 +12821,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}'
                 method: patch
                 knownMediaType: json
                 mediaTypes:
@@ -12907,7 +12907,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Update.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Update.json'
               responses:
                 '200':
                   body:
@@ -13051,7 +13051,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -13075,7 +13075,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -13121,7 +13121,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_List.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_List.json'
               responses:
                 '200':
                   body:
@@ -13271,7 +13271,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -13295,7 +13295,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/getResourceUploadUrl
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/getResourceUploadUrl'
                 method: post
                 uri: '{$host}'
         signatureParameters:
@@ -13343,7 +13343,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_GetResourceUploadUrl.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_GetResourceUploadUrl.json'
               responses:
                 '200':
                   body:
@@ -13353,10 +13353,10 @@ operationGroups:
         language:
           default:
             name: GetResourceUploadUrl
-            description: Get an resource upload URL for an App, which may be artifacts or source archive.
+            description: 'Get an resource upload URL for an App, which may be artifacts or source archive.'
           go:
             name: GetResourceUploadURL
-            description: Get an resource upload URL for an App, which may be artifacts or source archive.
+            description: 'Get an resource upload URL for an App, which may be artifacts or source archive.'
             azureARM: true
             clientName: AppsClient
             openApiType: arm
@@ -13482,7 +13482,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -13507,7 +13507,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/validateDomain
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/validateDomain'
                 method: post
                 knownMediaType: json
                 mediaTypes:
@@ -13562,12 +13562,12 @@ operationGroups:
                 subscriptionId: 00000000-0000-0000-0000-000000000000
                 validatePayload:
                   name: mydomain.io
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_ValidateDomain.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_ValidateDomain.json'
               responses:
                 '200':
                   body:
                     isValid: false
-                    message: Certificate is invalid, please check if it is a self signed cert or if it contains a suitable dns name
+                    message: 'Certificate is invalid, please check if it is a self signed cert or if it contains a suitable dns name'
         language:
           default:
             name: ValidateDomain
@@ -13716,7 +13716,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -13740,7 +13740,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -13790,7 +13790,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Get.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Get.json'
               responses:
                 '200':
                   body:
@@ -13996,7 +13996,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -14021,7 +14021,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}'
                 method: put
                 knownMediaType: json
                 mediaTypes:
@@ -14116,7 +14116,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_CreateOrUpdate.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_CreateOrUpdate.json'
               responses:
                 '200':
                   body:
@@ -14329,7 +14329,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -14353,7 +14353,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}'
                 method: delete
                 uri: '{$host}'
         signatureParameters:
@@ -14421,7 +14421,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Delete.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Delete.json'
               responses:
                 '200': {}
                 '202': {}
@@ -14585,7 +14585,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -14610,7 +14610,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}'
                 method: patch
                 knownMediaType: json
                 mediaTypes:
@@ -14689,7 +14689,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Update.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Update.json'
               responses:
                 '200':
                   body:
@@ -14835,7 +14835,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -14859,7 +14859,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -14907,7 +14907,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_List.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_List.json'
               responses:
                 '200':
                   body:
@@ -15066,7 +15066,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -15090,7 +15090,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/certificates/{certificateName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/certificates/{certificateName}'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -15138,7 +15138,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Get.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Get.json'
               responses:
                 '200':
                   body:
@@ -15158,7 +15158,7 @@ operationGroups:
                       keyVaultCertName: mycert
                       subjectName: mysubjectname
                       thumbprint: 934367bf1c97033f877db0f15cb1b586957d3133
-                      vaultUri: https://myvault.vault.azure.net
+                      vaultUri: 'https://myvault.vault.azure.net'
         language:
           default:
             name: Get
@@ -15329,7 +15329,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -15354,7 +15354,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/certificates/{certificateName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/certificates/{certificateName}'
                 method: put
                 knownMediaType: json
                 mediaTypes:
@@ -15438,11 +15438,11 @@ operationGroups:
                   properties:
                     certVersion: 08a219d06d874795a96db47e06fbb01e
                     keyVaultCertName: mycert
-                    vaultUri: https://myvault.vault.azure.net
+                    vaultUri: 'https://myvault.vault.azure.net'
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_CreateOrUpdate.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_CreateOrUpdate.json'
               responses:
                 '200':
                   body:
@@ -15462,7 +15462,7 @@ operationGroups:
                       keyVaultCertName: mycert
                       subjectName: mysubjectname
                       thumbprint: 934367bf1c97033f877db0f15cb1b586957d3133
-                      vaultUri: https://myvault.vault.azure.net
+                      vaultUri: 'https://myvault.vault.azure.net'
                 '201':
                   body:
                     name: mycertificate
@@ -15481,7 +15481,7 @@ operationGroups:
                       keyVaultCertName: mycert
                       subjectName: mysubjectname
                       thumbprint: 934367bf1c97033f877db0f15cb1b586957d3133
-                      vaultUri: https://myvault.vault.azure.net
+                      vaultUri: 'https://myvault.vault.azure.net'
                 '202':
                   body:
                     name: mycertificate
@@ -15500,7 +15500,7 @@ operationGroups:
                       keyVaultCertName: mycert
                       subjectName: mysubjectname
                       thumbprint: 934367bf1c97033f877db0f15cb1b586957d3133
-                      vaultUri: https://myvault.vault.azure.net
+                      vaultUri: 'https://myvault.vault.azure.net'
           x-ms-long-running-operation: true
           x-ms-long-running-operation-options:
             final-state-via: azure-async-operation
@@ -15642,7 +15642,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -15666,7 +15666,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/certificates/{certificateName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/certificates/{certificateName}'
                 method: delete
                 uri: '{$host}'
         signatureParameters:
@@ -15732,7 +15732,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Delete.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Delete.json'
               responses:
                 '200': {}
                 '202': {}
@@ -15810,7 +15810,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -15834,7 +15834,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/certificates
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/certificates'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -15880,7 +15880,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_List.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_List.json'
               responses:
                 '200':
                   body:
@@ -15902,7 +15902,7 @@ operationGroups:
                           keyVaultCertName: mycert
                           subjectName: mysubjectname
                           thumbprint: 934367bf1c97033f877db0f15cb1b586957d3133
-                          vaultUri: https://myvault.vault.azure.net
+                          vaultUri: 'https://myvault.vault.azure.net'
           x-ms-pageable:
             nextLinkName: nextLink
         language:
@@ -16057,7 +16057,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -16081,7 +16081,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/domains/{domainName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/domains/{domainName}'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -16131,7 +16131,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Get.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Get.json'
               responses:
                 '200':
                   body:
@@ -16328,7 +16328,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -16353,7 +16353,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/domains/{domainName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/domains/{domainName}'
                 method: put
                 knownMediaType: json
                 mediaTypes:
@@ -16442,7 +16442,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_CreateOrUpdate.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_CreateOrUpdate.json'
               responses:
                 '200':
                   body:
@@ -16628,7 +16628,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -16652,7 +16652,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/domains/{domainName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/domains/{domainName}'
                 method: delete
                 uri: '{$host}'
         signatureParameters:
@@ -16720,7 +16720,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Delete.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Delete.json'
               responses:
                 '200': {}
                 '202': {}
@@ -16884,7 +16884,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -16909,7 +16909,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/domains/{domainName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/domains/{domainName}'
                 method: patch
                 knownMediaType: json
                 mediaTypes:
@@ -16983,7 +16983,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Update.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Update.json'
               responses:
                 '200':
                   body:
@@ -17111,7 +17111,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -17135,7 +17135,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/domains
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/domains'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -17183,7 +17183,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_List.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_List.json'
               responses:
                 '200':
                   body:
@@ -17350,7 +17350,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -17374,7 +17374,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -17424,7 +17424,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Get.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Get.json'
               responses:
                 '200':
                   body:
@@ -17643,7 +17643,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -17668,7 +17668,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}'
                 method: put
                 knownMediaType: json
                 mediaTypes:
@@ -17772,7 +17772,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_CreateOrUpdate.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_CreateOrUpdate.json'
               responses:
                 '200':
                   body:
@@ -18024,7 +18024,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -18048,7 +18048,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}'
                 method: delete
                 uri: '{$host}'
         signatureParameters:
@@ -18116,7 +18116,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Delete.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Delete.json'
               responses:
                 '200': {}
                 '202': {}
@@ -18280,7 +18280,7 @@ operationGroups:
                     style: json
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -18305,7 +18305,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}'
                 method: patch
                 knownMediaType: json
                 mediaTypes:
@@ -18383,7 +18383,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Update.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Update.json'
               responses:
                 '200':
                   body:
@@ -18592,7 +18592,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -18616,7 +18616,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -18665,7 +18665,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_List.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_List.json'
               responses:
                 '200':
                   body:
@@ -18825,7 +18825,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -18849,7 +18849,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/deployments
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/deployments'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -18897,7 +18897,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_ListForCluster.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_ListForCluster.json'
               responses:
                 '200':
                   body:
@@ -19090,7 +19090,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -19114,7 +19114,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}/start
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}/start'
                 method: post
                 uri: '{$host}'
         signatureParameters:
@@ -19171,12 +19171,12 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Start.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Start.json'
               responses:
                 '200': {}
                 '202':
                   headers: &ref_1228
-                    location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
+                    location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...'
           x-ms-long-running-operation: true
           x-ms-long-running-operation-options:
             final-state-via: azure-async-operation
@@ -19320,7 +19320,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -19344,7 +19344,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}/stop
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}/stop'
                 method: post
                 uri: '{$host}'
         signatureParameters:
@@ -19401,12 +19401,12 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Stop.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Stop.json'
               responses:
                 '200': {}
                 '202':
                   headers: &ref_1234
-                    location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
+                    location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...'
           x-ms-long-running-operation: true
           x-ms-long-running-operation-options:
             final-state-via: azure-async-operation
@@ -19550,7 +19550,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -19574,7 +19574,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}/restart
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}/restart'
                 method: post
                 uri: '{$host}'
         signatureParameters:
@@ -19631,12 +19631,12 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Restart.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Restart.json'
               responses:
                 '200': {}
                 '202':
                   headers: &ref_1240
-                    location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
+                    location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...'
           x-ms-long-running-operation: true
           x-ms-long-running-operation-options:
             final-state-via: azure-async-operation
@@ -19742,7 +19742,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -19766,7 +19766,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}/getLogFileUrl
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}/getLogFileUrl'
                 method: post
                 uri: '{$host}'
         signatureParameters:
@@ -19827,7 +19827,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_GetLogFileUrl.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_GetLogFileUrl.json'
               responses:
                 '200':
                   body:
@@ -19917,7 +19917,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -19982,11 +19982,11 @@ operationGroups:
             Operations_List:
               parameters:
                 api-version: 2020-11-01-preview
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Operations_List.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Operations_List.json'
               responses:
                 '200':
                   body:
-                    nextLink: providers/Microsoft.AppPlatform?$skipToken={opaqueString}
+                    nextLink: 'providers/Microsoft.AppPlatform?$skipToken={opaqueString}'
                     value:
                       - name: Microsoft.AppPlatform/Spring/read
                         display:
@@ -19995,7 +19995,7 @@ operationGroups:
                           provider: Microsoft Azure Distributed Managed Service for Spring
                           resource: Managed Applications
                         isDataAction: false
-                        origin: user,system
+                        origin: 'user,system'
                         properties:
                           serviceSpecification: null
           x-ms-pageable:
@@ -20085,7 +20085,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -20150,7 +20150,7 @@ operationGroups:
             RuntimeVersions_ListRuntimeVersions:
               parameters:
                 api-version: 2020-11-01-preview
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/RuntimeVersions_ListRuntimeVersions.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/RuntimeVersions_ListRuntimeVersions.json'
               responses:
                 '200':
                   body:
@@ -20246,7 +20246,7 @@ operationGroups:
           - parameters:
               - schema: *ref_281
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -20270,7 +20270,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/skus
+                path: '/subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/skus'
                 method: get
                 uri: '{$host}'
         signatureParameters: []
@@ -20312,7 +20312,7 @@ operationGroups:
               parameters:
                 api-version: 2020-11-01-preview
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Skus_List.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Skus_List.json'
               responses:
                 '200':
                   body:
@@ -20412,7 +20412,7 @@ security:
   schemes:
     - type: OAuth2
       scopes:
-        - https://management.azure.com/.default
+        - 'https://management.azure.com/.default'
 testModel:
   mockTest:
     exampleGroups:
@@ -21201,7 +21201,7 @@ testModel:
                               language: *ref_861
                             serviceCidr:
                               schema: *ref_111
-                              rawValue: 10.8.0.0/16,10.244.0.0/16,10.245.0.1/16
+                              rawValue: '10.8.0.0/16,10.244.0.0/16,10.245.0.1/16'
                               language: *ref_862
                             serviceRuntimeNetworkResourceGroup:
                               schema: *ref_112
@@ -21372,7 +21372,7 @@ testModel:
                               language: *ref_844
                             serviceCidr:
                               schema: *ref_111
-                              rawValue: 10.8.0.0/16,10.244.0.0/16,10.245.0.1/16
+                              rawValue: '10.8.0.0/16,10.244.0.0/16,10.245.0.1/16'
                               language: *ref_862
                             serviceRuntimeNetworkResourceGroup:
                               schema: *ref_112
@@ -21546,7 +21546,7 @@ testModel:
                               language: *ref_844
                             serviceCidr:
                               schema: *ref_111
-                              rawValue: 10.8.0.0/16,10.244.0.0/16,10.245.0.1/16
+                              rawValue: '10.8.0.0/16,10.244.0.0/16,10.245.0.1/16'
                               language: *ref_862
                             serviceRuntimeNetworkResourceGroup:
                               schema: *ref_112
@@ -21720,7 +21720,7 @@ testModel:
                               language: *ref_844
                             serviceCidr:
                               schema: *ref_111
-                              rawValue: 10.8.0.0/16,10.244.0.0/16,10.245.0.1/16
+                              rawValue: '10.8.0.0/16,10.244.0.0/16,10.245.0.1/16'
                               language: *ref_862
                             serviceRuntimeNetworkResourceGroup:
                               schema: *ref_112
@@ -22898,7 +22898,7 @@ testModel:
                                   language: *ref_919
                                 uri:
                                   schema: *ref_21
-                                  rawValue: https://github.com/fake-user/fake-repository.git
+                                  rawValue: 'https://github.com/fake-user/fake-repository.git'
                                   language: *ref_920
                               language: *ref_921
                           language: *ref_922
@@ -22963,7 +22963,7 @@ testModel:
                                   language: *ref_919
                                 uri:
                                   schema: *ref_21
-                                  rawValue: https://github.com/fake-user/fake-repository.git
+                                  rawValue: 'https://github.com/fake-user/fake-repository.git'
                                   language: *ref_920
                               language: *ref_921
                           language: *ref_922
@@ -23025,7 +23025,7 @@ testModel:
                                   language: *ref_919
                                 uri:
                                   schema: *ref_21
-                                  rawValue: https://github.com/fake-user/fake-repository.git
+                                  rawValue: 'https://github.com/fake-user/fake-repository.git'
                                   language: *ref_920
                               language: *ref_921
                           language: *ref_922
@@ -23086,7 +23086,7 @@ testModel:
                                   language: *ref_919
                                 uri:
                                   schema: *ref_21
-                                  rawValue: https://github.com/fake-user/fake-repository.git
+                                  rawValue: 'https://github.com/fake-user/fake-repository.git'
                                   language: *ref_920
                               language: *ref_921
                           language: *ref_922
@@ -23151,7 +23151,7 @@ testModel:
                                   language: *ref_919
                                 uri:
                                   schema: *ref_21
-                                  rawValue: https://github.com/fake-user/fake-repository.git
+                                  rawValue: 'https://github.com/fake-user/fake-repository.git'
                                   language: *ref_920
                               language: *ref_921
                           language: *ref_922
@@ -23213,7 +23213,7 @@ testModel:
                                   language: *ref_919
                                 uri:
                                   schema: *ref_21
-                                  rawValue: https://github.com/fake-user/fake-repository.git
+                                  rawValue: 'https://github.com/fake-user/fake-repository.git'
                                   language: *ref_920
                               language: *ref_921
                           language: *ref_922
@@ -23274,7 +23274,7 @@ testModel:
                                   language: *ref_919
                                 uri:
                                   schema: *ref_21
-                                  rawValue: https://github.com/fake-user/fake-repository.git
+                                  rawValue: 'https://github.com/fake-user/fake-repository.git'
                                   language: *ref_920
                               language: *ref_921
                           language: *ref_922
@@ -23332,7 +23332,7 @@ testModel:
                           language: *ref_919
                         uri:
                           schema: *ref_21
-                          rawValue: https://github.com/fake-user/fake-repository.git
+                          rawValue: 'https://github.com/fake-user/fake-repository.git'
                           language: *ref_920
                       language: *ref_921
                   language: *ref_941
@@ -25009,7 +25009,7 @@ testModel:
                       language: *ref_1036
                     message:
                       schema: *ref_168
-                      rawValue: Certificate is invalid, please check if it is a self signed cert or if it contains a suitable dns name
+                      rawValue: 'Certificate is invalid, please check if it is a self signed cert or if it contains a suitable dns name'
                       language: *ref_1037
                   language: *ref_1038
         operation: *ref_1035
@@ -25902,7 +25902,7 @@ testModel:
                           language: *ref_1097
                         vaultUri:
                           schema: *ref_61
-                          rawValue: https://myvault.vault.azure.net
+                          rawValue: 'https://myvault.vault.azure.net'
                           language: *ref_1098
                       language: *ref_1099
                   language: *ref_1100
@@ -25956,7 +25956,7 @@ testModel:
                           language: *ref_1095
                         vaultUri:
                           schema: *ref_61
-                          rawValue: https://myvault.vault.azure.net
+                          rawValue: 'https://myvault.vault.azure.net'
                           language: *ref_1098
                       language: *ref_1099
                   language: *ref_1104
@@ -26040,7 +26040,7 @@ testModel:
                           language: *ref_1097
                         vaultUri:
                           schema: *ref_61
-                          rawValue: https://myvault.vault.azure.net
+                          rawValue: 'https://myvault.vault.azure.net'
                           language: *ref_1098
                       language: *ref_1099
                   language: *ref_1106
@@ -26119,7 +26119,7 @@ testModel:
                           language: *ref_1097
                         vaultUri:
                           schema: *ref_61
-                          rawValue: https://myvault.vault.azure.net
+                          rawValue: 'https://myvault.vault.azure.net'
                           language: *ref_1098
                       language: *ref_1099
                   language: *ref_1107
@@ -26198,7 +26198,7 @@ testModel:
                           language: *ref_1097
                         vaultUri:
                           schema: *ref_61
-                          rawValue: https://myvault.vault.azure.net
+                          rawValue: 'https://myvault.vault.azure.net'
                           language: *ref_1098
                       language: *ref_1099
                   language: *ref_1108
@@ -26357,7 +26357,7 @@ testModel:
                                   language: *ref_1097
                                 vaultUri:
                                   schema: *ref_61
-                                  rawValue: https://myvault.vault.azure.net
+                                  rawValue: 'https://myvault.vault.azure.net'
                                   language: *ref_1098
                               language: *ref_1099
                       language: *ref_1117
@@ -28608,7 +28608,7 @@ testModel:
                   properties:
                     nextLink:
                       schema: *ref_200
-                      rawValue: providers/Microsoft.AppPlatform?$skipToken={opaqueString}
+                      rawValue: 'providers/Microsoft.AppPlatform?$skipToken={opaqueString}'
                       language: *ref_1250
                     value:
                       schema: *ref_264
@@ -28647,7 +28647,7 @@ testModel:
                               language: *ref_1257
                             origin:
                               schema: *ref_183
-                              rawValue: user,system
+                              rawValue: 'user,system'
                               language: *ref_1258
                             properties:
                               schema: *ref_203
@@ -28842,7 +28842,7 @@ testModel:
         - type: armTemplateDeployment
           armTemplate: ''
           armTemplatePayload:
-            $schema: https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#
+            $schema: 'https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#'
             contentVersion: 1.0.0.0
             parameters:
               userAssignedIdentity:
@@ -28901,7 +28901,7 @@ testModel:
         - type: armTemplateDeployment
           armTemplate: templates/generate_service_name.json
           armTemplatePayload:
-            $schema: https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#
+            $schema: 'https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#'
             contentVersion: 1.0.0.0
             outputs:
               serviceName:
@@ -28924,7 +28924,7 @@ testModel:
         - type: armTemplateDeployment
           armTemplate: templates/create_application_insights_instance.json
           armTemplatePayload:
-            $schema: https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#
+            $schema: 'https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#'
             contentVersion: 1.0.0.0
             outputs:
               insightsInstrumentationKey:
@@ -28957,7 +28957,7 @@ testModel:
         - type: armTemplateDeployment
           armTemplate: ''
           armTemplatePayload:
-            $schema: https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#
+            $schema: 'https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#'
             contentVersion: 1.0.0.0
             parameters:
               userAssignedIdentity:
@@ -30915,7 +30915,7 @@ testModel:
                               language: *ref_1095
                             vaultUri:
                               schema: *ref_61
-                              rawValue: https://integration-test-prod.vault.azure.net/
+                              rawValue: 'https://integration-test-prod.vault.azure.net/'
                               language: *ref_1098
                           language: *ref_1099
                       language: *ref_1104
@@ -30995,7 +30995,7 @@ testModel:
                               language: *ref_1097
                             vaultUri:
                               schema: *ref_61
-                              rawValue: https://integration-test-prod.vault.azure.net/
+                              rawValue: 'https://integration-test-prod.vault.azure.net/'
                               language: *ref_1098
                           language: *ref_1099
                       language: *ref_1106
@@ -31070,7 +31070,7 @@ testModel:
                               language: *ref_1097
                             vaultUri:
                               schema: *ref_61
-                              rawValue: https://integration-test-prod.vault.azure.net/
+                              rawValue: 'https://integration-test-prod.vault.azure.net/'
                               language: *ref_1098
                           language: *ref_1099
                       language: *ref_1107
@@ -31145,7 +31145,7 @@ testModel:
                               language: *ref_1097
                             vaultUri:
                               schema: *ref_61
-                              rawValue: https://integration-test-prod.vault.azure.net/
+                              rawValue: 'https://integration-test-prod.vault.azure.net/'
                               language: *ref_1098
                           language: *ref_1099
                       language: *ref_1108
@@ -31158,7 +31158,7 @@ testModel:
                 certificateResource:
                   properties:
                     keyVaultCertName: pfx-cert
-                    vaultUri: https://integration-test-prod.vault.azure.net/
+                    vaultUri: 'https://integration-test-prod.vault.azure.net/'
                 resourceGroupName: $(resourceGroupName)
                 serviceName: $(serviceName)
                 subscriptionId: $(subscriptionId)
@@ -31188,7 +31188,7 @@ testModel:
                       keyVaultCertName: pfx-cert
                       subjectName: mysubjectname
                       thumbprint: 934367bf1c97033f877db0f15cb1b586957d3133
-                      vaultUri: https://integration-test-prod.vault.azure.net/
+                      vaultUri: 'https://integration-test-prod.vault.azure.net/'
                 '201':
                   body:
                     name: mycertificate
@@ -31206,7 +31206,7 @@ testModel:
                       keyVaultCertName: pfx-cert
                       subjectName: mysubjectname
                       thumbprint: 934367bf1c97033f877db0f15cb1b586957d3133
-                      vaultUri: https://integration-test-prod.vault.azure.net/
+                      vaultUri: 'https://integration-test-prod.vault.azure.net/'
                 '202':
                   body:
                     name: mycertificate
@@ -31224,7 +31224,7 @@ testModel:
                       keyVaultCertName: pfx-cert
                       subjectName: mysubjectname
                       thumbprint: 934367bf1c97033f877db0f15cb1b586957d3133
-                      vaultUri: https://integration-test-prod.vault.azure.net/
+                      vaultUri: 'https://integration-test-prod.vault.azure.net/'
             - type: restCall
               operationId: Certificates_Get
               description: Certificates_Get
@@ -31338,7 +31338,7 @@ testModel:
                               language: *ref_1097
                             vaultUri:
                               schema: *ref_61
-                              rawValue: https://myvault.vault.azure.net
+                              rawValue: 'https://myvault.vault.azure.net'
                               language: *ref_1098
                           language: *ref_1099
                       language: *ref_1100
@@ -31378,7 +31378,7 @@ testModel:
                       keyVaultCertName: mycert
                       subjectName: mysubjectname
                       thumbprint: 934367bf1c97033f877db0f15cb1b586957d3133
-                      vaultUri: https://myvault.vault.azure.net
+                      vaultUri: 'https://myvault.vault.azure.net'
             - type: restCall
               operationId: Certificates_List
               description: Certificates_List
@@ -31497,7 +31497,7 @@ testModel:
                                       language: *ref_1097
                                     vaultUri:
                                       schema: *ref_61
-                                      rawValue: https://myvault.vault.azure.net
+                                      rawValue: 'https://myvault.vault.azure.net'
                                       language: *ref_1098
                                   language: *ref_1099
                           language: *ref_1117
@@ -31536,7 +31536,7 @@ testModel:
                           keyVaultCertName: mycert
                           subjectName: mysubjectname
                           thumbprint: 934367bf1c97033f877db0f15cb1b586957d3133
-                          vaultUri: https://myvault.vault.azure.net
+                          vaultUri: 'https://myvault.vault.azure.net'
             - type: restCall
               operationId: ConfigServers_Validate
               description: ConfigServers_Validate
@@ -31586,7 +31586,7 @@ testModel:
                               language: *ref_919
                             uri:
                               schema: *ref_21
-                              rawValue: https://github.com/VSChina/asc-config-server-test-public.git
+                              rawValue: 'https://github.com/VSChina/asc-config-server-test-public.git'
                               language: *ref_920
                           language: *ref_921
                       language: *ref_941
@@ -31626,7 +31626,7 @@ testModel:
                     label: master
                     searchPaths:
                       - /
-                    uri: https://github.com/VSChina/asc-config-server-test-public.git
+                    uri: 'https://github.com/VSChina/asc-config-server-test-public.git'
                 resourceGroupName: $(resourceGroupName)
                 serviceName: $(serviceName)
                 subscriptionId: $(subscriptionId)
@@ -31699,7 +31699,7 @@ testModel:
                                       language: *ref_919
                                     uri:
                                       schema: *ref_21
-                                      rawValue: https://github.com/VSChina/asc-config-server-test-public.git
+                                      rawValue: 'https://github.com/VSChina/asc-config-server-test-public.git'
                                       language: *ref_920
                                   language: *ref_921
                               language: *ref_922
@@ -31761,7 +31761,7 @@ testModel:
                                       language: *ref_919
                                     uri:
                                       schema: *ref_21
-                                      rawValue: https://github.com/VSChina/asc-config-server-test-public.git
+                                      rawValue: 'https://github.com/VSChina/asc-config-server-test-public.git'
                                       language: *ref_920
                                   language: *ref_921
                               language: *ref_922
@@ -31822,7 +31822,7 @@ testModel:
                                       language: *ref_919
                                     uri:
                                       schema: *ref_21
-                                      rawValue: https://github.com/VSChina/asc-config-server-test-public.git
+                                      rawValue: 'https://github.com/VSChina/asc-config-server-test-public.git'
                                       language: *ref_920
                                   language: *ref_921
                               language: *ref_922
@@ -31844,7 +31844,7 @@ testModel:
                         label: master
                         searchPaths:
                           - /
-                        uri: https://github.com/VSChina/asc-config-server-test-public.git
+                        uri: 'https://github.com/VSChina/asc-config-server-test-public.git'
                 resourceGroupName: $(resourceGroupName)
                 serviceName: $(serviceName)
                 subscriptionId: $(subscriptionId)
@@ -31865,7 +31865,7 @@ testModel:
                           label: master
                           searchPaths:
                             - /
-                          uri: https://github.com/VSChina/asc-config-server-test-public.git
+                          uri: 'https://github.com/VSChina/asc-config-server-test-public.git'
                       provisioningState: Succeeded
                 '202':
                   body:
@@ -31878,7 +31878,7 @@ testModel:
                           label: master
                           searchPaths:
                             - /
-                          uri: https://github.com/VSChina/asc-config-server-test-public.git
+                          uri: 'https://github.com/VSChina/asc-config-server-test-public.git'
                       provisioningState: Updating
             - type: restCall
               operationId: ConfigServers_UpdatePatch
@@ -31927,7 +31927,7 @@ testModel:
                                   properties:
                                     uri:
                                       schema: *ref_21
-                                      rawValue: https://github.com/azure-samples/spring-petclinic-microservices-config
+                                      rawValue: 'https://github.com/azure-samples/spring-petclinic-microservices-config'
                                       language: *ref_920
                                   language: *ref_921
                               language: *ref_922
@@ -31979,7 +31979,7 @@ testModel:
                                   properties:
                                     uri:
                                       schema: *ref_21
-                                      rawValue: https://github.com/azure-samples/spring-petclinic-microservices-config
+                                      rawValue: 'https://github.com/azure-samples/spring-petclinic-microservices-config'
                                       language: *ref_920
                                   language: *ref_921
                               language: *ref_922
@@ -32030,7 +32030,7 @@ testModel:
                                   properties:
                                     uri:
                                       schema: *ref_21
-                                      rawValue: https://github.com/azure-samples/spring-petclinic-microservices-config
+                                      rawValue: 'https://github.com/azure-samples/spring-petclinic-microservices-config'
                                       language: *ref_920
                                   language: *ref_921
                               language: *ref_922
@@ -32054,7 +32054,7 @@ testModel:
                   properties:
                     configServer:
                       gitProperty:
-                        uri: https://github.com/azure-samples/spring-petclinic-microservices-config
+                        uri: 'https://github.com/azure-samples/spring-petclinic-microservices-config'
                 resourceGroupName: $(resourceGroupName)
                 serviceName: $(serviceName)
                 subscriptionId: $(subscriptionId)
@@ -32072,7 +32072,7 @@ testModel:
                     properties:
                       configServer:
                         gitProperty:
-                          uri: https://github.com/azure-samples/spring-petclinic-microservices-config
+                          uri: 'https://github.com/azure-samples/spring-petclinic-microservices-config'
                       provisioningState: Succeeded
                 '202':
                   body:
@@ -32082,7 +32082,7 @@ testModel:
                     properties:
                       configServer:
                         gitProperty:
-                          uri: https://github.com/azure-samples/spring-petclinic-microservices-config
+                          uri: 'https://github.com/azure-samples/spring-petclinic-microservices-config'
                       provisioningState: Updating
                   headers: *ref_1294
             - type: restCall
@@ -32169,7 +32169,7 @@ testModel:
                                       language: *ref_919
                                     uri:
                                       schema: *ref_21
-                                      rawValue: https://github.com/fake-user/fake-repository.git
+                                      rawValue: 'https://github.com/fake-user/fake-repository.git'
                                       language: *ref_920
                                   language: *ref_921
                               language: *ref_922
@@ -32204,7 +32204,7 @@ testModel:
                           label: master
                           searchPaths:
                             - /
-                          uri: https://github.com/fake-user/fake-repository.git
+                          uri: 'https://github.com/fake-user/fake-repository.git'
                       provisioningState: Succeeded
             - type: restCall
               operationId: MonitoringSettings_UpdatePut
@@ -36416,7 +36416,7 @@ testModel:
                           language: *ref_1036
                         message:
                           schema: *ref_168
-                          rawValue: Certificate is invalid, please check if it is a self signed cert or if it contains a suitable dns name
+                          rawValue: 'Certificate is invalid, please check if it is a self signed cert or if it contains a suitable dns name'
                           language: *ref_1037
                       language: *ref_1038
               isManagementPlane: true
@@ -36439,7 +36439,7 @@ testModel:
                 '200':
                   body:
                     isValid: false
-                    message: Certificate is invalid, please check if it is a self signed cert or if it contains a suitable dns name
+                    message: 'Certificate is invalid, please check if it is a self signed cert or if it contains a suitable dns name'
             - type: restCall
               operationId: CustomDomains_CreateOrUpdate
               description: CustomDomains_CreateOrUpdate
@@ -37174,7 +37174,7 @@ testModel:
             - type: armTemplateDeployment
               armTemplate: ''
               armTemplatePayload:
-                $schema: https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#
+                $schema: 'https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#'
                 contentVersion: 1.0.0.0
                 parameters:
                   userAssignedIdentity:
@@ -38358,7 +38358,7 @@ testModel:
                       language: *ref_1306
                   '202':
                     headers: &ref_1308
-                      location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
+                      location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...'
               isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
@@ -38431,7 +38431,7 @@ testModel:
                       language: *ref_1309
                   '202':
                     headers: &ref_1311
-                      location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
+                      location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...'
               isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
@@ -38504,7 +38504,7 @@ testModel:
                       language: *ref_1312
                   '202':
                     headers: &ref_1314
-                      location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
+                      location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...'
               isManagementPlane: true
               outputVariables: {}
               outputVariablesModel: {}
@@ -39856,7 +39856,7 @@ testModel:
                       rawValue: &ref_1324 {}
                       language: *ref_1323
                     headers: &ref_1325
-                      location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
+                      location: 'https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...'
                   '204': {}
               isManagementPlane: true
               outputVariables: {}
@@ -40029,7 +40029,7 @@ testModel:
                       properties:
                         nextLink:
                           schema: *ref_200
-                          rawValue: providers/Microsoft.AppPlatform?$skipToken={opaqueString}
+                          rawValue: 'providers/Microsoft.AppPlatform?$skipToken={opaqueString}'
                           language: *ref_1250
                         value:
                           schema: *ref_264
@@ -40068,7 +40068,7 @@ testModel:
                                   language: *ref_1257
                                 origin:
                                   schema: *ref_183
-                                  rawValue: user,system
+                                  rawValue: 'user,system'
                                   language: *ref_1258
                                 properties:
                                   schema: *ref_203
@@ -40094,7 +40094,7 @@ testModel:
               responses:
                 '200':
                   body:
-                    nextLink: providers/Microsoft.AppPlatform?$skipToken={opaqueString}
+                    nextLink: 'providers/Microsoft.AppPlatform?$skipToken={opaqueString}'
                     value:
                       - name: Microsoft.AppPlatform/Spring/read
                         display:
@@ -40103,7 +40103,7 @@ testModel:
                           provider: Microsoft Azure Distributed Managed Service for Spring
                           resource: Managed Applications
                         isDataAction: false
-                        origin: user,system
+                        origin: 'user,system'
                         properties:
                           serviceSpecification: null
           variables:
@@ -40122,7 +40122,7 @@ testModel:
           value: app01
         armEndpoint:
           type: string
-          value: https://management.azure.com
+          value: 'https://management.azure.com'
         ascDomainName:
           type: string
           value: .azuremicroservices.io

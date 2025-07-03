@@ -375,10 +375,10 @@ function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport
           content += '\t\tContentType: req.Header.Get("Content-Type"),\n';
           content += '\t})\n';
         } else if (method.responseEnvelope.result.kind === 'monomorphicResult') {
-          if (go.isBytesType(method.responseEnvelope.result.monomorphicType)) {
+          if (method.responseEnvelope.result.monomorphicType.kind === 'encodedBytes') {
             const encoding = method.responseEnvelope.result.monomorphicType.encoding;
             content += `\tresp, err := server.MarshalResponseAsByteArray(respContent, server.GetResponse(respr).${getResultFieldName(method.responseEnvelope.result)}, runtime.Base64${encoding}Format, req)\n`;
-          } else if (go.isSliceType(method.responseEnvelope.result.monomorphicType) && method.responseEnvelope.result.monomorphicType.rawJSONAsBytes) {
+          } else if (method.responseEnvelope.result.monomorphicType.kind === 'rawJSON') {
             imports.add('bytes');
             imports.add('io');
             content += '\tresp, err := server.NewResponse(respContent, req, &server.ResponseOptions{\n';
@@ -386,13 +386,13 @@ function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport
             content += '\t\tContentType: "application/json",\n\t})\n';
           } else {
             let respField = `.${getResultFieldName(method.responseEnvelope.result)}`;
-            if (method.responseEnvelope.result.format === 'XML' && go.isSliceType(method.responseEnvelope.result.monomorphicType)) {
+            if (method.responseEnvelope.result.format === 'XML' && method.responseEnvelope.result.monomorphicType.kind === 'slice') {
               // for XML array responses we use the response type directly as it has the necessary XML tag for proper marshalling
               respField = '';
             }
             let responseField = `server.GetResponse(respr)${respField}`;
-            if (go.isTimeType(method.responseEnvelope.result.monomorphicType)) {
-              responseField = `(*${method.responseEnvelope.result.monomorphicType.dateTimeFormat})(${responseField})`;
+            if (method.responseEnvelope.result.monomorphicType.kind === 'time') {
+              responseField = `(*${method.responseEnvelope.result.monomorphicType.format})(${responseField})`;
             }
             content += `\tresp, err := server.MarshalResponseAs${method.responseEnvelope.result.format}(respContent, ${responseField}, req)\n`;
           }
@@ -465,26 +465,31 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
       case 'XML':
         if (bodyParam && !go.isLiteralParameter(bodyParam)) {
           imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
-          if (go.isBytesType(bodyParam.type)) {
-            content += `\tbody, err := server.UnmarshalRequestAsByteArray(req, runtime.Base64${bodyParam.type.encoding}Format)\n`;
-            content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-          } else if (go.isSliceType(bodyParam.type) && bodyParam.type.rawJSONAsBytes) {
-            content += '\tbody, err := io.ReadAll(req.Body)\n';
-            content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-            content += '\treq.Body.Close()\n';
-          } else if (go.isInterfaceType(bodyParam.type)) {
-            requiredHelpers.readRequestBody = true;
-            content += '\traw, err := readRequestBody(req)\n';
-            content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-            content += `\tbody, err := unmarshal${bodyParam.type.name}(raw)\n`;
-            content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-          } else {
-            let bodyTypeName = go.getTypeDeclaration(bodyParam.type, clientPkg);
-            if (go.isTimeType(bodyParam.type)) {
-              bodyTypeName = bodyParam.type.dateTimeFormat;
+          switch (bodyParam.type.kind) {
+            case 'encodedBytes':
+              content += `\tbody, err := server.UnmarshalRequestAsByteArray(req, runtime.Base64${bodyParam.type.encoding}Format)\n`;
+              content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+              break;
+            case 'interface':
+              requiredHelpers.readRequestBody = true;
+              content += '\traw, err := readRequestBody(req)\n';
+              content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+              content += `\tbody, err := unmarshal${bodyParam.type.name}(raw)\n`;
+              content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+              break;
+            case 'rawJSON':
+              content += '\tbody, err := io.ReadAll(req.Body)\n';
+              content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+              content += '\treq.Body.Close()\n';
+              break;
+            default: {
+              let bodyTypeName = go.getTypeDeclaration(bodyParam.type, clientPkg);
+              if (bodyParam.type.kind === 'time') {
+                bodyTypeName = bodyParam.type.format;
+              }
+              content += `\tbody, err := server.UnmarshalRequestAs${bodyParam.bodyFormat}[${bodyTypeName}](req)\n`;
+              content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
             }
-            content += `\tbody, err := server.UnmarshalRequestAs${bodyParam.bodyFormat}[${bodyTypeName}](req)\n`;
-            content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
           }
         }
         break;
@@ -506,8 +511,12 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     content += '\treader := multipart.NewReader(req.Body, params["boundary"])\n';
     for (const param of multipartBodyParams) {
       let pkgPrefix = '';
-      if (go.isConstantType(param.type) || go.isModelType(param.type)) {
-        pkgPrefix = clientPkg + '.';
+      switch (param.type.kind) {
+        case 'constant':
+        case 'model':
+        case 'polymorphicModel':
+          pkgPrefix = clientPkg + '.';
+          break;
       }
       content += `\tvar ${param.name} ${pkgPrefix}${go.getTypeDeclaration(param.type)}\n`;
     }
@@ -523,7 +532,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     // specify boolTarget if parsing bools happens in place.
     // i.e. the result from the parsing doesn't require further conversion (e.g. casting)
     // otherwise the parsed value is in a local var named parsed.
-    const parsePrimitiveType = function (typeName: go.PrimitiveTypeName, boolTarget?: string): string {
+    const parsePrimitiveType = function (typeName: go.ScalarType, boolTarget?: string): string {
       let parseErr = 'parseErr';
       const parseResults = `parsed, ${parseErr}`;
       let parsingCode = '';
@@ -555,24 +564,28 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
       return parsingCode;
     };
 
-    const isMultipartContentType = function (type: go.PossibleType): type is go.QualifiedType {
+    const isMultipartContentType = function (type: go.PossibleType): boolean {
       type = helpers.recursiveUnwrapMapSlice(type);
-      return (go.isQualifiedType(type) && type.exportName === 'MultipartContent');
+      return (type.kind === 'qualifiedType' && type.exportName === 'MultipartContent');
     };
+
+    const isModelType = function (type: go.PossibleType): type is go.Model | go.PolymorphicModel {
+      return type.kind === 'model' || type.kind === 'polymorphicModel';
+    }
 
     const emitCase = function (caseValue: string, paramVar: string, type: go.PossibleType): string {
       let caseContent = `\t\tcase "${caseValue}":\n`;
       caseContent += '\t\t\tcontent, err = io.ReadAll(part)\n';
       caseContent += '\t\t\tif err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n';
       let assignedValue: string | undefined;
-      if (go.isModelType(helpers.recursiveUnwrapMapSlice(type))) {
+      if (isModelType(helpers.recursiveUnwrapMapSlice(type))) {
         imports.add('encoding/json');
         caseContent += `\t\t\tif err = json.Unmarshal(content, &${paramVar}); err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n`;
-      } else if (go.isQualifiedType(type) && type.exportName === 'ReadSeekCloser') {
+      } else if (type.kind === 'qualifiedType' && type.exportName === 'ReadSeekCloser') {
         imports.add('bytes');
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
         assignedValue = 'streaming.NopCloser(bytes.NewReader(content))';
-      } else if (go.isConstantType(type)) {
+      } else if (type.kind === 'constant') {
         let from: string;
         switch (type.type) {
           case 'bool':
@@ -588,12 +601,12 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
             break;
         }
         assignedValue = `${clientPkg}.${type.name}(${from})`;
-      } else if (go.isPrimitiveType(type)) {
-        switch (type.typeName) {
+      } else if (type.kind === 'scalar') {
+        switch (type.type) {
           case 'bool':
             imports.add('strconv');
             // ParseBool happens in place, so no need to set assignedValue
-            caseContent += parsePrimitiveType(type.typeName, paramVar);
+            caseContent += parsePrimitiveType(type.type, paramVar);
             break;
           case 'float32':
           case 'float64':
@@ -601,22 +614,21 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
           case 'int16':
           case 'int32':
           case 'int64':
-            caseContent += parsePrimitiveType(type.typeName);
-            assignedValue = `${type.typeName}(parsed)`;
-            break;
-          case 'string':
-            assignedValue = 'string(content)';
+            caseContent += parsePrimitiveType(type.type);
+            assignedValue = `${type.type}(parsed)`;
             break;
           default:
-            throw new CodegenError('InternalError', `unhandled multipart parameter primitive type ${type.typeName}`);
+            throw new CodegenError('InternalError', `unhandled multipart parameter primitive type ${type.type}`);
         }
+      } else if (type.kind === 'string') {
+        assignedValue = 'string(content)';
       } else if (isMultipartContentType(type)) {
         imports.add('bytes');
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
         const bodyContent = 'streaming.NopCloser(bytes.NewReader(content))';
         const contentType = 'part.Header.Get("Content-Type")';
         const filename = 'part.FileName()';
-        if (go.isSliceType(type)) {
+        if (type.kind === 'slice') {
           caseContent += `\t\t\t${paramVar} = append(${paramVar}, streaming.MultipartContent{\n`;
           caseContent += `\t\t\t\tBody: ${bodyContent},\n`;
           caseContent += `\t\t\t\tContentType: ${contentType},\n`;
@@ -627,16 +639,16 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
           caseContent += `\t\t\t${paramVar}.ContentType = ${contentType}\n`;
           caseContent += `\t\t\t${paramVar}.Filename = ${filename}\n`;
         }
-      } else if (go.isSliceType(type)) {
-        if (go.isQualifiedType(type.elementType) && type.elementType.exportName === 'ReadSeekCloser') {
+      } else if (type.kind === 'slice') {
+        if (type.elementType.kind === 'qualifiedType' && type.elementType.exportName === 'ReadSeekCloser') {
           imports.add('bytes');
           imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
           assignedValue = `append(${paramVar}, streaming.NopCloser(bytes.NewReader(content)))`;
         } else {
-          throw new CodegenError('InternalError', `uhandled multipart parameter array element type ${go.getTypeDeclaration(type.elementType)}`);
+          throw new CodegenError('InternalError', `uhandled multipart parameter array element kind ${type.elementType.kind}`);
         }
       } else {
-        throw new CodegenError('InternalError', `uhandled multipart parameter type ${go.getTypeDeclaration(type)}`);
+        throw new CodegenError('InternalError', `uhandled multipart parameter kind ${type.kind}`);
       }
       if (assignedValue) {
         caseContent += `\t\t\t${paramVar} = ${assignedValue}\n`;
@@ -645,7 +657,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     };
 
     for (const param of multipartBodyParams) {
-      if (go.isModelType(param.type)) {
+      if (isModelType(param.type)) {
         for (const field of param.type.fields) {
           content += emitCase(field.serializedName, `${param.name}.${field.name}`, field.type);
         }
@@ -660,7 +672,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
   } else if (formBodyParams.length > 0) {
     for (const param of formBodyParams) {
       let pkgPrefix = '';
-      if (go.isConstantType(param.type)) {
+      if (param.type.kind === 'constant') {
         pkgPrefix = clientPkg + '.';
       }
       content += `\tvar ${param.name} ${pkgPrefix}${go.getTypeDeclaration(param.type)}\n`;
@@ -671,12 +683,15 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     for (const param of formBodyParams) {
       content += `\t\tcase "${param.formDataName}":\n`;
       let assignedValue: string;
-      if (go.isConstantType(param.type)) {
-        assignedValue = `${go.getTypeDeclaration(param.type, clientPkg)}(req.FormValue(key))`;
-      } else if (go.isPrimitiveType(param.type) && param.type.typeName === 'string') {
-        assignedValue = 'req.FormValue(key)';
-      } else {
-        throw new CodegenError('InternalError', `uhandled form parameter type ${go.getTypeDeclaration(param.type)}`);
+      switch (param.type.kind) {
+        case 'constant':
+          assignedValue = `${go.getTypeDeclaration(param.type, clientPkg)}(req.FormValue(key))`;
+          break;
+        case 'string':
+          assignedValue = 'req.FormValue(key)';
+          break;
+        default:
+          throw new CodegenError('InternalError', `uhandled form parameter kind ${param.type.kind}`);
       }
       content += `\t\t\t${param.name} = ${assignedValue}\n`;
     }
@@ -896,7 +911,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
       const escapedParam = createLocalVariableName(param, 'Escaped');
       content += `\t${escapedParam} := ${paramValue}\n`;
       let paramVar = createLocalVariableName(param, 'Unescaped');
-      if (go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
+      if (param.type.elementType.kind === 'string') {
         // by convention, if the value is in its "final form" (i.e. no parsing required)
         // then its var is to have the "Param" suffix. the only case is string, everything
         // else requires some amount of parsing/conversion.
@@ -917,7 +932,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
         where = 'Query';
       }
       let paramVar = createLocalVariableName(param, 'Unescaped');
-      if (go.isRequiredParameter(param) && go.isConstantType(param.type) && param.type.type === 'string') {
+      if (go.isRequiredParameter(param) && param.type.kind === 'constant' && param.type.type === 'string') {
         // for string-based enums, we perform the conversion as part of unescaping
         requiredHelpers.parseWithCast = true;
         paramVar = createLocalVariableName(param, 'Param');
@@ -927,8 +942,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
         content += `\t\treturn ${go.getTypeDeclaration(param.type, clientPkg)}(p), nil\n\t})\n`;
       } else {
         if (go.isRequiredParameter(param) &&
-          ((go.isPrimitiveType(param.type) && param.type.typeName === 'string') ||
-            (go.isSliceType(param.type) && go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string'))) {
+          (param.type.kind === 'string' || (param.type.kind === 'slice' && param.type.elementType.kind === 'string'))) {
           // by convention, if the value is in its "final form" (i.e. no parsing required)
           // then its var is to have the "Param" suffix. the only case is string, everything
           // else requires some amount of parsing/conversion.
@@ -943,7 +957,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
     // parse params as required
     if (param.kind === 'headerCollectionParam' || param.kind === 'pathCollectionParam' || param.kind === 'queryCollectionParam') {
       // any element type other than string will require some form of conversion/parsing
-      if (!(go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string')) {
+      if (param.type.elementType.kind !== 'string') {
         if (param.collectionFormat !== 'multi') {
           requiredHelpers.splitHelper = true;
           const elementsParam = createLocalVariableName(param, 'Elements');
@@ -952,21 +966,24 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
         }
 
         const paramVar = createLocalVariableName(param, 'Param');
-        let elementFormat: go.PrimitiveTypeName | go.DateTimeFormat | go.BytesEncoding;
-        if (go.isConstantType(param.type.elementType)) {
-          elementFormat = param.type.elementType.type;
-        } else if (go.isPrimitiveType(param.type.elementType)) {
-          elementFormat = param.type.elementType.typeName;
-        } else if (go.isBytesType(param.type.elementType)) {
-          elementFormat = param.type.elementType.encoding;
-        } else if (go.isTimeType(param.type.elementType)) {
-          elementFormat = param.type.elementType.dateTimeFormat;
-        } else {
-          throw new CodegenError('InternalError', `unhandled element type ${go.getTypeDeclaration(param.type.elementType)}`);
+        let elementFormat: go.ScalarType | go.TimeFormat | go.BytesEncoding | 'string';
+        switch (param.type.elementType.kind) {
+          case 'constant':
+          case 'scalar':
+            elementFormat = param.type.elementType.type;
+            break;
+          case 'encodedBytes':
+            elementFormat = param.type.elementType.encoding;
+            break;
+          case 'time':
+            elementFormat = param.type.elementType.format;
+            break;
+          default:
+            throw new CodegenError('InternalError', `unhandled element kind ${param.type.elementType.kind}`);
         }
 
         let toType = go.getTypeDeclaration(param.type.elementType);
-        if (go.isConstantType(param.type.elementType)) {
+        if (param.type.elementType.kind === 'constant') {
           toType = `${clientPkg}.${toType}`;
         }
         content += `\t${paramVar} := make([]${toType}, len(${paramValue}))\n`;
@@ -1020,7 +1037,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
         requiredHelpers.splitHelper = true;
         content += `\t${createLocalVariableName(param, 'Param')} := splitHelper(${paramValue}, "${helpers.getDelimiterForCollectionFormat(param.collectionFormat)}")\n`;
       }
-    } else if (go.isPrimitiveType(param.type) && param.type.typeName === 'bool') {
+    } else if (param.type.kind === 'scalar' && param.type.type === 'bool') {
       imports.add('strconv');
       let from = `strconv.ParseBool(${paramValue})`;
       if (!go.isRequiredParameter(param)) {
@@ -1029,15 +1046,15 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
       }
       content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-    } else if (go.isBytesType(param.type)) {
+    } else if (param.type.kind === 'encodedBytes') {
       imports.add('encoding/base64');
       content += `\t${createLocalVariableName(param, 'Param')}, err := base64.${param.type.encoding}Encoding.DecodeString(${paramValue})\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-    } else if (go.isTimeType(param.type)) {
-      if (param.type.dateTimeFormat === 'dateType' || param.type.dateTimeFormat === 'timeRFC3339') {
+    } else if (param.type.kind === 'time') {
+      if (param.type.format === 'dateType' || param.type.format === 'timeRFC3339') {
         imports.add('time');
         let format = helpers.dateFormat;
-        if (param.type.dateTimeFormat === 'timeRFC3339') {
+        if (param.type.format === 'timeRFC3339') {
           format = helpers.timeRFC3339Format;
         }
         let from = `time.Parse("${format}", ${paramValue})`;
@@ -1047,10 +1064,10 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
         }
         content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
         content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-      } else if (param.type.dateTimeFormat === 'dateTimeRFC1123' || param.type.dateTimeFormat === 'dateTimeRFC3339') {
+      } else if (param.type.format === 'dateTimeRFC1123' || param.type.format === 'dateTimeRFC3339') {
         imports.add('time');
         let format = 'time.RFC3339Nano';
-        if (param.type.dateTimeFormat === 'dateTimeRFC1123') {
+        if (param.type.format === 'dateTimeRFC1123') {
           format = 'time.RFC1123';
         }
         let from = `time.Parse(${format}, ${paramValue})`;
@@ -1076,7 +1093,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
         content += '\t\treturn time.Unix(p, 0).UTC(), nil\n\t})\n';
         content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
       }
-    } else if (go.isPrimitiveType(param.type) && (param.type.typeName === 'float32' || param.type.typeName === 'float64' || param.type.typeName === 'int32' || param.type.typeName === 'int64')) {
+    } else if (param.type.kind === 'scalar' && (param.type.type === 'float32' || param.type.type === 'float64' || param.type.type === 'int32' || param.type.type === 'int64')) {
       let parser: string;
       if (!go.isRequiredParameter(param)) {
         requiredHelpers.parseOptional = true;
@@ -1085,17 +1102,17 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
         requiredHelpers.parseWithCast = true;
         parser = 'parseWithCast';
       }
-      if ((param.type.typeName === 'float32' || param.type.typeName === 'int32') || !go.isRequiredParameter(param)) {
-        content += `\t${createLocalVariableName(param, 'Param')}, err := ${parser}(${paramValue}, func(v string) (${param.type.typeName}, error) {\n`;
-        content += `\t\tp, parseErr := ${emitNumericConversion('v', param.type.typeName)}\n`;
+      if ((param.type.type === 'float32' || param.type.type === 'int32') || !go.isRequiredParameter(param)) {
+        content += `\t${createLocalVariableName(param, 'Param')}, err := ${parser}(${paramValue}, func(v string) (${param.type.type}, error) {\n`;
+        content += `\t\tp, parseErr := ${emitNumericConversion('v', param.type.type)}\n`;
         content += '\t\tif parseErr != nil {\n\t\t\treturn 0, parseErr\n\t\t}\n';
         let result = 'p';
-        if (param.type.typeName === 'float32' || param.type.typeName === 'int32') {
-          result = `${param.type.typeName}(${result})`;
+        if (param.type.type === 'float32' || param.type.type === 'int32') {
+          result = `${param.type.type}(${result})`;
         }
         content += `\t\treturn ${result}, nil\n\t})\n`;
       } else {
-        content += `\t${createLocalVariableName(param, 'Param')}, err := ${emitNumericConversion(paramValue, param.type.typeName)}\n`;
+        content += `\t${createLocalVariableName(param, 'Param')}, err := ${emitNumericConversion(paramValue, param.type.type)}\n`;
       }
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     } else if (param.kind === 'headerMapParam') {
@@ -1110,7 +1127,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
       content += `\t\t\tif ${localVar} == nil {\n\t\t\t\t${localVar} = map[string]*string{}\n\t\t\t}\n`;
       content += `\t\t\t${localVar}[hh[len("${headerPrefix}"):]] = to.Ptr(getHeaderValue(req.Header, hh))\n`;
       content += '\t\t}\n\t}\n';
-    } else if (go.isConstantType(param.type) && param.type.type !== 'string') {
+    } else if (param.type.kind === 'constant' && param.type.type !== 'string') {
       let parseHelper: string;
       if (!go.isRequiredParameter(param)) {
         requiredHelpers.parseOptional = true;
@@ -1139,7 +1156,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
     } else if (!go.isRequiredParameter(param)) {
       // we check this last as it's a superset of the previous conditions
       requiredHelpers.getOptional = true;
-      if (go.isConstantType(param.type)) {
+      if (param.type.kind === 'constant') {
         paramValue = `${go.getTypeDeclaration(param.type, clientPkg)}(${paramValue})`;
       }
       content += `\t${createLocalVariableName(param, 'Param')} := getOptional(${paramValue})\n`;
@@ -1160,7 +1177,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
       const paramNilCheck = new Array<string>();
       for (const param of values(params)) {
         // check array before body in case the body is just an array
-        if (go.isSliceType(param.type)) {
+        if (param.type.kind === 'slice') {
           paramNilCheck.push(`len(${getFinalParamValue(clientPkg, param, paramValues)}) > 0`);
         } else if (param.kind === 'bodyParam') {
           if (param.bodyFormat === 'binary') {
@@ -1285,7 +1302,7 @@ function getFinalParamValue(clientPkg: string, param: go.MethodParameter, paramV
 
   // there are a few corner-cases that require some fix-ups
 
-  if ((param.kind === 'bodyParam' || go.isFormBodyParameter(param) || param.kind === 'multipartFormBodyParam') && go.isTimeType(param.type)) {
+  if ((param.kind === 'bodyParam' || go.isFormBodyParameter(param) || param.kind === 'multipartFormBodyParam') && param.type.kind === 'time') {
     // time types in the body have been unmarshalled into our time helpers thus require a cast to time.Time
     return `time.Time(${paramValue})`;
   } else if (go.isRequiredParameter(param)) {
@@ -1293,11 +1310,11 @@ function getFinalParamValue(clientPkg: string, param: go.MethodParameter, paramV
     if (param.kind === 'headerCollectionParam' || param.kind === 'pathCollectionParam' || param.kind === 'queryCollectionParam') {
       // for required params that are collections of strings, we split them inline.
       // not necessary for optional params as they're already in slice format.
-      if (param.collectionFormat !== 'multi' && go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
+      if (param.collectionFormat !== 'multi' && param.type.elementType.kind === 'string') {
         requiredHelpers.splitHelper = true;
         return `splitHelper(${paramValue}, "${helpers.getDelimiterForCollectionFormat(param.collectionFormat)}")`;
       }
-    } else if (go.isHeaderParameter(param) && go.isConstantType(param.type) && param.type.type === 'string') {
+    } else if (go.isHeaderParameter(param) && param.type.kind === 'constant' && param.type.type === 'string') {
       // since headers aren't escaped, we cast required, string-based enums inline
       return `${go.getTypeDeclaration(param.type, clientPkg)}(${paramValue})`;
     }
@@ -1361,7 +1378,7 @@ function getResultFieldName(result: go.AnyResult | go.BinaryResult | go.Monomorp
     case 'modelResult':
       return result.modelType.name;
     case 'polymorphicResult':
-      return result.interfaceType.name;
+      return result.interface.name;
     default:
       return result.fieldName;
   }

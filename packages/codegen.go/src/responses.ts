@@ -65,7 +65,7 @@ function generateMarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager
     text += `${comment(`MarshalJSON implements the json.Marshaller interface for type ${respEnv.name}.`, '// ', undefined, helpers.commentLength)}\n`;
     text += `func (${receiver} ${respEnv.name}) MarshalJSON() ([]byte, error) {\n`;
     // TODO: this doesn't include any headers. however, LROs with header responses are currently broken :(
-    text += `\treturn json.Marshal(${receiver}.${go.getTypeDeclaration(respEnv.result.interfaceType)})\n}\n\n`;
+    text += `\treturn json.Marshal(${receiver}.${go.getTypeDeclaration(respEnv.result.interface)})\n}\n\n`;
   }
   return text;
 }
@@ -93,7 +93,7 @@ function generateUnmarshaller(respEnv: go.ResponseEnvelope, imports: ImportManag
 
   // add a custom unmarshaller to the response envelope
   if (polymorphicRes) {
-    const type = polymorphicRes.interfaceType.name;
+    const type = polymorphicRes.interface.name;
     unmarshaller += `\tres, err := unmarshal${type}(data)\n`;
     unmarshaller += '\tif err != nil {\n';
     unmarshaller += '\t\treturn err\n';

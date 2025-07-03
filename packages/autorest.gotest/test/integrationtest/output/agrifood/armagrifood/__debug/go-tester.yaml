@@ -96,7 +96,7 @@ schemas:
       type: string
       apiVersions:
         - version: 2021-09-01-preview
-      pattern: ^[a-zA-Z]{3,50}[.][a-zA-Z]{3,100}$
+      pattern: '^[a-zA-Z]{3,50}[.][a-zA-Z]{3,100}$'
       language:
         default:
           name: ExtensionPropertiesExtensionId
@@ -121,7 +121,7 @@ schemas:
       type: string
       apiVersions:
         - version: 2021-09-01-preview
-      pattern: ^([1-9]|10).\d$
+      pattern: '^([1-9]|10).\d$'
       language:
         default:
           name: ExtensionPropertiesInstalledExtensionVersion
@@ -173,10 +173,10 @@ schemas:
       language:
         default:
           name: ResourceId
-          description: Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+          description: 'Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
         go:
           name: string
-          description: Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+          description: 'Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
       protocol: {}
     - &ref_35
       type: string
@@ -376,7 +376,7 @@ schemas:
         - version: 2021-09-01-preview
       maxLength: 100
       minLength: 2
-      pattern: ^[a-zA-Z]{3,50}[.][a-zA-Z]{3,100}$
+      pattern: '^[a-zA-Z]{3,50}[.][a-zA-Z]{3,100}$'
       language:
         default:
           name: FarmBeatsExtensionPropertiesFarmBeatsExtensionId
@@ -405,7 +405,7 @@ schemas:
         - version: 2021-09-01-preview
       maxLength: 100
       minLength: 2
-      pattern: ^([1-9]|10).\d$
+      pattern: '^([1-9]|10).\d$'
       language:
         default:
           name: FarmBeatsExtensionPropertiesFarmBeatsExtensionVersion
@@ -570,7 +570,7 @@ schemas:
       type: string
       apiVersions:
         - version: 2021-09-01-preview
-      pattern: ^[a-zA-Z]{3,50}[.][a-zA-Z]{3,100}$
+      pattern: '^[a-zA-Z]{3,50}[.][a-zA-Z]{3,100}$'
       language:
         default:
           name: String
@@ -610,10 +610,10 @@ schemas:
       language:
         default:
           name: SensorIntegrationEnabled
-          description: Sensor integration enable state. Allowed values are True, None
+          description: 'Sensor integration enable state. Allowed values are True, None'
         go:
           name: string
-          description: Sensor integration enable state. Allowed values are True, None
+          description: 'Sensor integration enable state. Allowed values are True, None'
       protocol: {}
     - &ref_7
       type: string
@@ -721,7 +721,7 @@ schemas:
       type: string
       apiVersions:
         - version: 2021-09-01-preview
-      pattern: ^[A-Za-z0-9]+(-[A-Za-z0-9]+)*$
+      pattern: '^[A-Za-z0-9]+(-[A-Za-z0-9]+)*$'
       language:
         default:
           name: String
@@ -797,10 +797,10 @@ schemas:
       language:
         default:
           name: OperationDisplayProvider
-          description: The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute".
+          description: 'The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute".'
         go:
           name: string
-          description: The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute".
+          description: 'The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute".'
       protocol: {}
     - &ref_91
       type: string
@@ -821,10 +821,10 @@ schemas:
       language:
         default:
           name: OperationDisplayOperation
-          description: The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine".
+          description: 'The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine".'
         go:
           name: string
-          description: The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine".
+          description: 'The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine".'
       protocol: {}
     - &ref_93
       type: string
@@ -833,10 +833,10 @@ schemas:
       language:
         default:
           name: OperationDisplayDescription
-          description: The short, localized friendly description of the operation; suitable for tool tips and detailed views.
+          description: 'The short, localized friendly description of the operation; suitable for tool tips and detailed views.'
         go:
           name: string
-          description: The short, localized friendly description of the operation; suitable for tool tips and detailed views.
+          description: 'The short, localized friendly description of the operation; suitable for tool tips and detailed views.'
       protocol: {}
     - &ref_96
       type: string
@@ -1167,7 +1167,7 @@ schemas:
             go:
               name: OriginSystem
               description: ''
-        - value: user,system
+        - value: 'user,system'
           language:
             default:
               name: UserSystem
@@ -1182,10 +1182,10 @@ schemas:
       language:
         default:
           name: Origin
-          description: The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system"
+          description: 'The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system"'
         go:
           name: Origin
-          description: The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system"
+          description: 'The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system"'
           possibleValuesFunc: PossibleOriginValues
       protocol: {}
     - &ref_95
@@ -1262,7 +1262,7 @@ schemas:
           name: TrackedResourceTags
           description: Resource tags.
         go:
-          name: map[string]*string
+          name: 'map[string]*string'
           description: Resource tags.
           elementIsPtr: true
           marshallingFormat: json
@@ -1275,7 +1275,7 @@ schemas:
           name: FarmBeatsUpdateRequestModelTags
           description: Resource tags.
         go:
-          name: map[string]*string
+          name: 'map[string]*string'
           description: Resource tags.
           elementIsPtr: true
           marshallingFormat: json
@@ -1652,10 +1652,10 @@ schemas:
                                                     language: &ref_429
                                                       default:
                                                         name: enabled
-                                                        description: Sensor integration enable state. Allowed values are True, None
+                                                        description: 'Sensor integration enable state. Allowed values are True, None'
                                                       go:
                                                         name: Enabled
-                                                        description: Sensor integration enable state. Allowed values are True, None
+                                                        description: 'Sensor integration enable state. Allowed values are True, None'
                                                     protocol: {}
                                                   - schema: *ref_17
                                                     readOnly: true
@@ -2160,10 +2160,10 @@ schemas:
                             language: &ref_338
                               default:
                                 name: id
-                                description: Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+                                description: 'Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
                               go:
                                 name: ID
-                                description: Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+                                description: 'Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
                             protocol: {}
                           - schema: *ref_35
                             readOnly: true
@@ -3267,10 +3267,10 @@ schemas:
                         language: &ref_471
                           default:
                             name: provider
-                            description: The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute".
+                            description: 'The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute".'
                           go:
                             name: Provider
-                            description: The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute".
+                            description: 'The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute".'
                         protocol: {}
                       - schema: *ref_91
                         readOnly: true
@@ -3289,10 +3289,10 @@ schemas:
                         language: &ref_470
                           default:
                             name: operation
-                            description: The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine".
+                            description: 'The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine".'
                           go:
                             name: Operation
-                            description: The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine".
+                            description: 'The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine".'
                         protocol: {}
                       - schema: *ref_93
                         readOnly: true
@@ -3300,10 +3300,10 @@ schemas:
                         language: &ref_469
                           default:
                             name: description
-                            description: The short, localized friendly description of the operation; suitable for tool tips and detailed views.
+                            description: 'The short, localized friendly description of the operation; suitable for tool tips and detailed views.'
                           go:
                             name: Description
-                            description: The short, localized friendly description of the operation; suitable for tool tips and detailed views.
+                            description: 'The short, localized friendly description of the operation; suitable for tool tips and detailed views.'
                         protocol: {}
                     serializationFormats:
                       - json
@@ -3335,10 +3335,10 @@ schemas:
                   language:
                     default:
                       name: origin
-                      description: The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system"
+                      description: 'The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system"'
                     go:
                       name: Origin
-                      description: The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system"
+                      description: 'The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system"'
                   protocol: {}
                 - schema: *ref_95
                   readOnly: true
@@ -3359,12 +3359,12 @@ schemas:
               language:
                 default:
                   name: Operation
-                  description: Details of a REST API operation, returned from the Resource Provider Operations API
+                  description: 'Details of a REST API operation, returned from the Resource Provider Operations API'
                   namespace: ''
                   summary: REST API Operation
                 go:
                   name: Operation
-                  description: Operation - Details of a REST API operation, returned from the Resource Provider Operations API
+                  description: 'Operation - Details of a REST API operation, returned from the Resource Provider Operations API'
                   marshallingFormat: json
                   namespace: ''
                   summary: REST API Operation
@@ -3640,9 +3640,9 @@ globalParameters:
         in: path
   - &ref_123
     schema: *ref_0
-    clientDefaultValue: https://management.azure.com
+    clientDefaultValue: 'https://management.azure.com'
     implementation: Client
-    origin: modelerfour:synthesized/host
+    origin: 'modelerfour:synthesized/host'
     required: true
     extensions:
       x-ms-skip-url-encoding: true
@@ -3661,7 +3661,7 @@ globalParameters:
   - &ref_126
     schema: *ref_122
     implementation: Client
-    origin: modelerfour:synthesized/api-version
+    origin: 'modelerfour:synthesized/api-version'
     required: true
     language: &ref_330
       default:
@@ -3739,7 +3739,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -3763,7 +3763,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}'
                 method: put
                 uri: '{$host}'
         signatureParameters:
@@ -3811,7 +3811,7 @@ operationGroups:
                 farmBeatsResourceName: examples-farmbeatsResourceName
                 resourceGroupName: examples-rg
                 subscriptionId: 11111111-2222-3333-4444-555555555555
-              x-ms-original-file: https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_Create.json
+              x-ms-original-file: 'https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_Create.json'
               responses:
                 '201':
                   body:
@@ -3820,8 +3820,8 @@ operationGroups:
                     eTag: 7200b954-0000-0700-0000-603cbbc40000
                     id: /subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension
                     properties:
-                      extensionApiDocsLink: https://docs.provider.com/documentation/extension
-                      extensionAuthLink: https://www.provider.com/extension/
+                      extensionApiDocsLink: 'https://docs.provider.com/documentation/extension'
+                      extensionAuthLink: 'https://www.provider.com/extension/'
                       extensionCategory: Weather
                       installedExtensionVersion: '1.0'
                     systemData:
@@ -3947,7 +3947,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -3971,7 +3971,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -4019,7 +4019,7 @@ operationGroups:
                 farmBeatsResourceName: examples-farmbeatsResourceName
                 resourceGroupName: examples-rg
                 subscriptionId: 11111111-2222-3333-4444-555555555555
-              x-ms-original-file: https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_Get.json
+              x-ms-original-file: 'https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_Get.json'
               responses:
                 '200':
                   body:
@@ -4028,8 +4028,8 @@ operationGroups:
                     eTag: 7200b954-0000-0700-0000-603cbbc40000
                     id: /subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension
                     properties:
-                      extensionApiDocsLink: https://docs.provider.com/documentation/extension
-                      extensionAuthLink: https://www.provider.com/extension/
+                      extensionApiDocsLink: 'https://docs.provider.com/documentation/extension'
+                      extensionAuthLink: 'https://www.provider.com/extension/'
                       extensionCategory: Weather
                       installedExtensionVersion: '1.0'
                     systemData:
@@ -4155,7 +4155,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -4179,7 +4179,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}'
                 method: patch
                 uri: '{$host}'
         signatureParameters:
@@ -4227,7 +4227,7 @@ operationGroups:
                 farmBeatsResourceName: examples-farmbeatsResourceName
                 resourceGroupName: examples-rg
                 subscriptionId: 11111111-2222-3333-4444-555555555555
-              x-ms-original-file: https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_Update.json
+              x-ms-original-file: 'https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_Update.json'
               responses:
                 '200':
                   body:
@@ -4236,8 +4236,8 @@ operationGroups:
                     eTag: 7200b954-0000-0700-0000-603cbbc40000
                     id: /subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension
                     properties:
-                      extensionApiDocsLink: https://docs.provider.com/documentation/extension
-                      extensionAuthLink: https://www.provider.com/extension/
+                      extensionApiDocsLink: 'https://docs.provider.com/documentation/extension'
+                      extensionAuthLink: 'https://www.provider.com/extension/'
                       extensionCategory: Weather
                       installedExtensionVersion: '2.0'
                     systemData:
@@ -4363,7 +4363,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -4387,7 +4387,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}'
                 method: delete
                 uri: '{$host}'
         signatureParameters:
@@ -4442,7 +4442,7 @@ operationGroups:
                 farmBeatsResourceName: examples-farmbeatsResourceName
                 resourceGroupName: examples-rg
                 subscriptionId: 11111111-2222-3333-4444-555555555555
-              x-ms-original-file: https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_Delete.json
+              x-ms-original-file: 'https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_Delete.json'
               responses:
                 '200': {}
                 '204': {}
@@ -4580,7 +4580,7 @@ operationGroups:
                           serializedName: $maxPageSize
                         go:
                           name: MaxPageSize
-                          description: Maximum number of items needed (inclusive). Minimum = 10, Maximum = 1000, Default value = 50.
+                          description: 'Maximum number of items needed (inclusive). Minimum = 10, Maximum = 1000, Default value = 50.'
                           paramGroup: *ref_162
                           serializedName: $maxPageSize
                       protocol:
@@ -4623,7 +4623,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -4647,7 +4647,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -4697,7 +4697,7 @@ operationGroups:
                 farmBeatsResourceName: examples-farmbeatsResourceName
                 resourceGroupName: examples-rg
                 subscriptionId: 11111111-2222-3333-4444-555555555555
-              x-ms-original-file: https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_ListByFarmBeats.json
+              x-ms-original-file: 'https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_ListByFarmBeats.json'
               responses:
                 '200':
                   body:
@@ -4707,8 +4707,8 @@ operationGroups:
                         eTag: 7200b954-0000-0700-0000-603cbbc40000
                         id: /subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension
                         properties:
-                          extensionApiDocsLink: https://docs.provider.com/documentation/extension
-                          extensionAuthLink: https://www.provider.com/extension/
+                          extensionApiDocsLink: 'https://docs.provider.com/documentation/extension'
+                          extensionAuthLink: 'https://www.provider.com/extension/'
                           extensionCategory: Weather
                           installedExtensionVersion: '1.0'
                         systemData:
@@ -4876,7 +4876,7 @@ operationGroups:
                           serializedName: $maxPageSize
                         go:
                           name: MaxPageSize
-                          description: Maximum number of items needed (inclusive). Minimum = 10, Maximum = 1000, Default value = 50.
+                          description: 'Maximum number of items needed (inclusive). Minimum = 10, Maximum = 1000, Default value = 50.'
                           paramGroup: *ref_178
                           serializedName: $maxPageSize
                       protocol:
@@ -4905,7 +4905,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -4975,7 +4975,7 @@ operationGroups:
             FarmBeatsExtensions_List:
               parameters:
                 api-version: 2021-09-01-preview
-              x-ms-original-file: https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsExtensions_List.json
+              x-ms-original-file: 'https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsExtensions_List.json'
               responses:
                 '200':
                   body:
@@ -5170,8 +5170,8 @@ operationGroups:
                                 values:
                                   - us
                                   - si
-                          extensionApiDocsLink: https://cs-docs.dtn.com/api/weather-observations-and-forecasts-rest-api/
-                          extensionAuthLink: https://www.dtn.com/dtn-content-integration/
+                          extensionApiDocsLink: 'https://cs-docs.dtn.com/api/weather-observations-and-forecasts-rest-api/'
+                          extensionAuthLink: 'https://www.dtn.com/dtn-content-integration/'
                           extensionCategory: Weather
                           farmBeatsExtensionId: DTN.ContentServices
                           farmBeatsExtensionName: DTN
@@ -5254,7 +5254,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -5278,7 +5278,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/{farmBeatsExtensionId}
+                path: '/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/{farmBeatsExtensionId}'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -5321,7 +5321,7 @@ operationGroups:
               parameters:
                 api-version: 2021-09-01-preview
                 farmBeatsExtensionId: DTN.ContentServices
-              x-ms-original-file: https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsExtensions_Get.json
+              x-ms-original-file: 'https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsExtensions_Get.json'
               responses:
                 '200':
                   body:
@@ -5514,8 +5514,8 @@ operationGroups:
                             values:
                               - us
                               - si
-                      extensionApiDocsLink: https://cs-docs.dtn.com/api/weather-observations-and-forecasts-rest-api/
-                      extensionAuthLink: https://www.dtn.com/dtn-content-integration/
+                      extensionApiDocsLink: 'https://cs-docs.dtn.com/api/weather-observations-and-forecasts-rest-api/'
+                      extensionAuthLink: 'https://www.dtn.com/dtn-content-integration/'
                       extensionCategory: Weather
                       farmBeatsExtensionId: DTN.ContentServices
                       farmBeatsExtensionName: DTN
@@ -5639,7 +5639,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -5663,7 +5663,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -5709,7 +5709,7 @@ operationGroups:
                 farmBeatsResourceName: examples-farmBeatsResourceName
                 resourceGroupName: examples-rg
                 subscriptionId: 11111111-2222-3333-4444-555555555555
-              x-ms-original-file: https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_Get.json
+              x-ms-original-file: 'https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_Get.json'
               responses:
                 '200':
                   body:
@@ -5718,7 +5718,7 @@ operationGroups:
                     id: /subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName
                     location: eastus2
                     properties:
-                      instanceUri: https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net
+                      instanceUri: 'https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net'
                       provisioningState: Succeeded
                     systemData:
                       createdAt: '2020-02-01T01:01:01.1075056Z'
@@ -5846,7 +5846,7 @@ operationGroups:
                     style: json
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -5871,7 +5871,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}'
                 method: put
                 knownMediaType: json
                 mediaTypes:
@@ -5952,7 +5952,7 @@ operationGroups:
                     id: /subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName
                     location: eastus2
                     properties:
-                      instanceUri: https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net
+                      instanceUri: 'https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net'
                       provisioningState: Succeeded
                     systemData:
                       createdAt: '2020-02-01T01:01:01.1075056Z'
@@ -5971,7 +5971,7 @@ operationGroups:
                     id: /subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName
                     location: eastus2
                     properties:
-                      instanceUri: https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net
+                      instanceUri: 'https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net'
                       provisioningState: Failed
                     systemData:
                       createdAt: '2020-02-01T01:01:01.1075056Z'
@@ -6137,7 +6137,7 @@ operationGroups:
                     style: json
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -6162,7 +6162,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}'
                 method: patch
                 knownMediaType: json
                 mediaTypes:
@@ -6238,7 +6238,7 @@ operationGroups:
                 farmBeatsResourceName: examples-farmBeatsResourceName
                 resourceGroupName: examples-rg
                 subscriptionId: 11111111-2222-3333-4444-555555555555
-              x-ms-original-file: https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_Update.json
+              x-ms-original-file: 'https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_Update.json'
               responses:
                 '200':
                   body:
@@ -6247,7 +6247,7 @@ operationGroups:
                     id: /subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName
                     location: eastus2
                     properties:
-                      instanceUri: https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net
+                      instanceUri: 'https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net'
                       provisioningState: Succeeded
                     systemData:
                       createdAt: '2020-02-01T01:01:01.1075056Z'
@@ -6261,7 +6261,7 @@ operationGroups:
                       key2: value2
                 '202':
                   headers: &ref_426
-                    location: http://azure.async.operation/status
+                    location: 'http://azure.async.operation/status'
             FarmBeatsModels_UpdateWithSensor:
               parameters:
                 api-version: 2021-09-01-preview
@@ -6290,7 +6290,7 @@ operationGroups:
                       tenantId: abcdefgh-86f1-41af-91ab-2d7cd011db47
                     location: eastus2
                     properties:
-                      instanceUri: https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net
+                      instanceUri: 'https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net'
                       provisioningState: Succeeded
                       sensorIntegration:
                         enabled: 'True'
@@ -6307,7 +6307,7 @@ operationGroups:
                       key2: value2
                 '202':
                   headers: &ref_436
-                    location: http://azure.async.operation/status
+                    location: 'http://azure.async.operation/status'
           x-ms-long-running-operation: true
           x-ms-long-running-operation-options:
             final-state-via: location
@@ -6395,7 +6395,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -6419,7 +6419,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}'
                 method: delete
                 uri: '{$host}'
         signatureParameters:
@@ -6472,7 +6472,7 @@ operationGroups:
                 farmBeatsResourceName: examples-farmBeatsResourceName
                 resourceGroupName: examples-rg
                 subscriptionId: 11111111-2222-3333-4444-555555555555
-              x-ms-original-file: https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_Delete.json
+              x-ms-original-file: 'https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_Delete.json'
               responses:
                 '200': {}
                 '204': {}
@@ -6534,7 +6534,7 @@ operationGroups:
                 serializedName: $maxPageSize
               go:
                 name: MaxPageSize
-                description: Maximum number of items needed (inclusive). Minimum = 10, Maximum = 1000, Default value = 50.
+                description: 'Maximum number of items needed (inclusive). Minimum = 10, Maximum = 1000, Default value = 50.'
                 paramGroup: &ref_235
                   schema:
                     type: object
@@ -6581,7 +6581,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -6605,7 +6605,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/farmBeats
+                path: '/subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/farmBeats'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -6660,7 +6660,7 @@ operationGroups:
                         id: /subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName
                         location: eastus2
                         properties:
-                          instanceUri: https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net
+                          instanceUri: 'https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net'
                           provisioningState: Succeeded
                         systemData:
                           createdAt: '2020-02-01T01:01:01.1075056Z'
@@ -6734,7 +6734,7 @@ operationGroups:
                 serializedName: $maxPageSize
               go:
                 name: MaxPageSize
-                description: Maximum number of items needed (inclusive). Minimum = 10, Maximum = 1000, Default value = 50.
+                description: 'Maximum number of items needed (inclusive). Minimum = 10, Maximum = 1000, Default value = 50.'
                 paramGroup: &ref_244
                   schema:
                     type: object
@@ -6797,7 +6797,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -6821,7 +6821,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -6878,7 +6878,7 @@ operationGroups:
                         id: /subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName
                         location: eastus2
                         properties:
-                          instanceUri: https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net
+                          instanceUri: 'https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net'
                           provisioningState: Succeeded
                         systemData:
                           createdAt: '2020-02-01T01:01:01.1075056Z'
@@ -6996,7 +6996,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -7020,7 +7020,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/operationResults/{operationResultsId}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/operationResults/{operationResultsId}'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -7174,7 +7174,7 @@ operationGroups:
                     style: json
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -7199,7 +7199,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/checkNameAvailability
+                path: '/subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/checkNameAvailability'
                 method: post
                 knownMediaType: json
                 mediaTypes:
@@ -7353,7 +7353,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -7418,11 +7418,11 @@ operationGroups:
             Operations_List:
               parameters:
                 api-version: 2021-09-01-preview
-              x-ms-original-file: https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Operations_List.json
+              x-ms-original-file: 'https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Operations_List.json'
               responses:
                 '200':
                   body:
-                    nextLink: https://management.azure.com/providers/Microsoft.AgFoodPlatform/operations?$skiptoken={token}
+                    nextLink: 'https://management.azure.com/providers/Microsoft.AgFoodPlatform/operations?$skiptoken={token}'
                     value:
                       - name: Microsoft.AgFoodPlatform/farmBeats/read
                         display:
@@ -7632,7 +7632,7 @@ operationGroups:
                     style: json
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -7657,7 +7657,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateEndpointConnections/{privateEndpointConnectionName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateEndpointConnections/{privateEndpointConnectionName}'
                 method: put
                 knownMediaType: json
                 mediaTypes:
@@ -7847,7 +7847,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -7871,7 +7871,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateEndpointConnections/{privateEndpointConnectionName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateEndpointConnections/{privateEndpointConnectionName}'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -8113,7 +8113,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -8137,7 +8137,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateEndpointConnections/{privateEndpointConnectionName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateEndpointConnections/{privateEndpointConnectionName}'
                 method: delete
                 uri: '{$host}'
         signatureParameters:
@@ -8292,7 +8292,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -8316,7 +8316,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateEndpointConnections
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateEndpointConnections'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -8512,7 +8512,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -8536,7 +8536,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateLinkResources
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateLinkResources'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -8719,7 +8719,7 @@ operationGroups:
           - parameters:
               - schema: *ref_127
                 implementation: Method
-                origin: modelerfour:synthesized/accept
+                origin: 'modelerfour:synthesized/accept'
                 required: true
                 language:
                   default:
@@ -8743,7 +8743,7 @@ operationGroups:
                 description: ''
             protocol:
               http:
-                path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateLinkResources/{subResourceName}
+                path: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateLinkResources/{subResourceName}'
                 method: get
                 uri: '{$host}'
         signatureParameters:
@@ -8808,7 +8808,7 @@ operationGroups:
                 resourceGroupName: examples-rg
                 subResourceName: farmbeats
                 subscriptionId: 11111111-2222-3333-4444-555555555555
-              x-ms-original-file: https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/PrivateLinkResources_Get.json
+              x-ms-original-file: 'https://github.com/Azure/azure-rest-api-specs/blob/a7af6049f4b4743ef3b649f3852bcc7bd9a43ee0/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/PrivateLinkResources_Get.json'
               responses:
                 '200':
                   body:
@@ -8825,7 +8825,7 @@ operationGroups:
                   body:
                     error:
                       code: ResourceNotFound
-                      message: Resource with subscriptionId '11111111-2222-3333-4444-555555555555', resource group 'examples-rg' and resourcename 'examples-farmbeatsResourceName' not found.
+                      message: 'Resource with subscriptionId ''11111111-2222-3333-4444-555555555555'', resource group ''examples-rg'' and resourcename ''examples-farmbeatsResourceName'' not found.'
         language:
           default:
             name: Get
@@ -8900,7 +8900,7 @@ security:
   schemes:
     - type: OAuth2
       scopes:
-        - https://management.azure.com/.default
+        - 'https://management.azure.com/.default'
 testModel:
   mockTest:
     clientFactoryParametersOutput:
@@ -9029,11 +9029,11 @@ testModel:
                       properties:
                         extensionApiDocsLink:
                           schema: *ref_61
-                          rawValue: https://docs.provider.com/documentation/extension
+                          rawValue: 'https://docs.provider.com/documentation/extension'
                           language: *ref_349
                         extensionAuthLink:
                           schema: *ref_60
-                          rawValue: https://www.provider.com/extension/
+                          rawValue: 'https://www.provider.com/extension/'
                           language: *ref_350
                         extensionCategory:
                           schema: *ref_58
@@ -9192,11 +9192,11 @@ testModel:
                       properties:
                         extensionApiDocsLink:
                           schema: *ref_61
-                          rawValue: https://docs.provider.com/documentation/extension
+                          rawValue: 'https://docs.provider.com/documentation/extension'
                           language: *ref_349
                         extensionAuthLink:
                           schema: *ref_60
-                          rawValue: https://www.provider.com/extension/
+                          rawValue: 'https://www.provider.com/extension/'
                           language: *ref_350
                         extensionCategory:
                           schema: *ref_58
@@ -9355,11 +9355,11 @@ testModel:
                       properties:
                         extensionApiDocsLink:
                           schema: *ref_61
-                          rawValue: https://docs.provider.com/documentation/extension
+                          rawValue: 'https://docs.provider.com/documentation/extension'
                           language: *ref_349
                         extensionAuthLink:
                           schema: *ref_60
-                          rawValue: https://www.provider.com/extension/
+                          rawValue: 'https://www.provider.com/extension/'
                           language: *ref_350
                         extensionCategory:
                           schema: *ref_58
@@ -9584,11 +9584,11 @@ testModel:
                               properties:
                                 extensionApiDocsLink:
                                   schema: *ref_61
-                                  rawValue: https://docs.provider.com/documentation/extension
+                                  rawValue: 'https://docs.provider.com/documentation/extension'
                                   language: *ref_349
                                 extensionAuthLink:
                                   schema: *ref_60
-                                  rawValue: https://www.provider.com/extension/
+                                  rawValue: 'https://www.provider.com/extension/'
                                   language: *ref_350
                                 extensionCategory:
                                   schema: *ref_58
@@ -10359,11 +10359,11 @@ testModel:
                                   language: *ref_386
                                 extensionApiDocsLink:
                                   schema: *ref_50
-                                  rawValue: https://cs-docs.dtn.com/api/weather-observations-and-forecasts-rest-api/
+                                  rawValue: 'https://cs-docs.dtn.com/api/weather-observations-and-forecasts-rest-api/'
                                   language: *ref_387
                                 extensionAuthLink:
                                   schema: *ref_49
-                                  rawValue: https://www.dtn.com/dtn-content-integration/
+                                  rawValue: 'https://www.dtn.com/dtn-content-integration/'
                                   language: *ref_388
                                 extensionCategory:
                                   schema: *ref_48
@@ -11139,11 +11139,11 @@ testModel:
                           language: *ref_386
                         extensionApiDocsLink:
                           schema: *ref_50
-                          rawValue: https://cs-docs.dtn.com/api/weather-observations-and-forecasts-rest-api/
+                          rawValue: 'https://cs-docs.dtn.com/api/weather-observations-and-forecasts-rest-api/'
                           language: *ref_387
                         extensionAuthLink:
                           schema: *ref_49
-                          rawValue: https://www.dtn.com/dtn-content-integration/
+                          rawValue: 'https://www.dtn.com/dtn-content-integration/'
                           language: *ref_388
                         extensionCategory:
                           schema: *ref_48
@@ -11323,7 +11323,7 @@ testModel:
                       properties:
                         instanceUri:
                           schema: *ref_16
-                          rawValue: https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net
+                          rawValue: 'https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net'
                           language: *ref_410
                         provisioningState:
                           schema: *ref_17
@@ -11517,7 +11517,7 @@ testModel:
                       properties:
                         instanceUri:
                           schema: *ref_16
-                          rawValue: https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net
+                          rawValue: 'https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net'
                           language: *ref_410
                         provisioningState:
                           schema: *ref_17
@@ -11601,7 +11601,7 @@ testModel:
                       properties:
                         instanceUri:
                           schema: *ref_16
-                          rawValue: https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net
+                          rawValue: 'https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net'
                           language: *ref_410
                         provisioningState:
                           schema: *ref_17
@@ -11786,7 +11786,7 @@ testModel:
                       properties:
                         instanceUri:
                           schema: *ref_16
-                          rawValue: https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net
+                          rawValue: 'https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net'
                           language: *ref_410
                         provisioningState:
                           schema: *ref_17
@@ -12021,7 +12021,7 @@ testModel:
                       properties:
                         instanceUri:
                           schema: *ref_16
-                          rawValue: https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net
+                          rawValue: 'https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net'
                           language: *ref_410
                         provisioningState:
                           schema: *ref_17
@@ -12246,7 +12246,7 @@ testModel:
                               properties:
                                 instanceUri:
                                   schema: *ref_16
-                                  rawValue: https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net
+                                  rawValue: 'https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net'
                                   language: *ref_410
                                 provisioningState:
                                   schema: *ref_17
@@ -12412,7 +12412,7 @@ testModel:
                               properties:
                                 instanceUri:
                                   schema: *ref_16
-                                  rawValue: https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net
+                                  rawValue: 'https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net'
                                   language: *ref_410
                                 provisioningState:
                                   schema: *ref_17
@@ -12770,7 +12770,7 @@ testModel:
                   properties:
                     nextLink:
                       schema: *ref_96
-                      rawValue: https://management.azure.com/providers/Microsoft.AgFoodPlatform/operations?$skiptoken={token}
+                      rawValue: 'https://management.azure.com/providers/Microsoft.AgFoodPlatform/operations?$skiptoken={token}'
                       language: *ref_467
                     value:
                       schema: *ref_116

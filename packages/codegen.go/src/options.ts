@@ -28,7 +28,7 @@ export async function generateOptions(codeModel: go.CodeModel): Promise<string> 
   return optionsText;
 }
 
-function emit(struct: go.StructType, imports: ImportManager): string {
+function emit(struct: go.Struct, imports: ImportManager): string {
   let text = helpers.formatDocComment(struct.docs);
   text += `type ${struct.name} struct {\n`;
 
@@ -51,9 +51,9 @@ function emit(struct: go.StructType, imports: ImportManager): string {
       }
 
       let typeName = go.getTypeDeclaration(field.type);
-      if (go.isLiteralValue(field.type)) {
+      if (field.type.kind === 'literal') {
         // for constants we use the underlying type name
-        typeName = go.getLiteralValueTypeName(field.type.type);
+        typeName = go.getLiteralTypeDeclaration(field.type.type);
       }
 
       let pointer = '*';

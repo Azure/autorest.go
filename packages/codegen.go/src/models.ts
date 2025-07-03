@@ -152,15 +152,15 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       const descriptionMods = new Array<string>();
       if (field.annotations.readOnly) {
         descriptionMods.push('READ-ONLY');
-      } else if (field.annotations.required && (!go.isLiteralValue(field.type) || model.usage === go.UsageFlags.Output)) {
+      } else if (field.annotations.required && (field.type.kind !== 'literal' || model.usage === go.UsageFlags.Output)) {
         descriptionMods.push('REQUIRED');
-      } else if (go.isLiteralValue(field.type)) {
+      } else if (field.type.kind === 'literal') {
         if (!field.annotations.required) {
           descriptionMods.push('FLAG');
         }
         descriptionMods.push('CONSTANT');
       }
-      if (go.isLiteralValue(field.type) && model.usage !== go.UsageFlags.Output) {
+      if (field.type.kind === 'literal' && model.usage !== go.UsageFlags.Output) {
         // add a comment with the const value for const properties that are sent over the wire
         if (field.docs.description) {
           field.docs.description += '\n';
@@ -169,7 +169,7 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       }
       if (field.docs.description) {
         descriptionMods.push(field.docs.description);
-      } else if (go.isSliceType(field.type) && field.type.rawJSONAsBytes) {
+      } else if (field.type.kind === 'rawJSON') {
         // add a basic description if one isn't available
         descriptionMods.push('The contents of this field are raw JSON.');
       }
@@ -182,15 +182,15 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       modelImports.addImportForType(field.type);
     }
 
-    if (go.isModelType(model) && serDeFormat === 'XML' && !model.annotations.omitSerDeMethods) {
+    if (model.kind === 'model' && serDeFormat === 'XML' && !model.annotations.omitSerDeMethods) {
       serdeImports.add('encoding/xml');
       let needsDateTimeMarshalling = false;
       let byteArrayFormat = false;
       for (const field of values(model.fields)) {
         serdeImports.addImportForType(field.type);
-        if (go.isTimeType(field.type)) {
+        if (field.type.kind === 'time') {
           needsDateTimeMarshalling = true;
-        } else if (go.isBytesType(field.type)) {
+        } else if (field.type.kind === 'encodedBytes') {
           byteArrayFormat = true;
         }
       }
@@ -207,7 +207,7 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       modelDefs.push(modelDef);
       continue;
     }
-    if (go.isPolymorphicType(model)) {
+    if (model.kind === 'polymorphicModel') {
       generateDiscriminatorMarkerMethod(model.interface, modelDef);
       for (let parent = model.interface.parent; parent !== undefined; parent = parent.parent) {
         generateDiscriminatorMarkerMethod(parent, modelDef);
@@ -225,19 +225,19 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
   return modelDefs;
 }
 
-function needsXMLDictionaryHelper(modelType: go.ModelType): boolean {
+function needsXMLDictionaryHelper(modelType: go.Model): boolean {
   for (const field of values(modelType.fields)) {
     // additional properties uses an internal wrapper type with its own serde impl
-    if (go.isMapType(field.type) && !field.annotations.isAdditionalProperties) {
+    if (field.type.kind === 'map' && !field.annotations.isAdditionalProperties) {
       return true;
     }
   }
   return false;
 }
 
-function needsXMLArrayMarshalling(modelType: go.ModelType): boolean {
+function needsXMLArrayMarshalling(modelType: go.Model): boolean {
   for (const prop of values(modelType.fields)) {
-    if (go.isSliceType(prop.type)) {
+    if (prop.type.kind === 'slice') {
       return true;
     }
   }
@@ -245,7 +245,7 @@ function needsXMLArrayMarshalling(modelType: go.ModelType): boolean {
 }
 
 // generates discriminator marker method
-function generateDiscriminatorMarkerMethod(type: go.InterfaceType, modelDef: ModelDef) {
+function generateDiscriminatorMarkerMethod(type: go.Interface, modelDef: ModelDef) {
   const typeName = type.rootType.name;
   const receiver = modelDef.receiverName();
   const interfaceMethod = `Get${typeName}`;
@@ -276,7 +276,7 @@ function generateToMultipartForm(modelDef: ModelDef) {
     if (!field.byValue) {
       star = '*';
     }
-    if (go.isModelType(fieldType) && !fieldType.annotations.multipartFormData) {
+    if (fieldType.kind === 'model' && !fieldType.annotations.multipartFormData) {
       setField = `\tif err := populateMultipartJSON(objectMap, "${field.serializedName}", ${star}${receiver}.${field.name}); err != nil {\n\t\treturn nil, err\n\t}\n`;
     } else {
       setField = `\tobjectMap["${field.serializedName}"] = ${star}${receiver}.${field.name}\n`;
@@ -290,8 +290,8 @@ function generateToMultipartForm(modelDef: ModelDef) {
   modelDef.SerDe.methods.push({ name: 'toMultipartFormData', desc: `toMultipartFormData converts ${modelDef.Name} to multipart/form data.`, text: method });
 }
 
-function generateJSONMarshaller(modelType: go.ModelType | go.PolymorphicType, modelDef: ModelDef, imports: ImportManager) {
-  if (go.isModelType(modelType) && modelType.fields.length === 0) {
+function generateJSONMarshaller(modelType: go.Model | go.PolymorphicModel, modelDef: ModelDef, imports: ImportManager) {
+  if (modelType.kind === 'model' && modelType.fields.length === 0) {
     // non-discriminated types without content don't need a custom marshaller.
     // there is a case in network where child is allOf base and child has no properties.
     return;
@@ -307,11 +307,11 @@ function generateJSONMarshaller(modelType: go.ModelType | go.PolymorphicType, mo
   modelDef.SerDe.methods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
 }
 
-function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType, modelDef: ModelDef, receiver: string, imports: ImportManager): string {
+function generateJSONMarshallerBody(modelType: go.Model | go.PolymorphicModel, modelDef: ModelDef, receiver: string, imports: ImportManager): string {
   let marshaller = '';
-  let addlProps: go.MapType | undefined;
+  let addlProps: go.Map | undefined;
   for (const field of values(modelType.fields)) {
-    if (go.isMapType(field.type) && field.annotations.isAdditionalProperties) {
+    if (field.type.kind === 'map' && field.annotations.isAdditionalProperties) {
       addlProps = field.type;
       continue;
     }
@@ -323,12 +323,12 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
         // this will enable support for custom types that aren't (yet) described in the swagger.
         marshaller += `\tobjectMap["${field.serializedName}"] = ${receiver}.${field.name}\n`;
       }
-    } else if (go.isBytesType(field.type)) {
+    } else if (field.type.kind === 'encodedBytes') {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
       marshaller += `\tpopulateByteArray(objectMap, "${field.serializedName}", ${receiver}.${field.name}, func() any {\n`;
       marshaller += `\t\treturn runtime.EncodeByteArray(${receiver}.${field.name}, runtime.Base64${field.type.encoding}Format)\n\t})\n`;
       modelDef.SerDe.needsJSONPopulateByteArray = true;
-    } else if (go.isSliceType(field.type) && go.isBytesType(field.type.elementType)) {
+    } else if (field.type.kind === 'slice' && field.type.elementType.kind === 'encodedBytes') {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
       marshaller += `\tpopulateByteArray(objectMap, "${field.serializedName}", ${receiver}.${field.name}, func() any {\n`;
       marshaller += `\t\tencodedValue := make([]string, len(${receiver}.${field.name}))\n`;
@@ -336,26 +336,26 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
       marshaller += `\t\t\tencodedValue[i] = runtime.EncodeByteArray(${receiver}.${field.name}[i], runtime.Base64${field.type.elementType.encoding}Format)\n\t\t}\n`;
       marshaller += '\t\treturn encodedValue\n\t})\n';
       modelDef.SerDe.needsJSONPopulateByteArray = true;
-    } else if (go.isSliceType(field.type) && go.isTimeType(field.type.elementType)) {
+    } else if (field.type.kind === 'slice' && field.type.elementType.kind === 'time') {
       const source = `${receiver}.${field.name}`;
       let elementPtr = '*';
       if (field.type.elementTypeByValue) {
         elementPtr = '';
       }
-      marshaller += `\taux := make([]${elementPtr}${field.type.elementType.dateTimeFormat}, len(${source}), len(${source}))\n`;
+      marshaller += `\taux := make([]${elementPtr}${field.type.elementType.format}, len(${source}), len(${source}))\n`;
       marshaller += `\tfor i := 0; i < len(${source}); i++ {\n`;
-      marshaller += `\t\taux[i] = (${elementPtr}${field.type.elementType.dateTimeFormat})(${source}[i])\n`;
+      marshaller += `\t\taux[i] = (${elementPtr}${field.type.elementType.format})(${source}[i])\n`;
       marshaller += '\t}\n';
       marshaller += `\tpopulate(objectMap, "${field.serializedName}", aux)\n`;
       modelDef.SerDe.needsJSONPopulate = true;
-    } else if (go.isLiteralValue(field.type)) {
+    } else if (field.type.kind === 'literal') {
       const setter = `objectMap["${field.serializedName}"] = ${helpers.formatLiteralValue(field.type, true)}`;
       if (!field.annotations.required) {
         marshaller += `\tif ${receiver}.${field.name} != nil {\n\t\t${setter}\n\t}\n`;
       } else {
         marshaller += `\t${setter}\n`;
       }
-    } else if (go.isSliceType(field.type) && field.type.rawJSONAsBytes) {
+    } else if (field.type.kind === 'rawJSON') {
       marshaller += `\tpopulate(objectMap, "${field.serializedName}", json.RawMessage(${receiver}.${field.name}))\n`;
       modelDef.SerDe.needsJSONPopulate = true;
     } else {
@@ -364,23 +364,23 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
         marshaller += `\tif ${receiver}.${field.name} == nil {\n\t\t${receiver}.${field.name} = to.Ptr(${helpers.formatLiteralValue(field.defaultValue, true)})\n\t}\n`;
       }
       let populate = 'populate';
-      if (go.isTimeType(field.type)) {
-        populate += capitalize(field.type.dateTimeFormat);
+      if (field.type.kind === 'time') {
+        populate += capitalize(field.type.format);
         modelDef.SerDe.needsJSONPopulate = true;
-      } else if (go.isPrimitiveType(field.type) && field.type.typeName === 'any') {
+      } else if (field.type.kind === 'any') {
         populate += 'Any';
         modelDef.SerDe.needsJSONPopulateAny = true;
       } else {
         modelDef.SerDe.needsJSONPopulate = true;
       }
-      if (go.isPrimitiveType(field.type) && (field.type.typeName.startsWith('uint') || field.type.typeName.startsWith('int')) && field.type.encodeAsString) {
+      if (field.type.kind === 'scalar' && (field.type.type.startsWith('uint') || field.type.type.startsWith('int')) && field.type.encodeAsString) {
         // TODO: need to handle map and slice type with underlying int as string type
         imports.add('strconv');
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
-        if (field.type.typeName.startsWith('uint') && field.type.typeName !== 'uint64' || field.type.typeName.startsWith('int') && field.type.typeName !== 'int64') {
-          marshaller += `\t${populate}(objectMap, "${field.serializedName}", to.Ptr(strconv.${field.type.typeName.startsWith('int') ? 'FormatInt' : 'FormatUint'}(${field.type.typeName.startsWith('int') ? 'int64' : 'uint64'}(*${receiver}.${field.name}), 10)))\n`;
+        if (field.type.type.startsWith('uint') && field.type.type !== 'uint64' || field.type.type.startsWith('int') && field.type.type !== 'int64') {
+          marshaller += `\t${populate}(objectMap, "${field.serializedName}", to.Ptr(strconv.${field.type.type.startsWith('int') ? 'FormatInt' : 'FormatUint'}(${field.type.type.startsWith('int') ? 'int64' : 'uint64'}(*${receiver}.${field.name}), 10)))\n`;
         } else {
-          marshaller += `\t${populate}(objectMap, "${field.serializedName}", to.Ptr(strconv.${field.type.typeName.startsWith('int') ? 'FormatInt' : 'FormatUint'}(*${receiver}.${field.name}, 10)))\n`;
+          marshaller += `\t${populate}(objectMap, "${field.serializedName}", to.Ptr(strconv.${field.type.type.startsWith('int') ? 'FormatInt' : 'FormatUint'}(*${receiver}.${field.name}, 10)))\n`;
         }
       } else {
         marshaller += `\t${populate}(objectMap, "${field.serializedName}", ${receiver}.${field.name})\n`;
@@ -391,8 +391,8 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
     marshaller += `\tif ${receiver}.AdditionalProperties != nil {\n`;
     marshaller += `\t\tfor key, val := range ${receiver}.AdditionalProperties {\n`;
     let assignment = 'val';
-    if (go.isTimeType(addlProps.valueType)) {
-      assignment = `(*${addlProps.valueType.dateTimeFormat})(val)`;
+    if (addlProps.valueType.kind === 'time') {
+      assignment = `(*${addlProps.valueType.format})(val)`;
     }
     marshaller += `\t\t\tobjectMap[key] = ${assignment}\n`;
     marshaller += '\t\t}\n';
@@ -401,7 +401,7 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
   return marshaller;
 }
 
-function generateJSONUnmarshaller(modelType: go.ModelType | go.PolymorphicType, modelDef: ModelDef, imports: ImportManager, options: go.Options) {
+function generateJSONUnmarshaller(modelType: go.Model | go.PolymorphicModel, modelDef: ModelDef, imports: ImportManager, options: go.Options) {
   // there's a corner-case where a derived type might not add any new fields (Cookiecuttershark).
   // in this case skip adding the unmarshaller as it's not necessary and doesn't compile.
   if (modelDef.Fields.length === 0) {
@@ -421,8 +421,8 @@ function generateJSONUnmarshaller(modelType: go.ModelType | go.PolymorphicType, 
   modelDef.SerDe.methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });
 }
 
-function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicType, modelDef: ModelDef, receiver: string, imports: ImportManager, options: go.Options): string {
-  const emitAddlProps = function (tab: string, addlProps: go.MapType): string {
+function generateJSONUnmarshallerBody(modelType: go.Model | go.PolymorphicModel, modelDef: ModelDef, receiver: string, imports: ImportManager, options: go.Options): string {
+  const emitAddlProps = function (tab: string, addlProps: go.Map): string {
     let addlPropsText = `${tab}\t\tif ${receiver}.AdditionalProperties == nil {\n`;
     let ref = '';
     if (!addlProps.valueTypeByValue) {
@@ -433,9 +433,9 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
     addlPropsText += `${tab}\t\tif val != nil {\n`;
     let auxType = go.getTypeDeclaration(addlProps.valueType);
     let assignment = `${ref}aux`;
-    if (go.isTimeType(addlProps.valueType)) {
+    if (addlProps.valueType.kind === 'time') {
       imports.add('time');
-      auxType = addlProps.valueType.dateTimeFormat!;
+      auxType = addlProps.valueType.format;
       assignment = `(*time.Time)(${assignment})`;
     }
     addlPropsText += `${tab}\t\t\tvar aux ${auxType}\n`;
@@ -449,35 +449,35 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
   unmarshalBody = '\tfor key, val := range rawMsg {\n';
   unmarshalBody += '\t\tvar err error\n';
   unmarshalBody += '\t\tswitch key {\n';
-  let addlProps: go.MapType | undefined;
+  let addlProps: go.Map | undefined;
   for (const field of values(modelType.fields)) {
-    if (go.isMapType(field.type) && field.annotations.isAdditionalProperties) {
+    if (field.type.kind === 'map' && field.annotations.isAdditionalProperties) {
       addlProps = field.type;
       continue;
     }
     unmarshalBody += `\t\tcase "${field.serializedName}":\n`;
     if (hasDiscriminatorInterface(field.type)) {
       unmarshalBody += generateDiscriminatorUnmarshaller(field, receiver);
-    } else if (go.isTimeType(field.type)) {
-      unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(field.type.dateTimeFormat)}(val, "${field.name}", &${receiver}.${field.name})\n`;
+    } else if (field.type.kind === 'time') {
+      unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(field.type.format)}(val, "${field.name}", &${receiver}.${field.name})\n`;
       modelDef.SerDe.needsJSONUnpopulate = true;
-    } else if (go.isSliceType(field.type) && go.isTimeType(field.type.elementType)) {
+    } else if (field.type.kind === 'slice' && field.type.elementType.kind === 'time') {
       imports.add('time');
       let elementPtr = '*';
       if (field.type.elementTypeByValue) {
         elementPtr = '';
       }
-      unmarshalBody += `\t\t\tvar aux []${elementPtr}${field.type.elementType.dateTimeFormat}\n`;
+      unmarshalBody += `\t\t\tvar aux []${elementPtr}${field.type.elementType.format}\n`;
       unmarshalBody += `\t\t\terr = unpopulate(val, "${field.name}", &aux)\n`;
       unmarshalBody += '\t\t\tfor _, au := range aux {\n';
       unmarshalBody += `\t\t\t\t${receiver}.${field.name} = append(${receiver}.${field.name}, (${elementPtr}time.Time)(au))\n`;
       unmarshalBody += '\t\t\t}\n';
       modelDef.SerDe.needsJSONUnpopulate = true;
-    } else if (go.isBytesType(field.type)) {
+    } else if (field.type.kind === 'encodedBytes') {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
       unmarshalBody += '\t\tif val != nil && string(val) != "null" {\n';
       unmarshalBody += `\t\t\t\terr = runtime.DecodeByteArray(string(val), &${receiver}.${field.name}, runtime.Base64${field.type.encoding}Format)\n\t\t}\n`;
-    } else if (go.isSliceType(field.type) && go.isBytesType(field.type.elementType)) {
+    } else if (field.type.kind === 'slice' && field.type.elementType.kind === 'encodedBytes') {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
       unmarshalBody += '\t\t\tvar encodedValue []string\n';
       unmarshalBody += `\t\t\terr = unpopulate(val, "${field.name}", &encodedValue)\n`;
@@ -487,20 +487,20 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
       unmarshalBody += `\t\t\t\t\terr = runtime.DecodeByteArray(encodedValue[i], &${receiver}.${field.name}[i], runtime.Base64${field.type.elementType.encoding}Format)\n`;
       unmarshalBody += '\t\t\t\t}\n\t\t\t}\n';
       modelDef.SerDe.needsJSONUnpopulate = true;
-    } else if (go.isSliceType(field.type) && field.type.rawJSONAsBytes) {
+    } else if (field.type.kind === 'rawJSON') {
       unmarshalBody += '\t\t\tif string(val) != "null" {\n';
       unmarshalBody += `\t\t\t\t${receiver}.${field.name} = val\n\t\t\t}\n`;
-    } else if (go.isPrimitiveType(field.type) && (field.type.typeName.startsWith('uint') || field.type.typeName.startsWith('int')) && field.type.encodeAsString) {
+    } else if (field.type.kind === 'scalar' && (field.type.type.startsWith('uint') || field.type.type.startsWith('int')) && field.type.encodeAsString) {
       // TODO: need to handle map and slice type with underlying int as string type
       imports.add('strconv');
       unmarshalBody += `\t\t\t\tvar aux string\n`;
       unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.name}", &aux)\n`;
       unmarshalBody += `\t\t\t\tif err == nil {\n`;
-      unmarshalBody += `\t\t\t\t\tvar v ${field.type.typeName.startsWith('int') ? 'int64' : 'uint64'}\n`;
-      unmarshalBody += `\t\t\t\t\tv, err = strconv.${field.type.typeName.startsWith('int') ? 'ParseInt' : 'ParseUint'}(aux, 10, 0)\n`;
+      unmarshalBody += `\t\t\t\t\tvar v ${field.type.type.startsWith('int') ? 'int64' : 'uint64'}\n`;
+      unmarshalBody += `\t\t\t\t\tv, err = strconv.${field.type.type.startsWith('int') ? 'ParseInt' : 'ParseUint'}(aux, 10, 0)\n`;
       unmarshalBody += `\t\t\t\t\tif err == nil {\n`;
-      if (field.type.typeName.startsWith('uint') && field.type.typeName !== 'uint64' || field.type.typeName.startsWith('int') && field.type.typeName !== 'int64') {
-        unmarshalBody += `\t\t\t\t\t\t${receiver}.${field.name} = to.Ptr(${field.type.typeName}(v))\n`;
+      if (field.type.type.startsWith('uint') && field.type.type !== 'uint64' || field.type.type.startsWith('int') && field.type.type !== 'int64') {
+        unmarshalBody += `\t\t\t\t\t\t${receiver}.${field.name} = to.Ptr(${field.type.type}(v))\n`;
       } else {
         unmarshalBody += `\t\t\t\t\t\t${receiver}.${field.name} = to.Ptr(v)\n`;
       }
@@ -532,14 +532,16 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
 // returns true if item has a discriminator interface.
 // recursively called for arrays and dictionaries.
 function hasDiscriminatorInterface(item: go.PossibleType): boolean {
-  if (go.isInterfaceType(item)) {
-    return true;
-  } else if (go.isMapType(item)) {
-    return hasDiscriminatorInterface(item.valueType);
-  } else if (go.isSliceType(item)) {
-    return hasDiscriminatorInterface(item.elementType);
+  switch (item.kind) {
+    case 'interface':
+      return true;
+    case 'map':
+      return hasDiscriminatorInterface(item.valueType);
+    case 'slice':
+      return hasDiscriminatorInterface(item.elementType);
+    default:
+      return false;
   }
-  return false;
 }
 
 // returns the text for unmarshalling a discriminated type
@@ -548,11 +550,11 @@ function generateDiscriminatorUnmarshaller(field: go.ModelField, receiver: strin
   const propertyName = field.name;
 
   // these are the simple, non-nested cases (e.g. IterfaceType, []InterfaceType, map[string]InterfaceType)
-  if (go.isInterfaceType(field.type)) {
+  if (field.type.kind === 'interface') {
     return `${startingIndentation}${receiver}.${propertyName}, err = unmarshal${field.type.name}(val)\n`;
-  } else if (go.isSliceType(field.type) && go.isInterfaceType(field.type.elementType)) {
+  } else if (field.type.kind === 'slice' && field.type.elementType.kind === 'interface') {
     return `${startingIndentation}${receiver}.${propertyName}, err = unmarshal${field.type.elementType.name}Array(val)\n`;
-  } else if (go.isMapType(field.type) && go.isInterfaceType(field.type.valueType)) {
+  } else if (field.type.kind === 'map' && field.type.valueType.kind === 'interface') {
     return `${startingIndentation}${receiver}.${propertyName}, err = unmarshal${field.type.valueType.name}Map(val)\n`;
   }
 
@@ -566,7 +568,7 @@ function generateDiscriminatorUnmarshaller(field: go.ModelField, receiver: strin
   // create a local instantiation of the final type
   const finalTargetVar = field.serializedName;
   let finalTargetCtor = recursiveGetDiscriminatorTypeName(field.type, false);
-  if (go.isSliceType(field.type)) {
+  if (field.type.kind === 'slice') {
     finalTargetCtor = `make(${finalTargetCtor}, len(${rawTargetVar}))`;
   } else {
     // must be a dictionary
@@ -587,12 +589,12 @@ function generateDiscriminatorUnmarshaller(field: go.ModelField, receiver: strin
 // !raw e.g. map[string]map[string]InterfaceType, [][]InterfaceType etc
 function recursiveGetDiscriminatorTypeName(item: go.PossibleType, raw: boolean): string {
   // when raw is true, stop recursing at the level before the leaf schema
-  if (go.isSliceType(item)) {
-    if (!raw || !go.isInterfaceType(item.elementType)) {
+  if (item.kind === 'slice') {
+    if (!raw || item.elementType.kind !== 'interface') {
       return `[]${recursiveGetDiscriminatorTypeName(item.elementType, raw)}`;
     }
-  } else if (go.isMapType(item)) {
-    if (!raw || !go.isInterfaceType(item.valueType)) {
+  } else if (item.kind === 'map') {
+    if (!raw || item.valueType.kind !== 'interface') {
       return `map[string]${recursiveGetDiscriminatorTypeName(item.valueType, raw)}`;
     }
   }
@@ -608,8 +610,8 @@ function recursivePopulateDiscriminator(item: go.PossibleType, receiver: string,
   let interfaceName = '';
   let targetType = '';
 
-  if (go.isSliceType(item)) {
-    if (!go.isInterfaceType(item.elementType)) {
+  if (item.kind === 'slice') {
+    if (item.elementType.kind !== 'interface') {
       if (nesting > 1) {
         // at nestling level 1, the destination var was already created in generateDiscriminatorUnmarshaller()
         text += `${indent}${dest} = make(${recursiveGetDiscriminatorTypeName(item, false)}, len(${rawSrc}))\n`;
@@ -626,8 +628,8 @@ function recursivePopulateDiscriminator(item: go.PossibleType, receiver: string,
     // we're at leaf node - 1, so get the interface from the element's type
     interfaceName = go.getTypeDeclaration(item.elementType);
     targetType = 'Array';
-  } else if (go.isMapType(item)) {
-    if (!go.isInterfaceType(item.valueType)) {
+  } else if (item.kind === 'map') {
+    if (item.valueType.kind !== 'interface') {
       if (nesting > 1) {
         // at nestling level 1, the destination var was already created in generateDiscriminatorUnmarshaller()
         text += `${indent}${dest} = ${recursiveGetDiscriminatorTypeName(item, false)}{}\n`;
@@ -652,7 +654,7 @@ function recursivePopulateDiscriminator(item: go.PossibleType, receiver: string,
   return text;
 }
 
-function generateXMLMarshaller(modelType: go.ModelType, modelDef: ModelDef, imports: ImportManager) {
+function generateXMLMarshaller(modelType: go.Model, modelDef: ModelDef, imports: ImportManager) {
   // only needed for types with time.Time, maps, or where the XML name doesn't match the type name
   const receiver = modelDef.receiverName();
   const desc = `MarshalXML implements the xml.Marshaller interface for type ${modelDef.Name}.`;
@@ -662,13 +664,13 @@ function generateXMLMarshaller(modelType: go.ModelType, modelDef: ModelDef, impo
   }
   text += generateAliasType(modelType, receiver, true);
   for (const field of values(modelDef.Fields)) {
-    if (go.isSliceType(field.type)) {
+    if (field.type.kind === 'slice') {
       text += `\tif ${receiver}.${field.name} != nil {\n`;
       text += `\t\taux.${field.name} = &${receiver}.${field.name}\n`;
       text += '\t}\n';
-    } else if (field.annotations.isAdditionalProperties || go.isMapType(field.type)) {
+    } else if (field.annotations.isAdditionalProperties || field.type.kind === 'map') {
       text += `\taux.${field.name} = (additionalProperties)(${receiver}.${field.name})\n`;
-    } else if (go.isBytesType(field.type)) {
+    } else if (field.type.kind === 'encodedBytes') {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
       text += `\tif ${receiver}.${field.name} != nil {\n`;
       text += `\t\tencoded${field.name} := runtime.EncodeByteArray(${receiver}.${field.name}, runtime.Base64${field.type.encoding}Format)\n`;
@@ -681,7 +683,7 @@ function generateXMLMarshaller(modelType: go.ModelType, modelDef: ModelDef, impo
   modelDef.SerDe.methods.push({ name: 'MarshalXML', desc: desc, text: text });
 }
 
-function generateXMLUnmarshaller(modelType: go.ModelType, modelDef: ModelDef, imports: ImportManager) {
+function generateXMLUnmarshaller(modelType: go.Model, modelDef: ModelDef, imports: ImportManager) {
   // non-polymorphic case, must be something with time.Time
   const receiver = modelDef.receiverName();
   const desc = `UnmarshalXML implements the xml.Unmarshaller interface for type ${modelDef.Name}.`;
@@ -691,12 +693,12 @@ function generateXMLUnmarshaller(modelType: go.ModelType, modelDef: ModelDef, im
   text += '\t\treturn err\n';
   text += '\t}\n';
   for (const field of values(modelDef.Fields)) {
-    if (go.isTimeType(field.type)) {
+    if (field.type.kind === 'time') {
       text += `\tif aux.${field.name} != nil && !(*time.Time)(aux.${field.name}).IsZero() {\n`;
       text += `\t\t${receiver}.${field.name} = (*time.Time)(aux.${field.name})\n\t}\n`;
-    } else if (field.annotations.isAdditionalProperties || go.isMapType(field.type)) {
+    } else if (field.annotations.isAdditionalProperties || field.type.kind === 'map') {
       text += `\t${receiver}.${field.name} = (map[string]*string)(aux.${field.name})\n`;
-    } else if (go.isBytesType(field.type)) {
+    } else if (field.type.kind === 'encodedBytes') {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
       text += `\tif aux.${field.name} != nil {\n`;
       text += `\t\tif err := runtime.DecodeByteArray(*aux.${field.name}, &${receiver}.${field.name}, runtime.Base64${field.type.encoding}Format); err != nil {\n`;
@@ -711,19 +713,19 @@ function generateXMLUnmarshaller(modelType: go.ModelType, modelDef: ModelDef, im
 }
 
 // generates an alias type used by custom XML marshaller/unmarshaller
-function generateAliasType(modelType: go.ModelType, receiver: string, forMarshal: boolean): string {
+function generateAliasType(modelType: go.Model, receiver: string, forMarshal: boolean): string {
   let text = `\ttype alias ${modelType.name}\n`;
   text += '\taux := &struct {\n';
   text += '\t\t*alias\n';
   for (const field of values(modelType.fields)) {
     const sn = getXMLSerialization(field, false);
-    if (go.isTimeType(field.type)) {
-      text += `\t\t${field.name} *${field.type.dateTimeFormat} \`xml:"${sn}"\`\n`;
-    } else if (field.annotations.isAdditionalProperties || go.isMapType(field.type)) {
+    if (field.type.kind === 'time') {
+      text += `\t\t${field.name} *${field.type.format} \`xml:"${sn}"\`\n`;
+    } else if (field.annotations.isAdditionalProperties || field.type.kind === 'map') {
       text += `\t\t${field.name} additionalProperties \`xml:"${sn}"\`\n`;
-    } else if (go.isSliceType(field.type)) {
+    } else if (field.type.kind === 'slice') {
       text += `\t\t${field.name} *${go.getTypeDeclaration(field.type)} \`xml:"${sn}"\`\n`;
-    } else if (go.isBytesType(field.type)) {
+    } else if (field.type.kind === 'encodedBytes') {
       text += `\t\t${field.name} *string \`xml:"${sn}"\`\n`;
     }
   }
@@ -736,10 +738,10 @@ function generateAliasType(modelType: go.ModelType, receiver: string, forMarshal
   if (forMarshal) {
     // emit code to initialize time fields
     for (const field of modelType.fields) {
-      if (!go.isTimeType(field.type)) {
+      if (field.type.kind !== 'time') {
         continue;
       }
-      text += `\t\t${field.name}: (*${field.type.dateTimeFormat})(${receiver}.${field.name}),\n`;
+      text += `\t\t${field.name}: (*${field.type.format})(${receiver}.${field.name}),\n`;
     }
   }
   text += '\t}\n';
@@ -817,9 +819,9 @@ class ModelDef {
         text += helpers.formatDocComment(field.docs);
       }
       let typeName = go.getTypeDeclaration(field.type);
-      if (go.isLiteralValue(field.type)) {
+      if (field.type.kind === 'literal') {
         // for constants we use the underlying type name
-        typeName = go.getLiteralValueTypeName(field.type.type);
+        typeName = go.getLiteralTypeDeclaration(field.type.type);
       }
       let serialization = field.serializedName;
       if (this.Format === 'JSON') {
@@ -860,7 +862,7 @@ export function getXMLSerialization(field: go.ModelField, isResponseEnvelope: bo
   if (field.xml?.attribute) {
     // value comes from an xml attribute
     serialization += ',attr';
-  } else if (go.isSliceType(field.type)) {
+  } else if (field.type.kind === 'slice') {
     // start with the serialized name of the element, preferring xml name if available
     let inner = go.getTypeDeclaration(field.type.elementType);
     if (field.xml?.name) {

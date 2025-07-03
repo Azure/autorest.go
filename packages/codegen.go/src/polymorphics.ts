@@ -10,7 +10,7 @@ import { ImportManager } from './imports.js';
 
 // Creates the content in polymorphic_helpers.go
 export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeServerPkg?: string): Promise<string> {
-  if (codeModel.interfaceTypes.length === 0) {
+  if (codeModel.interfaces.length === 0) {
     // no polymorphic types
     return '';
   }
@@ -33,19 +33,25 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
   // i.e. are they vanilla fields, elements in a slice, or values in a map.
   // polymorphic types within maps/slices will also need the scalar helpers.
   const trackDisciminator = function(type: go.PossibleType) {
-    if (go.isInterfaceType(type)) {
-      scalars.add(type.name);
-    } else if (go.isSliceType(type)) {
-      const leafType = helpers.recursiveUnwrapMapSlice(type);
-      if (go.isInterfaceType(leafType)) {
-        scalars.add(leafType.name);
-        arrays.add(leafType.name);
+    switch (type.kind) {
+      case 'interface':
+        scalars.add(type.name);
+        break;
+      case 'map': {
+        const leafType = helpers.recursiveUnwrapMapSlice(type);
+        if (leafType.kind === 'interface') {
+          scalars.add(leafType.name);
+          maps.add(leafType.name);
+        }
+        break;
       }
-    } else if (go.isMapType(type)) {
-      const leafType = helpers.recursiveUnwrapMapSlice(type);
-      if (go.isInterfaceType(leafType)) {
-        scalars.add(leafType.name);
-        maps.add(leafType.name);
+      case 'slice': {
+        const leafType = helpers.recursiveUnwrapMapSlice(type);
+        if (leafType.kind === 'interface') {
+          scalars.add(leafType.name);
+          arrays.add(leafType.name);
+        }
+        break;
       }
     }
   };
@@ -71,14 +77,17 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
     for (const respEnv of values(codeModel.responseEnvelopes)) {
       switch (respEnv.result?.kind) {
         case 'monomorphicResult':
-          if (go.isMapType(respEnv.result.monomorphicType)) {
-            trackDisciminator(respEnv.result.monomorphicType.valueType);
-          } else if (go.isSliceType(respEnv.result.monomorphicType)) {
-            trackDisciminator(respEnv.result.monomorphicType.elementType);
+          switch (respEnv.result.monomorphicType.kind) {
+            case 'map':
+              trackDisciminator(respEnv.result.monomorphicType.valueType);
+              break;
+            case 'slice':
+              trackDisciminator(respEnv.result.monomorphicType.elementType);
+              break;
           }
           break;
         case 'polymorphicResult':
-          trackDisciminator(respEnv.result.interfaceType);
+          trackDisciminator(respEnv.result.interface);
           break;
       }
     }
@@ -98,7 +107,7 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
     prefix = `${codeModel.packageName}.`;
   }
 
-  for (const interfaceType of codeModel.interfaceTypes) {
+  for (const interfaceType of codeModel.interfaces) {
     // generate unmarshallers for each discriminator
 
     // scalar unmarshaller
@@ -116,7 +125,7 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
       for (const possibleType of interfaceType.possibleTypes) {
         let disc = helpers.formatLiteralValue(possibleType.discriminatorValue!, true);
         // when the discriminator value is an enum, cast the const as a string
-        if (go.isConstantType(possibleType.discriminatorValue!.type)) {
+        if (possibleType.discriminatorValue!.type.kind === 'constant') {
           disc = `string(${prefix}${disc})`;
         }
         text += `\tcase ${disc}:\n`;

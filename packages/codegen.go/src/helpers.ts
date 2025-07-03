@@ -145,7 +145,7 @@ export function getMethodParameters(method: go.MethodType | go.NextPageMethod, p
       if (!paramGroups.includes(param.group)) {
         paramGroups.push(param.group);
       }
-    } else if (go.isLiteralValue(param.type)) {
+    } else if (param.type.kind === 'literal') {
       // don't generate a parameter for a constant
       // NOTE: this check must come last as non-required optional constants
       // in header/query params get dumped into the optional params group
@@ -218,6 +218,9 @@ export function formatParamValue(param: go.MethodParameter, imports: ImportManag
       if (param.collectionFormat === 'multi') {
         throw new CodegenError('InternalError', 'multi collection format should have been previously handled');
       }
+
+      const separator = getDelimiterForCollectionFormat(param.collectionFormat);
+
       const emitConvertOver = function(paramName: string, format: string): string {
         const encodedVar = `encoded${capitalize(paramName)}`;
         let content = 'strings.Join(func() []string {\n';
@@ -228,26 +231,27 @@ export function formatParamValue(param: go.MethodParameter, imports: ImportManag
         content += `\t}(), "${separator}")`;
         return content;
       }
-      const separator = getDelimiterForCollectionFormat(param.collectionFormat);
-      if (go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
-        imports.add('strings');
-        return `strings.Join(${paramName}, "${separator}")`;
-      } else if (go.isBytesType(param.type.elementType)) {
-        imports.add('encoding/base64');
-        imports.add('strings');
-        return emitConvertOver(param.name, `base64.${formatBytesEncoding(param.type.elementType.encoding)}Encoding.EncodeToString(${param.name}[i])`);
-      } else if (go.isTimeType(param.type.elementType)) {
-        imports.add('strings');
-        return emitConvertOver(param.name, `${param.type.elementType.dateTimeFormat}(${param.name}[i]).String()`);
-      } else {
-        imports.add('fmt');
-        imports.add('strings');
-        return `strings.Join(strings.Fields(strings.Trim(fmt.Sprint(${paramName}), "[]")), "${separator}")`;
+
+      switch (param.type.elementType.kind) {
+        case 'encodedBytes':
+          imports.add('encoding/base64');
+          imports.add('strings');
+          return emitConvertOver(param.name, `base64.${formatBytesEncoding(param.type.elementType.encoding)}Encoding.EncodeToString(${param.name}[i])`);
+        case 'string':
+          imports.add('strings');
+          return `strings.Join(${paramName}, "${separator}")`;
+        case 'time':
+          imports.add('strings');
+          return emitConvertOver(param.name, `${param.type.elementType.format}(${param.name}[i]).String()`);
+        default:
+          imports.add('fmt');
+          imports.add('strings');
+          return `strings.Join(strings.Fields(strings.Trim(fmt.Sprint(${paramName}), "[]")), "${separator}")`;
       }
     }
   }
 
-  if (go.isTimeType(param.type) && param.type.dateTimeFormat !== 'timeUnix') {
+  if (param.type.kind === 'time' && param.type.format !== 'timeUnix') {
     // for most time types we call methods on time.Time which is why we remove the dereference.
     // however, for unix time, we cast to our unixTime helper first so we must keep the dereference.
     if (!go.isRequiredParameter(param) && paramName[0] === '*') {
@@ -281,88 +285,93 @@ export function formatValue(paramName: string, type: go.PossibleType, imports: I
   if (defef === true) {
     star = '*';
   }
-  if (go.isLiteralValue(type)) {
-    // cannot use formatLiteralValue() since all values are treated as strings
-    return `"${type.literal}"`;
-  } else if (go.isBytesType(type)) {
-    // ByteArray is a base-64 encoded value in string format
-    imports.add('encoding/base64');
-    return `base64.${formatBytesEncoding(type.encoding)}Encoding.EncodeToString(${paramName})`;
-  } else if (go.isPrimitiveType(type)) {
-    if (type.typeName === 'bool') {
-      imports.add('strconv');
-      return `strconv.FormatBool(${star}${paramName})`;
-    } else if (type.typeName === 'int32') {
-      imports.add('strconv');
-      return `strconv.FormatInt(int64(${star}${paramName}), 10)`;
-    } else if (type.typeName === 'int64') {
-      imports.add('strconv');
-      return `strconv.FormatInt(${star}${paramName}, 10)`;
-    } else if (type.typeName === 'float32') {
-      imports.add('strconv');
-      return `strconv.FormatFloat(float64(${star}${paramName}), 'f', -1, 32)`;
-    } else if (type.typeName === 'float64') {
-      imports.add('strconv');
-      return `strconv.FormatFloat(${star}${paramName}, 'f', -1, 64)`;
-    }
-  } else if (go.isTimeType(type)) {
-    if (type.dateTimeFormat === 'dateType') {
-      return `${paramName}.Format("${dateFormat}")`;
-    } else if (type.dateTimeFormat === 'timeUnix') {
-      return `timeUnix(${star}${paramName}).String()`;
-    } else if (type.dateTimeFormat === 'timeRFC3339') {
-      return `timeRFC3339(${star}${paramName}).String()`;
-    } else {
-      imports.add('time');
-      let format = datetimeRFC3339Format;
-      if (type.dateTimeFormat === 'dateTimeRFC1123') {
-        format = datetimeRFC1123Format;
+
+  switch (type.kind) {
+    case 'constant':
+      if (type.type === 'string') {
+        return `string(${star}${paramName})`;
       }
-      return `${paramName}.Format(${format})`;
-    }
-  } else if (go.isConstantType(type)) {
-    if (type.type === 'string') {
-      return `string(${star}${paramName})`;
-    }
-    imports.add('fmt');
-    return `fmt.Sprintf("%v", ${star}${paramName})`;
+      imports.add('fmt');
+      return `fmt.Sprintf("%v", ${star}${paramName})`;
+    case 'encodedBytes':
+      // a base-64 encoded value in string format
+      imports.add('encoding/base64');
+      return `base64.${formatBytesEncoding(type.encoding)}Encoding.EncodeToString(${paramName})`;
+    case 'literal':
+      // cannot use formatLiteralValue() since all values are treated as strings
+      return `"${type.literal}"`;
+    case 'scalar':
+      switch (type.type) {
+        case 'bool':
+          imports.add('strconv');
+          return `strconv.FormatBool(${star}${paramName})`;
+        case 'float32':
+          imports.add('strconv');
+          return `strconv.FormatFloat(float64(${star}${paramName}), 'f', -1, 32)`;
+        case 'float64':
+          imports.add('strconv');
+          return `strconv.FormatFloat(${star}${paramName}, 'f', -1, 64)`;
+        case 'int32':
+          imports.add('strconv');
+          return `strconv.FormatInt(int64(${star}${paramName}), 10)`;
+        case 'int64':
+          imports.add('strconv');
+          return `strconv.FormatInt(${star}${paramName}, 10)`;
+        default:
+          throw new CodegenError('InternalError', `unhandled scalar type ${type.type}`);
+      }
+    case 'time':
+      switch (type.format) {
+        case 'dateTimeRFC1123':
+        case 'dateTimeRFC3339':
+          imports.add('time');
+          return `${paramName}.Format(${type.format === 'dateTimeRFC1123' ? datetimeRFC1123Format : datetimeRFC3339Format})`;
+        case 'dateType':
+          return `${paramName}.Format("${dateFormat}")`;
+        case 'timeRFC3339':
+          return `timeRFC3339(${star}${paramName}).String()`;
+        case 'timeUnix':
+          return `timeUnix(${star}${paramName}).String()`;
+      }
+    default:
+      return `${star}${paramName}`;
   }
-  return `${star}${paramName}`;
 }
 
 // returns the clientDefaultValue of the specified param.
 // this is usually the value in quotes (i.e. a string) however
 // it could also be a constant.
-export function formatLiteralValue(value: go.LiteralValue, withCast: boolean): string {
-  if (go.isConstantType(value.type)) {
-    return (<go.ConstantValue>value.literal).name;
-  } else if (go.isPrimitiveType(value.type)) {
-    // if it's a string, we want the uncasted version to include quotes
-    if (!withCast && value.type.typeName !== 'string') {
-      return `${value.literal}`;
-    }
-    switch (value.type.typeName) {
-      case 'float32':
-        return `float32(${value.literal})`;
-      case 'float64':
-        return `float64(${value.literal})`;
-      case 'int32':
-        return `int32(${value.literal})`;
-      case 'int64':
-        return `int64(${value.literal})`;
-      case 'string':
-        if (value.literal[0] === '"') {
-          // string is already quoted
+export function formatLiteralValue(value: go.Literal, withCast: boolean): string {
+  switch (value.type.kind) {
+    case 'constant':
+      return (<go.ConstantValue>value.literal).name;
+    case 'encodedBytes':
+      return value.literal;
+    case 'scalar':
+      if (!withCast) {
+        return `${value.literal}`;
+      }
+      switch (value.type.type) {
+        case 'float32':
+          return `float32(${value.literal})`;
+        case 'float64':
+          return `float64(${value.literal})`;
+        case 'int32':
+          return `int32(${value.literal})`;
+        case 'int64':
+          return `int64(${value.literal})`;
+        default:
           return value.literal;
-        }
-        return `"${value.literal}"`;
-      default:
+      }
+    case 'string':
+      if (value.literal[0] === '"') {
+        // string is already quoted
         return value.literal;
-    }
-  } else if (go.isTimeType(value.type)) {
-    return `"${value.literal}"`;
+      }
+      return `"${value.literal}"`;
+    case 'time':
+      return `"${value.literal}"`;
   }
-  return value.literal;
 }
 
 // returns true if at least one of the responses has a schema
@@ -393,7 +402,7 @@ export function getResultFieldName(method: go.MethodType): string {
     case 'modelResult':
       return result.modelType.name;
     case 'polymorphicResult':
-      return result.interfaceType.name;
+      return result.interface.name;
   }
 }
 
@@ -646,12 +655,14 @@ export function getBitSizeForNumber(intSize: 'float32' | 'float64' | 'int8' | 'i
 // returns the underlying map/slice element/value type
 // if item isn't a map or slice, item is returned
 export function recursiveUnwrapMapSlice(item: go.PossibleType): go.PossibleType {
-  if (go.isMapType(item)) {
-    return recursiveUnwrapMapSlice(item.valueType);
-  } else if (go.isSliceType(item)) {
-    return recursiveUnwrapMapSlice(item.elementType);
+  switch (item.kind) {
+    case 'map':
+      return recursiveUnwrapMapSlice(item.valueType);
+    case 'slice':
+      return recursiveUnwrapMapSlice(item.elementType);
+    default:
+      return item;
   }
-  return item;
 }
 
 // returns a * for optional params
@@ -666,7 +677,7 @@ const serDeFormatCache = new Map<string, SerDeFormat>();
 
 // returns the wire format for the named model.
 // at present this assumes the formats to be mutually exclusive.
-export function getSerDeFormat(model: go.ModelType | go.PolymorphicType, codeModel: go.CodeModel): SerDeFormat {
+export function getSerDeFormat(model: go.Model | go.PolymorphicModel, codeModel: go.CodeModel): SerDeFormat {
   let serDeFormat = serDeFormatCache.get(model.name);
   if (serDeFormat) {
     return serDeFormat;
@@ -680,22 +691,26 @@ export function getSerDeFormat(model: go.ModelType | go.PolymorphicType, codeMod
   // recursively walks the fields in model, updating serDeFormatCache with the model name and specified format
   const recursiveWalkModelFields = function(type: go.PossibleType, serDeFormat: SerDeFormat): void {
     type = recursiveUnwrapMapSlice(type);
-    if (go.isInterfaceType(type)) {
-      recursiveWalkModelFields(type.rootType, serDeFormat);
-      for (const possibleType of type.possibleTypes) {
-        recursiveWalkModelFields(possibleType, serDeFormat);
-      }
-    } else if (go.isPolymorphicType(type) || go.isModelType(type)) {
-      if (serDeFormatCache.has(type.name)) {
-        // we've already processed this type, don't do it again
-        return;
-      }
+    switch (type.kind) {
+      case 'interface':
+        recursiveWalkModelFields(type.rootType, serDeFormat);
+        for (const possibleType of type.possibleTypes) {
+          recursiveWalkModelFields(possibleType, serDeFormat);
+        }
+        break;
+      case 'model':
+      case 'polymorphicModel':
+        if (serDeFormatCache.has(type.name)) {
+          // we've already processed this type, don't do it again
+          return;
+        }
 
-      serDeFormatCache.set(type.name, serDeFormat);
-      for (const field of type.fields) {
-        const fieldType = recursiveUnwrapMapSlice(field.type);
-        recursiveWalkModelFields(fieldType, serDeFormat);
-      }
+        serDeFormatCache.set(type.name, serDeFormat);
+        for (const field of type.fields) {
+          const fieldType = recursiveUnwrapMapSlice(field.type);
+          recursiveWalkModelFields(fieldType, serDeFormat);
+        }
+        break;
     }
   };
 
@@ -728,7 +743,7 @@ export function getSerDeFormat(model: go.ModelType | go.PolymorphicType, codeMod
           }
           break;
         case 'polymorphicResult':
-          recursiveWalkModelFields(resultType.interfaceType, resultType.format);
+          recursiveWalkModelFields(resultType.interface, resultType.format);
           break;
       }
     }

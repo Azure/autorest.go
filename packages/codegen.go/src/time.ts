@@ -29,7 +29,7 @@ export async function generateTimeHelpers(codeModel: go.CodeModel, packageName?:
   let needsTimeRFC3339Helper = false;
   let needsUnixTimeHelper = false;
 
-  const setHelper = function(dateTimeFormat: go.DateTimeFormat): void {
+  const setHelper = function(dateTimeFormat: go.TimeFormat): void {
     switch (dateTimeFormat) {
       case 'dateTimeRFC1123':
         needsDateTimeRFC1123Helper = true;
@@ -62,15 +62,15 @@ export async function generateTimeHelpers(codeModel: go.CodeModel, packageName?:
       for (const method of client.methods) {
         for (const param of method.parameters) {
           const unwrappedParam = recursiveUnwrapMapSlice(param.type);
-          if (!go.isTimeType(unwrappedParam)) {
+          if (unwrappedParam.kind !== 'time') {
             continue;
           }
           // for body params, the helpers are always required.
           // for header/path/query params, the conversion happens in place. the only
           // exceptions are for timeRFC3339 and timeUnix
           // TODO: clean this up when moving to DateTime type in azcore
-          if (param.kind === 'bodyParam' || unwrappedParam.dateTimeFormat === 'timeRFC3339' || unwrappedParam.dateTimeFormat === 'timeUnix') {
-            setHelper(unwrappedParam.dateTimeFormat);
+          if (param.kind === 'bodyParam' || unwrappedParam.format === 'timeRFC3339' || unwrappedParam.format === 'timeUnix') {
+            setHelper(unwrappedParam.format);
           }
         }
       }
@@ -79,14 +79,14 @@ export async function generateTimeHelpers(codeModel: go.CodeModel, packageName?:
     for (const model of codeModel.models) {
       for (const field of values(model.fields)) {
         const unwrappedField = recursiveUnwrapMapSlice(field.type);
-        if (!go.isTimeType(unwrappedField)) {
+        if (unwrappedField.kind !== 'time') {
           continue;
         }
         if (getSerDeFormat(model, codeModel) === 'JSON') {
           // needsSerDeHelpers helpers are for JSON only
           needsSerDeHelpers = true;
         }
-        setHelper(unwrappedField.dateTimeFormat);
+        setHelper(unwrappedField.format);
       }
     }
 
@@ -95,10 +95,10 @@ export async function generateTimeHelpers(codeModel: go.CodeModel, packageName?:
         continue;
       }
       const unwrappedResult = recursiveUnwrapMapSlice(respEnv.result.monomorphicType);
-      if (!go.isTimeType(unwrappedResult)) {
+      if (unwrappedResult.kind !== 'time') {
         continue;
       }
-      setHelper(unwrappedResult.dateTimeFormat);
+      setHelper(unwrappedResult.format);
     }
   } else {
 	// for fakes, only need to check the if the body params are of type time.Time.
@@ -106,8 +106,8 @@ export async function generateTimeHelpers(codeModel: go.CodeModel, packageName?:
     for (const client of codeModel.clients) {
       for (const method of client.methods) {
         for (const param of method.parameters) {
-          if (param.kind === 'bodyParam' && go.isTimeType(param.type)) {
-            setHelper(param.type.dateTimeFormat);
+          if (param.kind === 'bodyParam' && param.type.kind === 'time') {
+            setHelper(param.type.format);
           }
         }
       }
@@ -117,12 +117,12 @@ export async function generateTimeHelpers(codeModel: go.CodeModel, packageName?:
       for (const header of respEnv.headers) {
         // for header/path/query params, the conversion happens in place. the only
         // exceptions are for timeRFC3339 and timeUnix
-        if (go.isTimeType(header.type) && (header.type.dateTimeFormat === 'timeRFC3339' || header.type.dateTimeFormat === 'timeUnix')) {
-          setHelper(header.type.dateTimeFormat);
+        if (header.type.kind === 'time' && (header.type.format === 'timeRFC3339' || header.type.format === 'timeUnix')) {
+          setHelper(header.type.format);
         }
       }
-      if (respEnv.result?.kind === 'monomorphicResult' && go.isTimeType(respEnv.result.monomorphicType)) {
-        setHelper(respEnv.result.monomorphicType.dateTimeFormat);
+      if (respEnv.result?.kind === 'monomorphicResult' && respEnv.result.monomorphicType.kind === 'time') {
+        setHelper(respEnv.result.monomorphicType.format);
       }
     }
   }
