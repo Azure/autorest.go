@@ -38,3 +38,26 @@ type LroClientBeginExportOptions struct {
 type OperationsClientListOptions struct {
 	// placeholder for future optional parameters
 }
+
+// OptionalBodyClientGetOptions contains the optional parameters for the OptionalBodyClient.Get method.
+type OptionalBodyClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// OptionalBodyClientPatchOptions contains the optional parameters for the OptionalBodyClient.Patch method.
+type OptionalBodyClientPatchOptions struct {
+	// The resource properties to be updated.
+	Properties *Widget
+}
+
+// OptionalBodyClientPostOptions contains the optional parameters for the OptionalBodyClient.Post method.
+type OptionalBodyClientPostOptions struct {
+	// The content of the action request
+	Body *ActionRequest
+}
+
+// OptionalBodyClientProviderPostOptions contains the optional parameters for the OptionalBodyClient.ProviderPost method.
+type OptionalBodyClientProviderPostOptions struct {
+	// The request body
+	Body *ChangeAllowanceRequest
+}
