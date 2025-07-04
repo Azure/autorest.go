@@ -76,6 +76,8 @@ const azureHttpSpecsGroup = {
   'accessgroup': ['azure/client-generator-core/access'],
   'flattengroup': ['azure/client-generator-core/flatten-property'],
   'coreusagegroup': ['azure/client-generator-core/usage'],
+  'locationgroup': ['azure/client-generator-core/client-location'],
+  'deserializegroup': ['azure/client-generator-core/deserialize-empty-string-as-null'],
   // 'clientinitializationgroup': ['azure/client-generator-core/client-initialization'],
   // 'apiversionheadergroup' : ['azure/client-generator-core/api-version/header'],
   // 'apiversionpathgroup' : ['azure/client-generator-core/api-version/path'],
@@ -86,7 +88,7 @@ const azureHttpSpecsGroup = {
   'azurepagegroup': ['azure/core/page/client.tsp'], // requires paging with re-injection support
   'corescalargroup': ['azure/core/scalar'],
   'coremodelgroup': ['azure/core/model'],
-  //'traitsgroup': ['azure/core/traits'], // requires union support
+  'traitsgroup': ['azure/core/traits'], // requires union support
   'encodedurationgroup': ['azure/encode/duration'],
   'examplebasicgroup': ['azure/example/basic'],
   'pageablegroup': ['azure/payload/pageable'],
@@ -94,12 +96,14 @@ const azureHttpSpecsGroup = {
   'resources': ['azure/resource-manager/resources', 'factory-gather-all-params=false'],
   'nonresourcegroup' : ['azure/resource-manager/non-resource'],
   'templatesgroup' : ['azure/resource-manager/operation-templates'],
+  'largeheadergroup' : ['azure/resource-manager/large-header'],
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
   'naminggroup': ['client/naming'],
   'defaultgroup': ['client/structure/default/client.tsp'],
   'multiclientgroup': ['client/structure/multi-client/client.tsp'],
   'renamedopgroup': ['client/structure/renamed-operation/client.tsp'],
   'twoopgroup': ['client/structure/two-operation-group/client.tsp'],
+  'clientopgroup': ['client/structure/client-operation-group/client.tsp'],
   'clientnamespacegroup': ['client/namespace'],
   'srvdrivenoldgroup': ['resiliency/srv-driven/old.tsp'],
   'srvdrivennewgroup': ['resiliency/srv-driven'],

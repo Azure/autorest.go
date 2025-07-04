@@ -31,3 +31,12 @@ func TestModelInOperationClient_OutputToInputOutput(t *testing.T) {
 		Name: to.Ptr("Madge"),
 	}, resp.OutputModel)
 }
+
+func TestModelInOperationClient_ModelInReadOnlyProperty(t *testing.T) {
+	client, err := coreusagegroup.NewUsageClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewUsageModelInOperationClient().ModelInReadOnlyProperty(context.Background(), coreusagegroup.RoundTripModel{}, nil)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.Equal(t, "Madge", *resp.Result.Name)
+}

@@ -21,6 +21,6 @@ type UsageModelInOperationClientOrphanModelSerializableResponse struct {
 
 // UsageModelInOperationClientOutputToInputOutputResponse contains the response from method UsageModelInOperationClient.OutputToInputOutput.
 type UsageModelInOperationClientOutputToInputOutputResponse struct {
-	// Usage override to roundtrip.
+	// Usage additive to roundtrip.
 	OutputModel
 }
