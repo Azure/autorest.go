@@ -15,11 +15,11 @@ import (
 
 // ServerFactory is a fake server for instances of the armlargeinstance.ClientFactory type.
 type ServerFactory struct {
-	// AzureLargeInstanceServer contains the fakes for client AzureLargeInstanceClient
-	AzureLargeInstanceServer AzureLargeInstanceServer
-
 	// AzureLargeStorageInstanceServer contains the fakes for client AzureLargeStorageInstanceClient
 	AzureLargeStorageInstanceServer AzureLargeStorageInstanceServer
+
+	// Server contains the fakes for client Client
+	Server Server
 
 	// OperationsServer contains the fakes for client OperationsClient
 	OperationsServer OperationsServer
@@ -39,8 +39,8 @@ func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
 type ServerFactoryTransport struct {
 	srv                               *ServerFactory
 	trMu                              sync.Mutex
-	trAzureLargeInstanceServer        *AzureLargeInstanceServerTransport
 	trAzureLargeStorageInstanceServer *AzureLargeStorageInstanceServerTransport
+	trServer                          *ServerTransport
 	trOperationsServer                *OperationsServerTransport
 }
 
@@ -57,16 +57,14 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	var err error
 
 	switch client {
-	case "AzureLargeInstanceClient":
-		initServer(s, &s.trAzureLargeInstanceServer, func() *AzureLargeInstanceServerTransport {
-			return NewAzureLargeInstanceServerTransport(&s.srv.AzureLargeInstanceServer)
-		})
-		resp, err = s.trAzureLargeInstanceServer.Do(req)
 	case "AzureLargeStorageInstanceClient":
 		initServer(s, &s.trAzureLargeStorageInstanceServer, func() *AzureLargeStorageInstanceServerTransport {
 			return NewAzureLargeStorageInstanceServerTransport(&s.srv.AzureLargeStorageInstanceServer)
 		})
 		resp, err = s.trAzureLargeStorageInstanceServer.Do(req)
+	case "Client":
+		initServer(s, &s.trServer, func() *ServerTransport { return NewServerTransport(&s.srv.Server) })
+		resp, err = s.trServer.Do(req)
 	case "OperationsClient":
 		initServer(s, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
 		resp, err = s.trOperationsServer.Do(req)

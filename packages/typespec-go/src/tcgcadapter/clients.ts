@@ -70,10 +70,6 @@ export class clientAdapter {
       clientName = parent.name.substring(0, parent.name.length - 6) + clientName;
     }
 
-    if (!clientName.match(/Client$/)) {
-      clientName += 'Client';
-    }
-
     const docs: go.Docs = {
       summary: sdkClient.summary,
       description: sdkClient.doc,

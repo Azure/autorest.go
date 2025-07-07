@@ -4,6 +4,11 @@
 
 package armrandom
 
+// ClientGetOptions contains the optional parameters for the Client.Get method.
+type ClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
 // SomeServiceClientCheckTrialAvailabilityOptions contains the optional parameters for the SomeServiceClient.CheckTrialAvailability
 // method.
 type SomeServiceClientCheckTrialAvailabilityOptions struct {

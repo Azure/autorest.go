@@ -95,6 +95,11 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
   // ensure that enum, client, and struct type names don't stutter
 
   const recursiveWalkClients = function(client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
+    // NOTE: we MUST do this before calling trimPackagePrefix to properly handle
+    // the case where the client name is the same as the package name.
+    if (!client.name.match(/Client$/)) {
+      client.name += 'Client';
+    }
     client.name = trimPackagePrefix(stutteringPrefix, client.name);
 
     // fix up the synthesized type names for page responses

@@ -46,6 +46,11 @@ interface SomeService {
   ): ArmResponse<Trial> | ErrorResponse;
 }
 
+interface Random {
+  @doc("Get details of a certificate profile.")
+  get is ArmResourceRead<FakeData>;
+}
+
 @doc("List of made up things")
 @Azure.Core.pagedResult
 model ThingsListResult {
