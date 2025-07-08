@@ -360,7 +360,7 @@ function getTimeValue(type: go.Time, value: any, imports?: ImportManager): strin
   }
 }
 
-function getPointerValue(type: go.PossibleType, valueString: string, byValue: boolean, imports?: ImportManager): string {
+function getPointerValue(type: go.WireType, valueString: string, byValue: boolean, imports?: ImportManager): string {
   if (byValue) {
     return valueString;
   }
@@ -423,7 +423,7 @@ function jsonToGo(value: any, indent: string): string {
   return '';
 }
 
-function generateFakeExample(goType: go.PossibleType, name?: string): go.ExampleType {
+function generateFakeExample(goType: go.WireType, name?: string): go.ExampleType {
   switch (goType.kind) {
     case 'any':
       return new go.NullExample(goType);

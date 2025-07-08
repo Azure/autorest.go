@@ -166,7 +166,7 @@ export class clientAdapter {
   }
 
   private adaptURIParam(sdkParam: tcgc.SdkPathParameter): go.URIParameter {
-    const paramType = this.ta.getPossibleType(sdkParam.type, true, false);
+    const paramType = this.ta.getWireType(sdkParam.type, true, false);
     if (go.isURIParameterType(paramType)) {
       // TODO: follow up with tcgc if serializedName should actually be optional
       return new go.URIParameter(sdkParam.name, sdkParam.serializedName ? sdkParam.serializedName : sdkParam.name, paramType,
@@ -398,7 +398,7 @@ export class clientAdapter {
             if (!serializedName) {
               throw new AdapterError('InternalError', `didn't find body model property for spread parameter ${param.name}`, param.__raw?.node ?? NoTarget);
             }
-            adaptedParam = new go.PartialBodyParameter(paramName, serializedName, contentType, this.ta.getPossibleType(param.type, true, true), paramStyle, byVal);
+            adaptedParam = new go.PartialBodyParameter(paramName, serializedName, contentType, this.ta.getWireType(param.type, true, true), paramStyle, byVal);
             break;
           }
           case 'binary':
@@ -520,10 +520,10 @@ export class clientAdapter {
     if (param.kind === 'body') {
       // TODO: form data? (non-multipart)
       if (param.defaultContentType.match(/multipart/i)) {
-        adaptedParam = new go.MultipartFormBodyParameter(paramName, this.ta.getPossibleType(param.type, false, true), paramStyle, byVal);
+        adaptedParam = new go.MultipartFormBodyParameter(paramName, this.ta.getWireType(param.type, false, true), paramStyle, byVal);
       } else {
         const contentType = this.adaptContentType(param.defaultContentType);
-        let bodyType = this.ta.getPossibleType(param.type, false, true);
+        let bodyType = this.ta.getWireType(param.type, false, true);
         if (contentType === 'binary') {
           // tcgc models binary params as 'bytes' but we want an io.ReadSeekCloser
           bodyType = this.ta.getReadSeekCloser(param.type.kind === 'array');
@@ -536,7 +536,7 @@ export class clientAdapter {
           throw new AdapterError('InternalError', `unexpected collection format ${param.collectionFormat} for HeaderCollectionParameter`, param.__raw?.node ?? NoTarget);
         }
         // TODO: is hard-coded false for element type by value correct?
-        const type = this.ta.getPossibleType(param.type, true, false);
+        const type = this.ta.getWireType(param.type, true, false);
         if (type.kind !== 'slice') {
           throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${param.name}`, param.__raw?.node ?? NoTarget);
         }
@@ -551,7 +551,7 @@ export class clientAdapter {
       throw new AdapterError('UnsupportedTsp', 'unsupported parameter type cookie', param.__raw?.node ?? NoTarget);
     } else {
       if (param.collectionFormat) {
-        const type = this.ta.getPossibleType(param.type, true, false);
+        const type = this.ta.getWireType(param.type, true, false);
         if (type.kind !== 'slice') {
           throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${param.name}`, param.__raw?.node ?? NoTarget);
         }
@@ -697,7 +697,7 @@ export class clientAdapter {
       respEnv.result.docs.summary = sdkResponseType.summary;
       respEnv.result.docs.description = sdkResponseType.doc;
     } else {
-      const resultType = this.ta.getPossibleType(sdkResponseType, false, false);
+      const resultType = this.ta.getWireType(sdkResponseType, false, false);
       if (go.isMonomorphicResultType(resultType)) {
         respEnv.result = new go.MonomorphicResult(this.recursiveTypeName(sdkResponseType, false), contentType, resultType, isTypePassedByValue(sdkResponseType));
       } else {
@@ -793,7 +793,7 @@ export class clientAdapter {
 
   private adaptHeaderScalarType(sdkType: tcgc.SdkType, forParam: boolean): go.HeaderScalarType {
     // for header params, we never pass the element type by pointer
-    const type = this.ta.getPossibleType(sdkType, forParam, false);
+    const type = this.ta.getWireType(sdkType, forParam, false);
     if (go.isHeaderScalarType(type)) {
       return type;
     }
@@ -801,7 +801,7 @@ export class clientAdapter {
   }
 
   private adaptPathScalarParameterType(sdkType: tcgc.SdkType): go.PathScalarParameterType {
-    const type = this.ta.getPossibleType(sdkType, false, false);
+    const type = this.ta.getWireType(sdkType, false, false);
     if (go.isPathScalarParameterType(type)) {
       return type;
     }
@@ -809,7 +809,7 @@ export class clientAdapter {
   }
 
   private adaptQueryScalarParameterType(sdkType: tcgc.SdkType): go.QueryScalarParameterType {
-    const type = this.ta.getPossibleType(sdkType, false, false);
+    const type = this.ta.getWireType(sdkType, false, false);
     if (go.isQueryScalarParameterType(type)) {
       return type;
     }
@@ -824,7 +824,7 @@ export class clientAdapter {
       }
       return 'literal';
     } else if (param.clientDefaultValue) {
-      const adaptedType = this.ta.getPossibleType(param.type, false, false);
+      const adaptedType = this.ta.getWireType(param.type, false, false);
       if (!go.isLiteralValueType(adaptedType)) {
         throw new AdapterError('InternalError', `unexpected client side default type ${go.getTypeDeclaration(adaptedType)} for parameter ${param.name}`, param.__raw?.node ?? NoTarget);
       }
@@ -908,7 +908,7 @@ export class clientAdapter {
     }
   }
 
-  private adaptExampleType(exampleType: tcgc.SdkExampleValue, goType: go.PossibleType): go.ExampleType {
+  private adaptExampleType(exampleType: tcgc.SdkExampleValue, goType: go.WireType): go.ExampleType {
     switch (exampleType.kind) {
       case 'string':
         switch (goType.kind) {

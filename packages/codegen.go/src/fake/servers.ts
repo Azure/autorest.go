@@ -564,16 +564,16 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
       return parsingCode;
     };
 
-    const isMultipartContentType = function (type: go.PossibleType): boolean {
+    const isMultipartContentType = function (type: go.WireType): boolean {
       type = helpers.recursiveUnwrapMapSlice(type);
       return (type.kind === 'qualifiedType' && type.exportName === 'MultipartContent');
     };
 
-    const isModelType = function (type: go.PossibleType): type is go.Model | go.PolymorphicModel {
+    const isModelType = function (type: go.WireType): type is go.Model | go.PolymorphicModel {
       return type.kind === 'model' || type.kind === 'polymorphicModel';
     }
 
-    const emitCase = function (caseValue: string, paramVar: string, type: go.PossibleType): string {
+    const emitCase = function (caseValue: string, paramVar: string, type: go.WireType): string {
       let caseContent = `\t\tcase "${caseValue}":\n`;
       caseContent += '\t\t\tcontent, err = io.ReadAll(part)\n';
       caseContent += '\t\t\tif err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n';

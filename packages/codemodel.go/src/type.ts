@@ -13,7 +13,7 @@ export interface Docs {
 }
 
 /** defines types that go across the wire */
-export type PossibleType = Any | Constant | EncodedBytes | Interface | Literal | Map | Model | PolymorphicModel | QualifiedType | RawJSON | Scalar | Slice | String | Time;
+export type WireType = Any | Constant | EncodedBytes | Interface | Literal | Map | Model | PolymorphicModel | QualifiedType | RawJSON | Scalar | Slice | String | Time;
 
 /** the Go any type */
 export interface Any {
@@ -124,7 +124,7 @@ export interface Map {
 }
 
 /** the set of map value types */
-export type MapValueType = PossibleType;
+export type MapValueType = WireType;
 
 /** a field within a model */
 export interface ModelField extends StructField {
@@ -227,7 +227,7 @@ export interface Slice {
 }
 
 /** the set of slice element types */
-export type SliceElementType = PossibleType;
+export type SliceElementType = WireType;
 
 /** a Go string */
 export interface String {
@@ -255,7 +255,7 @@ export interface StructField {
   docs: Docs;
 
   /** the field's underlying type */
-  type: PossibleType;
+  type: WireType;
 
   /** indicates if the field is pointer-to-type or not */
   byValue: boolean;
@@ -334,7 +334,7 @@ export function getLiteralTypeDeclaration(literal: LiteralType): string {
  * @param pkgName optional package name prefix for the type
  * @returns the Go type declaration
  */
-export function getTypeDeclaration(type: PossibleType, pkgName?: string): string {
+export function getTypeDeclaration(type: WireType, pkgName?: string): string {
   switch (type.kind) {
     case 'any':
     case 'string':
@@ -373,7 +373,7 @@ export function getTypeDeclaration(type: PossibleType, pkgName?: string): string
 }
 
 /** narrows type to a LiteralType within the conditional block */
-export function isLiteralValueType(type: PossibleType): type is LiteralType {
+export function isLiteralValueType(type: WireType): type is LiteralType {
   switch (type.kind) {
     case 'constant':
     case 'encodedBytes':
@@ -391,7 +391,7 @@ export function isLiteralValueType(type: PossibleType): type is LiteralType {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class StructField implements StructField {
-  constructor(name: string, type: PossibleType, byValue: boolean) {
+  constructor(name: string, type: WireType, byValue: boolean) {
     this.name = name;
     this.type = type;
     this.byValue = byValue;
@@ -468,7 +468,7 @@ export class EncodedBytes implements EncodedBytes {
 }
 
 export class Interface implements Interface {
-  // possibleTypes and rootType are required. however, we have a chicken-and-egg
+  // WireTypes and rootType are required. however, we have a chicken-and-egg
   // problem as creating a PolymorphicType requires the necessary InterfaceType.
   // so these fields MUST be populated after creating the InterfaceType.
   constructor(name: string, discriminatorField: string) {
@@ -506,7 +506,7 @@ export class ModelAnnotations implements ModelAnnotations {
 }
 
 export class ModelField extends StructField implements ModelField {
-  constructor(name: string, type: PossibleType, byValue: boolean, serializedName: string, annotations: ModelFieldAnnotations) {
+  constructor(name: string, type: WireType, byValue: boolean, serializedName: string, annotations: ModelFieldAnnotations) {
     super(name, type, byValue);
     this.serializedName = serializedName;
     this.annotations = annotations;

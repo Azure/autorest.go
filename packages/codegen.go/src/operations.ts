@@ -973,7 +973,7 @@ function emitClientSideDefault(param: go.HeaderCollectionParameter | go.HeaderSc
   return text;
 }
 
-function getMediaFormat(type: go.PossibleType, mediaType: 'JSON' | 'XML', param: string): string {
+function getMediaFormat(type: go.WireType, mediaType: 'JSON' | 'XML', param: string): string {
   let marshaller: 'JSON' | 'XML' | 'ByteArray' = mediaType;
   let format = '';
   if (type.kind === 'encodedBytes') {
@@ -983,7 +983,7 @@ function getMediaFormat(type: go.PossibleType, mediaType: 'JSON' | 'XML', param:
   return `${marshaller}(${param}${format})`;
 }
 
-function isArrayOfDateTimeForMarshalling(paramType: go.PossibleType): { format: go.TimeFormat, elemByVal: boolean } | undefined {
+function isArrayOfDateTimeForMarshalling(paramType: go.WireType): { format: go.TimeFormat, elemByVal: boolean } | undefined {
   if (paramType.kind !== 'slice') {
     return undefined;
   }
@@ -1011,7 +1011,7 @@ function needsResponseHandler(method: go.MethodType): boolean {
   return helpers.hasSchemaResponse(method) || method.responseEnvelope.headers.length > 0;
 }
 
-function generateResponseUnmarshaller(method: go.MethodType, type: go.PossibleType, format: go.ResultFormat, unmarshalTarget: string): string {
+function generateResponseUnmarshaller(method: go.MethodType, type: go.WireType, format: go.ResultFormat, unmarshalTarget: string): string {
   let unmarshallerText = '';
   const zeroValue = getZeroReturnValue(method, 'handler');
   if (type.kind === 'time') {
@@ -1156,7 +1156,7 @@ function createProtocolResponse(client: go.Client, method: go.Method | go.LROPag
   return text;
 }
 
-function isArrayOfDateTime(paramType: go.PossibleType): { format: go.TimeFormat, elemByVal: boolean } | undefined {
+function isArrayOfDateTime(paramType: go.WireType): { format: go.TimeFormat, elemByVal: boolean } | undefined {
   if (paramType.kind !== 'slice') {
     return undefined;
   }
@@ -1169,7 +1169,7 @@ function isArrayOfDateTime(paramType: go.PossibleType): { format: go.TimeFormat,
   };
 }
 
-function isMapOfDateTime(paramType: go.PossibleType): string | undefined {
+function isMapOfDateTime(paramType: go.WireType): string | undefined {
   if (paramType.kind !== 'map') {
     return undefined;
   }

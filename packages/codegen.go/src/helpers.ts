@@ -277,7 +277,7 @@ export function getDelimiterForCollectionFormat(cf: go.CollectionFormat): string
   }
 }
 
-export function formatValue(paramName: string, type: go.PossibleType, imports: ImportManager, defef?: boolean): string {
+export function formatValue(paramName: string, type: go.WireType, imports: ImportManager, defef?: boolean): string {
   // callers don't have enough context to know if paramName needs to be
   // deferenced so we track that here when specified. note that not all
   // cases will require paramName to be dereferenced.
@@ -654,7 +654,7 @@ export function getBitSizeForNumber(intSize: 'float32' | 'float64' | 'int8' | 'i
 
 // returns the underlying map/slice element/value type
 // if item isn't a map or slice, item is returned
-export function recursiveUnwrapMapSlice(item: go.PossibleType): go.PossibleType {
+export function recursiveUnwrapMapSlice(item: go.WireType): go.WireType {
   switch (item.kind) {
     case 'map':
       return recursiveUnwrapMapSlice(item.valueType);
@@ -689,7 +689,7 @@ export function getSerDeFormat(model: go.Model | go.PolymorphicModel, codeModel:
   }
 
   // recursively walks the fields in model, updating serDeFormatCache with the model name and specified format
-  const recursiveWalkModelFields = function(type: go.PossibleType, serDeFormat: SerDeFormat): void {
+  const recursiveWalkModelFields = function(type: go.WireType, serDeFormat: SerDeFormat): void {
     type = recursiveUnwrapMapSlice(type);
     switch (type.kind) {
       case 'interface':

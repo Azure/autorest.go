@@ -531,7 +531,7 @@ function generateJSONUnmarshallerBody(modelType: go.Model | go.PolymorphicModel,
 
 // returns true if item has a discriminator interface.
 // recursively called for arrays and dictionaries.
-function hasDiscriminatorInterface(item: go.PossibleType): boolean {
+function hasDiscriminatorInterface(item: go.WireType): boolean {
   switch (item.kind) {
     case 'interface':
       return true;
@@ -587,7 +587,7 @@ function generateDiscriminatorUnmarshaller(field: go.ModelField, receiver: strin
 // constructs the type name for a nested discriminated type
 // raw e.g. map[string]json.RawMessage, []json.RawMessage etc
 // !raw e.g. map[string]map[string]InterfaceType, [][]InterfaceType etc
-function recursiveGetDiscriminatorTypeName(item: go.PossibleType, raw: boolean): string {
+function recursiveGetDiscriminatorTypeName(item: go.WireType, raw: boolean): string {
   // when raw is true, stop recursing at the level before the leaf schema
   if (item.kind === 'slice') {
     if (!raw || item.elementType.kind !== 'interface') {
@@ -605,7 +605,7 @@ function recursiveGetDiscriminatorTypeName(item: go.PossibleType, raw: boolean):
 }
 
 // recursively constructs the text to populate a nested discriminator
-function recursivePopulateDiscriminator(item: go.PossibleType, receiver: string, rawSrc: string, dest: string, indent: string, nesting: number): string {
+function recursivePopulateDiscriminator(item: go.WireType, receiver: string, rawSrc: string, dest: string, indent: string, nesting: number): string {
   let text = '';
   let interfaceName = '';
   let targetType = '';

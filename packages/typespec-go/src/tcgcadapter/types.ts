@@ -18,12 +18,12 @@ export class typeAdapter {
   readonly codeModel: go.CodeModel;
 
   // cache of previously created types/constant values
-  private types: Map<string, go.PossibleType>;
+  private types: Map<string, go.WireType>;
   private constValues: Map<string, go.ConstantValue>;
   
   constructor(codeModel: go.CodeModel) {
     this.codeModel = codeModel;
-    this.types = new Map<string, go.PossibleType>();
+    this.types = new Map<string, go.WireType>();
     this.constValues = new Map<string, go.ConstantValue>();
   }
 
@@ -108,7 +108,7 @@ export class typeAdapter {
       }
       if (content.addlProps) {
         const annotations = new go.ModelFieldAnnotations(false, false, true, false);
-        const addlPropsType = new go.Map(this.getPossibleType(content.addlProps, false, false), isTypePassedByValue(content.addlProps));
+        const addlPropsType = new go.Map(this.getWireType(content.addlProps, false, false), isTypePassedByValue(content.addlProps));
         const addlProps = new go.ModelField('AdditionalProperties', addlPropsType, true, '', annotations);
         modelType.go.fields.push(addlProps);
       }
@@ -151,7 +151,7 @@ export class typeAdapter {
   // returns the Go code model type for the specified SDK type.
   // the operation is idempotent, so getting the same type multiple times
   // returns the same instance of the converted type.
-  getPossibleType(type: tcgc.SdkType, elementTypeByValue: boolean, substituteDiscriminator: boolean): go.PossibleType {
+  getWireType(type: tcgc.SdkType, elementTypeByValue: boolean, substituteDiscriminator: boolean): go.WireType {
     switch (type.kind) {
       case 'boolean':
       case 'bytes':
@@ -190,7 +190,7 @@ export class typeAdapter {
         if (arrayType) {
           return arrayType;
         }
-        arrayType = new go.Slice(this.getPossibleType(elementType, elementTypeByValue, substituteDiscriminator), myElementTypeByValue);
+        arrayType = new go.Slice(this.getWireType(elementType, elementTypeByValue, substituteDiscriminator), myElementTypeByValue);
         this.types.set(keyName, arrayType);
         return arrayType;
       }
@@ -220,7 +220,7 @@ export class typeAdapter {
         if (mapType) {
           return mapType;
         }
-        mapType = new go.Map(this.getPossibleType(type.valueType, elementTypeByValue, substituteDiscriminator), valueTypeByValue);
+        mapType = new go.Map(this.getWireType(type.valueType, elementTypeByValue, substituteDiscriminator), valueTypeByValue);
         this.types.set(keyName, mapType);
         return mapType;
       }
@@ -243,7 +243,7 @@ export class typeAdapter {
         }
         return this.getModel(type);
       case 'nullable':
-        return this.getPossibleType(type.type, elementTypeByValue, substituteDiscriminator);
+        return this.getWireType(type.type, elementTypeByValue, substituteDiscriminator);
       default:
         throw new AdapterError('UnsupportedTsp', `unsupported type kind ${type.kind}`, type.__raw?.node ?? tsp.NoTarget);
     }
@@ -261,7 +261,7 @@ export class typeAdapter {
   }
 
   // returns the Go code model type for an io.ReadSeekCloser
-  getReadSeekCloser(sliceOf: boolean): go.PossibleType {
+  getReadSeekCloser(sliceOf: boolean): go.WireType {
     let keyName = 'io-readseekcloser';
     if (sliceOf) {
       keyName = 'sliceof-' + keyName;
@@ -278,7 +278,7 @@ export class typeAdapter {
   }
 
   // returns the Go code model type for streaming.MultipartContent
-  getMultipartContent(sliceOf: boolean): go.PossibleType {
+  getMultipartContent(sliceOf: boolean): go.WireType {
     let keyName = 'streaming-multipartcontent';
     if (sliceOf) {
       keyName = 'sliceof-' + keyName;
@@ -294,7 +294,7 @@ export class typeAdapter {
     return rsc;
   }
 
-  private getBuiltInType(type: tcgc.SdkBuiltInType): go.PossibleType {
+  private getBuiltInType(type: tcgc.SdkBuiltInType): go.WireType {
     switch (type.kind) {
       case 'unknown': {
         if (this.codeModel.options.rawJSONAsBytes) {
@@ -583,7 +583,7 @@ export class typeAdapter {
     if (isMultipartFormData && prop.kind === 'property' && prop.optional) {
       fieldByValue = false;
     }
-    let type = this.getPossibleType(prop.type, isMultipartFormData, true);
+    let type = this.getWireType(prop.type, isMultipartFormData, true);
     if (prop.kind === 'property') {
       if (prop.isMultipartFileInput) {
         type = this.getMultipartContent(prop.type.kind === 'array');

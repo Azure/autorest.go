@@ -50,7 +50,7 @@ export class ImportManager {
     return text;
   }
 
-  addImportForType(type: go.PossibleType) {
+  addImportForType(type: go.WireType) {
     switch (type.kind) {
       case 'map':
         this.addImportForType(type.valueType);

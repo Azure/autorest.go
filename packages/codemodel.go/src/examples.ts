@@ -52,7 +52,7 @@ export interface MethodExample {
 export interface NullExample {
   kind: 'null';
   value: null;
-  type: type.PossibleType;
+  type: type.WireType;
 }
 
 export interface NumberExample {
@@ -142,7 +142,7 @@ export class MethodExample implements MethodExample {
 }
 
 export class NullExample implements NullExample {
-  constructor(type: type.PossibleType) {
+  constructor(type: type.WireType) {
     this.kind = 'null';
     this.type = type;
   }
