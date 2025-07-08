@@ -54,3 +54,11 @@ func (c *ClientFactory) NewOperationsClient() *OperationsClient {
 		internal: c.internal,
 	}
 }
+
+// NewOptionalBodyClient creates a new instance of OptionalBodyClient.
+func (c *ClientFactory) NewOptionalBodyClient() *OptionalBodyClient {
+	return &OptionalBodyClient{
+		subscriptionID: c.subscriptionID,
+		internal:       c.internal,
+	}
+}

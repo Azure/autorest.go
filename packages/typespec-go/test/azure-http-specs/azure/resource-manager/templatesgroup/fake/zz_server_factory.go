@@ -23,6 +23,9 @@ type ServerFactory struct {
 
 	// OperationsServer contains the fakes for client OperationsClient
 	OperationsServer OperationsServer
+
+	// OptionalBodyServer contains the fakes for client OptionalBodyClient
+	OptionalBodyServer OptionalBodyServer
 }
 
 // NewServerFactoryTransport creates a new instance of ServerFactoryTransport with the provided implementation.
@@ -42,6 +45,7 @@ type ServerFactoryTransport struct {
 	trCheckNameAvailabilityServer *CheckNameAvailabilityServerTransport
 	trLroServer                   *LroServerTransport
 	trOperationsServer            *OperationsServerTransport
+	trOptionalBodyServer          *OptionalBodyServerTransport
 }
 
 // Do implements the policy.Transporter interface for ServerFactoryTransport.
@@ -68,6 +72,9 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	case "OperationsClient":
 		initServer(s, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
 		resp, err = s.trOperationsServer.Do(req)
+	case "OptionalBodyClient":
+		initServer(s, &s.trOptionalBodyServer, func() *OptionalBodyServerTransport { return NewOptionalBodyServerTransport(&s.srv.OptionalBodyServer) })
+		resp, err = s.trOptionalBodyServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}
