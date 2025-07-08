@@ -15,7 +15,7 @@ export function hasDescription(lang: m4.Language): boolean {
 }
 
 // cache of previously created types
-const types = new Map<string, go.PossibleType>();
+const types = new Map<string, go.WireType>();
 const constValues = new Map<string, go.ConstantValue>();
 
 export function adaptConstantType(choice: m4.ChoiceSchema | m4.SealedChoiceSchema): go.Constant {
@@ -172,7 +172,7 @@ function getDiscriminatorLiteral(discriminatorValue: string): go.Literal {
 }
 
 export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.ModelField {
-  const fieldType = adaptPossibleType(prop.schema);
+  const fieldType = adaptWireType(prop.schema);
   let required = prop.required === true;
   if (fieldType.kind === 'literal') {
     // for OpenAPI, literal values are always considered required
@@ -270,7 +270,7 @@ export function adaptXMLInfo(obj: m4.Schema): go.XMLInfo | undefined {
 }
 
 // converts an M4 schema type to a Go code model type
-export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolean): go.PossibleType {
+export function adaptWireType(schema: m4.Schema, elementTypeByValue?: boolean): go.WireType {
   const rawJSONAsBytes = <boolean>schema.language.go!.rawJSONAsBytes;
   switch (schema.type) {
     case m4.SchemaType.Any: {
@@ -330,7 +330,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (arrayType) {
         return arrayType;
       }
-      arrayType = new go.Slice(adaptPossibleType((<m4.ArraySchema>schema).elementType, elementTypeByValue), myElementTypeByValue);
+      arrayType = new go.Slice(adaptWireType((<m4.ArraySchema>schema).elementType, elementTypeByValue), myElementTypeByValue);
       types.set(keyName, arrayType);
       return arrayType;
     }
@@ -395,7 +395,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (mapType) {
         return mapType;
       }
-      mapType = new go.Map(adaptPossibleType((<m4.DictionarySchema>schema).elementType, elementTypeByValue), valueTypeByValue);
+      mapType = new go.Map(adaptWireType((<m4.DictionarySchema>schema).elementType, elementTypeByValue), valueTypeByValue);
       types.set(keyName, mapType);
       return mapType;
     }

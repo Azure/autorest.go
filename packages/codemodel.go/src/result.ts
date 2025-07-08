@@ -24,7 +24,7 @@ export interface AnyResult {
    * maps an HTTP status code to a result type.
    * status codes that don't return a schema will be absent.
    */
-  httpStatusCodeType: Record<number, type.PossibleType>;
+  httpStatusCodeType: Record<number, type.WireType>;
 
   /** the format in which the result is returned */
   format: ResultFormat;
@@ -207,7 +207,7 @@ export function getResultType(result: Result): type.Interface | type.Model | Mon
 }
 
 /** narrows type to a MonomorphicResultType within the conditional block */
-export function isMonomorphicResultType(type: type.PossibleType): type is MonomorphicResultType {
+export function isMonomorphicResultType(type: type.WireType): type is MonomorphicResultType {
   switch (type.kind) {
     case 'any':
     case 'constant':
@@ -228,7 +228,7 @@ export function isMonomorphicResultType(type: type.PossibleType): type is Monomo
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class AnyResult implements AnyResult {
-  constructor(fieldName: string, format: ResultFormat, resultTypes: Record<number, type.PossibleType>) {
+  constructor(fieldName: string, format: ResultFormat, resultTypes: Record<number, type.WireType>) {
     this.kind = 'anyResult';
     this.fieldName = fieldName;
     this.format = format;

@@ -32,7 +32,7 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
   // we know there are polymorphic types but we don't know how they're used.
   // i.e. are they vanilla fields, elements in a slice, or values in a map.
   // polymorphic types within maps/slices will also need the scalar helpers.
-  const trackDisciminator = function(type: go.PossibleType) {
+  const trackDisciminator = function(type: go.WireType) {
     switch (type.kind) {
       case 'interface':
         scalars.add(type.name);

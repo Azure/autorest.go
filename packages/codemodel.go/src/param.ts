@@ -278,7 +278,7 @@ export function isHeaderParameter(param: MethodParameter): param is HeaderParame
 }
 
 /** narrows type to a HeaderScalarType within the conditional block */
-export function isHeaderScalarType(type: type.PossibleType): type is HeaderScalarType {
+export function isHeaderScalarType(type: type.WireType): type is HeaderScalarType {
   switch (type.kind) {
     case 'constant':
     case 'encodedBytes':
@@ -298,7 +298,7 @@ export function isPathParameter(param: MethodParameter): param is PathParameter 
 }
 
 /** narrows type to a PathScalarParameterType within the conditional block */
-export function isPathScalarParameterType(type: type.PossibleType): type is PathScalarParameterType {
+export function isPathScalarParameterType(type: type.WireType): type is PathScalarParameterType {
   switch (type.kind) {
     case 'constant':
     case 'encodedBytes':
@@ -318,7 +318,7 @@ export function isQueryParameter(param: MethodParameter): param is QueryParamete
 }
 
 /** narrows type to a QueryScalarParameterType within the conditional block */
-export function isQueryScalarParameterType(type: type.PossibleType): type is QueryScalarParameterType {
+export function isQueryScalarParameterType(type: type.WireType): type is QueryScalarParameterType {
   switch (type.kind) {
     case 'constant':
     case 'encodedBytes':
@@ -342,7 +342,7 @@ export function isRequiredParameter(param: MethodParameter | Parameter): boolean
 }
 
 /** narrows type to a URIParameterType within the conditional block */
-export function isURIParameterType(type: type.PossibleType): type is URIParameterType {
+export function isURIParameterType(type: type.WireType): type is URIParameterType {
   switch (type.kind) {
     case 'constant':
     case 'scalar':
@@ -376,7 +376,7 @@ interface ParameterBase {
    * the parameter's type.
    * NOTE: if the type is a LiteralValue the style will either be literal or flag
    */
-  type: type.PossibleType;
+  type: type.WireType;
 
   /** kind will have value literal or flag when type is a LiteralValue (see above comment) */
   style: ParameterStyle;
@@ -392,7 +392,7 @@ interface ParameterBase {
 }
 
 class ParameterBase implements ParameterBase {
-  constructor(name: string, type: type.PossibleType, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
+  constructor(name: string, type: type.WireType, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
     this.name = name;
     this.type = type;
     this.style = style;
@@ -406,7 +406,7 @@ class ParameterBase implements ParameterBase {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class BodyParameter extends ParameterBase implements BodyParameter {
-  constructor(name: string, bodyFormat: BodyFormat, contentType: string, type: type.PossibleType, style: ParameterStyle, byValue: boolean) {
+  constructor(name: string, bodyFormat: BodyFormat, contentType: string, type: type.WireType, style: ParameterStyle, byValue: boolean) {
     super(name, type, style, byValue, 'method');
     this.kind = 'bodyParam';
     this.bodyFormat = bodyFormat;
@@ -430,7 +430,7 @@ export class FormBodyCollectionParameter extends ParameterBase implements FormBo
 }
 
 export class FormBodyScalarParameter extends ParameterBase implements FormBodyScalarParameter {
-  constructor(name: string, formDataName: string, type: type.PossibleType, style: ParameterStyle, byValue: boolean) {
+  constructor(name: string, formDataName: string, type: type.WireType, style: ParameterStyle, byValue: boolean) {
     super(name, type, style, byValue, 'method');
     this.kind = 'formBodyScalarParam';
     this.formDataName = formDataName;
@@ -463,14 +463,14 @@ export class HeaderScalarParameter extends ParameterBase implements HeaderScalar
 }
 
 export class MultipartFormBodyParameter extends ParameterBase implements MultipartFormBodyParameter {
-  constructor(name: string, type: type.PossibleType, style: ParameterStyle, byValue: boolean) {
+  constructor(name: string, type: type.WireType, style: ParameterStyle, byValue: boolean) {
     super(name, type, style, byValue, 'method');
     this.kind = 'multipartFormBodyParam';
   }
 }
 
 export class Parameter extends ParameterBase implements Parameter {
-  constructor(name: string, type: type.PossibleType, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
+  constructor(name: string, type: type.WireType, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
     super(name, type, style, byValue, location);
     this.kind = 'parameter';
   }
@@ -490,7 +490,7 @@ export class ParameterGroup implements ParameterGroup {
 }
 
 export class PartialBodyParameter extends ParameterBase implements PartialBodyParameter{
-  constructor(name: string, serializedName: string, format: 'JSON' | 'XML', type: type.PossibleType, style: ParameterStyle, byValue: boolean) {
+  constructor(name: string, serializedName: string, format: 'JSON' | 'XML', type: type.WireType, style: ParameterStyle, byValue: boolean) {
     super(name, type, style, byValue, 'method');
     this.kind = 'partialBodyParam';
     this.format = format;
