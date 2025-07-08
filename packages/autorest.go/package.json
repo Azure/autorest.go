@@ -53,7 +53,7 @@
     "@autorest/extension-base": "~3.5.2",
     "@azure-tools/codegen": "catalog:",
     "@eslint/js": "catalog:",
-    "@microsoft.azure/autorest.testserver": "3.3.49",
+    "@microsoft.azure/autorest.testserver": "3.3.50",
     "@types/node": "catalog:",
     "@vitest/coverage-v8": "catalog:",
     "@vitest/ui": "catalog:",
