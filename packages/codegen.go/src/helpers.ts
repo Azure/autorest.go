@@ -903,3 +903,104 @@ export function getMethodParamGroups(method: go.MethodType | go.NextPageMethod):
     unencodedQueryParams,
   }
 }
+
+/** helper for managing indentation levels */
+export class indentation {
+  private level: number;
+  constructor(level?: number) {
+    if (level !== undefined) {
+      this.level = level;
+    } else {
+      // default to one level of indentation
+      this.level = 1;
+    }
+  }
+
+  /**
+   * returns spaces for the current indentation level
+   * 
+   * @returns a string with the current indentation level
+   */
+  get(): string {
+    let indent = '';
+    for (let i = 0; i < this.level; ++i) {
+      indent += '\t';
+    }
+    return indent;
+  }
+
+  /**
+   * increments the indentation level
+   * 
+   * @returns this indentation instance
+   */
+  push(): indentation {
+    ++this.level;
+    return this;
+  }
+
+  /**
+   * decrements the indentation level
+   * 
+   * @returns this indentation instance
+   */
+  pop(): indentation {
+    --this.level;
+    if (this.level < 0) {
+      throw new CodegenError('InternalError', 'indentation stack underflow');
+    }
+    return this;
+  }
+}
+
+/** the if condition in an if block */
+export interface ifBlock {
+  /** the condition in the if block */
+  condition: string;
+
+  /** the body of the if block */
+  body: (indent: indentation) => string;
+}
+
+/** the else condition in an if/else block */
+export interface elseBlock {
+  /** the body of the else block */
+  body: (indent: indentation) => string;
+}
+
+/**
+ * constructs an if block (can expand to include else if as necessary)
+ * 
+ * @param indent the current indentation helper in scope
+ * @param ifBlock the if block definition
+ * @param elseBlock optional else block definition
+ * @returns the text for the if block
+ */
+export function buildIfBlock(indent: indentation, ifBlock: ifBlock, elseBlock?: elseBlock): string {
+  let body = `if ${ifBlock.condition} {\n`;
+  body += ifBlock.body(indent.push());
+  body += `${indent.pop().get()}}`;
+
+  if (elseBlock) {
+    body += ' else {\n';
+    body += elseBlock.body(indent.push());
+    body += `${indent.pop().get()}}`;
+  }
+
+  return body;
+}
+
+/**
+ * constructs an "if err != nil { return something }" block
+ * 
+ * @param indent the current indentation helper in scope
+ * @param errVar the name of the error variable used in the condition
+ * @param returns the value(s) to return from the control block
+ * @returns the text for the error check block
+ */
+export function buildErrCheck(indent: indentation, errVar: string, returns: string): string {
+  let body = `if ${errVar} != nil {\n`;
+  body += `${indent.push().get()}return ${returns}\n`;
+  body += `${indent.pop().get()}}`;
+  return body;
+}
