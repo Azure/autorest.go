@@ -128,7 +128,7 @@ importers:
         version: 3.5.2
       '@autorest/testmodeler':
         specifier: 2.6.4-ci.254802bfc.0
-        version: 2.6.4-ci.254802bfc.0(@babel/core@7.27.1)(@jest/transform@29.7.0)(@jest/types@29.6.3)(@types/eslint@9.6.1)(babel-jest@29.7.0(@babel/core@7.27.1))(webpack@5.99.9)
+        version: 2.6.4-ci.254802bfc.0(@babel/core@7.27.7)(@jest/transform@29.7.0)(@jest/types@29.6.3)(@types/eslint@9.6.1)(babel-jest@29.7.0(@babel/core@7.27.7))(webpack@5.99.9)
       '@azure-tools/codegen':
         specifier: 'catalog:'
         version: 2.10.0
@@ -204,7 +204,7 @@ importers:
         version: 3.5.3
       ts-jest:
         specifier: ~29.3.2
-        version: 29.3.4(@babel/core@7.27.1)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.27.1))(jest@29.7.0(@types/node@20.17.40))(typescript@5.8.3)
+        version: 29.3.4(@babel/core@7.27.7)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.27.7))(jest@29.7.0(@types/node@20.17.40))(typescript@5.8.3)
       typescript:
         specifier: 'catalog:'
         version: 5.8.3
@@ -247,8 +247,8 @@ importers:
         version: 0.5.21
     devDependencies:
       '@azure-tools/azure-http-specs':
-        specifier: 0.1.0-alpha.19
-        version: 0.1.0-alpha.19(35e31b7a6dace2f04c39ba930604fce8)
+        specifier: 0.1.0-alpha.22
+        version: 0.1.0-alpha.22(35e31b7a6dace2f04c39ba930604fce8)
       '@azure-tools/typespec-autorest':
         specifier: 0.57.0
         version: 0.57.0(cc210ccd06397d55b588b64f6bd657bf)
@@ -353,8 +353,8 @@ packages:
     resolution: {integrity: sha512-4w2xfBcT0dj/IYp9t/fsBvuzTrV8faQnCs3URqfui9RBnoHVj12p8FdxCRKuRaN5CRPQlZ6XW4eMhp1wu5E8GQ==}
     engines: {node: '>=12.13.0'}
 
-  '@azure-tools/azure-http-specs@0.1.0-alpha.19':
-    resolution: {integrity: sha512-zxBtxdBaGo5n8OvZmYiE3IXJB1X+8CS0CfrcqwqfYB+kAgXOHLKWnMkGE1Yx0UZdbrkFio0bnZRZRtu2E0tYdg==}
+  '@azure-tools/azure-http-specs@0.1.0-alpha.22':
+    resolution: {integrity: sha512-UbK1Gc0zcthjfpdp34CybWsn5j02GCcpKihX7yXa5nAoZ++faFeaoFm0IbhvQpTfnTuY7X42goxUjZPXZGxeKg==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       '@azure-tools/typespec-azure-core': ^0.57.0
@@ -5557,7 +5557,7 @@ snapshots:
       js-yaml: 4.0.0
       vscode-jsonrpc: 3.6.2
 
-  '@autorest/testmodeler@2.6.4-ci.254802bfc.0(@babel/core@7.27.1)(@jest/transform@29.7.0)(@jest/types@29.6.3)(@types/eslint@9.6.1)(babel-jest@29.7.0(@babel/core@7.27.1))(webpack@5.99.9)':
+  '@autorest/testmodeler@2.6.4-ci.254802bfc.0(@babel/core@7.27.7)(@jest/transform@29.7.0)(@jest/types@29.6.3)(@types/eslint@9.6.1)(babel-jest@29.7.0(@babel/core@7.27.7))(webpack@5.99.9)':
     dependencies:
       '@autorest/codemodel': 4.19.3
       '@autorest/extension-base': 3.5.2
@@ -5582,7 +5582,7 @@ snapshots:
       prettier: 3.5.3
       reflect-metadata: 0.2.2
       source-map-support: 0.5.21
-      ts-jest: 29.3.4(@babel/core@7.27.1)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.27.1))(jest@30.0.3(@types/node@24.0.4))(typescript@5.8.3)
+      ts-jest: 29.3.4(@babel/core@7.27.7)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.27.7))(jest@30.0.3(@types/node@24.0.4))(typescript@5.8.3)
       ts-loader: 9.5.2(typescript@5.8.3)(webpack@5.99.9)
       typescript: 5.8.3
     transitivePeerDependencies:
@@ -5612,7 +5612,7 @@ snapshots:
       '@azure-tools/tasks': 4.0.246
       proper-lockfile: 2.0.1
 
-  '@azure-tools/azure-http-specs@0.1.0-alpha.19(35e31b7a6dace2f04c39ba930604fce8)':
+  '@azure-tools/azure-http-specs@0.1.0-alpha.22(35e31b7a6dace2f04c39ba930604fce8)':
     dependencies:
       '@azure-tools/typespec-azure-core': 0.57.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/http@1.1.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/streams@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40))))(@typespec/rest@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/http@1.1.0(@typespec/compiler@1.1.0(@types/node@20.17.40))(@typespec/streams@0.71.0(@typespec/compiler@1.1.0(@types/node@20.17.40)))))
       '@typespec/compiler': 1.1.0(@types/node@20.17.40)
@@ -7934,6 +7934,20 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  babel-jest@29.7.0(@babel/core@7.27.7):
+    dependencies:
+      '@babel/core': 7.27.7
+      '@jest/transform': 29.7.0
+      '@types/babel__core': 7.20.5
+      babel-plugin-istanbul: 6.1.1
+      babel-preset-jest: 29.6.3(@babel/core@7.27.7)
+      chalk: 4.1.2
+      graceful-fs: 4.2.11
+      slash: 3.0.0
+    transitivePeerDependencies:
+      - supports-color
+    optional: true
+
   babel-jest@30.0.2(@babel/core@7.27.7):
     dependencies:
       '@babel/core': 7.27.7
@@ -8023,6 +8037,13 @@ snapshots:
       '@babel/core': 7.27.1
       babel-plugin-jest-hoist: 29.6.3
       babel-preset-current-node-syntax: 1.1.0(@babel/core@7.27.1)
+
+  babel-preset-jest@29.6.3(@babel/core@7.27.7):
+    dependencies:
+      '@babel/core': 7.27.7
+      babel-plugin-jest-hoist: 29.6.3
+      babel-preset-current-node-syntax: 1.1.0(@babel/core@7.27.7)
+    optional: true
 
   babel-preset-jest@30.0.1(@babel/core@7.27.7):
     dependencies:
@@ -11490,7 +11511,7 @@ snapshots:
     dependencies:
       typescript: 5.8.3
 
-  ts-jest@29.3.4(@babel/core@7.27.1)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.27.1))(jest@29.7.0(@types/node@20.17.40))(typescript@5.8.3):
+  ts-jest@29.3.4(@babel/core@7.27.7)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.27.7))(jest@29.7.0(@types/node@20.17.40))(typescript@5.8.3):
     dependencies:
       bs-logger: 0.2.6
       ejs: 3.1.10
@@ -11505,12 +11526,12 @@ snapshots:
       typescript: 5.8.3
       yargs-parser: 21.1.1
     optionalDependencies:
-      '@babel/core': 7.27.1
+      '@babel/core': 7.27.7
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
-      babel-jest: 29.7.0(@babel/core@7.27.1)
+      babel-jest: 29.7.0(@babel/core@7.27.7)
 
-  ts-jest@29.3.4(@babel/core@7.27.1)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.27.1))(jest@30.0.3(@types/node@24.0.4))(typescript@5.8.3):
+  ts-jest@29.3.4(@babel/core@7.27.7)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.27.7))(jest@30.0.3(@types/node@24.0.4))(typescript@5.8.3):
     dependencies:
       bs-logger: 0.2.6
       ejs: 3.1.10
@@ -11525,10 +11546,10 @@ snapshots:
       typescript: 5.8.3
       yargs-parser: 21.1.1
     optionalDependencies:
-      '@babel/core': 7.27.1
+      '@babel/core': 7.27.7
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
-      babel-jest: 29.7.0(@babel/core@7.27.1)
+      babel-jest: 29.7.0(@babel/core@7.27.7)
 
   ts-loader@9.5.2(typescript@5.8.3)(webpack@5.99.9):
     dependencies:
