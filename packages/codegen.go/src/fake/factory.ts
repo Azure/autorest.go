@@ -5,7 +5,7 @@
 
 import * as go from '../../../codemodel.go/src/index.js';
 import { getServerName } from './servers.js';
-import { contentPreamble } from '../helpers.js';
+import * as helpers from '../helpers.js';
 import { ImportManager } from '../imports.js';
 
 export function generateServerFactory(codeModel: go.CodeModel): string {
@@ -15,6 +15,7 @@ export function generateServerFactory(codeModel: go.CodeModel): string {
   }
 
   const imports = new ImportManager();
+  const indent = new helpers.indentation();
   imports.add('errors');
   imports.add('fmt');
   imports.add('net/http');
@@ -22,15 +23,15 @@ export function generateServerFactory(codeModel: go.CodeModel): string {
   imports.add('sync');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
 
-  let text = contentPreamble(codeModel, 'fake');
+  let text = helpers.contentPreamble(codeModel, 'fake');
   text += imports.text();
 
   text += `// ServerFactory is a fake server for instances of the ${codeModel.packageName}.ClientFactory type.\n`;
   text += 'type ServerFactory struct {\n';
   for (const client of codeModel.clients) {
     const serverName = getServerName(client);
-    text += `\t// ${serverName} contains the fakes for client ${client.name}\n`;
-    text += `\t${serverName} ${serverName}\n\n`;
+    text += `${indent.get()}// ${serverName} contains the fakes for client ${client.name}\n`;
+    text += `${indent.get()}${serverName} ${serverName}\n\n`;
   }
   text += '}\n\n';
 
@@ -38,41 +39,45 @@ export function generateServerFactory(codeModel: go.CodeModel): string {
   text += `// The returned ServerFactoryTransport instance is connected to an instance of ${codeModel.packageName}.ClientFactory via the\n`;
   text += '// azcore.ClientOptions.Transporter field in the client\'s constructor parameters.\n';
   text += 'func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {\n';
-  text += '\treturn &ServerFactoryTransport{\n\t\tsrv: srv,\n\t}\n}\n\n';
+  text += `${indent.get()}return &ServerFactoryTransport{\n${indent.push().get()}srv: srv,\n${indent.pop().get()}}\n}\n\n`;
 
   text += `// ServerFactoryTransport connects instances of ${codeModel.packageName}.ClientFactory to instances of ServerFactory.\n`;
   text += '// Don\'t use this type directly, use NewServerFactoryTransport instead.\n';
   text += 'type ServerFactoryTransport struct {\n';
-  text += '\tsrv *ServerFactory\n';
-  text += '\ttrMu sync.Mutex\n';
+  text += `${indent.get()}srv *ServerFactory\n`;
+  text += `${indent.get()}trMu sync.Mutex\n`;
   for (const client of codeModel.clients) {
     const serverName = getServerName(client);
-    text += `\ttr${serverName} *${serverName}Transport\n`;
+    text += `${indent.get()}tr${serverName} *${serverName}Transport\n`;
   }
   text += '}\n\n';
 
   text += '// Do implements the policy.Transporter interface for ServerFactoryTransport.\n';
   text += 'func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {\n';
-  text += '\trawMethod := req.Context().Value(runtime.CtxAPINameKey{})\n';
-  text += '\tmethod, ok := rawMethod.(string)\n';
-  text += '\tif !ok {\n\t\treturn nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}\n\t}\n\n';
-  text += '\tclient := method[:strings.Index(method, ".")]\n';
-  text += '\tvar resp *http.Response\n\tvar err error\n\n';
-  text += '\tswitch client {\n';
+  text += `${indent.get()}rawMethod := req.Context().Value(runtime.CtxAPINameKey{})\n`;
+  text += `${indent.get()}method, ok := rawMethod.(string)\n`;
+  text += `${indent.get()}if !ok {\n${indent.push().get()}return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}\n${indent.pop().get()}}\n\n`;
+  text += `${indent.get()}client := method[:strings.Index(method, ".")]\n`;
+  text += `${indent.get()}var resp *http.Response\n${indent.get()}var err error\n\n`;
+  text += `${indent.get()}switch client {\n`;
   for (const client of codeModel.clients) {
-    text += `\tcase "${client.name}":\n`;
+    text += `${indent.get()}case "${client.name}":\n`;
     const serverName = getServerName(client);
-    text += `\t\tinitServer(s, &s.tr${serverName}, func() *${serverName}Transport { return New${serverName}Transport(&s.srv.${serverName}) })\n`;
-    text += `\t\tresp, err = s.tr${serverName}.Do(req)\n`;
+    text += `${indent.push().get()}initServer(s, &s.tr${serverName}, func() *${serverName}Transport { return New${serverName}Transport(&s.srv.${serverName}) })\n`;
+    text += `${indent.get()}resp, err = s.tr${serverName}.Do(req)\n`;
+    indent.pop();
   }
-  text += '\tdefault:\n\t\terr = fmt.Errorf("unhandled client %s", client)\n';
-  text += '\t}\n\n';
-  text += '\tif err != nil {\n\t\treturn nil, err\n\t}\n\n';
-  text += '\treturn resp, nil\n}\n\n';
+  text += `${indent.get()}default:\n${indent.push().get()}err = fmt.Errorf("unhandled client %s", client)\n`;
+  text += `${indent.pop().get()}}\n\n`;
+  text += `${indent.get()}${helpers.buildErrCheck(indent, 'err', 'nil, err')}\n\n`;
+  text += `${indent.get()}return resp, nil\n}\n\n`;
 
   text += 'func initServer[T any](s *ServerFactoryTransport, dst **T, src func() *T) {\n';
-  text += '\ts.trMu.Lock()\n';
-  text += '\tif *dst == nil {\n\t\t*dst = src()\n\t}\n';
-  text += '\ts.trMu.Unlock()\n}\n';
+  text += `${indent.get()}s.trMu.Lock()\n`;
+  text += `${indent.get()}${helpers.buildIfBlock(indent, {
+    condition: '*dst == nil',
+    body: (indent) => `${indent.get()}*dst = src()\n`,
+  })}\n`;
+  text += `${indent.get()}s.trMu.Unlock()\n}\n`;
   return text;
 }
