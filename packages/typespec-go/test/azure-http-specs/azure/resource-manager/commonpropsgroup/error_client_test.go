@@ -6,10 +6,11 @@ package commonpropsgroup_test
 import (
 	"commonpropsgroup"
 	"encoding/json"
-	"http"
+	"net/http"
 	"regexp"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
@@ -38,19 +39,17 @@ func TestErrorClient_CreateForUserDefinedError(t *testing.T) {
 	err = json.Unmarshal([]byte(jsonStr), &errorResp)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
-	require.Contains(t, errorResp.Message, "Username should not contain only numbers.")
-	require.Contains(t, errorResp.InnerError.ExceptionType, "general")
-	require.Contains(t, errorResp.Code, "BadRequest")
+	require.Equal(t, errorResp.Message, "Username should not contain only numbers.")
+	require.Equal(t, errorResp.InnerError.ExceptionType, "general")
+	require.Equal(t, errorResp.Code, "BadRequest")
 }
 
 func TestErrorClient_GetForPredefinedError(t *testing.T) {
 	resp, err := clientFactory.NewErrorClient().GetForPredefinedError(ctx, resourceGroupExpected, "confidential", nil)
 	require.Error(t, err)
 	require.NotNil(t, resp)
-	// require.Contains(t, err.Error(), "The Resource 'Azure.ResourceManager.CommonProperties/confidentialResources/confidential' under resource group 'test-rg' was not found.")
-	// require.Contains(t, err.Error(), "ResourceNotFound")
 	var respErr *azcore.ResponseError
 	require.ErrorAs(t, err, &respErr)
-	require.EqualValues(t, http.StatusInternalServerError, respErr.StatusCode)
+	require.EqualValues(t, http.StatusNotFound, respErr.StatusCode)
 	require.Zero(t, resp)
 }
