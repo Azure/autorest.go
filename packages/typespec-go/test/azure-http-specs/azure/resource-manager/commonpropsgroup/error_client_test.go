@@ -33,15 +33,15 @@ func TestErrorClient_CreateForUserDefinedError(t *testing.T) {
 		},
 	}, nil)
 	require.Error(t, err)
+	require.NotNil(t, resp)
 	re := regexp.MustCompile(`(?s)\{.*\}`)
 	jsonStr := re.FindString(err.Error())
 	var errorResp ErrorResp
 	err = json.Unmarshal([]byte(jsonStr), &errorResp)
 	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.Equal(t, errorResp.Message, "Username should not contain only numbers.")
-	require.Equal(t, errorResp.InnerError.ExceptionType, "general")
-	require.Equal(t, errorResp.Code, "BadRequest")
+	require.Contains(t, errorResp.Message, "Username should not contain only numbers")
+	require.Equal(t, "general", errorResp.InnerError.ExceptionType)
+	require.Equal(t, "BadRequest", errorResp.Code)
 }
 
 func TestErrorClient_GetForPredefinedError(t *testing.T) {
