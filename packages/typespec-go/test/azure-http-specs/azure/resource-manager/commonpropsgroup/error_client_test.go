@@ -26,6 +26,11 @@ func TestErrorClient_CreateForUserDefinedError(t *testing.T) {
 	require.ErrorAs(t, err, &respErr)
 	require.EqualValues(t, http.StatusBadRequest, respErr.StatusCode)
 	require.Zero(t, resp)
+	bodyBytes := make([]byte, respErr.RawResponse.ContentLength)
+	_, readErr := respErr.RawResponse.Body.Read(bodyBytes)
+	require.NoError(t, readErr)
+	bodyString := string(bodyBytes)
+	require.Contains(t, bodyString, "Username should not contain only numbers.")
 }
 
 func TestErrorClient_GetForPredefinedError(t *testing.T) {
@@ -36,4 +41,9 @@ func TestErrorClient_GetForPredefinedError(t *testing.T) {
 	require.ErrorAs(t, err, &respErr)
 	require.EqualValues(t, http.StatusNotFound, respErr.StatusCode)
 	require.Zero(t, resp)
+	bodyBytes := make([]byte, respErr.RawResponse.ContentLength)
+	_, readErr := respErr.RawResponse.Body.Read(bodyBytes)
+	require.NoError(t, readErr)
+	bodyString := string(bodyBytes)
+	require.Contains(t, bodyString, "The Resource 'Azure.ResourceManager.CommonProperties/confidentialResources/confidential' under resource group 'test-rg' was not found.")
 }
