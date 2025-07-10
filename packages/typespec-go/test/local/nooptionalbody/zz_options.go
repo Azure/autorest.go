@@ -4,7 +4,7 @@
 
 package nooptionalbody
 
-// BodyWidgetsClientPutOptions contains the optional parameters for the BodyWidgetsClient.Put method.
-type BodyWidgetsClientPutOptions struct {
+// ClientPutOptions contains the optional parameters for the Client.Put method.
+type ClientPutOptions struct {
 	// placeholder for future optional parameters
 }

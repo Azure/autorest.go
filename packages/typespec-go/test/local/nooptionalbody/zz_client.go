@@ -13,41 +13,40 @@ import (
 	"strings"
 )
 
-// BodyWidgetsClient contains the methods for the BodyWidgets group.
-// Don't use this type directly, use [BodyClient.NewBodyWidgetsClient] instead.
-type BodyWidgetsClient struct {
+// Client contains the methods for the group.
+// Don't use this type directly, use a constructor function instead.
+type Client struct {
 	internal *azcore.Client
 	endpoint string
 }
 
 // Put -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - options - BodyWidgetsClientPutOptions contains the optional parameters for the BodyWidgetsClient.Put method.
-func (client *BodyWidgetsClient) Put(ctx context.Context, body Widget, options *BodyWidgetsClientPutOptions) (BodyWidgetsClientPutResponse, error) {
+//   - options - ClientPutOptions contains the optional parameters for the Client.Put method.
+func (client *Client) Put(ctx context.Context, body Widget, options *ClientPutOptions) (ClientPutResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "BodyWidgetsClient.Put", client.internal.Tracer(), nil)
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.Put", client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
-		return BodyWidgetsClientPutResponse{}, err
+		return ClientPutResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return BodyWidgetsClientPutResponse{}, err
+		return ClientPutResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return BodyWidgetsClientPutResponse{}, err
+		return ClientPutResponse{}, err
 	}
-	return BodyWidgetsClientPutResponse{}, nil
+	return ClientPutResponse{}, nil
 }
 
 // putCreateRequest creates the Put request.
-func (client *BodyWidgetsClient) putCreateRequest(ctx context.Context, body Widget, _ *BodyWidgetsClientPutOptions) (*policy.Request, error) {
+func (client *Client) putCreateRequest(ctx context.Context, body Widget, _ *ClientPutOptions) (*policy.Request, error) {
 	host := "{endpoint}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	urlPath := "/widgets"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, host)
 	if err != nil {
 		return nil, err
 	}

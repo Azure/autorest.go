@@ -4,7 +4,7 @@
 
 package nooptionalbody
 
-// BodyWidgetsClientPutResponse contains the response from method BodyWidgetsClient.Put.
-type BodyWidgetsClientPutResponse struct {
+// ClientPutResponse contains the response from method Client.Put.
+type ClientPutResponse struct {
 	// placeholder for future response values
 }
