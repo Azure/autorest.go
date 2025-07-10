@@ -1,5 +1,11 @@
 # Release History
 
+## 0.5.2 (unreleased)
+
+### Other Changes
+
+* Added switch `no-optional-body` to make optional body parameters required.
+
 ## 0.5.1 (2025-06-26)
 
 ### Other Changes
