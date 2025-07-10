@@ -5,12 +5,24 @@
 package clientnamespacegroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import "github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 
 // ClientNamespaceClient - Illustrates the clientNamespace cases.
 // Don't use this type directly, use a constructor function instead.
 type ClientNamespaceClient struct {
 	internal *azcore.Client
 }
+
+func NewClientNamespaceClient(options *azcore.ClientOptions) (*ClientNamespaceClient, error) {
+	internal, err := azcore.NewClient("clientnamespacegroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
+	}
+	return &ClientNamespaceClient{
+		internal: internal,
+	}, nil
+}
+
 
 // NewClientNamespaceFirstClient creates a new instance of [ClientNamespaceFirstClient].
 func (client *ClientNamespaceClient) NewClientNamespaceFirstClient() *ClientNamespaceFirstClient {

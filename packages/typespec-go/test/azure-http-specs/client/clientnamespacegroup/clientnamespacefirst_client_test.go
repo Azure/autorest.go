@@ -4,16 +4,19 @@ import (
 	"context"
 	"testing"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/stretchr/testify/require"
 )
 
 func TestClientNamespaceFirstClient_GetFirst(t *testing.T) {
-	factory := &ClientNamespaceClient{internal: &azcore.Client{}}
-	client := factory.NewClientNamespaceFirstClient()
+	client, err := NewClientNamespaceClient(nil)
+	require.NoError(t, err)
 	require.NotNil(t, client)
-	resp, err := client.GetFirst(context.Background(), nil) // Use appropriate context and options
+	firstClient := client.NewClientNamespaceFirstClient()
+	require.NotNil(t, firstClient)
+	resp, err := firstClient.GetFirst(context.Background(), nil) // Use appropriate context and options
 	require.NoError(t, err)
 	require.NotNil(t, resp)
-	require.Equal(t, "first", resp.FirstClientResult.Name)
+	require.NotNil(t, resp.FirstClientResult)
+	require.NotNil(t, resp.FirstClientResult.Name)
+	require.Equal(t, "first", *resp.FirstClientResult.Name)
 }
