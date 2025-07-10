@@ -44,6 +44,7 @@ func NewClientLocationClient(options *azcore.ClientOptions) (*ClientLocationClie
 		internal: internal,
 	}, nil
 }
+
 func NewClientLocationMoveToRootClient(options *azcore.ClientOptions) (*ClientLocationMoveToRootClient, error) {
 	internal, err := azcore.NewClient("clientnamespacegroup", "v0.1.0", runtime.PipelineOptions{}, options)
 	if err != nil {
