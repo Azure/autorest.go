@@ -513,7 +513,10 @@ export class clientAdapter {
     }
 
     let adaptedParam: go.MethodParameter;
-    const paramStyle = this.adaptParameterStyle(param);
+    let paramStyle = this.adaptParameterStyle(param);
+    if (param.kind === 'body' && this.opts['no-optional-body'] === true) {
+      paramStyle = 'required';
+    }
     const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');
     const byVal = isTypePassedByValue(param.type);
 
