@@ -408,7 +408,7 @@ export class clientAdapter {
             throw new AdapterError('UnsupportedTsp', `unsupported spread param content type ${contentType}`, opParam.__raw?.node ?? NoTarget);
         }
       } else {
-        adaptedParam = this.adaptMethodParameter(opParam);
+        adaptedParam = this.adaptMethodParameter(opParam, method.httpMethod);
       }
 
       adaptedParam.docs.summary = param.summary;
@@ -433,7 +433,7 @@ export class clientAdapter {
     // look for them in the operation parameters.
     for (const opParam of allOpParams) {
       if (opParam.onClient) {
-        const adaptedParam = this.adaptMethodParameter(opParam);
+        const adaptedParam = this.adaptMethodParameter(opParam, method.httpMethod);
         adaptedParam.docs.summary = opParam.summary;
         adaptedParam.docs.description = opParam.doc;
         method.parameters.unshift(adaptedParam);
@@ -476,7 +476,7 @@ export class clientAdapter {
     return contentType;
   }
 
-  private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter): go.MethodParameter {
+  private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter, verb: go.HTTPMethod): go.MethodParameter {
     if (param.isApiVersionParam && param.clientDefaultValue) {
       // we emit the api version param inline as a literal, never as a param.
       // the ClientOptions.APIVersion setting is used to change the version.
@@ -510,7 +510,7 @@ export class clientAdapter {
 
     let adaptedParam: go.MethodParameter;
     let paramStyle = this.adaptParameterStyle(param);
-    if (param.kind === 'body' && this.opts['no-optional-body'] === true) {
+    if (param.kind === 'body' && (verb === 'patch' || verb === 'put')) {
       paramStyle = 'required';
     }
     const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');

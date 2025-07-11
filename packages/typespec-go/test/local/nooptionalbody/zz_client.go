@@ -20,7 +20,84 @@ type Client struct {
 	endpoint string
 }
 
-// Put -
+// Patch - body should not be optional
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientPatchOptions contains the optional parameters for the Client.Patch method.
+func (client *Client) Patch(ctx context.Context, body Widget, options *ClientPatchOptions) (ClientPatchResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.Patch", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.patchCreateRequest(ctx, body, options)
+	if err != nil {
+		return ClientPatchResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientPatchResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientPatchResponse{}, err
+	}
+	return ClientPatchResponse{}, nil
+}
+
+// patchCreateRequest creates the Patch request.
+func (client *Client) patchCreateRequest(ctx context.Context, body Widget, _ *ClientPatchOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, host)
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// Post - body should be optional
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientPostOptions contains the optional parameters for the Client.Post method.
+func (client *Client) Post(ctx context.Context, options *ClientPostOptions) (ClientPostResponse, error) {
+	var err error
+	ctx, endSpan := runtime.StartSpan(ctx, "Client.Post", client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.postCreateRequest(ctx, options)
+	if err != nil {
+		return ClientPostResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientPostResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientPostResponse{}, err
+	}
+	return ClientPostResponse{}, nil
+}
+
+// postCreateRequest creates the Post request.
+func (client *Client) postCreateRequest(ctx context.Context, options *ClientPostOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	req, err := runtime.NewRequest(ctx, http.MethodPost, host)
+	if err != nil {
+		return nil, err
+	}
+	if options != nil && options.Body != nil {
+		req.Raw().Header["Content-Type"] = []string{"application/json"}
+		if err := runtime.MarshalAsJSON(req, *options.Body); err != nil {
+			return nil, err
+		}
+		return req, nil
+	}
+	return req, nil
+}
+
+// Put - body should not be optional
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ClientPutOptions contains the optional parameters for the Client.Put method.
 func (client *Client) Put(ctx context.Context, body Widget, options *ClientPutOptions) (ClientPutResponse, error) {

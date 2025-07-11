@@ -72,13 +72,13 @@ func (client *JSONMergePatchClient) createResourceHandleResponse(resp *http.Resp
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - JSONMergePatchClientUpdateOptionalResourceOptions contains the optional parameters for the JSONMergePatchClient.UpdateOptionalResource
 //     method.
-func (client *JSONMergePatchClient) UpdateOptionalResource(ctx context.Context, options *JSONMergePatchClientUpdateOptionalResourceOptions) (JSONMergePatchClientUpdateOptionalResourceResponse, error) {
+func (client *JSONMergePatchClient) UpdateOptionalResource(ctx context.Context, body ResourcePatch, options *JSONMergePatchClientUpdateOptionalResourceOptions) (JSONMergePatchClientUpdateOptionalResourceResponse, error) {
 	var err error
 	const operationName = "JSONMergePatchClient.UpdateOptionalResource"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.updateOptionalResourceCreateRequest(ctx, options)
+	req, err := client.updateOptionalResourceCreateRequest(ctx, body, options)
 	if err != nil {
 		return JSONMergePatchClientUpdateOptionalResourceResponse{}, err
 	}
@@ -95,19 +95,16 @@ func (client *JSONMergePatchClient) UpdateOptionalResource(ctx context.Context, 
 }
 
 // updateOptionalResourceCreateRequest creates the UpdateOptionalResource request.
-func (client *JSONMergePatchClient) updateOptionalResourceCreateRequest(ctx context.Context, options *JSONMergePatchClientUpdateOptionalResourceOptions) (*policy.Request, error) {
+func (client *JSONMergePatchClient) updateOptionalResourceCreateRequest(ctx context.Context, body ResourcePatch, _ *JSONMergePatchClientUpdateOptionalResourceOptions) (*policy.Request, error) {
 	urlPath := "/json-merge-patch/update/resource/optional"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Body != nil {
-		req.Raw().Header["Content-Type"] = []string{"application/merge-patch+json"}
-		if err := runtime.MarshalAsJSON(req, *options.Body); err != nil {
-			return nil, err
-		}
-		return req, nil
+	req.Raw().Header["Content-Type"] = []string{"application/merge-patch+json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
 	}
 	return req, nil
 }
