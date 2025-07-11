@@ -4,6 +4,16 @@
 
 package nooptionalbody
 
+// ClientPatchOptions contains the optional parameters for the Client.Patch method.
+type ClientPatchOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientPostOptions contains the optional parameters for the Client.Post method.
+type ClientPostOptions struct {
+	Body *Widget
+}
+
 // ClientPutOptions contains the optional parameters for the Client.Put method.
 type ClientPutOptions struct {
 	// placeholder for future optional parameters

@@ -5,10 +5,7 @@
 ### Breaking Changes
 
 * Fixed some cases where a client name could stutter.
-
-### Other Changes
-
-* Added switch `no-optional-body` to make optional body parameters required.
+* Force the body paramter to be required for `PATCH` and `PUT` operations.
 
 ## 0.5.1 (2025-06-26)
 

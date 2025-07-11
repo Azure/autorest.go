@@ -14,7 +14,6 @@ export interface GoEmitterOptions {
   'inject-spans'?: boolean;
   'module'?: string;
   'module-version'?: string;
-  'no-optional-body'?: boolean;
   'rawjson-as-bytes'?: boolean;
   'slice-elements-byval'?: boolean;
   'single-client'?: boolean;
@@ -71,11 +70,6 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
       type: 'string',
       nullable: true,
       description: 'Semantic version of the Go module without the leading \'v\' written to constants.go. (e.g. 1.2.3). When module-version is specified, module must also be specified.',
-    },
-    'no-optional-body': {
-      type: 'boolean',
-      nullable: true,
-      description: 'When true, optional body parameters are forced to be required. The default is false.'
     },
     'rawjson-as-bytes': {
       type: 'boolean',

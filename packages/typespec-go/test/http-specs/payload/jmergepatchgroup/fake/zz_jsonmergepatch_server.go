@@ -13,7 +13,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"jmergepatchgroup"
 	"net/http"
-	"reflect"
 )
 
 // JSONMergePatchServer is a fake server for instances of the jmergepatchgroup.JSONMergePatchClient type.
@@ -24,7 +23,7 @@ type JSONMergePatchServer struct {
 
 	// UpdateOptionalResource is the fake for method JSONMergePatchClient.UpdateOptionalResource
 	// HTTP status codes to indicate success: http.StatusOK
-	UpdateOptionalResource func(ctx context.Context, options *jmergepatchgroup.JSONMergePatchClientUpdateOptionalResourceOptions) (resp azfake.Responder[jmergepatchgroup.JSONMergePatchClientUpdateOptionalResourceResponse], errResp azfake.ErrorResponder)
+	UpdateOptionalResource func(ctx context.Context, body jmergepatchgroup.ResourcePatch, options *jmergepatchgroup.JSONMergePatchClientUpdateOptionalResourceOptions) (resp azfake.Responder[jmergepatchgroup.JSONMergePatchClientUpdateOptionalResourceResponse], errResp azfake.ErrorResponder)
 
 	// UpdateResource is the fake for method JSONMergePatchClient.UpdateResource
 	// HTTP status codes to indicate success: http.StatusOK
@@ -123,13 +122,7 @@ func (j *JSONMergePatchServerTransport) dispatchUpdateOptionalResource(req *http
 	if err != nil {
 		return nil, err
 	}
-	var options *jmergepatchgroup.JSONMergePatchClientUpdateOptionalResourceOptions
-	if !reflect.ValueOf(body).IsZero() {
-		options = &jmergepatchgroup.JSONMergePatchClientUpdateOptionalResourceOptions{
-			Body: &body,
-		}
-	}
-	respr, errRespr := j.srv.UpdateOptionalResource(req.Context(), options)
+	respr, errRespr := j.srv.UpdateOptionalResource(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

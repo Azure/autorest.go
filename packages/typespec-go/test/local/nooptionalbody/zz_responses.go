@@ -4,6 +4,16 @@
 
 package nooptionalbody
 
+// ClientPatchResponse contains the response from method Client.Patch.
+type ClientPatchResponse struct {
+	// placeholder for future response values
+}
+
+// ClientPostResponse contains the response from method Client.Post.
+type ClientPostResponse struct {
+	// placeholder for future response values
+}
+
 // ClientPutResponse contains the response from method Client.Put.
 type ClientPutResponse struct {
 	// placeholder for future response values

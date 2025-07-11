@@ -13,5 +13,14 @@ model Widget {
   weight: int32;
 }
 
+/** body should not be optional */
+@patch
+op patch(@body body?: Widget): void;
+
+/** body should not be optional */
 @put
 op put(@body body?: Widget): void;
+
+/** body should be optional */
+@post
+op post(@body body?: Widget): void;

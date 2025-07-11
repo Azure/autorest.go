@@ -13,7 +13,7 @@ type JSONMergePatchClientCreateResourceOptions struct {
 // JSONMergePatchClientUpdateOptionalResourceOptions contains the optional parameters for the JSONMergePatchClient.UpdateOptionalResource
 // method.
 type JSONMergePatchClientUpdateOptionalResourceOptions struct {
-	Body *ResourcePatch
+	// placeholder for future optional parameters
 }
 
 // JSONMergePatchClientUpdateResourceOptions contains the optional parameters for the JSONMergePatchClient.UpdateResource
