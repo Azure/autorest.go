@@ -4,7 +4,7 @@
 
 package coreusagegroup
 
-// InputModel - Usage override to roundtrip.
+// InputModel - Usage additive to roundtrip.
 type InputModel struct {
 	// REQUIRED
 	Name *string
@@ -19,7 +19,7 @@ type OrphanModel struct {
 	ModelName *string
 }
 
-// OutputModel - Usage override to roundtrip.
+// OutputModel - Usage additive to roundtrip.
 type OutputModel struct {
 	// REQUIRED
 	Name *string

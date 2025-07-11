@@ -6,6 +6,35 @@ package templatesgroup
 
 import "time"
 
+type ActionRequest struct {
+	// The action type to perform.
+	ActionType *string
+
+	// Additional action parameters.
+	Parameters *string
+}
+
+type ActionResult struct {
+	// REQUIRED; The result of the action.
+	Result *string
+}
+
+type ChangeAllowanceRequest struct {
+	// The reason for the change.
+	Reason *string
+
+	// The new total allowed widgets.
+	TotalAllowed *int32
+}
+
+type ChangeAllowanceResult struct {
+	// REQUIRED; The status of the change.
+	Status *string
+
+	// REQUIRED; The new total allowed widgets.
+	TotalAllowed *int32
+}
+
 // CheckNameAvailabilityRequest - The check availability request body.
 type CheckNameAvailabilityRequest struct {
 	// The name of the resource for which availability needs to be checked.
@@ -142,4 +171,39 @@ type SystemData struct {
 
 	// The type of identity that last modified the resource.
 	LastModifiedByType *CreatedByType
+}
+
+// Widget - Concrete tracked resource types can be created by aliasing this type using a specific property type.
+type Widget struct {
+	// REQUIRED; The geo-location where the resource lives
+	Location *string
+
+	// The resource-specific properties for this resource.
+	Properties *WidgetProperties
+
+	// Resource tags.
+	Tags map[string]*string
+
+	// READ-ONLY; The name of the Widget
+	Name *string
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+type WidgetProperties struct {
+	// The description of the widget.
+	Description *string
+
+	// The name of the widget.
+	Name *string
+
+	// READ-ONLY; The provisioning state of the widget.
+	ProvisioningState *string
 }
