@@ -4,6 +4,12 @@
 
 package armrandom
 
+// ClientGetResponse contains the response from method Client.Get.
+type ClientGetResponse struct {
+	// Response for fake things.
+	FakeData
+}
+
 // SomeServiceClientCheckTrialAvailabilityResponse contains the response from method SomeServiceClient.CheckTrialAvailability.
 type SomeServiceClientCheckTrialAvailabilityResponse struct {
 	// Subscription trial availability

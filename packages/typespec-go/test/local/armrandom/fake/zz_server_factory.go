@@ -15,6 +15,9 @@ import (
 
 // ServerFactory is a fake server for instances of the armrandom.ClientFactory type.
 type ServerFactory struct {
+	// Server contains the fakes for client Client
+	Server Server
+
 	// SomeServiceServer contains the fakes for client SomeServiceClient
 	SomeServiceServer SomeServiceServer
 }
@@ -33,6 +36,7 @@ func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
 type ServerFactoryTransport struct {
 	srv                 *ServerFactory
 	trMu                sync.Mutex
+	trServer            *ServerTransport
 	trSomeServiceServer *SomeServiceServerTransport
 }
 
@@ -49,6 +53,9 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	var err error
 
 	switch client {
+	case "Client":
+		initServer(s, &s.trServer, func() *ServerTransport { return NewServerTransport(&s.srv.Server) })
+		resp, err = s.trServer.Do(req)
 	case "SomeServiceClient":
 		initServer(s, &s.trSomeServiceServer, func() *SomeServiceServerTransport { return NewSomeServiceServerTransport(&s.srv.SomeServiceServer) })
 		resp, err = s.trSomeServiceServer.Do(req)

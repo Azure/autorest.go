@@ -1,6 +1,10 @@
 # Release History
 
-## 0.5.2 (unreleased)
+## 0.6.0 (unreleased)
+
+### Breaking Changes
+
+* Fixed some cases where a client name could stutter.
 
 ### Other Changes
 

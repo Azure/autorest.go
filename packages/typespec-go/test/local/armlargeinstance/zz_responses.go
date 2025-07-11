@@ -4,61 +4,6 @@
 
 package armlargeinstance
 
-// AzureLargeInstanceClientCreateResponse contains the response from method AzureLargeInstanceClient.Create.
-type AzureLargeInstanceClientCreateResponse struct {
-	// Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
-	// properties)
-	AzureLargeInstance
-}
-
-// AzureLargeInstanceClientDeleteResponse contains the response from method AzureLargeInstanceClient.Delete.
-type AzureLargeInstanceClientDeleteResponse struct {
-	// placeholder for future response values
-}
-
-// AzureLargeInstanceClientGetResponse contains the response from method AzureLargeInstanceClient.Get.
-type AzureLargeInstanceClientGetResponse struct {
-	// Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
-	// properties)
-	AzureLargeInstance
-}
-
-// AzureLargeInstanceClientListByResourceGroupResponse contains the response from method AzureLargeInstanceClient.NewListByResourceGroupPager.
-type AzureLargeInstanceClientListByResourceGroupResponse struct {
-	// The response of a AzureLargeInstance list operation.
-	ListResult
-}
-
-// AzureLargeInstanceClientListBySubscriptionResponse contains the response from method AzureLargeInstanceClient.NewListBySubscriptionPager.
-type AzureLargeInstanceClientListBySubscriptionResponse struct {
-	// The response of a AzureLargeInstance list operation.
-	ListResult
-}
-
-// AzureLargeInstanceClientRestartResponse contains the response from method AzureLargeInstanceClient.BeginRestart.
-type AzureLargeInstanceClientRestartResponse struct {
-	// placeholder for future response values
-}
-
-// AzureLargeInstanceClientShutdownResponse contains the response from method AzureLargeInstanceClient.BeginShutdown.
-type AzureLargeInstanceClientShutdownResponse struct {
-	// The current status of an async operation.
-	OperationStatusResult
-}
-
-// AzureLargeInstanceClientStartResponse contains the response from method AzureLargeInstanceClient.BeginStart.
-type AzureLargeInstanceClientStartResponse struct {
-	// The current status of an async operation.
-	OperationStatusResult
-}
-
-// AzureLargeInstanceClientUpdateResponse contains the response from method AzureLargeInstanceClient.Update.
-type AzureLargeInstanceClientUpdateResponse struct {
-	// Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
-	// properties)
-	AzureLargeInstance
-}
-
 // AzureLargeStorageInstanceClientCreateResponse contains the response from method AzureLargeStorageInstanceClient.Create.
 type AzureLargeStorageInstanceClientCreateResponse struct {
 	// AzureLargeStorageInstance info on Azure (ARM properties and
@@ -95,6 +40,61 @@ type AzureLargeStorageInstanceClientUpdateResponse struct {
 	// AzureLargeStorageInstance info on Azure (ARM properties and
 	// AzureLargeStorageInstance properties)
 	AzureLargeStorageInstance
+}
+
+// ClientCreateResponse contains the response from method Client.Create.
+type ClientCreateResponse struct {
+	// Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
+	// properties)
+	AzureLargeInstance
+}
+
+// ClientDeleteResponse contains the response from method Client.Delete.
+type ClientDeleteResponse struct {
+	// placeholder for future response values
+}
+
+// ClientGetResponse contains the response from method Client.Get.
+type ClientGetResponse struct {
+	// Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
+	// properties)
+	AzureLargeInstance
+}
+
+// ClientListByResourceGroupResponse contains the response from method Client.NewListByResourceGroupPager.
+type ClientListByResourceGroupResponse struct {
+	// The response of a AzureLargeInstance list operation.
+	ListResult
+}
+
+// ClientListBySubscriptionResponse contains the response from method Client.NewListBySubscriptionPager.
+type ClientListBySubscriptionResponse struct {
+	// The response of a AzureLargeInstance list operation.
+	ListResult
+}
+
+// ClientRestartResponse contains the response from method Client.BeginRestart.
+type ClientRestartResponse struct {
+	// placeholder for future response values
+}
+
+// ClientShutdownResponse contains the response from method Client.BeginShutdown.
+type ClientShutdownResponse struct {
+	// The current status of an async operation.
+	OperationStatusResult
+}
+
+// ClientStartResponse contains the response from method Client.BeginStart.
+type ClientStartResponse struct {
+	// The current status of an async operation.
+	OperationStatusResult
+}
+
+// ClientUpdateResponse contains the response from method Client.Update.
+type ClientUpdateResponse struct {
+	// Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
+	// properties)
+	AzureLargeInstance
 }
 
 // OperationsClientListResponse contains the response from method OperationsClient.NewListPager.
