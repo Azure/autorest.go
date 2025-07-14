@@ -90,8 +90,12 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
       execSync(checkCommand, { stdio: ['ignore', 'ignore', 'ignore'], timeout: 5000 });
       goImportsInstalled = true;
     } catch {
-      // goimports is not installed or not in PATH
-      // so we'll just fall back to gofmt silently
+      context.program.reportDiagnostic({
+        code: 'findGoImports',
+        severity: 'warning',
+        message: `didn't find goimports, falling back to gofmt`,
+        target: NoTarget,
+      });
     }
 
     if (goImportsInstalled) {
