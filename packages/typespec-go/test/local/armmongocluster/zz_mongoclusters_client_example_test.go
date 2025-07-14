@@ -7,10 +7,11 @@ package armmongocluster_test
 import (
 	"armmongocluster"
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
-	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
 	"time"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
+	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 )
 
 // Generated from example definition: 2024-07-01/MongoClusters_NameAvailability.json

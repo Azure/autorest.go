@@ -6,11 +6,12 @@ package dictionarygroup
 
 import (
 	"context"
+	"net/http"
+	"time"
+
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"net/http"
-	"time"
 )
 
 // DictionaryDatetimeValueClient - Dictionary of datetime values

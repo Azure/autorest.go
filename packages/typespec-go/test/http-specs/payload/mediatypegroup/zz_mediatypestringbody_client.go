@@ -6,12 +6,13 @@ package mediatypegroup
 
 import (
 	"context"
+	"net/http"
+	"strings"
+
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
-	"net/http"
-	"strings"
 )
 
 // MediaTypeStringBodyClient contains the methods for the MediaTypeStringBody group.

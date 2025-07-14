@@ -8,11 +8,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/http"
+	"xmlgroup"
+
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"net/http"
-	"xmlgroup"
 )
 
 // XMLSimpleModelValueServer is a fake server for instances of the xmlgroup.XMLSimpleModelValueClient type.

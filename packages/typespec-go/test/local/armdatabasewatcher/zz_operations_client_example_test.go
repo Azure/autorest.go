@@ -7,8 +7,9 @@ package armdatabasewatcher_test
 import (
 	"armdatabasewatcher"
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 )
 
 // Generated from example definition: 2024-07-19-preview/Operations_List_MaximumSet_Gen.json

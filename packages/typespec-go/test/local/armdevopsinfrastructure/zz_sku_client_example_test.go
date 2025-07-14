@@ -7,8 +7,9 @@ package armdevopsinfrastructure_test
 import (
 	"armdevopsinfrastructure"
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 )
 
 // Generated from example definition: 2024-04-04-preview/Sku_ListByLocation.json

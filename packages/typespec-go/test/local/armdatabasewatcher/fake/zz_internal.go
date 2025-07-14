@@ -5,9 +5,10 @@
 package fake
 
 import (
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"net/http"
 	"sync"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 )
 
 type result struct {

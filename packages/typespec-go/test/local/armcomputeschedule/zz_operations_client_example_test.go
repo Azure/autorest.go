@@ -7,8 +7,9 @@ package armcomputeschedule_test
 import (
 	"armcomputeschedule"
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 )
 
 // Generated from example definition: 2025-05-01/Operations_List_MaximumSet_Gen.json

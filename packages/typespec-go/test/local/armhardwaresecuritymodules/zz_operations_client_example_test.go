@@ -7,8 +7,9 @@ package armhardwaresecuritymodules_test
 import (
 	"armhardwaresecuritymodules"
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 )
 
 // Generated from example definition: 2024-06-30-preview/OperationsList.json

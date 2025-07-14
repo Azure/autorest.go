@@ -6,13 +6,14 @@ package datetimegroup
 
 import (
 	"context"
+	"net/http"
+	"strconv"
+	"time"
+
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
-	"net/http"
-	"strconv"
-	"time"
 )
 
 // DatetimeResponseHeaderClient contains the methods for the DatetimeResponseHeader group.

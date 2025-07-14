@@ -6,11 +6,12 @@ package twoopgroup
 
 import (
 	"context"
+	"net/http"
+	"strings"
+
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"net/http"
-	"strings"
 )
 
 // TwoOperationGroupGroup2Client contains the methods for the TwoOperationGroupGroup2 group.

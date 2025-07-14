@@ -65,18 +65,51 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
       }
     }
 
-    // format after transforms in case any formatting gets munged
-    try {
-      execSync('gofmt -w .', { cwd: context.emitterOutputDir, encoding: 'ascii' });
-    } catch (err) {
-      context.program.reportDiagnostic({
-        code: 'gofmt',
-        severity: 'error',
-        message: (<Error>err).message,
-        target: NoTarget,
-      });
+    // format after transforms in case any formatting gets munged.
+    // first try goimports which will also fix up any imports that
+    // might be stale due to transforms.
 
-      return;
+    // probe to see if goimports is installed
+    let goImportsInstalled = false;
+    try {
+      // Use 'where' on Windows or 'which' on Unix to check if goimports exists
+      // This avoids issues with commands that write to stderr or exit with non-zero codes
+      const checkCommand = process.platform === 'win32' ? 'where goimports' : 'which goimports';
+      execSync(checkCommand, { stdio: ['ignore', 'ignore', 'ignore'], timeout: 5000 });
+      goImportsInstalled = true;
+    } catch {
+      // goimports is not installed or not in PATH
+      // so we'll just fall back to gofmt silently
+    }
+
+    if (goImportsInstalled) {
+      try {
+        execSync('goimports -w .', { cwd: context.emitterOutputDir, encoding: 'ascii' });
+      } catch (err) {
+        context.program.reportDiagnostic({
+          code: 'goimports',
+          severity: 'error',
+          message: (<Error>err).message,
+          target: NoTarget,
+        });
+
+        return;
+      }
+    } else {
+      // fall back to gofmt which is installed as part of the Go toolset
+      // and is guaranteed to be present.
+      try {
+        execSync('gofmt -w .', { cwd: context.emitterOutputDir, encoding: 'ascii' });
+      } catch (err) {
+        context.program.reportDiagnostic({
+          code: 'gofmt',
+          severity: 'error',
+          message: (<Error>err).message,
+          target: NoTarget,
+        });
+
+        return;
+      }
     }
   } catch (error) {
     if (error instanceof AdapterError) {

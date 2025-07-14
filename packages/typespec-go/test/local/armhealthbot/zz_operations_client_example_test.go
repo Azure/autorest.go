@@ -7,8 +7,9 @@ package armhealthbot_test
 import (
 	"armhealthbot"
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 )
 
 // Generated from example definition: 2024-02-01/GetOperations.json

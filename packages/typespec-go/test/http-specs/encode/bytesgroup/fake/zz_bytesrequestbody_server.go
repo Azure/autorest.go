@@ -9,11 +9,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
+	"net/http"
+
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"io"
-	"net/http"
 )
 
 // BytesRequestBodyServer is a fake server for instances of the bytesgroup.BytesRequestBodyClient type.

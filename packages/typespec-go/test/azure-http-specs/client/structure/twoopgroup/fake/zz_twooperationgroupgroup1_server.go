@@ -8,11 +8,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/http"
+	"twoopgroup"
+
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"net/http"
-	"twoopgroup"
 )
 
 // TwoOperationGroupGroup1Server is a fake server for instances of the twoopgroup.TwoOperationGroupGroup1Client type.

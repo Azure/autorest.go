@@ -8,11 +8,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"jmergepatchgroup"
+	"net/http"
+
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"jmergepatchgroup"
-	"net/http"
 )
 
 // JSONMergePatchServer is a fake server for instances of the jmergepatchgroup.JSONMergePatchClient type.

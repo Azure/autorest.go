@@ -8,11 +8,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"multiclientgroup"
+	"net/http"
+
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"multiclientgroup"
-	"net/http"
 )
 
 // ClientBServer is a fake server for instances of the multiclientgroup.ClientBClient type.
