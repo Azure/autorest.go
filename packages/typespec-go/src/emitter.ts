@@ -24,7 +24,7 @@ import { generateMetadataFile } from '../../codegen.go/src/metadata.js';
 import { CodeModelError } from '../../codemodel.go/src/errors.js';
 import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
-import { EmitContext, NoTarget } from '@typespec/compiler';
+import { DiagnosticSeverity, EmitContext, NoTarget } from '@typespec/compiler';
 import 'source-map-support/register.js';
 import { reportDiagnostic } from './lib.js';
 import { CodegenError } from '../../codegen.go/src/errors.js';
@@ -34,14 +34,28 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   try {
     await generate(context);
 
+    const transformsFile = `${context.emitterOutputDir}/testdata/generate/transforms.go`;
+    const transformsFileExists = existsSync(transformsFile);
+
     // probe to see if Go tools are on the path
     try {
-      execSync('go version', { encoding: 'ascii' });
+      execSync('go version', { stdio: ['ignore', 'ignore', 'ignore'], timeout: 5000 });
     } catch {
+      // if the transforms file exists and we don't have Go
+      // on the path then make this an error as it means we
+      // expect to transform the generated code but were unable
+      // to do so.
+      let severity: DiagnosticSeverity = 'warning';
+      let message = 'skip executing post emitter steps (is go on the path?)';
+      if (transformsFileExists) {
+        severity = 'error';
+        message = 'unable to execute post emitter transformations due to missing go tool (is go on the path?)';
+      }
+
       context.program.reportDiagnostic({
         code: 'GoVersion',
-        severity: 'warning',
-        message: 'skip executing post emitter steps (is go on the path?)',
+        severity: severity,
+        message: message,
         target: NoTarget,
       });
 
@@ -49,10 +63,8 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
       return;
     }
 
-    // check for the transforms file.
-    // if it's there then "go run" it.
-    const transformsFile = `${context.emitterOutputDir}/testdata/generate/transforms.go`;
-    if (existsSync(transformsFile)) {
+    // if we have a transforms file then "go run" it
+    if (transformsFileExists) {
       try {
         execSync(`go run ${transformsFile}`, { cwd: context.emitterOutputDir, encoding: 'ascii' });
       } catch (err) {
