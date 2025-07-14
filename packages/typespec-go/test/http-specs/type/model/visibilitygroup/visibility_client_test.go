@@ -85,3 +85,22 @@ func TestVisibilityClientPutModel(t *testing.T) {
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
+
+func TestVisibilityClientPutReadOnlyModel(t *testing.T) {
+	client, err := visibilitygroup.NewVisibilityClient(nil)
+	require.NoError(t, err)
+	resp, err := client.PutReadOnlyModel(context.Background(), visibilitygroup.ReadOnlyModel{}, nil)
+	require.NoError(t, err)
+	expect := visibilitygroup.ReadOnlyModel{
+		OptionalNullableIntList: []*int32{
+			to.Ptr[int32](1),
+			to.Ptr[int32](2),
+			to.Ptr[int32](3),
+		},
+		OptionalStringRecord: map[string]*string{
+			"k1": to.Ptr("value1"),
+			"k2": to.Ptr("value2"),
+		},
+	}
+	require.EqualValues(t, expect, resp.ReadOnlyModel)
+}

@@ -13,7 +13,7 @@ import (
 )
 
 // Generated from example definition: 2024-08-01-preview/AzureLargeInstance_Create.json
-func ExampleAzureLargeInstanceClient_Create() {
+func ExampleClient_Create() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -23,7 +23,7 @@ func ExampleAzureLargeInstanceClient_Create() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewAzureLargeInstanceClient().Create(ctx, "myResourceGroup", "myALInstance", armlargeinstance.AzureLargeInstance{
+	res, err := clientFactory.NewClient().Create(ctx, "myResourceGroup", "myALInstance", armlargeinstance.AzureLargeInstance{
 		Location: to.Ptr("westus"),
 		Tags: map[string]*string{
 			"testkey": to.Ptr("testvalue"),
@@ -62,7 +62,7 @@ func ExampleAzureLargeInstanceClient_Create() {
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-	// res = armlargeinstance.AzureLargeInstanceClientCreateResponse{
+	// res = armlargeinstance.ClientCreateResponse{
 	// 	AzureLargeInstance: &armlargeinstance.AzureLargeInstance{
 	// 		ID: to.Ptr("/subscriptions/f0f4887f-d13c-4943-a8ba-d7da28d2a3fd/resourceGroups/myResourceGroup/providers/Microsoft.AzureLargeInstance/AzureLargeInstances/myALInstance"),
 	// 		Name: to.Ptr("myALInstance"),
@@ -112,7 +112,7 @@ func ExampleAzureLargeInstanceClient_Create() {
 }
 
 // Generated from example definition: 2024-08-01-preview/AzureLargeInstance_Delete.json
-func ExampleAzureLargeInstanceClient_Delete() {
+func ExampleClient_Delete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -122,19 +122,19 @@ func ExampleAzureLargeInstanceClient_Delete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewAzureLargeInstanceClient().Delete(ctx, "myResourceGroup", "myAzureLargeInstance", nil)
+	res, err := clientFactory.NewClient().Delete(ctx, "myResourceGroup", "myAzureLargeInstance", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-	// res = armlargeinstance.AzureLargeInstanceClientDeleteResponse{
+	// res = armlargeinstance.ClientDeleteResponse{
 	// }
 }
 
 // Generated from example definition: 2024-08-01-preview/AzureLargeInstance_Get.json
-func ExampleAzureLargeInstanceClient_Get() {
+func ExampleClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -144,14 +144,14 @@ func ExampleAzureLargeInstanceClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewAzureLargeInstanceClient().Get(ctx, "myResourceGroup", "myAzureLargeInstance", nil)
+	res, err := clientFactory.NewClient().Get(ctx, "myResourceGroup", "myAzureLargeInstance", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-	// res = armlargeinstance.AzureLargeInstanceClientGetResponse{
+	// res = armlargeinstance.ClientGetResponse{
 	// 	AzureLargeInstance: &armlargeinstance.AzureLargeInstance{
 	// 		ID: to.Ptr("/subscriptions/f0f4887f-d13c-4943-a8ba-d7da28d2a3fd/resourceGroups/myResourceGroup/providers/Microsoft.AzureLargeInstance/AzureLargeInstances/myAzureLargeInstance"),
 	// 		Location: to.Ptr("westus2"),
@@ -199,7 +199,7 @@ func ExampleAzureLargeInstanceClient_Get() {
 }
 
 // Generated from example definition: 2024-08-01-preview/AzureLargeInstance_ListByResourceGroup.json
-func ExampleAzureLargeInstanceClient_NewListByResourceGroupPager() {
+func ExampleClient_NewListByResourceGroupPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -209,7 +209,7 @@ func ExampleAzureLargeInstanceClient_NewListByResourceGroupPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewAzureLargeInstanceClient().NewListByResourceGroupPager("myResourceGroup", nil)
+	pager := clientFactory.NewClient().NewListByResourceGroupPager("myResourceGroup", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -220,7 +220,7 @@ func ExampleAzureLargeInstanceClient_NewListByResourceGroupPager() {
 			_ = v
 		}
 		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-		// page = armlargeinstance.AzureLargeInstanceClientListByResourceGroupResponse{
+		// page = armlargeinstance.ClientListByResourceGroupResponse{
 		// 	ListResult: armlargeinstance.ListResult{
 		// 		Value: []*armlargeinstance.AzureLargeInstance{
 		// 			{
@@ -320,7 +320,7 @@ func ExampleAzureLargeInstanceClient_NewListByResourceGroupPager() {
 }
 
 // Generated from example definition: 2024-08-01-preview/AzureLargeInstance_ListBySubscription.json
-func ExampleAzureLargeInstanceClient_NewListBySubscriptionPager() {
+func ExampleClient_NewListBySubscriptionPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -330,7 +330,7 @@ func ExampleAzureLargeInstanceClient_NewListBySubscriptionPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewAzureLargeInstanceClient().NewListBySubscriptionPager(nil)
+	pager := clientFactory.NewClient().NewListBySubscriptionPager(nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -341,7 +341,7 @@ func ExampleAzureLargeInstanceClient_NewListBySubscriptionPager() {
 			_ = v
 		}
 		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-		// page = armlargeinstance.AzureLargeInstanceClientListBySubscriptionResponse{
+		// page = armlargeinstance.ClientListBySubscriptionResponse{
 		// 	ListResult: armlargeinstance.ListResult{
 		// 		Value: []*armlargeinstance.AzureLargeInstance{
 		// 			{
@@ -437,7 +437,7 @@ func ExampleAzureLargeInstanceClient_NewListBySubscriptionPager() {
 }
 
 // Generated from example definition: 2024-08-01-preview/AzureLargeInstance_Restart.json
-func ExampleAzureLargeInstanceClient_BeginRestart() {
+func ExampleClient_BeginRestart() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -447,7 +447,7 @@ func ExampleAzureLargeInstanceClient_BeginRestart() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewAzureLargeInstanceClient().BeginRestart(ctx, "myResourceGroup", "myALInstance", nil)
+	poller, err := clientFactory.NewClient().BeginRestart(ctx, "myResourceGroup", "myALInstance", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -458,12 +458,12 @@ func ExampleAzureLargeInstanceClient_BeginRestart() {
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-	// res = armlargeinstance.AzureLargeInstanceClientRestartResponse{
+	// res = armlargeinstance.ClientRestartResponse{
 	// }
 }
 
 // Generated from example definition: 2024-08-01-preview/AzureLargeInstance_Shutdown.json
-func ExampleAzureLargeInstanceClient_BeginShutdown() {
+func ExampleClient_BeginShutdown() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -473,7 +473,7 @@ func ExampleAzureLargeInstanceClient_BeginShutdown() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewAzureLargeInstanceClient().BeginShutdown(ctx, "myResourceGroup", "myALInstance", nil)
+	poller, err := clientFactory.NewClient().BeginShutdown(ctx, "myResourceGroup", "myALInstance", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -484,7 +484,7 @@ func ExampleAzureLargeInstanceClient_BeginShutdown() {
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-	// res = armlargeinstance.AzureLargeInstanceClientShutdownResponse{
+	// res = armlargeinstance.ClientShutdownResponse{
 	// 	OperationStatusResult: &armlargeinstance.OperationStatusResult{
 	// 		Name: to.Ptr("00000000-0000-0000-0000-000000000001"),
 	// 		Status: to.Ptr("InProgress"),
@@ -498,7 +498,7 @@ func ExampleAzureLargeInstanceClient_BeginShutdown() {
 }
 
 // Generated from example definition: 2024-08-01-preview/AzureLargeInstance_Start.json
-func ExampleAzureLargeInstanceClient_BeginStart() {
+func ExampleClient_BeginStart() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -508,7 +508,7 @@ func ExampleAzureLargeInstanceClient_BeginStart() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewAzureLargeInstanceClient().BeginStart(ctx, "myResourceGroup", "myALInstance", nil)
+	poller, err := clientFactory.NewClient().BeginStart(ctx, "myResourceGroup", "myALInstance", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -519,7 +519,7 @@ func ExampleAzureLargeInstanceClient_BeginStart() {
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-	// res = armlargeinstance.AzureLargeInstanceClientStartResponse{
+	// res = armlargeinstance.ClientStartResponse{
 	// 	OperationStatusResult: &armlargeinstance.OperationStatusResult{
 	// 		Name: to.Ptr("00000000-0000-0000-0000-000000000001"),
 	// 		Status: to.Ptr("InProgress"),
@@ -533,7 +533,7 @@ func ExampleAzureLargeInstanceClient_BeginStart() {
 }
 
 // Generated from example definition: 2024-08-01-preview/AzureLargeInstance_PatchTags.json
-func ExampleAzureLargeInstanceClient_Update_azureLargeInstanceUpdateTag() {
+func ExampleClient_Update_azureLargeInstanceUpdateTag() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -543,7 +543,7 @@ func ExampleAzureLargeInstanceClient_Update_azureLargeInstanceUpdateTag() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewAzureLargeInstanceClient().Update(ctx, "myResourceGroup", "myALInstance", armlargeinstance.TagsUpdate{
+	res, err := clientFactory.NewClient().Update(ctx, "myResourceGroup", "myALInstance", armlargeinstance.TagsUpdate{
 		Tags: map[string]*string{
 			"testkey": to.Ptr("testvalue"),
 		},
@@ -554,7 +554,7 @@ func ExampleAzureLargeInstanceClient_Update_azureLargeInstanceUpdateTag() {
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-	// res = armlargeinstance.AzureLargeInstanceClientUpdateResponse{
+	// res = armlargeinstance.ClientUpdateResponse{
 	// 	AzureLargeInstance: &armlargeinstance.AzureLargeInstance{
 	// 		ID: to.Ptr("/subscriptions/f0f4887f-d13c-4943-a8ba-d7da28d2a3fd/resourceGroups/myResourceGroup/providers/Microsoft.AzureLargeInstance/AzureLargeInstances/myALInstance"),
 	// 		Name: to.Ptr("myALInstance"),
@@ -604,7 +604,7 @@ func ExampleAzureLargeInstanceClient_Update_azureLargeInstanceUpdateTag() {
 }
 
 // Generated from example definition: 2024-08-01-preview/AzureLargeInstance_PatchTags_Delete.json
-func ExampleAzureLargeInstanceClient_Update_azureLargeInstanceDeleteTag() {
+func ExampleClient_Update_azureLargeInstanceDeleteTag() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -614,7 +614,7 @@ func ExampleAzureLargeInstanceClient_Update_azureLargeInstanceDeleteTag() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewAzureLargeInstanceClient().Update(ctx, "myResourceGroup", "myALInstance", armlargeinstance.TagsUpdate{
+	res, err := clientFactory.NewClient().Update(ctx, "myResourceGroup", "myALInstance", armlargeinstance.TagsUpdate{
 		Tags: map[string]*string{},
 	}, nil)
 	if err != nil {
@@ -623,7 +623,7 @@ func ExampleAzureLargeInstanceClient_Update_azureLargeInstanceDeleteTag() {
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-	// res = armlargeinstance.AzureLargeInstanceClientUpdateResponse{
+	// res = armlargeinstance.ClientUpdateResponse{
 	// 	AzureLargeInstance: &armlargeinstance.AzureLargeInstance{
 	// 		ID: to.Ptr("/subscriptions/f0f4887f-d13c-4943-a8ba-d7da28d2a3fd/resourceGroups/myResourceGroup/providers/Microsoft.AzureLargeInstance/AzureLargeInstances/myALInstance"),
 	// 		Name: to.Ptr("myALInstance"),

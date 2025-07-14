@@ -1,5 +1,12 @@
 # Release History
 
+## 0.6.0 (unreleased)
+
+### Breaking Changes
+
+* Fixed some cases where a client name could stutter.
+* Force the body paramter to be required for `PATCH` and `PUT` operations.
+
 ## 0.5.1 (2025-06-26)
 
 ### Other Changes

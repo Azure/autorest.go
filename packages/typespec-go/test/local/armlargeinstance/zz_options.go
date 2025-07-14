@@ -4,63 +4,6 @@
 
 package armlargeinstance
 
-// AzureLargeInstanceClientBeginRestartOptions contains the optional parameters for the AzureLargeInstanceClient.BeginRestart
-// method.
-type AzureLargeInstanceClientBeginRestartOptions struct {
-	// When set to 'active', this parameter empowers the server with the ability to forcefully terminate and halt any existing
-	// processes that may be running on the server
-	ForceParameter *ForceState
-
-	// Resumes the long-running operation from the provided token.
-	ResumeToken string
-}
-
-// AzureLargeInstanceClientBeginShutdownOptions contains the optional parameters for the AzureLargeInstanceClient.BeginShutdown
-// method.
-type AzureLargeInstanceClientBeginShutdownOptions struct {
-	// Resumes the long-running operation from the provided token.
-	ResumeToken string
-}
-
-// AzureLargeInstanceClientBeginStartOptions contains the optional parameters for the AzureLargeInstanceClient.BeginStart
-// method.
-type AzureLargeInstanceClientBeginStartOptions struct {
-	// Resumes the long-running operation from the provided token.
-	ResumeToken string
-}
-
-// AzureLargeInstanceClientCreateOptions contains the optional parameters for the AzureLargeInstanceClient.Create method.
-type AzureLargeInstanceClientCreateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// AzureLargeInstanceClientDeleteOptions contains the optional parameters for the AzureLargeInstanceClient.Delete method.
-type AzureLargeInstanceClientDeleteOptions struct {
-	// placeholder for future optional parameters
-}
-
-// AzureLargeInstanceClientGetOptions contains the optional parameters for the AzureLargeInstanceClient.Get method.
-type AzureLargeInstanceClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// AzureLargeInstanceClientListByResourceGroupOptions contains the optional parameters for the AzureLargeInstanceClient.NewListByResourceGroupPager
-// method.
-type AzureLargeInstanceClientListByResourceGroupOptions struct {
-	// placeholder for future optional parameters
-}
-
-// AzureLargeInstanceClientListBySubscriptionOptions contains the optional parameters for the AzureLargeInstanceClient.NewListBySubscriptionPager
-// method.
-type AzureLargeInstanceClientListBySubscriptionOptions struct {
-	// placeholder for future optional parameters
-}
-
-// AzureLargeInstanceClientUpdateOptions contains the optional parameters for the AzureLargeInstanceClient.Update method.
-type AzureLargeInstanceClientUpdateOptions struct {
-	// placeholder for future optional parameters
-}
-
 // AzureLargeStorageInstanceClientCreateOptions contains the optional parameters for the AzureLargeStorageInstanceClient.Create
 // method.
 type AzureLargeStorageInstanceClientCreateOptions struct {
@@ -94,6 +37,58 @@ type AzureLargeStorageInstanceClientListBySubscriptionOptions struct {
 // AzureLargeStorageInstanceClientUpdateOptions contains the optional parameters for the AzureLargeStorageInstanceClient.Update
 // method.
 type AzureLargeStorageInstanceClientUpdateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientBeginRestartOptions contains the optional parameters for the Client.BeginRestart method.
+type ClientBeginRestartOptions struct {
+	// When set to 'active', this parameter empowers the server with the ability to forcefully terminate and halt any existing
+	// processes that may be running on the server
+	ForceParameter *ForceState
+
+	// Resumes the long-running operation from the provided token.
+	ResumeToken string
+}
+
+// ClientBeginShutdownOptions contains the optional parameters for the Client.BeginShutdown method.
+type ClientBeginShutdownOptions struct {
+	// Resumes the long-running operation from the provided token.
+	ResumeToken string
+}
+
+// ClientBeginStartOptions contains the optional parameters for the Client.BeginStart method.
+type ClientBeginStartOptions struct {
+	// Resumes the long-running operation from the provided token.
+	ResumeToken string
+}
+
+// ClientCreateOptions contains the optional parameters for the Client.Create method.
+type ClientCreateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientDeleteOptions contains the optional parameters for the Client.Delete method.
+type ClientDeleteOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetOptions contains the optional parameters for the Client.Get method.
+type ClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientListByResourceGroupOptions contains the optional parameters for the Client.NewListByResourceGroupPager method.
+type ClientListByResourceGroupOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientListBySubscriptionOptions contains the optional parameters for the Client.NewListBySubscriptionPager method.
+type ClientListBySubscriptionOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientUpdateOptions contains the optional parameters for the Client.Update method.
+type ClientUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
