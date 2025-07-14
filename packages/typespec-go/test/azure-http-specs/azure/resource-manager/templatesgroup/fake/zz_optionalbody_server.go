@@ -26,7 +26,7 @@ type OptionalBodyServer struct {
 
 	// Patch is the fake for method OptionalBodyClient.Patch
 	// HTTP status codes to indicate success: http.StatusOK
-	Patch func(ctx context.Context, resourceGroupName string, widgetName string, options *templatesgroup.OptionalBodyClientPatchOptions) (resp azfake.Responder[templatesgroup.OptionalBodyClientPatchResponse], errResp azfake.ErrorResponder)
+	Patch func(ctx context.Context, resourceGroupName string, widgetName string, properties templatesgroup.Widget, options *templatesgroup.OptionalBodyClientPatchOptions) (resp azfake.Responder[templatesgroup.OptionalBodyClientPatchResponse], errResp azfake.ErrorResponder)
 
 	// Post is the fake for method OptionalBodyClient.Post
 	// HTTP status codes to indicate success: http.StatusOK
@@ -155,13 +155,7 @@ func (o *OptionalBodyServerTransport) dispatchPatch(req *http.Request) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	var options *templatesgroup.OptionalBodyClientPatchOptions
-	if !reflect.ValueOf(body).IsZero() {
-		options = &templatesgroup.OptionalBodyClientPatchOptions{
-			Properties: &body,
-		}
-	}
-	respr, errRespr := o.srv.Patch(req.Context(), resourceGroupNameParam, widgetNameParam, options)
+	respr, errRespr := o.srv.Patch(req.Context(), resourceGroupNameParam, widgetNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
