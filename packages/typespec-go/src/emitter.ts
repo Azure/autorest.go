@@ -49,6 +49,23 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
       return;
     }
 
+    // check for the transforms file.
+    // if it's there then "go run" it.
+    const transformsFile = `${context.emitterOutputDir}/testdata/generate/transforms.go`;
+    if (existsSync(transformsFile)) {
+      try {
+        execSync(`go run ${transformsFile}`, { cwd: context.emitterOutputDir, encoding: 'ascii' });
+      } catch (err) {
+        context.program.reportDiagnostic({
+          code: 'transforms',
+          severity: 'error',
+          message: (<Error>err).message,
+          target: NoTarget,
+        });
+      }
+    }
+
+    // format after transforms in case any formatting gets munged
     try {
       execSync('gofmt -w .', { cwd: context.emitterOutputDir, encoding: 'ascii' });
     } catch (err) {
@@ -60,23 +77,6 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
       });
 
       return;
-    }
-
-    // check for the transforms file.
-    // if it's there then "go run" it.
-    const transformsFile = `${context.emitterOutputDir}/internal/generate/transforms.go`;
-    if (!existsSync(transformsFile)) {
-      return;
-    }
-    try {
-      execSync(`go run ${transformsFile}`, { cwd: context.emitterOutputDir, encoding: 'ascii' });
-    } catch (err) {
-      context.program.reportDiagnostic({
-        code: 'transforms',
-        severity: 'error',
-        message: (<Error>err).message,
-        target: NoTarget,
-      });
     }
   } catch (error) {
     if (error instanceof AdapterError) {
