@@ -28,10 +28,56 @@ import { EmitContext, NoTarget } from '@typespec/compiler';
 import 'source-map-support/register.js';
 import { reportDiagnostic } from './lib.js';
 import { CodegenError } from '../../codegen.go/src/errors.js';
+import { execSync } from 'child_process';
 
 export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   try {
     await generate(context);
+
+    // probe to see if Go tools are on the path
+    try {
+      execSync('go version', { encoding: 'ascii' });
+    } catch {
+      context.program.reportDiagnostic({
+        code: 'GoVersion',
+        severity: 'warning',
+        message: 'skip executing post emitter steps (is go on the path?)',
+        target: NoTarget,
+      });
+
+      // no Go tools available so exit
+      return;
+    }
+
+    try {
+      execSync('gofmt -w .', { cwd: context.emitterOutputDir, encoding: 'ascii' });
+    } catch (err) {
+      context.program.reportDiagnostic({
+        code: 'gofmt',
+        severity: 'error',
+        message: (<Error>err).message,
+        target: NoTarget,
+      });
+
+      return;
+    }
+
+    // check for the transforms file.
+    // if it's there then "go run" it.
+    const transformsFile = `${context.emitterOutputDir}/internal/generate/transforms.go`;
+    if (!existsSync(transformsFile)) {
+      return;
+    }
+    try {
+      execSync(`go run ${transformsFile}`, { cwd: context.emitterOutputDir, encoding: 'ascii' });
+    } catch (err) {
+      context.program.reportDiagnostic({
+        code: 'transforms',
+        severity: 'error',
+        message: (<Error>err).message,
+        target: NoTarget,
+      });
+    }
   } catch (error) {
     if (error instanceof AdapterError) {
       reportDiagnostic(context.program, {
