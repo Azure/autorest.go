@@ -31,3 +31,27 @@ func TestModelInOperationClient_OutputToInputOutput(t *testing.T) {
 		Name: to.Ptr("Madge"),
 	}, resp.OutputModel)
 }
+
+func TestModelInOperationClient_ModelInReadOnlyProperty(t *testing.T) {
+	client, err := coreusagegroup.NewUsageClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewUsageModelInOperationClient().ModelInReadOnlyProperty(context.Background(), coreusagegroup.RoundTripModel{}, nil)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.Equal(t, "Madge", *resp.Result.Name)
+}
+
+func TestModelInOperationClient_OrphanModelSerializable(t *testing.T) {
+	client, err := coreusagegroup.NewUsageClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewUsageModelInOperationClient().OrphanModelSerializable(
+		context.Background(),
+		coreusagegroup.OrphanModel{
+			ModelName:   to.Ptr("name"),
+			Description: to.Ptr("desc"),
+		},
+		&coreusagegroup.UsageModelInOperationClientOrphanModelSerializableOptions{},
+	)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+}

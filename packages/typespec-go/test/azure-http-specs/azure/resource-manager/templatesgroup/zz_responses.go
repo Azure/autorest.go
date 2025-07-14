@@ -37,3 +37,25 @@ type OperationsClientListResponse struct {
 	// A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results.
 	OperationListResult
 }
+
+// OptionalBodyClientGetResponse contains the response from method OptionalBodyClient.Get.
+type OptionalBodyClientGetResponse struct {
+	// Concrete tracked resource types can be created by aliasing this type using a specific property type.
+	Widget
+}
+
+// OptionalBodyClientPatchResponse contains the response from method OptionalBodyClient.Patch.
+type OptionalBodyClientPatchResponse struct {
+	// Concrete tracked resource types can be created by aliasing this type using a specific property type.
+	Widget
+}
+
+// OptionalBodyClientPostResponse contains the response from method OptionalBodyClient.Post.
+type OptionalBodyClientPostResponse struct {
+	ActionResult
+}
+
+// OptionalBodyClientProviderPostResponse contains the response from method OptionalBodyClient.ProviderPost.
+type OptionalBodyClientProviderPostResponse struct {
+	ChangeAllowanceResult
+}
