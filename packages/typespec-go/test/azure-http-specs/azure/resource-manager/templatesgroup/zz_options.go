@@ -46,8 +46,7 @@ type OptionalBodyClientGetOptions struct {
 
 // OptionalBodyClientPatchOptions contains the optional parameters for the OptionalBodyClient.Patch method.
 type OptionalBodyClientPatchOptions struct {
-	// The resource properties to be updated.
-	Properties *Widget
+	// placeholder for future optional parameters
 }
 
 // OptionalBodyClientPostOptions contains the optional parameters for the OptionalBodyClient.Post method.

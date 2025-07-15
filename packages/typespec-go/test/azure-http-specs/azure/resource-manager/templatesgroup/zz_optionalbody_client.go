@@ -109,14 +109,15 @@ func (client *OptionalBodyClient) getHandleResponse(resp *http.Response) (Option
 // Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - widgetName - The name of the Widget
+//   - properties - The resource properties to be updated.
 //   - options - OptionalBodyClientPatchOptions contains the optional parameters for the OptionalBodyClient.Patch method.
-func (client *OptionalBodyClient) Patch(ctx context.Context, resourceGroupName string, widgetName string, options *OptionalBodyClientPatchOptions) (OptionalBodyClientPatchResponse, error) {
+func (client *OptionalBodyClient) Patch(ctx context.Context, resourceGroupName string, widgetName string, properties Widget, options *OptionalBodyClientPatchOptions) (OptionalBodyClientPatchResponse, error) {
 	var err error
 	const operationName = "OptionalBodyClient.Patch"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.patchCreateRequest(ctx, resourceGroupName, widgetName, options)
+	req, err := client.patchCreateRequest(ctx, resourceGroupName, widgetName, properties, options)
 	if err != nil {
 		return OptionalBodyClientPatchResponse{}, err
 	}
@@ -133,7 +134,7 @@ func (client *OptionalBodyClient) Patch(ctx context.Context, resourceGroupName s
 }
 
 // patchCreateRequest creates the Patch request.
-func (client *OptionalBodyClient) patchCreateRequest(ctx context.Context, resourceGroupName string, widgetName string, options *OptionalBodyClientPatchOptions) (*policy.Request, error) {
+func (client *OptionalBodyClient) patchCreateRequest(ctx context.Context, resourceGroupName string, widgetName string, properties Widget, _ *OptionalBodyClientPatchOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/widgets/{widgetName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -155,12 +156,9 @@ func (client *OptionalBodyClient) patchCreateRequest(ctx context.Context, resour
 	reqQP.Set("api-version", "2023-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Properties != nil {
-		req.Raw().Header["Content-Type"] = []string{"application/json"}
-		if err := runtime.MarshalAsJSON(req, *options.Properties); err != nil {
-			return nil, err
-		}
-		return req, nil
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, properties); err != nil {
+		return nil, err
 	}
 	return req, nil
 }
