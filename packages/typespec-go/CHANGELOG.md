@@ -9,8 +9,10 @@
 
 ### Features Added
 
-* When Go tools are found on the path, the following steps happen after successfully generating code.
-  * If `after_generate.go` exists in the output directory, `go generate` it from the output directory.
+* Added switch `go-generate` to invoke post-generation scripts.
+  * The value is an output-relative path to a `.go` file that will can be used with `go generate`.
+  * If Go tools are not on the path, and `go-generate` was specified, then an error is produced.
+* When Go tools are found on the path, the following steps happen after successfully generating code and any `go-generate` script is invoked.
   * Execute `gofmt -w .` followed by `go mod tidy` in the output directory.
   * If Go tools are not found, the above steps are skipped and a warning is displayed.
 

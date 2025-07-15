@@ -10,6 +10,7 @@ export interface GoEmitterOptions {
   'disallow-unknown-fields'?: boolean;
   'file-prefix'?: string;
   'generate-fakes'?: boolean;
+  'go-generate'?: string;
   'head-as-boolean'?: boolean;
   'inject-spans'?: boolean;
   'module'?: string;
@@ -50,6 +51,11 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
       type: 'boolean',
       nullable: true,
       description: 'When true, enables generation of fake servers. The default is false.',
+    },
+    'go-generate': {
+      type: 'string',
+      nullable: true,
+      description: `Path to a post-generation 'go generate' script. The path is relative to the directory where the SDK is emitted.`,
     },
     'head-as-boolean': {
       type: 'boolean',

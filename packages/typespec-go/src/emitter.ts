@@ -34,7 +34,8 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   try {
     await generate(context);
 
-    const afterGenerateFileExists = existsSync(`${context.emitterOutputDir}/after_generate.go`);
+    const goGenerateFile = context.options['go-generate'];
+    const goGenerateFileExists = goGenerateFile ? existsSync(`${context.emitterOutputDir}/${goGenerateFile}`) : false;
 
     // probe to see if Go tools are on the path
     try {
@@ -46,7 +47,7 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
       // to do so.
       let severity: DiagnosticSeverity = 'warning';
       let message = 'skip executing post emitter steps (is go on the path?)';
-      if (afterGenerateFileExists) {
+      if (goGenerateFileExists) {
         severity = 'error';
         message = 'unable to execute post emitter transformations due to missing go tool (is go on the path?)';
       }
@@ -63,9 +64,9 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
     }
 
     // if we have a post-generation transforms file then "go generate" it
-    if (afterGenerateFileExists) {
+    if (goGenerateFileExists) {
       try {
-        execSync('go generate', { cwd: context.emitterOutputDir, encoding: 'ascii' });
+        execSync(`go generate ${goGenerateFile}`, { cwd: context.emitterOutputDir, encoding: 'ascii' });
       } catch (err) {
         context.program.reportDiagnostic({
           code: 'transforms',
