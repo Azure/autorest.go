@@ -8,12 +8,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"net/http"
-	"specialwordsgroup"
-
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"net/http"
+	"specialwordsgroup"
 )
 
 // SpecialWordsModelsServer is a fake server for instances of the specialwordsgroup.SpecialWordsModelsClient type.

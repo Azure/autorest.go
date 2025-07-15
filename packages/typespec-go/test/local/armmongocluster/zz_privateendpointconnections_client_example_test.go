@@ -7,10 +7,9 @@ package armmongocluster_test
 import (
 	"armmongocluster"
 	"context"
-	"log"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
+	"log"
 )
 
 // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionPut.json

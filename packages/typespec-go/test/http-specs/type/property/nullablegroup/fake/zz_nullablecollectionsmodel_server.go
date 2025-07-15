@@ -8,12 +8,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"net/http"
-	"nullablegroup"
-
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"net/http"
+	"nullablegroup"
 )
 
 // NullableCollectionsModelServer is a fake server for instances of the nullablegroup.NullableCollectionsModelClient type.

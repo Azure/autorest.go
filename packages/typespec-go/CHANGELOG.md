@@ -10,9 +10,8 @@
 ### Features Added
 
 * When Go tools are found on the path, the following steps happen after successfully generating code.
-  * Execute `goimports -w .` to fix formatting and clean up any import statements.
-    * If `goimports` isn't installed, fall back to `gofmt -w .`.
-  * If `/testdata/generate/transforms.go` exists in the output directory, `go run` it from the output directory.
+  * If `after_generate.go` exists in the output directory, `go generate` it from the output directory.
+  * Execute `gofmt -w .` followed by `go mod tidy` in the output directory.
   * If Go tools are not found, the above steps are skipped and a warning is displayed.
 
 ## 0.5.1 (2025-06-26)

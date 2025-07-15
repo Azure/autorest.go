@@ -9,11 +9,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"net/http"
-
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"net/http"
 )
 
 // ArrayNullableBooleanValueServer is a fake server for instances of the arraygroup.ArrayNullableBooleanValueClient type.

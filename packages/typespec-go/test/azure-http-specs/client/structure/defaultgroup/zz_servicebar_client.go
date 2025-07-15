@@ -6,12 +6,11 @@ package defaultgroup
 
 import (
 	"context"
-	"net/http"
-	"strings"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"net/http"
+	"strings"
 )
 
 // ServiceBarClient contains the methods for the ServiceBar group.

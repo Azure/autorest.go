@@ -7,10 +7,9 @@ package armapicenter_test
 import (
 	"armapicenter"
 	"context"
-	"log"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
+	"log"
 )
 
 // Generated from example definition: 2024-03-15-preview/Environments_CreateOrUpdate.json

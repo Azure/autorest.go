@@ -8,12 +8,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"net/http"
-	"scalargroup"
-
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"net/http"
+	"scalargroup"
 )
 
 // ScalarDecimal128VerifyServer is a fake server for instances of the scalargroup.ScalarDecimal128VerifyClient type.

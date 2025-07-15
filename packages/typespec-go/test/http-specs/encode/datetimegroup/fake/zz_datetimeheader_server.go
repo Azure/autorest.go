@@ -9,13 +9,12 @@ import (
 	"datetimegroup"
 	"errors"
 	"fmt"
-	"net/http"
-	"strconv"
-	"time"
-
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"net/http"
+	"strconv"
+	"time"
 )
 
 // DatetimeHeaderServer is a fake server for instances of the datetimegroup.DatetimeHeaderClient type.

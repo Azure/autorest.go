@@ -15,10 +15,6 @@ steps:
       version: "${{ parameters.GoVersion }}"
     displayName: "Select Go Version"
 
-  - script: |
-      go install golang.org/x/tools/cmd/goimports@latest
-    displayName: Install goimports
-
   - task: Cache@2
     inputs:
       key: 'pnpm | "$(Agent.OS)" | $(System.DefaultWorkingDirectory)/pnpm-lock.yaml'

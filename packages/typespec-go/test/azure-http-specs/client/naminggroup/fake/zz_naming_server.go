@@ -8,15 +8,14 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"naminggroup"
 	"net/http"
 	"net/url"
 	"strings"
 	"sync"
-
-	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
 // NamingServer is a fake server for instances of the naminggroup.NamingClient type.

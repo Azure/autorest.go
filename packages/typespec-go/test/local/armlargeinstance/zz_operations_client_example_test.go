@@ -7,9 +7,8 @@ package armlargeinstance_test
 import (
 	"armlargeinstance"
 	"context"
-	"log"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
+	"log"
 )
 
 // Generated from example definition: 2024-08-01-preview/AzureLargeInstanceOperations_List.json

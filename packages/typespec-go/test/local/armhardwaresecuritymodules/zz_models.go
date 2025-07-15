@@ -5,9 +5,8 @@
 package armhardwaresecuritymodules
 
 import (
-	"time"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"time"
 )
 
 // APIEntityReference - The API entity reference.

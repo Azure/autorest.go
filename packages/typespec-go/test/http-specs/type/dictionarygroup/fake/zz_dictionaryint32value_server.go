@@ -9,11 +9,10 @@ import (
 	"dictionarygroup"
 	"errors"
 	"fmt"
-	"net/http"
-
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"net/http"
 )
 
 // DictionaryInt32ValueServer is a fake server for instances of the dictionarygroup.DictionaryInt32ValueClient type.

@@ -7,9 +7,8 @@ package armmongocluster_test
 import (
 	"armmongocluster"
 	"context"
-	"log"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
+	"log"
 )
 
 // Generated from example definition: 2024-07-01/Operations_List.json

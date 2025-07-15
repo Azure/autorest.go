@@ -8,12 +8,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"net/http"
-	"noendpointgroup"
-
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"net/http"
+	"noendpointgroup"
 )
 
 // NotDefinedServer is a fake server for instances of the noendpointgroup.NotDefinedClient type.

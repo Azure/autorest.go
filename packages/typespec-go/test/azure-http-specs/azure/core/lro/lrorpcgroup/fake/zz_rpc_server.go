@@ -8,12 +8,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"lrorpcgroup"
-	"net/http"
-
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"lrorpcgroup"
+	"net/http"
 )
 
 // RPCServer is a fake server for instances of the lrorpcgroup.RPCClient type.

@@ -7,9 +7,8 @@ package armloadtestservice_test
 import (
 	"armloadtestservice"
 	"context"
-	"log"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
+	"log"
 )
 
 // Generated from example definition: 2023-12-01-preview/Operations_List.json

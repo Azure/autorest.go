@@ -7,9 +7,8 @@ package armcodesigning_test
 import (
 	"armcodesigning"
 	"context"
-	"log"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
+	"log"
 )
 
 // Generated from example definition: 2024-09-30-preview/Operations_List.json

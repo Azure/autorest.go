@@ -8,12 +8,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"mediatypegroup"
-	"net/http"
-
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"mediatypegroup"
+	"net/http"
 )
 
 // MediaTypeStringBodyServer is a fake server for instances of the mediatypegroup.MediaTypeStringBodyClient type.

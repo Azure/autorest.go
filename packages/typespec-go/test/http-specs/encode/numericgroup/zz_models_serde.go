@@ -7,11 +7,10 @@ package numericgroup
 import (
 	"encoding/json"
 	"fmt"
-	"reflect"
-	"strconv"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
+	"reflect"
+	"strconv"
 )
 
 // MarshalJSON implements the json.Marshaller interface for type SafeintAsStringProperty.

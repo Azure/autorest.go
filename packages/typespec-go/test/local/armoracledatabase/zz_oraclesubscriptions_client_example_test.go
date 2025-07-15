@@ -7,9 +7,8 @@ package armoracledatabase_test
 import (
 	"armoracledatabase"
 	"context"
-	"log"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
+	"log"
 )
 
 // Generated from example definition: 2024-06-01-preview/oracleSubscriptions_listCloudAccountDetails.json

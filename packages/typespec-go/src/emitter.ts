@@ -34,8 +34,7 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   try {
     await generate(context);
 
-    const transformsFile = `${context.emitterOutputDir}/testdata/generate/transforms.go`;
-    const transformsFileExists = existsSync(transformsFile);
+    const afterGenerateFileExists = existsSync(`${context.emitterOutputDir}/after_generate.go`);
 
     // probe to see if Go tools are on the path
     try {
@@ -47,7 +46,7 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
       // to do so.
       let severity: DiagnosticSeverity = 'warning';
       let message = 'skip executing post emitter steps (is go on the path?)';
-      if (transformsFileExists) {
+      if (afterGenerateFileExists) {
         severity = 'error';
         message = 'unable to execute post emitter transformations due to missing go tool (is go on the path?)';
       }
@@ -63,10 +62,10 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
       return;
     }
 
-    // if we have a transforms file then "go run" it
-    if (transformsFileExists) {
+    // if we have a post-generation transforms file then "go generate" it
+    if (afterGenerateFileExists) {
       try {
-        execSync(`go run ${transformsFile}`, { cwd: context.emitterOutputDir, encoding: 'ascii' });
+        execSync('go generate', { cwd: context.emitterOutputDir, encoding: 'ascii' });
       } catch (err) {
         context.program.reportDiagnostic({
           code: 'transforms',
@@ -77,55 +76,32 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
       }
     }
 
-    // format after transforms in case any formatting gets munged.
-    // first try goimports which will also fix up any imports that
-    // might be stale due to transforms.
-
-    // probe to see if goimports is installed
-    let goImportsInstalled = false;
+    // format after transforms in case any formatting gets munged
     try {
-      // Use 'where' on Windows or 'which' on Unix to check if goimports exists
-      // This avoids issues with commands that write to stderr or exit with non-zero codes
-      const checkCommand = process.platform === 'win32' ? 'where goimports' : 'which goimports';
-      execSync(checkCommand, { stdio: ['ignore', 'ignore', 'ignore'], timeout: 5000 });
-      goImportsInstalled = true;
-    } catch {
+      execSync('gofmt -w .', { cwd: context.emitterOutputDir, encoding: 'ascii' });
+    } catch (err) {
       context.program.reportDiagnostic({
-        code: 'findGoImports',
-        severity: 'warning',
-        message: `didn't find goimports, falling back to gofmt`,
+        code: 'gofmt',
+        severity: 'error',
+        message: (<Error>err).message,
         target: NoTarget,
       });
+
+      return;
     }
 
-    if (goImportsInstalled) {
-      try {
-        execSync('goimports -w .', { cwd: context.emitterOutputDir, encoding: 'ascii' });
-      } catch (err) {
-        context.program.reportDiagnostic({
-          code: 'goimports',
-          severity: 'error',
-          message: (<Error>err).message,
-          target: NoTarget,
-        });
+    // now go mod tidy
+    try {
+      execSync('go mod tidy', { cwd: context.emitterOutputDir, encoding: 'ascii' });
+    } catch (err) {
+      context.program.reportDiagnostic({
+        code: 'gomodtidy',
+        severity: 'error',
+        message: (<Error>err).message,
+        target: NoTarget,
+      });
 
-        return;
-      }
-    } else {
-      // fall back to gofmt which is installed as part of the Go toolset
-      // and is guaranteed to be present.
-      try {
-        execSync('gofmt -w .', { cwd: context.emitterOutputDir, encoding: 'ascii' });
-      } catch (err) {
-        context.program.reportDiagnostic({
-          code: 'gofmt',
-          severity: 'error',
-          message: (<Error>err).message,
-          target: NoTarget,
-        });
-
-        return;
-      }
+      return;
     }
   } catch (error) {
     if (error instanceof AdapterError) {

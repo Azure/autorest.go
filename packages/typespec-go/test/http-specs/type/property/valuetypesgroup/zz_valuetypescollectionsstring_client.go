@@ -6,11 +6,10 @@ package valuetypesgroup
 
 import (
 	"context"
-	"net/http"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"net/http"
 )
 
 // ValueTypesCollectionsStringClient contains the methods for the ValueTypesCollectionsString group.

@@ -6,12 +6,11 @@ package renamedopgroup
 
 import (
 	"context"
-	"net/http"
-	"strings"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"net/http"
+	"strings"
 )
 
 // RenamedOperationClient contains the methods for the RenamedOperation group.

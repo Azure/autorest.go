@@ -7,9 +7,8 @@ package armcontainerorchestratorruntime_test
 import (
 	"armcontainerorchestratorruntime"
 	"context"
-	"log"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
+	"log"
 )
 
 // Generated from example definition: 2024-03-01/Operations_List.json

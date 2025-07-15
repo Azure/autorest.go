@@ -7,11 +7,10 @@ package armcomputeschedule_test
 import (
 	"armcomputeschedule"
 	"context"
-	"log"
-	"time"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
+	"log"
+	"time"
 )
 
 // Generated from example definition: 2025-05-01/ScheduledActions_VirtualMachinesCancelOperations_MaximumSet_Gen.json

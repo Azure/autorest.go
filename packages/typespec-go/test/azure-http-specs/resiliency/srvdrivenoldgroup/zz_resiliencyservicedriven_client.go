@@ -6,12 +6,11 @@ package srvdrivenoldgroup
 
 import (
 	"context"
-	"net/http"
-	"strings"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"net/http"
+	"strings"
 )
 
 // ResiliencyServiceDrivenClient - Test that we can grow up a service spec and service deployment into a multi-versioned service
