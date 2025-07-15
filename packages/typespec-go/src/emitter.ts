@@ -73,6 +73,9 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
           message: (<Error>err).message,
           target: NoTarget,
         });
+
+        // don't continue so the state of the SDK can be inspected without any additional changes
+        return;
       }
     }
 
