@@ -38,7 +38,7 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
 
     // probe to see if Go tools are on the path
     try {
-      execSync('go version', { stdio: ['ignore', 'ignore', 'ignore'], timeout: 5000 });
+      execSync('go version', { stdio: ['ignore', 'ignore', 'ignore'] });
     } catch {
       // if the transforms file exists and we don't have Go
       // on the path then make this an error as it means we
