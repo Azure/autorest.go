@@ -37,6 +37,19 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
     const goGenerateFile = context.options['go-generate'];
     const goGenerateFileExists = goGenerateFile ? existsSync(`${context.emitterOutputDir}/${goGenerateFile}`) : false;
 
+    if (goGenerateFile && !goGenerateFileExists) {
+      // go-generate was specified but we didn't find the file, so error and exit
+      context.program.reportDiagnostic({
+        code: 'gogenerate',
+        severity: 'error',
+        message: `the go-generate file wasn't found. the complete path is ${context.emitterOutputDir}/${goGenerateFile}`,
+        target: NoTarget,
+      });
+
+      // don't continue so the state of the SDK can be inspected without any additional changes
+      return;
+    }
+
     // probe to see if Go tools are on the path
     try {
       execSync('go version', { stdio: ['ignore', 'ignore', 'ignore'] });
@@ -69,7 +82,7 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
         execSync(`go generate ${goGenerateFile}`, { cwd: context.emitterOutputDir, encoding: 'ascii' });
       } catch (err) {
         context.program.reportDiagnostic({
-          code: 'transforms',
+          code: 'gogenerate',
           severity: 'error',
           message: (<Error>err).message,
           target: NoTarget,
