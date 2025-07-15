@@ -1,11 +1,23 @@
 # Release History
 
-## 0.6.0 (unreleased)
+## 0.6.0 (2025-07-15)
 
 ### Breaking Changes
 
 * Fixed some cases where a client name could stutter.
 * Force the body paramter to be required for `PATCH` and `PUT` operations.
+
+### Features Added
+
+* Added switch `go-generate` to invoke post-generation scripts.
+  * The value is an output-relative path to a `.go` file containing `//go:generate` directives.
+  * If Go tools are not on the path, and `go-generate` was specified, then an error is produced.
+
+### Other Changes
+
+* When Go tools are found on the path, the following steps happen after successfully generating code and any `go-generate` script is invoked.
+  * Execute `gofmt -w .` followed by `go mod tidy` in the output directory.
+  * If Go tools are not found, the above steps are skipped and a warning is displayed.
 
 ## 0.5.1 (2025-06-26)
 

@@ -199,7 +199,7 @@ const armbillingbenefits = pkgRoot + 'test/tsp/BillingBenefits.Management';
 generate('armbillingbenefits', armbillingbenefits, 'test/local/armbillingbenefits', [`examples-directory=${armbillingbenefits}/examples`, 'generate-samples=true']);
 
 const nooptionalbody = pkgRoot + 'test/tsp/NoOptionalBody';
-generate('nooptionalbody', nooptionalbody, 'test/local/nooptionalbody', ['generate-fakes=false', 'no-optional-body=true']);
+generate('nooptionalbody', nooptionalbody, 'test/local/nooptionalbody', ['generate-fakes=false', 'go-generate=after_generate.go', 'no-optional-body=true']);
 
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
@@ -294,7 +294,6 @@ function generate(moduleName, input, outputDir, perTestOptions) {
         logResult(error, stdout, stderr);
         // format on success
         if (error === null) {
-          execSync('gofmt -w .', { cwd: fullOutputDir});
           // Force emitter version to a constant in _metadata.json to avoid unnecessary version drift in committed files
           const metadataPath = `${fullOutputDir}/testdata/_metadata.json`;
           if (existsSync(metadataPath)) {

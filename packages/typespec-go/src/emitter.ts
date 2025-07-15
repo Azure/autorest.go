@@ -24,14 +24,102 @@ import { generateMetadataFile } from '../../codegen.go/src/metadata.js';
 import { CodeModelError } from '../../codemodel.go/src/errors.js';
 import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
-import { EmitContext, NoTarget } from '@typespec/compiler';
+import { DiagnosticSeverity, EmitContext, NoTarget } from '@typespec/compiler';
 import 'source-map-support/register.js';
 import { reportDiagnostic } from './lib.js';
 import { CodegenError } from '../../codegen.go/src/errors.js';
+import { execSync } from 'child_process';
 
 export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   try {
     await generate(context);
+
+    const goGenerateFile = context.options['go-generate'];
+    const goGenerateFileExists = goGenerateFile ? existsSync(`${context.emitterOutputDir}/${goGenerateFile}`) : false;
+
+    if (goGenerateFile && !goGenerateFileExists) {
+      // go-generate was specified but we didn't find the file, so error and exit
+      context.program.reportDiagnostic({
+        code: 'gogenerate',
+        severity: 'error',
+        message: `the go-generate file wasn't found. the complete path is ${context.emitterOutputDir}/${goGenerateFile}`,
+        target: NoTarget,
+      });
+
+      // don't continue so the state of the SDK can be inspected without any additional changes
+      return;
+    }
+
+    // probe to see if Go tools are on the path
+    try {
+      execSync('go version', { stdio: ['ignore', 'ignore', 'ignore'] });
+    } catch {
+      // if the transforms file exists and we don't have Go
+      // on the path then make this an error as it means we
+      // expect to transform the generated code but were unable
+      // to do so.
+      let severity: DiagnosticSeverity = 'warning';
+      let message = 'skip executing post emitter steps (is go on the path?)';
+      if (goGenerateFileExists) {
+        severity = 'error';
+        message = 'unable to execute post emitter transformations due to missing go tool (is go on the path?)';
+      }
+
+      context.program.reportDiagnostic({
+        code: 'GoVersion',
+        severity: severity,
+        message: message,
+        target: NoTarget,
+      });
+
+      // no Go tools available so exit
+      return;
+    }
+
+    // if we have a post-generation transforms file then "go generate" it
+    if (goGenerateFileExists) {
+      try {
+        execSync(`go generate ${goGenerateFile}`, { cwd: context.emitterOutputDir, encoding: 'ascii' });
+      } catch (err) {
+        context.program.reportDiagnostic({
+          code: 'gogenerate',
+          severity: 'error',
+          message: (<Error>err).message,
+          target: NoTarget,
+        });
+
+        // don't continue so the state of the SDK can be inspected without any additional changes
+        return;
+      }
+    }
+
+    // format after transforms in case any formatting gets munged
+    try {
+      execSync('gofmt -w .', { cwd: context.emitterOutputDir, encoding: 'ascii' });
+    } catch (err) {
+      context.program.reportDiagnostic({
+        code: 'gofmt',
+        severity: 'error',
+        message: (<Error>err).message,
+        target: NoTarget,
+      });
+
+      return;
+    }
+
+    // now go mod tidy
+    try {
+      execSync('go mod tidy', { cwd: context.emitterOutputDir, encoding: 'ascii' });
+    } catch (err) {
+      context.program.reportDiagnostic({
+        code: 'gomodtidy',
+        severity: 'error',
+        message: (<Error>err).message,
+        target: NoTarget,
+      });
+
+      return;
+    }
   } catch (error) {
     if (error instanceof AdapterError) {
       reportDiagnostic(context.program, {
