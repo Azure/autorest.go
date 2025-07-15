@@ -55,7 +55,7 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
     'go-generate': {
       type: 'string',
       nullable: true,
-      description: `Path to a post-generation 'go generate' script. The path is relative to the directory where the SDK is emitted.`,
+      description: `Path to a post-generation 'go generate' script. The path is relative to the emitter-output-dir.`,
     },
     'head-as-boolean': {
       type: 'boolean',
