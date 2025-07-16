@@ -233,7 +233,7 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     ///////////////////////////////////////////////////////////////////////////
 
     // stitch everything together
-    let text = helpers.contentPreamble(codeModel, 'fake');
+    let text = helpers.contentPreamble(codeModel, true, 'fake');
     text += imports.text();
     text += content;
     operations.push(new OperationGroupContent(serverName, text));

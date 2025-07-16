@@ -9,7 +9,7 @@ import (
 )
 
 func NewNamingClient(options *azcore.ClientOptions) (*NamingClient, error) {
-	internal, err := azcore.NewClient("naminggroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}

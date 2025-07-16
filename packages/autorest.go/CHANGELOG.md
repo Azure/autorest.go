@@ -2,9 +2,16 @@
 
 ## 4.0.0-preview.73 (unreleased)
 
+### Breaking Changes
+
+* The `module-version` switch is now used to seed the value for the `moduleVersion` constant. It will _not_ change an existing value.
+  * If not specified, it has a default value of `0.1.0`.
+
 ### Other Changes
 
 * Length check for `regexp` matches includes full match.
+* The `moduleName` and `moduleVersion` constants have been moved out of `constants.go` and into `version.go`.
+  * The `version.go` file is emitted for all SDK flavors.
 
 ## 4.0.0-preview.72 (2025-04-18)
 

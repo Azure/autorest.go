@@ -4,11 +4,6 @@
 
 package armrandom
 
-const (
-	moduleName    = "armrandom"
-	moduleVersion = "v0.1.0"
-)
-
 // SKUTier - This field is required to be implemented by the Resource Provider if the service has more than one tier, but
 // is not required on a PUT.
 type SKUTier string

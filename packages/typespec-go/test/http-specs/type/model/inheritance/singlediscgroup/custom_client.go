@@ -12,7 +12,7 @@ import (
 )
 
 func NewSingleDiscriminatorClient(options *azcore.ClientOptions) (*SingleDiscriminatorClient, error) {
-	internal, err := azcore.NewClient("singlediscgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}

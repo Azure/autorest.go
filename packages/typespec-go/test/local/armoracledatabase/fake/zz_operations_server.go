@@ -5,7 +5,7 @@
 package fake
 
 import (
-	"armoracledatabase"
+	"armoracledatabase/v2"
 	"errors"
 	"fmt"
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"

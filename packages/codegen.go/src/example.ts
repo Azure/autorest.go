@@ -214,7 +214,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
     if (exampleText === '') continue;
 
     // stitch it all together
-    let text = helpers.contentPreamble(codeModel, codeModel.packageName + '_test');
+    let text = helpers.contentPreamble(codeModel, true, codeModel.packageName + '_test');
     text += imports.text();
     text += exampleText;
     examples.push(new ExampleContent(client.name, text));

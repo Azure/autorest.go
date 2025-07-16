@@ -5,11 +5,6 @@
 
 package armdataboxedge
 
-const (
-	moduleName    = "armdataboxedge"
-	moduleVersion = "v2.0.0"
-)
-
 // AccessLevel - Access level allowed for this remote application type
 type AccessLevel string
 

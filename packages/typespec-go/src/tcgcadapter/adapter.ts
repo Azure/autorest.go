@@ -51,10 +51,9 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
     emitterVersion: packageJson['version']
   };
   
-  if (context.options.module && context.options['module-version']) {
-    codeModel.options.module = new go.Module(context.options.module, context.options['module-version']);
-  } else if (context.options.module || context.options['module-version']) {
-    throw new AdapterError('InvalidArgument', '--module and --module-version must both or neither be set', NoTarget);
+  if (context.options.module) {
+    const moduleVersion = context.options['module-version'] ?? '0.1.0';
+    codeModel.options.module = new go.Module(context.options.module, moduleVersion);
   }
   if (context.options['rawjson-as-bytes']) {
     codeModel.options.rawJSONAsBytes = true;
