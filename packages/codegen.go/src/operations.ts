@@ -356,18 +356,7 @@ function generateNilChecks(path: string, prefix: string = 'page'): string {
   return checks.join(' && ');
 }
 
-// Helper function to generate safe access condition for dotted path in fetcher
-function generateSafeAccessCondition(path: string, prefix: string = 'page'): string {
-  const segments = path.split('.');
-  const checks: string[] = [prefix + ' != nil'];
-  
-  for (let i = 0; i < segments.length - 1; i++) {
-    const currentPath = [prefix, ...segments.slice(0, i + 1)].join('.');
-    checks.push(`${currentPath} != nil`);
-  }
-  
-  return checks.join(' && ');
-}
+
 
 function emitPagerDefinition(client: go.Client, method: go.LROPageableMethod | go.PageableMethod, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
   imports.add('context');
@@ -392,8 +381,7 @@ function emitPagerDefinition(client: go.Client, method: go.LROPageableMethod | g
     if (method.kind === 'pageableMethod') {
       text += '\t\t\tnextLink := ""\n';
       nextLinkVar = 'nextLink';
-      const safeAccessCondition = generateSafeAccessCondition(method.nextLinkName);
-      text += `\t\t\tif ${safeAccessCondition} {\n`;
+      text += '\t\t\tif page != nil {\n';
       text += `\t\t\t\tnextLink = *page.${method.nextLinkName}\n\t\t\t}\n`;
     } else {
       nextLinkVar = `*page.${method.nextLinkName}`;
