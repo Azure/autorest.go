@@ -75,12 +75,12 @@ func (client *PageableServerDrivenPaginationClient) linkHandleResponse(resp *htt
 func (client *PageableServerDrivenPaginationClient) NewNestedLinkPager(options *PageableServerDrivenPaginationClientNestedLinkOptions) *runtime.Pager[PageableServerDrivenPaginationClientNestedLinkResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PageableServerDrivenPaginationClientNestedLinkResponse]{
 		More: func(page PageableServerDrivenPaginationClientNestedLinkResponse) bool {
-			return page.NestedNext.Next != nil && len(*page.NestedNext.Next) > 0
+			return page.NestedNext != nil && page.NestedNext.Next != nil && len(*page.NestedNext.Next) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationClientNestedLinkResponse) (PageableServerDrivenPaginationClientNestedLinkResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationClient.NewNestedLinkPager")
 			nextLink := ""
-			if page != nil {
+			if page != nil && page.NestedNext != nil {
 				nextLink = *page.NestedNext.Next
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
