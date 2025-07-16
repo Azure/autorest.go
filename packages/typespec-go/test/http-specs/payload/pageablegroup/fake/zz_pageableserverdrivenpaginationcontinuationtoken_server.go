@@ -17,6 +17,10 @@ import (
 
 // PageableServerDrivenPaginationContinuationTokenServer is a fake server for instances of the pageablegroup.PageableServerDrivenPaginationContinuationTokenClient type.
 type PageableServerDrivenPaginationContinuationTokenServer struct {
+	// NewRequestHeaderNestedResponseBodyPager is the fake for method PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderNestedResponseBodyPager
+	// HTTP status codes to indicate success: http.StatusOK
+	NewRequestHeaderNestedResponseBodyPager func(options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions) (resp azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse])
+
 	// NewRequestHeaderResponseBodyPager is the fake for method PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderResponseBodyPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewRequestHeaderResponseBodyPager func(options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions) (resp azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyResponse])
@@ -24,6 +28,10 @@ type PageableServerDrivenPaginationContinuationTokenServer struct {
 	// NewRequestHeaderResponseHeaderPager is the fake for method PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderResponseHeaderPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewRequestHeaderResponseHeaderPager func(options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions) (resp azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse])
+
+	// NewRequestQueryNestedResponseBodyPager is the fake for method PageableServerDrivenPaginationContinuationTokenClient.NewRequestQueryNestedResponseBodyPager
+	// HTTP status codes to indicate success: http.StatusOK
+	NewRequestQueryNestedResponseBodyPager func(options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions) (resp azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse])
 
 	// NewRequestQueryResponseBodyPager is the fake for method PageableServerDrivenPaginationContinuationTokenClient.NewRequestQueryResponseBodyPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -39,22 +47,26 @@ type PageableServerDrivenPaginationContinuationTokenServer struct {
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPageableServerDrivenPaginationContinuationTokenServerTransport(srv *PageableServerDrivenPaginationContinuationTokenServer) *PageableServerDrivenPaginationContinuationTokenServerTransport {
 	return &PageableServerDrivenPaginationContinuationTokenServerTransport{
-		srv:                                 srv,
-		newRequestHeaderResponseBodyPager:   newTracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyResponse]](),
-		newRequestHeaderResponseHeaderPager: newTracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse]](),
-		newRequestQueryResponseBodyPager:    newTracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyResponse]](),
-		newRequestQueryResponseHeaderPager:  newTracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderResponse]](),
+		srv:                                     srv,
+		newRequestHeaderNestedResponseBodyPager: newTracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse]](),
+		newRequestHeaderResponseBodyPager:       newTracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyResponse]](),
+		newRequestHeaderResponseHeaderPager:     newTracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse]](),
+		newRequestQueryNestedResponseBodyPager:  newTracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse]](),
+		newRequestQueryResponseBodyPager:        newTracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyResponse]](),
+		newRequestQueryResponseHeaderPager:      newTracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderResponse]](),
 	}
 }
 
 // PageableServerDrivenPaginationContinuationTokenServerTransport connects instances of pageablegroup.PageableServerDrivenPaginationContinuationTokenClient to instances of PageableServerDrivenPaginationContinuationTokenServer.
 // Don't use this type directly, use NewPageableServerDrivenPaginationContinuationTokenServerTransport instead.
 type PageableServerDrivenPaginationContinuationTokenServerTransport struct {
-	srv                                 *PageableServerDrivenPaginationContinuationTokenServer
-	newRequestHeaderResponseBodyPager   *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyResponse]]
-	newRequestHeaderResponseHeaderPager *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse]]
-	newRequestQueryResponseBodyPager    *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyResponse]]
-	newRequestQueryResponseHeaderPager  *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderResponse]]
+	srv                                     *PageableServerDrivenPaginationContinuationTokenServer
+	newRequestHeaderNestedResponseBodyPager *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse]]
+	newRequestHeaderResponseBodyPager       *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyResponse]]
+	newRequestHeaderResponseHeaderPager     *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse]]
+	newRequestQueryNestedResponseBodyPager  *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse]]
+	newRequestQueryResponseBodyPager        *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyResponse]]
+	newRequestQueryResponseHeaderPager      *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderResponse]]
 }
 
 // Do implements the policy.Transporter interface for PageableServerDrivenPaginationContinuationTokenServerTransport.
@@ -80,10 +92,14 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 		}
 		if !intercepted {
 			switch method {
+			case "PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderNestedResponseBodyPager":
+				res.resp, res.err = p.dispatchNewRequestHeaderNestedResponseBodyPager(req)
 			case "PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderResponseBodyPager":
 				res.resp, res.err = p.dispatchNewRequestHeaderResponseBodyPager(req)
 			case "PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderResponseHeaderPager":
 				res.resp, res.err = p.dispatchNewRequestHeaderResponseHeaderPager(req)
+			case "PageableServerDrivenPaginationContinuationTokenClient.NewRequestQueryNestedResponseBodyPager":
+				res.resp, res.err = p.dispatchNewRequestQueryNestedResponseBodyPager(req)
 			case "PageableServerDrivenPaginationContinuationTokenClient.NewRequestQueryResponseBodyPager":
 				res.resp, res.err = p.dispatchNewRequestQueryResponseBodyPager(req)
 			case "PageableServerDrivenPaginationContinuationTokenClient.NewRequestQueryResponseHeaderPager":
@@ -105,6 +121,46 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 	case res := <-resultChan:
 		return res.resp, res.err
 	}
+}
+
+func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatchNewRequestHeaderNestedResponseBodyPager(req *http.Request) (*http.Response, error) {
+	if p.srv.NewRequestHeaderNestedResponseBodyPager == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NewRequestHeaderNestedResponseBodyPager not implemented")}
+	}
+	newRequestHeaderNestedResponseBodyPager := p.newRequestHeaderNestedResponseBodyPager.get(req)
+	if newRequestHeaderNestedResponseBodyPager == nil {
+		qp := req.URL.Query()
+		tokenParam := getOptional(getHeaderValue(req.Header, "token"))
+		fooParam := getOptional(getHeaderValue(req.Header, "foo"))
+		barUnescaped, err := url.QueryUnescape(qp.Get("bar"))
+		if err != nil {
+			return nil, err
+		}
+		barParam := getOptional(barUnescaped)
+		var options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions
+		if tokenParam != nil || fooParam != nil || barParam != nil {
+			options = &pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions{
+				Token: tokenParam,
+				Foo:   fooParam,
+				Bar:   barParam,
+			}
+		}
+		resp := p.srv.NewRequestHeaderNestedResponseBodyPager(options)
+		newRequestHeaderNestedResponseBodyPager = &resp
+		p.newRequestHeaderNestedResponseBodyPager.add(req, newRequestHeaderNestedResponseBodyPager)
+	}
+	resp, err := server.PagerResponderNext(newRequestHeaderNestedResponseBodyPager, req)
+	if err != nil {
+		return nil, err
+	}
+	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newRequestHeaderNestedResponseBodyPager.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+	}
+	if !server.PagerResponderMore(newRequestHeaderNestedResponseBodyPager) {
+		p.newRequestHeaderNestedResponseBodyPager.remove(req)
+	}
+	return resp, nil
 }
 
 func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatchNewRequestHeaderResponseBodyPager(req *http.Request) (*http.Response, error) {
@@ -183,6 +239,50 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 	}
 	if !server.PagerResponderMore(newRequestHeaderResponseHeaderPager) {
 		p.newRequestHeaderResponseHeaderPager.remove(req)
+	}
+	return resp, nil
+}
+
+func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatchNewRequestQueryNestedResponseBodyPager(req *http.Request) (*http.Response, error) {
+	if p.srv.NewRequestQueryNestedResponseBodyPager == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NewRequestQueryNestedResponseBodyPager not implemented")}
+	}
+	newRequestQueryNestedResponseBodyPager := p.newRequestQueryNestedResponseBodyPager.get(req)
+	if newRequestQueryNestedResponseBodyPager == nil {
+		qp := req.URL.Query()
+		tokenUnescaped, err := url.QueryUnescape(qp.Get("token"))
+		if err != nil {
+			return nil, err
+		}
+		tokenParam := getOptional(tokenUnescaped)
+		fooParam := getOptional(getHeaderValue(req.Header, "foo"))
+		barUnescaped, err := url.QueryUnescape(qp.Get("bar"))
+		if err != nil {
+			return nil, err
+		}
+		barParam := getOptional(barUnescaped)
+		var options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions
+		if tokenParam != nil || fooParam != nil || barParam != nil {
+			options = &pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions{
+				Token: tokenParam,
+				Foo:   fooParam,
+				Bar:   barParam,
+			}
+		}
+		resp := p.srv.NewRequestQueryNestedResponseBodyPager(options)
+		newRequestQueryNestedResponseBodyPager = &resp
+		p.newRequestQueryNestedResponseBodyPager.add(req, newRequestQueryNestedResponseBodyPager)
+	}
+	resp, err := server.PagerResponderNext(newRequestQueryNestedResponseBodyPager, req)
+	if err != nil {
+		return nil, err
+	}
+	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newRequestQueryNestedResponseBodyPager.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+	}
+	if !server.PagerResponderMore(newRequestQueryNestedResponseBodyPager) {
+		p.newRequestQueryNestedResponseBodyPager.remove(req)
 	}
 	return resp, nil
 }

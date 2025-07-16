@@ -19,6 +19,63 @@ type PageableServerDrivenPaginationContinuationTokenClient struct {
 	internal *azcore.Client
 }
 
+//   - options - PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions contains the optional
+//     parameters for the PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderNestedResponseBodyPager method.
+func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestHeaderNestedResponseBodyPager(options *PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions) *runtime.Pager[PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse] {
+	return runtime.NewPager(runtime.PagingHandler[PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse]{
+		More: func(page PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse) bool {
+			return false
+		},
+		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse) (PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderNestedResponseBodyPager")
+			req, err := client.requestHeaderNestedResponseBodyCreateRequest(ctx, options)
+			if err != nil {
+				return PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse{}, err
+			}
+			resp, err := client.internal.Pipeline().Do(req)
+			if err != nil {
+				return PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.requestHeaderNestedResponseBodyHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// requestHeaderNestedResponseBodyCreateRequest creates the RequestHeaderNestedResponseBody request.
+func (client *PageableServerDrivenPaginationContinuationTokenClient) requestHeaderNestedResponseBodyCreateRequest(ctx context.Context, options *PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions) (*policy.Request, error) {
+	urlPath := "/payload/pageable/server-driven-pagination/continuationtoken/request-header-nested-response-body"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	if options != nil && options.Bar != nil {
+		reqQP.Set("bar", *options.Bar)
+	}
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	if options != nil && options.Foo != nil {
+		req.Raw().Header["foo"] = []string{*options.Foo}
+	}
+	if options != nil && options.Token != nil {
+		req.Raw().Header["token"] = []string{*options.Token}
+	}
+	return req, nil
+}
+
+// requestHeaderNestedResponseBodyHandleResponse handles the RequestHeaderNestedResponseBody response.
+func (client *PageableServerDrivenPaginationContinuationTokenClient) requestHeaderNestedResponseBodyHandleResponse(resp *http.Response) (PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse, error) {
+	result := PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.RequestHeaderNestedResponseBodyResponse); err != nil {
+		return PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse{}, err
+	}
+	return result, nil
+}
+
 //   - options - PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions contains the optional parameters
 //     for the PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderResponseBodyPager method.
 func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestHeaderResponseBodyPager(options *PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions) *runtime.Pager[PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyResponse] {
@@ -132,6 +189,63 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) requestHead
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RequestHeaderResponseHeaderResponse); err != nil {
 		return PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse{}, err
+	}
+	return result, nil
+}
+
+//   - options - PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions contains the optional
+//     parameters for the PageableServerDrivenPaginationContinuationTokenClient.NewRequestQueryNestedResponseBodyPager method.
+func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestQueryNestedResponseBodyPager(options *PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions) *runtime.Pager[PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse] {
+	return runtime.NewPager(runtime.PagingHandler[PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse]{
+		More: func(page PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse) bool {
+			return false
+		},
+		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse) (PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationContinuationTokenClient.NewRequestQueryNestedResponseBodyPager")
+			req, err := client.requestQueryNestedResponseBodyCreateRequest(ctx, options)
+			if err != nil {
+				return PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse{}, err
+			}
+			resp, err := client.internal.Pipeline().Do(req)
+			if err != nil {
+				return PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.requestQueryNestedResponseBodyHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// requestQueryNestedResponseBodyCreateRequest creates the RequestQueryNestedResponseBody request.
+func (client *PageableServerDrivenPaginationContinuationTokenClient) requestQueryNestedResponseBodyCreateRequest(ctx context.Context, options *PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions) (*policy.Request, error) {
+	urlPath := "/payload/pageable/server-driven-pagination/continuationtoken/request-query-nested-response-body"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	if options != nil && options.Bar != nil {
+		reqQP.Set("bar", *options.Bar)
+	}
+	if options != nil && options.Token != nil {
+		reqQP.Set("token", *options.Token)
+	}
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	if options != nil && options.Foo != nil {
+		req.Raw().Header["foo"] = []string{*options.Foo}
+	}
+	return req, nil
+}
+
+// requestQueryNestedResponseBodyHandleResponse handles the RequestQueryNestedResponseBody response.
+func (client *PageableServerDrivenPaginationContinuationTokenClient) requestQueryNestedResponseBodyHandleResponse(resp *http.Response) (PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse, error) {
+	result := PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.RequestQueryNestedResponseBodyResponse); err != nil {
+		return PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse{}, err
 	}
 	return result, nil
 }
