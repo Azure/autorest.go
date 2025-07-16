@@ -69,3 +69,48 @@ func (client *PageableServerDrivenPaginationClient) linkHandleResponse(resp *htt
 	}
 	return result, nil
 }
+
+//   - options - PageableServerDrivenPaginationClientNestedLinkOptions contains the optional parameters for the PageableServerDrivenPaginationClient.NewNestedLinkPager
+//     method.
+func (client *PageableServerDrivenPaginationClient) NewNestedLinkPager(options *PageableServerDrivenPaginationClientNestedLinkOptions) *runtime.Pager[PageableServerDrivenPaginationClientNestedLinkResponse] {
+	return runtime.NewPager(runtime.PagingHandler[PageableServerDrivenPaginationClientNestedLinkResponse]{
+		More: func(page PageableServerDrivenPaginationClientNestedLinkResponse) bool {
+			return page.NestedNext != nil && page.NestedNext.Next != nil && len(*page.NestedNext.Next) > 0
+		},
+		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationClientNestedLinkResponse) (PageableServerDrivenPaginationClientNestedLinkResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationClient.NewNestedLinkPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NestedNext.Next
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.nestedLinkCreateRequest(ctx, options)
+			}, nil)
+			if err != nil {
+				return PageableServerDrivenPaginationClientNestedLinkResponse{}, err
+			}
+			return client.nestedLinkHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// nestedLinkCreateRequest creates the NestedLink request.
+func (client *PageableServerDrivenPaginationClient) nestedLinkCreateRequest(ctx context.Context, _ *PageableServerDrivenPaginationClientNestedLinkOptions) (*policy.Request, error) {
+	urlPath := "/payload/pageable/server-driven-pagination/nested-link"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// nestedLinkHandleResponse handles the NestedLink response.
+func (client *PageableServerDrivenPaginationClient) nestedLinkHandleResponse(resp *http.Response) (PageableServerDrivenPaginationClientNestedLinkResponse, error) {
+	result := PageableServerDrivenPaginationClientNestedLinkResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.NestedLinkResponse); err != nil {
+		return PageableServerDrivenPaginationClientNestedLinkResponse{}, err
+	}
+	return result, nil
+}

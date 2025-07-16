@@ -343,13 +343,29 @@ function getZeroReturnValue(method: go.MethodType, apiType: 'api' | 'op' | 'hand
   return returnType;
 }
 
+// Helper function to generate nil checks for a dotted path
+function generateNilChecks(path: string, prefix: string = 'page'): string {
+  const segments = path.split('.');
+  const checks: string[] = [];
+  
+  for (let i = 0; i < segments.length; i++) {
+    const currentPath = [prefix, ...segments.slice(0, i + 1)].join('.');
+    checks.push(`${currentPath} != nil`);
+  }
+  
+  return checks.join(' && ');
+}
+
+
+
 function emitPagerDefinition(client: go.Client, method: go.LROPageableMethod | go.PageableMethod, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
   imports.add('context');
   let text = `runtime.NewPager(runtime.PagingHandler[${method.responseEnvelope.name}]{\n`;
   text += `\t\tMore: func(page ${method.responseEnvelope.name}) bool {\n`;
   // there is no advancer for single-page pagers
   if (method.nextLinkName) {
-    text += `\t\t\treturn page.${method.nextLinkName} != nil && len(*page.${method.nextLinkName}) > 0\n`;
+    const nilChecks = generateNilChecks(method.nextLinkName);
+    text += `\t\t\treturn ${nilChecks} && len(*page.${method.nextLinkName}) > 0\n`;
     text += '\t\t},\n';
   } else {
     text += '\t\t\treturn false\n';
