@@ -4,11 +4,6 @@
 
 package armhealthbot
 
-const (
-	moduleName    = "armhealthbot"
-	moduleVersion = "v0.1.0"
-)
-
 // CreatedByType - The kind of entity that created the resource.
 type CreatedByType string
 

@@ -75,7 +75,7 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
     'module-version': {
       type: 'string',
       nullable: true,
-      description: 'Semantic version of the Go module without the leading \'v\' written to constants.go. (e.g. 1.2.3). When module-version is specified, module must also be specified.',
+      description: 'Initial semantic version of the Go module without the leading \'v\'. (e.g. 1.2.3). Defaults to 0.1.0.',
     },
     'rawjson-as-bytes': {
       type: 'boolean',

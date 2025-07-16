@@ -1,10 +1,17 @@
 # Release History
 
-## 0.6.1 (2025-07-16)
+## 0.7.0 (unreleased)
+
+### Breaking Changes
+
+* The `module-version` switch is now used to seed the value for the `moduleVersion` constant. It will _not_ change an existing value.
+  * If not specified, it has a default value of `0.1.0`.
 
 ### Other Changes
 
 * Updated to the latest tsp toolset.
+* The `moduleName` and `moduleVersion` constants have been moved out of `constants.go` and into `version.go`.
+  * The `version.go` file is emitted for all SDK flavors.
 
 ## 0.6.0 (2025-07-15)
 

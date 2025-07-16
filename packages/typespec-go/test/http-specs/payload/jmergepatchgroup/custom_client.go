@@ -9,7 +9,7 @@ import (
 )
 
 func NewJSONMergePatchClient(options *azcore.ClientOptions) (*JSONMergePatchClient, error) {
-	internal, err := azcore.NewClient("jmergepatchgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}

@@ -12,7 +12,7 @@ import (
 )
 
 func NewRecursiveClient(options *azcore.ClientOptions) (*RecursiveClient, error) {
-	internal, err := azcore.NewClient("recursivegroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}

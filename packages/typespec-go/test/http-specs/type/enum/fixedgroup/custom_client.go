@@ -12,7 +12,7 @@ import (
 )
 
 func NewFixedClient(options *azcore.ClientOptions) (*FixedClient, error) {
-	internal, err := azcore.NewClient("fixedenumgroup", "v0.1.1", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}

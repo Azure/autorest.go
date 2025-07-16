@@ -9,7 +9,7 @@ import (
 )
 
 func NewMadeOptionalClient(options *azcore.ClientOptions) (*MadeOptionalClient, error) {
-	internal, err := azcore.NewClient("madeoptionalgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}

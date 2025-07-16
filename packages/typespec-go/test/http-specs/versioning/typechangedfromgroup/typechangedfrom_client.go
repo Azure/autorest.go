@@ -9,7 +9,7 @@ import (
 )
 
 func NewTypeChangedFromClient(options *azcore.ClientOptions) (*TypeChangedFromClient, error) {
-	internal, err := azcore.NewClient("typechangedfromgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}

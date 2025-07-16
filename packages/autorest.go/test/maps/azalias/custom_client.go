@@ -17,7 +17,7 @@ func NewClient(options *ClientOptions) (*Client, error) {
 	if options == nil {
 		options = &ClientOptions{}
 	}
-	client, err := azcore.NewClient("Client", "v0.0.1", runtime.PipelineOptions{}, &options.ClientOptions)
+	client, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
 	if err != nil {
 		return nil, err
 	}

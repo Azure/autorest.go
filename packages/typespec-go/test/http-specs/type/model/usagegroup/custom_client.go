@@ -12,7 +12,7 @@ import (
 )
 
 func NewUsageClient(options *azcore.ClientOptions) (*UsageClient, error) {
-	internal, err := azcore.NewClient("modelusagegroup", "v0.1.0", runtime.PipelineOptions{}, nil)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, nil)
 	if err != nil {
 		return nil, err
 	}
