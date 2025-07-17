@@ -19,8 +19,8 @@ This guide outlines the getting started steps to contributing to these generator
 - [Step 4: Test your changes](#step-4-test-your-changes)
   - [Debug](#debug)
   - [Built in commands](#built-in-commands)
-- [Step 5: Make a PR](#step-5-make-a-pr)
-- [Step 6: Update emitter documentation](#step-6-update-emitter-documentation)
+  - [Step 5: Update emitter documentation](#step-5-update-emitter-documentation)
+- [Step 6: Make a PR](#step-6-make-a-pr)
 
 ## Prerequisites
 
