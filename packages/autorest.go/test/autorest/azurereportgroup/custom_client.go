@@ -13,13 +13,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewAutoRestReportServiceForAzureClient(options *azcore.ClientOptions) (*AutoRestReportServiceForAzureClient, error) {
+func NewAutoRestReportServiceForAzureClient(endpoint string, options *azcore.ClientOptions) (*AutoRestReportServiceForAzureClient, error) {
 	cl, err := azcore.NewClient("azurereportgroup.AutoRestReportServiceForAzureClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &AutoRestReportServiceForAzureClient{
 		internal: cl,
+		endpoint: endpoint,
 	}
 	return client, nil
 }

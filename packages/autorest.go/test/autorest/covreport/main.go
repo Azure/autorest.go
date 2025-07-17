@@ -22,7 +22,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	azureClient, err := azurereportgroup.NewAutoRestReportServiceForAzureClient(nil)
+	azureClient, err := azurereportgroup.NewAutoRestReportServiceForAzureClient(generatortests.Host, nil)
 	if err != nil {
 		panic(err)
 	}
