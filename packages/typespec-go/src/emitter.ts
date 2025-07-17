@@ -21,6 +21,7 @@ import { generateServers } from '../../codegen.go/src/fake/servers.js';
 import { generateServerFactory } from '../../codegen.go/src/fake/factory.js';
 import { generateXMLAdditionalPropsHelpers } from '../../codegen.go/src/xmlAdditionalProps.js';
 import { generateMetadataFile } from '../../codegen.go/src/metadata.js';
+import { generateVersionInfo } from '../../codegen.go/src/version.js';
 import { CodeModelError } from '../../codemodel.go/src/errors.js';
 import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
@@ -271,6 +272,12 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
   const timeHelpers = await generateTimeHelpers(codeModel);
   for (const helper of timeHelpers) {
     await writeFile(`${context.emitterOutputDir}/${filePrefix}${helper.name.toLowerCase()}.go`, helper.content);
+  }
+
+  // don't overwrite an existing version.go file
+  const verisonGoFileName = `${context.emitterOutputDir}/${filePrefix}version.go`;
+  if (!existsSync(verisonGoFileName)) {
+    await writeFile(verisonGoFileName, await generateVersionInfo(codeModel));
   }
 
   const xmlAddlProps = await generateXMLAdditionalPropsHelpers(codeModel);

@@ -206,9 +206,14 @@ export class clientAdapter {
         throw new AdapterError('UnsupportedTsp', `paging with re-injected parameters is not supported`, sdkMethod.__raw?.node ?? NoTarget);
       }
       method = new go.PageableMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
-      if (sdkMethod.nextLinkPath) {
-        // TODO: handle nested next link
-        method.nextLinkName = capitalize(ensureNameCase(sdkMethod.nextLinkPath));
+      if (sdkMethod.pagingMetadata.nextLinkSegments) {
+         method.nextLinkName = capitalize(sdkMethod.pagingMetadata.nextLinkSegments.map((segment) => {
+          if (segment.kind === 'property') {
+            return ensureNameCase(segment.name);
+          } else {
+            throw new AdapterError('UnsupportedTsp', `unsupported next link segment kind ${segment.kind}`, sdkMethod.__raw?.node ?? NoTarget);
+          }
+        }).join('.'));
       }
     } else if (sdkMethod.kind === 'lro') {
       method = new go.LROMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);

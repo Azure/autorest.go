@@ -9,7 +9,7 @@ import (
 )
 
 func NewScalarClient(options *azcore.ClientOptions) (*ScalarClient, error) {
-	internal, err := azcore.NewClient("corescalargroup", "v0.1.0", runtime.PipelineOptions{}, nil)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, nil)
 	if err != nil {
 		return nil, err
 	}

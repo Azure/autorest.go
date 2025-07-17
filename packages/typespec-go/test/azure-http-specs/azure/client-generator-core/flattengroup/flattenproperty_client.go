@@ -9,7 +9,7 @@ import (
 )
 
 func NewFlattenPropertyClient(options *azcore.ClientOptions) (*FlattenPropertyClient, error) {
-	internal, err := azcore.NewClient("flattengroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}

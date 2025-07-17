@@ -108,25 +108,25 @@ for (const namespace in goMappings) {
 }
 
 const blobStorage = repoRoot + 'swagger/specification/storage/data-plane/Microsoft.BlobStorage/readme.md';
-generateFromReadme("azblob", blobStorage, 'package-2021-12', 'test/storage/azblob', '--module-version=0.1.0 --inject-spans');
+generateFromReadme("azblob", blobStorage, 'package-2021-12', 'test/storage/azblob', '--inject-spans');
 
 const network = repoRoot + 'swagger/specification/network/resource-manager/readme.md';
-generateFromReadme("armnetwork", network, 'package-2022-09', 'test/network/armnetwork', '--module=armnetwork --module-version=0.1.0 --azure-arm=true --remove-unreferenced-types');
+generateFromReadme("armnetwork", network, 'package-2022-09', 'test/network/armnetwork', '--module=armnetwork --azure-arm=true --remove-unreferenced-types');
 
 const compute = repoRoot + 'swagger/specification/compute/resource-manager/readme.md';
-generateFromReadme("armcompute", compute, 'package-2021-12-01', 'test/compute/armcompute', '--module=armcompute --module-version=0.1.0 --azure-arm=true --remove-unreferenced-types --slice-elements-byval');
+generateFromReadme("armcompute", compute, 'package-2021-12-01', 'test/compute/armcompute', '--module=armcompute --azure-arm=true --remove-unreferenced-types --slice-elements-byval');
 
 const synapseArtifacts = repoRoot + 'swagger/specification/synapse/data-plane/readme.md';
-generateFromReadme("azartifacts", synapseArtifacts, 'package-artifacts-composite-v6', 'test/synapse/azartifacts', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azartifacts" --module-version=0.1.0 --openapi-type="data-plane"');
+generateFromReadme("azartifacts", synapseArtifacts, 'package-artifacts-composite-v6', 'test/synapse/azartifacts', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azartifacts" --openapi-type="data-plane"');
 
 const synapseSpark = repoRoot + 'swagger/specification/synapse/data-plane/readme.md';
-generateFromReadme("azspark", synapseSpark, 'package-spark-2020-12-01', 'test/synapse/azspark', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azspark" --module-version=0.1.0 --openapi-type="data-plane"');
+generateFromReadme("azspark", synapseSpark, 'package-spark-2020-12-01', 'test/synapse/azspark', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azspark" --openapi-type="data-plane"');
 
 const tables = repoRoot + 'swagger/specification/cosmos-db/data-plane/readme.md';
-generateFromReadme("aztables", tables, 'package-2019-02', 'test/tables/aztables', '--security=AADToken --security-scopes="https://tables.azure.com/.default" --module=aztables --module-version=0.1.0 --openapi-type="data-plane" --export-clients --azure-validator=false --group-parameters=false --stutter=table --rawjson-as-bytes');
+generateFromReadme("aztables", tables, 'package-2019-02', 'test/tables/aztables', '--security=AADToken --security-scopes="https://tables.azure.com/.default" --module=aztables --openapi-type="data-plane" --export-clients --azure-validator=false --group-parameters=false --stutter=table --rawjson-as-bytes');
 
 const keyvault = repoRoot + 'swagger/specification/keyvault/data-plane/readme.md';
-generateFromReadme("azkeyvault", keyvault, 'package-7.2', 'test/keyvault/azkeyvault', '--module=azkeyvault --module-version=0.1.0');
+generateFromReadme("azkeyvault", keyvault, 'package-7.2', 'test/keyvault/azkeyvault', '--module=azkeyvault');
 
 const consumption = repoRoot + 'swagger/specification/consumption/resource-manager/readme.md';
 generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consumption/armconsumption', '--module=armconsumption --module-version=1.0.0 --azure-arm=true --generate-fakes=false --inject-spans=false --remove-unreferenced-types --factory-gather-all-params=false');
@@ -135,14 +135,14 @@ const databoxedge = repoRoot + 'swagger/specification/databoxedge/resource-manag
 generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/armdataboxedge', '--module=armdataboxedge --module-version=2.0.0 --azure-arm=true --remove-unreferenced-types --inject-spans=false --fix-const-stuttering=true');
 
 const acr = repoRoot + 'swagger/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json';
-generate("azacr", acr, 'test/acr/azacr', '--module="azacr" --module-version=0.1.0 --openapi-type="data-plane" --rawjson-as-bytes --generate-fakes');
+generate("azacr", acr, 'test/acr/azacr', '--module="azacr" --openapi-type="data-plane" --rawjson-as-bytes --generate-fakes');
 
 const machineLearning = repoRoot + 'swagger/specification/machinelearningservices/resource-manager';
 generateFromReadme("armmachinelearning", machineLearning, 'package-2022-02-01-preview', 'test/machinelearning/armmachinelearning', '--module=armmachinelearning --module-version=1.0.0 --azure-arm=true --generate-fakes=false --inject-spans=false --remove-unreferenced-types');
 
-generate("azalias", pkgRoot + 'test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --module-version=0.1.0 --openapi-type="data-plane" --generate-fakes --inject-spans --slice-elements-byval --disallow-unknown-fields --single-client');
+generate("azalias", pkgRoot + 'test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --openapi-type="data-plane" --generate-fakes --inject-spans --slice-elements-byval --disallow-unknown-fields --single-client');
 
-generate("azarrayofrawjson", pkgRoot + 'test/swagger/arrayOfRawJSON.json', 'test/misc/azarrayofrawjson', '--security=AzureKey --module="azarrayofrawjson" --module-version=0.1.0 --openapi-type="data-plane" --rawjson-as-bytes=true');
+generate("azarrayofrawjson", pkgRoot + 'test/swagger/arrayOfRawJSON.json', 'test/misc/azarrayofrawjson', '--security=AzureKey --module="azarrayofrawjson" --openapi-type="data-plane" --rawjson-as-bytes=true');
 
 function should_generate(name) {
   if (filter !== undefined) {

@@ -12,7 +12,7 @@ import (
 )
 
 func NewSpecialWordsClient(options *azcore.ClientOptions) (*SpecialWordsClient, error) {
-	internal, err := azcore.NewClient("specialwordsgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}

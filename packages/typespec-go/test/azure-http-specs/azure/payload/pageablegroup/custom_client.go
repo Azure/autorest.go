@@ -12,7 +12,7 @@ import (
 )
 
 func NewPageableClient(options *azcore.ClientOptions) (*PageableClient, error) {
-	internal, err := azcore.NewClient("pageablegroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}

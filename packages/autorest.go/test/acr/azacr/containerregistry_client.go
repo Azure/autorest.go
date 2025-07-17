@@ -15,7 +15,7 @@ func NewContainerRegistryClient(endpoint string, options *azcore.ClientOptions) 
 	if options == nil {
 		options = &azcore.ClientOptions{}
 	}
-	client, err := azcore.NewClient("azacr.ContainerRegistryClient", "v0.1.0", runtime.PipelineOptions{}, options)
+	client, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}

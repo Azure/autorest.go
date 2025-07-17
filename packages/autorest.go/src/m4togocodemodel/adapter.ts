@@ -43,10 +43,8 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
     if (session.model.language.go!.host) {
       codeModel.host = <string>session.model.language.go!.host;
     }
-    if (session.model.language.go!.module && session.model.language.go!.moduleVersion) {
-      codeModel.options.module = new go.Module(session.model.language.go!.module, session.model.language.go!.moduleVersion);
-    } else if (session.model.language.go!.module || session.model.language.go!.moduleVersion) {
-      throw new Error('--module and --module-version must both or neither be set');
+    if (session.model.language.go!.module) {
+      codeModel.options.module = new go.Module(session.model.language.go!.module, session.model.language.go!.moduleVersion ?? "0.1.0");
     } else if (session.model.language.go!.containingModule !== '') {
       codeModel.options.containingModule = <string>session.model.language.go!.containingModule;
     }

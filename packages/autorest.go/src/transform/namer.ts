@@ -86,6 +86,8 @@ export async function namer(session: Session<CodeModel>) {
   const moduleVersion = await session.getValue('module-version', '');
   if (moduleVersion !== '') {
     model.language.go!.moduleVersion = moduleVersion;
+  } else {
+    model.language.go!.moduleVersion = '0.1.0';
   }
 
   const module = await session.getValue('module', '');

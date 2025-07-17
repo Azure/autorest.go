@@ -12,7 +12,7 @@ import (
 )
 
 func NewNotDiscriminatedClient(options *azcore.ClientOptions) (*NotDiscriminatedClient, error) {
-	internal, err := azcore.NewClient("nodiscgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}

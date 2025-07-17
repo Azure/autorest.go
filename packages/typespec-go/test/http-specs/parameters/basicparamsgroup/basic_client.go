@@ -9,7 +9,7 @@ import (
 )
 
 func NewBasicClient(options *azcore.ClientOptions) (*BasicClient, error) {
-	internal, err := azcore.NewClient("basicparamsgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}

@@ -1,4 +1,4 @@
-module armoracledatabase
+module armoracledatabase/v2
 
 go 1.23.0
 

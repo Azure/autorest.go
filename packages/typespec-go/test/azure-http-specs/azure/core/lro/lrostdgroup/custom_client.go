@@ -13,7 +13,7 @@ import (
 
 func NewStandardClient(options *azcore.ClientOptions) (*StandardClient, error) {
 	const apiVersion = "2022-12-01-preview"
-	internal, err := azcore.NewClient("lrostdgroup", "v0.1.0", runtime.PipelineOptions{
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
 		PerCall: []policy.Policy{&apiVersionPolicy{apiVersion: apiVersion}},
 	}, options)
 	if err != nil {

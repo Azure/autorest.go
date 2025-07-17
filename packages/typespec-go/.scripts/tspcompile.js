@@ -186,10 +186,10 @@ const internalpager = pkgRoot + 'test/tsp/Internal.Pager';
 generate('internalpager', internalpager, 'test/local/internalpager', ['generate-fakes=false']);
 
 const armoracledatabase = pkgRoot + 'test/tsp/Oracle.Database.Management';
-generate('armoracledatabase', armoracledatabase, 'test/local/armoracledatabase', [`examples-directory=${armoracledatabase}/examples`, 'generate-samples=true']);
+generate('armoracledatabase', armoracledatabase, 'test/local/armoracledatabase', [`examples-directory=${armoracledatabase}/examples`, 'generate-samples=true', 'module-version=2.0.0']);
 
 const armhealthbot = pkgRoot + 'test/tsp/Healthbot.Management';
-generate('armhealthbot', armhealthbot, 'test/local/armhealthbot', [`examples-directory=${armhealthbot}/examples`, 'generate-samples=true']);
+generate('armhealthbot', armhealthbot, 'test/local/armhealthbot', [`examples-directory=${armhealthbot}/examples`, 'generate-samples=true', 'module-version=1.0.0']);
 
 const armhardwaresecuritymodules = pkgRoot + 'test/tsp/HardwareSecurityModules.Management';
 generate('armhardwaresecuritymodules', armhardwaresecuritymodules, 'test/local/armhardwaresecuritymodules', [`examples-directory=${armhardwaresecuritymodules}/examples`, 'generate-samples=true']);
@@ -245,7 +245,6 @@ function generate(moduleName, input, outputDir, perTestOptions) {
   // these options _can_ be changed per test
   // TODO: disabled examples by default https://github.com/Azure/autorest.go/issues/1441
   const defaultOptions = [
-    'module-version=0.1.0',
     'generate-fakes=true',
     'inject-spans=true',
     'head-as-boolean=true',

@@ -9,7 +9,7 @@ import (
 )
 
 func NewVersionedClient(options *azcore.ClientOptions) (*VersionedClient, error) {
-	internal, err := azcore.NewClient("versionedgroup", "v0.1.0", runtime.PipelineOptions{
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
 		APIVersion: runtime.APIVersionOptions{
 			Name: "api-version",
 		},

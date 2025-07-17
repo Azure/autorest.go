@@ -9,7 +9,7 @@ import (
 )
 
 func NewMultipleClient(options *azcore.ClientOptions) (*MultipleClient, error) {
-	internal, err := azcore.NewClient("multiplegroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
