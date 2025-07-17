@@ -13,10 +13,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewFormdataClient(options *azcore.ClientOptions) (*FormdataClient, error) {
+func NewFormdataClient(endpoint string, options *azcore.ClientOptions) (*FormdataClient, error) {
 	client, err := azcore.NewClient("formdatagroup.FormdataClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &FormdataClient{internal: client}, nil
+	return &FormdataClient{
+		internal: client,
+		endpoint: endpoint,
+	}, nil
 }

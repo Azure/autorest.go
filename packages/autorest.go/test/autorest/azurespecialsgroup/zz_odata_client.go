@@ -18,6 +18,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type ODataClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
@@ -49,7 +50,7 @@ func (client *ODataClient) GetWithFilter(ctx context.Context, options *ODataClie
 // getWithFilterCreateRequest creates the GetWithFilter request.
 func (client *ODataClient) getWithFilterCreateRequest(ctx context.Context, options *ODataClientGetWithFilterOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/odata/filter"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

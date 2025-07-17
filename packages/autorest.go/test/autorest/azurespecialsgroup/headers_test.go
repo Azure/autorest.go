@@ -16,19 +16,19 @@ import (
 )
 
 func newHeaderClient(t *testing.T) *HeaderClient {
-	client, err := NewHeaderClient(&azcore.ClientOptions{
+	client, err := NewHeaderClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewHeaderClient(options *azcore.ClientOptions) (*HeaderClient, error) {
+func NewHeaderClient(endpoint string, options *azcore.ClientOptions) (*HeaderClient, error) {
 	client, err := azcore.NewClient("azurespecialsgroup.HeaderClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &HeaderClient{internal: client}, nil
+	return &HeaderClient{internal: client, endpoint: endpoint}, nil
 }
 
 // CustomNamedRequestID - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request

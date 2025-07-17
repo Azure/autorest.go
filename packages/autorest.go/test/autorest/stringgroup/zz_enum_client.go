@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type EnumClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
@@ -49,7 +50,7 @@ func (client *EnumClient) GetNotExpandable(ctx context.Context, options *EnumCli
 // getNotExpandableCreateRequest creates the GetNotExpandable request.
 func (client *EnumClient) getNotExpandableCreateRequest(ctx context.Context, _ *EnumClientGetNotExpandableOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/notExpandable"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +97,7 @@ func (client *EnumClient) GetReferenced(ctx context.Context, options *EnumClient
 // getReferencedCreateRequest creates the GetReferenced request.
 func (client *EnumClient) getReferencedCreateRequest(ctx context.Context, _ *EnumClientGetReferencedOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/Referenced"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +145,7 @@ func (client *EnumClient) GetReferencedConstant(ctx context.Context, options *En
 // getReferencedConstantCreateRequest creates the GetReferencedConstant request.
 func (client *EnumClient) getReferencedConstantCreateRequest(ctx context.Context, _ *EnumClientGetReferencedConstantOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/ReferencedConstant"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -191,7 +192,7 @@ func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Color
 // putNotExpandableCreateRequest creates the PutNotExpandable request.
 func (client *EnumClient) putNotExpandableCreateRequest(ctx context.Context, stringBody Colors, _ *EnumClientPutNotExpandableOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/notExpandable"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -232,7 +233,7 @@ func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colo
 // putReferencedCreateRequest creates the PutReferenced request.
 func (client *EnumClient) putReferencedCreateRequest(ctx context.Context, enumStringBody Colors, _ *EnumClientPutReferencedOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/Referenced"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -274,7 +275,7 @@ func (client *EnumClient) PutReferencedConstant(ctx context.Context, enumStringB
 // putReferencedConstantCreateRequest creates the PutReferencedConstant request.
 func (client *EnumClient) putReferencedConstantCreateRequest(ctx context.Context, enumStringBody RefColorConstant, _ *EnumClientPutReferencedConstantOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/ReferencedConstant"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

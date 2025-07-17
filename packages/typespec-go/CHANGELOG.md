@@ -1,5 +1,11 @@
 # Release History
 
+## 0.7.1 (unreleased)
+
+### Other Changes
+
+* Non-ARM clients always have an `endpoint` field.
+
 ## 0.7.0 (2025-07-17)
 
 ### Breaking Changes

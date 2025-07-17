@@ -10,11 +10,13 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type PageableClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewPageableServerDrivenPaginationClient creates a new instance of [PageableServerDrivenPaginationClient].
 func (client *PageableClient) NewPageableServerDrivenPaginationClient() *PageableServerDrivenPaginationClient {
 	return &PageableServerDrivenPaginationClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

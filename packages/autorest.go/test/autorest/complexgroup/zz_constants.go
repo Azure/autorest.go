@@ -5,8 +5,6 @@
 
 package complexgroup
 
-const host = "http://localhost:3000"
-
 type CMYKColors string
 
 const (

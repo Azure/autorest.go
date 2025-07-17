@@ -3,6 +3,8 @@
 
 package generatortests
 
+const Host = "http://localhost:3000"
+
 const (
 	ModuleName    = "generatortests"
 	ModuleVersion = "v1.0.0"

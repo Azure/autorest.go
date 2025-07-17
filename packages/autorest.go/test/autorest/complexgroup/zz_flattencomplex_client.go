@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type FlattencomplexClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetValid -
@@ -49,7 +50,7 @@ func (client *FlattencomplexClient) GetValid(ctx context.Context, options *Flatt
 // getValidCreateRequest creates the GetValid request.
 func (client *FlattencomplexClient) getValidCreateRequest(ctx context.Context, _ *FlattencomplexClientGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/flatten/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

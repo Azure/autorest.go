@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type DownloadClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // ErrorStream - Get binary error stream
@@ -48,7 +49,7 @@ func (client *DownloadClient) ErrorStream(ctx context.Context, options *Download
 // errorStreamCreateRequest creates the ErrorStream request.
 func (client *DownloadClient) errorStreamCreateRequest(ctx context.Context, _ *DownloadClientErrorStreamOptions) (*policy.Request, error) {
 	urlPath := "/binary/error"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

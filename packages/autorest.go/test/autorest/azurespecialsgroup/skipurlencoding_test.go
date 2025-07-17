@@ -14,19 +14,19 @@ import (
 )
 
 func newSkipURLEncodingClient(t *testing.T) *SkipURLEncodingClient {
-	client, err := NewSkipURLEncodingClient(&azcore.ClientOptions{
+	client, err := NewSkipURLEncodingClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewSkipURLEncodingClient(options *azcore.ClientOptions) (*SkipURLEncodingClient, error) {
+func NewSkipURLEncodingClient(endpoint string, options *azcore.ClientOptions) (*SkipURLEncodingClient, error) {
 	client, err := azcore.NewClient("azurespecialsgroup.SkipURLEncodingClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &SkipURLEncodingClient{internal: client}, nil
+	return &SkipURLEncodingClient{internal: client, endpoint: endpoint}, nil
 }
 
 // GetMethodPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'

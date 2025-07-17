@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [XMLClient.NewXMLModelWithRenamedArraysValueClient] instead.
 type XMLModelWithRenamedArraysValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -47,7 +48,7 @@ func (client *XMLModelWithRenamedArraysValueClient) Get(ctx context.Context, opt
 // getCreateRequest creates the Get request.
 func (client *XMLModelWithRenamedArraysValueClient) getCreateRequest(ctx context.Context, _ *XMLModelWithRenamedArraysValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/payload/xml/modelWithRenamedArrays"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +96,7 @@ func (client *XMLModelWithRenamedArraysValueClient) Put(ctx context.Context, inp
 // putCreateRequest creates the Put request.
 func (client *XMLModelWithRenamedArraysValueClient) putCreateRequest(ctx context.Context, input ModelWithRenamedArrays, _ *XMLModelWithRenamedArraysValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/payload/xml/modelWithRenamedArrays"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [XMLClient.NewXMLSimpleModelValueClient] instead.
 type XMLSimpleModelValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -46,7 +47,7 @@ func (client *XMLSimpleModelValueClient) Get(ctx context.Context, options *XMLSi
 // getCreateRequest creates the Get request.
 func (client *XMLSimpleModelValueClient) getCreateRequest(ctx context.Context, _ *XMLSimpleModelValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/payload/xml/simpleModel"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,7 @@ func (client *XMLSimpleModelValueClient) Put(ctx context.Context, input SimpleMo
 // putCreateRequest creates the Put request.
 func (client *XMLSimpleModelValueClient) putCreateRequest(ctx context.Context, input SimpleModel, _ *XMLSimpleModelValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/payload/xml/simpleModel"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

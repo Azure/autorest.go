@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ArrayClient.NewArrayModelValueClient] instead.
 type ArrayModelValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -46,7 +47,7 @@ func (client *ArrayModelValueClient) Get(ctx context.Context, options *ArrayMode
 // getCreateRequest creates the Get request.
 func (client *ArrayModelValueClient) getCreateRequest(ctx context.Context, _ *ArrayModelValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/model"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +91,7 @@ func (client *ArrayModelValueClient) Put(ctx context.Context, body []InnerModel,
 // putCreateRequest creates the Put request.
 func (client *ArrayModelValueClient) putCreateRequest(ctx context.Context, body []InnerModel, _ *ArrayModelValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/model"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [XMLClient.NewXMLModelWithEncodedNamesValueClient] instead.
 type XMLModelWithEncodedNamesValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -47,7 +48,7 @@ func (client *XMLModelWithEncodedNamesValueClient) Get(ctx context.Context, opti
 // getCreateRequest creates the Get request.
 func (client *XMLModelWithEncodedNamesValueClient) getCreateRequest(ctx context.Context, _ *XMLModelWithEncodedNamesValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/payload/xml/modelWithEncodedNames"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +96,7 @@ func (client *XMLModelWithEncodedNamesValueClient) Put(ctx context.Context, inpu
 // putCreateRequest creates the Put request.
 func (client *XMLModelWithEncodedNamesValueClient) putCreateRequest(ctx context.Context, input ModelWithEncodedNames, _ *XMLModelWithEncodedNamesValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/payload/xml/modelWithEncodedNames"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

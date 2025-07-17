@@ -16,7 +16,7 @@ import (
 )
 
 func TestEnumDiscriminatorClientGetExtensibleModel(t *testing.T) {
-	client, err := enumdiscgroup.NewEnumDiscriminatorClient(nil)
+	client, err := enumdiscgroup.NewEnumDiscriminatorClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.GetExtensibleModel(context.Background(), nil)
 	require.NoError(t, err)
@@ -28,7 +28,7 @@ func TestEnumDiscriminatorClientGetExtensibleModel(t *testing.T) {
 }
 
 func TestEnumDiscriminatorClientGetExtensibleModelMissingDiscriminator(t *testing.T) {
-	client, err := enumdiscgroup.NewEnumDiscriminatorClient(nil)
+	client, err := enumdiscgroup.NewEnumDiscriminatorClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.GetExtensibleModelMissingDiscriminator(context.Background(), nil)
 	require.NoError(t, err)
@@ -39,7 +39,7 @@ func TestEnumDiscriminatorClientGetExtensibleModelMissingDiscriminator(t *testin
 }
 
 func TestEnumDiscriminatorClientGetExtensibleModelWrongDiscriminator(t *testing.T) {
-	client, err := enumdiscgroup.NewEnumDiscriminatorClient(nil)
+	client, err := enumdiscgroup.NewEnumDiscriminatorClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.GetExtensibleModelWrongDiscriminator(context.Background(), nil)
 	require.NoError(t, err)
@@ -51,7 +51,7 @@ func TestEnumDiscriminatorClientGetExtensibleModelWrongDiscriminator(t *testing.
 }
 
 func TestEnumDiscriminatorClientGetFixedModel(t *testing.T) {
-	client, err := enumdiscgroup.NewEnumDiscriminatorClient(nil)
+	client, err := enumdiscgroup.NewEnumDiscriminatorClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.GetFixedModel(context.Background(), nil)
 	require.NoError(t, err)
@@ -63,7 +63,7 @@ func TestEnumDiscriminatorClientGetFixedModel(t *testing.T) {
 }
 
 func TestEnumDiscriminatorClientGetFixedModelMissingDiscriminator(t *testing.T) {
-	client, err := enumdiscgroup.NewEnumDiscriminatorClient(nil)
+	client, err := enumdiscgroup.NewEnumDiscriminatorClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.GetFixedModelMissingDiscriminator(context.Background(), nil)
 	require.NoError(t, err)
@@ -74,7 +74,7 @@ func TestEnumDiscriminatorClientGetFixedModelMissingDiscriminator(t *testing.T) 
 }
 
 func TestEnumDiscriminatorClientGetFixedModelWrongDiscriminator(t *testing.T) {
-	client, err := enumdiscgroup.NewEnumDiscriminatorClient(nil)
+	client, err := enumdiscgroup.NewEnumDiscriminatorClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.GetFixedModelWrongDiscriminator(context.Background(), nil)
 	require.NoError(t, err)
@@ -86,7 +86,7 @@ func TestEnumDiscriminatorClientGetFixedModelWrongDiscriminator(t *testing.T) {
 }
 
 func TestEnumDiscriminatorClientPutExtensibleModel(t *testing.T) {
-	client, err := enumdiscgroup.NewEnumDiscriminatorClient(nil)
+	client, err := enumdiscgroup.NewEnumDiscriminatorClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.PutExtensibleModel(context.Background(), &enumdiscgroup.Golden{
 		Kind:   to.Ptr(enumdiscgroup.DogKindGolden),
@@ -97,7 +97,7 @@ func TestEnumDiscriminatorClientPutExtensibleModel(t *testing.T) {
 }
 
 func TestEnumDiscriminatorClientPutFixedModel(t *testing.T) {
-	client, err := enumdiscgroup.NewEnumDiscriminatorClient(nil)
+	client, err := enumdiscgroup.NewEnumDiscriminatorClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.PutFixedModel(context.Background(), &enumdiscgroup.Cobra{
 		Kind:   to.Ptr(enumdiscgroup.SnakeKindCobra),

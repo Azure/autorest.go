@@ -5,6 +5,7 @@ package mediatypesgroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/mediatypesgroup"
 	"generatortests/mediatypesgroup/fake"
 	"io"
@@ -32,7 +33,7 @@ func TestFakeBinaryBodyWithThreeContentTypes(t *testing.T) {
 			return
 		},
 	}
-	client, err := mediatypesgroup.NewMediaTypesClient(&azcore.ClientOptions{
+	client, err := mediatypesgroup.NewMediaTypesClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewMediaTypesServerTransport(&server),
 	})
 	require.NoError(t, err)

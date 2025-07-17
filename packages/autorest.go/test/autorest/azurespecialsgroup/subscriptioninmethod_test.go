@@ -15,19 +15,19 @@ import (
 )
 
 func newSubscriptionInMethodClient(t *testing.T) *SubscriptionInMethodClient {
-	client, err := NewSubscriptionInMethodClient(&azcore.ClientOptions{
+	client, err := NewSubscriptionInMethodClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewSubscriptionInMethodClient(options *azcore.ClientOptions) (*SubscriptionInMethodClient, error) {
+func NewSubscriptionInMethodClient(endpoint string, options *azcore.ClientOptions) (*SubscriptionInMethodClient, error) {
 	client, err := azcore.NewClient("azurespecialsgroup.SubscriptionInMethodClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &SubscriptionInMethodClient{internal: client}, nil
+	return &SubscriptionInMethodClient{internal: client, endpoint: endpoint}, nil
 }
 
 // PostMethodLocalNull - POST method with subscriptionId modeled in the method.  pass in subscription id = null, client-side validation should prevent you from making this call

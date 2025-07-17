@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ScalarClient.NewScalarStringClient] instead.
 type ScalarStringClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - get string value
@@ -46,7 +47,7 @@ func (client *ScalarStringClient) Get(ctx context.Context, options *ScalarString
 // getCreateRequest creates the Get request.
 func (client *ScalarStringClient) getCreateRequest(ctx context.Context, _ *ScalarStringClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/string"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +95,7 @@ func (client *ScalarStringClient) Put(ctx context.Context, body string, options 
 // putCreateRequest creates the Put request.
 func (client *ScalarStringClient) putCreateRequest(ctx context.Context, body string, _ *ScalarStringClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/string"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

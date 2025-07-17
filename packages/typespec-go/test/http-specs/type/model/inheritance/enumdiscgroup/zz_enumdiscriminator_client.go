@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type EnumDiscriminatorClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetExtensibleModel - Receive model with extensible enum discriminator type.
@@ -47,7 +48,7 @@ func (client *EnumDiscriminatorClient) GetExtensibleModel(ctx context.Context, o
 // getExtensibleModelCreateRequest creates the GetExtensibleModel request.
 func (client *EnumDiscriminatorClient) getExtensibleModelCreateRequest(ctx context.Context, _ *EnumDiscriminatorClientGetExtensibleModelOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/enum-discriminator/extensible-enum"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,7 @@ func (client *EnumDiscriminatorClient) GetExtensibleModelMissingDiscriminator(ct
 // getExtensibleModelMissingDiscriminatorCreateRequest creates the GetExtensibleModelMissingDiscriminator request.
 func (client *EnumDiscriminatorClient) getExtensibleModelMissingDiscriminatorCreateRequest(ctx context.Context, _ *EnumDiscriminatorClientGetExtensibleModelMissingDiscriminatorOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/enum-discriminator/extensible-enum/missingdiscriminator"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -139,7 +140,7 @@ func (client *EnumDiscriminatorClient) GetExtensibleModelWrongDiscriminator(ctx 
 // getExtensibleModelWrongDiscriminatorCreateRequest creates the GetExtensibleModelWrongDiscriminator request.
 func (client *EnumDiscriminatorClient) getExtensibleModelWrongDiscriminatorCreateRequest(ctx context.Context, _ *EnumDiscriminatorClientGetExtensibleModelWrongDiscriminatorOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/enum-discriminator/extensible-enum/wrongdiscriminator"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -185,7 +186,7 @@ func (client *EnumDiscriminatorClient) GetFixedModel(ctx context.Context, option
 // getFixedModelCreateRequest creates the GetFixedModel request.
 func (client *EnumDiscriminatorClient) getFixedModelCreateRequest(ctx context.Context, _ *EnumDiscriminatorClientGetFixedModelOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/enum-discriminator/fixed-enum"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -231,7 +232,7 @@ func (client *EnumDiscriminatorClient) GetFixedModelMissingDiscriminator(ctx con
 // getFixedModelMissingDiscriminatorCreateRequest creates the GetFixedModelMissingDiscriminator request.
 func (client *EnumDiscriminatorClient) getFixedModelMissingDiscriminatorCreateRequest(ctx context.Context, _ *EnumDiscriminatorClientGetFixedModelMissingDiscriminatorOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/enum-discriminator/fixed-enum/missingdiscriminator"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -277,7 +278,7 @@ func (client *EnumDiscriminatorClient) GetFixedModelWrongDiscriminator(ctx conte
 // getFixedModelWrongDiscriminatorCreateRequest creates the GetFixedModelWrongDiscriminator request.
 func (client *EnumDiscriminatorClient) getFixedModelWrongDiscriminatorCreateRequest(ctx context.Context, _ *EnumDiscriminatorClientGetFixedModelWrongDiscriminatorOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/enum-discriminator/fixed-enum/wrongdiscriminator"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -323,7 +324,7 @@ func (client *EnumDiscriminatorClient) PutExtensibleModel(ctx context.Context, i
 // putExtensibleModelCreateRequest creates the PutExtensibleModel request.
 func (client *EnumDiscriminatorClient) putExtensibleModelCreateRequest(ctx context.Context, input DogClassification, _ *EnumDiscriminatorClientPutExtensibleModelOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/enum-discriminator/extensible-enum"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -363,7 +364,7 @@ func (client *EnumDiscriminatorClient) PutFixedModel(ctx context.Context, input 
 // putFixedModelCreateRequest creates the PutFixedModel request.
 func (client *EnumDiscriminatorClient) putFixedModelCreateRequest(ctx context.Context, input SnakeClassification, _ *EnumDiscriminatorClientPutFixedModelOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/enum-discriminator/fixed-enum"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

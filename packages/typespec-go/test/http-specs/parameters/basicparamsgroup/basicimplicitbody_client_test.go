@@ -12,7 +12,7 @@ import (
 )
 
 func TestBasicImplicitBodyClient_Simple(t *testing.T) {
-	client, err := basicparamsgroup.NewBasicClient(nil)
+	client, err := basicparamsgroup.NewBasicClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBasicImplicitBodyClient().Simple(context.Background(), "foo", nil)
 	require.NoError(t, err)

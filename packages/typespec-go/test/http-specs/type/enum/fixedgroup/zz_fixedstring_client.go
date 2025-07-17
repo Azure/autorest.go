@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [FixedClient.NewFixedStringClient] instead.
 type FixedStringClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetKnownValue - getKnownValue
@@ -47,7 +48,7 @@ func (client *FixedStringClient) GetKnownValue(ctx context.Context, options *Fix
 // getKnownValueCreateRequest creates the GetKnownValue request.
 func (client *FixedStringClient) getKnownValueCreateRequest(ctx context.Context, _ *FixedStringClientGetKnownValueOptions) (*policy.Request, error) {
 	urlPath := "/type/enum/fixed/string/known-value"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +97,7 @@ func (client *FixedStringClient) PutKnownValue(ctx context.Context, body DaysOfW
 // putKnownValueCreateRequest creates the PutKnownValue request.
 func (client *FixedStringClient) putKnownValueCreateRequest(ctx context.Context, body DaysOfWeekEnum, _ *FixedStringClientPutKnownValueOptions) (*policy.Request, error) {
 	urlPath := "/type/enum/fixed/string/known-value"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +137,7 @@ func (client *FixedStringClient) PutUnknownValue(ctx context.Context, body DaysO
 // putUnknownValueCreateRequest creates the PutUnknownValue request.
 func (client *FixedStringClient) putUnknownValueCreateRequest(ctx context.Context, body DaysOfWeekEnum, _ *FixedStringClientPutUnknownValueOptions) (*policy.Request, error) {
 	urlPath := "/type/enum/fixed/string/unknown-value"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -13,7 +13,7 @@ import (
 )
 
 func TestValueTypesDictionaryStringClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesDictionaryStringClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -24,7 +24,7 @@ func TestValueTypesDictionaryStringClient_Get(t *testing.T) {
 }
 
 func TestValueTypesDictionaryStringClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesDictionaryStringClient().Put(context.Background(), valuetypesgroup.DictionaryStringProperty{
 		Property: map[string]*string{

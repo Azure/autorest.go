@@ -15,7 +15,7 @@ import (
 )
 
 func newStringClient(t *testing.T) *StringClient {
-	client, err := NewStringClient(&azcore.ClientOptions{
+	client, err := NewStringClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)

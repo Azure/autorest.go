@@ -12,7 +12,7 @@ import (
 )
 
 func Test_Test(t *testing.T) {
-	client, err := rettypechangedfromgroup.NewReturnTypeChangedFromClient(nil)
+	client, err := rettypechangedfromgroup.NewReturnTypeChangedFromClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Test(context.Background(), "test", nil)
 	require.NoError(t, err)

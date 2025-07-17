@@ -10,10 +10,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewHTTPSuccessClient(options *azcore.ClientOptions) (*HTTPSuccessClient, error) {
+func NewHTTPSuccessClient(endpoint string, options *azcore.ClientOptions) (*HTTPSuccessClient, error) {
 	client, err := azcore.NewClient("headgroup.HTTPSuccessClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &HTTPSuccessClient{internal: client}, nil
+	return &HTTPSuccessClient{
+		internal: client,
+		endpoint: endpoint,
+	}, nil
 }

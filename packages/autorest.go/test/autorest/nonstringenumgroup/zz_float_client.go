@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type FloatClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get a float enum
@@ -49,7 +50,7 @@ func (client *FloatClient) Get(ctx context.Context, options *FloatClientGetOptio
 // getCreateRequest creates the Get request.
 func (client *FloatClient) getCreateRequest(ctx context.Context, _ *FloatClientGetOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/float/get"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ func (client *FloatClient) Put(ctx context.Context, input FloatEnum, options *Fl
 // putCreateRequest creates the Put request.
 func (client *FloatClient) putCreateRequest(ctx context.Context, input FloatEnum, _ *FloatClientPutOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/float/put"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

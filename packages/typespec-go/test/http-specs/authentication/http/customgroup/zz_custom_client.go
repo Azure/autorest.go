@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type CustomClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Invalid - Check whether client is authenticated.
@@ -45,7 +46,7 @@ func (client *CustomClient) Invalid(ctx context.Context, options *CustomClientIn
 // invalidCreateRequest creates the Invalid request.
 func (client *CustomClient) invalidCreateRequest(ctx context.Context, _ *CustomClientInvalidOptions) (*policy.Request, error) {
 	urlPath := "/authentication/http/custom/invalid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +81,7 @@ func (client *CustomClient) Valid(ctx context.Context, options *CustomClientVali
 // validCreateRequest creates the Valid request.
 func (client *CustomClient) validCreateRequest(ctx context.Context, _ *CustomClientValidOptions) (*policy.Request, error) {
 	urlPath := "/authentication/http/custom/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

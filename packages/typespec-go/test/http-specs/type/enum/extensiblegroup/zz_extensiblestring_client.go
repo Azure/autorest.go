@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ExtensibleClient.NewExtensibleStringClient] instead.
 type ExtensibleStringClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetKnownValue -
@@ -47,7 +48,7 @@ func (client *ExtensibleStringClient) GetKnownValue(ctx context.Context, options
 // getKnownValueCreateRequest creates the GetKnownValue request.
 func (client *ExtensibleStringClient) getKnownValueCreateRequest(ctx context.Context, _ *ExtensibleStringClientGetKnownValueOptions) (*policy.Request, error) {
 	urlPath := "/type/enum/extensible/string/known-value"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +97,7 @@ func (client *ExtensibleStringClient) GetUnknownValue(ctx context.Context, optio
 // getUnknownValueCreateRequest creates the GetUnknownValue request.
 func (client *ExtensibleStringClient) getUnknownValueCreateRequest(ctx context.Context, _ *ExtensibleStringClientGetUnknownValueOptions) (*policy.Request, error) {
 	urlPath := "/type/enum/extensible/string/unknown-value"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +145,7 @@ func (client *ExtensibleStringClient) PutKnownValue(ctx context.Context, body Da
 // putKnownValueCreateRequest creates the PutKnownValue request.
 func (client *ExtensibleStringClient) putKnownValueCreateRequest(ctx context.Context, body DaysOfWeekExtensibleEnum, _ *ExtensibleStringClientPutKnownValueOptions) (*policy.Request, error) {
 	urlPath := "/type/enum/extensible/string/known-value"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -183,7 +184,7 @@ func (client *ExtensibleStringClient) PutUnknownValue(ctx context.Context, body 
 // putUnknownValueCreateRequest creates the PutUnknownValue request.
 func (client *ExtensibleStringClient) putUnknownValueCreateRequest(ctx context.Context, body DaysOfWeekExtensibleEnum, _ *ExtensibleStringClientPutUnknownValueOptions) (*policy.Request, error) {
 	urlPath := "/type/enum/extensible/string/unknown-value"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

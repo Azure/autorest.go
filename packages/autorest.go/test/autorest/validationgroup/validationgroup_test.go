@@ -15,20 +15,21 @@ import (
 )
 
 func newAutoRestValidationTestClient(t *testing.T) *AutoRestValidationTestClient {
-	client, err := NewAutoRestValidationTestClient("", &azcore.ClientOptions{
+	client, err := NewAutoRestValidationTestClient(generatortests.Host, "", &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewAutoRestValidationTestClient(subscriptionID string, options *azcore.ClientOptions) (*AutoRestValidationTestClient, error) {
+func NewAutoRestValidationTestClient(endpoint string, subscriptionID string, options *azcore.ClientOptions) (*AutoRestValidationTestClient, error) {
 	client, err := azcore.NewClient("validationgroup.AutoRestValidationTestClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &AutoRestValidationTestClient{
 		internal:       client,
+		endpoint:       endpoint,
 		subscriptionID: subscriptionID,
 	}, nil
 }

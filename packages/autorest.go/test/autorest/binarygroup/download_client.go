@@ -10,10 +10,10 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewDownloadClient(options *azcore.ClientOptions) (*DownloadClient, error) {
+func NewDownloadClient(endpoint string, options *azcore.ClientOptions) (*DownloadClient, error) {
 	client, err := azcore.NewClient("binarygroup.DownloadClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &DownloadClient{internal: client}, nil
+	return &DownloadClient{internal: client, endpoint: endpoint}, nil
 }

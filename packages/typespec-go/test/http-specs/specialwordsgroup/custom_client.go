@@ -11,12 +11,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewSpecialWordsClient(options *azcore.ClientOptions) (*SpecialWordsClient, error) {
+func NewSpecialWordsClient(endpoint string, options *azcore.ClientOptions) (*SpecialWordsClient, error) {
 	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &SpecialWordsClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

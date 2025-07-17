@@ -5,6 +5,7 @@ package paginggroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/paginggroup"
 	"generatortests/paginggroup/fake"
 	"net/http"
@@ -73,7 +74,7 @@ func TestFakeNewGetMultiplePagesPager(t *testing.T) {
 			return
 		},
 	}
-	client, err := paginggroup.NewPagingClient(&azcore.ClientOptions{
+	client, err := paginggroup.NewPagingClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewPagingServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -122,7 +123,7 @@ func TestFakeNewGetMultiplePagesFailurePager(t *testing.T) {
 			return
 		},
 	}
-	client, err := paginggroup.NewPagingClient(&azcore.ClientOptions{
+	client, err := paginggroup.NewPagingClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewPagingServerTransport(&server),
 	})
 	require.NoError(t, err)

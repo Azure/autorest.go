@@ -10,12 +10,14 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type BasicClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewBasicExplicitBodyClient creates a new instance of [BasicExplicitBodyClient].
 func (client *BasicClient) NewBasicExplicitBodyClient() *BasicExplicitBodyClient {
 	return &BasicExplicitBodyClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -23,5 +25,6 @@ func (client *BasicClient) NewBasicExplicitBodyClient() *BasicExplicitBodyClient
 func (client *BasicClient) NewBasicImplicitBodyClient() *BasicImplicitBodyClient {
 	return &BasicImplicitBodyClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

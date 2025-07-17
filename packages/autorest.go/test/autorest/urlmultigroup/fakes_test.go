@@ -5,6 +5,7 @@ package urlmultigroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/urlmultigroup"
 	"generatortests/urlmultigroup/fake"
 	"net/http"
@@ -25,7 +26,7 @@ func TestFakeArrayStringMultiValid(t *testing.T) {
 			return
 		},
 	}
-	client, err := urlmultigroup.NewQueriesClient(&azcore.ClientOptions{
+	client, err := urlmultigroup.NewQueriesClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewQueriesServerTransport(&server),
 	})
 	require.NoError(t, err)

@@ -18,6 +18,7 @@ import (
 // Don't use this type directly, use [BytesClient.NewBytesQueryClient] instead.
 type BytesQueryClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Base64 -
@@ -47,7 +48,7 @@ func (client *BytesQueryClient) Base64(ctx context.Context, value []byte, option
 // base64CreateRequest creates the Base64 request.
 func (client *BytesQueryClient) base64CreateRequest(ctx context.Context, value []byte, _ *BytesQueryClientBase64Options) (*policy.Request, error) {
 	urlPath := "/encode/bytes/query/base64"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +85,7 @@ func (client *BytesQueryClient) Base64URL(ctx context.Context, value []byte, opt
 // base64URLCreateRequest creates the Base64URL request.
 func (client *BytesQueryClient) base64URLCreateRequest(ctx context.Context, value []byte, _ *BytesQueryClientBase64URLOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/query/base64url"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +123,7 @@ func (client *BytesQueryClient) Base64URLArray(ctx context.Context, value [][]by
 // base64URLArrayCreateRequest creates the Base64URLArray request.
 func (client *BytesQueryClient) base64URLArrayCreateRequest(ctx context.Context, value [][]byte, _ *BytesQueryClientBase64URLArrayOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/query/base64url-array"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -165,7 +166,7 @@ func (client *BytesQueryClient) Default(ctx context.Context, value []byte, optio
 // defaultCreateRequest creates the Default request.
 func (client *BytesQueryClient) defaultCreateRequest(ctx context.Context, value []byte, _ *BytesQueryClientDefaultOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/query/default"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

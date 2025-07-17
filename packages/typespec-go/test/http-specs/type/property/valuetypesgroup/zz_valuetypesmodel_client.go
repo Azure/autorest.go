@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesModelClient] instead.
 type ValueTypesModelClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get call
@@ -46,7 +47,7 @@ func (client *ValueTypesModelClient) Get(ctx context.Context, options *ValueType
 // getCreateRequest creates the Get request.
 func (client *ValueTypesModelClient) getCreateRequest(ctx context.Context, _ *ValueTypesModelClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/model"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +92,7 @@ func (client *ValueTypesModelClient) Put(ctx context.Context, body ModelProperty
 // putCreateRequest creates the Put request.
 func (client *ValueTypesModelClient) putCreateRequest(ctx context.Context, body ModelProperty, _ *ValueTypesModelClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/model"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

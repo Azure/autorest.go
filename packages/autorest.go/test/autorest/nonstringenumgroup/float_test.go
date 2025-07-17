@@ -9,29 +9,19 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
 
 func newFloatClient(t *testing.T) *FloatClient {
-	client, err := NewFloatClient(&azcore.ClientOptions{
+	client, err := NewFloatClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewFloatClient(options *azcore.ClientOptions) (*FloatClient, error) {
-	client, err := azcore.NewClient("nonstringenumgroup.FloatClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &FloatClient{internal: client}, nil
-}
-
-// Get - Get a float enum
 func TestFloatGet(t *testing.T) {
 	client := newFloatClient(t)
 	result, err := client.Get(context.Background(), nil)
@@ -41,7 +31,6 @@ func TestFloatGet(t *testing.T) {
 	}
 }
 
-// Put - Put a float enum
 func TestFloatPut(t *testing.T) {
 	client := newFloatClient(t)
 	result, err := client.Put(context.Background(), FloatEnumTwoHundred4, nil)

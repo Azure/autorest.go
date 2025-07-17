@@ -5,6 +5,7 @@ package complexgroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/complexgroup"
 	"generatortests/complexgroup/fake"
 	"net/http"
@@ -44,7 +45,7 @@ func TestFakePolymorphismGetValid(t *testing.T) {
 			return
 		},
 	}
-	client, err := complexgroup.NewPolymorphismClient(&azcore.ClientOptions{
+	client, err := complexgroup.NewPolymorphismClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewPolymorphismServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -104,7 +105,7 @@ func TestFakePolymorphismPutValid(t *testing.T) {
 			return
 		},
 	}
-	client, err := complexgroup.NewPolymorphismClient(&azcore.ClientOptions{
+	client, err := complexgroup.NewPolymorphismClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewPolymorphismServerTransport(&server),
 	})
 	require.NoError(t, err)

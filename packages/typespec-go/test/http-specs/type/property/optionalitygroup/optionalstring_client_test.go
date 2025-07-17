@@ -13,7 +13,7 @@ import (
 )
 
 func TestOptionalStringClient_GetAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalStringClient().GetAll(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestOptionalStringClient_GetAll(t *testing.T) {
 }
 
 func TestOptionalStringClient_GetDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalStringClient().GetDefault(context.Background(), nil)
 	require.NoError(t, err)
@@ -30,7 +30,7 @@ func TestOptionalStringClient_GetDefault(t *testing.T) {
 }
 
 func TestOptionalStringClient_PutAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalStringClient().PutAll(context.Background(), optionalitygroup.StringProperty{
 		Property: to.Ptr("hello"),
@@ -40,7 +40,7 @@ func TestOptionalStringClient_PutAll(t *testing.T) {
 }
 
 func TestOptionalStringClient_PutDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalStringClient().PutDefault(context.Background(), optionalitygroup.StringProperty{}, nil)
 	require.NoError(t, err)

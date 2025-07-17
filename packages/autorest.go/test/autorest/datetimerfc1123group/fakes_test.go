@@ -5,6 +5,7 @@ package datetimerfc1123group_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/datetimerfc1123group"
 	"generatortests/datetimerfc1123group/fake"
 	"net/http"
@@ -26,7 +27,7 @@ func TestFakeGetUTCMinDateTime(t *testing.T) {
 			return
 		},
 	}
-	client, err := datetimerfc1123group.NewDatetimerfc1123Client(&azcore.ClientOptions{
+	client, err := datetimerfc1123group.NewDatetimerfc1123Client(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewDatetimerfc1123ServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -44,7 +45,7 @@ func TestFakePutUTCMaxDateTime(t *testing.T) {
 			return
 		},
 	}
-	client, err := datetimerfc1123group.NewDatetimerfc1123Client(&azcore.ClientOptions{
+	client, err := datetimerfc1123group.NewDatetimerfc1123Client(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewDatetimerfc1123ServerTransport(&server),
 	})
 	require.NoError(t, err)

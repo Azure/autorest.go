@@ -20,6 +20,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type MediaTypesClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // AnalyzeBody - Analyze body, that could be different media types.
@@ -53,7 +54,7 @@ func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType Con
 // analyzeBodyCreateRequest creates the AnalyzeBody request.
 func (client *MediaTypesClient) analyzeBodyCreateRequest(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/analyze"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +110,7 @@ func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeader(ctx context.Context, c
 // analyzeBodyNoAcceptHeaderCreateRequest creates the AnalyzeBodyNoAcceptHeader request.
 func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderCreateRequest(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/analyzeNoAccept"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -154,7 +155,7 @@ func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeaderWithJSON(ctx context.Co
 // analyzeBodyNoAcceptHeaderWithJSONCreateRequest creates the AnalyzeBodyNoAcceptHeaderWithJSON request.
 func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithJSONCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/analyzeNoAccept"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -198,7 +199,7 @@ func (client *MediaTypesClient) AnalyzeBodyWithJSON(ctx context.Context, options
 // analyzeBodyWithJSONCreateRequest creates the AnalyzeBodyWithJSON request.
 func (client *MediaTypesClient) analyzeBodyWithJSONCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithJSONOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/analyze"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -256,7 +257,7 @@ func (client *MediaTypesClient) BinaryBodyWithThreeContentTypes(ctx context.Cont
 // binaryBodyWithThreeContentTypesCreateRequest creates the BinaryBodyWithThreeContentTypes request.
 func (client *MediaTypesClient) binaryBodyWithThreeContentTypesCreateRequest(ctx context.Context, contentType ContentType2, message io.ReadSeekCloser, _ *MediaTypesClientBinaryBodyWithThreeContentTypesOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/binaryBodyThreeContentTypes"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -314,7 +315,7 @@ func (client *MediaTypesClient) BinaryBodyWithTwoContentTypes(ctx context.Contex
 // binaryBodyWithTwoContentTypesCreateRequest creates the BinaryBodyWithTwoContentTypes request.
 func (client *MediaTypesClient) binaryBodyWithTwoContentTypesCreateRequest(ctx context.Context, contentType ContentType1, message io.ReadSeekCloser, _ *MediaTypesClientBinaryBodyWithTwoContentTypesOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/binaryBodyTwoContentTypes"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -372,7 +373,7 @@ func (client *MediaTypesClient) BodyThreeTypes(ctx context.Context, message io.R
 // bodyThreeTypesCreateRequest creates the BodyThreeTypes request.
 func (client *MediaTypesClient) bodyThreeTypesCreateRequest(ctx context.Context, message io.ReadSeekCloser, _ *MediaTypesClientBodyThreeTypesOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/bodyThreeTypes"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -429,7 +430,7 @@ func (client *MediaTypesClient) BodyThreeTypesWithJSON(ctx context.Context, mess
 // bodyThreeTypesWithJSONCreateRequest creates the BodyThreeTypesWithJSON request.
 func (client *MediaTypesClient) bodyThreeTypesWithJSONCreateRequest(ctx context.Context, message any, _ *MediaTypesClientBodyThreeTypesWithJSONOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/bodyThreeTypes"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -486,7 +487,7 @@ func (client *MediaTypesClient) BodyThreeTypesWithText(ctx context.Context, mess
 // bodyThreeTypesWithTextCreateRequest creates the BodyThreeTypesWithText request.
 func (client *MediaTypesClient) bodyThreeTypesWithTextCreateRequest(ctx context.Context, message string, _ *MediaTypesClientBodyThreeTypesWithTextOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/bodyThreeTypes"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -541,7 +542,7 @@ func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, opt
 // contentTypeWithEncodingCreateRequest creates the ContentTypeWithEncoding request.
 func (client *MediaTypesClient) contentTypeWithEncodingCreateRequest(ctx context.Context, options *MediaTypesClientContentTypeWithEncodingOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/contentTypeWithEncoding"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -598,7 +599,7 @@ func (client *MediaTypesClient) PutTextAndJSONBody(ctx context.Context, contentT
 // putTextAndJSONBodyCreateRequest creates the PutTextAndJSONBody request.
 func (client *MediaTypesClient) putTextAndJSONBodyCreateRequest(ctx context.Context, contentType ContentType3, message string, _ *MediaTypesClientPutTextAndJSONBodyOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/textAndJson"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

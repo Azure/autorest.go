@@ -15,7 +15,7 @@ import (
 )
 
 func TestServiceFooClient_Four(t *testing.T) {
-	client, err := defaultgroup.NewServiceClient(defaultgroup.ClientTypeDefault, nil)
+	client, err := defaultgroup.NewServiceClient("http://localhost:3000", defaultgroup.ClientTypeDefault, nil)
 	require.NoError(t, err)
 	resp, err := client.NewServiceFooClient().Four(context.Background(), nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestServiceFooClient_Four(t *testing.T) {
 }
 
 func TestServiceFooClient_Seven(t *testing.T) {
-	client, err := defaultgroup.NewServiceClient(defaultgroup.ClientTypeDefault, nil)
+	client, err := defaultgroup.NewServiceClient("http://localhost:3000", defaultgroup.ClientTypeDefault, nil)
 	require.NoError(t, err)
 	resp, err := client.NewServiceBazClient().NewServiceBazFooClient().Seven(context.Background(), nil)
 	require.NoError(t, err)
@@ -31,7 +31,7 @@ func TestServiceFooClient_Seven(t *testing.T) {
 }
 
 func TestServiceFooClient_Three(t *testing.T) {
-	client, err := defaultgroup.NewServiceClient(defaultgroup.ClientTypeDefault, nil)
+	client, err := defaultgroup.NewServiceClient("http://localhost:3000", defaultgroup.ClientTypeDefault, nil)
 	require.NoError(t, err)
 	resp, err := client.NewServiceFooClient().Three(context.Background(), nil)
 	require.NoError(t, err)

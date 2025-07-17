@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ContentNegotiationClient.NewContentNegotiationSameBodyClient] instead.
 type ContentNegotiationSameBodyClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetAvatarAsJPEG -
@@ -47,7 +48,7 @@ func (client *ContentNegotiationSameBodyClient) GetAvatarAsJPEG(ctx context.Cont
 // getAvatarAsJPEGCreateRequest creates the GetAvatarAsJPEG request.
 func (client *ContentNegotiationSameBodyClient) getAvatarAsJPEGCreateRequest(ctx context.Context, _ *ContentNegotiationSameBodyClientGetAvatarAsJPEGOptions) (*policy.Request, error) {
 	urlPath := "/content-negotiation/same-body"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +95,7 @@ func (client *ContentNegotiationSameBodyClient) GetAvatarAsPNG(ctx context.Conte
 // getAvatarAsPNGCreateRequest creates the GetAvatarAsPNG request.
 func (client *ContentNegotiationSameBodyClient) getAvatarAsPNGCreateRequest(ctx context.Context, _ *ContentNegotiationSameBodyClientGetAvatarAsPNGOptions) (*policy.Request, error) {
 	urlPath := "/content-negotiation/same-body"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

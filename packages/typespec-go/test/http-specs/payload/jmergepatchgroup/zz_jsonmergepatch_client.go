@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type JSONMergePatchClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // CreateResource - Test content-type: application/merge-patch+json with required body
@@ -47,7 +48,7 @@ func (client *JSONMergePatchClient) CreateResource(ctx context.Context, body Res
 // createResourceCreateRequest creates the CreateResource request.
 func (client *JSONMergePatchClient) createResourceCreateRequest(ctx context.Context, body Resource, _ *JSONMergePatchClientCreateResourceOptions) (*policy.Request, error) {
 	urlPath := "/json-merge-patch/create/resource"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ func (client *JSONMergePatchClient) UpdateOptionalResource(ctx context.Context, 
 // updateOptionalResourceCreateRequest creates the UpdateOptionalResource request.
 func (client *JSONMergePatchClient) updateOptionalResourceCreateRequest(ctx context.Context, body ResourcePatch, _ *JSONMergePatchClientUpdateOptionalResourceOptions) (*policy.Request, error) {
 	urlPath := "/json-merge-patch/update/resource/optional"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +148,7 @@ func (client *JSONMergePatchClient) UpdateResource(ctx context.Context, body Res
 // updateResourceCreateRequest creates the UpdateResource request.
 func (client *JSONMergePatchClient) updateResourceCreateRequest(ctx context.Context, body ResourcePatch, _ *JSONMergePatchClientUpdateResourceOptions) (*policy.Request, error) {
 	urlPath := "/json-merge-patch/update/resource"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

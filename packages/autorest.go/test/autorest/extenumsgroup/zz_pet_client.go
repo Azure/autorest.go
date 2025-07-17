@@ -20,6 +20,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type PetClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // AddPet - add pet
@@ -52,7 +53,7 @@ func (client *PetClient) AddPet(ctx context.Context, options *PetClientAddPetOpt
 // addPetCreateRequest creates the AddPet request.
 func (client *PetClient) addPetCreateRequest(ctx context.Context, options *PetClientAddPetOptions) (*policy.Request, error) {
 	urlPath := "/extensibleenums/pet/addPet"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +111,7 @@ func (client *PetClient) getByPetIDCreateRequest(ctx context.Context, petID stri
 		return nil, errors.New("parameter petID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // SingleClient - Illustrates server with a single path parameter @server
@@ -44,10 +43,8 @@ func (client *SingleClient) MyOp(ctx context.Context, options *SingleClientMyOpO
 
 // myOpCreateRequest creates the MyOp request.
 func (client *SingleClient) myOpCreateRequest(ctx context.Context, _ *SingleClientMyOpOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/path/single/myOp"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // PagerWidgetsClient contains the methods for the PagerWidgets group.
@@ -47,10 +46,8 @@ func (client *PagerWidgetsClient) newListMethodPager(options *pagerWidgetsClient
 
 // listCreateRequest creates the listMethod request.
 func (client *PagerWidgetsClient) listCreateRequest(ctx context.Context, _ *pagerWidgetsClientlistMethodOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/widgets"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

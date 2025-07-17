@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesUnionFloatLiteralClient] instead.
 type ValueTypesUnionFloatLiteralClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get call
@@ -47,7 +48,7 @@ func (client *ValueTypesUnionFloatLiteralClient) Get(ctx context.Context, option
 // getCreateRequest creates the Get request.
 func (client *ValueTypesUnionFloatLiteralClient) getCreateRequest(ctx context.Context, _ *ValueTypesUnionFloatLiteralClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/union/float/literal"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,7 @@ func (client *ValueTypesUnionFloatLiteralClient) Put(ctx context.Context, body U
 // putCreateRequest creates the Put request.
 func (client *ValueTypesUnionFloatLiteralClient) putCreateRequest(ctx context.Context, body UnionFloatLiteralProperty, _ *ValueTypesUnionFloatLiteralClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/union/float/literal"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

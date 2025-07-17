@@ -14,24 +14,24 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestGroupClient_RenamedFour(t *testing.T) {
-	client, err := renamedopgroup.NewRenamedOperationClient(nil)
+func TestRenamedOperationGroupClient_RenamedFour(t *testing.T) {
+	client, err := renamedopgroup.NewRenamedOperationClient("http://localhost:3000", renamedopgroup.ClientTypeRenamedOperation, nil)
 	require.NoError(t, err)
 	resp, err := client.NewRenamedOperationGroupClient().RenamedFour(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
-func TestGroupClient_RenamedSix(t *testing.T) {
-	client, err := renamedopgroup.NewRenamedOperationClient(nil)
+func TestRenamedOperationGroupClient_RenamedSix(t *testing.T) {
+	client, err := renamedopgroup.NewRenamedOperationClient("http://localhost:3000", renamedopgroup.ClientTypeRenamedOperation, nil)
 	require.NoError(t, err)
 	resp, err := client.NewRenamedOperationGroupClient().RenamedSix(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
-func TestGroupClient_RenamedTwo(t *testing.T) {
-	client, err := renamedopgroup.NewRenamedOperationClient(nil)
+func TestRenamedOperationGroupClient_RenamedTwo(t *testing.T) {
+	client, err := renamedopgroup.NewRenamedOperationClient("http://localhost:3000", renamedopgroup.ClientTypeRenamedOperation, nil)
 	require.NoError(t, err)
 	resp, err := client.NewRenamedOperationGroupClient().RenamedTwo(context.Background(), nil)
 	require.NoError(t, err)

@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [DictionaryClient.NewDictionaryUnknownValueClient] instead.
 type DictionaryUnknownValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -47,7 +48,7 @@ func (client *DictionaryUnknownValueClient) Get(ctx context.Context, options *Di
 // getCreateRequest creates the Get request.
 func (client *DictionaryUnknownValueClient) getCreateRequest(ctx context.Context, _ *DictionaryUnknownValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/unknown"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +93,7 @@ func (client *DictionaryUnknownValueClient) Put(ctx context.Context, body map[st
 // putCreateRequest creates the Put request.
 func (client *DictionaryUnknownValueClient) putCreateRequest(ctx context.Context, body map[string]any, _ *DictionaryUnknownValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/unknown"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -17,7 +17,7 @@ import (
 )
 
 func TestBasicClient_CreateOrReplace(t *testing.T) {
-	client, err := basicgroup.NewBasicClient(nil)
+	client, err := basicgroup.NewBasicClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.CreateOrReplace(context.Background(), 1, basicgroup.User{
 		Name: to.Ptr("Madge"),
@@ -31,7 +31,7 @@ func TestBasicClient_CreateOrReplace(t *testing.T) {
 }
 
 func TestBasicClient_CreateOrUpdate(t *testing.T) {
-	client, err := basicgroup.NewBasicClient(nil)
+	client, err := basicgroup.NewBasicClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.CreateOrUpdate(context.Background(), 1, basicgroup.User{
 		Name: to.Ptr("Madge"),
@@ -45,7 +45,7 @@ func TestBasicClient_CreateOrUpdate(t *testing.T) {
 }
 
 func TestBasicClient_Delete(t *testing.T) {
-	client, err := basicgroup.NewBasicClient(nil)
+	client, err := basicgroup.NewBasicClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Delete(context.Background(), 1, nil)
 	require.NoError(t, err)
@@ -53,7 +53,7 @@ func TestBasicClient_Delete(t *testing.T) {
 }
 
 func TestBasicClient_Export(t *testing.T) {
-	client, err := basicgroup.NewBasicClient(nil)
+	client, err := basicgroup.NewBasicClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Export(context.Background(), 1, "json", nil)
 	require.NoError(t, err)
@@ -65,7 +65,7 @@ func TestBasicClient_Export(t *testing.T) {
 }
 
 func TestBasicClient_ExportAllUsers(t *testing.T) {
-	client, err := basicgroup.NewBasicClient(nil)
+	client, err := basicgroup.NewBasicClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.ExportAllUsers(context.Background(), "json", nil)
 	require.NoError(t, err)
@@ -84,7 +84,7 @@ func TestBasicClient_ExportAllUsers(t *testing.T) {
 }
 
 func TestBasicClient_Get(t *testing.T) {
-	client, err := basicgroup.NewBasicClient(nil)
+	client, err := basicgroup.NewBasicClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Get(context.Background(), 1, nil)
 	require.NoError(t, err)
@@ -96,7 +96,7 @@ func TestBasicClient_Get(t *testing.T) {
 }
 
 func TestBasicClient_NewListPager(t *testing.T) {
-	client, err := basicgroup.NewBasicClient(nil)
+	client, err := basicgroup.NewBasicClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	pager := client.NewListPager(&basicgroup.BasicClientListOptions{
 		Top:     to.Ptr[int32](5),

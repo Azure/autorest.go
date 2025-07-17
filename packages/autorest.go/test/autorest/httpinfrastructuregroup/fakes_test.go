@@ -5,6 +5,7 @@ package httpinfrastructuregroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/httpinfrastructuregroup"
 	"generatortests/httpinfrastructuregroup/fake"
 	"net/http"
@@ -27,7 +28,7 @@ func TestFakeGet200Model201ModelDefaultError200Valid(t *testing.T) {
 			return
 		},
 	}
-	client, err := httpinfrastructuregroup.NewMultipleResponsesClient(&azcore.ClientOptions{
+	client, err := httpinfrastructuregroup.NewMultipleResponsesClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewMultipleResponsesServerTransport(&server),
 	})
 	require.NoError(t, err)

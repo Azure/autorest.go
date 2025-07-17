@@ -16,19 +16,19 @@ import (
 )
 
 func newInheritanceClient(t *testing.T) *InheritanceClient {
-	client, err := NewInheritanceClient(&azcore.ClientOptions{
+	client, err := NewInheritanceClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewInheritanceClient(options *azcore.ClientOptions) (*InheritanceClient, error) {
+func NewInheritanceClient(endpoint string, options *azcore.ClientOptions) (*InheritanceClient, error) {
 	client, err := azcore.NewClient("complexgroup.InheritanceClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &InheritanceClient{internal: client}, nil
+	return &InheritanceClient{internal: client, endpoint: endpoint}, nil
 }
 
 func TestInheritanceGetValid(t *testing.T) {

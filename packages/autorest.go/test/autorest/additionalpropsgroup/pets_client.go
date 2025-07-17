@@ -14,13 +14,14 @@ import (
 )
 
 // NewPetsClient creates a new instance of PetsClient with the specified values.
-func NewPetsClient(options *azcore.ClientOptions) (*PetsClient, error) {
+func NewPetsClient(endpoint string, options *azcore.ClientOptions) (*PetsClient, error) {
 	cl, err := azcore.NewClient("additionalpropsgroup.PetsClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &PetsClient{
 		internal: cl,
+		endpoint: endpoint,
 	}
 	return client, nil
 }

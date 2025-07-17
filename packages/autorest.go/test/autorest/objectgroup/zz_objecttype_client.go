@@ -19,6 +19,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type ObjectTypeClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Basic get that returns an object. Returns object { 'message': 'An object was successfully returned' }
@@ -51,7 +52,7 @@ func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClie
 // getCreateRequest creates the Get request.
 func (client *ObjectTypeClient) getCreateRequest(ctx context.Context, _ *ObjectTypeClientGetOptions) (*policy.Request, error) {
 	urlPath := "/objectType/get"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +101,7 @@ func (client *ObjectTypeClient) Put(ctx context.Context, putObject []byte, optio
 // putCreateRequest creates the Put request.
 func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject []byte, _ *ObjectTypeClientPutOptions) (*policy.Request, error) {
 	urlPath := "/objectType/put"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

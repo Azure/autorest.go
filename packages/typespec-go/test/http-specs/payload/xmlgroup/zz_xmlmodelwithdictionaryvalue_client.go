@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [XMLClient.NewXMLModelWithDictionaryValueClient] instead.
 type XMLModelWithDictionaryValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -47,7 +48,7 @@ func (client *XMLModelWithDictionaryValueClient) Get(ctx context.Context, option
 // getCreateRequest creates the Get request.
 func (client *XMLModelWithDictionaryValueClient) getCreateRequest(ctx context.Context, _ *XMLModelWithDictionaryValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/payload/xml/modelWithDictionary"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +96,7 @@ func (client *XMLModelWithDictionaryValueClient) Put(ctx context.Context, input 
 // putCreateRequest creates the Put request.
 func (client *XMLModelWithDictionaryValueClient) putCreateRequest(ctx context.Context, input ModelWithDictionary, _ *XMLModelWithDictionaryValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/payload/xml/modelWithDictionary"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

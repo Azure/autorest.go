@@ -10,12 +10,14 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type DictionaryClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewDictionaryBooleanValueClient creates a new instance of [DictionaryBooleanValueClient].
 func (client *DictionaryClient) NewDictionaryBooleanValueClient() *DictionaryBooleanValueClient {
 	return &DictionaryBooleanValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -23,6 +25,7 @@ func (client *DictionaryClient) NewDictionaryBooleanValueClient() *DictionaryBoo
 func (client *DictionaryClient) NewDictionaryDatetimeValueClient() *DictionaryDatetimeValueClient {
 	return &DictionaryDatetimeValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -30,6 +33,7 @@ func (client *DictionaryClient) NewDictionaryDatetimeValueClient() *DictionaryDa
 func (client *DictionaryClient) NewDictionaryDurationValueClient() *DictionaryDurationValueClient {
 	return &DictionaryDurationValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -37,6 +41,7 @@ func (client *DictionaryClient) NewDictionaryDurationValueClient() *DictionaryDu
 func (client *DictionaryClient) NewDictionaryFloat32ValueClient() *DictionaryFloat32ValueClient {
 	return &DictionaryFloat32ValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -44,6 +49,7 @@ func (client *DictionaryClient) NewDictionaryFloat32ValueClient() *DictionaryFlo
 func (client *DictionaryClient) NewDictionaryInt32ValueClient() *DictionaryInt32ValueClient {
 	return &DictionaryInt32ValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -51,6 +57,7 @@ func (client *DictionaryClient) NewDictionaryInt32ValueClient() *DictionaryInt32
 func (client *DictionaryClient) NewDictionaryInt64ValueClient() *DictionaryInt64ValueClient {
 	return &DictionaryInt64ValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -58,6 +65,7 @@ func (client *DictionaryClient) NewDictionaryInt64ValueClient() *DictionaryInt64
 func (client *DictionaryClient) NewDictionaryModelValueClient() *DictionaryModelValueClient {
 	return &DictionaryModelValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -65,6 +73,7 @@ func (client *DictionaryClient) NewDictionaryModelValueClient() *DictionaryModel
 func (client *DictionaryClient) NewDictionaryNullableFloatValueClient() *DictionaryNullableFloatValueClient {
 	return &DictionaryNullableFloatValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -72,6 +81,7 @@ func (client *DictionaryClient) NewDictionaryNullableFloatValueClient() *Diction
 func (client *DictionaryClient) NewDictionaryRecursiveModelValueClient() *DictionaryRecursiveModelValueClient {
 	return &DictionaryRecursiveModelValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -79,6 +89,7 @@ func (client *DictionaryClient) NewDictionaryRecursiveModelValueClient() *Dictio
 func (client *DictionaryClient) NewDictionaryStringValueClient() *DictionaryStringValueClient {
 	return &DictionaryStringValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -86,5 +97,6 @@ func (client *DictionaryClient) NewDictionaryStringValueClient() *DictionaryStri
 func (client *DictionaryClient) NewDictionaryUnknownValueClient() *DictionaryUnknownValueClient {
 	return &DictionaryUnknownValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

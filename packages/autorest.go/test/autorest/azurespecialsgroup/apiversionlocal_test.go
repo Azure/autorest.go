@@ -14,19 +14,19 @@ import (
 )
 
 func newAPIVersionLocalClient(t *testing.T) *APIVersionLocalClient {
-	client, err := NewAPIVersionLocalClient(&azcore.ClientOptions{
+	client, err := NewAPIVersionLocalClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewAPIVersionLocalClient(options *azcore.ClientOptions) (*APIVersionLocalClient, error) {
+func NewAPIVersionLocalClient(endpoint string, options *azcore.ClientOptions) (*APIVersionLocalClient, error) {
 	client, err := azcore.NewClient("azurespecialsgroup.APIVersionLocalClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &APIVersionLocalClient{internal: client}, nil
+	return &APIVersionLocalClient{internal: client, endpoint: endpoint}, nil
 }
 
 // GetMethodLocalNull - Get method with api-version modeled in the method.  pass in api-version = null to succeed

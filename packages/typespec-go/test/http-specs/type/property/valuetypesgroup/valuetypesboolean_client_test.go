@@ -13,7 +13,7 @@ import (
 )
 
 func TestValueTypesBooleanClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesBooleanClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestValueTypesBooleanClient_Get(t *testing.T) {
 }
 
 func TestValueTypesBooleanClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesBooleanClient().Put(context.Background(), valuetypesgroup.BooleanProperty{
 		Property: to.Ptr(true),

@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type AutoRestReportServiceClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetOptionalReport - Get optional test coverage report
@@ -50,7 +51,7 @@ func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context
 // getOptionalReportCreateRequest creates the GetOptionalReport request.
 func (client *AutoRestReportServiceClient) getOptionalReportCreateRequest(ctx context.Context, options *AutoRestReportServiceClientGetOptionalReportOptions) (*policy.Request, error) {
 	urlPath := "/report/optional"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +104,7 @@ func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, option
 // getReportCreateRequest creates the GetReport request.
 func (client *AutoRestReportServiceClient) getReportCreateRequest(ctx context.Context, options *AutoRestReportServiceClientGetReportOptions) (*policy.Request, error) {
 	urlPath := "/report"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

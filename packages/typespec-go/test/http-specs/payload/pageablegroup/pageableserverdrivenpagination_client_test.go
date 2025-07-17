@@ -13,7 +13,7 @@ import (
 )
 
 func TestNewLinkPager(t *testing.T) {
-	client, err := pageablegroup.NewPageableServerDrivenPaginationClient(nil)
+	client, err := pageablegroup.NewPageableServerDrivenPaginationClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	pager := client.NewLinkPager(nil)
 	pageCount := 0

@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [NamingClient.NewNamingClientModelClient] instead.
 type NamingClientModelClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Client -
@@ -46,7 +47,7 @@ func (client *NamingClientModelClient) Client(ctx context.Context, body ClientMo
 // clientCreateRequest creates the Client request.
 func (client *NamingClientModelClient) clientCreateRequest(ctx context.Context, body ClientModel, _ *NamingClientModelClientClientOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/model/client"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +86,7 @@ func (client *NamingClientModelClient) Language(ctx context.Context, body GoMode
 // languageCreateRequest creates the Language request.
 func (client *NamingClientModelClient) languageCreateRequest(ctx context.Context, body GoModel, _ *NamingClientModelClientLanguageOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/model/language"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

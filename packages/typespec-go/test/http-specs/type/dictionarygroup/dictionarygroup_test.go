@@ -17,7 +17,7 @@ import (
 )
 
 func TestBooleanValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryBooleanValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -28,7 +28,7 @@ func TestBooleanValueClientGet(t *testing.T) {
 }
 
 func TestBooleanValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryBooleanValueClient().Put(context.Background(), map[string]*bool{
 		"k1": to.Ptr(true),
@@ -39,7 +39,7 @@ func TestBooleanValueClientPut(t *testing.T) {
 }
 
 func TestDatetimeValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryDatetimeValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -49,7 +49,7 @@ func TestDatetimeValueClientGet(t *testing.T) {
 }
 
 func TestDatetimeValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryDatetimeValueClient().Put(context.Background(), map[string]*time.Time{
 		"k1": to.Ptr(time.Date(2022, time.August, 26, 18, 38, 0, 0, time.UTC)),
@@ -59,7 +59,7 @@ func TestDatetimeValueClientPut(t *testing.T) {
 }
 
 func TestDurationValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryDurationValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -69,7 +69,7 @@ func TestDurationValueClientGet(t *testing.T) {
 }
 
 func TestDurationValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryDurationValueClient().Put(context.Background(), map[string]*string{
 		"k1": to.Ptr("P123DT22H14M12.011S"),
@@ -79,7 +79,7 @@ func TestDurationValueClientPut(t *testing.T) {
 }
 
 func TestFloat32ValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryFloat32ValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -89,7 +89,7 @@ func TestFloat32ValueClientGet(t *testing.T) {
 }
 
 func TestFloat32ValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryFloat32ValueClient().Put(context.Background(), map[string]*float32{
 		"k1": to.Ptr[float32](43.125),
@@ -99,7 +99,7 @@ func TestFloat32ValueClientPut(t *testing.T) {
 }
 
 func TestInt32ValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryInt32ValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -110,7 +110,7 @@ func TestInt32ValueClientGet(t *testing.T) {
 }
 
 func TestInt32ValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryInt32ValueClient().Put(context.Background(), map[string]*int32{
 		"k1": to.Ptr[int32](1),
@@ -121,7 +121,7 @@ func TestInt32ValueClientPut(t *testing.T) {
 }
 
 func TestInt64ValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryInt64ValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -132,7 +132,7 @@ func TestInt64ValueClientGet(t *testing.T) {
 }
 
 func TestInt64ValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryInt64ValueClient().Put(context.Background(), map[string]*int64{
 		"k1": to.Ptr[int64](9007199254740991),
@@ -143,7 +143,7 @@ func TestInt64ValueClientPut(t *testing.T) {
 }
 
 func TestModelValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryModelValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -158,7 +158,7 @@ func TestModelValueClientGet(t *testing.T) {
 }
 
 func TestModelValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryModelValueClient().Put(context.Background(), map[string]*dictionarygroup.InnerModel{
 		"k1": {
@@ -173,7 +173,7 @@ func TestModelValueClientPut(t *testing.T) {
 }
 
 func TestNullableFloatValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryNullableFloatValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -185,7 +185,7 @@ func TestNullableFloatValueClientGet(t *testing.T) {
 }
 
 func TestNullableFloatValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryNullableFloatValueClient().Put(context.Background(), map[string]*float32{
 		"k1": to.Ptr[float32](1.25),
@@ -197,7 +197,7 @@ func TestNullableFloatValueClientPut(t *testing.T) {
 }
 
 func TestRecursiveModelValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryRecursiveModelValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -218,7 +218,7 @@ func TestRecursiveModelValueClientGet(t *testing.T) {
 }
 
 func TestRecursiveModelValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryRecursiveModelValueClient().Put(context.Background(), map[string]*dictionarygroup.InnerModel{
 		"k1": {
@@ -239,7 +239,7 @@ func TestRecursiveModelValueClientPut(t *testing.T) {
 }
 
 func TestStringValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryStringValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -250,7 +250,7 @@ func TestStringValueClientGet(t *testing.T) {
 }
 
 func TestStringValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryStringValueClient().Put(context.Background(), map[string]*string{
 		"k1": to.Ptr("hello"),
@@ -261,7 +261,7 @@ func TestStringValueClientPut(t *testing.T) {
 }
 
 func TestUnknownValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryUnknownValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -273,7 +273,7 @@ func TestUnknownValueClientGet(t *testing.T) {
 }
 
 func TestUnknownValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewDictionaryClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDictionaryUnknownValueClient().Put(context.Background(), map[string]any{
 		"k1": float64(1),

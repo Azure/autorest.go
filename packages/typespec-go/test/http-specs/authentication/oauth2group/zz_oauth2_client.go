@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type OAuth2Client struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Invalid - Check whether client is authenticated. Will return an invalid bearer error.
@@ -45,7 +46,7 @@ func (client *OAuth2Client) Invalid(ctx context.Context, options *OAuth2ClientIn
 // invalidCreateRequest creates the Invalid request.
 func (client *OAuth2Client) invalidCreateRequest(ctx context.Context, _ *OAuth2ClientInvalidOptions) (*policy.Request, error) {
 	urlPath := "/authentication/oauth2/invalid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +81,7 @@ func (client *OAuth2Client) Valid(ctx context.Context, options *OAuth2ClientVali
 // validCreateRequest creates the Valid request.
 func (client *OAuth2Client) validCreateRequest(ctx context.Context, _ *OAuth2ClientValidOptions) (*policy.Request, error) {
 	urlPath := "/authentication/oauth2/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

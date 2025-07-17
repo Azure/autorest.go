@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type QueriesClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // ArrayStringMultiEmpty - Get an empty array [] of string using the multi-array format
@@ -49,7 +50,7 @@ func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options 
 // arrayStringMultiEmptyCreateRequest creates the ArrayStringMultiEmpty request.
 func (client *QueriesClient) arrayStringMultiEmptyCreateRequest(ctx context.Context, options *QueriesClientArrayStringMultiEmptyOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/multi/string/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +95,7 @@ func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, options *
 // arrayStringMultiNullCreateRequest creates the ArrayStringMultiNull request.
 func (client *QueriesClient) arrayStringMultiNullCreateRequest(ctx context.Context, options *QueriesClientArrayStringMultiNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/multi/string/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -140,7 +141,7 @@ func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options 
 // arrayStringMultiValidCreateRequest creates the ArrayStringMultiValid request.
 func (client *QueriesClient) arrayStringMultiValidCreateRequest(ctx context.Context, options *QueriesClientArrayStringMultiValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/multi/string/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

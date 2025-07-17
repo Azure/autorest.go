@@ -18,7 +18,7 @@ import (
 )
 
 func newMultipleResponsesClient(t *testing.T) *MultipleResponsesClient {
-	client, err := NewMultipleResponsesClient(&azcore.ClientOptions{
+	client, err := NewMultipleResponsesClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)

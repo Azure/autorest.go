@@ -11,12 +11,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewNullableClient(options *azcore.ClientOptions) (*NullableClient, error) {
+func NewNullableClient(endpoint string, options *azcore.ClientOptions) (*NullableClient, error) {
 	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &NullableClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

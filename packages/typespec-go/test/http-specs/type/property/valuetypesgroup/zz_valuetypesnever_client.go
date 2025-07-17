@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesNeverClient] instead.
 type ValueTypesNeverClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get call
@@ -46,7 +47,7 @@ func (client *ValueTypesNeverClient) Get(ctx context.Context, options *ValueType
 // getCreateRequest creates the Get request.
 func (client *ValueTypesNeverClient) getCreateRequest(ctx context.Context, _ *ValueTypesNeverClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/never"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +92,7 @@ func (client *ValueTypesNeverClient) Put(ctx context.Context, body NeverProperty
 // putCreateRequest creates the Put request.
 func (client *ValueTypesNeverClient) putCreateRequest(ctx context.Context, body NeverProperty, _ *ValueTypesNeverClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/never"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

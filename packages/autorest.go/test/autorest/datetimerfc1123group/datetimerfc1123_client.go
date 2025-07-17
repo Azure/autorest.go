@@ -10,10 +10,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewDatetimerfc1123Client(options *azcore.ClientOptions) (*Datetimerfc1123Client, error) {
+func NewDatetimerfc1123Client(endpoint string, options *azcore.ClientOptions) (*Datetimerfc1123Client, error) {
 	client, err := azcore.NewClient("datetimerfc1123group.Datetimerfc1123Client", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &Datetimerfc1123Client{internal: client}, nil
+	return &Datetimerfc1123Client{
+		internal: client,
+		endpoint: endpoint,
+	}, nil
 }

@@ -760,22 +760,6 @@ export class typeAdapter {
   }
 }
 
-export function getEndpointType(param: tcgc.SdkEndpointParameter) {
-  // for multiple endpoint, currently we only generate the first one
-  let endpointType: tcgc.SdkEndpointType;
-  if (param.type.kind === 'endpoint') {
-    endpointType = param.type;
-  } else {
-    endpointType = param.type.variantTypes[0];
-  }
-  // for endpoint with only a template argument with default value, we fall back to constant endpoint
-  if (endpointType.templateArguments.length === 1 && endpointType.templateArguments[0].clientDefaultValue) {
-    endpointType.serverUrl = <string>endpointType.templateArguments[0].clientDefaultValue;
-    endpointType.templateArguments = [];
-  }
-  return endpointType;
-}
-
 function getPrimitiveType(type: tcgc.SdkBuiltInType): 'bool' | 'float32' | 'float64' | 'int32' | 'int64' | 'string' {
   switch (type.kind) {
     case 'boolean':

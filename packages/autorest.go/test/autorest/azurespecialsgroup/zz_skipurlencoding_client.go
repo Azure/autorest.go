@@ -18,6 +18,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type SkipURLEncodingClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetMethodPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
@@ -52,7 +53,7 @@ func (client *SkipURLEncodingClient) GetMethodPathValid(ctx context.Context, une
 func (client *SkipURLEncodingClient) getMethodPathValidCreateRequest(ctx context.Context, unencodedPathParam string, _ *SkipURLEncodingClientGetMethodPathValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/skipUrlEncoding/method/path/valid/{unencodedPathParam}"
 	urlPath = strings.ReplaceAll(urlPath, "{unencodedPathParam}", unencodedPathParam)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +91,7 @@ func (client *SkipURLEncodingClient) GetMethodQueryNull(ctx context.Context, opt
 // getMethodQueryNullCreateRequest creates the GetMethodQueryNull request.
 func (client *SkipURLEncodingClient) getMethodQueryNullCreateRequest(ctx context.Context, options *SkipURLEncodingClientGetMethodQueryNullOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/skipUrlEncoding/method/query/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +135,7 @@ func (client *SkipURLEncodingClient) GetMethodQueryValid(ctx context.Context, q1
 // getMethodQueryValidCreateRequest creates the GetMethodQueryValid request.
 func (client *SkipURLEncodingClient) getMethodQueryValidCreateRequest(ctx context.Context, q1 string, _ *SkipURLEncodingClientGetMethodQueryValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/skipUrlEncoding/method/query/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +177,7 @@ func (client *SkipURLEncodingClient) GetPathQueryValid(ctx context.Context, q1 s
 // getPathQueryValidCreateRequest creates the GetPathQueryValid request.
 func (client *SkipURLEncodingClient) getPathQueryValidCreateRequest(ctx context.Context, q1 string, _ *SkipURLEncodingClientGetPathQueryValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/skipUrlEncoding/path/query/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -219,7 +220,7 @@ func (client *SkipURLEncodingClient) GetPathValid(ctx context.Context, unencoded
 func (client *SkipURLEncodingClient) getPathValidCreateRequest(ctx context.Context, unencodedPathParam string, _ *SkipURLEncodingClientGetPathValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/skipUrlEncoding/path/path/valid/{unencodedPathParam}"
 	urlPath = strings.ReplaceAll(urlPath, "{unencodedPathParam}", unencodedPathParam)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -258,7 +259,7 @@ func (client *SkipURLEncodingClient) GetSwaggerPathValid(ctx context.Context, op
 func (client *SkipURLEncodingClient) getSwaggerPathValidCreateRequest(ctx context.Context, _ *SkipURLEncodingClientGetSwaggerPathValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/skipUrlEncoding/swagger/path/valid/{unencodedPathParam}"
 	urlPath = strings.ReplaceAll(urlPath, "{unencodedPathParam}", "path1/path2/path3")
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -296,7 +297,7 @@ func (client *SkipURLEncodingClient) GetSwaggerQueryValid(ctx context.Context, o
 // getSwaggerQueryValidCreateRequest creates the GetSwaggerQueryValid request.
 func (client *SkipURLEncodingClient) getSwaggerQueryValidCreateRequest(ctx context.Context, _ *SkipURLEncodingClientGetSwaggerQueryValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/skipUrlEncoding/swagger/query/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

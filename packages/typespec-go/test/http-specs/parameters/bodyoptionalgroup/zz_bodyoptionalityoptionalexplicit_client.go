@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [BodyOptionalityClient.NewBodyOptionalityOptionalExplicitClient] instead.
 type BodyOptionalityOptionalExplicitClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Omit -
@@ -46,7 +47,7 @@ func (client *BodyOptionalityOptionalExplicitClient) Omit(ctx context.Context, o
 // omitCreateRequest creates the Omit request.
 func (client *BodyOptionalityOptionalExplicitClient) omitCreateRequest(ctx context.Context, options *BodyOptionalityOptionalExplicitClientOmitOptions) (*policy.Request, error) {
 	urlPath := "/parameters/body-optionality/optional-explicit/omit"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +89,7 @@ func (client *BodyOptionalityOptionalExplicitClient) Set(ctx context.Context, op
 // setCreateRequest creates the Set request.
 func (client *BodyOptionalityOptionalExplicitClient) setCreateRequest(ctx context.Context, options *BodyOptionalityOptionalExplicitClientSetOptions) (*policy.Request, error) {
 	urlPath := "/parameters/body-optionality/optional-explicit/set"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

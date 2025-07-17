@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ArrayClient.NewArrayDurationValueClient] instead.
 type ArrayDurationValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -46,7 +47,7 @@ func (client *ArrayDurationValueClient) Get(ctx context.Context, options *ArrayD
 // getCreateRequest creates the Get request.
 func (client *ArrayDurationValueClient) getCreateRequest(ctx context.Context, _ *ArrayDurationValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/duration"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +91,7 @@ func (client *ArrayDurationValueClient) Put(ctx context.Context, body []string, 
 // putCreateRequest creates the Put request.
 func (client *ArrayDurationValueClient) putCreateRequest(ctx context.Context, body []string, _ *ArrayDurationValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/duration"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -12,7 +12,7 @@ import (
 )
 
 func TestValueTypesUnknownArrayClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesUnknownArrayClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -20,7 +20,7 @@ func TestValueTypesUnknownArrayClient_Get(t *testing.T) {
 }
 
 func TestValueTypesUnknownArrayClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesUnknownArrayClient().Put(context.Background(), valuetypesgroup.UnknownArrayProperty{
 		Property: []any{"hello", "world"},

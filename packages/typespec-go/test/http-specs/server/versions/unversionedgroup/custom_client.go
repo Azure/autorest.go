@@ -8,13 +8,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewNotVersionedClient(options *azcore.ClientOptions) (*NotVersionedClient, error) {
+func NewNotVersionedClient(endpoint string, options *azcore.ClientOptions) (*NotVersionedClient, error) {
 	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &NotVersionedClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
+		endpoint: endpoint,
 	}, nil
 }

@@ -13,7 +13,7 @@ import (
 )
 
 func TestValueTypesUnionStringLiteralClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesUnionStringLiteralClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestValueTypesUnionStringLiteralClient_Get(t *testing.T) {
 }
 
 func TestValueTypesUnionStringLiteralClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesUnionStringLiteralClient().Put(context.Background(), valuetypesgroup.UnionStringLiteralProperty{
 		Property: to.Ptr(valuetypesgroup.UnionStringLiteralPropertyPropertyWorld),

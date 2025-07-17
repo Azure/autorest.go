@@ -16,7 +16,7 @@ import (
 )
 
 func TestOptionalExplicitClient_Omit(t *testing.T) {
-	client, err := bodyoptionalgroup.NewBodyOptionalityClient(nil)
+	client, err := bodyoptionalgroup.NewBodyOptionalityClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBodyOptionalityOptionalExplicitClient().Omit(context.Background(), nil)
 	require.NoError(t, err)
@@ -24,7 +24,7 @@ func TestOptionalExplicitClient_Omit(t *testing.T) {
 }
 
 func TestOptionalExplicitClient_Set(t *testing.T) {
-	client, err := bodyoptionalgroup.NewBodyOptionalityClient(nil)
+	client, err := bodyoptionalgroup.NewBodyOptionalityClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBodyOptionalityOptionalExplicitClient().Set(context.Background(), &bodyoptionalgroup.BodyOptionalityOptionalExplicitClientSetOptions{
 		Body: &bodyoptionalgroup.BodyModel{

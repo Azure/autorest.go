@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type XMSClientRequestIDClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get operation with azure `x-ms-client-request-id` header.
@@ -45,7 +46,7 @@ func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSCli
 // getCreateRequest creates the Get request.
 func (client *XMSClientRequestIDClient) getCreateRequest(ctx context.Context, options *XMSClientRequestIDClientGetOptions) (*policy.Request, error) {
 	urlPath := "/azure/special-headers/x-ms-client-request-id/"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
