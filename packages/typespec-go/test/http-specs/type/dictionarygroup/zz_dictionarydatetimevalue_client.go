@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use [DictionaryClient.NewDictionaryDatetimeValueClient] instead.
 type DictionaryDatetimeValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -48,7 +49,7 @@ func (client *DictionaryDatetimeValueClient) Get(ctx context.Context, options *D
 // getCreateRequest creates the Get request.
 func (client *DictionaryDatetimeValueClient) getCreateRequest(ctx context.Context, _ *DictionaryDatetimeValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/datetime"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +100,7 @@ func (client *DictionaryDatetimeValueClient) Put(ctx context.Context, body map[s
 // putCreateRequest creates the Put request.
 func (client *DictionaryDatetimeValueClient) putCreateRequest(ctx context.Context, body map[string]*time.Time, _ *DictionaryDatetimeValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/datetime"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

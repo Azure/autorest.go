@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type PolymorphismClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetComplicated - Get complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
@@ -50,7 +51,7 @@ func (client *PolymorphismClient) GetComplicated(ctx context.Context, options *P
 // getComplicatedCreateRequest creates the GetComplicated request.
 func (client *PolymorphismClient) getComplicatedCreateRequest(ctx context.Context, _ *PolymorphismClientGetComplicatedOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/complicated"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +101,7 @@ func (client *PolymorphismClient) GetComposedWithDiscriminator(ctx context.Conte
 // getComposedWithDiscriminatorCreateRequest creates the GetComposedWithDiscriminator request.
 func (client *PolymorphismClient) getComposedWithDiscriminatorCreateRequest(ctx context.Context, _ *PolymorphismClientGetComposedWithDiscriminatorOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/composedWithDiscriminator"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -150,7 +151,7 @@ func (client *PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Co
 // getComposedWithoutDiscriminatorCreateRequest creates the GetComposedWithoutDiscriminator request.
 func (client *PolymorphismClient) getComposedWithoutDiscriminatorCreateRequest(ctx context.Context, _ *PolymorphismClientGetComposedWithoutDiscriminatorOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/composedWithoutDiscriminator"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -198,7 +199,7 @@ func (client *PolymorphismClient) GetDotSyntax(ctx context.Context, options *Pol
 // getDotSyntaxCreateRequest creates the GetDotSyntax request.
 func (client *PolymorphismClient) getDotSyntaxCreateRequest(ctx context.Context, _ *PolymorphismClientGetDotSyntaxOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/dotsyntax"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -245,7 +246,7 @@ func (client *PolymorphismClient) GetValid(ctx context.Context, options *Polymor
 // getValidCreateRequest creates the GetValid request.
 func (client *PolymorphismClient) getValidCreateRequest(ctx context.Context, _ *PolymorphismClientGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -292,7 +293,7 @@ func (client *PolymorphismClient) PutComplicated(ctx context.Context, complexBod
 // putComplicatedCreateRequest creates the PutComplicated request.
 func (client *PolymorphismClient) putComplicatedCreateRequest(ctx context.Context, complexBody SalmonClassification, _ *PolymorphismClientPutComplicatedOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/complicated"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -334,7 +335,7 @@ func (client *PolymorphismClient) PutMissingDiscriminator(ctx context.Context, c
 // putMissingDiscriminatorCreateRequest creates the PutMissingDiscriminator request.
 func (client *PolymorphismClient) putMissingDiscriminatorCreateRequest(ctx context.Context, complexBody SalmonClassification, _ *PolymorphismClientPutMissingDiscriminatorOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/missingdiscriminator"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -389,7 +390,7 @@ func (client *PolymorphismClient) PutValid(ctx context.Context, complexBody Fish
 // putValidCreateRequest creates the PutValid request.
 func (client *PolymorphismClient) putValidCreateRequest(ctx context.Context, complexBody FishClassification, _ *PolymorphismClientPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -436,7 +437,7 @@ func (client *PolymorphismClient) PutValidMissingRequired(ctx context.Context, c
 // putValidMissingRequiredCreateRequest creates the PutValidMissingRequired request.
 func (client *PolymorphismClient) putValidMissingRequiredCreateRequest(ctx context.Context, complexBody FishClassification, _ *PolymorphismClientPutValidMissingRequiredOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/missingrequired/invalid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

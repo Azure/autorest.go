@@ -5,8 +5,6 @@
 
 package nonstringenumgroup
 
-const host = "http://localhost:3000"
-
 // FloatEnum - List of float enums
 type FloatEnum float32
 

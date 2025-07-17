@@ -10,12 +10,14 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type ScalarClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewScalarBooleanClient creates a new instance of [ScalarBooleanClient].
 func (client *ScalarClient) NewScalarBooleanClient() *ScalarBooleanClient {
 	return &ScalarBooleanClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -23,6 +25,7 @@ func (client *ScalarClient) NewScalarBooleanClient() *ScalarBooleanClient {
 func (client *ScalarClient) NewScalarDecimal128TypeClient() *ScalarDecimal128TypeClient {
 	return &ScalarDecimal128TypeClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -30,6 +33,7 @@ func (client *ScalarClient) NewScalarDecimal128TypeClient() *ScalarDecimal128Typ
 func (client *ScalarClient) NewScalarDecimal128VerifyClient() *ScalarDecimal128VerifyClient {
 	return &ScalarDecimal128VerifyClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -37,6 +41,7 @@ func (client *ScalarClient) NewScalarDecimal128VerifyClient() *ScalarDecimal128V
 func (client *ScalarClient) NewScalarDecimalTypeClient() *ScalarDecimalTypeClient {
 	return &ScalarDecimalTypeClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -44,6 +49,7 @@ func (client *ScalarClient) NewScalarDecimalTypeClient() *ScalarDecimalTypeClien
 func (client *ScalarClient) NewScalarDecimalVerifyClient() *ScalarDecimalVerifyClient {
 	return &ScalarDecimalVerifyClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -51,6 +57,7 @@ func (client *ScalarClient) NewScalarDecimalVerifyClient() *ScalarDecimalVerifyC
 func (client *ScalarClient) NewScalarStringClient() *ScalarStringClient {
 	return &ScalarStringClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -58,5 +65,6 @@ func (client *ScalarClient) NewScalarStringClient() *ScalarStringClient {
 func (client *ScalarClient) NewScalarUnknownClient() *ScalarUnknownClient {
 	return &ScalarUnknownClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

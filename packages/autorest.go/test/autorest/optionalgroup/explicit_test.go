@@ -13,7 +13,7 @@ import (
 )
 
 func newExplicitClient(t *testing.T) *ExplicitClient {
-	client, err := NewExplicitClient(&azcore.ClientOptions{
+	client, err := NewExplicitClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)

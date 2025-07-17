@@ -9,14 +9,12 @@ import * as go from '../../codemodel.go/src/index.js';
 
 // Creates the content in constants.go
 export async function generateConstants(codeModel: go.CodeModel): Promise<string> {
-  // lack of operation groups indicates model-only mode.
-  if (!codeModel.clients || (codeModel.constants.length === 0 && !codeModel.host && codeModel.type !== 'azure-arm')) {
+  if (codeModel.constants.length === 0) {
     return '';
   }
+
   let text = helpers.contentPreamble(codeModel);
-  if (codeModel.host) {
-    text += `const host = "${codeModel.host}"\n\n`;
-  }
+
   for (const enm of values(codeModel.constants)) {
     text += helpers.formatDocCommentWithPrefix(enm.name, enm.docs);
     text += `type ${enm.name} ${enm.type}\n\n`;

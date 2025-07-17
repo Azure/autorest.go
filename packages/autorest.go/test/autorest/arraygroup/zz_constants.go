@@ -5,8 +5,6 @@
 
 package arraygroup
 
-const host = "http://localhost:3000"
-
 type Enum0 string
 
 const (

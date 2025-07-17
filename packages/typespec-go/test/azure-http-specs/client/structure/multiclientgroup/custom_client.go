@@ -11,26 +11,26 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewClientAClient(options *azcore.ClientOptions) (*ClientAClient, error) {
+func NewClientAClient(endpoint string, options *azcore.ClientOptions) (*ClientAClient, error) {
 	internal, err := newClient(options)
 	if err != nil {
 		return nil, err
 	}
 	return &ClientAClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
+		endpoint: endpoint,
 		client:   ClientTypeMultiClient,
 	}, err
 }
 
-func NewClientBClient(options *azcore.ClientOptions) (*ClientBClient, error) {
+func NewClientBClient(endpoint string, options *azcore.ClientOptions) (*ClientBClient, error) {
 	internal, err := newClient(options)
 	if err != nil {
 		return nil, err
 	}
 	return &ClientBClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
+		endpoint: endpoint,
 		client:   ClientTypeMultiClient,
 	}, err
 }

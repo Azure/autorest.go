@@ -11,12 +11,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewBodyOptionalityClient(options *azcore.ClientOptions) (*BodyOptionalityClient, error) {
+func NewBodyOptionalityClient(endpoint string, options *azcore.ClientOptions) (*BodyOptionalityClient, error) {
 	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &BodyOptionalityClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

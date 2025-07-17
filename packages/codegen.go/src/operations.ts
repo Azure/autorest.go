@@ -560,7 +560,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
   } else if (client.templatedHost) {
     imports.add('strings');
     // we have a templated host
-    text += `\thost := "${client.host!}"\n`;
+    text += `\thost := "${client.templatedHost}"\n`;
     // get all the host params on the client
     for (const hostParam of hostParams) {
       text += `\thost = strings.ReplaceAll(host, "{${hostParam.uriPathSegment}}", ${helpers.formatValue(`client.${hostParam.name}`, hostParam.type, imports)})\n`;
@@ -575,9 +575,6 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
   } else if (hostParams.length === 1) {
     // simple parameterized host case
     hostParam = 'client.' + hostParams[0].name;
-  } else if (client.host) {
-    // swagger defines a host, use its const
-    hostParam = '\thost';
   } else {
     throw new CodegenError('InternalError', `no host or endpoint defined for method ${client.name}.${method.name}`);
   }

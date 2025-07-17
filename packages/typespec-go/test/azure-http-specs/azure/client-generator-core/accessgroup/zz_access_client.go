@@ -10,12 +10,14 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type AccessClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewAccessInternalOperationClient creates a new instance of [AccessInternalOperationClient].
 func (client *AccessClient) NewAccessInternalOperationClient() *AccessInternalOperationClient {
 	return &AccessInternalOperationClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -23,6 +25,7 @@ func (client *AccessClient) NewAccessInternalOperationClient() *AccessInternalOp
 func (client *AccessClient) NewAccessPublicOperationClient() *AccessPublicOperationClient {
 	return &AccessPublicOperationClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -30,6 +33,7 @@ func (client *AccessClient) NewAccessPublicOperationClient() *AccessPublicOperat
 func (client *AccessClient) NewAccessRelativeModelInOperationClient() *AccessRelativeModelInOperationClient {
 	return &AccessRelativeModelInOperationClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -37,5 +41,6 @@ func (client *AccessClient) NewAccessRelativeModelInOperationClient() *AccessRel
 func (client *AccessClient) NewAccessSharedModelInOperationClient() *AccessSharedModelInOperationClient {
 	return &AccessSharedModelInOperationClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

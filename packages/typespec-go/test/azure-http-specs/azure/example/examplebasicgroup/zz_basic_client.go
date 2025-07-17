@@ -10,11 +10,13 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type BasicClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewBasicServiceOperationGroupClient creates a new instance of [BasicServiceOperationGroupClient].
 func (client *BasicClient) NewBasicServiceOperationGroupClient() *BasicServiceOperationGroupClient {
 	return &BasicServiceOperationGroupClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

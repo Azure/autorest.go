@@ -21,6 +21,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type PagingClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewAppendAPIVersionPager - A paging operation with api version. When calling the next link, you want to append your client's
@@ -55,7 +56,7 @@ func (client *PagingClient) NewAppendAPIVersionPager(options *PagingClientAppend
 // appendAPIVersionCreateRequest creates the AppendAPIVersion request.
 func (client *PagingClient) appendAPIVersionCreateRequest(ctx context.Context, _ *PagingClientAppendAPIVersionOptions) (*policy.Request, error) {
 	urlPath := "/paging/apiVersion/append/1"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +108,7 @@ func (client *PagingClient) NewDuplicateParamsPager(options *PagingClientDuplica
 // duplicateParamsCreateRequest creates the DuplicateParams request.
 func (client *PagingClient) duplicateParamsCreateRequest(ctx context.Context, options *PagingClientDuplicateParamsOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/duplicateParams/1"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -161,7 +162,7 @@ func (client *PagingClient) NewFirstResponseEmptyPager(options *PagingClientFirs
 // firstResponseEmptyCreateRequest creates the FirstResponseEmpty request.
 func (client *PagingClient) firstResponseEmptyCreateRequest(ctx context.Context, _ *PagingClientFirstResponseEmptyOptions) (*policy.Request, error) {
 	urlPath := "/paging/firstResponseEmpty/1"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -209,7 +210,7 @@ func (client *PagingClient) NewGetEmptyNextLinkNamePagesPager(options *PagingCli
 // getEmptyNextLinkNamePagesCreateRequest creates the GetEmptyNextLinkNamePages request.
 func (client *PagingClient) getEmptyNextLinkNamePagesCreateRequest(ctx context.Context, _ *PagingClientGetEmptyNextLinkNamePagesOptions) (*policy.Request, error) {
 	urlPath := "/paging/emptynextlink"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +258,7 @@ func (client *PagingClient) NewGetMultiplePagesPager(options *PagingClientGetMul
 // getMultiplePagesCreateRequest creates the GetMultiplePages request.
 func (client *PagingClient) getMultiplePagesCreateRequest(ctx context.Context, options *PagingClientGetMultiplePagesOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -314,7 +315,7 @@ func (client *PagingClient) NewGetMultiplePagesFailurePager(options *PagingClien
 // getMultiplePagesFailureCreateRequest creates the GetMultiplePagesFailure request.
 func (client *PagingClient) getMultiplePagesFailureCreateRequest(ctx context.Context, _ *PagingClientGetMultiplePagesFailureOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/failure"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -362,7 +363,7 @@ func (client *PagingClient) NewGetMultiplePagesFailureURIPager(options *PagingCl
 // getMultiplePagesFailureURICreateRequest creates the GetMultiplePagesFailureURI request.
 func (client *PagingClient) getMultiplePagesFailureURICreateRequest(ctx context.Context, _ *PagingClientGetMultiplePagesFailureURIOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/failureuri"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -420,7 +421,7 @@ func (client *PagingClient) getMultiplePagesFragmentNextLinkCreateRequest(ctx co
 		return nil, errors.New("parameter tenant cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(tenant))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -482,7 +483,7 @@ func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkCreateRe
 		return nil, errors.New("parameter customParameterGroup.Tenant cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(customParameterGroup.Tenant))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -569,7 +570,7 @@ func (client *PagingClient) getMultiplePagesLRO(ctx context.Context, options *Pa
 // getMultiplePagesLROCreateRequest creates the GetMultiplePagesLRO request.
 func (client *PagingClient) getMultiplePagesLROCreateRequest(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/lro"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -627,7 +628,7 @@ func (client *PagingClient) NewGetMultiplePagesRetryFirstPager(options *PagingCl
 // getMultiplePagesRetryFirstCreateRequest creates the GetMultiplePagesRetryFirst request.
 func (client *PagingClient) getMultiplePagesRetryFirstCreateRequest(ctx context.Context, _ *PagingClientGetMultiplePagesRetryFirstOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/retryfirst"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -676,7 +677,7 @@ func (client *PagingClient) NewGetMultiplePagesRetrySecondPager(options *PagingC
 // getMultiplePagesRetrySecondCreateRequest creates the GetMultiplePagesRetrySecond request.
 func (client *PagingClient) getMultiplePagesRetrySecondCreateRequest(ctx context.Context, _ *PagingClientGetMultiplePagesRetrySecondOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/retrysecond"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -725,7 +726,7 @@ func (client *PagingClient) NewGetMultiplePagesWithOffsetPager(options PagingCli
 func (client *PagingClient) getMultiplePagesWithOffsetCreateRequest(ctx context.Context, options PagingClientGetMultiplePagesWithOffsetOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/withpath/{offset}"
 	urlPath = strings.ReplaceAll(urlPath, "{offset}", url.PathEscape(strconv.FormatInt(int64(options.Offset), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -782,7 +783,7 @@ func (client *PagingClient) NewGetNoItemNamePagesPager(options *PagingClientGetN
 // getNoItemNamePagesCreateRequest creates the GetNoItemNamePages request.
 func (client *PagingClient) getNoItemNamePagesCreateRequest(ctx context.Context, _ *PagingClientGetNoItemNamePagesOptions) (*policy.Request, error) {
 	urlPath := "/paging/noitemname"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -831,7 +832,7 @@ func (client *PagingClient) NewGetNullNextLinkNamePagesPager(options *PagingClie
 // getNullNextLinkNamePagesCreateRequest creates the GetNullNextLinkNamePages request.
 func (client *PagingClient) getNullNextLinkNamePagesCreateRequest(ctx context.Context, _ *PagingClientGetNullNextLinkNamePagesOptions) (*policy.Request, error) {
 	urlPath := "/paging/nullnextlink"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -879,7 +880,7 @@ func (client *PagingClient) NewGetODataMultiplePagesPager(options *PagingClientG
 // getODataMultiplePagesCreateRequest creates the GetODataMultiplePages request.
 func (client *PagingClient) getODataMultiplePagesCreateRequest(ctx context.Context, options *PagingClientGetODataMultiplePagesOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/odata"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -937,7 +938,7 @@ func (client *PagingClient) NewGetPagingModelWithItemNameWithXMSClientNamePager(
 // getPagingModelWithItemNameWithXMSClientNameCreateRequest creates the GetPagingModelWithItemNameWithXMSClientName request.
 func (client *PagingClient) getPagingModelWithItemNameWithXMSClientNameCreateRequest(ctx context.Context, _ *PagingClientGetPagingModelWithItemNameWithXMSClientNameOptions) (*policy.Request, error) {
 	urlPath := "/paging/itemNameWithXMSClientName"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -985,7 +986,7 @@ func (client *PagingClient) NewGetSinglePagesPager(options *PagingClientGetSingl
 // getSinglePagesCreateRequest creates the GetSinglePages request.
 func (client *PagingClient) getSinglePagesCreateRequest(ctx context.Context, _ *PagingClientGetSinglePagesOptions) (*policy.Request, error) {
 	urlPath := "/paging/single"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1033,7 +1034,7 @@ func (client *PagingClient) NewGetSinglePagesFailurePager(options *PagingClientG
 // getSinglePagesFailureCreateRequest creates the GetSinglePagesFailure request.
 func (client *PagingClient) getSinglePagesFailureCreateRequest(ctx context.Context, _ *PagingClientGetSinglePagesFailureOptions) (*policy.Request, error) {
 	urlPath := "/paging/single/failure"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1082,7 +1083,7 @@ func (client *PagingClient) NewGetSinglePagesWithBodyParamsPager(parameters Body
 // getSinglePagesWithBodyParamsCreateRequest creates the GetSinglePagesWithBodyParams request.
 func (client *PagingClient) getSinglePagesWithBodyParamsCreateRequest(ctx context.Context, parameters BodyParam, _ *PagingClientGetSinglePagesWithBodyParamsOptions) (*policy.Request, error) {
 	urlPath := "/paging/single/getWithBodyParams"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1139,7 +1140,7 @@ func (client *PagingClient) NewGetWithQueryParamsPager(requiredQueryParameter in
 // getWithQueryParamsCreateRequest creates the GetWithQueryParams request.
 func (client *PagingClient) getWithQueryParamsCreateRequest(ctx context.Context, requiredQueryParameter int32, _ *PagingClientGetWithQueryParamsOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/getWithQueryParams"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1191,7 +1192,7 @@ func (client *PagingClient) NewPageWithMaxPageSizePager(options *PagingClientPag
 // pageWithMaxPageSizeCreateRequest creates the PageWithMaxPageSize request.
 func (client *PagingClient) pageWithMaxPageSizeCreateRequest(ctx context.Context, options *PagingClientPageWithMaxPageSizeOptions) (*policy.Request, error) {
 	urlPath := "/paging/maxPageSize"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1245,7 +1246,7 @@ func (client *PagingClient) NewReplaceAPIVersionPager(options *PagingClientRepla
 // replaceAPIVersionCreateRequest creates the ReplaceAPIVersion request.
 func (client *PagingClient) replaceAPIVersionCreateRequest(ctx context.Context, _ *PagingClientReplaceAPIVersionOptions) (*policy.Request, error) {
 	urlPath := "/paging/apiVersion/replace/1"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1273,7 +1274,7 @@ func (client *PagingClient) nextFragmentCreateRequest(ctx context.Context, apiVe
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(tenant))
 	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1292,7 +1293,7 @@ func (client *PagingClient) nextFragmentWithGroupingCreateRequest(ctx context.Co
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(customParameterGroup.Tenant))
 	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1306,7 +1307,7 @@ func (client *PagingClient) nextFragmentWithGroupingCreateRequest(ctx context.Co
 // nextOperationWithQueryParamsCreateRequest creates the nextOperationWithQueryParamsCreateRequest request.
 func (client *PagingClient) nextOperationWithQueryParamsCreateRequest(ctx context.Context) (*policy.Request, error) {
 	urlPath := "/paging/multiple/nextOperationWithQueryParams"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

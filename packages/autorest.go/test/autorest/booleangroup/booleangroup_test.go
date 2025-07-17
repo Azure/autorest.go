@@ -16,19 +16,19 @@ import (
 )
 
 func newBoolClient(t *testing.T) *BoolClient {
-	client, err := NewBoolClient(&azcore.ClientOptions{
+	client, err := NewBoolClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewBoolClient(options *azcore.ClientOptions) (*BoolClient, error) {
+func NewBoolClient(endpoint string, options *azcore.ClientOptions) (*BoolClient, error) {
 	client, err := azcore.NewClient("booleangroup.BoolClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &BoolClient{internal: client}, nil
+	return &BoolClient{internal: client, endpoint: endpoint}, nil
 }
 
 func TestGetTrue(t *testing.T) {

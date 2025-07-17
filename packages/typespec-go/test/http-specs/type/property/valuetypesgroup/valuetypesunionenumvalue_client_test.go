@@ -13,7 +13,7 @@ import (
 )
 
 func TestValueTypesUnionEnumValueClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesUnionEnumValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestValueTypesUnionEnumValueClient_Get(t *testing.T) {
 }
 
 func TestValueTypesUnionEnumValueClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesUnionEnumValueClient().Put(context.Background(), valuetypesgroup.UnionEnumValueProperty{
 		Property: to.Ptr(valuetypesgroup.ExtendedEnumEnumValue2),

@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [SpecialWordsClient.NewSpecialWordsOperationsClient] instead.
 type SpecialWordsOperationsClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // And -
@@ -46,7 +47,7 @@ func (client *SpecialWordsOperationsClient) And(ctx context.Context, options *Sp
 // andCreateRequest creates the And request.
 func (client *SpecialWordsOperationsClient) andCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientAndOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/and"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +82,7 @@ func (client *SpecialWordsOperationsClient) As(ctx context.Context, options *Spe
 // asCreateRequest creates the As request.
 func (client *SpecialWordsOperationsClient) asCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientAsOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/as"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +117,7 @@ func (client *SpecialWordsOperationsClient) Assert(ctx context.Context, options 
 // assertCreateRequest creates the Assert request.
 func (client *SpecialWordsOperationsClient) assertCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientAssertOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/assert"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -151,7 +152,7 @@ func (client *SpecialWordsOperationsClient) Async(ctx context.Context, options *
 // asyncCreateRequest creates the Async request.
 func (client *SpecialWordsOperationsClient) asyncCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientAsyncOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/async"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -186,7 +187,7 @@ func (client *SpecialWordsOperationsClient) Await(ctx context.Context, options *
 // awaitCreateRequest creates the Await request.
 func (client *SpecialWordsOperationsClient) awaitCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientAwaitOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/await"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -221,7 +222,7 @@ func (client *SpecialWordsOperationsClient) Break(ctx context.Context, options *
 // breakCreateRequest creates the Break request.
 func (client *SpecialWordsOperationsClient) breakCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientBreakOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/break"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -256,7 +257,7 @@ func (client *SpecialWordsOperationsClient) Class(ctx context.Context, options *
 // classCreateRequest creates the Class request.
 func (client *SpecialWordsOperationsClient) classCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientClassOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/class"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -291,7 +292,7 @@ func (client *SpecialWordsOperationsClient) Constructor(ctx context.Context, opt
 // constructorCreateRequest creates the Constructor request.
 func (client *SpecialWordsOperationsClient) constructorCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientConstructorOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/constructor"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -326,7 +327,7 @@ func (client *SpecialWordsOperationsClient) Continue(ctx context.Context, option
 // continueCreateRequest creates the Continue request.
 func (client *SpecialWordsOperationsClient) continueCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientContinueOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/continue"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -361,7 +362,7 @@ func (client *SpecialWordsOperationsClient) Def(ctx context.Context, options *Sp
 // defCreateRequest creates the Def request.
 func (client *SpecialWordsOperationsClient) defCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientDefOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/def"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -396,7 +397,7 @@ func (client *SpecialWordsOperationsClient) Del(ctx context.Context, options *Sp
 // delCreateRequest creates the Del request.
 func (client *SpecialWordsOperationsClient) delCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientDelOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/del"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -431,7 +432,7 @@ func (client *SpecialWordsOperationsClient) Elif(ctx context.Context, options *S
 // elifCreateRequest creates the Elif request.
 func (client *SpecialWordsOperationsClient) elifCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientElifOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/elif"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -466,7 +467,7 @@ func (client *SpecialWordsOperationsClient) Else(ctx context.Context, options *S
 // elseCreateRequest creates the Else request.
 func (client *SpecialWordsOperationsClient) elseCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientElseOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/else"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -501,7 +502,7 @@ func (client *SpecialWordsOperationsClient) Except(ctx context.Context, options 
 // exceptCreateRequest creates the Except request.
 func (client *SpecialWordsOperationsClient) exceptCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientExceptOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/except"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -536,7 +537,7 @@ func (client *SpecialWordsOperationsClient) Exec(ctx context.Context, options *S
 // execCreateRequest creates the Exec request.
 func (client *SpecialWordsOperationsClient) execCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientExecOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/exec"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -571,7 +572,7 @@ func (client *SpecialWordsOperationsClient) Finally(ctx context.Context, options
 // finallyCreateRequest creates the Finally request.
 func (client *SpecialWordsOperationsClient) finallyCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientFinallyOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/finally"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -606,7 +607,7 @@ func (client *SpecialWordsOperationsClient) For(ctx context.Context, options *Sp
 // forCreateRequest creates the For request.
 func (client *SpecialWordsOperationsClient) forCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientForOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/for"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -641,7 +642,7 @@ func (client *SpecialWordsOperationsClient) From(ctx context.Context, options *S
 // fromCreateRequest creates the From request.
 func (client *SpecialWordsOperationsClient) fromCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientFromOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/from"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -676,7 +677,7 @@ func (client *SpecialWordsOperationsClient) Global(ctx context.Context, options 
 // globalCreateRequest creates the Global request.
 func (client *SpecialWordsOperationsClient) globalCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientGlobalOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/global"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -711,7 +712,7 @@ func (client *SpecialWordsOperationsClient) If(ctx context.Context, options *Spe
 // ifCreateRequest creates the If request.
 func (client *SpecialWordsOperationsClient) ifCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientIfOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/if"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -746,7 +747,7 @@ func (client *SpecialWordsOperationsClient) Import(ctx context.Context, options 
 // importCreateRequest creates the Import request.
 func (client *SpecialWordsOperationsClient) importCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientImportOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/import"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -781,7 +782,7 @@ func (client *SpecialWordsOperationsClient) In(ctx context.Context, options *Spe
 // inCreateRequest creates the In request.
 func (client *SpecialWordsOperationsClient) inCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientInOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/in"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -816,7 +817,7 @@ func (client *SpecialWordsOperationsClient) Is(ctx context.Context, options *Spe
 // isCreateRequest creates the Is request.
 func (client *SpecialWordsOperationsClient) isCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientIsOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/is"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -851,7 +852,7 @@ func (client *SpecialWordsOperationsClient) Lambda(ctx context.Context, options 
 // lambdaCreateRequest creates the Lambda request.
 func (client *SpecialWordsOperationsClient) lambdaCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientLambdaOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/lambda"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -886,7 +887,7 @@ func (client *SpecialWordsOperationsClient) Not(ctx context.Context, options *Sp
 // notCreateRequest creates the Not request.
 func (client *SpecialWordsOperationsClient) notCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientNotOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/not"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -921,7 +922,7 @@ func (client *SpecialWordsOperationsClient) Or(ctx context.Context, options *Spe
 // orCreateRequest creates the Or request.
 func (client *SpecialWordsOperationsClient) orCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientOrOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/or"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -956,7 +957,7 @@ func (client *SpecialWordsOperationsClient) Pass(ctx context.Context, options *S
 // passCreateRequest creates the Pass request.
 func (client *SpecialWordsOperationsClient) passCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientPassOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/pass"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -991,7 +992,7 @@ func (client *SpecialWordsOperationsClient) Raise(ctx context.Context, options *
 // raiseCreateRequest creates the Raise request.
 func (client *SpecialWordsOperationsClient) raiseCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientRaiseOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/raise"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1026,7 +1027,7 @@ func (client *SpecialWordsOperationsClient) Return(ctx context.Context, options 
 // returnCreateRequest creates the Return request.
 func (client *SpecialWordsOperationsClient) returnCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientReturnOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/return"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1061,7 +1062,7 @@ func (client *SpecialWordsOperationsClient) Try(ctx context.Context, options *Sp
 // tryCreateRequest creates the Try request.
 func (client *SpecialWordsOperationsClient) tryCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientTryOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/try"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1096,7 +1097,7 @@ func (client *SpecialWordsOperationsClient) While(ctx context.Context, options *
 // whileCreateRequest creates the While request.
 func (client *SpecialWordsOperationsClient) whileCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientWhileOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/while"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1131,7 +1132,7 @@ func (client *SpecialWordsOperationsClient) With(ctx context.Context, options *S
 // withCreateRequest creates the With request.
 func (client *SpecialWordsOperationsClient) withCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientWithOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/with"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1166,7 +1167,7 @@ func (client *SpecialWordsOperationsClient) Yield(ctx context.Context, options *
 // yieldCreateRequest creates the Yield request.
 func (client *SpecialWordsOperationsClient) yieldCreateRequest(ctx context.Context, _ *SpecialWordsOperationsClientYieldOptions) (*policy.Request, error) {
 	urlPath := "/special-words/operations/yield"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

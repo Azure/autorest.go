@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [XMLClient.NewXMLModelWithOptionalFieldValueClient] instead.
 type XMLModelWithOptionalFieldValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -47,7 +48,7 @@ func (client *XMLModelWithOptionalFieldValueClient) Get(ctx context.Context, opt
 // getCreateRequest creates the Get request.
 func (client *XMLModelWithOptionalFieldValueClient) getCreateRequest(ctx context.Context, _ *XMLModelWithOptionalFieldValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/payload/xml/modelWithOptionalField"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +96,7 @@ func (client *XMLModelWithOptionalFieldValueClient) Put(ctx context.Context, inp
 // putCreateRequest creates the Put request.
 func (client *XMLModelWithOptionalFieldValueClient) putCreateRequest(ctx context.Context, input ModelWithOptionalField, _ *XMLModelWithOptionalFieldValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/payload/xml/modelWithOptionalField"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

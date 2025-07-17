@@ -5,8 +5,6 @@
 
 package urlgroup
 
-const host = "http://localhost:3000"
-
 type URIColor string
 
 const (

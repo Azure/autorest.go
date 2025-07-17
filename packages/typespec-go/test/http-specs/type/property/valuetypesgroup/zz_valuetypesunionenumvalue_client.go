@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesUnionEnumValueClient] instead.
 type ValueTypesUnionEnumValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get call
@@ -47,7 +48,7 @@ func (client *ValueTypesUnionEnumValueClient) Get(ctx context.Context, options *
 // getCreateRequest creates the Get request.
 func (client *ValueTypesUnionEnumValueClient) getCreateRequest(ctx context.Context, _ *ValueTypesUnionEnumValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/union-enum-value"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,7 @@ func (client *ValueTypesUnionEnumValueClient) Put(ctx context.Context, body Unio
 // putCreateRequest creates the Put request.
 func (client *ValueTypesUnionEnumValueClient) putCreateRequest(ctx context.Context, body UnionEnumValueProperty, _ *ValueTypesUnionEnumValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/union-enum-value"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

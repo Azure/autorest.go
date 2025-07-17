@@ -5,6 +5,7 @@ package optionalgroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/optionalgroup"
 	"generatortests/optionalgroup/fake"
 	"net/http"
@@ -25,7 +26,7 @@ func TestFakePostOptionalStringProperty(t *testing.T) {
 			return
 		},
 	}
-	client, err := optionalgroup.NewExplicitClient(&azcore.ClientOptions{
+	client, err := optionalgroup.NewExplicitClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewExplicitServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -46,7 +47,7 @@ func TestFakePostOptionalStringPropertyNil(t *testing.T) {
 			return
 		},
 	}
-	client, err := optionalgroup.NewExplicitClient(&azcore.ClientOptions{
+	client, err := optionalgroup.NewExplicitClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewExplicitServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -63,7 +64,7 @@ func TestFakePostRequiredStringParameter(t *testing.T) {
 			return
 		},
 	}
-	client, err := optionalgroup.NewExplicitClient(&azcore.ClientOptions{
+	client, err := optionalgroup.NewExplicitClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewExplicitServerTransport(&server),
 	})
 	require.NoError(t, err)

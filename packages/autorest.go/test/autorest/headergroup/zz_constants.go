@@ -5,8 +5,6 @@
 
 package headergroup
 
-const host = "http://localhost:3000"
-
 type GreyscaleColors string
 
 const (

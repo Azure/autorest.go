@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ArrayClient.NewArrayUnknownValueClient] instead.
 type ArrayUnknownValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -46,7 +47,7 @@ func (client *ArrayUnknownValueClient) Get(ctx context.Context, options *ArrayUn
 // getCreateRequest creates the Get request.
 func (client *ArrayUnknownValueClient) getCreateRequest(ctx context.Context, _ *ArrayUnknownValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/unknown"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +91,7 @@ func (client *ArrayUnknownValueClient) Put(ctx context.Context, body []any, opti
 // putCreateRequest creates the Put request.
 func (client *ArrayUnknownValueClient) putCreateRequest(ctx context.Context, body []any, _ *ArrayUnknownValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/unknown"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

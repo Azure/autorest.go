@@ -10,12 +10,14 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type ValueTypesClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewValueTypesBooleanClient creates a new instance of [ValueTypesBooleanClient].
 func (client *ValueTypesClient) NewValueTypesBooleanClient() *ValueTypesBooleanClient {
 	return &ValueTypesBooleanClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -23,6 +25,7 @@ func (client *ValueTypesClient) NewValueTypesBooleanClient() *ValueTypesBooleanC
 func (client *ValueTypesClient) NewValueTypesBooleanLiteralClient() *ValueTypesBooleanLiteralClient {
 	return &ValueTypesBooleanLiteralClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -30,6 +33,7 @@ func (client *ValueTypesClient) NewValueTypesBooleanLiteralClient() *ValueTypesB
 func (client *ValueTypesClient) NewValueTypesBytesClient() *ValueTypesBytesClient {
 	return &ValueTypesBytesClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -37,6 +41,7 @@ func (client *ValueTypesClient) NewValueTypesBytesClient() *ValueTypesBytesClien
 func (client *ValueTypesClient) NewValueTypesCollectionsIntClient() *ValueTypesCollectionsIntClient {
 	return &ValueTypesCollectionsIntClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -44,6 +49,7 @@ func (client *ValueTypesClient) NewValueTypesCollectionsIntClient() *ValueTypesC
 func (client *ValueTypesClient) NewValueTypesCollectionsModelClient() *ValueTypesCollectionsModelClient {
 	return &ValueTypesCollectionsModelClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -51,6 +57,7 @@ func (client *ValueTypesClient) NewValueTypesCollectionsModelClient() *ValueType
 func (client *ValueTypesClient) NewValueTypesCollectionsStringClient() *ValueTypesCollectionsStringClient {
 	return &ValueTypesCollectionsStringClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -58,6 +65,7 @@ func (client *ValueTypesClient) NewValueTypesCollectionsStringClient() *ValueTyp
 func (client *ValueTypesClient) NewValueTypesDatetimeClient() *ValueTypesDatetimeClient {
 	return &ValueTypesDatetimeClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -65,6 +73,7 @@ func (client *ValueTypesClient) NewValueTypesDatetimeClient() *ValueTypesDatetim
 func (client *ValueTypesClient) NewValueTypesDecimal128Client() *ValueTypesDecimal128Client {
 	return &ValueTypesDecimal128Client{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -72,6 +81,7 @@ func (client *ValueTypesClient) NewValueTypesDecimal128Client() *ValueTypesDecim
 func (client *ValueTypesClient) NewValueTypesDecimalClient() *ValueTypesDecimalClient {
 	return &ValueTypesDecimalClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -79,6 +89,7 @@ func (client *ValueTypesClient) NewValueTypesDecimalClient() *ValueTypesDecimalC
 func (client *ValueTypesClient) NewValueTypesDictionaryStringClient() *ValueTypesDictionaryStringClient {
 	return &ValueTypesDictionaryStringClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -86,6 +97,7 @@ func (client *ValueTypesClient) NewValueTypesDictionaryStringClient() *ValueType
 func (client *ValueTypesClient) NewValueTypesDurationClient() *ValueTypesDurationClient {
 	return &ValueTypesDurationClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -93,6 +105,7 @@ func (client *ValueTypesClient) NewValueTypesDurationClient() *ValueTypesDuratio
 func (client *ValueTypesClient) NewValueTypesEnumClient() *ValueTypesEnumClient {
 	return &ValueTypesEnumClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -100,6 +113,7 @@ func (client *ValueTypesClient) NewValueTypesEnumClient() *ValueTypesEnumClient 
 func (client *ValueTypesClient) NewValueTypesExtensibleEnumClient() *ValueTypesExtensibleEnumClient {
 	return &ValueTypesExtensibleEnumClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -107,6 +121,7 @@ func (client *ValueTypesClient) NewValueTypesExtensibleEnumClient() *ValueTypesE
 func (client *ValueTypesClient) NewValueTypesFloatClient() *ValueTypesFloatClient {
 	return &ValueTypesFloatClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -114,6 +129,7 @@ func (client *ValueTypesClient) NewValueTypesFloatClient() *ValueTypesFloatClien
 func (client *ValueTypesClient) NewValueTypesFloatLiteralClient() *ValueTypesFloatLiteralClient {
 	return &ValueTypesFloatLiteralClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -121,6 +137,7 @@ func (client *ValueTypesClient) NewValueTypesFloatLiteralClient() *ValueTypesFlo
 func (client *ValueTypesClient) NewValueTypesIntClient() *ValueTypesIntClient {
 	return &ValueTypesIntClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -128,6 +145,7 @@ func (client *ValueTypesClient) NewValueTypesIntClient() *ValueTypesIntClient {
 func (client *ValueTypesClient) NewValueTypesIntLiteralClient() *ValueTypesIntLiteralClient {
 	return &ValueTypesIntLiteralClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -135,6 +153,7 @@ func (client *ValueTypesClient) NewValueTypesIntLiteralClient() *ValueTypesIntLi
 func (client *ValueTypesClient) NewValueTypesModelClient() *ValueTypesModelClient {
 	return &ValueTypesModelClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -142,6 +161,7 @@ func (client *ValueTypesClient) NewValueTypesModelClient() *ValueTypesModelClien
 func (client *ValueTypesClient) NewValueTypesNeverClient() *ValueTypesNeverClient {
 	return &ValueTypesNeverClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -149,6 +169,7 @@ func (client *ValueTypesClient) NewValueTypesNeverClient() *ValueTypesNeverClien
 func (client *ValueTypesClient) NewValueTypesStringClient() *ValueTypesStringClient {
 	return &ValueTypesStringClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -156,6 +177,7 @@ func (client *ValueTypesClient) NewValueTypesStringClient() *ValueTypesStringCli
 func (client *ValueTypesClient) NewValueTypesStringLiteralClient() *ValueTypesStringLiteralClient {
 	return &ValueTypesStringLiteralClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -163,6 +185,7 @@ func (client *ValueTypesClient) NewValueTypesStringLiteralClient() *ValueTypesSt
 func (client *ValueTypesClient) NewValueTypesUnionEnumValueClient() *ValueTypesUnionEnumValueClient {
 	return &ValueTypesUnionEnumValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -170,6 +193,7 @@ func (client *ValueTypesClient) NewValueTypesUnionEnumValueClient() *ValueTypesU
 func (client *ValueTypesClient) NewValueTypesUnionFloatLiteralClient() *ValueTypesUnionFloatLiteralClient {
 	return &ValueTypesUnionFloatLiteralClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -177,6 +201,7 @@ func (client *ValueTypesClient) NewValueTypesUnionFloatLiteralClient() *ValueTyp
 func (client *ValueTypesClient) NewValueTypesUnionIntLiteralClient() *ValueTypesUnionIntLiteralClient {
 	return &ValueTypesUnionIntLiteralClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -184,6 +209,7 @@ func (client *ValueTypesClient) NewValueTypesUnionIntLiteralClient() *ValueTypes
 func (client *ValueTypesClient) NewValueTypesUnionStringLiteralClient() *ValueTypesUnionStringLiteralClient {
 	return &ValueTypesUnionStringLiteralClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -191,6 +217,7 @@ func (client *ValueTypesClient) NewValueTypesUnionStringLiteralClient() *ValueTy
 func (client *ValueTypesClient) NewValueTypesUnknownArrayClient() *ValueTypesUnknownArrayClient {
 	return &ValueTypesUnknownArrayClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -198,6 +225,7 @@ func (client *ValueTypesClient) NewValueTypesUnknownArrayClient() *ValueTypesUnk
 func (client *ValueTypesClient) NewValueTypesUnknownDictClient() *ValueTypesUnknownDictClient {
 	return &ValueTypesUnknownDictClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -205,6 +233,7 @@ func (client *ValueTypesClient) NewValueTypesUnknownDictClient() *ValueTypesUnkn
 func (client *ValueTypesClient) NewValueTypesUnknownIntClient() *ValueTypesUnknownIntClient {
 	return &ValueTypesUnknownIntClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -212,5 +241,6 @@ func (client *ValueTypesClient) NewValueTypesUnknownIntClient() *ValueTypesUnkno
 func (client *ValueTypesClient) NewValueTypesUnknownStringClient() *ValueTypesUnknownStringClient {
 	return &ValueTypesUnknownStringClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

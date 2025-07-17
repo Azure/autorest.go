@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [UsageClient.NewUsageModelInOperationClient] instead.
 type UsageModelInOperationClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // InputToInputOutput - Expected body parameter:
@@ -51,7 +52,7 @@ func (client *UsageModelInOperationClient) InputToInputOutput(ctx context.Contex
 // inputToInputOutputCreateRequest creates the InputToInputOutput request.
 func (client *UsageModelInOperationClient) inputToInputOutputCreateRequest(ctx context.Context, body InputModel, _ *UsageModelInOperationClientInputToInputOutputOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/usage/inputToInputOutput"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +105,7 @@ func (client *UsageModelInOperationClient) ModelInReadOnlyProperty(ctx context.C
 // modelInReadOnlyPropertyCreateRequest creates the ModelInReadOnlyProperty request.
 func (client *UsageModelInOperationClient) modelInReadOnlyPropertyCreateRequest(ctx context.Context, body RoundTripModel, _ *UsageModelInOperationClientModelInReadOnlyPropertyOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/usage/modelInReadOnlyProperty"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +161,7 @@ func (client *UsageModelInOperationClient) OrphanModelSerializable(ctx context.C
 // orphanModelSerializableCreateRequest creates the OrphanModelSerializable request.
 func (client *UsageModelInOperationClient) orphanModelSerializableCreateRequest(ctx context.Context, body any, _ *UsageModelInOperationClientOrphanModelSerializableOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/usage/orphanModelSerializable"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -205,7 +206,7 @@ func (client *UsageModelInOperationClient) OutputToInputOutput(ctx context.Conte
 // outputToInputOutputCreateRequest creates the OutputToInputOutput request.
 func (client *UsageModelInOperationClient) outputToInputOutputCreateRequest(ctx context.Context, _ *UsageModelInOperationClientOutputToInputOutputOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/usage/outputToInputOutput"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

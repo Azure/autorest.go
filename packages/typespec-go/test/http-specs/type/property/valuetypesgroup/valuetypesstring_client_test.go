@@ -13,7 +13,7 @@ import (
 )
 
 func TestValueTypesStringClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesStringClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestValueTypesStringClient_Get(t *testing.T) {
 }
 
 func TestValueTypesStringClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesStringClient().Put(context.Background(), valuetypesgroup.StringProperty{
 		Property: to.Ptr("hello"),

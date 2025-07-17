@@ -10,11 +10,13 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type NumericClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewNumericPropertyClient creates a new instance of [NumericPropertyClient].
 func (client *NumericClient) NewNumericPropertyClient() *NumericPropertyClient {
 	return &NumericPropertyClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

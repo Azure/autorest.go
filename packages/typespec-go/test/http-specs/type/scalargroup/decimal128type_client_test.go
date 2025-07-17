@@ -15,7 +15,7 @@ import (
 )
 
 func TestDecimal128TypeClient_RequestBody(t *testing.T) {
-	client, err := scalargroup.NewScalarClient(nil)
+	client, err := scalargroup.NewScalarClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarDecimal128TypeClient().RequestBody(context.Background(), 0.33333, nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestDecimal128TypeClient_RequestBody(t *testing.T) {
 }
 
 func TestDecimal128TypeClient_RequestParameter(t *testing.T) {
-	client, err := scalargroup.NewScalarClient(nil)
+	client, err := scalargroup.NewScalarClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarDecimal128TypeClient().RequestParameter(context.Background(), 0.33333, nil)
 	require.NoError(t, err)
@@ -31,7 +31,7 @@ func TestDecimal128TypeClient_RequestParameter(t *testing.T) {
 }
 
 func TestDecimal128TypeClient_ResponseBody(t *testing.T) {
-	client, err := scalargroup.NewScalarClient(nil)
+	client, err := scalargroup.NewScalarClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarDecimal128TypeClient().ResponseBody(context.Background(), nil)
 	require.NoError(t, err)

@@ -6,6 +6,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"generatortests"
 	"generatortests/azurereportgroup"
 	"generatortests/reportgroup"
 	"sort"
@@ -13,7 +14,7 @@ import (
 
 // generate autorest test server coverage report
 func main() {
-	vanillaClient, err := reportgroup.NewAutoRestReportServiceClient(nil)
+	vanillaClient, err := reportgroup.NewAutoRestReportServiceClient(generatortests.Host, nil)
 	if err != nil {
 		panic(err)
 	}

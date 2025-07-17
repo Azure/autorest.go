@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [OptionalClient.NewOptionalIntLiteralClient] instead.
 type OptionalIntLiteralClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetAll - Get models that will return all properties in the model
@@ -47,7 +48,7 @@ func (client *OptionalIntLiteralClient) GetAll(ctx context.Context, options *Opt
 // getAllCreateRequest creates the GetAll request.
 func (client *OptionalIntLiteralClient) getAllCreateRequest(ctx context.Context, _ *OptionalIntLiteralClientGetAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/int/literal/all"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,7 @@ func (client *OptionalIntLiteralClient) GetDefault(ctx context.Context, options 
 // getDefaultCreateRequest creates the GetDefault request.
 func (client *OptionalIntLiteralClient) getDefaultCreateRequest(ctx context.Context, _ *OptionalIntLiteralClientGetDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/int/literal/default"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +139,7 @@ func (client *OptionalIntLiteralClient) PutAll(ctx context.Context, body IntLite
 // putAllCreateRequest creates the PutAll request.
 func (client *OptionalIntLiteralClient) putAllCreateRequest(ctx context.Context, body IntLiteralProperty, _ *OptionalIntLiteralClientPutAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/int/literal/all"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -177,7 +178,7 @@ func (client *OptionalIntLiteralClient) PutDefault(ctx context.Context, body Int
 // putDefaultCreateRequest creates the PutDefault request.
 func (client *OptionalIntLiteralClient) putDefaultCreateRequest(ctx context.Context, body IntLiteralProperty, _ *OptionalIntLiteralClientPutDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/int/literal/default"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -10,12 +10,14 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type CollectionFormatClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewCollectionFormatHeaderClient creates a new instance of [CollectionFormatHeaderClient].
 func (client *CollectionFormatClient) NewCollectionFormatHeaderClient() *CollectionFormatHeaderClient {
 	return &CollectionFormatHeaderClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -23,5 +25,6 @@ func (client *CollectionFormatClient) NewCollectionFormatHeaderClient() *Collect
 func (client *CollectionFormatClient) NewCollectionFormatQueryClient() *CollectionFormatQueryClient {
 	return &CollectionFormatQueryClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

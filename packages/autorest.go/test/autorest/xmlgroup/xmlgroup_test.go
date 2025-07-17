@@ -32,7 +32,7 @@ func newXMLClient(t *testing.T) *XMLClient {
 		},
 		TracingProvider: generatortests.NewTracingProvider(t),
 	}
-	client, err := NewXMLClient(&options)
+	client, err := NewXMLClient(generatortests.Host, &options)
 	require.NoError(t, err)
 	return client
 }

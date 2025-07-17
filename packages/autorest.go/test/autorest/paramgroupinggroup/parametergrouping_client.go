@@ -10,10 +10,10 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewParameterGroupingClient(options *azcore.ClientOptions) (*ParameterGroupingClient, error) {
+func NewParameterGroupingClient(endpoint string, options *azcore.ClientOptions) (*ParameterGroupingClient, error) {
 	client, err := azcore.NewClient("paramgroupinggroup.ParameterGroupingClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &ParameterGroupingClient{internal: client}, nil
+	return &ParameterGroupingClient{internal: client, endpoint: endpoint}, nil
 }

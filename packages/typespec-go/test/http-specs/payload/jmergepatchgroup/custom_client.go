@@ -8,12 +8,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewJSONMergePatchClient(options *azcore.ClientOptions) (*JSONMergePatchClient, error) {
+func NewJSONMergePatchClient(endpoint string, options *azcore.ClientOptions) (*JSONMergePatchClient, error) {
 	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &JSONMergePatchClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

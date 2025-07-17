@@ -21,6 +21,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type QueriesClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format
@@ -53,7 +54,7 @@ func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *Q
 // arrayStringCSVEmptyCreateRequest creates the ArrayStringCSVEmpty request.
 func (client *QueriesClient) arrayStringCSVEmptyCreateRequest(ctx context.Context, options *QueriesClientArrayStringCSVEmptyOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/csv/string/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +97,7 @@ func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *Qu
 // arrayStringCSVNullCreateRequest creates the ArrayStringCSVNull request.
 func (client *QueriesClient) arrayStringCSVNullCreateRequest(ctx context.Context, options *QueriesClientArrayStringCSVNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/csv/string/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -140,7 +141,7 @@ func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *Q
 // arrayStringCSVValidCreateRequest creates the ArrayStringCSVValid request.
 func (client *QueriesClient) arrayStringCSVValidCreateRequest(ctx context.Context, options *QueriesClientArrayStringCSVValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/csv/string/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -184,7 +185,7 @@ func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Cont
 // arrayStringNoCollectionFormatEmptyCreateRequest creates the ArrayStringNoCollectionFormatEmpty request.
 func (client *QueriesClient) arrayStringNoCollectionFormatEmptyCreateRequest(ctx context.Context, options *QueriesClientArrayStringNoCollectionFormatEmptyOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/none/string/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -228,7 +229,7 @@ func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options 
 // arrayStringPipesValidCreateRequest creates the ArrayStringPipesValid request.
 func (client *QueriesClient) arrayStringPipesValidCreateRequest(ctx context.Context, options *QueriesClientArrayStringPipesValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/pipes/string/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -272,7 +273,7 @@ func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *Q
 // arrayStringSsvValidCreateRequest creates the ArrayStringSsvValid request.
 func (client *QueriesClient) arrayStringSsvValidCreateRequest(ctx context.Context, options *QueriesClientArrayStringSsvValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/ssv/string/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -316,7 +317,7 @@ func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *Q
 // arrayStringTsvValidCreateRequest creates the ArrayStringTsvValid request.
 func (client *QueriesClient) arrayStringTsvValidCreateRequest(ctx context.Context, options *QueriesClientArrayStringTsvValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/tsv/string/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -358,7 +359,7 @@ func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesClie
 // byteEmptyCreateRequest creates the ByteEmpty request.
 func (client *QueriesClient) byteEmptyCreateRequest(ctx context.Context, _ *QueriesClientByteEmptyOptions) (*policy.Request, error) {
 	urlPath := "/queries/byte/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -398,7 +399,7 @@ func (client *QueriesClient) ByteMultiByte(ctx context.Context, options *Queries
 // byteMultiByteCreateRequest creates the ByteMultiByte request.
 func (client *QueriesClient) byteMultiByteCreateRequest(ctx context.Context, options *QueriesClientByteMultiByteOptions) (*policy.Request, error) {
 	urlPath := "/queries/byte/multibyte"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -440,7 +441,7 @@ func (client *QueriesClient) ByteNull(ctx context.Context, options *QueriesClien
 // byteNullCreateRequest creates the ByteNull request.
 func (client *QueriesClient) byteNullCreateRequest(ctx context.Context, options *QueriesClientByteNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/byte/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -482,7 +483,7 @@ func (client *QueriesClient) DateNull(ctx context.Context, options *QueriesClien
 // dateNullCreateRequest creates the DateNull request.
 func (client *QueriesClient) dateNullCreateRequest(ctx context.Context, options *QueriesClientDateNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/date/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -524,7 +525,7 @@ func (client *QueriesClient) DateTimeNull(ctx context.Context, options *QueriesC
 // dateTimeNullCreateRequest creates the DateTimeNull request.
 func (client *QueriesClient) dateTimeNullCreateRequest(ctx context.Context, options *QueriesClientDateTimeNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/datetime/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -566,7 +567,7 @@ func (client *QueriesClient) DateTimeValid(ctx context.Context, options *Queries
 // dateTimeValidCreateRequest creates the DateTimeValid request.
 func (client *QueriesClient) dateTimeValidCreateRequest(ctx context.Context, _ *QueriesClientDateTimeValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/datetime/2012-01-01T01%3A01%3A01Z"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -606,7 +607,7 @@ func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesClie
 // dateValidCreateRequest creates the DateValid request.
 func (client *QueriesClient) dateValidCreateRequest(ctx context.Context, _ *QueriesClientDateValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/date/2012-01-01"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -647,7 +648,7 @@ func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options 
 // doubleDecimalNegativeCreateRequest creates the DoubleDecimalNegative request.
 func (client *QueriesClient) doubleDecimalNegativeCreateRequest(ctx context.Context, _ *QueriesClientDoubleDecimalNegativeOptions) (*policy.Request, error) {
 	urlPath := "/queries/double/-9999999.999"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -688,7 +689,7 @@ func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options 
 // doubleDecimalPositiveCreateRequest creates the DoubleDecimalPositive request.
 func (client *QueriesClient) doubleDecimalPositiveCreateRequest(ctx context.Context, _ *QueriesClientDoubleDecimalPositiveOptions) (*policy.Request, error) {
 	urlPath := "/queries/double/9999999.999"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -728,7 +729,7 @@ func (client *QueriesClient) DoubleNull(ctx context.Context, options *QueriesCli
 // doubleNullCreateRequest creates the DoubleNull request.
 func (client *QueriesClient) doubleNullCreateRequest(ctx context.Context, options *QueriesClientDoubleNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/double/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -770,7 +771,7 @@ func (client *QueriesClient) EnumNull(ctx context.Context, options *QueriesClien
 // enumNullCreateRequest creates the EnumNull request.
 func (client *QueriesClient) enumNullCreateRequest(ctx context.Context, options *QueriesClientEnumNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/enum/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -812,7 +813,7 @@ func (client *QueriesClient) EnumValid(ctx context.Context, options *QueriesClie
 // enumValidCreateRequest creates the EnumValid request.
 func (client *QueriesClient) enumValidCreateRequest(ctx context.Context, options *QueriesClientEnumValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/enum/green%20color"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -854,7 +855,7 @@ func (client *QueriesClient) FloatNull(ctx context.Context, options *QueriesClie
 // floatNullCreateRequest creates the FloatNull request.
 func (client *QueriesClient) floatNullCreateRequest(ctx context.Context, options *QueriesClientFloatNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/float/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -897,7 +898,7 @@ func (client *QueriesClient) FloatScientificNegative(ctx context.Context, option
 // floatScientificNegativeCreateRequest creates the FloatScientificNegative request.
 func (client *QueriesClient) floatScientificNegativeCreateRequest(ctx context.Context, _ *QueriesClientFloatScientificNegativeOptions) (*policy.Request, error) {
 	urlPath := "/queries/float/-1.034E-20"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -938,7 +939,7 @@ func (client *QueriesClient) FloatScientificPositive(ctx context.Context, option
 // floatScientificPositiveCreateRequest creates the FloatScientificPositive request.
 func (client *QueriesClient) floatScientificPositiveCreateRequest(ctx context.Context, _ *QueriesClientFloatScientificPositiveOptions) (*policy.Request, error) {
 	urlPath := "/queries/float/1.034E+20"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -978,7 +979,7 @@ func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *Queri
 // getBooleanFalseCreateRequest creates the GetBooleanFalse request.
 func (client *QueriesClient) getBooleanFalseCreateRequest(ctx context.Context, _ *QueriesClientGetBooleanFalseOptions) (*policy.Request, error) {
 	urlPath := "/queries/bool/false"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1018,7 +1019,7 @@ func (client *QueriesClient) GetBooleanNull(ctx context.Context, options *Querie
 // getBooleanNullCreateRequest creates the GetBooleanNull request.
 func (client *QueriesClient) getBooleanNullCreateRequest(ctx context.Context, options *QueriesClientGetBooleanNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/bool/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1060,7 +1061,7 @@ func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *Querie
 // getBooleanTrueCreateRequest creates the GetBooleanTrue request.
 func (client *QueriesClient) getBooleanTrueCreateRequest(ctx context.Context, _ *QueriesClientGetBooleanTrueOptions) (*policy.Request, error) {
 	urlPath := "/queries/bool/true"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1101,7 +1102,7 @@ func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, optio
 // getIntNegativeOneMillionCreateRequest creates the GetIntNegativeOneMillion request.
 func (client *QueriesClient) getIntNegativeOneMillionCreateRequest(ctx context.Context, _ *QueriesClientGetIntNegativeOneMillionOptions) (*policy.Request, error) {
 	urlPath := "/queries/int/-1000000"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1141,7 +1142,7 @@ func (client *QueriesClient) GetIntNull(ctx context.Context, options *QueriesCli
 // getIntNullCreateRequest creates the GetIntNull request.
 func (client *QueriesClient) getIntNullCreateRequest(ctx context.Context, options *QueriesClientGetIntNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/int/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1184,7 +1185,7 @@ func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *Quer
 // getIntOneMillionCreateRequest creates the GetIntOneMillion request.
 func (client *QueriesClient) getIntOneMillionCreateRequest(ctx context.Context, _ *QueriesClientGetIntOneMillionOptions) (*policy.Request, error) {
 	urlPath := "/queries/int/1000000"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1224,7 +1225,7 @@ func (client *QueriesClient) GetLongNull(ctx context.Context, options *QueriesCl
 // getLongNullCreateRequest creates the GetLongNull request.
 func (client *QueriesClient) getLongNullCreateRequest(ctx context.Context, options *QueriesClientGetLongNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/long/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1267,7 +1268,7 @@ func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options 
 // getNegativeTenBillionCreateRequest creates the GetNegativeTenBillion request.
 func (client *QueriesClient) getNegativeTenBillionCreateRequest(ctx context.Context, _ *QueriesClientGetNegativeTenBillionOptions) (*policy.Request, error) {
 	urlPath := "/queries/long/-10000000000"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1307,7 +1308,7 @@ func (client *QueriesClient) GetTenBillion(ctx context.Context, options *Queries
 // getTenBillionCreateRequest creates the GetTenBillion request.
 func (client *QueriesClient) getTenBillionCreateRequest(ctx context.Context, _ *QueriesClientGetTenBillionOptions) (*policy.Request, error) {
 	urlPath := "/queries/long/10000000000"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1347,7 +1348,7 @@ func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesCl
 // stringEmptyCreateRequest creates the StringEmpty request.
 func (client *QueriesClient) stringEmptyCreateRequest(ctx context.Context, _ *QueriesClientStringEmptyOptions) (*policy.Request, error) {
 	urlPath := "/queries/string/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1387,7 +1388,7 @@ func (client *QueriesClient) StringNull(ctx context.Context, options *QueriesCli
 // stringNullCreateRequest creates the StringNull request.
 func (client *QueriesClient) stringNullCreateRequest(ctx context.Context, options *QueriesClientStringNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/string/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1430,7 +1431,7 @@ func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *Quer
 // stringURLEncodedCreateRequest creates the StringURLEncoded request.
 func (client *QueriesClient) stringURLEncodedCreateRequest(ctx context.Context, _ *QueriesClientStringURLEncodedOptions) (*policy.Request, error) {
 	urlPath := "/queries/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1470,7 +1471,7 @@ func (client *QueriesClient) StringUnicode(ctx context.Context, options *Queries
 // stringUnicodeCreateRequest creates the StringUnicode request.
 func (client *QueriesClient) stringUnicodeCreateRequest(ctx context.Context, _ *QueriesClientStringUnicodeOptions) (*policy.Request, error) {
 	urlPath := "/queries/string/unicode/"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

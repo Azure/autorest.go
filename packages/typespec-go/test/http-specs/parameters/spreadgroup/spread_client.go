@@ -8,12 +8,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewSpreadClient(options *azcore.ClientOptions) (*SpreadClient, error) {
+func NewSpreadClient(endpoint string, options *azcore.ClientOptions) (*SpreadClient, error) {
 	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &SpreadClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

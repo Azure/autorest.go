@@ -13,7 +13,7 @@ import (
 )
 
 func TestOptionalUnionIntLiteralClient_GetAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalUnionIntLiteralClient().GetAll(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestOptionalUnionIntLiteralClient_GetAll(t *testing.T) {
 }
 
 func TestOptionalUnionIntLiteralClient_GetDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalUnionIntLiteralClient().GetDefault(context.Background(), nil)
 	require.NoError(t, err)
@@ -30,7 +30,7 @@ func TestOptionalUnionIntLiteralClient_GetDefault(t *testing.T) {
 }
 
 func TestOptionalUnionIntLiteralClient_PutAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalUnionIntLiteralClient().PutAll(context.Background(), optionalitygroup.UnionIntLiteralProperty{
 		Property: to.Ptr(optionalitygroup.UnionIntLiteralPropertyProperty2),
@@ -40,7 +40,7 @@ func TestOptionalUnionIntLiteralClient_PutAll(t *testing.T) {
 }
 
 func TestOptionalUnionIntLiteralClient_PutDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalUnionIntLiteralClient().PutDefault(context.Background(), optionalitygroup.UnionIntLiteralProperty{}, nil)
 	require.NoError(t, err)

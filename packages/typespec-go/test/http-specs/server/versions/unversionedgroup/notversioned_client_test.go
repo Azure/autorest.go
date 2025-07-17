@@ -12,7 +12,7 @@ import (
 )
 
 func TestNotVersionedClient_WithPathAPIVersion(t *testing.T) {
-	client, err := unversionedgroup.NewNotVersionedClient(nil)
+	client, err := unversionedgroup.NewNotVersionedClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.WithPathAPIVersion(context.Background(), "v1.0", nil)
 	require.NoError(t, err)
@@ -20,7 +20,7 @@ func TestNotVersionedClient_WithPathAPIVersion(t *testing.T) {
 }
 
 func TestNotVersionedClient_WithQueryAPIVersion(t *testing.T) {
-	client, err := unversionedgroup.NewNotVersionedClient(nil)
+	client, err := unversionedgroup.NewNotVersionedClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.WithQueryAPIVersion(context.Background(), "v1.0", nil)
 	require.NoError(t, err)
@@ -28,7 +28,7 @@ func TestNotVersionedClient_WithQueryAPIVersion(t *testing.T) {
 }
 
 func TestNotVersionedClient_WithoutAPIVersion(t *testing.T) {
-	client, err := unversionedgroup.NewNotVersionedClient(nil)
+	client, err := unversionedgroup.NewNotVersionedClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.WithoutAPIVersion(context.Background(), nil)
 	require.NoError(t, err)

@@ -16,12 +16,14 @@ import (
 // Don't use this type directly, use [PageableClient.NewPageableServerDrivenPaginationClient] instead.
 type PageableServerDrivenPaginationClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewPageableServerDrivenPaginationContinuationTokenClient creates a new instance of [PageableServerDrivenPaginationContinuationTokenClient].
 func (client *PageableServerDrivenPaginationClient) NewPageableServerDrivenPaginationContinuationTokenClient() *PageableServerDrivenPaginationContinuationTokenClient {
 	return &PageableServerDrivenPaginationContinuationTokenClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -53,7 +55,7 @@ func (client *PageableServerDrivenPaginationClient) NewLinkPager(options *Pageab
 // linkCreateRequest creates the Link request.
 func (client *PageableServerDrivenPaginationClient) linkCreateRequest(ctx context.Context, _ *PageableServerDrivenPaginationClientLinkOptions) (*policy.Request, error) {
 	urlPath := "/payload/pageable/server-driven-pagination/link"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +100,7 @@ func (client *PageableServerDrivenPaginationClient) NewNestedLinkPager(options *
 // nestedLinkCreateRequest creates the NestedLink request.
 func (client *PageableServerDrivenPaginationClient) nestedLinkCreateRequest(ctx context.Context, _ *PageableServerDrivenPaginationClientNestedLinkOptions) (*policy.Request, error) {
 	urlPath := "/payload/pageable/server-driven-pagination/nested-link"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

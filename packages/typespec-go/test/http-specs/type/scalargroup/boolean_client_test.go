@@ -15,7 +15,7 @@ import (
 )
 
 func TestBooleanClient_Get(t *testing.T) {
-	client, err := scalargroup.NewScalarClient(nil)
+	client, err := scalargroup.NewScalarClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarBooleanClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -24,7 +24,7 @@ func TestBooleanClient_Get(t *testing.T) {
 }
 
 func TestBooleanClient_Put(t *testing.T) {
-	client, err := scalargroup.NewScalarClient(nil)
+	client, err := scalargroup.NewScalarClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarBooleanClient().Put(context.Background(), true, nil)
 	require.NoError(t, err)

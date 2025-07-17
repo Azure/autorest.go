@@ -5,6 +5,7 @@ package stringgroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/stringgroup"
 	"generatortests/stringgroup/fake"
 	"net/http"
@@ -25,7 +26,7 @@ func TestFakeGetBase64Encoded(t *testing.T) {
 			return
 		},
 	}
-	client, err := stringgroup.NewStringClient(&azcore.ClientOptions{
+	client, err := stringgroup.NewStringClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewStringServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -43,7 +44,7 @@ func TestFakePutBase64URLEncoded(t *testing.T) {
 			return
 		},
 	}
-	client, err := stringgroup.NewStringClient(&azcore.ClientOptions{
+	client, err := stringgroup.NewStringClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewStringServerTransport(&server),
 	})
 	require.NoError(t, err)

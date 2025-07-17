@@ -11,12 +11,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewEmptyClient(options *azcore.ClientOptions) (*EmptyClient, error) {
+func NewEmptyClient(endpoint string, options *azcore.ClientOptions) (*EmptyClient, error) {
 	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &EmptyClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

@@ -16,7 +16,7 @@ import (
 )
 
 func TestNotDiscriminatedClientGetValid(t *testing.T) {
-	client, err := nodiscgroup.NewNotDiscriminatedClient(nil)
+	client, err := nodiscgroup.NewNotDiscriminatedClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.GetValid(context.Background(), nil)
 	require.NoError(t, err)
@@ -28,7 +28,7 @@ func TestNotDiscriminatedClientGetValid(t *testing.T) {
 }
 
 func TestNotDiscriminatedClientPostValid(t *testing.T) {
-	client, err := nodiscgroup.NewNotDiscriminatedClient(nil)
+	client, err := nodiscgroup.NewNotDiscriminatedClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.PostValid(context.Background(), nodiscgroup.Siamese{
 		Age:   to.Ptr[int32](32),
@@ -40,7 +40,7 @@ func TestNotDiscriminatedClientPostValid(t *testing.T) {
 }
 
 func TestNotDiscriminatedClientPutValid(t *testing.T) {
-	client, err := nodiscgroup.NewNotDiscriminatedClient(nil)
+	client, err := nodiscgroup.NewNotDiscriminatedClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	myCat := nodiscgroup.Siamese{
 		Age:   to.Ptr[int32](32),

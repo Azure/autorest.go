@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type ReadonlypropertyClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetValid - Get complex types that have readonly properties
@@ -50,7 +51,7 @@ func (client *ReadonlypropertyClient) GetValid(ctx context.Context, options *Rea
 // getValidCreateRequest creates the GetValid request.
 func (client *ReadonlypropertyClient) getValidCreateRequest(ctx context.Context, _ *ReadonlypropertyClientGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/readonlyproperty/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody 
 // putValidCreateRequest creates the PutValid request.
 func (client *ReadonlypropertyClient) putValidCreateRequest(ctx context.Context, complexBody ReadonlyObj, _ *ReadonlypropertyClientPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/readonlyproperty/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

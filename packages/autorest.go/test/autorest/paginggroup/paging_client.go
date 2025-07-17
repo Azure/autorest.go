@@ -10,10 +10,10 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewPagingClient(options *azcore.ClientOptions) (*PagingClient, error) {
+func NewPagingClient(endpoint string, options *azcore.ClientOptions) (*PagingClient, error) {
 	client, err := azcore.NewClient("paginggroup.PagingClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &PagingClient{internal: client}, nil
+	return &PagingClient{internal: client, endpoint: endpoint}, nil
 }

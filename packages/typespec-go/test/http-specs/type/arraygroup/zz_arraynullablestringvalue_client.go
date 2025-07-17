@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ArrayClient.NewArrayNullableStringValueClient] instead.
 type ArrayNullableStringValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -47,7 +48,7 @@ func (client *ArrayNullableStringValueClient) Get(ctx context.Context, options *
 // getCreateRequest creates the Get request.
 func (client *ArrayNullableStringValueClient) getCreateRequest(ctx context.Context, _ *ArrayNullableStringValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/nullable-string"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +93,7 @@ func (client *ArrayNullableStringValueClient) Put(ctx context.Context, body []*s
 // putCreateRequest creates the Put request.
 func (client *ArrayNullableStringValueClient) putCreateRequest(ctx context.Context, body []*string, _ *ArrayNullableStringValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/nullable-string"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

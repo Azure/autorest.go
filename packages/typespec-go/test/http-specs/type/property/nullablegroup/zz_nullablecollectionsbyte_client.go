@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [NullableClient.NewNullableCollectionsByteClient] instead.
 type NullableCollectionsByteClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetNonNull - Get models that will return all properties in the model
@@ -47,7 +48,7 @@ func (client *NullableCollectionsByteClient) GetNonNull(ctx context.Context, opt
 // getNonNullCreateRequest creates the GetNonNull request.
 func (client *NullableCollectionsByteClient) getNonNullCreateRequest(ctx context.Context, _ *NullableCollectionsByteClientGetNonNullOptions) (*policy.Request, error) {
 	urlPath := "/type/property/nullable/collections/bytes/non-null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,7 @@ func (client *NullableCollectionsByteClient) GetNull(ctx context.Context, option
 // getNullCreateRequest creates the GetNull request.
 func (client *NullableCollectionsByteClient) getNullCreateRequest(ctx context.Context, _ *NullableCollectionsByteClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/type/property/nullable/collections/bytes/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +139,7 @@ func (client *NullableCollectionsByteClient) PatchNonNull(ctx context.Context, b
 // patchNonNullCreateRequest creates the PatchNonNull request.
 func (client *NullableCollectionsByteClient) patchNonNullCreateRequest(ctx context.Context, body CollectionsByteProperty, _ *NullableCollectionsByteClientPatchNonNullOptions) (*policy.Request, error) {
 	urlPath := "/type/property/nullable/collections/bytes/non-null"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -177,7 +178,7 @@ func (client *NullableCollectionsByteClient) PatchNull(ctx context.Context, body
 // patchNullCreateRequest creates the PatchNull request.
 func (client *NullableCollectionsByteClient) patchNullCreateRequest(ctx context.Context, body CollectionsByteProperty, _ *NullableCollectionsByteClientPatchNullOptions) (*policy.Request, error) {
 	urlPath := "/type/property/nullable/collections/bytes/null"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

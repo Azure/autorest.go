@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ArrayClient.NewArrayInt32ValueClient] instead.
 type ArrayInt32ValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -46,7 +47,7 @@ func (client *ArrayInt32ValueClient) Get(ctx context.Context, options *ArrayInt3
 // getCreateRequest creates the Get request.
 func (client *ArrayInt32ValueClient) getCreateRequest(ctx context.Context, _ *ArrayInt32ValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/int32"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +91,7 @@ func (client *ArrayInt32ValueClient) Put(ctx context.Context, body []int32, opti
 // putCreateRequest creates the Put request.
 func (client *ArrayInt32ValueClient) putCreateRequest(ctx context.Context, body []int32, _ *ArrayInt32ValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/int32"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

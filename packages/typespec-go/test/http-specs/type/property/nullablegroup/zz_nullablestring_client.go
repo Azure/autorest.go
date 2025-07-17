@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [NullableClient.NewNullableStringClient] instead.
 type NullableStringClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetNonNull - Get models that will return all properties in the model
@@ -47,7 +48,7 @@ func (client *NullableStringClient) GetNonNull(ctx context.Context, options *Nul
 // getNonNullCreateRequest creates the GetNonNull request.
 func (client *NullableStringClient) getNonNullCreateRequest(ctx context.Context, _ *NullableStringClientGetNonNullOptions) (*policy.Request, error) {
 	urlPath := "/type/property/nullable/string/non-null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +93,7 @@ func (client *NullableStringClient) GetNull(ctx context.Context, options *Nullab
 // getNullCreateRequest creates the GetNull request.
 func (client *NullableStringClient) getNullCreateRequest(ctx context.Context, _ *NullableStringClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/type/property/nullable/string/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +138,7 @@ func (client *NullableStringClient) PatchNonNull(ctx context.Context, body Strin
 // patchNonNullCreateRequest creates the PatchNonNull request.
 func (client *NullableStringClient) patchNonNullCreateRequest(ctx context.Context, body StringProperty, _ *NullableStringClientPatchNonNullOptions) (*policy.Request, error) {
 	urlPath := "/type/property/nullable/string/non-null"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +177,7 @@ func (client *NullableStringClient) PatchNull(ctx context.Context, body StringPr
 // patchNullCreateRequest creates the PatchNull request.
 func (client *NullableStringClient) patchNullCreateRequest(ctx context.Context, body StringProperty, _ *NullableStringClientPatchNullOptions) (*policy.Request, error) {
 	urlPath := "/type/property/nullable/string/null"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

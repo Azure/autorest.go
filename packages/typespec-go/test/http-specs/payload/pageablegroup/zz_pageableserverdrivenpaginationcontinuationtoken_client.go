@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use [PageableServerDrivenPaginationClient.NewPageableServerDrivenPaginationContinuationTokenClient] instead.
 type PageableServerDrivenPaginationContinuationTokenClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 //   - options - PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions contains the optional
@@ -48,7 +49,7 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestH
 // requestHeaderNestedResponseBodyCreateRequest creates the RequestHeaderNestedResponseBody request.
 func (client *PageableServerDrivenPaginationContinuationTokenClient) requestHeaderNestedResponseBodyCreateRequest(ctx context.Context, options *PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions) (*policy.Request, error) {
 	urlPath := "/payload/pageable/server-driven-pagination/continuationtoken/request-header-nested-response-body"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +106,7 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestH
 // requestHeaderResponseBodyCreateRequest creates the RequestHeaderResponseBody request.
 func (client *PageableServerDrivenPaginationContinuationTokenClient) requestHeaderResponseBodyCreateRequest(ctx context.Context, options *PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions) (*policy.Request, error) {
 	urlPath := "/payload/pageable/server-driven-pagination/continuationtoken/request-header-response-body"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -162,7 +163,7 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestH
 // requestHeaderResponseHeaderCreateRequest creates the RequestHeaderResponseHeader request.
 func (client *PageableServerDrivenPaginationContinuationTokenClient) requestHeaderResponseHeaderCreateRequest(ctx context.Context, options *PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions) (*policy.Request, error) {
 	urlPath := "/payload/pageable/server-driven-pagination/continuationtoken/request-header-response-header"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -222,7 +223,7 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestQ
 // requestQueryNestedResponseBodyCreateRequest creates the RequestQueryNestedResponseBody request.
 func (client *PageableServerDrivenPaginationContinuationTokenClient) requestQueryNestedResponseBodyCreateRequest(ctx context.Context, options *PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions) (*policy.Request, error) {
 	urlPath := "/payload/pageable/server-driven-pagination/continuationtoken/request-query-nested-response-body"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -279,7 +280,7 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestQ
 // requestQueryResponseBodyCreateRequest creates the RequestQueryResponseBody request.
 func (client *PageableServerDrivenPaginationContinuationTokenClient) requestQueryResponseBodyCreateRequest(ctx context.Context, options *PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyOptions) (*policy.Request, error) {
 	urlPath := "/payload/pageable/server-driven-pagination/continuationtoken/request-query-response-body"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -336,7 +337,7 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestQ
 // requestQueryResponseHeaderCreateRequest creates the RequestQueryResponseHeader request.
 func (client *PageableServerDrivenPaginationContinuationTokenClient) requestQueryResponseHeaderCreateRequest(ctx context.Context, options *PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderOptions) (*policy.Request, error) {
 	urlPath := "/payload/pageable/server-driven-pagination/continuationtoken/request-query-response-header"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

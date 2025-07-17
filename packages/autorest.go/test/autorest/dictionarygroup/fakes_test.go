@@ -5,6 +5,7 @@ package dictionarygroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/dictionarygroup"
 	"generatortests/dictionarygroup/fake"
 	"net/http"
@@ -31,7 +32,7 @@ func TestFakeGetArrayValid(t *testing.T) {
 			return
 		},
 	}
-	client, err := dictionarygroup.NewDictionaryClient(&azcore.ClientOptions{
+	client, err := dictionarygroup.NewDictionaryClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewDictionaryServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -57,7 +58,7 @@ func TestFakePutDictionaryValid(t *testing.T) {
 			return
 		},
 	}
-	client, err := dictionarygroup.NewDictionaryClient(&azcore.ClientOptions{
+	client, err := dictionarygroup.NewDictionaryClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewDictionaryServerTransport(&server),
 	})
 	require.NoError(t, err)

@@ -16,7 +16,7 @@ import (
 )
 
 func TestUsageClientInput(t *testing.T) {
-	client, err := usagegroup.NewUsageClient(nil)
+	client, err := usagegroup.NewUsageClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Input(context.Background(), usagegroup.InputRecord{
 		RequiredProp: to.Ptr("example-value"),
@@ -26,7 +26,7 @@ func TestUsageClientInput(t *testing.T) {
 }
 
 func TestUsageClientInputAndOutput(t *testing.T) {
-	client, err := usagegroup.NewUsageClient(nil)
+	client, err := usagegroup.NewUsageClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.InputAndOutput(context.Background(), usagegroup.InputOutputRecord{
 		RequiredProp: to.Ptr("example-value"),
@@ -37,7 +37,7 @@ func TestUsageClientInputAndOutput(t *testing.T) {
 }
 
 func TestUsageClientOutput(t *testing.T) {
-	client, err := usagegroup.NewUsageClient(nil)
+	client, err := usagegroup.NewUsageClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Output(context.Background(), nil)
 	require.NoError(t, err)

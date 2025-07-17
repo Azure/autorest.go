@@ -11,12 +11,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewCollectionFormatClient(options *azcore.ClientOptions) (*CollectionFormatClient, error) {
+func NewCollectionFormatClient(endpoint string, options *azcore.ClientOptions) (*CollectionFormatClient, error) {
 	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &CollectionFormatClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

@@ -11,14 +11,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewRenamedOperationClient(options *azcore.ClientOptions) (*RenamedOperationClient, error) {
-	internal, err := azcore.NewClient("renamedopgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+func NewRenamedOperationClient(endpoint string, client ClientType, options *azcore.ClientOptions) (*RenamedOperationClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &RenamedOperationClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
-		client:   ClientTypeRenamedOperation,
+		client:   client,
+		endpoint: endpoint,
 	}, nil
 }

@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ArrayClient.NewArrayNullableFloatValueClient] instead.
 type ArrayNullableFloatValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -47,7 +48,7 @@ func (client *ArrayNullableFloatValueClient) Get(ctx context.Context, options *A
 // getCreateRequest creates the Get request.
 func (client *ArrayNullableFloatValueClient) getCreateRequest(ctx context.Context, _ *ArrayNullableFloatValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/nullable-float"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +93,7 @@ func (client *ArrayNullableFloatValueClient) Put(ctx context.Context, body []*fl
 // putCreateRequest creates the Put request.
 func (client *ArrayNullableFloatValueClient) putCreateRequest(ctx context.Context, body []*float32, _ *ArrayNullableFloatValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/nullable-float"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

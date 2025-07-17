@@ -5,6 +5,7 @@ package xmlgroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/xmlgroup"
 	"generatortests/xmlgroup/fake"
 	"net/http"
@@ -44,7 +45,7 @@ func TestFakeGetACLs(t *testing.T) {
 			return
 		},
 	}
-	client, err := xmlgroup.NewXMLClient(&azcore.ClientOptions{
+	client, err := xmlgroup.NewXMLClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewXMLServerTransport(&server),
 	})
 	require.NoError(t, err)

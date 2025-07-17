@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type LROsClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // BeginDelete202NoRetry204 - Long running delete request, service returns a 202 to the initial request. Polls return this
@@ -72,7 +73,7 @@ func (client *LROsClient) delete202NoRetry204(ctx context.Context, options *LROs
 // delete202NoRetry204CreateRequest creates the Delete202NoRetry204 request.
 func (client *LROsClient) delete202NoRetry204CreateRequest(ctx context.Context, _ *LROsClientBeginDelete202NoRetry204Options) (*policy.Request, error) {
 	urlPath := "/lro/delete/202/noretry/204"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +134,7 @@ func (client *LROsClient) delete202Retry200(ctx context.Context, options *LROsCl
 // delete202Retry200CreateRequest creates the Delete202Retry200 request.
 func (client *LROsClient) delete202Retry200CreateRequest(ctx context.Context, _ *LROsClientBeginDelete202Retry200Options) (*policy.Request, error) {
 	urlPath := "/lro/delete/202/retry/200"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -192,7 +193,7 @@ func (client *LROsClient) delete204Succeeded(ctx context.Context, options *LROsC
 // delete204SucceededCreateRequest creates the Delete204Succeeded request.
 func (client *LROsClient) delete204SucceededCreateRequest(ctx context.Context, _ *LROsClientBeginDelete204SucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/delete/204/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -253,7 +254,7 @@ func (client *LROsClient) deleteAsyncNoHeaderInRetry(ctx context.Context, option
 // deleteAsyncNoHeaderInRetryCreateRequest creates the DeleteAsyncNoHeaderInRetry request.
 func (client *LROsClient) deleteAsyncNoHeaderInRetryCreateRequest(ctx context.Context, _ *LROsClientBeginDeleteAsyncNoHeaderInRetryOptions) (*policy.Request, error) {
 	urlPath := "/lro/deleteasync/noheader/202/204"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -314,7 +315,7 @@ func (client *LROsClient) deleteAsyncNoRetrySucceeded(ctx context.Context, optio
 // deleteAsyncNoRetrySucceededCreateRequest creates the DeleteAsyncNoRetrySucceeded request.
 func (client *LROsClient) deleteAsyncNoRetrySucceededCreateRequest(ctx context.Context, _ *LROsClientBeginDeleteAsyncNoRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/deleteasync/noretry/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -375,7 +376,7 @@ func (client *LROsClient) deleteAsyncRetryFailed(ctx context.Context, options *L
 // deleteAsyncRetryFailedCreateRequest creates the DeleteAsyncRetryFailed request.
 func (client *LROsClient) deleteAsyncRetryFailedCreateRequest(ctx context.Context, _ *LROsClientBeginDeleteAsyncRetryFailedOptions) (*policy.Request, error) {
 	urlPath := "/lro/deleteasync/retry/failed"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -436,7 +437,7 @@ func (client *LROsClient) deleteAsyncRetrySucceeded(ctx context.Context, options
 // deleteAsyncRetrySucceededCreateRequest creates the DeleteAsyncRetrySucceeded request.
 func (client *LROsClient) deleteAsyncRetrySucceededCreateRequest(ctx context.Context, _ *LROsClientBeginDeleteAsyncRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/deleteasync/retry/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -497,7 +498,7 @@ func (client *LROsClient) deleteAsyncRetrycanceled(ctx context.Context, options 
 // deleteAsyncRetrycanceledCreateRequest creates the DeleteAsyncRetrycanceled request.
 func (client *LROsClient) deleteAsyncRetrycanceledCreateRequest(ctx context.Context, _ *LROsClientBeginDeleteAsyncRetrycanceledOptions) (*policy.Request, error) {
 	urlPath := "/lro/deleteasync/retry/canceled"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -558,7 +559,7 @@ func (client *LROsClient) deleteNoHeaderInRetry(ctx context.Context, options *LR
 // deleteNoHeaderInRetryCreateRequest creates the DeleteNoHeaderInRetry request.
 func (client *LROsClient) deleteNoHeaderInRetryCreateRequest(ctx context.Context, _ *LROsClientBeginDeleteNoHeaderInRetryOptions) (*policy.Request, error) {
 	urlPath := "/lro/delete/noheader"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -623,7 +624,7 @@ func (client *LROsClient) deleteProvisioning202Accepted200Succeeded(ctx context.
 // deleteProvisioning202Accepted200SucceededCreateRequest creates the DeleteProvisioning202Accepted200Succeeded request.
 func (client *LROsClient) deleteProvisioning202Accepted200SucceededCreateRequest(ctx context.Context, _ *LROsClientBeginDeleteProvisioning202Accepted200SucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/delete/provisioning/202/accepted/200/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -687,7 +688,7 @@ func (client *LROsClient) deleteProvisioning202DeletingFailed200(ctx context.Con
 // deleteProvisioning202DeletingFailed200CreateRequest creates the DeleteProvisioning202DeletingFailed200 request.
 func (client *LROsClient) deleteProvisioning202DeletingFailed200CreateRequest(ctx context.Context, _ *LROsClientBeginDeleteProvisioning202DeletingFailed200Options) (*policy.Request, error) {
 	urlPath := "/lro/delete/provisioning/202/deleting/200/failed"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -751,7 +752,7 @@ func (client *LROsClient) deleteProvisioning202Deletingcanceled200(ctx context.C
 // deleteProvisioning202Deletingcanceled200CreateRequest creates the DeleteProvisioning202Deletingcanceled200 request.
 func (client *LROsClient) deleteProvisioning202Deletingcanceled200CreateRequest(ctx context.Context, _ *LROsClientBeginDeleteProvisioning202Deletingcanceled200Options) (*policy.Request, error) {
 	urlPath := "/lro/delete/provisioning/202/deleting/200/canceled"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -813,7 +814,7 @@ func (client *LROsClient) patch200SucceededIgnoreHeaders(ctx context.Context, pr
 // patch200SucceededIgnoreHeadersCreateRequest creates the Patch200SucceededIgnoreHeaders request.
 func (client *LROsClient) patch200SucceededIgnoreHeadersCreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPatch200SucceededIgnoreHeadersOptions) (*policy.Request, error) {
 	urlPath := "/lro/patch/200/succeeded/ignoreheaders"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -877,7 +878,7 @@ func (client *LROsClient) patch201RetryWithAsyncHeader(ctx context.Context, prod
 // patch201RetryWithAsyncHeaderCreateRequest creates the Patch201RetryWithAsyncHeader request.
 func (client *LROsClient) patch201RetryWithAsyncHeaderCreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPatch201RetryWithAsyncHeaderOptions) (*policy.Request, error) {
 	urlPath := "/lro/patch/201/retry/onlyAsyncHeader"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -942,7 +943,7 @@ func (client *LROsClient) patch202RetryWithAsyncAndLocationHeader(ctx context.Co
 // patch202RetryWithAsyncAndLocationHeaderCreateRequest creates the Patch202RetryWithAsyncAndLocationHeader request.
 func (client *LROsClient) patch202RetryWithAsyncAndLocationHeaderCreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPatch202RetryWithAsyncAndLocationHeaderOptions) (*policy.Request, error) {
 	urlPath := "/lro/patch/202/retry/asyncAndLocationHeader"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1006,7 +1007,7 @@ func (client *LROsClient) post200WithPayload(ctx context.Context, options *LROsC
 // post200WithPayloadCreateRequest creates the Post200WithPayload request.
 func (client *LROsClient) post200WithPayloadCreateRequest(ctx context.Context, _ *LROsClientBeginPost200WithPayloadOptions) (*policy.Request, error) {
 	urlPath := "/lro/post/payload/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1066,7 +1067,7 @@ func (client *LROsClient) post202List(ctx context.Context, options *LROsClientBe
 // post202ListCreateRequest creates the Post202List request.
 func (client *LROsClient) post202ListCreateRequest(ctx context.Context, _ *LROsClientBeginPost202ListOptions) (*policy.Request, error) {
 	urlPath := "/lro/list"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1127,7 +1128,7 @@ func (client *LROsClient) post202NoRetry204(ctx context.Context, options *LROsCl
 // post202NoRetry204CreateRequest creates the Post202NoRetry204 request.
 func (client *LROsClient) post202NoRetry204CreateRequest(ctx context.Context, options *LROsClientBeginPost202NoRetry204Options) (*policy.Request, error) {
 	urlPath := "/lro/post/202/noretry/204"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1194,7 +1195,7 @@ func (client *LROsClient) post202Retry200(ctx context.Context, options *LROsClie
 // post202Retry200CreateRequest creates the Post202Retry200 request.
 func (client *LROsClient) post202Retry200CreateRequest(ctx context.Context, options *LROsClientBeginPost202Retry200Options) (*policy.Request, error) {
 	urlPath := "/lro/post/202/retry/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1263,7 +1264,7 @@ func (client *LROsClient) postAsyncNoRetrySucceeded(ctx context.Context, options
 // postAsyncNoRetrySucceededCreateRequest creates the PostAsyncNoRetrySucceeded request.
 func (client *LROsClient) postAsyncNoRetrySucceededCreateRequest(ctx context.Context, options *LROsClientBeginPostAsyncNoRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/postasync/noretry/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1332,7 +1333,7 @@ func (client *LROsClient) postAsyncRetryFailed(ctx context.Context, options *LRO
 // postAsyncRetryFailedCreateRequest creates the PostAsyncRetryFailed request.
 func (client *LROsClient) postAsyncRetryFailedCreateRequest(ctx context.Context, options *LROsClientBeginPostAsyncRetryFailedOptions) (*policy.Request, error) {
 	urlPath := "/lro/postasync/retry/failed"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1401,7 +1402,7 @@ func (client *LROsClient) postAsyncRetrySucceeded(ctx context.Context, options *
 // postAsyncRetrySucceededCreateRequest creates the PostAsyncRetrySucceeded request.
 func (client *LROsClient) postAsyncRetrySucceededCreateRequest(ctx context.Context, options *LROsClientBeginPostAsyncRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/postasync/retry/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1470,7 +1471,7 @@ func (client *LROsClient) postAsyncRetrycanceled(ctx context.Context, options *L
 // postAsyncRetrycanceledCreateRequest creates the PostAsyncRetrycanceled request.
 func (client *LROsClient) postAsyncRetrycanceledCreateRequest(ctx context.Context, options *LROsClientBeginPostAsyncRetrycanceledOptions) (*policy.Request, error) {
 	urlPath := "/lro/postasync/retry/canceled"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1538,7 +1539,7 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGet(ctx context.Conte
 // postDoubleHeadersFinalAzureHeaderGetCreateRequest creates the PostDoubleHeadersFinalAzureHeaderGet request.
 func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetCreateRequest(ctx context.Context, _ *LROsClientBeginPostDoubleHeadersFinalAzureHeaderGetOptions) (*policy.Request, error) {
 	urlPath := "/lro/LROPostDoubleHeadersFinalAzureHeaderGet"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1602,7 +1603,7 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefault(ctx contex
 // postDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest creates the PostDoubleHeadersFinalAzureHeaderGetDefault request.
 func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest(ctx context.Context, _ *LROsClientBeginPostDoubleHeadersFinalAzureHeaderGetDefaultOptions) (*policy.Request, error) {
 	urlPath := "/lro/LROPostDoubleHeadersFinalAzureHeaderGetDefault"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1664,7 +1665,7 @@ func (client *LROsClient) postDoubleHeadersFinalLocationGet(ctx context.Context,
 // postDoubleHeadersFinalLocationGetCreateRequest creates the PostDoubleHeadersFinalLocationGet request.
 func (client *LROsClient) postDoubleHeadersFinalLocationGetCreateRequest(ctx context.Context, _ *LROsClientBeginPostDoubleHeadersFinalLocationGetOptions) (*policy.Request, error) {
 	urlPath := "/lro/LROPostDoubleHeadersFinalLocationGet"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1728,7 +1729,7 @@ func (client *LROsClient) put200Acceptedcanceled200(ctx context.Context, product
 // put200Acceptedcanceled200CreateRequest creates the Put200Acceptedcanceled200 request.
 func (client *LROsClient) put200Acceptedcanceled200CreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPut200Acceptedcanceled200Options) (*policy.Request, error) {
 	urlPath := "/lro/put/200/accepted/canceled/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1793,7 +1794,7 @@ func (client *LROsClient) put200Succeeded(ctx context.Context, product Product, 
 // put200SucceededCreateRequest creates the Put200Succeeded request.
 func (client *LROsClient) put200SucceededCreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPut200SucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/put/200/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1858,7 +1859,7 @@ func (client *LROsClient) put200SucceededNoState(ctx context.Context, product Pr
 // put200SucceededNoStateCreateRequest creates the Put200SucceededNoState request.
 func (client *LROsClient) put200SucceededNoStateCreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPut200SucceededNoStateOptions) (*policy.Request, error) {
 	urlPath := "/lro/put/200/succeeded/nostate"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1925,7 +1926,7 @@ func (client *LROsClient) put200UpdatingSucceeded204(ctx context.Context, produc
 // put200UpdatingSucceeded204CreateRequest creates the Put200UpdatingSucceeded204 request.
 func (client *LROsClient) put200UpdatingSucceeded204CreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPut200UpdatingSucceeded204Options) (*policy.Request, error) {
 	urlPath := "/lro/put/200/updating/succeeded/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1992,7 +1993,7 @@ func (client *LROsClient) put201CreatingFailed200(ctx context.Context, product P
 // put201CreatingFailed200CreateRequest creates the Put201CreatingFailed200 request.
 func (client *LROsClient) put201CreatingFailed200CreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPut201CreatingFailed200Options) (*policy.Request, error) {
 	urlPath := "/lro/put/201/created/failed/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2059,7 +2060,7 @@ func (client *LROsClient) put201CreatingSucceeded200(ctx context.Context, produc
 // put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
 func (client *LROsClient) put201CreatingSucceeded200CreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPut201CreatingSucceeded200Options) (*policy.Request, error) {
 	urlPath := "/lro/put/201/creating/succeeded/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2124,7 +2125,7 @@ func (client *LROsClient) put201Succeeded(ctx context.Context, product Product, 
 // put201SucceededCreateRequest creates the Put201Succeeded request.
 func (client *LROsClient) put201SucceededCreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPut201SucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/put/201/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2189,7 +2190,7 @@ func (client *LROsClient) put202Retry200(ctx context.Context, product Product, o
 // put202Retry200CreateRequest creates the Put202Retry200 request.
 func (client *LROsClient) put202Retry200CreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPut202Retry200Options) (*policy.Request, error) {
 	urlPath := "/lro/put/202/retry/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2254,7 +2255,7 @@ func (client *LROsClient) putAsyncNoHeaderInRetry(ctx context.Context, product P
 // putAsyncNoHeaderInRetryCreateRequest creates the PutAsyncNoHeaderInRetry request.
 func (client *LROsClient) putAsyncNoHeaderInRetryCreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPutAsyncNoHeaderInRetryOptions) (*policy.Request, error) {
 	urlPath := "/lro/putasync/noheader/201/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2321,7 +2322,7 @@ func (client *LROsClient) putAsyncNoRetrySucceeded(ctx context.Context, product 
 // putAsyncNoRetrySucceededCreateRequest creates the PutAsyncNoRetrySucceeded request.
 func (client *LROsClient) putAsyncNoRetrySucceededCreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPutAsyncNoRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/putasync/noretry/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2388,7 +2389,7 @@ func (client *LROsClient) putAsyncNoRetrycanceled(ctx context.Context, product P
 // putAsyncNoRetrycanceledCreateRequest creates the PutAsyncNoRetrycanceled request.
 func (client *LROsClient) putAsyncNoRetrycanceledCreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPutAsyncNoRetrycanceledOptions) (*policy.Request, error) {
 	urlPath := "/lro/putasync/noretry/canceled"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2451,7 +2452,7 @@ func (client *LROsClient) putAsyncNonResource(ctx context.Context, sku SKU, opti
 // putAsyncNonResourceCreateRequest creates the PutAsyncNonResource request.
 func (client *LROsClient) putAsyncNonResourceCreateRequest(ctx context.Context, sku SKU, _ *LROsClientBeginPutAsyncNonResourceOptions) (*policy.Request, error) {
 	urlPath := "/lro/putnonresourceasync/202/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2518,7 +2519,7 @@ func (client *LROsClient) putAsyncRetryFailed(ctx context.Context, product Produ
 // putAsyncRetryFailedCreateRequest creates the PutAsyncRetryFailed request.
 func (client *LROsClient) putAsyncRetryFailedCreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPutAsyncRetryFailedOptions) (*policy.Request, error) {
 	urlPath := "/lro/putasync/retry/failed"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2585,7 +2586,7 @@ func (client *LROsClient) putAsyncRetrySucceeded(ctx context.Context, product Pr
 // putAsyncRetrySucceededCreateRequest creates the PutAsyncRetrySucceeded request.
 func (client *LROsClient) putAsyncRetrySucceededCreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPutAsyncRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/putasync/retry/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2648,7 +2649,7 @@ func (client *LROsClient) putAsyncSubResource(ctx context.Context, product SubPr
 // putAsyncSubResourceCreateRequest creates the PutAsyncSubResource request.
 func (client *LROsClient) putAsyncSubResourceCreateRequest(ctx context.Context, product SubProduct, _ *LROsClientBeginPutAsyncSubResourceOptions) (*policy.Request, error) {
 	urlPath := "/lro/putsubresourceasync/202/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2713,7 +2714,7 @@ func (client *LROsClient) putNoHeaderInRetry(ctx context.Context, product Produc
 // putNoHeaderInRetryCreateRequest creates the PutNoHeaderInRetry request.
 func (client *LROsClient) putNoHeaderInRetryCreateRequest(ctx context.Context, product Product, _ *LROsClientBeginPutNoHeaderInRetryOptions) (*policy.Request, error) {
 	urlPath := "/lro/put/noheader/202/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2776,7 +2777,7 @@ func (client *LROsClient) putNonResource(ctx context.Context, sku SKU, options *
 // putNonResourceCreateRequest creates the PutNonResource request.
 func (client *LROsClient) putNonResourceCreateRequest(ctx context.Context, sku SKU, _ *LROsClientBeginPutNonResourceOptions) (*policy.Request, error) {
 	urlPath := "/lro/putnonresource/202/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2839,7 +2840,7 @@ func (client *LROsClient) putSubResource(ctx context.Context, product SubProduct
 // putSubResourceCreateRequest creates the PutSubResource request.
 func (client *LROsClient) putSubResourceCreateRequest(ctx context.Context, product SubProduct, _ *LROsClientBeginPutSubResourceOptions) (*policy.Request, error) {
 	urlPath := "/lro/putsubresource/202/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

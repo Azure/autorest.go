@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ScalarClient.NewScalarDecimalVerifyClient] instead.
 type ScalarDecimalVerifyClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // PrepareVerify -
@@ -47,7 +48,7 @@ func (client *ScalarDecimalVerifyClient) PrepareVerify(ctx context.Context, opti
 // prepareVerifyCreateRequest creates the PrepareVerify request.
 func (client *ScalarDecimalVerifyClient) prepareVerifyCreateRequest(ctx context.Context, _ *ScalarDecimalVerifyClientPrepareVerifyOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/decimal/prepare_verify"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +93,7 @@ func (client *ScalarDecimalVerifyClient) Verify(ctx context.Context, body float6
 // verifyCreateRequest creates the Verify request.
 func (client *ScalarDecimalVerifyClient) verifyCreateRequest(ctx context.Context, body float64, _ *ScalarDecimalVerifyClientVerifyOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/decimal/verify"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

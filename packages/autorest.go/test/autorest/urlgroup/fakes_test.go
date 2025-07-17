@@ -5,6 +5,7 @@ package urlgroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/urlgroup"
 	"generatortests/urlgroup/fake"
 	"net/http"
@@ -33,7 +34,7 @@ func TestFakeGetGlobalAndLocalQueryNull(t *testing.T) {
 			return
 		},
 	}
-	client, err := urlgroup.NewPathItemsClient("clientPathParam", nil, &azcore.ClientOptions{
+	client, err := urlgroup.NewPathItemsClient(generatortests.Host, "clientPathParam", nil, &azcore.ClientOptions{
 		Transport: fake.NewPathItemsServerTransport(&server),
 	})
 	require.NoError(t, err)

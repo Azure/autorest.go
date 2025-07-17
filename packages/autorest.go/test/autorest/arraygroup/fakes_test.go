@@ -5,6 +5,7 @@ package arraygroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/arraygroup"
 	"generatortests/arraygroup/fake"
 	"net/http"
@@ -31,7 +32,7 @@ func TestFakeGetArrayValid(t *testing.T) {
 			return
 		},
 	}
-	client, err := arraygroup.NewArrayClient(&azcore.ClientOptions{
+	client, err := arraygroup.NewArrayClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewArrayServerTransport(&server),
 	})
 	require.NoError(t, err)

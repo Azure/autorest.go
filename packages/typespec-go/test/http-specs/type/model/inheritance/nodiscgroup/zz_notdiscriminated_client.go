@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type NotDiscriminatedClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetValid -
@@ -47,7 +48,7 @@ func (client *NotDiscriminatedClient) GetValid(ctx context.Context, options *Not
 // getValidCreateRequest creates the GetValid request.
 func (client *NotDiscriminatedClient) getValidCreateRequest(ctx context.Context, _ *NotDiscriminatedClientGetValidOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/not-discriminated/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +93,7 @@ func (client *NotDiscriminatedClient) PostValid(ctx context.Context, input Siame
 // postValidCreateRequest creates the PostValid request.
 func (client *NotDiscriminatedClient) postValidCreateRequest(ctx context.Context, input Siamese, _ *NotDiscriminatedClientPostValidOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/not-discriminated/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +133,7 @@ func (client *NotDiscriminatedClient) PutValid(ctx context.Context, input Siames
 // putValidCreateRequest creates the PutValid request.
 func (client *NotDiscriminatedClient) putValidCreateRequest(ctx context.Context, input Siamese, _ *NotDiscriminatedClientPutValidOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/not-discriminated/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

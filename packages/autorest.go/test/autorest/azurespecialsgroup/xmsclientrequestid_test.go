@@ -15,19 +15,19 @@ import (
 )
 
 func newXMSClientRequestIDClient(t *testing.T) *XMSClientRequestIDClient {
-	client, err := NewXMSClientRequestIDClient(&azcore.ClientOptions{
+	client, err := NewXMSClientRequestIDClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewXMSClientRequestIDClient(options *azcore.ClientOptions) (*XMSClientRequestIDClient, error) {
+func NewXMSClientRequestIDClient(endpoint string, options *azcore.ClientOptions) (*XMSClientRequestIDClient, error) {
 	client, err := azcore.NewClient("azurespecialsgroup.XMSClientRequestIDClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &XMSClientRequestIDClient{internal: client}, nil
+	return &XMSClientRequestIDClient{internal: client, endpoint: endpoint}, nil
 }
 
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.

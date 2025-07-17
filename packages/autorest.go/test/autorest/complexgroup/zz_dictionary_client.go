@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type DictionaryClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetEmpty - Get complex types with dictionary property which is empty
@@ -49,7 +50,7 @@ func (client *DictionaryClient) GetEmpty(ctx context.Context, options *Dictionar
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *DictionaryClient) getEmptyCreateRequest(ctx context.Context, _ *DictionaryClientGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ func (client *DictionaryClient) GetNotProvided(ctx context.Context, options *Dic
 // getNotProvidedCreateRequest creates the GetNotProvided request.
 func (client *DictionaryClient) getNotProvidedCreateRequest(ctx context.Context, _ *DictionaryClientGetNotProvidedOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/notprovided"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +145,7 @@ func (client *DictionaryClient) GetNull(ctx context.Context, options *Dictionary
 // getNullCreateRequest creates the GetNull request.
 func (client *DictionaryClient) getNullCreateRequest(ctx context.Context, _ *DictionaryClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -191,7 +192,7 @@ func (client *DictionaryClient) GetValid(ctx context.Context, options *Dictionar
 // getValidCreateRequest creates the GetValid request.
 func (client *DictionaryClient) getValidCreateRequest(ctx context.Context, _ *DictionaryClientGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -238,7 +239,7 @@ func (client *DictionaryClient) PutEmpty(ctx context.Context, complexBody Dictio
 // putEmptyCreateRequest creates the PutEmpty request.
 func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, complexBody DictionaryWrapper, _ *DictionaryClientPutEmptyOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -280,7 +281,7 @@ func (client *DictionaryClient) PutValid(ctx context.Context, complexBody Dictio
 // putValidCreateRequest creates the PutValid request.
 func (client *DictionaryClient) putValidCreateRequest(ctx context.Context, complexBody DictionaryWrapper, _ *DictionaryClientPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

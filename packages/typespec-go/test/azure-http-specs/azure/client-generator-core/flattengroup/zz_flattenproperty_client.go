@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type FlattenPropertyClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // PutFlattenModel -
@@ -47,7 +48,7 @@ func (client *FlattenPropertyClient) PutFlattenModel(ctx context.Context, input 
 // putFlattenModelCreateRequest creates the PutFlattenModel request.
 func (client *FlattenPropertyClient) putFlattenModelCreateRequest(ctx context.Context, input FlattenModel, _ *FlattenPropertyClientPutFlattenModelOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/flatten-property/flattenModel"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ func (client *FlattenPropertyClient) PutNestedFlattenModel(ctx context.Context, 
 // putNestedFlattenModelCreateRequest creates the PutNestedFlattenModel request.
 func (client *FlattenPropertyClient) putNestedFlattenModelCreateRequest(ctx context.Context, input NestedFlattenModel, _ *FlattenPropertyClientPutNestedFlattenModelOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/flatten-property/nestedFlattenModel"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

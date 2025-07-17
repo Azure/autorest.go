@@ -10,11 +10,13 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type JsonlClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewJsonlBasicClient creates a new instance of [JsonlBasicClient].
 func (client *JsonlClient) NewJsonlBasicClient() *JsonlBasicClient {
 	return &JsonlBasicClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

@@ -15,10 +15,10 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewExplicitClient(options *azcore.ClientOptions) (*ExplicitClient, error) {
+func NewExplicitClient(endpoint string, options *azcore.ClientOptions) (*ExplicitClient, error) {
 	client, err := azcore.NewClient("optionalgroup.ExplicitClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &ExplicitClient{internal: client}, nil
+	return &ExplicitClient{internal: client, endpoint: endpoint}, nil
 }

@@ -8,13 +8,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewSingleClient(options *azcore.ClientOptions) (*SingleClient, error) {
+func NewSingleClient(endpoint string, options *azcore.ClientOptions) (*SingleClient, error) {
 	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &SingleClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
+		endpoint: endpoint,
 	}, nil
 }

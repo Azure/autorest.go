@@ -16,7 +16,7 @@ import (
 )
 
 func newDownloadClient(t *testing.T) *DownloadClient {
-	client, err := NewDownloadClient(&azcore.ClientOptions{
+	client, err := NewDownloadClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
@@ -24,7 +24,7 @@ func newDownloadClient(t *testing.T) *DownloadClient {
 }
 
 func newUploadClient(t *testing.T) *UploadClient {
-	client, err := NewUploadClient(&azcore.ClientOptions{
+	client, err := NewUploadClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)

@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type XMSClientRequestIDClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
@@ -48,7 +49,7 @@ func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSCli
 // getCreateRequest creates the Get request.
 func (client *XMSClientRequestIDClient) getCreateRequest(ctx context.Context, _ *XMSClientRequestIDClientGetOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/method/"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +87,7 @@ func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientR
 // paramGetCreateRequest creates the ParamGet request.
 func (client *XMSClientRequestIDClient) paramGetCreateRequest(ctx context.Context, xmsClientRequestID string, _ *XMSClientRequestIDClientParamGetOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/via-param/method/"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

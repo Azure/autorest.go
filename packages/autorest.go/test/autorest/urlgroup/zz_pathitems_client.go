@@ -20,6 +20,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type PathItemsClient struct {
 	internal          *azcore.Client
+	endpoint          string
 	globalStringPath  string
 	globalStringQuery *string
 }
@@ -70,7 +71,7 @@ func (client *PathItemsClient) getAllWithValuesCreateRequest(ctx context.Context
 		return nil, errors.New("parameter localStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +136,7 @@ func (client *PathItemsClient) getGlobalAndLocalQueryNullCreateRequest(ctx conte
 		return nil, errors.New("parameter localStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -200,7 +201,7 @@ func (client *PathItemsClient) getGlobalQueryNullCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter localStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -265,7 +266,7 @@ func (client *PathItemsClient) getLocalPathItemQueryNullCreateRequest(ctx contex
 		return nil, errors.New("parameter localStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
