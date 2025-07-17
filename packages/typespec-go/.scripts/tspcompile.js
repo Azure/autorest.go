@@ -99,6 +99,8 @@ const azureHttpSpecsGroup = {
   'defaultgroup': ['client/structure/default/client.tsp'],
   'multiclientgroup': ['client/structure/multi-client/client.tsp'],
   'renamedopgroup': ['client/structure/renamed-operation/client.tsp'],
+  'clientopgroup': ['client/structure/client-operation-group/client.tsp'],
+  'clientnamespacegroup': ['client/namespace'],
   'twoopgroup': ['client/structure/two-operation-group/client.tsp'],
   'srvdrivenoldgroup': ['resiliency/srv-driven/old.tsp'],
   'srvdrivennewgroup': ['resiliency/srv-driven'],
