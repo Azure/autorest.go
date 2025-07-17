@@ -10,10 +10,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewObjectTypeClient(options *azcore.ClientOptions) (*ObjectTypeClient, error) {
+func NewObjectTypeClient(endpoint string, options *azcore.ClientOptions) (*ObjectTypeClient, error) {
 	client, err := azcore.NewClient("objectgroup.ObjectTypeClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &ObjectTypeClient{internal: client}, nil
+	return &ObjectTypeClient{
+		internal: client,
+		endpoint: endpoint,
+	}, nil
 }

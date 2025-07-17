@@ -9,26 +9,17 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
 
 func newReadonlypropertyClient(t *testing.T) *ReadonlypropertyClient {
-	client, err := NewReadonlypropertyClient(&azcore.ClientOptions{
+	client, err := NewReadonlypropertyClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewReadonlypropertyClient(options *azcore.ClientOptions) (*ReadonlypropertyClient, error) {
-	client, err := azcore.NewClient("complexgroup.ReadonlypropertyClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &ReadonlypropertyClient{internal: client}, nil
 }
 
 func TestReadonlypropertyGetValid(t *testing.T) {

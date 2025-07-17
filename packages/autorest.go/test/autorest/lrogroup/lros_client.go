@@ -10,13 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewLROsClient(options *azcore.ClientOptions) (*LROsClient, error) {
+func NewLROsClient(endpoint string, options *azcore.ClientOptions) (*LROsClient, error) {
 	cl, err := azcore.NewClient("lrogroup.LROsClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &LROsClient{
 		internal: cl,
+		endpoint: endpoint,
 	}
 	return client, nil
 }

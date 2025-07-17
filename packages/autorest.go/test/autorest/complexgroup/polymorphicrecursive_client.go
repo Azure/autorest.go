@@ -1,10 +1,7 @@
-//go:build go1.18
-// +build go1.18
-
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package formdatagroup
+package complexgroup
 
 import (
 	"generatortests"
@@ -13,12 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewFormdataClient(endpoint string, options *azcore.ClientOptions) (*FormdataClient, error) {
-	client, err := azcore.NewClient("formdatagroup.FormdataClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
+func NewPolymorphicrecursiveClient(endpoint string, options *azcore.ClientOptions) (*PolymorphicrecursiveClient, error) {
+	client, err := azcore.NewClient("complexgroup.PolymorphicrecursiveClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &FormdataClient{
+	return &PolymorphicrecursiveClient{
 		internal: client,
 		endpoint: endpoint,
 	}, nil

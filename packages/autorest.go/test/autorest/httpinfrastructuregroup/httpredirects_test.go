@@ -14,19 +14,19 @@ import (
 )
 
 func newHTTPRedirectsClient(t *testing.T) *HTTPRedirectsClient {
-	client, err := NewHTTPRedirectsClient(&azcore.ClientOptions{
+	client, err := NewHTTPRedirectsClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewHTTPRedirectsClient(options *azcore.ClientOptions) (*HTTPRedirectsClient, error) {
+func NewHTTPRedirectsClient(endpoint string, options *azcore.ClientOptions) (*HTTPRedirectsClient, error) {
 	client, err := azcore.NewClient("httpinfrastructuregroup.HTTPRedirectsClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &HTTPRedirectsClient{internal: client}, nil
+	return &HTTPRedirectsClient{internal: client, endpoint: endpoint}, nil
 }
 
 func TestHTTPRedirectsDelete307(t *testing.T) {

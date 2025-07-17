@@ -56,7 +56,7 @@ func TestFakeArrayCSVInPath(t *testing.T) {
 			return
 		},
 	}
-	client, err := urlgroup.NewPathsClient(&azcore.ClientOptions{
+	client, err := urlgroup.NewPathsClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewPathsServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -79,7 +79,7 @@ func TestFakeArrayStringCSVEmpty(t *testing.T) {
 			return
 		},
 	}
-	client, err := urlgroup.NewQueriesClient(&azcore.ClientOptions{
+	client, err := urlgroup.NewQueriesClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewQueriesServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -99,7 +99,7 @@ func TestFakeDateTimeNull(t *testing.T) {
 			return
 		},
 	}
-	client, err := urlgroup.NewPathsClient(&azcore.ClientOptions{
+	client, err := urlgroup.NewPathsClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewPathsServerTransport(&server),
 	})
 	require.NoError(t, err)

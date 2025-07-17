@@ -15,19 +15,19 @@ import (
 )
 
 func newDictionaryClient(t *testing.T) *DictionaryClient {
-	client, err := NewDictionaryClient(&azcore.ClientOptions{
+	client, err := NewDictionaryClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewDictionaryClient(options *azcore.ClientOptions) (*DictionaryClient, error) {
+func NewDictionaryClient(endpoint string, options *azcore.ClientOptions) (*DictionaryClient, error) {
 	client, err := azcore.NewClient("complexgroup.DictionaryClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &DictionaryClient{internal: client}, nil
+	return &DictionaryClient{internal: client, endpoint: endpoint}, nil
 }
 
 func TestDictionaryGetEmpty(t *testing.T) {

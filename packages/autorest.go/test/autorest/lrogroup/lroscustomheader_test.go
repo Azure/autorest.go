@@ -22,7 +22,7 @@ func newLrOSCustomHeaderClient(t *testing.T) *LROsCustomHeaderClient {
 	options.Retry.RetryDelay = time.Second
 	options.TracingProvider = generatortests.NewTracingProvider(t)
 	options.Transport = httpClientWithCookieJar()
-	client, err := NewLROsCustomHeaderClient(&options)
+	client, err := NewLROsCustomHeaderClient(generatortests.Host, &options)
 	require.NoError(t, err)
 	return client
 }
@@ -33,13 +33,14 @@ func ctxWithHTTPHeader() context.Context {
 	return runtime.WithHTTPHeader(context.Background(), header)
 }
 
-func NewLROsCustomHeaderClient(options *azcore.ClientOptions) (*LROsCustomHeaderClient, error) {
+func NewLROsCustomHeaderClient(endpoint string, options *azcore.ClientOptions) (*LROsCustomHeaderClient, error) {
 	cl, err := azcore.NewClient("lrogroup.LROsCustomHeaderClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &LROsCustomHeaderClient{
 		internal: cl,
+		endpoint: endpoint,
 	}
 	return client, nil
 }

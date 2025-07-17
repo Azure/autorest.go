@@ -22,17 +22,17 @@ func newHTTPClientFailureClient(t *testing.T) *HTTPClientFailureClient {
 		},
 		TracingProvider: generatortests.NewTracingProvider(t),
 	}
-	client, err := NewHTTPClientFailureClient(&options)
+	client, err := NewHTTPClientFailureClient(generatortests.Host, &options)
 	require.NoError(t, err)
 	return client
 }
 
-func NewHTTPClientFailureClient(options *azcore.ClientOptions) (*HTTPClientFailureClient, error) {
+func NewHTTPClientFailureClient(endpoint string, options *azcore.ClientOptions) (*HTTPClientFailureClient, error) {
 	client, err := azcore.NewClient("httpinfrastructuregroup.HTTPClientFailureClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &HTTPClientFailureClient{internal: client}, nil
+	return &HTTPClientFailureClient{internal: client, endpoint: endpoint}, nil
 }
 
 func TestHTTPClientFailureDelete400(t *testing.T) {

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Mfunc newPolymorphicrecursiveClient(t *testing.T) *PolymorphicrecursiveClient {
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 package complexgroup
@@ -10,26 +10,17 @@ import (
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
 
 func newPolymorphicrecursiveClient(t *testing.T) *PolymorphicrecursiveClient {
-	client, err := NewPolymorphicrecursiveClient(&azcore.ClientOptions{
+	client, err := NewPolymorphicrecursiveClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewPolymorphicrecursiveClient(options *azcore.ClientOptions) (*PolymorphicrecursiveClient, error) {
-	client, err := azcore.NewClient("complexgroup.PolymorphicrecursiveClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &PolymorphicrecursiveClient{internal: client}, nil
 }
 
 // GetValid - Get complex types that are polymorphic and have recursive references

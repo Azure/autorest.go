@@ -21,18 +21,19 @@ func newLRORetrysClient(t *testing.T) *LRORetrysClient {
 	options.Retry.RetryDelay = time.Second
 	options.TracingProvider = generatortests.NewTracingProvider(t)
 	options.Transport = httpClientWithCookieJar()
-	client, err := NewLRORetrysClient(&options)
+	client, err := NewLRORetrysClient(generatortests.Host, &options)
 	require.NoError(t, err)
 	return client
 }
 
-func NewLRORetrysClient(options *azcore.ClientOptions) (*LRORetrysClient, error) {
+func NewLRORetrysClient(endpoint string, options *azcore.ClientOptions) (*LRORetrysClient, error) {
 	cl, err := azcore.NewClient("lrogroup.LRORetrysClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &LRORetrysClient{
 		internal: cl,
+		endpoint: endpoint,
 	}
 	return client, nil
 }
@@ -41,7 +42,7 @@ func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = time.Second
 	options.Transport = httpClientWithCookieJar()
-	op, err := NewLRORetrysClient(&options)
+	op, err := NewLRORetrysClient(generatortests.Host, &options)
 	require.NoError(t, err)
 
 	poller, err := op.BeginDelete202Retry200(context.Background(), nil)

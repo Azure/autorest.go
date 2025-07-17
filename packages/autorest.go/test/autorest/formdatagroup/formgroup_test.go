@@ -5,6 +5,7 @@ package formdatagroup
 
 import (
 	"context"
+	"generatortests"
 	"io"
 	"strings"
 	"testing"
@@ -14,7 +15,7 @@ import (
 )
 
 func TestUploadFile(t *testing.T) {
-	client, err := NewFormdataClient(nil)
+	client, err := NewFormdataClient(generatortests.Host, nil)
 	require.NoError(t, err)
 	s := strings.NewReader("the data")
 	resp, err := client.UploadFile(context.Background(), streaming.NopCloser(s), "sample", nil)
@@ -27,7 +28,7 @@ func TestUploadFile(t *testing.T) {
 }
 
 func TestUploadFileViaBody(t *testing.T) {
-	client, err := NewFormdataClient(nil)
+	client, err := NewFormdataClient(generatortests.Host, nil)
 	require.NoError(t, err)
 	s := strings.NewReader("the data")
 	resp, err := client.UploadFileViaBody(context.Background(), streaming.NopCloser(s), nil)
@@ -41,7 +42,7 @@ func TestUploadFileViaBody(t *testing.T) {
 
 func TestUploadFiles(t *testing.T) {
 	t.Skip("missing route in test server")
-	client, err := NewFormdataClient(nil)
+	client, err := NewFormdataClient(generatortests.Host, nil)
 	require.NoError(t, err)
 	s1 := strings.NewReader("the data")
 	s2 := strings.NewReader(" to be uploaded")
