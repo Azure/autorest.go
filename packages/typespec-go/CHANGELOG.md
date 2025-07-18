@@ -6,6 +6,7 @@
 
 * Non-ARM clients always have an `endpoint` field.
 * Only rename the `options` parameter when it collides with another required parameter with the same name.
+* Improve generic doc comment for clients when the name is simply `Client`.
 
 ## 0.7.0 (2025-07-17)
 

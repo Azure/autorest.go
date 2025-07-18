@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// Client contains the methods for the group.
+// Client contains the methods for the service.
 // Don't use this type directly, use a constructor function instead.
 type Client struct {
 	internal *azcore.Client
