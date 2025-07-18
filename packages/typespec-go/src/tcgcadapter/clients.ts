@@ -293,9 +293,9 @@ export class clientAdapter {
       optionalParamsGroupName = uncapitalize(optionalParamsGroupName);
     }
     let optsGroupName = 'options';
-    // if there's an existing parameter with the name options then pick something else
+    // if there's an existing required parameter with the name options then pick something else
     for (const param of sdkMethod.parameters) {
-      if (param.name === optsGroupName) {
+      if (!param.optional && param.name === optsGroupName) {
         optsGroupName = 'opts';
         break;
       }
