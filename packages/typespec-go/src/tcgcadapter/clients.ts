@@ -79,10 +79,13 @@ export class clientAdapter {
       docs.summary = `${clientName} - ${docs.summary}`;
     } else if (docs.description) {
       docs.description = `${clientName} - ${docs.description}`;
-    } else {
+    } else if (clientName.length > 6) {
       // strip clientName's "Client" suffix
       const groupName = clientName.substring(0, clientName.length - 6);
       docs.summary = `${clientName} contains the methods for the ${groupName} group.`;
+    } else {
+      // the client name is simply "Client"
+      docs.summary = `${clientName} contains the methods for the service.`;
     }
 
     const goClient = new go.Client(clientName, docs, go.newClientOptions(this.ta.codeModel.type, clientName));

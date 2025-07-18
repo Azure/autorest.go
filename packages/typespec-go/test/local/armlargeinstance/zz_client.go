@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// Client contains the methods for the group.
+// Client contains the methods for the service.
 // Don't use this type directly, use NewClient() instead.
 type Client struct {
 	internal       *arm.Client
