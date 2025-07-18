@@ -5,6 +5,7 @@
 ### Other Changes
 
 * Non-ARM clients always have an `endpoint` field.
+* Only rename the `options` parameter when it collides with another required parameter with the same name.
 
 ## 0.7.0 (2025-07-17)
 
