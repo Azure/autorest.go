@@ -6,6 +6,9 @@ package internalpager
 
 type widget struct {
 	// REQUIRED
+	Color *widgetColor
+
+	// REQUIRED
 	Weight *int32
 }
 
