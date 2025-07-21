@@ -444,7 +444,7 @@ export class typeAdapter {
     if (constType) {
       return <go.Constant>constType;
     }
-    constType = new go.Constant(constTypeName, getPrimitiveType(enumType.valueType), `Possible${constTypeName}Values`);
+    constType = new go.Constant(constTypeName, getPrimitiveType(enumType.valueType), `${enumType.access === 'internal' ? 'p' : 'P'}ossible${constTypeName}Values`);
     constType.values = this.getConstantValues(constType, enumType.values);
     constType.docs.summary = enumType.summary;
     constType.docs.description = enumType.doc;

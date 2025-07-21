@@ -2,6 +2,10 @@
 
 ## 0.7.1 (unreleased)
 
+### Bugs Fixed
+
+* For internal enums, don't export the "possible values" helper function.
+
 ### Other Changes
 
 * Non-ARM clients always have an `endpoint` field.
