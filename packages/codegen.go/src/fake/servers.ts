@@ -817,10 +817,21 @@ function createPathParamsRegex(method: go.MethodType, pathParams: Array<go.PathP
   urlPath = urlPath.replace(/([.$*+()])/g, '\\$1');
   for (const param of pathParams) {
     const toReplace = `{${param.pathSegment}}`;
-    let replaceWith = `(?P<${sanitizeRegexpCaptureGroupName(param.pathSegment)}>[!#&$-;=?-\\[\\]_a-zA-Z0-9~%@]+)`;
-    if (param.style === 'optional' || param.style === 'flag') {
-      replaceWith += '?';
+    let replaceWith: string;
+    
+    if (go.isLiteralParameter(param)) {
+      // For literal parameters (like API version with default values), 
+      // don't create a capture group - just match the literal value
+      const literalValue = (param.type as go.Literal).literal;
+      replaceWith = literalValue.replace(/([.$*+()])/g, '\\$1'); // escape regex chars
+    } else {
+      // For non-literal parameters, create a named capture group
+      replaceWith = `(?P<${sanitizeRegexpCaptureGroupName(param.pathSegment)}>[!#&$-;=?-\\[\\]_a-zA-Z0-9~%@]+)`;
+      if (param.style === 'optional' || param.style === 'flag') {
+        replaceWith += '?';
+      }
     }
+    
     urlPath = urlPath.replace(toReplace, replaceWith);
   }
   return urlPath;
