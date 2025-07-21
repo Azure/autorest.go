@@ -19,6 +19,11 @@ steps:
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
 
   - script: |
+      node ../../eng/scripts/validate-changelog-dates.js CHANGELOG.md
+    displayName: "Validate CHANGELOG.md Release Dates"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
+
+  - script: |
       export currentVersion=$(node -p -e "require('./package.json').version")
       pnpm pack
       if [ "${{ parameters.Nightly }}" = "true" ]; then
