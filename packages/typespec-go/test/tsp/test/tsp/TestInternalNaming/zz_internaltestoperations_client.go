@@ -19,31 +19,31 @@ type InternalTestOperationsClient struct {
 	endpoint string
 }
 
-// GetError -
+// getLowercase -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - options - InternalTestOperationsClientGetErrorOptions contains the optional parameters for the InternalTestOperationsClient.GetError
+//   - options - internalTestOperationsClientgetLowercaseOptions contains the optional parameters for the InternalTestOperationsClient.getLowercase
 //     method.
-func (client *InternalTestOperationsClient) GetError(ctx context.Context, options *InternalTestOperationsClientGetErrorOptions) (InternalTestOperationsClientGetErrorResponse, error) {
+func (client *InternalTestOperationsClient) getLowercase(ctx context.Context, options *internalTestOperationsClientgetLowercaseOptions) (internalTestOperationsClientgetLowercaseResponse, error) {
 	var err error
-	req, err := client.getErrorCreateRequest(ctx, options)
+	req, err := client.getLowercaseCreateRequest(ctx, options)
 	if err != nil {
-		return InternalTestOperationsClientGetErrorResponse{}, err
+		return internalTestOperationsClientgetLowercaseResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return InternalTestOperationsClientGetErrorResponse{}, err
+		return internalTestOperationsClientgetLowercaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return InternalTestOperationsClientGetErrorResponse{}, err
+		return internalTestOperationsClientgetLowercaseResponse{}, err
 	}
-	resp, err := client.getErrorHandleResponse(httpResp)
+	resp, err := client.getLowercaseHandleResponse(httpResp)
 	return resp, err
 }
 
-// getErrorCreateRequest creates the GetError request.
-func (client *InternalTestOperationsClient) getErrorCreateRequest(ctx context.Context, _ *InternalTestOperationsClientGetErrorOptions) (*policy.Request, error) {
-	urlPath := "/test"
+// getLowercaseCreateRequest creates the getLowercase request.
+func (client *InternalTestOperationsClient) getLowercaseCreateRequest(ctx context.Context, _ *internalTestOperationsClientgetLowercaseOptions) (*policy.Request, error) {
+	urlPath := "/test/lowercase"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
@@ -52,11 +52,95 @@ func (client *InternalTestOperationsClient) getErrorCreateRequest(ctx context.Co
 	return req, nil
 }
 
-// getErrorHandleResponse handles the GetError response.
-func (client *InternalTestOperationsClient) getErrorHandleResponse(resp *http.Response) (InternalTestOperationsClientGetErrorResponse, error) {
-	result := InternalTestOperationsClientGetErrorResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.InternalACSMessageChannelEventError); err != nil {
-		return InternalTestOperationsClientGetErrorResponse{}, err
+// getLowercaseHandleResponse handles the getLowercase response.
+func (client *InternalTestOperationsClient) getLowercaseHandleResponse(resp *http.Response) (internalTestOperationsClientgetLowercaseResponse, error) {
+	result := internalTestOperationsClientgetLowercaseResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.internalACSMessageChannelEventError); err != nil {
+		return internalTestOperationsClientgetLowercaseResponse{}, err
+	}
+	return result, nil
+}
+
+// getNormal -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - internalTestOperationsClientgetNormalOptions contains the optional parameters for the InternalTestOperationsClient.getNormal
+//     method.
+func (client *InternalTestOperationsClient) getNormal(ctx context.Context, options *internalTestOperationsClientgetNormalOptions) (internalTestOperationsClientgetNormalResponse, error) {
+	var err error
+	req, err := client.getNormalCreateRequest(ctx, options)
+	if err != nil {
+		return internalTestOperationsClientgetNormalResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return internalTestOperationsClientgetNormalResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return internalTestOperationsClientgetNormalResponse{}, err
+	}
+	resp, err := client.getNormalHandleResponse(httpResp)
+	return resp, err
+}
+
+// getNormalCreateRequest creates the getNormal request.
+func (client *InternalTestOperationsClient) getNormalCreateRequest(ctx context.Context, _ *internalTestOperationsClientgetNormalOptions) (*policy.Request, error) {
+	urlPath := "/test/normal"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// getNormalHandleResponse handles the getNormal response.
+func (client *InternalTestOperationsClient) getNormalHandleResponse(resp *http.Response) (internalTestOperationsClientgetNormalResponse, error) {
+	result := internalTestOperationsClientgetNormalResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.normalInternalModel); err != nil {
+		return internalTestOperationsClientgetNormalResponse{}, err
+	}
+	return result, nil
+}
+
+// getUppercase -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - internalTestOperationsClientgetUppercaseOptions contains the optional parameters for the InternalTestOperationsClient.getUppercase
+//     method.
+func (client *InternalTestOperationsClient) getUppercase(ctx context.Context, options *internalTestOperationsClientgetUppercaseOptions) (internalTestOperationsClientgetUppercaseResponse, error) {
+	var err error
+	req, err := client.getUppercaseCreateRequest(ctx, options)
+	if err != nil {
+		return internalTestOperationsClientgetUppercaseResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return internalTestOperationsClientgetUppercaseResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return internalTestOperationsClientgetUppercaseResponse{}, err
+	}
+	resp, err := client.getUppercaseHandleResponse(httpResp)
+	return resp, err
+}
+
+// getUppercaseCreateRequest creates the getUppercase request.
+func (client *InternalTestOperationsClient) getUppercaseCreateRequest(ctx context.Context, _ *internalTestOperationsClientgetUppercaseOptions) (*policy.Request, error) {
+	urlPath := "/test/uppercase"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// getUppercaseHandleResponse handles the getUppercase response.
+func (client *InternalTestOperationsClient) getUppercaseHandleResponse(resp *http.Response) (internalTestOperationsClientgetUppercaseResponse, error) {
+	result := internalTestOperationsClientgetUppercaseResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.uppercaseInternalModel); err != nil {
+		return internalTestOperationsClientgetUppercaseResponse{}, err
 	}
 	return result, nil
 }

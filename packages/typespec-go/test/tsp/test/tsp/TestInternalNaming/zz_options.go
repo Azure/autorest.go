@@ -4,8 +4,20 @@
 
 package TestInternalNaming
 
-// InternalTestOperationsClientGetErrorOptions contains the optional parameters for the InternalTestOperationsClient.GetError
+// internalTestOperationsClientgetLowercaseOptions contains the optional parameters for the InternalTestOperationsClient.getLowercase
 // method.
-type InternalTestOperationsClientGetErrorOptions struct {
+type internalTestOperationsClientgetLowercaseOptions struct {
+	// placeholder for future optional parameters
+}
+
+// internalTestOperationsClientgetNormalOptions contains the optional parameters for the InternalTestOperationsClient.getNormal
+// method.
+type internalTestOperationsClientgetNormalOptions struct {
+	// placeholder for future optional parameters
+}
+
+// internalTestOperationsClientgetUppercaseOptions contains the optional parameters for the InternalTestOperationsClient.getUppercase
+// method.
+type internalTestOperationsClientgetUppercaseOptions struct {
 	// placeholder for future optional parameters
 }

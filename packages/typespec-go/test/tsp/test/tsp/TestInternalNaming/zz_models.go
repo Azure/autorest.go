@@ -4,7 +4,17 @@
 
 package TestInternalNaming
 
-type InternalACSMessageChannelEventError struct {
+type internalACSMessageChannelEventError struct {
+	// REQUIRED
+	Code *string
+}
+
+type normalInternalModel struct {
+	// REQUIRED
+	Code *string
+}
+
+type uppercaseInternalModel struct {
 	// REQUIRED
 	Code *string
 }

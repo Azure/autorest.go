@@ -436,9 +436,21 @@ export class typeAdapter {
 
   // converts an SdkEnumType to a go.ConstantType
   private getConstantType(enumType: tcgc.SdkEnumType): go.Constant {
-    let constTypeName = naming.ensureNameCase(enumType.name);
-    if (enumType.access === 'internal') {
+    let constTypeName: string;
+    
+    if (enumType.access === 'internal' && enumType.name.length > 0 && enumType.name[0] === enumType.name[0].toLowerCase()) {
+      // For internal enums where the original name starts with lowercase,
+      // apply ensureNameCase with lowerFirst=true to preserve the lowercase start
+      constTypeName = naming.ensureNameCase(enumType.name, true);
+      constTypeName = naming.getEscapedReservedName(constTypeName, 'Type');
+    } else if (enumType.access === 'internal') {
+      // For internal enums where the original name starts with uppercase,
+      // apply normal ensureNameCase then uncapitalize
+      constTypeName = naming.ensureNameCase(enumType.name);
       constTypeName = naming.getEscapedReservedName(uncapitalize(constTypeName), 'Type');
+    } else {
+      // For public enums, always apply ensureNameCase
+      constTypeName = naming.ensureNameCase(enumType.name);
     }
     let constType = this.types.get(constTypeName);
     if (constType) {
@@ -459,9 +471,21 @@ export class typeAdapter {
     if (!model.discriminatedSubtypes) {
       throw new AdapterError('InternalError', `type ${model.name} isn't a discriminator root`, model.__raw?.node ?? tsp.NoTarget);
     }
-    let ifaceName = naming.createPolymorphicInterfaceName(naming.ensureNameCase(model.name));
-    if (model.access === 'internal') {
+    let ifaceName: string;
+    
+    if (model.access === 'internal' && model.name.length > 0 && model.name[0] === model.name[0].toLowerCase()) {
+      // For internal interfaces where the original name starts with lowercase,
+      // create polymorphic name with lowerFirst=true to preserve the lowercase start
+      const baseName = naming.ensureNameCase(model.name, true);
+      ifaceName = naming.createPolymorphicInterfaceName(baseName);
+    } else if (model.access === 'internal') {
+      // For internal interfaces where the original name starts with uppercase,
+      // apply normal transformation then uncapitalize
+      ifaceName = naming.createPolymorphicInterfaceName(naming.ensureNameCase(model.name));
       ifaceName = uncapitalize(ifaceName);
+    } else {
+      // For public interfaces, always apply normal transformation
+      ifaceName = naming.createPolymorphicInterfaceName(naming.ensureNameCase(model.name));
     }
     let iface = this.types.get(ifaceName);
     if (iface) {
@@ -489,9 +513,21 @@ export class typeAdapter {
 
   // converts an SdkModelType to a go.ModelType or go.PolymorphicType if the model is polymorphic
   private getModel(model: tcgc.SdkModelType): go.Model | go.PolymorphicModel {
-    let modelName = naming.ensureNameCase(model.name);
-    if (model.access === 'internal') {
+    let modelName: string;
+    
+    if (model.access === 'internal' && model.name.length > 0 && model.name[0] === model.name[0].toLowerCase()) {
+      // For internal models where the original name starts with lowercase,
+      // apply ensureNameCase with lowerFirst=true to preserve the lowercase start
+      modelName = naming.ensureNameCase(model.name, true);
+      modelName = naming.getEscapedReservedName(modelName, 'Model');
+    } else if (model.access === 'internal') {
+      // For internal models where the original name starts with uppercase,
+      // apply normal ensureNameCase then uncapitalize
+      modelName = naming.ensureNameCase(model.name);
       modelName = naming.getEscapedReservedName(uncapitalize(modelName), 'Model');
+    } else {
+      // For public models, always apply ensureNameCase
+      modelName = naming.ensureNameCase(model.name);
     }
     let modelType = this.types.get(modelName);
     if (modelType) {

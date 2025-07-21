@@ -11,6 +11,14 @@ using TypeSpec.Http;
 })
 namespace Microsoft.Test.Internal;
 
+// Test case 1: Normal internal model without clientName (should get uncapitalize logic)
+@global.Azure.ClientGenerator.Core.access(global.Azure.ClientGenerator.Core.Access.internal)
+model NormalInternalModel {
+  code: string;
+}
+
+// Test case 2: Internal model with clientName starting with lowercase (should preserve case)
+@global.Azure.ClientGenerator.Core.access(global.Azure.ClientGenerator.Core.Access.internal)
 model AcsMessageChannelEventError {
   code: string;
 }
@@ -19,10 +27,32 @@ model AcsMessageChannelEventError {
   "internalACSMessageChannelEventError",
   "go"
 );
-@@access(AcsMessageChannelEventError, Access.internal, "go");
+
+// Test case 3: Internal model with clientName starting with uppercase (should use normal uncapitalize logic)
+@global.Azure.ClientGenerator.Core.access(global.Azure.ClientGenerator.Core.Access.internal)  
+model UppercaseInternalModel {
+  code: string;
+}
+
+@@clientName(UppercaseInternalModel,
+  "UppercaseInternalModel",
+  "go"
+);
 
 @route("/test")
 interface TestOperations {
+  @route("/normal")
   @get
-  getError(): AcsMessageChannelEventError;
+  @global.Azure.ClientGenerator.Core.access(global.Azure.ClientGenerator.Core.Access.internal)
+  getNormal(): NormalInternalModel;
+
+  @route("/lowercase")
+  @get
+  @global.Azure.ClientGenerator.Core.access(global.Azure.ClientGenerator.Core.Access.internal)
+  getLowercase(): AcsMessageChannelEventError;
+
+  @route("/uppercase")
+  @get
+  @global.Azure.ClientGenerator.Core.access(global.Azure.ClientGenerator.Core.Access.internal)
+  getUppercase(): UppercaseInternalModel;
 }

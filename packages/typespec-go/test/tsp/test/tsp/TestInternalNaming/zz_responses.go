@@ -4,7 +4,17 @@
 
 package TestInternalNaming
 
-// InternalTestOperationsClientGetErrorResponse contains the response from method InternalTestOperationsClient.GetError.
-type InternalTestOperationsClientGetErrorResponse struct {
-	InternalACSMessageChannelEventError
+// internalTestOperationsClientgetLowercaseResponse contains the response from method InternalTestOperationsClient.getLowercase.
+type internalTestOperationsClientgetLowercaseResponse struct {
+	internalACSMessageChannelEventError
+}
+
+// internalTestOperationsClientgetNormalResponse contains the response from method InternalTestOperationsClient.getNormal.
+type internalTestOperationsClientgetNormalResponse struct {
+	normalInternalModel
+}
+
+// internalTestOperationsClientgetUppercaseResponse contains the response from method InternalTestOperationsClient.getUppercase.
+type internalTestOperationsClientgetUppercaseResponse struct {
+	uppercaseInternalModel
 }
