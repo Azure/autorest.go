@@ -478,6 +478,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
               content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
               break;
             case 'rawJSON':
+              imports.add('io');
               content += '\tbody, err := io.ReadAll(req.Body)\n';
               content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
               content += '\treq.Body.Close()\n';

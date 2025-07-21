@@ -5,6 +5,8 @@
 ### Bugs Fixed
 
 * For internal enums, don't export the "possible values" helper function.
+* Fixed missing import of the `io` package in fakes when `rawjson-as-bytes` is enabled.
+* Fixed linter error in certain `UnmarshalJSON` implementations due to unused `var err error`.
 
 ### Other Changes
 

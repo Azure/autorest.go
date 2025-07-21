@@ -422,6 +422,12 @@ function generateJSONUnmarshaller(modelType: go.Model | go.PolymorphicModel, mod
 }
 
 function generateJSONUnmarshallerBody(modelType: go.Model | go.PolymorphicModel, modelDef: ModelDef, receiver: string, imports: ImportManager, options: go.Options): string {
+  // we almost always need to have an error check when unmarshaling the values.
+  // however, fields that are raw JSON don't require any unmarshaling. so, if all
+  // of the fields in a type are raw JSON, then the error check isn't necessary
+  // and can be elided (the linter complains about it otherwise).
+  let needsErrCheck = false;
+
   const emitAddlProps = function (tab: string, addlProps: go.Map): string {
     let addlPropsText = `${tab}\t\tif ${receiver}.AdditionalProperties == nil {\n`;
     let ref = '';
@@ -443,87 +449,110 @@ function generateJSONUnmarshallerBody(modelType: go.Model | go.PolymorphicModel,
     addlPropsText += `${tab}\t\t\t${receiver}.AdditionalProperties[key] = ${assignment}\n`;
     addlPropsText += `${tab}\t\t}\n`;
     addlPropsText += `${tab}\t\tdelete(rawMsg, key)\n`;
+    needsErrCheck = true;
     return addlPropsText;
   };
-  let unmarshalBody = '';
-  unmarshalBody = '\tfor key, val := range rawMsg {\n';
-  unmarshalBody += '\t\tvar err error\n';
-  unmarshalBody += '\t\tswitch key {\n';
-  let addlProps: go.Map | undefined;
-  for (const field of values(modelType.fields)) {
-    if (field.type.kind === 'map' && field.annotations.isAdditionalProperties) {
-      addlProps = field.type;
-      continue;
-    }
-    unmarshalBody += `\t\tcase "${field.serializedName}":\n`;
-    if (hasDiscriminatorInterface(field.type)) {
-      unmarshalBody += generateDiscriminatorUnmarshaller(field, receiver);
-    } else if (field.type.kind === 'time') {
-      unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(field.type.format)}(val, "${field.name}", &${receiver}.${field.name})\n`;
-      modelDef.SerDe.needsJSONUnpopulate = true;
-    } else if (field.type.kind === 'slice' && field.type.elementType.kind === 'time') {
-      imports.add('time');
-      let elementPtr = '*';
-      if (field.type.elementTypeByValue) {
-        elementPtr = '';
+
+  const emitSwitchCase = function(): string {
+    let unmarshalBody = '';
+    let addlProps: go.Map | undefined;
+    unmarshalBody += '\t\tswitch key {\n';
+    for (const field of values(modelType.fields)) {
+      if (field.type.kind === 'map' && field.annotations.isAdditionalProperties) {
+        addlProps = field.type;
+        continue;
       }
-      unmarshalBody += `\t\t\tvar aux []${elementPtr}${field.type.elementType.format}\n`;
-      unmarshalBody += `\t\t\terr = unpopulate(val, "${field.name}", &aux)\n`;
-      unmarshalBody += '\t\t\tfor _, au := range aux {\n';
-      unmarshalBody += `\t\t\t\t${receiver}.${field.name} = append(${receiver}.${field.name}, (${elementPtr}time.Time)(au))\n`;
-      unmarshalBody += '\t\t\t}\n';
-      modelDef.SerDe.needsJSONUnpopulate = true;
-    } else if (field.type.kind === 'encodedBytes') {
-      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-      unmarshalBody += '\t\tif val != nil && string(val) != "null" {\n';
-      unmarshalBody += `\t\t\t\terr = runtime.DecodeByteArray(string(val), &${receiver}.${field.name}, runtime.Base64${field.type.encoding}Format)\n\t\t}\n`;
-    } else if (field.type.kind === 'slice' && field.type.elementType.kind === 'encodedBytes') {
-      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-      unmarshalBody += '\t\t\tvar encodedValue []string\n';
-      unmarshalBody += `\t\t\terr = unpopulate(val, "${field.name}", &encodedValue)\n`;
-      unmarshalBody += '\t\t\tif err == nil && len(encodedValue) > 0 {\n';
-      unmarshalBody += `\t\t\t\t${receiver}.${field.name} = make([][]byte, len(encodedValue))\n`;
-      unmarshalBody += '\t\t\t\tfor i := 0; i < len(encodedValue) && err == nil; i++ {\n';
-      unmarshalBody += `\t\t\t\t\terr = runtime.DecodeByteArray(encodedValue[i], &${receiver}.${field.name}[i], runtime.Base64${field.type.elementType.encoding}Format)\n`;
-      unmarshalBody += '\t\t\t\t}\n\t\t\t}\n';
-      modelDef.SerDe.needsJSONUnpopulate = true;
-    } else if (field.type.kind === 'rawJSON') {
-      unmarshalBody += '\t\t\tif string(val) != "null" {\n';
-      unmarshalBody += `\t\t\t\t${receiver}.${field.name} = val\n\t\t\t}\n`;
-    } else if (field.type.kind === 'scalar' && (field.type.type.startsWith('uint') || field.type.type.startsWith('int')) && field.type.encodeAsString) {
-      // TODO: need to handle map and slice type with underlying int as string type
-      imports.add('strconv');
-      unmarshalBody += `\t\t\t\tvar aux string\n`;
-      unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.name}", &aux)\n`;
-      unmarshalBody += `\t\t\t\tif err == nil {\n`;
-      unmarshalBody += `\t\t\t\t\tvar v ${field.type.type.startsWith('int') ? 'int64' : 'uint64'}\n`;
-      unmarshalBody += `\t\t\t\t\tv, err = strconv.${field.type.type.startsWith('int') ? 'ParseInt' : 'ParseUint'}(aux, 10, 0)\n`;
-      unmarshalBody += `\t\t\t\t\tif err == nil {\n`;
-      if (field.type.type.startsWith('uint') && field.type.type !== 'uint64' || field.type.type.startsWith('int') && field.type.type !== 'int64') {
-        unmarshalBody += `\t\t\t\t\t\t${receiver}.${field.name} = to.Ptr(${field.type.type}(v))\n`;
+      unmarshalBody += `\t\tcase "${field.serializedName}":\n`;
+      if (hasDiscriminatorInterface(field.type)) {
+        unmarshalBody += generateDiscriminatorUnmarshaller(field, receiver);
+        needsErrCheck = true;
+      } else if (field.type.kind === 'time') {
+        unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(field.type.format)}(val, "${field.name}", &${receiver}.${field.name})\n`;
+        modelDef.SerDe.needsJSONUnpopulate = true;
+        needsErrCheck = true;
+      } else if (field.type.kind === 'slice' && field.type.elementType.kind === 'time') {
+        imports.add('time');
+        let elementPtr = '*';
+        if (field.type.elementTypeByValue) {
+          elementPtr = '';
+        }
+        unmarshalBody += `\t\t\tvar aux []${elementPtr}${field.type.elementType.format}\n`;
+        unmarshalBody += `\t\t\terr = unpopulate(val, "${field.name}", &aux)\n`;
+        unmarshalBody += '\t\t\tfor _, au := range aux {\n';
+        unmarshalBody += `\t\t\t\t${receiver}.${field.name} = append(${receiver}.${field.name}, (${elementPtr}time.Time)(au))\n`;
+        unmarshalBody += '\t\t\t}\n';
+        modelDef.SerDe.needsJSONUnpopulate = true;
+        needsErrCheck = true;
+      } else if (field.type.kind === 'encodedBytes') {
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
+        unmarshalBody += '\t\tif val != nil && string(val) != "null" {\n';
+        unmarshalBody += `\t\t\t\terr = runtime.DecodeByteArray(string(val), &${receiver}.${field.name}, runtime.Base64${field.type.encoding}Format)\n\t\t}\n`;
+        needsErrCheck = true;
+      } else if (field.type.kind === 'slice' && field.type.elementType.kind === 'encodedBytes') {
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
+        unmarshalBody += '\t\t\tvar encodedValue []string\n';
+        unmarshalBody += `\t\t\terr = unpopulate(val, "${field.name}", &encodedValue)\n`;
+        unmarshalBody += '\t\t\tif err == nil && len(encodedValue) > 0 {\n';
+        unmarshalBody += `\t\t\t\t${receiver}.${field.name} = make([][]byte, len(encodedValue))\n`;
+        unmarshalBody += '\t\t\t\tfor i := 0; i < len(encodedValue) && err == nil; i++ {\n';
+        unmarshalBody += `\t\t\t\t\terr = runtime.DecodeByteArray(encodedValue[i], &${receiver}.${field.name}[i], runtime.Base64${field.type.elementType.encoding}Format)\n`;
+        unmarshalBody += '\t\t\t\t}\n\t\t\t}\n';
+        modelDef.SerDe.needsJSONUnpopulate = true;
+        needsErrCheck = true;
+      } else if (field.type.kind === 'rawJSON') {
+        unmarshalBody += '\t\t\tif string(val) != "null" {\n';
+        unmarshalBody += `\t\t\t\t${receiver}.${field.name} = val\n\t\t\t}\n`;
+      } else if (field.type.kind === 'scalar' && (field.type.type.startsWith('uint') || field.type.type.startsWith('int')) && field.type.encodeAsString) {
+        // TODO: need to handle map and slice type with underlying int as string type
+        imports.add('strconv');
+        unmarshalBody += `\t\t\t\tvar aux string\n`;
+        unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.name}", &aux)\n`;
+        unmarshalBody += `\t\t\t\tif err == nil {\n`;
+        unmarshalBody += `\t\t\t\t\tvar v ${field.type.type.startsWith('int') ? 'int64' : 'uint64'}\n`;
+        unmarshalBody += `\t\t\t\t\tv, err = strconv.${field.type.type.startsWith('int') ? 'ParseInt' : 'ParseUint'}(aux, 10, 0)\n`;
+        unmarshalBody += `\t\t\t\t\tif err == nil {\n`;
+        if (field.type.type.startsWith('uint') && field.type.type !== 'uint64' || field.type.type.startsWith('int') && field.type.type !== 'int64') {
+          unmarshalBody += `\t\t\t\t\t\t${receiver}.${field.name} = to.Ptr(${field.type.type}(v))\n`;
+        } else {
+          unmarshalBody += `\t\t\t\t\t\t${receiver}.${field.name} = to.Ptr(v)\n`;
+        }
+        unmarshalBody += '\t\t\t\t\t}\n';
+        unmarshalBody += '\t\t\t\t}\n';
+        modelDef.SerDe.needsJSONUnpopulate = true;
+        needsErrCheck = true;
       } else {
-        unmarshalBody += `\t\t\t\t\t\t${receiver}.${field.name} = to.Ptr(v)\n`;
+        unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.name}", &${receiver}.${field.name})\n`;
+        modelDef.SerDe.needsJSONUnpopulate = true;
+        needsErrCheck = true;
       }
-      unmarshalBody += '\t\t\t\t\t}\n';
-      unmarshalBody += '\t\t\t\t}\n';
-      modelDef.SerDe.needsJSONUnpopulate = true;
-    } else {
-      unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.name}", &${receiver}.${field.name})\n`;
-      modelDef.SerDe.needsJSONUnpopulate = true;
+      unmarshalBody += '\t\t\tdelete(rawMsg, key)\n';
     }
-    unmarshalBody += '\t\t\tdelete(rawMsg, key)\n';
+    if (addlProps) {
+      unmarshalBody += '\t\tdefault:\n';
+      unmarshalBody += emitAddlProps('\t', addlProps);
+    } else if (options.disallowUnknownFields) {
+      unmarshalBody += '\t\tdefault:\n';
+      unmarshalBody += `\t\t\terr = fmt.Errorf("unmarshalling type %T, unknown field %q", ${receiver}, key)\n`;
+      needsErrCheck = true;
+    }
+    unmarshalBody += '\t\t}\n';
+    return unmarshalBody;
+  };
+
+  let unmarshalBody = '\tfor key, val := range rawMsg {\n';
+
+  // emitSwitchCase sets needsErrCheck so we must call it first
+  const switchCaseBody = emitSwitchCase();
+
+  if (needsErrCheck) {
+    unmarshalBody += '\t\tvar err error\n';
   }
-  if (addlProps) {
-    unmarshalBody += '\t\tdefault:\n';
-    unmarshalBody += emitAddlProps('\t', addlProps);
-  } else if (options.disallowUnknownFields) {
-    unmarshalBody += '\t\tdefault:\n';
-    unmarshalBody += `\t\t\terr = fmt.Errorf("unmarshalling type %T, unknown field %q", ${receiver}, key)\n`;
+  unmarshalBody += switchCaseBody;
+  if (needsErrCheck) {
+    unmarshalBody += '\t\tif err != nil {\n';
+    unmarshalBody += `\t\t\treturn fmt.Errorf("unmarshalling type %T: %v", ${receiver}, err)\n`;
+    unmarshalBody += '\t\t}\n';
   }
-  unmarshalBody += '\t\t}\n';
-  unmarshalBody += '\t\tif err != nil {\n';
-  unmarshalBody += `\t\t\treturn fmt.Errorf("unmarshalling type %T: %v", ${receiver}, err)\n`;
-  unmarshalBody += '\t\t}\n';
   unmarshalBody += '\t}\n'; // end for key, val := range rawMsg
   unmarshalBody += '\treturn nil\n';
   return unmarshalBody;
