@@ -607,16 +607,35 @@ export class clientAdapter {
 
   private getMethodNameForDocComment(method: go.MethodType): string {
     let methodName: string;
+    // Check if method has internal access (name starts with lowercase letter)
+    const isInternalMethod = method.name && method.name.charAt(0) === method.name.charAt(0).toLowerCase();
+    
     switch (method.kind) {
       case 'lroMethod':
       case 'lroPageableMethod':
         methodName = `Begin${method.name}`;
+        if (isInternalMethod) {
+          // For internal methods, remove "Method" suffix if present and use proper casing
+          let baseName = method.name;
+          if (baseName.endsWith('Method')) {
+            baseName = baseName.slice(0, -6); // Remove "Method" suffix
+          }
+          methodName = `begin${capitalize(baseName)}`;
+        }
         break;
       case 'method':
         methodName = method.name;
         break;
       case 'pageableMethod':
         methodName = `New${method.name}Pager`;
+        if (isInternalMethod) {
+          // For internal methods, remove "Method" suffix if present and use proper casing
+          let baseName = method.name;
+          if (baseName.endsWith('Method')) {
+            baseName = baseName.slice(0, -6); // Remove "Method" suffix
+          }
+          methodName = `new${capitalize(baseName)}Pager`;
+        }
         break;
     }
     return `${method.client.name}.${methodName}`;
