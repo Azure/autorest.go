@@ -7,6 +7,7 @@ import { createTypeSpecLibrary, JSONSchemaType, paramMessage } from '@typespec/c
 
 export interface GoEmitterOptions {
   'azcore-version'?: string;
+  'containing-module'?: string;
   'disallow-unknown-fields'?: boolean;
   'file-prefix'?: string;
   'generate-fakes'?: boolean;
@@ -36,6 +37,11 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
       type: 'string',
       nullable: true,
       description: 'Semantic version of azcore without the leading \'v\' to use if different from the default version (e.g. 1.2.3).',
+    },
+    'containing-module': {
+      type: 'string',
+      nullable: true,
+      description: 'The name of the module containing the package. This is mutually exclusive with module.',
     },
     'disallow-unknown-fields': {
       type: 'boolean',
