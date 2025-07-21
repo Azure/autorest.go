@@ -926,22 +926,3 @@ export function adaptXMLInfo(decorators: Array<tcgc.DecoratorInfo>, field?: go.M
 
   return xmlInfo;
 }
-
-/**
- * unwraps array, dict, and null types to their underlying type.
- * returns type if type doesn't require unwrapping.
- * 
- * @param type the type to unwrap
- * @returns the unwrapped type or type
- */
-export function unwrapSdkType(type: tcgc.SdkType): tcgc.SdkType {
-  let unwrapped = type;
-  while (unwrapped.kind === 'array' || unwrapped.kind === 'dict' || unwrapped.kind === 'nullable') {
-    if (unwrapped.kind === 'nullable') {
-      unwrapped = unwrapped.type;
-    } else {
-      unwrapped = unwrapped.valueType;
-    }
-  }
-  return unwrapped;
-}
