@@ -2,10 +2,31 @@
 
 /**
  * Script to validate release dates in CHANGELOG.md files
- * Ensures that:
+ * 
+ * This script is used in the typespec-go release pipeline to ensure that:
  * 1. Release dates follow the format YYYY-MM-DD
  * 2. Release dates are not in the future (allowing some buffer for timezone differences)
  * 3. "unreleased" entries are allowed
+ * 4. Dates are within a reasonable range (2020 to current year + 2)
+ * 
+ * Usage:
+ *   node validate-changelog-dates.js [path-to-changelog]
+ *   
+ *   If no path is provided, defaults to ../../packages/typespec-go/CHANGELOG.md
+ * 
+ * Exit codes:
+ *   0 - Validation passed
+ *   1 - Validation failed (invalid dates found)
+ * 
+ * Examples:
+ *   Valid entries:
+ *   - ## 0.7.1 (unreleased)
+ *   - ## 0.7.0 (2024-07-17)
+ *   
+ *   Invalid entries:
+ *   - ## 0.8.0 (2030-12-31)     // Too far in future
+ *   - ## 0.6.0 (invalid-date)   // Wrong format
+ *   - ## 0.5.0 (2024-13-45)     // Invalid month/day
  */
 
 import fs from 'fs';
