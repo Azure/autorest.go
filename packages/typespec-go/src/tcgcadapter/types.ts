@@ -91,11 +91,8 @@ export class typeAdapter {
 
     // now adapt model fields
     for (const modelType of modelTypes) {
-      const content = aggregateProperties(modelType.tcgc);
+      const content = aggregateProperties(sdkContext, modelType.tcgc);
       for (const prop of values(content.props)) {
-      if (tcgc.isHttpMetadata(sdkContext, prop)) {
-        continue;
-      }
         const field = this.getModelField(prop, modelType.tcgc);
         modelType.go.fields.push(field);
       }
@@ -830,9 +827,12 @@ interface InterfaceTypeSdkModelType {
 
 // aggregate the properties from the provided type and its parent types.
 // this includes any inherited additional properties.
-function aggregateProperties(model: tcgc.SdkModelType): {props: Array<tcgc.SdkModelPropertyType>, addlProps?: tcgc.SdkType} {
+function aggregateProperties(sdkContext: tcgc.SdkContext, model: tcgc.SdkModelType): {props: Array<tcgc.SdkModelPropertyType>, addlProps?: tcgc.SdkType} {
   const allProps = new Array<tcgc.SdkModelPropertyType>();
   for (const prop of model.properties) {
+    if (tcgc.isHttpMetadata(sdkContext, prop)) {
+      continue;
+    }
     allProps.push(prop);
   }
 
@@ -840,6 +840,9 @@ function aggregateProperties(model: tcgc.SdkModelType): {props: Array<tcgc.SdkMo
   let parent = model.baseModel;
   while (parent) {
     for (const parentProp of parent.properties) {
+      if (tcgc.isHttpMetadata(sdkContext, parentProp)) {
+        continue;
+      }
       const exists = values(allProps).where(p => { return p.name === parentProp.name; }).first();
       if (exists) {
         // don't add the duplicate. the TS compiler has better enforcement than OpenAPI
