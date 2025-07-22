@@ -4,7 +4,6 @@
 *--------------------------------------------------------------------------------------------*/
 
 import * as client from './client.js';
-import { CodeModelError } from './errors.js';
 import * as result from './result.js';
 import * as type from './type.js';
 
@@ -54,15 +53,6 @@ export interface Info {
   title: string;
 }
 
-/** contains module information */
-export interface Module {
-  /** the module identity excluding any major version suffix */
-  name: string;
-  
-  /** the semantic version x.y.z[-beta.N]. the default value is 0.1.0 */
-  version: string;
-}
-
 /**
  * contains global options set on the CodeModel.
  * most of the values come from command-line args.
@@ -90,10 +80,10 @@ export interface Options {
   containingModule?: string;
 
   /**
-   * module information when emitting code as a module.
+   * the module identity including any major version suffix.
    * this is mutually exclusive with containingModule.
    */
-  module?: Module;
+  module?: string;
 
   /** custom version of azcore to use instead of the emitter's default value */
   azcoreVersion?: string;
@@ -174,24 +164,6 @@ export class CodeModel implements CodeModel {
 export class Info implements Info {
   constructor(title: string) {
     this.title = title;
-  }
-}
-
-export class Module implements Module {
-  constructor(name: string, version: string) {
-    if (name.match(/\/v\d+$/)) {
-      throw new CodeModelError('module name must not contain major version suffix');
-    }
-    if (!version.match(/^(\d+\.\d+\.\d+(?:-beta\.\d+)?)?$/)) {
-      throw new CodeModelError(`module version ${version} must be in the format major.minor.patch[-beta.N]`);
-    }
-    // if the module's major version is greater than one, add a major version suffix to the module name
-    const majorVersion = version.substring(0, version.indexOf('.'));
-    if (Number(majorVersion) > 1) {
-      name += '/v' + majorVersion;
-    }
-    this.name = name;
-    this.version = version;
   }
 }
 

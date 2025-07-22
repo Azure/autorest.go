@@ -7,6 +7,7 @@ import { createTypeSpecLibrary, JSONSchemaType, paramMessage } from '@typespec/c
 
 export interface GoEmitterOptions {
   'azcore-version'?: string;
+  'containing-module'?: string;
   'disallow-unknown-fields'?: boolean;
   'file-prefix'?: string;
   'generate-fakes'?: boolean;
@@ -14,7 +15,6 @@ export interface GoEmitterOptions {
   'head-as-boolean'?: boolean;
   'inject-spans'?: boolean;
   'module'?: string;
-  'module-version'?: string;
   'rawjson-as-bytes'?: boolean;
   'slice-elements-byval'?: boolean;
   'single-client'?: boolean;
@@ -36,6 +36,11 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
       type: 'string',
       nullable: true,
       description: 'Semantic version of azcore without the leading \'v\' to use if different from the default version (e.g. 1.2.3).',
+    },
+    'containing-module': {
+      type: 'string',
+      nullable: true,
+      description: 'The module identity into which the package is being emitted. Mutually exclusive with module.',
     },
     'disallow-unknown-fields': {
       type: 'boolean',
@@ -70,12 +75,7 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
     'module': {
       type: 'string',
       nullable: true,
-      description: 'The name of the Go module written to go.mod. Omit to skip go.mod generation. When module is specified, module-version must also be specified.',
-    },
-    'module-version': {
-      type: 'string',
-      nullable: true,
-      description: 'Initial semantic version of the Go module without the leading \'v\'. (e.g. 1.2.3). Defaults to 0.1.0.',
+      description: 'The module identity to use in go.mod minus any major version suffix. Mutually exclusive with containing-module.',
     },
     'rawjson-as-bytes': {
       type: 'boolean',

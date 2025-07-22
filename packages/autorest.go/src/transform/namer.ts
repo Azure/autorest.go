@@ -83,24 +83,18 @@ export async function namer(session: Session<CodeModel>) {
   const sliceElementsByValue = await session.getValue('slice-elements-byval', false);
   model.language.go!.sliceElementsByValue = sliceElementsByValue;
 
-  const moduleVersion = await session.getValue('module-version', '');
-  if (moduleVersion !== '') {
-    model.language.go!.moduleVersion = moduleVersion;
-  } else {
-    model.language.go!.moduleVersion = '0.1.0';
-  }
-
   const module = await session.getValue('module', '');
-  if (module !== '') {
-    model.language.go!.module = module;
-  }
-  model.language.go!.module = module;
-
   const containingModule = await session.getValue('containing-module', '');
+
   if (containingModule !== '' && module !== '') {
     throw new Error('--module and --containing-module are mutually exclusive');
+  } else if (module !== '') {
+    model.language.go!.module = module;
+  } else if (containingModule !== '') {
+    model.language.go!.containingModule = containingModule;
+  } else {
+    throw new Error('missing argument --module or --containing-module');
   }
-  model.language.go!.containingModule = containingModule;
 
   const singleClient = await session.getValue('single-client', false);
   model.language.go!.singleClient = singleClient;

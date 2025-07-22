@@ -4,8 +4,13 @@
 
 ### Breaking Changes
 
-* The `module-version` switch is now used to seed the value for the `moduleVersion` constant. It will _not_ change an existing value.
-  * If not specified, it has a default value of `0.1.0`.
+* The `module-version` switch has been removed.
+  * For new modules, the `moduleVersion` constant will have an initial value of `v0.1.0`.
+  * For existing modules, the value of `moduleVersion` is externally maintained.
+
+### Features Added
+
+* The `module` switch now accepts a major version suffix (e.g. `module=mymodule/v2`).
 
 ### Other Changes
 

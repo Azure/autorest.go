@@ -38,13 +38,14 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
     if (session.model.language.go!.azureARM) {
       type = 'azure-arm';
     }
-    
+
     const codeModel = new go.CodeModel(info, type, session.model.language.go!.packageName, options);
     if (session.model.language.go!.module) {
-      codeModel.options.module = new go.Module(session.model.language.go!.module, session.model.language.go!.moduleVersion ?? "0.1.0");
+      codeModel.options.module = <string>session.model.language.go!.module;
     } else if (session.model.language.go!.containingModule !== '') {
       codeModel.options.containingModule = <string>session.model.language.go!.containingModule;
     }
+
     adaptConstantTypes(session.model, codeModel);
     adaptInterfaceTypes(session.model, codeModel);
     adaptModels(session.model, codeModel);

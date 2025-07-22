@@ -11,12 +11,11 @@ import { CodegenError } from './errors.js';
 // if there's a preexisting go.mod file, update its specified version of azcore as needed.
 export async function generateGoModFile(codeModel: go.CodeModel, existingGoMod?: string): Promise<string> {
   if (!codeModel.options.module) {
-    if (!existingGoMod) {
-      return '';
-    }
-    throw new CodegenError('InvalidArgument', '--module and --module-version are required when go.mod exists');
+    // must be containg-module, we don't emit go.mod for that scenario
+    return '';
   }
-  const modName = codeModel.options.module.name;
+
+  const modName = codeModel.options.module;
 
   // here we specify the minimum version of azcore as required by the code generator.
   // the version can be overwritten by passing the --azcore-version switch during generation.
@@ -39,6 +38,11 @@ export async function generateGoModFile(codeModel: go.CodeModel, existingGoMod?:
     return text;
   }
 
+  // check if the module name needs to be replaced due to a major version increase
+  if (!existingGoMod.match(`module ${modName}$`)) {
+    existingGoMod = existingGoMod.replace(/module \S+/, `module ${modName}`);
+  }
+
   // check if the existing version of azcore is greater than or equal to the specified version.
   // note that some modules (e.g. models-only) might not have a dependency on azcore.
   const match = existingGoMod.match(/github\.com\/Azure\/azure-sdk-for-go\/sdk\/azcore\s+v(\d+\.\d+\.\d+(?:-[a-zA-Z0-9_.-]+)?)/);
@@ -51,10 +55,6 @@ export async function generateGoModFile(codeModel: go.CodeModel, existingGoMod?:
     if (lt(existingVer, specifiedVer)) {
       // the existing version of azcore is less than the specified version so update it
       existingGoMod = existingGoMod.replace(/github\.com\/Azure\/azure-sdk-for-go\/sdk\/azcore\s+v\d+\.\d+\.\d+(?:-[a-zA-Z0-9_.-]+)?/, azcore);
-    }
-    // now check if the module name needs to be replaced due to a major version increase
-    if (!existingGoMod.match(`module ${modName}$`)) {
-      existingGoMod = existingGoMod.replace(/module \S+/, `module ${modName}`);
     }
   }
   return existingGoMod;

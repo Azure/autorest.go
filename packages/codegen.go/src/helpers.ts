@@ -642,7 +642,7 @@ export function formatDocComment(docs: go.Docs): string {
 export function getParentImport(codeModel: go.CodeModel): string {
   const clientPkg = codeModel.packageName;
   if (codeModel.options.module) {
-    return codeModel.options.module.name;
+    return codeModel.options.module;
   } else if (codeModel.options.containingModule) {
     return codeModel.options.containingModule + '/' + clientPkg;
   } else {

@@ -40,7 +40,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
       imports.add('context');
       imports.add('log');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azidentity');
-      imports.add(codeModel.options.module!.name);
+      imports.add(codeModel.options.module!);
     }
 
     let clientFactoryParams = new Array<go.ClientParameter>();

@@ -184,10 +184,10 @@ const internalpager = pkgRoot + 'test/tsp/Internal.Pager';
 generate('internalpager', internalpager, 'test/local/internalpager', ['generate-fakes=false']);
 
 const armoracledatabase = pkgRoot + 'test/tsp/Oracle.Database.Management';
-generate('armoracledatabase', armoracledatabase, 'test/local/armoracledatabase', [`examples-directory=${armoracledatabase}/examples`, 'generate-samples=true', 'module-version=2.0.0']);
+generate('armoracledatabase/v2', armoracledatabase, 'test/local/armoracledatabase', [`examples-directory=${armoracledatabase}/examples`, 'generate-samples=true']);
 
 const armhealthbot = pkgRoot + 'test/tsp/Healthbot.Management';
-generate('armhealthbot', armhealthbot, 'test/local/armhealthbot', [`examples-directory=${armhealthbot}/examples`, 'generate-samples=true', 'module-version=1.0.0']);
+generate('armhealthbot', armhealthbot, 'test/local/armhealthbot', [`examples-directory=${armhealthbot}/examples`, 'generate-samples=true']);
 
 const armhardwaresecuritymodules = pkgRoot + 'test/tsp/HardwareSecurityModules.Management';
 generate('armhardwaresecuritymodules', armhardwaresecuritymodules, 'test/local/armhardwaresecuritymodules', [`examples-directory=${armhardwaresecuritymodules}/examples`, 'generate-samples=true']);
@@ -202,7 +202,7 @@ const nooptionalbody = pkgRoot + 'test/tsp/NoOptionalBody';
 generate('nooptionalbody', nooptionalbody, 'test/local/nooptionalbody', ['generate-fakes=false', 'go-generate=after_generate.go', 'no-optional-body=true']);
 
 const rawjson = pkgRoot + 'test/tsp/RawJson';
-generate('rawjson', rawjson, 'test/local/rawjson', ['rawjson-as-bytes=true']);
+generate('rawjson', rawjson, 'test/local/rawjson/subpkg', ['containing-module=rawjson/v2', 'rawjson-as-bytes=true']);
 
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
@@ -236,9 +236,18 @@ function generate(moduleName, input, outputDir, perTestOptions) {
 
   const fullOutputDir = pkgRoot + outputDir;
 
+  // check for containing-module and swap out module for it as needed
+  let outputKind = `module=${moduleName}`;
+  for (const perTestOption of perTestOptions) {
+    if (perTestOption.match(/containing\-module/)) {
+      outputKind = perTestOption;
+      break;
+    }
+  }
+
   // these options can't be changed per test
   const fixedOptions = [
-    `module=${moduleName}`,
+    outputKind,
     `emitter-output-dir=${fullOutputDir}`,
     'file-prefix=zz_',
   ];
@@ -332,7 +341,8 @@ function cleanGeneratedFiles(outputDir) {
       if (dirEnt === null) {
           break;
       }
-      if (dirEnt.isFile() && dirEnt.name.startsWith('zz_')) {
+      // preserve the version.go file so we can test the v2+ major version scenario
+      if (dirEnt.isFile() && dirEnt.name.startsWith('zz_') && dirEnt.name !== 'zz_version.go') {
           unlinkSync(dir.path + '/' + dirEnt.name);
       }
   }

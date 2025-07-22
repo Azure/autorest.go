@@ -200,6 +200,7 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
       filePrefix += '_';
     }
   }
+
   const clientFactory = await generateClientFactory(codeModel);
   if (clientFactory.length > 0) {
     await writeFile(`${context.emitterOutputDir}/${filePrefix}client_factory.go`, clientFactory);
@@ -275,9 +276,10 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
   }
 
   // don't overwrite an existing version.go file
-  const verisonGoFileName = `${context.emitterOutputDir}/${filePrefix}version.go`;
-  if (!existsSync(verisonGoFileName)) {
-    await writeFile(verisonGoFileName, await generateVersionInfo(codeModel));
+  const versionGo = await generateVersionInfo(codeModel);
+  const versionGoFileName = `${context.emitterOutputDir}/${filePrefix}version.go`;
+  if (versionGo.length > 0 && !existsSync(versionGoFileName)) {
+    await writeFile(versionGoFileName, versionGo);
   }
 
   const xmlAddlProps = await generateXMLAdditionalPropsHelpers(codeModel);
