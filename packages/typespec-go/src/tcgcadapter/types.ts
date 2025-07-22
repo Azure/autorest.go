@@ -93,16 +93,9 @@ export class typeAdapter {
     for (const modelType of modelTypes) {
       const content = aggregateProperties(modelType.tcgc);
       for (const prop of values(content.props)) {
-        if (prop.kind === 'header') {
-          // the common case here is the @header decorator specifying
-          // the content-type for the model. we can just skip it.
-          // TODO: follow up with tcgc to see if we can remove the entry.
-          continue;
-        }
-        if (prop.kind === 'query') {
-          // skip query params for now, wait for confirming visibility behavior
-          continue;
-        }
+      if (tcgc.isHttpMetadata(sdkContext, prop)) {
+        continue;
+      }
         const field = this.getModelField(prop, modelType.tcgc);
         modelType.go.fields.push(field);
       }
@@ -562,7 +555,7 @@ export class typeAdapter {
     return modelType;
   }
 
-  private getDiscriminatorLiteral(sdkProp: tcgc.SdkBodyModelPropertyType): go.Literal {
+  private getDiscriminatorLiteral(sdkProp: tcgc.SdkModelPropertyType): go.Literal {
     switch (sdkProp.type.kind) {
       case 'constant':
       case 'enumvalue':
@@ -573,7 +566,7 @@ export class typeAdapter {
   }
 
   private getModelField(prop: tcgc.SdkModelPropertyType, modelType: tcgc.SdkModelType): go.ModelField {
-    if (prop.kind !== 'path' && prop.kind !== 'property') {
+    if (prop.kind !== 'property') {
       throw new AdapterError('UnsupportedTsp', `unsupported kind ${prop.kind} for property ${prop.name} in model ${modelType.name}`, prop.__raw?.node ?? tsp.NoTarget);
     }
     const annotations = new go.ModelFieldAnnotations(prop.optional === false, false, false, false);
@@ -601,12 +594,8 @@ export class typeAdapter {
     const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.name)), type, fieldByValue, prop.serializedName, annotations);
     field.docs.summary = prop.summary;
     field.docs.description = prop.doc;
-    if (prop.kind === 'path') {
-      // for ARM resources, a property of kind path is usually the model
-      // key and will be exposed as a discrete method parameter. this also
-      // means that the value is read-only.
-      annotations.readOnly = true;
-    } else if (prop.discriminator && modelType.discriminatorValue) {
+    // TODO: handle 'path' parameters
+    if (prop.discriminator && modelType.discriminatorValue) {
       // the presence of modelType.discriminatorValue tells us that this
       // property is on a model that's not the root discriminator
       annotations.isDiscriminator = true;
