@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ClientNamespaceClient.NewClientNamespaceFirstClient] instead.
 type ClientNamespaceFirstClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetFirst -
@@ -47,7 +48,7 @@ func (client *ClientNamespaceFirstClient) GetFirst(ctx context.Context, options 
 // getFirstCreateRequest creates the GetFirst request.
 func (client *ClientNamespaceFirstClient) getFirstCreateRequest(ctx context.Context, _ *ClientNamespaceFirstClientGetFirstOptions) (*policy.Request, error) {
 	urlPath := "/client/client-namespace/first"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

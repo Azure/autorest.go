@@ -10,12 +10,14 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type ClientNamespaceClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewClientNamespaceFirstClient creates a new instance of [ClientNamespaceFirstClient].
 func (client *ClientNamespaceClient) NewClientNamespaceFirstClient() *ClientNamespaceFirstClient {
 	return &ClientNamespaceFirstClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -23,5 +25,6 @@ func (client *ClientNamespaceClient) NewClientNamespaceFirstClient() *ClientName
 func (client *ClientNamespaceClient) NewClientNamespaceSecondClient() *ClientNamespaceSecondClient {
 	return &ClientNamespaceSecondClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

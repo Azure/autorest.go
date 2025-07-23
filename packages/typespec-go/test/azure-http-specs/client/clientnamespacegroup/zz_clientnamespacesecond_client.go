@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ClientNamespaceClient.NewClientNamespaceSecondClient] instead.
 type ClientNamespaceSecondClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetSecond -
@@ -47,7 +48,7 @@ func (client *ClientNamespaceSecondClient) GetSecond(ctx context.Context, option
 // getSecondCreateRequest creates the GetSecond request.
 func (client *ClientNamespaceSecondClient) getSecondCreateRequest(ctx context.Context, _ *ClientNamespaceSecondClientGetSecondOptions) (*policy.Request, error) {
 	urlPath := "/client/client-namespace/second"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
