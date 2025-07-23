@@ -5,8 +5,6 @@
 
 package mediatypesgroup
 
-const host = "http://localhost:3000"
-
 // ContentType - Content type for upload
 type ContentType string
 

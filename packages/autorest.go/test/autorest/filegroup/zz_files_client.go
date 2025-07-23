@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type FilesClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetEmptyFile - Get empty file
@@ -48,7 +49,7 @@ func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesClien
 // getEmptyFileCreateRequest creates the GetEmptyFile request.
 func (client *FilesClient) getEmptyFileCreateRequest(ctx context.Context, _ *FilesClientGetEmptyFileOptions) (*policy.Request, error) {
 	urlPath := "/files/stream/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +87,7 @@ func (client *FilesClient) GetFile(ctx context.Context, options *FilesClientGetF
 // getFileCreateRequest creates the GetFile request.
 func (client *FilesClient) getFileCreateRequest(ctx context.Context, _ *FilesClientGetFileOptions) (*policy.Request, error) {
 	urlPath := "/files/stream/nonempty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +125,7 @@ func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesClien
 // getFileLargeCreateRequest creates the GetFileLarge request.
 func (client *FilesClient) getFileLargeCreateRequest(ctx context.Context, _ *FilesClientGetFileLargeOptions) (*policy.Request, error) {
 	urlPath := "/files/stream/verylarge"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -10,10 +10,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewHeaderClient(options *azcore.ClientOptions) (*HeaderClient, error) {
+func NewHeaderClient(endpoint string, options *azcore.ClientOptions) (*HeaderClient, error) {
 	client, err := azcore.NewClient("headergroup.HeaderClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &HeaderClient{internal: client}, nil
+	return &HeaderClient{
+		internal: client,
+		endpoint: endpoint,
+	}, nil
 }

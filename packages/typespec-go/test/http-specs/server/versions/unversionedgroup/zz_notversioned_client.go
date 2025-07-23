@@ -47,14 +47,12 @@ func (client *NotVersionedClient) WithPathAPIVersion(ctx context.Context, apiVer
 
 // withPathAPIVersionCreateRequest creates the WithPathAPIVersion request.
 func (client *NotVersionedClient) withPathAPIVersionCreateRequest(ctx context.Context, apiVersion string, _ *NotVersionedClientWithPathAPIVersionOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/versions/not-versioned/with-path-api-version/{apiVersion}"
 	if apiVersion == "" {
 		return nil, errors.New("parameter apiVersion cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{apiVersion}", url.PathEscape(apiVersion))
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -86,10 +84,8 @@ func (client *NotVersionedClient) WithQueryAPIVersion(ctx context.Context, apiVe
 
 // withQueryAPIVersionCreateRequest creates the WithQueryAPIVersion request.
 func (client *NotVersionedClient) withQueryAPIVersionCreateRequest(ctx context.Context, apiVersion string, _ *NotVersionedClientWithQueryAPIVersionOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/versions/not-versioned/with-query-api-version"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -124,10 +120,8 @@ func (client *NotVersionedClient) WithoutAPIVersion(ctx context.Context, options
 
 // withoutAPIVersionCreateRequest creates the WithoutAPIVersion request.
 func (client *NotVersionedClient) withoutAPIVersionCreateRequest(ctx context.Context, _ *NotVersionedClientWithoutAPIVersionOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/versions/not-versioned/without-api-version"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

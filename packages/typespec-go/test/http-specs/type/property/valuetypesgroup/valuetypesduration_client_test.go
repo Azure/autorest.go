@@ -13,7 +13,7 @@ import (
 )
 
 func TestValueTypesDurationClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesDurationClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestValueTypesDurationClient_Get(t *testing.T) {
 }
 
 func TestValueTypesDurationClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesDurationClient().Put(context.Background(), valuetypesgroup.DurationProperty{
 		Property: to.Ptr("P123DT22H14M12.011S"),

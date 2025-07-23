@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [BasicClient.NewBasicImplicitBodyClient] instead.
 type BasicImplicitBodyClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Simple -
@@ -46,7 +47,7 @@ func (client *BasicImplicitBodyClient) Simple(ctx context.Context, name string, 
 // simpleCreateRequest creates the Simple request.
 func (client *BasicImplicitBodyClient) simpleCreateRequest(ctx context.Context, name string, _ *BasicImplicitBodyClientSimpleOptions) (*policy.Request, error) {
 	urlPath := "/parameters/basic/implicit-body/simple"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

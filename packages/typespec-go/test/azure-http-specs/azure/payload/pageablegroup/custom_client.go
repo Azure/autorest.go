@@ -11,12 +11,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewPageableClient(options *azcore.ClientOptions) (*PageableClient, error) {
+func NewPageableClient(endpoint string, options *azcore.ClientOptions) (*PageableClient, error) {
 	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &PageableClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

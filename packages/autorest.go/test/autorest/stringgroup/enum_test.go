@@ -16,19 +16,19 @@ import (
 )
 
 func newEnumClient(t *testing.T) *EnumClient {
-	client, err := NewEnumClient(&azcore.ClientOptions{
+	client, err := NewEnumClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewEnumClient(options *azcore.ClientOptions) (*EnumClient, error) {
+func NewEnumClient(endpoint string, options *azcore.ClientOptions) (*EnumClient, error) {
 	client, err := azcore.NewClient("stringgroup.EnumClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &EnumClient{internal: client}, nil
+	return &EnumClient{internal: client, endpoint: endpoint}, nil
 }
 
 func TestEnumGetNotExpandable(t *testing.T) {

@@ -5,6 +5,7 @@ package headgroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/headgroup"
 	"generatortests/headgroup/fake"
 	"net/http"
@@ -24,7 +25,7 @@ func TestFakeHead204(t *testing.T) {
 			return
 		},
 	}
-	client, err := headgroup.NewHTTPSuccessClient(&azcore.ClientOptions{
+	client, err := headgroup.NewHTTPSuccessClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewHTTPSuccessServerTransport(&server),
 	})
 	require.NoError(t, err)

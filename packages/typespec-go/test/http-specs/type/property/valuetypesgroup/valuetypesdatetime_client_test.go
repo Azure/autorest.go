@@ -14,7 +14,7 @@ import (
 )
 
 func TestValueTypesDatetimeClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesDatetimeClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestValueTypesDatetimeClient_Get(t *testing.T) {
 }
 
 func TestValueTypesDatetimeClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesDatetimeClient().Put(context.Background(), valuetypesgroup.DatetimeProperty{
 		Property: to.Ptr(time.Date(2022, 8, 26, 18, 38, 0, 0, time.UTC)),

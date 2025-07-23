@@ -13,7 +13,7 @@ import (
 )
 
 func TestValueTypesFloatLiteralClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesFloatLiteralClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestValueTypesFloatLiteralClient_Get(t *testing.T) {
 }
 
 func TestValueTypesFloatLiteralClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesFloatLiteralClient().Put(context.Background(), valuetypesgroup.FloatLiteralProperty{
 		Property: to.Ptr[float32](43.125),

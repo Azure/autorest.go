@@ -4,8 +4,6 @@
 
 package optionalitygroup
 
-const host = "http://localhost:3000"
-
 type UnionFloatLiteralPropertyProperty float32
 
 const (

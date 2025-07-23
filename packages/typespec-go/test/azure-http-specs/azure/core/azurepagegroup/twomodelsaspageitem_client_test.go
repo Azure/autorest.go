@@ -16,7 +16,7 @@ import (
 )
 
 func TestTwoModelsAsPageItemClient_NewListFirstItemPager(t *testing.T) {
-	client, err := azurepagegroup.NewPageClient(nil)
+	client, err := azurepagegroup.NewPageClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	pager := client.NewPageTwoModelsAsPageItemClient().NewListFirstItemPager(nil)
 	pages := 0
@@ -34,7 +34,7 @@ func TestTwoModelsAsPageItemClient_NewListFirstItemPager(t *testing.T) {
 }
 
 func TestTwoModelsAsPageItemClient_NewListSecondItemPager(t *testing.T) {
-	client, err := azurepagegroup.NewPageClient(nil)
+	client, err := azurepagegroup.NewPageClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	pager := client.NewPageTwoModelsAsPageItemClient().NewListSecondItemPager(nil)
 	pages := 0

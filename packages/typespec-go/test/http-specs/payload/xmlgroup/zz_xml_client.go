@@ -10,12 +10,14 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type XMLClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewXMLModelWithArrayOfModelValueClient creates a new instance of [XMLModelWithArrayOfModelValueClient].
 func (client *XMLClient) NewXMLModelWithArrayOfModelValueClient() *XMLModelWithArrayOfModelValueClient {
 	return &XMLModelWithArrayOfModelValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -23,6 +25,7 @@ func (client *XMLClient) NewXMLModelWithArrayOfModelValueClient() *XMLModelWithA
 func (client *XMLClient) NewXMLModelWithAttributesValueClient() *XMLModelWithAttributesValueClient {
 	return &XMLModelWithAttributesValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -30,6 +33,7 @@ func (client *XMLClient) NewXMLModelWithAttributesValueClient() *XMLModelWithAtt
 func (client *XMLClient) NewXMLModelWithDictionaryValueClient() *XMLModelWithDictionaryValueClient {
 	return &XMLModelWithDictionaryValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -37,6 +41,7 @@ func (client *XMLClient) NewXMLModelWithDictionaryValueClient() *XMLModelWithDic
 func (client *XMLClient) NewXMLModelWithEmptyArrayValueClient() *XMLModelWithEmptyArrayValueClient {
 	return &XMLModelWithEmptyArrayValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -44,6 +49,7 @@ func (client *XMLClient) NewXMLModelWithEmptyArrayValueClient() *XMLModelWithEmp
 func (client *XMLClient) NewXMLModelWithEncodedNamesValueClient() *XMLModelWithEncodedNamesValueClient {
 	return &XMLModelWithEncodedNamesValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -51,6 +57,7 @@ func (client *XMLClient) NewXMLModelWithEncodedNamesValueClient() *XMLModelWithE
 func (client *XMLClient) NewXMLModelWithOptionalFieldValueClient() *XMLModelWithOptionalFieldValueClient {
 	return &XMLModelWithOptionalFieldValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -58,6 +65,7 @@ func (client *XMLClient) NewXMLModelWithOptionalFieldValueClient() *XMLModelWith
 func (client *XMLClient) NewXMLModelWithRenamedArraysValueClient() *XMLModelWithRenamedArraysValueClient {
 	return &XMLModelWithRenamedArraysValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -65,6 +73,7 @@ func (client *XMLClient) NewXMLModelWithRenamedArraysValueClient() *XMLModelWith
 func (client *XMLClient) NewXMLModelWithRenamedFieldsValueClient() *XMLModelWithRenamedFieldsValueClient {
 	return &XMLModelWithRenamedFieldsValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -72,6 +81,7 @@ func (client *XMLClient) NewXMLModelWithRenamedFieldsValueClient() *XMLModelWith
 func (client *XMLClient) NewXMLModelWithSimpleArraysValueClient() *XMLModelWithSimpleArraysValueClient {
 	return &XMLModelWithSimpleArraysValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -79,6 +89,7 @@ func (client *XMLClient) NewXMLModelWithSimpleArraysValueClient() *XMLModelWithS
 func (client *XMLClient) NewXMLModelWithTextValueClient() *XMLModelWithTextValueClient {
 	return &XMLModelWithTextValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -86,6 +97,7 @@ func (client *XMLClient) NewXMLModelWithTextValueClient() *XMLModelWithTextValue
 func (client *XMLClient) NewXMLModelWithUnwrappedArrayValueClient() *XMLModelWithUnwrappedArrayValueClient {
 	return &XMLModelWithUnwrappedArrayValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -93,5 +105,6 @@ func (client *XMLClient) NewXMLModelWithUnwrappedArrayValueClient() *XMLModelWit
 func (client *XMLClient) NewXMLSimpleModelValueClient() *XMLSimpleModelValueClient {
 	return &XMLSimpleModelValueClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

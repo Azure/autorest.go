@@ -11,12 +11,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewVisibilityClient(options *azcore.ClientOptions) (*VisibilityClient, error) {
+func NewVisibilityClient(endpoint string, options *azcore.ClientOptions) (*VisibilityClient, error) {
 	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &VisibilityClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

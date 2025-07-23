@@ -15,7 +15,7 @@ import (
 )
 
 func TestServiceQuxClient_Eight(t *testing.T) {
-	client, err := defaultgroup.NewServiceClient(defaultgroup.ClientTypeDefault, nil)
+	client, err := defaultgroup.NewServiceClient("http://localhost:3000", defaultgroup.ClientTypeDefault, nil)
 	require.NoError(t, err)
 	resp, err := client.NewServiceQuxClient().Eight(context.Background(), nil)
 	require.NoError(t, err)

@@ -5,6 +5,7 @@ package objectgroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/objectgroup"
 	"generatortests/objectgroup/fake"
 	"net/http"
@@ -23,13 +24,14 @@ func TestFakeGet(t *testing.T) {
 			return
 		},
 	}
-	client, err := objectgroup.NewObjectTypeClient(&azcore.ClientOptions{
+	client, err := objectgroup.NewObjectTypeClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewObjectTypeServerTransport(&server),
 	})
 	require.NoError(t, err)
+
 	resp, err := client.Get(context.Background(), nil)
 	require.NoError(t, err)
-	require.EqualValues(t, raw, resp.RawJSON)
+	require.Equal(t, raw, resp.RawJSON)
 }
 
 func TestFakePut(t *testing.T) {
@@ -41,7 +43,7 @@ func TestFakePut(t *testing.T) {
 			return
 		},
 	}
-	client, err := objectgroup.NewObjectTypeClient(&azcore.ClientOptions{
+	client, err := objectgroup.NewObjectTypeClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewObjectTypeServerTransport(&server),
 	})
 	require.NoError(t, err)

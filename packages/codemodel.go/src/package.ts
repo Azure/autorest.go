@@ -8,86 +8,106 @@ import { CodeModelError } from './errors.js';
 import * as result from './result.js';
 import * as type from './type.js';
 
-// CodeModel contains a Go-specific abstraction over an OpenAPI (or other) description of REST endpoints.
+/** a Go-specific abstraction over REST endpoints */
 export interface CodeModel {
+  /** the info for this code model */
   info: Info;
 
-  host?: string;
-
+  /** the service type for this code model */
   type: CodeModelType;
 
+  /** the Go package name for this code model */
   packageName: string;
 
+  /** contains the options for this code model */
   options: Options;
 
-  // all of the struct model types to generate (models.go file)
+  /** all of the struct model types to generate (models.go file). can be empty */
   models: Array<type.Model | type.PolymorphicModel>;
 
-  // all of the const types to generate (constants.go file)
+  /** all of the const types to generate (constants.go file). can be empty */
   constants: Array<type.Constant>;
 
-  // all of the operation groups (i.e. clients and their methods)
-  // no clients indicates a models-only build
+  /**
+   * all of the operation clients. can be empty (models-only build)
+   */
   clients: Array<client.Client>;
 
-  // all of the parameter groups including the options types (options.go file)
+  /** all of the parameter groups including the options types (options.go file) */
   paramGroups: Array<type.Struct>;
 
-  // all of the response envelopes (responses.go file)
-  // no response envelopes indicates a models-only build
+  /** all of the response envelopes (responses.go file). can be empty */
   responseEnvelopes: Array<result.ResponseEnvelope>;
 
-  // all of the interfaces for discriminated types (interfaces.go file)
+  /** all of the interfaces for discriminated types (interfaces.go file) */
   interfaces: Array<type.Interface>;
 
-  // metadata of the package
+  /** package metadata */
   metadata?: {};
 }
 
+/** the service type that the code model represents */
 export type CodeModelType = 'azure-arm' | 'data-plane';
 
-// Info contains top-level info about the input source
+/** contains top-level info about the input source */
 export interface Info {
   title: string;
 }
 
+/** contains module information */
 export interface Module {
-  // the full module path excluding any major version suffix
+  /** the module identity excluding any major version suffix */
   name: string;
   
-  // the semantic version x.y.z[-beta.N]
+  /** the semantic version x.y.z[-beta.N]. the default value is 0.1.0 */
   version: string;
 }
 
-// Options contains global options set on the CodeModel.
+/**
+ * contains global options set on the CodeModel.
+ * most of the values come from command-line args.
+ */
 export interface Options {
+  /** the header text to emit per file. usually contains license and copyright info */
   headerText: string;
 
+  /** indicates if fakes should be emitted. the default is false */
   generateFakes: boolean;
 
+  /** indicates if tracing spans should be emitted. the default is false */
   injectSpans: boolean;
 
-  // disallowUnknownFields indicates whether or not to disallow unknown fields in the JSON unmarshaller.
-  // reproduce the behavior of https://pkg.go.dev/encoding/json#Decoder.DisallowUnknownFields
+  /**
+   * indicates whether or not to disallow unknown fields in the JSON unmarshaller.
+   * reproduce the behavior of https://pkg.go.dev/encoding/json#Decoder.DisallowUnknownFields
+   */
   disallowUnknownFields: boolean;
 
-  // NOTE: containingModule and module are mutually exclusive
-
-  // the module into which the package is being generated
+  /**
+   * the module into which the package is being generated.
+   * this is mutually exclusive with module
+   */
   containingModule?: string;
 
-  // module and containingModule are mutually exclusive
+  /**
+   * module information when emitting code as a module.
+   * this is mutually exclusive with containingModule.
+   */
   module?: Module;
 
+  /** custom version of azcore to use instead of the emitter's default value */
   azcoreVersion?: string;
 
+  /** emits Go any types as []byte containing raw JSON. the default value is false */
   rawJSONAsBytes: boolean;
 
+  /** emit slice element types by value (e.g. []string not []*string). the default value is false */
   sliceElementsByval: boolean;
 
+  /** generates example _test.go files. the default value is false */
   generateExamples: boolean;
 
-  // whether or not to gather all client parameters for the client factory.
+  /** whether or not to gather all client parameters for the client factory. the default value is true */
   factoryGatherAllParams: boolean;
 }
 

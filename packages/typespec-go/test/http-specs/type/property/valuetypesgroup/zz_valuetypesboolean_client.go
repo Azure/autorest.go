@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesBooleanClient] instead.
 type ValueTypesBooleanClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get call
@@ -46,7 +47,7 @@ func (client *ValueTypesBooleanClient) Get(ctx context.Context, options *ValueTy
 // getCreateRequest creates the Get request.
 func (client *ValueTypesBooleanClient) getCreateRequest(ctx context.Context, _ *ValueTypesBooleanClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/boolean"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +92,7 @@ func (client *ValueTypesBooleanClient) Put(ctx context.Context, body BooleanProp
 // putCreateRequest creates the Put request.
 func (client *ValueTypesBooleanClient) putCreateRequest(ctx context.Context, body BooleanProperty, _ *ValueTypesBooleanClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/boolean"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

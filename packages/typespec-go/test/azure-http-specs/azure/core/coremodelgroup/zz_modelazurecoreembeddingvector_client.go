@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ModelClient.NewModelAzureCoreEmbeddingVectorClient] instead.
 type ModelAzureCoreEmbeddingVectorClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - get an embedding vector
@@ -47,7 +48,7 @@ func (client *ModelAzureCoreEmbeddingVectorClient) Get(ctx context.Context, opti
 // getCreateRequest creates the Get request.
 func (client *ModelAzureCoreEmbeddingVectorClient) getCreateRequest(ctx context.Context, _ *ModelAzureCoreEmbeddingVectorClientGetOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/model/embeddingVector"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +95,7 @@ func (client *ModelAzureCoreEmbeddingVectorClient) Post(ctx context.Context, bod
 // postCreateRequest creates the Post request.
 func (client *ModelAzureCoreEmbeddingVectorClient) postCreateRequest(ctx context.Context, body AzureEmbeddingModel, _ *ModelAzureCoreEmbeddingVectorClientPostOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/model/embeddingVector"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +145,7 @@ func (client *ModelAzureCoreEmbeddingVectorClient) Put(ctx context.Context, body
 // putCreateRequest creates the Put request.
 func (client *ModelAzureCoreEmbeddingVectorClient) putCreateRequest(ctx context.Context, body []*int32, _ *ModelAzureCoreEmbeddingVectorClientPutOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/model/embeddingVector"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

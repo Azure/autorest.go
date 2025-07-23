@@ -19,6 +19,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type BasicClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // CreateOrReplace - Adds a user or replaces a user's fields.
@@ -56,7 +57,7 @@ func (client *BasicClient) CreateOrReplace(ctx context.Context, id int32, resour
 func (client *BasicClient) createOrReplaceCreateRequest(ctx context.Context, id int32, resource User, _ *BasicClientCreateOrReplaceOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/basic/users/{id}"
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -115,7 +116,7 @@ func (client *BasicClient) CreateOrUpdate(ctx context.Context, id int32, resourc
 func (client *BasicClient) createOrUpdateCreateRequest(ctx context.Context, id int32, resource User, _ *BasicClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/basic/users/{id}"
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -172,7 +173,7 @@ func (client *BasicClient) Delete(ctx context.Context, id int32, options *BasicC
 func (client *BasicClient) deleteCreateRequest(ctx context.Context, id int32, _ *BasicClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/basic/users/{id}"
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -218,7 +219,7 @@ func (client *BasicClient) Export(ctx context.Context, id int32, formatParam str
 func (client *BasicClient) exportCreateRequest(ctx context.Context, id int32, formatParam string, _ *BasicClientExportOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/basic/users/{id}:export"
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -272,7 +273,7 @@ func (client *BasicClient) ExportAllUsers(ctx context.Context, formatParam strin
 // exportAllUsersCreateRequest creates the ExportAllUsers request.
 func (client *BasicClient) exportAllUsersCreateRequest(ctx context.Context, formatParam string, _ *BasicClientExportAllUsersOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/basic/users:exportallusers"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -327,7 +328,7 @@ func (client *BasicClient) Get(ctx context.Context, id int32, options *BasicClie
 func (client *BasicClient) getCreateRequest(ctx context.Context, id int32, _ *BasicClientGetOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/basic/users/{id}"
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -379,7 +380,7 @@ func (client *BasicClient) NewListPager(options *BasicClientListOptions) *runtim
 // listCreateRequest creates the List request.
 func (client *BasicClient) listCreateRequest(ctx context.Context, options *BasicClientListOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/basic/users"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -15,19 +15,19 @@ import (
 )
 
 func newFilesClient(t *testing.T) *FilesClient {
-	client, err := NewFilesClient(&azcore.ClientOptions{
+	client, err := NewFilesClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewFilesClient(options *azcore.ClientOptions) (*FilesClient, error) {
+func NewFilesClient(endpoint string, options *azcore.ClientOptions) (*FilesClient, error) {
 	client, err := azcore.NewClient("filegroup.FilesClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &FilesClient{internal: client}, nil
+	return &FilesClient{internal: client, endpoint: endpoint}, nil
 }
 
 func TestGetEmptyFile(t *testing.T) {

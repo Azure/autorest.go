@@ -5,6 +5,7 @@ package additionalpropsgroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/additionalpropsgroup"
 	"generatortests/additionalpropsgroup/fake"
 	"net/http"
@@ -27,7 +28,7 @@ func TestFakeCreateAPInProperties(t *testing.T) {
 			return
 		},
 	}
-	client, err := additionalpropsgroup.NewPetsClient(&azcore.ClientOptions{
+	client, err := additionalpropsgroup.NewPetsClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewPetsServerTransport(&server),
 	})
 	require.NoError(t, err)

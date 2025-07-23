@@ -9,24 +9,15 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/stretchr/testify/require"
 )
 
 func newComplexModelClient(t *testing.T) *ComplexModelClient {
-	client, err := NewComplexModelClient(&azcore.ClientOptions{
+	client, err := NewComplexModelClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewComplexModelClient(options *azcore.ClientOptions) (*ComplexModelClient, error) {
-	client, err := azcore.NewClient("complexmodelgroup.ComplexModelClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &ComplexModelClient{internal: client}, nil
 }
 
 func TestCreate(t *testing.T) {

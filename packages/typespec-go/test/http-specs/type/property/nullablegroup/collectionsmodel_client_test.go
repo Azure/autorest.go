@@ -17,7 +17,7 @@ import (
 )
 
 func TestCollectionsModelClientGetNonNull(t *testing.T) {
-	client, err := nullablegroup.NewNullableClient(nil)
+	client, err := nullablegroup.NewNullableClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNullableCollectionsModelClient().GetNonNull(context.Background(), nil)
 	require.NoError(t, err)
@@ -35,7 +35,7 @@ func TestCollectionsModelClientGetNonNull(t *testing.T) {
 }
 
 func TestCollectionsModelClientGetNull(t *testing.T) {
-	client, err := nullablegroup.NewNullableClient(nil)
+	client, err := nullablegroup.NewNullableClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNullableCollectionsModelClient().GetNull(context.Background(), nil)
 	require.NoError(t, err)
@@ -45,7 +45,7 @@ func TestCollectionsModelClientGetNull(t *testing.T) {
 }
 
 func TestCollectionsModelClientPatchNonNull(t *testing.T) {
-	client, err := nullablegroup.NewNullableClient(nil)
+	client, err := nullablegroup.NewNullableClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNullableCollectionsModelClient().PatchNonNull(context.Background(), nullablegroup.CollectionsModelProperty{
 		NullableProperty: []*nullablegroup.InnerModel{
@@ -63,7 +63,7 @@ func TestCollectionsModelClientPatchNonNull(t *testing.T) {
 }
 
 func TestCollectionsModelClientPatchNull(t *testing.T) {
-	client, err := nullablegroup.NewNullableClient(nil)
+	client, err := nullablegroup.NewNullableClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNullableCollectionsModelClient().PatchNull(context.Background(), nullablegroup.CollectionsModelProperty{
 		NullableProperty: azcore.NullValue[[]*nullablegroup.InnerModel](),

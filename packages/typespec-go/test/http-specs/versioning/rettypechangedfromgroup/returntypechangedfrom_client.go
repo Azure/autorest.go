@@ -8,14 +8,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewReturnTypeChangedFromClient(options *azcore.ClientOptions) (*ReturnTypeChangedFromClient, error) {
+func NewReturnTypeChangedFromClient(endpoint string, options *azcore.ClientOptions) (*ReturnTypeChangedFromClient, error) {
 	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &ReturnTypeChangedFromClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
+		endpoint: endpoint,
 		version:  VersionsV2,
 	}, nil
 }

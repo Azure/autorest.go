@@ -11,12 +11,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewDictionaryClient(options *azcore.ClientOptions) (*DictionaryClient, error) {
+func NewDictionaryClient(endpoint string, options *azcore.ClientOptions) (*DictionaryClient, error) {
 	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &DictionaryClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

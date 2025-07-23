@@ -5,8 +5,6 @@
 
 package xmlgroup
 
-const host = "http://localhost:3000"
-
 type AccessTier string
 
 const (

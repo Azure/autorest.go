@@ -18,6 +18,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type DatetimeClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetInvalid - Get invalid datetime value
@@ -50,7 +51,7 @@ func (client *DatetimeClient) GetInvalid(ctx context.Context, options *DatetimeC
 // getInvalidCreateRequest creates the GetInvalid request.
 func (client *DatetimeClient) getInvalidCreateRequest(ctx context.Context, _ *DatetimeClientGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/datetime/invalid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +101,7 @@ func (client *DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTime(ctx con
 // getLocalNegativeOffsetLowercaseMaxDateTimeCreateRequest creates the GetLocalNegativeOffsetLowercaseMaxDateTime request.
 func (client *DatetimeClient) getLocalNegativeOffsetLowercaseMaxDateTimeCreateRequest(ctx context.Context, _ *DatetimeClientGetLocalNegativeOffsetLowercaseMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/localnegativeoffset/lowercase"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -150,7 +151,7 @@ func (client *DatetimeClient) GetLocalNegativeOffsetMinDateTime(ctx context.Cont
 // getLocalNegativeOffsetMinDateTimeCreateRequest creates the GetLocalNegativeOffsetMinDateTime request.
 func (client *DatetimeClient) getLocalNegativeOffsetMinDateTimeCreateRequest(ctx context.Context, _ *DatetimeClientGetLocalNegativeOffsetMinDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/min/localnegativeoffset"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -200,7 +201,7 @@ func (client *DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTime(ctx con
 // getLocalNegativeOffsetUppercaseMaxDateTimeCreateRequest creates the GetLocalNegativeOffsetUppercaseMaxDateTime request.
 func (client *DatetimeClient) getLocalNegativeOffsetUppercaseMaxDateTimeCreateRequest(ctx context.Context, _ *DatetimeClientGetLocalNegativeOffsetUppercaseMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/localnegativeoffset/uppercase"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -250,7 +251,7 @@ func (client *DatetimeClient) GetLocalNoOffsetMinDateTime(ctx context.Context, o
 // getLocalNoOffsetMinDateTimeCreateRequest creates the GetLocalNoOffsetMinDateTime request.
 func (client *DatetimeClient) getLocalNoOffsetMinDateTimeCreateRequest(ctx context.Context, _ *DatetimeClientGetLocalNoOffsetMinDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/min/localnooffset"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -300,7 +301,7 @@ func (client *DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTime(ctx con
 // getLocalPositiveOffsetLowercaseMaxDateTimeCreateRequest creates the GetLocalPositiveOffsetLowercaseMaxDateTime request.
 func (client *DatetimeClient) getLocalPositiveOffsetLowercaseMaxDateTimeCreateRequest(ctx context.Context, _ *DatetimeClientGetLocalPositiveOffsetLowercaseMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/localpositiveoffset/lowercase"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -350,7 +351,7 @@ func (client *DatetimeClient) GetLocalPositiveOffsetMinDateTime(ctx context.Cont
 // getLocalPositiveOffsetMinDateTimeCreateRequest creates the GetLocalPositiveOffsetMinDateTime request.
 func (client *DatetimeClient) getLocalPositiveOffsetMinDateTimeCreateRequest(ctx context.Context, _ *DatetimeClientGetLocalPositiveOffsetMinDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/min/localpositiveoffset"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -400,7 +401,7 @@ func (client *DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTime(ctx con
 // getLocalPositiveOffsetUppercaseMaxDateTimeCreateRequest creates the GetLocalPositiveOffsetUppercaseMaxDateTime request.
 func (client *DatetimeClient) getLocalPositiveOffsetUppercaseMaxDateTimeCreateRequest(ctx context.Context, _ *DatetimeClientGetLocalPositiveOffsetUppercaseMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/localpositiveoffset/uppercase"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -449,7 +450,7 @@ func (client *DatetimeClient) GetNull(ctx context.Context, options *DatetimeClie
 // getNullCreateRequest creates the GetNull request.
 func (client *DatetimeClient) getNullCreateRequest(ctx context.Context, _ *DatetimeClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/datetime/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -498,7 +499,7 @@ func (client *DatetimeClient) GetOverflow(ctx context.Context, options *Datetime
 // getOverflowCreateRequest creates the GetOverflow request.
 func (client *DatetimeClient) getOverflowCreateRequest(ctx context.Context, _ *DatetimeClientGetOverflowOptions) (*policy.Request, error) {
 	urlPath := "/datetime/overflow"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -548,7 +549,7 @@ func (client *DatetimeClient) GetUTCLowercaseMaxDateTime(ctx context.Context, op
 // getUTCLowercaseMaxDateTimeCreateRequest creates the GetUTCLowercaseMaxDateTime request.
 func (client *DatetimeClient) getUTCLowercaseMaxDateTimeCreateRequest(ctx context.Context, _ *DatetimeClientGetUTCLowercaseMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/utc/lowercase"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -598,7 +599,7 @@ func (client *DatetimeClient) GetUTCMinDateTime(ctx context.Context, options *Da
 // getUTCMinDateTimeCreateRequest creates the GetUTCMinDateTime request.
 func (client *DatetimeClient) getUTCMinDateTimeCreateRequest(ctx context.Context, _ *DatetimeClientGetUTCMinDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/min/utc"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -648,7 +649,7 @@ func (client *DatetimeClient) GetUTCUppercaseMaxDateTime(ctx context.Context, op
 // getUTCUppercaseMaxDateTimeCreateRequest creates the GetUTCUppercaseMaxDateTime request.
 func (client *DatetimeClient) getUTCUppercaseMaxDateTimeCreateRequest(ctx context.Context, _ *DatetimeClientGetUTCUppercaseMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/utc/uppercase"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -699,7 +700,7 @@ func (client *DatetimeClient) GetUTCUppercaseMaxDateTime7Digits(ctx context.Cont
 // getUTCUppercaseMaxDateTime7DigitsCreateRequest creates the GetUTCUppercaseMaxDateTime7Digits request.
 func (client *DatetimeClient) getUTCUppercaseMaxDateTime7DigitsCreateRequest(ctx context.Context, _ *DatetimeClientGetUTCUppercaseMaxDateTime7DigitsOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/utc7ms/uppercase"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -748,7 +749,7 @@ func (client *DatetimeClient) GetUnderflow(ctx context.Context, options *Datetim
 // getUnderflowCreateRequest creates the GetUnderflow request.
 func (client *DatetimeClient) getUnderflowCreateRequest(ctx context.Context, _ *DatetimeClientGetUnderflowOptions) (*policy.Request, error) {
 	urlPath := "/datetime/underflow"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -798,7 +799,7 @@ func (client *DatetimeClient) PutLocalNegativeOffsetMaxDateTime(ctx context.Cont
 // putLocalNegativeOffsetMaxDateTimeCreateRequest creates the PutLocalNegativeOffsetMaxDateTime request.
 func (client *DatetimeClient) putLocalNegativeOffsetMaxDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, _ *DatetimeClientPutLocalNegativeOffsetMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/localnegativeoffset"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -840,7 +841,7 @@ func (client *DatetimeClient) PutLocalNegativeOffsetMinDateTime(ctx context.Cont
 // putLocalNegativeOffsetMinDateTimeCreateRequest creates the PutLocalNegativeOffsetMinDateTime request.
 func (client *DatetimeClient) putLocalNegativeOffsetMinDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, _ *DatetimeClientPutLocalNegativeOffsetMinDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/min/localnegativeoffset"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -882,7 +883,7 @@ func (client *DatetimeClient) PutLocalPositiveOffsetMaxDateTime(ctx context.Cont
 // putLocalPositiveOffsetMaxDateTimeCreateRequest creates the PutLocalPositiveOffsetMaxDateTime request.
 func (client *DatetimeClient) putLocalPositiveOffsetMaxDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, _ *DatetimeClientPutLocalPositiveOffsetMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/localpositiveoffset"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -924,7 +925,7 @@ func (client *DatetimeClient) PutLocalPositiveOffsetMinDateTime(ctx context.Cont
 // putLocalPositiveOffsetMinDateTimeCreateRequest creates the PutLocalPositiveOffsetMinDateTime request.
 func (client *DatetimeClient) putLocalPositiveOffsetMinDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, _ *DatetimeClientPutLocalPositiveOffsetMinDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/min/localpositiveoffset"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -966,7 +967,7 @@ func (client *DatetimeClient) PutUTCMaxDateTime(ctx context.Context, datetimeBod
 // putUTCMaxDateTimeCreateRequest creates the PutUTCMaxDateTime request.
 func (client *DatetimeClient) putUTCMaxDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, _ *DatetimeClientPutUTCMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/utc"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1009,7 +1010,7 @@ func (client *DatetimeClient) PutUTCMaxDateTime7Digits(ctx context.Context, date
 // putUTCMaxDateTime7DigitsCreateRequest creates the PutUTCMaxDateTime7Digits request.
 func (client *DatetimeClient) putUTCMaxDateTime7DigitsCreateRequest(ctx context.Context, datetimeBody time.Time, _ *DatetimeClientPutUTCMaxDateTime7DigitsOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/utc7ms"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1051,7 +1052,7 @@ func (client *DatetimeClient) PutUTCMinDateTime(ctx context.Context, datetimeBod
 // putUTCMinDateTimeCreateRequest creates the PutUTCMinDateTime request.
 func (client *DatetimeClient) putUTCMinDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, _ *DatetimeClientPutUTCMinDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/min/utc"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

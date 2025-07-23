@@ -1,6 +1,20 @@
 # Release History
 
-## 0.7.0 (unreleased)
+## 0.7.1 (unreleased)
+
+### Bugs Fixed
+
+* For internal enums, don't export the "possible values" helper function.
+* Fixed missing import of the `io` package in fakes when `rawjson-as-bytes` is enabled.
+* Fixed linter error in certain `UnmarshalJSON` implementations due to unused `var err error`.
+
+### Other Changes
+
+* Non-ARM clients always have an `endpoint` field.
+* Only rename the `options` parameter when it collides with another required parameter with the same name.
+* Improve generic doc comment for clients when the name is simply `Client`.
+
+## 0.7.0 (2025-07-17)
 
 ### Breaking Changes
 

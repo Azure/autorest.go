@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [XMLClient.NewXMLModelWithTextValueClient] instead.
 type XMLModelWithTextValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -47,7 +48,7 @@ func (client *XMLModelWithTextValueClient) Get(ctx context.Context, options *XML
 // getCreateRequest creates the Get request.
 func (client *XMLModelWithTextValueClient) getCreateRequest(ctx context.Context, _ *XMLModelWithTextValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/payload/xml/modelWithText"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +96,7 @@ func (client *XMLModelWithTextValueClient) Put(ctx context.Context, input ModelW
 // putCreateRequest creates the Put request.
 func (client *XMLModelWithTextValueClient) putCreateRequest(ctx context.Context, input ModelWithText, _ *XMLModelWithTextValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/payload/xml/modelWithText"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

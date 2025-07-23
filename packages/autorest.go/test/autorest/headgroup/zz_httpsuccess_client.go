@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type HTTPSuccessClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Head200 - Return 200 status code if successful
@@ -47,7 +48,7 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 // head200CreateRequest creates the Head200 request.
 func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, _ *HTTPSuccessClientHead200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +83,7 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 // head204CreateRequest creates the Head204 request.
 func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, _ *HTTPSuccessClientHead204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +118,7 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 // head404CreateRequest creates the Head404 request.
 func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, _ *HTTPSuccessClientHead404Options) (*policy.Request, error) {
 	urlPath := "/http/success/404"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

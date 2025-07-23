@@ -11,12 +11,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewEnumDiscriminatorClient(options *azcore.ClientOptions) (*EnumDiscriminatorClient, error) {
+func NewEnumDiscriminatorClient(endpoint string, options *azcore.ClientOptions) (*EnumDiscriminatorClient, error) {
 	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &EnumDiscriminatorClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

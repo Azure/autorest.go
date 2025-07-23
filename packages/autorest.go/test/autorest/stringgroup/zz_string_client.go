@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type StringClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetBase64Encoded - Get value that is base64 encoded
@@ -49,7 +50,7 @@ func (client *StringClient) GetBase64Encoded(ctx context.Context, options *Strin
 // getBase64EncodedCreateRequest creates the GetBase64Encoded request.
 func (client *StringClient) getBase64EncodedCreateRequest(ctx context.Context, _ *StringClientGetBase64EncodedOptions) (*policy.Request, error) {
 	urlPath := "/string/base64Encoding"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ func (client *StringClient) GetBase64URLEncoded(ctx context.Context, options *St
 // getBase64URLEncodedCreateRequest creates the GetBase64URLEncoded request.
 func (client *StringClient) getBase64URLEncodedCreateRequest(ctx context.Context, _ *StringClientGetBase64URLEncodedOptions) (*policy.Request, error) {
 	urlPath := "/string/base64UrlEncoding"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +145,7 @@ func (client *StringClient) GetEmpty(ctx context.Context, options *StringClientG
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *StringClient) getEmptyCreateRequest(ctx context.Context, _ *StringClientGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/string/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -191,7 +192,7 @@ func (client *StringClient) GetMBCS(ctx context.Context, options *StringClientGe
 // getMBCSCreateRequest creates the GetMBCS request.
 func (client *StringClient) getMBCSCreateRequest(ctx context.Context, _ *StringClientGetMBCSOptions) (*policy.Request, error) {
 	urlPath := "/string/mbcs"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -238,7 +239,7 @@ func (client *StringClient) GetNotProvided(ctx context.Context, options *StringC
 // getNotProvidedCreateRequest creates the GetNotProvided request.
 func (client *StringClient) getNotProvidedCreateRequest(ctx context.Context, _ *StringClientGetNotProvidedOptions) (*policy.Request, error) {
 	urlPath := "/string/notProvided"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -285,7 +286,7 @@ func (client *StringClient) GetNull(ctx context.Context, options *StringClientGe
 // getNullCreateRequest creates the GetNull request.
 func (client *StringClient) getNullCreateRequest(ctx context.Context, _ *StringClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/string/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -333,7 +334,7 @@ func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context, options
 // getNullBase64URLEncodedCreateRequest creates the GetNullBase64URLEncoded request.
 func (client *StringClient) getNullBase64URLEncodedCreateRequest(ctx context.Context, _ *StringClientGetNullBase64URLEncodedOptions) (*policy.Request, error) {
 	urlPath := "/string/nullBase64UrlEncoding"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -381,7 +382,7 @@ func (client *StringClient) GetWhitespace(ctx context.Context, options *StringCl
 // getWhitespaceCreateRequest creates the GetWhitespace request.
 func (client *StringClient) getWhitespaceCreateRequest(ctx context.Context, _ *StringClientGetWhitespaceOptions) (*policy.Request, error) {
 	urlPath := "/string/whitespace"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -429,7 +430,7 @@ func (client *StringClient) PutBase64URLEncoded(ctx context.Context, stringBody 
 // putBase64URLEncodedCreateRequest creates the PutBase64URLEncoded request.
 func (client *StringClient) putBase64URLEncodedCreateRequest(ctx context.Context, stringBody []byte, _ *StringClientPutBase64URLEncodedOptions) (*policy.Request, error) {
 	urlPath := "/string/base64UrlEncoding"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -469,7 +470,7 @@ func (client *StringClient) PutEmpty(ctx context.Context, options *StringClientP
 // putEmptyCreateRequest creates the PutEmpty request.
 func (client *StringClient) putEmptyCreateRequest(ctx context.Context, _ *StringClientPutEmptyOptions) (*policy.Request, error) {
 	urlPath := "/string/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -509,7 +510,7 @@ func (client *StringClient) PutMBCS(ctx context.Context, options *StringClientPu
 // putMBCSCreateRequest creates the PutMBCS request.
 func (client *StringClient) putMBCSCreateRequest(ctx context.Context, _ *StringClientPutMBCSOptions) (*policy.Request, error) {
 	urlPath := "/string/mbcs"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -550,7 +551,7 @@ func (client *StringClient) PutNull(ctx context.Context, stringBody string, opti
 // putNullCreateRequest creates the PutNull request.
 func (client *StringClient) putNullCreateRequest(ctx context.Context, stringBody string, _ *StringClientPutNullOptions) (*policy.Request, error) {
 	urlPath := "/string/null"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -591,7 +592,7 @@ func (client *StringClient) PutWhitespace(ctx context.Context, options *StringCl
 // putWhitespaceCreateRequest creates the PutWhitespace request.
 func (client *StringClient) putWhitespaceCreateRequest(ctx context.Context, _ *StringClientPutWhitespaceOptions) (*policy.Request, error) {
 	urlPath := "/string/whitespace"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

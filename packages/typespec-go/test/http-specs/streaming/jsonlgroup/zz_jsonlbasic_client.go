@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [JsonlClient.NewJsonlBasicClient] instead.
 type JsonlBasicClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Receive -
@@ -46,7 +47,7 @@ func (client *JsonlBasicClient) Receive(ctx context.Context, options *JsonlBasic
 // receiveCreateRequest creates the Receive request.
 func (client *JsonlBasicClient) receiveCreateRequest(ctx context.Context, _ *JsonlBasicClientReceiveOptions) (*policy.Request, error) {
 	urlPath := "/streaming/jsonl/basic/receive"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,7 @@ func (client *JsonlBasicClient) Send(ctx context.Context, options *JsonlBasicCli
 // sendCreateRequest creates the Send request.
 func (client *JsonlBasicClient) sendCreateRequest(ctx context.Context, _ *JsonlBasicClientSendOptions) (*policy.Request, error) {
 	urlPath := "/streaming/jsonl/basic/send"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

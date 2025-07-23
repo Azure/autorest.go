@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type ByteClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetEmpty - Get empty byte value ”
@@ -49,7 +50,7 @@ func (client *ByteClient) GetEmpty(ctx context.Context, options *ByteClientGetEm
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *ByteClient) getEmptyCreateRequest(ctx context.Context, _ *ByteClientGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/byte/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +97,7 @@ func (client *ByteClient) GetInvalid(ctx context.Context, options *ByteClientGet
 // getInvalidCreateRequest creates the GetInvalid request.
 func (client *ByteClient) getInvalidCreateRequest(ctx context.Context, _ *ByteClientGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/byte/invalid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +144,7 @@ func (client *ByteClient) GetNonASCII(ctx context.Context, options *ByteClientGe
 // getNonASCIICreateRequest creates the GetNonASCII request.
 func (client *ByteClient) getNonASCIICreateRequest(ctx context.Context, _ *ByteClientGetNonASCIIOptions) (*policy.Request, error) {
 	urlPath := "/byte/nonAscii"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +191,7 @@ func (client *ByteClient) GetNull(ctx context.Context, options *ByteClientGetNul
 // getNullCreateRequest creates the GetNull request.
 func (client *ByteClient) getNullCreateRequest(ctx context.Context, _ *ByteClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/byte/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -237,7 +238,7 @@ func (client *ByteClient) PutNonASCII(ctx context.Context, byteBody []byte, opti
 // putNonASCIICreateRequest creates the PutNonASCII request.
 func (client *ByteClient) putNonASCIICreateRequest(ctx context.Context, byteBody []byte, _ *ByteClientPutNonASCIIOptions) (*policy.Request, error) {
 	urlPath := "/byte/nonAscii"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

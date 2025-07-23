@@ -10,13 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewPathItemsClient(globalStringPath string, globalStringQuery *string, options *azcore.ClientOptions) (*PathItemsClient, error) {
+func NewPathItemsClient(endpoint string, globalStringPath string, globalStringQuery *string, options *azcore.ClientOptions) (*PathItemsClient, error) {
 	client, err := azcore.NewClient("urlgroup.PathItemsClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &PathItemsClient{
 		internal:          client,
+		endpoint:          endpoint,
 		globalStringPath:  globalStringPath,
 		globalStringQuery: globalStringQuery,
 	}, nil

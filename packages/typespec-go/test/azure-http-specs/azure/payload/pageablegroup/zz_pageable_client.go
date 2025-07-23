@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type PageableClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewListPager - List users
@@ -47,7 +48,7 @@ func (client *PageableClient) NewListPager(options *PageableClientListOptions) *
 // listCreateRequest creates the List request.
 func (client *PageableClient) listCreateRequest(ctx context.Context, options *PageableClientListOptions) (*policy.Request, error) {
 	urlPath := "/azure/payload/pageable"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

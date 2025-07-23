@@ -18,6 +18,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type FormdataClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // UploadFile - Upload file
@@ -51,7 +52,7 @@ func (client *FormdataClient) UploadFile(ctx context.Context, fileContent io.Rea
 // uploadFileCreateRequest creates the UploadFile request.
 func (client *FormdataClient) uploadFileCreateRequest(ctx context.Context, fileContent io.ReadSeekCloser, fileName string, _ *FormdataClientUploadFileOptions) (*policy.Request, error) {
 	urlPath := "/formdata/stream/uploadfile"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent
 // uploadFileViaBodyCreateRequest creates the UploadFileViaBody request.
 func (client *FormdataClient) uploadFileViaBodyCreateRequest(ctx context.Context, fileContent io.ReadSeekCloser, _ *FormdataClientUploadFileViaBodyOptions) (*policy.Request, error) {
 	urlPath := "/formdata/stream/uploadfile"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -139,7 +140,7 @@ func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []io.
 // uploadFilesCreateRequest creates the UploadFiles request.
 func (client *FormdataClient) uploadFilesCreateRequest(ctx context.Context, fileContent []io.ReadSeekCloser, _ *FormdataClientUploadFilesOptions) (*policy.Request, error) {
 	urlPath := "/formdata/stream/uploadfiles"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

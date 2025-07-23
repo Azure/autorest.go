@@ -15,7 +15,7 @@ import (
 )
 
 func TestRpcClient_BeginLongRunningRPC(t *testing.T) {
-	client, err := lrorpcgroup.NewRPCClient(nil)
+	client, err := lrorpcgroup.NewRPCClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	poller, err := client.BeginLongRunningRPC(context.Background(), lrorpcgroup.GenerationOptions{
 		Prompt: to.Ptr("text"),

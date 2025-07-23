@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type ConditionalRequestClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // HeadIfModifiedSince - Check when only If-Modified-Since in header is defined.
@@ -46,7 +47,7 @@ func (client *ConditionalRequestClient) HeadIfModifiedSince(ctx context.Context,
 // headIfModifiedSinceCreateRequest creates the HeadIfModifiedSince request.
 func (client *ConditionalRequestClient) headIfModifiedSinceCreateRequest(ctx context.Context, options *ConditionalRequestClientHeadIfModifiedSinceOptions) (*policy.Request, error) {
 	urlPath := "/special-headers/conditional-request/if-modified-since"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +85,7 @@ func (client *ConditionalRequestClient) PostIfMatch(ctx context.Context, options
 // postIfMatchCreateRequest creates the PostIfMatch request.
 func (client *ConditionalRequestClient) postIfMatchCreateRequest(ctx context.Context, options *ConditionalRequestClientPostIfMatchOptions) (*policy.Request, error) {
 	urlPath := "/special-headers/conditional-request/if-match"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +123,7 @@ func (client *ConditionalRequestClient) PostIfNoneMatch(ctx context.Context, opt
 // postIfNoneMatchCreateRequest creates the PostIfNoneMatch request.
 func (client *ConditionalRequestClient) postIfNoneMatchCreateRequest(ctx context.Context, options *ConditionalRequestClientPostIfNoneMatchOptions) (*policy.Request, error) {
 	urlPath := "/special-headers/conditional-request/if-none-match"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +161,7 @@ func (client *ConditionalRequestClient) PostIfUnmodifiedSince(ctx context.Contex
 // postIfUnmodifiedSinceCreateRequest creates the PostIfUnmodifiedSince request.
 func (client *ConditionalRequestClient) postIfUnmodifiedSinceCreateRequest(ctx context.Context, options *ConditionalRequestClientPostIfUnmodifiedSinceOptions) (*policy.Request, error) {
 	urlPath := "/special-headers/conditional-request/if-unmodified-since"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

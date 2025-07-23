@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [AccessClient.NewAccessPublicOperationClient] instead.
 type AccessPublicOperationClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NoDecoratorInPublic -
@@ -47,7 +48,7 @@ func (client *AccessPublicOperationClient) NoDecoratorInPublic(ctx context.Conte
 // noDecoratorInPublicCreateRequest creates the NoDecoratorInPublic request.
 func (client *AccessPublicOperationClient) noDecoratorInPublicCreateRequest(ctx context.Context, name string, _ *AccessPublicOperationClientNoDecoratorInPublicOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/access/publicOperation/noDecoratorInPublic"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +97,7 @@ func (client *AccessPublicOperationClient) PublicDecoratorInPublic(ctx context.C
 // publicDecoratorInPublicCreateRequest creates the PublicDecoratorInPublic request.
 func (client *AccessPublicOperationClient) publicDecoratorInPublicCreateRequest(ctx context.Context, name string, _ *AccessPublicOperationClientPublicDecoratorInPublicOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/access/publicOperation/publicDecoratorInPublic"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

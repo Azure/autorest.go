@@ -19,18 +19,19 @@ func newLrosaDsClient(t *testing.T) *LROSADsClient {
 	options.Retry.RetryDelay = time.Second
 	options.TracingProvider = generatortests.NewTracingProvider(t)
 	options.Transport = httpClientWithCookieJar()
-	client, err := NewLROSADsClient(&options)
+	client, err := NewLROSADsClient(generatortests.Host, &options)
 	require.NoError(t, err)
 	return client
 }
 
-func NewLROSADsClient(options *azcore.ClientOptions) (*LROSADsClient, error) {
+func NewLROSADsClient(endpoint string, options *azcore.ClientOptions) (*LROSADsClient, error) {
 	cl, err := azcore.NewClient("lrogroup.LROSADsClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &LROSADsClient{
 		internal: cl,
+		endpoint: endpoint,
 	}
 	return client, nil
 }

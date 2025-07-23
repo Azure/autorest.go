@@ -5,8 +5,6 @@
 
 package stringgroup
 
-const host = "http://localhost:3000"
-
 // Colors - Referenced Color Enum Description.
 type Colors string
 

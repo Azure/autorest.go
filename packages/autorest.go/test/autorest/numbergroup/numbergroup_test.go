@@ -9,25 +9,16 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
 
 func newNumberClient(t *testing.T) *NumberClient {
-	client, err := NewNumberClient(&azcore.ClientOptions{
+	client, err := NewNumberClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewNumberClient(options *azcore.ClientOptions) (*NumberClient, error) {
-	client, err := azcore.NewClient("numbergroup.NumberClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &NumberClient{internal: client}, nil
 }
 
 func TestNumberGetBigDecimal(t *testing.T) {

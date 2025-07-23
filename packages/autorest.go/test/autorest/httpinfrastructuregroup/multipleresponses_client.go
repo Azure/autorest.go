@@ -10,10 +10,10 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewMultipleResponsesClient(options *azcore.ClientOptions) (*MultipleResponsesClient, error) {
+func NewMultipleResponsesClient(endpoint string, options *azcore.ClientOptions) (*MultipleResponsesClient, error) {
 	client, err := azcore.NewClient("httpinfrastructuregroup.MultipleResponsesClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &MultipleResponsesClient{internal: client}, nil
+	return &MultipleResponsesClient{internal: client, endpoint: endpoint}, nil
 }

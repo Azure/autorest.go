@@ -18,19 +18,19 @@ import (
 )
 
 func newPrimitiveClient(t *testing.T) *PrimitiveClient {
-	client, err := NewPrimitiveClient(&azcore.ClientOptions{
+	client, err := NewPrimitiveClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewPrimitiveClient(options *azcore.ClientOptions) (*PrimitiveClient, error) {
+func NewPrimitiveClient(endpoint string, options *azcore.ClientOptions) (*PrimitiveClient, error) {
 	client, err := azcore.NewClient("complexgroup.PrimitiveClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &PrimitiveClient{internal: client}, nil
+	return &PrimitiveClient{internal: client, endpoint: endpoint}, nil
 }
 
 func TestPrimitiveGetInt(t *testing.T) {

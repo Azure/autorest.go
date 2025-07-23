@@ -22,17 +22,17 @@ func newHTTPRetryClient(t *testing.T) *HTTPRetryClient {
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.TracingProvider = generatortests.NewTracingProvider(t)
 	options.Transport = httpClientWithCookieJar()
-	client, err := NewHTTPRetryClient(&options)
+	client, err := NewHTTPRetryClient(generatortests.Host, &options)
 	require.NoError(t, err)
 	return client
 }
 
-func NewHTTPRetryClient(options *azcore.ClientOptions) (*HTTPRetryClient, error) {
+func NewHTTPRetryClient(endpoint string, options *azcore.ClientOptions) (*HTTPRetryClient, error) {
 	client, err := azcore.NewClient("httpinfrastructuregroup.HTTPRetryClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &HTTPRetryClient{internal: client}, nil
+	return &HTTPRetryClient{internal: client, endpoint: endpoint}, nil
 }
 
 func httpClientWithCookieJar() policy.Transporter {

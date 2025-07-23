@@ -12,7 +12,7 @@ import (
 )
 
 func TestBasicServiceOperationGroupClient_Basic_Success(t *testing.T) {
-	client, err := NewBasicServiceOperationGroupClient(nil)
+	client, err := NewBasicServiceOperationGroupClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	reqBody := ActionRequest{
 		StringProperty: to.Ptr("text"),

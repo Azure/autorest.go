@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type PrimitiveClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetBool - Get complex types with bool properties
@@ -49,7 +50,7 @@ func (client *PrimitiveClient) GetBool(ctx context.Context, options *PrimitiveCl
 // getBoolCreateRequest creates the GetBool request.
 func (client *PrimitiveClient) getBoolCreateRequest(ctx context.Context, _ *PrimitiveClientGetBoolOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/bool"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +97,7 @@ func (client *PrimitiveClient) GetByte(ctx context.Context, options *PrimitiveCl
 // getByteCreateRequest creates the GetByte request.
 func (client *PrimitiveClient) getByteCreateRequest(ctx context.Context, _ *PrimitiveClientGetByteOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/byte"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +144,7 @@ func (client *PrimitiveClient) GetDate(ctx context.Context, options *PrimitiveCl
 // getDateCreateRequest creates the GetDate request.
 func (client *PrimitiveClient) getDateCreateRequest(ctx context.Context, _ *PrimitiveClientGetDateOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/date"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +191,7 @@ func (client *PrimitiveClient) GetDateTime(ctx context.Context, options *Primiti
 // getDateTimeCreateRequest creates the GetDateTime request.
 func (client *PrimitiveClient) getDateTimeCreateRequest(ctx context.Context, _ *PrimitiveClientGetDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/datetime"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -238,7 +239,7 @@ func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *
 // getDateTimeRFC1123CreateRequest creates the GetDateTimeRFC1123 request.
 func (client *PrimitiveClient) getDateTimeRFC1123CreateRequest(ctx context.Context, _ *PrimitiveClientGetDateTimeRFC1123Options) (*policy.Request, error) {
 	urlPath := "/complex/primitive/datetimerfc1123"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -285,7 +286,7 @@ func (client *PrimitiveClient) GetDouble(ctx context.Context, options *Primitive
 // getDoubleCreateRequest creates the GetDouble request.
 func (client *PrimitiveClient) getDoubleCreateRequest(ctx context.Context, _ *PrimitiveClientGetDoubleOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/double"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -332,7 +333,7 @@ func (client *PrimitiveClient) GetDuration(ctx context.Context, options *Primiti
 // getDurationCreateRequest creates the GetDuration request.
 func (client *PrimitiveClient) getDurationCreateRequest(ctx context.Context, _ *PrimitiveClientGetDurationOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/duration"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -379,7 +380,7 @@ func (client *PrimitiveClient) GetFloat(ctx context.Context, options *PrimitiveC
 // getFloatCreateRequest creates the GetFloat request.
 func (client *PrimitiveClient) getFloatCreateRequest(ctx context.Context, _ *PrimitiveClientGetFloatOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/float"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -426,7 +427,7 @@ func (client *PrimitiveClient) GetInt(ctx context.Context, options *PrimitiveCli
 // getIntCreateRequest creates the GetInt request.
 func (client *PrimitiveClient) getIntCreateRequest(ctx context.Context, _ *PrimitiveClientGetIntOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/integer"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -473,7 +474,7 @@ func (client *PrimitiveClient) GetLong(ctx context.Context, options *PrimitiveCl
 // getLongCreateRequest creates the GetLong request.
 func (client *PrimitiveClient) getLongCreateRequest(ctx context.Context, _ *PrimitiveClientGetLongOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/long"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -520,7 +521,7 @@ func (client *PrimitiveClient) GetString(ctx context.Context, options *Primitive
 // getStringCreateRequest creates the GetString request.
 func (client *PrimitiveClient) getStringCreateRequest(ctx context.Context, _ *PrimitiveClientGetStringOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/string"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -567,7 +568,7 @@ func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanW
 // putBoolCreateRequest creates the PutBool request.
 func (client *PrimitiveClient) putBoolCreateRequest(ctx context.Context, complexBody BooleanWrapper, _ *PrimitiveClientPutBoolOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/bool"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -608,7 +609,7 @@ func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrap
 // putByteCreateRequest creates the PutByte request.
 func (client *PrimitiveClient) putByteCreateRequest(ctx context.Context, complexBody ByteWrapper, _ *PrimitiveClientPutByteOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/byte"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -649,7 +650,7 @@ func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrap
 // putDateCreateRequest creates the PutDate request.
 func (client *PrimitiveClient) putDateCreateRequest(ctx context.Context, complexBody DateWrapper, _ *PrimitiveClientPutDateOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/date"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -690,7 +691,7 @@ func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody Date
 // putDateTimeCreateRequest creates the PutDateTime request.
 func (client *PrimitiveClient) putDateTimeCreateRequest(ctx context.Context, complexBody DatetimeWrapper, _ *PrimitiveClientPutDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/datetime"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -732,7 +733,7 @@ func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBo
 // putDateTimeRFC1123CreateRequest creates the PutDateTimeRFC1123 request.
 func (client *PrimitiveClient) putDateTimeRFC1123CreateRequest(ctx context.Context, complexBody Datetimerfc1123Wrapper, _ *PrimitiveClientPutDateTimeRFC1123Options) (*policy.Request, error) {
 	urlPath := "/complex/primitive/datetimerfc1123"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -773,7 +774,7 @@ func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody Double
 // putDoubleCreateRequest creates the PutDouble request.
 func (client *PrimitiveClient) putDoubleCreateRequest(ctx context.Context, complexBody DoubleWrapper, _ *PrimitiveClientPutDoubleOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/double"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -814,7 +815,7 @@ func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody Dura
 // putDurationCreateRequest creates the PutDuration request.
 func (client *PrimitiveClient) putDurationCreateRequest(ctx context.Context, complexBody DurationWrapper, _ *PrimitiveClientPutDurationOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/duration"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -855,7 +856,7 @@ func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWr
 // putFloatCreateRequest creates the PutFloat request.
 func (client *PrimitiveClient) putFloatCreateRequest(ctx context.Context, complexBody FloatWrapper, _ *PrimitiveClientPutFloatOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/float"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -896,7 +897,7 @@ func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrappe
 // putIntCreateRequest creates the PutInt request.
 func (client *PrimitiveClient) putIntCreateRequest(ctx context.Context, complexBody IntWrapper, _ *PrimitiveClientPutIntOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/integer"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -937,7 +938,7 @@ func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrap
 // putLongCreateRequest creates the PutLong request.
 func (client *PrimitiveClient) putLongCreateRequest(ctx context.Context, complexBody LongWrapper, _ *PrimitiveClientPutLongOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/long"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -978,7 +979,7 @@ func (client *PrimitiveClient) PutString(ctx context.Context, complexBody String
 // putStringCreateRequest creates the PutString request.
 func (client *PrimitiveClient) putStringCreateRequest(ctx context.Context, complexBody StringWrapper, _ *PrimitiveClientPutStringOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/string"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

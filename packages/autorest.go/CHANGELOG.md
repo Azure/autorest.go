@@ -1,6 +1,6 @@
 # Release History
 
-## 4.0.0-preview.73 (unreleased)
+## 4.0.0-preview.73 (2025-07-22)
 
 ### Breaking Changes
 
@@ -12,6 +12,7 @@
 * Length check for `regexp` matches includes full match.
 * The `moduleName` and `moduleVersion` constants have been moved out of `constants.go` and into `version.go`.
   * The `version.go` file is emitted for all SDK flavors.
+* Non-ARM clients always have an `endpoint` field.
 
 ## 4.0.0-preview.72 (2025-04-18)
 

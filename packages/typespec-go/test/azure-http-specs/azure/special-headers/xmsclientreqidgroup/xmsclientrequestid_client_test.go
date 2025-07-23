@@ -18,7 +18,7 @@ func TestXMSClientRequestIDClient_Get(t *testing.T) {
 	_ = xmsclientreqidgroup.XMSClientRequestIDClientGetOptions{
 		ClientRequestID: nil, // this should evaporate
 	}
-	client, err := xmsclientreqidgroup.NewXMSClientRequestIDClient(nil)
+	client, err := xmsclientreqidgroup.NewXMSClientRequestIDClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	var httpResp *http.Response
 	resp, err := client.Get(policy.WithCaptureResponse(context.Background(), &httpResp), nil)

@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [DictionaryClient.NewDictionaryModelValueClient] instead.
 type DictionaryModelValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -47,7 +48,7 @@ func (client *DictionaryModelValueClient) Get(ctx context.Context, options *Dict
 // getCreateRequest creates the Get request.
 func (client *DictionaryModelValueClient) getCreateRequest(ctx context.Context, _ *DictionaryModelValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/model"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +93,7 @@ func (client *DictionaryModelValueClient) Put(ctx context.Context, body map[stri
 // putCreateRequest creates the Put request.
 func (client *DictionaryModelValueClient) putCreateRequest(ctx context.Context, body map[string]*InnerModel, _ *DictionaryModelValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/model"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -21,6 +21,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type ImplicitClient struct {
 	internal            *azcore.Client
+	endpoint            string
 	requiredGlobalPath  string
 	requiredGlobalQuery string
 	optionalGlobalQuery *int32
@@ -56,7 +57,7 @@ func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context, option
 // getOptionalGlobalQueryCreateRequest creates the GetOptionalGlobalQuery request.
 func (client *ImplicitClient) getOptionalGlobalQueryCreateRequest(ctx context.Context, _ *ImplicitClientGetOptionalGlobalQueryOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/global/optional/query"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +104,7 @@ func (client *ImplicitClient) getRequiredGlobalPathCreateRequest(ctx context.Con
 		return nil, errors.New("parameter client.requiredGlobalPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{required-global-path}", url.PathEscape(client.requiredGlobalPath))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -141,7 +142,7 @@ func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context, option
 // getRequiredGlobalQueryCreateRequest creates the GetRequiredGlobalQuery request.
 func (client *ImplicitClient) getRequiredGlobalQueryCreateRequest(ctx context.Context, _ *ImplicitClientGetRequiredGlobalQueryOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/global/required/query"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -186,7 +187,7 @@ func (client *ImplicitClient) getRequiredPathCreateRequest(ctx context.Context, 
 		return nil, errors.New("parameter pathParameter cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pathParameter}", url.PathEscape(pathParameter))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -224,7 +225,7 @@ func (client *ImplicitClient) PutOptionalBinaryBody(ctx context.Context, options
 // putOptionalBinaryBodyCreateRequest creates the PutOptionalBinaryBody request.
 func (client *ImplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Context, options *ImplicitClientPutOptionalBinaryBodyOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/optional/binary-body"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -268,7 +269,7 @@ func (client *ImplicitClient) PutOptionalBody(ctx context.Context, options *Impl
 // putOptionalBodyCreateRequest creates the PutOptionalBody request.
 func (client *ImplicitClient) putOptionalBodyCreateRequest(ctx context.Context, options *ImplicitClientPutOptionalBodyOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/optional/body"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -312,7 +313,7 @@ func (client *ImplicitClient) PutOptionalHeader(ctx context.Context, options *Im
 // putOptionalHeaderCreateRequest creates the PutOptionalHeader request.
 func (client *ImplicitClient) putOptionalHeaderCreateRequest(ctx context.Context, options *ImplicitClientPutOptionalHeaderOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/optional/header"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -353,7 +354,7 @@ func (client *ImplicitClient) PutOptionalQuery(ctx context.Context, options *Imp
 // putOptionalQueryCreateRequest creates the PutOptionalQuery request.
 func (client *ImplicitClient) putOptionalQueryCreateRequest(ctx context.Context, options *ImplicitClientPutOptionalQueryOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/optional/query"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

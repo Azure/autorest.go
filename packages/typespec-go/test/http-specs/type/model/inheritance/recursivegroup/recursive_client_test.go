@@ -16,7 +16,7 @@ import (
 )
 
 func TestRecursiveClientGet(t *testing.T) {
-	client, err := recursivegroup.NewRecursiveClient(nil)
+	client, err := recursivegroup.NewRecursiveClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -39,7 +39,7 @@ func TestRecursiveClientGet(t *testing.T) {
 }
 
 func TestRecursiveClientPut(t *testing.T) {
-	client, err := recursivegroup.NewRecursiveClient(nil)
+	client, err := recursivegroup.NewRecursiveClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Put(context.Background(), recursivegroup.Extension{
 		Extension: []recursivegroup.Extension{

@@ -10,12 +10,14 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type ContentNegotiationClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewContentNegotiationDifferentBodyClient creates a new instance of [ContentNegotiationDifferentBodyClient].
 func (client *ContentNegotiationClient) NewContentNegotiationDifferentBodyClient() *ContentNegotiationDifferentBodyClient {
 	return &ContentNegotiationDifferentBodyClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -23,5 +25,6 @@ func (client *ContentNegotiationClient) NewContentNegotiationDifferentBodyClient
 func (client *ContentNegotiationClient) NewContentNegotiationSameBodyClient() *ContentNegotiationSameBodyClient {
 	return &ContentNegotiationSameBodyClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

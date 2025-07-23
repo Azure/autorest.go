@@ -5,6 +5,7 @@ package headergroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/headergroup"
 	"generatortests/headergroup/fake"
 	"net/http"
@@ -25,7 +26,7 @@ func TestFakeParamByte(t *testing.T) {
 			return
 		},
 	}
-	client, err := headergroup.NewHeaderClient(&azcore.ClientOptions{
+	client, err := headergroup.NewHeaderClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewHeaderServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -45,7 +46,7 @@ func TestFakeResponseEnum(t *testing.T) {
 			return
 		},
 	}
-	client, err := headergroup.NewHeaderClient(&azcore.ClientOptions{
+	client, err := headergroup.NewHeaderClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewHeaderServerTransport(&server),
 	})
 	require.NoError(t, err)

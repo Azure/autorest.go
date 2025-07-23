@@ -203,6 +203,9 @@ generate('armbillingbenefits', armbillingbenefits, 'test/local/armbillingbenefit
 const nooptionalbody = pkgRoot + 'test/tsp/NoOptionalBody';
 generate('nooptionalbody', nooptionalbody, 'test/local/nooptionalbody', ['generate-fakes=false', 'go-generate=after_generate.go', 'no-optional-body=true']);
 
+const rawjson = pkgRoot + 'test/tsp/RawJson';
+generate('rawjson', rawjson, 'test/local/rawjson', ['rawjson-as-bytes=true']);
+
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
 

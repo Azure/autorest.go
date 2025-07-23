@@ -13,7 +13,7 @@ import (
 )
 
 func TestVersionedClient_WithPathAPIVersion(t *testing.T) {
-	client, err := versionedgroup.NewVersionedClient(nil)
+	client, err := versionedgroup.NewVersionedClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.WithPathAPIVersion(context.Background(), nil)
 	require.NoError(t, err)
@@ -21,7 +21,7 @@ func TestVersionedClient_WithPathAPIVersion(t *testing.T) {
 }
 
 func TestVersionedClient_WithQueryAPIVersion(t *testing.T) {
-	client, err := versionedgroup.NewVersionedClient(nil)
+	client, err := versionedgroup.NewVersionedClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.WithQueryAPIVersion(context.Background(), nil)
 	require.NoError(t, err)
@@ -29,7 +29,7 @@ func TestVersionedClient_WithQueryAPIVersion(t *testing.T) {
 }
 
 func TestVersionedClient_WithQueryOldAPIVersion(t *testing.T) {
-	client, err := versionedgroup.NewVersionedClient(&azcore.ClientOptions{
+	client, err := versionedgroup.NewVersionedClient("http://localhost:3000", &azcore.ClientOptions{
 		APIVersion: "2021-01-01-preview",
 	})
 	require.NoError(t, err)
@@ -39,7 +39,7 @@ func TestVersionedClient_WithQueryOldAPIVersion(t *testing.T) {
 }
 
 func TestVersionedClient_WithoutAPIVersion(t *testing.T) {
-	client, err := versionedgroup.NewVersionedClient(nil)
+	client, err := versionedgroup.NewVersionedClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.WithoutAPIVersion(context.Background(), nil)
 	require.NoError(t, err)

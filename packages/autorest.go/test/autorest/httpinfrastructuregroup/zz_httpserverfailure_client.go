@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type HTTPServerFailureClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Delete505 - Return 505 status code - should be represented in the client as an error
@@ -49,7 +50,7 @@ func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *H
 // delete505CreateRequest creates the Delete505 request.
 func (client *HTTPServerFailureClient) delete505CreateRequest(ctx context.Context, options *HTTPServerFailureClientDelete505Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/505"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,7 @@ func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTP
 // get501CreateRequest creates the Get501 request.
 func (client *HTTPServerFailureClient) get501CreateRequest(ctx context.Context, _ *HTTPServerFailureClientGet501Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/501"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -130,7 +131,7 @@ func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTT
 // head501CreateRequest creates the Head501 request.
 func (client *HTTPServerFailureClient) head501CreateRequest(ctx context.Context, _ *HTTPServerFailureClientHead501Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/501"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +169,7 @@ func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTT
 // post505CreateRequest creates the Post505 request.
 func (client *HTTPServerFailureClient) post505CreateRequest(ctx context.Context, options *HTTPServerFailureClientPost505Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/505"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

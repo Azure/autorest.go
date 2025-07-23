@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type PolymorphicrecursiveClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetValid - Get complex types that are polymorphic and have recursive references
@@ -50,7 +51,7 @@ func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context, options 
 // getValidCreateRequest creates the GetValid request.
 func (client *PolymorphicrecursiveClient) getValidCreateRequest(ctx context.Context, _ *PolymorphicrecursiveClientGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphicrecursive/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +105,7 @@ func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexB
 // putValidCreateRequest creates the PutValid request.
 func (client *PolymorphicrecursiveClient) putValidCreateRequest(ctx context.Context, complexBody FishClassification, _ *PolymorphicrecursiveClientPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphicrecursive/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -564,7 +564,11 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
         if (param.extensions?.['x-ms-header-collection-prefix']) {
           param.schema.language.go!.headerCollectionPrefix = param.extensions['x-ms-header-collection-prefix'];
         }
-        if (param.implementation === m4.ImplementationLocation.Client && (param.schema.type !== m4.SchemaType.Constant || !param.required) && param.language.default.name !== '$host') {
+        if (param.implementation === m4.ImplementationLocation.Client && (param.schema.type !== m4.SchemaType.Constant || !param.required)) {
+          if (param.language.default.name === '$host' && <boolean>session.model.language.go!.azureARM) {
+            // for ARM, the host is handled by azcore/arm.Client so we can skip it
+            continue;
+          }
           if (param.protocol.http!.in === 'uri') {
             // this is a parameterized host param.
             // use the param name to avoid reference equality checks.
@@ -574,7 +578,7 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
             // we special-case fully templated host param, e.g. {endpoint}
             // as there's no need to do a find/replace in this case, we'd
             // just directly use the endpoint param value.
-            if (!(<string>group.language.go!.host).match(/^\{\w+\}$/)) {
+            if (param.language.default.name !== '$host' && !(<string>group.language.go!.host).match(/^\{\w+\}$/)) {
               group.language.go!.complexHostParams = true;
             }
             continue;

@@ -15,14 +15,14 @@ import (
 )
 
 func newSubscriptionInCredentialsClient(t *testing.T) *SubscriptionInCredentialsClient {
-	client, err := NewSubscriptionInCredentialsClient("1234-5678-9012-3456", &azcore.ClientOptions{
+	client, err := NewSubscriptionInCredentialsClient(generatortests.Host, "1234-5678-9012-3456", &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewSubscriptionInCredentialsClient(subscriptionID string, options *azcore.ClientOptions) (*SubscriptionInCredentialsClient, error) {
+func NewSubscriptionInCredentialsClient(endpoint string, subscriptionID string, options *azcore.ClientOptions) (*SubscriptionInCredentialsClient, error) {
 	client, err := azcore.NewClient("azurespecialsgroup.SubscriptionInCredentialsClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
@@ -30,6 +30,7 @@ func NewSubscriptionInCredentialsClient(subscriptionID string, options *azcore.C
 	return &SubscriptionInCredentialsClient{
 		subscriptionID: subscriptionID,
 		internal:       client,
+		endpoint:       endpoint,
 	}, nil
 }
 

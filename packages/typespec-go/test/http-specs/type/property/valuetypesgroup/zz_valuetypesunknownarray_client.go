@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesUnknownArrayClient] instead.
 type ValueTypesUnknownArrayClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get call
@@ -47,7 +48,7 @@ func (client *ValueTypesUnknownArrayClient) Get(ctx context.Context, options *Va
 // getCreateRequest creates the Get request.
 func (client *ValueTypesUnknownArrayClient) getCreateRequest(ctx context.Context, _ *ValueTypesUnknownArrayClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/unknown/array"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,7 @@ func (client *ValueTypesUnknownArrayClient) Put(ctx context.Context, body Unknow
 // putCreateRequest creates the Put request.
 func (client *ValueTypesUnknownArrayClient) putCreateRequest(ctx context.Context, body UnknownArrayProperty, _ *ValueTypesUnknownArrayClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/unknown/array"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesBytesClient] instead.
 type ValueTypesBytesClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get call
@@ -46,7 +47,7 @@ func (client *ValueTypesBytesClient) Get(ctx context.Context, options *ValueType
 // getCreateRequest creates the Get request.
 func (client *ValueTypesBytesClient) getCreateRequest(ctx context.Context, _ *ValueTypesBytesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/bytes"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +92,7 @@ func (client *ValueTypesBytesClient) Put(ctx context.Context, body BytesProperty
 // putCreateRequest creates the Put request.
 func (client *ValueTypesBytesClient) putCreateRequest(ctx context.Context, body BytesProperty, _ *ValueTypesBytesClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/bytes"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

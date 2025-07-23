@@ -8,12 +8,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewPageableServerDrivenPaginationClient(options *azcore.ClientOptions) (*PageableServerDrivenPaginationClient, error) {
-	client, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
+func NewPageableServerDrivenPaginationClient(endpoint string, options *azcore.ClientOptions) (*PageableServerDrivenPaginationClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &PageableServerDrivenPaginationClient{
-		internal: client,
+		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

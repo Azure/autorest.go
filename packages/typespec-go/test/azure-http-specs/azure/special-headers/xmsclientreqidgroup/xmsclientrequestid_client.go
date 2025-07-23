@@ -11,7 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewXMSClientRequestIDClient(options *azcore.ClientOptions) (*XMSClientRequestIDClient, error) {
+func NewXMSClientRequestIDClient(endpoint string, options *azcore.ClientOptions) (*XMSClientRequestIDClient, error) {
 	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
 		PerCall: []policy.Policy{
 			newRequestIDPolicy(),
@@ -22,6 +22,7 @@ func NewXMSClientRequestIDClient(options *azcore.ClientOptions) (*XMSClientReque
 	}
 	return &XMSClientRequestIDClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }
 

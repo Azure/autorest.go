@@ -16,19 +16,19 @@ import (
 )
 
 func newDateClient(t *testing.T) *DateClient {
-	client, err := NewDateClient(&azcore.ClientOptions{
+	client, err := NewDateClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewDateClient(options *azcore.ClientOptions) (*DateClient, error) {
+func NewDateClient(endpoint string, options *azcore.ClientOptions) (*DateClient, error) {
 	client, err := azcore.NewClient("dategroup.DateClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &DateClient{internal: client}, nil
+	return &DateClient{internal: client, endpoint: endpoint}, nil
 }
 
 func TestGetInvalidDate(t *testing.T) {

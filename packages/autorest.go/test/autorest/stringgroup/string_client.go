@@ -10,10 +10,10 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewStringClient(options *azcore.ClientOptions) (*StringClient, error) {
+func NewStringClient(endpoint string, options *azcore.ClientOptions) (*StringClient, error) {
 	client, err := azcore.NewClient("stringgroup.StringClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &StringClient{internal: client}, nil
+	return &StringClient{internal: client, endpoint: endpoint}, nil
 }

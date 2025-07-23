@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [DictionaryClient.NewDictionaryBooleanValueClient] instead.
 type DictionaryBooleanValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -47,7 +48,7 @@ func (client *DictionaryBooleanValueClient) Get(ctx context.Context, options *Di
 // getCreateRequest creates the Get request.
 func (client *DictionaryBooleanValueClient) getCreateRequest(ctx context.Context, _ *DictionaryBooleanValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/boolean"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +93,7 @@ func (client *DictionaryBooleanValueClient) Put(ctx context.Context, body map[st
 // putCreateRequest creates the Put request.
 func (client *DictionaryBooleanValueClient) putCreateRequest(ctx context.Context, body map[string]*bool, _ *DictionaryBooleanValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/boolean"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

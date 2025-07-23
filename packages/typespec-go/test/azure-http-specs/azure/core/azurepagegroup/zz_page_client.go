@@ -16,12 +16,14 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type PageClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewPageTwoModelsAsPageItemClient creates a new instance of [PageTwoModelsAsPageItemClient].
 func (client *PageClient) NewPageTwoModelsAsPageItemClient() *PageTwoModelsAsPageItemClient {
 	return &PageTwoModelsAsPageItemClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -56,7 +58,7 @@ func (client *PageClient) NewListWithCustomPageModelPager(options *PageClientLis
 // listWithCustomPageModelCreateRequest creates the ListWithCustomPageModel request.
 func (client *PageClient) listWithCustomPageModelCreateRequest(ctx context.Context, _ *PageClientListWithCustomPageModelOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/page/custom-page"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -106,7 +108,7 @@ func (client *PageClient) NewListWithPagePager(options *PageClientListWithPageOp
 // listWithPageCreateRequest creates the ListWithPage request.
 func (client *PageClient) listWithPageCreateRequest(ctx context.Context, _ *PageClientListWithPageOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/page/page"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +160,7 @@ func (client *PageClient) NewListWithParametersPager(bodyInput ListItemInputBody
 // listWithParametersCreateRequest creates the ListWithParameters request.
 func (client *PageClient) listWithParametersCreateRequest(ctx context.Context, bodyInput ListItemInputBody, options *PageClientListWithParametersOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/page/parameters"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

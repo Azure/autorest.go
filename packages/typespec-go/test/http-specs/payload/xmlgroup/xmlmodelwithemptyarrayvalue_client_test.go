@@ -12,7 +12,7 @@ import (
 )
 
 func TestXMLModelWithEmptyArrayValueClient_Get(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient(nil)
+	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithEmptyArrayValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -20,7 +20,7 @@ func TestXMLModelWithEmptyArrayValueClient_Get(t *testing.T) {
 }
 
 func TestXMLModelWithEmptyArrayValueClient_Put(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient(nil)
+	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithEmptyArrayValueClient().Put(context.Background(), xmlgroup.ModelWithEmptyArray{
 		Items: []xmlgroup.SimpleModel{},

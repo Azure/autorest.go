@@ -18,6 +18,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type UploadClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Binary - Uploading binary file
@@ -50,7 +51,7 @@ func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekClo
 // binaryCreateRequest creates the Binary request.
 func (client *UploadClient) binaryCreateRequest(ctx context.Context, fileParam io.ReadSeekCloser, _ *UploadClientBinaryOptions) (*policy.Request, error) {
 	urlPath := "/binary/octet"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +91,7 @@ func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekClose
 // fileCreateRequest creates the File request.
 func (client *UploadClient) fileCreateRequest(ctx context.Context, fileParam io.ReadSeekCloser, _ *UploadClientFileOptions) (*policy.Request, error) {
 	urlPath := "/binary/file"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -9,26 +9,17 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
 
 func newPetClient(t *testing.T) *PetClient {
-	client, err := NewPetClient(&azcore.ClientOptions{
+	client, err := NewPetClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewPetClient(options *azcore.ClientOptions) (*PetClient, error) {
-	client, err := azcore.NewClient("extenumsgroup.PetClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &PetClient{internal: client}, nil
 }
 
 func TestAddPet(t *testing.T) {

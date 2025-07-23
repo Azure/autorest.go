@@ -13,7 +13,7 @@ import (
 )
 
 func TestNumericPropertyClient_SafeintAsString(t *testing.T) {
-	client, err := numericgroup.NewNumericClient(nil)
+	client, err := numericgroup.NewNumericClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNumericPropertyClient().SafeintAsString(context.Background(), numericgroup.SafeintAsStringProperty{Value: to.Ptr(int64(10000000000))}, nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestNumericPropertyClient_SafeintAsString(t *testing.T) {
 }
 
 func TestNumericPropertyClient_Uint32AsStringOptional(t *testing.T) {
-	client, err := numericgroup.NewNumericClient(nil)
+	client, err := numericgroup.NewNumericClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNumericPropertyClient().Uint32AsStringOptional(context.Background(), numericgroup.Uint32AsStringProperty{Value: to.Ptr(uint32(1))}, nil)
 	require.NoError(t, err)
@@ -33,7 +33,7 @@ func TestNumericPropertyClient_Uint32AsStringOptional(t *testing.T) {
 }
 
 func TestNumericPropertyClient_Uint8AsString(t *testing.T) {
-	client, err := numericgroup.NewNumericClient(nil)
+	client, err := numericgroup.NewNumericClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNumericPropertyClient().Uint8AsString(context.Background(), numericgroup.Uint8AsStringProperty{Value: to.Ptr(uint8(255))}, nil)
 	require.NoError(t, err)

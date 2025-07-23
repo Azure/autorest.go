@@ -15,7 +15,7 @@ import (
 )
 
 func TestStringClient_Get(t *testing.T) {
-	client, err := scalargroup.NewScalarClient(nil)
+	client, err := scalargroup.NewScalarClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarStringClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -24,7 +24,7 @@ func TestStringClient_Get(t *testing.T) {
 }
 
 func TestStringClient_Put(t *testing.T) {
-	client, err := scalargroup.NewScalarClient(nil)
+	client, err := scalargroup.NewScalarClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarStringClient().Put(context.Background(), "test", nil)
 	require.NoError(t, err)

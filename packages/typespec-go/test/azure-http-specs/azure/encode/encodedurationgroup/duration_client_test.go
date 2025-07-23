@@ -11,7 +11,7 @@ import (
 )
 
 func TestDurationClient_DurationConstant(t *testing.T) {
-	client, err := NewDurationClient(nil)
+	client, err := NewDurationClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	input := "1.02:59:59.5000000"
 	body := DurationModel{

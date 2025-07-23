@@ -10,25 +10,16 @@ import (
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
 
 func newDatetimeClient(t *testing.T) *DatetimeClient {
-	client, err := NewDatetimeClient(&azcore.ClientOptions{
+	client, err := NewDatetimeClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewDatetimeClient(options *azcore.ClientOptions) (*DatetimeClient, error) {
-	client, err := azcore.NewClient("datetimegroup.DatetimeClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &DatetimeClient{internal: client}, nil
 }
 
 func TestGetInvalid(t *testing.T) {

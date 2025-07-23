@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use [ArrayClient.NewArrayDatetimeValueClient] instead.
 type ArrayDatetimeValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -47,7 +48,7 @@ func (client *ArrayDatetimeValueClient) Get(ctx context.Context, options *ArrayD
 // getCreateRequest creates the Get request.
 func (client *ArrayDatetimeValueClient) getCreateRequest(ctx context.Context, _ *ArrayDatetimeValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/datetime"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ func (client *ArrayDatetimeValueClient) Put(ctx context.Context, body []time.Tim
 // putCreateRequest creates the Put request.
 func (client *ArrayDatetimeValueClient) putCreateRequest(ctx context.Context, body []time.Time, _ *ArrayDatetimeValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/datetime"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

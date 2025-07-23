@@ -13,7 +13,7 @@ import (
 )
 
 func TestXMLModelWithAttributesValueClient_Get(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient(nil)
+	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithAttributesValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -25,7 +25,7 @@ func TestXMLModelWithAttributesValueClient_Get(t *testing.T) {
 }
 
 func TestXMLModelWithAttributesValueClient_Put(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient(nil)
+	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithAttributesValueClient().Put(context.Background(), xmlgroup.ModelWithAttributes{
 		Id1:     to.Ptr[int32](123),

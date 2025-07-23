@@ -11,12 +11,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewExtensibleClient(options *azcore.ClientOptions) (*ExtensibleClient, error) {
+func NewExtensibleClient(endpoint string, options *azcore.ClientOptions) (*ExtensibleClient, error) {
 	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &ExtensibleClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }
