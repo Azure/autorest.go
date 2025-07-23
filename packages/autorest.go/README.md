@@ -80,10 +80,10 @@ help-content:
     settings:
       - key: module
         type: string
-        description: The module identity to use in go.mod minus any major version suffix. Mutually exclusive with containing-module.
+        description: The module identity to use in go.mod. Mutually exclusive with containing-module.
       - key: containing-module
         type: string
-        description: The module identity into which the package is being emitted. Mutually exclusive with module.
+        description: The module into which the package is being emitted. Mutually exclusive with module.
       - key: azcore-version
         description: Semantic version of azcore without the leading 'v' to use if different from the default version (e.g. 1.2.3).
         type: string

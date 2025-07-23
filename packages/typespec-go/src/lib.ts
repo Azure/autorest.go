@@ -40,7 +40,7 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
     'containing-module': {
       type: 'string',
       nullable: true,
-      description: 'The module identity into which the package is being emitted. Mutually exclusive with module.',
+      description: 'The module into which the package is being emitted. Mutually exclusive with module.',
     },
     'disallow-unknown-fields': {
       type: 'boolean',
@@ -75,7 +75,7 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
     'module': {
       type: 'string',
       nullable: true,
-      description: 'The module identity to use in go.mod minus any major version suffix. Mutually exclusive with containing-module.',
+      description: 'The module identity to use in go.mod. Mutually exclusive with containing-module.',
     },
     'rawjson-as-bytes': {
       type: 'boolean',
