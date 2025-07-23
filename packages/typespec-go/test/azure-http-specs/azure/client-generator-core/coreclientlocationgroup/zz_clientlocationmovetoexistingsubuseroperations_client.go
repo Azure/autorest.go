@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use [ClientLocationMoveToExistingSubClient.NewClientLocationMoveToExistingSubUserOperationsClient] instead.
 type ClientLocationMoveToExistingSubUserOperationsClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetUser -
@@ -47,7 +48,7 @@ func (client *ClientLocationMoveToExistingSubUserOperationsClient) GetUser(ctx c
 // getUserCreateRequest creates the GetUser request.
 func (client *ClientLocationMoveToExistingSubUserOperationsClient) getUserCreateRequest(ctx context.Context, _ *ClientLocationMoveToExistingSubUserOperationsClientGetUserOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/client-location/user"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

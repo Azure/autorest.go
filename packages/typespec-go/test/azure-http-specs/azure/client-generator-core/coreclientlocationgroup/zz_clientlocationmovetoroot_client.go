@@ -10,11 +10,13 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use [ClientLocationClient.NewClientLocationMoveToRootClient] instead.
 type ClientLocationMoveToRootClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewClientLocationMoveToRootResourceOperationsClient creates a new instance of [ClientLocationMoveToRootResourceOperationsClient].
 func (client *ClientLocationMoveToRootClient) NewClientLocationMoveToRootResourceOperationsClient() *ClientLocationMoveToRootResourceOperationsClient {
 	return &ClientLocationMoveToRootResourceOperationsClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

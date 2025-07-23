@@ -4,8 +4,6 @@
 
 package traitsgroup
 
-const host = "http://localhost:3000"
-
 // RepeatabilityResult - Repeatability Result header options
 type RepeatabilityResult string
 

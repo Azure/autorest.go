@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ClientLocationClient.NewClientLocationArchiveOperationsClient] instead.
 type ClientLocationArchiveOperationsClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // ArchiveProduct -
@@ -46,7 +47,7 @@ func (client *ClientLocationArchiveOperationsClient) ArchiveProduct(ctx context.
 // archiveProductCreateRequest creates the ArchiveProduct request.
 func (client *ClientLocationArchiveOperationsClient) archiveProductCreateRequest(ctx context.Context, _ *ClientLocationArchiveOperationsClientArchiveProductOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/client-location/products/archive"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

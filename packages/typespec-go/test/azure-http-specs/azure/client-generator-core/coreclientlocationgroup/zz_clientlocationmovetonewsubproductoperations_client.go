@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use [ClientLocationMoveToNewSubClient.NewClientLocationMoveToNewSubProductOperationsClient] instead.
 type ClientLocationMoveToNewSubProductOperationsClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // ListProducts -
@@ -47,7 +48,7 @@ func (client *ClientLocationMoveToNewSubProductOperationsClient) ListProducts(ct
 // listProductsCreateRequest creates the ListProducts request.
 func (client *ClientLocationMoveToNewSubProductOperationsClient) listProductsCreateRequest(ctx context.Context, _ *ClientLocationMoveToNewSubProductOperationsClientListProductsOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/client-location/products"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

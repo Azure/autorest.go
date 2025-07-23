@@ -16,12 +16,14 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type ClientLocationClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewClientLocationArchiveOperationsClient creates a new instance of [ClientLocationArchiveOperationsClient].
 func (client *ClientLocationClient) NewClientLocationArchiveOperationsClient() *ClientLocationArchiveOperationsClient {
 	return &ClientLocationArchiveOperationsClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -29,6 +31,7 @@ func (client *ClientLocationClient) NewClientLocationArchiveOperationsClient() *
 func (client *ClientLocationClient) NewClientLocationMoveToExistingSubClient() *ClientLocationMoveToExistingSubClient {
 	return &ClientLocationMoveToExistingSubClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -36,6 +39,7 @@ func (client *ClientLocationClient) NewClientLocationMoveToExistingSubClient() *
 func (client *ClientLocationClient) NewClientLocationMoveToNewSubClient() *ClientLocationMoveToNewSubClient {
 	return &ClientLocationMoveToNewSubClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -43,6 +47,7 @@ func (client *ClientLocationClient) NewClientLocationMoveToNewSubClient() *Clien
 func (client *ClientLocationClient) NewClientLocationMoveToRootClient() *ClientLocationMoveToRootClient {
 	return &ClientLocationMoveToRootClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -74,7 +79,7 @@ func (client *ClientLocationClient) GetHealthStatus(ctx context.Context, options
 // getHealthStatusCreateRequest creates the GetHealthStatus request.
 func (client *ClientLocationClient) getHealthStatusCreateRequest(ctx context.Context, _ *ClientLocationClientGetHealthStatusOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/client-location/health"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

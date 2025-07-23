@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use [ClientLocationMoveToRootClient.NewClientLocationMoveToRootResourceOperationsClient] instead.
 type ClientLocationMoveToRootResourceOperationsClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetResource -
@@ -47,7 +48,7 @@ func (client *ClientLocationMoveToRootResourceOperationsClient) GetResource(ctx 
 // getResourceCreateRequest creates the GetResource request.
 func (client *ClientLocationMoveToRootResourceOperationsClient) getResourceCreateRequest(ctx context.Context, _ *ClientLocationMoveToRootResourceOperationsClientGetResourceOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/client-location/resource"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -20,6 +20,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type TraitsClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // RepeatableAction - Test for repeatable requests
@@ -55,7 +56,7 @@ func (client *TraitsClient) RepeatableAction(ctx context.Context, id int32, body
 func (client *TraitsClient) repeatableActionCreateRequest(ctx context.Context, id int32, body UserActionParam, options *TraitsClientRepeatableActionOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/traits/user/{id}:repeatableAction"
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +122,7 @@ func (client *TraitsClient) SmokeTest(ctx context.Context, id int32, foo string,
 func (client *TraitsClient) smokeTestCreateRequest(ctx context.Context, id int32, foo string, options *TraitsClientSmokeTestOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/traits/user/{id}"
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use [ClientLocationMoveToExistingSubClient.NewClientLocationMoveToExistingSubAdminOperationsClient] instead.
 type ClientLocationMoveToExistingSubAdminOperationsClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // DeleteUser -
@@ -47,7 +48,7 @@ func (client *ClientLocationMoveToExistingSubAdminOperationsClient) DeleteUser(c
 // deleteUserCreateRequest creates the DeleteUser request.
 func (client *ClientLocationMoveToExistingSubAdminOperationsClient) deleteUserCreateRequest(ctx context.Context, _ *ClientLocationMoveToExistingSubAdminOperationsClientDeleteUserOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/client-location/user"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +83,7 @@ func (client *ClientLocationMoveToExistingSubAdminOperationsClient) GetAdminInfo
 // getAdminInfoCreateRequest creates the GetAdminInfo request.
 func (client *ClientLocationMoveToExistingSubAdminOperationsClient) getAdminInfoCreateRequest(ctx context.Context, _ *ClientLocationMoveToExistingSubAdminOperationsClientGetAdminInfoOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/client-location/admin"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

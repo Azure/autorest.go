@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type DeserializeEmptyStringAsNullClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -47,7 +48,7 @@ func (client *DeserializeEmptyStringAsNullClient) Get(ctx context.Context, optio
 // getCreateRequest creates the Get request.
 func (client *DeserializeEmptyStringAsNullClient) getCreateRequest(ctx context.Context, _ *DeserializeEmptyStringAsNullClientGetOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/deserialize-empty-string-as-null/responseModel"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
