@@ -80,16 +80,16 @@ help-content:
     settings:
       - key: module
         type: string
-        description: The name of the Go module written to go.mod.  Omit to skip go.mod generation.
+        description: The module identity to use in go.mod. Mutually exclusive with containing-module.
+      - key: containing-module
+        type: string
+        description: The module into which the package is being emitted. Mutually exclusive with module.
       - key: azcore-version
         description: Semantic version of azcore without the leading 'v' to use if different from the default version (e.g. 1.2.3).
         type: string
       - key: file-prefix
         type: string
         description: Optional prefix to file names. For example, if you set your file prefix to "zzz_", all generated code files will begin with "zzz_".
-      - key: module-version
-        description: Initial semantic version to include in generated telemetryInfo constant without the leading 'v' (e.g. 1.2.3). Defaults to 0.1.0.
-        type: string
       - key: group-parameters
         description: Enables parameter grouping via x-ms-parameter-grouping, defaults to true.
         type: boolean

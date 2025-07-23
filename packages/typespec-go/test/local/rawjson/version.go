@@ -6,5 +6,5 @@ package rawjson
 
 const (
 	moduleName    = "rawjson"
-	moduleVersion = "v0.1.0"
+	moduleVersion = "v2.0.3"
 )

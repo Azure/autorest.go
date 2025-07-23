@@ -14,54 +14,54 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"io"
 	"net/http"
-	"rawjson"
+	"rawjson/v2/subpkg"
 )
 
-// OutputOnlyServer is a fake server for instances of the rawjson.OutputOnlyClient type.
-type OutputOnlyServer struct {
-	// Get is the fake for method OutputOnlyClient.Get
+// RawJSONOutputOnlyServer is a fake server for instances of the subpkg.RawJSONOutputOnlyClient type.
+type RawJSONOutputOnlyServer struct {
+	// Get is the fake for method RawJSONOutputOnlyClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, options *rawjson.OutputOnlyClientGetOptions) (resp azfake.Responder[rawjson.OutputOnlyClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, options *subpkg.RawJSONOutputOnlyClientGetOptions) (resp azfake.Responder[subpkg.RawJSONOutputOnlyClientGetResponse], errResp azfake.ErrorResponder)
 }
 
-// NewOutputOnlyServerTransport creates a new instance of OutputOnlyServerTransport with the provided implementation.
-// The returned OutputOnlyServerTransport instance is connected to an instance of rawjson.OutputOnlyClient via the
+// NewRawJSONOutputOnlyServerTransport creates a new instance of RawJSONOutputOnlyServerTransport with the provided implementation.
+// The returned RawJSONOutputOnlyServerTransport instance is connected to an instance of subpkg.RawJSONOutputOnlyClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewOutputOnlyServerTransport(srv *OutputOnlyServer) *OutputOnlyServerTransport {
-	return &OutputOnlyServerTransport{srv: srv}
+func NewRawJSONOutputOnlyServerTransport(srv *RawJSONOutputOnlyServer) *RawJSONOutputOnlyServerTransport {
+	return &RawJSONOutputOnlyServerTransport{srv: srv}
 }
 
-// OutputOnlyServerTransport connects instances of rawjson.OutputOnlyClient to instances of OutputOnlyServer.
-// Don't use this type directly, use NewOutputOnlyServerTransport instead.
-type OutputOnlyServerTransport struct {
-	srv *OutputOnlyServer
+// RawJSONOutputOnlyServerTransport connects instances of subpkg.RawJSONOutputOnlyClient to instances of RawJSONOutputOnlyServer.
+// Don't use this type directly, use NewRawJSONOutputOnlyServerTransport instead.
+type RawJSONOutputOnlyServerTransport struct {
+	srv *RawJSONOutputOnlyServer
 }
 
-// Do implements the policy.Transporter interface for OutputOnlyServerTransport.
-func (o *OutputOnlyServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for RawJSONOutputOnlyServerTransport.
+func (r *RawJSONOutputOnlyServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
-	return o.dispatchToMethodFake(req, method)
+	return r.dispatchToMethodFake(req, method)
 }
 
-func (o *OutputOnlyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (r *RawJSONOutputOnlyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
 	defer close(resultChan)
 
 	go func() {
 		var intercepted bool
 		var res result
-		if outputOnlyServerTransportInterceptor != nil {
-			res.resp, res.err, intercepted = outputOnlyServerTransportInterceptor.Do(req)
+		if rawJsonOutputOnlyServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = rawJsonOutputOnlyServerTransportInterceptor.Do(req)
 		}
 		if !intercepted {
 			switch method {
-			case "OutputOnlyClient.Get":
-				res.resp, res.err = o.dispatchGet(req)
+			case "RawJSONOutputOnlyClient.Get":
+				res.resp, res.err = r.dispatchGet(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
 			}
@@ -81,11 +81,11 @@ func (o *OutputOnlyServerTransport) dispatchToMethodFake(req *http.Request, meth
 	}
 }
 
-func (o *OutputOnlyServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
-	if o.srv.Get == nil {
+func (r *RawJSONOutputOnlyServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
+	if r.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
-	respr, errRespr := o.srv.Get(req.Context(), nil)
+	respr, errRespr := r.srv.Get(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -103,8 +103,8 @@ func (o *OutputOnlyServerTransport) dispatchGet(req *http.Request) (*http.Respon
 	return resp, nil
 }
 
-// set this to conditionally intercept incoming requests to OutputOnlyServerTransport
-var outputOnlyServerTransportInterceptor interface {
+// set this to conditionally intercept incoming requests to RawJSONOutputOnlyServerTransport
+var rawJsonOutputOnlyServerTransportInterceptor interface {
 	// Do returns true if the server transport should use the returned response/error
 	Do(*http.Request) (*http.Response, error, bool)
 }

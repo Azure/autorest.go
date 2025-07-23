@@ -13,54 +13,54 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"io"
 	"net/http"
-	"rawjson"
+	"rawjson/v2/subpkg"
 )
 
-// InputOnlyServer is a fake server for instances of the rawjson.InputOnlyClient type.
-type InputOnlyServer struct {
-	// Put is the fake for method InputOnlyClient.Put
+// RawJSONInputOnlyServer is a fake server for instances of the subpkg.RawJSONInputOnlyClient type.
+type RawJSONInputOnlyServer struct {
+	// Put is the fake for method RawJSONInputOnlyClient.Put
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Put func(ctx context.Context, body []byte, options *rawjson.InputOnlyClientPutOptions) (resp azfake.Responder[rawjson.InputOnlyClientPutResponse], errResp azfake.ErrorResponder)
+	Put func(ctx context.Context, body []byte, options *subpkg.RawJSONInputOnlyClientPutOptions) (resp azfake.Responder[subpkg.RawJSONInputOnlyClientPutResponse], errResp azfake.ErrorResponder)
 }
 
-// NewInputOnlyServerTransport creates a new instance of InputOnlyServerTransport with the provided implementation.
-// The returned InputOnlyServerTransport instance is connected to an instance of rawjson.InputOnlyClient via the
+// NewRawJSONInputOnlyServerTransport creates a new instance of RawJSONInputOnlyServerTransport with the provided implementation.
+// The returned RawJSONInputOnlyServerTransport instance is connected to an instance of subpkg.RawJSONInputOnlyClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewInputOnlyServerTransport(srv *InputOnlyServer) *InputOnlyServerTransport {
-	return &InputOnlyServerTransport{srv: srv}
+func NewRawJSONInputOnlyServerTransport(srv *RawJSONInputOnlyServer) *RawJSONInputOnlyServerTransport {
+	return &RawJSONInputOnlyServerTransport{srv: srv}
 }
 
-// InputOnlyServerTransport connects instances of rawjson.InputOnlyClient to instances of InputOnlyServer.
-// Don't use this type directly, use NewInputOnlyServerTransport instead.
-type InputOnlyServerTransport struct {
-	srv *InputOnlyServer
+// RawJSONInputOnlyServerTransport connects instances of subpkg.RawJSONInputOnlyClient to instances of RawJSONInputOnlyServer.
+// Don't use this type directly, use NewRawJSONInputOnlyServerTransport instead.
+type RawJSONInputOnlyServerTransport struct {
+	srv *RawJSONInputOnlyServer
 }
 
-// Do implements the policy.Transporter interface for InputOnlyServerTransport.
-func (i *InputOnlyServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for RawJSONInputOnlyServerTransport.
+func (r *RawJSONInputOnlyServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
-	return i.dispatchToMethodFake(req, method)
+	return r.dispatchToMethodFake(req, method)
 }
 
-func (i *InputOnlyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (r *RawJSONInputOnlyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
 	defer close(resultChan)
 
 	go func() {
 		var intercepted bool
 		var res result
-		if inputOnlyServerTransportInterceptor != nil {
-			res.resp, res.err, intercepted = inputOnlyServerTransportInterceptor.Do(req)
+		if rawJsonInputOnlyServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = rawJsonInputOnlyServerTransportInterceptor.Do(req)
 		}
 		if !intercepted {
 			switch method {
-			case "InputOnlyClient.Put":
-				res.resp, res.err = i.dispatchPut(req)
+			case "RawJSONInputOnlyClient.Put":
+				res.resp, res.err = r.dispatchPut(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
 			}
@@ -80,8 +80,8 @@ func (i *InputOnlyServerTransport) dispatchToMethodFake(req *http.Request, metho
 	}
 }
 
-func (i *InputOnlyServerTransport) dispatchPut(req *http.Request) (*http.Response, error) {
-	if i.srv.Put == nil {
+func (r *RawJSONInputOnlyServerTransport) dispatchPut(req *http.Request) (*http.Response, error) {
+	if r.srv.Put == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Put not implemented")}
 	}
 	body, err := io.ReadAll(req.Body)
@@ -89,7 +89,7 @@ func (i *InputOnlyServerTransport) dispatchPut(req *http.Request) (*http.Respons
 		return nil, err
 	}
 	req.Body.Close()
-	respr, errRespr := i.srv.Put(req.Context(), body, nil)
+	respr, errRespr := r.srv.Put(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -104,8 +104,8 @@ func (i *InputOnlyServerTransport) dispatchPut(req *http.Request) (*http.Respons
 	return resp, nil
 }
 
-// set this to conditionally intercept incoming requests to InputOnlyServerTransport
-var inputOnlyServerTransportInterceptor interface {
+// set this to conditionally intercept incoming requests to RawJSONInputOnlyServerTransport
+var rawJsonInputOnlyServerTransportInterceptor interface {
 	// Do returns true if the server transport should use the returned response/error
 	Do(*http.Request) (*http.Response, error, bool)
 }
