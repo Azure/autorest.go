@@ -11,7 +11,7 @@ import { CodegenError } from './errors.js';
 // if there's a preexisting go.mod file, update its specified version of azcore as needed.
 export async function generateGoModFile(codeModel: go.CodeModel, existingGoMod?: string): Promise<string> {
   if (!codeModel.options.module) {
-    // must be containing-module, we don't emit go.mod for that scenario
+    // must be containing-module, so we're emitting a package into a module that already has a go.mod
     return '';
   }
 

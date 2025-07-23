@@ -53,7 +53,9 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
 
   if (context.options['containing-module'] && context.options.module) {
     throw new AdapterError('InvalidArgument', 'module and containing-module are mutually exclusive', NoTarget);
-  } else if (context.options.module) {
+  }
+
+  if (context.options.module) {
     codeModel.options.module = context.options.module;
   } else if (context.options['containing-module']) {
     codeModel.options.containingModule = context.options['containing-module'];

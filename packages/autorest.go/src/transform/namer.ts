@@ -88,7 +88,9 @@ export async function namer(session: Session<CodeModel>) {
 
   if (containingModule !== '' && module !== '') {
     throw new Error('--module and --containing-module are mutually exclusive');
-  } else if (module !== '') {
+  }
+
+  if (module !== '') {
     model.language.go!.module = module;
   } else if (containingModule !== '') {
     model.language.go!.containingModule = containingModule;
