@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestFirstGroup4Client_Two(t *testing.T) {
+func TestFirstGroup4Client_Four(t *testing.T) {
 	client, err := NewFirstGroup4Client(nil)
 	require.Nil(t, err)
 	require.NotNil(t, client)

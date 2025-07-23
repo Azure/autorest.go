@@ -6,7 +6,7 @@ import (
 )
 
 func NewFirstClient(options *azcore.ClientOptions) (*FirstClient, error) {
-	internal, err := azcore.NewClient("clientopgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
@@ -16,7 +16,7 @@ func NewFirstClient(options *azcore.ClientOptions) (*FirstClient, error) {
 }
 
 func NewSecondClient(options *azcore.ClientOptions) (*SecondClient, error) {
-	internal, err := azcore.NewClient("clientopgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
@@ -26,7 +26,7 @@ func NewSecondClient(options *azcore.ClientOptions) (*SecondClient, error) {
 }
 
 func NewSecondGroup5Client(options *azcore.ClientOptions) (*SecondGroup5Client, error) {
-	internal, err := azcore.NewClient("clientopgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +36,7 @@ func NewSecondGroup5Client(options *azcore.ClientOptions) (*SecondGroup5Client, 
 }
 
 func NewFirstGroup3Client(options *azcore.ClientOptions) (*FirstGroup3Client, error) {
-	internal, err := azcore.NewClient("clientopgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func NewFirstGroup3Client(options *azcore.ClientOptions) (*FirstGroup3Client, er
 }
 
 func NewFirstGroup4Client(options *azcore.ClientOptions) (*FirstGroup4Client, error) {
-	internal, err := azcore.NewClient("clientopgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
