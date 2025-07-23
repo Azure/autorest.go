@@ -1,6 +1,6 @@
 # Release History
 
-## 4.0.0-preview.73 (2025-07-22)
+## 4.0.0-preview.74 (unreleased)
 
 ### Breaking Changes
 
@@ -11,6 +11,13 @@
 ### Features Added
 
 * The `module` switch now accepts a major version suffix (e.g. `module=mymodule/v2`).
+
+## 4.0.0-preview.73 (2025-07-22)
+
+### Breaking Changes
+
+* The `module-version` switch is now used to seed the value for the `moduleVersion` constant. It will _not_ change an existing value.
+  * If not specified, it has a default value of `0.1.0`.
 
 ### Other Changes
 
