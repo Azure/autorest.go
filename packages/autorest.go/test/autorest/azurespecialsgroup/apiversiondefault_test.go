@@ -14,19 +14,19 @@ import (
 )
 
 func newAPIVersionDefaultClient(t *testing.T) *APIVersionDefaultClient {
-	client, err := NewAPIVersionDefaultClient(&azcore.ClientOptions{
+	client, err := NewAPIVersionDefaultClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewAPIVersionDefaultClient(options *azcore.ClientOptions) (*APIVersionDefaultClient, error) {
+func NewAPIVersionDefaultClient(endpoint string, options *azcore.ClientOptions) (*APIVersionDefaultClient, error) {
 	client, err := azcore.NewClient("azurespecialsgroup.APIVersionDefaultClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &APIVersionDefaultClient{internal: client}, nil
+	return &APIVersionDefaultClient{internal: client, endpoint: endpoint}, nil
 }
 
 // GetMethodGlobalNotProvidedValid - GET method with api-version modeled in global settings.

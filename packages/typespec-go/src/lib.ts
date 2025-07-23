@@ -10,6 +10,7 @@ export interface GoEmitterOptions {
   'disallow-unknown-fields'?: boolean;
   'file-prefix'?: string;
   'generate-fakes'?: boolean;
+  'go-generate'?: string;
   'head-as-boolean'?: boolean;
   'inject-spans'?: boolean;
   'module'?: string;
@@ -51,6 +52,11 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
       nullable: true,
       description: 'When true, enables generation of fake servers. The default is false.',
     },
+    'go-generate': {
+      type: 'string',
+      nullable: true,
+      description: `Path to a post-generation 'go generate' script. The path is relative to the emitter-output-dir.`,
+    },
     'head-as-boolean': {
       type: 'boolean',
       nullable: true,
@@ -69,7 +75,7 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
     'module-version': {
       type: 'string',
       nullable: true,
-      description: 'Semantic version of the Go module without the leading \'v\' written to constants.go. (e.g. 1.2.3). When module-version is specified, module must also be specified.',
+      description: 'Initial semantic version of the Go module without the leading \'v\'. (e.g. 1.2.3). Defaults to 0.1.0.',
     },
     'rawjson-as-bytes': {
       type: 'boolean',

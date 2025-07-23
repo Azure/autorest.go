@@ -12,7 +12,7 @@ import (
 )
 
 func TestXMLModelWithSimpleArraysValueClient_Get(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient(nil)
+	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithSimpleArraysValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestXMLModelWithSimpleArraysValueClient_Get(t *testing.T) {
 }
 
 func TestXMLModelWithSimpleArraysValueClient_Put(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient(nil)
+	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithSimpleArraysValueClient().Put(context.Background(), xmlgroup.ModelWithSimpleArrays{
 		Colors: []string{"red", "green", "blue"},

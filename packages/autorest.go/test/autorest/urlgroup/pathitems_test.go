@@ -14,7 +14,7 @@ import (
 )
 
 func newPathItemsClient(t *testing.T, globalStringPath string, globalStringQuery *string) *PathItemsClient {
-	client, err := NewPathItemsClient(globalStringPath, globalStringQuery, &azcore.ClientOptions{
+	client, err := NewPathItemsClient(generatortests.Host, globalStringPath, globalStringQuery, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)

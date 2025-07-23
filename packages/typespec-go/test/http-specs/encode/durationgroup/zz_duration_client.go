@@ -10,12 +10,14 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type DurationClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewDurationHeaderClient creates a new instance of [DurationHeaderClient].
 func (client *DurationClient) NewDurationHeaderClient() *DurationHeaderClient {
 	return &DurationHeaderClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -23,6 +25,7 @@ func (client *DurationClient) NewDurationHeaderClient() *DurationHeaderClient {
 func (client *DurationClient) NewDurationPropertyClient() *DurationPropertyClient {
 	return &DurationPropertyClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -30,5 +33,6 @@ func (client *DurationClient) NewDurationPropertyClient() *DurationPropertyClien
 func (client *DurationClient) NewDurationQueryClient() *DurationQueryClient {
 	return &DurationQueryClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

@@ -11,9 +11,9 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewStandardClient(options *azcore.ClientOptions) (*StandardClient, error) {
+func NewStandardClient(endpoint string, options *azcore.ClientOptions) (*StandardClient, error) {
 	const apiVersion = "2022-12-01-preview"
-	internal, err := azcore.NewClient("lrostdgroup", "v0.1.0", runtime.PipelineOptions{
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
 		PerCall: []policy.Policy{&apiVersionPolicy{apiVersion: apiVersion}},
 	}, options)
 	if err != nil {
@@ -21,6 +21,7 @@ func NewStandardClient(options *azcore.ClientOptions) (*StandardClient, error) {
 	}
 	return &StandardClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }
 

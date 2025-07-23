@@ -15,7 +15,7 @@ import (
 )
 
 func newDatetimerfc1123Client(t *testing.T) *Datetimerfc1123Client {
-	client, err := NewDatetimerfc1123Client(&azcore.ClientOptions{
+	client, err := NewDatetimerfc1123Client(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)

@@ -10,10 +10,9 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
-// Client contains the methods for the group.
+// Client contains the methods for the service.
 // Don't use this type directly, use a constructor function instead.
 type Client struct {
 	internal *azcore.Client
@@ -44,9 +43,7 @@ func (client *Client) Patch(ctx context.Context, body Widget, options *ClientPat
 
 // patchCreateRequest creates the Patch request.
 func (client *Client) patchCreateRequest(ctx context.Context, body Widget, _ *ClientPatchOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, host)
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -81,9 +78,7 @@ func (client *Client) Post(ctx context.Context, options *ClientPostOptions) (Cli
 
 // postCreateRequest creates the Post request.
 func (client *Client) postCreateRequest(ctx context.Context, options *ClientPostOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	req, err := runtime.NewRequest(ctx, http.MethodPost, host)
+	req, err := runtime.NewRequest(ctx, http.MethodPost, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -121,9 +116,7 @@ func (client *Client) Put(ctx context.Context, body Widget, options *ClientPutOp
 
 // putCreateRequest creates the Put request.
 func (client *Client) putCreateRequest(ctx context.Context, body Widget, _ *ClientPutOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	req, err := runtime.NewRequest(ctx, http.MethodPut, host)
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}

@@ -9,7 +9,7 @@ import (
 )
 
 func NewClient(vaultURL string, options *azcore.ClientOptions) (*Client, error) {
-	client, err := azcore.NewClient("azkeys", "v0.1.0", runtime.PipelineOptions{}, options)
+	client, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}

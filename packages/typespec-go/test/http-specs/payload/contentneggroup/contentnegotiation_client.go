@@ -8,12 +8,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewContentNegotiationClient(options *azcore.ClientOptions) (*ContentNegotiationClient, error) {
-	internal, err := azcore.NewClient("contentneggroup", "v0.1.0", runtime.PipelineOptions{}, options)
+func NewContentNegotiationClient(endpoint string, options *azcore.ClientOptions) (*ContentNegotiationClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &ContentNegotiationClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

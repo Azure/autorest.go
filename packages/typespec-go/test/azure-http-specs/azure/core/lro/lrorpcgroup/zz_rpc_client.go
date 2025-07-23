@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type RPCClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // BeginLongRunningRPC - Generate data.
@@ -74,7 +75,7 @@ func (client *RPCClient) longRunningRPC(ctx context.Context, body GenerationOpti
 // longRunningRPCCreateRequest creates the LongRunningRPC request.
 func (client *RPCClient) longRunningRPCCreateRequest(ctx context.Context, body GenerationOptions, _ *RPCClientBeginLongRunningRPCOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/lro/rpc/generations:submit"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

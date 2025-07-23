@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesDecimalClient] instead.
 type ValueTypesDecimalClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get call
@@ -46,7 +47,7 @@ func (client *ValueTypesDecimalClient) Get(ctx context.Context, options *ValueTy
 // getCreateRequest creates the Get request.
 func (client *ValueTypesDecimalClient) getCreateRequest(ctx context.Context, _ *ValueTypesDecimalClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/decimal"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +92,7 @@ func (client *ValueTypesDecimalClient) Put(ctx context.Context, body DecimalProp
 // putCreateRequest creates the Put request.
 func (client *ValueTypesDecimalClient) putCreateRequest(ctx context.Context, body DecimalProperty, _ *ValueTypesDecimalClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/decimal"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

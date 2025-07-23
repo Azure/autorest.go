@@ -16,7 +16,7 @@ import (
 )
 
 func TestModelPropertiesClient_SameAsModel(t *testing.T) {
-	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
+	client, err := specialwordsgroup.NewSpecialWordsClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewSpecialWordsModelPropertiesClient().SameAsModel(context.Background(), specialwordsgroup.SameAsModel{
 		SameAsModel: to.Ptr("ok"),

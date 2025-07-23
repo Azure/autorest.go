@@ -15,7 +15,7 @@ import (
 )
 
 func TestDecimal128VerifyClient_PrepareVerify(t *testing.T) {
-	client, err := scalargroup.NewScalarClient(nil)
+	client, err := scalargroup.NewScalarClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarDecimal128VerifyClient().PrepareVerify(context.Background(), nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestDecimal128VerifyClient_PrepareVerify(t *testing.T) {
 }
 
 func TestDecimal128VerifyClient_Verify(t *testing.T) {
-	client, err := scalargroup.NewScalarClient(nil)
+	client, err := scalargroup.NewScalarClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarDecimal128VerifyClient().Verify(context.Background(), 0.3, nil)
 	require.NoError(t, err)

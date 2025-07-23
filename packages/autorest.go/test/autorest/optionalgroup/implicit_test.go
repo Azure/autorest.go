@@ -14,19 +14,25 @@ import (
 )
 
 func newImplicitClient(t *testing.T) *ImplicitClient {
-	client, err := NewImplicitClient("", "", nil, &azcore.ClientOptions{
+	client, err := NewImplicitClient(generatortests.Host, "", "", nil, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewImplicitClient(equiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32, options *azcore.ClientOptions) (*ImplicitClient, error) {
+func NewImplicitClient(endpoint string, requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32, options *azcore.ClientOptions) (*ImplicitClient, error) {
 	client, err := azcore.NewClient("optionalgroup.ImplicitClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &ImplicitClient{internal: client}, nil
+	return &ImplicitClient{
+		internal:            client,
+		endpoint:            endpoint,
+		requiredGlobalPath:  requiredGlobalPath,
+		requiredGlobalQuery: requiredGlobalQuery,
+		optionalGlobalQuery: optionalGlobalQuery,
+	}, nil
 }
 
 func TestImplicitGetOptionalGlobalQuery(t *testing.T) {

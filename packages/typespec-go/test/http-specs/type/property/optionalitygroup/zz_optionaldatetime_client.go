@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [OptionalClient.NewOptionalDatetimeClient] instead.
 type OptionalDatetimeClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetAll - Get models that will return all properties in the model
@@ -46,7 +47,7 @@ func (client *OptionalDatetimeClient) GetAll(ctx context.Context, options *Optio
 // getAllCreateRequest creates the GetAll request.
 func (client *OptionalDatetimeClient) getAllCreateRequest(ctx context.Context, _ *OptionalDatetimeClientGetAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/datetime/all"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +93,7 @@ func (client *OptionalDatetimeClient) GetDefault(ctx context.Context, options *O
 // getDefaultCreateRequest creates the GetDefault request.
 func (client *OptionalDatetimeClient) getDefaultCreateRequest(ctx context.Context, _ *OptionalDatetimeClientGetDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/datetime/default"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +137,7 @@ func (client *OptionalDatetimeClient) PutAll(ctx context.Context, body DatetimeP
 // putAllCreateRequest creates the PutAll request.
 func (client *OptionalDatetimeClient) putAllCreateRequest(ctx context.Context, body DatetimeProperty, _ *OptionalDatetimeClientPutAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/datetime/all"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -175,7 +176,7 @@ func (client *OptionalDatetimeClient) PutDefault(ctx context.Context, body Datet
 // putDefaultCreateRequest creates the PutDefault request.
 func (client *OptionalDatetimeClient) putDefaultCreateRequest(ctx context.Context, body DatetimeProperty, _ *OptionalDatetimeClientPutDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/datetime/default"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

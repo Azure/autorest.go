@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [NumericClient.NewNumericPropertyClient] instead.
 type NumericPropertyClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // SafeintAsString -
@@ -47,7 +48,7 @@ func (client *NumericPropertyClient) SafeintAsString(ctx context.Context, value 
 // safeintAsStringCreateRequest creates the SafeintAsString request.
 func (client *NumericPropertyClient) safeintAsStringCreateRequest(ctx context.Context, value SafeintAsStringProperty, _ *NumericPropertyClientSafeintAsStringOptions) (*policy.Request, error) {
 	urlPath := "/encode/numeric/property/safeint"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ func (client *NumericPropertyClient) Uint32AsStringOptional(ctx context.Context,
 // uint32AsStringOptionalCreateRequest creates the Uint32AsStringOptional request.
 func (client *NumericPropertyClient) uint32AsStringOptionalCreateRequest(ctx context.Context, value Uint32AsStringProperty, _ *NumericPropertyClientUint32AsStringOptionalOptions) (*policy.Request, error) {
 	urlPath := "/encode/numeric/property/uint32"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +148,7 @@ func (client *NumericPropertyClient) Uint8AsString(ctx context.Context, value Ui
 // uint8AsStringCreateRequest creates the Uint8AsString request.
 func (client *NumericPropertyClient) uint8AsStringCreateRequest(ctx context.Context, value Uint8AsStringProperty, _ *NumericPropertyClientUint8AsStringOptions) (*policy.Request, error) {
 	urlPath := "/encode/numeric/property/uint8"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

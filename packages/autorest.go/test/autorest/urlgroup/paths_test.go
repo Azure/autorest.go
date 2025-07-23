@@ -10,24 +10,15 @@ import (
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/stretchr/testify/require"
 )
 
 func newPathsClient(t *testing.T) *PathsClient {
-	client, err := NewPathsClient(&azcore.ClientOptions{
+	client, err := NewPathsClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewPathsClient(options *azcore.ClientOptions) (*PathsClient, error) {
-	client, err := azcore.NewClient("urlgroup.PathsClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &PathsClient{internal: client}, nil
 }
 
 func TestArrayCSVInPath(t *testing.T) {

@@ -5,8 +5,6 @@
 
 package lrogroup
 
-const host = "http://localhost:3000"
-
 type ProductPropertiesProvisioningStateValues string
 
 const (

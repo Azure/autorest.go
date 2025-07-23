@@ -8,14 +8,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewTypeChangedFromClient(options *azcore.ClientOptions) (*TypeChangedFromClient, error) {
-	internal, err := azcore.NewClient("typechangedfromgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+func NewTypeChangedFromClient(endpoint string, options *azcore.ClientOptions) (*TypeChangedFromClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &TypeChangedFromClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
+		endpoint: endpoint,
 		version:  VersionsV2,
 	}, nil
 }

@@ -20,6 +20,7 @@ import { generateGoModFile } from '../../../codegen.go/src/gomod.js';
 import { generateXMLAdditionalPropsHelpers } from '../../../codegen.go/src/xmlAdditionalProps.js';
 import { generateServers } from '../../../codegen.go/src/fake/servers.js';
 import { generateServerFactory } from '../../../codegen.go/src/fake/factory.js';
+import { generateVersionInfo } from '../../../codegen.go/src/version.js';
 import { fileURLToPath } from 'url';
 
 // The generator emits Go source code files to disk.
@@ -152,6 +153,17 @@ export async function generateCode(host: AutorestExtensionHost) {
       host.writeFile({
         filename: 'go.mod',
         content: gomod,
+        artifactType: 'source-file-go'
+      });
+    }
+
+    // don't overwrite an existing version.go file
+    const verisonGoFileName = `${filePrefix}version.go`;
+    const existingVersionGo = await host.readFile(verisonGoFileName);
+    if (existingVersionGo === null) {
+      host.writeFile({
+        filename: verisonGoFileName,
+        content: await generateVersionInfo(session.model),
         artifactType: 'source-file-go'
       });
     }

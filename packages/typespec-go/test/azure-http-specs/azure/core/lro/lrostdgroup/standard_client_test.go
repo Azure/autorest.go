@@ -15,7 +15,7 @@ import (
 )
 
 func TestStandardClient_BeginCreateOrReplace(t *testing.T) {
-	client, err := lrostdgroup.NewStandardClient(nil)
+	client, err := lrostdgroup.NewStandardClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	poller, err := client.BeginCreateOrReplace(context.Background(), "madge", lrostdgroup.User{
 		Role: to.Ptr("contributor"),
@@ -32,7 +32,7 @@ func TestStandardClient_BeginCreateOrReplace(t *testing.T) {
 }
 
 func TestStandardClient_BeginDelete(t *testing.T) {
-	client, err := lrostdgroup.NewStandardClient(nil)
+	client, err := lrostdgroup.NewStandardClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	poller, err := client.BeginDelete(context.Background(), "madge", nil)
 	require.NoError(t, err)
@@ -44,7 +44,7 @@ func TestStandardClient_BeginDelete(t *testing.T) {
 }
 
 func TestStandardClient_BeginExport(t *testing.T) {
-	client, err := lrostdgroup.NewStandardClient(nil)
+	client, err := lrostdgroup.NewStandardClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	poller, err := client.BeginExport(context.Background(), "madge", "json", nil)
 	require.NoError(t, err)

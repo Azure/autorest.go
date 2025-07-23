@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [XMLClient.NewXMLModelWithEmptyArrayValueClient] instead.
 type XMLModelWithEmptyArrayValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -47,7 +48,7 @@ func (client *XMLModelWithEmptyArrayValueClient) Get(ctx context.Context, option
 // getCreateRequest creates the Get request.
 func (client *XMLModelWithEmptyArrayValueClient) getCreateRequest(ctx context.Context, _ *XMLModelWithEmptyArrayValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/payload/xml/modelWithEmptyArray"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +96,7 @@ func (client *XMLModelWithEmptyArrayValueClient) Put(ctx context.Context, input 
 // putCreateRequest creates the Put request.
 func (client *XMLModelWithEmptyArrayValueClient) putCreateRequest(ctx context.Context, input ModelWithEmptyArray, _ *XMLModelWithEmptyArrayValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/payload/xml/modelWithEmptyArray"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -14,19 +14,19 @@ import (
 )
 
 func newHTTPServerFailureClient(t *testing.T) *HTTPServerFailureClient {
-	client, err := NewHTTPServerFailureClient(&azcore.ClientOptions{
+	client, err := NewHTTPServerFailureClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewHTTPServerFailureClient(options *azcore.ClientOptions) (*HTTPServerFailureClient, error) {
+func NewHTTPServerFailureClient(endpoint string, options *azcore.ClientOptions) (*HTTPServerFailureClient, error) {
 	client, err := azcore.NewClient("httpinfrastructuregroup.HTTPServerFailureClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &HTTPServerFailureClient{internal: client}, nil
+	return &HTTPServerFailureClient{internal: client, endpoint: endpoint}, nil
 }
 
 func TestHTTPServerFailureDelete505(t *testing.T) {

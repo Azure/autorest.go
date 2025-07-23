@@ -5,8 +5,6 @@
 
 package extenumsgroup
 
-const host = "http://localhost:3000"
-
 // DaysOfWeekExtensibleEnum - Type of Pet
 type DaysOfWeekExtensibleEnum string
 

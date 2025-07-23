@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type IntClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get an int enum
@@ -49,7 +50,7 @@ func (client *IntClient) Get(ctx context.Context, options *IntClientGetOptions) 
 // getCreateRequest creates the Get request.
 func (client *IntClient) getCreateRequest(ctx context.Context, _ *IntClientGetOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/int/get"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ func (client *IntClient) Put(ctx context.Context, input IntEnum, options *IntCli
 // putCreateRequest creates the Put request.
 func (client *IntClient) putCreateRequest(ctx context.Context, input IntEnum, _ *IntClientPutOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/int/put"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

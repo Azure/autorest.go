@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [OptionalClient.NewOptionalPlainTimeClient] instead.
 type OptionalPlainTimeClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetAll - Get models that will return all properties in the model
@@ -47,7 +48,7 @@ func (client *OptionalPlainTimeClient) GetAll(ctx context.Context, options *Opti
 // getAllCreateRequest creates the GetAll request.
 func (client *OptionalPlainTimeClient) getAllCreateRequest(ctx context.Context, _ *OptionalPlainTimeClientGetAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/plainTime/all"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,7 @@ func (client *OptionalPlainTimeClient) GetDefault(ctx context.Context, options *
 // getDefaultCreateRequest creates the GetDefault request.
 func (client *OptionalPlainTimeClient) getDefaultCreateRequest(ctx context.Context, _ *OptionalPlainTimeClientGetDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/plainTime/default"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +139,7 @@ func (client *OptionalPlainTimeClient) PutAll(ctx context.Context, body PlainTim
 // putAllCreateRequest creates the PutAll request.
 func (client *OptionalPlainTimeClient) putAllCreateRequest(ctx context.Context, body PlainTimeProperty, _ *OptionalPlainTimeClientPutAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/plainTime/all"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -177,7 +178,7 @@ func (client *OptionalPlainTimeClient) PutDefault(ctx context.Context, body Plai
 // putDefaultCreateRequest creates the PutDefault request.
 func (client *OptionalPlainTimeClient) putDefaultCreateRequest(ctx context.Context, body PlainTimeProperty, _ *OptionalPlainTimeClientPutDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/plainTime/default"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

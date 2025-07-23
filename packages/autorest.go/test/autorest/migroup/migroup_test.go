@@ -9,26 +9,17 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
 
 func newMultipleInheritanceServiceClient(t *testing.T) *MultipleInheritanceServiceClient {
-	client, err := NewMultipleInheritanceServiceClient(&azcore.ClientOptions{
+	client, err := NewMultipleInheritanceServiceClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewMultipleInheritanceServiceClient(options *azcore.ClientOptions) (*MultipleInheritanceServiceClient, error) {
-	client, err := azcore.NewClient("migroup.MultipleInheritanceServiceClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &MultipleInheritanceServiceClient{internal: client}, nil
 }
 
 // GetCat - Get a cat with name 'Whiskers' where likesMilk, meows, and hisses is true

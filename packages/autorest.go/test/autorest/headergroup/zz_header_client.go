@@ -20,6 +20,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type HeaderClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // CustomRequestID - Send x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
@@ -51,7 +52,7 @@ func (client *HeaderClient) CustomRequestID(ctx context.Context, options *Header
 // customRequestIDCreateRequest creates the CustomRequestID request.
 func (client *HeaderClient) customRequestIDCreateRequest(ctx context.Context, _ *HeaderClientCustomRequestIDOptions) (*policy.Request, error) {
 	urlPath := "/header/custom/x-ms-client-request-id/9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +91,7 @@ func (client *HeaderClient) ParamBool(ctx context.Context, scenario string, valu
 // paramBoolCreateRequest creates the ParamBool request.
 func (client *HeaderClient) paramBoolCreateRequest(ctx context.Context, scenario string, value bool, _ *HeaderClientParamBoolOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/bool"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +132,7 @@ func (client *HeaderClient) ParamByte(ctx context.Context, scenario string, valu
 // paramByteCreateRequest creates the ParamByte request.
 func (client *HeaderClient) paramByteCreateRequest(ctx context.Context, scenario string, value []byte, _ *HeaderClientParamByteOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/byte"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +174,7 @@ func (client *HeaderClient) ParamDate(ctx context.Context, scenario string, valu
 // paramDateCreateRequest creates the ParamDate request.
 func (client *HeaderClient) paramDateCreateRequest(ctx context.Context, scenario string, value time.Time, _ *HeaderClientParamDateOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/date"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -215,7 +216,7 @@ func (client *HeaderClient) ParamDatetime(ctx context.Context, scenario string, 
 // paramDatetimeCreateRequest creates the ParamDatetime request.
 func (client *HeaderClient) paramDatetimeCreateRequest(ctx context.Context, scenario string, value time.Time, _ *HeaderClientParamDatetimeOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/datetime"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +258,7 @@ func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario s
 // paramDatetimeRFC1123CreateRequest creates the ParamDatetimeRFC1123 request.
 func (client *HeaderClient) paramDatetimeRFC1123CreateRequest(ctx context.Context, scenario string, options *HeaderClientParamDatetimeRFC1123Options) (*policy.Request, error) {
 	urlPath := "/header/param/prim/datetimerfc1123"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -301,7 +302,7 @@ func (client *HeaderClient) ParamDouble(ctx context.Context, scenario string, va
 // paramDoubleCreateRequest creates the ParamDouble request.
 func (client *HeaderClient) paramDoubleCreateRequest(ctx context.Context, scenario string, value float64, _ *HeaderClientParamDoubleOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/double"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -342,7 +343,7 @@ func (client *HeaderClient) ParamDuration(ctx context.Context, scenario string, 
 // paramDurationCreateRequest creates the ParamDuration request.
 func (client *HeaderClient) paramDurationCreateRequest(ctx context.Context, scenario string, value string, _ *HeaderClientParamDurationOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/duration"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -383,7 +384,7 @@ func (client *HeaderClient) ParamEnum(ctx context.Context, scenario string, opti
 // paramEnumCreateRequest creates the ParamEnum request.
 func (client *HeaderClient) paramEnumCreateRequest(ctx context.Context, scenario string, options *HeaderClientParamEnumOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/enum"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -425,7 +426,7 @@ func (client *HeaderClient) ParamExistingKey(ctx context.Context, userAgent stri
 // paramExistingKeyCreateRequest creates the ParamExistingKey request.
 func (client *HeaderClient) paramExistingKeyCreateRequest(ctx context.Context, userAgent string, _ *HeaderClientParamExistingKeyOptions) (*policy.Request, error) {
 	urlPath := "/header/param/existingkey"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -466,7 +467,7 @@ func (client *HeaderClient) ParamFloat(ctx context.Context, scenario string, val
 // paramFloatCreateRequest creates the ParamFloat request.
 func (client *HeaderClient) paramFloatCreateRequest(ctx context.Context, scenario string, value float32, _ *HeaderClientParamFloatOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/float"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -508,7 +509,7 @@ func (client *HeaderClient) ParamInteger(ctx context.Context, scenario string, v
 // paramIntegerCreateRequest creates the ParamInteger request.
 func (client *HeaderClient) paramIntegerCreateRequest(ctx context.Context, scenario string, value int32, _ *HeaderClientParamIntegerOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/integer"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -550,7 +551,7 @@ func (client *HeaderClient) ParamLong(ctx context.Context, scenario string, valu
 // paramLongCreateRequest creates the ParamLong request.
 func (client *HeaderClient) paramLongCreateRequest(ctx context.Context, scenario string, value int64, _ *HeaderClientParamLongOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/long"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -591,7 +592,7 @@ func (client *HeaderClient) ParamProtectedKey(ctx context.Context, contentType s
 // paramProtectedKeyCreateRequest creates the ParamProtectedKey request.
 func (client *HeaderClient) paramProtectedKeyCreateRequest(ctx context.Context, contentType string, _ *HeaderClientParamProtectedKeyOptions) (*policy.Request, error) {
 	urlPath := "/header/param/protectedkey"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -631,7 +632,7 @@ func (client *HeaderClient) ParamString(ctx context.Context, scenario string, op
 // paramStringCreateRequest creates the ParamString request.
 func (client *HeaderClient) paramStringCreateRequest(ctx context.Context, scenario string, options *HeaderClientParamStringOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/string"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -674,7 +675,7 @@ func (client *HeaderClient) ResponseBool(ctx context.Context, scenario string, o
 // responseBoolCreateRequest creates the ResponseBool request.
 func (client *HeaderClient) responseBoolCreateRequest(ctx context.Context, scenario string, _ *HeaderClientResponseBoolOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/bool"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -727,7 +728,7 @@ func (client *HeaderClient) ResponseByte(ctx context.Context, scenario string, o
 // responseByteCreateRequest creates the ResponseByte request.
 func (client *HeaderClient) responseByteCreateRequest(ctx context.Context, scenario string, _ *HeaderClientResponseByteOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/byte"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -780,7 +781,7 @@ func (client *HeaderClient) ResponseDate(ctx context.Context, scenario string, o
 // responseDateCreateRequest creates the ResponseDate request.
 func (client *HeaderClient) responseDateCreateRequest(ctx context.Context, scenario string, _ *HeaderClientResponseDateOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/date"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -833,7 +834,7 @@ func (client *HeaderClient) ResponseDatetime(ctx context.Context, scenario strin
 // responseDatetimeCreateRequest creates the ResponseDatetime request.
 func (client *HeaderClient) responseDatetimeCreateRequest(ctx context.Context, scenario string, _ *HeaderClientResponseDatetimeOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/datetime"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -888,7 +889,7 @@ func (client *HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenari
 // responseDatetimeRFC1123CreateRequest creates the ResponseDatetimeRFC1123 request.
 func (client *HeaderClient) responseDatetimeRFC1123CreateRequest(ctx context.Context, scenario string, _ *HeaderClientResponseDatetimeRFC1123Options) (*policy.Request, error) {
 	urlPath := "/header/response/prim/datetimerfc1123"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -941,7 +942,7 @@ func (client *HeaderClient) ResponseDouble(ctx context.Context, scenario string,
 // responseDoubleCreateRequest creates the ResponseDouble request.
 func (client *HeaderClient) responseDoubleCreateRequest(ctx context.Context, scenario string, _ *HeaderClientResponseDoubleOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/double"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -994,7 +995,7 @@ func (client *HeaderClient) ResponseDuration(ctx context.Context, scenario strin
 // responseDurationCreateRequest creates the ResponseDuration request.
 func (client *HeaderClient) responseDurationCreateRequest(ctx context.Context, scenario string, _ *HeaderClientResponseDurationOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/duration"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1043,7 +1044,7 @@ func (client *HeaderClient) ResponseEnum(ctx context.Context, scenario string, o
 // responseEnumCreateRequest creates the ResponseEnum request.
 func (client *HeaderClient) responseEnumCreateRequest(ctx context.Context, scenario string, _ *HeaderClientResponseEnumOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/enum"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1092,7 +1093,7 @@ func (client *HeaderClient) ResponseExistingKey(ctx context.Context, options *He
 // responseExistingKeyCreateRequest creates the ResponseExistingKey request.
 func (client *HeaderClient) responseExistingKeyCreateRequest(ctx context.Context, _ *HeaderClientResponseExistingKeyOptions) (*policy.Request, error) {
 	urlPath := "/header/response/existingkey"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1140,7 +1141,7 @@ func (client *HeaderClient) ResponseFloat(ctx context.Context, scenario string, 
 // responseFloatCreateRequest creates the ResponseFloat request.
 func (client *HeaderClient) responseFloatCreateRequest(ctx context.Context, scenario string, _ *HeaderClientResponseFloatOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/float"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1194,7 +1195,7 @@ func (client *HeaderClient) ResponseInteger(ctx context.Context, scenario string
 // responseIntegerCreateRequest creates the ResponseInteger request.
 func (client *HeaderClient) responseIntegerCreateRequest(ctx context.Context, scenario string, _ *HeaderClientResponseIntegerOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/integer"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1248,7 +1249,7 @@ func (client *HeaderClient) ResponseLong(ctx context.Context, scenario string, o
 // responseLongCreateRequest creates the ResponseLong request.
 func (client *HeaderClient) responseLongCreateRequest(ctx context.Context, scenario string, _ *HeaderClientResponseLongOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/long"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1301,7 +1302,7 @@ func (client *HeaderClient) ResponseProtectedKey(ctx context.Context, options *H
 // responseProtectedKeyCreateRequest creates the ResponseProtectedKey request.
 func (client *HeaderClient) responseProtectedKeyCreateRequest(ctx context.Context, _ *HeaderClientResponseProtectedKeyOptions) (*policy.Request, error) {
 	urlPath := "/header/response/protectedkey"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1349,7 +1350,7 @@ func (client *HeaderClient) ResponseString(ctx context.Context, scenario string,
 // responseStringCreateRequest creates the ResponseString request.
 func (client *HeaderClient) responseStringCreateRequest(ctx context.Context, scenario string, _ *HeaderClientResponseStringOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/string"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

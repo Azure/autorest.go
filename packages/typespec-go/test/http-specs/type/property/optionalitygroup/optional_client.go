@@ -8,12 +8,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewOptionalClient(options *azcore.ClientOptions) (*OptionalClient, error) {
-	internal, err := azcore.NewClient("optionalitygroup", "v0.1.0", runtime.PipelineOptions{}, options)
+func NewOptionalClient(endpoint string, options *azcore.ClientOptions) (*OptionalClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &OptionalClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

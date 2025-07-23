@@ -13,7 +13,7 @@ import (
 
 func TestModelAzureCoreEmbeddingVectorClient_Get(t *testing.T) {
 	input := []*int32{to.Ptr(int32(0)), to.Ptr(int32(1)), to.Ptr(int32(2)), to.Ptr(int32(3)), to.Ptr(int32(4))}
-	client, err := NewModelAzureCoreEmbeddingVectorClient(nil)
+	client, err := NewModelAzureCoreEmbeddingVectorClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 
 	resp, err := client.Get(context.Background(), nil)
@@ -23,7 +23,7 @@ func TestModelAzureCoreEmbeddingVectorClient_Get(t *testing.T) {
 
 func TestModelAzureCoreEmbeddingVectorClient_Post(t *testing.T) {
 	input := AzureEmbeddingModel{Embedding: []*int32{to.Ptr(int32(0)), to.Ptr(int32(1)), to.Ptr(int32(2)), to.Ptr(int32(3)), to.Ptr(int32(4))}}
-	client, err := NewModelAzureCoreEmbeddingVectorClient(nil)
+	client, err := NewModelAzureCoreEmbeddingVectorClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Post(context.Background(), input, nil)
 	require.NoError(t, err)
@@ -34,7 +34,7 @@ func TestModelAzureCoreEmbeddingVectorClient_Post(t *testing.T) {
 
 func TestModelAzureCoreEmbeddingVectorClient_Put(t *testing.T) {
 	input := []*int32{to.Ptr(int32(0)), to.Ptr(int32(1)), to.Ptr(int32(2)), to.Ptr(int32(3)), to.Ptr(int32(4))}
-	client, err := NewModelAzureCoreEmbeddingVectorClient(nil)
+	client, err := NewModelAzureCoreEmbeddingVectorClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Put(context.Background(), input, nil)
 	require.NoError(t, err)

@@ -6,6 +6,7 @@ package lrogroup_test
 import (
 	"context"
 	"errors"
+	"generatortests"
 	"generatortests/lrogroup"
 	"generatortests/lrogroup/fake"
 	"net/http"
@@ -32,7 +33,7 @@ func TestFakeBeginDelete202NoRetry204(t *testing.T) {
 			return
 		},
 	}
-	client, err := lrogroup.NewLROsClient(&azcore.ClientOptions{
+	client, err := lrogroup.NewLROsClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewLROsServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -59,7 +60,7 @@ func TestFakeBeginDelete204Succeeded(t *testing.T) {
 			return
 		},
 	}
-	client, err := lrogroup.NewLROsClient(&azcore.ClientOptions{
+	client, err := lrogroup.NewLROsClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewLROsServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -85,7 +86,7 @@ func TestFakeBeginDeleteAsyncRetryFailed(t *testing.T) {
 			return
 		},
 	}
-	client, err := lrogroup.NewLROsClient(&azcore.ClientOptions{
+	client, err := lrogroup.NewLROsClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewLROsServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -137,7 +138,7 @@ func TestFakeBeginPut200Succeeded(t *testing.T) {
 			return
 		},
 	}
-	client, err := lrogroup.NewLROsClient(&azcore.ClientOptions{
+	client, err := lrogroup.NewLROsClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewLROsServerTransport(&server),
 	})
 	require.NoError(t, err)

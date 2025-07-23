@@ -5,11 +5,6 @@
 
 package armcompute
 
-const (
-	moduleName    = "armcompute"
-	moduleVersion = "v0.1.0"
-)
-
 type AccessLevel string
 
 const (

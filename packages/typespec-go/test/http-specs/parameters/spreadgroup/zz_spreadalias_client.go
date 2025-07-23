@@ -19,6 +19,7 @@ import (
 // Don't use this type directly, use [SpreadClient.NewSpreadAliasClient] instead.
 type SpreadAliasClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // SpreadAsRequestBody -
@@ -49,7 +50,7 @@ func (client *SpreadAliasClient) SpreadAsRequestBody(ctx context.Context, name s
 // spreadAsRequestBodyCreateRequest creates the SpreadAsRequestBody request.
 func (client *SpreadAliasClient) spreadAsRequestBodyCreateRequest(ctx context.Context, name string, _ *SpreadAliasClientSpreadAsRequestBodyOptions) (*policy.Request, error) {
 	urlPath := "/parameters/spread/alias/request-body"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ func (client *SpreadAliasClient) spreadAsRequestParameterCreateRequest(ctx conte
 		return nil, errors.New("parameter id cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(id))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (client *SpreadAliasClient) spreadParameterWithInnerAliasCreateRequest(ctx 
 		return nil, errors.New("parameter id cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(id))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -199,7 +200,7 @@ func (client *SpreadAliasClient) spreadParameterWithInnerModelCreateRequest(ctx 
 		return nil, errors.New("parameter id cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(id))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -250,7 +251,7 @@ func (client *SpreadAliasClient) spreadWithMultipleParametersCreateRequest(ctx c
 		return nil, errors.New("parameter id cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(id))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

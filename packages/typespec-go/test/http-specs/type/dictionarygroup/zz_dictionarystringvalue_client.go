@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [DictionaryClient.NewDictionaryStringValueClient] instead.
 type DictionaryStringValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -47,7 +48,7 @@ func (client *DictionaryStringValueClient) Get(ctx context.Context, options *Dic
 // getCreateRequest creates the Get request.
 func (client *DictionaryStringValueClient) getCreateRequest(ctx context.Context, _ *DictionaryStringValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/string"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +93,7 @@ func (client *DictionaryStringValueClient) Put(ctx context.Context, body map[str
 // putCreateRequest creates the Put request.
 func (client *DictionaryStringValueClient) putCreateRequest(ctx context.Context, body map[string]*string, _ *DictionaryStringValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/string"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

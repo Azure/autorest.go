@@ -5,6 +5,7 @@ package nonstringenumgroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/nonstringenumgroup"
 	"generatortests/nonstringenumgroup/fake"
 	"net/http"
@@ -25,7 +26,7 @@ func TestFakeGet(t *testing.T) {
 			return
 		},
 	}
-	client, err := nonstringenumgroup.NewIntClient(&azcore.ClientOptions{
+	client, err := nonstringenumgroup.NewIntClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewIntServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -47,7 +48,7 @@ func TestFakePut(t *testing.T) {
 			return
 		},
 	}
-	client, err := nonstringenumgroup.NewIntClient(&azcore.ClientOptions{
+	client, err := nonstringenumgroup.NewIntClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewIntServerTransport(&server),
 	})
 	require.NoError(t, err)

@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ArrayClient.NewArrayStringValueClient] instead.
 type ArrayStringValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -46,7 +47,7 @@ func (client *ArrayStringValueClient) Get(ctx context.Context, options *ArrayStr
 // getCreateRequest creates the Get request.
 func (client *ArrayStringValueClient) getCreateRequest(ctx context.Context, _ *ArrayStringValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/string"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +91,7 @@ func (client *ArrayStringValueClient) Put(ctx context.Context, body []string, op
 // putCreateRequest creates the Put request.
 func (client *ArrayStringValueClient) putCreateRequest(ctx context.Context, body []string, _ *ArrayStringValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/string"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

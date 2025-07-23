@@ -14,6 +14,7 @@ import (
 // MarshalJSON implements the json.Marshaller interface for type widget.
 func (w widget) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
+	populate(objectMap, "color", w.Color)
 	populate(objectMap, "weight", w.Weight)
 	return json.Marshal(objectMap)
 }
@@ -27,6 +28,9 @@ func (w *widget) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "color":
+			err = unpopulate(val, "Color", &w.Color)
+			delete(rawMsg, key)
 		case "weight":
 			err = unpopulate(val, "Weight", &w.Weight)
 			delete(rawMsg, key)

@@ -5,11 +5,6 @@
 
 package armconsumption
 
-const (
-	moduleName    = "armconsumption"
-	moduleVersion = "v1.0.0"
-)
-
 // BillingFrequency - The billing frequency.
 type BillingFrequency string
 

@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type DurationClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // DurationConstant - Test duration with azure specific encoding.
@@ -46,7 +47,7 @@ func (client *DurationClient) DurationConstant(ctx context.Context, body Duratio
 // durationConstantCreateRequest creates the DurationConstant request.
 func (client *DurationClient) durationConstantCreateRequest(ctx context.Context, body DurationModel, _ *DurationClientDurationConstantOptions) (*policy.Request, error) {
 	urlPath := "/azure/encode/duration/duration-constant"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -13,7 +13,7 @@ import (
 )
 
 func TestXMLModelWithOptionalFieldValueClient_Get(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient(nil)
+	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithOptionalFieldValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestXMLModelWithOptionalFieldValueClient_Get(t *testing.T) {
 }
 
 func TestXMLModelWithOptionalFieldValueClient_Put(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient(nil)
+	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithOptionalFieldValueClient().Put(context.Background(), xmlgroup.ModelWithOptionalField{
 		Item: to.Ptr("widget"),

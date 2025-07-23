@@ -8,13 +8,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewNotDefinedClient(options *azcore.ClientOptions) (*NotDefinedClient, error) {
+func NewNotDefinedClient(endpoint string, options *azcore.ClientOptions) (*NotDefinedClient, error) {
 	internal, err := azcore.NewClient("noendpointgroup", "v0.1.0", runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &NotDefinedClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
+		endpoint: endpoint,
 	}, nil
 }

@@ -33,15 +33,12 @@ export interface Client {
   /** contains any client accessor methods. can be empty */
   clientAccessors: Array<ClientAccessor>;
 
-  /** client has a statically defined or templated host */
-  host?: string;
-
   /**
    * templatedHost indicates that there's one or more URIParameters
    * required to construct the complete host. the parameters can
    * be solely on the client or span client and method params.
    */
-  templatedHost: boolean;
+  templatedHost?: string;
 
   /** the parent client in a hierarchical client */
   parent?: Client;
@@ -242,7 +239,6 @@ class MethodBase implements MethodBase {
 export class Client implements Client {
   constructor(name: string, docs: type.Docs, options: ClientOptions) {
     this.name = name;
-    this.templatedHost = false;
     this.constructors = new Array<Constructor>();
     this.docs = docs;
     this.methods = new Array<MethodType>();

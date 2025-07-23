@@ -10,6 +10,20 @@ type PageableServerDrivenPaginationClientLinkOptions struct {
 	// placeholder for future optional parameters
 }
 
+// PageableServerDrivenPaginationClientNestedLinkOptions contains the optional parameters for the PageableServerDrivenPaginationClient.NewNestedLinkPager
+// method.
+type PageableServerDrivenPaginationClientNestedLinkOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions contains the optional parameters
+// for the PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderNestedResponseBodyPager method.
+type PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions struct {
+	Bar   *string
+	Foo   *string
+	Token *string
+}
+
 // PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions contains the optional parameters
 // for the PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderResponseBodyPager method.
 type PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions struct {
@@ -21,6 +35,14 @@ type PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseB
 // PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions contains the optional parameters
 // for the PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderResponseHeaderPager method.
 type PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions struct {
+	Bar   *string
+	Foo   *string
+	Token *string
+}
+
+// PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions contains the optional parameters
+// for the PageableServerDrivenPaginationContinuationTokenClient.NewRequestQueryNestedResponseBodyPager method.
+type PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions struct {
 	Bar   *string
 	Foo   *string
 	Token *string

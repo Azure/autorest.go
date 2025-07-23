@@ -21,6 +21,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type AutoRestValidationTestClient struct {
 	internal       *azcore.Client
+	endpoint       string
 	subscriptionID string
 }
 
@@ -55,7 +56,7 @@ func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Co
 func (client *AutoRestValidationTestClient) getWithConstantInPathCreateRequest(ctx context.Context, _ *AutoRestValidationTestClientGetWithConstantInPathOptions) (*policy.Request, error) {
 	urlPath := "/validation/constantsInPath/{constantParam}/value"
 	urlPath = strings.ReplaceAll(urlPath, "{constantParam}", url.PathEscape("constant"))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +95,7 @@ func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.C
 func (client *AutoRestValidationTestClient) postWithConstantInBodyCreateRequest(ctx context.Context, options *AutoRestValidationTestClientPostWithConstantInBodyOptions) (*policy.Request, error) {
 	urlPath := "/validation/constantsInPath/{constantParam}/value"
 	urlPath = strings.ReplaceAll(urlPath, "{constantParam}", url.PathEscape("constant"))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -159,7 +160,7 @@ func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx co
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -224,7 +225,7 @@ func (client *AutoRestValidationTestClient) validationOfMethodParametersCreateRe
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

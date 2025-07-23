@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ArrayClient.NewArrayNullableBooleanValueClient] instead.
 type ArrayNullableBooleanValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -47,7 +48,7 @@ func (client *ArrayNullableBooleanValueClient) Get(ctx context.Context, options 
 // getCreateRequest creates the Get request.
 func (client *ArrayNullableBooleanValueClient) getCreateRequest(ctx context.Context, _ *ArrayNullableBooleanValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/nullable-boolean"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +93,7 @@ func (client *ArrayNullableBooleanValueClient) Put(ctx context.Context, body []*
 // putCreateRequest creates the Put request.
 func (client *ArrayNullableBooleanValueClient) putCreateRequest(ctx context.Context, body []*bool, _ *ArrayNullableBooleanValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/nullable-boolean"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

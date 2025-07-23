@@ -5,6 +5,7 @@ package paramgroupinggroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/paramgroupinggroup"
 	"generatortests/paramgroupinggroup/fake"
 	"net/http"
@@ -37,7 +38,7 @@ func TestFakePostMultiParamGroups(t *testing.T) {
 			return
 		},
 	}
-	client, err := paramgroupinggroup.NewParameterGroupingClient(&azcore.ClientOptions{
+	client, err := paramgroupinggroup.NewParameterGroupingClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewParameterGroupingServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -59,7 +60,7 @@ func TestFakePostMultiParamGroupsEmpty(t *testing.T) {
 			return
 		},
 	}
-	client, err := paramgroupinggroup.NewParameterGroupingClient(&azcore.ClientOptions{
+	client, err := paramgroupinggroup.NewParameterGroupingClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewParameterGroupingServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -78,7 +79,7 @@ func TestFakePostMultiParamGroupsNil(t *testing.T) {
 			return
 		},
 	}
-	client, err := paramgroupinggroup.NewParameterGroupingClient(&azcore.ClientOptions{
+	client, err := paramgroupinggroup.NewParameterGroupingClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewParameterGroupingServerTransport(&server),
 	})
 	require.NoError(t, err)

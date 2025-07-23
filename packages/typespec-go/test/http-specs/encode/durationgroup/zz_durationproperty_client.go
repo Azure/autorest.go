@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [DurationClient.NewDurationPropertyClient] instead.
 type DurationPropertyClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Default -
@@ -47,7 +48,7 @@ func (client *DurationPropertyClient) Default(ctx context.Context, body DefaultD
 // defaultCreateRequest creates the Default request.
 func (client *DurationPropertyClient) defaultCreateRequest(ctx context.Context, body DefaultDurationProperty, _ *DurationPropertyClientDefaultOptions) (*policy.Request, error) {
 	urlPath := "/encode/duration/property/default"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ func (client *DurationPropertyClient) Float64Seconds(ctx context.Context, body F
 // float64SecondsCreateRequest creates the Float64Seconds request.
 func (client *DurationPropertyClient) float64SecondsCreateRequest(ctx context.Context, body Float64SecondsDurationProperty, _ *DurationPropertyClientFloat64SecondsOptions) (*policy.Request, error) {
 	urlPath := "/encode/duration/property/float64-seconds"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +148,7 @@ func (client *DurationPropertyClient) FloatSeconds(ctx context.Context, body Flo
 // floatSecondsCreateRequest creates the FloatSeconds request.
 func (client *DurationPropertyClient) floatSecondsCreateRequest(ctx context.Context, body FloatSecondsDurationProperty, _ *DurationPropertyClientFloatSecondsOptions) (*policy.Request, error) {
 	urlPath := "/encode/duration/property/float-seconds"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +198,7 @@ func (client *DurationPropertyClient) FloatSecondsArray(ctx context.Context, bod
 // floatSecondsArrayCreateRequest creates the FloatSecondsArray request.
 func (client *DurationPropertyClient) floatSecondsArrayCreateRequest(ctx context.Context, body FloatSecondsDurationArrayProperty, _ *DurationPropertyClientFloatSecondsArrayOptions) (*policy.Request, error) {
 	urlPath := "/encode/duration/property/float-seconds-array"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -247,7 +248,7 @@ func (client *DurationPropertyClient) ISO8601(ctx context.Context, body ISO8601D
 // iso8601CreateRequest creates the ISO8601 request.
 func (client *DurationPropertyClient) iso8601CreateRequest(ctx context.Context, body ISO8601DurationProperty, _ *DurationPropertyClientISO8601Options) (*policy.Request, error) {
 	urlPath := "/encode/duration/property/iso8601"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -297,7 +298,7 @@ func (client *DurationPropertyClient) Int32Seconds(ctx context.Context, body Int
 // int32SecondsCreateRequest creates the Int32Seconds request.
 func (client *DurationPropertyClient) int32SecondsCreateRequest(ctx context.Context, body Int32SecondsDurationProperty, _ *DurationPropertyClientInt32SecondsOptions) (*policy.Request, error) {
 	urlPath := "/encode/duration/property/int32-seconds"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

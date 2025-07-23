@@ -9,26 +9,17 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
 
 func newDurationClient(t *testing.T) *DurationClient {
-	client, err := NewDurationClient(&azcore.ClientOptions{
+	client, err := NewDurationClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewDurationClient(options *azcore.ClientOptions) (*DurationClient, error) {
-	client, err := azcore.NewClient("durationgroup.DurationClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &DurationClient{internal: client}, nil
 }
 
 func TestGetInvalid(t *testing.T) {

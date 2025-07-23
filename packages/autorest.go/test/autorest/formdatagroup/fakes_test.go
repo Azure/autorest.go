@@ -5,6 +5,7 @@ package formdatagroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/formdatagroup"
 	"generatortests/formdatagroup/fake"
 	"io"
@@ -25,7 +26,7 @@ func TestFakeUploadFile(t *testing.T) {
 			return
 		},
 	}
-	client, err := formdatagroup.NewFormdataClient(&azcore.ClientOptions{
+	client, err := formdatagroup.NewFormdataClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewFormdataServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -53,7 +54,7 @@ func TestFakeUploadFiles(t *testing.T) {
 			return
 		},
 	}
-	client, err := formdatagroup.NewFormdataClient(&azcore.ClientOptions{
+	client, err := formdatagroup.NewFormdataClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewFormdataServerTransport(&server),
 	})
 	require.NoError(t, err)

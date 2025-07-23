@@ -13,7 +13,7 @@ import (
 )
 
 func TestOptionalCollectionsModelClient_GetAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalCollectionsModelClient().GetAll(context.Background(), nil)
 	require.NoError(t, err)
@@ -28,7 +28,7 @@ func TestOptionalCollectionsModelClient_GetAll(t *testing.T) {
 }
 
 func TestOptionalCollectionsModelClient_GetDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalCollectionsModelClient().GetDefault(context.Background(), nil)
 	require.NoError(t, err)
@@ -36,7 +36,7 @@ func TestOptionalCollectionsModelClient_GetDefault(t *testing.T) {
 }
 
 func TestOptionalCollectionsModelClient_PutAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalCollectionsModelClient().PutAll(context.Background(), optionalitygroup.CollectionsModelProperty{
 		Property: []optionalitygroup.StringProperty{
@@ -53,7 +53,7 @@ func TestOptionalCollectionsModelClient_PutAll(t *testing.T) {
 }
 
 func TestOptionalCollectionsModelClient_PutDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalCollectionsModelClient().PutDefault(context.Background(), optionalitygroup.CollectionsModelProperty{}, nil)
 	require.NoError(t, err)

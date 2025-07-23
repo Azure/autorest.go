@@ -11,12 +11,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewNotDiscriminatedClient(options *azcore.ClientOptions) (*NotDiscriminatedClient, error) {
-	internal, err := azcore.NewClient("nodiscgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+func NewNotDiscriminatedClient(endpoint string, options *azcore.ClientOptions) (*NotDiscriminatedClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &NotDiscriminatedClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

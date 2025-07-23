@@ -88,7 +88,7 @@ help-content:
         type: string
         description: Optional prefix to file names. For example, if you set your file prefix to "zzz_", all generated code files will begin with "zzz_".
       - key: module-version
-        description: When --azure-arm is true, semantic version to include in generated telemetryInfo constant without the leading 'v' (e.g. 1.2.3).
+        description: Initial semantic version to include in generated telemetryInfo constant without the leading 'v' (e.g. 1.2.3). Defaults to 0.1.0.
         type: string
       - key: group-parameters
         description: Enables parameter grouping via x-ms-parameter-grouping, defaults to true.

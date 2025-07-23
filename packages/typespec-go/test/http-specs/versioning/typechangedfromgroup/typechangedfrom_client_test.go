@@ -13,7 +13,7 @@ import (
 )
 
 func Test_Test(t *testing.T) {
-	client, err := typechangedfromgroup.NewTypeChangedFromClient(nil)
+	client, err := typechangedfromgroup.NewTypeChangedFromClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Test(context.Background(), typechangedfromgroup.TestModel{
 		Prop:        to.Ptr("foo"),

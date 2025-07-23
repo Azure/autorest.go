@@ -10,12 +10,44 @@ type LinkResponse struct {
 	Next *string
 }
 
+type NestedLinkResponse struct {
+	// REQUIRED
+	NestedItems *NestedLinkResponseNestedItems
+
+	// REQUIRED
+	NestedNext *NestedLinkResponseNestedNext
+}
+
+type NestedLinkResponseNestedItems struct {
+	// REQUIRED
+	Pets []*Pet
+}
+
+type NestedLinkResponseNestedNext struct {
+	Next *string
+}
+
 type Pet struct {
 	// REQUIRED
 	ID *string
 
 	// REQUIRED
 	Name *string
+}
+
+type RequestHeaderNestedResponseBodyResponse struct {
+	// REQUIRED
+	NestedItems *RequestHeaderNestedResponseBodyResponseNestedItems
+	NestedNext  *RequestHeaderNestedResponseBodyResponseNestedNext
+}
+
+type RequestHeaderNestedResponseBodyResponseNestedItems struct {
+	// REQUIRED
+	Pets []*Pet
+}
+
+type RequestHeaderNestedResponseBodyResponseNestedNext struct {
+	NextToken *string
 }
 
 type RequestHeaderResponseBodyResponse struct {
@@ -27,6 +59,21 @@ type RequestHeaderResponseBodyResponse struct {
 type RequestHeaderResponseHeaderResponse struct {
 	// REQUIRED
 	Pets []*Pet
+}
+
+type RequestQueryNestedResponseBodyResponse struct {
+	// REQUIRED
+	NestedItems *RequestQueryNestedResponseBodyResponseNestedItems
+	NestedNext  *RequestQueryNestedResponseBodyResponseNestedNext
+}
+
+type RequestQueryNestedResponseBodyResponseNestedItems struct {
+	// REQUIRED
+	Pets []*Pet
+}
+
+type RequestQueryNestedResponseBodyResponseNestedNext struct {
+	NextToken *string
 }
 
 type RequestQueryResponseBodyResponse struct {

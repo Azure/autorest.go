@@ -11,12 +11,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewBasicClient(options *azcore.ClientOptions) (*BasicClient, error) {
-	internal, err := azcore.NewClient("basicgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+func NewBasicClient(endpoint string, options *azcore.ClientOptions) (*BasicClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &BasicClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

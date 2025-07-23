@@ -10,7 +10,7 @@ import * as go from '../../../codemodel.go/src/index.js';
 import { capitalize, createOptionsTypeDescription, createResponseEnvelopeDescription, ensureNameCase, getEscapedReservedName, uncapitalize } from '../../../naming.go/src/naming.js';
 import { AdapterError } from './errors.js';
 import { GoEmitterOptions } from '../lib.js';
-import { getEndpointType, isTypePassedByValue, typeAdapter } from './types.js';
+import { isTypePassedByValue, typeAdapter } from './types.js';
 
 // used to convert SDK clients and their methods to Go code model types
 export class clientAdapter {
@@ -79,10 +79,13 @@ export class clientAdapter {
       docs.summary = `${clientName} - ${docs.summary}`;
     } else if (docs.description) {
       docs.description = `${clientName} - ${docs.description}`;
-    } else {
+    } else if (clientName.length > 6) {
       // strip clientName's "Client" suffix
       const groupName = clientName.substring(0, clientName.length - 6);
       docs.summary = `${clientName} contains the methods for the ${groupName} group.`;
+    } else {
+      // the client name is simply "Client"
+      docs.summary = `${clientName} contains the methods for the service.`;
     }
 
     const goClient = new go.Client(clientName, docs, go.newClientOptions(this.ta.codeModel.type, clientName));
@@ -91,47 +94,76 @@ export class clientAdapter {
     // anything other than public means non-instantiable client
     if (sdkClient.clientInitialization.initializedBy & tcgc.InitializedByFlags.Individually) {
       for (const param of sdkClient.clientInitialization.parameters) {
-        if (param.kind === 'credential') {
-          // skip this for now as we don't generate client constructors
-          continue;
-        } else if (param.kind === 'endpoint') {
-          const paramType = getEndpointType(param);
-          // this will either be a fixed or templated host
-          // don't set the fixed host for ARM as it isn't used
-          if (this.ta.codeModel.type !== 'azure-arm') {
-            goClient.host = paramType.serverUrl;
-          }
-          if (paramType.templateArguments.length === 0) {
-            // this is the param for the fixed host, don't create a param for it
-            if (!this.ta.codeModel.host) {
-              this.ta.codeModel.host = goClient.host;
-            } else if (this.ta.codeModel.host !== goClient.host) {
-              throw new AdapterError('InternalError', `client ${goClient.name} has a conflicting host ${goClient.host}`, NoTarget);
+        switch (param.kind) {
+          case 'credential':
+            // skip this for now as we don't generate client constructors
+            continue;
+          case 'endpoint': {
+            if (this.ta.codeModel.type === 'azure-arm') {
+              // for ARM, the endpoint is handled via the azcore/arm.Client
+              // so we don't need to adapt it.
+              continue;
             }
-          } else {
-            goClient.templatedHost = true;
-            for (const templateArg of paramType.templateArguments) {
-              goClient.parameters.push(this.adaptURIParam(templateArg));
-            }
-          }
-          continue;
-        } else if (param.kind === 'method') {
-          // some client params, notably api-version, can be explicitly
-          // defined in the operation signature:
-          // e.g. op withQueryApiVersion(@query("api-version") apiVersion: string)
-          // these get propagated to sdkMethod.operation.parameters thus they
-          // will be adapted in adaptMethodParameters()
-          continue;
-        }
 
-        goClient.parameters.push(this.adaptURIParam(param));
+            let endpointType: tcgc.SdkEndpointType;
+            switch (param.type.kind) {
+              case 'endpoint':
+                // single endpoint without any supplemental path
+                endpointType = param.type;
+                break;
+              case 'union':
+                // this is a union of endpoints. the first is the endpoint plus
+                // the supplemental path. the second is a "raw" endpoint which
+                // requires the caller to provide the complete endpoint. we only
+                // expose the former at present. languages that support overloads
+                // MAY support both but it's not a requirement.
+                endpointType = param.type.variantTypes[0];
+            }
+
+            for (let i = 0; i < endpointType.templateArguments.length; ++i) {
+              const templateArg = endpointType.templateArguments[i];
+              if (i === 0) {
+                // the first template arg is always the endpoint parameter.
+                // note that the types of the param and the field are different.
+                // NOTE: we use param.name here instead of templateArg.name as
+                // the former has the fixed name "endpoint" which is what we want.
+                const adaptedParam = this.adaptURIParam(templateArg);
+                adaptedParam.docs.summary = templateArg.summary;
+                adaptedParam.docs.description = templateArg.doc;
+                goClient.parameters.push(adaptedParam);
+
+                // if the server's URL is *only* the endpoint parameter then we're done.
+                // this is the param.type.kind === 'endpoint' case.
+                if (endpointType.serverUrl === `{${templateArg.serializedName}}`) {
+                  break;
+                }
+
+                goClient.templatedHost = endpointType.serverUrl;
+                continue;
+              }
+
+              const adaptedParam = this.adaptURIParam(templateArg);
+              adaptedParam.docs.summary = templateArg.summary;
+              adaptedParam.docs.description = templateArg.doc;
+              goClient.parameters.push(adaptedParam);
+            }
+            break;
+          }
+          case 'method':
+            // some client params, notably api-version, can be explicitly
+            // defined in the operation signature:
+            // e.g. op withQueryApiVersion(@query("api-version") apiVersion: string)
+            // these get propagated to sdkMethod.operation.parameters thus they
+            // will be adapted in adaptMethodParameters()
+            continue;
+        }
       }
     } else if (parent) {
       // this is a sub-client. it will share the client/host params of the parent.
       // NOTE: we must propagate parant params before a potential recursive call
       // to create a child client that will need to inherit our client params.
       goClient.templatedHost = parent.templatedHost;
-      goClient.host = parent.host;
+
       // make a copy of the client params. this is to prevent
       // client method params from being shared across clients
       // as not all client method params might be uniform.
@@ -206,9 +238,14 @@ export class clientAdapter {
         throw new AdapterError('UnsupportedTsp', `paging with re-injected parameters is not supported`, sdkMethod.__raw?.node ?? NoTarget);
       }
       method = new go.PageableMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
-      if (sdkMethod.nextLinkPath) {
-        // TODO: handle nested next link
-        method.nextLinkName = capitalize(ensureNameCase(sdkMethod.nextLinkPath));
+      if (sdkMethod.pagingMetadata.nextLinkSegments) {
+        method.nextLinkName = capitalize(sdkMethod.pagingMetadata.nextLinkSegments.map((segment) => {
+          if (segment.kind === 'property') {
+            return ensureNameCase(segment.name);
+          } else {
+            throw new AdapterError('UnsupportedTsp', `unsupported next link segment kind ${segment.kind}`, sdkMethod.__raw?.node ?? NoTarget);
+          }
+        }).join('.'));
       }
     } else if (sdkMethod.kind === 'lro') {
       method = new go.LROMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
@@ -259,9 +296,10 @@ export class clientAdapter {
       optionalParamsGroupName = uncapitalize(optionalParamsGroupName);
     }
     let optsGroupName = 'options';
-    // if there's an existing parameter with the name options then pick something else
+    // if there's an existing required parameter with the name options then pick something else.
+    // optional params will be inside the options type, so they can never collide.
     for (const param of sdkMethod.parameters) {
-      if (param.name === optsGroupName) {
+      if (!param.optional && param.name === optsGroupName) {
         optsGroupName = 'opts';
         break;
       }

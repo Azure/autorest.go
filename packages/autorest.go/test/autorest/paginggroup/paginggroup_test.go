@@ -25,7 +25,7 @@ func newPagingClient(t *testing.T) *PagingClient {
 	options.Retry.RetryDelay = time.Second
 	options.TracingProvider = generatortests.NewTracingProvider(t)
 	options.Transport = httpClientWithCookieJar()
-	client, err := NewPagingClient(&options)
+	client, err := NewPagingClient(generatortests.Host, &options)
 	require.NoError(t, err)
 	return client
 }

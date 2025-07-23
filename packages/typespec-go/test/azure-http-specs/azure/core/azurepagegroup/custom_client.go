@@ -11,12 +11,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewPageClient(options *azcore.ClientOptions) (*PageClient, error) {
-	internal, err := azcore.NewClient("azurepagegroup", "v0.1.0", runtime.PipelineOptions{}, options)
+func NewPageClient(endpoint string, options *azcore.ClientOptions) (*PageClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &PageClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

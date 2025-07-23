@@ -25,7 +25,7 @@ func newLROSClient(t *testing.T) *LROsClient {
 	options.Retry.RetryDelay = time.Second
 	options.TracingProvider = generatortests.NewTracingProvider(t)
 	options.Transport = httpClientWithCookieJar()
-	client, err := NewLROsClient(&options)
+	client, err := NewLROsClient(generatortests.Host, &options)
 	require.NoError(t, err)
 	return client
 }

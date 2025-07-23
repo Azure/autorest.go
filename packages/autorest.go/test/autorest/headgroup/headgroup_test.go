@@ -13,7 +13,7 @@ import (
 )
 
 func newHTTPSuccessClient(t *testing.T) *HTTPSuccessClient {
-	client, err := NewHTTPSuccessClient(&azcore.ClientOptions{
+	client, err := NewHTTPSuccessClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)

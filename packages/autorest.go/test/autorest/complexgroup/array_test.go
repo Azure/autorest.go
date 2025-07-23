@@ -16,19 +16,19 @@ import (
 )
 
 func newArrayClient(t *testing.T) *ArrayClient {
-	client, err := NewArrayClient(&azcore.ClientOptions{
+	client, err := NewArrayClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewArrayClient(options *azcore.ClientOptions) (*ArrayClient, error) {
+func NewArrayClient(endpoint string, options *azcore.ClientOptions) (*ArrayClient, error) {
 	client, err := azcore.NewClient("complexgroup.ArrayClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &ArrayClient{internal: client}, nil
+	return &ArrayClient{internal: client, endpoint: endpoint}, nil
 }
 
 func TestArrayGetEmpty(t *testing.T) {

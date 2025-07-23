@@ -8,8 +8,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewVersionedClient(options *azcore.ClientOptions) (*VersionedClient, error) {
-	internal, err := azcore.NewClient("versionedgroup", "v0.1.0", runtime.PipelineOptions{
+func NewVersionedClient(endpoint string, options *azcore.ClientOptions) (*VersionedClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
 		APIVersion: runtime.APIVersionOptions{
 			Name: "api-version",
 		},
@@ -19,6 +19,6 @@ func NewVersionedClient(options *azcore.ClientOptions) (*VersionedClient, error)
 	}
 	return &VersionedClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
+		endpoint: endpoint,
 	}, nil
 }

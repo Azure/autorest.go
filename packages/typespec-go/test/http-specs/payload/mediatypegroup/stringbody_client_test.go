@@ -12,7 +12,7 @@ import (
 )
 
 func TestStringBodyClient_GetAsJSON(t *testing.T) {
-	client, err := mediatypegroup.NewMediaTypeClient(nil)
+	client, err := mediatypegroup.NewMediaTypeClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewMediaTypeStringBodyClient().GetAsJSON(context.Background(), nil)
 	require.NoError(t, err)
@@ -21,7 +21,7 @@ func TestStringBodyClient_GetAsJSON(t *testing.T) {
 }
 
 func TestStringBodyClient_GetAsText(t *testing.T) {
-	client, err := mediatypegroup.NewMediaTypeClient(nil)
+	client, err := mediatypegroup.NewMediaTypeClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewMediaTypeStringBodyClient().GetAsText(context.Background(), nil)
 	require.NoError(t, err)
@@ -30,7 +30,7 @@ func TestStringBodyClient_GetAsText(t *testing.T) {
 }
 
 func TestStringBodyClient_SendAsJSON(t *testing.T) {
-	client, err := mediatypegroup.NewMediaTypeClient(nil)
+	client, err := mediatypegroup.NewMediaTypeClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewMediaTypeStringBodyClient().SendAsJSON(context.Background(), "foo", nil)
 	require.NoError(t, err)
@@ -38,7 +38,7 @@ func TestStringBodyClient_SendAsJSON(t *testing.T) {
 }
 
 func TestStringBodyClient_SendAsText(t *testing.T) {
-	client, err := mediatypegroup.NewMediaTypeClient(nil)
+	client, err := mediatypegroup.NewMediaTypeClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewMediaTypeStringBodyClient().SendAsText(context.Background(), "{cat}", nil)
 	require.NoError(t, err)

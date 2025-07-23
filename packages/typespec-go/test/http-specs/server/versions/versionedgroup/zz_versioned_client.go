@@ -49,11 +49,9 @@ func (client *VersionedClient) WithPathAPIVersion(ctx context.Context, options *
 
 // withPathAPIVersionCreateRequest creates the WithPathAPIVersion request.
 func (client *VersionedClient) withPathAPIVersionCreateRequest(ctx context.Context, _ *VersionedClientWithPathAPIVersionOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/versions/versioned/with-path-api-version/{apiVersion}"
 	urlPath = strings.ReplaceAll(urlPath, "{apiVersion}", url.PathEscape("2022-12-01-preview"))
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -88,10 +86,8 @@ func (client *VersionedClient) WithQueryAPIVersion(ctx context.Context, options 
 
 // withQueryAPIVersionCreateRequest creates the WithQueryAPIVersion request.
 func (client *VersionedClient) withQueryAPIVersionCreateRequest(ctx context.Context, _ *VersionedClientWithQueryAPIVersionOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/versions/versioned/with-query-api-version"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -129,10 +125,8 @@ func (client *VersionedClient) WithQueryOldAPIVersion(ctx context.Context, optio
 
 // withQueryOldAPIVersionCreateRequest creates the WithQueryOldAPIVersion request.
 func (client *VersionedClient) withQueryOldAPIVersionCreateRequest(ctx context.Context, _ *VersionedClientWithQueryOldAPIVersionOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/versions/versioned/with-query-old-api-version"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -167,10 +161,8 @@ func (client *VersionedClient) WithoutAPIVersion(ctx context.Context, options *V
 
 // withoutAPIVersionCreateRequest creates the WithoutAPIVersion request.
 func (client *VersionedClient) withoutAPIVersionCreateRequest(ctx context.Context, _ *VersionedClientWithoutAPIVersionOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/versions/versioned/without-api-version"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

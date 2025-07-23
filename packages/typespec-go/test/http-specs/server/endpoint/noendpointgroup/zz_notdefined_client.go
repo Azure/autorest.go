@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // NotDefinedClient - Illustrates server doesn't define endpoint. Client should automatically add an endpoint to let user
@@ -45,10 +44,8 @@ func (client *NotDefinedClient) Valid(ctx context.Context, options *NotDefinedCl
 
 // validCreateRequest creates the Valid request.
 func (client *NotDefinedClient) validCreateRequest(ctx context.Context, _ *NotDefinedClientValidOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/endpoint/not-defined/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

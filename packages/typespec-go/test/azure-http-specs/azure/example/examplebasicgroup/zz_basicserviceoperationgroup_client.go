@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [BasicClient.NewBasicServiceOperationGroupClient] instead.
 type BasicServiceOperationGroupClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Basic -
@@ -49,7 +50,7 @@ func (client *BasicServiceOperationGroupClient) Basic(ctx context.Context, query
 // basicCreateRequest creates the Basic request.
 func (client *BasicServiceOperationGroupClient) basicCreateRequest(ctx context.Context, queryParam string, headerParam string, body ActionRequest, _ *BasicServiceOperationGroupClientBasicOptions) (*policy.Request, error) {
 	urlPath := "/azure/example/basic/basic"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

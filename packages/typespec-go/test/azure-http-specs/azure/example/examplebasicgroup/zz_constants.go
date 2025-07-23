@@ -4,8 +4,6 @@
 
 package examplebasicgroup
 
-const host = "http://localhost:3000"
-
 type Enum string
 
 const (

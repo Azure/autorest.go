@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [OptionalClient.NewOptionalFloatLiteralClient] instead.
 type OptionalFloatLiteralClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetAll - Get models that will return all properties in the model
@@ -47,7 +48,7 @@ func (client *OptionalFloatLiteralClient) GetAll(ctx context.Context, options *O
 // getAllCreateRequest creates the GetAll request.
 func (client *OptionalFloatLiteralClient) getAllCreateRequest(ctx context.Context, _ *OptionalFloatLiteralClientGetAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/float/literal/all"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,7 @@ func (client *OptionalFloatLiteralClient) GetDefault(ctx context.Context, option
 // getDefaultCreateRequest creates the GetDefault request.
 func (client *OptionalFloatLiteralClient) getDefaultCreateRequest(ctx context.Context, _ *OptionalFloatLiteralClientGetDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/float/literal/default"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +139,7 @@ func (client *OptionalFloatLiteralClient) PutAll(ctx context.Context, body Float
 // putAllCreateRequest creates the PutAll request.
 func (client *OptionalFloatLiteralClient) putAllCreateRequest(ctx context.Context, body FloatLiteralProperty, _ *OptionalFloatLiteralClientPutAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/float/literal/all"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -177,7 +178,7 @@ func (client *OptionalFloatLiteralClient) PutDefault(ctx context.Context, body F
 // putDefaultCreateRequest creates the PutDefault request.
 func (client *OptionalFloatLiteralClient) putDefaultCreateRequest(ctx context.Context, body FloatLiteralProperty, _ *OptionalFloatLiteralClientPutDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/float/literal/default"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

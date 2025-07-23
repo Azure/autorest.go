@@ -16,7 +16,7 @@ import (
 )
 
 func TestPageableClientNewListPager(t *testing.T) {
-	client, err := pageablegroup.NewPageableClient(nil)
+	client, err := pageablegroup.NewPageableClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	pager := client.NewListPager(&pageablegroup.PageableClientListOptions{
 		Maxpagesize: to.Ptr[int32](3),

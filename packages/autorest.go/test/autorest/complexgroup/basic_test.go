@@ -16,19 +16,19 @@ import (
 )
 
 func newBasicClient(t *testing.T) *BasicClient {
-	client, err := NewBasicClient(&azcore.ClientOptions{
+	client, err := NewBasicClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewBasicClient(options *azcore.ClientOptions) (*BasicClient, error) {
+func NewBasicClient(endpoint string, options *azcore.ClientOptions) (*BasicClient, error) {
 	client, err := azcore.NewClient("complexgroup.BasicClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &BasicClient{internal: client}, nil
+	return &BasicClient{internal: client, endpoint: endpoint}, nil
 }
 
 func TestBasicGetValid(t *testing.T) {

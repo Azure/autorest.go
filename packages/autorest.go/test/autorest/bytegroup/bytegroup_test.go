@@ -15,19 +15,19 @@ import (
 )
 
 func newByteClient(t *testing.T) *ByteClient {
-	client, err := NewByteClient(&azcore.ClientOptions{
+	client, err := NewByteClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewByteClient(options *azcore.ClientOptions) (*ByteClient, error) {
+func NewByteClient(endpoint string, options *azcore.ClientOptions) (*ByteClient, error) {
 	client, err := azcore.NewClient("bytegroup.ByteClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &ByteClient{internal: client}, nil
+	return &ByteClient{internal: client, endpoint: endpoint}, nil
 }
 
 func TestGetEmpty(t *testing.T) {

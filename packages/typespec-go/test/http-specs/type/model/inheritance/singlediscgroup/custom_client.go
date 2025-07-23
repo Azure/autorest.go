@@ -11,12 +11,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewSingleDiscriminatorClient(options *azcore.ClientOptions) (*SingleDiscriminatorClient, error) {
-	internal, err := azcore.NewClient("singlediscgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+func NewSingleDiscriminatorClient(endpoint string, options *azcore.ClientOptions) (*SingleDiscriminatorClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &SingleDiscriminatorClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

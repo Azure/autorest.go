@@ -1,11 +1,50 @@
 # Release History
 
-## 0.6.0 (unreleased)
+## 0.7.1 (unreleased)
+
+### Bugs Fixed
+
+* For internal enums, don't export the "possible values" helper function.
+* Fixed missing import of the `io` package in fakes when `rawjson-as-bytes` is enabled.
+* Fixed linter error in certain `UnmarshalJSON` implementations due to unused `var err error`.
+
+### Other Changes
+
+* Non-ARM clients always have an `endpoint` field.
+* Only rename the `options` parameter when it collides with another required parameter with the same name.
+* Improve generic doc comment for clients when the name is simply `Client`.
+
+## 0.7.0 (2025-07-17)
+
+### Breaking Changes
+
+* The `module-version` switch is now used to seed the value for the `moduleVersion` constant. It will _not_ change an existing value.
+  * If not specified, it has a default value of `0.1.0`.
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
+* The `moduleName` and `moduleVersion` constants have been moved out of `constants.go` and into `version.go`.
+  * The `version.go` file is emitted for all SDK flavors.
+
+## 0.6.0 (2025-07-15)
 
 ### Breaking Changes
 
 * Fixed some cases where a client name could stutter.
 * Force the body paramter to be required for `PATCH` and `PUT` operations.
+
+### Features Added
+
+* Added switch `go-generate` to invoke post-generation scripts.
+  * The value is an output-relative path to a `.go` file containing `//go:generate` directives.
+  * If Go tools are not on the path, and `go-generate` was specified, then an error is produced.
+
+### Other Changes
+
+* When Go tools are found on the path, the following steps happen after successfully generating code and any `go-generate` script is invoked.
+  * Execute `gofmt -w .` followed by `go mod tidy` in the output directory.
+  * If Go tools are not found, the above steps are skipped and a warning is displayed.
 
 ## 0.5.1 (2025-06-26)
 

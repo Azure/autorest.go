@@ -10,11 +10,13 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type MediaTypeClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewMediaTypeStringBodyClient creates a new instance of [MediaTypeStringBodyClient].
 func (client *MediaTypeClient) NewMediaTypeStringBodyClient() *MediaTypeStringBodyClient {
 	return &MediaTypeStringBodyClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

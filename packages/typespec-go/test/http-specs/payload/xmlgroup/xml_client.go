@@ -8,12 +8,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewXMLClient(options *azcore.ClientOptions) (*XMLClient, error) {
-	internal, err := azcore.NewClient("xmlbasicgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+func NewXMLClient(endpoint string, options *azcore.ClientOptions) (*XMLClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &XMLClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

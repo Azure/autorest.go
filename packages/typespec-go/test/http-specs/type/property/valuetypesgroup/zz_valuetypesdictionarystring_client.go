@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesDictionaryStringClient] instead.
 type ValueTypesDictionaryStringClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get call
@@ -47,7 +48,7 @@ func (client *ValueTypesDictionaryStringClient) Get(ctx context.Context, options
 // getCreateRequest creates the Get request.
 func (client *ValueTypesDictionaryStringClient) getCreateRequest(ctx context.Context, _ *ValueTypesDictionaryStringClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/dictionary/string"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,7 @@ func (client *ValueTypesDictionaryStringClient) Put(ctx context.Context, body Di
 // putCreateRequest creates the Put request.
 func (client *ValueTypesDictionaryStringClient) putCreateRequest(ctx context.Context, body DictionaryStringProperty, _ *ValueTypesDictionaryStringClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/dictionary/string"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -11,12 +11,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewArrayClient(options *azcore.ClientOptions) (*ArrayClient, error) {
-	internal, err := azcore.NewClient("arraygroup", "v0.1.0", runtime.PipelineOptions{}, options)
+func NewArrayClient(endpoint string, options *azcore.ClientOptions) (*ArrayClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &ArrayClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

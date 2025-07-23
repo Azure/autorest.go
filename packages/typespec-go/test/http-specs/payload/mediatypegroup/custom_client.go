@@ -8,12 +8,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewMediaTypeClient(options *azcore.ClientOptions) (*MediaTypeClient, error) {
-	internal, err := azcore.NewClient("mediatypegroup", "v0.1.0", runtime.PipelineOptions{}, options)
+func NewMediaTypeClient(endpoint string, options *azcore.ClientOptions) (*MediaTypeClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &MediaTypeClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

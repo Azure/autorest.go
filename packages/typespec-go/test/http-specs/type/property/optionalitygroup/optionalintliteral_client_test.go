@@ -13,7 +13,7 @@ import (
 )
 
 func TestOptionalIntLiteralClient_GetAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalIntLiteralClient().GetAll(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestOptionalIntLiteralClient_GetAll(t *testing.T) {
 }
 
 func TestOptionalIntLiteralClient_GetDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalIntLiteralClient().GetDefault(context.Background(), nil)
 	require.NoError(t, err)
@@ -30,7 +30,7 @@ func TestOptionalIntLiteralClient_GetDefault(t *testing.T) {
 }
 
 func TestOptionalIntLiteralClient_PutAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalIntLiteralClient().PutAll(context.Background(), optionalitygroup.IntLiteralProperty{
 		Property: to.Ptr[int32](1),
@@ -40,7 +40,7 @@ func TestOptionalIntLiteralClient_PutAll(t *testing.T) {
 }
 
 func TestOptionalIntLiteralClient_PutDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalIntLiteralClient().PutDefault(context.Background(), optionalitygroup.IntLiteralProperty{}, nil)
 	require.NoError(t, err)

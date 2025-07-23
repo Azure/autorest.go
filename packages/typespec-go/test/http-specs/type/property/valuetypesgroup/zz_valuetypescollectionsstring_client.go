@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesCollectionsStringClient] instead.
 type ValueTypesCollectionsStringClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get call
@@ -47,7 +48,7 @@ func (client *ValueTypesCollectionsStringClient) Get(ctx context.Context, option
 // getCreateRequest creates the Get request.
 func (client *ValueTypesCollectionsStringClient) getCreateRequest(ctx context.Context, _ *ValueTypesCollectionsStringClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/collections/string"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,7 @@ func (client *ValueTypesCollectionsStringClient) Put(ctx context.Context, body C
 // putCreateRequest creates the Put request.
 func (client *ValueTypesCollectionsStringClient) putCreateRequest(ctx context.Context, body CollectionsStringProperty, _ *ValueTypesCollectionsStringClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/collections/string"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

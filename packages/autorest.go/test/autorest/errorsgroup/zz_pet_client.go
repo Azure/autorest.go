@@ -20,6 +20,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type PetClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // DoSomething - Asks pet to do something
@@ -57,7 +58,7 @@ func (client *PetClient) doSomethingCreateRequest(ctx context.Context, whatActio
 		return nil, errors.New("parameter whatAction cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{whatAction}", url.PathEscape(whatAction))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +110,7 @@ func (client *PetClient) getPetByIDCreateRequest(ctx context.Context, petID stri
 		return nil, errors.New("parameter petID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +157,7 @@ func (client *PetClient) HasModelsParam(ctx context.Context, options *PetClientH
 // hasModelsParamCreateRequest creates the HasModelsParam request.
 func (client *PetClient) hasModelsParamCreateRequest(ctx context.Context, options *PetClientHasModelsParamOptions) (*policy.Request, error) {
 	urlPath := "/errorStatusCodes/Pets/hasModelsParam"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

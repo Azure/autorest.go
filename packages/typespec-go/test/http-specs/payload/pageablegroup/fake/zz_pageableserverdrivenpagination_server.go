@@ -25,6 +25,10 @@ type PageableServerDrivenPaginationServer struct {
 	// NewLinkPager is the fake for method PageableServerDrivenPaginationClient.NewLinkPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewLinkPager func(options *pageablegroup.PageableServerDrivenPaginationClientLinkOptions) (resp azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientLinkResponse])
+
+	// NewNestedLinkPager is the fake for method PageableServerDrivenPaginationClient.NewNestedLinkPager
+	// HTTP status codes to indicate success: http.StatusOK
+	NewNestedLinkPager func(options *pageablegroup.PageableServerDrivenPaginationClientNestedLinkOptions) (resp azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientNestedLinkResponse])
 }
 
 // NewPageableServerDrivenPaginationServerTransport creates a new instance of PageableServerDrivenPaginationServerTransport with the provided implementation.
@@ -32,8 +36,9 @@ type PageableServerDrivenPaginationServer struct {
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPageableServerDrivenPaginationServerTransport(srv *PageableServerDrivenPaginationServer) *PageableServerDrivenPaginationServerTransport {
 	return &PageableServerDrivenPaginationServerTransport{
-		srv:          srv,
-		newLinkPager: newTracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientLinkResponse]](),
+		srv:                srv,
+		newLinkPager:       newTracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientLinkResponse]](),
+		newNestedLinkPager: newTracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientNestedLinkResponse]](),
 	}
 }
 
@@ -44,6 +49,7 @@ type PageableServerDrivenPaginationServerTransport struct {
 	trMu                                                    sync.Mutex
 	trPageableServerDrivenPaginationContinuationTokenServer *PageableServerDrivenPaginationContinuationTokenServerTransport
 	newLinkPager                                            *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientLinkResponse]]
+	newNestedLinkPager                                      *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientNestedLinkResponse]]
 }
 
 // Do implements the policy.Transporter interface for PageableServerDrivenPaginationServerTransport.
@@ -91,6 +97,8 @@ func (p *PageableServerDrivenPaginationServerTransport) dispatchToMethodFake(req
 			switch method {
 			case "PageableServerDrivenPaginationClient.NewLinkPager":
 				res.resp, res.err = p.dispatchNewLinkPager(req)
+			case "PageableServerDrivenPaginationClient.NewNestedLinkPager":
+				res.resp, res.err = p.dispatchNewNestedLinkPager(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
 			}
@@ -133,6 +141,33 @@ func (p *PageableServerDrivenPaginationServerTransport) dispatchNewLinkPager(req
 	}
 	if !server.PagerResponderMore(newLinkPager) {
 		p.newLinkPager.remove(req)
+	}
+	return resp, nil
+}
+
+func (p *PageableServerDrivenPaginationServerTransport) dispatchNewNestedLinkPager(req *http.Request) (*http.Response, error) {
+	if p.srv.NewNestedLinkPager == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NewNestedLinkPager not implemented")}
+	}
+	newNestedLinkPager := p.newNestedLinkPager.get(req)
+	if newNestedLinkPager == nil {
+		resp := p.srv.NewNestedLinkPager(nil)
+		newNestedLinkPager = &resp
+		p.newNestedLinkPager.add(req, newNestedLinkPager)
+		server.PagerResponderInjectNextLinks(newNestedLinkPager, req, func(page *pageablegroup.PageableServerDrivenPaginationClientNestedLinkResponse, createLink func() string) {
+			page.NestedNext.Next = to.Ptr(createLink())
+		})
+	}
+	resp, err := server.PagerResponderNext(newNestedLinkPager, req)
+	if err != nil {
+		return nil, err
+	}
+	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newNestedLinkPager.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+	}
+	if !server.PagerResponderMore(newNestedLinkPager) {
+		p.newNestedLinkPager.remove(req)
 	}
 	return resp, nil
 }

@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type AutoRestReportServiceForAzureClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetReport - Get test coverage report
@@ -50,7 +51,7 @@ func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context
 // getReportCreateRequest creates the GetReport request.
 func (client *AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx context.Context, options *AutoRestReportServiceForAzureClientGetReportOptions) (*policy.Request, error) {
 	urlPath := "/report/azure"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

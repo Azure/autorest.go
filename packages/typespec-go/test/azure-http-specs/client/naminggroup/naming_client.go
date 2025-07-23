@@ -8,12 +8,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewNamingClient(options *azcore.ClientOptions) (*NamingClient, error) {
-	internal, err := azcore.NewClient("naminggroup", "v0.1.0", runtime.PipelineOptions{}, options)
+func NewNamingClient(endpoint string, options *azcore.ClientOptions) (*NamingClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &NamingClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

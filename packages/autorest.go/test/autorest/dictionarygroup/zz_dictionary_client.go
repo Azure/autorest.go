@@ -18,6 +18,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type DictionaryClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetArrayEmpty - Get an empty dictionary {}
@@ -51,7 +52,7 @@ func (client *DictionaryClient) GetArrayEmpty(ctx context.Context, options *Dict
 // getArrayEmptyCreateRequest creates the GetArrayEmpty request.
 func (client *DictionaryClient) getArrayEmptyCreateRequest(ctx context.Context, _ *DictionaryClientGetArrayEmptyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/array/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +100,7 @@ func (client *DictionaryClient) GetArrayItemEmpty(ctx context.Context, options *
 // getArrayItemEmptyCreateRequest creates the GetArrayItemEmpty request.
 func (client *DictionaryClient) getArrayItemEmptyCreateRequest(ctx context.Context, _ *DictionaryClientGetArrayItemEmptyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/array/itemempty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +148,7 @@ func (client *DictionaryClient) GetArrayItemNull(ctx context.Context, options *D
 // getArrayItemNullCreateRequest creates the GetArrayItemNull request.
 func (client *DictionaryClient) getArrayItemNullCreateRequest(ctx context.Context, _ *DictionaryClientGetArrayItemNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/array/itemnull"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -194,7 +195,7 @@ func (client *DictionaryClient) GetArrayNull(ctx context.Context, options *Dicti
 // getArrayNullCreateRequest creates the GetArrayNull request.
 func (client *DictionaryClient) getArrayNullCreateRequest(ctx context.Context, _ *DictionaryClientGetArrayNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/array/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -242,7 +243,7 @@ func (client *DictionaryClient) GetArrayValid(ctx context.Context, options *Dict
 // getArrayValidCreateRequest creates the GetArrayValid request.
 func (client *DictionaryClient) getArrayValidCreateRequest(ctx context.Context, _ *DictionaryClientGetArrayValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/array/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -290,7 +291,7 @@ func (client *DictionaryClient) GetBase64URL(ctx context.Context, options *Dicti
 // getBase64URLCreateRequest creates the GetBase64URL request.
 func (client *DictionaryClient) getBase64URLCreateRequest(ctx context.Context, _ *DictionaryClientGetBase64URLOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/base64url/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -338,7 +339,7 @@ func (client *DictionaryClient) GetBooleanInvalidNull(ctx context.Context, optio
 // getBooleanInvalidNullCreateRequest creates the GetBooleanInvalidNull request.
 func (client *DictionaryClient) getBooleanInvalidNullCreateRequest(ctx context.Context, _ *DictionaryClientGetBooleanInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/boolean/true.null.false"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -386,7 +387,7 @@ func (client *DictionaryClient) GetBooleanInvalidString(ctx context.Context, opt
 // getBooleanInvalidStringCreateRequest creates the GetBooleanInvalidString request.
 func (client *DictionaryClient) getBooleanInvalidStringCreateRequest(ctx context.Context, _ *DictionaryClientGetBooleanInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/boolean/true.boolean.false"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -434,7 +435,7 @@ func (client *DictionaryClient) GetBooleanTfft(ctx context.Context, options *Dic
 // getBooleanTfftCreateRequest creates the GetBooleanTfft request.
 func (client *DictionaryClient) getBooleanTfftCreateRequest(ctx context.Context, _ *DictionaryClientGetBooleanTfftOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/boolean/tfft"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -482,7 +483,7 @@ func (client *DictionaryClient) GetByteInvalidNull(ctx context.Context, options 
 // getByteInvalidNullCreateRequest creates the GetByteInvalidNull request.
 func (client *DictionaryClient) getByteInvalidNullCreateRequest(ctx context.Context, _ *DictionaryClientGetByteInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/byte/invalidnull"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -530,7 +531,7 @@ func (client *DictionaryClient) GetByteValid(ctx context.Context, options *Dicti
 // getByteValidCreateRequest creates the GetByteValid request.
 func (client *DictionaryClient) getByteValidCreateRequest(ctx context.Context, _ *DictionaryClientGetByteValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/byte/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -578,7 +579,7 @@ func (client *DictionaryClient) GetComplexEmpty(ctx context.Context, options *Di
 // getComplexEmptyCreateRequest creates the GetComplexEmpty request.
 func (client *DictionaryClient) getComplexEmptyCreateRequest(ctx context.Context, _ *DictionaryClientGetComplexEmptyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/complex/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -627,7 +628,7 @@ func (client *DictionaryClient) GetComplexItemEmpty(ctx context.Context, options
 // getComplexItemEmptyCreateRequest creates the GetComplexItemEmpty request.
 func (client *DictionaryClient) getComplexItemEmptyCreateRequest(ctx context.Context, _ *DictionaryClientGetComplexItemEmptyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/complex/itemempty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -676,7 +677,7 @@ func (client *DictionaryClient) GetComplexItemNull(ctx context.Context, options 
 // getComplexItemNullCreateRequest creates the GetComplexItemNull request.
 func (client *DictionaryClient) getComplexItemNullCreateRequest(ctx context.Context, _ *DictionaryClientGetComplexItemNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/complex/itemnull"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -724,7 +725,7 @@ func (client *DictionaryClient) GetComplexNull(ctx context.Context, options *Dic
 // getComplexNullCreateRequest creates the GetComplexNull request.
 func (client *DictionaryClient) getComplexNullCreateRequest(ctx context.Context, _ *DictionaryClientGetComplexNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/complex/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -773,7 +774,7 @@ func (client *DictionaryClient) GetComplexValid(ctx context.Context, options *Di
 // getComplexValidCreateRequest creates the GetComplexValid request.
 func (client *DictionaryClient) getComplexValidCreateRequest(ctx context.Context, _ *DictionaryClientGetComplexValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/complex/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -821,7 +822,7 @@ func (client *DictionaryClient) GetDateInvalidChars(ctx context.Context, options
 // getDateInvalidCharsCreateRequest creates the GetDateInvalidChars request.
 func (client *DictionaryClient) getDateInvalidCharsCreateRequest(ctx context.Context, _ *DictionaryClientGetDateInvalidCharsOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date/invalidchars"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -875,7 +876,7 @@ func (client *DictionaryClient) GetDateInvalidNull(ctx context.Context, options 
 // getDateInvalidNullCreateRequest creates the GetDateInvalidNull request.
 func (client *DictionaryClient) getDateInvalidNullCreateRequest(ctx context.Context, _ *DictionaryClientGetDateInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date/invalidnull"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -929,7 +930,7 @@ func (client *DictionaryClient) GetDateTimeInvalidChars(ctx context.Context, opt
 // getDateTimeInvalidCharsCreateRequest creates the GetDateTimeInvalidChars request.
 func (client *DictionaryClient) getDateTimeInvalidCharsCreateRequest(ctx context.Context, _ *DictionaryClientGetDateTimeInvalidCharsOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date-time/invalidchars"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -983,7 +984,7 @@ func (client *DictionaryClient) GetDateTimeInvalidNull(ctx context.Context, opti
 // getDateTimeInvalidNullCreateRequest creates the GetDateTimeInvalidNull request.
 func (client *DictionaryClient) getDateTimeInvalidNullCreateRequest(ctx context.Context, _ *DictionaryClientGetDateTimeInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date-time/invalidnull"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1038,7 +1039,7 @@ func (client *DictionaryClient) GetDateTimeRFC1123Valid(ctx context.Context, opt
 // getDateTimeRFC1123ValidCreateRequest creates the GetDateTimeRFC1123Valid request.
 func (client *DictionaryClient) getDateTimeRFC1123ValidCreateRequest(ctx context.Context, _ *DictionaryClientGetDateTimeRFC1123ValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date-time-rfc1123/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1093,7 +1094,7 @@ func (client *DictionaryClient) GetDateTimeValid(ctx context.Context, options *D
 // getDateTimeValidCreateRequest creates the GetDateTimeValid request.
 func (client *DictionaryClient) getDateTimeValidCreateRequest(ctx context.Context, _ *DictionaryClientGetDateTimeValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date-time/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1146,7 +1147,7 @@ func (client *DictionaryClient) GetDateValid(ctx context.Context, options *Dicti
 // getDateValidCreateRequest creates the GetDateValid request.
 func (client *DictionaryClient) getDateValidCreateRequest(ctx context.Context, _ *DictionaryClientGetDateValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1200,7 +1201,7 @@ func (client *DictionaryClient) GetDictionaryEmpty(ctx context.Context, options 
 // getDictionaryEmptyCreateRequest creates the GetDictionaryEmpty request.
 func (client *DictionaryClient) getDictionaryEmptyCreateRequest(ctx context.Context, _ *DictionaryClientGetDictionaryEmptyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/dictionary/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1249,7 +1250,7 @@ func (client *DictionaryClient) GetDictionaryItemEmpty(ctx context.Context, opti
 // getDictionaryItemEmptyCreateRequest creates the GetDictionaryItemEmpty request.
 func (client *DictionaryClient) getDictionaryItemEmptyCreateRequest(ctx context.Context, _ *DictionaryClientGetDictionaryItemEmptyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/dictionary/itemempty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1298,7 +1299,7 @@ func (client *DictionaryClient) GetDictionaryItemNull(ctx context.Context, optio
 // getDictionaryItemNullCreateRequest creates the GetDictionaryItemNull request.
 func (client *DictionaryClient) getDictionaryItemNullCreateRequest(ctx context.Context, _ *DictionaryClientGetDictionaryItemNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/dictionary/itemnull"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1346,7 +1347,7 @@ func (client *DictionaryClient) GetDictionaryNull(ctx context.Context, options *
 // getDictionaryNullCreateRequest creates the GetDictionaryNull request.
 func (client *DictionaryClient) getDictionaryNullCreateRequest(ctx context.Context, _ *DictionaryClientGetDictionaryNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/dictionary/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1395,7 +1396,7 @@ func (client *DictionaryClient) GetDictionaryValid(ctx context.Context, options 
 // getDictionaryValidCreateRequest creates the GetDictionaryValid request.
 func (client *DictionaryClient) getDictionaryValidCreateRequest(ctx context.Context, _ *DictionaryClientGetDictionaryValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/dictionary/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1443,7 +1444,7 @@ func (client *DictionaryClient) GetDoubleInvalidNull(ctx context.Context, option
 // getDoubleInvalidNullCreateRequest creates the GetDoubleInvalidNull request.
 func (client *DictionaryClient) getDoubleInvalidNullCreateRequest(ctx context.Context, _ *DictionaryClientGetDoubleInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/double/0.0-null-1.2e20"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1491,7 +1492,7 @@ func (client *DictionaryClient) GetDoubleInvalidString(ctx context.Context, opti
 // getDoubleInvalidStringCreateRequest creates the GetDoubleInvalidString request.
 func (client *DictionaryClient) getDoubleInvalidStringCreateRequest(ctx context.Context, _ *DictionaryClientGetDoubleInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/double/1.number.0"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1539,7 +1540,7 @@ func (client *DictionaryClient) GetDoubleValid(ctx context.Context, options *Dic
 // getDoubleValidCreateRequest creates the GetDoubleValid request.
 func (client *DictionaryClient) getDoubleValidCreateRequest(ctx context.Context, _ *DictionaryClientGetDoubleValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/double/0--0.01-1.2e20"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1587,7 +1588,7 @@ func (client *DictionaryClient) GetDurationValid(ctx context.Context, options *D
 // getDurationValidCreateRequest creates the GetDurationValid request.
 func (client *DictionaryClient) getDurationValidCreateRequest(ctx context.Context, _ *DictionaryClientGetDurationValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/duration/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1634,7 +1635,7 @@ func (client *DictionaryClient) GetEmpty(ctx context.Context, options *Dictionar
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *DictionaryClient) getEmptyCreateRequest(ctx context.Context, _ *DictionaryClientGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1682,7 +1683,7 @@ func (client *DictionaryClient) GetEmptyStringKey(ctx context.Context, options *
 // getEmptyStringKeyCreateRequest creates the GetEmptyStringKey request.
 func (client *DictionaryClient) getEmptyStringKeyCreateRequest(ctx context.Context, _ *DictionaryClientGetEmptyStringKeyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/keyemptystring"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1730,7 +1731,7 @@ func (client *DictionaryClient) GetFloatInvalidNull(ctx context.Context, options
 // getFloatInvalidNullCreateRequest creates the GetFloatInvalidNull request.
 func (client *DictionaryClient) getFloatInvalidNullCreateRequest(ctx context.Context, _ *DictionaryClientGetFloatInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/float/0.0-null-1.2e20"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1778,7 +1779,7 @@ func (client *DictionaryClient) GetFloatInvalidString(ctx context.Context, optio
 // getFloatInvalidStringCreateRequest creates the GetFloatInvalidString request.
 func (client *DictionaryClient) getFloatInvalidStringCreateRequest(ctx context.Context, _ *DictionaryClientGetFloatInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/float/1.number.0"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1826,7 +1827,7 @@ func (client *DictionaryClient) GetFloatValid(ctx context.Context, options *Dict
 // getFloatValidCreateRequest creates the GetFloatValid request.
 func (client *DictionaryClient) getFloatValidCreateRequest(ctx context.Context, _ *DictionaryClientGetFloatValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/float/0--0.01-1.2e20"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1874,7 +1875,7 @@ func (client *DictionaryClient) GetIntInvalidNull(ctx context.Context, options *
 // getIntInvalidNullCreateRequest creates the GetIntInvalidNull request.
 func (client *DictionaryClient) getIntInvalidNullCreateRequest(ctx context.Context, _ *DictionaryClientGetIntInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/integer/1.null.zero"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1922,7 +1923,7 @@ func (client *DictionaryClient) GetIntInvalidString(ctx context.Context, options
 // getIntInvalidStringCreateRequest creates the GetIntInvalidString request.
 func (client *DictionaryClient) getIntInvalidStringCreateRequest(ctx context.Context, _ *DictionaryClientGetIntInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/integer/1.integer.0"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1970,7 +1971,7 @@ func (client *DictionaryClient) GetIntegerValid(ctx context.Context, options *Di
 // getIntegerValidCreateRequest creates the GetIntegerValid request.
 func (client *DictionaryClient) getIntegerValidCreateRequest(ctx context.Context, _ *DictionaryClientGetIntegerValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/integer/1.-1.3.300"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2017,7 +2018,7 @@ func (client *DictionaryClient) GetInvalid(ctx context.Context, options *Diction
 // getInvalidCreateRequest creates the GetInvalid request.
 func (client *DictionaryClient) getInvalidCreateRequest(ctx context.Context, _ *DictionaryClientGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/invalid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2065,7 +2066,7 @@ func (client *DictionaryClient) GetLongInvalidNull(ctx context.Context, options 
 // getLongInvalidNullCreateRequest creates the GetLongInvalidNull request.
 func (client *DictionaryClient) getLongInvalidNullCreateRequest(ctx context.Context, _ *DictionaryClientGetLongInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/long/1.null.zero"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2113,7 +2114,7 @@ func (client *DictionaryClient) GetLongInvalidString(ctx context.Context, option
 // getLongInvalidStringCreateRequest creates the GetLongInvalidString request.
 func (client *DictionaryClient) getLongInvalidStringCreateRequest(ctx context.Context, _ *DictionaryClientGetLongInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/long/1.integer.0"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2160,7 +2161,7 @@ func (client *DictionaryClient) GetLongValid(ctx context.Context, options *Dicti
 // getLongValidCreateRequest creates the GetLongValid request.
 func (client *DictionaryClient) getLongValidCreateRequest(ctx context.Context, _ *DictionaryClientGetLongValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/long/1.-1.3.300"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2207,7 +2208,7 @@ func (client *DictionaryClient) GetNull(ctx context.Context, options *Dictionary
 // getNullCreateRequest creates the GetNull request.
 func (client *DictionaryClient) getNullCreateRequest(ctx context.Context, _ *DictionaryClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2254,7 +2255,7 @@ func (client *DictionaryClient) GetNullKey(ctx context.Context, options *Diction
 // getNullKeyCreateRequest creates the GetNullKey request.
 func (client *DictionaryClient) getNullKeyCreateRequest(ctx context.Context, _ *DictionaryClientGetNullKeyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/nullkey"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2301,7 +2302,7 @@ func (client *DictionaryClient) GetNullValue(ctx context.Context, options *Dicti
 // getNullValueCreateRequest creates the GetNullValue request.
 func (client *DictionaryClient) getNullValueCreateRequest(ctx context.Context, _ *DictionaryClientGetNullValueOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/nullvalue"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2349,7 +2350,7 @@ func (client *DictionaryClient) GetStringValid(ctx context.Context, options *Dic
 // getStringValidCreateRequest creates the GetStringValid request.
 func (client *DictionaryClient) getStringValidCreateRequest(ctx context.Context, _ *DictionaryClientGetStringValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/string/foo1.foo2.foo3"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2397,7 +2398,7 @@ func (client *DictionaryClient) GetStringWithInvalid(ctx context.Context, option
 // getStringWithInvalidCreateRequest creates the GetStringWithInvalid request.
 func (client *DictionaryClient) getStringWithInvalidCreateRequest(ctx context.Context, _ *DictionaryClientGetStringWithInvalidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/string/foo.123.foo2"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2445,7 +2446,7 @@ func (client *DictionaryClient) GetStringWithNull(ctx context.Context, options *
 // getStringWithNullCreateRequest creates the GetStringWithNull request.
 func (client *DictionaryClient) getStringWithNullCreateRequest(ctx context.Context, _ *DictionaryClientGetStringWithNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/string/foo.null.foo2"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2492,7 +2493,7 @@ func (client *DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map
 // putArrayValidCreateRequest creates the PutArrayValid request.
 func (client *DictionaryClient) putArrayValidCreateRequest(ctx context.Context, arrayBody map[string][]*string, _ *DictionaryClientPutArrayValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/array/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2533,7 +2534,7 @@ func (client *DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody ma
 // putBooleanTfftCreateRequest creates the PutBooleanTfft request.
 func (client *DictionaryClient) putBooleanTfftCreateRequest(ctx context.Context, arrayBody map[string]*bool, _ *DictionaryClientPutBooleanTfftOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/boolean/tfft"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2574,7 +2575,7 @@ func (client *DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[
 // putByteValidCreateRequest creates the PutByteValid request.
 func (client *DictionaryClient) putByteValidCreateRequest(ctx context.Context, arrayBody map[string][]byte, _ *DictionaryClientPutByteValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/byte/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2616,7 +2617,7 @@ func (client *DictionaryClient) PutComplexValid(ctx context.Context, arrayBody m
 // putComplexValidCreateRequest creates the PutComplexValid request.
 func (client *DictionaryClient) putComplexValidCreateRequest(ctx context.Context, arrayBody map[string]*Widget, _ *DictionaryClientPutComplexValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/complex/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2658,7 +2659,7 @@ func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arr
 // putDateTimeRFC1123ValidCreateRequest creates the PutDateTimeRFC1123Valid request.
 func (client *DictionaryClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Context, arrayBody map[string]*time.Time, _ *DictionaryClientPutDateTimeRFC1123ValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date-time-rfc1123/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2703,7 +2704,7 @@ func (client *DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody 
 // putDateTimeValidCreateRequest creates the PutDateTimeValid request.
 func (client *DictionaryClient) putDateTimeValidCreateRequest(ctx context.Context, arrayBody map[string]*time.Time, _ *DictionaryClientPutDateTimeValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date-time/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2747,7 +2748,7 @@ func (client *DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[
 // putDateValidCreateRequest creates the PutDateValid request.
 func (client *DictionaryClient) putDateValidCreateRequest(ctx context.Context, arrayBody map[string]*time.Time, _ *DictionaryClientPutDateValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2793,7 +2794,7 @@ func (client *DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBod
 // putDictionaryValidCreateRequest creates the PutDictionaryValid request.
 func (client *DictionaryClient) putDictionaryValidCreateRequest(ctx context.Context, arrayBody map[string]map[string]*string, _ *DictionaryClientPutDictionaryValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/dictionary/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2834,7 +2835,7 @@ func (client *DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody ma
 // putDoubleValidCreateRequest creates the PutDoubleValid request.
 func (client *DictionaryClient) putDoubleValidCreateRequest(ctx context.Context, arrayBody map[string]*float64, _ *DictionaryClientPutDoubleValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/double/0--0.01-1.2e20"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2875,7 +2876,7 @@ func (client *DictionaryClient) PutDurationValid(ctx context.Context, arrayBody 
 // putDurationValidCreateRequest creates the PutDurationValid request.
 func (client *DictionaryClient) putDurationValidCreateRequest(ctx context.Context, arrayBody map[string]*string, _ *DictionaryClientPutDurationValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/duration/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2915,7 +2916,7 @@ func (client *DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[stri
 // putEmptyCreateRequest creates the PutEmpty request.
 func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, arrayBody map[string]*string, _ *DictionaryClientPutEmptyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2956,7 +2957,7 @@ func (client *DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map
 // putFloatValidCreateRequest creates the PutFloatValid request.
 func (client *DictionaryClient) putFloatValidCreateRequest(ctx context.Context, arrayBody map[string]*float32, _ *DictionaryClientPutFloatValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/float/0--0.01-1.2e20"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2997,7 +2998,7 @@ func (client *DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody m
 // putIntegerValidCreateRequest creates the PutIntegerValid request.
 func (client *DictionaryClient) putIntegerValidCreateRequest(ctx context.Context, arrayBody map[string]*int32, _ *DictionaryClientPutIntegerValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/integer/1.-1.3.300"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -3037,7 +3038,7 @@ func (client *DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[
 // putLongValidCreateRequest creates the PutLongValid request.
 func (client *DictionaryClient) putLongValidCreateRequest(ctx context.Context, arrayBody map[string]*int64, _ *DictionaryClientPutLongValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/long/1.-1.3.300"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -3078,7 +3079,7 @@ func (client *DictionaryClient) PutStringValid(ctx context.Context, arrayBody ma
 // putStringValidCreateRequest creates the PutStringValid request.
 func (client *DictionaryClient) putStringValidCreateRequest(ctx context.Context, arrayBody map[string]*string, _ *DictionaryClientPutStringValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/string/foo1.foo2.foo3"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

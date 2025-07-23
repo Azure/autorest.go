@@ -8,12 +8,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewFlattenPropertyClient(options *azcore.ClientOptions) (*FlattenPropertyClient, error) {
-	internal, err := azcore.NewClient("flattengroup", "v0.1.0", runtime.PipelineOptions{}, options)
+func NewFlattenPropertyClient(endpoint string, options *azcore.ClientOptions) (*FlattenPropertyClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &FlattenPropertyClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

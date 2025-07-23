@@ -186,10 +186,10 @@ const internalpager = pkgRoot + 'test/tsp/Internal.Pager';
 generate('internalpager', internalpager, 'test/local/internalpager', ['generate-fakes=false']);
 
 const armoracledatabase = pkgRoot + 'test/tsp/Oracle.Database.Management';
-generate('armoracledatabase', armoracledatabase, 'test/local/armoracledatabase', [`examples-directory=${armoracledatabase}/examples`, 'generate-samples=true']);
+generate('armoracledatabase', armoracledatabase, 'test/local/armoracledatabase', [`examples-directory=${armoracledatabase}/examples`, 'generate-samples=true', 'module-version=2.0.0']);
 
 const armhealthbot = pkgRoot + 'test/tsp/Healthbot.Management';
-generate('armhealthbot', armhealthbot, 'test/local/armhealthbot', [`examples-directory=${armhealthbot}/examples`, 'generate-samples=true']);
+generate('armhealthbot', armhealthbot, 'test/local/armhealthbot', [`examples-directory=${armhealthbot}/examples`, 'generate-samples=true', 'module-version=1.0.0']);
 
 const armhardwaresecuritymodules = pkgRoot + 'test/tsp/HardwareSecurityModules.Management';
 generate('armhardwaresecuritymodules', armhardwaresecuritymodules, 'test/local/armhardwaresecuritymodules', [`examples-directory=${armhardwaresecuritymodules}/examples`, 'generate-samples=true']);
@@ -201,7 +201,10 @@ const armbillingbenefits = pkgRoot + 'test/tsp/BillingBenefits.Management';
 generate('armbillingbenefits', armbillingbenefits, 'test/local/armbillingbenefits', [`examples-directory=${armbillingbenefits}/examples`, 'generate-samples=true']);
 
 const nooptionalbody = pkgRoot + 'test/tsp/NoOptionalBody';
-generate('nooptionalbody', nooptionalbody, 'test/local/nooptionalbody', ['generate-fakes=false', 'no-optional-body=true']);
+generate('nooptionalbody', nooptionalbody, 'test/local/nooptionalbody', ['generate-fakes=false', 'go-generate=after_generate.go', 'no-optional-body=true']);
+
+const rawjson = pkgRoot + 'test/tsp/RawJson';
+generate('rawjson', rawjson, 'test/local/rawjson', ['rawjson-as-bytes=true']);
 
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
@@ -245,7 +248,6 @@ function generate(moduleName, input, outputDir, perTestOptions) {
   // these options _can_ be changed per test
   // TODO: disabled examples by default https://github.com/Azure/autorest.go/issues/1441
   const defaultOptions = [
-    'module-version=0.1.0',
     'generate-fakes=true',
     'inject-spans=true',
     'head-as-boolean=true',
@@ -296,7 +298,6 @@ function generate(moduleName, input, outputDir, perTestOptions) {
         logResult(error, stdout, stderr);
         // format on success
         if (error === null) {
-          execSync('gofmt -w .', { cwd: fullOutputDir});
           // Force emitter version to a constant in _metadata.json to avoid unnecessary version drift in committed files
           const metadataPath = `${fullOutputDir}/testdata/_metadata.json`;
           if (existsSync(metadataPath)) {

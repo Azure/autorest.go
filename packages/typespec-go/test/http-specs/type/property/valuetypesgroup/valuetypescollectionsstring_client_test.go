@@ -12,7 +12,7 @@ import (
 )
 
 func TestValueTypesCollectionsStringClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesCollectionsStringClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -20,7 +20,7 @@ func TestValueTypesCollectionsStringClient_Get(t *testing.T) {
 }
 
 func TestValueTypesCollectionsStringClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesCollectionsStringClient().Put(context.Background(), valuetypesgroup.CollectionsStringProperty{
 		Property: []string{"hello", "world"},

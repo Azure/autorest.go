@@ -19,6 +19,14 @@ model WidgetList {
 
 model Widget {
   weight: int32;
+  color: WidgetColor;
+}
+
+union WidgetColor {
+  string,
+  Blue: "Blue",
+  Green: "Green",
+  Red: "Red",
 }
 
 @route("/widgets")

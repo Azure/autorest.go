@@ -5,6 +5,7 @@ package integergroup_test
 
 import (
 	"context"
+	"generatortests"
 	"generatortests/integergroup"
 	"generatortests/integergroup/fake"
 	"net/http"
@@ -26,7 +27,7 @@ func TestFakeGetInvalid(t *testing.T) {
 			return
 		},
 	}
-	client, err := integergroup.NewIntClient(&azcore.ClientOptions{
+	client, err := integergroup.NewIntClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewIntServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -46,7 +47,7 @@ func TestFakeGetUnixTime(t *testing.T) {
 			return
 		},
 	}
-	client, err := integergroup.NewIntClient(&azcore.ClientOptions{
+	client, err := integergroup.NewIntClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewIntServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -65,7 +66,7 @@ func TestFakePutMax64(t *testing.T) {
 			return
 		},
 	}
-	client, err := integergroup.NewIntClient(&azcore.ClientOptions{
+	client, err := integergroup.NewIntClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewIntServerTransport(&server),
 	})
 	require.NoError(t, err)
@@ -83,7 +84,7 @@ func TestFakePutUnixTimeDate(t *testing.T) {
 			return
 		},
 	}
-	client, err := integergroup.NewIntClient(&azcore.ClientOptions{
+	client, err := integergroup.NewIntClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewIntServerTransport(&server),
 	})
 	require.NoError(t, err)

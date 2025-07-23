@@ -9,25 +9,16 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
 func newQueriesClient(t *testing.T) *QueriesClient {
-	client, err := NewQueriesClient(&azcore.ClientOptions{
+	client, err := NewQueriesClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
-}
-
-func NewQueriesClient(options *azcore.ClientOptions) (*QueriesClient, error) {
-	client, err := azcore.NewClient("urlgroup.QueriesClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
-	if err != nil {
-		return nil, err
-	}
-	return &QueriesClient{internal: client}, nil
 }
 
 // ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format

@@ -15,19 +15,19 @@ import (
 )
 
 func newODataClient(t *testing.T) *ODataClient {
-	client, err := NewODataClient(&azcore.ClientOptions{
+	client, err := NewODataClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)
 	return client
 }
 
-func NewODataClient(options *azcore.ClientOptions) (*ODataClient, error) {
+func NewODataClient(endpoint string, options *azcore.ClientOptions) (*ODataClient, error) {
 	client, err := azcore.NewClient("azurespecialsgroup.ODataClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &ODataClient{internal: client}, nil
+	return &ODataClient{internal: client, endpoint: endpoint}, nil
 }
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'

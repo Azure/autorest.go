@@ -18,6 +18,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type DateClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetInvalidDate - Get invalid date value
@@ -50,7 +51,7 @@ func (client *DateClient) GetInvalidDate(ctx context.Context, options *DateClien
 // getInvalidDateCreateRequest creates the GetInvalidDate request.
 func (client *DateClient) getInvalidDateCreateRequest(ctx context.Context, _ *DateClientGetInvalidDateOptions) (*policy.Request, error) {
 	urlPath := "/date/invaliddate"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +100,7 @@ func (client *DateClient) GetMaxDate(ctx context.Context, options *DateClientGet
 // getMaxDateCreateRequest creates the GetMaxDate request.
 func (client *DateClient) getMaxDateCreateRequest(ctx context.Context, _ *DateClientGetMaxDateOptions) (*policy.Request, error) {
 	urlPath := "/date/max"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (client *DateClient) GetMinDate(ctx context.Context, options *DateClientGet
 // getMinDateCreateRequest creates the GetMinDate request.
 func (client *DateClient) getMinDateCreateRequest(ctx context.Context, _ *DateClientGetMinDateOptions) (*policy.Request, error) {
 	urlPath := "/date/min"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +198,7 @@ func (client *DateClient) GetNull(ctx context.Context, options *DateClientGetNul
 // getNullCreateRequest creates the GetNull request.
 func (client *DateClient) getNullCreateRequest(ctx context.Context, _ *DateClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/date/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -246,7 +247,7 @@ func (client *DateClient) GetOverflowDate(ctx context.Context, options *DateClie
 // getOverflowDateCreateRequest creates the GetOverflowDate request.
 func (client *DateClient) getOverflowDateCreateRequest(ctx context.Context, _ *DateClientGetOverflowDateOptions) (*policy.Request, error) {
 	urlPath := "/date/overflowdate"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -295,7 +296,7 @@ func (client *DateClient) GetUnderflowDate(ctx context.Context, options *DateCli
 // getUnderflowDateCreateRequest creates the GetUnderflowDate request.
 func (client *DateClient) getUnderflowDateCreateRequest(ctx context.Context, _ *DateClientGetUnderflowDateOptions) (*policy.Request, error) {
 	urlPath := "/date/underflowdate"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -344,7 +345,7 @@ func (client *DateClient) PutMaxDate(ctx context.Context, dateBody time.Time, op
 // putMaxDateCreateRequest creates the PutMaxDate request.
 func (client *DateClient) putMaxDateCreateRequest(ctx context.Context, dateBody time.Time, _ *DateClientPutMaxDateOptions) (*policy.Request, error) {
 	urlPath := "/date/max"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -385,7 +386,7 @@ func (client *DateClient) PutMinDate(ctx context.Context, dateBody time.Time, op
 // putMinDateCreateRequest creates the PutMinDate request.
 func (client *DateClient) putMinDateCreateRequest(ctx context.Context, dateBody time.Time, _ *DateClientPutMinDateOptions) (*policy.Request, error) {
 	urlPath := "/date/min"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

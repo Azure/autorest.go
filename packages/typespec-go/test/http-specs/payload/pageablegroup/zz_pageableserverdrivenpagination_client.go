@@ -16,12 +16,14 @@ import (
 // Don't use this type directly, use [PageableClient.NewPageableServerDrivenPaginationClient] instead.
 type PageableServerDrivenPaginationClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewPageableServerDrivenPaginationContinuationTokenClient creates a new instance of [PageableServerDrivenPaginationContinuationTokenClient].
 func (client *PageableServerDrivenPaginationClient) NewPageableServerDrivenPaginationContinuationTokenClient() *PageableServerDrivenPaginationContinuationTokenClient {
 	return &PageableServerDrivenPaginationContinuationTokenClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -53,7 +55,7 @@ func (client *PageableServerDrivenPaginationClient) NewLinkPager(options *Pageab
 // linkCreateRequest creates the Link request.
 func (client *PageableServerDrivenPaginationClient) linkCreateRequest(ctx context.Context, _ *PageableServerDrivenPaginationClientLinkOptions) (*policy.Request, error) {
 	urlPath := "/payload/pageable/server-driven-pagination/link"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -66,6 +68,51 @@ func (client *PageableServerDrivenPaginationClient) linkHandleResponse(resp *htt
 	result := PageableServerDrivenPaginationClientLinkResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LinkResponse); err != nil {
 		return PageableServerDrivenPaginationClientLinkResponse{}, err
+	}
+	return result, nil
+}
+
+//   - options - PageableServerDrivenPaginationClientNestedLinkOptions contains the optional parameters for the PageableServerDrivenPaginationClient.NewNestedLinkPager
+//     method.
+func (client *PageableServerDrivenPaginationClient) NewNestedLinkPager(options *PageableServerDrivenPaginationClientNestedLinkOptions) *runtime.Pager[PageableServerDrivenPaginationClientNestedLinkResponse] {
+	return runtime.NewPager(runtime.PagingHandler[PageableServerDrivenPaginationClientNestedLinkResponse]{
+		More: func(page PageableServerDrivenPaginationClientNestedLinkResponse) bool {
+			return page.NestedNext != nil && page.NestedNext.Next != nil && len(*page.NestedNext.Next) > 0
+		},
+		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationClientNestedLinkResponse) (PageableServerDrivenPaginationClientNestedLinkResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationClient.NewNestedLinkPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NestedNext.Next
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.nestedLinkCreateRequest(ctx, options)
+			}, nil)
+			if err != nil {
+				return PageableServerDrivenPaginationClientNestedLinkResponse{}, err
+			}
+			return client.nestedLinkHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// nestedLinkCreateRequest creates the NestedLink request.
+func (client *PageableServerDrivenPaginationClient) nestedLinkCreateRequest(ctx context.Context, _ *PageableServerDrivenPaginationClientNestedLinkOptions) (*policy.Request, error) {
+	urlPath := "/payload/pageable/server-driven-pagination/nested-link"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// nestedLinkHandleResponse handles the NestedLink response.
+func (client *PageableServerDrivenPaginationClient) nestedLinkHandleResponse(resp *http.Response) (PageableServerDrivenPaginationClientNestedLinkResponse, error) {
+	result := PageableServerDrivenPaginationClientNestedLinkResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.NestedLinkResponse); err != nil {
+		return PageableServerDrivenPaginationClientNestedLinkResponse{}, err
 	}
 	return result, nil
 }

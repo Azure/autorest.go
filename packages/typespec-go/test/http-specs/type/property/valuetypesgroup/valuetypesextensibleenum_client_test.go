@@ -13,7 +13,7 @@ import (
 )
 
 func TestValueTypesExtensibleEnumClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesExtensibleEnumClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestValueTypesExtensibleEnumClient_Get(t *testing.T) {
 }
 
 func TestValueTypesExtensibleEnumClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient(nil)
+	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesExtensibleEnumClient().Put(context.Background(), valuetypesgroup.ExtensibleEnumProperty{
 		Property: to.Ptr(valuetypesgroup.InnerEnum("UnknownValue")),

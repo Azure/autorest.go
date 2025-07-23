@@ -15,7 +15,7 @@ import (
 )
 
 func TestClientAClient_RenamedFive(t *testing.T) {
-	client, err := multiclientgroup.NewClientAClient(nil)
+	client, err := multiclientgroup.NewClientAClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.RenamedFive(context.Background(), nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestClientAClient_RenamedFive(t *testing.T) {
 }
 
 func TestClientAClient_RenamedOne(t *testing.T) {
-	client, err := multiclientgroup.NewClientAClient(nil)
+	client, err := multiclientgroup.NewClientAClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.RenamedOne(context.Background(), nil)
 	require.NoError(t, err)
@@ -31,7 +31,7 @@ func TestClientAClient_RenamedOne(t *testing.T) {
 }
 
 func TestClientAClient_RenamedThree(t *testing.T) {
-	client, err := multiclientgroup.NewClientAClient(nil)
+	client, err := multiclientgroup.NewClientAClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.RenamedThree(context.Background(), nil)
 	require.NoError(t, err)

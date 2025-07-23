@@ -14,7 +14,7 @@ import (
 )
 
 func newObjectTypeClient(t *testing.T) *ObjectTypeClient {
-	client, err := NewObjectTypeClient(&azcore.ClientOptions{
+	client, err := NewObjectTypeClient(generatortests.Host, &azcore.ClientOptions{
 		TracingProvider: generatortests.NewTracingProvider(t),
 	})
 	require.NoError(t, err)

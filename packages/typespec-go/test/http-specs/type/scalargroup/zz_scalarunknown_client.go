@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [ScalarClient.NewScalarUnknownClient] instead.
 type ScalarUnknownClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - get unknown value
@@ -46,7 +47,7 @@ func (client *ScalarUnknownClient) Get(ctx context.Context, options *ScalarUnkno
 // getCreateRequest creates the Get request.
 func (client *ScalarUnknownClient) getCreateRequest(ctx context.Context, _ *ScalarUnknownClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/unknown"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +95,7 @@ func (client *ScalarUnknownClient) Put(ctx context.Context, body any, options *S
 // putCreateRequest creates the Put request.
 func (client *ScalarUnknownClient) putCreateRequest(ctx context.Context, body any, _ *ScalarUnknownClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/unknown"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

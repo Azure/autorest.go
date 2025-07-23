@@ -13,7 +13,7 @@ import (
 )
 
 func TestXMLSimpleModelValueClient_Get(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient(nil)
+	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLSimpleModelValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -24,7 +24,7 @@ func TestXMLSimpleModelValueClient_Get(t *testing.T) {
 }
 
 func TestXMLSimpleModelValueClient_Put(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient(nil)
+	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLSimpleModelValueClient().Put(context.Background(), xmlgroup.SimpleModel{
 		Age:  to.Ptr[int32](123),

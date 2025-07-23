@@ -8,12 +8,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewValueTypesClient(options *azcore.ClientOptions) (*ValueTypesClient, error) {
-	internal, err := azcore.NewClient("valuetypesgroup", "v0.1.0", runtime.PipelineOptions{}, options)
+func NewValueTypesClient(endpoint string, options *azcore.ClientOptions) (*ValueTypesClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
 	return &ValueTypesClient{
 		internal: internal,
+		endpoint: endpoint,
 	}, nil
 }

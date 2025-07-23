@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [AccessClient.NewAccessInternalOperationClient] instead.
 type AccessInternalOperationClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // internalDecoratorInInternal -
@@ -47,7 +48,7 @@ func (client *AccessInternalOperationClient) internalDecoratorInInternal(ctx con
 // internalDecoratorInInternalCreateRequest creates the internalDecoratorInInternal request.
 func (client *AccessInternalOperationClient) internalDecoratorInInternalCreateRequest(ctx context.Context, name string, _ *accessInternalOperationClientinternalDecoratorInInternalOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/access/internalOperation/internalDecoratorInInternal"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +97,7 @@ func (client *AccessInternalOperationClient) noDecoratorInInternal(ctx context.C
 // noDecoratorInInternalCreateRequest creates the noDecoratorInInternal request.
 func (client *AccessInternalOperationClient) noDecoratorInInternalCreateRequest(ctx context.Context, name string, _ *accessInternalOperationClientnoDecoratorInInternalOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/access/internalOperation/noDecoratorInInternal"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +146,7 @@ func (client *AccessInternalOperationClient) publicDecoratorInInternal(ctx conte
 // publicDecoratorInInternalCreateRequest creates the publicDecoratorInInternal request.
 func (client *AccessInternalOperationClient) publicDecoratorInInternalCreateRequest(ctx context.Context, name string, _ *accessInternalOperationClientpublicDecoratorInInternalOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/access/internalOperation/publicDecoratorInInternal"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

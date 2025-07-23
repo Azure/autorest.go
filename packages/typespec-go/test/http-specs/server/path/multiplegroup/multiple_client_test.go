@@ -12,7 +12,7 @@ import (
 )
 
 func TestMultipleClient_NoOperationParams(t *testing.T) {
-	client, err := multiplegroup.NewMultipleClient(nil)
+	client, err := multiplegroup.NewMultipleClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NoOperationParams(context.Background(), nil)
 	require.NoError(t, err)
@@ -20,7 +20,7 @@ func TestMultipleClient_NoOperationParams(t *testing.T) {
 }
 
 func TestMultipleClient_WithOperationPathParam(t *testing.T) {
-	client, err := multiplegroup.NewMultipleClient(nil)
+	client, err := multiplegroup.NewMultipleClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.WithOperationPathParam(context.Background(), "test", nil)
 	require.NoError(t, err)

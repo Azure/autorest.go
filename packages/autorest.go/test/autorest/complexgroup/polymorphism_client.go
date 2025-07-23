@@ -10,10 +10,10 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewPolymorphismClient(options *azcore.ClientOptions) (*PolymorphismClient, error) {
+func NewPolymorphismClient(endpoint string, options *azcore.ClientOptions) (*PolymorphismClient, error) {
 	client, err := azcore.NewClient("complexgroup.PolymorphismClient", generatortests.ModuleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &PolymorphismClient{internal: client}, nil
+	return &PolymorphismClient{internal: client, endpoint: endpoint}, nil
 }

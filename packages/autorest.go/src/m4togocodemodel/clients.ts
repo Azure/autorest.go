@@ -156,10 +156,8 @@ function adaptURIPrameterType(schema: m4.Schema): go.URIParameterType {
 function adaptClient(type: go.CodeModelType, group: m4.OperationGroup): go.Client {
   const description = `${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.`;
   const client = new go.Client(group.language.go!.clientName, {description: description}, go.newClientOptions(type, group.language.go!.clientName));
-
-  client.host = group.language.go!.host;
   if (group.language.go!.complexHostParams) {
-    client.templatedHost = true;
+    client.templatedHost = group.language.go!.host;
   }
   if (group.language.go!.hostParams) {
     for (const hostParam of values(<Array<m4.Parameter>>group.language.go!.hostParams)) {

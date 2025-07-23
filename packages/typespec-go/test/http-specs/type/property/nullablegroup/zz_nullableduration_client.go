@@ -16,6 +16,7 @@ import (
 // Don't use this type directly, use [NullableClient.NewNullableDurationClient] instead.
 type NullableDurationClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetNonNull - Get models that will return all properties in the model
@@ -47,7 +48,7 @@ func (client *NullableDurationClient) GetNonNull(ctx context.Context, options *N
 // getNonNullCreateRequest creates the GetNonNull request.
 func (client *NullableDurationClient) getNonNullCreateRequest(ctx context.Context, _ *NullableDurationClientGetNonNullOptions) (*policy.Request, error) {
 	urlPath := "/type/property/nullable/duration/non-null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +94,7 @@ func (client *NullableDurationClient) GetNull(ctx context.Context, options *Null
 // getNullCreateRequest creates the GetNull request.
 func (client *NullableDurationClient) getNullCreateRequest(ctx context.Context, _ *NullableDurationClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/type/property/nullable/duration/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +139,7 @@ func (client *NullableDurationClient) PatchNonNull(ctx context.Context, body Dur
 // patchNonNullCreateRequest creates the PatchNonNull request.
 func (client *NullableDurationClient) patchNonNullCreateRequest(ctx context.Context, body DurationProperty, _ *NullableDurationClientPatchNonNullOptions) (*policy.Request, error) {
 	urlPath := "/type/property/nullable/duration/non-null"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -177,7 +178,7 @@ func (client *NullableDurationClient) PatchNull(ctx context.Context, body Durati
 // patchNullCreateRequest creates the PatchNull request.
 func (client *NullableDurationClient) patchNullCreateRequest(ctx context.Context, body DurationProperty, _ *NullableDurationClientPatchNullOptions) (*policy.Request, error) {
 	urlPath := "/type/property/nullable/duration/null"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

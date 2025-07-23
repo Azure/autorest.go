@@ -12,7 +12,7 @@ import (
 )
 
 func TestOptionalBytesClient_GetAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalBytesClient().GetAll(context.Background(), nil)
 	require.NoError(t, err)
@@ -20,7 +20,7 @@ func TestOptionalBytesClient_GetAll(t *testing.T) {
 }
 
 func TestOptionalBytesClient_GetDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalBytesClient().GetDefault(context.Background(), nil)
 	require.NoError(t, err)
@@ -28,7 +28,7 @@ func TestOptionalBytesClient_GetDefault(t *testing.T) {
 }
 
 func TestOptionalBytesClient_PutAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalBytesClient().PutAll(context.Background(), optionalitygroup.BytesProperty{
 		Property: []byte("hello, world!"),
@@ -38,7 +38,7 @@ func TestOptionalBytesClient_PutAll(t *testing.T) {
 }
 
 func TestOptionalBytesClient_PutDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient(nil)
+	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalBytesClient().PutDefault(context.Background(), optionalitygroup.BytesProperty{}, nil)
 	require.NoError(t, err)

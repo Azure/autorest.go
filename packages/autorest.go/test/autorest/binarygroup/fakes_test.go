@@ -6,6 +6,7 @@ package binarygroup_test
 import (
 	"bytes"
 	"context"
+	"generatortests"
 	"generatortests/binarygroup"
 	"generatortests/binarygroup/fake"
 	"io"
@@ -29,7 +30,7 @@ func TestFakeBinary(t *testing.T) {
 			return
 		},
 	}
-	client, err := binarygroup.NewUploadClient(&azcore.ClientOptions{
+	client, err := binarygroup.NewUploadClient(generatortests.Host, &azcore.ClientOptions{
 		Transport: fake.NewUploadServerTransport(&server),
 	})
 	require.NoError(t, err)

@@ -5,11 +5,6 @@
 
 package armnetwork
 
-const (
-	moduleName    = "armnetwork"
-	moduleVersion = "v0.1.0"
-)
-
 // Access - Access to be allowed or denied.
 type Access string
 
