@@ -10,6 +10,7 @@ import (
 func TestClientNamespaceSecondClient_GetSecond(t *testing.T) {
 	client, err := NewClientNamespaceClient(nil)
 	require.NoError(t, err)
+	client.endpoint = "http://localhost:3000"
 	secondClient := client.NewClientNamespaceSecondClient()
 	require.NotNil(t, secondClient)
 	resp, err := secondClient.GetSecond(context.Background(), nil)

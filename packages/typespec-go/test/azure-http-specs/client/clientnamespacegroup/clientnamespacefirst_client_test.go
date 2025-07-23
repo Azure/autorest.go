@@ -11,6 +11,7 @@ func TestClientNamespaceFirstClient_GetFirst(t *testing.T) {
 	client, err := NewClientNamespaceClient(nil)
 	require.NoError(t, err)
 	require.NotNil(t, client)
+	client.endpoint = "http://localhost:3000"
 	firstClient := client.NewClientNamespaceFirstClient()
 	require.NotNil(t, firstClient)
 	resp, err := firstClient.GetFirst(context.Background(), nil) // Use appropriate context and options
