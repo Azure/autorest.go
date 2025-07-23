@@ -11,7 +11,7 @@ import { CodegenError } from './errors.js';
 // if there's a preexisting go.mod file, update its specified version of azcore as needed.
 export async function generateGoModFile(codeModel: go.CodeModel, existingGoMod?: string): Promise<string> {
   if (!codeModel.options.module) {
-    // must be containg-module, we don't emit go.mod for that scenario
+    // must be containing-module, we don't emit go.mod for that scenario
     return '';
   }
 
@@ -38,7 +38,7 @@ export async function generateGoModFile(codeModel: go.CodeModel, existingGoMod?:
     return text;
   }
 
-  // check if the module name needs to be replaced due to a major version increase
+  // check if the module identity needs to be replaced due to a major version change
   if (!existingGoMod.match(`module ${modName}$`)) {
     existingGoMod = existingGoMod.replace(/module \S+/, `module ${modName}`);
   }
