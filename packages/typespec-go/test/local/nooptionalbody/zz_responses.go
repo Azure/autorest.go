@@ -18,4 +18,3 @@ type ClientPostResponse struct {
 type ClientPutResponse struct {
 	// placeholder for future response values
 }
-

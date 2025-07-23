@@ -5,7 +5,6 @@
 package nooptionalbody
 
 type Widget struct {
-// REQUIRED
+	// REQUIRED (transformed)
 	Weight *int32
 }
-

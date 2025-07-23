@@ -5,7 +5,6 @@
 package nooptionalbody
 
 const (
-	moduleName = "nooptionalbody"
+	moduleName    = "nooptionalbody"
 	moduleVersion = "v0.1.0"
 )
-

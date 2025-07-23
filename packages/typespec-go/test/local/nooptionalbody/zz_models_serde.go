@@ -28,7 +28,7 @@ func (w *Widget) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "weight":
-				err = unpopulate(val, "Weight", &w.Weight)
+			err = unpopulate(val, "Weight", &w.Weight)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -57,4 +57,3 @@ func unpopulate(data json.RawMessage, fn string, v any) error {
 	}
 	return nil
 }
-
