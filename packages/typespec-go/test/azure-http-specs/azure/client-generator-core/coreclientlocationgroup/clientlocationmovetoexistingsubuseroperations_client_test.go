@@ -12,6 +12,7 @@ func TestClientLocationMoveToExistingSubUserOperationsClient_GetUser(t *testing.
 	require.NoError(t, err)
 	client := factory.NewClientLocationMoveToExistingSubUserOperationsClient()
 	require.NotNil(t, client)
+	client.endpoint = "http://localhost:3000"
 	resp, err := client.GetUser(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)

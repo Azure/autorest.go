@@ -12,6 +12,7 @@ func TestClientLocationArchiveOperationsClient_ArchiveProduct(t *testing.T) {
 	require.NoError(t, err)
 	client := factory.NewClientLocationArchiveOperationsClient()
 	require.NotNil(t, client)
+	client.endpoint = "http://localhost:3000"
 	resp, err := client.ArchiveProduct(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
@@ -22,6 +23,7 @@ func TestClientLocationMoveToRootResourceOperationsClient_GetResource(t *testing
 	require.NoError(t, err)
 	client := factory.NewClientLocationMoveToRootResourceOperationsClient()
 	require.NotNil(t, client)
+	client.endpoint = "http://localhost:3000"
 	resp, err := client.GetResource(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
