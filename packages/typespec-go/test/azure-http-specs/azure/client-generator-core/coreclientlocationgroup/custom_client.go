@@ -6,7 +6,7 @@ import (
 )
 
 func NewClientLocationMoveToExistingSubAdminOperationsClient(options *azcore.ClientOptions) (*ClientLocationMoveToExistingSubAdminOperationsClient, error) {
-	internal, err := azcore.NewClient("clientnamespacegroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
@@ -16,7 +16,7 @@ func NewClientLocationMoveToExistingSubAdminOperationsClient(options *azcore.Cli
 }
 
 func NewClientLocationMoveToExistingSubClient(options *azcore.ClientOptions) (*ClientLocationMoveToExistingSubClient, error) {
-	internal, err := azcore.NewClient("clientnamespacegroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
@@ -26,7 +26,7 @@ func NewClientLocationMoveToExistingSubClient(options *azcore.ClientOptions) (*C
 }
 
 func NewClientLocationMoveToNewSubProductOperationsClient(options *azcore.ClientOptions) (*ClientLocationMoveToNewSubProductOperationsClient, error) {
-	internal, err := azcore.NewClient("clientnamespacegroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +36,7 @@ func NewClientLocationMoveToNewSubProductOperationsClient(options *azcore.Client
 }
 
 func NewClientLocationClient(options *azcore.ClientOptions) (*ClientLocationClient, error) {
-	internal, err := azcore.NewClient("clientnamespacegroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func NewClientLocationClient(options *azcore.ClientOptions) (*ClientLocationClie
 }
 
 func NewClientLocationMoveToRootClient(options *azcore.ClientOptions) (*ClientLocationMoveToRootClient, error) {
-	internal, err := azcore.NewClient("clientnamespacegroup", "v0.1.0", runtime.PipelineOptions{}, options)
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
