@@ -387,3 +387,5 @@ junit.xml
 
 cadl-ranch-coverage.json
 spec-coverage.json
+
+/packages/typespec-go/website
