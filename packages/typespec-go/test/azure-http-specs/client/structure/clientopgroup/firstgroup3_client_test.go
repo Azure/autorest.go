@@ -1,6 +1,10 @@
-package clientopgroup
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+package clientopgroup_test
 
 import (
+	"clientopgroup"
 	"context"
 	"testing"
 
@@ -8,23 +12,19 @@ import (
 )
 
 func TestFirstGroup3Client_Three(t *testing.T) {
-	client, err := NewFirstGroup3Client(nil)
+	client, err := clientopgroup.NewFirstGroup3Client("http://localhost:3000", clientopgroup.ClientTypeClientOperationGroup, nil)
 	require.Nil(t, err)
 	require.NotNil(t, client)
-	client.endpoint = "http://localhost:3000"
-	client.client = ClientType(ClientTypeClientOperationGroup)
-	resp, err := client.Three(context.Background(), &FirstGroup3ClientThreeOptions{})
+	resp, err := client.Three(context.Background(), &clientopgroup.FirstGroup3ClientThreeOptions{})
 	require.Nil(t, err)
 	require.NotNil(t, resp)
 }
 
 func TestFirstGroup3Client_Two(t *testing.T) {
-	client, err := NewFirstGroup3Client(nil)
+	client, err := clientopgroup.NewFirstGroup3Client("http://localhost:3000", clientopgroup.ClientTypeClientOperationGroup, nil)
 	require.Nil(t, err)
 	require.NotNil(t, client)
-	client.endpoint = "http://localhost:3000"
-	client.client = ClientType(ClientTypeClientOperationGroup)
-	resp, err := client.Two(context.Background(), &FirstGroup3ClientTwoOptions{})
+	resp, err := client.Two(context.Background(), &clientopgroup.FirstGroup3ClientTwoOptions{})
 	require.Nil(t, err)
 	require.NotNil(t, resp)
 }

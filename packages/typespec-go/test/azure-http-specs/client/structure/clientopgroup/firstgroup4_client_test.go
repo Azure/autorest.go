@@ -1,6 +1,10 @@
-package clientopgroup
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+package clientopgroup_test
 
 import (
+	"clientopgroup"
 	"context"
 	"testing"
 
@@ -8,12 +12,10 @@ import (
 )
 
 func TestFirstGroup4Client_Four(t *testing.T) {
-	client, err := NewFirstGroup4Client(nil)
+	client, err := clientopgroup.NewFirstGroup4Client("http://localhost:3000", clientopgroup.ClientTypeClientOperationGroup, nil)
 	require.Nil(t, err)
 	require.NotNil(t, client)
-	client.endpoint = "http://localhost:3000"
-	client.client = ClientType(ClientTypeClientOperationGroup)
-	resp, err := client.Four(context.Background(), &FirstGroup4ClientFourOptions{})
+	resp, err := client.Four(context.Background(), &clientopgroup.FirstGroup4ClientFourOptions{})
 	require.Nil(t, err)
 	require.NotNil(t, resp)
 }

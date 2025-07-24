@@ -1,6 +1,10 @@
-package clientnamespacegroup
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+package clientnamespacegroup_test
 
 import (
+	"clientnamespacegroup"
 	"context"
 	"testing"
 
@@ -8,9 +12,8 @@ import (
 )
 
 func TestClientNamespaceSecondClient_GetSecond(t *testing.T) {
-	client, err := NewClientNamespaceClient(nil)
+	client, err := clientnamespacegroup.NewClientNamespaceClient("http://localhost:3000", nil)
 	require.NoError(t, err)
-	client.endpoint = "http://localhost:3000"
 	secondClient := client.NewClientNamespaceSecondClient()
 	require.NotNil(t, secondClient)
 	resp, err := secondClient.GetSecond(context.Background(), nil)
@@ -18,5 +21,5 @@ func TestClientNamespaceSecondClient_GetSecond(t *testing.T) {
 	require.NotNil(t, resp)
 	require.NotNil(t, resp.SecondClientResult)
 	require.NotNil(t, resp.SecondClientResult.Type)
-	require.Equal(t, SecondClientEnumTypeSecond, *resp.SecondClientResult.Type)
+	require.Equal(t, clientnamespacegroup.SecondClientEnumTypeSecond, *resp.SecondClientResult.Type)
 }
