@@ -256,7 +256,7 @@ export class clientAdapter {
       if (sdkMethod.lroMetadata.finalResponse?.resultSegments) {
         // 'resultSegments' is designed for furture extensibility, currently only has one segment
         method.operationLocationResultPath = sdkMethod.lroMetadata.finalResponse.resultSegments.map((segment) => {
-          return (<tcgc.SdkModelPropertyType>segment).serializationOptions.json?.name;
+          return segment.serializationOptions.json?.name;
         }).join('.');
       }
     } else {
@@ -425,7 +425,7 @@ export class clientAdapter {
             let serializedName: string | undefined;
             for (const property of opParam.type.properties) {
               if (property.name === param.name) {
-                serializedName = getSerializedNameFromProperty(<tcgc.SdkModelPropertyType>property);
+                serializedName = getSerializedNameFromProperty(property);
                 break;
               }
             }
