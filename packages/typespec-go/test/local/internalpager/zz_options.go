@@ -4,7 +4,7 @@
 
 package internalpager
 
-// pagerWidgetsClientlistMethodOptions contains the optional parameters for the PagerWidgetsClient.NewlistMethodPager method.
+// pagerWidgetsClientlistMethodOptions contains the optional parameters for the PagerWidgetsClient.newListPager method.
 type pagerWidgetsClientlistMethodOptions struct {
 	// placeholder for future optional parameters
 }
