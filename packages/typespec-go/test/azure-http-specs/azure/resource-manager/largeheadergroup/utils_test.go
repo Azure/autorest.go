@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package templatesgroup_test
+package largeheadergroup_test
 
 import (
 	"context"
 	"fmt"
+	"largeheadergroup"
 	"net/http"
-	"templatesgroup"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
@@ -18,21 +18,19 @@ import (
 
 var (
 	ctx           context.Context
-	clientFactory *templatesgroup.ClientFactory
+	clientFactory *largeheadergroup.ClientFactory
 
 	subscriptionIdExpected = "00000000-0000-0000-0000-000000000000"
-	locationExpected       = "eastus"
 	resourceGroupExpected  = "test-rg"
-	widgetName             = "widget1"
 )
 
 func TestMain(m *testing.M) {
 	ctx = context.Background()
-	clientFactory, _ = templatesgroup.NewClientFactory(subscriptionIdExpected, &azfake.TokenCredential{}, &arm.ClientOptions{
+	clientFactory, _ = largeheadergroup.NewClientFactory(subscriptionIdExpected, &azfake.TokenCredential{}, &arm.ClientOptions{
 		ClientOptions: azcore.ClientOptions{
 			InsecureAllowCredentialWithHTTP: true,
 			PerCallPolicies: []policy.Policy{
-				&cadlranchPolicy{},
+				&spectorPolicy{},
 			},
 		},
 	})
@@ -40,26 +38,26 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-type cadlranchPolicy struct {
+type spectorPolicy struct {
 	useHttps  bool
 	proxyPort int
 }
 
-func (p cadlranchPolicy) scheme() string {
+func (p spectorPolicy) scheme() string {
 	if p.useHttps {
 		return "https"
 	}
 	return "http"
 }
 
-func (p cadlranchPolicy) host() string {
+func (p spectorPolicy) host() string {
 	if p.proxyPort != 0 {
 		return fmt.Sprintf("localhost:%d", p.proxyPort)
 	}
 	return "localhost:3000"
 }
 
-func (p *cadlranchPolicy) Do(req *policy.Request) (*http.Response, error) {
+func (p *spectorPolicy) Do(req *policy.Request) (*http.Response, error) {
 	oriSchema := req.Raw().URL.Scheme
 	oriHost := req.Raw().URL.Host
 
