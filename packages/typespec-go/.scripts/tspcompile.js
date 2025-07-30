@@ -87,7 +87,7 @@ const azureHttpSpecsGroup = {
   'corescalargroup': ['azure/core/scalar'],
   'coremodelgroup': ['azure/core/model'],
   'coreclientlocationgroup': ['azure/client-generator-core/client-location'],
-  'coredeserializegroup': ['azure/client-generator-core/deserialize-empty-string-as-null'],
+  // 'coredeserializegroup': ['azure/client-generator-core/deserialize-empty-string-as-null'],
   'traitsgroup': ['azure/core/traits'], // requires union support
   'encodedurationgroup': ['azure/encode/duration'],
   'examplebasicgroup': ['azure/example/basic'],
