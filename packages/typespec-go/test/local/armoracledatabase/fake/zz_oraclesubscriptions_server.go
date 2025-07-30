@@ -5,7 +5,7 @@
 package fake
 
 import (
-	"armoracledatabase"
+	"armoracledatabase/v2"
 	"context"
 	"errors"
 	"fmt"
