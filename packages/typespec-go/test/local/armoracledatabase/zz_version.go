@@ -6,5 +6,5 @@ package armoracledatabase
 
 const (
 	moduleName    = "armoracledatabase"
-	moduleVersion = "v2.0.0"
+	moduleVersion = "v0.1.0"
 )

@@ -5,7 +5,7 @@
 package armoracledatabase_test
 
 import (
-	"armoracledatabase/v2"
+	"armoracledatabase"
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"

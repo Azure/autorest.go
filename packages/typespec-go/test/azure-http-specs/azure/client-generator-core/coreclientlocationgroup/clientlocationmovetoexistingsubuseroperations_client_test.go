@@ -8,11 +8,10 @@ import (
 )
 
 func TestClientLocationMoveToExistingSubUserOperationsClient_GetUser(t *testing.T) {
-	factory, err := NewClientLocationMoveToExistingSubClient(nil)
+	factory, err := NewClientLocationMoveToExistingSubClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	client := factory.NewClientLocationMoveToExistingSubUserOperationsClient()
 	require.NotNil(t, client)
-	client.endpoint = "http://localhost:3000"
 	resp, err := client.GetUser(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)

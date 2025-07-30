@@ -10,7 +10,7 @@ import (
 )
 
 func TestTraitsClient_RepeatableAction(t *testing.T) {
-	client, err := NewTraitsClient(nil)
+	client, err := NewTraitsClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	require.NotNil(t, client)
 	id := int32(1)
@@ -18,7 +18,6 @@ func TestTraitsClient_RepeatableAction(t *testing.T) {
 	layout := time.RFC1123
 	tt, err := time.Parse(layout, rfc7231)
 	require.NoError(t, err)
-	client.endpoint = "http://localhost:3000"
 	resp, err := client.RepeatableAction(context.Background(), id, UserActionParam{
 		UserActionValue: to.Ptr("test"),
 	}, &TraitsClientRepeatableActionOptions{
@@ -31,7 +30,7 @@ func TestTraitsClient_RepeatableAction(t *testing.T) {
 }
 
 func TestTraitsClient_SmokeTest(t *testing.T) {
-	client, err := NewTraitsClient(nil)
+	client, err := NewTraitsClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	require.NotNil(t, client)
 	require.NoError(t, err)
@@ -44,7 +43,6 @@ func TestTraitsClient_SmokeTest(t *testing.T) {
 	require.NoError(t, err)
 	t2, err := time.Parse(layout, rfc7231_02)
 	require.NoError(t, err)
-	client.endpoint = "http://localhost:3000"
 	resp, err := client.SmokeTest(context.Background(), id, foo, &TraitsClientSmokeTestOptions{
 		IfMatch:           to.Ptr("\"valid\""),
 		IfNoneMatch:       to.Ptr("\"invalid\""),

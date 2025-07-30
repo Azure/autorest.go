@@ -6,5 +6,5 @@ package armhealthbot
 
 const (
 	moduleName    = "armhealthbot"
-	moduleVersion = "v1.0.0"
+	moduleVersion = "v0.1.0"
 )

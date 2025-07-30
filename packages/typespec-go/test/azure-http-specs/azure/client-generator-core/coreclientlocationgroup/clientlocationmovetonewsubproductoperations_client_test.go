@@ -8,10 +8,9 @@ import (
 )
 
 func TestClientLocationMoveToNewSubProductOperationsClient_ListProducts(t *testing.T) {
-	client, err := NewClientLocationMoveToNewSubProductOperationsClient(nil)
+	client, err := NewClientLocationMoveToNewSubProductOperationsClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	require.NotNil(t, client)
-	client.endpoint = "http://localhost:3000"
 	resp, err := client.ListProducts(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
