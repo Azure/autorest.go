@@ -160,10 +160,11 @@ export async function generateCode(host: AutorestExtensionHost) {
     // don't overwrite an existing version.go file
     const verisonGoFileName = `${filePrefix}version.go`;
     const existingVersionGo = await host.readFile(verisonGoFileName);
-    if (existingVersionGo === null) {
+    const versionGo = await generateVersionInfo(session.model);
+    if (existingVersionGo === null && versionGo.length > 0) {
       host.writeFile({
         filename: verisonGoFileName,
-        content: await generateVersionInfo(session.model),
+        content: versionGo,
         artifactType: 'source-file-go'
       });
     }

@@ -44,17 +44,25 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
   }
 
   const codeModel = new go.CodeModel(info, codeModelType, packageNameFromOutputFolder(context.emitterOutputDir), options);
-  
+
   const packageJson = createRequire(import.meta.url)('../../../../package.json') as Record<string, never>;
   codeModel.metadata = {
     ...sdkContext.sdkPackage.metadata,
     emitterVersion: packageJson['version']
   };
-  
-  if (context.options.module) {
-    const moduleVersion = context.options['module-version'] ?? '0.1.0';
-    codeModel.options.module = new go.Module(context.options.module, moduleVersion);
+
+  if (context.options['containing-module'] && context.options.module) {
+    throw new AdapterError('InvalidArgument', 'module and containing-module are mutually exclusive', NoTarget);
   }
+
+  if (context.options.module) {
+    codeModel.options.module = context.options.module;
+  } else if (context.options['containing-module']) {
+    codeModel.options.containingModule = context.options['containing-module'];
+  } else {
+    throw new AdapterError('InvalidArgument', 'missing argument module or containing-module', NoTarget);
+  }
+
   if (context.options['rawjson-as-bytes']) {
     codeModel.options.rawJSONAsBytes = true;
   }

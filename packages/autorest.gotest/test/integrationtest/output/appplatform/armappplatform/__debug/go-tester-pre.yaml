@@ -7719,7 +7719,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Get.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Get.json'
               responses:
                 '200':
                   body:
@@ -8027,7 +8027,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate.json'
               responses:
                 '200':
                   body:
@@ -8163,7 +8163,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate_VNetInjection.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate_VNetInjection.json'
               responses:
                 '200':
                   body:
@@ -8493,7 +8493,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Delete.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Delete.json'
               responses:
                 '202':
                   headers: &ref_868
@@ -8725,7 +8725,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Update.json
+              x-ms-original-file: 'file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Update.json'
               responses:
                 '200':
                   body:
@@ -40154,12 +40154,10 @@ language:
     name: AppPlatformManagementClient
     description: ''
     azureARM: true
-    containingModule: ''
     generateDateTimeRFC3339Helper: true
     groupParameters: true
     headAsBoolean: true
-    module: github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/appplatform/armappplatform
-    moduleVersion: 2.0.0-beta.1
+    module: github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/appplatform/armappplatform/v2
     openApiType: arm
     packageName: armappplatform
     parameterGroups:

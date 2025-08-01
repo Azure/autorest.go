@@ -44204,8 +44204,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: >-
-                file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicDataFactoryCompute.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicDataFactoryCompute.json
               responses:
                 '200':
                   body:
@@ -44318,8 +44317,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: >-
-                file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstanceMinimal.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstanceMinimal.json
               responses:
                 '200':
                   body:
@@ -58333,8 +58331,7 @@ operationGroups:
                 skipValidation: false
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureFileWAccountKey/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureFileWAccountKey/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -58410,8 +58407,7 @@ operationGroups:
                 skipValidation: false
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureBlobWAccountKey/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureBlobWAccountKey/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -68238,8 +68234,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json
               responses:
                 '200':
                   body:
@@ -68316,8 +68311,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/get.json
               responses:
                 '200':
                   body:
@@ -68705,8 +68699,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/update.json
               responses:
                 '200':
                   body:
@@ -68800,8 +68793,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/update.json
               responses:
                 '200':
                   body:
@@ -70011,8 +70003,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/listSkus.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/listSkus.json
               responses:
                 '200':
                   body:
@@ -70038,8 +70029,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/listSkus.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/listSkus.json
               responses:
                 '200':
                   body:
@@ -70330,7 +70320,6 @@ language:
     name: AzureMachineLearningWorkspaces
     description: ''
     azureARM: true
-    containingModule: ''
     discriminators:
       - *ref_91
       - *ref_1018
@@ -70362,7 +70351,6 @@ language:
     groupParameters: true
     headAsBoolean: true
     module: github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/machinelearningservices/armmachinelearningservices
-    moduleVersion: 0.1.0
     openApiType: arm
     packageName: armmachinelearningservices
     parameterGroups:

@@ -129,16 +129,16 @@ const keyvault = repoRoot + 'swagger/specification/keyvault/data-plane/readme.md
 generateFromReadme("azkeyvault", keyvault, 'package-7.2', 'test/keyvault/azkeyvault', '--module=azkeyvault');
 
 const consumption = repoRoot + 'swagger/specification/consumption/resource-manager/readme.md';
-generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consumption/armconsumption', '--module=armconsumption --module-version=1.0.0 --azure-arm=true --generate-fakes=false --inject-spans=false --remove-unreferenced-types --factory-gather-all-params=false');
+generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consumption/armconsumption', '--module=armconsumption --azure-arm=true --generate-fakes=false --inject-spans=false --remove-unreferenced-types --factory-gather-all-params=false');
 
 const databoxedge = repoRoot + 'swagger/specification/databoxedge/resource-manager/readme.md';
-generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/armdataboxedge', '--module=armdataboxedge --module-version=2.0.0 --azure-arm=true --remove-unreferenced-types --inject-spans=false --fix-const-stuttering=true');
+generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/armdataboxedge', '--module=armdataboxedge/v2 --azure-arm=true --remove-unreferenced-types --inject-spans=false --fix-const-stuttering=true');
 
 const acr = repoRoot + 'swagger/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json';
 generate("azacr", acr, 'test/acr/azacr', '--module="azacr" --openapi-type="data-plane" --rawjson-as-bytes --generate-fakes');
 
 const machineLearning = repoRoot + 'swagger/specification/machinelearningservices/resource-manager';
-generateFromReadme("armmachinelearning", machineLearning, 'package-2022-02-01-preview', 'test/machinelearning/armmachinelearning', '--module=armmachinelearning --module-version=1.0.0 --azure-arm=true --generate-fakes=false --inject-spans=false --remove-unreferenced-types');
+generateFromReadme("armmachinelearning", machineLearning, 'package-2022-02-01-preview', 'test/machinelearning/armmachinelearning', '--module=armmachinelearning --azure-arm=true --generate-fakes=false --inject-spans=false --remove-unreferenced-types');
 
 generate("azalias", pkgRoot + 'test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --openapi-type="data-plane" --generate-fakes --inject-spans --slice-elements-byval --disallow-unknown-fields --single-client');
 
@@ -197,7 +197,8 @@ function cleanGeneratedFiles(outputDir) {
     if (dirEnt === null) {
       break;
     }
-    if (dirEnt.isFile() && dirEnt.name.startsWith('zz_')) {
+    // preserve the version.go file so we can test the v2+ major version scenario
+    if (dirEnt.isFile() && dirEnt.name.startsWith('zz_') && dirEnt.name !== 'zz_version.go') {
       fs.unlinkSync(dir.path + '/' + dirEnt.name);
     }
   }
