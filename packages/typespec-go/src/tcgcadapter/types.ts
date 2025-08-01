@@ -91,18 +91,8 @@ export class typeAdapter {
 
     // now adapt model fields
     for (const modelType of modelTypes) {
-      const content = aggregateProperties(modelType.tcgc);
+      const content = aggregateProperties(sdkContext, modelType.tcgc);
       for (const prop of values(content.props)) {
-        if (prop.kind === 'header') {
-          // the common case here is the @header decorator specifying
-          // the content-type for the model. we can just skip it.
-          // TODO: follow up with tcgc to see if we can remove the entry.
-          continue;
-        }
-        if (prop.kind === 'query') {
-          // skip query params for now, wait for confirming visibility behavior
-          continue;
-        }
         const field = this.getModelField(prop, modelType.tcgc);
         modelType.go.fields.push(field);
       }
@@ -562,7 +552,7 @@ export class typeAdapter {
     return modelType;
   }
 
-  private getDiscriminatorLiteral(sdkProp: tcgc.SdkBodyModelPropertyType): go.Literal {
+  private getDiscriminatorLiteral(sdkProp: tcgc.SdkModelPropertyType): go.Literal {
     switch (sdkProp.type.kind) {
       case 'constant':
       case 'enumvalue':
@@ -573,9 +563,6 @@ export class typeAdapter {
   }
 
   private getModelField(prop: tcgc.SdkModelPropertyType, modelType: tcgc.SdkModelType): go.ModelField {
-    if (prop.kind !== 'path' && prop.kind !== 'property') {
-      throw new AdapterError('UnsupportedTsp', `unsupported kind ${prop.kind} for property ${prop.name} in model ${modelType.name}`, prop.__raw?.node ?? tsp.NoTarget);
-    }
     const annotations = new go.ModelFieldAnnotations(prop.optional === false, false, false, false);
     // for multipart/form data containing models, default to fields not being pointer-to-type as we
     // don't have to deal with JSON patch shenanigans. only the optional fields will be pointer-to-type.
@@ -601,12 +588,8 @@ export class typeAdapter {
     const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.name)), type, fieldByValue, prop.serializedName, annotations);
     field.docs.summary = prop.summary;
     field.docs.description = prop.doc;
-    if (prop.kind === 'path') {
-      // for ARM resources, a property of kind path is usually the model
-      // key and will be exposed as a discrete method parameter. this also
-      // means that the value is read-only.
-      annotations.readOnly = true;
-    } else if (prop.discriminator && modelType.discriminatorValue) {
+    // TODO: handle 'path' parameters
+    if (prop.discriminator && modelType.discriminatorValue) {
       // the presence of modelType.discriminatorValue tells us that this
       // property is on a model that's not the root discriminator
       annotations.isDiscriminator = true;
@@ -841,9 +824,12 @@ interface InterfaceTypeSdkModelType {
 
 // aggregate the properties from the provided type and its parent types.
 // this includes any inherited additional properties.
-function aggregateProperties(model: tcgc.SdkModelType): {props: Array<tcgc.SdkModelPropertyType>, addlProps?: tcgc.SdkType} {
+function aggregateProperties(sdkContext: tcgc.SdkContext, model: tcgc.SdkModelType): {props: Array<tcgc.SdkModelPropertyType>, addlProps?: tcgc.SdkType} {
   const allProps = new Array<tcgc.SdkModelPropertyType>();
   for (const prop of model.properties) {
+    if (tcgc.isHttpMetadata(sdkContext, prop)) {
+      continue;
+    }
     allProps.push(prop);
   }
 
@@ -851,6 +837,9 @@ function aggregateProperties(model: tcgc.SdkModelType): {props: Array<tcgc.SdkMo
   let parent = model.baseModel;
   while (parent) {
     for (const parentProp of parent.properties) {
+      if (tcgc.isHttpMetadata(sdkContext, parentProp)) {
+        continue;
+      }
       const exists = values(allProps).where(p => { return p.name === parentProp.name; }).first();
       if (exists) {
         // don't add the duplicate. the TS compiler has better enforcement than OpenAPI
