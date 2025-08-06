@@ -67,7 +67,6 @@ func TestOptionalBodyClient_Patch(t *testing.T) {
 	resp, err = client.Patch(context.Background(), resourceGroupExpected, widgetName, widget, &templatesgroup.OptionalBodyClientPatchOptions{})
 	require.NoError(t, err)
 	require.NotNil(t, resp)
-	fmt.Println("Updated widget: ", *resp.Widget.ID, *resp.Widget.Name, *resp.Widget.Properties.Name, *resp.Widget.Properties.Description)
 	require.EqualValues(t, widget.Properties.Name, resp.Widget.Properties.Name)
 	require.EqualValues(t, widget.Properties.Description, resp.Widget.Properties.Description)
 	require.EqualValues(t, widget.Name, resp.Widget.Name)
