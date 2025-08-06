@@ -86,7 +86,9 @@ const azureHttpSpecsGroup = {
   'azurepagegroup': ['azure/core/page/client.tsp'], // requires paging with re-injection support
   'corescalargroup': ['azure/core/scalar'],
   'coremodelgroup': ['azure/core/model'],
-  //'traitsgroup': ['azure/core/traits'], // requires union support
+  'coreclientlocationgroup': ['azure/client-generator-core/client-location'],
+  // 'coredeserializegroup': ['azure/client-generator-core/deserialize-empty-string-as-null'],
+  'traitsgroup': ['azure/core/traits'], // requires union support
   'encodedurationgroup': ['azure/encode/duration'],
   'examplebasicgroup': ['azure/example/basic'],
   'pageablegroup': ['azure/payload/pageable'],
