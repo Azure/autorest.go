@@ -181,7 +181,6 @@ func (client *ApisClient) deleteCreateRequest(ctx context.Context, resourceGroup
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2024-03-15-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -321,7 +320,6 @@ func (client *ApisClient) headCreateRequest(ctx context.Context, resourceGroupNa
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2024-03-15-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

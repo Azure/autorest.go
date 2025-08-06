@@ -443,7 +443,7 @@ export class typeAdapter {
     return constType;
   }
 
-  private getInterfaceType(model: tcgc.SdkModelType, parent?: go.Interface): go.Interface {
+  private getInterfaceType(model: tcgc.SdkModelType): go.Interface {
     if (model.name.length === 0) {
       throw new AdapterError('InternalError', 'unnamed model', tsp.NoTarget);
     }
@@ -471,8 +471,8 @@ export class typeAdapter {
       throw new AdapterError('InternalError', `failed to find discriminator field for type ${model.name}`, tsp.NoTarget);
     }
     iface = new go.Interface(ifaceName, discriminatorField);
-    if (parent) {
-      iface.parent = parent;
+    if (model.baseModel && model.baseModel.discriminatedSubtypes) {
+      iface.parent = this.getInterfaceType(model.baseModel);
     }
     this.types.set(ifaceName, iface);
     return iface;
@@ -518,7 +518,9 @@ export class typeAdapter {
         if (!iface) {
           throw new AdapterError('InternalError', `failed to find discriminator interface name for type ${model.name}`, tsp.NoTarget);
         }
+      }
 
+      if (model.discriminatorValue) {
         // find the discriminator property and create the discriminator literal based on it
         for (const prop of model.properties) {
           if (prop.kind === 'property' && prop.discriminator) {

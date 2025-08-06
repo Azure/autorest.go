@@ -180,7 +180,6 @@ func (client *BasicClient) deleteCreateRequest(ctx context.Context, id int32, _ 
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
