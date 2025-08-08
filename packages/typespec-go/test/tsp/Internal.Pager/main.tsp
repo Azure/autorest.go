@@ -11,9 +11,8 @@ using TypeSpec.Http;
 })
 namespace Microsoft.Internal.Pager;
 
-@pagedResult
 model WidgetList {
-  @items
+  @pageItems
   values: Widget[];
 }
 
@@ -34,5 +33,6 @@ union WidgetColor {
 interface Widgets {
   @access(Access.internal)
   @get
+  @list
   list(): WidgetList;
 }

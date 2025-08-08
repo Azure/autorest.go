@@ -13,12 +13,11 @@ namespace Microsoft.BillingBenefits;
 /**
  * Represents the result of listing savings plan models
  */
-@Azure.Core.pagedResult
 model SavingsPlanModelListResult {
   /**
    * The list of savings plans.
    */
-  @Azure.Core.items
+  @pageItems
   @visibility(Lifecycle.Read)
   value?: SavingsPlanModel[];
 

@@ -214,6 +214,7 @@ op getKey is Azure.Core.Foundations.Operation<
 @summary("Retrieves a list of individual key versions with the same key name.")
 @route("/keys/{key-name}/versions")
 @get
+@list
 op getKeyVersions is Azure.Core.Foundations.Operation<
   {
     /**
@@ -248,6 +249,7 @@ op getKeyVersions is Azure.Core.Foundations.Operation<
 @summary("List keys in the specified vault.")
 @route("/keys")
 @get
+@list
 op getKeys is Azure.Core.Foundations.Operation<
   {
     /**
@@ -634,6 +636,7 @@ op release is Azure.Core.Foundations.Operation<
 @summary("Lists the deleted keys in the specified vault.")
 @route("/deletedkeys")
 @get
+@list
 op getDeletedKeys is Azure.Core.Foundations.Operation<
   {
     /**
