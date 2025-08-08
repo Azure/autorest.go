@@ -163,6 +163,9 @@ export interface ModelFieldAnnotations {
 
   /** field is the discriminator for a discriminated type */
   isDiscriminator: boolean;
+
+  /** field should treat empty strings as null during deserialization */
+  deserializeEmptyStringAsNull: boolean;
 }
 
 /** a struct that participates in serialization over the wire */
@@ -514,11 +517,12 @@ export class ModelField extends StructField implements ModelField {
 }
 
 export class ModelFieldAnnotations implements ModelFieldAnnotations {
-  constructor(required: boolean, readOnly: boolean, isAddlProps: boolean, isDiscriminator: boolean) {
+  constructor(required: boolean, readOnly: boolean, isAddlProps: boolean, isDiscriminator: boolean, deserializeEmptyStringAsNull: boolean = false) {
     this.required = required;
     this.readOnly = readOnly;
     this.isAdditionalProperties = isAddlProps;
     this.isDiscriminator = isDiscriminator;
+    this.deserializeEmptyStringAsNull = deserializeEmptyStringAsNull;
   }
 }
 

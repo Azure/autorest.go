@@ -107,7 +107,7 @@ export class typeAdapter {
         modelType.go.fields.push(field);
       }
       if (content.addlProps) {
-        const annotations = new go.ModelFieldAnnotations(false, false, true, false);
+        const annotations = new go.ModelFieldAnnotations(false, false, true, false, false);
         const addlPropsType = new go.Map(this.getWireType(content.addlProps, false, false), isTypePassedByValue(content.addlProps));
         const addlProps = new go.ModelField('AdditionalProperties', addlPropsType, true, '', annotations);
         modelType.go.fields.push(addlProps);
@@ -572,11 +572,17 @@ export class typeAdapter {
     }
   }
 
+  // checks if a property has the @deserializeEmptyStringAsNull decorator
+  private hasDeserializeEmptyStringAsNullDecorator(decorators: Array<tcgc.DecoratorInfo>): boolean {
+    return decorators.some(decorator => decorator.name === 'Azure.ClientGenerator.Core.@deserializeEmptyStringAsNull');
+  }
+
   private getModelField(prop: tcgc.SdkModelPropertyType, modelType: tcgc.SdkModelType): go.ModelField {
     if (prop.kind !== 'path' && prop.kind !== 'property') {
       throw new AdapterError('UnsupportedTsp', `unsupported kind ${prop.kind} for property ${prop.name} in model ${modelType.name}`, prop.__raw?.node ?? tsp.NoTarget);
     }
-    const annotations = new go.ModelFieldAnnotations(prop.optional === false, false, false, false);
+    const deserializeEmptyStringAsNull = this.hasDeserializeEmptyStringAsNullDecorator(prop.decorators);
+    const annotations = new go.ModelFieldAnnotations(prop.optional === false, false, false, false, deserializeEmptyStringAsNull);
     // for multipart/form data containing models, default to fields not being pointer-to-type as we
     // don't have to deal with JSON patch shenanigans. only the optional fields will be pointer-to-type.
     const isMultipartFormData = <tcgc.UsageFlags>(modelType.usage & tcgc.UsageFlags.MultipartFormData) === tcgc.UsageFlags.MultipartFormData;
