@@ -2968,7 +2968,7 @@ operationGroups:
                 language:
                   default: &ref_104
                     name: ExtensionsClientCreateOptions
-                    description: ExtensionsClientCreateOptions contains the optional parameters for the ExtensionsClient.Create method.
+                    description: ExtensionsClientCreateOptions contains the optional parameters for the [ExtensionsClient.Create] method.
                   go: *ref_104
                 protocol: {}
               originalParameter: []
@@ -2977,7 +2977,7 @@ operationGroups:
               language:
                 default: &ref_105
                   name: options
-                  description: ExtensionsClientCreateOptions contains the optional parameters for the ExtensionsClient.Create method.
+                  description: ExtensionsClientCreateOptions contains the optional parameters for the [ExtensionsClient.Create] method.
                 go: *ref_105
               protocol: {}
             protocolNaming:
@@ -3001,7 +3001,7 @@ operationGroups:
               language:
                 default: &ref_108
                   name: ExtensionsClientCreateResponse
-                  description: ExtensionsClientCreateResponse contains the response from method ExtensionsClient.Create.
+                  description: ExtensionsClientCreateResponse contains the response from method [ExtensionsClient.Create].
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_107
@@ -3176,7 +3176,7 @@ operationGroups:
                 language:
                   default: &ref_112
                     name: ExtensionsClientGetOptions
-                    description: ExtensionsClientGetOptions contains the optional parameters for the ExtensionsClient.Get method.
+                    description: ExtensionsClientGetOptions contains the optional parameters for the [ExtensionsClient.Get] method.
                   go: *ref_112
                 protocol: {}
               originalParameter: []
@@ -3185,7 +3185,7 @@ operationGroups:
               language:
                 default: &ref_113
                   name: options
-                  description: ExtensionsClientGetOptions contains the optional parameters for the ExtensionsClient.Get method.
+                  description: ExtensionsClientGetOptions contains the optional parameters for the [ExtensionsClient.Get] method.
                 go: *ref_113
               protocol: {}
             protocolNaming:
@@ -3209,7 +3209,7 @@ operationGroups:
               language:
                 default: &ref_116
                   name: ExtensionsClientGetResponse
-                  description: ExtensionsClientGetResponse contains the response from method ExtensionsClient.Get.
+                  description: ExtensionsClientGetResponse contains the response from method [ExtensionsClient.Get].
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_115
@@ -3384,7 +3384,7 @@ operationGroups:
                 language:
                   default: &ref_120
                     name: ExtensionsClientUpdateOptions
-                    description: ExtensionsClientUpdateOptions contains the optional parameters for the ExtensionsClient.Update method.
+                    description: ExtensionsClientUpdateOptions contains the optional parameters for the [ExtensionsClient.Update] method.
                   go: *ref_120
                 protocol: {}
               originalParameter: []
@@ -3393,7 +3393,7 @@ operationGroups:
               language:
                 default: &ref_121
                   name: options
-                  description: ExtensionsClientUpdateOptions contains the optional parameters for the ExtensionsClient.Update method.
+                  description: ExtensionsClientUpdateOptions contains the optional parameters for the [ExtensionsClient.Update] method.
                 go: *ref_121
               protocol: {}
             protocolNaming:
@@ -3417,7 +3417,7 @@ operationGroups:
               language:
                 default: &ref_124
                   name: ExtensionsClientUpdateResponse
-                  description: ExtensionsClientUpdateResponse contains the response from method ExtensionsClient.Update.
+                  description: ExtensionsClientUpdateResponse contains the response from method [ExtensionsClient.Update].
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_123
@@ -3583,7 +3583,7 @@ operationGroups:
                 language:
                   default: &ref_128
                     name: ExtensionsClientDeleteOptions
-                    description: ExtensionsClientDeleteOptions contains the optional parameters for the ExtensionsClient.Delete method.
+                    description: ExtensionsClientDeleteOptions contains the optional parameters for the [ExtensionsClient.Delete] method.
                   go: *ref_128
                 protocol: {}
               originalParameter: []
@@ -3592,7 +3592,7 @@ operationGroups:
               language:
                 default: &ref_129
                   name: options
-                  description: ExtensionsClientDeleteOptions contains the optional parameters for the ExtensionsClient.Delete method.
+                  description: ExtensionsClientDeleteOptions contains the optional parameters for the [ExtensionsClient.Delete] method.
                 go: *ref_129
               protocol: {}
             protocolNaming:
@@ -3604,7 +3604,7 @@ operationGroups:
               language:
                 default: &ref_130
                   name: ExtensionsClientDeleteResponse
-                  description: ExtensionsClientDeleteResponse contains the response from method ExtensionsClient.Delete.
+                  description: ExtensionsClientDeleteResponse contains the response from method [ExtensionsClient.Delete].
                   responseType: true
                 go: *ref_130
               protocol: {}
@@ -3665,7 +3665,7 @@ operationGroups:
                     language:
                       default: &ref_132
                         name: ExtensionsClientListByFarmBeatsOptions
-                        description: ExtensionsClientListByFarmBeatsOptions contains the optional parameters for the ExtensionsClient.ListByFarmBeats method.
+                        description: ExtensionsClientListByFarmBeatsOptions contains the optional parameters for the [ExtensionsClient.ListByFarmBeats] method.
                       go: *ref_132
                     protocol: {}
                   originalParameter:
@@ -3726,7 +3726,7 @@ operationGroups:
                   language:
                     default: &ref_137
                       name: options
-                      description: ExtensionsClientListByFarmBeatsOptions contains the optional parameters for the ExtensionsClient.ListByFarmBeats method.
+                      description: ExtensionsClientListByFarmBeatsOptions contains the optional parameters for the [ExtensionsClient.ListByFarmBeats] method.
                     go: *ref_137
                   protocol: {}
                 serializedName: extensionIds
@@ -3878,7 +3878,7 @@ operationGroups:
               language:
                 default: &ref_146
                   name: ExtensionsClientListByFarmBeatsResponse
-                  description: ExtensionsClientListByFarmBeatsResponse contains the response from method ExtensionsClient.ListByFarmBeats.
+                  description: ExtensionsClientListByFarmBeatsResponse contains the response from method [ExtensionsClient.ListByFarmBeats].
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_145
@@ -3921,7 +3921,7 @@ operationGroups:
                     language:
                       default: &ref_148
                         name: FarmBeatsExtensionsClientListOptions
-                        description: FarmBeatsExtensionsClientListOptions contains the optional parameters for the FarmBeatsExtensionsClient.List method.
+                        description: FarmBeatsExtensionsClientListOptions contains the optional parameters for the [FarmBeatsExtensionsClient.List] method.
                       go: *ref_148
                     protocol: {}
                   originalParameter:
@@ -4004,7 +4004,7 @@ operationGroups:
                   language:
                     default: &ref_154
                       name: options
-                      description: FarmBeatsExtensionsClientListOptions contains the optional parameters for the FarmBeatsExtensionsClient.List method.
+                      description: FarmBeatsExtensionsClientListOptions contains the optional parameters for the [FarmBeatsExtensionsClient.List] method.
                     go: *ref_154
                   protocol: {}
                 serializedName: farmBeatsExtensionIds
@@ -4339,7 +4339,7 @@ operationGroups:
               language:
                 default: &ref_162
                   name: FarmBeatsExtensionsClientListResponse
-                  description: FarmBeatsExtensionsClientListResponse contains the response from method FarmBeatsExtensionsClient.List.
+                  description: FarmBeatsExtensionsClientListResponse contains the response from method [FarmBeatsExtensionsClient.List].
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_161
@@ -4660,7 +4660,7 @@ operationGroups:
                 language:
                   default: &ref_165
                     name: FarmBeatsExtensionsClientGetOptions
-                    description: FarmBeatsExtensionsClientGetOptions contains the optional parameters for the FarmBeatsExtensionsClient.Get method.
+                    description: FarmBeatsExtensionsClientGetOptions contains the optional parameters for the [FarmBeatsExtensionsClient.Get] method.
                   go: *ref_165
                 protocol: {}
               originalParameter: []
@@ -4669,7 +4669,7 @@ operationGroups:
               language:
                 default: &ref_166
                   name: options
-                  description: FarmBeatsExtensionsClientGetOptions contains the optional parameters for the FarmBeatsExtensionsClient.Get method.
+                  description: FarmBeatsExtensionsClientGetOptions contains the optional parameters for the [FarmBeatsExtensionsClient.Get] method.
                 go: *ref_166
               protocol: {}
             protocolNaming:
@@ -4693,7 +4693,7 @@ operationGroups:
               language:
                 default: &ref_169
                   name: FarmBeatsExtensionsClientGetResponse
-                  description: FarmBeatsExtensionsClientGetResponse contains the response from method FarmBeatsExtensionsClient.Get.
+                  description: FarmBeatsExtensionsClientGetResponse contains the response from method [FarmBeatsExtensionsClient.Get].
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_168
@@ -4863,7 +4863,7 @@ operationGroups:
                 language:
                   default: &ref_172
                     name: FarmBeatsModelsClientGetOptions
-                    description: FarmBeatsModelsClientGetOptions contains the optional parameters for the FarmBeatsModelsClient.Get method.
+                    description: FarmBeatsModelsClientGetOptions contains the optional parameters for the [FarmBeatsModelsClient.Get] method.
                   go: *ref_172
                 protocol: {}
               originalParameter: []
@@ -4872,7 +4872,7 @@ operationGroups:
               language:
                 default: &ref_173
                   name: options
-                  description: FarmBeatsModelsClientGetOptions contains the optional parameters for the FarmBeatsModelsClient.Get method.
+                  description: FarmBeatsModelsClientGetOptions contains the optional parameters for the [FarmBeatsModelsClient.Get] method.
                 go: *ref_173
               protocol: {}
             protocolNaming:
@@ -4896,7 +4896,7 @@ operationGroups:
               language:
                 default: &ref_176
                   name: FarmBeatsModelsClientGetResponse
-                  description: FarmBeatsModelsClientGetResponse contains the response from method FarmBeatsModelsClient.Get.
+                  description: FarmBeatsModelsClientGetResponse contains the response from method [FarmBeatsModelsClient.Get].
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_175
@@ -5113,7 +5113,7 @@ operationGroups:
                 language:
                   default: &ref_180
                     name: FarmBeatsModelsClientCreateOrUpdateOptions
-                    description: FarmBeatsModelsClientCreateOrUpdateOptions contains the optional parameters for the FarmBeatsModelsClient.CreateOrUpdate method.
+                    description: FarmBeatsModelsClientCreateOrUpdateOptions contains the optional parameters for the [FarmBeatsModelsClient.CreateOrUpdate] method.
                   go: *ref_180
                 protocol: {}
               originalParameter: []
@@ -5122,7 +5122,7 @@ operationGroups:
               language:
                 default: &ref_181
                   name: options
-                  description: FarmBeatsModelsClientCreateOrUpdateOptions contains the optional parameters for the FarmBeatsModelsClient.CreateOrUpdate method.
+                  description: FarmBeatsModelsClientCreateOrUpdateOptions contains the optional parameters for the [FarmBeatsModelsClient.CreateOrUpdate] method.
                 go: *ref_181
               protocol: {}
             protocolNaming:
@@ -5146,7 +5146,7 @@ operationGroups:
               language:
                 default: &ref_184
                   name: FarmBeatsModelsClientCreateOrUpdateResponse
-                  description: FarmBeatsModelsClientCreateOrUpdateResponse contains the response from method FarmBeatsModelsClient.CreateOrUpdate.
+                  description: FarmBeatsModelsClientCreateOrUpdateResponse contains the response from method [FarmBeatsModelsClient.CreateOrUpdate].
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_183
@@ -5327,7 +5327,7 @@ operationGroups:
                 language:
                   default: &ref_189
                     name: FarmBeatsModelsClientUpdateOptions
-                    description: FarmBeatsModelsClientUpdateOptions contains the optional parameters for the FarmBeatsModelsClient.Update method.
+                    description: FarmBeatsModelsClientUpdateOptions contains the optional parameters for the [FarmBeatsModelsClient.Update] method.
                   go: *ref_189
                 protocol: {}
               originalParameter: []
@@ -5336,7 +5336,7 @@ operationGroups:
               language:
                 default: &ref_190
                   name: options
-                  description: FarmBeatsModelsClientUpdateOptions contains the optional parameters for the FarmBeatsModelsClient.Update method.
+                  description: FarmBeatsModelsClientUpdateOptions contains the optional parameters for the [FarmBeatsModelsClient.Update] method.
                 go: *ref_190
               protocol: {}
             protocolNaming:
@@ -5360,7 +5360,7 @@ operationGroups:
               language:
                 default: &ref_193
                   name: FarmBeatsModelsClientUpdateResponse
-                  description: FarmBeatsModelsClientUpdateResponse contains the response from method FarmBeatsModelsClient.Update.
+                  description: FarmBeatsModelsClientUpdateResponse contains the response from method [FarmBeatsModelsClient.Update].
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_192
@@ -5508,7 +5508,7 @@ operationGroups:
                 language:
                   default: &ref_196
                     name: FarmBeatsModelsClientDeleteOptions
-                    description: FarmBeatsModelsClientDeleteOptions contains the optional parameters for the FarmBeatsModelsClient.Delete method.
+                    description: FarmBeatsModelsClientDeleteOptions contains the optional parameters for the [FarmBeatsModelsClient.Delete] method.
                   go: *ref_196
                 protocol: {}
               originalParameter: []
@@ -5517,7 +5517,7 @@ operationGroups:
               language:
                 default: &ref_197
                   name: options
-                  description: FarmBeatsModelsClientDeleteOptions contains the optional parameters for the FarmBeatsModelsClient.Delete method.
+                  description: FarmBeatsModelsClientDeleteOptions contains the optional parameters for the [FarmBeatsModelsClient.Delete] method.
                 go: *ref_197
               protocol: {}
             protocolNaming:
@@ -5529,7 +5529,7 @@ operationGroups:
               language:
                 default: &ref_198
                   name: FarmBeatsModelsClientDeleteResponse
-                  description: FarmBeatsModelsClientDeleteResponse contains the response from method FarmBeatsModelsClient.Delete.
+                  description: FarmBeatsModelsClientDeleteResponse contains the response from method [FarmBeatsModelsClient.Delete].
                   responseType: true
                 go: *ref_198
               protocol: {}
@@ -5555,7 +5555,7 @@ operationGroups:
                     language:
                       default: &ref_199
                         name: FarmBeatsModelsClientListBySubscriptionOptions
-                        description: FarmBeatsModelsClientListBySubscriptionOptions contains the optional parameters for the FarmBeatsModelsClient.ListBySubscription method.
+                        description: FarmBeatsModelsClientListBySubscriptionOptions contains the optional parameters for the [FarmBeatsModelsClient.ListBySubscription] method.
                       go: *ref_199
                     protocol: {}
                   originalParameter:
@@ -5581,7 +5581,7 @@ operationGroups:
                   language:
                     default: &ref_202
                       name: options
-                      description: FarmBeatsModelsClientListBySubscriptionOptions contains the optional parameters for the FarmBeatsModelsClient.ListBySubscription method.
+                      description: FarmBeatsModelsClientListBySubscriptionOptions contains the optional parameters for the [FarmBeatsModelsClient.ListBySubscription] method.
                     go: *ref_202
                   protocol: {}
                 serializedName: $maxPageSize
@@ -5727,7 +5727,7 @@ operationGroups:
               language:
                 default: &ref_207
                   name: FarmBeatsModelsClientListBySubscriptionResponse
-                  description: FarmBeatsModelsClientListBySubscriptionResponse contains the response from method FarmBeatsModelsClient.ListBySubscription.
+                  description: FarmBeatsModelsClientListBySubscriptionResponse contains the response from method [FarmBeatsModelsClient.ListBySubscription].
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_206
@@ -5755,7 +5755,7 @@ operationGroups:
                     language:
                       default: &ref_208
                         name: FarmBeatsModelsClientListByResourceGroupOptions
-                        description: FarmBeatsModelsClientListByResourceGroupOptions contains the optional parameters for the FarmBeatsModelsClient.ListByResourceGroup method.
+                        description: FarmBeatsModelsClientListByResourceGroupOptions contains the optional parameters for the [FarmBeatsModelsClient.ListByResourceGroup] method.
                       go: *ref_208
                     protocol: {}
                   originalParameter:
@@ -5781,7 +5781,7 @@ operationGroups:
                   language:
                     default: &ref_211
                       name: options
-                      description: FarmBeatsModelsClientListByResourceGroupOptions contains the optional parameters for the FarmBeatsModelsClient.ListByResourceGroup method.
+                      description: FarmBeatsModelsClientListByResourceGroupOptions contains the optional parameters for the [FarmBeatsModelsClient.ListByResourceGroup] method.
                     go: *ref_211
                   protocol: {}
                 serializedName: $maxPageSize
@@ -5945,7 +5945,7 @@ operationGroups:
               language:
                 default: &ref_216
                   name: FarmBeatsModelsClientListByResourceGroupResponse
-                  description: FarmBeatsModelsClientListByResourceGroupResponse contains the response from method FarmBeatsModelsClient.ListByResourceGroup.
+                  description: FarmBeatsModelsClientListByResourceGroupResponse contains the response from method [FarmBeatsModelsClient.ListByResourceGroup].
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_215
@@ -6103,7 +6103,7 @@ operationGroups:
                 language:
                   default: &ref_220
                     name: LocationsClientCheckNameAvailabilityOptions
-                    description: LocationsClientCheckNameAvailabilityOptions contains the optional parameters for the LocationsClient.CheckNameAvailability method.
+                    description: LocationsClientCheckNameAvailabilityOptions contains the optional parameters for the [LocationsClient.CheckNameAvailability] method.
                   go: *ref_220
                 protocol: {}
               originalParameter: []
@@ -6112,7 +6112,7 @@ operationGroups:
               language:
                 default: &ref_221
                   name: options
-                  description: LocationsClientCheckNameAvailabilityOptions contains the optional parameters for the LocationsClient.CheckNameAvailability method.
+                  description: LocationsClientCheckNameAvailabilityOptions contains the optional parameters for the [LocationsClient.CheckNameAvailability] method.
                 go: *ref_221
               protocol: {}
             protocolNaming:
@@ -6136,7 +6136,7 @@ operationGroups:
               language:
                 default: &ref_224
                   name: LocationsClientCheckNameAvailabilityResponse
-                  description: LocationsClientCheckNameAvailabilityResponse contains the response from method LocationsClient.CheckNameAvailability.
+                  description: LocationsClientCheckNameAvailabilityResponse contains the response from method [LocationsClient.CheckNameAvailability].
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_223
@@ -6315,7 +6315,7 @@ operationGroups:
                 language:
                   default: &ref_226
                     name: OperationsClientListOptions
-                    description: OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
+                    description: OperationsClientListOptions contains the optional parameters for the [OperationsClient.List] method.
                   go: *ref_226
                 protocol: {}
               originalParameter: []
@@ -6324,7 +6324,7 @@ operationGroups:
               language:
                 default: &ref_227
                   name: options
-                  description: OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
+                  description: OperationsClientListOptions contains the optional parameters for the [OperationsClient.List] method.
                 go: *ref_227
               protocol: {}
             paging:
@@ -6350,7 +6350,7 @@ operationGroups:
               language:
                 default: &ref_230
                   name: OperationsClientListResponse
-                  description: OperationsClientListResponse contains the response from method OperationsClient.List.
+                  description: OperationsClientListResponse contains the response from method [OperationsClient.List].
                   marshallingFormat: json
                   responseType: true
                   resultProp: *ref_229
