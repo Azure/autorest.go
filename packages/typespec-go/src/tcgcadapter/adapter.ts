@@ -34,7 +34,7 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
   // however, it's filtered out by default so we need
   // to add it to the allow list of decorators
   const sdkContext = await tcgc.createSdkContext(context, '@azure-tools/typespec-go', {
-    additionalDecorators: ['TypeSpec\\.@encodedName'],
+    additionalDecorators: ['TypeSpec\\.@encodedName', 'Azure\\.ClientGenerator\\.Core\\.@deserializeEmptyStringAsNull'],
     disableUsageAccessPropagationToBase: true,
   });
   context.program.reportDiagnostics(sdkContext.diagnostics);

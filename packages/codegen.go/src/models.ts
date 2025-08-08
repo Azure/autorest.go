@@ -521,7 +521,13 @@ function generateJSONUnmarshallerBody(modelType: go.Model | go.PolymorphicModel,
         modelDef.SerDe.needsJSONUnpopulate = true;
         needsErrCheck = true;
       } else {
-        unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.name}", &${receiver}.${field.name})\n`;
+        if (field.annotations.deserializeEmptyStringAsNull) {
+          unmarshalBody += `\t\t\tif val != nil && string(val) != "null" && string(val) != "\\"\\""  {\n`;
+          unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.name}", &${receiver}.${field.name})\n`;
+          unmarshalBody += '\t\t\t}\n';
+        } else {
+          unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.name}", &${receiver}.${field.name})\n`;
+        }
         modelDef.SerDe.needsJSONUnpopulate = true;
         needsErrCheck = true;
       }

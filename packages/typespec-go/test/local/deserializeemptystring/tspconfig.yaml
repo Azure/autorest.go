@@ -1,0 +1,12 @@
+parameters:
+  "service-dir":
+    default: "sdk/deserializeemptystring"
+    
+emit:
+- "@azure-tools/typespec-go"
+options:
+  "@azure-tools/typespec-go":
+    package-name: "azdeserializeemptystring"
+    module: github.com/Azure/azure-sdk-for-go/sdk/deserializeemptystring/azdeserializeemptystring
+    packageVersion: "1.0.0"
+    format: false

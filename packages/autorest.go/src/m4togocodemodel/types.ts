@@ -178,7 +178,7 @@ export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.Mod
     // for OpenAPI, literal values are always considered required
     required = true;
   }
-  const annotations = new go.ModelFieldAnnotations(required, prop.readOnly === true, prop.language.go!.isAdditionalProperties === true, prop.isDiscriminator === true);
+  const annotations = new go.ModelFieldAnnotations(required, prop.readOnly === true, prop.language.go!.isAdditionalProperties === true, prop.isDiscriminator === true, false);
   const field = new go.ModelField(prop.language.go!.name, fieldType, prop.language.go!.byValue === true, prop.serializedName, annotations);
   if (hasDescription(prop.language.go!)) {
     field.docs.description = prop.language.go!.description;
