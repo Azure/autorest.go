@@ -125,7 +125,7 @@ pnpm -w modtidy
 
 ## Step 5: Update emitter documentation
 
-If you have made changes to the emitter option in typespec-go, you need to update the documentation in [`typespec-azure`](https://github.com/Azure/typespec-azure) repo.
+If you have made changes to the emitter options in typespec-go, you need to update the documentation in [`typespec-azure`](https://github.com/Azure/typespec-azure) repo.
 
 1. Run `pnpm run regen-docs` from the `packages/typespec-go` directory to generate the documentation.
 2. Copy the generated documentation folder `packages/typespec-go/website` to the root folder of `typespec-azure` repo.
