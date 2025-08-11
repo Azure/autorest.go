@@ -4,12 +4,32 @@
 
 package hierarchygroup
 
-// HierarchyBuildingClientUpdateDogOptions contains the optional parameters for the HierarchyBuildingClient.UpdateDog method.
-type HierarchyBuildingClientUpdateDogOptions struct {
+// HierarchyBuildingAnimalOperationsClientUpdateDogAsAnimalOptions contains the optional parameters for the HierarchyBuildingAnimalOperationsClient.UpdateDogAsAnimal
+// method.
+type HierarchyBuildingAnimalOperationsClientUpdateDogAsAnimalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HierarchyBuildingClientUpdatePetOptions contains the optional parameters for the HierarchyBuildingClient.UpdatePet method.
-type HierarchyBuildingClientUpdatePetOptions struct {
+// HierarchyBuildingAnimalOperationsClientUpdatePetAsAnimalOptions contains the optional parameters for the HierarchyBuildingAnimalOperationsClient.UpdatePetAsAnimal
+// method.
+type HierarchyBuildingAnimalOperationsClientUpdatePetAsAnimalOptions struct {
+	// placeholder for future optional parameters
+}
+
+// HierarchyBuildingDogOperationsClientUpdateDogAsDogOptions contains the optional parameters for the HierarchyBuildingDogOperationsClient.UpdateDogAsDog
+// method.
+type HierarchyBuildingDogOperationsClientUpdateDogAsDogOptions struct {
+	// placeholder for future optional parameters
+}
+
+// HierarchyBuildingPetOperationsClientUpdateDogAsPetOptions contains the optional parameters for the HierarchyBuildingPetOperationsClient.UpdateDogAsPet
+// method.
+type HierarchyBuildingPetOperationsClientUpdateDogAsPetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// HierarchyBuildingPetOperationsClientUpdatePetAsPetOptions contains the optional parameters for the HierarchyBuildingPetOperationsClient.UpdatePetAsPet
+// method.
+type HierarchyBuildingPetOperationsClientUpdatePetAsPetOptions struct {
 	// placeholder for future optional parameters
 }

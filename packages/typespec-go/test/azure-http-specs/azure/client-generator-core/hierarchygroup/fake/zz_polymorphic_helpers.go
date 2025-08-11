@@ -31,3 +31,24 @@ func unmarshalAnimalClassification(rawMsg json.RawMessage) (hierarchygroup.Anima
 	}
 	return b, nil
 }
+
+func unmarshalPetClassification(rawMsg json.RawMessage) (hierarchygroup.PetClassification, error) {
+	if rawMsg == nil || string(rawMsg) == "null" {
+		return nil, nil
+	}
+	var m map[string]any
+	if err := json.Unmarshal(rawMsg, &m); err != nil {
+		return nil, err
+	}
+	var b hierarchygroup.PetClassification
+	switch m["kind"] {
+	case "dog":
+		b = &hierarchygroup.Dog{}
+	default:
+		b = &hierarchygroup.Pet{}
+	}
+	if err := json.Unmarshal(rawMsg, b); err != nil {
+		return nil, err
+	}
+	return b, nil
+}

@@ -4,12 +4,27 @@
 
 package hierarchygroup
 
-// HierarchyBuildingClientUpdateDogResponse contains the response from method HierarchyBuildingClient.UpdateDog.
-type HierarchyBuildingClientUpdateDogResponse struct {
+// HierarchyBuildingAnimalOperationsClientUpdateDogAsAnimalResponse contains the response from method HierarchyBuildingAnimalOperationsClient.UpdateDogAsAnimal.
+type HierarchyBuildingAnimalOperationsClientUpdateDogAsAnimalResponse struct {
 	AnimalClassification
 }
 
-// HierarchyBuildingClientUpdatePetResponse contains the response from method HierarchyBuildingClient.UpdatePet.
-type HierarchyBuildingClientUpdatePetResponse struct {
+// HierarchyBuildingAnimalOperationsClientUpdatePetAsAnimalResponse contains the response from method HierarchyBuildingAnimalOperationsClient.UpdatePetAsAnimal.
+type HierarchyBuildingAnimalOperationsClientUpdatePetAsAnimalResponse struct {
 	AnimalClassification
+}
+
+// HierarchyBuildingDogOperationsClientUpdateDogAsDogResponse contains the response from method HierarchyBuildingDogOperationsClient.UpdateDogAsDog.
+type HierarchyBuildingDogOperationsClientUpdateDogAsDogResponse struct {
+	PetClassification
+}
+
+// HierarchyBuildingPetOperationsClientUpdateDogAsPetResponse contains the response from method HierarchyBuildingPetOperationsClient.UpdateDogAsPet.
+type HierarchyBuildingPetOperationsClientUpdateDogAsPetResponse struct {
+	PetClassification
+}
+
+// HierarchyBuildingPetOperationsClientUpdatePetAsPetResponse contains the response from method HierarchyBuildingPetOperationsClient.UpdatePetAsPet.
+type HierarchyBuildingPetOperationsClientUpdatePetAsPetResponse struct {
+	PetClassification
 }

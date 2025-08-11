@@ -5,25 +5,24 @@
 package fake
 
 import (
-	"context"
 	"errors"
 	"fmt"
-	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"hierarchygroup"
 	"net/http"
+	"strings"
+	"sync"
 )
 
 // HierarchyBuildingServer is a fake server for instances of the hierarchygroup.HierarchyBuildingClient type.
 type HierarchyBuildingServer struct {
-	// UpdateDog is the fake for method HierarchyBuildingClient.UpdateDog
-	// HTTP status codes to indicate success: http.StatusOK
-	UpdateDog func(ctx context.Context, animal hierarchygroup.AnimalClassification, options *hierarchygroup.HierarchyBuildingClientUpdateDogOptions) (resp azfake.Responder[hierarchygroup.HierarchyBuildingClientUpdateDogResponse], errResp azfake.ErrorResponder)
+	// HierarchyBuildingAnimalOperationsServer contains the fakes for client HierarchyBuildingAnimalOperationsClient
+	HierarchyBuildingAnimalOperationsServer HierarchyBuildingAnimalOperationsServer
 
-	// UpdatePet is the fake for method HierarchyBuildingClient.UpdatePet
-	// HTTP status codes to indicate success: http.StatusOK
-	UpdatePet func(ctx context.Context, animal hierarchygroup.AnimalClassification, options *hierarchygroup.HierarchyBuildingClientUpdatePetOptions) (resp azfake.Responder[hierarchygroup.HierarchyBuildingClientUpdatePetResponse], errResp azfake.ErrorResponder)
+	// HierarchyBuildingDogOperationsServer contains the fakes for client HierarchyBuildingDogOperationsClient
+	HierarchyBuildingDogOperationsServer HierarchyBuildingDogOperationsServer
+
+	// HierarchyBuildingPetOperationsServer contains the fakes for client HierarchyBuildingPetOperationsClient
+	HierarchyBuildingPetOperationsServer HierarchyBuildingPetOperationsServer
 }
 
 // NewHierarchyBuildingServerTransport creates a new instance of HierarchyBuildingServerTransport with the provided implementation.
@@ -36,7 +35,11 @@ func NewHierarchyBuildingServerTransport(srv *HierarchyBuildingServer) *Hierarch
 // HierarchyBuildingServerTransport connects instances of hierarchygroup.HierarchyBuildingClient to instances of HierarchyBuildingServer.
 // Don't use this type directly, use NewHierarchyBuildingServerTransport instead.
 type HierarchyBuildingServerTransport struct {
-	srv *HierarchyBuildingServer
+	srv                                       *HierarchyBuildingServer
+	trMu                                      sync.Mutex
+	trHierarchyBuildingAnimalOperationsServer *HierarchyBuildingAnimalOperationsServerTransport
+	trHierarchyBuildingDogOperationsServer    *HierarchyBuildingDogOperationsServerTransport
+	trHierarchyBuildingPetOperationsServer    *HierarchyBuildingPetOperationsServerTransport
 }
 
 // Do implements the policy.Transporter interface for HierarchyBuildingServerTransport.
@@ -47,96 +50,34 @@ func (h *HierarchyBuildingServerTransport) Do(req *http.Request) (*http.Response
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
-	return h.dispatchToMethodFake(req, method)
+	return h.dispatchToClientFake(req, method[:strings.Index(method, ".")])
 }
 
-func (h *HierarchyBuildingServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	resultChan := make(chan result)
-	defer close(resultChan)
+func (h *HierarchyBuildingServerTransport) dispatchToClientFake(req *http.Request, client string) (*http.Response, error) {
+	var resp *http.Response
+	var err error
 
-	go func() {
-		var intercepted bool
-		var res result
-		if hierarchyBuildingServerTransportInterceptor != nil {
-			res.resp, res.err, intercepted = hierarchyBuildingServerTransportInterceptor.Do(req)
-		}
-		if !intercepted {
-			switch method {
-			case "HierarchyBuildingClient.UpdateDog":
-				res.resp, res.err = h.dispatchUpdateDog(req)
-			case "HierarchyBuildingClient.UpdatePet":
-				res.resp, res.err = h.dispatchUpdatePet(req)
-			default:
-				res.err = fmt.Errorf("unhandled API %s", method)
-			}
+	switch client {
+	case "HierarchyBuildingAnimalOperationsClient":
+		initServer(&h.trMu, &h.trHierarchyBuildingAnimalOperationsServer, func() *HierarchyBuildingAnimalOperationsServerTransport {
+			return NewHierarchyBuildingAnimalOperationsServerTransport(&h.srv.HierarchyBuildingAnimalOperationsServer)
+		})
+		resp, err = h.trHierarchyBuildingAnimalOperationsServer.Do(req)
+	case "HierarchyBuildingDogOperationsClient":
+		initServer(&h.trMu, &h.trHierarchyBuildingDogOperationsServer, func() *HierarchyBuildingDogOperationsServerTransport {
+			return NewHierarchyBuildingDogOperationsServerTransport(&h.srv.HierarchyBuildingDogOperationsServer)
+		})
+		resp, err = h.trHierarchyBuildingDogOperationsServer.Do(req)
+	case "HierarchyBuildingPetOperationsClient":
+		initServer(&h.trMu, &h.trHierarchyBuildingPetOperationsServer, func() *HierarchyBuildingPetOperationsServerTransport {
+			return NewHierarchyBuildingPetOperationsServerTransport(&h.srv.HierarchyBuildingPetOperationsServer)
+		})
+		resp, err = h.trHierarchyBuildingPetOperationsServer.Do(req)
+	default:
+		err = fmt.Errorf("unhandled client %s", client)
+	}
 
-		}
-		select {
-		case resultChan <- res:
-		case <-req.Context().Done():
-		}
-	}()
-
-	select {
-	case <-req.Context().Done():
-		return nil, req.Context().Err()
-	case res := <-resultChan:
-		return res.resp, res.err
-	}
-}
-
-func (h *HierarchyBuildingServerTransport) dispatchUpdateDog(req *http.Request) (*http.Response, error) {
-	if h.srv.UpdateDog == nil {
-		return nil, &nonRetriableError{errors.New("fake for method UpdateDog not implemented")}
-	}
-	raw, err := readRequestBody(req)
-	if err != nil {
-		return nil, err
-	}
-	body, err := unmarshalAnimalClassification(raw)
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := h.srv.UpdateDog(req.Context(), body, nil)
-	if respErr := server.GetError(errRespr, req); respErr != nil {
-		return nil, respErr
-	}
-	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
-	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AnimalClassification, req)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (h *HierarchyBuildingServerTransport) dispatchUpdatePet(req *http.Request) (*http.Response, error) {
-	if h.srv.UpdatePet == nil {
-		return nil, &nonRetriableError{errors.New("fake for method UpdatePet not implemented")}
-	}
-	raw, err := readRequestBody(req)
-	if err != nil {
-		return nil, err
-	}
-	body, err := unmarshalAnimalClassification(raw)
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := h.srv.UpdatePet(req.Context(), body, nil)
-	if respErr := server.GetError(errRespr, req); respErr != nil {
-		return nil, respErr
-	}
-	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
-	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AnimalClassification, req)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }
 
 // set this to conditionally intercept incoming requests to HierarchyBuildingServerTransport

@@ -4,8 +4,8 @@
 
 package hierarchygroup
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type HierarchyBuildingClientUpdateDogResponse.
-func (h *HierarchyBuildingClientUpdateDogResponse) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type HierarchyBuildingAnimalOperationsClientUpdateDogAsAnimalResponse.
+func (h *HierarchyBuildingAnimalOperationsClientUpdateDogAsAnimalResponse) UnmarshalJSON(data []byte) error {
 	res, err := unmarshalAnimalClassification(data)
 	if err != nil {
 		return err
@@ -14,12 +14,42 @@ func (h *HierarchyBuildingClientUpdateDogResponse) UnmarshalJSON(data []byte) er
 	return nil
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type HierarchyBuildingClientUpdatePetResponse.
-func (h *HierarchyBuildingClientUpdatePetResponse) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type HierarchyBuildingAnimalOperationsClientUpdatePetAsAnimalResponse.
+func (h *HierarchyBuildingAnimalOperationsClientUpdatePetAsAnimalResponse) UnmarshalJSON(data []byte) error {
 	res, err := unmarshalAnimalClassification(data)
 	if err != nil {
 		return err
 	}
 	h.AnimalClassification = res
+	return nil
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HierarchyBuildingDogOperationsClientUpdateDogAsDogResponse.
+func (h *HierarchyBuildingDogOperationsClientUpdateDogAsDogResponse) UnmarshalJSON(data []byte) error {
+	res, err := unmarshalPetClassification(data)
+	if err != nil {
+		return err
+	}
+	h.PetClassification = res
+	return nil
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HierarchyBuildingPetOperationsClientUpdateDogAsPetResponse.
+func (h *HierarchyBuildingPetOperationsClientUpdateDogAsPetResponse) UnmarshalJSON(data []byte) error {
+	res, err := unmarshalPetClassification(data)
+	if err != nil {
+		return err
+	}
+	h.PetClassification = res
+	return nil
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type HierarchyBuildingPetOperationsClientUpdatePetAsPetResponse.
+func (h *HierarchyBuildingPetOperationsClientUpdatePetAsPetResponse) UnmarshalJSON(data []byte) error {
+	res, err := unmarshalPetClassification(data)
+	if err != nil {
+		return err
+	}
+	h.PetClassification = res
 	return nil
 }
