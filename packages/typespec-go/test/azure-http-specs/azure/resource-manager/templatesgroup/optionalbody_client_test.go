@@ -56,6 +56,20 @@ func TestOptionalBodyClient_Patch(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 	require.EqualValues(t, validWidget, resp.Widget)
+
+	widget := templatesgroup.Widget{
+		Name: to.Ptr("widget1"),
+		Properties: &templatesgroup.WidgetProperties{
+			Name:        to.Ptr("updated-widget"),
+			Description: to.Ptr("Updated description"),
+		},
+	}
+	resp, err = client.Patch(context.Background(), resourceGroupExpected, widgetName, widget, &templatesgroup.OptionalBodyClientPatchOptions{})
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.EqualValues(t, widget.Properties.Name, resp.Widget.Properties.Name)
+	require.EqualValues(t, widget.Properties.Description, resp.Widget.Properties.Description)
+	require.EqualValues(t, widget.Name, resp.Widget.Name)
 }
 
 func TestOptionalBodyClient_Post(t *testing.T) {
@@ -66,6 +80,15 @@ func TestOptionalBodyClient_Post(t *testing.T) {
 	require.NotNil(t, resp)
 	require.EqualValues(t, "Action completed successfully", *resp.ActionResult.Result)
 
+	resp, err = client.Post(context.Background(), resourceGroupExpected, widgetName, &templatesgroup.OptionalBodyClientPostOptions{
+		Body: &templatesgroup.ActionRequest{
+			ActionType: to.Ptr("perform"),
+			Parameters: to.Ptr("test-parameters"),
+		},
+	})
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.EqualValues(t, "Action completed successfully with parameters", *resp.ActionResult.Result)
 }
 
 func TestOptionalBodyClient_ProviderPost(t *testing.T) {
@@ -76,4 +99,15 @@ func TestOptionalBodyClient_ProviderPost(t *testing.T) {
 	require.NotNil(t, resp)
 	require.EqualValues(t, "Changed to default allowance", *resp.Status)
 	require.EqualValues(t, 50, *resp.TotalAllowed)
+
+	resp, err = client.ProviderPost(context.Background(), &templatesgroup.OptionalBodyClientProviderPostOptions{
+		Body: &templatesgroup.ChangeAllowanceRequest{
+			Reason:       to.Ptr("Increased demand"),
+			TotalAllowed: to.Ptr(int32(100)),
+		},
+	})
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.EqualValues(t, "Changed to requested allowance", *resp.Status)
+	require.EqualValues(t, 100, *resp.TotalAllowed)
 }
