@@ -163,6 +163,7 @@ interface CloudHsmClusters {
   @get
   @action("privateLinkResources")
   @operationId("CloudHsmClusterPrivateLinkResources_ListByCloudHsmCluster")
+  @list
   listByCloudHsmCluster is ArmResourceActionSync<
     CloudHsmCluster,
     void,

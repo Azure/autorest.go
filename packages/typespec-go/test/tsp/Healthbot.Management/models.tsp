@@ -317,13 +317,12 @@ model BotResponseList is Azure.Core.Page<HealthBot>;
 /**
  * Available operations of the service.
  */
-@pagedResult
 model AvailableOperations {
   /**
    * Collection of available operation details.
    */
   @OpenAPI.extension("x-ms-identifiers", #[])
-  @items
+  @pageItems
   value: OperationDetail[];
 
   /**

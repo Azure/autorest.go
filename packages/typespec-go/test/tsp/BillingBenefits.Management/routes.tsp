@@ -22,6 +22,7 @@ interface SavingsPlanOperationGroup {
   @operationId("SavingsPlan_ListAll")
   @autoRoute
   @get
+  @list
   @action("savingsPlans")
   listAll is ArmProviderActionSync<
     Response = SavingsPlanModelListResult,
@@ -88,6 +89,7 @@ interface DiscountsOperationGroup {
   @operationId("Discounts_ScopeList")
   @route("/{scope}/providers/Microsoft.BillingBenefits/applicableDiscounts")
   @get
+  @list
   scopeList(
     ...ApiVersionParameter,
 

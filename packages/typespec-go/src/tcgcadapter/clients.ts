@@ -256,7 +256,7 @@ export class clientAdapter {
       if (sdkMethod.lroMetadata.finalResponse?.resultSegments) {
         // 'resultSegments' is designed for furture extensibility, currently only has one segment
         method.operationLocationResultPath = sdkMethod.lroMetadata.finalResponse.resultSegments.map((segment) => {
-          return (<tcgc.SdkBodyModelPropertyType>segment).serializationOptions.json?.name;
+          return segment.serializationOptions.json?.name;
         }).join('.');
       }
     } else {
@@ -356,7 +356,7 @@ export class clientAdapter {
       // be a many-to-one mapping. i.e. multiple params will map to the same underlying
       // operation param. each param corresponds to a field within the operation param.
       let opParam = values(allOpParams).where((opParam: OperationParamType) => {
-        return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType) => {
+        return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
           if (param.type.kind === 'model') {
             for (const property of param.type.properties) {
               if (property === methodParam) {
@@ -377,7 +377,7 @@ export class clientAdapter {
       if (!opParam && param.type.kind === 'model') {
         for (const property of param.type.properties) {
           opParam = values(allOpParams).where((opParam: OperationParamType) => {
-            return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType) => {
+            return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
               return methodParam === property;
             }).any();
           }).first();
@@ -406,7 +406,7 @@ export class clientAdapter {
         const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');
         const byVal = isTypePassedByValue(param.type);
         const contentType = this.adaptContentType(opParam.defaultContentType);
-        const getSerializedNameFromProperty = function(property: tcgc.SdkBodyModelPropertyType): string | undefined {
+        const getSerializedNameFromProperty = function(property: tcgc.SdkModelPropertyType): string | undefined {
           if (contentType === 'JSON') {
             return property.serializationOptions.json?.name;
           }
@@ -425,7 +425,7 @@ export class clientAdapter {
             let serializedName: string | undefined;
             for (const property of opParam.type.properties) {
               if (property.name === param.name) {
-                serializedName = getSerializedNameFromProperty(<tcgc.SdkBodyModelPropertyType>property);
+                serializedName = getSerializedNameFromProperty(property);
                 break;
               }
             }

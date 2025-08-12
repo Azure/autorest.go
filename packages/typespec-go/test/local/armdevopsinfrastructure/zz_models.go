@@ -132,11 +132,11 @@ type ImageVersion struct {
 	// The resource-specific properties for this resource.
 	Properties *ImageVersionProperties
 
-	// READ-ONLY; The name of the image version.
-	Name *string
-
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
@@ -291,9 +291,6 @@ type Pool struct {
 	// REQUIRED; The geo-location where the resource lives
 	Location *string
 
-	// READ-ONLY; Name of the pool. It needs to be globally unique.
-	Name *string
-
 	// The managed service identities assigned to this resource.
 	Identity *ManagedServiceIdentity
 
@@ -305,6 +302,9 @@ type Pool struct {
 
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
@@ -423,11 +423,11 @@ type ResourceDetailsObject struct {
 	// The resource-specific properties for this resource.
 	Properties *ResourceDetailsObjectProperties
 
-	// READ-ONLY; The name of the resource.
-	Name *string
-
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
@@ -477,11 +477,11 @@ type ResourceSKU struct {
 	// The resource-specific properties for this resource.
 	Properties *ResourceSKUProperties
 
-	// READ-ONLY; The name of the SKU.
-	Name *string
-
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData

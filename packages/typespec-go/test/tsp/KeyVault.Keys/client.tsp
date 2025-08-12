@@ -21,6 +21,7 @@ using KeyVault;
 @summary("Retrieves a list of individual key versions with the same key name.")
 @route("/keys/{key-name}/versions")
 @get
+@list
 op listKeyPropertiesVersions is Azure.Core.Foundations.Operation<
   {
     /**
@@ -46,6 +47,7 @@ op listKeyPropertiesVersions is Azure.Core.Foundations.Operation<
 @summary("List keys in the specified vault.")
 @route("/keys")
 @get
+@list
 op listKeyProperties is Azure.Core.Foundations.Operation<
   {},
   KeyListResult,
@@ -66,6 +68,7 @@ op listKeyProperties is Azure.Core.Foundations.Operation<
 @summary("Lists the deleted keys in the specified vault.")
 @route("/deletedkeys")
 @get
+@list
 op listDeletedKeyProperties is Azure.Core.Foundations.Operation<
   {},
   DeletedKeyListResult,

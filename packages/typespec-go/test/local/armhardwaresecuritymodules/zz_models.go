@@ -88,10 +88,6 @@ type CloudHsmCluster struct {
 	// REQUIRED; The geo-location where the resource lives
 	Location *string
 
-	// READ-ONLY; The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between
-	// 3 and 23 characters in length.
-	Name *string
-
 	// Managed service identity (system assigned and/or user assigned identities)
 	Identity *ManagedServiceIdentity
 
@@ -106,6 +102,9 @@ type CloudHsmCluster struct {
 
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
@@ -198,11 +197,11 @@ type DedicatedHsm struct {
 	// The availability zones.
 	Zones []*string
 
-	// READ-ONLY; Name of the dedicated Hsm
-	Name *string
-
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
@@ -412,11 +411,11 @@ type PrivateEndpointConnection struct {
 	// READ-ONLY; The entity tag for this resource.
 	Etag *azcore.ETag
 
-	// READ-ONLY; Name of the private endpoint connection associated with the Cloud HSM Cluster.
-	Name *string
-
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData

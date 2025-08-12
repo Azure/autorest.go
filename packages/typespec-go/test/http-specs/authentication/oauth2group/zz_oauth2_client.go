@@ -50,7 +50,6 @@ func (client *OAuth2Client) invalidCreateRequest(ctx context.Context, _ *OAuth2C
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
