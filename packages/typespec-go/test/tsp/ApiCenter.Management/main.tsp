@@ -136,6 +136,7 @@ enum Versions {
 @listsResource(TResource)
 @segmentOf(TResource)
 @armResourceList(TResource)
+@list
 op ArmResourceListByParent<
   TResource extends Azure.ResourceManager.Foundations.Resource,
   TBaseParameters = BaseParameters<TResource>,

@@ -50,7 +50,6 @@ func (client *CustomClient) invalidCreateRequest(ctx context.Context, _ *CustomC
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

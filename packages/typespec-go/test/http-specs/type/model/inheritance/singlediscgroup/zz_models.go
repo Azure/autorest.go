@@ -31,7 +31,7 @@ func (d *Dinosaur) GetDinosaur() *Dinosaur { return d }
 // Eagle - The second level model in polymorphic single levels inheritance which contains references to other polymorphic
 // instances.
 type Eagle struct {
-	// CONSTANT; undefinedField has constant value "eagle", any specified value is ignored.
+	// CONSTANT; Field has constant value "eagle", any specified value is ignored.
 	Kind *string
 
 	// REQUIRED
@@ -51,7 +51,7 @@ func (e *Eagle) GetBird() *Bird {
 
 // Goose - The second level model in polymorphic single level inheritance.
 type Goose struct {
-	// CONSTANT; undefinedField has constant value "goose", any specified value is ignored.
+	// CONSTANT; Field has constant value "goose", any specified value is ignored.
 	Kind *string
 
 	// REQUIRED
@@ -68,7 +68,7 @@ func (g *Goose) GetBird() *Bird {
 
 // SeaGull - The second level model in polymorphic single level inheritance.
 type SeaGull struct {
-	// CONSTANT; undefinedField has constant value "seagull", any specified value is ignored.
+	// CONSTANT; Field has constant value "seagull", any specified value is ignored.
 	Kind *string
 
 	// REQUIRED
@@ -85,7 +85,7 @@ func (s *SeaGull) GetBird() *Bird {
 
 // Sparrow - The second level model in polymorphic single level inheritance.
 type Sparrow struct {
-	// CONSTANT; undefinedField has constant value "sparrow", any specified value is ignored.
+	// CONSTANT; Field has constant value "sparrow", any specified value is ignored.
 	Kind *string
 
 	// REQUIRED

@@ -125,6 +125,7 @@ interface DedicatedHsms {
   @get
   @action("outboundNetworkDependenciesEndpoints")
   @operationId("DedicatedHsm_ListOutboundNetworkDependenciesEndpoints")
+  @list
   listOutboundNetworkDependenciesEndpoints is ArmResourceActionSync<
     DedicatedHsm,
     void,
