@@ -590,7 +590,7 @@ export class typeAdapter {
     const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.name)), type, fieldByValue, prop.serializedName, annotations);
     field.docs.summary = prop.summary;
     field.docs.description = prop.doc;
-    // TODO: handle 'path' parameters
+
     if (prop.discriminator && modelType.discriminatorValue) {
       // the presence of modelType.discriminatorValue tells us that this
       // property is on a model that's not the root discriminator

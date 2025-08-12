@@ -1,6 +1,6 @@
 # Release History
 
-## 0.8.0 (unreleased)
+## 0.8.0 (2025-08-12)
 
 ### Breaking Changes
 
@@ -12,6 +12,7 @@
 
 * The `module` switch now accepts a major version suffix (e.g. `module=mymodule/v2`).
 * Added switch `containing-module` for scenarios where the emitted code is a package within an existing module. No `go.mod` or `version.go` file is emitted for this scenario.
+* Support multi-layer discriminator.
 
 ### Bugs Fixed
 
@@ -24,6 +25,7 @@
 * Non-ARM clients always have an `endpoint` field.
 * Only rename the `options` parameter when it collides with another required parameter with the same name.
 * Improve generic doc comment for clients when the name is simply `Client`.
+* Updated to the latest version of TypeSpec libraries.
 
 ## 0.7.0 (2025-07-17)
 
