@@ -164,6 +164,8 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
         // add a comment with the const value for const properties that are sent over the wire
         if (field.docs.description) {
           field.docs.description += '\n';
+        } else {
+          field.docs.description = '';
         }
         field.docs.description += `Field has constant value ${helpers.formatLiteralValue(field.type, false)}, any specified value is ignored.`;
       }

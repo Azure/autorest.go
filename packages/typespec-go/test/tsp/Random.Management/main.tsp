@@ -31,6 +31,7 @@ enum Versions {
 interface SomeService {
   @doc("Misc test APIs")
   @post
+  @list
   @armResourceCollectionAction
   @route("/providers/Microsoft.Random/listThings")
   listThings(
@@ -52,10 +53,9 @@ interface Random {
 }
 
 @doc("List of made up things")
-@Azure.Core.pagedResult
 model ThingsListResult {
   @doc("The fake items on this page")
-  @items
+  @pageItems
   value: FakeData[];
 
   @doc("The link to the next page of items")

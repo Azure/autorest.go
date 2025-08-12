@@ -900,7 +900,6 @@ func (client *Client) purgeDeletedKeyCreateRequest(ctx context.Context, keyName 
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.6-preview.1")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
