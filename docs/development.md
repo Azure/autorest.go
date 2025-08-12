@@ -19,7 +19,8 @@ This guide outlines the getting started steps to contributing to these generator
 - [Step 4: Test your changes](#step-4-test-your-changes)
   - [Debug](#debug)
   - [Built in commands](#built-in-commands)
-- [Step 5: Make a PR](#step-5-make-a-pr)
+  - [Step 5: Update emitter documentation](#step-5-update-emitter-documentation)
+- [Step 6: Make a PR](#step-6-make-a-pr)
 
 ## Prerequisites
 
@@ -122,11 +123,19 @@ To run `go mod tidy` on every generated module:
 pnpm -w modtidy
 ```
 
-## Step 5: Make a PR
+## Step 5: Update emitter documentation
 
-Once you're satistied with your changes, it's time to make a PR in the [repo](https://github.com/Azure/autorest.go/pulls).
+If you have made changes to the emitter options in typespec-go, you need to update the documentation in [`typespec-azure`](https://github.com/Azure/typespec-azure) repo.
+
+1. Run `pnpm run regen-docs` from the `packages/typespec-go` directory to generate the documentation.
+2. Copy the generated documentation folder `packages/typespec-go/website` to the root folder of `typespec-azure` repo.
+3. Commit the changes in the `typespec-azure` repo and make a PR in the [repo](https://github.com/Azure/typespec-azure).
+
+## Step 6: Make a PR
+
+Once you're satisfied with your changes, it's time to make a PR in the [repo](https://github.com/Azure/autorest.go/pulls).
 
 Before you do, make sure to:
 
 1. Format your code using the Prettier configuration file in the root of the repo
-2. Dont't forget to rebuild and regenerate everything before pushing your changes
+2. Don't forget to rebuild and regenerate everything before pushing your changes
