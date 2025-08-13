@@ -19,7 +19,7 @@ type PagerWidgetsClient struct {
 	endpoint string
 }
 
-//   - options - pagerWidgetsClientlistMethodOptions contains the optional parameters for the PagerWidgetsClient.NewlistMethodPager
+//   - options - pagerWidgetsClientlistMethodOptions contains the optional parameters for the PagerWidgetsClient.newListPager
 //     method.
 func (client *PagerWidgetsClient) newListMethodPager(options *pagerWidgetsClientlistMethodOptions) *runtime.Pager[pagerWidgetsClientlistMethodResponse] {
 	return runtime.NewPager(runtime.PagingHandler[pagerWidgetsClientlistMethodResponse]{
