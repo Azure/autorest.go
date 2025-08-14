@@ -63,14 +63,16 @@ def update_commit_id(file: Path, commit_id: str):
     with open(file, "w") as f:
         f.writelines(content)
 
-def regenerate_sdk() -> Dict[str, List[str]]:
+def regenerate_sdk(use_latest_spec: bool) -> Dict[str, List[str]]:
     result = {"succeed_to_regenerate": [], "fail_to_regenerate": [], "time_to_regenerate": str(datetime.now())}
     # get all tsp-location.yaml
     commit_id = get_latest_commit_id()
-    for item in Path(".").rglob("tsp-location.yaml"):
+    for item in Path("sdk/resourcemanager").rglob("tsp-location.yaml"):
         package_folder = item.parent
         logging.info(f"Regenerating {package_folder.name}...")
-        update_commit_id(item, commit_id)
+        if use_latest_spec:
+            logging.info("Using latest spec")
+            update_commit_id(item, commit_id)
         try:
             # Use subprocess.run for better control over output
             proc_result = subprocess.run(
@@ -145,7 +147,7 @@ def git_add():
     check_call("git add .", shell=True)
 
 
-def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str):
+def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str, use_latest_spec: bool):
     # Configure logging for better pipeline visibility
     logging.basicConfig(
         level=logging.INFO,
@@ -157,7 +159,7 @@ def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str):
     
     prepare_branch(typespec_go_branch)
     update_emitter_package(sdk_root, typespec_go_root)
-    result = regenerate_sdk()
+    result = regenerate_sdk(use_latest_spec)
     with open("regenerate-sdk-result.json", "w") as f:
         json.dump(result, f, indent=2)
     git_add()
@@ -184,6 +186,12 @@ if __name__ == "__main__":
         type=str,
     )
 
+    parser.add_argument(
+        "--use-latest-spec",
+        help="Whether to use the latest spec",
+        type=bool,
+    )
+
     args = parser.parse_args()
 
-    main(args.sdk_root, args.typespec_go_root, args.typespec_go_branch)
+    main(args.sdk_root, args.typespec_go_root, args.typespec_go_branch, args.use_latest_spec)
