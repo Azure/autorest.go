@@ -55,8 +55,8 @@ jobs:
     displayName: pnpm build
     workingDirectory: $(Build.SourcesDirectory)/autorest.go/packages/typespec-go
 
-  - script: npm pack
-    displayName: npm pack
+  - script: pnpm pack
+    displayName: pnpm pack
     workingDirectory: $(Build.SourcesDirectory)/autorest.go/packages/typespec-go
 
   - script: npm install -g @azure-tools/typespec-client-generator-cli
