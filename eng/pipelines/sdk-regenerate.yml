@@ -9,7 +9,7 @@ parameters:
   - true
 
 variables:
-  - template: /eng/pipelines/variables/globals.yml
+  - template: /eng/pipelines/templates/variables/globals.yml
   - template: /eng/pipelines/templates/variables/image.yml
   - group: Release Secrets for GitHub
 
