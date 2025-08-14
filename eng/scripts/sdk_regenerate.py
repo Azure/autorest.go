@@ -42,26 +42,81 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str):
         logging.error(e)
         raise e
 
+def get_latest_commit_id() -> str:
+    return (
+        check_output(
+            "git ls-remote https://github.com/Azure/azure-rest-api-specs.git HEAD | awk '{ print $1}'", shell=True
+        )
+        .decode("utf-8")
+        .split("\n")[0]
+        .strip()
+    )
+
+
+def update_commit_id(file: Path, commit_id: str):
+    with open(file, "r") as f:
+        content = f.readlines()
+    for idx in range(len(content)):
+        if "commit:" in content[idx]:
+            content[idx] = f"commit: {commit_id}\n"
+            break
+    with open(file, "w") as f:
+        f.writelines(content)
+
 def regenerate_sdk() -> Dict[str, List[str]]:
     result = {"succeed_to_regenerate": [], "fail_to_regenerate": [], "time_to_regenerate": str(datetime.now())}
     # get all tsp-location.yaml
+    commit_id = get_latest_commit_id()
     for item in Path(".").rglob("tsp-location.yaml"):
         package_folder = item.parent
+        logging.info(f"Regenerating {package_folder.name}...")
+        update_commit_id(item, commit_id)
         try:
-            output = (
-                check_output("tsp-client update", shell=True, cwd=str(package_folder), stderr=subprocess.STDOUT)
-                .decode("utf-8")
-                .split("\n")
+            # Use subprocess.run for better control over output
+            proc_result = subprocess.run(
+                "tsp-client update", 
+                shell=True, 
+                cwd=str(package_folder),
+                capture_output=True,
+                text=True,
+                check=True
             )
-            errors = [line for line in output if "- error " in line.lower()]
+            
+            # Log the output for progress tracking
+            if proc_result.stdout:
+                logging.info(f"Output for {package_folder.name}:")
+                for line in proc_result.stdout.split('\n'):
+                    if line.strip():
+                        logging.info(f"  {line}")
+            
+            if proc_result.stderr:
+                logging.warning(f"Stderr for {package_folder.name}:")
+                for line in proc_result.stderr.split('\n'):
+                    if line.strip():
+                        logging.warning(f"  {line}")
+                        
+            # Check for errors in output
+            output_lines = proc_result.stdout.split('\n') if proc_result.stdout else []
+            errors = [line for line in output_lines if "- error " in line.lower()]
             if errors:
-                raise Exception("\n".join(errors))
+                raise Exception("Errors found in output:\n" + "\n".join(errors))
+                
+        except subprocess.CalledProcessError as e:
+            logging.error(f"Failed to regenerate {package_folder.name}")
+            logging.error(f"Command failed with exit code {e.returncode}")
+            if e.stdout:
+                logging.error(f"Stdout:\n{e.stdout}")
+            if e.stderr:
+                logging.error(f"Stderr:\n{e.stderr}")
+            result["fail_to_regenerate"].append(package_folder.name)
         except Exception as e:
-            logging.error(f"failed to regenerate {package_folder.name}")
-            logging.error(e)
+            logging.error(f"Failed to regenerate {package_folder.name}")
+            logging.error(f"Error: {str(e)}")
             result["fail_to_regenerate"].append(package_folder.name)
         else:
+            logging.info(f"Successfully regenerated {package_folder.name}")
             result["succeed_to_regenerate"].append(package_folder.name)
+            
     result["succeed_to_regenerate"].sort()
     result["fail_to_regenerate"].sort()
     return result
@@ -91,6 +146,15 @@ def git_add():
 
 
 def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str):
+    # Configure logging for better pipeline visibility
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.StreamHandler(),  # Console output for pipeline
+        ]
+    )
+    
     prepare_branch(typespec_go_branch)
     update_emitter_package(sdk_root, typespec_go_root)
     result = regenerate_sdk()
