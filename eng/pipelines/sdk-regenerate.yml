@@ -53,7 +53,7 @@ jobs:
 
   - script: pnpm build
     displayName: pnpm build
-    workingDirectory: $(Build.SourcesDirectory)/autorest.go
+    workingDirectory: $(Build.SourcesDirectory)/autorest.go/packages/typespec-go
 
   - script: npm pack
     displayName: npm pack
@@ -63,7 +63,7 @@ jobs:
     displayName: 'Install tsp-client'
 
   - script: |
-      python3 $(Build.SourcesDirectory)/autorest.go/eng/scripts/sdk_regenerate.py --sdk-root=$(Build.SourcesDirectory)/azure-sdk-for-go --typespec-go-root=$(Build.SourcesDirectory)/autorest.go --typespec-go-branch=$(Build.SourceBranchName)
+      python3 $(Build.SourcesDirectory)/autorest.go/eng/scripts/sdk_regenerate.py --sdk-root=$(Build.SourcesDirectory)/azure-sdk-for-go --typespec-go-root=$(Build.SourcesDirectory)/autorest.go/packages/typespec-go --typespec-go-branch=$(Build.SourceBranchName)
     displayName: 'Generate SDK'
     workingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-go
 
