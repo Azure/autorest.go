@@ -14,8 +14,7 @@ pr: none
 
 variables:
   - template: /eng/pipelines/templates/variables/image.yml
-  - name: group
-    value: Release Secrets for GitHub
+  - group: Release Secrets for GitHub
 
 pool:
   name: $(LINUXPOOL)
@@ -78,3 +77,4 @@ jobs:
       PRTitle: '[Automation] Regenerate SDK based on typespec-go branch $(Build.SourceBranchName)'
       OpenAsDraft: 'true'
       PushArgs: '--force'
+      AuthToken: $(azuresdk-github-pat)
