@@ -61,10 +61,10 @@ jobs:
   - script: npm install -g @azure-tools/typespec-client-generator-cli
     displayName: 'Install tsp-client'
 
-  - script: |
-      python3 $(Build.SourcesDirectory)/autorest.go/eng/scripts/sdk_regenerate.py --sdk-root=$(Build.SourcesDirectory)/azure-sdk-for-go --typespec-go-root=$(Build.SourcesDirectory)/autorest.go/packages/typespec-go --typespec-go-branch=$(Build.SourceBranchName)
-    displayName: 'Generate SDK'
-    workingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-go
+  # - script: |
+  #     python3 $(Build.SourcesDirectory)/autorest.go/eng/scripts/sdk_regenerate.py --sdk-root=$(Build.SourcesDirectory)/azure-sdk-for-go --typespec-go-root=$(Build.SourcesDirectory)/autorest.go/packages/typespec-go --typespec-go-branch=$(Build.SourceBranchName)
+  #   displayName: 'Generate SDK'
+  #   workingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-go
 
   - template: /eng/common/pipelines/templates/steps//create-pull-request.yml@azure-sdk-for-go
     parameters:
