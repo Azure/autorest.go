@@ -32,6 +32,7 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str):
     emitter_package["dependencies"]["@azure-tools/typespec-go"] = typespec_go_tgz.absolute().as_posix()
     with open(emitter_package_folder, "w") as f:
         json.dump(emitter_package, f, indent=2)
+    logging.info("updated emitter-package.json, content:%s", json.dumps(emitter_package, indent=2))
 
     # update the emitter-package-lock.json
     try:
