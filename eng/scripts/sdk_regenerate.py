@@ -40,7 +40,7 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str):
     except Exception as e:
         logging.error("failed to update emitter-package-lock.json")
         logging.error(e)
-        raise e
+        raise
 
 def get_latest_commit_id() -> str:
     return (
@@ -130,7 +130,7 @@ def checkout_branch(branch: str, sync_main: bool = False):
         check_call(f"git checkout {branch}", shell=True)
         if sync_main:
             logging.info(f"sync {branch} with main branch")
-            call(f"git pull azure-sdk main:{branch} --force", shell=True)
+            call(f"git pull azure-sdk main", shell=True)
     except Exception:
         check_call(f"git checkout -b {branch}", shell=True)
 
