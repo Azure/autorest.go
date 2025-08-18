@@ -454,8 +454,12 @@ func populate(m map[string]any, k string, v any) {
 	}
 }
 
-func unpopulate(data json.RawMessage, fn string, v any) error {
-	if data == nil || string(data) == "null" {
+func unpopulate[T any](data json.RawMessage, fn string, v *T) error {
+	if data == nil {
+		return nil
+	}
+	if string(data) == "null" && v != nil {
+		*v = azcore.NullValue[T]()
 		return nil
 	}
 	if err := json.Unmarshal(data, v); err != nil {
