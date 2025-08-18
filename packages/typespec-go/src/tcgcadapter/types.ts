@@ -36,6 +36,9 @@ export class typeAdapter {
       } else if ((enumType.usage & tcgc.UsageFlags.Input) === 0 && (enumType.usage & tcgc.UsageFlags.Output) === 0) {
         // skip types without input and output usage
         continue;
+      } else if (this.isExternalType(sdkContext, enumType)) {
+        // skip external enum types (equivalent of x-ms-external in autorest.go)
+        continue;
       }
       const constType = this.getConstantType(enumType);
       this.codeModel.constants.push(constType);
@@ -63,7 +66,10 @@ export class typeAdapter {
         this.codeModel.interfaces.push(iface);
         ifaceTypes.push({go: iface, tcgc: modelType});
       }
-      // TODO: what's the equivalent of x-ms-external?
+      // Skip external types (equivalent of x-ms-external in autorest.go)
+      if (this.isExternalType(sdkContext, modelType)) {
+        continue;
+      }
       const model = this.getModel(modelType);
       modelTypes.push({go: model, tcgc: modelType});
     }
@@ -107,6 +113,30 @@ export class typeAdapter {
   }
 
   // returns the synthesized paged response types
+  private isExternalType(sdkContext: tcgc.SdkContext, type: tcgc.SdkModelType | tcgc.SdkEnumType): boolean {
+    // External types are those that are not defined within the current service namespace
+    // We determine this by checking if the type's namespace is part of the service's namespaces
+    if (!type.namespace) {
+      return false;
+    }
+    
+    // Get all namespace paths from the service
+    const serviceNamespaces = new Set<string>();
+    const collectNamespaces = (namespaces: Array<tcgc.SdkNamespace<tcgc.SdkHttpOperation>>) => {
+      for (const ns of namespaces) {
+        serviceNamespaces.add(ns.fullName);
+        if (ns.namespaces && ns.namespaces.length > 0) {
+          collectNamespaces(ns.namespaces);
+        }
+      }
+    };
+    
+    collectNamespaces(sdkContext.sdkPackage.namespaces);
+    
+    // If the type's namespace is not in the service namespaces, it's external
+    return !serviceNamespaces.has(type.namespace);
+  }
+
   private getPagedResponses(sdkContext: tcgc.SdkContext): Array<tcgc.SdkModelType> {
     const pagedResponses = new Array<tcgc.SdkModelType>();
     const recursiveWalkClients = function(client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
