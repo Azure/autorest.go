@@ -829,9 +829,6 @@ interface InterfaceTypeSdkModelType {
 function aggregateProperties(sdkContext: tcgc.SdkContext, model: tcgc.SdkModelType): {props: Array<tcgc.SdkModelPropertyType>, addlProps?: tcgc.SdkType} {
   const allProps = new Array<tcgc.SdkModelPropertyType>();
   for (const prop of model.properties) {
-    if (tcgc.isHttpMetadata(sdkContext, prop)) {
-      continue;
-    }
     allProps.push(prop);
   }
 
@@ -839,9 +836,6 @@ function aggregateProperties(sdkContext: tcgc.SdkContext, model: tcgc.SdkModelTy
   let parent = model.baseModel;
   while (parent) {
     for (const parentProp of parent.properties) {
-      if (tcgc.isHttpMetadata(sdkContext, parentProp)) {
-        continue;
-      }
       const exists = values(allProps).where(p => { return p.name === parentProp.name; }).first();
       if (exists) {
         // don't add the duplicate. the TS compiler has better enforcement than OpenAPI

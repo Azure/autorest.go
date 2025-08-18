@@ -62,6 +62,9 @@ type Discount struct {
 	// REQUIRED; The geo-location where the resource lives
 	Location *string
 
+	// READ-ONLY; Name of the discount
+	Name *string
+
 	// Managed service identity (system assigned and/or user assigned identities)
 	Identity *ManagedServiceIdentity
 
@@ -94,9 +97,6 @@ type Discount struct {
 
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
@@ -704,17 +704,17 @@ type ReservationOrderAliasResponse struct {
 	// REQUIRED; Reservation order SKU
 	SKU *ResourceSKU
 
-	// The Azure Region where the reserved resource lives.
-	Location *string
-
 	// Reservation order alias response properties
 	Properties *ReservationOrderAliasResponseProperties
 
+	// READ-ONLY; Name of the reservation order alias
+	Name *string
+
+	// The Azure Region where the reserved resource lives.
+	Location *string
+
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
@@ -828,11 +828,11 @@ type SavingsPlanModel struct {
 	// Savings plan properties
 	Properties *SavingsPlanModelProperties
 
+	// READ-ONLY; ID of the savings plan
+	Name *string
+
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
@@ -939,17 +939,17 @@ type SavingsPlanOrderAliasModel struct {
 	// REQUIRED; Savings plan SKU
 	SKU *ResourceSKU
 
-	// Resource provider kind
-	Kind *string
-
 	// Savings plan order alias properties
 	Properties *SavingsPlanOrderAliasProperties
 
+	// READ-ONLY; Name of the savings plan order alias
+	Name *string
+
+	// Resource provider kind
+	Kind *string
+
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
@@ -999,11 +999,11 @@ type SavingsPlanOrderModel struct {
 	// Savings plan order properties
 	Properties *SavingsPlanOrderModelProperties
 
+	// READ-ONLY; Order ID of the savings plan
+	Name *string
+
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData

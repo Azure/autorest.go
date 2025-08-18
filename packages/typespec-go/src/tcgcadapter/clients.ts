@@ -1021,7 +1021,10 @@ export class clientAdapter {
           }
           const ret = new go.StructExample(concreteType);
           for (const [k, v] of Object.entries(exampleType.value)) {
-            const field = concreteType.fields.find(f => f.serializedName === k)!;
+            const field = concreteType.fields.find(f => f.serializedName === k);
+            if (!field) {
+              throw new AdapterError('InternalError', `can not find field ${k} of example type ${exampleType.type.name} in concrete type ${concreteType.name}`, NoTarget);
+            }
             ret.value[field.name] = this.adaptExampleType(v, field.type);
           }
           if (exampleType.additionalPropertiesValue) {

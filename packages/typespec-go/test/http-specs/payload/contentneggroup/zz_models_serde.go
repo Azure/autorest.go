@@ -17,6 +17,7 @@ func (p PNGImageAsJSON) MarshalJSON() ([]byte, error) {
 	populateByteArray(objectMap, "content", p.Content, func() any {
 		return runtime.EncodeByteArray(p.Content, runtime.Base64StdFormat)
 	})
+	objectMap["contentType"] = "application/json"
 	return json.Marshal(objectMap)
 }
 
@@ -34,6 +35,9 @@ func (p *PNGImageAsJSON) UnmarshalJSON(data []byte) error {
 				err = runtime.DecodeByteArray(string(val), &p.Content, runtime.Base64StdFormat)
 			}
 			delete(rawMsg, key)
+		case "contentType":
+			err = unpopulate(val, "ContentType", &p.ContentType)
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -50,4 +54,14 @@ func populateByteArray[T any](m map[string]any, k string, b []T, convert func() 
 	} else {
 		m[k] = convert()
 	}
+}
+
+func unpopulate(data json.RawMessage, fn string, v any) error {
+	if data == nil || string(data) == "null" {
+		return nil
+	}
+	if err := json.Unmarshal(data, v); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	return nil
 }

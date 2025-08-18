@@ -74,11 +74,11 @@ type OracleSubscription struct {
 	// The resource-specific properties for this resource.
 	Properties *OracleSubscriptionProperties
 
+	// READ-ONLY; OracleSubscription name
+	Name *string
+
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
