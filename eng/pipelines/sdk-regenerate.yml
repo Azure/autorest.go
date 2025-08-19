@@ -7,6 +7,10 @@ parameters:
   values:
   - false
   - true
+- name: ServiceFilter
+  type: string
+  description: 'An regex filter to specify which service to regenerate. If not specified, all services will be regenerated.'
+  default: ''
 
 variables:
   - template: /eng/pipelines/templates/variables/globals.yml
@@ -59,7 +63,7 @@ jobs:
     displayName: 'Install tsp-client'
 
   - script: |
-      python3 $(Build.SourcesDirectory)/autorest.go/eng/scripts/sdk_regenerate.py --sdk-root=$(Build.SourcesDirectory)/azure-sdk-for-go --typespec-go-root=$(Build.SourcesDirectory)/autorest.go/packages/typespec-go --typespec-go-branch=$(Build.SourceBranchName) --use-latest-spec=$(UseLatestSpec)
+      python3 $(Build.SourcesDirectory)/autorest.go/eng/scripts/sdk_regenerate.py --sdk-root=$(Build.SourcesDirectory)/azure-sdk-for-go --typespec-go-root=$(Build.SourcesDirectory)/autorest.go/packages/typespec-go --typespec-go-branch=$(Build.SourceBranchName) --use-latest-spec=$(UseLatestSpec) --service-filter=$(ServiceFilter)
     displayName: 'Generate SDK'
     workingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-go
 

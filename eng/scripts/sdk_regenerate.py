@@ -12,6 +12,7 @@ from subprocess import check_call, check_output, call
 import argparse
 import logging
 import json
+import re
 
 
 def update_emitter_package(sdk_root: str, typespec_go_root: str):
@@ -63,12 +64,14 @@ def update_commit_id(file: Path, commit_id: str):
     with open(file, "w") as f:
         f.writelines(content)
 
-def regenerate_sdk(use_latest_spec: bool) -> Dict[str, List[str]]:
+def regenerate_sdk(use_latest_spec: bool, service_filter: str) -> Dict[str, List[str]]:
     result = {"succeed_to_regenerate": [], "fail_to_regenerate": [], "time_to_regenerate": str(datetime.now())}
     # get all tsp-location.yaml
     commit_id = get_latest_commit_id()
     for item in Path("sdk/resourcemanager").rglob("tsp-location.yaml"):
         package_folder = item.parent
+        if len(service_filter) > 0 and re.match(service_filter, package_folder) is None:
+            continue
         logging.info(f"Regenerating {package_folder.name}...")
         if use_latest_spec:
             logging.info("Using latest spec")
@@ -137,17 +140,17 @@ def checkout_branch(branch: str, sync_main: bool = False):
 
 def prepare_branch(typespec_go_branch: str):
     check_call("git remote add azure-sdk https://github.com/azure-sdk/azure-sdk-for-go.git", shell=True)
-    checkout_branch("typespec-go-main", typespec_go_branch == "main")
 
-    if typespec_go_branch != "main":
+    if typespec_go_branch == "main":
+        checkout_branch("typespec-go-main", typespec_go_branch == "main")
+    else:
         checkout_branch(f"typespec-go-{typespec_go_branch}")
-
 
 def git_add():
     check_call("git add .", shell=True)
 
 
-def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str, use_latest_spec: bool):
+def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str, use_latest_spec: bool, service_filter: str):
     # Configure logging for better pipeline visibility
     logging.basicConfig(
         level=logging.INFO,
@@ -159,7 +162,7 @@ def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str, use_late
     
     prepare_branch(typespec_go_branch)
     update_emitter_package(sdk_root, typespec_go_root)
-    result = regenerate_sdk(use_latest_spec)
+    result = regenerate_sdk(use_latest_spec, service_filter)
     with open("regenerate-sdk-result.json", "w") as f:
         json.dump(result, f, indent=2)
     git_add()
@@ -192,6 +195,12 @@ if __name__ == "__main__":
         type=bool,
     )
 
+    parser.add_argument(
+        "--service-filter",
+        help="An regex filter to specify which service to regenerate. If not specified, all services will be regenerated.",
+        type=str,
+    )
+
     args = parser.parse_args()
 
-    main(args.sdk_root, args.typespec_go_root, args.typespec_go_branch, args.use_latest_spec)
+    main(args.sdk_root, args.typespec_go_root, args.typespec_go_branch, args.use_latest_spec, args.service_filter)
