@@ -192,7 +192,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--use-latest-spec",
         help="Whether to use the latest spec",
-        action='store_true',
+        type=lambda x: x.lower() == 'true',
         default=False,
     )
 
