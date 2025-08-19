@@ -70,7 +70,7 @@ def regenerate_sdk(use_latest_spec: bool, service_filter: str) -> Dict[str, List
     commit_id = get_latest_commit_id()
     for item in Path("sdk/resourcemanager").rglob("tsp-location.yaml"):
         package_folder = item.parent
-        if len(service_filter) > 0 and re.match(service_filter, package_folder) is None:
+        if len(service_filter) > 0 and re.match(service_filter, package_folder.name) is None:
             continue
         logging.info(f"Regenerating {package_folder.name}...")
         if use_latest_spec:
