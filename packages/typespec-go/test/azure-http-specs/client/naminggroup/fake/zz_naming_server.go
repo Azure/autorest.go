@@ -20,8 +20,8 @@ import (
 
 // NamingServer is a fake server for instances of the naminggroup.NamingClient type.
 type NamingServer struct {
-	// NamingClientModelServer contains the fakes for client NamingClientModelClient
-	NamingClientModelServer NamingClientModelServer
+	// NamingModelServer contains the fakes for client NamingModelClient
+	NamingModelServer NamingModelServer
 
 	// NamingUnionEnumServer contains the fakes for client NamingUnionEnumClient
 	NamingUnionEnumServer NamingUnionEnumServer
@@ -65,10 +65,10 @@ func NewNamingServerTransport(srv *NamingServer) *NamingServerTransport {
 // NamingServerTransport connects instances of naminggroup.NamingClient to instances of NamingServer.
 // Don't use this type directly, use NewNamingServerTransport instead.
 type NamingServerTransport struct {
-	srv                       *NamingServer
-	trMu                      sync.Mutex
-	trNamingClientModelServer *NamingClientModelServerTransport
-	trNamingUnionEnumServer   *NamingUnionEnumServerTransport
+	srv                     *NamingServer
+	trMu                    sync.Mutex
+	trNamingModelServer     *NamingModelServerTransport
+	trNamingUnionEnumServer *NamingUnionEnumServerTransport
 }
 
 // Do implements the policy.Transporter interface for NamingServerTransport.
@@ -90,11 +90,11 @@ func (n *NamingServerTransport) dispatchToClientFake(req *http.Request, client s
 	var err error
 
 	switch client {
-	case "NamingClientModelClient":
-		initServer(&n.trMu, &n.trNamingClientModelServer, func() *NamingClientModelServerTransport {
-			return NewNamingClientModelServerTransport(&n.srv.NamingClientModelServer)
+	case "NamingModelClient":
+		initServer(&n.trMu, &n.trNamingModelServer, func() *NamingModelServerTransport {
+			return NewNamingModelServerTransport(&n.srv.NamingModelServer)
 		})
-		resp, err = n.trNamingClientModelServer.Do(req)
+		resp, err = n.trNamingModelServer.Do(req)
 	case "NamingUnionEnumClient":
 		initServer(&n.trMu, &n.trNamingUnionEnumServer, func() *NamingUnionEnumServerTransport {
 			return NewNamingUnionEnumServerTransport(&n.srv.NamingUnionEnumServer)
