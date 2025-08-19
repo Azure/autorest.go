@@ -51,8 +51,8 @@ jobs:
     workingDirectory: $(Build.SourcesDirectory)/autorest.go
 
   - script: pnpm build
-    displayName: pnpm build:all
-    workingDirectory: $(Build.SourcesDirectory)/autorest.go
+    displayName: pnpm build
+    workingDirectory: $(Build.SourcesDirectory)/autorest.go/packages/typespec-go
 
   - script: pnpm pack
     displayName: pnpm pack
