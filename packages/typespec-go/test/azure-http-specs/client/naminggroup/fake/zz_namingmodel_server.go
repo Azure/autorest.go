@@ -15,32 +15,32 @@ import (
 	"net/http"
 )
 
-// NamingClientModelServer is a fake server for instances of the naminggroup.NamingClientModelClient type.
-type NamingClientModelServer struct {
-	// Client is the fake for method NamingClientModelClient.Client
+// NamingModelServer is a fake server for instances of the naminggroup.NamingModelClient type.
+type NamingModelServer struct {
+	// Client is the fake for method NamingModelClient.Client
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Client func(ctx context.Context, body naminggroup.ClientModel, options *naminggroup.NamingClientModelClientClientOptions) (resp azfake.Responder[naminggroup.NamingClientModelClientClientResponse], errResp azfake.ErrorResponder)
+	Client func(ctx context.Context, body naminggroup.ClientModel, options *naminggroup.NamingModelClientClientOptions) (resp azfake.Responder[naminggroup.NamingModelClientClientResponse], errResp azfake.ErrorResponder)
 
-	// Language is the fake for method NamingClientModelClient.Language
+	// Language is the fake for method NamingModelClient.Language
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Language func(ctx context.Context, body naminggroup.GoModel, options *naminggroup.NamingClientModelClientLanguageOptions) (resp azfake.Responder[naminggroup.NamingClientModelClientLanguageResponse], errResp azfake.ErrorResponder)
+	Language func(ctx context.Context, body naminggroup.GoModel, options *naminggroup.NamingModelClientLanguageOptions) (resp azfake.Responder[naminggroup.NamingModelClientLanguageResponse], errResp azfake.ErrorResponder)
 }
 
-// NewNamingClientModelServerTransport creates a new instance of NamingClientModelServerTransport with the provided implementation.
-// The returned NamingClientModelServerTransport instance is connected to an instance of naminggroup.NamingClientModelClient via the
+// NewNamingModelServerTransport creates a new instance of NamingModelServerTransport with the provided implementation.
+// The returned NamingModelServerTransport instance is connected to an instance of naminggroup.NamingModelClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewNamingClientModelServerTransport(srv *NamingClientModelServer) *NamingClientModelServerTransport {
-	return &NamingClientModelServerTransport{srv: srv}
+func NewNamingModelServerTransport(srv *NamingModelServer) *NamingModelServerTransport {
+	return &NamingModelServerTransport{srv: srv}
 }
 
-// NamingClientModelServerTransport connects instances of naminggroup.NamingClientModelClient to instances of NamingClientModelServer.
-// Don't use this type directly, use NewNamingClientModelServerTransport instead.
-type NamingClientModelServerTransport struct {
-	srv *NamingClientModelServer
+// NamingModelServerTransport connects instances of naminggroup.NamingModelClient to instances of NamingModelServer.
+// Don't use this type directly, use NewNamingModelServerTransport instead.
+type NamingModelServerTransport struct {
+	srv *NamingModelServer
 }
 
-// Do implements the policy.Transporter interface for NamingClientModelServerTransport.
-func (n *NamingClientModelServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for NamingModelServerTransport.
+func (n *NamingModelServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
@@ -50,21 +50,21 @@ func (n *NamingClientModelServerTransport) Do(req *http.Request) (*http.Response
 	return n.dispatchToMethodFake(req, method)
 }
 
-func (n *NamingClientModelServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (n *NamingModelServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
 	defer close(resultChan)
 
 	go func() {
 		var intercepted bool
 		var res result
-		if namingClientModelServerTransportInterceptor != nil {
-			res.resp, res.err, intercepted = namingClientModelServerTransportInterceptor.Do(req)
+		if namingModelServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = namingModelServerTransportInterceptor.Do(req)
 		}
 		if !intercepted {
 			switch method {
-			case "NamingClientModelClient.Client":
+			case "NamingModelClient.Client":
 				res.resp, res.err = n.dispatchClient(req)
-			case "NamingClientModelClient.Language":
+			case "NamingModelClient.Language":
 				res.resp, res.err = n.dispatchLanguage(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
@@ -85,7 +85,7 @@ func (n *NamingClientModelServerTransport) dispatchToMethodFake(req *http.Reques
 	}
 }
 
-func (n *NamingClientModelServerTransport) dispatchClient(req *http.Request) (*http.Response, error) {
+func (n *NamingModelServerTransport) dispatchClient(req *http.Request) (*http.Response, error) {
 	if n.srv.Client == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Client not implemented")}
 	}
@@ -108,7 +108,7 @@ func (n *NamingClientModelServerTransport) dispatchClient(req *http.Request) (*h
 	return resp, nil
 }
 
-func (n *NamingClientModelServerTransport) dispatchLanguage(req *http.Request) (*http.Response, error) {
+func (n *NamingModelServerTransport) dispatchLanguage(req *http.Request) (*http.Response, error) {
 	if n.srv.Language == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Language not implemented")}
 	}
@@ -131,8 +131,8 @@ func (n *NamingClientModelServerTransport) dispatchLanguage(req *http.Request) (
 	return resp, nil
 }
 
-// set this to conditionally intercept incoming requests to NamingClientModelServerTransport
-var namingClientModelServerTransportInterceptor interface {
+// set this to conditionally intercept incoming requests to NamingModelServerTransport
+var namingModelServerTransportInterceptor interface {
 	// Do returns true if the server transport should use the returned response/error
 	Do(*http.Request) (*http.Response, error, bool)
 }

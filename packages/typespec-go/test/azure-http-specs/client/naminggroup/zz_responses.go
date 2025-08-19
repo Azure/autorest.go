@@ -24,16 +24,6 @@ type NamingClientLanguageResponse struct {
 	// placeholder for future response values
 }
 
-// NamingClientModelClientClientResponse contains the response from method NamingClientModelClient.Client.
-type NamingClientModelClientClientResponse struct {
-	// placeholder for future response values
-}
-
-// NamingClientModelClientLanguageResponse contains the response from method NamingClientModelClient.Language.
-type NamingClientModelClientLanguageResponse struct {
-	// placeholder for future response values
-}
-
 // NamingClientParameterResponse contains the response from method NamingClient.Parameter.
 type NamingClientParameterResponse struct {
 	// placeholder for future response values
@@ -47,6 +37,16 @@ type NamingClientRequestResponse struct {
 // NamingClientResponseResponse contains the response from method NamingClient.Response.
 type NamingClientResponseResponse struct {
 	DefaultName *string
+}
+
+// NamingModelClientClientResponse contains the response from method NamingModelClient.Client.
+type NamingModelClientClientResponse struct {
+	// placeholder for future response values
+}
+
+// NamingModelClientLanguageResponse contains the response from method NamingModelClient.Language.
+type NamingModelClientLanguageResponse struct {
+	// placeholder for future response values
 }
 
 // NamingUnionEnumClientUnionEnumMemberNameResponse contains the response from method NamingUnionEnumClient.UnionEnumMemberName.

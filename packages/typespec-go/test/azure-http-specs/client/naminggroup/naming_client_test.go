@@ -75,6 +75,26 @@ func TestNamingClient_Response(t *testing.T) {
 	require.EqualValues(t, "true", *resp.DefaultName)
 }
 
+func TestModelClient_Client(t *testing.T) {
+	client, err := naminggroup.NewNamingClient("http://localhost:3000", nil)
+	require.NoError(t, err)
+	resp, err := client.NewNamingModelClient().Client(context.Background(), naminggroup.ClientModel{
+		DefaultName: to.Ptr(true),
+	}, nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
+
+func TestModelClient_Language(t *testing.T) {
+	client, err := naminggroup.NewNamingClient("http://localhost:3000", nil)
+	require.NoError(t, err)
+	resp, err := client.NewNamingModelClient().Language(context.Background(), naminggroup.GoModel{
+		DefaultName: to.Ptr(true),
+	}, nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
+
 func TestUnionEnumClient_UnionEnumMemberName(t *testing.T) {
 	client, err := naminggroup.NewNamingClient("http://localhost:3000", nil)
 	require.NoError(t, err)

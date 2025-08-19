@@ -19,9 +19,9 @@ type NamingClient struct {
 	endpoint string
 }
 
-// NewNamingClientModelClient creates a new instance of [NamingClientModelClient].
-func (client *NamingClient) NewNamingClientModelClient() *NamingClientModelClient {
-	return &NamingClientModelClient{
+// NewNamingModelClient creates a new instance of [NamingModelClient].
+func (client *NamingClient) NewNamingModelClient() *NamingModelClient {
+	return &NamingModelClient{
 		internal: client.internal,
 		endpoint: client.endpoint,
 	}

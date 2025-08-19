@@ -20,12 +20,12 @@ func TestFakeNamingServer(t *testing.T) {
 	calledModelServerClient := false
 	calledNamingServerClient := false
 	server := fake.NamingServer{
-		NamingClientModelServer: fake.NamingClientModelServer{
-			Client: func(ctx context.Context, body naminggroup.ClientModel, options *naminggroup.NamingClientModelClientClientOptions) (resp azfake.Responder[naminggroup.NamingClientModelClientClientResponse], errResp azfake.ErrorResponder) {
+		NamingModelServer: fake.NamingModelServer{
+			Client: func(ctx context.Context, body naminggroup.ClientModel, options *naminggroup.NamingModelClientClientOptions) (resp azfake.Responder[naminggroup.NamingModelClientClientResponse], errResp azfake.ErrorResponder) {
 				require.NotNil(t, body.DefaultName)
 				require.True(t, *body.DefaultName)
 				calledModelServerClient = true
-				resp.SetResponse(http.StatusNoContent, naminggroup.NamingClientModelClientClientResponse{}, nil)
+				resp.SetResponse(http.StatusNoContent, naminggroup.NamingModelClientClientResponse{}, nil)
 				return
 			},
 		},
@@ -42,7 +42,7 @@ func TestFakeNamingServer(t *testing.T) {
 	})
 	require.NoError(t, err)
 
-	_, err = client.NewNamingClientModelClient().Client(context.Background(), naminggroup.ClientModel{
+	_, err = client.NewNamingModelClient().Client(context.Background(), naminggroup.ClientModel{
 		DefaultName: to.Ptr(true),
 	}, nil)
 	require.NoError(t, err)
