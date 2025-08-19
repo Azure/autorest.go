@@ -4,9 +4,7 @@ pr: none
 parameters:
 - name: UseLatestSpec
   default: false
-  values:
-  - false
-  - true
+  type: boolean
 - name: ServiceFilter
   type: string
   default: ''
