@@ -9,7 +9,6 @@ parameters:
   - true
 - name: ServiceFilter
   type: string
-  description: 'An regex filter to specify which service to regenerate. If not specified, all services will be regenerated.'
   default: ''
 
 variables:
