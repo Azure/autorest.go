@@ -1,0 +1,78 @@
+trigger: none
+pr: none
+
+parameters:
+- name: UseLatestSpec
+  default: false
+  type: boolean
+- name: ServiceFilter
+  type: string
+  default: ''
+
+variables:
+  - template: /eng/pipelines/templates/variables/globals.yml
+  - template: /eng/pipelines/templates/variables/image.yml
+  - group: Release Secrets for GitHub
+
+pool:
+  name: $(LINUXPOOL)
+  demands: ImageOverride -equals $(LINUXVMIMAGE)
+
+resources:
+  repositories:
+    - repository: azure-sdk-for-go
+      type: github
+      name: Azure/azure-sdk-for-go
+      endpoint: azure
+      ref: main
+
+jobs:
+- job: Generate_SDK
+
+  timeoutInMinutes: 120
+
+  steps:
+  - checkout: self
+    fetchDepth: 1
+  - checkout: azure-sdk-for-go
+
+  - task: NodeTool@0
+    displayName: 'Install Node.js $(NodeVersion)'
+    inputs:
+      versionSpec: '$(NodeVersion)'
+
+  - script: npm install -g pnpm@9.5.0
+    displayName: Install pnpm 9.5.0
+
+  - script: pnpm install
+    displayName: pnpm install
+    workingDirectory: $(Build.SourcesDirectory)/autorest.go
+
+  - script: pnpm build
+    displayName: pnpm build
+    workingDirectory: $(Build.SourcesDirectory)/autorest.go/packages/typespec-go
+
+  - script: pnpm pack
+    displayName: pnpm pack
+    workingDirectory: $(Build.SourcesDirectory)/autorest.go/packages/typespec-go
+
+  - script: npm install -g @azure-tools/typespec-client-generator-cli
+    displayName: 'Install tsp-client'
+
+  - script: |
+      python3 $(Build.SourcesDirectory)/autorest.go/eng/scripts/sdk_regenerate.py --sdk-root=$(Build.SourcesDirectory)/azure-sdk-for-go --typespec-go-root=$(Build.SourcesDirectory)/autorest.go/packages/typespec-go --typespec-go-branch=$(Build.SourceBranchName) --use-latest-spec=${{ parameters.UseLatestSpec }} --service-filter="${{ parameters.ServiceFilter }}"
+    displayName: 'Generate SDK'
+    workingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-go
+
+  - template: /eng/common/pipelines/templates/steps//create-pull-request.yml@azure-sdk-for-go
+    parameters:
+      WorkingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-go
+      ScriptDirectory: $(Build.SourcesDirectory)/azure-sdk-for-go/eng/common/scripts
+      RepoName: azure-sdk-for-go
+      BaseBranchName: 'refs/heads/main'
+      PRBranchName: typespec-go-regenerate-$(Build.SourceBranchName)
+      CommitMsg: 'Regenerate SDK based on typespec-go branch $(Build.SourceBranchName)'
+      PRTitle: '[Automation] Regenerate SDK based on typespec-go branch $(Build.SourceBranchName)'
+      OpenAsDraft: 'true'
+      PushArgs: '--force'
+      AuthToken: $(azuresdk-github-pat)
