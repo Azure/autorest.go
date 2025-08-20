@@ -18,7 +18,7 @@ const compiler = pkgRoot + 'node_modules/@typespec/compiler/cmd/tsp.js';
 // 'moduleName': [ 'input', 'emitter option 1', 'emitter option N...' ]
 // if no .tsp file is specified in input, it's assumed to be main.tsp
 const httpSpecsGroup = {
-  'apikeygroup': ['authentication/api-key'],     // missing tests
+  'apikeygroup': ['authentication/api-key'],     // missing tests, waiting for generated client constructors https://github.com/Azure/autorest.go/issues/1635
   'customgroup': ['authentication/http/custom'], // missing tests
   'oauth2group': ['authentication/oauth2'],      // missing tests
   'unionauthgroup': ['authentication/union'],    // missing tests
@@ -29,6 +29,7 @@ const httpSpecsGroup = {
   'basicparamsgroup': ['parameters/basic'],
   'bodyoptionalgroup': ['parameters/body-optionality'],
   'collectionfmtgroup': ['parameters/collection-format'],
+  //'pathgroup': ['parameters/path'], // requires optional path parameter support https://github.com/Azure/autorest.go/issues/1575
   'spreadgroup': ['parameters/spread'],
   'contentneggroup': ['payload/content-negotiation'],
   'jmergepatchgroup': ['payload/json-merge-patch'],
@@ -36,6 +37,7 @@ const httpSpecsGroup = {
   //'multipartgroup': ['payload/multipart'], // TODO: https://github.com/Azure/autorest.go/issues/1445
   'pageablegroup': ['payload/pageable'],
   'xmlgroup': ['payload/xml', 'slice-elements-byval=true'],
+  'statuscoderangegroup': ['response/status-code-range'],
   'jsongroup': ['serialization/encoded-name/json'],
   'noendpointgroup': ['server/endpoint/not-defined'],
   'multiplegroup': ['server/path/multiple'],
