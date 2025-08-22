@@ -1,5 +1,11 @@
 # Release History
 
+## 0.8.1 (unreleased)
+
+### Other Changes
+
+* Updated the minimum version of `azcore` to `v1.19.0`.
+
 ## 0.8.0 (2025-08-12)
 
 ### Breaking Changes

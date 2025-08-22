@@ -12,6 +12,10 @@
 
 * The `module` switch now accepts a major version suffix (e.g. `module=mymodule/v2`).
 
+### Other Changes
+
+* Updated the minimum version of `azcore` to `v1.19.0`.
+
 ## 4.0.0-preview.73 (2025-07-22)
 
 ### Breaking Changes

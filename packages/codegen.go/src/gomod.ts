@@ -19,7 +19,7 @@ export async function generateGoModFile(codeModel: go.CodeModel, existingGoMod?:
 
   // here we specify the minimum version of azcore as required by the code generator.
   // the version can be overwritten by passing the --azcore-version switch during generation.
-  let version = '1.17.1';
+  let version = '1.19.0';
   if (codeModel.options.azcoreVersion) {
     // when matching versions, we need to handle beta, non-beta, and pseudo versions
     // 1.2.3-beta.1, 1.2.3, 0.22.1-0.20220315231014-ed309e73db6b
