@@ -13,10 +13,40 @@ import (
 )
 
 // APIKeyClient - Illustrates clients generated with ApiKey authentication.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewAPIKeyClientWithKeyCredential() instead.
 type APIKeyClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// APIKeyClientOptions contains the optional values for creating a [APIKeyClient].
+type APIKeyClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewAPIKeyClientWithKeyCredential creates a new instance of APIKeyClient with the specified values.
+//   - endpoint - Service host
+//   - credential - the [azcore.KeyCredential] used to authenticate requests.
+//   - APIKeyClientOptions - APIKeyClientOptions contains the optional values for creating a [APIKeyClient]
+func NewAPIKeyClientWithKeyCredential(endpoint string, credential *azcore.KeyCredential, options *APIKeyClientOptions) (*APIKeyClient, error) {
+	if options == nil {
+		options = &APIKeyClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
+		PerCall: []policy.Policy{
+			runtime.NewKeyCredentialPolicy(credential, "x-ms-api-key", &runtime.KeyCredentialPolicyOptions{
+				InsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,
+			}),
+		},
+	}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &APIKeyClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Invalid - Check whether client is authenticated.

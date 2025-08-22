@@ -12,7 +12,7 @@ import (
 )
 
 func TestOptionalCollectionsByteClient_GetAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalCollectionsByteClient().GetAll(context.Background(), nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestOptionalCollectionsByteClient_GetAll(t *testing.T) {
 }
 
 func TestOptionalCollectionsByteClient_GetDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalCollectionsByteClient().GetDefault(context.Background(), nil)
 	require.NoError(t, err)
@@ -31,7 +31,7 @@ func TestOptionalCollectionsByteClient_GetDefault(t *testing.T) {
 }
 
 func TestOptionalCollectionsByteClient_PutAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalCollectionsByteClient().PutAll(context.Background(), optionalitygroup.CollectionsByteProperty{
 		Property: [][]byte{
@@ -44,7 +44,7 @@ func TestOptionalCollectionsByteClient_PutAll(t *testing.T) {
 }
 
 func TestOptionalCollectionsByteClient_PutDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalCollectionsByteClient().PutDefault(context.Background(), optionalitygroup.CollectionsByteProperty{}, nil)
 	require.NoError(t, err)

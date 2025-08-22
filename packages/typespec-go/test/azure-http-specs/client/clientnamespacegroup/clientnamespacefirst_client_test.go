@@ -12,7 +12,7 @@ import (
 )
 
 func TestClientNamespaceFirstClient_GetFirst(t *testing.T) {
-	client, err := clientnamespacegroup.NewClientNamespaceClient("http://localhost:3000", nil)
+	client, err := clientnamespacegroup.NewClientNamespaceClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	require.NotNil(t, client)
 	firstClient := client.NewClientNamespaceFirstClient()

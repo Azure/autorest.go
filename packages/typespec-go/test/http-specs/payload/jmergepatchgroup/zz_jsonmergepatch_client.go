@@ -13,10 +13,33 @@ import (
 )
 
 // JSONMergePatchClient - Test for merge-patch+json content-type
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewJSONMergePatchClientWithNoCredential() instead.
 type JSONMergePatchClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// JSONMergePatchClientOptions contains the optional values for creating a [JSONMergePatchClient].
+type JSONMergePatchClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewJSONMergePatchClientWithNoCredential creates a new instance of JSONMergePatchClient with the specified values.
+//   - endpoint - Service host
+//   - JSONMergePatchClientOptions - JSONMergePatchClientOptions contains the optional values for creating a [JSONMergePatchClient]
+func NewJSONMergePatchClientWithNoCredential(endpoint string, options *JSONMergePatchClientOptions) (*JSONMergePatchClient, error) {
+	if options == nil {
+		options = &JSONMergePatchClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &JSONMergePatchClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // CreateResource - Test content-type: application/merge-patch+json with required body

@@ -15,7 +15,7 @@ import (
 )
 
 func TestDecimalVerifyClient_PrepareVerify(t *testing.T) {
-	client, err := scalargroup.NewScalarClient("http://localhost:3000", nil)
+	client, err := scalargroup.NewScalarClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarDecimalVerifyClient().PrepareVerify(context.Background(), nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestDecimalVerifyClient_PrepareVerify(t *testing.T) {
 }
 
 func TestDecimalVerifyClient_Verify(t *testing.T) {
-	client, err := scalargroup.NewScalarClient("http://localhost:3000", nil)
+	client, err := scalargroup.NewScalarClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarDecimalVerifyClient().Verify(context.Background(), 0.3, nil)
 	require.NoError(t, err)

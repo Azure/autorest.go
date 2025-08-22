@@ -13,7 +13,7 @@ import (
 )
 
 func TestXMLModelWithEncodedNamesValueClient_Get(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
+	client, err := xmlgroup.NewXMLClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithEncodedNamesValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -27,7 +27,7 @@ func TestXMLModelWithEncodedNamesValueClient_Get(t *testing.T) {
 }
 
 func TestXMLModelWithEncodedNamesValueClient_Put(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
+	client, err := xmlgroup.NewXMLClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithEncodedNamesValueClient().Put(context.Background(), xmlgroup.ModelWithEncodedNames{
 		Colors: []string{"red", "green", "blue"},

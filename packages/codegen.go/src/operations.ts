@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as go from '../../codemodel.go/src/index.js';
+import { ensureNameCase } from '../../naming.go/src/naming.js';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import * as helpers from './helpers.js';
@@ -115,8 +116,13 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
       throw new CodegenError('UnsupportedTsp', 'optional client parameters for ARM is not supported');
     }
 
-    // generate client constructors
-    clientText += generateConstructors(azureARM, client, imports);
+    // we skip generating client constructors when emitting into
+    // an existing module. this is because the constructor(s) require
+    // the module name and version info, and we can't make any
+    // assumptions about the names/location.
+    if (!codeModel.options.containingModule) {
+      clientText += generateConstructors(client, imports);
+    }
 
     // generate client accessors and operations
     let opText = '';
@@ -127,6 +133,9 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
       opText += '\t\tinternal: client.internal,\n';
       // propagate all client params
       for (const param of client.parameters) {
+        if (go.isLiteralParameter(param)) {
+          continue;
+        }
         opText += `\t\t${param.name}: client.${param.name},\n`;
       }
       opText += '\t}\n}\n\n';
@@ -166,19 +175,52 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
   return operations;
 }
 
-// generates all modeled client constructors
-function generateConstructors(azureARM: boolean, client: go.Client, imports: ImportManager): string {
+/**
+ * generates all modeled client constructors and client options types.
+ * if there are no client constructors, the empty string is returned.
+ * 
+ * @param client the client for which to generate constructors and the client options type
+ * @param imports the import manager currently in scope
+ * @returns the client constructor code or the empty string
+ */
+function generateConstructors(client: go.Client, imports: ImportManager): string {
   if (client.constructors.length === 0) {
     return '';
   }
 
   let ctorText = '';
+
+  if (client.options.kind === 'clientOptions') {
+    // for non-ARM, the options type will always be a parameter group
+    ctorText += `// ${client.options.name} contains the optional values for creating a [${client.name}].\n`;
+    ctorText += `type ${client.options.name} struct {\n\tazcore.ClientOptions\n`;
+    for (const param of client.options.params) {
+      if (go.isAPIVersionParameter(param)) {
+        // we use azcore.ClientOptions.APIVersion
+        continue;
+      }
+      ctorText += helpers.formatDocCommentWithPrefix(ensureNameCase(param.name), param.docs);
+      if (go.isClientSideDefault(param.style)) {
+        if (!param.docs.description && !param.docs.summary) {
+          ctorText += '\n';
+        }
+        ctorText += `\t${comment(`The default value is ${helpers.formatLiteralValue(param.style.defaultValue, false)}`, '// ')}.\n`;
+      }
+      ctorText += `\t${ensureNameCase(param.name)} *${go.getTypeDeclaration(param.type)}\n`;
+    }
+    ctorText += '}\n\n';
+  }
+
   for (const constructor of client.constructors) {
     const ctorParams = new Array<string>();
     const paramDocs = new Array<string>();
 
     constructor.parameters.sort(helpers.sortParametersByRequired);
     for (const ctorParam of constructor.parameters) {
+      if (!go.isRequiredParameter(ctorParam)) {
+        // param is part of the options group
+        continue;
+      }
       imports.addImportForType(ctorParam.type);
       ctorParams.push(`${ctorParam.name} ${helpers.formatParameterTypeName(ctorParam)}`);
       if (ctorParam.docs.summary || ctorParam.docs.description) {
@@ -186,8 +228,99 @@ function generateConstructors(azureARM: boolean, client: go.Client, imports: Imp
       }
     }
 
+    const emitProlog = function(optionsTypeName: string, plOpts?: string): string {
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
+      let bodyText = `\tif options == nil {\n\t\toptions = &${optionsTypeName}{}\n\t}\n`;
+      let apiVersionConfig = '';
+      // check if there's an api version parameter
+      let apiVersionParam: go.HeaderScalarParameter | go.PathScalarParameter | go.QueryScalarParameter | go.URIParameter | undefined;
+      for (const param of client.parameters) {
+        switch (param.kind) {
+          case 'headerScalarParam':
+          case 'pathScalarParam':
+          case 'queryScalarParam':
+          case 'uriParam':
+            if (param.isApiVersion) {
+              apiVersionParam = param;
+            }
+        }
+      }
+      if (apiVersionParam) {
+        let location: string;
+        let name: string | undefined;
+        switch (apiVersionParam.kind) {
+          case 'headerScalarParam':
+            location = 'Header';
+            name = apiVersionParam.headerName;
+            break;
+          case 'pathScalarParam':
+          case 'uriParam':
+            location = 'Path';
+            // name isn't used for the path case
+            break;
+          case 'queryScalarParam':
+            location = 'QueryParam';
+            name = apiVersionParam.queryParameter;
+            break;
+        }
+
+        if (name) {
+          name = `\n\t\t\tName: "${name}",`;
+        } else {
+          name = '';
+        }
+
+        apiVersionConfig = `\n\t\tAPIVersion: runtime.APIVersionOptions{${name}\n\t\t\tLocation: runtime.APIVersionLocation${location},\n\t\t},`;
+        if (!plOpts) {
+          apiVersionConfig += '\n';
+        }
+      }
+      bodyText += `\tcl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{${apiVersionConfig}${plOpts ?? ''}}, &options.ClientOptions)\n`;
+      return bodyText;
+    };
+
+    let prolog: string;
+    switch (constructor.authentication.kind) {
+      case 'apikey':
+        ctorParams.push('credential *azcore.KeyCredential');
+        paramDocs.push(helpers.formatCommentAsBulletItem('credential', { summary: 'the [azcore.KeyCredential] used to authenticate requests.' }));
+        const keyPolicyOpts = '&runtime.KeyCredentialPolicyOptions{\n\t\t\tInsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,\n\t\t}';
+        const keyPolicy = `\n\t\tPerCall: []policy.Policy{\n\t\truntime.NewKeyCredentialPolicy(credential, "${constructor.authentication.name}", ${keyPolicyOpts}),\n\t\t},\n`;
+        if (client.options.kind !== 'clientOptions') {
+          throw new CodegenError('InternalError', `unexpected client options kind ${client.options.kind}`);
+        }
+        prolog = emitProlog(client.options.name, keyPolicy);
+        break;
+      case 'none':
+        if (client.options.kind !== 'clientOptions') {
+          throw new CodegenError('InternalError', `unexpected client options kind ${client.options.kind}`);
+        }
+        prolog = emitProlog(client.options.name);
+        break;
+      case 'token':
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+        ctorParams.push('credential azcore.TokenCredential');
+        paramDocs.push(helpers.formatCommentAsBulletItem('credential', { summary: 'used to authorize requests. Usually a credential from azidentity.' }));
+        switch (client.options.kind) {
+          case 'clientOptions': {
+            imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/policy');
+            const tokenPolicyOpts = '&policy.BearerTokenOptions{\n\t\t\tInsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,\n\t\t}';
+            const scopesSlice = new Array<string>();
+            values(constructor.authentication.scopes).forEach((scope: string) => { scopesSlice.push(`"${scope}"`); });
+            const tokenPolicy = `\n\t\tPerCall: []policy.Policy{\n\t\truntime.NewBearerTokenPolicy(credential, []string{${scopesSlice.join(', ')}}, ${tokenPolicyOpts}),\n\t\t},\n`;
+            prolog = emitProlog(client.options.name, tokenPolicy);
+            break;
+          }
+          case 'parameter':
+            // this is the ARM case
+            prolog = '\tcl, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
+            break;
+        }
+        break;
+    }
+
     // add client options last
-    ctorParams.push(`${client.options.name} ${helpers.formatParameterTypeName(client.options)}`);
+    ctorParams.push(`options ${helpers.formatParameterTypeName(client.options)}`);
     paramDocs.push(helpers.formatCommentAsBulletItem(client.options.name, client.options.docs));
 
     ctorText += `// ${constructor.name} creates a new instance of ${client.name} with the specified values.\n`;
@@ -196,25 +329,48 @@ function generateConstructors(azureARM: boolean, client: go.Client, imports: Imp
     }
 
     ctorText += `func ${constructor.name}(${ctorParams.join(', ')}) (*${client.name}, error) {\n`;
-    let clientType = 'azcore';
-    if (azureARM) {
-      clientType = 'arm';
-    }
-
-    ctorText += `\tcl, err := ${clientType}.NewClient(moduleName, moduleVersion, credential, options)\n`;
+    ctorText += prolog;
     ctorText += '\tif err != nil {\n';
     ctorText += '\t\treturn nil, err\n';
     ctorText += '\t}\n';
 
+    // handle any client-side defaults
+    if (client.options.kind === 'clientOptions') {
+      for (const param of client.options.params) {
+        if (go.isClientSideDefault(param.style)) {
+          let name: string;
+          if (go.isAPIVersionParameter(param)) {
+            name = 'APIVersion';
+          } else {
+            name = ensureNameCase(param.name);
+          }
+          ctorText += `\t${param.name} := ${helpers.formatLiteralValue(param.style.defaultValue, false)}\n`;
+          ctorText += `\tif options.${name} != ${helpers.zeroValue(param)} {\n\t\t${param.name} = ${helpers.star(param)}options.${name}\n\t}\n`;
+        }
+      }
+    }
+
     // construct client literal
-    ctorText += `\tclient := &${client.name}{\n`;
+    let clientVar = 'client';
+    // ensure clientVar doesn't collide with any params
+    for (const param of client.parameters) {
+      if (param.name === clientVar) {
+        clientVar = ensureNameCase(client.name, true);
+        break;
+      }
+    }
+
+    ctorText += `\t${clientVar} := &${client.name}{\n`;
     for (const parameter of values(client.parameters)) {
+      if (go.isLiteralParameter(parameter)) {
+        continue;
+      }
       // each client field will have a matching parameter with the same name
       ctorText += `\t\t${parameter.name}: ${parameter.name},\n`;
     }
     ctorText += '\tinternal: cl,\n';
     ctorText += '\t}\n';
-    ctorText += '\treturn client, nil\n';
+    ctorText += `\treturn ${clientVar}, nil\n`;
     ctorText += '}\n\n';
   }
 
@@ -224,14 +380,12 @@ function generateConstructors(azureARM: boolean, client: go.Client, imports: Imp
 // creates a modeled constructor for an ARM client
 function createARMClientConstructor(client: go.Client, imports: ImportManager): go.Constructor {
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
-  const ctor = new go.Constructor(`New${client.name}`);
+  // we don't need the scopes for ARM, it's handled by pipeline policy
+  const ctor = new go.Constructor(`New${client.name}`, new go.TokenAuthentication([]));
   // add any modeled parameter first, which should only be the subscriptionID, then add TokenCredential
   for (const param of client.parameters) {
     ctor.parameters.push(param);
   }
-  const tokenCredParam = new go.Parameter('credential', new go.QualifiedType('TokenCredential', 'github.com/Azure/azure-sdk-for-go/sdk/azcore'), 'required', true, 'client');
-  tokenCredParam.docs.summary = 'used to authorize requests. Usually a credential from azidentity.';
-  ctor.parameters.push(tokenCredParam);
   return ctor;
 }
 
@@ -355,8 +509,6 @@ function generateNilChecks(path: string, prefix: string = 'page'): string {
   
   return checks.join(' && ');
 }
-
-
 
 function emitPagerDefinition(client: go.Client, method: go.LROPageableMethod | go.PageableMethod, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
   imports.add('context');

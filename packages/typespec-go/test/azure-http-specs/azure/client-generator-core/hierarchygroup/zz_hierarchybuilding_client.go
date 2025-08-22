@@ -4,13 +4,39 @@
 
 package hierarchygroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+)
 
 // HierarchyBuildingClient - Test for @hierarchyBuilding decorator.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewHierarchyBuildingClientWithNoCredential() instead.
 type HierarchyBuildingClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// HierarchyBuildingClientOptions contains the optional values for creating a [HierarchyBuildingClient].
+type HierarchyBuildingClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewHierarchyBuildingClientWithNoCredential creates a new instance of HierarchyBuildingClient with the specified values.
+//   - endpoint - Service host
+//   - HierarchyBuildingClientOptions - HierarchyBuildingClientOptions contains the optional values for creating a [HierarchyBuildingClient]
+func NewHierarchyBuildingClientWithNoCredential(endpoint string, options *HierarchyBuildingClientOptions) (*HierarchyBuildingClient, error) {
+	if options == nil {
+		options = &HierarchyBuildingClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &HierarchyBuildingClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // NewHierarchyBuildingAnimalOperationsClient creates a new instance of [HierarchyBuildingAnimalOperationsClient].

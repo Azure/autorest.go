@@ -88,6 +88,8 @@ export async function namer(session: Session<CodeModel>) {
 
   if (containingModule !== '' && module !== '') {
     throw new Error('--module and --containing-module are mutually exclusive');
+  } else if (containingModule === '' && module === '') {
+    throw new Error('must specify --module or --containing-module');
   }
 
   if (module !== '') {

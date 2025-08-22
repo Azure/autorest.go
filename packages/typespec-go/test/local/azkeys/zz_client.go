@@ -15,11 +15,50 @@ import (
 	"strings"
 )
 
+<<<<<<< HEAD
 // Client - The key vault client performs cryptographic key operations and vault operations against the Key Vault service.
 // Don't use this type directly, use a constructor function instead.
+=======
+// Client - The key vault client performs cryptographic key operations and vault operations
+// against the Key Vault service.
+// Don't use this type directly, use NewClient() instead.
+>>>>>>> 29d91e2ccb (Generate client constructors)
 type Client struct {
 	internal     *azcore.Client
 	vaultBaseUrl string
+}
+
+// ClientOptions contains the optional values for creating a [Client].
+type ClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewClient creates a new instance of Client with the specified values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - ClientOptions - ClientOptions contains the optional values for creating a [Client]
+func NewClient(vaultBaseUrl string, credential azcore.TokenCredential, options *ClientOptions) (*Client, error) {
+	if options == nil {
+		options = &ClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
+		APIVersion: runtime.APIVersionOptions{
+			Name:     "api-version",
+			Location: runtime.APIVersionLocationQueryParam,
+		},
+		PerCall: []policy.Policy{
+			runtime.NewBearerTokenPolicy(credential, []string{"https://vault.azure.net/.default"}, &policy.BearerTokenOptions{
+				InsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,
+			}),
+		},
+	}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &Client{
+		vaultBaseUrl: vaultBaseUrl,
+		internal:     cl,
+	}
+	return client, nil
 }
 
 // BackupKey - Requests that a backup of the specified key be downloaded to the client.

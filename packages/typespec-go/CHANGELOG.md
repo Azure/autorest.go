@@ -16,6 +16,12 @@
 
 * Fix polymorphic type result of response generation.
 
+### Features Added
+
+* Emit client constructors and corresponding client options type.
+  * Note that when using switch `containing-module`, client constructors and options type are not emitted.
+  * Added switch `omit-constructors` to disable this feature.
+
 ### Other Changes
 
 * Updated the minimum version of `azcore` to `v1.19.0`.

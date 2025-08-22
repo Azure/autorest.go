@@ -4,13 +4,39 @@
 
 package internalpager
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+)
 
 // PagerClient contains the methods for the Pager group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewPagerClientWithNoCredential() instead.
 type PagerClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// PagerClientOptions contains the optional values for creating a [PagerClient].
+type PagerClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewPagerClientWithNoCredential creates a new instance of PagerClient with the specified values.
+//   - endpoint - Service host
+//   - PagerClientOptions - PagerClientOptions contains the optional values for creating a [PagerClient]
+func NewPagerClientWithNoCredential(endpoint string, options *PagerClientOptions) (*PagerClient, error) {
+	if options == nil {
+		options = &PagerClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &PagerClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // NewPagerWidgetsClient creates a new instance of [PagerWidgetsClient].

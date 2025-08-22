@@ -14,11 +14,36 @@ import (
 )
 
 // SecondClient contains the methods for the Second group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewSecondClientWithNoCredential() instead.
 type SecondClient struct {
 	internal *azcore.Client
 	endpoint string
 	client   ClientType
+}
+
+// SecondClientOptions contains the optional values for creating a [SecondClient].
+type SecondClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewSecondClientWithNoCredential creates a new instance of SecondClient with the specified values.
+//   - endpoint - Need to be set as 'http://localhost:3000' in client.
+//   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
+//   - SecondClientOptions - SecondClientOptions contains the optional values for creating a [SecondClient]
+func NewSecondClientWithNoCredential(endpoint string, client ClientType, options *SecondClientOptions) (*SecondClient, error) {
+	if options == nil {
+		options = &SecondClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	secondClient := &SecondClient{
+		endpoint: endpoint,
+		client:   client,
+		internal: cl,
+	}
+	return secondClient, nil
 }
 
 // NewSecondGroup5Client creates a new instance of [SecondGroup5Client].

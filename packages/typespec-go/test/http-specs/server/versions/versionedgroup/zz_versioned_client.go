@@ -15,10 +15,38 @@ import (
 )
 
 // VersionedClient - Illustrates versioned server.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewVersionedClientWithNoCredential() instead.
 type VersionedClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// VersionedClientOptions contains the optional values for creating a [VersionedClient].
+type VersionedClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewVersionedClientWithNoCredential creates a new instance of VersionedClient with the specified values.
+//   - endpoint - Need to be set as 'http://localhost:3000' in client.
+//   - VersionedClientOptions - VersionedClientOptions contains the optional values for creating a [VersionedClient]
+func NewVersionedClientWithNoCredential(endpoint string, options *VersionedClientOptions) (*VersionedClient, error) {
+	if options == nil {
+		options = &VersionedClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
+		APIVersion: runtime.APIVersionOptions{
+			Name:     "api-version",
+			Location: runtime.APIVersionLocationQueryParam,
+		},
+	}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &VersionedClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // WithPathAPIVersion -

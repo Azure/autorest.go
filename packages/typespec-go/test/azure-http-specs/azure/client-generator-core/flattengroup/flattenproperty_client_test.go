@@ -13,7 +13,7 @@ import (
 )
 
 func TestFlattenPropertyClient_PutFlattenModel(t *testing.T) {
-	client, err := flattengroup.NewFlattenPropertyClient("http://localhost:3000", nil)
+	client, err := flattengroup.NewFlattenPropertyClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.PutFlattenModel(context.Background(), flattengroup.FlattenModel{
 		Name: to.Ptr("foo"),
@@ -33,7 +33,7 @@ func TestFlattenPropertyClient_PutFlattenModel(t *testing.T) {
 }
 
 func TestFlattenPropertyClient_PutNestedFlattenModel(t *testing.T) {
-	client, err := flattengroup.NewFlattenPropertyClient("http://localhost:3000", nil)
+	client, err := flattengroup.NewFlattenPropertyClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.PutNestedFlattenModel(context.Background(), flattengroup.NestedFlattenModel{
 		Name: to.Ptr("foo"),
