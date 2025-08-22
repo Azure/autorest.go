@@ -5,6 +5,7 @@
 ### Other Changes
 
 * Updated the minimum version of `azcore` to `v1.19.0`.
+* Report a `NameCollision` diagnostic if two `const` values have the same name.
 
 ## 0.8.0 (2025-08-12)
 

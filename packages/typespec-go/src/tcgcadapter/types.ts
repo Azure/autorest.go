@@ -610,13 +610,27 @@ export class typeAdapter {
       if (valueType.enumType.access === 'internal') {
         valueTypeName = naming.getEscapedReservedName(uncapitalize(valueTypeName), 'Type');
       }
-      let value = this.constValues.get(valueTypeName);
-      if (!value) {
-        value = new go.ConstantValue(valueTypeName, type, valueType.value);
-        value.docs.summary = valueType.summary;
-        value.docs.description = valueType.doc;
-        this.constValues.set(valueTypeName, value);
+
+      if (this.constValues.has(valueTypeName)) {
+        // we have a type name collision. while tsp will prevent this
+        // from directly being authored, it can happen due to how names
+        // are computed. consider the following example.
+        //
+        // union ContentTypes { "application/json" | "application/*+json" }
+        //
+        // naming.ensureNameCase() will discard the "*+" chars in the
+        // second value. as a result, both entries will have the name
+        // "ApplicationJSON".
+        // instead of being clever, report a NameCollision diagnostic so
+        // that the tsp author can define the desired names.
+        throw new AdapterError('NameCollision', `enum ${type.name} contains entry ${valueTypeName} that collides with an existing value`, valueType.__raw?.node ?? tsp.NoTarget);
       }
+
+      const value = new go.ConstantValue(valueTypeName, type, valueType.value);
+      value.docs.summary = valueType.summary;
+      value.docs.description = valueType.doc;
+      this.constValues.set(valueTypeName, value);
+
       values.push(value);
     }
     return values;
