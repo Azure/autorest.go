@@ -623,7 +623,7 @@ export class typeAdapter {
         // "ApplicationJSON".
         // instead of being clever, report a NameCollision diagnostic so
         // that the tsp author can define the desired names.
-        throw new AdapterError('NameCollision', `enum ${type.name} contains entry ${valueTypeName} that collides with an existing value`, valueType.__raw?.node ?? tsp.NoTarget);
+        throw new AdapterError('NameCollision', `enum value ${valueType.name} was renamed to ${valueTypeName} which collides with an existing value`, valueType.__raw?.node ?? tsp.NoTarget);
       }
 
       const value = new go.ConstantValue(valueTypeName, type, valueType.value);
