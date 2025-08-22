@@ -37,7 +37,7 @@ const httpSpecsGroup = {
   //'multipartgroup': ['payload/multipart'], // TODO: https://github.com/Azure/autorest.go/issues/1445
   'pageablegroup': ['payload/pageable'],
   'xmlgroup': ['payload/xml', 'slice-elements-byval=true'],
-  'statuscoderangegroup': ['response/status-code-range'],
+  //'statuscoderangegroup': ['response/status-code-range'], // TODO: https://github.com/Azure/autorest.go/issues/1606
   'jsongroup': ['serialization/encoded-name/json'],
   'noendpointgroup': ['server/endpoint/not-defined'],
   'multiplegroup': ['server/path/multiple'],
