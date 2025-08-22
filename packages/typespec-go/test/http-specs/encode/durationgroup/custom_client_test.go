@@ -16,7 +16,7 @@ import (
 )
 
 func TestHeaderClientDefault(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationHeaderClient().Default(context.Background(), "P40D", nil)
 	require.NoError(t, err)
@@ -24,7 +24,7 @@ func TestHeaderClientDefault(t *testing.T) {
 }
 
 func TestHeaderClientFloat64Seconds(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationHeaderClient().Float64Seconds(context.Background(), 35.625, nil)
 	require.NoError(t, err)
@@ -32,7 +32,7 @@ func TestHeaderClientFloat64Seconds(t *testing.T) {
 }
 
 func TestHeaderClientFloatSeconds(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationHeaderClient().FloatSeconds(context.Background(), 35.625, nil)
 	require.NoError(t, err)
@@ -40,7 +40,7 @@ func TestHeaderClientFloatSeconds(t *testing.T) {
 }
 
 func TestHeaderClientInt32Seconds(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationHeaderClient().Int32Seconds(context.Background(), 36, nil)
 	require.NoError(t, err)
@@ -48,7 +48,7 @@ func TestHeaderClientInt32Seconds(t *testing.T) {
 }
 
 func TestHeaderClientISO8601(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationHeaderClient().ISO8601(context.Background(), "P40D", nil)
 	require.NoError(t, err)
@@ -56,7 +56,7 @@ func TestHeaderClientISO8601(t *testing.T) {
 }
 
 func TestHeaderClientISO8601Array(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationHeaderClient().ISO8601Array(context.Background(), []string{"P40D", "P50D"}, nil)
 	require.NoError(t, err)
@@ -64,7 +64,7 @@ func TestHeaderClientISO8601Array(t *testing.T) {
 }
 
 func TestPropertyClientDefault(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationPropertyClient().Default(context.Background(), durationgroup.DefaultDurationProperty{
 		Value: to.Ptr("P40D"),
@@ -75,7 +75,7 @@ func TestPropertyClientDefault(t *testing.T) {
 }
 
 func TestPropertyClientFloat64Seconds(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationPropertyClient().Float64Seconds(context.Background(), durationgroup.Float64SecondsDurationProperty{
 		Value: to.Ptr(35.625),
@@ -86,7 +86,7 @@ func TestPropertyClientFloat64Seconds(t *testing.T) {
 }
 
 func TestPropertyClientFloatSeconds(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationPropertyClient().FloatSeconds(context.Background(), durationgroup.FloatSecondsDurationProperty{
 		Value: to.Ptr[float32](35.625),
@@ -97,7 +97,7 @@ func TestPropertyClientFloatSeconds(t *testing.T) {
 }
 
 func TestPropertyClientFloatSecondsArray(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationPropertyClient().FloatSecondsArray(context.Background(), durationgroup.FloatSecondsDurationArrayProperty{
 		Value: []*float32{
@@ -114,7 +114,7 @@ func TestPropertyClientFloatSecondsArray(t *testing.T) {
 }
 
 func TestPropertyClientInt32Seconds(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationPropertyClient().Int32Seconds(context.Background(), durationgroup.Int32SecondsDurationProperty{
 		Value: to.Ptr[int32](36),
@@ -125,7 +125,7 @@ func TestPropertyClientInt32Seconds(t *testing.T) {
 }
 
 func TestPropertyClientISO8601(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationPropertyClient().ISO8601(context.Background(), durationgroup.ISO8601DurationProperty{
 		Value: to.Ptr("P40D"),
@@ -136,7 +136,7 @@ func TestPropertyClientISO8601(t *testing.T) {
 }
 
 func TestQueryClientDefault(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationQueryClient().Default(context.Background(), "P40D", nil)
 	require.NoError(t, err)
@@ -144,7 +144,7 @@ func TestQueryClientDefault(t *testing.T) {
 }
 
 func TestQueryClientFloat64Seconds(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationQueryClient().Float64Seconds(context.Background(), 35.625, nil)
 	require.NoError(t, err)
@@ -152,7 +152,7 @@ func TestQueryClientFloat64Seconds(t *testing.T) {
 }
 
 func TestQueryClientFloatSeconds(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationQueryClient().FloatSeconds(context.Background(), 35.625, nil)
 	require.NoError(t, err)
@@ -160,7 +160,7 @@ func TestQueryClientFloatSeconds(t *testing.T) {
 }
 
 func TestQueryClientInt32Seconds(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationQueryClient().Int32Seconds(context.Background(), 36, nil)
 	require.NoError(t, err)
@@ -168,7 +168,7 @@ func TestQueryClientInt32Seconds(t *testing.T) {
 }
 
 func TestQueryClientInt32SecondsArray(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationQueryClient().Int32SecondsArray(context.Background(), []int32{36, 47}, nil)
 	require.NoError(t, err)
@@ -176,7 +176,7 @@ func TestQueryClientInt32SecondsArray(t *testing.T) {
 }
 
 func TestQueryClientISO8601(t *testing.T) {
-	client, err := durationgroup.NewDurationClient("http://localhost:3000", nil)
+	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationQueryClient().ISO8601(context.Background(), "P40D", nil)
 	require.NoError(t, err)

@@ -14,11 +14,43 @@ import (
 )
 
 // ReturnTypeChangedFromClient - Test for the `@returnTypeChangedFrom` decorator.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewReturnTypeChangedFromClientWithNoCredential() instead.
 type ReturnTypeChangedFromClient struct {
 	internal *azcore.Client
 	endpoint string
-	version  Versions
+	version  string
+}
+
+// ReturnTypeChangedFromClientOptions contains the optional values for creating a [ReturnTypeChangedFromClient].
+type ReturnTypeChangedFromClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewReturnTypeChangedFromClientWithNoCredential creates a new instance of ReturnTypeChangedFromClient with the specified values.
+//   - endpoint - Need to be set as 'http://localhost:3000' in client.
+//   - ReturnTypeChangedFromClientOptions - ReturnTypeChangedFromClientOptions contains the optional values for creating a [ReturnTypeChangedFromClient]
+func NewReturnTypeChangedFromClientWithNoCredential(endpoint string, options *ReturnTypeChangedFromClientOptions) (*ReturnTypeChangedFromClient, error) {
+	if options == nil {
+		options = &ReturnTypeChangedFromClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
+		APIVersion: runtime.APIVersionOptions{
+			Location: runtime.APIVersionLocationPath,
+		},
+	}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	version := "v2"
+	if options.APIVersion != "" {
+		version = options.APIVersion
+	}
+	client := &ReturnTypeChangedFromClient{
+		endpoint: endpoint,
+		version:  version,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Test -
@@ -51,7 +83,7 @@ func (client *ReturnTypeChangedFromClient) Test(ctx context.Context, body string
 func (client *ReturnTypeChangedFromClient) testCreateRequest(ctx context.Context, body string, _ *ReturnTypeChangedFromClientTestOptions) (*policy.Request, error) {
 	host := "{endpoint}/versioning/return-type-changed-from/api-version:{version}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{version}", string(client.version))
+	host = strings.ReplaceAll(host, "{version}", client.version)
 	urlPath := "/test"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -13,7 +13,7 @@ import (
 )
 
 func TestValueTypesUnionFloatLiteralClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesUnionFloatLiteralClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestValueTypesUnionFloatLiteralClient_Get(t *testing.T) {
 }
 
 func TestValueTypesUnionFloatLiteralClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesUnionFloatLiteralClient().Put(context.Background(), valuetypesgroup.UnionFloatLiteralProperty{
 		Property: to.Ptr(valuetypesgroup.UnionFloatLiteralPropertyProperty46875),

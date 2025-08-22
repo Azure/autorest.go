@@ -13,7 +13,7 @@ import (
 )
 
 func TestHierarchyBuildingClient_UpdatePetAsAnimal(t *testing.T) {
-	client, err := hierarchygroup.NewHierarchyBuildingClient("http://localhost:3000", nil)
+	client, err := hierarchygroup.NewHierarchyBuildingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	animalClient := client.NewHierarchyBuildingAnimalOperationsClient()
 
@@ -31,7 +31,7 @@ func TestHierarchyBuildingClient_UpdatePetAsAnimal(t *testing.T) {
 }
 
 func TestHierarchyBuildingClient_UpdateDogAsAnimal(t *testing.T) {
-	client, err := hierarchygroup.NewHierarchyBuildingClient("http://localhost:3000", nil)
+	client, err := hierarchygroup.NewHierarchyBuildingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	animalClient := client.NewHierarchyBuildingAnimalOperationsClient()
 
@@ -51,7 +51,7 @@ func TestHierarchyBuildingClient_UpdateDogAsAnimal(t *testing.T) {
 }
 
 func TestHierarchyBuildingClient_UpdateDogAsPet(t *testing.T) {
-	client, err := hierarchygroup.NewHierarchyBuildingClient("http://localhost:3000", nil)
+	client, err := hierarchygroup.NewHierarchyBuildingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	petClient := client.NewHierarchyBuildingPetOperationsClient()
 
@@ -71,7 +71,7 @@ func TestHierarchyBuildingClient_UpdateDogAsPet(t *testing.T) {
 }
 
 func TestHierarchyBuildingClient_UpdatePetAsPet(t *testing.T) {
-	client, err := hierarchygroup.NewHierarchyBuildingClient("http://localhost:3000", nil)
+	client, err := hierarchygroup.NewHierarchyBuildingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	petClient := client.NewHierarchyBuildingPetOperationsClient()
 
@@ -89,7 +89,7 @@ func TestHierarchyBuildingClient_UpdatePetAsPet(t *testing.T) {
 }
 
 func TestHierarchyBuildingClient_UpdateDogAsDog(t *testing.T) {
-	client, err := hierarchygroup.NewHierarchyBuildingClient("http://localhost:3000", nil)
+	client, err := hierarchygroup.NewHierarchyBuildingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	dogClient := client.NewHierarchyBuildingDogOperationsClient()
 

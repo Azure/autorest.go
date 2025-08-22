@@ -17,7 +17,7 @@ import (
 )
 
 func TestCollectionsByteClientGetNonNull(t *testing.T) {
-	client, err := nullablegroup.NewNullableClient("http://localhost:3000", nil)
+	client, err := nullablegroup.NewNullableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNullableCollectionsByteClient().GetNonNull(context.Background(), nil)
 	require.NoError(t, err)
@@ -31,7 +31,7 @@ func TestCollectionsByteClientGetNonNull(t *testing.T) {
 }
 
 func TestCollectionsByteClientGetNull(t *testing.T) {
-	client, err := nullablegroup.NewNullableClient("http://localhost:3000", nil)
+	client, err := nullablegroup.NewNullableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNullableCollectionsByteClient().GetNull(context.Background(), nil)
 	require.NoError(t, err)
@@ -41,7 +41,7 @@ func TestCollectionsByteClientGetNull(t *testing.T) {
 }
 
 func TestCollectionsByteClientPatchNonNull(t *testing.T) {
-	client, err := nullablegroup.NewNullableClient("http://localhost:3000", nil)
+	client, err := nullablegroup.NewNullableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNullableCollectionsByteClient().PatchNonNull(context.Background(), nullablegroup.CollectionsByteProperty{
 		NullableProperty: [][]byte{
@@ -55,7 +55,7 @@ func TestCollectionsByteClientPatchNonNull(t *testing.T) {
 }
 
 func TestCollectionsByteClientPatchNull(t *testing.T) {
-	client, err := nullablegroup.NewNullableClient("http://localhost:3000", nil)
+	client, err := nullablegroup.NewNullableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNullableCollectionsByteClient().PatchNull(context.Background(), nullablegroup.CollectionsByteProperty{
 		NullableProperty: azcore.NullValue[[][]byte](),

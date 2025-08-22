@@ -67,6 +67,9 @@ export interface Options {
   /** indicates if tracing spans should be emitted. the default is false */
   injectSpans: boolean;
 
+  /** indicates if client constructors should be omitted. the default is false */
+  omitConstructors: boolean;
+
   /**
    * indicates whether or not to disallow unknown fields in the JSON unmarshaller.
    * reproduce the behavior of https://pkg.go.dev/encoding/json#Decoder.DisallowUnknownFields
@@ -152,6 +155,7 @@ export class CodeModel implements CodeModel {
   
     this.clients.sort((a: client.Client, b: client.Client) => { return sortAscending(a.name, b.name); });
     for (const client of this.clients) {
+      client.constructors.sort((a: client.Constructor, b: client.Constructor) => sortAscending(a.name, b.name));
       client.methods.sort((a: client.MethodType, b: client.MethodType) => { return sortAscending(a.name, b.name); });
       client.clientAccessors.sort((a: client.ClientAccessor, b: client.ClientAccessor) => { return sortAscending(a.name, b.name); });
       for (const method of client.methods) {
@@ -172,6 +176,7 @@ export class Options implements Options {
     this.headerText = headerText;
     this.generateFakes = generateFakes;
     this.injectSpans = injectSpans;
+    this.omitConstructors = false;
     this.disallowUnknownFields = disallowUnknownFields;
     this.generateExamples = generateExamples;
   }

@@ -13,10 +13,33 @@ import (
 )
 
 // FlattenPropertyClient - Illustrates the model flatten cases.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewFlattenPropertyClientWithNoCredential() instead.
 type FlattenPropertyClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// FlattenPropertyClientOptions contains the optional values for creating a [FlattenPropertyClient].
+type FlattenPropertyClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewFlattenPropertyClientWithNoCredential creates a new instance of FlattenPropertyClient with the specified values.
+//   - endpoint - Service host
+//   - FlattenPropertyClientOptions - FlattenPropertyClientOptions contains the optional values for creating a [FlattenPropertyClient]
+func NewFlattenPropertyClientWithNoCredential(endpoint string, options *FlattenPropertyClientOptions) (*FlattenPropertyClient, error) {
+	if options == nil {
+		options = &FlattenPropertyClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &FlattenPropertyClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // PutFlattenModel -

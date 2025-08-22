@@ -15,7 +15,7 @@ import (
 )
 
 func TestServiceClient_One(t *testing.T) {
-	client, err := defaultgroup.NewServiceClient("http://localhost:3000", defaultgroup.ClientTypeDefault, nil)
+	client, err := defaultgroup.NewServiceClientWithNoCredential("http://localhost:3000", defaultgroup.ClientTypeDefault, nil)
 	require.NoError(t, err)
 	resp, err := client.One(context.Background(), nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestServiceClient_One(t *testing.T) {
 }
 
 func TestServiceClient_Two(t *testing.T) {
-	client, err := defaultgroup.NewServiceClient("http://localhost:3000", defaultgroup.ClientTypeDefault, nil)
+	client, err := defaultgroup.NewServiceClientWithNoCredential("http://localhost:3000", defaultgroup.ClientTypeDefault, nil)
 	require.NoError(t, err)
 	resp, err := client.Two(context.Background(), nil)
 	require.NoError(t, err)

@@ -14,11 +14,36 @@ import (
 )
 
 // ClientAClient contains the methods for the ClientA group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewClientAClientWithNoCredential() instead.
 type ClientAClient struct {
 	internal *azcore.Client
 	endpoint string
 	client   ClientType
+}
+
+// ClientAClientOptions contains the optional values for creating a [ClientAClient].
+type ClientAClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewClientAClientWithNoCredential creates a new instance of ClientAClient with the specified values.
+//   - endpoint - Need to be set as 'http://localhost:3000' in client.
+//   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
+//   - ClientAClientOptions - ClientAClientOptions contains the optional values for creating a [ClientAClient]
+func NewClientAClientWithNoCredential(endpoint string, client ClientType, options *ClientAClientOptions) (*ClientAClient, error) {
+	if options == nil {
+		options = &ClientAClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	clientAClient := &ClientAClient{
+		endpoint: endpoint,
+		client:   client,
+		internal: cl,
+	}
+	return clientAClient, nil
 }
 
 // RenamedFive -

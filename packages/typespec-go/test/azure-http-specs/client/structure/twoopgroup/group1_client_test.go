@@ -15,7 +15,7 @@ import (
 )
 
 func TestGroup1Client_Four(t *testing.T) {
-	client, err := twoopgroup.NewTwoOperationGroupClient("http://localhost:3000", twoopgroup.ClientTypeTwoOperationGroup, nil)
+	client, err := twoopgroup.NewTwoOperationGroupClientWithNoCredential("http://localhost:3000", twoopgroup.ClientTypeTwoOperationGroup, nil)
 	require.NoError(t, err)
 	resp, err := client.NewTwoOperationGroupGroup1Client().Four(context.Background(), nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestGroup1Client_Four(t *testing.T) {
 }
 
 func TestGroup1Client_One(t *testing.T) {
-	client, err := twoopgroup.NewTwoOperationGroupClient("http://localhost:3000", twoopgroup.ClientTypeTwoOperationGroup, nil)
+	client, err := twoopgroup.NewTwoOperationGroupClientWithNoCredential("http://localhost:3000", twoopgroup.ClientTypeTwoOperationGroup, nil)
 	require.NoError(t, err)
 	resp, err := client.NewTwoOperationGroupGroup1Client().One(context.Background(), nil)
 	require.NoError(t, err)
@@ -31,7 +31,7 @@ func TestGroup1Client_One(t *testing.T) {
 }
 
 func TestGroup1Client_Three(t *testing.T) {
-	client, err := twoopgroup.NewTwoOperationGroupClient("http://localhost:3000", twoopgroup.ClientTypeTwoOperationGroup, nil)
+	client, err := twoopgroup.NewTwoOperationGroupClientWithNoCredential("http://localhost:3000", twoopgroup.ClientTypeTwoOperationGroup, nil)
 	require.NoError(t, err)
 	resp, err := client.NewTwoOperationGroupGroup1Client().Three(context.Background(), nil)
 	require.NoError(t, err)

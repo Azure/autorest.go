@@ -13,7 +13,7 @@ import (
 )
 
 func Test_Test(t *testing.T) {
-	client, err := madeoptionalgroup.NewMadeOptionalClient("http://localhost:3000", nil)
+	client, err := madeoptionalgroup.NewMadeOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Test(context.Background(), madeoptionalgroup.TestModel{
 		Prop: to.Ptr("foo"),

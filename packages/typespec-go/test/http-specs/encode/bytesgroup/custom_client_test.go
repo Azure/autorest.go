@@ -17,7 +17,7 @@ import (
 )
 
 func TestHeaderClientBase64(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesHeaderClient().Base64(context.Background(), []byte("test"), nil)
 	require.NoError(t, err)
@@ -25,7 +25,7 @@ func TestHeaderClientBase64(t *testing.T) {
 }
 
 func TestHeaderClientBase64URL(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesHeaderClient().Base64URL(context.Background(), []byte("test"), nil)
 	require.NoError(t, err)
@@ -33,7 +33,7 @@ func TestHeaderClientBase64URL(t *testing.T) {
 }
 
 func TestHeaderClientBase64URLArray(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesHeaderClient().Base64URLArray(context.Background(), [][]byte{[]byte("test"), []byte("test")}, nil)
 	require.NoError(t, err)
@@ -41,7 +41,7 @@ func TestHeaderClientBase64URLArray(t *testing.T) {
 }
 
 func TestHeaderClientDefault(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesHeaderClient().Default(context.Background(), []byte("test"), nil)
 	require.NoError(t, err)
@@ -49,7 +49,7 @@ func TestHeaderClientDefault(t *testing.T) {
 }
 
 func TestPropertyClientBase64(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesPropertyClient().Base64(context.Background(), bytesgroup.Base64BytesProperty{
 		Value: []byte("test"),
@@ -60,7 +60,7 @@ func TestPropertyClientBase64(t *testing.T) {
 }
 
 func TestPropertyClientBase64URL(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesPropertyClient().Base64URL(context.Background(), bytesgroup.Base64URLBytesProperty{
 		Value: []byte("test"),
@@ -71,7 +71,7 @@ func TestPropertyClientBase64URL(t *testing.T) {
 }
 
 func TestPropertyClientBase64URLArray(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesPropertyClient().Base64URLArray(context.Background(), bytesgroup.Base64URLArrayBytesProperty{
 		Value: [][]byte{[]byte("test"), []byte("test")},
@@ -82,7 +82,7 @@ func TestPropertyClientBase64URLArray(t *testing.T) {
 }
 
 func TestPropertyClientDefault(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesPropertyClient().Default(context.Background(), bytesgroup.DefaultBytesProperty{
 		Value: []byte("test"),
@@ -93,7 +93,7 @@ func TestPropertyClientDefault(t *testing.T) {
 }
 
 func TestQueryClientBase64(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesQueryClient().Base64(context.Background(), []byte("test"), nil)
 	require.NoError(t, err)
@@ -101,7 +101,7 @@ func TestQueryClientBase64(t *testing.T) {
 }
 
 func TestQueryClientBase64URL(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesQueryClient().Base64URL(context.Background(), []byte("test"), nil)
 	require.NoError(t, err)
@@ -109,7 +109,7 @@ func TestQueryClientBase64URL(t *testing.T) {
 }
 
 func TestQueryClientBase64URLArray(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesQueryClient().Base64URLArray(context.Background(), [][]byte{[]byte("test"), []byte("test")}, nil)
 	require.NoError(t, err)
@@ -117,7 +117,7 @@ func TestQueryClientBase64URLArray(t *testing.T) {
 }
 
 func TestQueryClientDefault(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesQueryClient().Default(context.Background(), []byte("test"), nil)
 	require.NoError(t, err)
@@ -125,7 +125,7 @@ func TestQueryClientDefault(t *testing.T) {
 }
 
 func TestRequestBodyClientBase64(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesRequestBodyClient().Base64(context.Background(), []byte("test"), nil)
 	require.NoError(t, err)
@@ -133,7 +133,7 @@ func TestRequestBodyClientBase64(t *testing.T) {
 }
 
 func TestRequestBodyClientBase64URL(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesRequestBodyClient().Base64URL(context.Background(), []byte("test"), nil)
 	require.NoError(t, err)
@@ -141,7 +141,7 @@ func TestRequestBodyClientBase64URL(t *testing.T) {
 }
 
 func TestRequestBodyClientCustomContentType(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	pngFile, err := os.OpenFile("../../../../node_modules/@typespec/http-specs/assets/image.png", os.O_RDONLY, 0)
 	require.NoError(t, err)
@@ -151,7 +151,7 @@ func TestRequestBodyClientCustomContentType(t *testing.T) {
 }
 
 func TestRequestBodyClientDefault(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	pngFile, err := os.OpenFile("../../../../node_modules/@typespec/http-specs/assets/image.png", os.O_RDONLY, 0)
 	require.NoError(t, err)
@@ -161,7 +161,7 @@ func TestRequestBodyClientDefault(t *testing.T) {
 }
 
 func TestRequestBodyClientOctetStream(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	pngFile, err := os.OpenFile("../../../../node_modules/@typespec/http-specs/assets/image.png", os.O_RDONLY, 0)
 	require.NoError(t, err)
@@ -171,7 +171,7 @@ func TestRequestBodyClientOctetStream(t *testing.T) {
 }
 
 func TestResponseBodyClientBase64(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesResponseBodyClient().Base64(context.Background(), nil)
 	require.NoError(t, err)
@@ -180,7 +180,7 @@ func TestResponseBodyClientBase64(t *testing.T) {
 }
 
 func TestResponseBodyClientBase64URL(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesResponseBodyClient().Base64URL(context.Background(), nil)
 	require.NoError(t, err)
@@ -189,7 +189,7 @@ func TestResponseBodyClientBase64URL(t *testing.T) {
 }
 
 func TestResponseBodyClientCustomContent(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesResponseBodyClient().CustomContentType(context.Background(), nil)
 	require.NoError(t, err)
@@ -202,7 +202,7 @@ func TestResponseBodyClientCustomContent(t *testing.T) {
 }
 
 func TestResponseBodyClientDefault(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesResponseBodyClient().Default(context.Background(), nil)
 	require.NoError(t, err)
@@ -215,7 +215,7 @@ func TestResponseBodyClientDefault(t *testing.T) {
 }
 
 func TestResponseBodyClientOctetStream(t *testing.T) {
-	client, err := bytesgroup.NewBytesClient("http://localhost:3000", nil)
+	client, err := bytesgroup.NewBytesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBytesResponseBodyClient().OctetStream(context.Background(), nil)
 	require.NoError(t, err)

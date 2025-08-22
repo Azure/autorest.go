@@ -13,7 +13,7 @@ import (
 )
 
 func TestOptionalBooleanLiteralClient_GetAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalBooleanLiteralClient().GetAll(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestOptionalBooleanLiteralClient_GetAll(t *testing.T) {
 }
 
 func TestOptionalBooleanLiteralClient_GetDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalBooleanLiteralClient().GetDefault(context.Background(), nil)
 	require.NoError(t, err)
@@ -30,7 +30,7 @@ func TestOptionalBooleanLiteralClient_GetDefault(t *testing.T) {
 }
 
 func TestOptionalBooleanLiteralClient_PutAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalBooleanLiteralClient().PutAll(context.Background(), optionalitygroup.BooleanLiteralProperty{
 		Property: to.Ptr(true),
@@ -40,7 +40,7 @@ func TestOptionalBooleanLiteralClient_PutAll(t *testing.T) {
 }
 
 func TestOptionalBooleanLiteralClient_PutDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalBooleanLiteralClient().PutDefault(context.Background(), optionalitygroup.BooleanLiteralProperty{}, nil)
 	require.NoError(t, err)
