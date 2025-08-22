@@ -13,7 +13,7 @@ import (
 )
 
 func TestValueTypesDecimalClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesDecimalClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestValueTypesDecimalClient_Get(t *testing.T) {
 }
 
 func TestValueTypesDecimalClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesDecimalClient().Put(context.Background(), valuetypesgroup.DecimalProperty{
 		Property: to.Ptr[float64](0.33333),

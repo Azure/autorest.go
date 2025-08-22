@@ -28,6 +28,9 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
   if (context.options['azcore-version']) {
     options.azcoreVersion = context.options['azcore-version'];
   }
+  if (context.options['omit-constructors']) {
+    options.omitConstructors = context.options['omit-constructors'];
+  }
 
   // @encodedName can be used in XML scenarios, it
   // is effectively the same as TypeSpec.Xml.@name.

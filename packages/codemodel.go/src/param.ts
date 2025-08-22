@@ -109,6 +109,12 @@ export interface HeaderScalarParameter extends ParameterBase {
 
   /** the type of the parameter */
   type: HeaderScalarType;
+
+  /**
+   * indicates this is an API version parameter 
+   * the default value is false.
+   */
+  isApiVersion: boolean;
 }
 
 /** defines the possible types for a scalar header */
@@ -204,6 +210,12 @@ export interface PathScalarParameter extends ParameterBase {
 
   /** indicates if the values must be URL encoded */
   isEncoded: boolean;
+
+  /**
+   * indicates this is an API version parameter 
+   * the default value is false.
+   */
+  isApiVersion: boolean;
 }
 
 /** defines the possible types for a PathScalarParameter */
@@ -238,6 +250,12 @@ export interface QueryScalarParameter extends ParameterBase {
 
   /** indicates if the value must be URL encoded */
   isEncoded: boolean;
+
+  /**
+   * indicates this is an API version parameter 
+   * the default value is false.
+   */
+  isApiVersion: boolean;
 }
 
 /** defines the possible types for a QueryScalarParameter */
@@ -257,10 +275,34 @@ export interface URIParameter extends ParameterBase {
 
   /** the type of the parameter */
   type: URIParameterType;
+
+  /**
+   * indicates this is an API version parameter 
+   * the default value is false.
+   */
+  isApiVersion: boolean;
 }
 
 /** defines the possible types for a URIParameter */
 export type URIParameterType = type.Constant | type.Scalar | type.String;
+
+/**
+ * returns true if the provided parameter is for the service API version
+ * 
+ * @param param the parameter to inspect
+ * @returns true if the parameter is for the API version
+ */
+export function isAPIVersionParameter(param: MethodParameter | Parameter): boolean {
+  switch (param.kind) {
+    case 'headerScalarParam':
+    case 'pathScalarParam':
+    case 'queryScalarParam':
+    case 'uriParam':
+      return param.isApiVersion;
+    default:
+      return false;
+  }
+}
 
 /** narrows style to a ClientSideDefault within the conditional block */
 export function isClientSideDefault(style: ParameterStyle): style is ClientSideDefault {
@@ -459,6 +501,7 @@ export class HeaderScalarParameter extends ParameterBase implements HeaderScalar
     super(name, type, style, byValue, location);
     this.kind = 'headerScalarParam';
     this.headerName = headerName;
+    this.isApiVersion = false;
   }
 }
 
@@ -514,6 +557,7 @@ export class PathScalarParameter extends ParameterBase implements PathScalarPara
     this.kind = 'pathScalarParam';
     this.pathSegment = pathSegment;
     this.isEncoded = isEncoded;
+    this.isApiVersion = false;
   }
 }
 
@@ -533,6 +577,7 @@ export class QueryScalarParameter extends ParameterBase implements QueryScalarPa
     this.kind = 'queryScalarParam';
     this.queryParameter = queryParam;
     this.isEncoded = isEncoded;
+    this.isApiVersion = false;
   }
 }
 
@@ -549,5 +594,6 @@ export class URIParameter extends ParameterBase implements URIParameter {
     super(name, type, style, byValue, location);
     this.kind = 'uriParam';
     this.uriPathSegment = uriPathSegment;
+    this.isApiVersion = false;
   }
 }

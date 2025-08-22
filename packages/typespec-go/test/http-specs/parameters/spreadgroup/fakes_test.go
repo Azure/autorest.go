@@ -38,8 +38,10 @@ func TestFake_SpreadWithMultipleParameters(t *testing.T) {
 			return
 		},
 	}
-	client, err := spreadgroup.NewSpreadClient("http://localhost:3000", &azcore.ClientOptions{
-		Transport: fake.NewSpreadAliasServerTransport(&server),
+	client, err := spreadgroup.NewSpreadClientWithNoCredential("http://localhost:3000", &spreadgroup.SpreadClientOptions{
+		azcore.ClientOptions{
+			Transport: fake.NewSpreadAliasServerTransport(&server),
+		},
 	})
 	require.NoError(t, err)
 

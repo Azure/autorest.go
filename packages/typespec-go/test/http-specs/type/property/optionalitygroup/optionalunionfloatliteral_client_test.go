@@ -13,7 +13,7 @@ import (
 )
 
 func TestOptionalUnionFloatLiteralClient_GetAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalUnionFloatLiteralClient().GetAll(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestOptionalUnionFloatLiteralClient_GetAll(t *testing.T) {
 }
 
 func TestOptionalUnionFloatLiteralClient_GetDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalUnionFloatLiteralClient().GetDefault(context.Background(), nil)
 	require.NoError(t, err)
@@ -30,7 +30,7 @@ func TestOptionalUnionFloatLiteralClient_GetDefault(t *testing.T) {
 }
 
 func TestOptionalUnionFloatLiteralClient_PutAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalUnionFloatLiteralClient().PutAll(context.Background(), optionalitygroup.UnionFloatLiteralProperty{
 		Property: to.Ptr(optionalitygroup.UnionFloatLiteralPropertyProperty2375),
@@ -40,7 +40,7 @@ func TestOptionalUnionFloatLiteralClient_PutAll(t *testing.T) {
 }
 
 func TestOptionalUnionFloatLiteralClient_PutDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalUnionFloatLiteralClient().PutDefault(context.Background(), optionalitygroup.UnionFloatLiteralProperty{}, nil)
 	require.NoError(t, err)

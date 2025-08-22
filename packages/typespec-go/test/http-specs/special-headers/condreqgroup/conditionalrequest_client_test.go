@@ -17,7 +17,7 @@ import (
 )
 
 func TestConditionalRequestClient_HeadIfModifiedSince(t *testing.T) {
-	client, err := condreqgroup.NewConditionalRequestClient("http://localhost:3000", nil)
+	client, err := condreqgroup.NewConditionalRequestClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	locale, err := time.LoadLocation("GMT")
 	require.NoError(t, err)
@@ -30,7 +30,7 @@ func TestConditionalRequestClient_HeadIfModifiedSince(t *testing.T) {
 }
 
 func TestConditionalRequestClient_PostIfMatch(t *testing.T) {
-	client, err := condreqgroup.NewConditionalRequestClient("http://localhost:3000", nil)
+	client, err := condreqgroup.NewConditionalRequestClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.PostIfMatch(context.Background(), &condreqgroup.ConditionalRequestClientPostIfMatchOptions{
 		IfMatch: to.Ptr(`"valid"`),
@@ -40,7 +40,7 @@ func TestConditionalRequestClient_PostIfMatch(t *testing.T) {
 }
 
 func TestConditionalRequestClient_PostIfNoneMatch(t *testing.T) {
-	client, err := condreqgroup.NewConditionalRequestClient("http://localhost:3000", nil)
+	client, err := condreqgroup.NewConditionalRequestClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.PostIfNoneMatch(context.Background(), &condreqgroup.ConditionalRequestClientPostIfNoneMatchOptions{
 		IfNoneMatch: to.Ptr(`"invalid"`),
@@ -50,7 +50,7 @@ func TestConditionalRequestClient_PostIfNoneMatch(t *testing.T) {
 }
 
 func TestConditionalRequestClient_PostIfUnmodifiedSince(t *testing.T) {
-	client, err := condreqgroup.NewConditionalRequestClient("http://localhost:3000", nil)
+	client, err := condreqgroup.NewConditionalRequestClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	locale, err := time.LoadLocation("GMT")
 	require.NoError(t, err)

@@ -4,13 +4,39 @@
 
 package collectionfmtgroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+)
 
 // CollectionFormatClient - Test for collectionFormat.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewCollectionFormatClientWithNoCredential() instead.
 type CollectionFormatClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// CollectionFormatClientOptions contains the optional values for creating a [CollectionFormatClient].
+type CollectionFormatClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewCollectionFormatClientWithNoCredential creates a new instance of CollectionFormatClient with the specified values.
+//   - endpoint - Service host
+//   - CollectionFormatClientOptions - CollectionFormatClientOptions contains the optional values for creating a [CollectionFormatClient]
+func NewCollectionFormatClientWithNoCredential(endpoint string, options *CollectionFormatClientOptions) (*CollectionFormatClient, error) {
+	if options == nil {
+		options = &CollectionFormatClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &CollectionFormatClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // NewCollectionFormatHeaderClient creates a new instance of [CollectionFormatHeaderClient].

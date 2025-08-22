@@ -13,7 +13,7 @@ import (
 )
 
 func TestModelInOperationClient_InputToInputOutput(t *testing.T) {
-	client, err := coreusagegroup.NewUsageClient("http://localhost:3000", nil)
+	client, err := coreusagegroup.NewUsageClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewUsageModelInOperationClient().InputToInputOutput(context.Background(), coreusagegroup.InputModel{
 		Name: to.Ptr("Madge"),
@@ -23,7 +23,7 @@ func TestModelInOperationClient_InputToInputOutput(t *testing.T) {
 }
 
 func TestModelInOperationClient_OutputToInputOutput(t *testing.T) {
-	client, err := coreusagegroup.NewUsageClient("http://localhost:3000", nil)
+	client, err := coreusagegroup.NewUsageClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewUsageModelInOperationClient().OutputToInputOutput(context.Background(), nil)
 	require.NoError(t, err)
@@ -33,7 +33,7 @@ func TestModelInOperationClient_OutputToInputOutput(t *testing.T) {
 }
 
 func TestModelInOperationClient_ModelInReadOnlyProperty(t *testing.T) {
-	client, err := coreusagegroup.NewUsageClient("http://localhost:3000", nil)
+	client, err := coreusagegroup.NewUsageClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewUsageModelInOperationClient().ModelInReadOnlyProperty(context.Background(), coreusagegroup.RoundTripModel{}, nil)
 	require.NoError(t, err)
@@ -42,7 +42,7 @@ func TestModelInOperationClient_ModelInReadOnlyProperty(t *testing.T) {
 }
 
 func TestModelInOperationClient_OrphanModelSerializable(t *testing.T) {
-	client, err := coreusagegroup.NewUsageClient("http://localhost:3000", nil)
+	client, err := coreusagegroup.NewUsageClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewUsageModelInOperationClient().OrphanModelSerializable(
 		context.Background(),

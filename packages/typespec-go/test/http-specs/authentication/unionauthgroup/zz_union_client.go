@@ -19,6 +19,61 @@ type UnionClient struct {
 	endpoint string
 }
 
+// UnionClientOptions contains the optional values for creating a [UnionClient].
+type UnionClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewUnionClient creates a new instance of UnionClient with the specified values.
+//   - endpoint - Service host
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - UnionClientOptions - UnionClientOptions contains the optional values for creating a [UnionClient]
+func NewUnionClient(endpoint string, credential azcore.TokenCredential, options *UnionClientOptions) (*UnionClient, error) {
+	if options == nil {
+		options = &UnionClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
+		PerCall: []policy.Policy{
+			runtime.NewBearerTokenPolicy(credential, []string{"https://security.microsoft.com/.default"}, &policy.BearerTokenOptions{
+				InsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,
+			}),
+		},
+	}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &UnionClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
+}
+
+// NewUnionClientWithKeyCredential creates a new instance of UnionClient with the specified values.
+//   - endpoint - Service host
+//   - credential - the [azcore.KeyCredential] used to authenticate requests.
+//   - UnionClientOptions - UnionClientOptions contains the optional values for creating a [UnionClient]
+func NewUnionClientWithKeyCredential(endpoint string, credential *azcore.KeyCredential, options *UnionClientOptions) (*UnionClient, error) {
+	if options == nil {
+		options = &UnionClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
+		PerCall: []policy.Policy{
+			runtime.NewKeyCredentialPolicy(credential, "x-ms-api-key", &runtime.KeyCredentialPolicyOptions{
+				InsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,
+			}),
+		},
+	}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &UnionClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
+}
+
 // ValidKey - Check whether client is authenticated
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - UnionClientValidKeyOptions contains the optional parameters for the UnionClient.ValidKey method.

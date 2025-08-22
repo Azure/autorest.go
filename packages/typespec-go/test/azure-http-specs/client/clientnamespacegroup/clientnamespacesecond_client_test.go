@@ -12,7 +12,7 @@ import (
 )
 
 func TestClientNamespaceSecondClient_GetSecond(t *testing.T) {
-	client, err := clientnamespacegroup.NewClientNamespaceClient("http://localhost:3000", nil)
+	client, err := clientnamespacegroup.NewClientNamespaceClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	secondClient := client.NewClientNamespaceSecondClient()
 	require.NotNil(t, secondClient)

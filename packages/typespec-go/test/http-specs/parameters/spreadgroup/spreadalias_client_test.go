@@ -13,7 +13,7 @@ import (
 )
 
 func TestSpreadAliasClient_SpreadAsRequestBody(t *testing.T) {
-	client, err := spreadgroup.NewSpreadClient("http://localhost:3000", nil)
+	client, err := spreadgroup.NewSpreadClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewSpreadAliasClient().SpreadAsRequestBody(context.Background(), "foo", nil)
 	require.NoError(t, err)
@@ -21,7 +21,7 @@ func TestSpreadAliasClient_SpreadAsRequestBody(t *testing.T) {
 }
 
 func TestSpreadAliasClient_SpreadAsRequestParameter(t *testing.T) {
-	client, err := spreadgroup.NewSpreadClient("http://localhost:3000", nil)
+	client, err := spreadgroup.NewSpreadClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewSpreadAliasClient().SpreadAsRequestParameter(context.Background(), "1", "bar", "foo", nil)
 	require.NoError(t, err)
@@ -29,7 +29,7 @@ func TestSpreadAliasClient_SpreadAsRequestParameter(t *testing.T) {
 }
 
 func TestSpreadAliasClient_SpreadWithMultipleParameters(t *testing.T) {
-	client, err := spreadgroup.NewSpreadClient("http://localhost:3000", nil)
+	client, err := spreadgroup.NewSpreadClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewSpreadAliasClient().SpreadWithMultipleParameters(context.Background(), "1", "bar", "foo", []int32{1, 2}, &spreadgroup.SpreadAliasClientSpreadWithMultipleParametersOptions{
 		OptionalInt:        to.Ptr[int32](1),
