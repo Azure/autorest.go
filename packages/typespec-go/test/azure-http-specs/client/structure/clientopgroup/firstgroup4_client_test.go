@@ -12,10 +12,10 @@ import (
 )
 
 func TestFirstGroup4Client_Four(t *testing.T) {
-	client, err := clientopgroup.NewFirstGroup4Client("http://localhost:3000", clientopgroup.ClientTypeClientOperationGroup, nil)
+	client, err := clientopgroup.NewFirstClientWithNoCredential("http://localhost:3000", clientopgroup.ClientTypeClientOperationGroup, nil)
 	require.Nil(t, err)
 	require.NotNil(t, client)
-	resp, err := client.Four(context.Background(), &clientopgroup.FirstGroup4ClientFourOptions{})
+	resp, err := client.NewFirstGroup4Client().Four(context.Background(), &clientopgroup.FirstGroup4ClientFourOptions{})
 	require.Nil(t, err)
 	require.NotNil(t, resp)
 }

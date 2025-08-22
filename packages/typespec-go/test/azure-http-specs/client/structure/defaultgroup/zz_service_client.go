@@ -21,11 +21,36 @@ import (
 // 4. split one interface into two clients
 // 5. have two clients with operations come from different interfaces
 // 6. have two clients with a hierarchy relation.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewServiceClientWithNoCredential() instead.
 type ServiceClient struct {
 	internal *azcore.Client
 	endpoint string
 	client   ClientType
+}
+
+// ServiceClientOptions contains the optional values for creating a [ServiceClient].
+type ServiceClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewServiceClientWithNoCredential creates a new instance of ServiceClient with the specified values.
+//   - endpoint - Need to be set as 'http://localhost:3000' in client.
+//   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
+//   - ServiceClientOptions - ServiceClientOptions contains the optional values for creating a [ServiceClient]
+func NewServiceClientWithNoCredential(endpoint string, client ClientType, options *ServiceClientOptions) (*ServiceClient, error) {
+	if options == nil {
+		options = &ServiceClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	serviceClient := &ServiceClient{
+		endpoint: endpoint,
+		client:   client,
+		internal: cl,
+	}
+	return serviceClient, nil
 }
 
 // NewServiceBarClient creates a new instance of [ServiceBarClient].

@@ -12,7 +12,7 @@ import (
 )
 
 func TestSecondClientClient_Five(t *testing.T) {
-	client, err := clientopgroup.NewSecondClient("http://localhost:3000", clientopgroup.ClientTypeClientOperationGroup, nil)
+	client, err := clientopgroup.NewSecondClientWithNoCredential("http://localhost:3000", clientopgroup.ClientTypeClientOperationGroup, nil)
 	require.Nil(t, err)
 	require.NotNil(t, client)
 	resp, err := client.Five(context.Background(), &clientopgroup.SecondClientFiveOptions{})

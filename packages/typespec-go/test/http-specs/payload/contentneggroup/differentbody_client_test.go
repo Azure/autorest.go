@@ -14,7 +14,7 @@ import (
 )
 
 func TestDifferentBodyClient_GetAvatarAsJSON(t *testing.T) {
-	client, err := contentneggroup.NewContentNegotiationClient("http://localhost:3000", nil)
+	client, err := contentneggroup.NewContentNegotiationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewContentNegotiationDifferentBodyClient().GetAvatarAsJSON(context.Background(), nil)
 	require.NoError(t, err)
@@ -24,7 +24,7 @@ func TestDifferentBodyClient_GetAvatarAsJSON(t *testing.T) {
 }
 
 func TestDifferentBodyClient_GetAvatarAsPNG(t *testing.T) {
-	client, err := contentneggroup.NewContentNegotiationClient("http://localhost:3000", nil)
+	client, err := contentneggroup.NewContentNegotiationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewContentNegotiationDifferentBodyClient().GetAvatarAsPNG(context.Background(), nil)
 	require.NoError(t, err)

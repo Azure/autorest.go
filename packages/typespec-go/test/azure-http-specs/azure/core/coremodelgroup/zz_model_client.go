@@ -4,13 +4,39 @@
 
 package coremodelgroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+)
 
 // ModelClient contains the methods for the Model group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewModelClientWithNoCredential() instead.
 type ModelClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ModelClientOptions contains the optional values for creating a [ModelClient].
+type ModelClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewModelClientWithNoCredential creates a new instance of ModelClient with the specified values.
+//   - endpoint - Service host
+//   - ModelClientOptions - ModelClientOptions contains the optional values for creating a [ModelClient]
+func NewModelClientWithNoCredential(endpoint string, options *ModelClientOptions) (*ModelClient, error) {
+	if options == nil {
+		options = &ModelClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ModelClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // NewModelAzureCoreEmbeddingVectorClient creates a new instance of [ModelAzureCoreEmbeddingVectorClient].
