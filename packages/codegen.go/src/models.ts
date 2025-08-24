@@ -114,8 +114,12 @@ export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSer
   }
   if (needsJSONUnpopulate) {
     serdeImports.add('fmt');
-    serdeTextBody += 'func unpopulate(data json.RawMessage, fn string, v any) error {\n';
-    serdeTextBody += '\tif data == nil || string(data) == "null" {\n';
+    serdeTextBody += 'func unpopulate[T any](data json.RawMessage, fn string, v *T) error {\n';
+    serdeTextBody += '\tif data == nil {\n';
+    serdeTextBody += '\t\treturn nil\n';
+    serdeTextBody += '\t}\n';
+    serdeTextBody += '\tif string(data) == "null" && v != nil {\n';
+    serdeTextBody += '\t\t*v = azcore.NullValue[T]()\n';
     serdeTextBody += '\t\treturn nil\n';
     serdeTextBody += '\t}\n';
     serdeTextBody += '\tif err := json.Unmarshal(data, v); err != nil {\n';
