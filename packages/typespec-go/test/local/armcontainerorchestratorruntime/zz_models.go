@@ -11,11 +11,11 @@ type BgpPeer struct {
 	// The resource-specific properties for this resource.
 	Properties *BgpPeerProperties
 
+	// READ-ONLY; The name of the BgpPeer
+	Name *string
+
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
@@ -73,11 +73,11 @@ type LoadBalancer struct {
 	// The resource-specific properties for this resource.
 	Properties *LoadBalancerProperties
 
+	// READ-ONLY; The name of the LoadBalancer
+	Name *string
+
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
@@ -239,11 +239,11 @@ type ServiceResource struct {
 	// The resource-specific properties for this resource.
 	Properties *ServiceProperties
 
+	// READ-ONLY; The name of the the service
+	Name *string
+
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
@@ -364,11 +364,11 @@ type StorageClassResource struct {
 	// The resource-specific properties for this resource.
 	Properties *StorageClassProperties
 
+	// READ-ONLY; The name of the the storage class
+	Name *string
+
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
