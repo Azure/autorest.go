@@ -7,7 +7,7 @@ package subpkg
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
 // RawJSONClient contains the methods for the RawJSON group.
-// Don't use this type directly, use NewRawJSONClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type RawJSONClient struct {
 	internal *azcore.Client
 	endpoint string

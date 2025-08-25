@@ -5,7 +5,7 @@
 
 import { values } from '@azure-tools/linq';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
-import { ModelProperty, NoTarget } from '@typespec/compiler';
+import { EmitContext, ModelProperty, NoTarget } from '@typespec/compiler';
 import * as http from '@typespec/http';
 import * as go from '../../../codemodel.go/src/index.js';
 import { capitalize, createOptionsTypeDescription, createResponseEnvelopeDescription, ensureNameCase, getEscapedReservedName, uncapitalize } from '../../../naming.go/src/naming.js';
@@ -16,23 +16,23 @@ import { isTypePassedByValue, typeAdapter } from './types.js';
 // used to convert SDK clients and their methods to Go code model types
 export class clientAdapter {
   private ta: typeAdapter;
-  private opts: GoEmitterOptions;
+  private ctx: EmitContext<GoEmitterOptions>;
 
   // track all of the client and parameter group params across all operations
   // as not every option might contain them, and parameter groups can be shared
   // across multiple operations
   private clientParams: Map<string, go.MethodParameter>;
 
-  constructor(ta: typeAdapter, opts: GoEmitterOptions) {
+  constructor(ta: typeAdapter, ctx: EmitContext<GoEmitterOptions>) {
     this.ta = ta;
-    this.opts = opts;
+    this.ctx = ctx;
     this.clientParams = new Map<string, go.MethodParameter>();
   }
 
   // converts all clients and their methods to Go code model types.
   // this includes parameter groups/options types and response envelopes.
   adaptClients(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperation>) {
-    if (this.opts['single-client'] && sdkPackage.clients.length > 1) {
+    if (this.ctx.options['single-client'] && sdkPackage.clients.length > 1) {
       throw new AdapterError('InvalidArgument', 'single-client cannot be enabled when there are multiple clients', NoTarget);
     }
     for (const sdkClient of sdkPackage.clients) {
@@ -106,7 +106,20 @@ export class clientAdapter {
       OmitAut = 4, // omit-constructors was specified
     }
 
-    let authType = AuthTypes.Default;
+    // we skip generating client constructors when emitting into
+    // an existing module. this is because the constructor(s) require
+    // the module name and version info, and we can't make any
+    // assumptions about the names/location.
+    let authType = (this.ta.codeModel.options.omitConstructors || this.ta.codeModel.options.containingModule) ? AuthTypes.OmitAut : AuthTypes.Default;
+    if (!this.ta.codeModel.options.omitConstructors && this.ta.codeModel.options.containingModule) {
+      // emit a diagnostic indicating that no ctors will be emitted due to containing-module.
+      this.ctx.program.reportDiagnostic({
+        code: 'UnsupportedConfiguration',
+        severity: 'warning',
+        message: 'cannot emit client constructors when containing-module is set',
+        target: sdkClient.__raw.type ?? NoTarget,
+      });
+    }
 
     /**
      * processes a credendial, potentially adding its supporting client constructor
@@ -140,8 +153,7 @@ export class clientAdapter {
       for (const param of sdkClient.clientInitialization.parameters) {
         switch (param.kind) {
           case 'credential':
-            if (this.ta.codeModel.options.omitConstructors) {
-              authType = AuthTypes.OmitAut;
+            if (authType === AuthTypes.OmitAut) {
               continue;
             }
             switch (param.type.kind) {
@@ -426,7 +438,7 @@ export class clientAdapter {
     }
 
     let prefix = method.client.name;
-    if (this.opts['single-client']) {
+    if (this.ctx.options['single-client']) {
       prefix = '';
     }
     if (go.isLROMethod(method)) {
@@ -809,7 +821,7 @@ export class clientAdapter {
   private adaptResponseEnvelope(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType): go.ResponseEnvelope {
     // TODO: add Envelope suffix if name collides with existing type
     let prefix = method.client.name;
-    if (this.opts['single-client']) {
+    if (this.ctx.options['single-client']) {
       prefix = '';
     }
     let respEnvName = `${prefix}${method.name}Response`;
@@ -842,7 +854,7 @@ export class clientAdapter {
     let sdkResponseType = sdkMethod.response.type;
 
     // since HEAD requests don't return a type, we must check this before checking sdkResponseType
-    if (method.httpMethod === 'head' && this.opts['head-as-boolean'] === true) {
+    if (method.httpMethod === 'head' && this.ctx.options['head-as-boolean'] === true) {
       respEnv.result = new go.HeadAsBooleanResult('Success');
       respEnv.result.docs.summary = 'Success indicates if the operation succeeded or failed.';
     }

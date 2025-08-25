@@ -116,13 +116,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
       throw new CodegenError('UnsupportedTsp', 'optional client parameters for ARM is not supported');
     }
 
-    // we skip generating client constructors when emitting into
-    // an existing module. this is because the constructor(s) require
-    // the module name and version info, and we can't make any
-    // assumptions about the names/location.
-    if (!codeModel.options.containingModule) {
-      clientText += generateConstructors(client, imports);
-    }
+    clientText += generateConstructors(client, imports);
 
     // generate client accessors and operations
     let opText = '';
