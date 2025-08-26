@@ -16,6 +16,6 @@ steps:
         -ForRelease $True
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
-    displayName: Verify ChangeLogEntry for ${{ parameters.PackageName }}
+    displayName: Verify ChangeLogEntry for ${{ parameters.PackagePath }}
     condition: ${{ parameters.Condition }}
     continueOnError: false
