@@ -8,34 +8,42 @@ parameters:
 steps:
   - pwsh: |
       $currentVersion = node -p -e "require('./packages/${{ parameters.PackagePath }}/package.json').version"
-      $releaseNotes = "${{ parameters.ReleaseNotes }}"
-      if ('${{ parameters.PublishDevVersion }}' -eq 'true') {
-        $currentVersion="$currentVersion-$(Build.BuildNumber)"
-        $releaseNotes = "Preview version of ${{ parameters.ReleaseNotes }}"
-      }
-      cd packages/${{ parameters.PackagePath }}
-      npm version --no-git-tag-version $currentVersion
-      pnpm pack
-      npm install -g ${{ parameters.PackageFileName }}-$currentVersion.tgz
-      if ($LASTEXITCODE) {
-        exit $LASTEXITCODE
-      }
-      npx publish-release `
-        --token $(azuresdk-github-pat) `
-        --repo autorest.go `
-        --owner azure `
-        --name "${{ parameters.ReleaseName }}" `
-        --tag v$currentVersion `
-        --notes="$releaseNotes" `
-        --prerelease `
-        --editRelease false `
-        --assets ${{ parameters.PackageFileName }}-$currentVersion.tgz `
-        --target_commitish $(Build.SourceBranchName);
-    displayName: "Publish GitHub Release ${{ parameters.PackagePath }}"
+      Write-Host "##vso[task.setvariable variable=currentVersion]$currentVersion"
+    displayName: "Get Current Version"
+  - template: /eng/pipelines/templates/steps/verify-changelog.yml
+    parameters:
+      PackagePath: ${{ parameters.PackagePath }}
+      VersionString: $(currentVersion)
+    displayName: "Verify ChangeLog Entry"
+  # - pwsh: |
+  #     $releaseNotes = "${{ parameters.ReleaseNotes }}"
+  #     if ('${{ parameters.PublishDevVersion }}' -eq 'true') {
+  #       $currentVersion="$currentVersion-$(Build.BuildNumber)"
+  #       $releaseNotes = "Preview version of ${{ parameters.ReleaseNotes }}"
+  #     }
+  #     cd packages/${{ parameters.PackagePath }}
+  #     npm version --no-git-tag-version $currentVersion
+  #     pnpm pack
+  #     npm install -g ${{ parameters.PackageFileName }}-$currentVersion.tgz
+  #     if ($LASTEXITCODE) {
+  #       exit $LASTEXITCODE
+  #     }
+  #     npx publish-release `
+  #       --token $(azuresdk-github-pat) `
+  #       --repo autorest.go `
+  #       --owner azure `
+  #       --name "${{ parameters.ReleaseName }}" `
+  #       --tag v$currentVersion `
+  #       --notes="$releaseNotes" `
+  #       --prerelease `
+  #       --editRelease false `
+  #       --assets ${{ parameters.PackageFileName }}-$currentVersion.tgz `
+  #       --target_commitish $(Build.SourceBranchName);
+  #   displayName: "Publish GitHub Release ${{ parameters.PackagePath }}"
 
-  - ${{ if ne(parameters.PublishDevVersion, true) }}:
-    - script: |
-        cd packages/${{ parameters.PackagePath }}
-        echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc
-        pnpm publish --access public --no-git-checks
-      displayName: "Publish to npm ${{ parameters.PackagePath }}"
+  # - ${{ if ne(parameters.PublishDevVersion, true) }}:
+  #   - script: |
+  #       cd packages/${{ parameters.PackagePath }}
+  #       echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc
+  #       pnpm publish --access public --no-git-checks
+  #     displayName: "Publish to npm ${{ parameters.PackagePath }}"
