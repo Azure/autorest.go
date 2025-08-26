@@ -11,7 +11,7 @@ steps:
     inputs:
       filePath: $(Build.SourcesDirectory)/eng/common/scripts/Verify-ChangeLog.ps1
       arguments: >
-        -ChangeLogLocation '${{ parameters.PackagePath }}'/CHANGELOG.md
+        -ChangeLogLocation '$(Build.SourcesDirectory)/packages/${{ parameters.PackagePath }}/CHANGELOG.md'
         -VersionString '${{ parameters.VersionString }}'
         -ForRelease $True
       pwsh: true
