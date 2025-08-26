@@ -7,7 +7,7 @@ parameters:
   default: ''
 
 steps:
-  - task: Powershell@2
+  - task: PowerShell@2
     inputs:
       filePath: $(Build.SourcesDirectory)/eng/common/scripts/Verify-ChangeLog.ps1
       arguments: >
@@ -17,5 +17,4 @@ steps:
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Verify ChangeLogEntry for ${{ parameters.PackagePath }}
-    condition: ${{ parameters.Condition }}
     continueOnError: false
