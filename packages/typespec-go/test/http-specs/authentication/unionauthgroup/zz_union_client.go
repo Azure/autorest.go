@@ -13,7 +13,7 @@ import (
 )
 
 // UnionClient - Illustrates clients generated with ApiKey and OAuth2 authentication.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewUnionClient() instead.
 type UnionClient struct {
 	internal *azcore.Client
 	endpoint string
@@ -35,31 +35,6 @@ func NewUnionClient(endpoint string, credential azcore.TokenCredential, options 
 	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
 		PerCall: []policy.Policy{
 			runtime.NewBearerTokenPolicy(credential, []string{"https://security.microsoft.com/.default"}, &policy.BearerTokenOptions{
-				InsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,
-			}),
-		},
-	}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &UnionClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
-}
-
-// NewUnionClientWithKeyCredential creates a new instance of UnionClient with the specified values.
-//   - endpoint - Service host
-//   - credential - the [azcore.KeyCredential] used to authenticate requests.
-//   - UnionClientOptions - UnionClientOptions contains the optional values for creating a [UnionClient]
-func NewUnionClientWithKeyCredential(endpoint string, credential *azcore.KeyCredential, options *UnionClientOptions) (*UnionClient, error) {
-	if options == nil {
-		options = &UnionClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
-		PerCall: []policy.Policy{
-			runtime.NewKeyCredentialPolicy(credential, "x-ms-api-key", &runtime.KeyCredentialPolicyOptions{
 				InsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,
 			}),
 		},

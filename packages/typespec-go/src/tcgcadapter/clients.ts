@@ -102,15 +102,15 @@ export class clientAdapter {
     enum AuthTypes {
       Default = 0, // unspecified
       NoAuth  = 1, // explicit NoAuth
-      WithAut = 2, // explicit credential
-      OmitAut = 4, // omit-constructors was specified
+      WithAuth = 2, // explicit credential
+      OmitAuth = 4, // omit-constructors was specified
     }
 
     // we skip generating client constructors when emitting into
     // an existing module. this is because the constructor(s) require
     // the module name and version info, and we can't make any
     // assumptions about the names/location.
-    let authType = (this.ta.codeModel.options.omitConstructors || this.ta.codeModel.options.containingModule) ? AuthTypes.OmitAut : AuthTypes.Default;
+    let authType = (this.ta.codeModel.options.omitConstructors || this.ta.codeModel.options.containingModule) ? AuthTypes.OmitAuth : AuthTypes.Default;
     if (!this.ta.codeModel.options.omitConstructors && this.ta.codeModel.options.containingModule) {
       // emit a diagnostic indicating that no ctors will be emitted due to containing-module.
       this.ctx.program.reportDiagnostic({
@@ -126,25 +126,27 @@ export class clientAdapter {
      * 
      * @param goClient the Go client for which to add the constructor
      * @param cred the credential type to process
-     * @param throwOnDefault when true, throws an error on unsupported credential types
      * @returns the AuthTypes enum for the credential that was handled, or AuthTypes.Default if none were specified/handled
      */
-    const processCredential = (goClient: go.Client, cred: http.HttpAuth, throwOnDefault: boolean): AuthTypes => {
+    const processCredential = (goClient: go.Client, cred: http.HttpAuth): AuthTypes => {
       switch (cred.type) {
-        case 'apiKey':
-          goClient.constructors.push(this.createAPIKeyCredentialCtor(goClient, cred));
-          return AuthTypes.WithAut;
         case 'noAuth':
           return AuthTypes.NoAuth;
         case 'oauth2': {
           goClient.constructors.push(this.createTokenCredentialCtor(goClient, cred));
-          return AuthTypes.WithAut;
+          return AuthTypes.WithAuth;
         }
         default:
-          if (throwOnDefault) {
-            throw new AdapterError('UnsupportedTsp', `credential scheme type ${cred.type} NYI`, cred.model);
-          }
-          return AuthTypes.Default;
+          this.ctx.program.reportDiagnostic({
+            code: 'UnsupportedAuthenticationScheme',
+            severity: 'warning',
+            message: `unsupported authentication scheme ${cred.type} will be omitted`,
+            target: sdkClient.__raw.type ?? NoTarget,
+          });
+          // return WithAuth as the tsp specifies authentication.
+          // this is to avoid adding a WithNoCredential() ctor to
+          // clients that might not support it.
+          return AuthTypes.WithAuth;
       }
     };
 
@@ -153,12 +155,12 @@ export class clientAdapter {
       for (const param of sdkClient.clientInitialization.parameters) {
         switch (param.kind) {
           case 'credential':
-            if (authType === AuthTypes.OmitAut) {
+            if (authType === AuthTypes.OmitAuth) {
               continue;
             }
             switch (param.type.kind) {
               case 'credential':
-                authType |= processCredential(goClient, param.type.scheme, true);
+                authType |= processCredential(goClient, param.type.scheme);
                 break;
               case 'union': {
                 const variantKinds = new Array<string>();
@@ -167,7 +169,7 @@ export class clientAdapter {
                   // emit the support credential kinds and skip any unsupported ones.
                   // this prevents emitting the WithNoCredential constructor in cases
                   // where it might not actually be supported.
-                  authType |= processCredential(goClient, variantType.scheme, false);
+                  authType |= processCredential(goClient, variantType.scheme);
                 }
 
                 // no supported credential types were specified
@@ -297,20 +299,6 @@ export class clientAdapter {
       this.ta.codeModel.clients.push(goClient);
     }
     return goClient;
-  }
-
-  /**
-   * creates a new Go client constructor using API key authentication
-   * 
-   * @param goClient the Go client for which to create the constructor
-   * @param cred the API key credential type
-   * @returns a new Go client constructor using API key authentication
-   */
-  private createAPIKeyCredentialCtor(goClient: go.Client, cred: http.ApiKeyAuth<'cookie' | 'header' | 'query', string>): go.Constructor {
-    if (cred.in === 'cookie') {
-      throw new AdapterError('UnsupportedTsp', 'cookie api-key NYI', cred.model);
-    }
-    return new go.Constructor(`New${goClient.name}WithKeyCredential`, new go.APIKeyAuthentication(cred.name, cred.in))
   }
 
   /**

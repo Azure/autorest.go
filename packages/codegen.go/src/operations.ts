@@ -275,16 +275,6 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
 
     let prolog: string;
     switch (constructor.authentication.kind) {
-      case 'apikey':
-        ctorParams.push('credential *azcore.KeyCredential');
-        paramDocs.push(helpers.formatCommentAsBulletItem('credential', { summary: 'the [azcore.KeyCredential] used to authenticate requests.' }));
-        const keyPolicyOpts = '&runtime.KeyCredentialPolicyOptions{\n\t\t\tInsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,\n\t\t}';
-        const keyPolicy = `\n\t\tPerCall: []policy.Policy{\n\t\truntime.NewKeyCredentialPolicy(credential, "${constructor.authentication.name}", ${keyPolicyOpts}),\n\t\t},\n`;
-        if (client.options.kind !== 'clientOptions') {
-          throw new CodegenError('InternalError', `unexpected client options kind ${client.options.kind}`);
-        }
-        prolog = emitProlog(client.options.name, keyPolicy);
-        break;
       case 'none':
         if (client.options.kind !== 'clientOptions') {
           throw new CodegenError('InternalError', `unexpected client options kind ${client.options.kind}`);

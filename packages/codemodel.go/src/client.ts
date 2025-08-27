@@ -86,18 +86,7 @@ export interface Constructor {
 }
 
 /** the supported types of client authentication */
-export type AuthenticationType = APIKeyAuthentication | NoAuthentication | TokenAuthentication;
-
-/** an azcore.KeyCredential */
-export interface APIKeyAuthentication {
-  kind: 'apikey';
-
-  /** the api-key name */
-  name: string;
-
-  /** where the api-key goes in the request */
-  loc: 'header' | 'query';
-}
+export type AuthenticationType = NoAuthentication | TokenAuthentication;
 
 /** the client supports unauthenticated requests */
 export interface NoAuthentication {
@@ -279,14 +268,6 @@ class MethodBase implements MethodBase {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-export class APIKeyAuthentication implements APIKeyAuthentication {
-  constructor(keyName: string, location: 'header' | 'query') {
-    this.kind = 'apikey';
-    this.name = keyName;
-    this.loc = location;
-  }
-}
 
 export class Client implements Client {
   constructor(name: string, docs: type.Docs, options: ClientOptions) {
