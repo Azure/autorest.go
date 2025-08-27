@@ -514,7 +514,14 @@ export class clientAdapter {
     return contentType;
   }
 
-  private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter, verb: go.HTTPMethod): go.MethodParameter {
+  /**
+   * adapts the provided operation parameter to a Go method parameter
+   * 
+   * @param param the operation parameter to adapt
+   * @param verb the HTTP verb used for the operation to which the parameter belongs
+   * @returns the adapted Go method parameter
+   */
+  private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkCookieParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter, verb: go.HTTPMethod): go.MethodParameter {
     if (param.isApiVersionParam && param.clientDefaultValue) {
       // we emit the api version param inline as a literal, never as a param.
       // the ClientOptions.APIVersion setting is used to change the version.
@@ -532,7 +539,7 @@ export class clientAdapter {
     }
 
     let location: go.ParameterLocation = 'method';
-    const getClientParamsKey = function (param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter): string {
+    const getClientParamsKey = function (param: tcgc.SdkBodyParameter | tcgc.SdkCookieParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): string {
       // include the param kind in the key name as a client param can be used
       // in different places across methods (path/query)
       return `${param.name}-${param.kind}`;
@@ -546,7 +553,6 @@ export class clientAdapter {
       location = 'client';
     }
 
-    let adaptedParam: go.MethodParameter;
     let paramStyle = this.adaptParameterStyle(param);
     if (param.kind === 'body' && (verb === 'patch' || verb === 'put')) {
       paramStyle = 'required';
@@ -554,50 +560,56 @@ export class clientAdapter {
     const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');
     const byVal = isTypePassedByValue(param.type);
 
-    if (param.kind === 'body') {
-      // TODO: form data? (non-multipart)
-      if (param.defaultContentType.match(/multipart/i)) {
-        adaptedParam = new go.MultipartFormBodyParameter(paramName, this.ta.getWireType(param.type, false, true), paramStyle, byVal);
-      } else {
-        const contentType = this.adaptContentType(param.defaultContentType);
-        let bodyType = this.ta.getWireType(param.type, false, true);
-        if (contentType === 'binary') {
-          // tcgc models binary params as 'bytes' but we want an io.ReadSeekCloser
-          bodyType = this.ta.getReadSeekCloser(param.type.kind === 'array');
+    let adaptedParam: go.MethodParameter;
+    switch (param.kind) {
+      case 'body':
+        // TODO: form data? (non-multipart)
+        if (param.defaultContentType.match(/multipart/i)) {
+          adaptedParam = new go.MultipartFormBodyParameter(paramName, this.ta.getWireType(param.type, false, true), paramStyle, byVal);
+        } else {
+          const contentType = this.adaptContentType(param.defaultContentType);
+          let bodyType = this.ta.getWireType(param.type, false, true);
+          if (contentType === 'binary') {
+            // tcgc models binary params as 'bytes' but we want an io.ReadSeekCloser
+            bodyType = this.ta.getReadSeekCloser(param.type.kind === 'array');
+          }
+          adaptedParam = new go.BodyParameter(paramName, contentType, `"${param.defaultContentType}"`, bodyType, paramStyle, byVal);
         }
-        adaptedParam = new go.BodyParameter(paramName, contentType, `"${param.defaultContentType}"`, bodyType, paramStyle, byVal);
-      }
-    } else if (param.kind === 'header') {
-      if (param.collectionFormat) {
-        if (param.collectionFormat === 'multi' || param.collectionFormat === 'form') {
-          throw new AdapterError('InternalError', `unexpected collection format ${param.collectionFormat} for HeaderCollectionParameter`, param.__raw?.node ?? NoTarget);
+        break;
+      case 'cookie':
+        // TODO: currently we don't have Azure service using cookie parameter. need to add support if needed in the future.
+        throw new AdapterError('UnsupportedTsp', 'unsupported parameter type cookie', param.__raw?.node ?? NoTarget);
+      case 'header':
+        if (param.collectionFormat) {
+          if (param.collectionFormat === 'multi' || param.collectionFormat === 'form') {
+            throw new AdapterError('InternalError', `unexpected collection format ${param.collectionFormat} for HeaderCollectionParameter`, param.__raw?.node ?? NoTarget);
+          }
+          // TODO: is hard-coded false for element type by value correct?
+          const type = this.ta.getWireType(param.type, true, false);
+          if (type.kind !== 'slice') {
+            throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${param.name}`, param.__raw?.node ?? NoTarget);
+          }
+          adaptedParam = new go.HeaderCollectionParameter(paramName, param.serializedName, type, param.collectionFormat === 'simple' ? 'csv' : param.collectionFormat, paramStyle, byVal, location);
+        } else {
+          adaptedParam = new go.HeaderScalarParameter(paramName, param.serializedName, this.adaptHeaderScalarType(param.type, true), paramStyle, byVal, location);
         }
-        // TODO: is hard-coded false for element type by value correct?
-        const type = this.ta.getWireType(param.type, true, false);
-        if (type.kind !== 'slice') {
-          throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${param.name}`, param.__raw?.node ?? NoTarget);
+        break;
+      case 'path':
+        adaptedParam = new go.PathScalarParameter(paramName, param.serializedName, !param.allowReserved, this.adaptPathScalarParameterType(param.type), paramStyle, byVal, location);
+        break;
+      case 'query':
+        if (param.collectionFormat) {
+          const type = this.ta.getWireType(param.type, true, false);
+          if (type.kind !== 'slice') {
+            throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${param.name}`, param.__raw?.node ?? NoTarget);
+          }
+          // TODO: unencoded query param
+          adaptedParam = new go.QueryCollectionParameter(paramName, param.serializedName, true, type, param.collectionFormat === 'simple' ? 'csv' : (param.collectionFormat === 'form' ? 'multi' : param.collectionFormat), paramStyle, byVal, location);
+        } else {
+          // TODO: unencoded query param
+          adaptedParam = new go.QueryScalarParameter(paramName, param.serializedName, true, this.adaptQueryScalarParameterType(param.type), paramStyle, byVal, location);
         }
-        adaptedParam = new go.HeaderCollectionParameter(paramName, param.serializedName, type, param.collectionFormat === 'simple' ? 'csv' : param.collectionFormat, paramStyle, byVal, location);
-      } else {
-        adaptedParam = new go.HeaderScalarParameter(paramName, param.serializedName, this.adaptHeaderScalarType(param.type, true), paramStyle, byVal, location);
-      }
-    } else if (param.kind === 'path') {
-      adaptedParam = new go.PathScalarParameter(paramName, param.serializedName, !param.allowReserved, this.adaptPathScalarParameterType(param.type), paramStyle, byVal, location);
-    } else if (param.kind === 'cookie') {
-      // TODO: currently we don't have Azure service using cookie parameter. need to add support if needed in the future.
-      throw new AdapterError('UnsupportedTsp', 'unsupported parameter type cookie', param.__raw?.node ?? NoTarget);
-    } else {
-      if (param.collectionFormat) {
-        const type = this.ta.getWireType(param.type, true, false);
-        if (type.kind !== 'slice') {
-          throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${param.name}`, param.__raw?.node ?? NoTarget);
-        }
-        // TODO: unencoded query param
-        adaptedParam = new go.QueryCollectionParameter(paramName, param.serializedName, true, type, param.collectionFormat === 'simple' ? 'csv' : (param.collectionFormat === 'form' ? 'multi' : param.collectionFormat), paramStyle, byVal, location);
-      } else {
-        // TODO: unencoded query param
-        adaptedParam = new go.QueryScalarParameter(paramName, param.serializedName, true, this.adaptQueryScalarParameterType(param.type), paramStyle, byVal, location);
-      }
+        break;
     }
 
     if (adaptedParam.location === 'client') {

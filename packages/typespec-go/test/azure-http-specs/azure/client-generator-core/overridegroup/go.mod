@@ -3,7 +3,7 @@ module overridegroup
 go 1.23.0
 
 require (
-	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.18.2
+	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.19.0
 	github.com/stretchr/testify v1.10.0
 )
 
