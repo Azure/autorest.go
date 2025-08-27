@@ -519,7 +519,7 @@ export class clientAdapter {
    * 
    * @param param the operation parameter to adapt
    * @param verb the HTTP verb used for the operation to which the parameter belongs
-   * @returns the adpated Go method parameter
+   * @returns the adapted Go method parameter
    */
   private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkCookieParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter, verb: go.HTTPMethod): go.MethodParameter {
     if (param.isApiVersionParam && param.clientDefaultValue) {
