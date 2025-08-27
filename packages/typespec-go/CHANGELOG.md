@@ -2,6 +2,10 @@
 
 ## 0.8.1 (unreleased)
 
+### Bugs Fixed
+
+* Fixed some edge cases where a method parameter's optionality wasn't correctly handled.
+
 ### Other Changes
 
 * Updated the minimum version of `azcore` to `v1.19.0`.
