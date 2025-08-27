@@ -313,6 +313,8 @@ export class clientAdapter {
       throw new AdapterError('InternalError', `no flows defined for credential type ${cred.type}`, cred.model);
     } else if (cred.flows[0].scopes.length === 0) {
       throw new AdapterError('InternalError', `no scopes defined for credential type ${cred.type}`, cred.model);
+    } else if (cred.flows[0].scopes.length > 1) {
+      throw new AdapterError('InternalError', `too many scopes defined for credential type ${cred.type}`, cred.model);
     }
     return new go.Constructor(`New${goClient.name}`, new go.TokenAuthentication(cred.flows[0].scopes.map(each => each.value)));
   }

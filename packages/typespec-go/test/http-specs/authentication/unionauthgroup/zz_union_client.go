@@ -6,10 +6,13 @@ package unionauthgroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"reflect"
 )
 
 // UnionClient - Illustrates clients generated with ApiKey and OAuth2 authentication.
@@ -32,9 +35,18 @@ func NewUnionClient(endpoint string, credential azcore.TokenCredential, options 
 	if options == nil {
 		options = &UnionClientOptions{}
 	}
+	if reflect.ValueOf(options.Cloud).IsZero() {
+		options.Cloud = cloud.AzurePublic
+	}
+	c, ok := options.Cloud.Services[ServiceName]
+	if !ok {
+		return nil, fmt.Errorf("provided Cloud field is missing configuration for %s", ServiceName)
+	} else if c.Audience == "" {
+		return nil, fmt.Errorf("provided Cloud field is missing Audience for %s", ServiceName)
+	}
 	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
 		PerCall: []policy.Policy{
-			runtime.NewBearerTokenPolicy(credential, []string{"https://security.microsoft.com/.default"}, &policy.BearerTokenOptions{
+			runtime.NewBearerTokenPolicy(credential, []string{c.Audience + "/.default"}, &policy.BearerTokenOptions{
 				InsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,
 			}),
 		},

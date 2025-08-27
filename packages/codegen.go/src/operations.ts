@@ -222,7 +222,7 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
       }
     }
 
-    const emitProlog = function(optionsTypeName: string, plOpts?: string): string {
+    const emitProlog = function(optionsTypeName: string, tokenAuth: boolean, plOpts?: string): string {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
       let bodyText = `\tif options == nil {\n\t\toptions = &${optionsTypeName}{}\n\t}\n`;
       let apiVersionConfig = '';
@@ -239,6 +239,20 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
             }
         }
       }
+
+      if (tokenAuth) {
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud');
+        imports.add('fmt');
+        imports.add('reflect');
+        bodyText += '\tif reflect.ValueOf(options.Cloud).IsZero() {\n';
+        bodyText += '\t\toptions.Cloud = cloud.AzurePublic\n\t}\n';
+        bodyText += '\tc, ok := options.Cloud.Services[ServiceName]\n';
+        bodyText += '\tif !ok {\n';
+        bodyText += '\t\treturn nil, fmt.Errorf("provided Cloud field is missing configuration for %s", ServiceName)\n';
+        bodyText += '\t} else if c.Audience == "" {\n';
+        bodyText += '\t\treturn nil, fmt.Errorf("provided Cloud field is missing Audience for %s", ServiceName)\n\t}\n';
+      }
+
       if (apiVersionParam) {
         let location: string;
         let name: string | undefined;
@@ -279,7 +293,7 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
         if (client.options.kind !== 'clientOptions') {
           throw new CodegenError('InternalError', `unexpected client options kind ${client.options.kind}`);
         }
-        prolog = emitProlog(client.options.name);
+        prolog = emitProlog(client.options.name, false);
         break;
       case 'token':
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
@@ -289,10 +303,8 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
           case 'clientOptions': {
             imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/policy');
             const tokenPolicyOpts = '&policy.BearerTokenOptions{\n\t\t\tInsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,\n\t\t}';
-            const scopesSlice = new Array<string>();
-            values(constructor.authentication.scopes).forEach((scope: string) => { scopesSlice.push(`"${scope}"`); });
-            const tokenPolicy = `\n\t\tPerCall: []policy.Policy{\n\t\truntime.NewBearerTokenPolicy(credential, []string{${scopesSlice.join(', ')}}, ${tokenPolicyOpts}),\n\t\t},\n`;
-            prolog = emitProlog(client.options.name, tokenPolicy);
+            const tokenPolicy = `\n\t\tPerCall: []policy.Policy{\n\t\truntime.NewBearerTokenPolicy(credential, []string{c.Audience + "/.default"}, ${tokenPolicyOpts}),\n\t\t},\n`;
+            prolog = emitProlog(client.options.name, true, tokenPolicy);
             break;
           }
           case 'parameter':
