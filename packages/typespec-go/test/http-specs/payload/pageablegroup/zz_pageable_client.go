@@ -5,16 +5,11 @@
 package pageablegroup
 
 import (
-<<<<<<< HEAD
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-=======
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
->>>>>>> 29d91e2ccb (Generate client constructors)
 )
 
 // PageableClient - Test for pageable payload.

@@ -13,11 +13,7 @@ import (
 )
 
 func TestNewLinkPager(t *testing.T) {
-<<<<<<< HEAD
-	client, err := pageablegroup.NewPageableClient("http://localhost:3000", nil)
-=======
 	client, err := pageablegroup.NewPageableClientWithNoCredential("http://localhost:3000", nil)
->>>>>>> 29d91e2ccb (Generate client constructors)
 	require.NoError(t, err)
 	pager := client.NewPageableServerDrivenPaginationClient().NewLinkPager(nil)
 	pageCount := 0
@@ -55,7 +51,7 @@ func TestNewLinkPager(t *testing.T) {
 }
 
 func TestNewNestedLinkPager(t *testing.T) {
-	client, err := pageablegroup.NewPageableClient("http://localhost:3000", nil)
+	client, err := pageablegroup.NewPageableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	pageCount := 0
 	pager := client.NewPageableServerDrivenPaginationClient().NewNestedLinkPager(&pageablegroup.PageableServerDrivenPaginationClientNestedLinkOptions{})

@@ -40,14 +40,14 @@ func TestSpreadAliasClient_SpreadWithMultipleParameters(t *testing.T) {
 }
 
 func TestSpreadAliasClient_SpreadWithInnerAlias(t *testing.T) {
-	client, err := spreadgroup.NewSpreadClient("http://localhost:3000", nil)
+	client, err := spreadgroup.NewSpreadClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	_, err = client.NewSpreadAliasClient().SpreadParameterWithInnerAlias(context.Background(), "1", "foo", 1, "bar", nil)
 	require.NoError(t, err)
 }
 
 func TestSpreadAliasClient_SpreadWithInnerModel(t *testing.T) {
-	client, err := spreadgroup.NewSpreadClient("http://localhost:3000", nil)
+	client, err := spreadgroup.NewSpreadClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	_, err = client.NewSpreadAliasClient().SpreadParameterWithInnerModel(context.Background(), "1", "foo", "bar", nil)
 	require.NoError(t, err)
