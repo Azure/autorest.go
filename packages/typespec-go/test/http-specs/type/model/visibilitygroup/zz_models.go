@@ -21,6 +21,9 @@ type VisibilityModel struct {
 	// REQUIRED; Required bool, illustrating a delete property.
 	DeleteProp *bool
 
+	// REQUIRED; Required int32, illustrating a query property.
+	QueryProp *int32
+
 	// REQUIRED; Required int32[], illustrating a update property.
 	UpdateProp []*int32
 

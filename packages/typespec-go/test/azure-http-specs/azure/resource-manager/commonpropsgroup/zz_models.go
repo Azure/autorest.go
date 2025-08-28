@@ -17,11 +17,11 @@ type ConfidentialResource struct {
 	// Resource tags.
 	Tags map[string]*string
 
+	// READ-ONLY; The name of the ConfidentialResource
+	Name *string
+
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
@@ -45,6 +45,9 @@ type ManagedIdentityTrackedResource struct {
 	// REQUIRED; The geo-location where the resource lives
 	Location *string
 
+	// READ-ONLY; arm resource name for path
+	Name *string
+
 	// The managed service identities assigned to this resource.
 	Identity *ManagedServiceIdentity
 
@@ -56,9 +59,6 @@ type ManagedIdentityTrackedResource struct {
 
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData

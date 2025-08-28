@@ -33,6 +33,9 @@ type HealthBot struct {
 	// REQUIRED; SKU of the Azure Health Bot.
 	SKU *SKU
 
+	// READ-ONLY; The name of the Bot resource.
+	Name *string
+
 	// The identity of the Azure Health Bot.
 	Identity *Identity
 
@@ -44,9 +47,6 @@ type HealthBot struct {
 
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
 
 	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData

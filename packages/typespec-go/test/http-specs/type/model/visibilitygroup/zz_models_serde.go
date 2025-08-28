@@ -47,6 +47,7 @@ func (v VisibilityModel) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "createProp", v.CreateProp)
 	populate(objectMap, "deleteProp", v.DeleteProp)
+	populate(objectMap, "queryProp", v.QueryProp)
 	populate(objectMap, "readProp", v.ReadProp)
 	populate(objectMap, "updateProp", v.UpdateProp)
 	return json.Marshal(objectMap)
@@ -66,6 +67,9 @@ func (v *VisibilityModel) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "deleteProp":
 			err = unpopulate(val, "DeleteProp", &v.DeleteProp)
+			delete(rawMsg, key)
+		case "queryProp":
+			err = unpopulate(val, "QueryProp", &v.QueryProp)
 			delete(rawMsg, key)
 		case "readProp":
 			err = unpopulate(val, "ReadProp", &v.ReadProp)

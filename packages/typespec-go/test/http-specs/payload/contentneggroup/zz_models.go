@@ -7,4 +7,7 @@ package contentneggroup
 type PNGImageAsJSON struct {
 	// REQUIRED
 	Content []byte
+
+	// REQUIRED
+	ContentType *string
 }
