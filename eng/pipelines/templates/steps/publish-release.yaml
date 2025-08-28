@@ -15,6 +15,7 @@ steps:
       PackagePath: ${{ parameters.PackagePath }}
       VersionString: $(currentVersion)
   - pwsh: |
+      $currentVersion = node -p -e "require('./packages/${{ parameters.PackagePath }}/package.json').version"
       $releaseNotes = "${{ parameters.ReleaseNotes }}"
       if ('${{ parameters.PublishDevVersion }}' -eq 'true') {
         $currentVersion="$currentVersion-$(Build.BuildNumber)"
