@@ -63,7 +63,7 @@ func (client *HierarchyBuildingDogOperationsClient) updateDogAsDogCreateRequest(
 // updateDogAsDogHandleResponse handles the UpdateDogAsDog response.
 func (client *HierarchyBuildingDogOperationsClient) updateDogAsDogHandleResponse(resp *http.Response) (HierarchyBuildingDogOperationsClientUpdateDogAsDogResponse, error) {
 	result := HierarchyBuildingDogOperationsClientUpdateDogAsDogResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Dog); err != nil {
 		return HierarchyBuildingDogOperationsClientUpdateDogAsDogResponse{}, err
 	}
 	return result, nil

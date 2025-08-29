@@ -24,16 +24,6 @@ func (h *HierarchyBuildingAnimalOperationsClientUpdatePetAsAnimalResponse) Unmar
 	return nil
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type HierarchyBuildingDogOperationsClientUpdateDogAsDogResponse.
-func (h *HierarchyBuildingDogOperationsClientUpdateDogAsDogResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalPetClassification(data)
-	if err != nil {
-		return err
-	}
-	h.PetClassification = res
-	return nil
-}
-
 // UnmarshalJSON implements the json.Unmarshaller interface for type HierarchyBuildingPetOperationsClientUpdateDogAsPetResponse.
 func (h *HierarchyBuildingPetOperationsClientUpdateDogAsPetResponse) UnmarshalJSON(data []byte) error {
 	res, err := unmarshalPetClassification(data)

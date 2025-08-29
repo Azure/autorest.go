@@ -277,7 +277,8 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
     exampleText += `${indent}}`;
     return exampleText;
   } else if (example.kind === 'model') {
-    let exampleText = `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}{\n`;
+     const isModelPolymorphic = example.type.kind === 'polymorphicModel';
+    let exampleText = `${indent}${getRef(byValue && !isModelPolymorphic)}${go.getTypeDeclaration(example.type, codeModel.packageName)}{\n`;
     if (inArray) {
       exampleText = `${indent}{\n`;
     }

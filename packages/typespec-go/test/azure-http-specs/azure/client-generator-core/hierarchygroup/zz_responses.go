@@ -16,7 +16,7 @@ type HierarchyBuildingAnimalOperationsClientUpdatePetAsAnimalResponse struct {
 
 // HierarchyBuildingDogOperationsClientUpdateDogAsDogResponse contains the response from method HierarchyBuildingDogOperationsClient.UpdateDogAsDog.
 type HierarchyBuildingDogOperationsClientUpdateDogAsDogResponse struct {
-	PetClassification
+	Dog
 }
 
 // HierarchyBuildingPetOperationsClientUpdateDogAsPetResponse contains the response from method HierarchyBuildingPetOperationsClient.UpdateDogAsPet.

@@ -103,7 +103,7 @@ export interface ModelResult {
   docs: type.Docs;
 
   /** the type returned in the response envelope */
-  modelType: type.Model;
+  modelType: type.Model | type.PolymorphicModel;
 
   /** the format in which the result is returned */
   format: ModelResultFormat;
@@ -189,7 +189,7 @@ export interface ResponseEnvelope {
 export type ResultFormat = 'JSON' | 'XML' | 'Text';
 
 /** returns the underlying type used for the specified result type */
-export function getResultType(result: Result): type.Interface | type.Model | MonomorphicResultType | type.Scalar | type.QualifiedType {
+export function getResultType(result: Result): type.Interface | type.Model | MonomorphicResultType | type.Scalar | type.QualifiedType | type.PolymorphicModel {
   switch (result.kind) {
     case 'anyResult':
       return new type.Any();
@@ -275,7 +275,7 @@ export class HeaderScalarResponse implements HeaderScalarResponse {
 }
 
 export class ModelResult implements ModelResult {
-  constructor(type: type.Model, format: ModelResultFormat) {
+  constructor(type: type.Model | type.PolymorphicModel, format: ModelResultFormat) {
     this.kind = 'modelResult';
     this.modelType = type;
     this.format = format;
