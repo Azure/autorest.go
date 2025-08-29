@@ -736,7 +736,7 @@ export class clientAdapter {
         throw new AdapterError('InternalError', `didn't find model type name ${sdkResponseType.name} for response envelope ${respEnv.name}`, sdkResponseType.__raw?.node ?? NoTarget);
       }
       if (modelType.kind === 'polymorphicModel') {
-        const concreteType = modelType.interface.possibleTypes.find(t => t.discriminatorValue?.literal === modelType.discriminatorValue?.literal)!;
+        const concreteType = modelType.interface.possibleTypes.find(t => t.discriminatorValue?.literal === modelType.discriminatorValue?.literal);
         if (concreteType === undefined) {
           respEnv.result = new go.PolymorphicResult(modelType.interface);
         }
