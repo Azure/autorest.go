@@ -105,5 +105,5 @@ func TestHierarchyBuildingClient_UpdateDogAsDog(t *testing.T) {
 		Name:    to.Ptr("Rex"),
 		Trained: to.Ptr(true),
 		Breed:   to.Ptr("German Shepherd"),
-	}, resp.PetClassification)
+	}, resp.Dog)
 }
