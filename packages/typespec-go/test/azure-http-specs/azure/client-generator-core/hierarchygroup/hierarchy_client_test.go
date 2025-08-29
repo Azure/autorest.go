@@ -100,7 +100,7 @@ func TestHierarchyBuildingClient_UpdateDogAsDog(t *testing.T) {
 		Breed:   to.Ptr("German Shepherd"),
 	}, nil)
 	require.NoError(t, err)
-	require.Equal(t, &hierarchygroup.Dog{
+	require.Equal(t, hierarchygroup.Dog{
 		Kind:    to.Ptr("dog"),
 		Name:    to.Ptr("Rex"),
 		Trained: to.Ptr(true),
