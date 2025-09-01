@@ -7,7 +7,7 @@ parameters:
   type: boolean
 - name: ServiceFilter
   type: string
-  default: ''
+  default: '.*'
 
 variables:
   - template: /eng/pipelines/templates/variables/globals.yml
