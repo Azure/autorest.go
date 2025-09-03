@@ -102,7 +102,11 @@ export interface ModelResult {
   /** any docs for the result type */
   docs: type.Docs;
 
-  /** the type returned in the response envelope */
+  /** 
+   * the type returned in the response envelope.
+   * will be a PolymorphicModel when the response envelope
+   * is a concrete type from a polymorphic hierarchy
+   */
   modelType: type.Model | type.PolymorphicModel;
 
   /** the format in which the result is returned */
