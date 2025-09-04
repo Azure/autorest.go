@@ -15,7 +15,7 @@ import (
 )
 
 func TestServiceBarClient_Five(t *testing.T) {
-	client, err := defaultgroup.NewServiceClient("http://localhost:3000", defaultgroup.ClientTypeDefault, nil)
+	client, err := defaultgroup.NewServiceClientWithNoCredential("http://localhost:3000", defaultgroup.ClientTypeDefault, nil)
 	require.NoError(t, err)
 	resp, err := client.NewServiceBarClient().Five(context.Background(), nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestServiceBarClient_Five(t *testing.T) {
 }
 
 func TestServiceBarClient_Nine(t *testing.T) {
-	client, err := defaultgroup.NewServiceClient("http://localhost:3000", defaultgroup.ClientTypeDefault, nil)
+	client, err := defaultgroup.NewServiceClientWithNoCredential("http://localhost:3000", defaultgroup.ClientTypeDefault, nil)
 	require.NoError(t, err)
 	resp, err := client.NewServiceQuxClient().NewServiceQuxBarClient().Nine(context.Background(), nil)
 	require.NoError(t, err)
@@ -31,7 +31,7 @@ func TestServiceBarClient_Nine(t *testing.T) {
 }
 
 func TestServiceBarClient_Six(t *testing.T) {
-	client, err := defaultgroup.NewServiceClient("http://localhost:3000", defaultgroup.ClientTypeDefault, nil)
+	client, err := defaultgroup.NewServiceClientWithNoCredential("http://localhost:3000", defaultgroup.ClientTypeDefault, nil)
 	require.NoError(t, err)
 	resp, err := client.NewServiceBarClient().Six(context.Background(), nil)
 	require.NoError(t, err)

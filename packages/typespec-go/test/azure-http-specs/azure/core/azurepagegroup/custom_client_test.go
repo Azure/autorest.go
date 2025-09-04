@@ -17,7 +17,7 @@ import (
 )
 
 func TestPageClient_NewListWithCustomPageModelPager(t *testing.T) {
-	client, err := azurepagegroup.NewPageClient("http://localhost:3000", nil)
+	client, err := azurepagegroup.NewPageClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	pager := client.NewListWithCustomPageModelPager(nil)
 	pages := 0
@@ -37,7 +37,7 @@ func TestPageClient_NewListWithCustomPageModelPager(t *testing.T) {
 }
 
 func TestPageClient_NewListWithPagePager(t *testing.T) {
-	client, err := azurepagegroup.NewPageClient("http://localhost:3000", nil)
+	client, err := azurepagegroup.NewPageClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	pager := client.NewListWithPagePager(nil)
 	pages := 0
@@ -57,7 +57,7 @@ func TestPageClient_NewListWithPagePager(t *testing.T) {
 }
 
 func TestPageClient_NewListWithParametersPager(t *testing.T) {
-	client, err := azurepagegroup.NewPageClient("http://localhost:3000", nil)
+	client, err := azurepagegroup.NewPageClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	pager := client.NewListWithParametersPager(azurepagegroup.ListItemInputBody{
 		InputName: to.Ptr("Madge"),

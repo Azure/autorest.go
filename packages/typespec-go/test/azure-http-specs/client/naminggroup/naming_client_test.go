@@ -13,7 +13,7 @@ import (
 )
 
 func TestNamingClient_Client(t *testing.T) {
-	client, err := naminggroup.NewNamingClient("http://localhost:3000", nil)
+	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Client(context.Background(), naminggroup.ClientNameModel{
 		to.Ptr(true),
@@ -23,7 +23,7 @@ func TestNamingClient_Client(t *testing.T) {
 }
 
 func TestNamingClient_ClientName(t *testing.T) {
-	client, err := naminggroup.NewNamingClient("http://localhost:3000", nil)
+	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.ClientName(context.Background(), nil)
 	require.NoError(t, err)
@@ -31,7 +31,7 @@ func TestNamingClient_ClientName(t *testing.T) {
 }
 
 func TestNamingClient_CompatibleWithEncodedName(t *testing.T) {
-	client, err := naminggroup.NewNamingClient("http://localhost:3000", nil)
+	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.CompatibleWithEncodedName(context.Background(), naminggroup.ClientNameAndJSONEncodedNameModel{
 		ClientName: to.Ptr(true),
@@ -41,7 +41,7 @@ func TestNamingClient_CompatibleWithEncodedName(t *testing.T) {
 }
 
 func TestNamingClient_Language(t *testing.T) {
-	client, err := naminggroup.NewNamingClient("http://localhost:3000", nil)
+	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Language(context.Background(), naminggroup.LanguageClientNameModel{
 		GoName: to.Ptr(true),
@@ -51,7 +51,7 @@ func TestNamingClient_Language(t *testing.T) {
 }
 
 func TestNamingClient_Parameter(t *testing.T) {
-	client, err := naminggroup.NewNamingClient("http://localhost:3000", nil)
+	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Parameter(context.Background(), "true", nil)
 	require.NoError(t, err)
@@ -59,7 +59,7 @@ func TestNamingClient_Parameter(t *testing.T) {
 }
 
 func TestNamingClient_Request(t *testing.T) {
-	client, err := naminggroup.NewNamingClient("http://localhost:3000", nil)
+	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Request(context.Background(), "true", nil)
 	require.NoError(t, err)
@@ -67,7 +67,7 @@ func TestNamingClient_Request(t *testing.T) {
 }
 
 func TestNamingClient_Response(t *testing.T) {
-	client, err := naminggroup.NewNamingClient("http://localhost:3000", nil)
+	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Response(context.Background(), nil)
 	require.NoError(t, err)
@@ -76,7 +76,7 @@ func TestNamingClient_Response(t *testing.T) {
 }
 
 func TestModelClient_Client(t *testing.T) {
-	client, err := naminggroup.NewNamingClient("http://localhost:3000", nil)
+	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNamingModelClient().Client(context.Background(), naminggroup.ClientModel{
 		DefaultName: to.Ptr(true),
@@ -86,7 +86,7 @@ func TestModelClient_Client(t *testing.T) {
 }
 
 func TestModelClient_Language(t *testing.T) {
-	client, err := naminggroup.NewNamingClient("http://localhost:3000", nil)
+	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNamingModelClient().Language(context.Background(), naminggroup.GoModel{
 		DefaultName: to.Ptr(true),
@@ -96,7 +96,7 @@ func TestModelClient_Language(t *testing.T) {
 }
 
 func TestUnionEnumClient_UnionEnumMemberName(t *testing.T) {
-	client, err := naminggroup.NewNamingClient("http://localhost:3000", nil)
+	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNamingUnionEnumClient().UnionEnumMemberName(context.Background(), naminggroup.ExtensibleEnumClientEnumValue1, nil)
 	require.NoError(t, err)
@@ -104,7 +104,7 @@ func TestUnionEnumClient_UnionEnumMemberName(t *testing.T) {
 }
 
 func TestUnionEnumClient_UnionEnumName(t *testing.T) {
-	client, err := naminggroup.NewNamingClient("http://localhost:3000", nil)
+	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNamingUnionEnumClient().UnionEnumName(context.Background(), naminggroup.ClientExtensibleEnumEnumValue1, nil)
 	require.NoError(t, err)

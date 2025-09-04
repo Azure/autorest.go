@@ -13,7 +13,7 @@ import (
 )
 
 func TestValueTypesDecimal128Client_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesDecimal128Client().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestValueTypesDecimal128Client_Get(t *testing.T) {
 }
 
 func TestValueTypesDecimal128Client_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesDecimal128Client().Put(context.Background(), valuetypesgroup.Decimal128Property{
 		Property: to.Ptr[float64](0.33333),

@@ -12,7 +12,7 @@ import (
 )
 
 func TestValueTypesUnknownIntClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesUnknownIntClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -20,7 +20,7 @@ func TestValueTypesUnknownIntClient_Get(t *testing.T) {
 }
 
 func TestValueTypesUnknownIntClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesUnknownIntClient().Put(context.Background(), valuetypesgroup.UnknownIntProperty{
 		Property: float64(42),

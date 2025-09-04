@@ -4,13 +4,39 @@
 
 package numericgroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+)
 
 // NumericClient - Test for encode decorator on integer.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewNumericClientWithNoCredential() instead.
 type NumericClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// NumericClientOptions contains the optional values for creating a [NumericClient].
+type NumericClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewNumericClientWithNoCredential creates a new instance of NumericClient with the specified values.
+//   - endpoint - Service host
+//   - NumericClientOptions - NumericClientOptions contains the optional values for creating a [NumericClient]
+func NewNumericClientWithNoCredential(endpoint string, options *NumericClientOptions) (*NumericClient, error) {
+	if options == nil {
+		options = &NumericClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &NumericClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // NewNumericPropertyClient creates a new instance of [NumericPropertyClient].

@@ -13,7 +13,7 @@ import (
 )
 
 func TestValueTypesEnumClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesEnumClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestValueTypesEnumClient_Get(t *testing.T) {
 }
 
 func TestValueTypesEnumClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesEnumClient().Put(context.Background(), valuetypesgroup.EnumProperty{
 		Property: to.Ptr(valuetypesgroup.FixedInnerEnumValueOne),

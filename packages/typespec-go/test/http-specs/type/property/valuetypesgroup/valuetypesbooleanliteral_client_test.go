@@ -12,7 +12,7 @@ import (
 )
 
 func TestValueTypesBooleanLiteralClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesBooleanLiteralClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -21,7 +21,7 @@ func TestValueTypesBooleanLiteralClient_Get(t *testing.T) {
 }
 
 func TestValueTypesBooleanLiteralClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesBooleanLiteralClient().Put(context.Background(), valuetypesgroup.BooleanLiteralProperty{}, nil)
 	require.NoError(t, err)

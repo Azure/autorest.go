@@ -13,7 +13,7 @@ import (
 )
 
 func TestXMLModelWithDictionaryValueClient_Get(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
+	client, err := xmlgroup.NewXMLClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithDictionaryValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -28,7 +28,7 @@ func TestXMLModelWithDictionaryValueClient_Get(t *testing.T) {
 }
 
 func TestXMLModelWithDictionaryValueClient_Put(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
+	client, err := xmlgroup.NewXMLClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithDictionaryValueClient().Put(context.Background(), xmlgroup.ModelWithDictionary{
 		Metadata: map[string]*string{

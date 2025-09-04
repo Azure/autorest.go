@@ -18,7 +18,7 @@ import (
 )
 
 func TestDatetimeClientGetNonNull(t *testing.T) {
-	client, err := nullablegroup.NewNullableClient("http://localhost:3000", nil)
+	client, err := nullablegroup.NewNullableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNullableDatetimeClient().GetNonNull(context.Background(), nil)
 	require.NoError(t, err)
@@ -31,7 +31,7 @@ func TestDatetimeClientGetNonNull(t *testing.T) {
 }
 
 func TestDatetimeClientGetNull(t *testing.T) {
-	client, err := nullablegroup.NewNullableClient("http://localhost:3000", nil)
+	client, err := nullablegroup.NewNullableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNullableDatetimeClient().GetNull(context.Background(), nil)
 	require.NoError(t, err)
@@ -41,7 +41,7 @@ func TestDatetimeClientGetNull(t *testing.T) {
 }
 
 func TestDatetimeClientPatchNonNull(t *testing.T) {
-	client, err := nullablegroup.NewNullableClient("http://localhost:3000", nil)
+	client, err := nullablegroup.NewNullableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	timeProp, err := time.Parse(time.RFC3339, "2022-08-26T18:38:00Z")
 	require.NoError(t, err)
@@ -54,7 +54,7 @@ func TestDatetimeClientPatchNonNull(t *testing.T) {
 }
 
 func TestDatetimeClientPatchNull(t *testing.T) {
-	client, err := nullablegroup.NewNullableClient("http://localhost:3000", nil)
+	client, err := nullablegroup.NewNullableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNullableDatetimeClient().PatchNull(context.Background(), nullablegroup.DatetimeProperty{
 		NullableProperty: azcore.NullValue[*time.Time](),
