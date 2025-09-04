@@ -736,8 +736,15 @@ export class clientAdapter {
         throw new AdapterError('InternalError', `didn't find model type name ${sdkResponseType.name} for response envelope ${respEnv.name}`, sdkResponseType.__raw?.node ?? NoTarget);
       }
       if (modelType.kind === 'polymorphicModel') {
-        respEnv.result = new go.PolymorphicResult(modelType.interface);
-      } else {
+        // For polymorphic models, check if we can find a concrete type that matches the discriminator value
+        // If no concrete type is found, create a PolymorphicResult that uses the interface type
+        // else use the concrete type as the result type
+        const concreteType = modelType.interface.possibleTypes.find(t => t.discriminatorValue?.literal === modelType.discriminatorValue?.literal);
+        if (concreteType === undefined) {
+          respEnv.result = new go.PolymorphicResult(modelType.interface);
+        }
+      }
+      if (respEnv.result === undefined) {
         if (contentType !== 'JSON' && contentType !== 'XML') {
           throw new AdapterError('InternalError', `unexpected content type ${contentType} for model ${modelType.name}`, NoTarget);
         }
