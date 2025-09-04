@@ -144,6 +144,9 @@ generate("azalias", pkgRoot + 'test/swagger/alias.json', 'test/maps/azalias', '-
 
 generate("azarrayofrawjson", pkgRoot + 'test/swagger/arrayOfRawJSON.json', 'test/misc/azarrayofrawjson', '--security=AzureKey --module="azarrayofrawjson" --openapi-type="data-plane" --rawjson-as-bytes=true');
 
+const dataprotection = repoRoot + 'swagger/specification/dataprotection/resource-manager/readme.md';
+generateFromReadme("armdataprotection", dataprotection, 'package-2025-07-01', 'test/dataprotection/armdataprotection', '--module=armdataprotection --azure-arm=true --remove-unreferenced-types --inject-spans=false --fix-const-stuttering=true');
+
 function should_generate(name) {
   if (filter !== undefined) {
     let re = new RegExp(filter);

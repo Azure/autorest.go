@@ -2,6 +2,10 @@
 
 ## 4.0.0-preview.74 (unreleased)
 
+### Bugs Fixed
+
+* Fix polymorphic type result of response generation.
+
 ### Breaking Changes
 
 * The `module-version` switch has been removed.

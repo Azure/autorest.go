@@ -252,9 +252,13 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
     }
     respEnv.result = new go.PolymorphicResult(ifaceResult);
   } else if (helpers.getSchemaResponse(op)) {
-    let modelType: go.Model | undefined;
+  /** 
+   * The modelType will be a PolymorphicModel when the response envelope
+   * is a concrete type from a polymorphic hierarchy
+   */
+    let modelType: go.Model | go.PolymorphicModel | undefined;
     for (const model of codeModel.models) {
-      if (model.kind === 'model' && model.name === resultProp.schema.language.go!.name) {
+      if ((model.kind === 'model' || model.kind === 'polymorphicModel') && model.name === resultProp.schema.language.go!.name) {
         modelType = model;
         break;
       }
