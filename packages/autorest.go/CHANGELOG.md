@@ -2,15 +2,15 @@
 
 ## 4.0.0-preview.74 (unreleased)
 
-### Bugs Fixed
-
-* Fix polymorphic type result of response generation.
-
 ### Breaking Changes
 
 * The `module-version` switch has been removed.
   * For new modules, the `moduleVersion` constant will have an initial value of `v0.1.0`.
   * For existing modules, the value of `moduleVersion` is externally maintained.
+
+### Bugs Fixed
+
+* Fix polymorphic type result of response generation.
 
 ### Features Added
 
