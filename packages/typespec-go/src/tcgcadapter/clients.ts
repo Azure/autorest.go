@@ -5,7 +5,7 @@
 
 import { values } from '@azure-tools/linq';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
-import { NoTarget } from '@typespec/compiler';
+import { ModelProperty, NoTarget } from '@typespec/compiler';
 import * as go from '../../../codemodel.go/src/index.js';
 import { capitalize, createOptionsTypeDescription, createResponseEnvelopeDescription, ensureNameCase, getEscapedReservedName, uncapitalize } from '../../../naming.go/src/naming.js';
 import { AdapterError } from './errors.js';
@@ -397,7 +397,9 @@ export class clientAdapter {
         // a flag which isn't what we want. so, we mark it as required. we ONLY do this
         // if the content-type is a constant (i.e. literal value).
         // the content-type will be conditionally set based on the requiredness of the body.
-        opParam.optional = false;
+        // NOTE: we set this on the corresponding method param as it's used when adapting the style.
+        // header param will only have one corresponding method param.
+        opParam.correspondingMethodParams[0].optional = false;
       }
 
       let adaptedParam: go.MethodParameter;
@@ -517,104 +519,120 @@ export class clientAdapter {
   /**
    * adapts the provided operation parameter to a Go method parameter
    * 
-   * @param param the operation parameter to adapt
+   * @param opParam the operation parameter to adapt
    * @param verb the HTTP verb used for the operation to which the parameter belongs
    * @returns the adapted Go method parameter
    */
-  private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkCookieParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter, verb: go.HTTPMethod): go.MethodParameter {
-    if (param.isApiVersionParam && param.clientDefaultValue) {
+  private adaptMethodParameter(opParam: tcgc.SdkBodyParameter | tcgc.SdkCookieParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter, verb: go.HTTPMethod): go.MethodParameter {
+    if (opParam.isApiVersionParam && opParam.clientDefaultValue) {
       // we emit the api version param inline as a literal, never as a param.
       // the ClientOptions.APIVersion setting is used to change the version.
-      const paramType = new go.Literal(new go.String(), param.clientDefaultValue);
-      switch (param.kind) {
+      const paramType = new go.Literal(new go.String(), opParam.clientDefaultValue);
+      switch (opParam.kind) {
         case 'header':
-          return new go.HeaderScalarParameter(param.name, param.serializedName, paramType, 'literal', true, 'method');
+          return new go.HeaderScalarParameter(opParam.name, opParam.serializedName, paramType, 'literal', true, 'method');
         case 'path':
-          return new go.PathScalarParameter(param.name, param.serializedName, true, paramType, 'literal', true, 'method');
+          return new go.PathScalarParameter(opParam.name, opParam.serializedName, true, paramType, 'literal', true, 'method');
         case 'query':
-          return new go.QueryScalarParameter(param.name, param.serializedName, true, paramType, 'literal', true, 'method');
+          return new go.QueryScalarParameter(opParam.name, opParam.serializedName, true, paramType, 'literal', true, 'method');
         default:
-          throw new AdapterError('UnsupportedTsp', `unsupported API version param kind ${param.kind}`, param.__raw?.node ?? NoTarget);
+          throw new AdapterError('UnsupportedTsp', `unsupported API version param kind ${opParam.kind}`, opParam.__raw?.node ?? NoTarget);
       }
     }
 
     let location: go.ParameterLocation = 'method';
-    const getClientParamsKey = function (param: tcgc.SdkBodyParameter | tcgc.SdkCookieParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): string {
+    const getClientParamsKey = function (opParam: tcgc.SdkBodyParameter | tcgc.SdkCookieParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): string {
       // include the param kind in the key name as a client param can be used
       // in different places across methods (path/query)
-      return `${param.name}-${param.kind}`;
+      return `${opParam.name}-${opParam.kind}`;
     };
-    if (param.onClient) {
+
+    // note that client params only show up in the operation
+    // params which is why we check opParam.onClient.
+    if (opParam.onClient) {
       // check if we've already adapted this client parameter
-      const clientParam = this.clientParams.get(getClientParamsKey(param));
+      const clientParam = this.clientParams.get(getClientParamsKey(opParam));
       if (clientParam) {
         return clientParam;
       }
       location = 'client';
     }
 
-    let paramStyle = this.adaptParameterStyle(param);
-    if (param.kind === 'body' && (verb === 'patch' || verb === 'put')) {
+    // we use the operation param's corresponding method
+    // param as the source of truth during adaptation.
+    // however, note that some things are only on the
+    // operation param.
+    if (opParam.correspondingMethodParams.length > 1) {
+      // this is only applicable to spread params
+      // which should have been handled earlier.
+      // so, if we get here, we have a bug elsewhere
+      throw new AdapterError('InternalError', `unexpected correspondingMethodParams.length of ${opParam.correspondingMethodParams.length}`, opParam.__raw?.node ?? NoTarget);
+    }
+
+    const methodParam = opParam.correspondingMethodParams[0];
+
+    let paramStyle = this.adaptParameterStyle(methodParam);
+    if (opParam.kind === 'body' && (verb === 'patch' || verb === 'put')) {
       paramStyle = 'required';
     }
-    const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');
-    const byVal = isTypePassedByValue(param.type);
+    const paramName = getEscapedReservedName(ensureNameCase(methodParam.name, paramStyle === 'required'), 'Param');
+    const byVal = isTypePassedByValue(methodParam.type);
 
     let adaptedParam: go.MethodParameter;
-    switch (param.kind) {
+    switch (opParam.kind) {
       case 'body':
         // TODO: form data? (non-multipart)
-        if (param.defaultContentType.match(/multipart/i)) {
-          adaptedParam = new go.MultipartFormBodyParameter(paramName, this.ta.getWireType(param.type, false, true), paramStyle, byVal);
+        if (opParam.defaultContentType.match(/multipart/i)) {
+          adaptedParam = new go.MultipartFormBodyParameter(paramName, this.ta.getWireType(methodParam.type, false, true), paramStyle, byVal);
         } else {
-          const contentType = this.adaptContentType(param.defaultContentType);
-          let bodyType = this.ta.getWireType(param.type, false, true);
+          const contentType = this.adaptContentType(opParam.defaultContentType);
+          let bodyType = this.ta.getWireType(methodParam.type, false, true);
           if (contentType === 'binary') {
             // tcgc models binary params as 'bytes' but we want an io.ReadSeekCloser
-            bodyType = this.ta.getReadSeekCloser(param.type.kind === 'array');
+            bodyType = this.ta.getReadSeekCloser(methodParam.type.kind === 'array');
           }
-          adaptedParam = new go.BodyParameter(paramName, contentType, `"${param.defaultContentType}"`, bodyType, paramStyle, byVal);
+          adaptedParam = new go.BodyParameter(paramName, contentType, `"${opParam.defaultContentType}"`, bodyType, paramStyle, byVal);
         }
         break;
       case 'cookie':
         // TODO: currently we don't have Azure service using cookie parameter. need to add support if needed in the future.
-        throw new AdapterError('UnsupportedTsp', 'unsupported parameter type cookie', param.__raw?.node ?? NoTarget);
+        throw new AdapterError('UnsupportedTsp', 'unsupported parameter type cookie', opParam.__raw?.node ?? NoTarget);
       case 'header':
-        if (param.collectionFormat) {
-          if (param.collectionFormat === 'multi' || param.collectionFormat === 'form') {
-            throw new AdapterError('InternalError', `unexpected collection format ${param.collectionFormat} for HeaderCollectionParameter`, param.__raw?.node ?? NoTarget);
+        if (opParam.collectionFormat) {
+          if (opParam.collectionFormat === 'multi' || opParam.collectionFormat === 'form') {
+            throw new AdapterError('InternalError', `unexpected collection format ${opParam.collectionFormat} for HeaderCollectionParameter`, opParam.__raw?.node ?? NoTarget);
           }
           // TODO: is hard-coded false for element type by value correct?
-          const type = this.ta.getWireType(param.type, true, false);
+          const type = this.ta.getWireType(methodParam.type, true, false);
           if (type.kind !== 'slice') {
-            throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${param.name}`, param.__raw?.node ?? NoTarget);
+            throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${methodParam.name}`, opParam.__raw?.node ?? NoTarget);
           }
-          adaptedParam = new go.HeaderCollectionParameter(paramName, param.serializedName, type, param.collectionFormat === 'simple' ? 'csv' : param.collectionFormat, paramStyle, byVal, location);
+          adaptedParam = new go.HeaderCollectionParameter(paramName, opParam.serializedName, type, opParam.collectionFormat === 'simple' ? 'csv' : opParam.collectionFormat, paramStyle, byVal, location);
         } else {
-          adaptedParam = new go.HeaderScalarParameter(paramName, param.serializedName, this.adaptHeaderScalarType(param.type, true), paramStyle, byVal, location);
+          adaptedParam = new go.HeaderScalarParameter(paramName, opParam.serializedName, this.adaptHeaderScalarType(methodParam.type, true), paramStyle, byVal, location);
         }
         break;
       case 'path':
-        adaptedParam = new go.PathScalarParameter(paramName, param.serializedName, !param.allowReserved, this.adaptPathScalarParameterType(param.type), paramStyle, byVal, location);
+        adaptedParam = new go.PathScalarParameter(paramName, opParam.serializedName, !opParam.allowReserved, this.adaptPathScalarParameterType(methodParam.type), paramStyle, byVal, location);
         break;
       case 'query':
-        if (param.collectionFormat) {
-          const type = this.ta.getWireType(param.type, true, false);
+        if (opParam.collectionFormat) {
+          const type = this.ta.getWireType(methodParam.type, true, false);
           if (type.kind !== 'slice') {
-            throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${param.name}`, param.__raw?.node ?? NoTarget);
+            throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${methodParam.name}`, opParam.__raw?.node ?? NoTarget);
           }
           // TODO: unencoded query param
-          adaptedParam = new go.QueryCollectionParameter(paramName, param.serializedName, true, type, param.collectionFormat === 'simple' ? 'csv' : (param.collectionFormat === 'form' ? 'multi' : param.collectionFormat), paramStyle, byVal, location);
+          adaptedParam = new go.QueryCollectionParameter(paramName, opParam.serializedName, true, type, opParam.collectionFormat === 'simple' ? 'csv' : (opParam.collectionFormat === 'form' ? 'multi' : opParam.collectionFormat), paramStyle, byVal, location);
         } else {
           // TODO: unencoded query param
-          adaptedParam = new go.QueryScalarParameter(paramName, param.serializedName, true, this.adaptQueryScalarParameterType(param.type), paramStyle, byVal, location);
+          adaptedParam = new go.QueryScalarParameter(paramName, opParam.serializedName, true, this.adaptQueryScalarParameterType(methodParam.type), paramStyle, byVal, location);
         }
         break;
     }
 
     if (adaptedParam.location === 'client') {
       // track client parameter for later use
-      this.clientParams.set(getClientParamsKey(param), adaptedParam);
+      this.clientParams.set(getClientParamsKey(opParam), adaptedParam);
     }
 
     return adaptedParam;
@@ -872,7 +890,7 @@ export class clientAdapter {
     throw new AdapterError('InternalError', `unexpected query scalar parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
   }
 
-  private adaptParameterStyle(param: tcgc.SdkBodyParameter | tcgc.SdkEndpointParameter | tcgc.SdkHeaderParameter | tcgc.SdkMethodParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter | tcgc.SdkCookieParameter): go.ParameterStyle {
+  private adaptParameterStyle(param: ParameterStyleInfo): go.ParameterStyle {
     // NOTE: must check for constant type first as it will also set clientDefaultValue
     if (param.type.kind === 'constant') {
       if (param.optional) {
@@ -1070,3 +1088,12 @@ interface HttpStatusCodeRange {
 function isHttpStatusCodeRange(statusCode: HttpStatusCodeRange | number): statusCode is HttpStatusCodeRange {
   return (<HttpStatusCodeRange>statusCode).start !== undefined;
 }
+
+/** contains the common set of param info needed to adapt the parameter's style */
+interface ParameterStyleInfo {
+  __raw?: ModelProperty;
+  clientDefaultValue?: unknown;
+  name: string;
+  optional: boolean;
+  type: tcgc.SdkType;
+};

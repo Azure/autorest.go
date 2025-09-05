@@ -22,35 +22,39 @@ import (
 type Server struct {
 	// BackupKey is the fake for method Client.BackupKey
 	// HTTP status codes to indicate success: http.StatusOK
-	BackupKey func(ctx context.Context, keyName string, options *azkeys.BackupKeyOptions) (resp azfake.Responder[azkeys.BackupKeyResponse], errResp azfake.ErrorResponder)
+	BackupKey func(ctx context.Context, name string, options *azkeys.BackupKeyOptions) (resp azfake.Responder[azkeys.BackupKeyResponse], errResp azfake.ErrorResponder)
 
 	// CreateKey is the fake for method Client.CreateKey
 	// HTTP status codes to indicate success: http.StatusOK
-	CreateKey func(ctx context.Context, keyName string, parameters azkeys.CreateKeyParameters, options *azkeys.CreateKeyOptions) (resp azfake.Responder[azkeys.CreateKeyResponse], errResp azfake.ErrorResponder)
+	CreateKey func(ctx context.Context, name string, parameters azkeys.CreateKeyParameters, options *azkeys.CreateKeyOptions) (resp azfake.Responder[azkeys.CreateKeyResponse], errResp azfake.ErrorResponder)
 
 	// Decrypt is the fake for method Client.Decrypt
 	// HTTP status codes to indicate success: http.StatusOK
-	Decrypt func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.KeyOperationParameters, options *azkeys.DecryptOptions) (resp azfake.Responder[azkeys.DecryptResponse], errResp azfake.ErrorResponder)
+	Decrypt func(ctx context.Context, name string, version string, parameters azkeys.KeyOperationParameters, options *azkeys.DecryptOptions) (resp azfake.Responder[azkeys.DecryptResponse], errResp azfake.ErrorResponder)
 
 	// DeleteKey is the fake for method Client.DeleteKey
 	// HTTP status codes to indicate success: http.StatusOK
-	DeleteKey func(ctx context.Context, keyName string, options *azkeys.DeleteKeyOptions) (resp azfake.Responder[azkeys.DeleteKeyResponse], errResp azfake.ErrorResponder)
+	DeleteKey func(ctx context.Context, name string, options *azkeys.DeleteKeyOptions) (resp azfake.Responder[azkeys.DeleteKeyResponse], errResp azfake.ErrorResponder)
 
 	// Encrypt is the fake for method Client.Encrypt
 	// HTTP status codes to indicate success: http.StatusOK
-	Encrypt func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.KeyOperationParameters, options *azkeys.EncryptOptions) (resp azfake.Responder[azkeys.EncryptResponse], errResp azfake.ErrorResponder)
+	Encrypt func(ctx context.Context, name string, version string, parameters azkeys.KeyOperationParameters, options *azkeys.EncryptOptions) (resp azfake.Responder[azkeys.EncryptResponse], errResp azfake.ErrorResponder)
 
 	// GetDeletedKey is the fake for method Client.GetDeletedKey
 	// HTTP status codes to indicate success: http.StatusOK
-	GetDeletedKey func(ctx context.Context, keyName string, options *azkeys.GetDeletedKeyOptions) (resp azfake.Responder[azkeys.GetDeletedKeyResponse], errResp azfake.ErrorResponder)
+	GetDeletedKey func(ctx context.Context, name string, options *azkeys.GetDeletedKeyOptions) (resp azfake.Responder[azkeys.GetDeletedKeyResponse], errResp azfake.ErrorResponder)
 
 	// GetKey is the fake for method Client.GetKey
 	// HTTP status codes to indicate success: http.StatusOK
-	GetKey func(ctx context.Context, keyName string, keyVersion string, options *azkeys.GetKeyOptions) (resp azfake.Responder[azkeys.GetKeyResponse], errResp azfake.ErrorResponder)
+	GetKey func(ctx context.Context, name string, version string, options *azkeys.GetKeyOptions) (resp azfake.Responder[azkeys.GetKeyResponse], errResp azfake.ErrorResponder)
+
+	// GetKeyAttestation is the fake for method Client.GetKeyAttestation
+	// HTTP status codes to indicate success: http.StatusOK
+	GetKeyAttestation func(ctx context.Context, name string, version string, options *azkeys.GetKeyAttestationOptions) (resp azfake.Responder[azkeys.GetKeyAttestationResponse], errResp azfake.ErrorResponder)
 
 	// GetKeyRotationPolicy is the fake for method Client.GetKeyRotationPolicy
 	// HTTP status codes to indicate success: http.StatusOK
-	GetKeyRotationPolicy func(ctx context.Context, keyName string, options *azkeys.GetKeyRotationPolicyOptions) (resp azfake.Responder[azkeys.GetKeyRotationPolicyResponse], errResp azfake.ErrorResponder)
+	GetKeyRotationPolicy func(ctx context.Context, name string, options *azkeys.GetKeyRotationPolicyOptions) (resp azfake.Responder[azkeys.GetKeyRotationPolicyResponse], errResp azfake.ErrorResponder)
 
 	// GetRandomBytes is the fake for method Client.GetRandomBytes
 	// HTTP status codes to indicate success: http.StatusOK
@@ -58,7 +62,7 @@ type Server struct {
 
 	// ImportKey is the fake for method Client.ImportKey
 	// HTTP status codes to indicate success: http.StatusOK
-	ImportKey func(ctx context.Context, keyName string, parameters azkeys.ImportKeyParameters, options *azkeys.ImportKeyOptions) (resp azfake.Responder[azkeys.ImportKeyResponse], errResp azfake.ErrorResponder)
+	ImportKey func(ctx context.Context, name string, parameters azkeys.ImportKeyParameters, options *azkeys.ImportKeyOptions) (resp azfake.Responder[azkeys.ImportKeyResponse], errResp azfake.ErrorResponder)
 
 	// NewListDeletedKeyPropertiesPager is the fake for method Client.NewListDeletedKeyPropertiesPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -70,19 +74,19 @@ type Server struct {
 
 	// NewListKeyPropertiesVersionsPager is the fake for method Client.NewListKeyPropertiesVersionsPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListKeyPropertiesVersionsPager func(keyName string, options *azkeys.ListKeyPropertiesVersionsOptions) (resp azfake.PagerResponder[azkeys.ListKeyPropertiesVersionsResponse])
+	NewListKeyPropertiesVersionsPager func(name string, options *azkeys.ListKeyPropertiesVersionsOptions) (resp azfake.PagerResponder[azkeys.ListKeyPropertiesVersionsResponse])
 
 	// PurgeDeletedKey is the fake for method Client.PurgeDeletedKey
 	// HTTP status codes to indicate success: http.StatusNoContent
-	PurgeDeletedKey func(ctx context.Context, keyName string, options *azkeys.PurgeDeletedKeyOptions) (resp azfake.Responder[azkeys.PurgeDeletedKeyResponse], errResp azfake.ErrorResponder)
+	PurgeDeletedKey func(ctx context.Context, name string, options *azkeys.PurgeDeletedKeyOptions) (resp azfake.Responder[azkeys.PurgeDeletedKeyResponse], errResp azfake.ErrorResponder)
 
 	// RecoverDeletedKey is the fake for method Client.RecoverDeletedKey
 	// HTTP status codes to indicate success: http.StatusOK
-	RecoverDeletedKey func(ctx context.Context, keyName string, options *azkeys.RecoverDeletedKeyOptions) (resp azfake.Responder[azkeys.RecoverDeletedKeyResponse], errResp azfake.ErrorResponder)
+	RecoverDeletedKey func(ctx context.Context, name string, options *azkeys.RecoverDeletedKeyOptions) (resp azfake.Responder[azkeys.RecoverDeletedKeyResponse], errResp azfake.ErrorResponder)
 
 	// Release is the fake for method Client.Release
 	// HTTP status codes to indicate success: http.StatusOK
-	Release func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.ReleaseParameters, options *azkeys.ReleaseOptions) (resp azfake.Responder[azkeys.ReleaseResponse], errResp azfake.ErrorResponder)
+	Release func(ctx context.Context, name string, version string, parameters azkeys.ReleaseParameters, options *azkeys.ReleaseOptions) (resp azfake.Responder[azkeys.ReleaseResponse], errResp azfake.ErrorResponder)
 
 	// RestoreKey is the fake for method Client.RestoreKey
 	// HTTP status codes to indicate success: http.StatusOK
@@ -90,31 +94,31 @@ type Server struct {
 
 	// RotateKey is the fake for method Client.RotateKey
 	// HTTP status codes to indicate success: http.StatusOK
-	RotateKey func(ctx context.Context, keyName string, options *azkeys.RotateKeyOptions) (resp azfake.Responder[azkeys.RotateKeyResponse], errResp azfake.ErrorResponder)
+	RotateKey func(ctx context.Context, name string, options *azkeys.RotateKeyOptions) (resp azfake.Responder[azkeys.RotateKeyResponse], errResp azfake.ErrorResponder)
 
 	// Sign is the fake for method Client.Sign
 	// HTTP status codes to indicate success: http.StatusOK
-	Sign func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.SignParameters, options *azkeys.SignOptions) (resp azfake.Responder[azkeys.SignResponse], errResp azfake.ErrorResponder)
+	Sign func(ctx context.Context, name string, version string, parameters azkeys.SignParameters, options *azkeys.SignOptions) (resp azfake.Responder[azkeys.SignResponse], errResp azfake.ErrorResponder)
 
 	// UnwrapKey is the fake for method Client.UnwrapKey
 	// HTTP status codes to indicate success: http.StatusOK
-	UnwrapKey func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.KeyOperationParameters, options *azkeys.UnwrapKeyOptions) (resp azfake.Responder[azkeys.UnwrapKeyResponse], errResp azfake.ErrorResponder)
+	UnwrapKey func(ctx context.Context, name string, version string, parameters azkeys.KeyOperationParameters, options *azkeys.UnwrapKeyOptions) (resp azfake.Responder[azkeys.UnwrapKeyResponse], errResp azfake.ErrorResponder)
 
 	// UpdateKey is the fake for method Client.UpdateKey
 	// HTTP status codes to indicate success: http.StatusOK
-	UpdateKey func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.UpdateKeyParameters, options *azkeys.UpdateKeyOptions) (resp azfake.Responder[azkeys.UpdateKeyResponse], errResp azfake.ErrorResponder)
+	UpdateKey func(ctx context.Context, name string, version string, parameters azkeys.UpdateKeyParameters, options *azkeys.UpdateKeyOptions) (resp azfake.Responder[azkeys.UpdateKeyResponse], errResp azfake.ErrorResponder)
 
 	// UpdateKeyRotationPolicy is the fake for method Client.UpdateKeyRotationPolicy
 	// HTTP status codes to indicate success: http.StatusOK
-	UpdateKeyRotationPolicy func(ctx context.Context, keyName string, keyRotationPolicy azkeys.KeyRotationPolicy, options *azkeys.UpdateKeyRotationPolicyOptions) (resp azfake.Responder[azkeys.UpdateKeyRotationPolicyResponse], errResp azfake.ErrorResponder)
+	UpdateKeyRotationPolicy func(ctx context.Context, name string, keyRotationPolicy azkeys.KeyRotationPolicy, options *azkeys.UpdateKeyRotationPolicyOptions) (resp azfake.Responder[azkeys.UpdateKeyRotationPolicyResponse], errResp azfake.ErrorResponder)
 
 	// Verify is the fake for method Client.Verify
 	// HTTP status codes to indicate success: http.StatusOK
-	Verify func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.VerifyParameters, options *azkeys.VerifyOptions) (resp azfake.Responder[azkeys.VerifyResponse], errResp azfake.ErrorResponder)
+	Verify func(ctx context.Context, name string, version string, parameters azkeys.VerifyParameters, options *azkeys.VerifyOptions) (resp azfake.Responder[azkeys.VerifyResponse], errResp azfake.ErrorResponder)
 
 	// WrapKey is the fake for method Client.WrapKey
 	// HTTP status codes to indicate success: http.StatusOK
-	WrapKey func(ctx context.Context, keyName string, keyVersion string, parameters azkeys.KeyOperationParameters, options *azkeys.WrapKeyOptions) (resp azfake.Responder[azkeys.WrapKeyResponse], errResp azfake.ErrorResponder)
+	WrapKey func(ctx context.Context, name string, version string, parameters azkeys.KeyOperationParameters, options *azkeys.WrapKeyOptions) (resp azfake.Responder[azkeys.WrapKeyResponse], errResp azfake.ErrorResponder)
 }
 
 // NewServerTransport creates a new instance of ServerTransport with the provided implementation.
@@ -175,6 +179,8 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 				res.resp, res.err = s.dispatchGetDeletedKey(req)
 			case "Client.GetKey":
 				res.resp, res.err = s.dispatchGetKey(req)
+			case "Client.GetKeyAttestation":
+				res.resp, res.err = s.dispatchGetKeyAttestation(req)
 			case "Client.GetKeyRotationPolicy":
 				res.resp, res.err = s.dispatchGetKeyRotationPolicy(req)
 			case "Client.GetRandomBytes":
@@ -238,11 +244,11 @@ func (s *ServerTransport) dispatchBackupKey(req *http.Request) (*http.Response, 
 	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.BackupKey(req.Context(), keyNameParam, nil)
+	respr, errRespr := s.srv.BackupKey(req.Context(), nameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -271,11 +277,11 @@ func (s *ServerTransport) dispatchCreateKey(req *http.Request) (*http.Response, 
 	if err != nil {
 		return nil, err
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.CreateKey(req.Context(), keyNameParam, body, nil)
+	respr, errRespr := s.srv.CreateKey(req.Context(), nameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -304,15 +310,15 @@ func (s *ServerTransport) dispatchDecrypt(req *http.Request) (*http.Response, er
 	if err != nil {
 		return nil, err
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	keyVersionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
+	versionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Decrypt(req.Context(), keyNameParam, keyVersionParam, body, nil)
+	respr, errRespr := s.srv.Decrypt(req.Context(), nameParam, versionParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -337,11 +343,11 @@ func (s *ServerTransport) dispatchDeleteKey(req *http.Request) (*http.Response, 
 	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.DeleteKey(req.Context(), keyNameParam, nil)
+	respr, errRespr := s.srv.DeleteKey(req.Context(), nameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -370,15 +376,15 @@ func (s *ServerTransport) dispatchEncrypt(req *http.Request) (*http.Response, er
 	if err != nil {
 		return nil, err
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	keyVersionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
+	versionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Encrypt(req.Context(), keyNameParam, keyVersionParam, body, nil)
+	respr, errRespr := s.srv.Encrypt(req.Context(), nameParam, versionParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -403,11 +409,11 @@ func (s *ServerTransport) dispatchGetDeletedKey(req *http.Request) (*http.Respon
 	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.GetDeletedKey(req.Context(), keyNameParam, nil)
+	respr, errRespr := s.srv.GetDeletedKey(req.Context(), nameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -432,15 +438,48 @@ func (s *ServerTransport) dispatchGetKey(req *http.Request) (*http.Response, err
 	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	keyVersionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
+	versionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.GetKey(req.Context(), keyNameParam, keyVersionParam, nil)
+	respr, errRespr := s.srv.GetKey(req.Context(), nameParam, versionParam, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).KeyBundle, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchGetKeyAttestation(req *http.Request) (*http.Response, error) {
+	if s.srv.GetKeyAttestation == nil {
+		return nil, &nonRetriableError{errors.New("fake for method GetKeyAttestation not implemented")}
+	}
+	const regexStr = `/keys/(?P<key_name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<key_version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/attestation`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if len(matches) < 3 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	if err != nil {
+		return nil, err
+	}
+	versionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.GetKeyAttestation(req.Context(), nameParam, versionParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -465,11 +504,11 @@ func (s *ServerTransport) dispatchGetKeyRotationPolicy(req *http.Request) (*http
 	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.GetKeyRotationPolicy(req.Context(), keyNameParam, nil)
+	respr, errRespr := s.srv.GetKeyRotationPolicy(req.Context(), nameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -521,11 +560,11 @@ func (s *ServerTransport) dispatchImportKey(req *http.Request) (*http.Response, 
 	if err != nil {
 		return nil, err
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.ImportKey(req.Context(), keyNameParam, body, nil)
+	respr, errRespr := s.srv.ImportKey(req.Context(), nameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -606,11 +645,11 @@ func (s *ServerTransport) dispatchNewListKeyPropertiesVersionsPager(req *http.Re
 		if len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+		nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 		if err != nil {
 			return nil, err
 		}
-		resp := s.srv.NewListKeyPropertiesVersionsPager(keyNameParam, nil)
+		resp := s.srv.NewListKeyPropertiesVersionsPager(nameParam, nil)
 		newListKeyPropertiesVersionsPager = &resp
 		s.newListKeyPropertiesVersionsPager.add(req, newListKeyPropertiesVersionsPager)
 		server.PagerResponderInjectNextLinks(newListKeyPropertiesVersionsPager, req, func(page *azkeys.ListKeyPropertiesVersionsResponse, createLink func() string) {
@@ -641,11 +680,11 @@ func (s *ServerTransport) dispatchPurgeDeletedKey(req *http.Request) (*http.Resp
 	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.PurgeDeletedKey(req.Context(), keyNameParam, nil)
+	respr, errRespr := s.srv.PurgeDeletedKey(req.Context(), nameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -670,11 +709,11 @@ func (s *ServerTransport) dispatchRecoverDeletedKey(req *http.Request) (*http.Re
 	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.RecoverDeletedKey(req.Context(), keyNameParam, nil)
+	respr, errRespr := s.srv.RecoverDeletedKey(req.Context(), nameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -703,15 +742,15 @@ func (s *ServerTransport) dispatchRelease(req *http.Request) (*http.Response, er
 	if err != nil {
 		return nil, err
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	keyVersionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
+	versionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Release(req.Context(), keyNameParam, keyVersionParam, body, nil)
+	respr, errRespr := s.srv.Release(req.Context(), nameParam, versionParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -759,11 +798,11 @@ func (s *ServerTransport) dispatchRotateKey(req *http.Request) (*http.Response, 
 	if len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.RotateKey(req.Context(), keyNameParam, nil)
+	respr, errRespr := s.srv.RotateKey(req.Context(), nameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -792,15 +831,15 @@ func (s *ServerTransport) dispatchSign(req *http.Request) (*http.Response, error
 	if err != nil {
 		return nil, err
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	keyVersionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
+	versionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Sign(req.Context(), keyNameParam, keyVersionParam, body, nil)
+	respr, errRespr := s.srv.Sign(req.Context(), nameParam, versionParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -829,15 +868,15 @@ func (s *ServerTransport) dispatchUnwrapKey(req *http.Request) (*http.Response, 
 	if err != nil {
 		return nil, err
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	keyVersionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
+	versionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.UnwrapKey(req.Context(), keyNameParam, keyVersionParam, body, nil)
+	respr, errRespr := s.srv.UnwrapKey(req.Context(), nameParam, versionParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -866,15 +905,15 @@ func (s *ServerTransport) dispatchUpdateKey(req *http.Request) (*http.Response, 
 	if err != nil {
 		return nil, err
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	keyVersionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
+	versionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.UpdateKey(req.Context(), keyNameParam, keyVersionParam, body, nil)
+	respr, errRespr := s.srv.UpdateKey(req.Context(), nameParam, versionParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -903,11 +942,11 @@ func (s *ServerTransport) dispatchUpdateKeyRotationPolicy(req *http.Request) (*h
 	if err != nil {
 		return nil, err
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.UpdateKeyRotationPolicy(req.Context(), keyNameParam, body, nil)
+	respr, errRespr := s.srv.UpdateKeyRotationPolicy(req.Context(), nameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -936,15 +975,15 @@ func (s *ServerTransport) dispatchVerify(req *http.Request) (*http.Response, err
 	if err != nil {
 		return nil, err
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	keyVersionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
+	versionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Verify(req.Context(), keyNameParam, keyVersionParam, body, nil)
+	respr, errRespr := s.srv.Verify(req.Context(), nameParam, versionParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -973,15 +1012,15 @@ func (s *ServerTransport) dispatchWrapKey(req *http.Request) (*http.Response, er
 	if err != nil {
 		return nil, err
 	}
-	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_name")])
 	if err != nil {
 		return nil, err
 	}
-	keyVersionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
+	versionParam, err := url.PathUnescape(matches[regex.SubexpIndex("key_version")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.WrapKey(req.Context(), keyNameParam, keyVersionParam, body, nil)
+	respr, errRespr := s.srv.WrapKey(req.Context(), nameParam, versionParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
