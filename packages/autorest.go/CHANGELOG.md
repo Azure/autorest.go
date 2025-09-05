@@ -1,6 +1,6 @@
 # Release History
 
-## 4.0.0-preview.74 (unreleased)
+## 4.0.0-preview.74 (2025-09-05)
 
 ### Breaking Changes
 
