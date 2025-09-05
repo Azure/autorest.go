@@ -8,6 +8,10 @@
   * For new modules, the `moduleVersion` constant will have an initial value of `v0.1.0`.
   * For existing modules, the value of `moduleVersion` is externally maintained.
 
+### Bugs Fixed
+
+* Fix polymorphic type result of response generation.
+
 ### Features Added
 
 * The `module` switch now accepts a major version suffix (e.g. `module=mymodule/v2`).
