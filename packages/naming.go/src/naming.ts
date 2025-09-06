@@ -120,9 +120,9 @@ export function createPolymorphicInterfaceName(base: string): string {
 }
 
 export function createOptionsTypeDescription(typeName: string, methodName: string): string {
-  return `${typeName} contains the optional parameters for the ${methodName} method.`;
+  return `${typeName} contains the optional parameters for the [${methodName}] method.`;
 }
 
 export function createResponseEnvelopeDescription(typeName: string, methodName: string): string {
-  return `${typeName} contains the response from method ${methodName}.`
+  return `${typeName} contains the response from method [${methodName}].`
 }
