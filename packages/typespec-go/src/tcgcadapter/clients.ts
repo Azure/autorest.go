@@ -401,7 +401,7 @@ export class clientAdapter {
       }
 
       let adaptedParam: go.MethodParameter;
-      if (opParam.kind === 'body' && opParam.type.kind === 'model' && opParam.type.kind !== param.type.kind) {
+      if (opParam.kind === 'body' && opParam.type.kind === 'model' && param.type.kind !== 'model') {
         const paramStyle = this.adaptParameterStyle(param);
         const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');
         const byVal = isTypePassedByValue(param.type);
