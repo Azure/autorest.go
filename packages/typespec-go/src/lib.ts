@@ -31,6 +31,7 @@ export interface GoEmitterOptions {
   // Enables generation of spans for distributed tracing. The default value is set to the value of --azure-arm.
   'inject-spans'?: boolean;
   
+  // The full module path (ex: github.com/Azure/azure-sdk-for-go/sdk/ai/azopenai)
   'module'?: string;
 
   // When true, properties that are untyped (i.e. raw JSON) are exposed as []byte instead of any or map[string]any. The default is false.
