@@ -45,7 +45,7 @@ export interface GoEmitterOptions {
   // Uses the specified value to remove stuttering from types and funcs instead of the built-in algorithm.
   'stutter'?: string;
 
-  // When true, unmarshalers will return an error when an unknown field is encountered in the payload.
+  // When true, fix stuttering for const types and their values.
   'fix-const-stuttering'?: boolean;
 
   /**
