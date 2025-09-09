@@ -209,8 +209,8 @@ export class clientAdapter {
                 // NOTE: we force the endpoint param to be required, omitting
                 // any potential for client-side default.
                 const adaptedParam = this.adaptURIParam(templateArg, true);
-                adaptedParam.docs.summary = templateArg.summary;
-                adaptedParam.docs.description = templateArg.doc;
+                adaptedParam.docs.summary = param.summary;
+                adaptedParam.docs.description = param.doc;
                 goClient.parameters.push(adaptedParam);
 
                 // if the server's URL is *only* the endpoint parameter then we're done.

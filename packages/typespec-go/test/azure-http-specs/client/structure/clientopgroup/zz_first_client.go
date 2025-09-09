@@ -27,7 +27,7 @@ type FirstClientOptions struct {
 }
 
 // NewFirstClientWithNoCredential creates a new instance of FirstClient with the specified values.
-//   - endpoint - Need to be set as 'http://localhost:3000' in client.
+//   - endpoint - Service host
 //   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
 //   - FirstClientOptions - FirstClientOptions contains the optional values for creating a [FirstClient]
 func NewFirstClientWithNoCredential(endpoint string, client ClientType, options *FirstClientOptions) (*FirstClient, error) {

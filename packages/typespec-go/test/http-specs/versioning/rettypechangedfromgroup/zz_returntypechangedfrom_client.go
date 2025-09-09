@@ -27,7 +27,7 @@ type ReturnTypeChangedFromClientOptions struct {
 }
 
 // NewReturnTypeChangedFromClientWithNoCredential creates a new instance of ReturnTypeChangedFromClient with the specified values.
-//   - endpoint - Need to be set as 'http://localhost:3000' in client.
+//   - endpoint - Service host
 //   - ReturnTypeChangedFromClientOptions - ReturnTypeChangedFromClientOptions contains the optional values for creating a [ReturnTypeChangedFromClient]
 func NewReturnTypeChangedFromClientWithNoCredential(endpoint string, options *ReturnTypeChangedFromClientOptions) (*ReturnTypeChangedFromClient, error) {
 	if options == nil {

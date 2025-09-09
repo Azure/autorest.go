@@ -25,7 +25,7 @@ type SingleClientOptions struct {
 }
 
 // NewSingleClientWithNoCredential creates a new instance of SingleClient with the specified values.
-//   - endpoint - Need to be set as 'http://localhost:3000' in client.
+//   - endpoint - Service host
 //   - SingleClientOptions - SingleClientOptions contains the optional values for creating a [SingleClient]
 func NewSingleClientWithNoCredential(endpoint string, options *SingleClientOptions) (*SingleClient, error) {
 	if options == nil {

@@ -27,7 +27,7 @@ type VersionedClientOptions struct {
 }
 
 // NewVersionedClientWithNoCredential creates a new instance of VersionedClient with the specified values.
-//   - endpoint - Need to be set as 'http://localhost:3000' in client.
+//   - endpoint - Service host
 //   - VersionedClientOptions - VersionedClientOptions contains the optional values for creating a [VersionedClient]
 func NewVersionedClientWithNoCredential(endpoint string, options *VersionedClientOptions) (*VersionedClient, error) {
 	if options == nil {

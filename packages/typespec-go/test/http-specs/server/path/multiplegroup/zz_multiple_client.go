@@ -29,7 +29,7 @@ type MultipleClientOptions struct {
 }
 
 // NewMultipleClientWithNoCredential creates a new instance of MultipleClient with the specified values.
-//   - endpoint - Pass in http://localhost:3000 for endpoint.
+//   - endpoint - Service host
 //   - MultipleClientOptions - MultipleClientOptions contains the optional values for creating a [MultipleClient]
 func NewMultipleClientWithNoCredential(endpoint string, options *MultipleClientOptions) (*MultipleClient, error) {
 	if options == nil {

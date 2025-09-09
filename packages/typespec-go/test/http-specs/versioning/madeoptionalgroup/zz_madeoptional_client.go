@@ -27,7 +27,7 @@ type MadeOptionalClientOptions struct {
 }
 
 // NewMadeOptionalClientWithNoCredential creates a new instance of MadeOptionalClient with the specified values.
-//   - endpoint - Need to be set as 'http://localhost:3000' in client.
+//   - endpoint - Service host
 //   - MadeOptionalClientOptions - MadeOptionalClientOptions contains the optional values for creating a [MadeOptionalClient]
 func NewMadeOptionalClientWithNoCredential(endpoint string, options *MadeOptionalClientOptions) (*MadeOptionalClient, error) {
 	if options == nil {
