@@ -27,7 +27,7 @@ type TypeChangedFromClientOptions struct {
 }
 
 // NewTypeChangedFromClientWithNoCredential creates a new instance of TypeChangedFromClient with the specified values.
-//   - endpoint - Need to be set as 'http://localhost:3000' in client.
+//   - endpoint - Service host
 //   - TypeChangedFromClientOptions - TypeChangedFromClientOptions contains the optional values for creating a [TypeChangedFromClient]
 func NewTypeChangedFromClientWithNoCredential(endpoint string, options *TypeChangedFromClientOptions) (*TypeChangedFromClient, error) {
 	if options == nil {
