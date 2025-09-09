@@ -13,7 +13,7 @@ import (
 )
 
 func TestBasicExplicitBodyClient_Simple(t *testing.T) {
-	client, err := basicparamsgroup.NewBasicClient("http://localhost:3000", nil)
+	client, err := basicparamsgroup.NewBasicClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewBasicExplicitBodyClient().Simple(context.Background(), basicparamsgroup.User{
 		Name: to.Ptr("foo"),

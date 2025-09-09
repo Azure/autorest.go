@@ -12,19 +12,19 @@ import (
 )
 
 func TestFirstGroup3Client_Three(t *testing.T) {
-	client, err := clientopgroup.NewFirstGroup3Client("http://localhost:3000", clientopgroup.ClientTypeClientOperationGroup, nil)
+	client, err := clientopgroup.NewFirstClientWithNoCredential("http://localhost:3000", clientopgroup.ClientTypeClientOperationGroup, nil)
 	require.Nil(t, err)
 	require.NotNil(t, client)
-	resp, err := client.Three(context.Background(), &clientopgroup.FirstGroup3ClientThreeOptions{})
+	resp, err := client.NewFirstGroup3Client().Three(context.Background(), &clientopgroup.FirstGroup3ClientThreeOptions{})
 	require.Nil(t, err)
 	require.NotNil(t, resp)
 }
 
 func TestFirstGroup3Client_Two(t *testing.T) {
-	client, err := clientopgroup.NewFirstGroup3Client("http://localhost:3000", clientopgroup.ClientTypeClientOperationGroup, nil)
+	client, err := clientopgroup.NewFirstClientWithNoCredential("http://localhost:3000", clientopgroup.ClientTypeClientOperationGroup, nil)
 	require.Nil(t, err)
 	require.NotNil(t, client)
-	resp, err := client.Two(context.Background(), &clientopgroup.FirstGroup3ClientTwoOptions{})
+	resp, err := client.NewFirstGroup3Client().Two(context.Background(), &clientopgroup.FirstGroup3ClientTwoOptions{})
 	require.Nil(t, err)
 	require.NotNil(t, resp)
 }

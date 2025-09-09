@@ -15,7 +15,7 @@ import (
 )
 
 func TestDecimalTypeClient_RequestBody(t *testing.T) {
-	client, err := scalargroup.NewScalarClient("http://localhost:3000", nil)
+	client, err := scalargroup.NewScalarClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarDecimalTypeClient().RequestBody(context.Background(), 0.33333, nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestDecimalTypeClient_RequestBody(t *testing.T) {
 }
 
 func TestDecimalTypeClient_RequestParameter(t *testing.T) {
-	client, err := scalargroup.NewScalarClient("http://localhost:3000", nil)
+	client, err := scalargroup.NewScalarClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarDecimalTypeClient().RequestParameter(context.Background(), 0.33333, nil)
 	require.NoError(t, err)
@@ -31,7 +31,7 @@ func TestDecimalTypeClient_RequestParameter(t *testing.T) {
 }
 
 func TestDecimalTypeClient_ResponseBody(t *testing.T) {
-	client, err := scalargroup.NewScalarClient("http://localhost:3000", nil)
+	client, err := scalargroup.NewScalarClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarDecimalTypeClient().ResponseBody(context.Background(), nil)
 	require.NoError(t, err)

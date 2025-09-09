@@ -12,7 +12,7 @@ import (
 )
 
 func TestOverrideReorderParametersClient_Reorder(t *testing.T) {
-	client, err := overridegroup.NewOverrideClient("http://localhost:3000", nil)
+	client, err := overridegroup.NewOverrideClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOverrideReorderParametersClient().Reorder(context.Background(), "param2", "param1", &overridegroup.OverrideReorderParametersClientReorderOptions{})
 	require.NoError(t, err)

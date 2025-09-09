@@ -4,13 +4,39 @@
 
 package optionalitygroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+)
 
 // OptionalClient - Illustrates models with optional properties.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewOptionalClientWithNoCredential() instead.
 type OptionalClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// OptionalClientOptions contains the optional values for creating a [OptionalClient].
+type OptionalClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewOptionalClientWithNoCredential creates a new instance of OptionalClient with the specified values.
+//   - endpoint - Service host
+//   - OptionalClientOptions - OptionalClientOptions contains the optional values for creating a [OptionalClient]
+func NewOptionalClientWithNoCredential(endpoint string, options *OptionalClientOptions) (*OptionalClient, error) {
+	if options == nil {
+		options = &OptionalClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &OptionalClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // NewOptionalBooleanLiteralClient creates a new instance of [OptionalBooleanLiteralClient].

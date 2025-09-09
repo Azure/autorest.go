@@ -13,7 +13,7 @@ import (
 )
 
 func TestValueTypesModelClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesModelClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -24,7 +24,7 @@ func TestValueTypesModelClient_Get(t *testing.T) {
 }
 
 func TestValueTypesModelClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesModelClient().Put(context.Background(), valuetypesgroup.ModelProperty{
 		Property: &valuetypesgroup.InnerModel{

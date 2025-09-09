@@ -28,6 +28,9 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
   if (context.options['azcore-version']) {
     options.azcoreVersion = context.options['azcore-version'];
   }
+  if (context.options['omit-constructors']) {
+    options.omitConstructors = context.options['omit-constructors'];
+  }
 
   // @encodedName can be used in XML scenarios, it
   // is effectively the same as TypeSpec.Xml.@name.
@@ -78,7 +81,7 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
   const ta = new typeAdapter(codeModel);
   ta.adaptTypes(sdkContext);
 
-  const ca = new clientAdapter(ta, context.options);
+  const ca = new clientAdapter(ta, context);
   ca.adaptClients(sdkContext.sdkPackage);
   codeModel.sortContent();
   return codeModel;

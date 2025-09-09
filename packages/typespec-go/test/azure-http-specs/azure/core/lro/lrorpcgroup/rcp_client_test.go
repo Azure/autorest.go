@@ -6,16 +6,34 @@ package lrorpcgroup_test
 import (
 	"context"
 	"lrorpcgroup"
+	"net/http"
 	"testing"
 	"time"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
+type apiVersionPolicy struct {
+	apiVersion string
+}
+
+func (a *apiVersionPolicy) Do(req *policy.Request) (*http.Response, error) {
+	rawQP := req.Raw().URL.Query()
+	rawQP.Set("api-version", a.apiVersion)
+	req.Raw().URL.RawQuery = rawQP.Encode()
+	return req.Next()
+}
+
 func TestRpcClient_BeginLongRunningRPC(t *testing.T) {
-	client, err := lrorpcgroup.NewRPCClient("http://localhost:3000", nil)
+	client, err := lrorpcgroup.NewRPCClientWithNoCredential("http://localhost:3000", &lrorpcgroup.RPCClientOptions{
+		azcore.ClientOptions{
+			PerCallPolicies: []policy.Policy{&apiVersionPolicy{apiVersion: "2022-12-01-preview"}},
+		},
+	})
 	require.NoError(t, err)
 	poller, err := client.BeginLongRunningRPC(context.Background(), lrorpcgroup.GenerationOptions{
 		Prompt: to.Ptr("text"),
