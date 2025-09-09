@@ -10,6 +10,8 @@ export interface GoEmitterOptions {
   'containing-module'?: string;
 
   // When true, unmarshalers will return an error when an unknown field is encountered in the payload.
+  // NOTE: this option should NOT be used without a specific use-case (ie: generating server-side models), 
+  // since model deserialization in clients should always be forward compatible.
   'disallow-unknown-fields'?: boolean;
 
   // Optional prefix to file names. For example, if you set your file prefix to "zzz_", all generated code files will begin with "zzz_".
