@@ -1,14 +1,18 @@
-package coreclientlocationgroup
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+package coreclientlocationgroup_test
 
 import (
 	"context"
+	"coreclientlocationgroup"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
 func TestClientLocationArchiveOperationsClient_ArchiveProduct(t *testing.T) {
-	factory, err := NewClientLocationClient("http://localhost:3000", nil)
+	factory, err := coreclientlocationgroup.NewClientLocationClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	client := factory.NewClientLocationArchiveOperationsClient()
 	require.NotNil(t, client)
@@ -18,9 +22,9 @@ func TestClientLocationArchiveOperationsClient_ArchiveProduct(t *testing.T) {
 }
 
 func TestClientLocationMoveToRootResourceOperationsClient_GetResource(t *testing.T) {
-	factory, err := NewClientLocationMoveToRootClient("http://localhost:3000", nil)
+	factory, err := coreclientlocationgroup.NewClientLocationClient("http://localhost:3000", nil)
 	require.NoError(t, err)
-	client := factory.NewClientLocationMoveToRootResourceOperationsClient()
+	client := factory.NewClientLocationMoveToRootClient().NewClientLocationMoveToRootResourceOperationsClient()
 	require.NotNil(t, client)
 	resp, err := client.GetResource(context.Background(), nil)
 	require.NoError(t, err)

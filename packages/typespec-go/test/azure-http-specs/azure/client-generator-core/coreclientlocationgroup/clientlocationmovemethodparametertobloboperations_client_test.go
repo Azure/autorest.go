@@ -11,11 +11,14 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestClientLocationClient_GetHealthStatus(t *testing.T) {
+func TestClientLocationMoveMethodParameterToBlobOperationsClient_GetBlob(t *testing.T) {
 	client, err := coreclientlocationgroup.NewClientLocationClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	require.NotNil(t, client)
-	resp, err := client.GetHealthStatus(context.Background(), nil)
+	resp, err := client.
+		NewClientLocationMoveMethodParameterToClient().
+		NewClientLocationMoveMethodParameterToBlobOperationsClient().
+		GetBlob(context.Background(), "testaccount", "testcontainer", "testblob.txt", nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 }
