@@ -10,8 +10,7 @@ using TypeSpec.Versioning;
 using Azure.Core;
 
 /**
- * The key vault client performs cryptographic key operations and vault operations
- * against the Key Vault service.
+ * The key vault client performs cryptographic key operations and vault operations against the Key Vault service.
  */
 @useAuth(
   OAuth2Auth<[
@@ -22,9 +21,7 @@ using Azure.Core;
     }
   ]>
 )
-@service(#{
-  title: "KeyVaultClient",
-})
+@service(#{ title: "KeyVaultClient" })
 @versioned(Versions)
 @server(
   "{vaultBaseUrl}",
@@ -46,8 +43,20 @@ enum Versions {
   `v7.5`: "7.5",
 
   /**
-   * The 7.6-preview.1 API version.
+   * The 7.6-preview.2 API version.
    */
   @useDependency(Azure.Core.Versions.v1_0_Preview_2)
-  `v7.6_preview.1`: "7.6-preview.1",
+  `v7.6_preview.2`: "7.6-preview.2",
+
+  /**
+   * The 7.6 API version.
+   */
+  @useDependency(Azure.Core.Versions.v1_0_Preview_2)
+  `v7.6`: "7.6",
+
+  /**
+   * The 2025-06-01-preview API version.
+   */
+  @useDependency(Azure.Core.Versions.v1_0_Preview_2)
+  v2025_06_01_preview: "2025-06-01-preview",
 }
