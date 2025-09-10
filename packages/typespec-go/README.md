@@ -126,12 +126,6 @@ Uses the specified value to remove stuttering from types and funcs instead of th
 
 When true, fix stuttering for `const` types and values. The default is false.
 
-### `generate-examples`
-
-**Type:** `boolean`
-
-Deprecated. Use generate-samples instead.
-
 ### `generate-samples`
 
 **Type:** `boolean`

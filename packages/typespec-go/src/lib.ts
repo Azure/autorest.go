@@ -6,6 +6,9 @@
 import { createTypeSpecLibrary, JSONSchemaType, paramMessage } from '@typespec/compiler';
 
 export interface GoEmitterOptions {
+  // NOTE: these options are also documented here in the readme file (../README.md). Make sure
+  // to keep these in sync.
+
   'azcore-version'?: string;
   'containing-module'?: string;
 
@@ -19,7 +22,7 @@ export interface GoEmitterOptions {
 
   // When true, enables generation of fake servers. The default is false.
   'generate-fakes'?: boolean;
-  
+
   /**
    * Configures invoking `go generate` after emitting the Go code.
    * - The value is an output-relative path to a `.go` file containing `//go:generate` directives.
@@ -29,10 +32,10 @@ export interface GoEmitterOptions {
 
   // When true, HEAD requests will return a boolean value based on the HTTP status code. The default is false, but will be set to true if --azure-arm is true.
   'head-as-boolean'?: boolean;
-  
+
   // Enables generation of spans for distributed tracing. The default value is set to the value of --azure-arm.
   'inject-spans'?: boolean;
-  
+
   // The full module path (ex: github.com/Azure/azure-sdk-for-go/sdk/ai/azopenai)
   'module'?: string;
 
@@ -50,8 +53,8 @@ export interface GoEmitterOptions {
 
   // When true, fix stuttering for const types and their values.
   'fix-const-stuttering'?: boolean;
-  
-  
+
+
   // When true, the `NewClientFactory` constructor will gather all parameters of clients. When false, the `NewClientFactory` constructor will only gather common parameters of clients. The default value is true.
   'factory-gather-all-params'?: boolean;
 
