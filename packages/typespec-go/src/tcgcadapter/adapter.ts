@@ -3,15 +3,15 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { clientAdapter } from './clients.js';
-import { AdapterError } from './errors.js';
-import { typeAdapter } from './types.js';
-import { GoEmitterOptions } from '../lib.js';
-import * as go from '../../../codemodel.go/src/index.js';
-import { packageNameFromOutputFolder, trimPackagePrefix } from '../../../naming.go/src/naming.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import { EmitContext, NoTarget } from '@typespec/compiler';
 import { createRequire } from 'module';
+import * as go from '../../../codemodel.go/src/index.js';
+import { packageNameFromOutputFolder, trimPackagePrefix } from '../../../naming.go/src/naming.js';
+import { GoEmitterOptions } from '../lib.js';
+import { clientAdapter } from './clients.js';
+import { AdapterError } from './errors.js';
+import { typeAdapter } from './types.js';
 
 const headerText = `Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License. See License.txt in the project root for license information.
@@ -23,7 +23,7 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
     context.options['generate-fakes'] === true,
     context.options['inject-spans'] === true,
     context.options['disallow-unknown-fields'] === true,
-    context.options['generate-examples'] === true || context.options['generate-samples'] === true // generate-examples has been deprecated, for compat we still support it.
+    context.options['generate-samples'] === true
   );
   if (context.options['azcore-version']) {
     options.azcoreVersion = context.options['azcore-version'];
@@ -101,7 +101,7 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
 
   // ensure that enum, client, and struct type names don't stutter
 
-  const recursiveWalkClients = function(client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
+  const recursiveWalkClients = function (client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
     // NOTE: we MUST do this before calling trimPackagePrefix to properly handle
     // the case where the client name is the same as the package name.
     if (!client.name.match(/Client$/)) {
@@ -136,7 +136,7 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
 
   // check if the name collides with an existing name. we only do
   // this for model types as clients and enums get a suffix.
-  const nameCollision = function(newName: string): boolean {
+  const nameCollision = function (newName: string): boolean {
     for (const modelType of sdkPackage.models) {
       if (modelType.name === newName) {
         return true;
@@ -150,9 +150,9 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
 
   // trims the stuttering prefix from typeName and returns the new name.
   // if there's a collision, an entry is added to the collision list.
-  const renameType = function(typeName: string): string {
+  const renameType = function (typeName: string): string {
     const originalName = typeName;
-    const newName = trimPackagePrefix(stutteringPrefix, originalName); 
+    const newName = trimPackagePrefix(stutteringPrefix, originalName);
 
     // if the type was renamed to remove stuttering, check if it collides with an existing type name
     if (newName !== originalName && nameCollision(newName)) {
