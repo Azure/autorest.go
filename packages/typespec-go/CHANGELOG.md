@@ -2,6 +2,10 @@
 
 ## 0.8.2 (2025-09-10)
 
+### Bugs Fixed
+
+* Fixed some edge cases where a method parameter's optionality wasn't correctly handled.
+
 ### Other Changes
 
 * Updated to the latest tsp toolset.
@@ -11,10 +15,6 @@
 ### Bugs Fixed
 
 * Fix polymorphic type result of response generation.
-
-### Bugs Fixed
-
-* Fixed some edge cases where a method parameter's optionality wasn't correctly handled.
 
 ### Other Changes
 
