@@ -50,11 +50,7 @@ export interface GoEmitterOptions {
 
   // When true, fix stuttering for const types and their values.
   'fix-const-stuttering'?: boolean;
-
-  /**
-   * @deprecated Use 'generate-samples' instead
-   */
-  'generate-examples'?: boolean;
+  
   
   // When true, the `NewClientFactory` constructor will gather all parameters of clients. When false, the `NewClientFactory` constructor will only gather common parameters of clients. The default value is true.
   'factory-gather-all-params'?: boolean;
