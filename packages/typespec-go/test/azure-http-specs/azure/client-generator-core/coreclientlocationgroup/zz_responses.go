@@ -14,6 +14,11 @@ type ClientLocationClientGetHealthStatusResponse struct {
 	// placeholder for future response values
 }
 
+// ClientLocationMoveMethodParameterToBlobOperationsClientGetBlobResponse contains the response from method ClientLocationMoveMethodParameterToBlobOperationsClient.GetBlob.
+type ClientLocationMoveMethodParameterToBlobOperationsClientGetBlobResponse struct {
+	Blob
+}
+
 // ClientLocationMoveToExistingSubAdminOperationsClientDeleteUserResponse contains the response from method ClientLocationMoveToExistingSubAdminOperationsClient.DeleteUser.
 type ClientLocationMoveToExistingSubAdminOperationsClientDeleteUserResponse struct {
 	// placeholder for future response values

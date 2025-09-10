@@ -16,6 +16,12 @@ type ClientLocationClientGetHealthStatusOptions struct {
 	// placeholder for future optional parameters
 }
 
+// ClientLocationMoveMethodParameterToBlobOperationsClientGetBlobOptions contains the optional parameters for the ClientLocationMoveMethodParameterToBlobOperationsClient.GetBlob
+// method.
+type ClientLocationMoveMethodParameterToBlobOperationsClientGetBlobOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ClientLocationMoveToExistingSubAdminOperationsClientDeleteUserOptions contains the optional parameters for the ClientLocationMoveToExistingSubAdminOperationsClient.DeleteUser
 // method.
 type ClientLocationMoveToExistingSubAdminOperationsClientDeleteUserOptions struct {

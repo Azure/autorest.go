@@ -10,6 +10,17 @@ type LinkResponse struct {
 	Next *string
 }
 
+type LinkStringResponse struct {
+	// REQUIRED
+	Pets []*Pet
+	Next *string
+}
+
+type ListWithoutContinuationResponse struct {
+	// REQUIRED
+	Pets []*Pet
+}
+
 type NestedLinkResponse struct {
 	// REQUIRED
 	NestedItems *NestedLinkResponseNestedItems

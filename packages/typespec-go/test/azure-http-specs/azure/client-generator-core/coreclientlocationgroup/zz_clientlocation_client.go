@@ -27,6 +27,14 @@ func (client *ClientLocationClient) NewClientLocationArchiveOperationsClient() *
 	}
 }
 
+// NewClientLocationMoveMethodParameterToClient creates a new instance of [ClientLocationMoveMethodParameterToClient].
+func (client *ClientLocationClient) NewClientLocationMoveMethodParameterToClient() *ClientLocationMoveMethodParameterToClient {
+	return &ClientLocationMoveMethodParameterToClient{
+		internal: client.internal,
+		endpoint: client.endpoint,
+	}
+}
+
 // NewClientLocationMoveToExistingSubClient creates a new instance of [ClientLocationMoveToExistingSubClient].
 func (client *ClientLocationClient) NewClientLocationMoveToExistingSubClient() *ClientLocationMoveToExistingSubClient {
 	return &ClientLocationMoveToExistingSubClient{
