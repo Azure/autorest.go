@@ -136,11 +136,6 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
       nullable: true,
       description: 'When true, fix stuttering for `const` types and values. The default is false.',
     },
-    'generate-examples': {
-      type: 'boolean',
-      nullable: true,
-      description: 'Deprecated. Use generate-samples instead.',
-    },
     'generate-samples': {
       type: 'boolean',
       nullable: true,
@@ -185,7 +180,7 @@ const libDef = {
     }
   },
   emitter: {
-    options: <JSONSchemaType<GoEmitterOptions>>EmitterOptionsSchema,
+    options: EmitterOptionsSchema,
   },
 } as const;
 
