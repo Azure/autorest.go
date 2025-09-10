@@ -13,9 +13,9 @@ import (
 )
 
 func TestNewLinkPager(t *testing.T) {
-	client, err := pageablegroup.NewPageableServerDrivenPaginationClient("http://localhost:3000", nil)
+	client, err := pageablegroup.NewPageableClient("http://localhost:3000", nil)
 	require.NoError(t, err)
-	pager := client.NewLinkPager(nil)
+	pager := client.NewPageableServerDrivenPaginationClient().NewLinkPager(nil)
 	pageCount := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
@@ -51,10 +51,10 @@ func TestNewLinkPager(t *testing.T) {
 }
 
 func TestNewNestedLinkPager(t *testing.T) {
-	client, err := pageablegroup.NewPageableServerDrivenPaginationClient("http://localhost:3000", nil)
+	client, err := pageablegroup.NewPageableClient("http://localhost:3000", nil)
 	require.NoError(t, err)
 	pageCount := 0
-	pager := client.NewNestedLinkPager(&pageablegroup.PageableServerDrivenPaginationClientNestedLinkOptions{})
+	pager := client.NewPageableServerDrivenPaginationClient().NewNestedLinkPager(&pageablegroup.PageableServerDrivenPaginationClientNestedLinkOptions{})
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
 		require.NoError(t, err)
