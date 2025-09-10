@@ -6,25 +6,59 @@
 import { createTypeSpecLibrary, JSONSchemaType, paramMessage } from '@typespec/compiler';
 
 export interface GoEmitterOptions {
+  // NOTE: these options are also documented here in the readme file (../README.md). Make sure
+  // to keep these in sync.
+
   'azcore-version'?: string;
   'containing-module'?: string;
+
+  // When true, unmarshalers will return an error when an unknown field is encountered in the payload.
+  // NOTE: this option should NOT be used without a specific use-case (ie: generating server-side models), 
+  // since model deserialization in clients should always be forward compatible.
   'disallow-unknown-fields'?: boolean;
+
+  // Optional prefix to file names. For example, if you set your file prefix to "zzz_", all generated code files will begin with "zzz_".
   'file-prefix'?: string;
+
+  // When true, enables generation of fake servers. The default is false.
   'generate-fakes'?: boolean;
-  'go-generate'?: string;
-  'head-as-boolean'?: boolean;
-  'inject-spans'?: boolean;
-  'module'?: string;
-  'rawjson-as-bytes'?: boolean;
-  'slice-elements-byval'?: boolean;
-  'single-client'?: boolean;
-  'stutter'?: string;
-  'fix-const-stuttering'?: boolean;
+
   /**
-   * @deprecated Use 'generate-samples' instead
+   * Configures invoking `go generate` after emitting the Go code.
+   * - The value is an output-relative path to a `.go` file containing `//go:generate` directives.
+   * - If Go tools are not on the path, and `go-generate` was specified, then an error is produced.
    */
-  'generate-examples'?: boolean;
+  'go-generate'?: string;
+
+  // When true, HEAD requests will return a boolean value based on the HTTP status code. The default is false, but will be set to true if --azure-arm is true.
+  'head-as-boolean'?: boolean;
+
+  // Enables generation of spans for distributed tracing. The default value is set to the value of --azure-arm.
+  'inject-spans'?: boolean;
+
+  // The full module path (ex: github.com/Azure/azure-sdk-for-go/sdk/ai/azopenai)
+  'module'?: string;
+
+  // When true, properties that are untyped (i.e. raw JSON) are exposed as []byte instead of any or map[string]any. The default is false.
+  'rawjson-as-bytes'?: boolean;
+
+  // When true, slice elements will not be pointer-to-type. The default is false.
+  'slice-elements-byval'?: boolean;
+
+  // Indicates package has a single client. This will omit the Client prefix from options and response types. If multiple clients are detected, an error is returned.
+  'single-client'?: boolean;
+
+  // Uses the specified value to remove stuttering from types and funcs instead of the built-in algorithm.
+  'stutter'?: string;
+
+  // When true, fix stuttering for const types and their values.
+  'fix-const-stuttering'?: boolean;
+
+
+  // When true, the `NewClientFactory` constructor will gather all parameters of clients. When false, the `NewClientFactory` constructor will only gather common parameters of clients. The default value is true.
   'factory-gather-all-params'?: boolean;
+
+  // When true, generate samples.
   'generate-samples'?: boolean;
 }
 
@@ -102,11 +136,6 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
       nullable: true,
       description: 'When true, fix stuttering for `const` types and values. The default is false.',
     },
-    'generate-examples': {
-      type: 'boolean',
-      nullable: true,
-      description: 'Deprecated. Use generate-samples instead.',
-    },
     'generate-samples': {
       type: 'boolean',
       nullable: true,
@@ -151,7 +180,7 @@ const libDef = {
     }
   },
   emitter: {
-    options: <JSONSchemaType<GoEmitterOptions>>EmitterOptionsSchema,
+    options: EmitterOptionsSchema,
   },
 } as const;
 
