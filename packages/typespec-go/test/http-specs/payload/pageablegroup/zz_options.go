@@ -4,9 +4,21 @@
 
 package pageablegroup
 
+// PageableClientListWithoutContinuationOptions contains the optional parameters for the PageableClient.NewListWithoutContinuationPager
+// method.
+type PageableClientListWithoutContinuationOptions struct {
+	// placeholder for future optional parameters
+}
+
 // PageableServerDrivenPaginationClientLinkOptions contains the optional parameters for the PageableServerDrivenPaginationClient.NewLinkPager
 // method.
 type PageableServerDrivenPaginationClientLinkOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PageableServerDrivenPaginationClientLinkStringOptions contains the optional parameters for the PageableServerDrivenPaginationClient.NewLinkStringPager
+// method.
+type PageableServerDrivenPaginationClientLinkStringOptions struct {
 	// placeholder for future optional parameters
 }
 

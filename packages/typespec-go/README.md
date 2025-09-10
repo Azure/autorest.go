@@ -48,6 +48,12 @@ See [Configuring output directory for more info](https://typespec.io/docs/handbo
 
 Semantic version of azcore without the leading 'v' to use if different from the default version (e.g. 1.2.3).
 
+### `containing-module`
+
+**Type:** `string`
+
+The module into which the package is being emitted. Mutually exclusive with module.
+
 ### `disallow-unknown-fields`
 
 **Type:** `boolean`
@@ -88,13 +94,7 @@ Enables generation of spans for distributed tracing. The default is false.
 
 **Type:** `string`
 
-The name of the Go module written to go.mod. Omit to skip go.mod generation. When module is specified, module-version must also be specified.
-
-### `module-version`
-
-**Type:** `string`
-
-Initial semantic version of the Go module without the leading 'v'. (e.g. 1.2.3). Defaults to 0.1.0.
+The module identity to use in go.mod. Mutually exclusive with containing-module.
 
 ### `rawjson-as-bytes`
 

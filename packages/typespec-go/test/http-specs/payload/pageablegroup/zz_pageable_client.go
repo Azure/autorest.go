@@ -4,7 +4,13 @@
 
 package pageablegroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"net/http"
+)
 
 // PageableClient - Test for pageable payload.
 // Don't use this type directly, use a constructor function instead.
@@ -19,4 +25,50 @@ func (client *PageableClient) NewPageableServerDrivenPaginationClient() *Pageabl
 		internal: client.internal,
 		endpoint: client.endpoint,
 	}
+}
+
+//   - options - PageableClientListWithoutContinuationOptions contains the optional parameters for the PageableClient.NewListWithoutContinuationPager
+//     method.
+func (client *PageableClient) NewListWithoutContinuationPager(options *PageableClientListWithoutContinuationOptions) *runtime.Pager[PageableClientListWithoutContinuationResponse] {
+	return runtime.NewPager(runtime.PagingHandler[PageableClientListWithoutContinuationResponse]{
+		More: func(page PageableClientListWithoutContinuationResponse) bool {
+			return false
+		},
+		Fetcher: func(ctx context.Context, page *PageableClientListWithoutContinuationResponse) (PageableClientListWithoutContinuationResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableClient.NewListWithoutContinuationPager")
+			req, err := client.listWithoutContinuationCreateRequest(ctx, options)
+			if err != nil {
+				return PageableClientListWithoutContinuationResponse{}, err
+			}
+			resp, err := client.internal.Pipeline().Do(req)
+			if err != nil {
+				return PageableClientListWithoutContinuationResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return PageableClientListWithoutContinuationResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listWithoutContinuationHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// listWithoutContinuationCreateRequest creates the ListWithoutContinuation request.
+func (client *PageableClient) listWithoutContinuationCreateRequest(ctx context.Context, _ *PageableClientListWithoutContinuationOptions) (*policy.Request, error) {
+	urlPath := "/payload/pageable/simple"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// listWithoutContinuationHandleResponse handles the ListWithoutContinuation response.
+func (client *PageableClient) listWithoutContinuationHandleResponse(resp *http.Response) (PageableClientListWithoutContinuationResponse, error) {
+	result := PageableClientListWithoutContinuationResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ListWithoutContinuationResponse); err != nil {
+		return PageableClientListWithoutContinuationResponse{}, err
+	}
+	return result, nil
 }

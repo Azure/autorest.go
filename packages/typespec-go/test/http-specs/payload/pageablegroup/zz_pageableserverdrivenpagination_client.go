@@ -72,6 +72,51 @@ func (client *PageableServerDrivenPaginationClient) linkHandleResponse(resp *htt
 	return result, nil
 }
 
+//   - options - PageableServerDrivenPaginationClientLinkStringOptions contains the optional parameters for the PageableServerDrivenPaginationClient.NewLinkStringPager
+//     method.
+func (client *PageableServerDrivenPaginationClient) NewLinkStringPager(options *PageableServerDrivenPaginationClientLinkStringOptions) *runtime.Pager[PageableServerDrivenPaginationClientLinkStringResponse] {
+	return runtime.NewPager(runtime.PagingHandler[PageableServerDrivenPaginationClientLinkStringResponse]{
+		More: func(page PageableServerDrivenPaginationClientLinkStringResponse) bool {
+			return page.Next != nil && len(*page.Next) > 0
+		},
+		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationClientLinkStringResponse) (PageableServerDrivenPaginationClientLinkStringResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationClient.NewLinkStringPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.Next
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.linkStringCreateRequest(ctx, options)
+			}, nil)
+			if err != nil {
+				return PageableServerDrivenPaginationClientLinkStringResponse{}, err
+			}
+			return client.linkStringHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// linkStringCreateRequest creates the LinkString request.
+func (client *PageableServerDrivenPaginationClient) linkStringCreateRequest(ctx context.Context, _ *PageableServerDrivenPaginationClientLinkStringOptions) (*policy.Request, error) {
+	urlPath := "/payload/pageable/server-driven-pagination/link-string"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// linkStringHandleResponse handles the LinkString response.
+func (client *PageableServerDrivenPaginationClient) linkStringHandleResponse(resp *http.Response) (PageableServerDrivenPaginationClientLinkStringResponse, error) {
+	result := PageableServerDrivenPaginationClientLinkStringResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.LinkStringResponse); err != nil {
+		return PageableServerDrivenPaginationClientLinkStringResponse{}, err
+	}
+	return result, nil
+}
+
 //   - options - PageableServerDrivenPaginationClientNestedLinkOptions contains the optional parameters for the PageableServerDrivenPaginationClient.NewNestedLinkPager
 //     method.
 func (client *PageableServerDrivenPaginationClient) NewNestedLinkPager(options *PageableServerDrivenPaginationClientNestedLinkOptions) *runtime.Pager[PageableServerDrivenPaginationClientNestedLinkResponse] {

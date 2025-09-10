@@ -4,9 +4,19 @@
 
 package pageablegroup
 
+// PageableClientListWithoutContinuationResponse contains the response from method PageableClient.NewListWithoutContinuationPager.
+type PageableClientListWithoutContinuationResponse struct {
+	ListWithoutContinuationResponse
+}
+
 // PageableServerDrivenPaginationClientLinkResponse contains the response from method PageableServerDrivenPaginationClient.NewLinkPager.
 type PageableServerDrivenPaginationClientLinkResponse struct {
 	LinkResponse
+}
+
+// PageableServerDrivenPaginationClientLinkStringResponse contains the response from method PageableServerDrivenPaginationClient.NewLinkStringPager.
+type PageableServerDrivenPaginationClientLinkStringResponse struct {
+	LinkStringResponse
 }
 
 // PageableServerDrivenPaginationClientNestedLinkResponse contains the response from method PageableServerDrivenPaginationClient.NewNestedLinkPager.
