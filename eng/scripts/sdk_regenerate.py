@@ -66,7 +66,7 @@ def update_commit_id(file: Path, commit_id: str):
         f.writelines(content)
 
 
-def get_api_version_from_metadata(package_folder: Path, sdk_root: str) -> Optional[str]:
+def get_api_version_from_metadata(package_folder: Path) -> Optional[str]:
     """Extract API version from metadata.json file if it exists."""
     # Construct the metadata.json path based on the package folder structure
     # {package_folder}/testdata/_metadata.json
@@ -86,19 +86,19 @@ def get_api_version_from_metadata(package_folder: Path, sdk_root: str) -> Option
     return None
 
 
-def get_api_version_from_client_files(package_folder: Path, sdk_root: str) -> Optional[str]:
+def get_api_version_from_client_files(package_folder: Path) -> Optional[str]:
     """Extract API version from client Go files by searching for 'Generated from API version' comment."""
     # Look for *_client.go files in the package folder
     client_files_pattern = str(package_folder / "*_client.go")
     client_files = glob.glob(client_files_pattern)
     
-    api_version_pattern = r"Generated from API version\s+([^\s,]+)"
+    api_version_pattern = re.compile(r"Generated from API version\s+([^\s,]+)")
     
     for client_file in client_files:
         try:
             with open(client_file, "r", encoding="utf-8") as f:
                 content = f.read()
-                match = re.search(api_version_pattern, content)
+                match = api_version_pattern.search(content)
                 if match:
                     api_version = match.group(1)
                     logging.info(f"Found API version {api_version} in {Path(client_file).name} for {package_folder.name}")
@@ -109,16 +109,16 @@ def get_api_version_from_client_files(package_folder: Path, sdk_root: str) -> Op
     return None
 
 
-def get_api_version(package_folder: Path, sdk_root: str) -> Optional[str]:
+def get_api_version(package_folder: Path) -> Optional[str]:
     """Get API version for a package, first trying metadata.json, then client files."""
     # First, try to get from metadata.json
-    api_version = get_api_version_from_metadata(package_folder, sdk_root)
+    api_version = get_api_version_from_metadata(package_folder)
     
     if api_version:
         return api_version
     
     # If not found in metadata, try client files
-    api_version = get_api_version_from_client_files(package_folder, sdk_root)
+    api_version = get_api_version_from_client_files(package_folder)
     
     if not api_version:
         logging.warning(f"Could not find API version for {package_folder.name}")
@@ -140,7 +140,7 @@ def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str) ->
             update_commit_id(item, commit_id)
         try:
             # Get API version for this package
-            api_version = get_api_version(package_folder, sdk_root)
+            api_version = get_api_version(package_folder)
             
             # Build the tsp-client command with optional API version
             tsp_command = "tsp-client update"
