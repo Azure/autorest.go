@@ -126,7 +126,7 @@ def get_api_version(package_folder: Path, sdk_root: str) -> Optional[str]:
     return api_version
 
 def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str) -> Dict[str, List[str]]:
-    result = {"succeed_to_regenerate": [], "fail_to_regenerate": [], "time_to_regenerate": str(datetime.now())}
+    result = {"succeed_to_regenerate": [], "fail_to_regenerate": [], "not_found_api_version": [], "time_to_regenerate": str(datetime.now())}
     # get all tsp-location.yaml
     commit_id = get_latest_commit_id()
     sdk_resourcemanager_path = Path(sdk_root) / "sdk" / "resourcemanager"
