@@ -69,8 +69,8 @@ def update_commit_id(file: Path, commit_id: str):
 def get_api_version_from_metadata(package_folder: Path, sdk_root: str) -> Optional[str]:
     """Extract API version from metadata.json file if it exists."""
     # Construct the metadata.json path based on the package folder structure
-    # sdk/resourcemanager/{service}/{package}/testdata/_metadata.json
-    metadata_path = Path(sdk_root) / package_folder / "testdata" / "_metadata.json"
+    # {package_folder}/testdata/_metadata.json
+    metadata_path = package_folder / "testdata" / "_metadata.json"
     
     if metadata_path.exists():
         try:
@@ -89,7 +89,7 @@ def get_api_version_from_metadata(package_folder: Path, sdk_root: str) -> Option
 def get_api_version_from_client_files(package_folder: Path, sdk_root: str) -> Optional[str]:
     """Extract API version from client Go files by searching for 'Generated from API version' comment."""
     # Look for *_client.go files in the package folder
-    client_files_pattern = str(Path(sdk_root) / package_folder / "*_client.go")
+    client_files_pattern = str(package_folder / "*_client.go")
     client_files = glob.glob(client_files_pattern)
     
     api_version_pattern = r"Generated from API version\s+([^\s,]+)"
@@ -139,16 +139,18 @@ def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str) ->
             logging.info("Using latest spec")
             update_commit_id(item, commit_id)
         try:
-            # Get API version for this package (relative path from SDK root)
-            relative_package_path = package_folder.relative_to(Path(sdk_root))
-            api_version = get_api_version(relative_package_path, sdk_root)
+            # Get API version for this package
+            api_version = get_api_version(package_folder, sdk_root)
             
             # Build the tsp-client command with optional API version
             tsp_command = "tsp-client update"
             if api_version:
                 tsp_command += f" --emitter-options api-version={api_version}"
                 logging.info(f"Using API version {api_version} for {package_folder.name}")
-            
+            else:
+                logging.info(f"No API version specified for {package_folder.name}, using default behavior")
+                result["not_found_api_version"].append(package_folder.name)
+
             # Use subprocess.run for better control over output
             proc_result = subprocess.run(
                 tsp_command, 
@@ -196,6 +198,7 @@ def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str) ->
             
     result["succeed_to_regenerate"].sort()
     result["fail_to_regenerate"].sort()
+    result["not_found_api_version"].sort()
     return result
 
 
