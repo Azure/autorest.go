@@ -4,7 +4,7 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
-from typing import Dict, List
+from typing import Dict, List, Optional
 from pathlib import Path
 import subprocess
 from datetime import datetime
@@ -13,6 +13,7 @@ import argparse
 import logging
 import json
 import re
+import glob
 
 
 def update_emitter_package(sdk_root: str, typespec_go_root: str):
@@ -64,11 +65,72 @@ def update_commit_id(file: Path, commit_id: str):
     with open(file, "w") as f:
         f.writelines(content)
 
-def regenerate_sdk(use_latest_spec: bool, service_filter: str) -> Dict[str, List[str]]:
+
+def get_api_version_from_metadata(package_folder: Path, sdk_root: str) -> Optional[str]:
+    """Extract API version from metadata.json file if it exists."""
+    # Construct the metadata.json path based on the package folder structure
+    # sdk/resourcemanager/{service}/{package}/testdata/_metadata.json
+    metadata_path = Path(sdk_root) / package_folder / "testdata" / "_metadata.json"
+    
+    if metadata_path.exists():
+        try:
+            with open(metadata_path, "r") as f:
+                metadata = json.load(f)
+                api_version = metadata.get("apiVersion")
+                if api_version:
+                    logging.info(f"Found API version {api_version} in metadata.json for {package_folder.name}")
+                    return api_version
+        except (json.JSONDecodeError, FileNotFoundError) as e:
+            logging.warning(f"Failed to read metadata.json for {package_folder.name}: {e}")
+    
+    return None
+
+
+def get_api_version_from_client_files(package_folder: Path, sdk_root: str) -> Optional[str]:
+    """Extract API version from client Go files by searching for 'Generated from API version' comment."""
+    # Look for *_client.go files in the package folder
+    client_files_pattern = str(Path(sdk_root) / package_folder / "*_client.go")
+    client_files = glob.glob(client_files_pattern)
+    
+    api_version_pattern = r"Generated from API version\s+([^\s,]+)"
+    
+    for client_file in client_files:
+        try:
+            with open(client_file, "r", encoding="utf-8") as f:
+                content = f.read()
+                match = re.search(api_version_pattern, content)
+                if match:
+                    api_version = match.group(1)
+                    logging.info(f"Found API version {api_version} in {Path(client_file).name} for {package_folder.name}")
+                    return api_version
+        except (FileNotFoundError, UnicodeDecodeError) as e:
+            logging.warning(f"Failed to read client file {client_file}: {e}")
+    
+    return None
+
+
+def get_api_version(package_folder: Path, sdk_root: str) -> Optional[str]:
+    """Get API version for a package, first trying metadata.json, then client files."""
+    # First, try to get from metadata.json
+    api_version = get_api_version_from_metadata(package_folder, sdk_root)
+    
+    if api_version:
+        return api_version
+    
+    # If not found in metadata, try client files
+    api_version = get_api_version_from_client_files(package_folder, sdk_root)
+    
+    if not api_version:
+        logging.warning(f"Could not find API version for {package_folder.name}")
+    
+    return api_version
+
+def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str) -> Dict[str, List[str]]:
     result = {"succeed_to_regenerate": [], "fail_to_regenerate": [], "time_to_regenerate": str(datetime.now())}
     # get all tsp-location.yaml
     commit_id = get_latest_commit_id()
-    for item in Path("sdk/resourcemanager").rglob("tsp-location.yaml"):
+    sdk_resourcemanager_path = Path(sdk_root) / "sdk" / "resourcemanager"
+    for item in sdk_resourcemanager_path.rglob("tsp-location.yaml"):
         package_folder = item.parent
         if len(service_filter) > 0 and re.match(service_filter, package_folder.name) is None:
             continue
@@ -77,9 +139,19 @@ def regenerate_sdk(use_latest_spec: bool, service_filter: str) -> Dict[str, List
             logging.info("Using latest spec")
             update_commit_id(item, commit_id)
         try:
+            # Get API version for this package (relative path from SDK root)
+            relative_package_path = package_folder.relative_to(Path(sdk_root))
+            api_version = get_api_version(relative_package_path, sdk_root)
+            
+            # Build the tsp-client command with optional API version
+            tsp_command = "tsp-client update"
+            if api_version:
+                tsp_command += f" --emitter-options api-version={api_version}"
+                logging.info(f"Using API version {api_version} for {package_folder.name}")
+            
             # Use subprocess.run for better control over output
             proc_result = subprocess.run(
-                "tsp-client update", 
+                tsp_command, 
                 shell=True, 
                 cwd=str(package_folder),
                 capture_output=True,
@@ -162,7 +234,7 @@ def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str, use_late
     
     prepare_branch(typespec_go_branch)
     update_emitter_package(sdk_root, typespec_go_root)
-    result = regenerate_sdk(use_latest_spec, service_filter)
+    result = regenerate_sdk(use_latest_spec, service_filter, sdk_root)
     with open("regenerate-sdk-result.json", "w") as f:
         json.dump(result, f, indent=2)
     git_add()
