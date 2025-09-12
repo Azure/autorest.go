@@ -178,7 +178,7 @@ function truncateStack(stack: string, finalFrame: string): string {
  * 
  * @param outputDir the directory to clean up
  */
-async function cleanupGeneratedFiles(outputDir: string): Promise<void> {
+async function cleanupGeneratedFiles(context: EmitContext<GoEmitterOptions>, outputDir: string): Promise<void> {
   try {
     const items = await readdir(outputDir, { withFileTypes: true });
     
@@ -187,7 +187,7 @@ async function cleanupGeneratedFiles(outputDir: string): Promise<void> {
       
       if (item.isDirectory()) {
         // recursively clean subdirectories
-        await cleanupGeneratedFiles(itemPath);
+        await cleanupGeneratedFiles(context, itemPath);
       } else if (item.isFile() && item.name.endsWith('.go')) {
         try {
           const content = await readFile(itemPath, 'utf8');
@@ -196,7 +196,12 @@ async function cleanupGeneratedFiles(outputDir: string): Promise<void> {
           }
         } catch (error) {
           // continue if we can't read or delete a specific file
-          console.warn(`Warning: Could not process file ${itemPath}: ${error}`);
+          context.program.reportDiagnostic({
+            code: 'cleanup',
+            severity: 'warning',
+            message: `Could not process file ${itemPath}: ${error}`,
+            target: NoTarget,
+          });
         }
       }
     }
@@ -210,7 +215,7 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
   await mkdir(context.emitterOutputDir, {recursive: true});
 
   // clean up existing generated Go files
-  await cleanupGeneratedFiles(context.emitterOutputDir);
+  await cleanupGeneratedFiles(context, context.emitterOutputDir);
 
   // don't overwrite an existing go.mod file, update it if required
   const goModFile = `${context.emitterOutputDir}/go.mod`;
