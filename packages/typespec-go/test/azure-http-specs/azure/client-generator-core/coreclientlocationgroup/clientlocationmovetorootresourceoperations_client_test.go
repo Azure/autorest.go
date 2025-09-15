@@ -12,11 +12,7 @@ import (
 )
 
 func TestClientLocationArchiveOperationsClient_ArchiveProduct(t *testing.T) {
-<<<<<<< HEAD
-	factory, err := coreclientlocationgroup.NewClientLocationClient("http://localhost:3000", nil)
-=======
 	factory, err := coreclientlocationgroup.NewClientLocationClientWithNoCredential("http://localhost:3000", nil)
->>>>>>> 29d91e2ccb (Generate client constructors)
 	require.NoError(t, err)
 	client := factory.NewClientLocationArchiveOperationsClient()
 	require.NotNil(t, client)
@@ -26,11 +22,7 @@ func TestClientLocationArchiveOperationsClient_ArchiveProduct(t *testing.T) {
 }
 
 func TestClientLocationMoveToRootResourceOperationsClient_GetResource(t *testing.T) {
-<<<<<<< HEAD
-	factory, err := coreclientlocationgroup.NewClientLocationClient("http://localhost:3000", nil)
-=======
 	factory, err := coreclientlocationgroup.NewClientLocationClientWithNoCredential("http://localhost:3000", nil)
->>>>>>> 29d91e2ccb (Generate client constructors)
 	require.NoError(t, err)
 	client := factory.NewClientLocationMoveToRootClient().NewClientLocationMoveToRootResourceOperationsClient()
 	require.NotNil(t, client)

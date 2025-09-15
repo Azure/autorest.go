@@ -12,11 +12,7 @@ import (
 )
 
 func TestClientLocationMoveToExistingSubUserOperationsClient_GetUser(t *testing.T) {
-<<<<<<< HEAD
-	factory, err := coreclientlocationgroup.NewClientLocationClient("http://localhost:3000", nil)
-=======
 	factory, err := coreclientlocationgroup.NewClientLocationClientWithNoCredential("http://localhost:3000", nil)
->>>>>>> 29d91e2ccb (Generate client constructors)
 	require.NoError(t, err)
 	client := factory.NewClientLocationMoveToExistingSubClient().NewClientLocationMoveToExistingSubUserOperationsClient()
 	require.NotNil(t, client)

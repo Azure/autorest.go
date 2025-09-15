@@ -18,14 +18,8 @@ import (
 	"strings"
 )
 
-<<<<<<< HEAD
 // Client - The key vault client performs cryptographic key operations and vault operations against the Key Vault service.
-// Don't use this type directly, use a constructor function instead.
-=======
-// Client - The key vault client performs cryptographic key operations and vault operations
-// against the Key Vault service.
 // Don't use this type directly, use NewClient() instead.
->>>>>>> 29d91e2ccb (Generate client constructors)
 type Client struct {
 	internal     *azcore.Client
 	vaultBaseUrl string
