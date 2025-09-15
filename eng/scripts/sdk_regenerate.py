@@ -125,8 +125,103 @@ def get_api_version(package_folder: Path) -> Optional[str]:
     
     return api_version
 
+
+def get_module_version_from_version_file(package_folder: Path) -> Optional[str]:
+    """Extract module version from version.go file if it exists."""
+    version_file_path = package_folder / "version.go"
+    
+    if version_file_path.exists():
+        try:
+            with open(version_file_path, "r", encoding="utf-8") as f:
+                content = f.read()
+                # Look for patterns like: const moduleVersion = "v1.2.3" or var moduleVersion = "v1.2.3"
+                version_pattern = re.compile(r'(?:const|var)\s+moduleVersion\s*=\s*"([^"]+)"')
+                match = version_pattern.search(content)
+                if match:
+                    module_version = match.group(1)
+                    logging.info(f"Found module version {module_version} in version.go for {package_folder.name}")
+                    return module_version
+        except (FileNotFoundError, UnicodeDecodeError) as e:
+            logging.warning(f"Failed to read version.go for {package_folder.name}: {e}")
+    
+    return None
+
+
+def get_module_version_from_constants_file(package_folder: Path) -> Optional[str]:
+    """Extract module version from constants.go file if it exists."""
+    constants_file_path = package_folder / "constants.go"
+    
+    if constants_file_path.exists():
+        try:
+            with open(constants_file_path, "r", encoding="utf-8") as f:
+                content = f.read()
+                # Look for patterns like: const moduleVersion = "v1.2.3" or var moduleVersion = "v1.2.3"
+                version_pattern = re.compile(r'(?:const|var)\s+moduleVersion\s*=\s*"([^"]+)"')
+                match = version_pattern.search(content)
+                if match:
+                    module_version = match.group(1)
+                    logging.info(f"Found module version {module_version} in constants.go for {package_folder.name}")
+                    return module_version
+        except (FileNotFoundError, UnicodeDecodeError) as e:
+            logging.warning(f"Failed to read constants.go for {package_folder.name}: {e}")
+    
+    return None
+
+
+def get_module_version(package_folder: Path) -> Optional[str]:
+    """Get module version for a package, first trying version.go, then constants.go."""
+    # First, try to get from version.go
+    module_version = get_module_version_from_version_file(package_folder)
+    
+    if module_version:
+        return module_version
+    
+    # If not found in version.go, try constants.go
+    module_version = get_module_version_from_constants_file(package_folder)
+    
+    if not module_version:
+        logging.warning(f"Could not find module version for {package_folder.name}")
+    
+    return module_version
+
+
+def update_module_version_in_generated_file(package_folder: Path, original_module_version: str) -> bool:
+    """Update the module version in the newly generated version.go file."""
+    version_file_path = package_folder / "version.go"
+    
+    if not version_file_path.exists():
+        logging.warning(f"Generated version.go file not found for {package_folder.name}")
+        return False
+    
+    try:
+        with open(version_file_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        
+        # Replace the module version with the original one
+        version_pattern = re.compile(r'((?:const|var)\s+moduleVersion\s*=\s*")[^"]+(")')
+        new_content = version_pattern.sub(r'\g<1>' + original_module_version + r'\g<2>', content)
+        
+        if new_content != content:
+            with open(version_file_path, "w", encoding="utf-8") as f:
+                f.write(new_content)
+            logging.info(f"Updated module version to {original_module_version} in version.go for {package_folder.name}")
+            return True
+        else:
+            logging.warning(f"No module version pattern found to update in version.go for {package_folder.name}")
+            return False
+    
+    except (FileNotFoundError, UnicodeDecodeError) as e:
+        logging.error(f"Failed to update module version in version.go for {package_folder.name}: {e}")
+        return False
+
 def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str) -> Dict[str, List[str]]:
-    result = {"succeed_to_regenerate": [], "fail_to_regenerate": [], "not_found_api_version": [], "time_to_regenerate": str(datetime.now())}
+    result = {
+        "succeed_to_regenerate": [], 
+        "fail_to_regenerate": [], 
+        "not_found_api_version": [], 
+        "not_found_module_version": [],
+        "time_to_regenerate": str(datetime.now())
+    }
     # get all tsp-location.yaml
     commit_id = get_latest_commit_id()
     sdk_resourcemanager_path = Path(sdk_root) / "sdk" / "resourcemanager"
@@ -141,6 +236,9 @@ def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str) ->
         try:
             # Get API version for this package
             api_version = get_api_version(package_folder)
+            
+            # Get original module version before regeneration
+            original_module_version = get_module_version(package_folder)
             
             # Build the tsp-client command with optional API version
             tsp_command = "tsp-client update"
@@ -194,11 +292,25 @@ def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str) ->
             result["fail_to_regenerate"].append(package_folder.name)
         else:
             logging.info(f"Successfully regenerated {package_folder.name}")
+            
+            # Restore original module version if it was found
+            if original_module_version:
+                update_success = update_module_version_in_generated_file(package_folder, original_module_version)
+                if update_success:
+                    logging.info(f"Successfully preserved module version {original_module_version} for {package_folder.name}")
+                    result["module_version_preserved"].append(package_folder.name)
+                else:
+                    logging.warning(f"Failed to preserve module version for {package_folder.name}")
+            else:
+                logging.info(f"No original module version found for {package_folder.name}, using generated version")
+                result["not_found_module_version"].append(package_folder.name)
+            
             result["succeed_to_regenerate"].append(package_folder.name)
             
     result["succeed_to_regenerate"].sort()
     result["fail_to_regenerate"].sort()
     result["not_found_api_version"].sort()
+    result["not_found_module_version"].sort()
     return result
 
 
