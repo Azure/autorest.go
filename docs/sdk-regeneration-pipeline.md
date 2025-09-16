@@ -103,18 +103,12 @@ You can find the generated SDK pull request link from pipeline logs
 graph TB
     A[TypeSpec Go Emitter Changes] --> B[Trigger Regeneration Pipeline]
     B --> C[Review Generated SDK PR]
-    C --> D{Purpose?}
-    D -->|Dev Validation| E[Merge Emitter PR]
-    D -->|Production Release| F[Merge Emitter PR]
+    C --> D[Merge Emitter PR]
     E --> G[Close Regeneration PR]
-    F --> H[Release Emitter Version]
-    H --> I[Merge Regeneration PR]
-    I --> J[SDK Baseline Updated]
     
-    K[TypeSpec/Emitter Version Released] --> L[Trigger Refresh Regeneration]
-    L --> M[Review Refresh PR]
-    M --> N[Merge Refresh PR]
-    N --> O[SDK Baseline Refreshed]
+    K[TypeSpec/Emitter Version Released] --> L[Trigger Regeneration Regeneration]
+    L --> M[Review Generated SDK PR]
+    M --> N[Merge Regeneration PR]
 ```
 
 #### For Development Validation
