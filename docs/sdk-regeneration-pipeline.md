@@ -10,7 +10,7 @@ The SDK regeneration pipeline regenerates Azure SDK for Go packages using any br
 
 ### Limitations
 
-⚠️ **Management Plane Only**: This pipeline is currently designed exclusively for **management plane (resource manager) SDKs**. It does **not** support:
+⚠️ **Management Plane Only**: This pipeline is currently designed exclusively for management plane (resource manager) SDKs. It does **not** support:
 - Data plane SDKs
 - Client libraries outside the `sdk/resourcemanager` directory
 - Custom SDK implementations
@@ -104,11 +104,11 @@ graph TB
     A[TypeSpec Go Emitter Changes] --> B[Trigger Regeneration Pipeline]
     B --> C[Review Generated SDK PR]
     C --> D[Merge Emitter PR]
-    D --> E[Close Regeneration PR]
+    D --> E[Close Generated SDK PR]
     
     K[TypeSpec/Emitter Version Released] --> L[Trigger Regeneration Regeneration]
     L --> M[Review Generated SDK PR]
-    M --> N[Merge Regeneration PR]
+    M --> N[Merge Generated SDK PR]
 ```
 
 #### For Development Validation
