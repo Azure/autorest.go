@@ -6,7 +6,7 @@ This document provides a guideline about the SDK regeneration pipeline for TypeS
 
 > **Pipeline Link**: [SDK Regeneration Pipeline](https://dev.azure.com/azure-sdk/internal/_build?definitionId=7860)
 
-The SDK regeneration pipeline could regenerate Azure SDK for Go packages using any branch of TypeSpec Go emitter. This pipeline could validate emitter changes and ensures that SDK packages stay up-to-date with TypeSpec changes and emitter changes.
+The SDK regeneration pipeline regenerates Azure SDK for Go packages using any branch of TypeSpec Go emitter with the same API version as the released SDK (which to make sure SDK changes are due to TypeSpec or Go emitter release, not API version). This pipeline validates emitter changes and ensures that SDK packages stay up-to-date with TypeSpec changes and emitter changes.
 
 ### Limitations
 
@@ -27,7 +27,7 @@ The SDK regeneration pipeline automates the process of updating Azure SDK packag
 #### 2. Package Discovery
 - Scans `sdk/resourcemanager` for packages with `tsp-location.yaml`
 - Applies service filtering (if specified)
-- Extracts original API versions from existing packages (`_metadata.json` or client files)
+- Extracts **original API versions** from existing packages (`_metadata.json` or client files)
 
 #### 3. SDK Generation
 - Runs `tsp-client update` for each package with original API version
@@ -44,7 +44,7 @@ The SDK regeneration pipeline automates the process of updating Azure SDK packag
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `UseLatestSpec` | boolean | `false` | Whether to use the latest API specifications from [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) or the original commit of `tsp-location.yml` |
-| `ServiceFilter` | string | `.*` | Regex pattern to filter which services to regenerate |
+| `ServiceFilter` | string | `.*` | Regex pattern to filter which services to regenerate. Matches against the service package name (e.g., `armcompute`, `armstorage`) |
 
 #### Usage Examples
 
@@ -57,13 +57,13 @@ ServiceFilter: '.*'
 ##### Generate Specific Services
 ```yaml
 UseLatestSpec: false
-ServiceFilter: '^(compute|storage|network).*'
+ServiceFilter: 'armcompute|armstorage|armchaos'
 ```
 
-##### Generate Container-related Services
+##### Generate One Service
 ```yaml
 UseLatestSpec: true
-ServiceFilter: '.*container.*'
+ServiceFilter: 'armcompute'
 ```
 
 ## Pipeline Usage
@@ -95,28 +95,44 @@ You could find the generated SDK pull request link from pipeline logs
 }
 ```
 
-## Build Baseline
+## Validate and Refresh SDK
 
 ### Development Workflow
+
 ```mermaid
-graph LR
-    A[TypeSpec Emitter Changes] --> B[Trigger Regeneration]
-    B --> C[Review Generated PR]
-    C --> D[Merge TypeSpec Go PR]
-    D --> E[Merge SDK Regeneration PR]
+graph TB
+    A[TypeSpec Go Emitter Changes] --> B[Trigger Regeneration Pipeline]
+    B --> C[Review Generated SDK PR]
+    C --> D{Purpose?}
+    D -->|Dev Validation| E[Merge Emitter PR]
+    D -->|Production Release| F[Merge Emitter PR]
+    E --> G[Close Regeneration PR]
+    F --> H[Release Emitter Version]
+    H --> I[Merge Regeneration PR]
+    I --> J[SDK Baseline Updated]
+    
+    K[TypeSpec/Emitter Version Released] --> L[Trigger Refresh Regeneration]
+    L --> M[Review Refresh PR]
+    M --> N[Merge Refresh PR]
+    N --> O[SDK Baseline Refreshed]
 ```
 
-### Baseline Merge Process
-1. Complete TypeSpec Go emitter development and testing
-2. Trigger regeneration pipeline for your branch
-3. Review generated SDK PR for correctness
-4. Merge TypeSpec Go PR into main branch
-5. Merge SDK regeneration PR into azure-sdk-for-go main
-6. Verify integration and update baselines
+#### For Development Validation
+1. **Develop & Test**: Complete TypeSpec Go emitter development and testing on feature branch
+2. **Trigger Pipeline**: Trigger regeneration pipeline for your feature branch
+3. **Review Changes**: Review the generated PR to ensure all changes are due to TypeSpec or Go emitter release
+4. **Merge Emitter**: Merge TypeSpec Go emitter PR into main branch
+5. **Close Regeneration PR**: Close/abandon the regeneration PR (it was only for validation)
+
+#### For Regular SDK Refresh
+After each TypeSpec or Go emitter version release:
+1. **Trigger Pipeline**: Trigger regeneration pipeline for `main` branch
+2. **Review Changes**: Review the generated PR to ensure all changes are due to TypeSpec or Go emitter release
+3. **Merge Regeneration PR**: Merge the refresh PR to keep SDK up-to-date
 
 ### Quality Gates
-- All pipeline steps must pass
-- Generated code must compile successfully
+- All pipelines must be pass
+- All SDK code changes are made by either TypeSpec changes or Go emitter changes
 - Module versions must not be changed
 - API versions must not be changed
 
