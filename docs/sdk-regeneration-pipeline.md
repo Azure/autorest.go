@@ -17,7 +17,7 @@ The SDK regeneration pipeline regenerates Azure SDK for Go packages using any br
 
 ### Pipeline Process
 The SDK regeneration pipeline automates the process of updating Azure SDK packages with the latest TypeSpec Go emitter changes. Here are the key stages:
-> 💡For detailed implementation, see the complete pipeline definition in [`/eng/pipelines/sdk-regenerate.yml`](https://github.com/Azure/autorest.go/blob/main/eng/pipelines/sdk-regenerate.yml) and the regeneration script in [`/eng/scripts/sdk-regenerate.py`](https://github.com/Azure/autorest.go/blob/main/eng/scripts/sdk_regenerate.py)
+> 💡For detailed implementation, see the complete pipeline definition in [`/eng/pipelines/sdk-regenerate.yml`](https://github.com/Azure/autorest.go/blob/main/eng/pipelines/sdk-regenerate.yml) and the regeneration script in [`/eng/scripts/sdk_regenerate.py`](https://github.com/Azure/autorest.go/blob/main/eng/scripts/sdk_regenerate.py)
 
 #### 1. Setup & Build
 - Sets up environment (Node.js, Go, pnpm, tsp-client)
@@ -76,7 +76,7 @@ Currently, this pipeline only supports manually triggered when you need to verif
 4. Click "Run"
 
 ## Pipeline Result
-You could find the generated SDK pull request link from pipeline logs
+You can find the generated SDK pull request link from pipeline logs
 <img width="923" height="610" alt="image" src="https://github.com/user-attachments/assets/a06cfe51-1cff-45b2-945f-a4398069cee0" />
 
 ### PR Structure
