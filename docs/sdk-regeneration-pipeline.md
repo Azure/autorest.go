@@ -106,7 +106,7 @@ graph TB
     C --> D[Merge Emitter PR]
     D --> E[Close Generated SDK PR]
     
-    K[TypeSpec/Emitter Version Released] --> L[Trigger Regeneration Regeneration]
+    K[TypeSpec/Emitter Version Released] --> L[Trigger Regeneration Pipeline]
     L --> M[Review Generated SDK PR]
     M --> N[Merge Generated SDK PR]
 ```
