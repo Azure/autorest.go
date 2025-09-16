@@ -104,7 +104,7 @@ graph TB
     A[TypeSpec Go Emitter Changes] --> B[Trigger Regeneration Pipeline]
     B --> C[Review Generated SDK PR]
     C --> D[Merge Emitter PR]
-    E --> G[Close Regeneration PR]
+    D --> E[Close Regeneration PR]
     
     K[TypeSpec/Emitter Version Released] --> L[Trigger Regeneration Regeneration]
     L --> M[Review Generated SDK PR]
