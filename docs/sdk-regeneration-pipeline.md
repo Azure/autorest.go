@@ -76,7 +76,7 @@ Currently, this pipeline only supports manually triggered when you need to verif
 4. Click "Run"
 
 ## Pipeline Result
-You could find the generated SDK pull request link from pipeline logs
+You can find the generated SDK pull request link from pipeline logs
 <img width="923" height="610" alt="image" src="https://github.com/user-attachments/assets/a06cfe51-1cff-45b2-945f-a4398069cee0" />
 
 ### PR Structure
