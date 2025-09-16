@@ -178,7 +178,7 @@ function truncateStack(stack: string, finalFrame: string): string {
  * 
  * @param outputDir the directory to clean up
  */
-async function cleanupGeneratedFiles(context: EmitContext<GoEmitterOptions>, outputDir: string): Promise<void> {
+export async function cleanupGeneratedFiles(context: EmitContext<GoEmitterOptions>, outputDir: string): Promise<void> {
   try {
     const items = await readdir(outputDir, { withFileTypes: true });
     
