@@ -68,7 +68,11 @@ ServiceFilter: 'armcompute'
 ```
 
 ## Pipeline Usage
-Currently, this pipeline only supports manually triggered when you need to verify emitter changes.
+
+### Weekly Trigger
+This pipeline has been scheduled to run at 2 AM UTC on Monday weekly
+
+### Manually Trigger
 1. Navigate to the [pipeline](https://dev.azure.com/azure-sdk/internal/_build?definitionId=7860)
 2. Select which branch of emitter you want to validate
 3. Configure parameters:
