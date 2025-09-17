@@ -23,7 +23,7 @@ type OverrideClientOptions struct {
 
 // NewOverrideClientWithNoCredential creates a new instance of OverrideClient with the specified values.
 //   - endpoint - Service host
-//   - OverrideClientOptions - OverrideClientOptions contains the optional values for creating a [OverrideClient]
+//   - options - OverrideClientOptions contains the optional values for creating a [OverrideClient]
 func NewOverrideClientWithNoCredential(endpoint string, options *OverrideClientOptions) (*OverrideClient, error) {
 	if options == nil {
 		options = &OverrideClientOptions{}

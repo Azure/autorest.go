@@ -26,7 +26,7 @@ type ClientOptions struct {
 
 // NewClientWithNoCredential creates a new instance of Client with the specified values.
 //   - endpoint - Service host
-//   - ClientOptions - ClientOptions contains the optional values for creating a [Client]
+//   - options - ClientOptions contains the optional values for creating a [Client]
 func NewClientWithNoCredential(endpoint string, options *ClientOptions) (*Client, error) {
 	if options == nil {
 		options = &ClientOptions{}

@@ -30,7 +30,7 @@ type TraitsClientOptions struct {
 
 // NewTraitsClientWithNoCredential creates a new instance of TraitsClient with the specified values.
 //   - endpoint - Service host
-//   - TraitsClientOptions - TraitsClientOptions contains the optional values for creating a [TraitsClient]
+//   - options - TraitsClientOptions contains the optional values for creating a [TraitsClient]
 func NewTraitsClientWithNoCredential(endpoint string, options *TraitsClientOptions) (*TraitsClient, error) {
 	if options == nil {
 		options = &TraitsClientOptions{}

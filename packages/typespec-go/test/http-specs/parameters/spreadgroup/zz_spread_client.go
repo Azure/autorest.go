@@ -23,7 +23,7 @@ type SpreadClientOptions struct {
 
 // NewSpreadClientWithNoCredential creates a new instance of SpreadClient with the specified values.
 //   - endpoint - Service host
-//   - SpreadClientOptions - SpreadClientOptions contains the optional values for creating a [SpreadClient]
+//   - options - SpreadClientOptions contains the optional values for creating a [SpreadClient]
 func NewSpreadClientWithNoCredential(endpoint string, options *SpreadClientOptions) (*SpreadClient, error) {
 	if options == nil {
 		options = &SpreadClientOptions{}

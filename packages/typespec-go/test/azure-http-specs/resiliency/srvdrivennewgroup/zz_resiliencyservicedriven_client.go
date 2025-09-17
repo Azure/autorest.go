@@ -43,8 +43,7 @@ type ResiliencyServiceDrivenClientOptions struct {
 //   - serviceDeploymentVersion - Pass in either 'v1' or 'v2'. This represents a version of the service deployment in history.
 //     'v1' is for the deployment when the service had only one api version. 'v2' is for the deployment when the service had api-versions
 //     'v1' and 'v2'.
-//   - ResiliencyServiceDrivenClientOptions - ResiliencyServiceDrivenClientOptions contains the optional values for creating a
-//     [ResiliencyServiceDrivenClient]
+//   - options - ResiliencyServiceDrivenClientOptions contains the optional values for creating a [ResiliencyServiceDrivenClient]
 func NewResiliencyServiceDrivenClientWithNoCredential(endpoint string, serviceDeploymentVersion string, options *ResiliencyServiceDrivenClientOptions) (*ResiliencyServiceDrivenClient, error) {
 	if options == nil {
 		options = &ResiliencyServiceDrivenClientOptions{}

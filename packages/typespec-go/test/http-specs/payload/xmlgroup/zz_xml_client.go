@@ -23,7 +23,7 @@ type XMLClientOptions struct {
 
 // NewXMLClientWithNoCredential creates a new instance of XMLClient with the specified values.
 //   - endpoint - Service host
-//   - XMLClientOptions - XMLClientOptions contains the optional values for creating a [XMLClient]
+//   - options - XMLClientOptions contains the optional values for creating a [XMLClient]
 func NewXMLClientWithNoCredential(endpoint string, options *XMLClientOptions) (*XMLClient, error) {
 	if options == nil {
 		options = &XMLClientOptions{}

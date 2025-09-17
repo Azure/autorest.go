@@ -23,7 +23,7 @@ type ExtensibleClientOptions struct {
 
 // NewExtensibleClientWithNoCredential creates a new instance of ExtensibleClient with the specified values.
 //   - endpoint - Service host
-//   - ExtensibleClientOptions - ExtensibleClientOptions contains the optional values for creating a [ExtensibleClient]
+//   - options - ExtensibleClientOptions contains the optional values for creating a [ExtensibleClient]
 func NewExtensibleClientWithNoCredential(endpoint string, options *ExtensibleClientOptions) (*ExtensibleClient, error) {
 	if options == nil {
 		options = &ExtensibleClientOptions{}

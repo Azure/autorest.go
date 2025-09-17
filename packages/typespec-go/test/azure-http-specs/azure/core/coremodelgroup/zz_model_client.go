@@ -23,7 +23,7 @@ type ModelClientOptions struct {
 
 // NewModelClientWithNoCredential creates a new instance of ModelClient with the specified values.
 //   - endpoint - Service host
-//   - ModelClientOptions - ModelClientOptions contains the optional values for creating a [ModelClient]
+//   - options - ModelClientOptions contains the optional values for creating a [ModelClient]
 func NewModelClientWithNoCredential(endpoint string, options *ModelClientOptions) (*ModelClient, error) {
 	if options == nil {
 		options = &ModelClientOptions{}

@@ -28,7 +28,7 @@ type TypeChangedFromClientOptions struct {
 
 // NewTypeChangedFromClientWithNoCredential creates a new instance of TypeChangedFromClient with the specified values.
 //   - endpoint - Service host
-//   - TypeChangedFromClientOptions - TypeChangedFromClientOptions contains the optional values for creating a [TypeChangedFromClient]
+//   - options - TypeChangedFromClientOptions contains the optional values for creating a [TypeChangedFromClient]
 func NewTypeChangedFromClientWithNoCredential(endpoint string, options *TypeChangedFromClientOptions) (*TypeChangedFromClient, error) {
 	if options == nil {
 		options = &TypeChangedFromClientOptions{}

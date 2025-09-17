@@ -23,7 +23,7 @@ type NumericClientOptions struct {
 
 // NewNumericClientWithNoCredential creates a new instance of NumericClient with the specified values.
 //   - endpoint - Service host
-//   - NumericClientOptions - NumericClientOptions contains the optional values for creating a [NumericClient]
+//   - options - NumericClientOptions contains the optional values for creating a [NumericClient]
 func NewNumericClientWithNoCredential(endpoint string, options *NumericClientOptions) (*NumericClient, error) {
 	if options == nil {
 		options = &NumericClientOptions{}

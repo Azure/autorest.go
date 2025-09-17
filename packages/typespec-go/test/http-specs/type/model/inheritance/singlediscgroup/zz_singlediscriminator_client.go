@@ -26,7 +26,7 @@ type SingleDiscriminatorClientOptions struct {
 
 // NewSingleDiscriminatorClientWithNoCredential creates a new instance of SingleDiscriminatorClient with the specified values.
 //   - endpoint - Service host
-//   - SingleDiscriminatorClientOptions - SingleDiscriminatorClientOptions contains the optional values for creating a [SingleDiscriminatorClient]
+//   - options - SingleDiscriminatorClientOptions contains the optional values for creating a [SingleDiscriminatorClient]
 func NewSingleDiscriminatorClientWithNoCredential(endpoint string, options *SingleDiscriminatorClientOptions) (*SingleDiscriminatorClient, error) {
 	if options == nil {
 		options = &SingleDiscriminatorClientOptions{}

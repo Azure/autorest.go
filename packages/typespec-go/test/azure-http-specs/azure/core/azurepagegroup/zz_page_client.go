@@ -26,7 +26,7 @@ type PageClientOptions struct {
 
 // NewPageClientWithNoCredential creates a new instance of PageClient with the specified values.
 //   - endpoint - Service host
-//   - PageClientOptions - PageClientOptions contains the optional values for creating a [PageClient]
+//   - options - PageClientOptions contains the optional values for creating a [PageClient]
 func NewPageClientWithNoCredential(endpoint string, options *PageClientOptions) (*PageClient, error) {
 	if options == nil {
 		options = &PageClientOptions{}

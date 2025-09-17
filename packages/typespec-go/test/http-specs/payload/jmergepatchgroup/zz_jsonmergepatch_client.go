@@ -26,7 +26,7 @@ type JSONMergePatchClientOptions struct {
 
 // NewJSONMergePatchClientWithNoCredential creates a new instance of JSONMergePatchClient with the specified values.
 //   - endpoint - Service host
-//   - JSONMergePatchClientOptions - JSONMergePatchClientOptions contains the optional values for creating a [JSONMergePatchClient]
+//   - options - JSONMergePatchClientOptions contains the optional values for creating a [JSONMergePatchClient]
 func NewJSONMergePatchClientWithNoCredential(endpoint string, options *JSONMergePatchClientOptions) (*JSONMergePatchClient, error) {
 	if options == nil {
 		options = &JSONMergePatchClientOptions{}

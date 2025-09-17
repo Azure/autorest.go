@@ -23,7 +23,7 @@ type UsageClientOptions struct {
 
 // NewUsageClientWithNoCredential creates a new instance of UsageClient with the specified values.
 //   - endpoint - Service host
-//   - UsageClientOptions - UsageClientOptions contains the optional values for creating a [UsageClient]
+//   - options - UsageClientOptions contains the optional values for creating a [UsageClient]
 func NewUsageClientWithNoCredential(endpoint string, options *UsageClientOptions) (*UsageClient, error) {
 	if options == nil {
 		options = &UsageClientOptions{}

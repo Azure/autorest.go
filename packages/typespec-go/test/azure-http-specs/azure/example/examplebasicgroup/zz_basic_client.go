@@ -23,7 +23,7 @@ type BasicClientOptions struct {
 
 // NewBasicClientWithNoCredential creates a new instance of BasicClient with the specified values.
 //   - endpoint - Service host
-//   - BasicClientOptions - BasicClientOptions contains the optional values for creating a [BasicClient]
+//   - options - BasicClientOptions contains the optional values for creating a [BasicClient]
 func NewBasicClientWithNoCredential(endpoint string, options *BasicClientOptions) (*BasicClient, error) {
 	if options == nil {
 		options = &BasicClientOptions{}

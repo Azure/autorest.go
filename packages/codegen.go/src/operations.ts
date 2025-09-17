@@ -318,7 +318,7 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
 
     // add client options last
     ctorParams.push(`options ${helpers.formatParameterTypeName(client.options)}`);
-    paramDocs.push(helpers.formatCommentAsBulletItem(client.options.name, client.options.docs));
+    paramDocs.push(helpers.formatCommentAsBulletItem('options', client.options.docs));
 
     ctorText += `// ${constructor.name} creates a new instance of ${client.name} with the specified values.\n`;
     for (const doc of paramDocs) {

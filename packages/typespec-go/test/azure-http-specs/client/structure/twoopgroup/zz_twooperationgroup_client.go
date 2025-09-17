@@ -25,7 +25,7 @@ type TwoOperationGroupClientOptions struct {
 // NewTwoOperationGroupClientWithNoCredential creates a new instance of TwoOperationGroupClient with the specified values.
 //   - endpoint - Service host
 //   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
-//   - TwoOperationGroupClientOptions - TwoOperationGroupClientOptions contains the optional values for creating a [TwoOperationGroupClient]
+//   - options - TwoOperationGroupClientOptions contains the optional values for creating a [TwoOperationGroupClient]
 func NewTwoOperationGroupClientWithNoCredential(endpoint string, client ClientType, options *TwoOperationGroupClientOptions) (*TwoOperationGroupClient, error) {
 	if options == nil {
 		options = &TwoOperationGroupClientOptions{}

@@ -59,7 +59,7 @@ type SpecialWordsClientOptions struct {
 
 // NewSpecialWordsClientWithNoCredential creates a new instance of SpecialWordsClient with the specified values.
 //   - endpoint - Service host
-//   - SpecialWordsClientOptions - SpecialWordsClientOptions contains the optional values for creating a [SpecialWordsClient]
+//   - options - SpecialWordsClientOptions contains the optional values for creating a [SpecialWordsClient]
 func NewSpecialWordsClientWithNoCredential(endpoint string, options *SpecialWordsClientOptions) (*SpecialWordsClient, error) {
 	if options == nil {
 		options = &SpecialWordsClientOptions{}

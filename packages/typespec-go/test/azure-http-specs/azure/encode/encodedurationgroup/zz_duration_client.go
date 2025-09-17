@@ -26,7 +26,7 @@ type DurationClientOptions struct {
 
 // NewDurationClientWithNoCredential creates a new instance of DurationClient with the specified values.
 //   - endpoint - Service host
-//   - DurationClientOptions - DurationClientOptions contains the optional values for creating a [DurationClient]
+//   - options - DurationClientOptions contains the optional values for creating a [DurationClient]
 func NewDurationClientWithNoCredential(endpoint string, options *DurationClientOptions) (*DurationClient, error) {
 	if options == nil {
 		options = &DurationClientOptions{}

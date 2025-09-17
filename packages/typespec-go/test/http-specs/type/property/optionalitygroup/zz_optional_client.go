@@ -23,7 +23,7 @@ type OptionalClientOptions struct {
 
 // NewOptionalClientWithNoCredential creates a new instance of OptionalClient with the specified values.
 //   - endpoint - Service host
-//   - OptionalClientOptions - OptionalClientOptions contains the optional values for creating a [OptionalClient]
+//   - options - OptionalClientOptions contains the optional values for creating a [OptionalClient]
 func NewOptionalClientWithNoCredential(endpoint string, options *OptionalClientOptions) (*OptionalClient, error) {
 	if options == nil {
 		options = &OptionalClientOptions{}

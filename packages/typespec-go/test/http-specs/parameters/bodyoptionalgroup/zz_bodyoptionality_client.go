@@ -26,7 +26,7 @@ type BodyOptionalityClientOptions struct {
 
 // NewBodyOptionalityClientWithNoCredential creates a new instance of BodyOptionalityClient with the specified values.
 //   - endpoint - Service host
-//   - BodyOptionalityClientOptions - BodyOptionalityClientOptions contains the optional values for creating a [BodyOptionalityClient]
+//   - options - BodyOptionalityClientOptions contains the optional values for creating a [BodyOptionalityClient]
 func NewBodyOptionalityClientWithNoCredential(endpoint string, options *BodyOptionalityClientOptions) (*BodyOptionalityClient, error) {
 	if options == nil {
 		options = &BodyOptionalityClientOptions{}

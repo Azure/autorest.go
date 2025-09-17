@@ -30,7 +30,7 @@ type OAuth2ClientOptions struct {
 // NewOAuth2Client creates a new instance of OAuth2Client with the specified values.
 //   - endpoint - Service host
 //   - credential - used to authorize requests. Usually a credential from azidentity.
-//   - OAuth2ClientOptions - OAuth2ClientOptions contains the optional values for creating a [OAuth2Client]
+//   - options - OAuth2ClientOptions contains the optional values for creating a [OAuth2Client]
 func NewOAuth2Client(endpoint string, credential azcore.TokenCredential, options *OAuth2ClientOptions) (*OAuth2Client, error) {
 	if options == nil {
 		options = &OAuth2ClientOptions{}

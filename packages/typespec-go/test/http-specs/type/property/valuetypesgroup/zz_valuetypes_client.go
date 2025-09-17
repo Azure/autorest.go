@@ -23,7 +23,7 @@ type ValueTypesClientOptions struct {
 
 // NewValueTypesClientWithNoCredential creates a new instance of ValueTypesClient with the specified values.
 //   - endpoint - Service host
-//   - ValueTypesClientOptions - ValueTypesClientOptions contains the optional values for creating a [ValueTypesClient]
+//   - options - ValueTypesClientOptions contains the optional values for creating a [ValueTypesClient]
 func NewValueTypesClientWithNoCredential(endpoint string, options *ValueTypesClientOptions) (*ValueTypesClient, error) {
 	if options == nil {
 		options = &ValueTypesClientOptions{}

@@ -27,7 +27,7 @@ type PageableClientOptions struct {
 
 // NewPageableClientWithNoCredential creates a new instance of PageableClient with the specified values.
 //   - endpoint - Service host
-//   - PageableClientOptions - PageableClientOptions contains the optional values for creating a [PageableClient]
+//   - options - PageableClientOptions contains the optional values for creating a [PageableClient]
 func NewPageableClientWithNoCredential(endpoint string, options *PageableClientOptions) (*PageableClient, error) {
 	if options == nil {
 		options = &PageableClientOptions{}

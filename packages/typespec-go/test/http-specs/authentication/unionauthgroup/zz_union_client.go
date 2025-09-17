@@ -30,7 +30,7 @@ type UnionClientOptions struct {
 // NewUnionClient creates a new instance of UnionClient with the specified values.
 //   - endpoint - Service host
 //   - credential - used to authorize requests. Usually a credential from azidentity.
-//   - UnionClientOptions - UnionClientOptions contains the optional values for creating a [UnionClient]
+//   - options - UnionClientOptions contains the optional values for creating a [UnionClient]
 func NewUnionClient(endpoint string, credential azcore.TokenCredential, options *UnionClientOptions) (*UnionClient, error) {
 	if options == nil {
 		options = &UnionClientOptions{}

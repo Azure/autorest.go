@@ -26,7 +26,7 @@ type EmptyClientOptions struct {
 
 // NewEmptyClientWithNoCredential creates a new instance of EmptyClient with the specified values.
 //   - endpoint - Service host
-//   - EmptyClientOptions - EmptyClientOptions contains the optional values for creating a [EmptyClient]
+//   - options - EmptyClientOptions contains the optional values for creating a [EmptyClient]
 func NewEmptyClientWithNoCredential(endpoint string, options *EmptyClientOptions) (*EmptyClient, error) {
 	if options == nil {
 		options = &EmptyClientOptions{}

@@ -23,7 +23,7 @@ type BytesClientOptions struct {
 
 // NewBytesClientWithNoCredential creates a new instance of BytesClient with the specified values.
 //   - endpoint - Service host
-//   - BytesClientOptions - BytesClientOptions contains the optional values for creating a [BytesClient]
+//   - options - BytesClientOptions contains the optional values for creating a [BytesClient]
 func NewBytesClientWithNoCredential(endpoint string, options *BytesClientOptions) (*BytesClient, error) {
 	if options == nil {
 		options = &BytesClientOptions{}

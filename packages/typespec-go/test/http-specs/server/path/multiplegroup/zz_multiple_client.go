@@ -30,7 +30,7 @@ type MultipleClientOptions struct {
 
 // NewMultipleClientWithNoCredential creates a new instance of MultipleClient with the specified values.
 //   - endpoint - Service host
-//   - MultipleClientOptions - MultipleClientOptions contains the optional values for creating a [MultipleClient]
+//   - options - MultipleClientOptions contains the optional values for creating a [MultipleClient]
 func NewMultipleClientWithNoCredential(endpoint string, options *MultipleClientOptions) (*MultipleClient, error) {
 	if options == nil {
 		options = &MultipleClientOptions{}

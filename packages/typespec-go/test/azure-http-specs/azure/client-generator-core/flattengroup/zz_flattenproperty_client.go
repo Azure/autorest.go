@@ -26,7 +26,7 @@ type FlattenPropertyClientOptions struct {
 
 // NewFlattenPropertyClientWithNoCredential creates a new instance of FlattenPropertyClient with the specified values.
 //   - endpoint - Service host
-//   - FlattenPropertyClientOptions - FlattenPropertyClientOptions contains the optional values for creating a [FlattenPropertyClient]
+//   - options - FlattenPropertyClientOptions contains the optional values for creating a [FlattenPropertyClient]
 func NewFlattenPropertyClientWithNoCredential(endpoint string, options *FlattenPropertyClientOptions) (*FlattenPropertyClient, error) {
 	if options == nil {
 		options = &FlattenPropertyClientOptions{}

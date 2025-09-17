@@ -26,7 +26,7 @@ type ClientLocationClientOptions struct {
 
 // NewClientLocationClientWithNoCredential creates a new instance of ClientLocationClient with the specified values.
 //   - endpoint - Service host
-//   - ClientLocationClientOptions - ClientLocationClientOptions contains the optional values for creating a [ClientLocationClient]
+//   - options - ClientLocationClientOptions contains the optional values for creating a [ClientLocationClient]
 func NewClientLocationClientWithNoCredential(endpoint string, options *ClientLocationClientOptions) (*ClientLocationClient, error) {
 	if options == nil {
 		options = &ClientLocationClientOptions{}

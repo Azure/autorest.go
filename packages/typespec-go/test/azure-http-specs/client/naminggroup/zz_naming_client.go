@@ -26,7 +26,7 @@ type NamingClientOptions struct {
 
 // NewNamingClientWithNoCredential creates a new instance of NamingClient with the specified values.
 //   - endpoint - Service host
-//   - NamingClientOptions - NamingClientOptions contains the optional values for creating a [NamingClient]
+//   - options - NamingClientOptions contains the optional values for creating a [NamingClient]
 func NewNamingClientWithNoCredential(endpoint string, options *NamingClientOptions) (*NamingClient, error) {
 	if options == nil {
 		options = &NamingClientOptions{}

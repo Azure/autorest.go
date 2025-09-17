@@ -23,7 +23,7 @@ type PagerClientOptions struct {
 
 // NewPagerClientWithNoCredential creates a new instance of PagerClient with the specified values.
 //   - endpoint - Service host
-//   - PagerClientOptions - PagerClientOptions contains the optional values for creating a [PagerClient]
+//   - options - PagerClientOptions contains the optional values for creating a [PagerClient]
 func NewPagerClientWithNoCredential(endpoint string, options *PagerClientOptions) (*PagerClient, error) {
 	if options == nil {
 		options = &PagerClientOptions{}

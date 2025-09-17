@@ -23,7 +23,7 @@ type JSONClientOptions struct {
 
 // NewJSONClientWithNoCredential creates a new instance of JSONClient with the specified values.
 //   - endpoint - Service host
-//   - JSONClientOptions - JSONClientOptions contains the optional values for creating a [JSONClient]
+//   - options - JSONClientOptions contains the optional values for creating a [JSONClient]
 func NewJSONClientWithNoCredential(endpoint string, options *JSONClientOptions) (*JSONClient, error) {
 	if options == nil {
 		options = &JSONClientOptions{}

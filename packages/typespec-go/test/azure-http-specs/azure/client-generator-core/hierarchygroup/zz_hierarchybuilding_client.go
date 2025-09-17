@@ -23,7 +23,7 @@ type HierarchyBuildingClientOptions struct {
 
 // NewHierarchyBuildingClientWithNoCredential creates a new instance of HierarchyBuildingClient with the specified values.
 //   - endpoint - Service host
-//   - HierarchyBuildingClientOptions - HierarchyBuildingClientOptions contains the optional values for creating a [HierarchyBuildingClient]
+//   - options - HierarchyBuildingClientOptions contains the optional values for creating a [HierarchyBuildingClient]
 func NewHierarchyBuildingClientWithNoCredential(endpoint string, options *HierarchyBuildingClientOptions) (*HierarchyBuildingClient, error) {
 	if options == nil {
 		options = &HierarchyBuildingClientOptions{}

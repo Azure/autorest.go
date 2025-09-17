@@ -23,7 +23,7 @@ type DatetimeClientOptions struct {
 
 // NewDatetimeClientWithNoCredential creates a new instance of DatetimeClient with the specified values.
 //   - endpoint - Service host
-//   - DatetimeClientOptions - DatetimeClientOptions contains the optional values for creating a [DatetimeClient]
+//   - options - DatetimeClientOptions contains the optional values for creating a [DatetimeClient]
 func NewDatetimeClientWithNoCredential(endpoint string, options *DatetimeClientOptions) (*DatetimeClient, error) {
 	if options == nil {
 		options = &DatetimeClientOptions{}

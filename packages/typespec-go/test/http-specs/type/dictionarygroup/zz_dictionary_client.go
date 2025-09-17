@@ -23,7 +23,7 @@ type DictionaryClientOptions struct {
 
 // NewDictionaryClientWithNoCredential creates a new instance of DictionaryClient with the specified values.
 //   - endpoint - Service host
-//   - DictionaryClientOptions - DictionaryClientOptions contains the optional values for creating a [DictionaryClient]
+//   - options - DictionaryClientOptions contains the optional values for creating a [DictionaryClient]
 func NewDictionaryClientWithNoCredential(endpoint string, options *DictionaryClientOptions) (*DictionaryClient, error) {
 	if options == nil {
 		options = &DictionaryClientOptions{}

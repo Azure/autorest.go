@@ -23,7 +23,7 @@ type FixedClientOptions struct {
 
 // NewFixedClientWithNoCredential creates a new instance of FixedClient with the specified values.
 //   - endpoint - Service host
-//   - FixedClientOptions - FixedClientOptions contains the optional values for creating a [FixedClient]
+//   - options - FixedClientOptions contains the optional values for creating a [FixedClient]
 func NewFixedClientWithNoCredential(endpoint string, options *FixedClientOptions) (*FixedClient, error) {
 	if options == nil {
 		options = &FixedClientOptions{}

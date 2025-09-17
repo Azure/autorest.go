@@ -23,7 +23,7 @@ type ArrayClientOptions struct {
 
 // NewArrayClientWithNoCredential creates a new instance of ArrayClient with the specified values.
 //   - endpoint - Service host
-//   - ArrayClientOptions - ArrayClientOptions contains the optional values for creating a [ArrayClient]
+//   - options - ArrayClientOptions contains the optional values for creating a [ArrayClient]
 func NewArrayClientWithNoCredential(endpoint string, options *ArrayClientOptions) (*ArrayClient, error) {
 	if options == nil {
 		options = &ArrayClientOptions{}

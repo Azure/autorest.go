@@ -23,7 +23,7 @@ type ClientNamespaceClientOptions struct {
 
 // NewClientNamespaceClientWithNoCredential creates a new instance of ClientNamespaceClient with the specified values.
 //   - endpoint - Service host
-//   - ClientNamespaceClientOptions - ClientNamespaceClientOptions contains the optional values for creating a [ClientNamespaceClient]
+//   - options - ClientNamespaceClientOptions contains the optional values for creating a [ClientNamespaceClient]
 func NewClientNamespaceClientWithNoCredential(endpoint string, options *ClientNamespaceClientOptions) (*ClientNamespaceClient, error) {
 	if options == nil {
 		options = &ClientNamespaceClientOptions{}

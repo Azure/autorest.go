@@ -26,7 +26,7 @@ type RecursiveClientOptions struct {
 
 // NewRecursiveClientWithNoCredential creates a new instance of RecursiveClient with the specified values.
 //   - endpoint - Service host
-//   - RecursiveClientOptions - RecursiveClientOptions contains the optional values for creating a [RecursiveClient]
+//   - options - RecursiveClientOptions contains the optional values for creating a [RecursiveClient]
 func NewRecursiveClientWithNoCredential(endpoint string, options *RecursiveClientOptions) (*RecursiveClient, error) {
 	if options == nil {
 		options = &RecursiveClientOptions{}

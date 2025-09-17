@@ -23,7 +23,7 @@ type CollectionFormatClientOptions struct {
 
 // NewCollectionFormatClientWithNoCredential creates a new instance of CollectionFormatClient with the specified values.
 //   - endpoint - Service host
-//   - CollectionFormatClientOptions - CollectionFormatClientOptions contains the optional values for creating a [CollectionFormatClient]
+//   - options - CollectionFormatClientOptions contains the optional values for creating a [CollectionFormatClient]
 func NewCollectionFormatClientWithNoCredential(endpoint string, options *CollectionFormatClientOptions) (*CollectionFormatClient, error) {
 	if options == nil {
 		options = &CollectionFormatClientOptions{}
