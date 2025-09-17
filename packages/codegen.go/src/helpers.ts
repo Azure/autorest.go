@@ -1048,3 +1048,18 @@ export function buildErrCheck(indent: indentation, errVar: string, returns: stri
   body += `${indent.pop().get()}}`;
   return body;
 }
+
+/**
+ * splits a token credential scope into the audience and scope.
+ * e.g. "https://monitor.azure.com/.default" is split into
+ *   - audience: https://monitor.azure.com
+ *   -    scope: /.default
+ * @param scope 
+ */
+export function splitScope(scope: string): { audience: string, scope: string } {
+  const scopeSplit = scope.lastIndexOf('/');
+  return {
+    audience: scope.substring(0, scopeSplit),
+    scope: scope.substring(scopeSplit),
+  }
+}

@@ -303,7 +303,8 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
           case 'clientOptions': {
             imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/policy');
             const tokenPolicyOpts = '&policy.BearerTokenOptions{\n\t\t\tInsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,\n\t\t}';
-            const tokenPolicy = `\n\t\tPerCall: []policy.Policy{\n\t\truntime.NewBearerTokenPolicy(credential, []string{c.Audience + "/.default"}, ${tokenPolicyOpts}),\n\t\t},\n`;
+            // we assume a single scope. this is enforced when adapting the data from tcgc
+            const tokenPolicy = `\n\t\tPerCall: []policy.Policy{\n\t\truntime.NewBearerTokenPolicy(credential, []string{c.Audience + "${helpers.splitScope(constructor.authentication.scopes[0]).scope}"}, ${tokenPolicyOpts}),\n\t\t},\n`;
             prolog = emitProlog(client.options.name, true, tokenPolicy);
             break;
           }

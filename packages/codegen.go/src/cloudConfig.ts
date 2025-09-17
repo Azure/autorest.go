@@ -58,19 +58,11 @@ export function generateCloudConfig(codeModel: go.CodeModel): string {
   }
   cloudConfig += `const ServiceName cloud.ServiceName = "${serviceName}"\n\n`;
 
-  // at present, we only support one scope on the token credential
-  // and assume it's for Azure public cloud. this is enforced when
-  // adapting the data from tcgc.
-  let audience = tokenCred.scopes[0];
-  const hasScope = audience.lastIndexOf('/.default');
-  if (hasScope > 0) {
-    audience = audience.substring(0, hasScope);
-  }
-
   // we omit the Endpoint field as all client constructors take an endpoint parameter
   cloudConfig += `func init() {\n`;
   cloudConfig += 'cloud.AzurePublic.Services[ServiceName] = cloud.ServiceConfiguration{\n';
-  cloudConfig += `\t\tAudience: "${audience}",\n`;
+  // we assume a single scope. this is enforced when adapting the data from tcgc
+  cloudConfig += `\t\tAudience: "${helpers.splitScope(tokenCred.scopes[0]).audience}",\n`;
   cloudConfig += '\t}\n';
   cloudConfig += `}\n\n`;
 
