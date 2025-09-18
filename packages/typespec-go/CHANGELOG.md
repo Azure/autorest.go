@@ -1,5 +1,11 @@
 # Release History
 
+## 0.8.3 (unreleased)
+
+### Features Added
+
+* Clean up all generated Go files before emitting any new files.
+
 ## 0.8.2 (2025-09-10)
 
 ### Bugs Fixed
