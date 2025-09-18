@@ -23,7 +23,7 @@ import { generateXMLAdditionalPropsHelpers } from '../../codegen.go/src/xmlAddit
 import { generateMetadataFile } from '../../codegen.go/src/metadata.js';
 import { generateVersionInfo } from '../../codegen.go/src/version.js';
 import { CodeModelError } from '../../codemodel.go/src/errors.js';
-import { existsSync } from 'fs';
+import { existsSync, opendirSync, unlinkSync, readFileSync } from 'fs';
 import { mkdir, readFile, writeFile, readdir, unlink } from 'fs/promises';
 import { join } from 'path';
 import { DiagnosticSeverity, EmitContext, NoTarget } from '@typespec/compiler';
@@ -156,7 +156,7 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
 
 /**
  * drop frames after the specified frame.
- * 
+ *
  * @param stack the stack to truncate
  * @returns the truncated stack
  */
@@ -175,47 +175,37 @@ function truncateStack(stack: string, finalFrame: string): string {
 /**
  * Clean up existing generated Go files in the output directory.
  * Removes any .go files that contain the Microsoft code generator comment.
- * 
+ *
  * @param outputDir the directory to clean up
  */
-export async function cleanupGeneratedFiles(context: EmitContext<GoEmitterOptions>, outputDir: string): Promise<void> {
-  try {
-    const items = await readdir(outputDir, { withFileTypes: true });
-    
-    for (const item of items) {
-      const itemPath = join(outputDir, item.name);
-      
-      if (item.isDirectory()) {
-        // recursively clean subdirectories
-        await cleanupGeneratedFiles(context, itemPath);
-      } else if (item.isFile() && item.name.endsWith('.go')) {
-        try {
-          const content = await readFile(itemPath, 'utf8');
-          if (doNotEditRegex.test(content)) {
-            await unlink(itemPath);
-          }
-        } catch (error) {
-          // continue if we can't read or delete a specific file
-          context.program.reportDiagnostic({
-            code: 'cleanup',
-            severity: 'warning',
-            message: `Could not process file ${itemPath}: ${error}`,
-            target: NoTarget,
-          });
-        }
+export function cleanupGeneratedFiles(outputDir: string) {
+  if (!existsSync(outputDir)) {
+    return;
+  }
+  const dir = opendirSync(outputDir);
+  while (true) {
+    const dirEnt = dir.readSync();
+    if (dirEnt === null) {
+      break;
+    }
+    // preserve the version.go file so we can test the v2+ major version scenario
+    if (dirEnt.isFile() && dirEnt.name.endsWith('.go')) {
+      const content = readFileSync(dir.path + '/' + dirEnt.name, 'utf8');
+      if (doNotEditRegex.test(content)) {
+        unlinkSync(dir.path + '/' + dirEnt.name);
       }
     }
-  } catch {
-    // if the directory doesn't exist or can't be read, just continue
   }
+  dir.closeSync();
+  cleanupGeneratedFiles(outputDir + '/fake');
 }
 
 async function generate(context: EmitContext<GoEmitterOptions>) {
   const codeModel = await tcgcToGoCodeModel(context);
-  await mkdir(context.emitterOutputDir, {recursive: true});
+  await mkdir(context.emitterOutputDir, { recursive: true });
 
   // clean up existing generated Go files
-  await cleanupGeneratedFiles(context, context.emitterOutputDir);
+  cleanupGeneratedFiles(context.emitterOutputDir);
 
   // don't overwrite an existing go.mod file, update it if required
   const goModFile = `${context.emitterOutputDir}/go.mod`;
@@ -229,10 +219,10 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
   }
 
   const metadata = generateMetadataFile(codeModel);
-  if (metadata.length > 0 ) {
+  if (metadata.length > 0) {
     const metedataDir = context.emitterOutputDir + '/testdata';
-    await mkdir(metedataDir, {recursive: true});
-    await writeFile(`${metedataDir}/_metadata.json`, metadata)
+    await mkdir(metedataDir, { recursive: true });
+    await writeFile(`${metedataDir}/_metadata.json`, metadata);
   }
 
   let filePrefix = '';
@@ -274,7 +264,7 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
     // insert a _ before Client, i.e. Foo_Client
     // if the name isn't simply Client.
     if (fileName !== 'client') {
-      fileName = fileName.substring(0, fileName.length-6) + '_client';
+      fileName = fileName.substring(0, fileName.length - 6) + '_client';
     }
     await writeFile(`${context.emitterOutputDir}/${filePrefix}${fileName}.go`, op.content);
   }
@@ -334,14 +324,14 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
     const serverContent = await generateServers(codeModel);
     if (serverContent.servers.length > 0) {
       const fakesDir = context.emitterOutputDir + '/fake';
-      await mkdir(fakesDir, {recursive: true});
+      await mkdir(fakesDir, { recursive: true });
       for (const op of serverContent.servers) {
         let fileName = op.name.toLowerCase();
         // op.name is the server name, e.g. FooServer.
         // insert a _ before Server, i.e. Foo_Server
         // if the name isn't simply Server.
         if (fileName !== 'server') {
-          fileName = fileName.substring(0, fileName.length-6) + '_server';
+          fileName = fileName.substring(0, fileName.length - 6) + '_server';
         }
         await writeFile(`${fakesDir}/${filePrefix}${fileName}.go`, op.content);
       }
