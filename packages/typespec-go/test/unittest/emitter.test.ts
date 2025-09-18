@@ -5,43 +5,6 @@ import { join } from 'path';
 import { tmpdir } from 'os';
 import { cleanupGeneratedFiles } from '../../src/emitter.js';
 
-// Types for the diagnostic object
-interface MockDiagnostic {
-  code: string;
-  severity: string;
-  message: string;
-  target: unknown;
-}
-
-// Simple mock context type
-interface MockContext {
-  diagnostics: MockDiagnostic[];
-  program: {
-    reportDiagnostic: (diagnostic: MockDiagnostic) => void;
-  };
-  emitterOutputDir: string;
-  options: Record<string, unknown>;
-}
-
-// Simple mock for the context
-const createMockContext = (): MockContext => {
-  const context: MockContext = {
-    program: {
-      reportDiagnostic: (diagnostic: MockDiagnostic) => {
-        // Store diagnostics for testing
-        context.diagnostics = context.diagnostics || [];
-        context.diagnostics.push(diagnostic);
-      },
-    },
-    emitterOutputDir: '',
-    options: {},
-    diagnostics: [],
-  };
-  return context;
-};
-
-let mockContext: ReturnType<typeof createMockContext>;
-
 describe('cleanupGeneratedFiles', () => {
   let testDir: string;
 
@@ -49,10 +12,6 @@ describe('cleanupGeneratedFiles', () => {
     // Create a unique test directory
     testDir = join(tmpdir(), `test-cleanup-${Date.now()}`);
     await mkdir(testDir, { recursive: true });
-
-    // Create mock context
-    mockContext = createMockContext();
-    mockContext.emitterOutputDir = testDir;
   });
 
   afterEach(() => {
@@ -90,8 +49,7 @@ func main() {
 
     await createTestFile('generated.go', generatedContent);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
-    await cleanupGeneratedFiles(mockContext as any, testDir);
+    cleanupGeneratedFiles(testDir);
 
     // Verify the file was deleted
     expect(await fileExists('generated.go')).toBe(false);
@@ -107,8 +65,7 @@ func main() {
 
     await createTestFile('user.go', userContent);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
-    await cleanupGeneratedFiles(mockContext as any, testDir);
+    cleanupGeneratedFiles(testDir);
 
     // Verify the file was NOT deleted
     expect(await fileExists('user.go')).toBe(true);
@@ -127,8 +84,7 @@ package nested`;
     await createTestFile('subdir2/deep/generated.go', generatedContent);
     await createTestFile('subdir2/deep/user.go', userContent);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
-    await cleanupGeneratedFiles(mockContext as any, testDir);
+    cleanupGeneratedFiles(testDir);
 
     // Verify only generated files were deleted
     expect(await fileExists('subdir1/generated.go')).toBe(false);
@@ -144,21 +100,10 @@ package nested`;
     await createTestFile('README.md', generatedContent);
     await createTestFile('config.json', generatedContent);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
-    await cleanupGeneratedFiles(mockContext as any, testDir);
+    cleanupGeneratedFiles(testDir);
 
     // Verify all non-Go files were preserved
     expect(await fileExists('README.md')).toBe(true);
     expect(await fileExists('config.json')).toBe(true);
-  });
-
-  it('should handle directory that does not exist gracefully', async () => {
-    const nonExistentDir = join(testDir, 'does-not-exist');
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
-    await cleanupGeneratedFiles(mockContext as any, nonExistentDir);
-
-    // Should not throw an error or report diagnostics
-    expect(mockContext.diagnostics).toHaveLength(0);
   });
 });
