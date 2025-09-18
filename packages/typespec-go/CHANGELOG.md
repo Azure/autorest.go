@@ -4,7 +4,7 @@
 
 ### Features Added
 
-* Clean up all generated Go files before emit any new files.
+* Clean up all generated Go files before emitting any new files.
 
 ## 0.8.2 (2025-09-10)
 
