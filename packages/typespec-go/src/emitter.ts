@@ -174,10 +174,12 @@ function truncateStack(stack: string, finalFrame: string): string {
 /**
  * Clean up existing generated Go files in the output directory.
  * Removes any .go files that contain the Microsoft code generator comment.
+ * 
+ * exported for testing purposes only.
  *
  * @param outputDir the directory to clean up
  */
-function cleanupGeneratedFiles(outputDir: string) {
+export function cleanupGeneratedFiles(outputDir: string) {
   if (!existsSync(outputDir)) {
     return;
   }
