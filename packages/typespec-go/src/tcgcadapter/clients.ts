@@ -1159,12 +1159,11 @@ export class clientAdapter {
         switch (goType.kind) {
           case 'constant':
           case 'encodedBytes':
+          case 'etag':
           case 'literal':
           case 'string':
           case 'time':
             return new go.StringExample(exampleType.value, goType);
-          case 'qualifiedType':
-            return new go.QualifiedExample(goType, exampleType.value);
         }
         break;
       case 'number':

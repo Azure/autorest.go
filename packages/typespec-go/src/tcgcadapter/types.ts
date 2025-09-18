@@ -258,7 +258,7 @@ export class typeAdapter {
     }
     let rsc = this.types.get(keyName);
     if (!rsc) {
-      rsc = new go.QualifiedType('ReadSeekCloser', 'io');
+      rsc = new go.ReadSeekCloser();
       if (sliceOf) {
         rsc = new go.Slice(rsc, true);
       }
@@ -273,15 +273,15 @@ export class typeAdapter {
     if (sliceOf) {
       keyName = 'sliceof-' + keyName;
     }
-    let rsc = this.types.get(keyName);
-    if (!rsc) {
-      rsc = new go.QualifiedType('MultipartContent', 'github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
+    let mpc = this.types.get(keyName);
+    if (!mpc) {
+      mpc = new go.MultipartContent();
       if (sliceOf) {
-        rsc = new go.Slice(rsc, true);
+        mpc = new go.Slice(mpc, true);
       }
-      this.types.set(keyName, rsc);
+      this.types.set(keyName, mpc);
     }
-    return rsc;
+    return mpc;
   }
 
   private getBuiltInType(type: tcgc.SdkBuiltInType): go.WireType {
@@ -394,7 +394,7 @@ export class typeAdapter {
           if (etag) {
             return etag;
           }
-          etag = new go.QualifiedType('ETag', 'github.com/Azure/azure-sdk-for-go/sdk/azcore');
+          etag = new go.ETag();
           this.types.set(etagKey, etag);
           return etag;
         }

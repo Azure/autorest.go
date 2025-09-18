@@ -50,7 +50,7 @@ export class ImportManager {
     return text;
   }
 
-  addImportForType(type: go.WireType) {
+  addImportForType(type: go.Type) {
     switch (type.kind) {
       case 'map':
         this.addImportForType(type.valueType);
@@ -58,12 +58,11 @@ export class ImportManager {
       case 'slice':
         this.addImportForType(type.elementType);
         break;
-      case 'qualifiedType':
-        this.add(type.packageName);
-        break;
-      case 'time':
-        this.add('time');
-        break;
+    }
+
+    // generic fallback for qualified types
+    if ((<go.QualifiedType>type).name !== undefined && (<go.QualifiedType>type).module !== undefined) {
+      this.add((<go.QualifiedType>type).module);
     }
   }
 

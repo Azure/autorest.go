@@ -8,7 +8,7 @@ import * as param from './param.js';
 import * as result from './result.js';
 import * as type from './type.js';
 
-export type ExampleType = AnyExample | ArrayExample | BooleanExample | DictionaryExample | NullExample | NumberExample | QualifiedExample| StringExample | StructExample;
+export type ExampleType = AnyExample | ArrayExample | BooleanExample | DictionaryExample | NullExample | NumberExample | StringExample | StructExample;
 
 export interface AnyExample {
   kind: 'any';
@@ -66,12 +66,6 @@ export interface ParameterExample {
   value: ExampleType;
 }
 
-export interface QualifiedExample {
-  kind: 'qualified';
-  value: any;
-  type: type.QualifiedType;
-}
-
 export interface ResponseEnvelopeExample {
   response: result.ResponseEnvelope;
   headers: Array<ResponseHeaderExample>;
@@ -86,7 +80,7 @@ export interface ResponseHeaderExample {
 export interface StringExample {
   kind: 'string';
   value: string;
-  type: type.Constant | type.EncodedBytes | type.Literal | type.Scalar | type.String | type.Time;
+  type: type.Constant | type.EncodedBytes | type.ETag | type.Literal | type.Scalar | type.String | type.Time;
 }
 
 export interface StructExample {
@@ -163,14 +157,6 @@ export class ParameterExample implements ParameterExample {
   }
 }
 
-export class QualifiedExample implements QualifiedExample {
-  constructor(type: type.QualifiedType, value: any) {
-    this.kind = 'qualified';
-    this.type = type;
-    this.value = value;
-  }
-}
-
 export class ResponseEnvelopeExample implements ResponseEnvelopeExample {
   constructor(response: result.ResponseEnvelope) {
     this.response = response;
@@ -186,7 +172,7 @@ export class ResponseHeaderExample implements ResponseHeaderExample {
 }
 
 export class StringExample implements StringExample {
-  constructor(value: string, type: type.Constant | type.EncodedBytes | type.Literal | type.Scalar | type.String | type.Time) {
+  constructor(value: string, type: type.Constant | type.EncodedBytes | type.ETag | type.Literal | type.Scalar | type.String | type.Time) {
     this.kind = 'string';
     this.value = value;
     this.type = type;

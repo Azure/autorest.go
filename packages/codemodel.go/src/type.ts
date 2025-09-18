@@ -12,12 +12,23 @@ export interface Docs {
   description?: string;
 }
 
+/** defines types used in generated code but do not go across the wire */
+export type SdkType = ArmClientOptions;
+
 /** defines types that go across the wire */
-export type WireType = Any | Constant | EncodedBytes | Interface | Literal | Map | Model | PolymorphicModel | QualifiedType | RawJSON | Scalar | Slice | String | Time;
+export type WireType = ArmClientOptions | Any | Constant | EncodedBytes | ETag | Interface | Literal | Map | Model | MultipartContent | PolymorphicModel | RawJSON | ReadCloser | ReadSeekCloser | Scalar | Slice | String | Time;
+
+/** defines a type within the Go type system */
+export type Type = SdkType | WireType;
 
 /** the Go any type */
 export interface Any {
   kind: 'any';
+}
+
+/** an arm.ClientOptions type from azcore */
+export interface ArmClientOptions extends QualifiedType {
+  kind: 'armClientOptions';
 }
 
 /** a const type definition */
@@ -73,6 +84,11 @@ export interface EncodedBytes {
 
 /** the types of base64 encoding */
 export type BytesEncoding = 'Std' | 'URL';
+
+/** an azcore.ETag type */
+export interface ETag extends QualifiedType {
+  kind: 'etag';
+}
 
 /** a Go interface type used for discriminated types */
 export interface Interface {
@@ -170,6 +186,11 @@ export interface Model extends ModelBase {
   kind: 'model';
 }
 
+/** a streaming.MultipartContent type from azcore */
+export interface MultipartContent extends QualifiedType {
+  kind: 'multipartContent';
+}
+
 /** a model that's a discriminated type */
 export interface PolymorphicModel extends ModelBase {
   kind: 'polymorphicModel';
@@ -183,17 +204,6 @@ export interface PolymorphicModel extends ModelBase {
    * will have this populated.
    */
   discriminatorValue?: Literal;
-}
-
-/** a type from some package, e.g. the Go standard library (excluding time.Time) */
-export interface QualifiedType {
-  kind: 'qualifiedType';
-
-  /** the type name minus any package qualifier (e.g. URL) */
-  exportName: string;
-
-  /** the full name of the package to import (e.g. "net/url") */
-  packageName: string;
 }
 
 /** a byte slice containing raw JSON */
@@ -210,6 +220,16 @@ export interface Scalar {
 
   /** indicates the value is sent/received as a string */
   encodeAsString: boolean;
+}
+
+/** an io.ReadCloser */
+export interface ReadCloser extends QualifiedType {
+  kind: 'readCloser'
+}
+
+/** an io.ReadSeekCloser */
+export interface ReadSeekCloser extends QualifiedType {
+  kind: 'readSeekCloser'
 }
 
 /** the supported Go scalar types */
@@ -262,7 +282,7 @@ export interface StructField {
 }
 
 /** a time.Time type from the standard library with a format specifier */
-export interface Time {
+export interface Time extends QualifiedType {
   kind: 'time';
 
   /** the serde format used */
@@ -334,7 +354,7 @@ export function getLiteralTypeDeclaration(literal: LiteralType): string {
  * @param pkgName optional package name prefix for the type
  * @returns the Go type declaration
  */
-export function getTypeDeclaration(type: WireType, pkgName?: string): string {
+export function getTypeDeclaration(type: Type, pkgName?: string): string {
   switch (type.kind) {
     case 'any':
     case 'string':
@@ -354,21 +374,25 @@ export function getTypeDeclaration(type: WireType, pkgName?: string): string {
       return getTypeDeclaration(type.type, pkgName);
     case 'map':
       return `map[string]${type.valueTypeByValue ? '' : '*'}` + getTypeDeclaration(type.valueType, pkgName);
-    case 'qualifiedType': {
-      // strip packageName to just the leaf package as required
-      let pkg = type.packageName;
-      const pathChar = pkg.lastIndexOf('/');
-      if (pathChar) {
-        pkg = pkg.substring(pathChar+1);
-      }
-      return pkg + '.' + type.exportName;
-    }
     case 'scalar':
       return type.type;
     case 'slice':
       return `[]${type.elementTypeByValue ? '' : '*'}` + getTypeDeclaration(type.elementType, pkgName);
     case 'time':
       return 'time.Time';
+    case 'armClientOptions':
+    case 'etag':
+    case 'multipartContent':
+    case 'readCloser':
+    case 'readSeekCloser': {
+      // strip module to just the leaf package as required
+      let pkg = type.module;
+      const pathChar = pkg.lastIndexOf('/');
+      if (pathChar) {
+        pkg = pkg.substring(pathChar+1);
+      }
+      return pkg + '.' + type.name;
+    }
   }
 }
 
@@ -387,7 +411,7 @@ export function isLiteralValueType(type: WireType): type is LiteralType {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// base types
+// exported base types
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class StructField implements StructField {
@@ -406,6 +430,26 @@ export class Struct implements Struct {
     this.docs = {};
   }
 }
+
+/** used when building types that come from an external package */
+export interface QualifiedType {
+  /** the type name minus any package qualifier (e.g. URL) */
+  name: string;
+
+  /** the full name of the module to import (e.g. "net/url") */
+  module: string;
+}
+
+export class QualifiedType implements QualifiedType {
+  constructor(name: string, module: string) {
+    this.name = name;
+    this.module = module;
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// base types
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 interface ModelBase extends Struct {
   /** the fields in this model. can be empty */
@@ -439,6 +483,13 @@ export class Any implements Any {
   }
 }
 
+export class ArmClientOptions extends QualifiedType implements ArmClientOptions {
+  constructor() {
+    super('ClientOptions', 'github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
+    this.kind = 'armClientOptions';
+  }
+}
+
 export class Constant implements Constant {
   constructor(name: string, type: ConstantType, valuesFuncName: string) {
     this.kind = 'constant';
@@ -464,6 +515,13 @@ export class EncodedBytes implements EncodedBytes {
   constructor(encoding: BytesEncoding) {
     this.kind = 'encodedBytes';
     this.encoding = encoding;
+  }
+}
+
+export class ETag extends QualifiedType implements ETag {
+  constructor() {
+    super('ETag', 'github.com/Azure/azure-sdk-for-go/sdk/azcore');
+    this.kind = 'etag';
   }
 }
 
@@ -530,6 +588,13 @@ export class Model extends ModelBase implements Model {
   }
 }
 
+export class MultipartContent extends QualifiedType implements MultipartContent {
+  constructor() {
+    super('MultipartContent', 'github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
+    this.kind = 'multipartContent';
+  }
+}
+
 export class PolymorphicModel extends ModelBase implements PolymorphicModel {
   constructor(name: string, iface: Interface, annotations: ModelAnnotations, usage: UsageFlags) {
     super(name, annotations, usage);
@@ -538,17 +603,23 @@ export class PolymorphicModel extends ModelBase implements PolymorphicModel {
   }
 }
 
-export class QualifiedType implements QualifiedType {
-  constructor(exportName: string, packageName: string) {
-    this.kind = 'qualifiedType';
-    this.exportName = exportName;
-    this.packageName = packageName;
-  }
-}
-
 export class RawJSON implements RawJSON {
   constructor() {
     this.kind = 'rawJSON';
+  }
+}
+
+export class ReadCloser extends QualifiedType implements ReadCloser {
+  constructor() {
+    super('ReadCloser', 'io');
+    this.kind = 'readCloser';
+  }
+}
+
+export class ReadSeekCloser extends QualifiedType implements ReadSeekCloser {
+  constructor() {
+    super('ReadSeekCloser', 'io');
+    this.kind = 'readSeekCloser';
   }
 }
 
@@ -574,8 +645,9 @@ export class String implements String {
   }
 }
 
-export class Time implements Time {
+export class Time extends QualifiedType implements Time {
   constructor(format: TimeFormat, utc: boolean) {
+    super('Time', 'time');
     this.kind = 'time';
     this.format = format;
     this.utc = utc;
