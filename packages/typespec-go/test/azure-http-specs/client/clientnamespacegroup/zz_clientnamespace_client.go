@@ -4,13 +4,39 @@
 
 package clientnamespacegroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+)
 
 // ClientNamespaceClient - Illustrates the clientNamespace cases.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewClientNamespaceClientWithNoCredential() instead.
 type ClientNamespaceClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ClientNamespaceClientOptions contains the optional values for creating a [ClientNamespaceClient].
+type ClientNamespaceClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewClientNamespaceClientWithNoCredential creates a new instance of ClientNamespaceClient with the specified values.
+//   - endpoint - Service host
+//   - options - ClientNamespaceClientOptions contains the optional values for creating a [ClientNamespaceClient]
+func NewClientNamespaceClientWithNoCredential(endpoint string, options *ClientNamespaceClientOptions) (*ClientNamespaceClient, error) {
+	if options == nil {
+		options = &ClientNamespaceClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ClientNamespaceClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // NewClientNamespaceFirstClient creates a new instance of [ClientNamespaceFirstClient].

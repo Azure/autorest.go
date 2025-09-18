@@ -12,7 +12,7 @@ import (
 )
 
 func TestOverrideGroupParametersClient_Group(t *testing.T) {
-	client, err := overridegroup.NewOverrideClient("http://localhost:3000", nil)
+	client, err := overridegroup.NewOverrideClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOverrideGroupParametersClient().Group(context.Background(), "param1", "param2", &overridegroup.OverrideGroupParametersClientGroupOptions{})
 	require.NoError(t, err)

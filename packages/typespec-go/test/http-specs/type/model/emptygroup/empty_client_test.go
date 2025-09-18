@@ -15,7 +15,7 @@ import (
 )
 
 func TestEmptyClientGetEmpty(t *testing.T) {
-	client, err := emptygroup.NewEmptyClient("http://localhost:3000", nil)
+	client, err := emptygroup.NewEmptyClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.GetEmpty(context.Background(), nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestEmptyClientGetEmpty(t *testing.T) {
 }
 
 func TestEmptyClientPostRoundTripEmpty(t *testing.T) {
-	client, err := emptygroup.NewEmptyClient("http://localhost:3000", nil)
+	client, err := emptygroup.NewEmptyClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.PostRoundTripEmpty(context.Background(), emptygroup.EmptyInputOutput{}, nil)
 	require.NoError(t, err)
@@ -31,7 +31,7 @@ func TestEmptyClientPostRoundTripEmpty(t *testing.T) {
 }
 
 func TestEmptyClientPutEmpty(t *testing.T) {
-	client, err := emptygroup.NewEmptyClient("http://localhost:3000", nil)
+	client, err := emptygroup.NewEmptyClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.PutEmpty(context.Background(), emptygroup.EmptyInput{}, nil)
 	require.NoError(t, err)

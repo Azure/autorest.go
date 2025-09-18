@@ -7,6 +7,7 @@ import { GoEmitterOptions } from './lib.js';
 import { tcgcToGoCodeModel } from './tcgcadapter/adapter.js';
 import { AdapterError } from './tcgcadapter/errors.js';
 import { generateClientFactory } from '../../codegen.go/src/clientFactory.js';
+import { generateCloudConfig } from '../../codegen.go/src/cloudConfig.js';
 import { generateConstants } from '../../codegen.go/src/constants.js';
 import { generateExamples } from '../../codegen.go/src/example.js';
 import { generateGoModFile } from '../../codegen.go/src/gomod.js';
@@ -285,6 +286,11 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
   const xmlAddlProps = await generateXMLAdditionalPropsHelpers(codeModel);
   if (xmlAddlProps.length > 0) {
     await writeFile(`${context.emitterOutputDir}/${filePrefix}xml_helper.go`, xmlAddlProps);
+  }
+
+  const cloudConfig = generateCloudConfig(codeModel);
+  if (cloudConfig.length > 0) {
+    await writeFile(`${context.emitterOutputDir}/${filePrefix}cloud_config.go`, cloudConfig);
   }
 
   if (codeModel.options.generateFakes) {

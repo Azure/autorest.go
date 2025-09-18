@@ -12,7 +12,7 @@ import (
 )
 
 func TestClientLocationClient_GetHealthStatus(t *testing.T) {
-	client, err := coreclientlocationgroup.NewClientLocationClient("http://localhost:3000", nil)
+	client, err := coreclientlocationgroup.NewClientLocationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	require.NotNil(t, client)
 	resp, err := client.GetHealthStatus(context.Background(), nil)

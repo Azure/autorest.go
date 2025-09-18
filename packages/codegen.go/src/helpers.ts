@@ -52,9 +52,12 @@ export function sortAscending(a: string, b: string): number {
 }
 
 // returns the type name with possible * prefix
-export function formatParameterTypeName(param: go.ClientParameter | go.ParameterGroup, pkgName?: string): string {
+export function formatParameterTypeName(param: go.ClientOptionsParameter | go.ClientParameter | go.ParameterGroup, pkgName?: string): string {
   let typeName: string;
   switch (param.kind) {
+    case 'clientOptions':
+      typeName = param.name;
+      break;
     case 'paramGroup':
       typeName = param.groupName;
       if (pkgName) {
@@ -679,8 +682,30 @@ export function recursiveUnwrapMapSlice(item: go.WireType): go.WireType {
 }
 
 // returns a * for optional params
-export function star(param: go.MethodParameter): string {
+export function star(param: go.ClientParameter | go.MethodParameter): string {
   return go.isRequiredParameter(param) || param.byValue ? '' : '*';
+}
+
+/**
+ * returns the zero-value expression for the specific parameter
+ * 
+ * @param param the param for which to create a zero value
+ * @returns the zero-value expression
+ */
+export function zeroValue(param: go.ClientParameter | go.MethodParameter): string {
+  // even though API version params typically have a client-side default which makes
+  // them optional, the azcore.ClientOptions.APIVersion field isn't pointer-to-type.
+  if (go.isRequiredParameter(param) || go.isAPIVersionParameter(param)) {
+    switch (param.type.kind) {
+      case 'string':
+        return `""`;
+      default:
+        throw new CodegenError('InternalError', `unhandled zero-value kind ${param.type.kind}`);
+    }
+  }
+
+  // optional params are pointer-to-type
+  return 'nil';
 }
 
 export type SerDeFormat = 'JSON' | 'XML';
@@ -780,6 +805,9 @@ export function getAllClientParameters(codeModel: go.CodeModel): Array<go.Client
   const allClientParams = new Array<go.ClientParameter>();
   for (const clients of codeModel.clients) {
     for (const clientParam of values(clients.parameters)) {
+      if (go.isLiteralParameter(clientParam)) {
+        continue;
+      }
       if (values(allClientParams).where(param => param.name === clientParam.name).any()) {
         continue;
       }
@@ -802,6 +830,9 @@ export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.Cli
 
     ++numClients;
     for (const clientParam of values(clients.parameters)) {
+      if (go.isLiteralParameter(clientParam)) {
+        continue;
+      }
       let entry = paramCount.get(clientParam.name);
       if (!entry) {
         entry = { uses: 0, param: clientParam };
@@ -1016,4 +1047,19 @@ export function buildErrCheck(indent: indentation, errVar: string, returns: stri
   body += `${indent.push().get()}return ${returns}\n`;
   body += `${indent.pop().get()}}`;
   return body;
+}
+
+/**
+ * splits a token credential scope into the audience and scope.
+ * e.g. "https://monitor.azure.com/.default" is split into
+ *   - audience: https://monitor.azure.com
+ *   -    scope: /.default
+ * @param scope 
+ */
+export function splitScope(scope: string): { audience: string, scope: string } {
+  const scopeSplit = scope.lastIndexOf('/');
+  return {
+    audience: scope.substring(0, scopeSplit),
+    scope: scope.substring(scopeSplit),
+  }
 }

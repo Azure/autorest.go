@@ -6,17 +6,59 @@ package oauth2group
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"reflect"
 )
 
 // OAuth2Client - Illustrates clients generated with OAuth2 authentication.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewOAuth2Client() instead.
 type OAuth2Client struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// OAuth2ClientOptions contains the optional values for creating a [OAuth2Client].
+type OAuth2ClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewOAuth2Client creates a new instance of OAuth2Client with the specified values.
+//   - endpoint - Service host
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - OAuth2ClientOptions contains the optional values for creating a [OAuth2Client]
+func NewOAuth2Client(endpoint string, credential azcore.TokenCredential, options *OAuth2ClientOptions) (*OAuth2Client, error) {
+	if options == nil {
+		options = &OAuth2ClientOptions{}
+	}
+	if reflect.ValueOf(options.Cloud).IsZero() {
+		options.Cloud = cloud.AzurePublic
+	}
+	c, ok := options.Cloud.Services[ServiceName]
+	if !ok {
+		return nil, fmt.Errorf("provided Cloud field is missing configuration for %s", ServiceName)
+	} else if c.Audience == "" {
+		return nil, fmt.Errorf("provided Cloud field is missing Audience for %s", ServiceName)
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
+		PerCall: []policy.Policy{
+			runtime.NewBearerTokenPolicy(credential, []string{c.Audience + "/.default"}, &policy.BearerTokenOptions{
+				InsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,
+			}),
+		},
+	}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &OAuth2Client{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Invalid - Check whether client is authenticated. Will return an invalid bearer error.

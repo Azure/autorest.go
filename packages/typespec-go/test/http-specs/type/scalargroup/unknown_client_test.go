@@ -15,7 +15,7 @@ import (
 )
 
 func TestUnknownClient_Get(t *testing.T) {
-	client, err := scalargroup.NewScalarClient("http://localhost:3000", nil)
+	client, err := scalargroup.NewScalarClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarUnknownClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestUnknownClient_Get(t *testing.T) {
 }
 
 func TestUnknownClient_Put(t *testing.T) {
-	client, err := scalargroup.NewScalarClient("http://localhost:3000", nil)
+	client, err := scalargroup.NewScalarClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarUnknownClient().Put(context.Background(), "test", nil)
 	require.NoError(t, err)

@@ -12,7 +12,7 @@ import (
 )
 
 func TestValueTypesStringLiteralClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesStringLiteralClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -21,7 +21,7 @@ func TestValueTypesStringLiteralClient_Get(t *testing.T) {
 }
 
 func TestValueTypesStringLiteralClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesStringLiteralClient().Put(context.Background(), valuetypesgroup.StringLiteralProperty{}, nil)
 	require.NoError(t, err)

@@ -13,10 +13,33 @@ import (
 )
 
 // RecursiveClient - Illustrates inheritance recursion
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewRecursiveClientWithNoCredential() instead.
 type RecursiveClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// RecursiveClientOptions contains the optional values for creating a [RecursiveClient].
+type RecursiveClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewRecursiveClientWithNoCredential creates a new instance of RecursiveClient with the specified values.
+//   - endpoint - Service host
+//   - options - RecursiveClientOptions contains the optional values for creating a [RecursiveClient]
+func NewRecursiveClientWithNoCredential(endpoint string, options *RecursiveClientOptions) (*RecursiveClient, error) {
+	if options == nil {
+		options = &RecursiveClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &RecursiveClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

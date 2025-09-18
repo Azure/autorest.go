@@ -12,7 +12,7 @@ import (
 )
 
 func TestNotDefinedClient_Valid(t *testing.T) {
-	client, err := noendpointgroup.NewNotDefinedClient("http://localhost:3000", nil)
+	client, err := noendpointgroup.NewNotDefinedClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.Valid(context.Background(), nil)
 	require.NoError(t, err)

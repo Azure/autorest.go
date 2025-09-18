@@ -18,10 +18,10 @@ const compiler = pkgRoot + 'node_modules/@typespec/compiler/cmd/tsp.js';
 // 'moduleName': [ 'input', 'emitter option 1', 'emitter option N...' ]
 // if no .tsp file is specified in input, it's assumed to be main.tsp
 const httpSpecsGroup = {
-  'apikeygroup': ['authentication/api-key'],     // missing tests, waiting for generated client constructors https://github.com/Azure/autorest.go/issues/1635
-  'customgroup': ['authentication/http/custom'], // missing tests
-  'oauth2group': ['authentication/oauth2'],      // missing tests
-  'unionauthgroup': ['authentication/union'],    // missing tests
+  'apikeygroup': ['authentication/api-key'],     // ctors for API key not supported
+  'customgroup': ['authentication/http/custom'], // ctors for API key not supported
+  'oauth2group': ['authentication/oauth2'],
+  'unionauthgroup': ['authentication/union'],    // ctors for API key not supported
   'bytesgroup': ['encode/bytes'],
   'datetimegroup': ['encode/datetime', 'slice-elements-byval=true'],
   'durationgroup': ['encode/duration'],
@@ -59,7 +59,7 @@ const httpSpecsGroup = {
   'singlediscgroup': ['type/model/inheritance/single-discriminator'],
   'usagegroup': ['type/model/usage'],
   'visibilitygroup': ['type/model/visibility'],
-  //'addlpropsgroup': ['type/property/additional-properties'], // requires union support
+  //'addlpropsgroup': ['type/property/additional-properties'], // requires union support (remove hand-written client when done)
   'nullablegroup': ['type/property/nullable'],
   'optionalitygroup': ['type/property/optionality', 'slice-elements-byval=true'],
   'valuetypesgroup': ['type/property/value-types', 'slice-elements-byval=true'],

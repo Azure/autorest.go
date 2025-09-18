@@ -46,6 +46,7 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
       codeModel.options.containingModule = <string>session.model.language.go!.containingModule;
     }
 
+    codeModel.options.omitConstructors = true;
     adaptConstantTypes(session.model, codeModel);
     adaptInterfaceTypes(session.model, codeModel);
     adaptModels(session.model, codeModel);

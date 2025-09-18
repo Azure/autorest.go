@@ -30,8 +30,8 @@ export class typeAdapter {
   // converts all model/enum SDK types to Go code model types
   adaptTypes(sdkContext: tcgc.SdkContext) {
     for (const enumType of sdkContext.sdkPackage.enums) {
-      if (enumType.usage === tcgc.UsageFlags.ApiVersionEnum) {
-        // we have a pipeline policy for controlling the api-version
+      if (<tcgc.UsageFlags>(enumType.usage & tcgc.UsageFlags.ApiVersionEnum) === tcgc.UsageFlags.ApiVersionEnum) {
+        // skip enums that are used for API version
         continue;
       } else if ((enumType.usage & tcgc.UsageFlags.Input) === 0 && (enumType.usage & tcgc.UsageFlags.Output) === 0) {
         // skip types without input and output usage
