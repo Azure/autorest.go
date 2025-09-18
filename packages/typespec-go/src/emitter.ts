@@ -177,7 +177,7 @@ function truncateStack(stack: string, finalFrame: string): string {
  *
  * @param outputDir the directory to clean up
  */
-export function cleanupGeneratedFiles(outputDir: string) {
+function cleanupGeneratedFiles(outputDir: string) {
   if (!existsSync(outputDir)) {
     return;
   }
@@ -187,7 +187,6 @@ export function cleanupGeneratedFiles(outputDir: string) {
     if (dirEnt === null) {
       break;
     }
-    // preserve the version.go file so we can test the v2+ major version scenario
     if (dirEnt.isFile() && dirEnt.name.endsWith('.go')) {
       const content = readFileSync(dir.path + '/' + dirEnt.name, 'utf8');
       if (doNotEditRegex.test(content)) {

@@ -1,6 +1,6 @@
 # Release History
 
-## 0.8.3 (UNRELEASED)
+## 0.8.3 (unreleased)
 
 ### Features Added
 
