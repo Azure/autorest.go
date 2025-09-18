@@ -224,12 +224,12 @@ export interface Scalar {
 
 /** an io.ReadCloser */
 export interface ReadCloser extends QualifiedType {
-  kind: 'readCloser'
+  kind: 'readCloser';
 }
 
 /** an io.ReadSeekCloser */
 export interface ReadSeekCloser extends QualifiedType {
-  kind: 'readSeekCloser'
+  kind: 'readSeekCloser';
 }
 
 /** the supported Go scalar types */
