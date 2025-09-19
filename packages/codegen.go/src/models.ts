@@ -865,7 +865,7 @@ class ModelDef {
       if (this.Format === 'XML' && !field.annotations.isAdditionalProperties) {
         tag = ` \`xml:"${serialization}"\``;
       }
-      text += `\t${field.name} ${getStar(field.byValue)}${typeName}${tag}\n`;
+      text += `\t${field.name} ${helpers.star(field.byValue)}${typeName}${tag}\n`;
       first = false;
     }
 
@@ -928,11 +928,4 @@ export function getXMLSerialization(field: go.ModelField, isResponseEnvelope: bo
     }
   }
   return serialization;
-}
-
-export function getStar(byValue: boolean): string {
-  if (byValue === true) {
-    return '';
-  }
-  return '*';
 }

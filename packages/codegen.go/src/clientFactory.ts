@@ -70,7 +70,7 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
     const clientPrivateParams = new Array<go.ClientParameter>();
     const clientCommonParams = new Array<go.ClientParameter>();
     for (const param of client.parameters) {
-      if (go.isLiteralParameter(param)) {
+      if (go.isLiteralParameter(param.style)) {
         continue;
       }
       if (clientFactoryParamsMap.has(param.name)) {

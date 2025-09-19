@@ -269,7 +269,7 @@ export class clientAdapter {
 
     // propagate optional params to the optional params group
     for (const param of goClient.parameters) {
-      if (!go.isRequiredParameter(param) && !go.isLiteralParameter(param) && goClient.options.kind === 'clientOptions') {
+      if (!go.isRequiredParameter(param.style) && !go.isLiteralParameter(param.style) && goClient.options.kind === 'clientOptions') {
         goClient.options.params.push(param);
       }
     }
@@ -375,7 +375,7 @@ export class clientAdapter {
     const statusCodes = getStatusCodes(sdkMethod.operation);
 
     if (sdkMethod.kind === 'basic') {
-      method = new go.Method(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
+      method = new go.SyncMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
     } else if (sdkMethod.kind === 'paging') {
       if (sdkMethod.pagingMetadata.nextLinkReInjectedParametersSegments !== undefined && sdkMethod.pagingMetadata.nextLinkReInjectedParametersSegments.length > 0) {
         throw new AdapterError('UnsupportedTsp', `paging with re-injected parameters is not supported`, sdkMethod.__raw?.node ?? NoTarget);
@@ -427,7 +427,7 @@ export class clientAdapter {
       throw new AdapterError('UnsupportedTsp', `unsupported method kind ${sdkMethod.kind}`, sdkMethod.__raw?.node ?? NoTarget);
     }
 
-    let prefix = method.client.name;
+    let prefix = method.receiver.type.name;
     if (this.ctx.options['single-client']) {
       prefix = '';
     }
@@ -449,7 +449,7 @@ export class clientAdapter {
     }
     method.optionalParamsGroup = new go.ParameterGroup(optsGroupName, optionalParamsGroupName, false, 'method');
     method.optionalParamsGroup.docs.summary = createOptionsTypeDescription(optionalParamsGroupName, this.getMethodNameForDocComment(method));
-    method.responseEnvelope = this.adaptResponseEnvelope(sdkMethod, method);
+    method.returns = this.adaptResponseEnvelope(sdkMethod, method);
 
     // find the api version param to use for the doc comment.
     // we can't use sdkMethod.apiVersions as that includes all
@@ -549,7 +549,8 @@ export class clientAdapter {
       if (opParam.kind === 'body' && opParam.type.kind === 'model' && opParam.type.kind !== param.type.kind) {
         const paramStyle = this.adaptParameterStyle(param);
         const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');
-        const byVal = isTypePassedByValue(param.type);
+        // if the param is required then it's always passed by value
+        const byVal = go.isRequiredParameter(paramStyle) ? true : isTypePassedByValue(param.type);
         const contentType = this.adaptContentType(opParam.defaultContentType);
         const getSerializedNameFromProperty = function(property: tcgc.SdkModelPropertyType): string | undefined {
           if (contentType === 'JSON') {
@@ -629,17 +630,17 @@ export class clientAdapter {
         // the array of client params as it's not a formal parameter.
         // the only exception is any api version parameter as we need this
         // for generating client constructors.
-        if (go.isLiteralParameter(adaptedParam) && !go.isAPIVersionParameter(adaptedParam)) {
+        if (go.isLiteralParameter(adaptedParam.style) && !go.isAPIVersionParameter(adaptedParam)) {
           continue;
         }
 
         // we must check via param name and not reference equality. this is because a client param
         // can be used in multiple ways. e.g. a client param "apiVersion" that's used as a path param
         // in one method and a query param in another.
-        if (!method.client.parameters.find((v: go.ClientParameter) => {
+        if (!method.receiver.type.parameters.find((v: go.ClientParameter) => {
           return v.name === adaptedParam.name;
         })) {
-          method.client.parameters.push(adaptedParam);
+          method.receiver.type.parameters.push(adaptedParam);
         }
       }
     }
@@ -728,8 +729,9 @@ export class clientAdapter {
     if (opParam.kind === 'body' && (verb === 'patch' || verb === 'put')) {
       paramStyle = 'required';
     }
+
     const paramName = getEscapedReservedName(ensureNameCase(methodParam.name, paramStyle === 'required'), 'Param');
-    const byVal = isTypePassedByValue(methodParam.type);
+    const byVal = go.isRequiredParameter(paramStyle) ? true : isTypePassedByValue(methodParam.type);
 
     let adaptedParam: go.MethodParameter;
     switch (opParam.kind) {
@@ -805,12 +807,12 @@ export class clientAdapter {
         methodName = `New${method.name}Pager`;
         break;
     }
-    return `${method.client.name}.${methodName}`;
+    return `${method.receiver.type.name}.${methodName}`;
   }
 
   private adaptResponseEnvelope(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType): go.ResponseEnvelope {
     // TODO: add Envelope suffix if name collides with existing type
-    let prefix = method.client.name;
+    let prefix = method.receiver.type.name;
     if (this.ctx.options['single-client']) {
       prefix = '';
     }
@@ -1117,9 +1119,9 @@ export class clientAdapter {
         // only handle 200 response
         const response = example.responses.find((v) => { return v.statusCode === 200; });
         if (response) {
-          goExample.responseEnvelope = new go.ResponseEnvelopeExample(method.responseEnvelope);
+          goExample.responseEnvelope = new go.ResponseEnvelopeExample(method.returns);
           for (const header of response.headers) {
-            const goHeader = method.responseEnvelope.headers.find(h => h.headerName === header.header.serializedName);
+            const goHeader = method.returns.headers.find(h => h.headerName === header.header.serializedName);
             if (!goHeader) {
               throw new AdapterError('InternalError', `can not find go header for example header ${header.header.serializedName}`, NoTarget);
             }
@@ -1128,8 +1130,8 @@ export class clientAdapter {
           // there are some problems with LROs at present which can cause the result
           // to be undefined even though the operation returns a response.
           // TODO: https://github.com/Azure/typespec-azure/issues/1688
-          if (response.bodyValue && method.responseEnvelope.result) {
-            switch (method.responseEnvelope.result.kind) {
+          if (response.bodyValue && method.returns.result) {
+            switch (method.returns.result.kind) {
               case 'anyResult':
                 goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.Any());
                 break;
@@ -1137,13 +1139,13 @@ export class clientAdapter {
                 goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.Scalar('byte', false));
                 break;
               case 'modelResult':
-                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.modelType);
+                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.returns.result.modelType);
                 break;
               case 'monomorphicResult':
-                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.monomorphicType);
+                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.returns.result.monomorphicType);
                 break;
               case 'polymorphicResult':
-                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.interface);
+                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.returns.result.interface);
                 break;
             }
           }

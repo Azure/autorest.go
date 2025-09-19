@@ -8,7 +8,6 @@ import { values } from '@azure-tools/linq';
 import * as go from '../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
-import { getStar } from './models.js';
 import { CodegenError } from './errors.js';
 
 export interface ResponsesSerDe {
@@ -149,7 +148,7 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
           byValue = respEnv.result.byValue;
         }
 
-        fields.push({docs: respEnv.result.docs, field: `\t${respEnv.result.fieldName} ${getStar(byValue)}${go.getTypeDeclaration(type)}${tag}\n`});
+        fields.push({docs: respEnv.result.docs, field: `\t${respEnv.result.fieldName} ${helpers.star(byValue)}${go.getTypeDeclaration(type)}${tag}\n`});
       }
     }
 
@@ -159,7 +158,7 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
       if (header.kind === 'headerScalarResponse') {
         byValue = header.byValue;
       }
-      fields.push({docs: header.docs, field: `\t${header.fieldName} ${getStar(byValue)}${go.getTypeDeclaration(header.type)}\n`});
+      fields.push({docs: header.docs, field: `\t${header.fieldName} ${helpers.star(byValue)}${go.getTypeDeclaration(header.type)}\n`});
     }
 
     fields.sort((a: {desc?: string, field: string}, b: {desc?: string, field: string}) => { return helpers.sortAscending(a.field, b.field); });

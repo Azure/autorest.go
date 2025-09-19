@@ -819,6 +819,13 @@ function recursiveKeyName(root: string, obj: tcgc.SdkType, substituteDiscriminat
   }
 }
 
+/**
+ * returns true if the specified type doesn't need to be pointer-to-type
+ * because it's implicitly nil-able.
+ * 
+ * @param type the type to inspect
+ * @returns true if the type is implicitly nil-able
+ */
 export function isTypePassedByValue(type: tcgc.SdkType): boolean {
   if (type.kind === 'nullable') {
     type = type.type;
