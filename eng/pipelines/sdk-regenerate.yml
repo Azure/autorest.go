@@ -1,6 +1,13 @@
 trigger: none
 pr: none
 
+schedules:
+- cron: "0 2 * * 1"  # Weekly at Monday 2 AM UTC
+  displayName: Weekly regenerate SDK
+  branches:
+    include:
+    - main
+
 parameters:
 - name: UseLatestSpec
   default: false
