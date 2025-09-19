@@ -5,10 +5,14 @@
 
 import { CodeModelError } from './errors.js';
 import { MethodExample } from './examples.js';
+import * as method from './method.js';
 import * as pkg from './package.js';
 import * as param from './param.js';
 import * as result from './result.js';
 import * as type from './type.js';
+
+// temporary until more param types refactor
+export { Receiver } from './method.js';
 
 /** an SDK client */
 export interface Client {
@@ -108,7 +112,7 @@ export type FinalStateVia = 'azure-async-operation' | 'location' | 'operation-lo
 export type HTTPMethod = 'delete' | 'get' | 'head' | 'patch' | 'post' | 'put';
 
 /** the possible method types */
-export type MethodType = LROMethod | LROPageableMethod | Method | PageableMethod;
+export type MethodType = LROMethod | LROPageableMethod | SyncMethod | PageableMethod;
 
 /** a long-running operation method */
 export interface LROMethod extends LROMethodBase {
@@ -121,7 +125,7 @@ export interface LROPageableMethod extends LROMethodBase, PageableMethodBase {
 }
 
 /** a synchronous method */
-export interface Method extends MethodBase {
+export interface SyncMethod extends HttpMethodBase {
   kind: 'method';
 }
 
@@ -161,7 +165,7 @@ export interface NextPageMethod {
   httpStatusCodes: Array<number>;
 
   /** the client to which the method belongs */
-  client: Client;
+  receiver: method.Receiver<Client>;
 
   apiVersions: Array<string>;
 }
@@ -199,19 +203,13 @@ export function newClientOptions(modelType: pkg.CodeModelType, clientName: strin
 // base types
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-interface LROMethodBase extends MethodBase {
+interface LROMethodBase extends HttpMethodBase {
   finalStateVia?: FinalStateVia;
 
   operationLocationResultPath?: string;
 }
 
-interface MethodBase {
-  /** the name of the method */
-  name: string;
-
-  /** any docs for the method */
-  docs: type.Docs;
-
+interface HttpMethodBase extends method.Method<Client, result.ResponseEnvelope> {
   /** the HTTP path used when creating the request */
   httpPath: string;
 
@@ -221,40 +219,38 @@ interface MethodBase {
   /** any modeled parameters. the ones we add to the generated code (context.Context etc) aren't included here */
   parameters: Array<param.MethodParameter>;
 
-  /** the method options type for this methoid */
+  /** the method options type for this method */
   optionalParamsGroup: param.ParameterGroup;
 
-  /** the response type for this method */
-  responseEnvelope: result.ResponseEnvelope;
+  /** the method's return type */
+  returns: result.ResponseEnvelope;
 
   /** the complete list of successful HTTP status codes */
   httpStatusCodes: Array<number>;
 
-  /** the client to which the method belongs */
-  client: Client;
-
   /** naming info for the internal hepler methods for which this method depends */
   naming: MethodNaming;
 
+  /** the API version(s) used during ingestion. can be empty */
   apiVersions: Array<string>;
 
   /** any examples for this method */
   examples: Array<MethodExample>;
 }
 
-interface PageableMethodBase extends MethodBase {
+interface PageableMethodBase extends HttpMethodBase {
   nextLinkName?: string;
 
   nextPageMethod?: NextPageMethod;
 }
 
-class MethodBase implements MethodBase {
+class HttpMethodBase extends method.Method<Client, result.ResponseEnvelope> implements HttpMethodBase {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     if (statusCodes.length === 0) {
       throw new CodeModelError('statusCodes cannot be empty');
     }
+    super(name, new method.Receiver('client', client, false));
     this.apiVersions = new Array<string>();
-    this.client = client;
     this.httpMethod = httpMethod;
     this.httpPath = httpPath;
     this.httpStatusCodes = statusCodes;
@@ -305,21 +301,21 @@ export class Constructor implements Constructor {
   }
 }
 
-export class LROMethod extends MethodBase implements LROMethod {
+export class LROMethod extends HttpMethodBase implements LROMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     super(name, client, httpPath, httpMethod, statusCodes, naming);
     this.kind = 'lroMethod';
   }
 }
 
-export class LROPageableMethod extends MethodBase implements LROPageableMethod {
+export class LROPageableMethod extends HttpMethodBase implements LROPageableMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     super(name, client, httpPath, httpMethod, statusCodes, naming);
     this.kind = 'lroPageableMethod';
   }
 }
 
-export class Method extends MethodBase implements Method {
+export class SyncMethod extends HttpMethodBase implements SyncMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     super(name, client, httpPath, httpMethod, statusCodes, naming);
     this.kind = 'method';
@@ -341,7 +337,7 @@ export class NextPageMethod implements NextPageMethod {
     }
     this.kind = 'nextPageMethod';
     this.apiVersions = new Array<string>();
-    this.client = client;
+    this.receiver = new method.Receiver('client', client, false);
     this.httpMethod = httpMethod;
     this.httpPath = httpPath;
     this.httpStatusCodes = statusCodes;
@@ -356,7 +352,7 @@ export class NoAuthentication implements NoAuthentication {
   }
 }
 
-export class PageableMethod extends MethodBase implements PageableMethod {
+export class PageableMethod extends HttpMethodBase implements PageableMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     super(name, client, httpPath, httpMethod, statusCodes, naming);
     this.kind = 'pageableMethod';

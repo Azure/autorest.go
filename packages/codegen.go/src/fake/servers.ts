@@ -100,26 +100,26 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
       switch (method.kind) {
         case 'lroMethod':
         case 'lroPageableMethod':
-          let respType = `${clientPkg}.${method.responseEnvelope.name}`;
+          let respType = `${clientPkg}.${method.returns.name}`;
           if (method.kind === 'lroPageableMethod') {
-            respType = `azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]`;
+            respType = `azfake.PagerResponder[${clientPkg}.${method.returns.name}]`;
           }
           serverResponse = `resp azfake.PollerResponder[${respType}], errResp azfake.ErrorResponder`;
           break;
         case 'method':
-          serverResponse = `resp azfake.Responder[${clientPkg}.${method.responseEnvelope.name}], errResp azfake.ErrorResponder`;
+          serverResponse = `resp azfake.Responder[${clientPkg}.${method.returns.name}], errResp azfake.ErrorResponder`;
           break;
         case 'pageableMethod':
-          serverResponse = `resp azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]`;
+          serverResponse = `resp azfake.PagerResponder[${clientPkg}.${method.returns.name}]`;
           break;
       }
 
       const operationName = fixUpMethodName(method);
       content += `\t// ${operationName} is the fake for method ${client.name}.${operationName}\n`;
       const successCodes = new Array<string>();
-      if (method.responseEnvelope.result?.kind === 'anyResult') {
+      if (method.returns.result?.kind === 'anyResult') {
         for (const httpStatus of getMethodStatusCodes(method)) {
-          const result = method.responseEnvelope.result.httpStatusCodeType[httpStatus];
+          const result = method.returns.result.httpStatusCodeType[httpStatus];
           if (!result) {
             // the operation contains a mix of schemas and non-schema responses
             successCodes.push(`${helpers.formatStatusCode(httpStatus)} (no return type)`);
@@ -165,12 +165,12 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     } else {
       content += `\treturn &${serverTransport}{\n\t\tsrv: srv,\n`;
       for (const method of values(finalMethods)) {
-        let respType = `${clientPkg}.${method.responseEnvelope.name}`;
+        let respType = `${clientPkg}.${method.returns.name}`;
         switch (method.kind) {
           case 'lroMethod':
           case 'lroPageableMethod':
             if (method.kind === 'lroPageableMethod') {
-              respType = `azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]`;
+              respType = `azfake.PagerResponder[${clientPkg}.${method.returns.name}]`;
             }
             requiredHelpers.tracker = true;
             content += `\t\t${uncapitalize(fixUpMethodName(method))}: newTracker[azfake.PollerResponder[${respType}]](),\n`;
@@ -202,19 +202,19 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
 
     for (const method of values(finalMethods)) {
       // create state machines for any pager/poller operations
-      let respType = `${clientPkg}.${method.responseEnvelope.name}`;
+      let respType = `${clientPkg}.${method.returns.name}`;
       switch (method.kind) {
         case 'lroMethod':
         case 'lroPageableMethod':
           if (method.kind === 'lroPageableMethod') {
-            respType = `azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]`;
+            respType = `azfake.PagerResponder[${clientPkg}.${method.returns.name}]`;
           }
           requiredHelpers.tracker = true;
           content += `\t${uncapitalize(fixUpMethodName(method))} *tracker[azfake.PollerResponder[${respType}]]\n`;
           break;
         case 'pageableMethod':
           requiredHelpers.tracker = true;
-          content += `\t${uncapitalize(fixUpMethodName(method))} *tracker[azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]]\n`;
+          content += `\t${uncapitalize(fixUpMethodName(method))} *tracker[azfake.PagerResponder[${clientPkg}.${method.returns.name}]]\n`;
           break;
       }
     }
@@ -365,47 +365,47 @@ function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport
         const formattedStatusCodes = helpers.formatStatusCodes(method.httpStatusCodes);
         content += `\tif !contains([]int{${formattedStatusCodes}}, respContent.HTTPStatus) {\n`;
         content += `\t\treturn nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", respContent.HTTPStatus)}\n\t}\n`;
-        if (!method.responseEnvelope.result || method.responseEnvelope.result.kind === 'headAsBooleanResult') {
+        if (!method.returns.result || method.returns.result.kind === 'headAsBooleanResult') {
           content += '\tresp, err := server.NewResponse(respContent, req, nil)\n';
-        } else if (method.responseEnvelope.result.kind === 'anyResult') {
-          content += `\tresp, err := server.MarshalResponseAs${method.responseEnvelope.result.format}(respContent, server.GetResponse(respr).${getResultFieldName(method.responseEnvelope.result)}, req)\n`;
-        } else if (method.responseEnvelope.result.kind === 'binaryResult') {
+        } else if (method.returns.result.kind === 'anyResult') {
+          content += `\tresp, err := server.MarshalResponseAs${method.returns.result.format}(respContent, server.GetResponse(respr).${getResultFieldName(method.returns.result)}, req)\n`;
+        } else if (method.returns.result.kind === 'binaryResult') {
           content += '\tresp, err := server.NewResponse(respContent, req, &server.ResponseOptions{\n';
-          content += `\t\tBody: server.GetResponse(respr).${getResultFieldName(method.responseEnvelope.result)},\n`;
+          content += `\t\tBody: server.GetResponse(respr).${getResultFieldName(method.returns.result)},\n`;
           content += '\t\tContentType: req.Header.Get("Content-Type"),\n';
           content += '\t})\n';
-        } else if (method.responseEnvelope.result.kind === 'monomorphicResult') {
-          if (method.responseEnvelope.result.monomorphicType.kind === 'encodedBytes') {
-            const encoding = method.responseEnvelope.result.monomorphicType.encoding;
-            content += `\tresp, err := server.MarshalResponseAsByteArray(respContent, server.GetResponse(respr).${getResultFieldName(method.responseEnvelope.result)}, runtime.Base64${encoding}Format, req)\n`;
-          } else if (method.responseEnvelope.result.monomorphicType.kind === 'rawJSON') {
+        } else if (method.returns.result.kind === 'monomorphicResult') {
+          if (method.returns.result.monomorphicType.kind === 'encodedBytes') {
+            const encoding = method.returns.result.monomorphicType.encoding;
+            content += `\tresp, err := server.MarshalResponseAsByteArray(respContent, server.GetResponse(respr).${getResultFieldName(method.returns.result)}, runtime.Base64${encoding}Format, req)\n`;
+          } else if (method.returns.result.monomorphicType.kind === 'rawJSON') {
             imports.add('bytes');
             imports.add('io');
             content += '\tresp, err := server.NewResponse(respContent, req, &server.ResponseOptions{\n';
             content += '\t\tBody: io.NopCloser(bytes.NewReader(server.GetResponse(respr).RawJSON)),\n';
             content += '\t\tContentType: "application/json",\n\t})\n';
           } else {
-            let respField = `.${getResultFieldName(method.responseEnvelope.result)}`;
-            if (method.responseEnvelope.result.format === 'XML' && method.responseEnvelope.result.monomorphicType.kind === 'slice') {
+            let respField = `.${getResultFieldName(method.returns.result)}`;
+            if (method.returns.result.format === 'XML' && method.returns.result.monomorphicType.kind === 'slice') {
               // for XML array responses we use the response type directly as it has the necessary XML tag for proper marshalling
               respField = '';
             }
             let responseField = `server.GetResponse(respr)${respField}`;
-            if (method.responseEnvelope.result.monomorphicType.kind === 'time') {
-              responseField = `(*${method.responseEnvelope.result.monomorphicType.format})(${responseField})`;
+            if (method.returns.result.monomorphicType.kind === 'time') {
+              responseField = `(*${method.returns.result.monomorphicType.format})(${responseField})`;
             }
-            content += `\tresp, err := server.MarshalResponseAs${method.responseEnvelope.result.format}(respContent, ${responseField}, req)\n`;
+            content += `\tresp, err := server.MarshalResponseAs${method.returns.result.format}(respContent, ${responseField}, req)\n`;
           }
-        } else if (method.responseEnvelope.result.kind === 'modelResult' || method.responseEnvelope.result.kind === 'polymorphicResult') {
-          const respField = `.${getResultFieldName(method.responseEnvelope.result)}`;
+        } else if (method.returns.result.kind === 'modelResult' || method.returns.result.kind === 'polymorphicResult') {
+          const respField = `.${getResultFieldName(method.returns.result)}`;
           const responseField = `server.GetResponse(respr)${respField}`;
-          content += `\tresp, err := server.MarshalResponseAs${method.responseEnvelope.result.format}(respContent, ${responseField}, req)\n`;
+          content += `\tresp, err := server.MarshalResponseAs${method.returns.result.format}(respContent, ${responseField}, req)\n`;
         }
 
         content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
 
         // propagate any header response values into the *http.Response
-        for (const header of values(method.responseEnvelope.headers)) {
+        for (const header of values(method.returns.headers)) {
           if (header.kind === 'headerMapResponse') {
             content += `\tfor k, v := range server.GetResponse(respr).${header.fieldName} {\n`;
             content += '\t\tif v != nil {\n';
@@ -733,7 +733,7 @@ function getMethodStatusCodes(method: go.MethodType): Array<number> {
         // pollers always include 200 as an acceptible status code so we emulate that here
         statusCodes.unshift(200);
       }
-      if (!method.responseEnvelope.result && !statusCodes.includes(204)) {
+      if (!method.returns.result && !statusCodes.includes(204)) {
         // also include 204 if the LRO doesn't return a body
         statusCodes.push(204);
       }
@@ -778,7 +778,7 @@ function dispatchForPagerBody(clientPkg: string, receiverName: string, method: g
   content += `\t\t${operationStateMachine}.add(req, ${localVarName})\n`;
   if (method.nextLinkName) {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
-    content += `\t\tserver.PagerResponderInjectNextLinks(${localVarName}, req, func(page *${clientPkg}.${method.responseEnvelope.name}, createLink func() string) {\n`;
+    content += `\t\tserver.PagerResponderInjectNextLinks(${localVarName}, req, func(page *${clientPkg}.${method.returns.name}, createLink func() string) {\n`;
     content += `\t\t\tpage.${method.nextLinkName} = to.Ptr(createLink())\n`;
     content += '\t\t})\n';
   }

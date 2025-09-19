@@ -394,7 +394,7 @@ export function formatLiteralValue(value: go.Literal, withCast: boolean): string
 
 // returns true if at least one of the responses has a schema
 export function hasSchemaResponse(method: go.MethodType): boolean {
-  switch (method.responseEnvelope.result?.kind) {
+  switch (method.returns.result?.kind) {
     case 'anyResult':
     case 'modelResult':
     case 'monomorphicResult':
@@ -407,7 +407,7 @@ export function hasSchemaResponse(method: go.MethodType): boolean {
 
 // returns the name of the response field within the response envelope
 export function getResultFieldName(method: go.MethodType): string {
-  const result = method.responseEnvelope.result;
+  const result = method.returns.result;
   if (!result) {
     throw new CodegenError('InternalError', `missing result for method ${method.name}`);
   }
@@ -765,7 +765,7 @@ export function getSerDeFormat(model: go.Model | go.PolymorphicModel, codeModel:
         recursiveWalkModelFields(param.type, param.bodyFormat);
       }
 
-      const resultType = method.responseEnvelope.result;
+      const resultType = method.returns.result;
       switch (resultType?.kind) {
         case 'anyResult':
           if (resultType.format === 'JSON' || resultType.format === 'XML') {

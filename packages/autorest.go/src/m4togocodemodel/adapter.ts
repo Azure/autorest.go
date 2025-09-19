@@ -56,7 +56,7 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
 
     for (const client of values(codeModel.clients)) {
       for (const method of client.methods) {
-        codeModel.responseEnvelopes.push(method.responseEnvelope);
+        codeModel.responseEnvelopes.push(method.returns);
         for (const param of values(method.parameters)) {
           if (param.group) {
             if (!paramGroups.has(param.group.groupName)) {
