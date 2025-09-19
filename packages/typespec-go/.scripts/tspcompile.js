@@ -101,6 +101,7 @@ const azureHttpSpecsGroup = {
   'nonresourcegroup' : ['azure/resource-manager/non-resource'],
   'templatesgroup' : ['azure/resource-manager/operation-templates'],
   'largeheadergroup' : ['azure/resource-manager/large-header'],
+  'methodsubscriptionidgroup' : ['/azure/resource-manager/method-subscription-id'],
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
   'naminggroup': ['client/naming'],
   'defaultgroup': ['client/structure/default/client.tsp'],

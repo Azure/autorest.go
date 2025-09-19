@@ -20,7 +20,7 @@ import (
 type ClientLocationMoveMethodParameterToBlobOperationsServer struct {
 	// GetBlob is the fake for method ClientLocationMoveMethodParameterToBlobOperationsClient.GetBlob
 	// HTTP status codes to indicate success: http.StatusOK
-	GetBlob func(ctx context.Context, storageAccount string, containerParam string, blob string, options *coreclientlocationgroup.ClientLocationMoveMethodParameterToBlobOperationsClientGetBlobOptions) (resp azfake.Responder[coreclientlocationgroup.ClientLocationMoveMethodParameterToBlobOperationsClientGetBlobResponse], errResp azfake.ErrorResponder)
+	GetBlob func(ctx context.Context, containerParam string, blob string, options *coreclientlocationgroup.ClientLocationMoveMethodParameterToBlobOperationsClientGetBlobOptions) (resp azfake.Responder[coreclientlocationgroup.ClientLocationMoveMethodParameterToBlobOperationsClientGetBlobResponse], errResp azfake.ErrorResponder)
 }
 
 // NewClientLocationMoveMethodParameterToBlobOperationsServerTransport creates a new instance of ClientLocationMoveMethodParameterToBlobOperationsServerTransport with the provided implementation.
@@ -85,10 +85,6 @@ func (c *ClientLocationMoveMethodParameterToBlobOperationsServerTransport) dispa
 		return nil, &nonRetriableError{errors.New("fake for method GetBlob not implemented")}
 	}
 	qp := req.URL.Query()
-	storageAccountParam, err := url.QueryUnescape(qp.Get("storageAccount"))
-	if err != nil {
-		return nil, err
-	}
 	containerParamParam, err := url.QueryUnescape(qp.Get("container"))
 	if err != nil {
 		return nil, err
@@ -97,7 +93,7 @@ func (c *ClientLocationMoveMethodParameterToBlobOperationsServerTransport) dispa
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.GetBlob(req.Context(), storageAccountParam, containerParamParam, blobParam, nil)
+	respr, errRespr := c.srv.GetBlob(req.Context(), containerParamParam, blobParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
