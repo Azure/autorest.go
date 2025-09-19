@@ -376,12 +376,12 @@ export function isQueryScalarParameterType(type: type.WireType): type is QuerySc
 }
 
 /** returns true if the param is required */
-export function isRequiredParameter(param: MethodParameter | Parameter): boolean {
+export function isRequiredParameter(paramStyle: ParameterStyle): boolean {
   // parameters with a client-side default value are always optional
-  if (isClientSideDefault(param.style)) {
+  if (isClientSideDefault(paramStyle)) {
     return false;
   }
-  return param.style === 'required';
+  return paramStyle === 'required';
 }
 
 /** narrows type to a URIParameterType within the conditional block */
@@ -397,11 +397,11 @@ export function isURIParameterType(type: type.WireType): type is URIParameterTyp
 }
 
 /** returns true if the param is a literal */
-export function isLiteralParameter(param: MethodParameter | Parameter): boolean {
-  if (isClientSideDefault(param.style)) {
+export function isLiteralParameter(paramStyle: ParameterStyle): boolean {
+  if (isClientSideDefault(paramStyle)) {
     return false;
   }
-  return param.style === 'literal';
+  return paramStyle === 'literal';
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

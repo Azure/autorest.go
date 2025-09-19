@@ -269,7 +269,7 @@ export class clientAdapter {
 
     // propagate optional params to the optional params group
     for (const param of goClient.parameters) {
-      if (!go.isRequiredParameter(param) && !go.isLiteralParameter(param) && goClient.options.kind === 'clientOptions') {
+      if (!go.isRequiredParameter(param.style) && !go.isLiteralParameter(param.style) && goClient.options.kind === 'clientOptions') {
         goClient.options.params.push(param);
       }
     }
@@ -549,7 +549,8 @@ export class clientAdapter {
       if (opParam.kind === 'body' && opParam.type.kind === 'model' && opParam.type.kind !== param.type.kind) {
         const paramStyle = this.adaptParameterStyle(param);
         const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');
-        const byVal = isTypePassedByValue(param.type);
+        // if the param is required then it's always passed by value
+        const byVal = go.isRequiredParameter(paramStyle) ? true : isTypePassedByValue(param.type);
         const contentType = this.adaptContentType(opParam.defaultContentType);
         const getSerializedNameFromProperty = function(property: tcgc.SdkModelPropertyType): string | undefined {
           if (contentType === 'JSON') {
@@ -629,7 +630,7 @@ export class clientAdapter {
         // the array of client params as it's not a formal parameter.
         // the only exception is any api version parameter as we need this
         // for generating client constructors.
-        if (go.isLiteralParameter(adaptedParam) && !go.isAPIVersionParameter(adaptedParam)) {
+        if (go.isLiteralParameter(adaptedParam.style) && !go.isAPIVersionParameter(adaptedParam)) {
           continue;
         }
 
@@ -728,8 +729,9 @@ export class clientAdapter {
     if (opParam.kind === 'body' && (verb === 'patch' || verb === 'put')) {
       paramStyle = 'required';
     }
+
     const paramName = getEscapedReservedName(ensureNameCase(methodParam.name, paramStyle === 'required'), 'Param');
-    const byVal = isTypePassedByValue(methodParam.type);
+    const byVal = go.isRequiredParameter(paramStyle) ? true : isTypePassedByValue(methodParam.type);
 
     let adaptedParam: go.MethodParameter;
     switch (opParam.kind) {

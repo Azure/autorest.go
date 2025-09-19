@@ -87,7 +87,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     if (client.parameters.length > 0) {
       const addedGroups = new Set<string>();
       for (const clientParam of values(client.parameters)) {
-        if (go.isLiteralParameter(clientParam)) {
+        if (go.isLiteralParameter(clientParam.style)) {
           continue;
         }
         if (clientParam.group) {
@@ -103,7 +103,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
         } else {
           clientText += `${helpers.formatParameterTypeName(clientParam)}\n`;
         }
-        if (!go.isRequiredParameter(clientParam)) {
+        if (!go.isRequiredParameter(clientParam.style)) {
           optionalParams.push(clientParam);
         }
       }
@@ -127,7 +127,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
       opText += '\t\tinternal: client.internal,\n';
       // propagate all client params
       for (const param of client.parameters) {
-        if (go.isLiteralParameter(param)) {
+        if (go.isLiteralParameter(param.style)) {
           continue;
         }
         opText += `\t\t${param.name}: client.${param.name},\n`;
@@ -211,7 +211,7 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
 
     constructor.parameters.sort(helpers.sortParametersByRequired);
     for (const ctorParam of constructor.parameters) {
-      if (!go.isRequiredParameter(ctorParam)) {
+      if (!go.isRequiredParameter(ctorParam.style)) {
         // param is part of the options group
         continue;
       }
@@ -342,7 +342,7 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
             name = ensureNameCase(param.name);
           }
           ctorText += `\t${param.name} := ${helpers.formatLiteralValue(param.style.defaultValue, false)}\n`;
-          ctorText += `\tif options.${name} != ${helpers.zeroValue(param)} {\n\t\t${param.name} = ${helpers.star(param)}options.${name}\n\t}\n`;
+          ctorText += `\tif options.${name} != ${helpers.zeroValue(param)} {\n\t\t${param.name} = ${helpers.star(param.byValue)}options.${name}\n\t}\n`;
         }
       }
     }
@@ -359,7 +359,7 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
 
     ctorText += `\t${clientVar} := &${client.name}{\n`;
     for (const parameter of values(client.parameters)) {
-      if (go.isLiteralParameter(parameter)) {
+      if (go.isLiteralParameter(parameter.style)) {
         continue;
       }
       // each client field will have a matching parameter with the same name
@@ -696,7 +696,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
   }
 
   for (const param of values(method.parameters)) {
-    if (param.location !== 'method' || !go.isRequiredParameter(param)) {
+    if (param.location !== 'method' || !go.isRequiredParameter(param.style)) {
       continue;
     }
     imports.addImportForType(param.type);
@@ -811,7 +811,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     let qpText = '';
     if (qp.location === 'method' && go.isClientSideDefault(qp.style)) {
       qpText = emitClientSideDefault(qp, qp.style, (name, val) => { return `\treqQP.Set(${name}, ${val})`; }, imports);
-    } else if (go.isRequiredParameter(qp) || go.isLiteralParameter(qp) || (qp.location === 'client' && go.isClientSideDefault(qp.style))) {
+    } else if (go.isRequiredParameter(qp.style) || go.isLiteralParameter(qp.style) || (qp.location === 'client' && go.isClientSideDefault(qp.style))) {
       qpText = `\t${setter}\n`;
     } else if (qp.location === 'client' && !qp.group) {
       // global optional param
@@ -925,7 +925,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
       // the content-type if the body is nil.
       // we do it like this as tsp specifies content-type while swagger does not.
       contentType = helpers.formatParamValue(param, imports);
-    } else if (go.isRequiredParameter(param) || go.isLiteralParameter(param) || go.isClientSideDefault(param.style)) {
+    } else if (go.isRequiredParameter(param.style) || go.isLiteralParameter(param.style) || go.isClientSideDefault(param.style)) {
       text += emitHeaderSet(param, '\t');
     } else if (param.location === 'client' && !param.group) {
       // global optional param
@@ -977,7 +977,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
         text += `\t\t${fieldName} *${go.getTypeDeclaration(bodyParam.type)} \`xml:"${tag}"\`\n`;
         text += '\t}\n';
         let addr = '&';
-        if (!go.isRequiredParameter(bodyParam) && !bodyParam.byValue) {
+        if (!go.isRequiredParameter(bodyParam.style) && !bodyParam.byValue) {
           addr = '';
         }
         body = `wrapper{${fieldName}: ${addr}${body}}`;
@@ -1010,7 +1010,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
         setBody = `req.SetBody(streaming.NopCloser(bytes.NewReader(${body})), "application/${bodyParam.bodyFormat.toLowerCase()}")`;
       }
-      if (go.isRequiredParameter(bodyParam) || go.isLiteralParameter(bodyParam)) {
+      if (go.isRequiredParameter(bodyParam.style) || go.isLiteralParameter(bodyParam.style)) {
         text += `\t${emitSetBodyWithErrCheck(setBody, contentType)}`;
         text += '\treturn req, nil\n';
       } else {
@@ -1021,7 +1021,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
         text += '\treturn req, nil\n';
       }
     } else if (bodyParam.bodyFormat === 'binary') {
-      if (go.isRequiredParameter(bodyParam)) {
+      if (go.isRequiredParameter(bodyParam.style)) {
         text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${bodyParam.name}, ${bodyParam.contentType})`, contentType)}`;
         text += '\treturn req, nil\n';
       } else {
@@ -1034,7 +1034,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     } else if (bodyParam.bodyFormat === 'Text') {
       imports.add('strings');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
-      if (go.isRequiredParameter(bodyParam)) {
+      if (go.isRequiredParameter(bodyParam.style)) {
         text += `\tbody := streaming.NopCloser(strings.NewReader(${bodyParam.name}))\n`;
         text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`, contentType)}`;
         text += '\treturn req, nil\n';
@@ -1052,19 +1052,19 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     // define and instantiate an instance of the wire type, using the values from each param.
     text += '\tbody := struct {\n';
     for (const partialBodyParam of partialBodyParams) {
-      text += `\t\t${capitalize(partialBodyParam.serializedName)} ${helpers.star(partialBodyParam)}${go.getTypeDeclaration(partialBodyParam.type)} \`${partialBodyParam.format.toLowerCase()}:"${partialBodyParam.serializedName}"\`\n`;
+      text += `\t\t${capitalize(partialBodyParam.serializedName)} ${helpers.star(partialBodyParam.byValue)}${go.getTypeDeclaration(partialBodyParam.type)} \`${partialBodyParam.format.toLowerCase()}:"${partialBodyParam.serializedName}"\`\n`;
     }
     text += '\t}{\n';
     // required params are emitted as initializers in the struct literal
     for (const partialBodyParam of partialBodyParams) {
-      if (go.isRequiredParameter(partialBodyParam)) {
+      if (go.isRequiredParameter(partialBodyParam.style)) {
         text += `\t\t${capitalize(partialBodyParam.serializedName)}: ${uncapitalize(partialBodyParam.name)},\n`;
       }
     }
     text += '\t}\n';
     // now populate any optional params from the options type
     for (const partialBodyParam of partialBodyParams) {
-      if (!go.isRequiredParameter(partialBodyParam)) {
+      if (!go.isRequiredParameter(partialBodyParam.style)) {
         text += emitParamGroupCheck(partialBodyParam);
         text += `\t\tbody.${capitalize(partialBodyParam.serializedName)} = options.${capitalize(partialBodyParam.name)}\n\t}\n`;
       }
@@ -1081,7 +1081,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
       text += '\tformData := map[string]any{}\n';
       for (const param of multipartBodyParams) {
         const setter = `formData["${param.name}"] = ${helpers.getParamName(param)}`;
-        if (go.isRequiredParameter(param)) {
+        if (go.isRequiredParameter(param.style)) {
           text += `\t${setter}\n`;
         } else {
           text += emitParamGroupCheck(param);
@@ -1094,7 +1094,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
   } else if (formBodyParams.length > 0) {
     const emitFormData = function (param: go.FormBodyParameter, setter: string): string {
       let formDataText = '';
-      if (go.isRequiredParameter(param)) {
+      if (go.isRequiredParameter(param.style)) {
         formDataText = `\t${setter}\n`;
       } else {
         formDataText = emitParamGroupCheck(param);
