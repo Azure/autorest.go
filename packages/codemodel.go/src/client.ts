@@ -185,7 +185,7 @@ export function isPageableMethod(method: MethodType): method is LROPageableMetho
 export function newClientOptions(modelType: pkg.CodeModelType, clientName: string): ClientOptions {
   let options: ClientOptions;
   if (modelType === 'azure-arm') {
-    options = new param.Parameter('options', new type.QualifiedType('ClientOptions', 'github.com/Azure/azure-sdk-for-go/sdk/azcore/arm'), 'optional', false, 'client');
+    options = new param.Parameter('options', new type.ArmClientOptions(), 'optional', false, 'client');
     options.docs.summary = 'pass nil to accept the default values.';
   } else {
     const optionsTypeName = `${clientName}Options`;

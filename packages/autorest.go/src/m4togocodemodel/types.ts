@@ -339,7 +339,7 @@ export function adaptWireType(schema: m4.Schema, elementTypeByValue?: boolean): 
       if (binaryType) {
         return binaryType;
       }
-      binaryType = new go.QualifiedType('ReadSeekCloser', 'io');
+      binaryType = new go.ReadSeekCloser();
       types.set(m4.SchemaType.Binary, binaryType);
       return binaryType;
     }

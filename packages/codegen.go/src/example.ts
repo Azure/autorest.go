@@ -223,101 +223,97 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
 }
 
 function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, indent: string, imports?: ImportManager, byValue: boolean = false, inArray: boolean = false): string {
-  if (example.kind === 'string') {
-    let exampleText = `"${escapeString(example.value)}"`;
-    if (example.type.kind === 'constant') {
-      exampleText = getConstantValue(codeModel, example.type, example.value);
-    } else if (example.type.kind === 'time') {
-      exampleText = getTimeValue(example.type, example.value, imports);
-    } else if (example.type.kind === 'encodedBytes') {
-      exampleText = `[]byte("${escapeString(example.value)}")`
-    } else if (example.type.kind === 'literal' && example.type.type.kind === 'constant') {
-      exampleText = getConstantValue(codeModel, example.type.type, example.type.literal.value);
-    }
-    return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
-  } else if (example.kind === 'number') {
-    let exampleText = `${example.value}`;
-    switch (example.type.kind) {
-      case 'constant':
-        exampleText = `${indent}${getConstantValue(codeModel, example.type, example.value)}`;
-        break;
-      case 'time':
+  switch (example.kind) {
+    case 'string': {
+      let exampleText = `"${escapeString(example.value)}"`;
+      if (example.type.kind === 'constant') {
+        exampleText = getConstantValue(codeModel, example.type, example.value);
+      } else if (example.type.kind === 'time') {
         exampleText = getTimeValue(example.type, example.value, imports);
-        break;
-    }
-    return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
-  } else if (example.kind === 'boolean') {
-    let exampleText = `${example.value}`;
-    if (example.type.kind === 'constant') {
-      exampleText = `${indent}${getConstantValue(codeModel, example.type, example.value)}`;
-    }
-    return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
-  } else if (example.kind === 'null') {
-    return `${indent}nil`;
-  } else if (example.kind === 'any') {
-    return jsonToGo(example.value, indent);
-  } else if (example.kind === 'array') {
-    const isElementByValue = example.type.elementTypeByValue;
-    // if polymorphic, need to add type name in array, so inArray will be set to false
-    // if other case, no need to add type name in array, so inArray will be set to true
-    const isElementPolymorphic = example.type.elementType.kind === 'interface';
-    let exampleText = `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}{\n`;
-    for (const element of example.value) {
-      exampleText += `${getExampleValue(codeModel, element, indent + '\t', imports, isElementByValue && !isElementPolymorphic, !isElementPolymorphic)},\n`;
-    }
-    exampleText += `${indent}}`;
-    return exampleText;
-  } else if (example.kind === 'dictionary') {
-    let exampleText = `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}{\n`;
-    const isValueByValue = example.type.valueTypeByValue;
-    const isValuePolymorphic = example.type.valueType.kind === 'interface';
-    for (const key in example.value) {
-      exampleText += `${indent}\t"${key}": ${getExampleValue(codeModel, example.value[key], indent + '\t', imports, isValueByValue && !isValuePolymorphic).slice(indent.length + 1)},\n`;
-    }
-    exampleText += `${indent}}`;
-    return exampleText;
-  } else if (example.kind === 'model') {
-    const isModelPolymorphic = example.type.kind === 'polymorphicModel';
-    let exampleText = `${indent}${getRef(byValue && !isModelPolymorphic)}${go.getTypeDeclaration(example.type, codeModel.packageName)}{\n`;
-    if (inArray) {
-      exampleText = `${indent}{\n`;
-    }
-    for (const field in example.value) {
-      const goField = example.type.fields.find(f => f.name === field)!;
-      const isFieldByValue = goField.byValue ?? false;
-      const isFieldPolymorphic = goField.type.kind === 'interface';
-      exampleText += `${indent}\t${field}: ${getExampleValue(codeModel, example.value[field], indent + '\t', imports, isFieldByValue && !isFieldPolymorphic).slice(indent.length + 1)},\n`;
-    }
-    if (example.additionalProperties) {
-      const additionalPropertiesField = example.type.fields.find(f => f.annotations.isAdditionalProperties)!;
-      if (additionalPropertiesField.type.kind !== 'map') {
-        throw new CodegenError('InternalError', `additional properties field type should be map type`);
+      } else if (example.type.kind === 'encodedBytes') {
+        exampleText = `[]byte("${escapeString(example.value)}")`
+      } else if (example.type.kind === 'literal' && example.type.type.kind === 'constant') {
+        exampleText = getConstantValue(codeModel, example.type.type, example.type.literal.value);
+      } else if (example.type.kind === 'etag') {
+        imports?.add(example.type.module);
+        return `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}(${jsonToGo(example.value, '')})`;
       }
-      const isAdditionalPropertiesFieldByValue = additionalPropertiesField.type.valueTypeByValue ?? false;
-      const isAdditionalPropertiesPolymorphic = additionalPropertiesField.type.valueType.kind === 'interface';
-      exampleText += `${indent}\t${additionalPropertiesField.name}: ${getRef(additionalPropertiesField.byValue)}${go.getTypeDeclaration(additionalPropertiesField.type, codeModel.packageName)}{\n`;
-      for (const key in example.additionalProperties) {
-        exampleText += `${indent}\t"${key}": ${getExampleValue(codeModel, example.additionalProperties[key], indent + '\t', imports, isAdditionalPropertiesFieldByValue && !isAdditionalPropertiesPolymorphic).slice(indent.length + 1)},\n`;
-      }
-      exampleText += `${indent}},\n`;
+      return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
     }
-    exampleText += `${indent}}`;
-    return exampleText;
-  } else if (example.kind === 'qualified') {
-    imports?.add(example.type.packageName);
-    if (example.type.exportName === 'ETag') {
-      return `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}(${jsonToGo(example.value, '')})`;
-    } else if (example.type.exportName === 'MultipartContent') {
-      // TODO: support MultipartContent
-      throw new CodegenError('InternalError', `MultipartContent example type is not supported yet`);
-    } else if (example.type.exportName === 'ReadSeekCloser') {
-      // TODO: support MultipartContent
-      throw new CodegenError('InternalError', `ReadSeekCloser example type is not supported yet`);
-    } else {
-      throw new CodegenError('InternalError', `qualified example type ${example.type.exportName} is not supported yet`);
+    case 'number': {
+      let exampleText = `${example.value}`;
+      switch (example.type.kind) {
+        case 'constant':
+          exampleText = `${indent}${getConstantValue(codeModel, example.type, example.value)}`;
+          break;
+        case 'time':
+          exampleText = getTimeValue(example.type, example.value, imports);
+          break;
+      }
+      return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
+    }
+    case 'boolean': {
+      let exampleText = `${example.value}`;
+      if (example.type.kind === 'constant') {
+        exampleText = `${indent}${getConstantValue(codeModel, example.type, example.value)}`;
+      }
+      return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
+    }
+    case 'null':
+      return `${indent}nil`;
+    case 'any':
+      return jsonToGo(example.value, indent);
+    case 'array': {
+      const isElementByValue = example.type.elementTypeByValue;
+      // if polymorphic, need to add type name in array, so inArray will be set to false
+      // if other case, no need to add type name in array, so inArray will be set to true
+      const isElementPolymorphic = example.type.elementType.kind === 'interface';
+      let exampleText = `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}{\n`;
+      for (const element of example.value) {
+        exampleText += `${getExampleValue(codeModel, element, indent + '\t', imports, isElementByValue && !isElementPolymorphic, !isElementPolymorphic)},\n`;
+      }
+      exampleText += `${indent}}`;
+      return exampleText;
+    }
+    case 'dictionary': {
+      let exampleText = `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}{\n`;
+      const isValueByValue = example.type.valueTypeByValue;
+      const isValuePolymorphic = example.type.valueType.kind === 'interface';
+      for (const key in example.value) {
+        exampleText += `${indent}\t"${key}": ${getExampleValue(codeModel, example.value[key], indent + '\t', imports, isValueByValue && !isValuePolymorphic).slice(indent.length + 1)},\n`;
+      }
+      exampleText += `${indent}}`;
+      return exampleText;
+    }
+    case 'model': {
+      const isModelPolymorphic = example.type.kind === 'polymorphicModel';
+      let exampleText = `${indent}${getRef(byValue && !isModelPolymorphic)}${go.getTypeDeclaration(example.type, codeModel.packageName)}{\n`;
+      if (inArray) {
+        exampleText = `${indent}{\n`;
+      }
+      for (const field in example.value) {
+        const goField = example.type.fields.find(f => f.name === field)!;
+        const isFieldByValue = goField.byValue ?? false;
+        const isFieldPolymorphic = goField.type.kind === 'interface';
+        exampleText += `${indent}\t${field}: ${getExampleValue(codeModel, example.value[field], indent + '\t', imports, isFieldByValue && !isFieldPolymorphic).slice(indent.length + 1)},\n`;
+      }
+      if (example.additionalProperties) {
+        const additionalPropertiesField = example.type.fields.find(f => f.annotations.isAdditionalProperties)!;
+        if (additionalPropertiesField.type.kind !== 'map') {
+          throw new CodegenError('InternalError', `additional properties field type should be map type`);
+        }
+        const isAdditionalPropertiesFieldByValue = additionalPropertiesField.type.valueTypeByValue ?? false;
+        const isAdditionalPropertiesPolymorphic = additionalPropertiesField.type.valueType.kind === 'interface';
+        exampleText += `${indent}\t${additionalPropertiesField.name}: ${getRef(additionalPropertiesField.byValue)}${go.getTypeDeclaration(additionalPropertiesField.type, codeModel.packageName)}{\n`;
+        for (const key in example.additionalProperties) {
+          exampleText += `${indent}\t"${key}": ${getExampleValue(codeModel, example.additionalProperties[key], indent + '\t', imports, isAdditionalPropertiesFieldByValue && !isAdditionalPropertiesPolymorphic).slice(indent.length + 1)},\n`;
+        }
+        exampleText += `${indent}},\n`;
+      }
+      exampleText += `${indent}}`;
+      return exampleText;
     }
   }
-  return '';
 }
 
 function getRef(byValue: boolean): string {
