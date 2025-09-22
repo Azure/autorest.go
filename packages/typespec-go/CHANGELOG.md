@@ -1,16 +1,14 @@
 # Release History
 
-## 0.8.4 (2025-09-22)
-
-### Other Changes
-
-* Updated to the latest tsp toolset.
-
-## 0.8.3 (unreleased)
+## 0.8.3 (2025-09-22)
 
 ### Features Added
 
 * Clean up all generated Go files before emitting any new files.
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
 
 ## 0.8.2 (2025-09-10)
 
