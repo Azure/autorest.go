@@ -13,7 +13,7 @@ import (
 )
 
 func TestOptionalStringLiteralClient_GetAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalStringLiteralClient().GetAll(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestOptionalStringLiteralClient_GetAll(t *testing.T) {
 }
 
 func TestOptionalStringLiteralClient_GetDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalStringLiteralClient().GetDefault(context.Background(), nil)
 	require.NoError(t, err)
@@ -30,7 +30,7 @@ func TestOptionalStringLiteralClient_GetDefault(t *testing.T) {
 }
 
 func TestOptionalStringLiteralClient_PutAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalStringLiteralClient().PutAll(context.Background(), optionalitygroup.StringLiteralProperty{
 		Property: to.Ptr("hello"),
@@ -40,7 +40,7 @@ func TestOptionalStringLiteralClient_PutAll(t *testing.T) {
 }
 
 func TestOptionalStringLiteralClient_PutDefault(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalStringLiteralClient().PutDefault(context.Background(), optionalitygroup.StringLiteralProperty{}, nil)
 	require.NoError(t, err)

@@ -12,7 +12,7 @@ import (
 )
 
 func TestValueTypesBytesClient_Get(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesBytesClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -20,7 +20,7 @@ func TestValueTypesBytesClient_Get(t *testing.T) {
 }
 
 func TestValueTypesBytesClient_Put(t *testing.T) {
-	client, err := valuetypesgroup.NewValueTypesClient("http://localhost:3000", nil)
+	client, err := valuetypesgroup.NewValueTypesClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewValueTypesBytesClient().Put(context.Background(), valuetypesgroup.BytesProperty{
 		Property: []byte("hello, world!"),

@@ -14,10 +14,33 @@ import (
 
 // NotDefinedClient - Illustrates server doesn't define endpoint. Client should automatically add an endpoint to let user
 // pass in.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewNotDefinedClientWithNoCredential() instead.
 type NotDefinedClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// NotDefinedClientOptions contains the optional values for creating a [NotDefinedClient].
+type NotDefinedClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewNotDefinedClientWithNoCredential creates a new instance of NotDefinedClient with the specified values.
+//   - endpoint - Service host
+//   - options - NotDefinedClientOptions contains the optional values for creating a [NotDefinedClient]
+func NewNotDefinedClientWithNoCredential(endpoint string, options *NotDefinedClientOptions) (*NotDefinedClient, error) {
+	if options == nil {
+		options = &NotDefinedClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &NotDefinedClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // - options - NotDefinedClientValidOptions contains the optional parameters for the NotDefinedClient.Valid method.

@@ -12,7 +12,7 @@ import (
 )
 
 func TestSingleClient_MyOp(t *testing.T) {
-	client, err := singlegroup.NewSingleClient("http://localhost:3000", nil)
+	client, err := singlegroup.NewSingleClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.MyOp(context.Background(), nil)
 	require.NoError(t, err)

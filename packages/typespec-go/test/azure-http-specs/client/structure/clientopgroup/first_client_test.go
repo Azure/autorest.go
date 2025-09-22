@@ -12,7 +12,7 @@ import (
 )
 
 func TestFirstClient_One(t *testing.T) {
-	client, err := clientopgroup.NewFirstClient("http://localhost:3000", clientopgroup.ClientTypeClientOperationGroup, nil)
+	client, err := clientopgroup.NewFirstClientWithNoCredential("http://localhost:3000", clientopgroup.ClientTypeClientOperationGroup, nil)
 	require.Nil(t, err)
 	require.NotNil(t, client)
 	resp, err := client.One(context.Background(), &clientopgroup.FirstClientOneOptions{})

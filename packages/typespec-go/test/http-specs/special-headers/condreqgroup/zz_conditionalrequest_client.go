@@ -14,10 +14,33 @@ import (
 )
 
 // ConditionalRequestClient - Illustrates conditional request headers
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewConditionalRequestClientWithNoCredential() instead.
 type ConditionalRequestClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ConditionalRequestClientOptions contains the optional values for creating a [ConditionalRequestClient].
+type ConditionalRequestClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewConditionalRequestClientWithNoCredential creates a new instance of ConditionalRequestClient with the specified values.
+//   - endpoint - Service host
+//   - options - ConditionalRequestClientOptions contains the optional values for creating a [ConditionalRequestClient]
+func NewConditionalRequestClientWithNoCredential(endpoint string, options *ConditionalRequestClientOptions) (*ConditionalRequestClient, error) {
+	if options == nil {
+		options = &ConditionalRequestClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ConditionalRequestClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // HeadIfModifiedSince - Check when only If-Modified-Since in header is defined.

@@ -1,5 +1,15 @@
 # Release History
 
+## 0.8.3 (unreleased)
+
+### Features Added
+
+* Clean up all generated Go files before emitting any new files.
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
+
 ## 0.8.2 (2025-09-10)
 
 ### Bugs Fixed
@@ -15,6 +25,12 @@
 ### Bugs Fixed
 
 * Fix polymorphic type result of response generation.
+
+### Features Added
+
+* Emit client constructors and corresponding client options type.
+  * Note that when using switch `containing-module`, client constructors and options type are not emitted.
+  * Added switch `omit-constructors` to disable this feature.
 
 ### Other Changes
 

@@ -12,7 +12,7 @@ import (
 )
 
 func TestInternalOperationClient_internalDecoratorInInternal(t *testing.T) {
-	client, err := NewAccessClient("http://localhost:3000", nil)
+	client, err := NewAccessClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewAccessInternalOperationClient().internalDecoratorInInternal(context.Background(), "sample", nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestInternalOperationClient_internalDecoratorInInternal(t *testing.T) {
 }
 
 func TestInternalOperationClient_noDecoratorInInternal(t *testing.T) {
-	client, err := NewAccessClient("http://localhost:3000", nil)
+	client, err := NewAccessClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewAccessInternalOperationClient().noDecoratorInInternal(context.Background(), "sample", nil)
 	require.NoError(t, err)
@@ -32,7 +32,7 @@ func TestInternalOperationClient_noDecoratorInInternal(t *testing.T) {
 }
 
 func TestInternalOperationClient_publicDecoratorInInternal(t *testing.T) {
-	client, err := NewAccessClient("http://localhost:3000", nil)
+	client, err := NewAccessClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewAccessInternalOperationClient().publicDecoratorInInternal(context.Background(), "sample", nil)
 	require.NoError(t, err)

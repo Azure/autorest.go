@@ -15,6 +15,7 @@ export interface GoEmitterOptions {
   'head-as-boolean'?: boolean;
   'inject-spans'?: boolean;
   'module'?: string;
+  'omit-constructors'?: boolean;
   'rawjson-as-bytes'?: boolean;
   'slice-elements-byval'?: boolean;
   'single-client'?: boolean;
@@ -76,6 +77,11 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
       type: 'string',
       nullable: true,
       description: 'The module identity to use in go.mod. Mutually exclusive with containing-module.',
+    },
+    'omit-constructors': {
+      type: 'boolean',
+      nullable: true,
+      description: 'When true, client constructors are not emitted. The default is false.',
     },
     'rawjson-as-bytes': {
       type: 'boolean',

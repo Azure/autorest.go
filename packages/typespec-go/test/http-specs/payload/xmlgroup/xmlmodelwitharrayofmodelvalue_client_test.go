@@ -13,7 +13,7 @@ import (
 )
 
 func TestXMLModelWithArrayOfModelValueClient_Get(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
+	client, err := xmlgroup.NewXMLClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithArrayOfModelValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -32,7 +32,7 @@ func TestXMLModelWithArrayOfModelValueClient_Get(t *testing.T) {
 }
 
 func TestXMLModelWithArrayOfModelValueClient_Put(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
+	client, err := xmlgroup.NewXMLClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithArrayOfModelValueClient().Put(context.Background(), xmlgroup.ModelWithArrayOfModel{
 		Items: []xmlgroup.SimpleModel{

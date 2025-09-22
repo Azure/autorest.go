@@ -16,7 +16,7 @@ import (
 )
 
 func TestSingleDiscriminatorClientGetLegacyModel(t *testing.T) {
-	client, err := singlediscgroup.NewSingleDiscriminatorClient("http://localhost:3000", nil)
+	client, err := singlediscgroup.NewSingleDiscriminatorClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.GetLegacyModel(context.Background(), nil)
 	require.NoError(t, err)
@@ -28,7 +28,7 @@ func TestSingleDiscriminatorClientGetLegacyModel(t *testing.T) {
 }
 
 func TestSingleDiscriminatorClientGetMissingDiscriminator(t *testing.T) {
-	client, err := singlediscgroup.NewSingleDiscriminatorClient("http://localhost:3000", nil)
+	client, err := singlediscgroup.NewSingleDiscriminatorClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.GetMissingDiscriminator(context.Background(), nil)
 	require.NoError(t, err)
@@ -39,7 +39,7 @@ func TestSingleDiscriminatorClientGetMissingDiscriminator(t *testing.T) {
 }
 
 func TestSingleDiscriminatorClientGetModel(t *testing.T) {
-	client, err := singlediscgroup.NewSingleDiscriminatorClient("http://localhost:3000", nil)
+	client, err := singlediscgroup.NewSingleDiscriminatorClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.GetModel(context.Background(), nil)
 	require.NoError(t, err)
@@ -51,7 +51,7 @@ func TestSingleDiscriminatorClientGetModel(t *testing.T) {
 }
 
 func TestSingleDiscriminatorClientGetRecursiveModel(t *testing.T) {
-	client, err := singlediscgroup.NewSingleDiscriminatorClient("http://localhost:3000", nil)
+	client, err := singlediscgroup.NewSingleDiscriminatorClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.GetRecursiveModel(context.Background(), nil)
 	require.NoError(t, err)
@@ -79,7 +79,7 @@ func TestSingleDiscriminatorClientGetRecursiveModel(t *testing.T) {
 }
 
 func TestSingleDiscriminatorClientGetWrongDiscriminator(t *testing.T) {
-	client, err := singlediscgroup.NewSingleDiscriminatorClient("http://localhost:3000", nil)
+	client, err := singlediscgroup.NewSingleDiscriminatorClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.GetWrongDiscriminator(context.Background(), nil)
 	require.NoError(t, err)
@@ -91,7 +91,7 @@ func TestSingleDiscriminatorClientGetWrongDiscriminator(t *testing.T) {
 }
 
 func TestSingleDiscriminatorClientPutModel(t *testing.T) {
-	client, err := singlediscgroup.NewSingleDiscriminatorClient("http://localhost:3000", nil)
+	client, err := singlediscgroup.NewSingleDiscriminatorClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.PutModel(context.Background(), &singlediscgroup.Sparrow{
 		Kind:     to.Ptr("sparrow"),
@@ -102,7 +102,7 @@ func TestSingleDiscriminatorClientPutModel(t *testing.T) {
 }
 
 func TestSingleDiscriminatorClientPutRecursiveModel(t *testing.T) {
-	client, err := singlediscgroup.NewSingleDiscriminatorClient("http://localhost:3000", nil)
+	client, err := singlediscgroup.NewSingleDiscriminatorClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.PutRecursiveModel(context.Background(), &singlediscgroup.Eagle{
 		Kind:     to.Ptr("eagle"),

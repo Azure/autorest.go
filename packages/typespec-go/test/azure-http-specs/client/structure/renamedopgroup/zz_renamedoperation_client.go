@@ -14,11 +14,36 @@ import (
 )
 
 // RenamedOperationClient contains the methods for the RenamedOperation group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewRenamedOperationClientWithNoCredential() instead.
 type RenamedOperationClient struct {
 	internal *azcore.Client
 	endpoint string
 	client   ClientType
+}
+
+// RenamedOperationClientOptions contains the optional values for creating a [RenamedOperationClient].
+type RenamedOperationClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewRenamedOperationClientWithNoCredential creates a new instance of RenamedOperationClient with the specified values.
+//   - endpoint - Service host
+//   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
+//   - options - RenamedOperationClientOptions contains the optional values for creating a [RenamedOperationClient]
+func NewRenamedOperationClientWithNoCredential(endpoint string, client ClientType, options *RenamedOperationClientOptions) (*RenamedOperationClient, error) {
+	if options == nil {
+		options = &RenamedOperationClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	renamedOperationClient := &RenamedOperationClient{
+		endpoint: endpoint,
+		client:   client,
+		internal: cl,
+	}
+	return renamedOperationClient, nil
 }
 
 // NewRenamedOperationGroupClient creates a new instance of [RenamedOperationGroupClient].

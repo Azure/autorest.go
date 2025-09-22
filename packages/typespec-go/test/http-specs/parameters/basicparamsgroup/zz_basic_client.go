@@ -4,13 +4,39 @@
 
 package basicparamsgroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+)
 
 // BasicClient - Test for basic parameters cases.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewBasicClientWithNoCredential() instead.
 type BasicClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// BasicClientOptions contains the optional values for creating a [BasicClient].
+type BasicClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewBasicClientWithNoCredential creates a new instance of BasicClient with the specified values.
+//   - endpoint - Service host
+//   - options - BasicClientOptions contains the optional values for creating a [BasicClient]
+func NewBasicClientWithNoCredential(endpoint string, options *BasicClientOptions) (*BasicClient, error) {
+	if options == nil {
+		options = &BasicClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &BasicClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // NewBasicExplicitBodyClient creates a new instance of [BasicExplicitBodyClient].

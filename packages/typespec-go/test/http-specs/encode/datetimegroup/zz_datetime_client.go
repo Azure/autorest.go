@@ -4,13 +4,39 @@
 
 package datetimegroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+)
 
 // DatetimeClient - Test for encode decorator on datetime.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewDatetimeClientWithNoCredential() instead.
 type DatetimeClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// DatetimeClientOptions contains the optional values for creating a [DatetimeClient].
+type DatetimeClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewDatetimeClientWithNoCredential creates a new instance of DatetimeClient with the specified values.
+//   - endpoint - Service host
+//   - options - DatetimeClientOptions contains the optional values for creating a [DatetimeClient]
+func NewDatetimeClientWithNoCredential(endpoint string, options *DatetimeClientOptions) (*DatetimeClient, error) {
+	if options == nil {
+		options = &DatetimeClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &DatetimeClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // NewDatetimeHeaderClient creates a new instance of [DatetimeHeaderClient].

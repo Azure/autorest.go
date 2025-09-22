@@ -13,7 +13,7 @@ import (
 )
 
 func TestSpreadModelClient_SpreadAsRequestBody(t *testing.T) {
-	client, err := spreadgroup.NewSpreadClient("http://localhost:3000", nil)
+	client, err := spreadgroup.NewSpreadClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewSpreadModelClient().SpreadAsRequestBody(context.Background(), "foo", nil)
 	require.NoError(t, err)
@@ -21,7 +21,7 @@ func TestSpreadModelClient_SpreadAsRequestBody(t *testing.T) {
 }
 
 func TestSpreadModelClient_SpreadCompositeRequest(t *testing.T) {
-	client, err := spreadgroup.NewSpreadClient("http://localhost:3000", nil)
+	client, err := spreadgroup.NewSpreadClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewSpreadModelClient().SpreadCompositeRequest(context.Background(), "foo", "bar", spreadgroup.BodyParameter{
 		Name: to.Ptr("foo"),
@@ -31,7 +31,7 @@ func TestSpreadModelClient_SpreadCompositeRequest(t *testing.T) {
 }
 
 func TestSpreadModelClient_SpreadCompositeRequestMix(t *testing.T) {
-	client, err := spreadgroup.NewSpreadClient("http://localhost:3000", nil)
+	client, err := spreadgroup.NewSpreadClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewSpreadModelClient().SpreadCompositeRequestMix(context.Background(), "foo", "bar", "foo", nil)
 	require.NoError(t, err)
@@ -39,7 +39,7 @@ func TestSpreadModelClient_SpreadCompositeRequestMix(t *testing.T) {
 }
 
 func TestSpreadModelClient_SpreadCompositeRequestOnlyWithBody(t *testing.T) {
-	client, err := spreadgroup.NewSpreadClient("http://localhost:3000", nil)
+	client, err := spreadgroup.NewSpreadClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewSpreadModelClient().SpreadCompositeRequestOnlyWithBody(context.Background(), spreadgroup.BodyParameter{
 		Name: to.Ptr("foo"),
@@ -49,7 +49,7 @@ func TestSpreadModelClient_SpreadCompositeRequestOnlyWithBody(t *testing.T) {
 }
 
 func TestSpreadModelClient_SpreadCompositeRequestWithoutBody(t *testing.T) {
-	client, err := spreadgroup.NewSpreadClient("http://localhost:3000", nil)
+	client, err := spreadgroup.NewSpreadClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewSpreadModelClient().SpreadCompositeRequestWithoutBody(context.Background(), "foo", "bar", nil)
 	require.NoError(t, err)

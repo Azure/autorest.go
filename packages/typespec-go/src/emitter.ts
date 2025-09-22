@@ -7,6 +7,7 @@ import { GoEmitterOptions } from './lib.js';
 import { tcgcToGoCodeModel } from './tcgcadapter/adapter.js';
 import { AdapterError } from './tcgcadapter/errors.js';
 import { generateClientFactory } from '../../codegen.go/src/clientFactory.js';
+import { generateCloudConfig } from '../../codegen.go/src/cloudConfig.js';
 import { generateConstants } from '../../codegen.go/src/constants.js';
 import { generateExamples } from '../../codegen.go/src/example.js';
 import { generateGoModFile } from '../../codegen.go/src/gomod.js';
@@ -23,13 +24,14 @@ import { generateXMLAdditionalPropsHelpers } from '../../codegen.go/src/xmlAddit
 import { generateMetadataFile } from '../../codegen.go/src/metadata.js';
 import { generateVersionInfo } from '../../codegen.go/src/version.js';
 import { CodeModelError } from '../../codemodel.go/src/errors.js';
-import { existsSync } from 'fs';
+import { existsSync, opendirSync, unlinkSync, readFileSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { DiagnosticSeverity, EmitContext, NoTarget } from '@typespec/compiler';
 import 'source-map-support/register.js';
 import { reportDiagnostic } from './lib.js';
 import { CodegenError } from '../../codegen.go/src/errors.js';
 import { execSync } from 'child_process';
+import { doNotEditRegex } from '../../codegen.go/src/helpers.js';
 
 export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   try {
@@ -154,7 +156,7 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
 
 /**
  * drop frames after the specified frame.
- * 
+ *
  * @param stack the stack to truncate
  * @returns the truncated stack
  */
@@ -170,9 +172,41 @@ function truncateStack(stack: string, finalFrame: string): string {
   return stack;
 }
 
+/**
+ * Clean up existing generated Go files in the output directory.
+ * Removes any .go files that contain the Microsoft code generator comment.
+ * 
+ * exported for testing purposes only.
+ *
+ * @param outputDir the directory to clean up
+ */
+export function cleanupGeneratedFiles(outputDir: string) {
+  if (!existsSync(outputDir)) {
+    return;
+  }
+  const dir = opendirSync(outputDir);
+  while (true) {
+    const dirEnt = dir.readSync();
+    if (dirEnt === null) {
+      break;
+    }
+    if (dirEnt.isFile() && dirEnt.name.endsWith('.go')) {
+      const content = readFileSync(dir.path + '/' + dirEnt.name, 'utf8');
+      if (doNotEditRegex.test(content)) {
+        unlinkSync(dir.path + '/' + dirEnt.name);
+      }
+    }
+  }
+  dir.closeSync();
+  cleanupGeneratedFiles(outputDir + '/fake');
+}
+
 async function generate(context: EmitContext<GoEmitterOptions>) {
   const codeModel = await tcgcToGoCodeModel(context);
-  await mkdir(context.emitterOutputDir, {recursive: true});
+  await mkdir(context.emitterOutputDir, { recursive: true });
+
+  // clean up existing generated Go files
+  cleanupGeneratedFiles(context.emitterOutputDir);
 
   // don't overwrite an existing go.mod file, update it if required
   const goModFile = `${context.emitterOutputDir}/go.mod`;
@@ -186,10 +220,10 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
   }
 
   const metadata = generateMetadataFile(codeModel);
-  if (metadata.length > 0 ) {
+  if (metadata.length > 0) {
     const metedataDir = context.emitterOutputDir + '/testdata';
-    await mkdir(metedataDir, {recursive: true});
-    await writeFile(`${metedataDir}/_metadata.json`, metadata)
+    await mkdir(metedataDir, { recursive: true });
+    await writeFile(`${metedataDir}/_metadata.json`, metadata);
   }
 
   let filePrefix = '';
@@ -231,7 +265,7 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
     // insert a _ before Client, i.e. Foo_Client
     // if the name isn't simply Client.
     if (fileName !== 'client') {
-      fileName = fileName.substring(0, fileName.length-6) + '_client';
+      fileName = fileName.substring(0, fileName.length - 6) + '_client';
     }
     await writeFile(`${context.emitterOutputDir}/${filePrefix}${fileName}.go`, op.content);
   }
@@ -287,18 +321,23 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
     await writeFile(`${context.emitterOutputDir}/${filePrefix}xml_helper.go`, xmlAddlProps);
   }
 
+  const cloudConfig = generateCloudConfig(codeModel);
+  if (cloudConfig.length > 0) {
+    await writeFile(`${context.emitterOutputDir}/${filePrefix}cloud_config.go`, cloudConfig);
+  }
+
   if (codeModel.options.generateFakes) {
     const serverContent = await generateServers(codeModel);
     if (serverContent.servers.length > 0) {
       const fakesDir = context.emitterOutputDir + '/fake';
-      await mkdir(fakesDir, {recursive: true});
+      await mkdir(fakesDir, { recursive: true });
       for (const op of serverContent.servers) {
         let fileName = op.name.toLowerCase();
         // op.name is the server name, e.g. FooServer.
         // insert a _ before Server, i.e. Foo_Server
         // if the name isn't simply Server.
         if (fileName !== 'server') {
-          fileName = fileName.substring(0, fileName.length-6) + '_server';
+          fileName = fileName.substring(0, fileName.length - 6) + '_server';
         }
         await writeFile(`${fakesDir}/${filePrefix}${fileName}.go`, op.content);
       }

@@ -17,7 +17,7 @@ import (
 )
 
 func TestHeaderClientDefault(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	gmt, err := time.LoadLocation("GMT")
 	require.NoError(t, err)
@@ -27,7 +27,7 @@ func TestHeaderClientDefault(t *testing.T) {
 }
 
 func TestHeaderClientRFC3339(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDatetimeHeaderClient().RFC3339(context.Background(), time.Date(2022, time.August, 26, 18, 38, 0, 0, time.UTC), nil)
 	require.NoError(t, err)
@@ -35,7 +35,7 @@ func TestHeaderClientRFC3339(t *testing.T) {
 }
 
 func TestHeaderClientRFC7231(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	gmt, err := time.LoadLocation("GMT")
 	require.NoError(t, err)
@@ -45,7 +45,7 @@ func TestHeaderClientRFC7231(t *testing.T) {
 }
 
 func TestHeaderClientUnixTimestamp(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDatetimeHeaderClient().UnixTimestamp(context.Background(), time.Unix(1686566864, 0), nil)
 	require.NoError(t, err)
@@ -53,7 +53,7 @@ func TestHeaderClientUnixTimestamp(t *testing.T) {
 }
 
 func TestHeaderClientUnixTimestampArray(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDatetimeHeaderClient().UnixTimestampArray(context.Background(), []time.Time{
 		time.Unix(1686566864, 0),
@@ -64,7 +64,7 @@ func TestHeaderClientUnixTimestampArray(t *testing.T) {
 }
 
 func TestPropertyClientDefault(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	v := time.Date(2022, time.August, 26, 18, 38, 0, 0, time.UTC)
 	resp, err := client.NewDatetimePropertyClient().Default(context.Background(), datetimegroup.DefaultDatetimeProperty{
@@ -76,7 +76,7 @@ func TestPropertyClientDefault(t *testing.T) {
 }
 
 func TestPropertyClientRFC3339(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	v := time.Date(2022, time.August, 26, 18, 38, 0, 0, time.UTC)
 	resp, err := client.NewDatetimePropertyClient().RFC3339(context.Background(), datetimegroup.RFC3339DatetimeProperty{
@@ -88,7 +88,7 @@ func TestPropertyClientRFC3339(t *testing.T) {
 }
 
 func TestPropertyClientRFC7231(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	gmt, err := time.LoadLocation("GMT")
 	require.NoError(t, err)
@@ -102,7 +102,7 @@ func TestPropertyClientRFC7231(t *testing.T) {
 }
 
 func TestPropertyClientUnixTimestamp(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	v := time.Unix(1686566864, 0)
 	resp, err := client.NewDatetimePropertyClient().UnixTimestamp(context.Background(), datetimegroup.UnixTimestampDatetimeProperty{
@@ -114,7 +114,7 @@ func TestPropertyClientUnixTimestamp(t *testing.T) {
 }
 
 func TestPropertyClientUnixTimestampArray(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	v := []time.Time{
 		time.Unix(1686566864, 0),
@@ -131,7 +131,7 @@ func TestPropertyClientUnixTimestampArray(t *testing.T) {
 }
 
 func TestQueryClientDefault(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	gmt, err := time.LoadLocation("GMT")
 	require.NoError(t, err)
@@ -141,7 +141,7 @@ func TestQueryClientDefault(t *testing.T) {
 }
 
 func TestQueryClientRFC3339(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDatetimeQueryClient().RFC3339(context.Background(), time.Date(2022, time.August, 26, 18, 38, 0, 0, time.UTC), nil)
 	require.NoError(t, err)
@@ -149,7 +149,7 @@ func TestQueryClientRFC3339(t *testing.T) {
 }
 
 func TestQueryClientRFC7231(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	gmt, err := time.LoadLocation("GMT")
 	require.NoError(t, err)
@@ -159,7 +159,7 @@ func TestQueryClientRFC7231(t *testing.T) {
 }
 
 func TestQueryClientUnixTimestamp(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDatetimeQueryClient().UnixTimestamp(context.Background(), time.Unix(1686566864, 0), nil)
 	require.NoError(t, err)
@@ -167,7 +167,7 @@ func TestQueryClientUnixTimestamp(t *testing.T) {
 }
 
 func TestQueryClientUnixTimestampArray(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDatetimeQueryClient().UnixTimestampArray(context.Background(), []time.Time{
 		time.Unix(1686566864, 0),
@@ -178,7 +178,7 @@ func TestQueryClientUnixTimestampArray(t *testing.T) {
 }
 
 func TestResponseHeaderClientDefault(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDatetimeResponseHeaderClient().Default(context.Background(), nil)
 	require.NoError(t, err)
@@ -187,7 +187,7 @@ func TestResponseHeaderClientDefault(t *testing.T) {
 }
 
 func TestResponseHeaderClientRFC3339(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDatetimeResponseHeaderClient().RFC3339(context.Background(), nil)
 	require.NoError(t, err)
@@ -196,7 +196,7 @@ func TestResponseHeaderClientRFC3339(t *testing.T) {
 }
 
 func TestResponseHeaderClientRFC7231(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDatetimeResponseHeaderClient().RFC7231(context.Background(), nil)
 	require.NoError(t, err)
@@ -207,7 +207,7 @@ func TestResponseHeaderClientRFC7231(t *testing.T) {
 }
 
 func TestResponseHeaderClientUnixTimestamp(t *testing.T) {
-	client, err := datetimegroup.NewDatetimeClient("http://localhost:3000", nil)
+	client, err := datetimegroup.NewDatetimeClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDatetimeResponseHeaderClient().UnixTimestamp(context.Background(), nil)
 	require.NoError(t, err)

@@ -45,7 +45,7 @@ export interface Client {
 }
 
 /** the possible types used for the client options type */
-export type ClientOptions = param.ParameterGroup | param.Parameter;
+export type ClientOptions = ClientOptionsParameter | param.Parameter;
 
 /** the possible client parameter types */
 export type ClientParameter = param.MethodParameter | param.Parameter;
@@ -59,6 +59,20 @@ export interface ClientAccessor {
   subClient: Client;
 }
 
+/** the client options parameter type */
+export interface ClientOptionsParameter {
+  kind: 'clientOptions';
+
+  /** the name of the type */
+  name: string;
+
+  /** any docs for the type */
+  docs: type.Docs;
+
+  /** the parameters that belong to this options */
+  params: Array<ClientParameter>;
+}
+
 /** a client constructor function */
 export interface Constructor {
   /** the name of the constructor function */
@@ -66,6 +80,25 @@ export interface Constructor {
 
   /** the modeled parameters. can be empty */
   parameters: Array<ClientParameter>;
+
+  /** the type of authentication for this constructor */
+  authentication: AuthenticationType;
+}
+
+/** the supported types of client authentication */
+export type AuthenticationType = NoAuthentication | TokenAuthentication;
+
+/** the client supports unauthenticated requests */
+export interface NoAuthentication {
+  kind: 'none';
+}
+
+/** an azcore.TokenCredential */
+export interface TokenAuthentication {
+  kind: 'token';
+
+  /** the scopes for the token */
+  scopes: Array<string>;
 }
 
 /** the possible values defining the "final state via" behavior for LROs */
@@ -152,11 +185,11 @@ export function isPageableMethod(method: MethodType): method is LROPageableMetho
 export function newClientOptions(modelType: pkg.CodeModelType, clientName: string): ClientOptions {
   let options: ClientOptions;
   if (modelType === 'azure-arm') {
-    options = new param.Parameter('options', new type.QualifiedType('ClientOptions', 'github.com/Azure/azure-sdk-for-go/sdk/azcore/arm'), 'optional', false, 'client');
+    options = new param.Parameter('options', new type.ArmClientOptions(), 'optional', false, 'client');
     options.docs.summary = 'pass nil to accept the default values.';
   } else {
     const optionsTypeName = `${clientName}Options`;
-    options = new param.ParameterGroup('options', optionsTypeName, false, 'client');
+    options = new ClientOptionsParameter(optionsTypeName);
     options.docs.summary = `${optionsTypeName} contains the optional values for creating a [${clientName}]`;
   }
   return options;
@@ -255,9 +288,19 @@ export class ClientAccessor implements ClientAccessor {
   }
 }
 
-export class Constructor implements Constructor {
+export class ClientOptionsParameter implements ClientOptionsParameter {
   constructor(name: string) {
+    this.kind = 'clientOptions';
     this.name = name;
+    this.docs = {};
+    this.params = new Array<ClientParameter>();
+  }
+}
+
+export class Constructor implements Constructor {
+  constructor(name: string, authentication: AuthenticationType) {
+    this.name = name;
+    this.authentication = authentication;
     this.parameters = new Array<ClientParameter>();
   }
 }
@@ -307,9 +350,22 @@ export class NextPageMethod implements NextPageMethod {
   }
 }
 
+export class NoAuthentication implements NoAuthentication {
+  constructor() {
+    this.kind = 'none';
+  }
+}
+
 export class PageableMethod extends MethodBase implements PageableMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     super(name, client, httpPath, httpMethod, statusCodes, naming);
     this.kind = 'pageableMethod';
+  }
+}
+
+export class TokenAuthentication implements TokenAuthentication {
+  constructor(scopes: Array<string>) {
+    this.kind = 'token';
+    this.scopes = scopes;
   }
 }

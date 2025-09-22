@@ -13,10 +13,33 @@ import (
 )
 
 // PageableClient - Test for pageable payload.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewPageableClientWithNoCredential() instead.
 type PageableClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// PageableClientOptions contains the optional values for creating a [PageableClient].
+type PageableClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewPageableClientWithNoCredential creates a new instance of PageableClient with the specified values.
+//   - endpoint - Service host
+//   - options - PageableClientOptions contains the optional values for creating a [PageableClient]
+func NewPageableClientWithNoCredential(endpoint string, options *PageableClientOptions) (*PageableClient, error) {
+	if options == nil {
+		options = &PageableClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &PageableClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // NewPageableServerDrivenPaginationClient creates a new instance of [PageableServerDrivenPaginationClient].
