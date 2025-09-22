@@ -5,43 +5,54 @@ package methodsubscriptionidgroup_test
 
 import (
 	"context"
-	"os"
+	"fmt"
 	"testing"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 
 	"methodsubscriptionidgroup"
 )
 
-func TestSubscriptionResource2OperationsClient_CRUD(t *testing.T) {
-	subscriptionID := os.Getenv("AZURE_SUBSCRIPTION_ID")
-	require.NotEmpty(t, subscriptionID, "AZURE_SUBSCRIPTION_ID must be set")
+var validResource2 = methodsubscriptionidgroup.SubscriptionResource2{
+	ID:   to.Ptr(fmt.Sprintf(`/subscriptions/%s/providers/Azure.ResourceManager.MethodSubscriptionId/subscriptionResource2s/sub-resource-2`, subscriptionIdExpected)),
+	Name: to.Ptr("sub-resource-2"),
+	Type: to.Ptr("Azure.ResourceManager.MethodSubscriptionId/subscriptionResource2s"),
+	Properties: &methodsubscriptionidgroup.SubscriptionResource2Properties{
+		ProvisioningState: to.Ptr(methodsubscriptionidgroup.ResourceProvisioningState("Succeeded")),
+		ConfigValue:       to.Ptr(string("test-config")),
+	},
+	SystemData: &methodsubscriptionidgroup.SystemData{
+		CreatedBy:          to.Ptr(string("AzureSDK")),
+		CreatedByType:      to.Ptr(methodsubscriptionidgroup.CreatedByType("User")),
+		CreatedAt:          to.Ptr(parseTime("2023-01-01T00:00:00.000Z")),
+		LastModifiedBy:     to.Ptr(string("AzureSDK")),
+		LastModifiedAt:     to.Ptr(parseTime("2023-01-01T00:00:00.000Z")),
+		LastModifiedByType: to.Ptr(methodsubscriptionidgroup.CreatedByType("User")),
+	},
+}
 
-	cred, err := azidentity.NewDefaultAzureCredential(nil)
-	require.NoError(t, err)
-
-	client, err := methodsubscriptionidgroup.NewSubscriptionResource2OperationsClient(subscriptionID, cred, nil)
-	require.NoError(t, err)
-	require.NotNil(t, client)
-
-	resourceName := "test-resource2"
-	resource := methodsubscriptionidgroup.SubscriptionResource2{
-		// TODO: Fill with required fields for creation according to Azure best practices
-	}
-
-	// Create (Put)
-	putResp, err := client.Put(context.Background(), resourceName, resource, nil)
-	require.NoError(t, err)
-	require.NotNil(t, putResp.SubscriptionResource2)
-
-	// Get
-	getResp, err := client.Get(context.Background(), resourceName, nil)
-	require.NoError(t, err)
-	require.NotNil(t, getResp.SubscriptionResource2)
-
-	// Delete
-	delResp, err := client.Delete(context.Background(), resourceName, nil)
+func TestSubscriptionResource2OperationsClient_Delete(t *testing.T) {
+	delResp, err := clientFactory.NewSubscriptionResource2OperationsClient().Delete(context.Background(), "sub-resource-1", &methodsubscriptionidgroup.SubscriptionResource2OperationsClientDeleteOptions{})
 	require.NoError(t, err)
 	require.NotNil(t, delResp)
+}
+
+func TestSubscriptionResource2OperationsClient_Put(t *testing.T) {
+	var validResource = methodsubscriptionidgroup.SubscriptionResource2{
+		Properties: &methodsubscriptionidgroup.SubscriptionResource2Properties{
+			ConfigValue: to.Ptr(string("test-config")),
+		},
+	}
+	putResp, err := clientFactory.NewSubscriptionResource2OperationsClient().Put(context.Background(), "sub-resource-1", validResource, &methodsubscriptionidgroup.SubscriptionResource2OperationsClientPutOptions{})
+	require.NoError(t, err)
+	require.NotNil(t, putResp)
+	require.Equal(t, validResource2, putResp.SubscriptionResource2)
+}
+
+func TestSubscriptionResource2OperationsClient_Get(t *testing.T) {
+	getResp, err := clientFactory.NewSubscriptionResource2OperationsClient().Get(context.Background(), "sub-resource-1", &methodsubscriptionidgroup.SubscriptionResource2OperationsClientGetOptions{})
+	require.NoError(t, err)
+	require.NotNil(t, getResp)
+	require.Equal(t, validResource2, getResp.SubscriptionResource2)
 }
