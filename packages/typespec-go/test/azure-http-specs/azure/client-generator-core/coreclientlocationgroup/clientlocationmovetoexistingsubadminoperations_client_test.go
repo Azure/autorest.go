@@ -12,7 +12,7 @@ import (
 )
 
 func TestClientLocationMoveToExistingSubAdminOperationsClient_DeleteUser(t *testing.T) {
-	client, err := coreclientlocationgroup.NewClientLocationClient("http://localhost:3000", nil)
+	client, err := coreclientlocationgroup.NewClientLocationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	require.NotNil(t, client)
 	resp, err := client.NewClientLocationMoveToExistingSubClient().NewClientLocationMoveToExistingSubAdminOperationsClient().DeleteUser(context.Background(), nil)
@@ -21,7 +21,7 @@ func TestClientLocationMoveToExistingSubAdminOperationsClient_DeleteUser(t *test
 }
 
 func TestClientLocationMoveToExistingSubAdminOperationsClient_GetAdminInfo(t *testing.T) {
-	client, err := coreclientlocationgroup.NewClientLocationClient("http://localhost:3000", nil)
+	client, err := coreclientlocationgroup.NewClientLocationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	require.NotNil(t, client)
 	resp, err := client.NewClientLocationMoveToExistingSubClient().NewClientLocationMoveToExistingSubAdminOperationsClient().GetAdminInfo(context.Background(), nil)

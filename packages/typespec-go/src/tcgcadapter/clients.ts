@@ -5,7 +5,8 @@
 
 import { values } from '@azure-tools/linq';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
-import { ModelProperty, NoTarget } from '@typespec/compiler';
+import { EmitContext, ModelProperty, NoTarget } from '@typespec/compiler';
+import * as http from '@typespec/http';
 import * as go from '../../../codemodel.go/src/index.js';
 import { capitalize, createOptionsTypeDescription, createResponseEnvelopeDescription, ensureNameCase, getEscapedReservedName, uncapitalize } from '../../../naming.go/src/naming.js';
 import { AdapterError } from './errors.js';
@@ -15,23 +16,23 @@ import { isTypePassedByValue, typeAdapter } from './types.js';
 // used to convert SDK clients and their methods to Go code model types
 export class clientAdapter {
   private ta: typeAdapter;
-  private opts: GoEmitterOptions;
+  private ctx: EmitContext<GoEmitterOptions>;
 
   // track all of the client and parameter group params across all operations
   // as not every option might contain them, and parameter groups can be shared
   // across multiple operations
   private clientParams: Map<string, go.MethodParameter>;
 
-  constructor(ta: typeAdapter, opts: GoEmitterOptions) {
+  constructor(ta: typeAdapter, ctx: EmitContext<GoEmitterOptions>) {
     this.ta = ta;
-    this.opts = opts;
+    this.ctx = ctx;
     this.clientParams = new Map<string, go.MethodParameter>();
   }
 
   // converts all clients and their methods to Go code model types.
   // this includes parameter groups/options types and response envelopes.
   adaptClients(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperation>) {
-    if (this.opts['single-client'] && sdkPackage.clients.length > 1) {
+    if (this.ctx.options['single-client'] && sdkPackage.clients.length > 1) {
       throw new AdapterError('InvalidArgument', 'single-client cannot be enabled when there are multiple clients', NoTarget);
     }
     for (const sdkClient of sdkPackage.clients) {
@@ -91,12 +92,93 @@ export class clientAdapter {
     const goClient = new go.Client(clientName, docs, go.newClientOptions(this.ta.codeModel.type, clientName));
     goClient.parent = parent;
 
+    // NOTE: per tcgc convention, if there is no param of kind credential
+    // it means that the client doesn't require any kind of authentication.
+    // HOWEVER, if there *is* a credential param, then the client *does not*
+    // automatically support unauthenticated requests. a credential with
+    // the noAuth scheme indicates support for unauthenticated requests.
+
+    // bit flags for auth types
+    enum AuthTypes {
+      Default = 0, // unspecified
+      NoAuth  = 1, // explicit NoAuth
+      WithAuth = 2, // explicit credential
+      OmitAuth = 4, // omit-constructors was specified
+    }
+
+    // we skip generating client constructors when emitting into
+    // an existing module. this is because the constructor(s) require
+    // the module name and version info, and we can't make any
+    // assumptions about the names/location.
+    let authType = (this.ta.codeModel.options.omitConstructors || this.ta.codeModel.options.containingModule) ? AuthTypes.OmitAuth : AuthTypes.Default;
+    if (!this.ta.codeModel.options.omitConstructors && this.ta.codeModel.options.containingModule) {
+      // emit a diagnostic indicating that no ctors will be emitted due to containing-module.
+      this.ctx.program.reportDiagnostic({
+        code: 'UnsupportedConfiguration',
+        severity: 'warning',
+        message: 'cannot emit client constructors when containing-module is set',
+        target: sdkClient.__raw.type ?? NoTarget,
+      });
+    }
+
+    /**
+     * processes a credendial, potentially adding its supporting client constructor
+     * 
+     * @param goClient the Go client for which to add the constructor
+     * @param cred the credential type to process
+     * @returns the AuthTypes enum for the credential that was handled, or AuthTypes.Default if none were specified/handled
+     */
+    const processCredential = (goClient: go.Client, cred: http.HttpAuth): AuthTypes => {
+      switch (cred.type) {
+        case 'noAuth':
+          return AuthTypes.NoAuth;
+        case 'oauth2': {
+          goClient.constructors.push(this.createTokenCredentialCtor(goClient, cred));
+          return AuthTypes.WithAuth;
+        }
+        default:
+          this.ctx.program.reportDiagnostic({
+            code: 'UnsupportedAuthenticationScheme',
+            severity: 'warning',
+            message: `unsupported authentication scheme ${cred.type} will be omitted`,
+            target: sdkClient.__raw.type ?? NoTarget,
+          });
+          // return WithAuth as the tsp specifies authentication.
+          // this is to avoid adding a WithNoCredential() ctor to
+          // clients that might not support it.
+          return AuthTypes.WithAuth;
+      }
+    };
+
     // anything other than public means non-instantiable client
     if (sdkClient.clientInitialization.initializedBy & tcgc.InitializedByFlags.Individually) {
       for (const param of sdkClient.clientInitialization.parameters) {
         switch (param.kind) {
           case 'credential':
-            // skip this for now as we don't generate client constructors
+            if (authType === AuthTypes.OmitAuth) {
+              continue;
+            }
+            switch (param.type.kind) {
+              case 'credential':
+                authType |= processCredential(goClient, param.type.scheme);
+                break;
+              case 'union': {
+                const variantKinds = new Array<string>();
+                for (const variantType of param.type.variantTypes) {
+                  variantKinds.push(variantType.scheme.type);
+                  // emit the support credential kinds and skip any unsupported ones.
+                  // this prevents emitting the WithNoCredential constructor in cases
+                  // where it might not actually be supported.
+                  authType |= processCredential(goClient, variantType.scheme);
+                }
+
+                // no supported credential types were specified
+                if (authType === AuthTypes.Default) {
+                  throw new AdapterError('UnsupportedTsp', `credential scheme types ${variantKinds.join()} NYI`, param.__raw?.node ?? NoTarget);
+                }
+                continue;
+              }
+            }
             continue;
           case 'endpoint': {
             if (this.ta.codeModel.type === 'azure-arm') {
@@ -124,12 +206,11 @@ export class clientAdapter {
               const templateArg = endpointType.templateArguments[i];
               if (i === 0) {
                 // the first template arg is always the endpoint parameter.
-                // note that the types of the param and the field are different.
-                // NOTE: we use param.name here instead of templateArg.name as
-                // the former has the fixed name "endpoint" which is what we want.
-                const adaptedParam = this.adaptURIParam(templateArg);
-                adaptedParam.docs.summary = templateArg.summary;
-                adaptedParam.docs.description = templateArg.doc;
+                // NOTE: we force the endpoint param to be required, omitting
+                // any potential for client-side default.
+                const adaptedParam = this.adaptURIParam(templateArg, true);
+                adaptedParam.docs.summary = param.summary;
+                adaptedParam.docs.description = param.doc;
                 goClient.parameters.push(adaptedParam);
 
                 // if the server's URL is *only* the endpoint parameter then we're done.
@@ -142,9 +223,10 @@ export class clientAdapter {
                 continue;
               }
 
-              const adaptedParam = this.adaptURIParam(templateArg);
+              const adaptedParam = this.adaptURIParam(templateArg, false);
               adaptedParam.docs.summary = templateArg.summary;
               adaptedParam.docs.description = templateArg.doc;
+              adaptedParam.isApiVersion = templateArg.isApiVersionParam;
               goClient.parameters.push(adaptedParam);
             }
             break;
@@ -155,8 +237,21 @@ export class clientAdapter {
             // e.g. op withQueryApiVersion(@query("api-version") apiVersion: string)
             // these get propagated to sdkMethod.operation.parameters thus they
             // will be adapted in adaptMethodParameters()
+
+            // for path-based API version params, we need to emit the field on the client
+            // and handle it like a regular client parameter.
+            //
+            // for header/query API version params, we need to emit the correct values
+            // for the APIVersionOptions{} struct so the policy can work. in this case,
+            // no field should be emitted on the client.
             continue;
         }
+      }
+
+      // if no authentication type was specified, or the noAuth scheme was
+      // explicitly specified, then include the WithNoCredential constructor
+      if (authType === AuthTypes.Default || <AuthTypes>(authType & AuthTypes.NoAuth) === AuthTypes.NoAuth) {
+        goClient.constructors.push(new go.Constructor(`New${clientName}WithNoCredential`, new go.NoAuthentication()));
       }
     } else if (parent) {
       // this is a sub-client. it will share the client/host params of the parent.
@@ -171,6 +266,19 @@ export class clientAdapter {
     } else {
       throw new AdapterError('InternalError', `uninstantiable client ${sdkClient.name} has no parent`, NoTarget);
     }
+
+    // propagate optional params to the optional params group
+    for (const param of goClient.parameters) {
+      if (!go.isRequiredParameter(param) && !go.isLiteralParameter(param) && goClient.options.kind === 'clientOptions') {
+        goClient.options.params.push(param);
+      }
+    }
+
+    // if we created constructors, propagate the persisted client params to them
+    for (const constructor of goClient.constructors) {
+      constructor.parameters = goClient.parameters;
+    }
+
     if (sdkClient.children && sdkClient.children.length > 0) {
       for (const child of sdkClient.children) {
         const subClient = this.recursiveAdaptClient(child, goClient);
@@ -193,12 +301,47 @@ export class clientAdapter {
     return goClient;
   }
 
-  private adaptURIParam(sdkParam: tcgc.SdkPathParameter): go.URIParameter {
-    const paramType = this.ta.getWireType(sdkParam.type, true, false);
+  /**
+   * creates a new Go client constructor using token credential authentication
+   * 
+   * @param goClient the Go client for which to create the constructor
+   * @param cred the token credential type
+   * @returns a new Go client constructor using token credential authentication
+   */
+  private createTokenCredentialCtor(goClient: go.Client, cred: http.Oauth2Auth<http.OAuth2Flow[]>): go.Constructor {
+    if (cred.flows.length === 0) {
+      throw new AdapterError('InternalError', `no flows defined for credential type ${cred.type}`, cred.model);
+    } else if (cred.flows[0].scopes.length === 0) {
+      throw new AdapterError('InternalError', `no scopes defined for credential type ${cred.type}`, cred.model);
+    } else if (cred.flows[0].scopes.length > 1) {
+      throw new AdapterError('InternalError', `too many scopes defined for credential type ${cred.type}`, cred.model);
+    }
+    return new go.Constructor(`New${goClient.name}`, new go.TokenAuthentication(cred.flows[0].scopes.map(each => each.value)));
+  }
+
+  /**
+   * creates a new Go URI parameter from the specified tcgc path parameter
+   * 
+   * @param sdkParam the tcgc parameter to adapt
+   * @param forceRequired when true, the parameter is not optional regardless of authoring
+   * @returns the adapted URI parameter
+   */
+  private adaptURIParam(sdkParam: tcgc.SdkPathParameter, forceRequired: boolean): go.URIParameter {
+    let paramType: go.WireType;
+    if (sdkParam.isApiVersionParam) {
+      paramType = new go.String();
+    } else {
+      paramType = this.ta.getWireType(sdkParam.type, true, false);
+    }
+
     if (go.isURIParameterType(paramType)) {
+      const style = forceRequired ? 'required' : this.adaptParameterStyle(sdkParam);
       // TODO: follow up with tcgc if serializedName should actually be optional
-      return new go.URIParameter(sdkParam.name, sdkParam.serializedName ? sdkParam.serializedName : sdkParam.name, paramType,
-        this.adaptParameterStyle(sdkParam), isTypePassedByValue(sdkParam.type) || !sdkParam.optional, 'client');
+      const uriParam = new go.URIParameter(sdkParam.name, sdkParam.serializedName ? sdkParam.serializedName : sdkParam.name, paramType,
+        style, isTypePassedByValue(sdkParam.type) || !sdkParam.optional, 'client');
+      uriParam.docs.summary = sdkParam.summary;
+      uriParam.docs.description = sdkParam.doc;
+      return uriParam;
     }
     throw new AdapterError('UnsupportedTsp', `unsupported URI parameter type ${paramType.kind}`, sdkParam.__raw?.node ?? NoTarget);
   }
@@ -285,7 +428,7 @@ export class clientAdapter {
     }
 
     let prefix = method.client.name;
-    if (this.opts['single-client']) {
+    if (this.ctx.options['single-client']) {
       prefix = '';
     }
     if (go.isLROMethod(method)) {
@@ -484,7 +627,9 @@ export class clientAdapter {
 
         // if the adapted client param is a literal then don't add it to
         // the array of client params as it's not a formal parameter.
-        if (go.isLiteralParameter(adaptedParam)) {
+        // the only exception is any api version parameter as we need this
+        // for generating client constructors.
+        if (go.isLiteralParameter(adaptedParam) && !go.isAPIVersionParameter(adaptedParam)) {
           continue;
         }
 
@@ -524,20 +669,28 @@ export class clientAdapter {
    * @returns the adapted Go method parameter
    */
   private adaptMethodParameter(opParam: tcgc.SdkBodyParameter | tcgc.SdkCookieParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter, verb: go.HTTPMethod): go.MethodParameter {
-    if (opParam.isApiVersionParam && opParam.clientDefaultValue) {
+    if (opParam.isApiVersionParam) {
       // we emit the api version param inline as a literal, never as a param.
       // the ClientOptions.APIVersion setting is used to change the version.
-      const paramType = new go.Literal(new go.String(), opParam.clientDefaultValue);
+      const paramType = opParam.clientDefaultValue ? new go.Literal(new go.String(), opParam.clientDefaultValue) : new go.String();
+      const paramStyle = opParam.clientDefaultValue ? 'literal' : opParam.optional ? 'optional' : 'required';
+      const paramLoc = opParam.onClient ? 'client' : 'method';
+      let apiVersionParam: go.HeaderScalarParameter | go.PathScalarParameter | go.QueryScalarParameter;
       switch (opParam.kind) {
         case 'header':
-          return new go.HeaderScalarParameter(opParam.name, opParam.serializedName, paramType, 'literal', true, 'method');
+          apiVersionParam = new go.HeaderScalarParameter('apiVersion', opParam.serializedName, paramType, paramStyle, true, paramLoc);
+          break;
         case 'path':
-          return new go.PathScalarParameter(opParam.name, opParam.serializedName, true, paramType, 'literal', true, 'method');
+          apiVersionParam = new go.PathScalarParameter('apiVersion', opParam.serializedName, true, paramType, paramStyle, true, paramLoc);
+          break;
         case 'query':
-          return new go.QueryScalarParameter(opParam.name, opParam.serializedName, true, paramType, 'literal', true, 'method');
+          apiVersionParam = new go.QueryScalarParameter('apiVersion', opParam.serializedName, true, paramType, paramStyle, true, paramLoc);
+          break;
         default:
           throw new AdapterError('UnsupportedTsp', `unsupported API version param kind ${opParam.kind}`, opParam.__raw?.node ?? NoTarget);
       }
+      apiVersionParam.isApiVersion = true;
+      return apiVersionParam;
     }
 
     let location: go.ParameterLocation = 'method';
@@ -658,7 +811,7 @@ export class clientAdapter {
   private adaptResponseEnvelope(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType): go.ResponseEnvelope {
     // TODO: add Envelope suffix if name collides with existing type
     let prefix = method.client.name;
-    if (this.opts['single-client']) {
+    if (this.ctx.options['single-client']) {
       prefix = '';
     }
     let respEnvName = `${prefix}${method.name}Response`;
@@ -691,7 +844,7 @@ export class clientAdapter {
     let sdkResponseType = sdkMethod.response.type;
 
     // since HEAD requests don't return a type, we must check this before checking sdkResponseType
-    if (method.httpMethod === 'head' && this.opts['head-as-boolean'] === true) {
+    if (method.httpMethod === 'head' && this.ctx.options['head-as-boolean'] === true) {
       respEnv.result = new go.HeadAsBooleanResult('Success');
       respEnv.result.docs.summary = 'Success indicates if the operation succeeded or failed.';
     }
@@ -898,10 +1051,28 @@ export class clientAdapter {
       }
       return 'literal';
     } else if (param.clientDefaultValue) {
-      const adaptedType = this.ta.getWireType(param.type, false, false);
-      if (!go.isLiteralValueType(adaptedType)) {
-        throw new AdapterError('InternalError', `unexpected client side default type ${go.getTypeDeclaration(adaptedType)} for parameter ${param.name}`, param.__raw?.node ?? NoTarget);
+      let adaptedType: go.LiteralType;
+      if (param.isApiVersionParam) {
+        // we force the API version param type to a string
+        // so it matches the ClientOptions.APIVersion type
+        adaptedType = new go.String();
+      } else {
+        const adaptedWireType = this.ta.getWireType(param.type, false, false);
+        if (!go.isLiteralValueType(adaptedWireType)) {
+          throw new AdapterError('InternalError', `unexpected client side default type ${go.getTypeDeclaration(adaptedWireType)} for parameter ${param.name}`, param.__raw?.node ?? NoTarget);
+        }
+        adaptedType = adaptedWireType;
       }
+      if (adaptedType.kind === 'constant') {
+        // find the matching constant for the clientDefaultValue
+        for (const constValue of adaptedType.values) {
+          if (constValue.value === param.clientDefaultValue) {
+            return new go.ClientSideDefault(new go.Literal(adaptedType, constValue));
+          }
+        }
+        throw new AdapterError('InternalError', `didn't find clientDefaultValue constant with value ${<string>param.clientDefaultValue} for parameter`, param.__raw?.node ?? NoTarget);
+      }
+      // non-constant clientDefaultValue
       return new go.ClientSideDefault(new go.Literal(adaptedType, param.clientDefaultValue));
     } else if (param.optional) {
       return 'optional';
@@ -988,12 +1159,11 @@ export class clientAdapter {
         switch (goType.kind) {
           case 'constant':
           case 'encodedBytes':
+          case 'etag':
           case 'literal':
           case 'string':
           case 'time':
             return new go.StringExample(exampleType.value, goType);
-          case 'qualifiedType':
-            return new go.QualifiedExample(goType, exampleType.value);
         }
         break;
       case 'number':
@@ -1093,6 +1263,7 @@ function isHttpStatusCodeRange(statusCode: HttpStatusCodeRange | number): status
 interface ParameterStyleInfo {
   __raw?: ModelProperty;
   clientDefaultValue?: unknown;
+  isApiVersionParam: boolean;
   name: string;
   optional: boolean;
   type: tcgc.SdkType;

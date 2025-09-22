@@ -15,7 +15,7 @@ import (
 )
 
 func TestClientBClient_RenamedFour(t *testing.T) {
-	client, err := multiclientgroup.NewClientBClient("http://localhost:3000", nil)
+	client, err := multiclientgroup.NewClientBClientWithNoCredential("http://localhost:3000", multiclientgroup.ClientTypeMultiClient, nil)
 	require.NoError(t, err)
 	resp, err := client.RenamedFour(context.Background(), nil)
 	require.NoError(t, err)
@@ -23,7 +23,7 @@ func TestClientBClient_RenamedFour(t *testing.T) {
 }
 
 func TestClientBClient_RenamedSix(t *testing.T) {
-	client, err := multiclientgroup.NewClientBClient("http://localhost:3000", nil)
+	client, err := multiclientgroup.NewClientBClientWithNoCredential("http://localhost:3000", multiclientgroup.ClientTypeMultiClient, nil)
 	require.NoError(t, err)
 	resp, err := client.RenamedSix(context.Background(), nil)
 	require.NoError(t, err)
@@ -31,7 +31,7 @@ func TestClientBClient_RenamedSix(t *testing.T) {
 }
 
 func TestClientBClient_RenamedTwo(t *testing.T) {
-	client, err := multiclientgroup.NewClientBClient("http://localhost:3000", nil)
+	client, err := multiclientgroup.NewClientBClientWithNoCredential("http://localhost:3000", multiclientgroup.ClientTypeMultiClient, nil)
 	require.NoError(t, err)
 	resp, err := client.RenamedTwo(context.Background(), nil)
 	require.NoError(t, err)

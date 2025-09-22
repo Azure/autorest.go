@@ -13,7 +13,7 @@ import (
 )
 
 func TestXMLModelWithRenamedFieldsValueClient_Get(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
+	client, err := xmlgroup.NewXMLClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithRenamedFieldsValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -30,7 +30,7 @@ func TestXMLModelWithRenamedFieldsValueClient_Get(t *testing.T) {
 }
 
 func TestXMLModelWithRenamedFieldsValueClient_Put(t *testing.T) {
-	client, err := xmlgroup.NewXMLClient("http://localhost:3000", nil)
+	client, err := xmlgroup.NewXMLClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithRenamedFieldsValueClient().Put(context.Background(), xmlgroup.ModelWithRenamedFields{
 		InputData: &xmlgroup.SimpleModel{

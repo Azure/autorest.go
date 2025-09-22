@@ -4,13 +4,39 @@
 
 package extensiblegroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+)
 
 // ExtensibleClient contains the methods for the Extensible group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewExtensibleClientWithNoCredential() instead.
 type ExtensibleClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ExtensibleClientOptions contains the optional values for creating a [ExtensibleClient].
+type ExtensibleClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewExtensibleClientWithNoCredential creates a new instance of ExtensibleClient with the specified values.
+//   - endpoint - Service host
+//   - options - ExtensibleClientOptions contains the optional values for creating a [ExtensibleClient]
+func NewExtensibleClientWithNoCredential(endpoint string, options *ExtensibleClientOptions) (*ExtensibleClient, error) {
+	if options == nil {
+		options = &ExtensibleClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ExtensibleClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // NewExtensibleStringClient creates a new instance of [ExtensibleStringClient].

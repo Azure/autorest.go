@@ -1,16 +1,20 @@
-package traitsgroup
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+package traitsgroup_test
 
 import (
 	"context"
 	"testing"
 	"time"
+	"traitsgroup"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
 func TestTraitsClient_RepeatableAction(t *testing.T) {
-	client, err := NewTraitsClient("http://localhost:3000", nil)
+	client, err := traitsgroup.NewTraitsClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	require.NotNil(t, client)
 	id := int32(1)
@@ -18,9 +22,9 @@ func TestTraitsClient_RepeatableAction(t *testing.T) {
 	layout := time.RFC1123
 	tt, err := time.Parse(layout, rfc7231)
 	require.NoError(t, err)
-	resp, err := client.RepeatableAction(context.Background(), id, UserActionParam{
+	resp, err := client.RepeatableAction(context.Background(), id, traitsgroup.UserActionParam{
 		UserActionValue: to.Ptr("test"),
-	}, &TraitsClientRepeatableActionOptions{
+	}, &traitsgroup.TraitsClientRepeatableActionOptions{
 		RepeatabilityFirstSent: to.Ptr(tt),
 		RepeatabilityRequestID: to.Ptr("86aede1f-96fa-4e7f-b1e1-bf8a947cb804"),
 	})
@@ -30,7 +34,7 @@ func TestTraitsClient_RepeatableAction(t *testing.T) {
 }
 
 func TestTraitsClient_SmokeTest(t *testing.T) {
-	client, err := NewTraitsClient("http://localhost:3000", nil)
+	client, err := traitsgroup.NewTraitsClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	require.NotNil(t, client)
 	require.NoError(t, err)
@@ -43,7 +47,7 @@ func TestTraitsClient_SmokeTest(t *testing.T) {
 	require.NoError(t, err)
 	t2, err := time.Parse(layout, rfc7231_02)
 	require.NoError(t, err)
-	resp, err := client.SmokeTest(context.Background(), id, foo, &TraitsClientSmokeTestOptions{
+	resp, err := client.SmokeTest(context.Background(), id, foo, &traitsgroup.TraitsClientSmokeTestOptions{
 		IfMatch:           to.Ptr("\"valid\""),
 		IfNoneMatch:       to.Ptr("\"invalid\""),
 		IfModifiedSince:   to.Ptr(t1),

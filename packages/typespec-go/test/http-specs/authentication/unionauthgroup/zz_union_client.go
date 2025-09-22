@@ -6,17 +6,59 @@ package unionauthgroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"reflect"
 )
 
 // UnionClient - Illustrates clients generated with ApiKey and OAuth2 authentication.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewUnionClient() instead.
 type UnionClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// UnionClientOptions contains the optional values for creating a [UnionClient].
+type UnionClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewUnionClient creates a new instance of UnionClient with the specified values.
+//   - endpoint - Service host
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - UnionClientOptions contains the optional values for creating a [UnionClient]
+func NewUnionClient(endpoint string, credential azcore.TokenCredential, options *UnionClientOptions) (*UnionClient, error) {
+	if options == nil {
+		options = &UnionClientOptions{}
+	}
+	if reflect.ValueOf(options.Cloud).IsZero() {
+		options.Cloud = cloud.AzurePublic
+	}
+	c, ok := options.Cloud.Services[ServiceName]
+	if !ok {
+		return nil, fmt.Errorf("provided Cloud field is missing configuration for %s", ServiceName)
+	} else if c.Audience == "" {
+		return nil, fmt.Errorf("provided Cloud field is missing Audience for %s", ServiceName)
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
+		PerCall: []policy.Policy{
+			runtime.NewBearerTokenPolicy(credential, []string{c.Audience + "/.default"}, &policy.BearerTokenOptions{
+				InsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,
+			}),
+		},
+	}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &UnionClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // ValidKey - Check whether client is authenticated

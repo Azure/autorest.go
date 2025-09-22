@@ -17,7 +17,7 @@ import (
 )
 
 func TestStringClientGetNonNull(t *testing.T) {
-	client, err := nullablegroup.NewNullableClient("http://localhost:3000", nil)
+	client, err := nullablegroup.NewNullableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNullableStringClient().GetNonNull(context.Background(), nil)
 	require.NoError(t, err)
@@ -28,7 +28,7 @@ func TestStringClientGetNonNull(t *testing.T) {
 }
 
 func TestStringClientGetNull(t *testing.T) {
-	client, err := nullablegroup.NewNullableClient("http://localhost:3000", nil)
+	client, err := nullablegroup.NewNullableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNullableStringClient().GetNull(context.Background(), nil)
 	require.NoError(t, err)
@@ -38,7 +38,7 @@ func TestStringClientGetNull(t *testing.T) {
 }
 
 func TestStringClientPatchNonNull(t *testing.T) {
-	client, err := nullablegroup.NewNullableClient("http://localhost:3000", nil)
+	client, err := nullablegroup.NewNullableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNullableStringClient().PatchNonNull(context.Background(), nullablegroup.StringProperty{
 		NullableProperty: to.Ptr("hello"),
@@ -49,7 +49,7 @@ func TestStringClientPatchNonNull(t *testing.T) {
 }
 
 func TestStringClientPatchNull(t *testing.T) {
-	client, err := nullablegroup.NewNullableClient("http://localhost:3000", nil)
+	client, err := nullablegroup.NewNullableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewNullableStringClient().PatchNull(context.Background(), nullablegroup.StringProperty{
 		NullableProperty: azcore.NullValue[*string](),

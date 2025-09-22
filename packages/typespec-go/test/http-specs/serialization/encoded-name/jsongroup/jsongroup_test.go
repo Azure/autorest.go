@@ -13,7 +13,7 @@ import (
 )
 
 func TestJSONClientGet(t *testing.T) {
-	client, err := jsongroup.NewJSONClient("http://localhost:3000", nil)
+	client, err := jsongroup.NewJSONClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewJSONPropertyClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -21,7 +21,7 @@ func TestJSONClientGet(t *testing.T) {
 }
 
 func TestJSONClientSend(t *testing.T) {
-	client, err := jsongroup.NewJSONClient("http://localhost:3000", nil)
+	client, err := jsongroup.NewJSONClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	_, err = client.NewJSONPropertyClient().Send(context.Background(), jsongroup.JSONEncodedNameModel{DefaultName: to.Ptr(true)}, nil)
 	require.NoError(t, err)

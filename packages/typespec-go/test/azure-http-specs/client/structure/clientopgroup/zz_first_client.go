@@ -14,11 +14,36 @@ import (
 )
 
 // FirstClient contains the methods for the First group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewFirstClientWithNoCredential() instead.
 type FirstClient struct {
 	internal *azcore.Client
 	endpoint string
 	client   ClientType
+}
+
+// FirstClientOptions contains the optional values for creating a [FirstClient].
+type FirstClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewFirstClientWithNoCredential creates a new instance of FirstClient with the specified values.
+//   - endpoint - Service host
+//   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
+//   - options - FirstClientOptions contains the optional values for creating a [FirstClient]
+func NewFirstClientWithNoCredential(endpoint string, client ClientType, options *FirstClientOptions) (*FirstClient, error) {
+	if options == nil {
+		options = &FirstClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	firstClient := &FirstClient{
+		endpoint: endpoint,
+		client:   client,
+		internal: cl,
+	}
+	return firstClient, nil
 }
 
 // NewFirstGroup3Client creates a new instance of [FirstGroup3Client].

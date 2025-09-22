@@ -13,7 +13,7 @@ import (
 )
 
 func TestAzureLocationScalarClient_Get(t *testing.T) {
-	client, err := corescalargroup.NewScalarClient("http://localhost:3000", nil)
+	client, err := corescalargroup.NewScalarClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarAzureLocationScalarClient().Get(context.Background(), nil)
 	require.NoError(t, err)
@@ -22,7 +22,7 @@ func TestAzureLocationScalarClient_Get(t *testing.T) {
 }
 
 func TestAzureLocationScalarClient_Header(t *testing.T) {
-	client, err := corescalargroup.NewScalarClient("http://localhost:3000", nil)
+	client, err := corescalargroup.NewScalarClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarAzureLocationScalarClient().Header(context.Background(), "eastus", nil)
 	require.NoError(t, err)
@@ -30,7 +30,7 @@ func TestAzureLocationScalarClient_Header(t *testing.T) {
 }
 
 func TestAzureLocationScalarClient_Post(t *testing.T) {
-	client, err := corescalargroup.NewScalarClient("http://localhost:3000", nil)
+	client, err := corescalargroup.NewScalarClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarAzureLocationScalarClient().Post(context.Background(), corescalargroup.AzureLocationModel{
 		Location: to.Ptr("eastus"),
@@ -41,7 +41,7 @@ func TestAzureLocationScalarClient_Post(t *testing.T) {
 }
 
 func TestAzureLocationScalarClient_Put(t *testing.T) {
-	client, err := corescalargroup.NewScalarClient("http://localhost:3000", nil)
+	client, err := corescalargroup.NewScalarClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarAzureLocationScalarClient().Put(context.Background(), "eastus", nil)
 	require.NoError(t, err)
@@ -49,7 +49,7 @@ func TestAzureLocationScalarClient_Put(t *testing.T) {
 }
 
 func TestAzureLocationScalarClient_Query(t *testing.T) {
-	client, err := corescalargroup.NewScalarClient("http://localhost:3000", nil)
+	client, err := corescalargroup.NewScalarClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewScalarAzureLocationScalarClient().Query(context.Background(), "eastus", nil)
 	require.NoError(t, err)

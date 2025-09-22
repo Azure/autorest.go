@@ -13,7 +13,7 @@ import (
 )
 
 func TestOptionalRequiredAndOptionalClient_GetAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalRequiredAndOptionalClient().GetAll(context.Background(), nil)
 	require.NoError(t, err)
@@ -24,7 +24,7 @@ func TestOptionalRequiredAndOptionalClient_GetAll(t *testing.T) {
 }
 
 func TestOptionalRequiredAndOptionalClient_GetRequiredOnly(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalRequiredAndOptionalClient().GetRequiredOnly(context.Background(), nil)
 	require.NoError(t, err)
@@ -34,7 +34,7 @@ func TestOptionalRequiredAndOptionalClient_GetRequiredOnly(t *testing.T) {
 }
 
 func TestOptionalRequiredAndOptionalClient_PutAll(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalRequiredAndOptionalClient().PutAll(context.Background(), optionalitygroup.RequiredAndOptionalProperty{
 		RequiredProperty: to.Ptr[int32](42),
@@ -45,7 +45,7 @@ func TestOptionalRequiredAndOptionalClient_PutAll(t *testing.T) {
 }
 
 func TestOptionalRequiredAndOptionalClient_PutRequiredOnly(t *testing.T) {
-	client, err := optionalitygroup.NewOptionalClient("http://localhost:3000", nil)
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewOptionalRequiredAndOptionalClient().PutRequiredOnly(context.Background(), optionalitygroup.RequiredAndOptionalProperty{
 		RequiredProperty: to.Ptr[int32](42),

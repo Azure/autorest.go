@@ -13,10 +13,33 @@ import (
 )
 
 // DurationClient - Test for azure related encode decorator.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewDurationClientWithNoCredential() instead.
 type DurationClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// DurationClientOptions contains the optional values for creating a [DurationClient].
+type DurationClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewDurationClientWithNoCredential creates a new instance of DurationClient with the specified values.
+//   - endpoint - Service host
+//   - options - DurationClientOptions contains the optional values for creating a [DurationClient]
+func NewDurationClientWithNoCredential(endpoint string, options *DurationClientOptions) (*DurationClient, error) {
+	if options == nil {
+		options = &DurationClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &DurationClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // DurationConstant - Test duration with azure specific encoding.

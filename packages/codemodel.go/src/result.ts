@@ -193,12 +193,12 @@ export interface ResponseEnvelope {
 export type ResultFormat = 'JSON' | 'XML' | 'Text';
 
 /** returns the underlying type used for the specified result type */
-export function getResultType(result: Result): type.Interface | type.Model | MonomorphicResultType | type.Scalar | type.QualifiedType | type.PolymorphicModel {
+export function getResultType(result: Result): type.Interface | type.Model | MonomorphicResultType | type.Scalar | type.ReadCloser | type.PolymorphicModel {
   switch (result.kind) {
     case 'anyResult':
       return new type.Any();
     case 'binaryResult':
-      return new type.QualifiedType('ReadCloser', 'io');
+      return new type.ReadCloser();
     case 'headAsBooleanResult':
       return new type.Scalar('bool', false);
     case 'modelResult':

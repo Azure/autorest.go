@@ -16,10 +16,38 @@ import (
 )
 
 // StandardClient - Illustrates bodies templated with Azure Core with long-running operation
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewStandardClientWithNoCredential() instead.
 type StandardClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// StandardClientOptions contains the optional values for creating a [StandardClient].
+type StandardClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewStandardClientWithNoCredential creates a new instance of StandardClient with the specified values.
+//   - endpoint - Service host
+//   - options - StandardClientOptions contains the optional values for creating a [StandardClient]
+func NewStandardClientWithNoCredential(endpoint string, options *StandardClientOptions) (*StandardClient, error) {
+	if options == nil {
+		options = &StandardClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
+		APIVersion: runtime.APIVersionOptions{
+			Name:     "api-version",
+			Location: runtime.APIVersionLocationQueryParam,
+		},
+	}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &StandardClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // BeginCreateOrReplace - Adds a user or replaces a user's fields.

@@ -565,11 +565,6 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
       return parsingCode;
     };
 
-    const isMultipartContentType = function (type: go.WireType): boolean {
-      type = helpers.recursiveUnwrapMapSlice(type);
-      return (type.kind === 'qualifiedType' && type.exportName === 'MultipartContent');
-    };
-
     const isModelType = function (type: go.WireType): type is go.Model | go.PolymorphicModel {
       return type.kind === 'model' || type.kind === 'polymorphicModel';
     }
@@ -582,7 +577,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
       if (isModelType(helpers.recursiveUnwrapMapSlice(type))) {
         imports.add('encoding/json');
         caseContent += `\t\t\tif err = json.Unmarshal(content, &${paramVar}); err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n`;
-      } else if (type.kind === 'qualifiedType' && type.exportName === 'ReadSeekCloser') {
+      } else if (type.kind === 'readSeekCloser') {
         imports.add('bytes');
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
         assignedValue = 'streaming.NopCloser(bytes.NewReader(content))';
@@ -623,7 +618,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
         }
       } else if (type.kind === 'string') {
         assignedValue = 'string(content)';
-      } else if (isMultipartContentType(type)) {
+      } else if (helpers.recursiveUnwrapMapSlice(type).kind === 'multipartContent') {
         imports.add('bytes');
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
         const bodyContent = 'streaming.NopCloser(bytes.NewReader(content))';
@@ -641,7 +636,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
           caseContent += `\t\t\t${paramVar}.Filename = ${filename}\n`;
         }
       } else if (type.kind === 'slice') {
-        if (type.elementType.kind === 'qualifiedType' && type.elementType.exportName === 'ReadSeekCloser') {
+        if (type.elementType.kind === 'readSeekCloser') {
           imports.add('bytes');
           imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
           assignedValue = `append(${paramVar}, streaming.NopCloser(bytes.NewReader(content)))`;

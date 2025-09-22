@@ -14,11 +14,36 @@ import (
 )
 
 // ClientBClient contains the methods for the ClientB group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewClientBClientWithNoCredential() instead.
 type ClientBClient struct {
 	internal *azcore.Client
 	endpoint string
 	client   ClientType
+}
+
+// ClientBClientOptions contains the optional values for creating a [ClientBClient].
+type ClientBClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewClientBClientWithNoCredential creates a new instance of ClientBClient with the specified values.
+//   - endpoint - Service host
+//   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
+//   - options - ClientBClientOptions contains the optional values for creating a [ClientBClient]
+func NewClientBClientWithNoCredential(endpoint string, client ClientType, options *ClientBClientOptions) (*ClientBClient, error) {
+	if options == nil {
+		options = &ClientBClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	clientBClient := &ClientBClient{
+		endpoint: endpoint,
+		client:   client,
+		internal: cl,
+	}
+	return clientBClient, nil
 }
 
 // RenamedFour -
