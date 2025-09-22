@@ -3,6 +3,7 @@
 *  Licensed under the MIT License. See License.txt in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
+import * as method from './method.js';
 import * as type from './type.js';
 
 /** indicates the wire format for request bodies */
@@ -375,12 +376,12 @@ export function isQueryScalarParameterType(type: type.WireType): type is QuerySc
 }
 
 /** returns true if the param is required */
-export function isRequiredParameter(param: MethodParameter | Parameter): boolean {
+export function isRequiredParameter(paramStyle: ParameterStyle): boolean {
   // parameters with a client-side default value are always optional
-  if (isClientSideDefault(param.style)) {
+  if (isClientSideDefault(paramStyle)) {
     return false;
   }
-  return param.style === 'required';
+  return paramStyle === 'required';
 }
 
 /** narrows type to a URIParameterType within the conditional block */
@@ -396,41 +397,18 @@ export function isURIParameterType(type: type.WireType): type is URIParameterTyp
 }
 
 /** returns true if the param is a literal */
-export function isLiteralParameter(param: MethodParameter | Parameter): boolean {
-  if (isClientSideDefault(param.style)) {
+export function isLiteralParameter(paramStyle: ParameterStyle): boolean {
+  if (isClientSideDefault(paramStyle)) {
     return false;
   }
-  return param.style === 'literal';
+  return paramStyle === 'literal';
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // base types
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-interface ParameterBase {
-  /** the name of the parameter */
-  name: string;
-
-  /** any docs for the parameter */
-  docs: type.Docs;
-
-  /** the parameter's type */
-  type: type.Type;
-
-  /** indicates if the parameter is passed by value or by pointer */
-  byValue: boolean;
-}
-
-class ParameterBase implements ParameterBase {
-  constructor(name: string, type: type.Type, byValue: boolean) {
-    this.name = name;
-    this.type = type;
-    this.byValue = byValue;
-    this.docs = {};
-  }
-}
-
-interface HttpParameterBase extends ParameterBase {
+interface HttpParameterBase extends method.Parameter {
   /**
    * the parameter's type.
    * NOTE: if the type is a LiteralValue the style will either be literal or flag
@@ -447,7 +425,7 @@ interface HttpParameterBase extends ParameterBase {
   location: ParameterLocation;
 }
 
-class HttpParameterBase extends ParameterBase implements HttpParameterBase {
+class HttpParameterBase extends method.Parameter implements HttpParameterBase {
   constructor(name: string, type: type.WireType, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
     super(name, type, byValue);
     this.style = style;

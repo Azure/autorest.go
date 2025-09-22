@@ -87,7 +87,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     if (client.parameters.length > 0) {
       const addedGroups = new Set<string>();
       for (const clientParam of values(client.parameters)) {
-        if (go.isLiteralParameter(clientParam)) {
+        if (go.isLiteralParameter(clientParam.style)) {
           continue;
         }
         if (clientParam.group) {
@@ -103,7 +103,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
         } else {
           clientText += `${helpers.formatParameterTypeName(clientParam)}\n`;
         }
-        if (!go.isRequiredParameter(clientParam)) {
+        if (!go.isRequiredParameter(clientParam.style)) {
           optionalParams.push(clientParam);
         }
       }
@@ -127,7 +127,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
       opText += '\t\tinternal: client.internal,\n';
       // propagate all client params
       for (const param of client.parameters) {
-        if (go.isLiteralParameter(param)) {
+        if (go.isLiteralParameter(param.style)) {
           continue;
         }
         opText += `\t\t${param.name}: client.${param.name},\n`;
@@ -141,13 +141,13 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
       // it must be done before the imports are written out
       if (go.isLROMethod(method)) {
         // generate Begin method
-        opText += generateLROBeginMethod(client, method, imports, codeModel.options.injectSpans, codeModel.options.generateFakes);
+        opText += generateLROBeginMethod(method, imports, codeModel.options.injectSpans, codeModel.options.generateFakes);
       }
-      opText += generateOperation(client, method, imports, codeModel.options.injectSpans, codeModel.options.generateFakes);
-      opText += createProtocolRequest(azureARM, client, method, imports);
+      opText += generateOperation(method, imports, codeModel.options.injectSpans, codeModel.options.generateFakes);
+      opText += createProtocolRequest(azureARM, method, imports);
       if (method.kind !== 'lroMethod') {
         // LRO responses are handled elsewhere, with the exception of pageable LROs
-        opText += createProtocolResponse(client, method, imports);
+        opText += createProtocolResponse(method, imports);
       }
       if ((method.kind === 'lroPageableMethod' || method.kind === 'pageableMethod') && method.nextPageMethod && !nextPageMethods.includes(method.nextPageMethod)) {
         // track the next page methods to generate as multiple operations can use the same next page operation
@@ -156,7 +156,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     }
 
     for (const method of nextPageMethods) {
-      opText += createProtocolRequest(azureARM, client, method, imports);
+      opText += createProtocolRequest(azureARM, method, imports);
     }
 
     // stitch it all together
@@ -211,7 +211,7 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
 
     constructor.parameters.sort(helpers.sortParametersByRequired);
     for (const ctorParam of constructor.parameters) {
-      if (!go.isRequiredParameter(ctorParam)) {
+      if (!go.isRequiredParameter(ctorParam.style)) {
         // param is part of the options group
         continue;
       }
@@ -342,7 +342,7 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
             name = ensureNameCase(param.name);
           }
           ctorText += `\t${param.name} := ${helpers.formatLiteralValue(param.style.defaultValue, false)}\n`;
-          ctorText += `\tif options.${name} != ${helpers.zeroValue(param)} {\n\t\t${param.name} = ${helpers.star(param)}options.${name}\n\t}\n`;
+          ctorText += `\tif options.${name} != ${helpers.zeroValue(param)} {\n\t\t${param.name} = ${helpers.star(param.byValue)}options.${name}\n\t}\n`;
         }
       }
     }
@@ -359,7 +359,7 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
 
     ctorText += `\t${clientVar} := &${client.name}{\n`;
     for (const parameter of values(client.parameters)) {
-      if (go.isLiteralParameter(parameter)) {
+      if (go.isLiteralParameter(parameter.style)) {
         continue;
       }
       // each client field will have a matching parameter with the same name
@@ -483,7 +483,7 @@ function formatHeaderResponseValue(headerResp: go.HeaderScalarResponse | go.Head
 }
 
 function getZeroReturnValue(method: go.MethodType, apiType: 'api' | 'op' | 'handler'): string {
-  let returnType = `${method.responseEnvelope.name}{}`;
+  let returnType = `${method.returns.name}{}`;
   if (go.isLROMethod(method)) {
     if (apiType === 'api' || apiType === 'op') {
       // the api returns a *Poller[T]
@@ -507,10 +507,10 @@ function generateNilChecks(path: string, prefix: string = 'page'): string {
   return checks.join(' && ');
 }
 
-function emitPagerDefinition(client: go.Client, method: go.LROPageableMethod | go.PageableMethod, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
+function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
   imports.add('context');
-  let text = `runtime.NewPager(runtime.PagingHandler[${method.responseEnvelope.name}]{\n`;
-  text += `\t\tMore: func(page ${method.responseEnvelope.name}) bool {\n`;
+  let text = `runtime.NewPager(runtime.PagingHandler[${method.returns.name}]{\n`;
+  text += `\t\tMore: func(page ${method.returns.name}) bool {\n`;
   // there is no advancer for single-page pagers
   if (method.nextLinkName) {
     const nilChecks = generateNilChecks(method.nextLinkName);
@@ -520,10 +520,10 @@ function emitPagerDefinition(client: go.Client, method: go.LROPageableMethod | g
     text += '\t\t\treturn false\n';
     text += '\t\t},\n';
   }
-  text += `\t\tFetcher: func(ctx context.Context, page *${method.responseEnvelope.name}) (${method.responseEnvelope.name}, error) {\n`;
+  text += `\t\tFetcher: func(ctx context.Context, page *${method.returns.name}) (${method.returns.name}, error) {\n`;
   const reqParams = helpers.getCreateRequestParameters(method);
   if (generateFakes) {
-    text += `\t\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "${client.name}.${fixUpMethodName(method)}")\n`;
+    text += `\t\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "${method.receiver.type.name}.${fixUpMethodName(method)}")\n`;
   }
   if (method.nextLinkName) {
     let nextLinkVar: string;
@@ -556,21 +556,21 @@ function emitPagerDefinition(client: go.Client, method: go.LROPageableMethod | g
     } else {
       text += 'nil)\n';
     }
-    text += `\t\t\tif err != nil {\n\t\t\t\treturn ${method.responseEnvelope.name}{}, err\n\t\t\t}\n`;
+    text += `\t\t\tif err != nil {\n\t\t\t\treturn ${method.returns.name}{}, err\n\t\t\t}\n`;
     text += `\t\t\treturn client.${method.naming.responseMethod}(resp)\n`;
     text += '\t\t\t},\n';
   } else {
     // this is the singular page case, no fetcher helper required
     text += `\t\t\treq, err := client.${method.naming.requestMethod}(${reqParams})\n`;
     text += '\t\t\tif err != nil {\n';
-    text += `\t\t\t\treturn ${method.responseEnvelope.name}{}, err\n`;
+    text += `\t\t\t\treturn ${method.returns.name}{}, err\n`;
     text += '\t\t\t}\n';
     text += '\t\t\tresp, err := client.internal.Pipeline().Do(req)\n';
     text += '\t\t\tif err != nil {\n';
-    text += `\t\t\t\treturn ${method.responseEnvelope.name}{}, err\n`;
+    text += `\t\t\t\treturn ${method.returns.name}{}, err\n`;
     text += '\t\t\t}\n';
     text += '\t\t\tif !runtime.HasStatusCode(resp, http.StatusOK) {\n';
-    text += `\t\t\t\treturn ${method.responseEnvelope.name}{}, runtime.NewResponseError(resp)\n`;
+    text += `\t\t\t\treturn ${method.returns.name}{}, runtime.NewResponseError(resp)\n`;
     text += '\t\t\t}\n';
     text += `\t\t\treturn client.${method.naming.responseMethod}(resp)\n`;
     text += '\t\t},\n';
@@ -590,7 +590,7 @@ function genApiVersionDoc(apiVersions: Array<string>): string {
 }
 
 function genRespErrorDoc(method: go.MethodType): string {
-  if (!(method.responseEnvelope.result?.kind === 'headAsBooleanResult') && !go.isPageableMethod(method)) {
+  if (!(method.returns.result?.kind === 'headAsBooleanResult') && !go.isPageableMethod(method)) {
     // when head-as-boolean is enabled, no error is returned for 4xx status codes.
     // pager constructors don't return an error
     return '// If the operation fails it returns an *azcore.ResponseError type.\n';
@@ -598,7 +598,17 @@ function genRespErrorDoc(method: go.MethodType): string {
   return '';
 }
 
-function generateOperation(client: go.Client, method: go.MethodType, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
+/**
+ * returns the receiver definition for a client
+ * 
+ * @param receiver the receiver for which to emit the definition
+ * @returns the receiver definition
+ */
+function getClientReceiverDefinition(receiver: go.Receiver<go.Client>): string {
+  return `(${receiver.name} ${receiver.byValue ? '' : '*'}${receiver.type.name})`;
+}
+
+function generateOperation(method: go.MethodType, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
   const params = getAPIParametersSig(method, imports);
   const returns = generateReturnsInfo(method, 'op');
   let methodName = method.name;
@@ -625,16 +635,16 @@ function generateOperation(client: go.Client, method: go.MethodType, imports: Im
       text += helpers.formatCommentAsBulletItem(param.name, param.docs);
     }
   }
-  text += `func (client *${client.name}) ${methodName}(${params}) (${returns.join(', ')}) {\n`;
+  text += `func ${getClientReceiverDefinition(method.receiver)} ${methodName}(${params}) (${returns.join(', ')}) {\n`;
   const reqParams = helpers.getCreateRequestParameters(method);
   if (method.kind === 'pageableMethod') {
     text += '\treturn ';
-    text += emitPagerDefinition(client, method, imports, injectSpans, generateFakes);
+    text += emitPagerDefinition(method, imports, injectSpans, generateFakes);
     text += '}\n\n';
     return text;
   }
   text += '\tvar err error\n';
-  let operationName = `"${client.name}.${fixUpMethodName(method)}"`;
+  let operationName = `"${method.receiver.type.name}.${fixUpMethodName(method)}"`;
   if (generateFakes && injectSpans) {
     text += `\tconst operationName = ${operationName}\n`;
     operationName = 'operationName';
@@ -660,8 +670,8 @@ function generateOperation(client: go.Client, method: go.MethodType, imports: Im
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
   // HAB with headers response is handled in protocol responder
-  if (method.responseEnvelope.result?.kind === 'headAsBooleanResult' && method.responseEnvelope.headers.length === 0) {
-    text += `\treturn ${method.responseEnvelope.name}{${method.responseEnvelope.result.fieldName}: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil\n`;
+  if (method.returns.result?.kind === 'headAsBooleanResult' && method.returns.headers.length === 0) {
+    text += `\treturn ${method.returns.name}{${method.returns.result.fieldName}: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil\n`;
   } else {
     if (go.isLROMethod(method)) {
       text += '\treturn httpResp, nil\n';
@@ -669,24 +679,24 @@ function generateOperation(client: go.Client, method: go.MethodType, imports: Im
       // also cheating here as at present the only param to the responder is an http.Response
       text += `\tresp, err := client.${method.naming.responseMethod}(httpResp)\n`;
       text += '\treturn resp, err\n';
-    } else if (method.responseEnvelope.result?.kind === 'binaryResult') {
-      text += `\treturn ${method.responseEnvelope.name}{${method.responseEnvelope.result.fieldName}: httpResp.Body}, nil\n`;
+    } else if (method.returns.result?.kind === 'binaryResult') {
+      text += `\treturn ${method.returns.name}{${method.returns.result.fieldName}: httpResp.Body}, nil\n`;
     } else {
-      text += `\treturn ${method.responseEnvelope.name}{}, nil\n`;
+      text += `\treturn ${method.returns.name}{}, nil\n`;
     }
   }
   text += '}\n\n';
   return text;
 }
 
-function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.MethodType | go.NextPageMethod, imports: ImportManager): string {
+function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.NextPageMethod, imports: ImportManager): string {
   let name = method.name;
   if (method.kind !== 'nextPageMethod') {
     name = method.naming.requestMethod;
   }
 
   for (const param of values(method.parameters)) {
-    if (param.location !== 'method' || !go.isRequiredParameter(param)) {
+    if (param.location !== 'method' || !go.isRequiredParameter(param.style)) {
       continue;
     }
     imports.addImportForType(param.type);
@@ -694,10 +704,10 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
 
   const returns = ['*policy.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${method.name} request.\n`;
-  text += `func (client *${client.name}) ${name}(${helpers.getCreateRequestParametersSig(method)}) (${returns.join(', ')}) {\n`;
+  text += `func ${getClientReceiverDefinition(method.receiver)} ${name}(${helpers.getCreateRequestParametersSig(method)}) (${returns.join(', ')}) {\n`;
 
   const hostParams = new Array<go.URIParameter>();
-  for (const parameter of client.parameters) {
+  for (const parameter of method.receiver.type.parameters) {
     if (parameter.kind === 'uriParam') {
       hostParams.push(parameter);
     }
@@ -706,10 +716,10 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
   let hostParam: string;
   if (azureARM) {
     hostParam = 'client.internal.Endpoint()';
-  } else if (client.templatedHost) {
+  } else if (method.receiver.type.templatedHost) {
     imports.add('strings');
     // we have a templated host
-    text += `\thost := "${client.templatedHost}"\n`;
+    text += `\thost := "${method.receiver.type.templatedHost}"\n`;
     // get all the host params on the client
     for (const hostParam of hostParams) {
       text += `\thost = strings.ReplaceAll(host, "{${hostParam.uriPathSegment}}", ${helpers.formatValue(`client.${hostParam.name}`, hostParam.type, imports)})\n`;
@@ -725,7 +735,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     // simple parameterized host case
     hostParam = 'client.' + hostParams[0].name;
   } else {
-    throw new CodegenError('InternalError', `no host or endpoint defined for method ${client.name}.${method.name}`);
+    throw new CodegenError('InternalError', `no host or endpoint defined for method ${method.receiver.type.name}.${method.name}`);
   }
 
   const methodParamGroups = helpers.getMethodParamGroups(method);
@@ -801,7 +811,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     let qpText = '';
     if (qp.location === 'method' && go.isClientSideDefault(qp.style)) {
       qpText = emitClientSideDefault(qp, qp.style, (name, val) => { return `\treqQP.Set(${name}, ${val})`; }, imports);
-    } else if (go.isRequiredParameter(qp) || go.isLiteralParameter(qp) || (qp.location === 'client' && go.isClientSideDefault(qp.style))) {
+    } else if (go.isRequiredParameter(qp.style) || go.isLiteralParameter(qp.style) || (qp.location === 'client' && go.isClientSideDefault(qp.style))) {
       qpText = `\t${setter}\n`;
     } else if (qp.location === 'client' && !qp.group) {
       // global optional param
@@ -879,7 +889,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     text += '\treq.Raw().URL.RawQuery = strings.Join(unencodedParams, "&")\n';
   }
 
-  if (method.kind !== 'nextPageMethod' && method.responseEnvelope.result?.kind === 'binaryResult') {
+  if (method.kind !== 'nextPageMethod' && method.returns.result?.kind === 'binaryResult') {
     // skip auto-body downloading for binary stream responses
     text += '\truntime.SkipBodyDownload(req)\n';
   }
@@ -915,7 +925,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
       // the content-type if the body is nil.
       // we do it like this as tsp specifies content-type while swagger does not.
       contentType = helpers.formatParamValue(param, imports);
-    } else if (go.isRequiredParameter(param) || go.isLiteralParameter(param) || go.isClientSideDefault(param.style)) {
+    } else if (go.isRequiredParameter(param.style) || go.isLiteralParameter(param.style) || go.isClientSideDefault(param.style)) {
       text += emitHeaderSet(param, '\t');
     } else if (param.location === 'client' && !param.group) {
       // global optional param
@@ -967,7 +977,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
         text += `\t\t${fieldName} *${go.getTypeDeclaration(bodyParam.type)} \`xml:"${tag}"\`\n`;
         text += '\t}\n';
         let addr = '&';
-        if (!go.isRequiredParameter(bodyParam) && !bodyParam.byValue) {
+        if (!go.isRequiredParameter(bodyParam.style) && !bodyParam.byValue) {
           addr = '';
         }
         body = `wrapper{${fieldName}: ${addr}${body}}`;
@@ -1000,7 +1010,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
         setBody = `req.SetBody(streaming.NopCloser(bytes.NewReader(${body})), "application/${bodyParam.bodyFormat.toLowerCase()}")`;
       }
-      if (go.isRequiredParameter(bodyParam) || go.isLiteralParameter(bodyParam)) {
+      if (go.isRequiredParameter(bodyParam.style) || go.isLiteralParameter(bodyParam.style)) {
         text += `\t${emitSetBodyWithErrCheck(setBody, contentType)}`;
         text += '\treturn req, nil\n';
       } else {
@@ -1011,7 +1021,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
         text += '\treturn req, nil\n';
       }
     } else if (bodyParam.bodyFormat === 'binary') {
-      if (go.isRequiredParameter(bodyParam)) {
+      if (go.isRequiredParameter(bodyParam.style)) {
         text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${bodyParam.name}, ${bodyParam.contentType})`, contentType)}`;
         text += '\treturn req, nil\n';
       } else {
@@ -1024,7 +1034,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     } else if (bodyParam.bodyFormat === 'Text') {
       imports.add('strings');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
-      if (go.isRequiredParameter(bodyParam)) {
+      if (go.isRequiredParameter(bodyParam.style)) {
         text += `\tbody := streaming.NopCloser(strings.NewReader(${bodyParam.name}))\n`;
         text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`, contentType)}`;
         text += '\treturn req, nil\n';
@@ -1042,19 +1052,19 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     // define and instantiate an instance of the wire type, using the values from each param.
     text += '\tbody := struct {\n';
     for (const partialBodyParam of partialBodyParams) {
-      text += `\t\t${capitalize(partialBodyParam.serializedName)} ${helpers.star(partialBodyParam)}${go.getTypeDeclaration(partialBodyParam.type)} \`${partialBodyParam.format.toLowerCase()}:"${partialBodyParam.serializedName}"\`\n`;
+      text += `\t\t${capitalize(partialBodyParam.serializedName)} ${helpers.star(partialBodyParam.byValue)}${go.getTypeDeclaration(partialBodyParam.type)} \`${partialBodyParam.format.toLowerCase()}:"${partialBodyParam.serializedName}"\`\n`;
     }
     text += '\t}{\n';
     // required params are emitted as initializers in the struct literal
     for (const partialBodyParam of partialBodyParams) {
-      if (go.isRequiredParameter(partialBodyParam)) {
+      if (go.isRequiredParameter(partialBodyParam.style)) {
         text += `\t\t${capitalize(partialBodyParam.serializedName)}: ${uncapitalize(partialBodyParam.name)},\n`;
       }
     }
     text += '\t}\n';
     // now populate any optional params from the options type
     for (const partialBodyParam of partialBodyParams) {
-      if (!go.isRequiredParameter(partialBodyParam)) {
+      if (!go.isRequiredParameter(partialBodyParam.style)) {
         text += emitParamGroupCheck(partialBodyParam);
         text += `\t\tbody.${capitalize(partialBodyParam.serializedName)} = options.${capitalize(partialBodyParam.name)}\n\t}\n`;
       }
@@ -1071,7 +1081,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
       text += '\tformData := map[string]any{}\n';
       for (const param of multipartBodyParams) {
         const setter = `formData["${param.name}"] = ${helpers.getParamName(param)}`;
-        if (go.isRequiredParameter(param)) {
+        if (go.isRequiredParameter(param.style)) {
           text += `\t${setter}\n`;
         } else {
           text += emitParamGroupCheck(param);
@@ -1084,7 +1094,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
   } else if (formBodyParams.length > 0) {
     const emitFormData = function (param: go.FormBodyParameter, setter: string): string {
       let formDataText = '';
-      if (go.isRequiredParameter(param)) {
+      if (go.isRequiredParameter(param.style)) {
         formDataText = `\t${setter}\n`;
       } else {
         formDataText = emitParamGroupCheck(param);
@@ -1170,7 +1180,7 @@ function isArrayOfDateTimeForMarshalling(paramType: go.WireType): { format: go.T
 // returns true if the method requires a response handler.
 // this is used to unmarshal the response body, parse response headers, or both.
 function needsResponseHandler(method: go.MethodType): boolean {
-  return helpers.hasSchemaResponse(method) || method.responseEnvelope.headers.length > 0;
+  return helpers.hasSchemaResponse(method) || method.returns.headers.length > 0;
 }
 
 function generateResponseUnmarshaller(method: go.MethodType, type: go.WireType, format: go.ResultFormat, unmarshalTarget: string): string {
@@ -1234,36 +1244,36 @@ function generateResponseUnmarshaller(method: go.MethodType, type: go.WireType, 
     unmarshallerText += `\t${unmarshalTarget} = &txt\n`;
   } else {
     // the remaining formats should have been handled elsewhere
-    throw new CodegenError('InternalError', `unhandled format ${format} for operation ${method.client.name}.${method.name}`);
+    throw new CodegenError('InternalError', `unhandled format ${format} for operation ${method.receiver.type.name}.${method.name}`);
   }
   return unmarshallerText;
 }
 
-function createProtocolResponse(client: go.Client, method: go.Method | go.LROPageableMethod | go.PageableMethod, imports: ImportManager): string {
+function createProtocolResponse(method: go.SyncMethod | go.LROPageableMethod | go.PageableMethod, imports: ImportManager): string {
   if (!needsResponseHandler(method)) {
     return '';
   }
   const name = method.naming.responseMethod;
   let text = `${comment(name, '// ')} handles the ${method.name} response.\n`;
-  text += `func (client *${client.name}) ${name}(resp *http.Response) (${generateReturnsInfo(method, 'handler').join(', ')}) {\n`;
+  text += `func ${getClientReceiverDefinition(method.receiver)} ${name}(resp *http.Response) (${generateReturnsInfo(method, 'handler').join(', ')}) {\n`;
 
   const addHeaders = function (headers: Array<go.HeaderScalarResponse | go.HeaderMapResponse>) {
     for (const header of values(headers)) {
-      text += formatHeaderResponseValue(header, imports, 'result', `${method.responseEnvelope.name}{}`);
+      text += formatHeaderResponseValue(header, imports, 'result', `${method.returns.name}{}`);
     }
   };
 
-  const result = method.responseEnvelope.result;
+  const result = method.returns.result;
   if (!result) {
     // only headers
-    text += `\tresult := ${method.responseEnvelope.name}{}\n`;
-    addHeaders(method.responseEnvelope.headers);
+    text += `\tresult := ${method.returns.name}{}\n`;
+    addHeaders(method.returns.headers);
   } else {
     switch (result.kind) {
       case 'anyResult':
         imports.add('fmt');
-        text += `\tresult := ${method.responseEnvelope.name}{}\n`;
-        addHeaders(method.responseEnvelope.headers);
+        text += `\tresult := ${method.returns.name}{}\n`;
+        addHeaders(method.returns.headers);
         text += '\tswitch resp.StatusCode {\n';
         for (const statusCode of method.httpStatusCodes) {
           text += `\tcase ${helpers.formatStatusCodes([statusCode])}:\n`;
@@ -1281,21 +1291,21 @@ function createProtocolResponse(client: go.Client, method: go.Method | go.LROPag
         text += '\t}\n';
         break;
       case 'binaryResult':
-        text += `\tresult := ${method.responseEnvelope.name}{${result.fieldName}: resp.Body}\n`;
-        addHeaders(method.responseEnvelope.headers);
+        text += `\tresult := ${method.returns.name}{${result.fieldName}: resp.Body}\n`;
+        addHeaders(method.returns.headers);
         break;
       case 'headAsBooleanResult':
-        text += `\tresult := ${method.responseEnvelope.name}{${result.fieldName}: resp.StatusCode >= 200 && resp.StatusCode < 300}\n`;
-        addHeaders(method.responseEnvelope.headers);
+        text += `\tresult := ${method.returns.name}{${result.fieldName}: resp.StatusCode >= 200 && resp.StatusCode < 300}\n`;
+        addHeaders(method.returns.headers);
         break;
       case 'modelResult':
-        text += `\tresult := ${method.responseEnvelope.name}{}\n`;
-        addHeaders(method.responseEnvelope.headers);
+        text += `\tresult := ${method.returns.name}{}\n`;
+        addHeaders(method.returns.headers);
         text += generateResponseUnmarshaller(method, result.modelType, result.format, `result.${helpers.getResultFieldName(method)}`);
         break;
       case 'monomorphicResult':
-        text += `\tresult := ${method.responseEnvelope.name}{}\n`;
-        addHeaders(method.responseEnvelope.headers);
+        text += `\tresult := ${method.returns.name}{}\n`;
+        addHeaders(method.returns.headers);
         let target = `result.${helpers.getResultFieldName(method)}`;
         // when unmarshalling a wrapped XML array, unmarshal into the response envelope
         if (result.format === 'XML' && result.monomorphicType.kind === 'slice') {
@@ -1304,8 +1314,8 @@ function createProtocolResponse(client: go.Client, method: go.Method | go.LROPag
         text += generateResponseUnmarshaller(method, result.monomorphicType, result.format, target);
         break;
       case 'polymorphicResult':
-        text += `\tresult := ${method.responseEnvelope.name}{}\n`;
-        addHeaders(method.responseEnvelope.headers);
+        text += `\tresult := ${method.returns.name}{}\n`;
+        addHeaders(method.returns.headers);
         text += generateResponseUnmarshaller(method, result.interface, result.format, 'result');
         break;
       default:
@@ -1363,7 +1373,7 @@ function getAPIParametersSig(method: go.MethodType, imports: ImportManager, pkgN
 //    op - for the operation
 // handler - for the response handler
 function generateReturnsInfo(method: go.MethodType, apiType: 'api' | 'op' | 'handler'): Array<string> {
-  let returnType = method.responseEnvelope.name;
+  let returnType = method.returns.name;
   switch (method.kind) {
     case 'lroMethod':
     case 'lroPageableMethod':
@@ -1398,7 +1408,7 @@ function generateReturnsInfo(method: go.MethodType, apiType: 'api' | 'op' | 'han
   return [returnType, 'error'];
 }
 
-function generateLROBeginMethod(client: go.Client, method: go.LROMethod | go.LROPageableMethod, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
+function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
   const params = getAPIParametersSig(method, imports);
   const returns = generateReturnsInfo(method, 'api');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
@@ -1413,15 +1423,15 @@ function generateLROBeginMethod(client: go.Client, method: go.LROMethod | go.LRO
   for (const param of values(methodParams)) {
     text += helpers.formatCommentAsBulletItem(param.name, param.docs);
   }
-  text += `func (client *${client.name}) ${fixUpMethodName(method)}(${params}) (${returns.join(', ')}) {\n`;
+  text += `func ${getClientReceiverDefinition(method.receiver)} ${fixUpMethodName(method)}(${params}) (${returns.join(', ')}) {\n`;
   let pollerType = 'nil';
-  let pollerTypeParam = `[${method.responseEnvelope.name}]`;
+  let pollerTypeParam = `[${method.returns.name}]`;
   if (method.kind === 'lroPageableMethod') {
     // for paged LROs, we construct a pager and pass it to the LRO ctor.
     pollerTypeParam = `[*runtime.Pager${pollerTypeParam}]`;
     pollerType = '&pager';
     text += '\tpager := ';
-    text += emitPagerDefinition(client, method, imports, injectSpans, generateFakes);
+    text += emitPagerDefinition(method, imports, injectSpans, generateFakes);
   }
 
   text += '\tif options == nil || options.ResumeToken == "" {\n';

@@ -57,7 +57,7 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
           method.nextPageMethod = nextPageMethod;
         }
       } else {
-        method = new go.Method(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
+        method = new go.SyncMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
       }
 
       populateMethod(op, method, m4CodeModel, codeModel);
@@ -110,7 +110,7 @@ function populateMethod(op: m4.Operation, method: go.MethodType | go.NextPageMet
     }
 
     method.optionalParamsGroup = optionalParamsGroup;
-    method.responseEnvelope = adaptResponseEnvelope(m4CodeModel, codeModel, op, method);
+    method.returns = adaptResponseEnvelope(m4CodeModel, codeModel, op, method);
   }
 
   adaptMethodParameters(op, method);

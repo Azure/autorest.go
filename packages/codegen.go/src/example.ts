@@ -172,7 +172,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
           if (method.kind === 'lroPageableMethod') {
             resultName = 'res';
           }
-          const itemType = ((method as go.PageableMethod).responseEnvelope.result as go.ModelResult).modelType.fields.find(f => f.type.kind === 'slice')!;
+          const itemType = ((method as go.PageableMethod).returns.result as go.ModelResult).modelType.fields.find(f => f.type.kind === 'slice')!;
           exampleText += `\tfor ${resultName}.More() {\n`;
           exampleText += `\t\tpage, err := ${resultName}.NextPage(ctx)\n`;
           exampleText += `\t\tif err != nil {\n`;
@@ -192,7 +192,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
           exampleText += `\t}\n`;
         } else if (checkResponse) {
           // if has fieldName, then the result is not a model type
-          const fieldName = (method.responseEnvelope as any).fieldName;
+          const fieldName = (method.returns as any).fieldName;
           exampleText += `\t// You could use response here. We use blank identifier for just demo purposes.\n`;
           exampleText += `\t_ = res\n`;
 

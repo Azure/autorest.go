@@ -80,7 +80,7 @@ export function formatParameterTypeName(param: go.ClientOptionsParameter | go.Cl
 }
 
 export function parameterByValue(param: go.ClientParameter): boolean {
-  return go.isRequiredParameter(param) || (param.location === 'client' && go.isClientSideDefault(param.style))
+  return go.isRequiredParameter(param.style) || (param.location === 'client' && go.isClientSideDefault(param.style))
 }
 
 // sorts parameters by their required state, ordering required before optional
@@ -93,7 +93,7 @@ export function sortParametersByRequired(a: go.ClientParameter | go.ParameterGro
       aRequired = a.required;
       break;
     default:
-      aRequired = go.isRequiredParameter(a);
+      aRequired = go.isRequiredParameter(a.style);
       break;
   }
 
@@ -102,7 +102,7 @@ export function sortParametersByRequired(a: go.ClientParameter | go.ParameterGro
       bRequired = b.required;
       break;
     default:
-      bRequired = go.isRequiredParameter(b);
+      bRequired = go.isRequiredParameter(b.style);
       break;
   }
 
@@ -212,7 +212,7 @@ export function getParamName(param: go.MethodParameter): string {
     paramName = `client.${paramName}`;
   }
   // client parameters with default values aren't emitted as pointer-to-type
-  if (!go.isRequiredParameter(param) && !(param.location === 'client' && go.isClientSideDefault(param.style)) && !param.byValue) {
+  if (!go.isRequiredParameter(param.style) && !(param.location === 'client' && go.isClientSideDefault(param.style)) && !param.byValue) {
     paramName = `*${paramName}`;
   }
   return paramName;
@@ -272,7 +272,7 @@ export function formatParamValue(param: go.MethodParameter, imports: ImportManag
   if (param.type.kind === 'time' && param.type.format !== 'timeUnix') {
     // for most time types we call methods on time.Time which is why we remove the dereference.
     // however, for unix time, we cast to our unixTime helper first so we must keep the dereference.
-    if (!go.isRequiredParameter(param) && paramName[0] === '*') {
+    if (!go.isRequiredParameter(param.style) && paramName[0] === '*') {
       // remove the dereference
       paramName = paramName.substring(1);
     }
@@ -394,7 +394,7 @@ export function formatLiteralValue(value: go.Literal, withCast: boolean): string
 
 // returns true if at least one of the responses has a schema
 export function hasSchemaResponse(method: go.MethodType): boolean {
-  switch (method.responseEnvelope.result?.kind) {
+  switch (method.returns.result?.kind) {
     case 'anyResult':
     case 'modelResult':
     case 'monomorphicResult':
@@ -407,7 +407,7 @@ export function hasSchemaResponse(method: go.MethodType): boolean {
 
 // returns the name of the response field within the response envelope
 export function getResultFieldName(method: go.MethodType): string {
-  const result = method.responseEnvelope.result;
+  const result = method.returns.result;
   if (!result) {
     throw new CodegenError('InternalError', `missing result for method ${method.name}`);
   }
@@ -683,9 +683,14 @@ export function recursiveUnwrapMapSlice(item: go.WireType): go.WireType {
   }
 }
 
-// returns a * for optional params
-export function star(param: go.ClientParameter | go.MethodParameter): string {
-  return go.isRequiredParameter(param) || param.byValue ? '' : '*';
+/**
+ * returns a * character when byValue is false
+ * 
+ * @param byValue indicates if the type is passed by value
+ * @returns a * or the empty string
+ */
+export function star(byValue: boolean): string {
+  return byValue ? '' : '*';
 }
 
 /**
@@ -697,7 +702,7 @@ export function star(param: go.ClientParameter | go.MethodParameter): string {
 export function zeroValue(param: go.ClientParameter | go.MethodParameter): string {
   // even though API version params typically have a client-side default which makes
   // them optional, the azcore.ClientOptions.APIVersion field isn't pointer-to-type.
-  if (go.isRequiredParameter(param) || go.isAPIVersionParameter(param)) {
+  if (go.isRequiredParameter(param.style) || go.isAPIVersionParameter(param)) {
     switch (param.type.kind) {
       case 'string':
         return `""`;
@@ -765,7 +770,7 @@ export function getSerDeFormat(model: go.Model | go.PolymorphicModel, codeModel:
         recursiveWalkModelFields(param.type, param.bodyFormat);
       }
 
-      const resultType = method.responseEnvelope.result;
+      const resultType = method.returns.result;
       switch (resultType?.kind) {
         case 'anyResult':
           if (resultType.format === 'JSON' || resultType.format === 'XML') {
@@ -807,7 +812,7 @@ export function getAllClientParameters(codeModel: go.CodeModel): Array<go.Client
   const allClientParams = new Array<go.ClientParameter>();
   for (const clients of codeModel.clients) {
     for (const clientParam of values(clients.parameters)) {
-      if (go.isLiteralParameter(clientParam)) {
+      if (go.isLiteralParameter(clientParam.style)) {
         continue;
       }
       if (values(allClientParams).where(param => param.name === clientParam.name).any()) {
@@ -832,7 +837,7 @@ export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.Cli
 
     ++numClients;
     for (const clientParam of values(clients.parameters)) {
-      if (go.isLiteralParameter(clientParam)) {
+      if (go.isLiteralParameter(clientParam.style)) {
         continue;
       }
       let entry = paramCount.get(clientParam.name);
