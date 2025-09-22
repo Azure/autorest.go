@@ -164,7 +164,7 @@ export interface NextPageMethod {
   /** the complete list of successful HTTP status codes */
   httpStatusCodes: Array<number>;
 
-  /** the client to which the method belongs */
+  /** the method's receiver parameter */
   receiver: method.Receiver<Client>;
 
   apiVersions: Array<string>;
