@@ -16,21 +16,22 @@ import (
 // group.
 // Don't use this type directly, use [ClientLocationMoveMethodParameterToClient.NewClientLocationMoveMethodParameterToBlobOperationsClient] instead.
 type ClientLocationMoveMethodParameterToBlobOperationsClient struct {
-	internal *azcore.Client
-	endpoint string
+	internal       *azcore.Client
+	endpoint       string
+	storageAccount string
 }
 
 // GetBlob -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ClientLocationMoveMethodParameterToBlobOperationsClientGetBlobOptions contains the optional parameters for the
 //     ClientLocationMoveMethodParameterToBlobOperationsClient.GetBlob method.
-func (client *ClientLocationMoveMethodParameterToBlobOperationsClient) GetBlob(ctx context.Context, storageAccount string, containerParam string, blob string, options *ClientLocationMoveMethodParameterToBlobOperationsClientGetBlobOptions) (ClientLocationMoveMethodParameterToBlobOperationsClientGetBlobResponse, error) {
+func (client *ClientLocationMoveMethodParameterToBlobOperationsClient) GetBlob(ctx context.Context, containerParam string, blob string, options *ClientLocationMoveMethodParameterToBlobOperationsClientGetBlobOptions) (ClientLocationMoveMethodParameterToBlobOperationsClientGetBlobResponse, error) {
 	var err error
 	const operationName = "ClientLocationMoveMethodParameterToBlobOperationsClient.GetBlob"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getBlobCreateRequest(ctx, storageAccount, containerParam, blob, options)
+	req, err := client.getBlobCreateRequest(ctx, containerParam, blob, options)
 	if err != nil {
 		return ClientLocationMoveMethodParameterToBlobOperationsClientGetBlobResponse{}, err
 	}
@@ -47,7 +48,7 @@ func (client *ClientLocationMoveMethodParameterToBlobOperationsClient) GetBlob(c
 }
 
 // getBlobCreateRequest creates the GetBlob request.
-func (client *ClientLocationMoveMethodParameterToBlobOperationsClient) getBlobCreateRequest(ctx context.Context, storageAccount string, containerParam string, blob string, _ *ClientLocationMoveMethodParameterToBlobOperationsClientGetBlobOptions) (*policy.Request, error) {
+func (client *ClientLocationMoveMethodParameterToBlobOperationsClient) getBlobCreateRequest(ctx context.Context, containerParam string, blob string, _ *ClientLocationMoveMethodParameterToBlobOperationsClientGetBlobOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/client-location/blob"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -56,7 +57,7 @@ func (client *ClientLocationMoveMethodParameterToBlobOperationsClient) getBlobCr
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("blob", blob)
 	reqQP.Set("container", containerParam)
-	reqQP.Set("storageAccount", storageAccount)
+	reqQP.Set("storageAccount", client.storageAccount)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
