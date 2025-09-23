@@ -1070,3 +1070,8 @@ export function splitScope(scope: string): { audience: string, scope: string } {
     scope: scope.substring(scopeSplit),
   }
 }
+
+/** returns true if the specified method is internal */
+export function isMethodInternal(method: go.MethodType): boolean {
+  return !!method.name.match(/^[a-z]{1}/);
+}

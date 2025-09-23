@@ -19,24 +19,23 @@ type PagerWidgetsClient struct {
 	endpoint string
 }
 
-//   - options - pagerWidgetsClientlistMethodOptions contains the optional parameters for the PagerWidgetsClient.NewlistMethodPager
-//     method.
-func (client *PagerWidgetsClient) newListMethodPager(options *pagerWidgetsClientlistMethodOptions) *runtime.Pager[pagerWidgetsClientlistMethodResponse] {
-	return runtime.NewPager(runtime.PagingHandler[pagerWidgetsClientlistMethodResponse]{
-		More: func(page pagerWidgetsClientlistMethodResponse) bool {
+// - options - pagerWidgetsClientlistOptions contains the optional parameters for the PagerWidgetsClient.NewlistPager method.
+func (client *PagerWidgetsClient) newListPager(options *pagerWidgetsClientlistOptions) *runtime.Pager[pagerWidgetsClientlistResponse] {
+	return runtime.NewPager(runtime.PagingHandler[pagerWidgetsClientlistResponse]{
+		More: func(page pagerWidgetsClientlistResponse) bool {
 			return false
 		},
-		Fetcher: func(ctx context.Context, page *pagerWidgetsClientlistMethodResponse) (pagerWidgetsClientlistMethodResponse, error) {
+		Fetcher: func(ctx context.Context, page *pagerWidgetsClientlistResponse) (pagerWidgetsClientlistResponse, error) {
 			req, err := client.listCreateRequest(ctx, options)
 			if err != nil {
-				return pagerWidgetsClientlistMethodResponse{}, err
+				return pagerWidgetsClientlistResponse{}, err
 			}
 			resp, err := client.internal.Pipeline().Do(req)
 			if err != nil {
-				return pagerWidgetsClientlistMethodResponse{}, err
+				return pagerWidgetsClientlistResponse{}, err
 			}
 			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return pagerWidgetsClientlistMethodResponse{}, runtime.NewResponseError(resp)
+				return pagerWidgetsClientlistResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -44,8 +43,8 @@ func (client *PagerWidgetsClient) newListMethodPager(options *pagerWidgetsClient
 	})
 }
 
-// listCreateRequest creates the listMethod request.
-func (client *PagerWidgetsClient) listCreateRequest(ctx context.Context, _ *pagerWidgetsClientlistMethodOptions) (*policy.Request, error) {
+// listCreateRequest creates the list request.
+func (client *PagerWidgetsClient) listCreateRequest(ctx context.Context, _ *pagerWidgetsClientlistOptions) (*policy.Request, error) {
 	urlPath := "/widgets"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -55,11 +54,11 @@ func (client *PagerWidgetsClient) listCreateRequest(ctx context.Context, _ *page
 	return req, nil
 }
 
-// listHandleResponse handles the listMethod response.
-func (client *PagerWidgetsClient) listHandleResponse(resp *http.Response) (pagerWidgetsClientlistMethodResponse, error) {
-	result := pagerWidgetsClientlistMethodResponse{}
+// listHandleResponse handles the list response.
+func (client *PagerWidgetsClient) listHandleResponse(resp *http.Response) (pagerWidgetsClientlistResponse, error) {
+	result := pagerWidgetsClientlistResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.widgetList); err != nil {
-		return pagerWidgetsClientlistMethodResponse{}, err
+		return pagerWidgetsClientlistResponse{}, err
 	}
 	return result, nil
 }

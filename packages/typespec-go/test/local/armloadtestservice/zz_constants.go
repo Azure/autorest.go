@@ -4,21 +4,6 @@
 
 package armloadtestservice
 
-// ActionType - Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
-type ActionType string
-
-const (
-	// ActionTypeInternal - Actions are for internal-only APIs.
-	ActionTypeInternal ActionType = "Internal"
-)
-
-// PossibleActionTypeValues returns the possible values for the ActionType const type.
-func PossibleActionTypeValues() []ActionType {
-	return []ActionType{
-		ActionTypeInternal,
-	}
-}
-
 // CreatedByType - The kind of entity that created the resource.
 type CreatedByType string
 
@@ -64,28 +49,6 @@ func PossibleManagedServiceIdentityTypeValues() []ManagedServiceIdentityType {
 		ManagedServiceIdentityTypeSystemAssigned,
 		ManagedServiceIdentityTypeSystemAssignedUserAssigned,
 		ManagedServiceIdentityTypeUserAssigned,
-	}
-}
-
-// Origin - The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default
-// value is "user,system"
-type Origin string
-
-const (
-	// OriginSystem - Indicates the operation is initiated by a system.
-	OriginSystem Origin = "system"
-	// OriginUser - Indicates the operation is initiated by a user.
-	OriginUser Origin = "user"
-	// OriginUserSystem - Indicates the operation is initiated by a user or system.
-	OriginUserSystem Origin = "user,system"
-)
-
-// PossibleOriginValues returns the possible values for the Origin const type.
-func PossibleOriginValues() []Origin {
-	return []Origin{
-		OriginSystem,
-		OriginUser,
-		OriginUserSystem,
 	}
 }
 

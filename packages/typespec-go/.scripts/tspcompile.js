@@ -78,7 +78,7 @@ const azureHttpSpecsGroup = {
   'accessgroup': ['azure/client-generator-core/access'],
   'flattengroup': ['azure/client-generator-core/flatten-property'],
   'coreusagegroup': ['azure/client-generator-core/usage'],
-  'overridegroup': ['azure/client-generator-core/override'],
+  // 'overridegroup': ['azure/client-generator-core/override'], TODO: https://github.com/Azure/autorest.go/issues/1718
   'hierarchygroup': ['azure/client-generator-core/hierarchy-building'],
   // 'clientinitializationgroup': ['azure/client-generator-core/client-initialization'],
   // 'apiversionheadergroup' : ['azure/client-generator-core/api-version/header'],
@@ -291,9 +291,15 @@ function generate(moduleName, input, outputDir, perTestOptions) {
   allOptions = allOptions.concat(defaultOptions);
 
   sem.take(function() {
-    // default to main.tsp if a .tsp file isn't specified in the input
+    // if a tsp file isn't specified, first check
+    // for a client.tsp file. if that doesn't exist
+    // then fall back to main.tsp.
     if (input.lastIndexOf('.tsp') === -1) {
-      input += '/main.tsp';
+      if (existsSync(input + '/client.tsp')) {
+        input += '/client.tsp';
+      } else {
+        input += '/main.tsp';
+      }
     }
     console.log('generating ' + input);
     try {

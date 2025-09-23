@@ -76,6 +76,16 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
       }
     }
 
+    if (codeModel.type === 'azure-arm') {
+      // we don't need the scopes for ARM, it's handled by pipeline policy
+      const ctor = new go.Constructor(`New${client.name}`, new go.TokenAuthentication([]));
+      // add any modeled parameter first, which should only be the subscriptionID, then add TokenCredential
+      for (const param of client.parameters) {
+        ctor.parameters.push(param);
+      }
+      client.constructors.push(ctor);
+    }
+
     codeModel.clients.push(client);
   }
 }

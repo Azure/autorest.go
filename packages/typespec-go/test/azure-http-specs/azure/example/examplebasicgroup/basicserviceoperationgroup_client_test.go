@@ -13,7 +13,7 @@ import (
 )
 
 func TestBasicServiceOperationGroupClient_Basic_Success(t *testing.T) {
-	client, err := examplebasicgroup.NewBasicClientWithNoCredential("http://localhost:3000", nil)
+	client, err := examplebasicgroup.NewAzureExampleClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	reqBody := examplebasicgroup.ActionRequest{
 		StringProperty: to.Ptr("text"),
@@ -27,6 +27,6 @@ func TestBasicServiceOperationGroupClient_Basic_Success(t *testing.T) {
 			"record": to.Ptr("value"),
 		},
 	}
-	_, err = client.NewBasicServiceOperationGroupClient().Basic(context.Background(), "query", "header", reqBody, nil)
+	_, err = client.BasicAction(context.Background(), "query", "header", reqBody, nil)
 	require.NoError(t, err)
 }

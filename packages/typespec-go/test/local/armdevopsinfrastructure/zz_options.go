@@ -10,11 +10,6 @@ type ImageVersionsClientListByImageOptions struct {
 	// placeholder for future optional parameters
 }
 
-// OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
-type OperationsClientListOptions struct {
-	// placeholder for future optional parameters
-}
-
 // PoolsClientBeginCreateOrUpdateOptions contains the optional parameters for the PoolsClient.BeginCreateOrUpdate method.
 type PoolsClientBeginCreateOrUpdateOptions struct {
 	// Resumes the long-running operation from the provided token.
@@ -63,5 +58,10 @@ type SKUClientListByLocationOptions struct {
 // SubscriptionUsagesClientUsagesOptions contains the optional parameters for the SubscriptionUsagesClient.NewUsagesPager
 // method.
 type SubscriptionUsagesClientUsagesOptions struct {
+	// placeholder for future optional parameters
+}
+
+// operationsClientlistOptions contains the optional parameters for the OperationsClient.NewlistPager method.
+type operationsClientlistOptions struct {
 	// placeholder for future optional parameters
 }

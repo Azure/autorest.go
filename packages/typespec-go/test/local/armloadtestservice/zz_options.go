@@ -4,119 +4,62 @@
 
 package armloadtestservice
 
-// LoadTestMappingsClientCreateOrUpdateOptions contains the optional parameters for the LoadTestMappingsClient.CreateOrUpdate
+// LoadTestMgmtClientBeginCreateOrUpdateLoadtestOptions contains the optional parameters for the LoadTestMgmtClient.BeginCreateOrUpdateLoadtest
 // method.
-type LoadTestMappingsClientCreateOrUpdateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LoadTestMappingsClientDeleteOptions contains the optional parameters for the LoadTestMappingsClient.Delete method.
-type LoadTestMappingsClientDeleteOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LoadTestMappingsClientGetOptions contains the optional parameters for the LoadTestMappingsClient.Get method.
-type LoadTestMappingsClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LoadTestMappingsClientListOptions contains the optional parameters for the LoadTestMappingsClient.NewListPager method.
-type LoadTestMappingsClientListOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LoadTestMappingsClientUpdateOptions contains the optional parameters for the LoadTestMappingsClient.Update method.
-type LoadTestMappingsClientUpdateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LoadTestProfileMappingsClientCreateOrUpdateOptions contains the optional parameters for the LoadTestProfileMappingsClient.CreateOrUpdate
-// method.
-type LoadTestProfileMappingsClientCreateOrUpdateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LoadTestProfileMappingsClientDeleteOptions contains the optional parameters for the LoadTestProfileMappingsClient.Delete
-// method.
-type LoadTestProfileMappingsClientDeleteOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LoadTestProfileMappingsClientGetOptions contains the optional parameters for the LoadTestProfileMappingsClient.Get method.
-type LoadTestProfileMappingsClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LoadTestProfileMappingsClientListOptions contains the optional parameters for the LoadTestProfileMappingsClient.NewListPager
-// method.
-type LoadTestProfileMappingsClientListOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LoadTestProfileMappingsClientUpdateOptions contains the optional parameters for the LoadTestProfileMappingsClient.Update
-// method.
-type LoadTestProfileMappingsClientUpdateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LoadTestsClientBeginCreateOrUpdateOptions contains the optional parameters for the LoadTestsClient.BeginCreateOrUpdate
-// method.
-type LoadTestsClientBeginCreateOrUpdateOptions struct {
+type LoadTestMgmtClientBeginCreateOrUpdateLoadtestOptions struct {
 	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
-// LoadTestsClientBeginDeleteOptions contains the optional parameters for the LoadTestsClient.BeginDelete method.
-type LoadTestsClientBeginDeleteOptions struct {
+// LoadTestMgmtClientBeginDeleteLoadtestOptions contains the optional parameters for the LoadTestMgmtClient.BeginDeleteLoadtest
+// method.
+type LoadTestMgmtClientBeginDeleteLoadtestOptions struct {
 	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
-// LoadTestsClientBeginUpdateOptions contains the optional parameters for the LoadTestsClient.BeginUpdate method.
-type LoadTestsClientBeginUpdateOptions struct {
+// LoadTestMgmtClientBeginUpdateLoadtestOptions contains the optional parameters for the LoadTestMgmtClient.BeginUpdateLoadtest
+// method.
+type LoadTestMgmtClientBeginUpdateLoadtestOptions struct {
 	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
-// LoadTestsClientGetOptions contains the optional parameters for the LoadTestsClient.Get method.
-type LoadTestsClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// LoadTestsClientListByResourceGroupOptions contains the optional parameters for the LoadTestsClient.NewListByResourceGroupPager
+// LoadTestMgmtClientCheckAvailabilityQuotaOptions contains the optional parameters for the LoadTestMgmtClient.CheckAvailabilityQuota
 // method.
-type LoadTestsClientListByResourceGroupOptions struct {
+type LoadTestMgmtClientCheckAvailabilityQuotaOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LoadTestsClientListBySubscriptionOptions contains the optional parameters for the LoadTestsClient.NewListBySubscriptionPager
+// LoadTestMgmtClientGetLoadtestOptions contains the optional parameters for the LoadTestMgmtClient.GetLoadtest method.
+type LoadTestMgmtClientGetLoadtestOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LoadTestMgmtClientGetQuotaOptions contains the optional parameters for the LoadTestMgmtClient.GetQuota method.
+type LoadTestMgmtClientGetQuotaOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LoadTestMgmtClientListByResourceGroupOptions contains the optional parameters for the LoadTestMgmtClient.NewListByResourceGroupPager
 // method.
-type LoadTestsClientListBySubscriptionOptions struct {
+type LoadTestMgmtClientListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LoadTestsClientOutboundNetworkDependenciesEndpointsOptions contains the optional parameters for the LoadTestsClient.NewOutboundNetworkDependenciesEndpointsPager
+// LoadTestMgmtClientListBySubscriptionOptions contains the optional parameters for the LoadTestMgmtClient.NewListBySubscriptionPager
 // method.
-type LoadTestsClientOutboundNetworkDependenciesEndpointsOptions struct {
+type LoadTestMgmtClientListBySubscriptionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
-type OperationsClientListOptions struct {
+// LoadTestMgmtClientListQuotaOptions contains the optional parameters for the LoadTestMgmtClient.NewListQuotaPager method.
+type LoadTestMgmtClientListQuotaOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QuotasClientCheckAvailabilityOptions contains the optional parameters for the QuotasClient.CheckAvailability method.
-type QuotasClientCheckAvailabilityOptions struct {
-	// placeholder for future optional parameters
-}
-
-// QuotasClientGetOptions contains the optional parameters for the QuotasClient.Get method.
-type QuotasClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// QuotasClientListOptions contains the optional parameters for the QuotasClient.NewListPager method.
-type QuotasClientListOptions struct {
+// LoadTestMgmtClientOutboundNetworkDependenciesEndpointsOptions contains the optional parameters for the LoadTestMgmtClient.NewOutboundNetworkDependenciesEndpointsPager
+// method.
+type LoadTestMgmtClientOutboundNetworkDependenciesEndpointsOptions struct {
 	// placeholder for future optional parameters
 }

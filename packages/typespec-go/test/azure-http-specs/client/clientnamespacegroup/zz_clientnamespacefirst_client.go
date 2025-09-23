@@ -13,10 +13,33 @@ import (
 )
 
 // ClientNamespaceFirstClient contains the methods for the ClientNamespaceFirst group.
-// Don't use this type directly, use [ClientNamespaceClient.NewClientNamespaceFirstClient] instead.
+// Don't use this type directly, use NewClientNamespaceFirstClientWithNoCredential() instead.
 type ClientNamespaceFirstClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ClientNamespaceFirstClientOptions contains the optional values for creating a [ClientNamespaceFirstClient].
+type ClientNamespaceFirstClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewClientNamespaceFirstClientWithNoCredential creates a new instance of ClientNamespaceFirstClient with the specified values.
+//   - endpoint - Service host
+//   - options - ClientNamespaceFirstClientOptions contains the optional values for creating a [ClientNamespaceFirstClient]
+func NewClientNamespaceFirstClientWithNoCredential(endpoint string, options *ClientNamespaceFirstClientOptions) (*ClientNamespaceFirstClient, error) {
+	if options == nil {
+		options = &ClientNamespaceFirstClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ClientNamespaceFirstClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // GetFirst -

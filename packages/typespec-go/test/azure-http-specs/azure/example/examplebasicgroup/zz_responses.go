@@ -4,7 +4,7 @@
 
 package examplebasicgroup
 
-// BasicServiceOperationGroupClientBasicResponse contains the response from method BasicServiceOperationGroupClient.Basic.
-type BasicServiceOperationGroupClientBasicResponse struct {
+// AzureExampleClientBasicActionResponse contains the response from method AzureExampleClient.BasicAction.
+type AzureExampleClientBasicActionResponse struct {
 	ActionResponse
 }

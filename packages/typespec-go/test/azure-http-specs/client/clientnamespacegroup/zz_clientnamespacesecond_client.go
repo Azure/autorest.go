@@ -13,10 +13,33 @@ import (
 )
 
 // ClientNamespaceSecondClient contains the methods for the ClientNamespaceSecond group.
-// Don't use this type directly, use [ClientNamespaceClient.NewClientNamespaceSecondClient] instead.
+// Don't use this type directly, use NewClientNamespaceSecondClientWithNoCredential() instead.
 type ClientNamespaceSecondClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ClientNamespaceSecondClientOptions contains the optional values for creating a [ClientNamespaceSecondClient].
+type ClientNamespaceSecondClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewClientNamespaceSecondClientWithNoCredential creates a new instance of ClientNamespaceSecondClient with the specified values.
+//   - endpoint - Service host
+//   - options - ClientNamespaceSecondClientOptions contains the optional values for creating a [ClientNamespaceSecondClient]
+func NewClientNamespaceSecondClientWithNoCredential(endpoint string, options *ClientNamespaceSecondClientOptions) (*ClientNamespaceSecondClient, error) {
+	if options == nil {
+		options = &ClientNamespaceSecondClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ClientNamespaceSecondClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // GetSecond -

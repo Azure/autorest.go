@@ -3,6 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+import { values } from '@azure-tools/linq';
 import * as go from '../../../codemodel.go/src/index.js';
 import { getServerName } from './servers.js';
 import * as helpers from '../helpers.js';
@@ -28,10 +29,19 @@ export function generateServerFactory(codeModel: go.CodeModel): string {
 
   text += `// ServerFactory is a fake server for instances of the ${codeModel.packageName}.ClientFactory type.\n`;
   text += 'type ServerFactory struct {\n';
+
+  // add server transports for client accessors
+  // we might remove some clients from the list
+  const finalSubClients = new Array<go.Client>();
   for (const client of codeModel.clients) {
+    if (client.clientAccessors.length === 0 && values(client.methods).all(method => { return helpers.isMethodInternal(method) })) {
+      // client has no client accessors and no exported methods, skip it
+      continue;
+    }
     const serverName = getServerName(client);
     text += `${indent.get()}// ${serverName} contains the fakes for client ${client.name}\n`;
     text += `${indent.get()}${serverName} ${serverName}\n\n`;
+    finalSubClients.push(client);
   }
   text += '}\n\n';
 
@@ -46,7 +56,7 @@ export function generateServerFactory(codeModel: go.CodeModel): string {
   text += 'type ServerFactoryTransport struct {\n';
   text += `${indent.get()}srv *ServerFactory\n`;
   text += `${indent.get()}trMu sync.Mutex\n`;
-  for (const client of codeModel.clients) {
+  for (const client of finalSubClients) {
     const serverName = getServerName(client);
     text += `${indent.get()}tr${serverName} *${serverName}Transport\n`;
   }
@@ -60,7 +70,7 @@ export function generateServerFactory(codeModel: go.CodeModel): string {
   text += `${indent.get()}client := method[:strings.Index(method, ".")]\n`;
   text += `${indent.get()}var resp *http.Response\n${indent.get()}var err error\n\n`;
   text += `${indent.get()}switch client {\n`;
-  for (const client of codeModel.clients) {
+  for (const client of finalSubClients) {
     text += `${indent.get()}case "${client.name}":\n`;
     const serverName = getServerName(client);
     text += `${indent.push().get()}initServer(s, &s.tr${serverName}, func() *${serverName}Transport { return New${serverName}Transport(&s.srv.${serverName}) })\n`;

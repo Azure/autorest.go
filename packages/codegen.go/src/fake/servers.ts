@@ -42,15 +42,11 @@ export function getServerName(client: go.Client): string {
   return capitalize(client.name.replace(/[C|c]lient$/, 'Server'));
 }
 
-function isMethodInternal(method: go.MethodType): boolean {
-  return !!method.name.match(/^[a-z]{1}/);
-}
-
 export async function generateServers(codeModel: go.CodeModel): Promise<ServerContent> {
   const operations = new Array<OperationGroupContent>();
   const clientPkg = codeModel.packageName;
   for (const client of values(codeModel.clients)) {
-    if (client.clientAccessors.length === 0 && values(client.methods).all(method => { return isMethodInternal(method) })) {
+    if (client.clientAccessors.length === 0 && values(client.methods).all(method => { return helpers.isMethodInternal(method) })) {
       // client has no client accessors and no exported methods, skip it
       continue;
     }
@@ -79,7 +75,7 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     // we might remove some clients from the list
     const finalSubClients = new Array<go.Client>();
     for (const clientAccessor of client.clientAccessors) {
-      if (values(clientAccessor.subClient.methods).all(method => { return isMethodInternal(method) })) {
+      if (values(clientAccessor.subClient.methods).all(method => { return helpers.isMethodInternal(method) })) {
         // client has no exported methods, skip it
         continue;
       }
@@ -90,7 +86,7 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     }
 
     for (const method of values(client.methods)) {
-      if (isMethodInternal(method)) {
+      if (helpers.isMethodInternal(method)) {
         // method isn't exported, don't create a fake for it
         continue;
       }

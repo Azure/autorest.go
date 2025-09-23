@@ -10,12 +10,6 @@ type ImageVersionsClientListByImageResponse struct {
 	ImageVersionListResult
 }
 
-// OperationsClientListResponse contains the response from method OperationsClient.NewListPager.
-type OperationsClientListResponse struct {
-	// A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results.
-	OperationListResult
-}
-
 // PoolsClientCreateOrUpdateResponse contains the response from method PoolsClient.BeginCreateOrUpdate.
 type PoolsClientCreateOrUpdateResponse struct {
 	// Concrete tracked resource types can be created by aliasing this type using a specific property type.
@@ -67,4 +61,10 @@ type SKUClientListByLocationResponse struct {
 type SubscriptionUsagesClientUsagesResponse struct {
 	// Paged collection of Quota items
 	PagedQuota
+}
+
+// operationsClientlistResponse contains the response from method OperationsClient.NewlistPager.
+type operationsClientlistResponse struct {
+	// A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results.
+	operationListResult
 }
