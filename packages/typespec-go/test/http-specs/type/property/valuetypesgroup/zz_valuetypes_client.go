@@ -4,13 +4,39 @@
 
 package valuetypesgroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+)
 
 // ValueTypesClient - Illustrates various property types for models
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewValueTypesClientWithNoCredential() instead.
 type ValueTypesClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ValueTypesClientOptions contains the optional values for creating a [ValueTypesClient].
+type ValueTypesClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewValueTypesClientWithNoCredential creates a new instance of ValueTypesClient with the specified values.
+//   - endpoint - Service host
+//   - options - ValueTypesClientOptions contains the optional values for creating a [ValueTypesClient]
+func NewValueTypesClientWithNoCredential(endpoint string, options *ValueTypesClientOptions) (*ValueTypesClient, error) {
+	if options == nil {
+		options = &ValueTypesClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ValueTypesClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // NewValueTypesBooleanClient creates a new instance of [ValueTypesBooleanClient].

@@ -14,11 +14,43 @@ import (
 )
 
 // MadeOptionalClient - Test for the `@madeOptional` decorator.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewMadeOptionalClientWithNoCredential() instead.
 type MadeOptionalClient struct {
 	internal *azcore.Client
 	endpoint string
-	version  Versions
+	version  string
+}
+
+// MadeOptionalClientOptions contains the optional values for creating a [MadeOptionalClient].
+type MadeOptionalClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewMadeOptionalClientWithNoCredential creates a new instance of MadeOptionalClient with the specified values.
+//   - endpoint - Service host
+//   - options - MadeOptionalClientOptions contains the optional values for creating a [MadeOptionalClient]
+func NewMadeOptionalClientWithNoCredential(endpoint string, options *MadeOptionalClientOptions) (*MadeOptionalClient, error) {
+	if options == nil {
+		options = &MadeOptionalClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
+		APIVersion: runtime.APIVersionOptions{
+			Location: runtime.APIVersionLocationPath,
+		},
+	}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	version := "v2"
+	if options.APIVersion != "" {
+		version = options.APIVersion
+	}
+	client := &MadeOptionalClient{
+		endpoint: endpoint,
+		version:  version,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Test -
@@ -50,7 +82,7 @@ func (client *MadeOptionalClient) Test(ctx context.Context, body TestModel, opti
 func (client *MadeOptionalClient) testCreateRequest(ctx context.Context, body TestModel, options *MadeOptionalClientTestOptions) (*policy.Request, error) {
 	host := "{endpoint}/versioning/made-optional/api-version:{version}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{version}", string(client.version))
+	host = strings.ReplaceAll(host, "{version}", client.version)
 	urlPath := "/test"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

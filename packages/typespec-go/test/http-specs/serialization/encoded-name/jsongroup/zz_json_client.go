@@ -4,13 +4,39 @@
 
 package jsongroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+)
 
 // JSONClient - Encoded names
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewJSONClientWithNoCredential() instead.
 type JSONClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// JSONClientOptions contains the optional values for creating a [JSONClient].
+type JSONClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewJSONClientWithNoCredential creates a new instance of JSONClient with the specified values.
+//   - endpoint - Service host
+//   - options - JSONClientOptions contains the optional values for creating a [JSONClient]
+func NewJSONClientWithNoCredential(endpoint string, options *JSONClientOptions) (*JSONClient, error) {
+	if options == nil {
+		options = &JSONClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &JSONClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // NewJSONPropertyClient creates a new instance of [JSONPropertyClient].

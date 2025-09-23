@@ -13,10 +13,38 @@ import (
 )
 
 // PageClient - Illustrates bodies templated with Azure Core with paging support
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewPageClientWithNoCredential() instead.
 type PageClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// PageClientOptions contains the optional values for creating a [PageClient].
+type PageClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewPageClientWithNoCredential creates a new instance of PageClient with the specified values.
+//   - endpoint - Service host
+//   - options - PageClientOptions contains the optional values for creating a [PageClient]
+func NewPageClientWithNoCredential(endpoint string, options *PageClientOptions) (*PageClient, error) {
+	if options == nil {
+		options = &PageClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
+		APIVersion: runtime.APIVersionOptions{
+			Name:     "api-version",
+			Location: runtime.APIVersionLocationQueryParam,
+		},
+	}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &PageClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // NewPageTwoModelsAsPageItemClient creates a new instance of [PageTwoModelsAsPageItemClient].
