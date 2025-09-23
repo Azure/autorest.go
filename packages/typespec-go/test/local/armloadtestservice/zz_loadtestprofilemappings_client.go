@@ -70,6 +70,9 @@ func (client *LoadTestProfileMappingsClient) CreateOrUpdate(ctx context.Context,
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *LoadTestProfileMappingsClient) createOrUpdateCreateRequest(ctx context.Context, resourceURI string, loadTestProfileMappingName string, resource LoadTestProfileMappingResource, _ *LoadTestProfileMappingsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/{resourceUri}/providers/Microsoft.LoadTestService/loadTestProfileMappings/{loadTestProfileMappingName}"
+	if resourceURI == "" {
+		return nil, errors.New("parameter resourceURI cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceUri}", resourceURI)
 	if loadTestProfileMappingName == "" {
 		return nil, errors.New("parameter loadTestProfileMappingName cannot be empty")
@@ -131,6 +134,9 @@ func (client *LoadTestProfileMappingsClient) Delete(ctx context.Context, resourc
 // deleteCreateRequest creates the Delete request.
 func (client *LoadTestProfileMappingsClient) deleteCreateRequest(ctx context.Context, resourceURI string, loadTestProfileMappingName string, _ *LoadTestProfileMappingsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/{resourceUri}/providers/Microsoft.LoadTestService/loadTestProfileMappings/{loadTestProfileMappingName}"
+	if resourceURI == "" {
+		return nil, errors.New("parameter resourceURI cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceUri}", resourceURI)
 	if loadTestProfileMappingName == "" {
 		return nil, errors.New("parameter loadTestProfileMappingName cannot be empty")
@@ -179,6 +185,9 @@ func (client *LoadTestProfileMappingsClient) Get(ctx context.Context, resourceUR
 // getCreateRequest creates the Get request.
 func (client *LoadTestProfileMappingsClient) getCreateRequest(ctx context.Context, resourceURI string, loadTestProfileMappingName string, _ *LoadTestProfileMappingsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/{resourceUri}/providers/Microsoft.LoadTestService/loadTestProfileMappings/{loadTestProfileMappingName}"
+	if resourceURI == "" {
+		return nil, errors.New("parameter resourceURI cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceUri}", resourceURI)
 	if loadTestProfileMappingName == "" {
 		return nil, errors.New("parameter loadTestProfileMappingName cannot be empty")
@@ -236,6 +245,9 @@ func (client *LoadTestProfileMappingsClient) NewListPager(resourceURI string, op
 // listCreateRequest creates the List request.
 func (client *LoadTestProfileMappingsClient) listCreateRequest(ctx context.Context, resourceURI string, _ *LoadTestProfileMappingsClientListOptions) (*policy.Request, error) {
 	urlPath := "/{resourceUri}/providers/Microsoft.LoadTestService/loadTestProfileMappings"
+	if resourceURI == "" {
+		return nil, errors.New("parameter resourceURI cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceUri}", resourceURI)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
@@ -291,6 +303,9 @@ func (client *LoadTestProfileMappingsClient) Update(ctx context.Context, resourc
 // updateCreateRequest creates the Update request.
 func (client *LoadTestProfileMappingsClient) updateCreateRequest(ctx context.Context, resourceURI string, loadTestProfileMappingName string, properties LoadTestProfileMappingResourceUpdate, _ *LoadTestProfileMappingsClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/{resourceUri}/providers/Microsoft.LoadTestService/loadTestProfileMappings/{loadTestProfileMappingName}"
+	if resourceURI == "" {
+		return nil, errors.New("parameter resourceURI cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceUri}", resourceURI)
 	if loadTestProfileMappingName == "" {
 		return nil, errors.New("parameter loadTestProfileMappingName cannot be empty")

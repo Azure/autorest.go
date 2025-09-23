@@ -759,23 +759,36 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     imports.add('strings');
     // replace path parameters
     for (const pp of methodParamGroups.pathParams) {
-      // emit check to ensure path param isn't an empty string.  we only need
-      // to do this for params that have an underlying type of string.
-      const choiceIsString = function (type: go.PathScalarParameterType): boolean {
-        return type.kind === 'constant' && type.type === 'string';
-      };
-      // TODO: https://github.com/Azure/autorest.go/issues/1593
-      if (pp.kind === 'pathScalarParam' && ((pp.type.kind === 'string' || choiceIsString(pp.type)) && pp.isEncoded)) {
+      // emit check to ensure path param isn't an empty string
+      if (pp.kind === 'pathScalarParam') {
+        const choiceIsString = function (type: go.PathScalarParameterType): boolean {
+          return type.kind === 'constant' && type.type === 'string';
+        };
+        // we only need to do this for params that have an underlying type of string
+        if ((pp.type.kind === 'string' || choiceIsString(pp.type)) && !pp.omitEmptyStringCheck) {
+          const paramName = helpers.getParamName(pp);
+          imports.add('errors');
+          text += `\tif ${paramName} == "" {\n`;
+          text += `\t\treturn nil, errors.New("parameter ${paramName} cannot be empty")\n`;
+          text += '\t}\n';
+        }
+      }
+
+      let paramValue = helpers.formatParamValue(pp, imports);
+      if (pp.kind === 'pathCollectionParam') {
         const paramName = helpers.getParamName(pp);
+        const joinedParamName = `${paramName}Param`;
+        text += `\t${joinedParamName} := ${paramValue}\n`;
         imports.add('errors');
-        text += `\tif ${paramName} == "" {\n`;
+        text += `\tif len(${joinedParamName}) == 0 {\n`;
         text += `\t\treturn nil, errors.New("parameter ${paramName} cannot be empty")\n`;
         text += '\t}\n';
+        paramValue = joinedParamName;
       }
-      let paramValue = helpers.formatParamValue(pp, imports);
+
       if (pp.isEncoded) {
         imports.add('net/url');
-        paramValue = `url.PathEscape(${helpers.formatParamValue(pp, imports)})`;
+        paramValue = `url.PathEscape(${paramValue})`;
       }
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.pathSegment}}", ${paramValue})\n`;
     }

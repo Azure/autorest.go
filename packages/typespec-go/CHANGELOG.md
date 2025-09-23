@@ -2,6 +2,11 @@
 
 ## 0.8.3 (unreleased)
 
+### Bugs Fixed
+
+* Fixed missing empty path param check for unencoded path params.
+* Emit empty path param check for path collection parameters.
+
 ### Features Added
 
 * Clean up all generated Go files before emitting any new files.

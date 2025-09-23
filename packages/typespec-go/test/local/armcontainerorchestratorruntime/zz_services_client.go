@@ -69,6 +69,9 @@ func (client *ServicesClient) CreateOrUpdate(ctx context.Context, resourceURI st
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *ServicesClient) createOrUpdateCreateRequest(ctx context.Context, resourceURI string, serviceName string, resource ServiceResource, _ *ServicesClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}"
+	if resourceURI == "" {
+		return nil, errors.New("parameter resourceURI cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceUri}", resourceURI)
 	if serviceName == "" {
 		return nil, errors.New("parameter serviceName cannot be empty")
@@ -129,6 +132,9 @@ func (client *ServicesClient) Delete(ctx context.Context, resourceURI string, se
 // deleteCreateRequest creates the Delete request.
 func (client *ServicesClient) deleteCreateRequest(ctx context.Context, resourceURI string, serviceName string, _ *ServicesClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}"
+	if resourceURI == "" {
+		return nil, errors.New("parameter resourceURI cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceUri}", resourceURI)
 	if serviceName == "" {
 		return nil, errors.New("parameter serviceName cannot be empty")
@@ -176,6 +182,9 @@ func (client *ServicesClient) Get(ctx context.Context, resourceURI string, servi
 // getCreateRequest creates the Get request.
 func (client *ServicesClient) getCreateRequest(ctx context.Context, resourceURI string, serviceName string, _ *ServicesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}"
+	if resourceURI == "" {
+		return nil, errors.New("parameter resourceURI cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceUri}", resourceURI)
 	if serviceName == "" {
 		return nil, errors.New("parameter serviceName cannot be empty")
@@ -232,6 +241,9 @@ func (client *ServicesClient) NewListPager(resourceURI string, options *Services
 // listCreateRequest creates the List request.
 func (client *ServicesClient) listCreateRequest(ctx context.Context, resourceURI string, _ *ServicesClientListOptions) (*policy.Request, error) {
 	urlPath := "/{resourceUri}/providers/Microsoft.KubernetesRuntime/services"
+	if resourceURI == "" {
+		return nil, errors.New("parameter resourceURI cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceUri}", resourceURI)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {

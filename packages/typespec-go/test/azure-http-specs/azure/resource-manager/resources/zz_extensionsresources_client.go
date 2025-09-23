@@ -91,6 +91,9 @@ func (client *ExtensionsResourcesClient) createOrUpdate(ctx context.Context, res
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *ExtensionsResourcesClient) createOrUpdateCreateRequest(ctx context.Context, resourceURI string, extensionsResourceName string, resource ExtensionsResource, _ *ExtensionsResourcesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/{resourceUri}/providers/Azure.ResourceManager.Resources/extensionsResources/{extensionsResourceName}"
+	if resourceURI == "" {
+		return nil, errors.New("parameter resourceURI cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceUri}", resourceURI)
 	if extensionsResourceName == "" {
 		return nil, errors.New("parameter extensionsResourceName cannot be empty")
@@ -143,6 +146,9 @@ func (client *ExtensionsResourcesClient) Delete(ctx context.Context, resourceURI
 // deleteCreateRequest creates the Delete request.
 func (client *ExtensionsResourcesClient) deleteCreateRequest(ctx context.Context, resourceURI string, extensionsResourceName string, _ *ExtensionsResourcesClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/{resourceUri}/providers/Azure.ResourceManager.Resources/extensionsResources/{extensionsResourceName}"
+	if resourceURI == "" {
+		return nil, errors.New("parameter resourceURI cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceUri}", resourceURI)
 	if extensionsResourceName == "" {
 		return nil, errors.New("parameter extensionsResourceName cannot be empty")
@@ -190,6 +196,9 @@ func (client *ExtensionsResourcesClient) Get(ctx context.Context, resourceURI st
 // getCreateRequest creates the Get request.
 func (client *ExtensionsResourcesClient) getCreateRequest(ctx context.Context, resourceURI string, extensionsResourceName string, _ *ExtensionsResourcesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/{resourceUri}/providers/Azure.ResourceManager.Resources/extensionsResources/{extensionsResourceName}"
+	if resourceURI == "" {
+		return nil, errors.New("parameter resourceURI cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceUri}", resourceURI)
 	if extensionsResourceName == "" {
 		return nil, errors.New("parameter extensionsResourceName cannot be empty")
@@ -247,6 +256,9 @@ func (client *ExtensionsResourcesClient) NewListByScopePager(resourceURI string,
 // listByScopeCreateRequest creates the ListByScope request.
 func (client *ExtensionsResourcesClient) listByScopeCreateRequest(ctx context.Context, resourceURI string, _ *ExtensionsResourcesClientListByScopeOptions) (*policy.Request, error) {
 	urlPath := "/{resourceUri}/providers/Azure.ResourceManager.Resources/extensionsResources"
+	if resourceURI == "" {
+		return nil, errors.New("parameter resourceURI cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceUri}", resourceURI)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
@@ -302,6 +314,9 @@ func (client *ExtensionsResourcesClient) Update(ctx context.Context, resourceURI
 // updateCreateRequest creates the Update request.
 func (client *ExtensionsResourcesClient) updateCreateRequest(ctx context.Context, resourceURI string, extensionsResourceName string, properties ExtensionsResource, _ *ExtensionsResourcesClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/{resourceUri}/providers/Azure.ResourceManager.Resources/extensionsResources/{extensionsResourceName}"
+	if resourceURI == "" {
+		return nil, errors.New("parameter resourceURI cannot be empty")
+	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceUri}", resourceURI)
 	if extensionsResourceName == "" {
 		return nil, errors.New("parameter extensionsResourceName cannot be empty")

@@ -388,8 +388,12 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
         adaptedParam = new go.PathCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
           pathType, collectionFormat, style, param.language.go!.byValue, location);
       } else {
-        adaptedParam = new go.PathScalarParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
+        const skipUrlEncoding = skipURLEncoding(param);
+        adaptedParam = new go.PathScalarParameter(param.language.go!.name, param.language.go!.serializedName, !skipUrlEncoding,
           adaptPathScalarParameterType(param.schema), style, param.language.go!.byValue, location);
+        // this is a legacy hack to work around the fact that
+        // swagger doesn't allow path params to be empty.
+        adaptedParam.omitEmptyStringCheck = skipUrlEncoding && (adaptedParam.type.kind === 'string' || (adaptedParam.type.kind === 'constant' && adaptedParam.type.type === 'string'));
       }
       break;
     }

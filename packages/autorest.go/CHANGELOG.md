@@ -1,5 +1,11 @@
 # Release History
 
+## 4.0.0-preview.75 (unreleased)
+
+### Bugs Fixed
+
+* Emit empty path param check for path collection parameters.
+
 ## 4.0.0-preview.74 (2025-09-05)
 
 ### Breaking Changes
