@@ -12,56 +12,30 @@ import (
 // ClientFactory is a client factory used to create any client in this module.
 // Don't use this type directly, use NewClientFactory instead.
 type ClientFactory struct {
-	internal *arm.Client
+	subscriptionID string
+	internal       *arm.Client
 }
 
 // NewClientFactory creates a new instance of ClientFactory with the specified values.
 // The parameter values will be propagated to any client created from this factory.
+//   - subscriptionID - The ID of the target subscription. The value must be an UUID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewClientFactory(credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
+func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {
 	internal, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	return &ClientFactory{
-		internal: internal,
+		subscriptionID: subscriptionID,
+		internal:       internal,
 	}, nil
 }
 
-// NewLoadTestMappingsClient creates a new instance of LoadTestMappingsClient.
-func (c *ClientFactory) NewLoadTestMappingsClient() *LoadTestMappingsClient {
-	return &LoadTestMappingsClient{
-		internal: c.internal,
-	}
-}
-
-// NewLoadTestProfileMappingsClient creates a new instance of LoadTestProfileMappingsClient.
-func (c *ClientFactory) NewLoadTestProfileMappingsClient() *LoadTestProfileMappingsClient {
-	return &LoadTestProfileMappingsClient{
-		internal: c.internal,
-	}
-}
-
-// NewLoadTestsClient creates a new instance of LoadTestsClient.
-func (c *ClientFactory) NewLoadTestsClient(subscriptionID string) *LoadTestsClient {
-	return &LoadTestsClient{
-		subscriptionID: subscriptionID,
-		internal:       c.internal,
-	}
-}
-
-// NewOperationsClient creates a new instance of OperationsClient.
-func (c *ClientFactory) NewOperationsClient() *OperationsClient {
-	return &OperationsClient{
-		internal: c.internal,
-	}
-}
-
-// NewQuotasClient creates a new instance of QuotasClient.
-func (c *ClientFactory) NewQuotasClient(subscriptionID string) *QuotasClient {
-	return &QuotasClient{
-		subscriptionID: subscriptionID,
+// NewLoadTestMgmtClient creates a new instance of LoadTestMgmtClient.
+func (c *ClientFactory) NewLoadTestMgmtClient() *LoadTestMgmtClient {
+	return &LoadTestMgmtClient{
+		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }

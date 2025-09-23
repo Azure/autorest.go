@@ -18,9 +18,6 @@ type ServerFactory struct {
 	// ImageVersionsServer contains the fakes for client ImageVersionsClient
 	ImageVersionsServer ImageVersionsServer
 
-	// OperationsServer contains the fakes for client OperationsClient
-	OperationsServer OperationsServer
-
 	// PoolsServer contains the fakes for client PoolsClient
 	PoolsServer PoolsServer
 
@@ -49,7 +46,6 @@ type ServerFactoryTransport struct {
 	srv                        *ServerFactory
 	trMu                       sync.Mutex
 	trImageVersionsServer      *ImageVersionsServerTransport
-	trOperationsServer         *OperationsServerTransport
 	trPoolsServer              *PoolsServerTransport
 	trResourceDetailsServer    *ResourceDetailsServerTransport
 	trSKUServer                *SKUServerTransport
@@ -74,9 +70,6 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 			return NewImageVersionsServerTransport(&s.srv.ImageVersionsServer)
 		})
 		resp, err = s.trImageVersionsServer.Do(req)
-	case "OperationsClient":
-		initServer(s, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
-		resp, err = s.trOperationsServer.Do(req)
 	case "PoolsClient":
 		initServer(s, &s.trPoolsServer, func() *PoolsServerTransport { return NewPoolsServerTransport(&s.srv.PoolsServer) })
 		resp, err = s.trPoolsServer.Do(req)

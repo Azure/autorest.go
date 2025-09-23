@@ -33,17 +33,17 @@ func NewOperationsClient(credential azcore.TokenCredential, options *arm.ClientO
 	return client, nil
 }
 
-// NewListPager - List the operations for the provider
+// newListPager - List the operations for the provider
 //
 // Generated from API version 2024-04-04-preview
-//   - options - OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
-func (client *OperationsClient) NewListPager(options *OperationsClientListOptions) *runtime.Pager[OperationsClientListResponse] {
-	return runtime.NewPager(runtime.PagingHandler[OperationsClientListResponse]{
-		More: func(page OperationsClientListResponse) bool {
+//   - options - operationsClientlistOptions contains the optional parameters for the OperationsClient.NewlistPager method.
+func (client *OperationsClient) newListPager(options *operationsClientlistOptions) *runtime.Pager[operationsClientlistResponse] {
+	return runtime.NewPager(runtime.PagingHandler[operationsClientlistResponse]{
+		More: func(page operationsClientlistResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		Fetcher: func(ctx context.Context, page *OperationsClientListResponse) (OperationsClientListResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "OperationsClient.NewListPager")
+		Fetcher: func(ctx context.Context, page *operationsClientlistResponse) (operationsClientlistResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "OperationsClient.newListPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -52,7 +52,7 @@ func (client *OperationsClient) NewListPager(options *OperationsClientListOption
 				return client.listCreateRequest(ctx, options)
 			}, nil)
 			if err != nil {
-				return OperationsClientListResponse{}, err
+				return operationsClientlistResponse{}, err
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -60,8 +60,8 @@ func (client *OperationsClient) NewListPager(options *OperationsClientListOption
 	})
 }
 
-// listCreateRequest creates the List request.
-func (client *OperationsClient) listCreateRequest(ctx context.Context, _ *OperationsClientListOptions) (*policy.Request, error) {
+// listCreateRequest creates the list request.
+func (client *OperationsClient) listCreateRequest(ctx context.Context, _ *operationsClientlistOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.DevOpsInfrastructure/operations"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
@@ -74,11 +74,11 @@ func (client *OperationsClient) listCreateRequest(ctx context.Context, _ *Operat
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *OperationsClient) listHandleResponse(resp *http.Response) (OperationsClientListResponse, error) {
-	result := OperationsClientListResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.OperationListResult); err != nil {
-		return OperationsClientListResponse{}, err
+// listHandleResponse handles the list response.
+func (client *OperationsClient) listHandleResponse(resp *http.Response) (operationsClientlistResponse, error) {
+	result := operationsClientlistResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.operationListResult); err != nil {
+		return operationsClientlistResponse{}, err
 	}
 	return result, nil
 }

@@ -150,6 +150,12 @@ export class clientAdapter {
       }
     };
 
+    if (this.ta.codeModel.type === 'azure-arm') {
+      // to keep compat with pre-tsp codegen we
+      // treat all ARM clients as instantiable.
+      sdkClient.clientInitialization.initializedBy |= tcgc.InitializedByFlags.Individually;
+    }
+
     // anything other than public means non-instantiable client
     if (sdkClient.clientInitialization.initializedBy & tcgc.InitializedByFlags.Individually) {
       for (const param of sdkClient.clientInitialization.parameters) {
@@ -368,10 +374,15 @@ export class clientAdapter {
 
     let methodName = capitalize(ensureNameCase(sdkMethod.name));
     if (sdkMethod.access === 'internal') {
-      // we add internal to the extra list so we don't end up with a method named "internal"
-      // which will collide with an unexported field with the same name.
-      methodName = getEscapedReservedName(uncapitalize(methodName), 'Method', ['internal']);
+      methodName = uncapitalize(methodName);
+      if (sdkMethod.kind === 'basic') {
+        // we add internal to the extra list so we don't end up with a method named "internal"
+        // which will collide with an unexported field with the same name. we don't need to
+        // do this for pagers/pollers as those methods get extra naming.
+        methodName = getEscapedReservedName(methodName, 'Method', ['internal']);
+      }
     }
+
     const statusCodes = getStatusCodes(sdkMethod.operation);
 
     if (sdkMethod.kind === 'basic') {
@@ -1084,7 +1095,7 @@ export class clientAdapter {
   }
 
   private adaptHttpOperationExamples(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType, paramMapping: Map<tcgc.SdkHttpParameter, Array<go.MethodParameter>>) {
-    if (sdkMethod.operation.examples) {
+    if (sdkMethod.operation.examples && sdkMethod.access !== 'internal') {
       for (const example of sdkMethod.operation.examples) {
         const goExample = new go.MethodExample(example.name, {summary: example.doc}, example.filePath);
         for (const param of example.parameters) {

@@ -12,18 +12,59 @@ import (
 	"log"
 )
 
-// Generated from example definition: 2023-12-01-preview/LoadTests_CreateOrUpdate.json
-func ExampleLoadTestsClient_BeginCreateOrUpdate() {
+// Generated from example definition: 2023-12-01-preview/Quotas_CheckAvailability.json
+func ExampleLoadTestMgmtClient_CheckAvailabilityQuota() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewLoadTestsClient("00000000-0000-0000-0000-000000000000").BeginCreateOrUpdate(ctx, "dummyrg", "myLoadTest", armloadtestservice.LoadTestResource{
+	res, err := clientFactory.NewLoadTestMgmtClient().CheckAvailabilityQuota(ctx, "westus", "testQuotaBucket", armloadtestservice.QuotaBucketRequest{
+		Properties: &armloadtestservice.QuotaBucketRequestProperties{
+			CurrentUsage: to.Ptr[int32](20),
+			CurrentQuota: to.Ptr[int32](40),
+			NewQuota:     to.Ptr[int32](50),
+			Dimensions: &armloadtestservice.QuotaBucketRequestPropertiesDimensions{
+				SubscriptionID: to.Ptr("testsubscriptionId"),
+				Location:       to.Ptr("westus"),
+			},
+		},
+	}, nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	// You could use response here. We use blank identifier for just demo purposes.
+	_ = res
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// res = armloadtestservice.LoadTestMgmtClientCheckAvailabilityQuotaResponse{
+	// 	CheckQuotaAvailabilityResponse: &armloadtestservice.CheckQuotaAvailabilityResponse{
+	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.LoadTestService/locations/westus/quotas/testQuotaBucket"),
+	// 		Name: to.Ptr("testQuotaBucket"),
+	// 		Type: to.Ptr("Microsoft.LoadTestService/locations/quotas"),
+	// 		Properties: &armloadtestservice.CheckQuotaAvailabilityResponseProperties{
+	// 			IsAvailable: to.Ptr(false),
+	// 			AvailabilityStatus: to.Ptr("The requested quota is currently unavailable. Please request for different quota, or upgrade subscription offer type and try again later."),
+	// 		},
+	// 	},
+	// }
+}
+
+// Generated from example definition: 2023-12-01-preview/LoadTests_CreateOrUpdate.json
+func ExampleLoadTestMgmtClient_BeginCreateOrUpdateLoadtest() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	poller, err := clientFactory.NewLoadTestMgmtClient().BeginCreateOrUpdateLoadtest(ctx, "dummyrg", "myLoadTest", armloadtestservice.LoadTestResource{
 		Location: to.Ptr("westus"),
 		Tags: map[string]*string{
 			"Team": to.Ptr("Dev Exp"),
@@ -55,7 +96,7 @@ func ExampleLoadTestsClient_BeginCreateOrUpdate() {
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-	// res = armloadtestservice.LoadTestsClientCreateOrUpdateResponse{
+	// res = armloadtestservice.LoadTestMgmtClientCreateOrUpdateLoadtestResponse{
 	// 	LoadTestResource: &armloadtestservice.LoadTestResource{
 	// 		Location: to.Ptr("westus"),
 	// 		Identity: &armloadtestservice.ManagedServiceIdentity{
@@ -100,17 +141,17 @@ func ExampleLoadTestsClient_BeginCreateOrUpdate() {
 }
 
 // Generated from example definition: 2023-12-01-preview/LoadTests_Delete.json
-func ExampleLoadTestsClient_BeginDelete() {
+func ExampleLoadTestMgmtClient_BeginDeleteLoadtest() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewLoadTestsClient("00000000-0000-0000-0000-000000000000").BeginDelete(ctx, "dummyrg", "myLoadTest", nil)
+	poller, err := clientFactory.NewLoadTestMgmtClient().BeginDeleteLoadtest(ctx, "dummyrg", "myLoadTest", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -121,24 +162,24 @@ func ExampleLoadTestsClient_BeginDelete() {
 }
 
 // Generated from example definition: 2023-12-01-preview/LoadTests_Get.json
-func ExampleLoadTestsClient_Get() {
+func ExampleLoadTestMgmtClient_GetLoadtest() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := clientFactory.NewLoadTestsClient("00000000-0000-0000-0000-000000000000").Get(ctx, "dummyrg", "myLoadTest", nil)
+	res, err := clientFactory.NewLoadTestMgmtClient().GetLoadtest(ctx, "dummyrg", "myLoadTest", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-	// res = armloadtestservice.LoadTestsClientGetResponse{
+	// res = armloadtestservice.LoadTestMgmtClientGetLoadtestResponse{
 	// 	LoadTestResource: &armloadtestservice.LoadTestResource{
 	// 		Location: to.Ptr("westus"),
 	// 		Properties: &armloadtestservice.LoadTestProperties{
@@ -164,18 +205,49 @@ func ExampleLoadTestsClient_Get() {
 	// }
 }
 
-// Generated from example definition: 2023-12-01-preview/LoadTests_ListByResourceGroup.json
-func ExampleLoadTestsClient_NewListByResourceGroupPager() {
+// Generated from example definition: 2023-12-01-preview/Quotas_Get.json
+func ExampleLoadTestMgmtClient_GetQuota() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewLoadTestsClient("00000000-0000-0000-0000-000000000000").NewListByResourceGroupPager("dummyrg", nil)
+	res, err := clientFactory.NewLoadTestMgmtClient().GetQuota(ctx, "westus", "testQuotaBucket", nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	// You could use response here. We use blank identifier for just demo purposes.
+	_ = res
+	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
+	// res = armloadtestservice.LoadTestMgmtClientGetQuotaResponse{
+	// 	QuotaResource: &armloadtestservice.QuotaResource{
+	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.LoadTestService/locations/westus/quotas/testQuotaBucket"),
+	// 		Name: to.Ptr("testQuotaBucket"),
+	// 		Type: to.Ptr("Microsoft.LoadTestService/locations/quotas"),
+	// 		Properties: &armloadtestservice.QuotaResourceProperties{
+	// 			Limit: to.Ptr[int32](50),
+	// 			Usage: to.Ptr[int32](20),
+	// 		},
+	// 	},
+	// }
+}
+
+// Generated from example definition: 2023-12-01-preview/LoadTests_ListByResourceGroup.json
+func ExampleLoadTestMgmtClient_NewListByResourceGroupPager() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	pager := clientFactory.NewLoadTestMgmtClient().NewListByResourceGroupPager("dummyrg", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -186,7 +258,7 @@ func ExampleLoadTestsClient_NewListByResourceGroupPager() {
 			_ = v
 		}
 		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-		// page = armloadtestservice.LoadTestsClientListByResourceGroupResponse{
+		// page = armloadtestservice.LoadTestMgmtClientListByResourceGroupResponse{
 		// 	LoadTestResourceListResult: armloadtestservice.LoadTestResourceListResult{
 		// 		Value: []*armloadtestservice.LoadTestResource{
 		// 			{
@@ -218,17 +290,17 @@ func ExampleLoadTestsClient_NewListByResourceGroupPager() {
 }
 
 // Generated from example definition: 2023-12-01-preview/LoadTests_ListBySubscription.json
-func ExampleLoadTestsClient_NewListBySubscriptionPager() {
+func ExampleLoadTestMgmtClient_NewListBySubscriptionPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewLoadTestsClient("00000000-0000-0000-0000-000000000000").NewListBySubscriptionPager(nil)
+	pager := clientFactory.NewLoadTestMgmtClient().NewListBySubscriptionPager(nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -239,7 +311,7 @@ func ExampleLoadTestsClient_NewListBySubscriptionPager() {
 			_ = v
 		}
 		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-		// page = armloadtestservice.LoadTestsClientListBySubscriptionResponse{
+		// page = armloadtestservice.LoadTestMgmtClientListBySubscriptionResponse{
 		// 	LoadTestResourceListResult: armloadtestservice.LoadTestResourceListResult{
 		// 		Value: []*armloadtestservice.LoadTestResource{
 		// 			{
@@ -270,18 +342,18 @@ func ExampleLoadTestsClient_NewListBySubscriptionPager() {
 	}
 }
 
-// Generated from example definition: 2023-12-01-preview/LoadTests_ListOutboundNetworkDependenciesEndpoints.json
-func ExampleLoadTestsClient_NewOutboundNetworkDependenciesEndpointsPager() {
+// Generated from example definition: 2023-12-01-preview/Quotas_List.json
+func ExampleLoadTestMgmtClient_NewListQuotaPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := clientFactory.NewLoadTestsClient("00000000-0000-0000-0000-000000000000").NewOutboundNetworkDependenciesEndpointsPager("default-azureloadtest-japaneast", "sampleloadtest", nil)
+	pager := clientFactory.NewLoadTestMgmtClient().NewListQuotaPager("westus", nil)
 	for pager.More() {
 		page, err := pager.NextPage(ctx)
 		if err != nil {
@@ -292,7 +364,47 @@ func ExampleLoadTestsClient_NewOutboundNetworkDependenciesEndpointsPager() {
 			_ = v
 		}
 		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-		// page = armloadtestservice.LoadTestsClientOutboundNetworkDependenciesEndpointsResponse{
+		// page = armloadtestservice.LoadTestMgmtClientListQuotaResponse{
+		// 	QuotaResourceListResult: armloadtestservice.QuotaResourceListResult{
+		// 		Value: []*armloadtestservice.QuotaResource{
+		// 			{
+		// 				ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.LoadTestService/locations/westus/quotas/testQuotaBucket"),
+		// 				Name: to.Ptr("testQuotaBucket"),
+		// 				Type: to.Ptr("Microsoft.LoadTestService/locations/quotas"),
+		// 				Properties: &armloadtestservice.QuotaResourceProperties{
+		// 					Limit: to.Ptr[int32](50),
+		// 					Usage: to.Ptr[int32](20),
+		// 				},
+		// 			},
+		// 		},
+		// 	},
+		// }
+	}
+}
+
+// Generated from example definition: 2023-12-01-preview/LoadTests_ListOutboundNetworkDependenciesEndpoints.json
+func ExampleLoadTestMgmtClient_NewOutboundNetworkDependenciesEndpointsPager() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	pager := clientFactory.NewLoadTestMgmtClient().NewOutboundNetworkDependenciesEndpointsPager("default-azureloadtest-japaneast", "sampleloadtest", nil)
+	for pager.More() {
+		page, err := pager.NextPage(ctx)
+		if err != nil {
+			log.Fatalf("failed to advance page: %v", err)
+		}
+		for _, v := range page.Value {
+			// You could use page here. We use blank identifier for just demo purposes.
+			_ = v
+		}
+		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
+		// page = armloadtestservice.LoadTestMgmtClientOutboundNetworkDependenciesEndpointsResponse{
 		// 	PagedOutboundEnvironmentEndpoint: armloadtestservice.PagedOutboundEnvironmentEndpoint{
 		// 		Value: []*armloadtestservice.OutboundEnvironmentEndpoint{
 		// 			{
@@ -394,17 +506,17 @@ func ExampleLoadTestsClient_NewOutboundNetworkDependenciesEndpointsPager() {
 }
 
 // Generated from example definition: 2023-12-01-preview/LoadTests_Update.json
-func ExampleLoadTestsClient_BeginUpdate() {
+func ExampleLoadTestMgmtClient_BeginUpdateLoadtest() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
 	}
 	ctx := context.Background()
-	clientFactory, err := armloadtestservice.NewClientFactory(cred, nil)
+	clientFactory, err := armloadtestservice.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewLoadTestsClient("00000000-0000-0000-0000-000000000000").BeginUpdate(ctx, "dummyrg", "myLoadTest", armloadtestservice.LoadTestResourceUpdate{
+	poller, err := clientFactory.NewLoadTestMgmtClient().BeginUpdateLoadtest(ctx, "dummyrg", "myLoadTest", armloadtestservice.LoadTestResourceUpdate{
 		Tags: map[string]*string{
 			"Team":     to.Ptr("Dev Exp"),
 			"Division": to.Ptr("LT"),
@@ -436,6 +548,6 @@ func ExampleLoadTestsClient_BeginUpdate() {
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-	// res = armloadtestservice.LoadTestsClientUpdateResponse{
+	// res = armloadtestservice.LoadTestMgmtClientUpdateLoadtestResponse{
 	// }
 }

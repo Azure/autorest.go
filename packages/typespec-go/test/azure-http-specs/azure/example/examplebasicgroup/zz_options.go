@@ -4,8 +4,7 @@
 
 package examplebasicgroup
 
-// BasicServiceOperationGroupClientBasicOptions contains the optional parameters for the BasicServiceOperationGroupClient.Basic
-// method.
-type BasicServiceOperationGroupClientBasicOptions struct {
+// AzureExampleClientBasicActionOptions contains the optional parameters for the AzureExampleClient.BasicAction method.
+type AzureExampleClientBasicActionOptions struct {
 	// placeholder for future optional parameters
 }

@@ -58,7 +58,7 @@ using Microsoft.DocumentDB;
   "MongoClusterNameUnavailableReason",
   "csharp"
 );
-@@clientName(PublicNetworkAccess, "MongoClusterPublicNetworkAccess", "csharp");
+@@clientName(Microsoft.DocumentDB.PublicNetworkAccess, "MongoClusterPublicNetworkAccess", "csharp");
 @@clientName(FirewallRule, "MongoClusterFirewallRule", "csharp");
 @@clientName(FirewallRuleProperties,
   "MongoClusterFirewallRuleProperties",

@@ -41,12 +41,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
     }
 
-    let clientPkg = 'azcore';
-    if (azureARM) {
-      clientPkg = 'arm';
-      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
-      client.constructors.push(createARMClientConstructor(client, imports))
-    } else {
+    if (!azureARM) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     }
 
@@ -73,7 +68,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
       clientText += 'a constructor function instead.\n';
     }
     clientText += `type ${client.name} struct {\n`;
-    clientText += `\tinternal *${clientPkg}.Client\n`;
+    clientText += `\tinternal *${azureARM ? 'arm' : 'azcore'}.Client\n`;
 
     // check for any optional host params
     const optionalParams = new Array<go.ClientParameter>();
@@ -310,6 +305,7 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
           }
           case 'parameter':
             // this is the ARM case
+            imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
             prolog = '\tcl, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
             break;
         }
@@ -372,18 +368,6 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
   }
 
   return ctorText;
-}
-
-// creates a modeled constructor for an ARM client
-function createARMClientConstructor(client: go.Client, imports: ImportManager): go.Constructor {
-  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
-  // we don't need the scopes for ARM, it's handled by pipeline policy
-  const ctor = new go.Constructor(`New${client.name}`, new go.TokenAuthentication([]));
-  // add any modeled parameter first, which should only be the subscriptionID, then add TokenCredential
-  for (const param of client.parameters) {
-    ctor.parameters.push(param);
-  }
-  return ctor;
 }
 
 // use this to generate the code that will help process values returned in response headers
