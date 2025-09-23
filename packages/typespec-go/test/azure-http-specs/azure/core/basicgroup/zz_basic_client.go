@@ -16,38 +16,10 @@ import (
 )
 
 // BasicClient - Illustrates bodies templated with Azure Core
-// Don't use this type directly, use NewBasicClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type BasicClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// BasicClientOptions contains the optional values for creating a [BasicClient].
-type BasicClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewBasicClientWithNoCredential creates a new instance of BasicClient with the specified values.
-//   - endpoint - Service host
-//   - options - BasicClientOptions contains the optional values for creating a [BasicClient]
-func NewBasicClientWithNoCredential(endpoint string, options *BasicClientOptions) (*BasicClient, error) {
-	if options == nil {
-		options = &BasicClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
-		APIVersion: runtime.APIVersionOptions{
-			Name:     "api-version",
-			Location: runtime.APIVersionLocationQueryParam,
-		},
-	}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &BasicClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // CreateOrReplace - Adds a user or replaces a user's fields.

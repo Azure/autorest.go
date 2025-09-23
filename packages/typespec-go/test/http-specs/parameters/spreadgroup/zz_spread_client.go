@@ -4,39 +4,13 @@
 
 package spreadgroup
 
-import (
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-)
+import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
 // SpreadClient - Test for the spread operator.
-// Don't use this type directly, use NewSpreadClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type SpreadClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// SpreadClientOptions contains the optional values for creating a [SpreadClient].
-type SpreadClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewSpreadClientWithNoCredential creates a new instance of SpreadClient with the specified values.
-//   - endpoint - Service host
-//   - options - SpreadClientOptions contains the optional values for creating a [SpreadClient]
-func NewSpreadClientWithNoCredential(endpoint string, options *SpreadClientOptions) (*SpreadClient, error) {
-	if options == nil {
-		options = &SpreadClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &SpreadClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // NewSpreadAliasClient creates a new instance of [SpreadAliasClient].

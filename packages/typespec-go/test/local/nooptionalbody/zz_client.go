@@ -13,33 +13,10 @@ import (
 )
 
 // Client contains the methods for the service.
-// Don't use this type directly, use NewClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type Client struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ClientOptions contains the optional values for creating a [Client].
-type ClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewClientWithNoCredential creates a new instance of Client with the specified values.
-//   - endpoint - Service host
-//   - options - ClientOptions contains the optional values for creating a [Client]
-func NewClientWithNoCredential(endpoint string, options *ClientOptions) (*Client, error) {
-	if options == nil {
-		options = &ClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &Client{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Patch - body should not be optional

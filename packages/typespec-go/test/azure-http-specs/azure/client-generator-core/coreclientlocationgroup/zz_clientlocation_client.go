@@ -13,33 +13,10 @@ import (
 )
 
 // ClientLocationClient - Test for @clientLocation decorator - moving operations between clients
-// Don't use this type directly, use NewClientLocationClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type ClientLocationClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ClientLocationClientOptions contains the optional values for creating a [ClientLocationClient].
-type ClientLocationClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewClientLocationClientWithNoCredential creates a new instance of ClientLocationClient with the specified values.
-//   - endpoint - Service host
-//   - options - ClientLocationClientOptions contains the optional values for creating a [ClientLocationClient]
-func NewClientLocationClientWithNoCredential(endpoint string, options *ClientLocationClientOptions) (*ClientLocationClient, error) {
-	if options == nil {
-		options = &ClientLocationClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &ClientLocationClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // NewClientLocationArchiveOperationsClient creates a new instance of [ClientLocationArchiveOperationsClient].

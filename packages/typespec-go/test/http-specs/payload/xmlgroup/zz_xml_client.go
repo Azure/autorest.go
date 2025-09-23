@@ -4,39 +4,13 @@
 
 package xmlgroup
 
-import (
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-)
+import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
 // XMLClient - Sends and receives bodies in XML format.
-// Don't use this type directly, use NewXMLClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type XMLClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// XMLClientOptions contains the optional values for creating a [XMLClient].
-type XMLClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewXMLClientWithNoCredential creates a new instance of XMLClient with the specified values.
-//   - endpoint - Service host
-//   - options - XMLClientOptions contains the optional values for creating a [XMLClient]
-func NewXMLClientWithNoCredential(endpoint string, options *XMLClientOptions) (*XMLClient, error) {
-	if options == nil {
-		options = &XMLClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &XMLClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // NewXMLModelWithArrayOfModelValueClient creates a new instance of [XMLModelWithArrayOfModelValueClient].

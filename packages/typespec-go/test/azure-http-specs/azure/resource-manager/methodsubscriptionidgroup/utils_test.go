@@ -12,6 +12,7 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 )
@@ -27,10 +28,15 @@ func TestMain(m *testing.M) {
 	ctx = context.Background()
 	clientFactory, _ = methodsubscriptionidgroup.NewClientFactory(subscriptionIdExpected, &azfake.TokenCredential{}, &arm.ClientOptions{
 		ClientOptions: azcore.ClientOptions{
-			InsecureAllowCredentialWithHTTP: true,
-			PerCallPolicies: []policy.Policy{
-				&spectorPolicy{},
+			Cloud: cloud.Configuration{
+				Services: map[cloud.ServiceName]cloud.ServiceConfiguration{
+					cloud.ResourceManager: {
+						Audience: "fake_audience",
+						Endpoint: "http://localhost:3000",
+					},
+				},
 			},
+			InsecureAllowCredentialWithHTTP: true,
 		},
 	})
 

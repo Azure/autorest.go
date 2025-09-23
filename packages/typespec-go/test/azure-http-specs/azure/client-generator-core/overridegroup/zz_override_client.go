@@ -4,39 +4,13 @@
 
 package overridegroup
 
-import (
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-)
+import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
 // OverrideClient - Test scenarios for client override behavior.
-// Don't use this type directly, use NewOverrideClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type OverrideClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// OverrideClientOptions contains the optional values for creating a [OverrideClient].
-type OverrideClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewOverrideClientWithNoCredential creates a new instance of OverrideClient with the specified values.
-//   - endpoint - Service host
-//   - options - OverrideClientOptions contains the optional values for creating a [OverrideClient]
-func NewOverrideClientWithNoCredential(endpoint string, options *OverrideClientOptions) (*OverrideClient, error) {
-	if options == nil {
-		options = &OverrideClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &OverrideClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // NewOverrideGroupParametersClient creates a new instance of [OverrideGroupParametersClient].

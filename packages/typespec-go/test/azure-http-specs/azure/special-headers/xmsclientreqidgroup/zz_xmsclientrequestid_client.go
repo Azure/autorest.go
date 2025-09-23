@@ -13,33 +13,10 @@ import (
 )
 
 // XMSClientRequestIDClient - Azure client request id header configurations.
-// Don't use this type directly, use NewXMSClientRequestIDClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type XMSClientRequestIDClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// XMSClientRequestIDClientOptions contains the optional values for creating a [XMSClientRequestIDClient].
-type XMSClientRequestIDClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewXMSClientRequestIDClientWithNoCredential creates a new instance of XMSClientRequestIDClient with the specified values.
-//   - endpoint - Service host
-//   - options - XMSClientRequestIDClientOptions contains the optional values for creating a [XMSClientRequestIDClient]
-func NewXMSClientRequestIDClientWithNoCredential(endpoint string, options *XMSClientRequestIDClientOptions) (*XMSClientRequestIDClient, error) {
-	if options == nil {
-		options = &XMSClientRequestIDClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &XMSClientRequestIDClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get - Get operation with azure `x-ms-client-request-id` header.

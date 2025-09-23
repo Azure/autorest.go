@@ -50,23 +50,20 @@ func (c *ClientFactory) NewResourceGroupResourceOperationsClient() *ResourceGrou
 // NewSubscriptionResource1OperationsClient creates a new instance of SubscriptionResource1OperationsClient.
 func (c *ClientFactory) NewSubscriptionResource1OperationsClient() *SubscriptionResource1OperationsClient {
 	return &SubscriptionResource1OperationsClient{
-		subscriptionID: c.subscriptionID,
-		internal:       c.internal,
+		internal: c.internal,
 	}
 }
 
 // NewSubscriptionResource2OperationsClient creates a new instance of SubscriptionResource2OperationsClient.
 func (c *ClientFactory) NewSubscriptionResource2OperationsClient() *SubscriptionResource2OperationsClient {
 	return &SubscriptionResource2OperationsClient{
-		subscriptionID: c.subscriptionID,
-		internal:       c.internal,
+		internal: c.internal,
 	}
 }
 
 // NewSubscriptionResourceOperationsClient creates a new instance of SubscriptionResourceOperationsClient.
 func (c *ClientFactory) NewSubscriptionResourceOperationsClient() *SubscriptionResourceOperationsClient {
 	return &SubscriptionResourceOperationsClient{
-		subscriptionID: c.subscriptionID,
-		internal:       c.internal,
+		internal: c.internal,
 	}
 }

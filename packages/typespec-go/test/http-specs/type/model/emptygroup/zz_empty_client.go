@@ -13,33 +13,10 @@ import (
 )
 
 // EmptyClient - Illustrates usage of empty model used in operation's parameters and responses.
-// Don't use this type directly, use NewEmptyClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type EmptyClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// EmptyClientOptions contains the optional values for creating a [EmptyClient].
-type EmptyClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewEmptyClientWithNoCredential creates a new instance of EmptyClient with the specified values.
-//   - endpoint - Service host
-//   - options - EmptyClientOptions contains the optional values for creating a [EmptyClient]
-func NewEmptyClientWithNoCredential(endpoint string, options *EmptyClientOptions) (*EmptyClient, error) {
-	if options == nil {
-		options = &EmptyClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &EmptyClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // GetEmpty -

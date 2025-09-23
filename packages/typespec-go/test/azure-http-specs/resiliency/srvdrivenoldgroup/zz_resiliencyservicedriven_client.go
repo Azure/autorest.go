@@ -15,48 +15,12 @@ import (
 
 // ResiliencyServiceDrivenClient - Test that we can grow up a service spec and service deployment into a multi-versioned service
 // with full client support.
-// Don't use this type directly, use NewResiliencyServiceDrivenClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type ResiliencyServiceDrivenClient struct {
 	internal                 *azcore.Client
 	endpoint                 string
 	serviceDeploymentVersion string
 	apiVersion               string
-}
-
-// ResiliencyServiceDrivenClientOptions contains the optional values for creating a [ResiliencyServiceDrivenClient].
-type ResiliencyServiceDrivenClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewResiliencyServiceDrivenClientWithNoCredential creates a new instance of ResiliencyServiceDrivenClient with the specified values.
-//   - endpoint - Service host
-//   - serviceDeploymentVersion - Pass in either 'v1' or 'v2'. This represents a version of the service deployment in history.
-//     'v1' is for the deployment when the service had only one api version. 'v2' is for the deployment when the service had api-versions
-//     'v1' and 'v2'.
-//   - options - ResiliencyServiceDrivenClientOptions contains the optional values for creating a [ResiliencyServiceDrivenClient]
-func NewResiliencyServiceDrivenClientWithNoCredential(endpoint string, serviceDeploymentVersion string, options *ResiliencyServiceDrivenClientOptions) (*ResiliencyServiceDrivenClient, error) {
-	if options == nil {
-		options = &ResiliencyServiceDrivenClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
-		APIVersion: runtime.APIVersionOptions{
-			Location: runtime.APIVersionLocationPath,
-		},
-	}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	apiVersion := "v1"
-	if options.APIVersion != "" {
-		apiVersion = options.APIVersion
-	}
-	client := &ResiliencyServiceDrivenClient{
-		endpoint:                 endpoint,
-		serviceDeploymentVersion: serviceDeploymentVersion,
-		apiVersion:               apiVersion,
-		internal:                 cl,
-	}
-	return client, nil
 }
 
 // FromNone - Test that currently accepts no parameters, will be updated in next spec to accept a new optional parameter as

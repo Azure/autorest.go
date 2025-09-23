@@ -16,33 +16,10 @@ import (
 )
 
 // NotVersionedClient - Illustrates not-versioned server.
-// Don't use this type directly, use NewNotVersionedClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type NotVersionedClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// NotVersionedClientOptions contains the optional values for creating a [NotVersionedClient].
-type NotVersionedClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewNotVersionedClientWithNoCredential creates a new instance of NotVersionedClient with the specified values.
-//   - endpoint - Service host
-//   - options - NotVersionedClientOptions contains the optional values for creating a [NotVersionedClient]
-func NewNotVersionedClientWithNoCredential(endpoint string, options *NotVersionedClientOptions) (*NotVersionedClient, error) {
-	if options == nil {
-		options = &NotVersionedClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &NotVersionedClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 //   - options - NotVersionedClientWithPathAPIVersionOptions contains the optional parameters for the NotVersionedClient.WithPathAPIVersion

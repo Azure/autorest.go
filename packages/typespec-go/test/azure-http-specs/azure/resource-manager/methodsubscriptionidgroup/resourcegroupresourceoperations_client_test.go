@@ -34,9 +34,9 @@ var validResource = methodsubscriptionidgroup.ResourceGroupResource{
 }
 
 func TestResourceGroupResourceOperationsClient_Delete(t *testing.T) {
-	delResp, err := clientFactory.NewResourceGroupResourceOperationsClient().Delete(context.Background(), "test-rg", "sub-resource-1", &methodsubscriptionidgroup.ResourceGroupResourceOperationsClientDeleteOptions{})
+	delResp, err := clientFactory.NewResourceGroupResourceOperationsClient().Delete(context.Background(), "test-rg", "sub-resource-1", nil)
 	require.NoError(t, err)
-	require.NotNil(t, delResp)
+	require.Zero(t, delResp)
 }
 
 func TestResourceGroupResourceOperationsClient_Put(t *testing.T) {
@@ -46,14 +46,14 @@ func TestResourceGroupResourceOperationsClient_Put(t *testing.T) {
 			ResourceGroupSetting: to.Ptr(string("test-setting")),
 		},
 	}
-	putResp, err := clientFactory.NewResourceGroupResourceOperationsClient().Put(context.Background(), "test-rg", "sub-resource-1", reqResource, &methodsubscriptionidgroup.ResourceGroupResourceOperationsClientPutOptions{})
+	putResp, err := clientFactory.NewResourceGroupResourceOperationsClient().Put(context.Background(), "test-rg", "sub-resource-1", reqResource, nil)
 	require.NoError(t, err)
 	require.NotNil(t, putResp)
 	require.Equal(t, validResource, putResp.ResourceGroupResource)
 }
 
 func TestResourceGroupResourceOperationsClient_Get(t *testing.T) {
-	getResp, err := clientFactory.NewResourceGroupResourceOperationsClient().Get(context.Background(), "test-rg", "sub-resource-1", &methodsubscriptionidgroup.ResourceGroupResourceOperationsClientGetOptions{})
+	getResp, err := clientFactory.NewResourceGroupResourceOperationsClient().Get(context.Background(), "test-rg", "sub-resource-1", nil)
 	require.NoError(t, err)
 	require.NotNil(t, getResp)
 	require.Equal(t, validResource, getResp.ResourceGroupResource)

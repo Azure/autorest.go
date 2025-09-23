@@ -4,39 +4,13 @@
 
 package contentneggroup
 
-import (
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-)
+import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
 // ContentNegotiationClient - Test describing optionality of the request body.
-// Don't use this type directly, use NewContentNegotiationClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type ContentNegotiationClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ContentNegotiationClientOptions contains the optional values for creating a [ContentNegotiationClient].
-type ContentNegotiationClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewContentNegotiationClientWithNoCredential creates a new instance of ContentNegotiationClient with the specified values.
-//   - endpoint - Service host
-//   - options - ContentNegotiationClientOptions contains the optional values for creating a [ContentNegotiationClient]
-func NewContentNegotiationClientWithNoCredential(endpoint string, options *ContentNegotiationClientOptions) (*ContentNegotiationClient, error) {
-	if options == nil {
-		options = &ContentNegotiationClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &ContentNegotiationClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // NewContentNegotiationDifferentBodyClient creates a new instance of [ContentNegotiationDifferentBodyClient].

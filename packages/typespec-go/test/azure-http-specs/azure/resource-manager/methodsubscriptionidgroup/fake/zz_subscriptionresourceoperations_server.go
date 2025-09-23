@@ -21,15 +21,15 @@ import (
 type SubscriptionResourceOperationsServer struct {
 	// Delete is the fake for method SubscriptionResourceOperationsClient.Delete
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
-	Delete func(ctx context.Context, subscriptionResourceName string, options *methodsubscriptionidgroup.SubscriptionResourceOperationsClientDeleteOptions) (resp azfake.Responder[methodsubscriptionidgroup.SubscriptionResourceOperationsClientDeleteResponse], errResp azfake.ErrorResponder)
+	Delete func(ctx context.Context, subscriptionID string, subscriptionResourceName string, options *methodsubscriptionidgroup.SubscriptionResourceOperationsClientDeleteOptions) (resp azfake.Responder[methodsubscriptionidgroup.SubscriptionResourceOperationsClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method SubscriptionResourceOperationsClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, subscriptionResourceName string, options *methodsubscriptionidgroup.SubscriptionResourceOperationsClientGetOptions) (resp azfake.Responder[methodsubscriptionidgroup.SubscriptionResourceOperationsClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, subscriptionID string, subscriptionResourceName string, options *methodsubscriptionidgroup.SubscriptionResourceOperationsClientGetOptions) (resp azfake.Responder[methodsubscriptionidgroup.SubscriptionResourceOperationsClientGetResponse], errResp azfake.ErrorResponder)
 
 	// Put is the fake for method SubscriptionResourceOperationsClient.Put
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	Put func(ctx context.Context, subscriptionResourceName string, resource methodsubscriptionidgroup.SubscriptionResource, options *methodsubscriptionidgroup.SubscriptionResourceOperationsClientPutOptions) (resp azfake.Responder[methodsubscriptionidgroup.SubscriptionResourceOperationsClientPutResponse], errResp azfake.ErrorResponder)
+	Put func(ctx context.Context, subscriptionID string, subscriptionResourceName string, resource methodsubscriptionidgroup.SubscriptionResource, options *methodsubscriptionidgroup.SubscriptionResourceOperationsClientPutOptions) (resp azfake.Responder[methodsubscriptionidgroup.SubscriptionResourceOperationsClientPutResponse], errResp azfake.ErrorResponder)
 }
 
 // NewSubscriptionResourceOperationsServerTransport creates a new instance of SubscriptionResourceOperationsServerTransport with the provided implementation.
@@ -103,11 +103,15 @@ func (s *SubscriptionResourceOperationsServerTransport) dispatchDelete(req *http
 	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
+	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
+	if err != nil {
+		return nil, err
+	}
 	subscriptionResourceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionResourceName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Delete(req.Context(), subscriptionResourceNameParam, nil)
+	respr, errRespr := s.srv.Delete(req.Context(), subscriptionIDParam, subscriptionResourceNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -132,11 +136,15 @@ func (s *SubscriptionResourceOperationsServerTransport) dispatchGet(req *http.Re
 	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
+	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
+	if err != nil {
+		return nil, err
+	}
 	subscriptionResourceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionResourceName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Get(req.Context(), subscriptionResourceNameParam, nil)
+	respr, errRespr := s.srv.Get(req.Context(), subscriptionIDParam, subscriptionResourceNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -165,11 +173,15 @@ func (s *SubscriptionResourceOperationsServerTransport) dispatchPut(req *http.Re
 	if err != nil {
 		return nil, err
 	}
+	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
+	if err != nil {
+		return nil, err
+	}
 	subscriptionResourceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionResourceName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Put(req.Context(), subscriptionResourceNameParam, body, nil)
+	respr, errRespr := s.srv.Put(req.Context(), subscriptionIDParam, subscriptionResourceNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

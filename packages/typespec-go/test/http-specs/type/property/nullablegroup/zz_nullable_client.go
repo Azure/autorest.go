@@ -4,39 +4,13 @@
 
 package nullablegroup
 
-import (
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-)
+import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
 // NullableClient - Illustrates models with nullable properties.
-// Don't use this type directly, use NewNullableClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type NullableClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// NullableClientOptions contains the optional values for creating a [NullableClient].
-type NullableClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewNullableClientWithNoCredential creates a new instance of NullableClient with the specified values.
-//   - endpoint - Service host
-//   - options - NullableClientOptions contains the optional values for creating a [NullableClient]
-func NewNullableClientWithNoCredential(endpoint string, options *NullableClientOptions) (*NullableClient, error) {
-	if options == nil {
-		options = &NullableClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &NullableClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // NewNullableBytesClient creates a new instance of [NullableBytesClient].

@@ -13,33 +13,10 @@ import (
 )
 
 // EnumDiscriminatorClient - Illustrates inheritance with enum discriminator.
-// Don't use this type directly, use NewEnumDiscriminatorClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type EnumDiscriminatorClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// EnumDiscriminatorClientOptions contains the optional values for creating a [EnumDiscriminatorClient].
-type EnumDiscriminatorClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewEnumDiscriminatorClientWithNoCredential creates a new instance of EnumDiscriminatorClient with the specified values.
-//   - endpoint - Service host
-//   - options - EnumDiscriminatorClientOptions contains the optional values for creating a [EnumDiscriminatorClient]
-func NewEnumDiscriminatorClientWithNoCredential(endpoint string, options *EnumDiscriminatorClientOptions) (*EnumDiscriminatorClient, error) {
-	if options == nil {
-		options = &EnumDiscriminatorClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &EnumDiscriminatorClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // GetExtensibleModel - Receive model with extensible enum discriminator type.

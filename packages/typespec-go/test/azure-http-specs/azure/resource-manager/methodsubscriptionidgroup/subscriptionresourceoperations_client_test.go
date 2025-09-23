@@ -33,9 +33,9 @@ var validMixedSubscriptionResource = methodsubscriptionidgroup.SubscriptionResou
 }
 
 func TestSubscriptionResourceOperationsClient_Delete(t *testing.T) {
-	delResp, err := clientFactory.NewSubscriptionResourceOperationsClient().Delete(context.Background(), "sub-resource-1", &methodsubscriptionidgroup.SubscriptionResourceOperationsClientDeleteOptions{})
+	delResp, err := clientFactory.NewSubscriptionResourceOperationsClient().Delete(context.Background(), subscriptionIdExpected, "sub-resource-1", nil)
 	require.NoError(t, err)
-	require.NotNil(t, delResp)
+	require.Zero(t, delResp)
 }
 
 func TestSubscriptionResourceOperationsClient_Put(t *testing.T) {
@@ -44,14 +44,14 @@ func TestSubscriptionResourceOperationsClient_Put(t *testing.T) {
 			SubscriptionSetting: to.Ptr(string("test-sub-setting")),
 		},
 	}
-	putResp, err := clientFactory.NewSubscriptionResourceOperationsClient().Put(context.Background(), "sub-resource-1", validResource, &methodsubscriptionidgroup.SubscriptionResourceOperationsClientPutOptions{})
+	putResp, err := clientFactory.NewSubscriptionResourceOperationsClient().Put(context.Background(), subscriptionIdExpected, "sub-resource-1", validResource, nil)
 	require.NoError(t, err)
 	require.NotNil(t, putResp)
 	require.Equal(t, validMixedSubscriptionResource, putResp.SubscriptionResource)
 }
 
 func TestSubscriptionResourceOperationsClient_Get(t *testing.T) {
-	getResp, err := clientFactory.NewSubscriptionResourceOperationsClient().Get(context.Background(), "sub-resource-1", &methodsubscriptionidgroup.SubscriptionResourceOperationsClientGetOptions{})
+	getResp, err := clientFactory.NewSubscriptionResourceOperationsClient().Get(context.Background(), subscriptionIdExpected, "sub-resource-1", nil)
 	require.NoError(t, err)
 	require.NotNil(t, getResp)
 	require.Equal(t, validMixedSubscriptionResource, getResp.SubscriptionResource)

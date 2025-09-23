@@ -4,39 +4,13 @@
 
 package coreusagegroup
 
-import (
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-)
+import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
 // UsageClient - Test for internal decorator.
-// Don't use this type directly, use NewUsageClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type UsageClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// UsageClientOptions contains the optional values for creating a [UsageClient].
-type UsageClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewUsageClientWithNoCredential creates a new instance of UsageClient with the specified values.
-//   - endpoint - Service host
-//   - options - UsageClientOptions contains the optional values for creating a [UsageClient]
-func NewUsageClientWithNoCredential(endpoint string, options *UsageClientOptions) (*UsageClient, error) {
-	if options == nil {
-		options = &UsageClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &UsageClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // NewUsageModelInOperationClient creates a new instance of [UsageModelInOperationClient].

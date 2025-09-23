@@ -19,22 +19,19 @@ import (
 // SubscriptionResource2OperationsClient contains the methods for the SubscriptionResource2Operations group.
 // Don't use this type directly, use NewSubscriptionResource2OperationsClient() instead.
 type SubscriptionResource2OperationsClient struct {
-	internal       *arm.Client
-	subscriptionID string
+	internal *arm.Client
 }
 
 // NewSubscriptionResource2OperationsClient creates a new instance of SubscriptionResource2OperationsClient with the specified values.
-//   - subscriptionID - The ID of the target subscription. The value must be an UUID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewSubscriptionResource2OperationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*SubscriptionResource2OperationsClient, error) {
+func NewSubscriptionResource2OperationsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*SubscriptionResource2OperationsClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &SubscriptionResource2OperationsClient{
-		subscriptionID: subscriptionID,
-		internal:       cl,
+		internal: cl,
 	}
 	return client, nil
 }
@@ -43,16 +40,17 @@ func NewSubscriptionResource2OperationsClient(subscriptionID string, credential 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2023-12-01-preview
+//   - subscriptionID - The ID of the target subscription. The value must be an UUID.
 //   - subscriptionResource2Name - The name of the SubscriptionResource2
 //   - options - SubscriptionResource2OperationsClientDeleteOptions contains the optional parameters for the SubscriptionResource2OperationsClient.Delete
 //     method.
-func (client *SubscriptionResource2OperationsClient) Delete(ctx context.Context, subscriptionResource2Name string, options *SubscriptionResource2OperationsClientDeleteOptions) (SubscriptionResource2OperationsClientDeleteResponse, error) {
+func (client *SubscriptionResource2OperationsClient) Delete(ctx context.Context, subscriptionID string, subscriptionResource2Name string, options *SubscriptionResource2OperationsClientDeleteOptions) (SubscriptionResource2OperationsClientDeleteResponse, error) {
 	var err error
 	const operationName = "SubscriptionResource2OperationsClient.Delete"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteCreateRequest(ctx, subscriptionResource2Name, options)
+	req, err := client.deleteCreateRequest(ctx, subscriptionID, subscriptionResource2Name, options)
 	if err != nil {
 		return SubscriptionResource2OperationsClientDeleteResponse{}, err
 	}
@@ -68,12 +66,12 @@ func (client *SubscriptionResource2OperationsClient) Delete(ctx context.Context,
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *SubscriptionResource2OperationsClient) deleteCreateRequest(ctx context.Context, subscriptionResource2Name string, _ *SubscriptionResource2OperationsClientDeleteOptions) (*policy.Request, error) {
+func (client *SubscriptionResource2OperationsClient) deleteCreateRequest(ctx context.Context, subscriptionID string, subscriptionResource2Name string, _ *SubscriptionResource2OperationsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Azure.ResourceManager.MethodSubscriptionId/subscriptionResource2s/{subscriptionResource2Name}"
-	if client.subscriptionID == "" {
-		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	if subscriptionID == "" {
+		return nil, errors.New("parameter subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
 	if subscriptionResource2Name == "" {
 		return nil, errors.New("parameter subscriptionResource2Name cannot be empty")
 	}
@@ -92,16 +90,17 @@ func (client *SubscriptionResource2OperationsClient) deleteCreateRequest(ctx con
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2023-12-01-preview
+//   - subscriptionID - The ID of the target subscription. The value must be an UUID.
 //   - subscriptionResource2Name - The name of the SubscriptionResource2
 //   - options - SubscriptionResource2OperationsClientGetOptions contains the optional parameters for the SubscriptionResource2OperationsClient.Get
 //     method.
-func (client *SubscriptionResource2OperationsClient) Get(ctx context.Context, subscriptionResource2Name string, options *SubscriptionResource2OperationsClientGetOptions) (SubscriptionResource2OperationsClientGetResponse, error) {
+func (client *SubscriptionResource2OperationsClient) Get(ctx context.Context, subscriptionID string, subscriptionResource2Name string, options *SubscriptionResource2OperationsClientGetOptions) (SubscriptionResource2OperationsClientGetResponse, error) {
 	var err error
 	const operationName = "SubscriptionResource2OperationsClient.Get"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getCreateRequest(ctx, subscriptionResource2Name, options)
+	req, err := client.getCreateRequest(ctx, subscriptionID, subscriptionResource2Name, options)
 	if err != nil {
 		return SubscriptionResource2OperationsClientGetResponse{}, err
 	}
@@ -118,12 +117,12 @@ func (client *SubscriptionResource2OperationsClient) Get(ctx context.Context, su
 }
 
 // getCreateRequest creates the Get request.
-func (client *SubscriptionResource2OperationsClient) getCreateRequest(ctx context.Context, subscriptionResource2Name string, _ *SubscriptionResource2OperationsClientGetOptions) (*policy.Request, error) {
+func (client *SubscriptionResource2OperationsClient) getCreateRequest(ctx context.Context, subscriptionID string, subscriptionResource2Name string, _ *SubscriptionResource2OperationsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Azure.ResourceManager.MethodSubscriptionId/subscriptionResource2s/{subscriptionResource2Name}"
-	if client.subscriptionID == "" {
-		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	if subscriptionID == "" {
+		return nil, errors.New("parameter subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
 	if subscriptionResource2Name == "" {
 		return nil, errors.New("parameter subscriptionResource2Name cannot be empty")
 	}
@@ -152,17 +151,18 @@ func (client *SubscriptionResource2OperationsClient) getHandleResponse(resp *htt
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2023-12-01-preview
+//   - subscriptionID - The ID of the target subscription. The value must be an UUID.
 //   - subscriptionResource2Name - The name of the SubscriptionResource2
 //   - resource - Resource create parameters.
 //   - options - SubscriptionResource2OperationsClientPutOptions contains the optional parameters for the SubscriptionResource2OperationsClient.Put
 //     method.
-func (client *SubscriptionResource2OperationsClient) Put(ctx context.Context, subscriptionResource2Name string, resource SubscriptionResource2, options *SubscriptionResource2OperationsClientPutOptions) (SubscriptionResource2OperationsClientPutResponse, error) {
+func (client *SubscriptionResource2OperationsClient) Put(ctx context.Context, subscriptionID string, subscriptionResource2Name string, resource SubscriptionResource2, options *SubscriptionResource2OperationsClientPutOptions) (SubscriptionResource2OperationsClientPutResponse, error) {
 	var err error
 	const operationName = "SubscriptionResource2OperationsClient.Put"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.putCreateRequest(ctx, subscriptionResource2Name, resource, options)
+	req, err := client.putCreateRequest(ctx, subscriptionID, subscriptionResource2Name, resource, options)
 	if err != nil {
 		return SubscriptionResource2OperationsClientPutResponse{}, err
 	}
@@ -179,12 +179,12 @@ func (client *SubscriptionResource2OperationsClient) Put(ctx context.Context, su
 }
 
 // putCreateRequest creates the Put request.
-func (client *SubscriptionResource2OperationsClient) putCreateRequest(ctx context.Context, subscriptionResource2Name string, resource SubscriptionResource2, _ *SubscriptionResource2OperationsClientPutOptions) (*policy.Request, error) {
+func (client *SubscriptionResource2OperationsClient) putCreateRequest(ctx context.Context, subscriptionID string, subscriptionResource2Name string, resource SubscriptionResource2, _ *SubscriptionResource2OperationsClientPutOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Azure.ResourceManager.MethodSubscriptionId/subscriptionResource2s/{subscriptionResource2Name}"
-	if client.subscriptionID == "" {
-		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	if subscriptionID == "" {
+		return nil, errors.New("parameter subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
 	if subscriptionResource2Name == "" {
 		return nil, errors.New("parameter subscriptionResource2Name cannot be empty")
 	}

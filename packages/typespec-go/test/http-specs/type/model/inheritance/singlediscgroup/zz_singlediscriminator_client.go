@@ -13,33 +13,10 @@ import (
 )
 
 // SingleDiscriminatorClient - Illustrates inheritance with single discriminator.
-// Don't use this type directly, use NewSingleDiscriminatorClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type SingleDiscriminatorClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// SingleDiscriminatorClientOptions contains the optional values for creating a [SingleDiscriminatorClient].
-type SingleDiscriminatorClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewSingleDiscriminatorClientWithNoCredential creates a new instance of SingleDiscriminatorClient with the specified values.
-//   - endpoint - Service host
-//   - options - SingleDiscriminatorClientOptions contains the optional values for creating a [SingleDiscriminatorClient]
-func NewSingleDiscriminatorClientWithNoCredential(endpoint string, options *SingleDiscriminatorClientOptions) (*SingleDiscriminatorClient, error) {
-	if options == nil {
-		options = &SingleDiscriminatorClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &SingleDiscriminatorClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // GetLegacyModel -

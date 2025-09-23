@@ -17,38 +17,10 @@ import (
 )
 
 // TraitsClient - Illustrates Azure Core operation customizations by traits
-// Don't use this type directly, use NewTraitsClientWithNoCredential() instead.
+// Don't use this type directly, use a constructor function instead.
 type TraitsClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// TraitsClientOptions contains the optional values for creating a [TraitsClient].
-type TraitsClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewTraitsClientWithNoCredential creates a new instance of TraitsClient with the specified values.
-//   - endpoint - Service host
-//   - options - TraitsClientOptions contains the optional values for creating a [TraitsClient]
-func NewTraitsClientWithNoCredential(endpoint string, options *TraitsClientOptions) (*TraitsClient, error) {
-	if options == nil {
-		options = &TraitsClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
-		APIVersion: runtime.APIVersionOptions{
-			Name:     "api-version",
-			Location: runtime.APIVersionLocationQueryParam,
-		},
-	}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &TraitsClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // RepeatableAction - Test for repeatable requests
