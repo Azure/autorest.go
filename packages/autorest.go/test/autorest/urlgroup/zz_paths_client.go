@@ -55,7 +55,11 @@ func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []strin
 // arrayCSVInPathCreateRequest creates the ArrayCSVInPath request.
 func (client *PathsClient) arrayCSVInPathCreateRequest(ctx context.Context, arrayPath []string, _ *PathsClientArrayCSVInPathOptions) (*policy.Request, error) {
 	urlPath := "/paths/array/ArrayPath1%2cbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%2c%2c/{arrayPath}"
-	urlPath = strings.ReplaceAll(urlPath, "{arrayPath}", url.PathEscape(strings.Join(arrayPath, ",")))
+	arrayPathParam := strings.Join(arrayPath, ",")
+	if len(arrayPathParam) == 0 {
+		return nil, errors.New("parameter arrayPath cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{arrayPath}", url.PathEscape(arrayPathParam))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err

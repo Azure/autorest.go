@@ -217,6 +217,12 @@ export interface PathScalarParameter extends HttpParameterBase {
    * the default value is false.
    */
   isApiVersion: boolean;
+
+  /**
+   * this is ONLY for compat with autorest.
+   * the default value is false.
+   */
+  omitEmptyStringCheck: boolean;
 }
 
 /** defines the possible types for a PathScalarParameter */
@@ -548,6 +554,7 @@ export class PathScalarParameter extends HttpParameterBase implements PathScalar
     this.pathSegment = pathSegment;
     this.isEncoded = isEncoded;
     this.isApiVersion = false;
+    this.omitEmptyStringCheck = false;
   }
 }
 
