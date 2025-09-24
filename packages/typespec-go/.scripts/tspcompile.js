@@ -102,6 +102,7 @@ const azureHttpSpecsGroup = {
   'templatesgroup' : ['azure/resource-manager/operation-templates'],
   'largeheadergroup' : ['azure/resource-manager/large-header'],
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
+  'previewversiongroup': ['azure/versioning/previewVersion'],
   'naminggroup': ['client/naming'],
   'defaultgroup': ['client/structure/default/client.tsp'],
   'multiclientgroup': ['client/structure/multi-client/client.tsp'],
