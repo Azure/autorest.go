@@ -356,7 +356,7 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
           if (bodyType.kind !== 'slice') {
             throw new Error(`unexpected type ${go.getTypeDeclaration(bodyType)} for FormBodyCollectionParameter ${param.language.go!.name}`);
           }
-          adaptedParam = new go.FormBodyCollectionParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, collectionFormat, style,byValue);
+          adaptedParam = new go.FormBodyCollectionParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, collectionFormat, style, byValue);
         } else {
           adaptedParam = new go.FormBodyScalarParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, style, byValue);
         }
