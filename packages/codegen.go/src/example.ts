@@ -96,7 +96,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
               clientFactoryParamsExample.push({ parameter: clientParam, value: generateFakeExample(clientParam.type, clientParam.name) });
             }
           }
-          exampleText += `\tclientFactory, err := ${codeModel.packageName}.NewClientFactory(${clientFactoryParamsExample.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${clientFactoryParams.length > 0 ? ', ' : ''}cred, nil)\n`;
+          exampleText += `\tclientFactory, err := ${codeModel.packageName}.NewClientFactory(${clientFactoryParamsExample.map(p => getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${clientFactoryParams.length > 0 ? ', ' : ''}cred, nil)\n`;
           exampleText += `\tif err != nil {\n`;
           exampleText += `\t\tlog.Fatalf("failed to create client: %v", err)\n`;
           exampleText += `\t}\n`;
@@ -108,11 +108,11 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
             }
           }
           if (clientPrivateParameters.length > 0) {
-            clientRef += `${clientPrivateParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}`;
+            clientRef += `${clientPrivateParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}`;
           }
           clientRef += `)`;
         } else {
-          exampleText += `\tclient, err := ${codeModel.packageName}.${client.constructors[0]?.name}(${clientParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}, cred, nil)\n`;
+          exampleText += `\tclient, err := ${codeModel.packageName}.${client.constructors[0]?.name}(${clientParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}, cred, nil)\n`;
           exampleText += `\tif err != nil {\n`;
           exampleText += `\t\tlog.Fatalf("failed to create client: %v", err)\n`;
           exampleText += `\t}\n`;
@@ -136,14 +136,14 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
         let methodOptionalParametersText = 'nil';
         if (methodOptionalParameters.length > 0) {
           methodOptionalParametersText = `&${codeModel.packageName}.${method.optionalParamsGroup.groupName}{\n`;
-          methodOptionalParametersText += methodOptionalParameters.map(p => `${capitalize(p.parameter.name)}: ${getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)}`).join(',\n');
+          methodOptionalParametersText += methodOptionalParameters.map(p => `${capitalize(p.parameter.name)}: ${getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue).slice(1)}`).join(',\n');
           methodOptionalParametersText += `}`;
         }
 
         switch (method.kind) {
           case 'lroMethod':
           case 'lroPageableMethod':
-            exampleText += `\tpoller, err := ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
+            exampleText += `\tpoller, err := ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
             exampleText += `\tif err != nil {\n`;
             exampleText += `\t\tlog.Fatalf("failed to finish the request: %v", err)\n`;
             exampleText += `\t}\n`;
@@ -154,13 +154,13 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
             exampleText += `\t}\n`;
             break;
           case 'method':
-            exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
+            exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
             exampleText += `\tif err != nil {\n`;
             exampleText += `\t\tlog.Fatalf("failed to finish the request: %v", err)\n`;
             exampleText += `\t}\n`;
             break;
           case 'pageableMethod':
-            exampleText += `\tpager := ${clientRef}.${fixUpMethodName(method)}(${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
+            exampleText += `\tpager := ${clientRef}.${fixUpMethodName(method)}(${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
             break;
           default:
             method satisfies never;
