@@ -39,8 +39,6 @@ enum Versions {
   /**
    * The 2024-06-30-preview API version.
    */
-  @useDependency(Azure.ResourceManager.Versions.v1_0_Preview_1)
-  @useDependency(Azure.Core.Versions.v1_0_Preview_1)
   v2024_06_30_preview: "2024-06-30-preview",
 }
 
