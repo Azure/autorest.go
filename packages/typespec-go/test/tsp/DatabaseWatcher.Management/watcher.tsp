@@ -28,14 +28,10 @@ interface Operations extends Azure.ResourceManager.Operations {}
 @doc("Versions info.")
 enum Versions {
   @doc("The 2023-09-01-preview version.")
-  @useDependency(Azure.ResourceManager.Versions.v1_0_Preview_1)
-  @useDependency(Azure.Core.Versions.v1_0_Preview_2)
   v2023_09_01_preview: "2023-09-01-preview",
 
   @doc("The 2024-07-17-preview version.")
   @armCommonTypesVersion(Azure.ResourceManager.CommonTypes.Versions.v5)
-  @useDependency(Azure.ResourceManager.Versions.v1_0_Preview_1)
-  @useDependency(Azure.Core.Versions.v1_0_Preview_2)
   v2024_07_19_preview: "2024-07-19-preview",
 }
 @doc("The DatabaseWatcherProviderHub resource.")
