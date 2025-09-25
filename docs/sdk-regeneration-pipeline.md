@@ -96,7 +96,10 @@ You can find the generated SDK pull request link from pipeline logs
 ```json
 {
   "succeed_to_regenerate": ["package1", "package2"],
-  "fail_to_regenerate": ["package3"]
+  "fail_to_regenerate": ["package3"],
+  "not_found_api_version": ["package4"],
+  "time_to_regenerate": "2025-09-25 10:30:45.123456",
+  "typespec_go_commit_hash": "abc123def456789..."
 }
 ```
 
