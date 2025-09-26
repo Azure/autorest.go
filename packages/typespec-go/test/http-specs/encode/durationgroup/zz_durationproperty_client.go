@@ -69,6 +69,56 @@ func (client *DurationPropertyClient) defaultHandleResponse(resp *http.Response)
 	return result, nil
 }
 
+// Float64Milliseconds -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationPropertyClientFloat64MillisecondsOptions contains the optional parameters for the DurationPropertyClient.Float64Milliseconds
+//     method.
+func (client *DurationPropertyClient) Float64Milliseconds(ctx context.Context, body Float64MillisecondsDurationProperty, options *DurationPropertyClientFloat64MillisecondsOptions) (DurationPropertyClientFloat64MillisecondsResponse, error) {
+	var err error
+	const operationName = "DurationPropertyClient.Float64Milliseconds"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.float64MillisecondsCreateRequest(ctx, body, options)
+	if err != nil {
+		return DurationPropertyClientFloat64MillisecondsResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationPropertyClientFloat64MillisecondsResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationPropertyClientFloat64MillisecondsResponse{}, err
+	}
+	resp, err := client.float64MillisecondsHandleResponse(httpResp)
+	return resp, err
+}
+
+// float64MillisecondsCreateRequest creates the Float64Milliseconds request.
+func (client *DurationPropertyClient) float64MillisecondsCreateRequest(ctx context.Context, body Float64MillisecondsDurationProperty, _ *DurationPropertyClientFloat64MillisecondsOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/property/float64-milliseconds"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// float64MillisecondsHandleResponse handles the Float64Milliseconds response.
+func (client *DurationPropertyClient) float64MillisecondsHandleResponse(resp *http.Response) (DurationPropertyClientFloat64MillisecondsResponse, error) {
+	result := DurationPropertyClientFloat64MillisecondsResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Float64MillisecondsDurationProperty); err != nil {
+		return DurationPropertyClientFloat64MillisecondsResponse{}, err
+	}
+	return result, nil
+}
+
 // Float64Seconds -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationPropertyClientFloat64SecondsOptions contains the optional parameters for the DurationPropertyClient.Float64Seconds
@@ -115,6 +165,106 @@ func (client *DurationPropertyClient) float64SecondsHandleResponse(resp *http.Re
 	result := DurationPropertyClientFloat64SecondsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float64SecondsDurationProperty); err != nil {
 		return DurationPropertyClientFloat64SecondsResponse{}, err
+	}
+	return result, nil
+}
+
+// FloatMilliseconds -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationPropertyClientFloatMillisecondsOptions contains the optional parameters for the DurationPropertyClient.FloatMilliseconds
+//     method.
+func (client *DurationPropertyClient) FloatMilliseconds(ctx context.Context, body FloatMillisecondsDurationProperty, options *DurationPropertyClientFloatMillisecondsOptions) (DurationPropertyClientFloatMillisecondsResponse, error) {
+	var err error
+	const operationName = "DurationPropertyClient.FloatMilliseconds"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.floatMillisecondsCreateRequest(ctx, body, options)
+	if err != nil {
+		return DurationPropertyClientFloatMillisecondsResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationPropertyClientFloatMillisecondsResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationPropertyClientFloatMillisecondsResponse{}, err
+	}
+	resp, err := client.floatMillisecondsHandleResponse(httpResp)
+	return resp, err
+}
+
+// floatMillisecondsCreateRequest creates the FloatMilliseconds request.
+func (client *DurationPropertyClient) floatMillisecondsCreateRequest(ctx context.Context, body FloatMillisecondsDurationProperty, _ *DurationPropertyClientFloatMillisecondsOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/property/float-milliseconds"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// floatMillisecondsHandleResponse handles the FloatMilliseconds response.
+func (client *DurationPropertyClient) floatMillisecondsHandleResponse(resp *http.Response) (DurationPropertyClientFloatMillisecondsResponse, error) {
+	result := DurationPropertyClientFloatMillisecondsResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.FloatMillisecondsDurationProperty); err != nil {
+		return DurationPropertyClientFloatMillisecondsResponse{}, err
+	}
+	return result, nil
+}
+
+// FloatMillisecondsArray -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationPropertyClientFloatMillisecondsArrayOptions contains the optional parameters for the DurationPropertyClient.FloatMillisecondsArray
+//     method.
+func (client *DurationPropertyClient) FloatMillisecondsArray(ctx context.Context, body FloatMillisecondsDurationArrayProperty, options *DurationPropertyClientFloatMillisecondsArrayOptions) (DurationPropertyClientFloatMillisecondsArrayResponse, error) {
+	var err error
+	const operationName = "DurationPropertyClient.FloatMillisecondsArray"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.floatMillisecondsArrayCreateRequest(ctx, body, options)
+	if err != nil {
+		return DurationPropertyClientFloatMillisecondsArrayResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationPropertyClientFloatMillisecondsArrayResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationPropertyClientFloatMillisecondsArrayResponse{}, err
+	}
+	resp, err := client.floatMillisecondsArrayHandleResponse(httpResp)
+	return resp, err
+}
+
+// floatMillisecondsArrayCreateRequest creates the FloatMillisecondsArray request.
+func (client *DurationPropertyClient) floatMillisecondsArrayCreateRequest(ctx context.Context, body FloatMillisecondsDurationArrayProperty, _ *DurationPropertyClientFloatMillisecondsArrayOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/property/float-milliseconds-array"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// floatMillisecondsArrayHandleResponse handles the FloatMillisecondsArray response.
+func (client *DurationPropertyClient) floatMillisecondsArrayHandleResponse(resp *http.Response) (DurationPropertyClientFloatMillisecondsArrayResponse, error) {
+	result := DurationPropertyClientFloatMillisecondsArrayResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.FloatMillisecondsDurationArrayProperty); err != nil {
+		return DurationPropertyClientFloatMillisecondsArrayResponse{}, err
 	}
 	return result, nil
 }
@@ -265,6 +415,56 @@ func (client *DurationPropertyClient) iso8601HandleResponse(resp *http.Response)
 	result := DurationPropertyClientISO8601Response{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ISO8601DurationProperty); err != nil {
 		return DurationPropertyClientISO8601Response{}, err
+	}
+	return result, nil
+}
+
+// Int32Milliseconds -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationPropertyClientInt32MillisecondsOptions contains the optional parameters for the DurationPropertyClient.Int32Milliseconds
+//     method.
+func (client *DurationPropertyClient) Int32Milliseconds(ctx context.Context, body Int32MillisecondsDurationProperty, options *DurationPropertyClientInt32MillisecondsOptions) (DurationPropertyClientInt32MillisecondsResponse, error) {
+	var err error
+	const operationName = "DurationPropertyClient.Int32Milliseconds"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.int32MillisecondsCreateRequest(ctx, body, options)
+	if err != nil {
+		return DurationPropertyClientInt32MillisecondsResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationPropertyClientInt32MillisecondsResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationPropertyClientInt32MillisecondsResponse{}, err
+	}
+	resp, err := client.int32MillisecondsHandleResponse(httpResp)
+	return resp, err
+}
+
+// int32MillisecondsCreateRequest creates the Int32Milliseconds request.
+func (client *DurationPropertyClient) int32MillisecondsCreateRequest(ctx context.Context, body Int32MillisecondsDurationProperty, _ *DurationPropertyClientInt32MillisecondsOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/property/int32-milliseconds"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// int32MillisecondsHandleResponse handles the Int32Milliseconds response.
+func (client *DurationPropertyClient) int32MillisecondsHandleResponse(resp *http.Response) (DurationPropertyClientInt32MillisecondsResponse, error) {
+	result := DurationPropertyClientInt32MillisecondsResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Int32MillisecondsDurationProperty); err != nil {
+		return DurationPropertyClientInt32MillisecondsResponse{}, err
 	}
 	return result, nil
 }

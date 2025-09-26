@@ -16,7 +16,7 @@ import (
 )
 
 // APIKeyServer is a fake server for instances of the apikeygroup.APIKeyClient type.
-type APIKeyServer struct {
+type APIKeyServer struct{
 	// Invalid is the fake for method APIKeyClient.Invalid
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Invalid func(ctx context.Context, options *apikeygroup.APIKeyClientInvalidOptions) (resp azfake.Responder[apikeygroup.APIKeyClientInvalidResponse], errResp azfake.ErrorResponder)
@@ -24,6 +24,7 @@ type APIKeyServer struct {
 	// Valid is the fake for method APIKeyClient.Valid
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Valid func(ctx context.Context, options *apikeygroup.APIKeyClientValidOptions) (resp azfake.Responder[apikeygroup.APIKeyClientValidResponse], errResp azfake.ErrorResponder)
+
 }
 
 // NewAPIKeyServerTransport creates a new instance of APIKeyServerTransport with the provided implementation.
@@ -57,8 +58,8 @@ func (a *APIKeyServerTransport) dispatchToMethodFake(req *http.Request, method s
 	go func() {
 		var intercepted bool
 		var res result
-		if apiKeyServerTransportInterceptor != nil {
-			res.resp, res.err, intercepted = apiKeyServerTransportInterceptor.Do(req)
+		 if apiKeyServerTransportInterceptor != nil {
+			 res.resp, res.err, intercepted = apiKeyServerTransportInterceptor.Do(req)
 		}
 		if !intercepted {
 			switch method {
@@ -66,8 +67,8 @@ func (a *APIKeyServerTransport) dispatchToMethodFake(req *http.Request, method s
 				res.resp, res.err = a.dispatchInvalid(req)
 			case "APIKeyClient.Valid":
 				res.resp, res.err = a.dispatchValid(req)
-			default:
-				res.err = fmt.Errorf("unhandled API %s", method)
+				default:
+		res.err = fmt.Errorf("unhandled API %s", method)
 			}
 
 		}

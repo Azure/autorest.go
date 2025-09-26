@@ -16,6 +16,11 @@ type LinkStringResponse struct {
 	Next *string
 }
 
+type ListWithPageSizeResponse struct {
+	// REQUIRED
+	Pets []*Pet
+}
+
 type ListWithoutContinuationResponse struct {
 	// REQUIRED
 	Pets []*Pet

@@ -7,33 +7,26 @@ package fake
 import (
 	"errors"
 	"fmt"
-	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"pageablegroup"
 	"strings"
 	"sync"
 )
 
 // PageableServer is a fake server for instances of the pageablegroup.PageableClient type.
 type PageableServer struct {
+	// PageablePageSizeServer contains the fakes for client PageablePageSizeClient
+	PageablePageSizeServer PageablePageSizeServer
+
 	// PageableServerDrivenPaginationServer contains the fakes for client PageableServerDrivenPaginationClient
 	PageableServerDrivenPaginationServer PageableServerDrivenPaginationServer
-
-	// NewListWithoutContinuationPager is the fake for method PageableClient.NewListWithoutContinuationPager
-	// HTTP status codes to indicate success: http.StatusOK
-	NewListWithoutContinuationPager func(options *pageablegroup.PageableClientListWithoutContinuationOptions) (resp azfake.PagerResponder[pageablegroup.PageableClientListWithoutContinuationResponse])
 }
 
 // NewPageableServerTransport creates a new instance of PageableServerTransport with the provided implementation.
 // The returned PageableServerTransport instance is connected to an instance of pageablegroup.PageableClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPageableServerTransport(srv *PageableServer) *PageableServerTransport {
-	return &PageableServerTransport{
-		srv:                             srv,
-		newListWithoutContinuationPager: newTracker[azfake.PagerResponder[pageablegroup.PageableClientListWithoutContinuationResponse]](),
-	}
+	return &PageableServerTransport{srv: srv}
 }
 
 // PageableServerTransport connects instances of pageablegroup.PageableClient to instances of PageableServer.
@@ -41,8 +34,8 @@ func NewPageableServerTransport(srv *PageableServer) *PageableServerTransport {
 type PageableServerTransport struct {
 	srv                                    *PageableServer
 	trMu                                   sync.Mutex
+	trPageablePageSizeServer               *PageablePageSizeServerTransport
 	trPageableServerDrivenPaginationServer *PageableServerDrivenPaginationServerTransport
-	newListWithoutContinuationPager        *tracker[azfake.PagerResponder[pageablegroup.PageableClientListWithoutContinuationResponse]]
 }
 
 // Do implements the policy.Transporter interface for PageableServerTransport.
@@ -53,10 +46,7 @@ func (p *PageableServerTransport) Do(req *http.Request) (*http.Response, error) 
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
-	if client := method[:strings.Index(method, ".")]; client != "PageableClient" {
-		return p.dispatchToClientFake(req, client)
-	}
-	return p.dispatchToMethodFake(req, method)
+	return p.dispatchToClientFake(req, method[:strings.Index(method, ".")])
 }
 
 func (p *PageableServerTransport) dispatchToClientFake(req *http.Request, client string) (*http.Response, error) {
@@ -64,6 +54,11 @@ func (p *PageableServerTransport) dispatchToClientFake(req *http.Request, client
 	var err error
 
 	switch client {
+	case "PageablePageSizeClient":
+		initServer(&p.trMu, &p.trPageablePageSizeServer, func() *PageablePageSizeServerTransport {
+			return NewPageablePageSizeServerTransport(&p.srv.PageablePageSizeServer)
+		})
+		resp, err = p.trPageablePageSizeServer.Do(req)
 	case "PageableServerDrivenPaginationClient":
 		initServer(&p.trMu, &p.trPageableServerDrivenPaginationServer, func() *PageableServerDrivenPaginationServerTransport {
 			return NewPageableServerDrivenPaginationServerTransport(&p.srv.PageableServerDrivenPaginationServer)
@@ -74,63 +69,6 @@ func (p *PageableServerTransport) dispatchToClientFake(req *http.Request, client
 	}
 
 	return resp, err
-}
-
-func (p *PageableServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	resultChan := make(chan result)
-	defer close(resultChan)
-
-	go func() {
-		var intercepted bool
-		var res result
-		if pageableServerTransportInterceptor != nil {
-			res.resp, res.err, intercepted = pageableServerTransportInterceptor.Do(req)
-		}
-		if !intercepted {
-			switch method {
-			case "PageableClient.NewListWithoutContinuationPager":
-				res.resp, res.err = p.dispatchNewListWithoutContinuationPager(req)
-			default:
-				res.err = fmt.Errorf("unhandled API %s", method)
-			}
-
-		}
-		select {
-		case resultChan <- res:
-		case <-req.Context().Done():
-		}
-	}()
-
-	select {
-	case <-req.Context().Done():
-		return nil, req.Context().Err()
-	case res := <-resultChan:
-		return res.resp, res.err
-	}
-}
-
-func (p *PageableServerTransport) dispatchNewListWithoutContinuationPager(req *http.Request) (*http.Response, error) {
-	if p.srv.NewListWithoutContinuationPager == nil {
-		return nil, &nonRetriableError{errors.New("fake for method NewListWithoutContinuationPager not implemented")}
-	}
-	newListWithoutContinuationPager := p.newListWithoutContinuationPager.get(req)
-	if newListWithoutContinuationPager == nil {
-		resp := p.srv.NewListWithoutContinuationPager(nil)
-		newListWithoutContinuationPager = &resp
-		p.newListWithoutContinuationPager.add(req, newListWithoutContinuationPager)
-	}
-	resp, err := server.PagerResponderNext(newListWithoutContinuationPager, req)
-	if err != nil {
-		return nil, err
-	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
-		p.newListWithoutContinuationPager.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
-	}
-	if !server.PagerResponderMore(newListWithoutContinuationPager) {
-		p.newListWithoutContinuationPager.remove(req)
-	}
-	return resp, nil
 }
 
 // set this to conditionally intercept incoming requests to PageableServerTransport
