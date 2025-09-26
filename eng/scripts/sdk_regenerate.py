@@ -55,6 +55,21 @@ def get_latest_commit_id() -> str:
     )
 
 
+def get_typespec_go_commit_hash(typespec_go_root: str) -> str:
+    """Get the current commit hash of the typespec-go repository."""
+    try:
+        return (
+            check_output(
+                "git rev-parse HEAD", shell=True, cwd=typespec_go_root
+            )
+            .decode("utf-8")
+            .strip()
+        )
+    except Exception as e:
+        logging.warning(f"Failed to get typespec-go commit hash: {e}")
+        return "unknown"
+
+
 def update_commit_id(file: Path, commit_id: str):
     with open(file, "r") as f:
         content = f.readlines()
@@ -125,8 +140,14 @@ def get_api_version(package_folder: Path) -> Optional[str]:
     
     return api_version
 
-def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str) -> Dict[str, List[str]]:
-    result = {"succeed_to_regenerate": [], "fail_to_regenerate": [], "not_found_api_version": [], "time_to_regenerate": str(datetime.now())}
+def regenerate_sdk(use_latest_spec: bool, service_filter: str, sdk_root: str, typespec_go_root: str) -> Dict[str, List[str]]:
+    result = {
+        "succeed_to_regenerate": [], 
+        "fail_to_regenerate": [], 
+        "not_found_api_version": [], 
+        "time_to_regenerate": str(datetime.now()),
+        "typespec_go_commit_hash": get_typespec_go_commit_hash(typespec_go_root)
+    }
     # get all tsp-location.yaml
     commit_id = get_latest_commit_id()
     sdk_resourcemanager_path = Path(sdk_root) / "sdk" / "resourcemanager"
@@ -237,7 +258,7 @@ def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str, use_late
     
     prepare_branch(typespec_go_branch)
     update_emitter_package(sdk_root, typespec_go_root)
-    result = regenerate_sdk(use_latest_spec, service_filter, sdk_root)
+    result = regenerate_sdk(use_latest_spec, service_filter, sdk_root, typespec_go_root)
     with open("regenerate-sdk-result.json", "w") as f:
         json.dump(result, f, indent=2)
     git_add()
