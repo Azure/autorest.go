@@ -13,4 +13,3 @@ type APIKeyClientInvalidResponse struct {
 type APIKeyClientValidResponse struct {
 	// placeholder for future response values
 }
-
