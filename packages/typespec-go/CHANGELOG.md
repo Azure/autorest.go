@@ -6,6 +6,7 @@
 
 * Fixed missing empty path param check for unencoded path params.
 * Emit empty path param check for path collection parameters.
+* Fixed incorrect handling of optional path parameters.
 
 ### Features Added
 

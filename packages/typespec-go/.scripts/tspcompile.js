@@ -29,7 +29,7 @@ const httpSpecsGroup = {
   'basicparamsgroup': ['parameters/basic'],
   'bodyoptionalgroup': ['parameters/body-optionality'],
   'collectionfmtgroup': ['parameters/collection-format'],
-  //'pathgroup': ['parameters/path'], // requires optional path parameter support https://github.com/Azure/autorest.go/issues/1575
+  'pathgroup': ['parameters/path'],
   'spreadgroup': ['parameters/spread'],
   'contentneggroup': ['payload/content-negotiation'],
   'jmergepatchgroup': ['payload/json-merge-patch'],

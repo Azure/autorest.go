@@ -738,51 +738,6 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     hostParam = `runtime.JoinPaths(${hostParam}, urlPath)`;
   }
 
-  if (hasPathParams) {
-    // swagger defines path params, emit path and replace tokens
-    imports.add('strings');
-    // replace path parameters
-    for (const pp of methodParamGroups.pathParams) {
-      // emit check to ensure path param isn't an empty string
-      if (pp.kind === 'pathScalarParam') {
-        const choiceIsString = function (type: go.PathScalarParameterType): boolean {
-          return type.kind === 'constant' && type.type === 'string';
-        };
-        // we only need to do this for params that have an underlying type of string
-        if ((pp.type.kind === 'string' || choiceIsString(pp.type)) && !pp.omitEmptyStringCheck) {
-          const paramName = helpers.getParamName(pp);
-          imports.add('errors');
-          text += `\tif ${paramName} == "" {\n`;
-          text += `\t\treturn nil, errors.New("parameter ${paramName} cannot be empty")\n`;
-          text += '\t}\n';
-        }
-      }
-
-      let paramValue = helpers.formatParamValue(pp, imports);
-      if (pp.kind === 'pathCollectionParam') {
-        const paramName = helpers.getParamName(pp);
-        const joinedParamName = `${paramName}Param`;
-        text += `\t${joinedParamName} := ${paramValue}\n`;
-        imports.add('errors');
-        text += `\tif len(${joinedParamName}) == 0 {\n`;
-        text += `\t\treturn nil, errors.New("parameter ${paramName} cannot be empty")\n`;
-        text += '\t}\n';
-        paramValue = joinedParamName;
-      }
-
-      if (pp.isEncoded) {
-        imports.add('net/url');
-        paramValue = `url.PathEscape(${paramValue})`;
-      }
-      text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.pathSegment}}", ${paramValue})\n`;
-    }
-  }
-
-  text += `\treq, err := runtime.NewRequest(ctx, http.Method${capitalize(method.httpMethod)}, ${hostParam})\n`;
-  text += '\tif err != nil {\n';
-  text += '\t\treturn nil, err\n';
-  text += '\t}\n';
-
   // helper to build nil checks for param groups
   const emitParamGroupCheck = function (param: go.MethodParameter): string {
     if (!param.group) {
@@ -799,6 +754,87 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     }
     return `\tif ${optionalParamGroupCheck}${client}${paramGroupName}.${capitalize(param.name)} != nil {\n`;
   };
+
+  if (hasPathParams) {
+    // swagger defines path params, emit path and replace tokens
+    imports.add('strings');
+    // replace path parameters
+    for (const pp of methodParamGroups.pathParams) {
+      let paramValue: string;
+      let optionalPathSep = false;
+      if (pp.style !== 'optional') {
+        // emit check to ensure path param isn't an empty string
+        if (pp.kind === 'pathScalarParam') {
+          const choiceIsString = function (type: go.PathScalarParameterType): boolean {
+            return type.kind === 'constant' && type.type === 'string';
+          };
+          // we only need to do this for params that have an underlying type of string
+          if ((pp.type.kind === 'string' || choiceIsString(pp.type)) && !pp.omitEmptyStringCheck) {
+            const paramName = helpers.getParamName(pp);
+            imports.add('errors');
+            text += `\tif ${paramName} == "" {\n`;
+            text += `\t\treturn nil, errors.New("parameter ${paramName} cannot be empty")\n`;
+            text += '\t}\n';
+          }
+        }
+
+        paramValue = helpers.formatParamValue(pp, imports);
+
+        // for collection-based path params, we emit the empty check
+        // after calling helpers.formatParamValue as that will have the
+        // var name that contains the slice.
+        if (pp.kind === 'pathCollectionParam') {
+          const paramName = helpers.getParamName(pp);
+          const joinedParamName = `${paramName}Param`;
+          text += `\t${joinedParamName} := ${paramValue}\n`;
+          imports.add('errors');
+          text += `\tif len(${joinedParamName}) == 0 {\n`;
+          text += `\t\treturn nil, errors.New("parameter ${paramName} cannot be empty")\n`;
+          text += '\t}\n';
+          paramValue = joinedParamName;
+        }
+      } else {
+        // param isn't required, so emit a local var with
+        // the correct default value, then populate it with
+        // the optional value when set.
+        paramValue = `optional${capitalize(pp.name)}`;
+        text += `\t${paramValue} := ""\n`;
+        text += emitParamGroupCheck(pp);
+        text += `\t${paramValue} = ${helpers.formatParamValue(pp, imports)}\n\t}\n`;
+
+        // there are two cases for optional path params.
+        //  - /foo/bar/{optional}
+        //  - /foo/bar{/optional}
+        // for the second case, we need to include a forward slash
+        if (method.httpPath[method.httpPath.indexOf(`{${pp.pathSegment}}`) - 1] !== '/') {
+          optionalPathSep = true;
+        }
+      }
+
+      const emitPathEscape = function(): string {
+        if (pp.isEncoded) {
+          imports.add('net/url');
+          return `url.PathEscape(${paramValue})`;
+        }
+        return paramValue;
+      };
+
+      if (optionalPathSep) {
+        text += `\tif len(${paramValue}) > 0 {\n`;
+        text += `\t\t${paramValue} = "/"+${emitPathEscape()}\n`;
+        text += '\t}\n';
+      } else {
+        paramValue = emitPathEscape();
+      }
+
+      text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.pathSegment}}", ${paramValue})\n`;
+    }
+  }
+
+  text += `\treq, err := runtime.NewRequest(ctx, http.Method${capitalize(method.httpMethod)}, ${hostParam})\n`;
+  text += '\tif err != nil {\n';
+  text += '\t\treturn nil, err\n';
+  text += '\t}\n';
 
   // add query parameters
   const encodedParams = methodParamGroups.encodedQueryParams;
