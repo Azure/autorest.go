@@ -761,7 +761,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     // replace path parameters
     for (const pp of methodParamGroups.pathParams) {
       let paramValue: string;
-      let optionalPathSep = '';
+      let optionalPathSep = false;
       if (pp.style !== 'optional') {
         // emit check to ensure path param isn't an empty string
         if (pp.kind === 'pathScalarParam') {
@@ -795,7 +795,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
         }
       } else {
         // param isn't required, so emit a local var with
-        // the correcte default value, then populate it with
+        // the correct default value, then populate it with
         // the optional value when set.
         paramValue = `optional${capitalize(pp.name)}`;
         text += `\t${paramValue} := ""\n`;
@@ -807,15 +807,27 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
         //  - /foo/bar{/optional}
         // for the second case, we need to include a forward slash
         if (method.httpPath[method.httpPath.indexOf(`{${pp.pathSegment}}`) - 1] !== '/') {
-          optionalPathSep = `"/"+`;
+          optionalPathSep = true;
         }
       }
 
-      if (pp.isEncoded) {
-        imports.add('net/url');
-        paramValue = `url.PathEscape(${paramValue})`;
+      const emitPathEscape = function(): string {
+        if (pp.isEncoded) {
+          imports.add('net/url');
+          return `url.PathEscape(${paramValue})`;
+        }
+        return paramValue;
+      };
+
+      if (optionalPathSep) {
+        text += `\tif len(${paramValue}) > 0 {\n`;
+        text += `\t\t${paramValue} = "/"+${emitPathEscape()}\n`;
+        text += '\t}\n';
+      } else {
+        paramValue = emitPathEscape();
       }
-      text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.pathSegment}}", ${optionalPathSep}${paramValue})\n`;
+
+      text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.pathSegment}}", ${paramValue})\n`;
     }
   }
 

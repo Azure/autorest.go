@@ -114,7 +114,10 @@ func (client *PathClient) optionalCreateRequest(ctx context.Context, options *Pa
 	if options != nil && options.Name != nil {
 		optionalName = *options.Name
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{name}", "/"+url.PathEscape(optionalName))
+	if len(optionalName) > 0 {
+		optionalName = "/" + url.PathEscape(optionalName)
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{name}", optionalName)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
