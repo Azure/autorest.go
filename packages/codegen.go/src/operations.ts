@@ -49,8 +49,8 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
 
     let clientText = helpers.formatDocComment(client.docs);
     clientText += '// Don\'t use this type directly, use ';
-    if (client.constructors.length === 1) {
-      clientText += `${client.constructors[0].name}() instead.\n`;
+    if (client.instance?.kind === 'constructable' && client.instance.constructors.length === 1) {
+      clientText += `${client.instance.constructors[0].name}() instead.\n`;
     } else if (client.parent) {
       // find the accessor method
       let accessorMethod: string | undefined;
@@ -173,17 +173,19 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
  * @returns the client constructor code or the empty string
  */
 function generateConstructors(client: go.Client, imports: ImportManager): string {
-  if (client.constructors.length === 0) {
+  if (client.instance?.kind !== 'constructable') {
     return '';
   }
 
+  const clientOptions = client.instance.options;
+
   let ctorText = '';
 
-  if (client.options.kind === 'clientOptions') {
+  if (clientOptions.kind === 'clientOptions') {
     // for non-ARM, the options type will always be a parameter group
-    ctorText += `// ${client.options.name} contains the optional values for creating a [${client.name}].\n`;
-    ctorText += `type ${client.options.name} struct {\n\tazcore.ClientOptions\n`;
-    for (const param of client.options.params) {
+    ctorText += `// ${clientOptions.name} contains the optional values for creating a [${client.name}].\n`;
+    ctorText += `type ${clientOptions.name} struct {\n\tazcore.ClientOptions\n`;
+    for (const param of clientOptions.params) {
       if (go.isAPIVersionParameter(param)) {
         // we use azcore.ClientOptions.APIVersion
         continue;
@@ -200,12 +202,18 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
     ctorText += '}\n\n';
   }
 
-  for (const constructor of client.constructors) {
+  for (const constructor of client.instance.constructors) {
     const ctorParams = new Array<string>();
     const paramDocs = new Array<string>();
 
-    constructor.parameters.sort(helpers.sortParametersByRequired);
-    for (const ctorParam of constructor.parameters) {
+    // ctor params can also be present in the supplemental endpoint parameters
+    const consolidatedCtorParams = new Array<go.ClientParameter>(...constructor.parameters);
+    if (client.instance.endpoint) {
+      consolidatedCtorParams.push(...client.instance.endpoint.parameters);
+    }
+
+    consolidatedCtorParams.sort(helpers.sortParametersByRequired);
+    for (const ctorParam of consolidatedCtorParams) {
       if (!go.isRequiredParameter(ctorParam.style)) {
         // param is part of the options group
         continue;
@@ -223,7 +231,7 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
       let apiVersionConfig = '';
       // check if there's an api version parameter
       let apiVersionParam: go.HeaderScalarParameter | go.PathScalarParameter | go.QueryScalarParameter | go.URIParameter | undefined;
-      for (const param of client.parameters) {
+      for (const param of consolidatedCtorParams) {
         switch (param.kind) {
           case 'headerScalarParam':
           case 'pathScalarParam':
@@ -285,22 +293,22 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
     let prolog: string;
     switch (constructor.authentication.kind) {
       case 'none':
-        if (client.options.kind !== 'clientOptions') {
-          throw new CodegenError('InternalError', `unexpected client options kind ${client.options.kind}`);
+        if (clientOptions.kind !== 'clientOptions') {
+          throw new CodegenError('InternalError', `unexpected client options kind ${clientOptions.kind}`);
         }
-        prolog = emitProlog(client.options.name, false);
+        prolog = emitProlog(clientOptions.name, false);
         break;
       case 'token':
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
         ctorParams.push('credential azcore.TokenCredential');
         paramDocs.push(helpers.formatCommentAsBulletItem('credential', { summary: 'used to authorize requests. Usually a credential from azidentity.' }));
-        switch (client.options.kind) {
+        switch (clientOptions.kind) {
           case 'clientOptions': {
             imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/policy');
             const tokenPolicyOpts = '&policy.BearerTokenOptions{\n\t\t\tInsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,\n\t\t}';
             // we assume a single scope. this is enforced when adapting the data from tcgc
             const tokenPolicy = `\n\t\tPerCall: []policy.Policy{\n\t\truntime.NewBearerTokenPolicy(credential, []string{c.Audience + "${helpers.splitScope(constructor.authentication.scopes[0]).scope}"}, ${tokenPolicyOpts}),\n\t\t},\n`;
-            prolog = emitProlog(client.options.name, true, tokenPolicy);
+            prolog = emitProlog(clientOptions.name, true, tokenPolicy);
             break;
           }
           case 'parameter':
@@ -313,8 +321,8 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
     }
 
     // add client options last
-    ctorParams.push(`options ${helpers.formatParameterTypeName(client.options)}`);
-    paramDocs.push(helpers.formatCommentAsBulletItem('options', client.options.docs));
+    ctorParams.push(`options ${helpers.formatParameterTypeName(clientOptions)}`);
+    paramDocs.push(helpers.formatCommentAsBulletItem('options', clientOptions.docs));
 
     ctorText += `// ${constructor.name} creates a new instance of ${client.name} with the specified values.\n`;
     for (const doc of paramDocs) {
@@ -327,26 +335,45 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
     ctorText += '\t\treturn nil, err\n';
     ctorText += '\t}\n';
 
-    // handle any client-side defaults
-    if (client.options.kind === 'clientOptions') {
-      for (const param of client.options.params) {
-        if (go.isClientSideDefault(param.style)) {
-          let name: string;
-          if (go.isAPIVersionParameter(param)) {
-            name = 'APIVersion';
-          } else {
-            name = ensureNameCase(param.name);
-          }
-          ctorText += `\t${param.name} := ${helpers.formatLiteralValue(param.style.defaultValue, false)}\n`;
-          ctorText += `\tif options.${name} != ${helpers.zeroValue(param)} {\n\t\t${param.name} = ${helpers.star(param.byValue)}options.${name}\n\t}\n`;
+    const emitClientSideDefault = function(param: go.ClientParameter): void {
+      if (go.isClientSideDefault(param.style)) {
+        let name: string;
+        if (go.isAPIVersionParameter(param)) {
+          name = 'APIVersion';
+        } else {
+          name = ensureNameCase(param.name);
         }
+        ctorText += `\t${param.name} := ${helpers.formatLiteralValue(param.style.defaultValue, false)}\n`;
+        ctorText += `\tif options.${name} != ${helpers.zeroValue(param)} {\n\t\t${param.name} = ${helpers.star(param.byValue)}options.${name}\n\t}\n`;
       }
+    };
+
+    // handle any client-side defaults
+    if (clientOptions.kind === 'clientOptions') {
+      for (const param of clientOptions.params) {
+        emitClientSideDefault(param);
+      }
+    }
+
+    // construct the supplemental path and join it to the endpoint
+    if (client.instance.endpoint) {
+      for (const param of client.instance.endpoint.parameters) {
+        emitClientSideDefault(param);
+      }
+      imports.add('strings');
+      ctorText += `\thost := "${client.instance.endpoint.path}"\n`;
+      for (const param of client.instance.endpoint.parameters) {
+        ctorText += `\thost = strings.ReplaceAll(host, "{${param.uriPathSegment}}", ${helpers.formatValue(param.name, param.type, imports)})\n`;
+      }
+      // the endpoint param is always the first ctor param
+      const endpointParam = client.instance.constructors[0].parameters[0];
+      ctorText += `\t${endpointParam.name} = runtime.JoinPaths(${endpointParam.name}, host)\n`;
     }
 
     // construct client literal
     let clientVar = 'client';
     // ensure clientVar doesn't collide with any params
-    for (const param of client.parameters) {
+    for (const param of consolidatedCtorParams) {
       if (param.name === clientVar) {
         clientVar = ensureNameCase(client.name, true);
         break;
@@ -354,6 +381,9 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
     }
 
     ctorText += `\t${clientVar} := &${client.name}{\n`;
+    // NOTE: we don't enumerate consolidatedCtorParams here
+    // as any supplemental endpoint params are ephemeral and
+    // consumed during client construction.
     for (const parameter of values(client.parameters)) {
       if (go.isLiteralParameter(parameter.style)) {
         continue;
@@ -700,10 +730,10 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
   let hostParam: string;
   if (azureARM) {
     hostParam = 'client.internal.Endpoint()';
-  } else if (method.receiver.type.templatedHost) {
+  } else if (method.receiver.type.instance?.kind === 'templatedHost') {
     imports.add('strings');
     // we have a templated host
-    text += `\thost := "${method.receiver.type.templatedHost}"\n`;
+    text += `\thost := "${method.receiver.type.instance.path}"\n`;
     // get all the host params on the client
     for (const hostParam of hostParams) {
       text += `\thost = strings.ReplaceAll(host, "{${hostParam.uriPathSegment}}", ${helpers.formatValue(`client.${hostParam.name}`, hostParam.type, imports)})\n`;

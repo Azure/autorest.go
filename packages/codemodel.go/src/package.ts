@@ -155,7 +155,9 @@ export class CodeModel implements CodeModel {
   
     this.clients.sort((a: client.Client, b: client.Client) => { return sortAscending(a.name, b.name); });
     for (const client of this.clients) {
-      client.constructors.sort((a: client.Constructor, b: client.Constructor) => sortAscending(a.name, b.name));
+      if (client.instance?.kind === 'constructable') {
+        client.instance.constructors.sort((a: client.Constructor, b: client.Constructor) => sortAscending(a.name, b.name));
+      }
       client.methods.sort((a: client.MethodType, b: client.MethodType) => { return sortAscending(a.name, b.name); });
       client.clientAccessors.sort((a: client.ClientAccessor, b: client.ClientAccessor) => { return sortAscending(a.name, b.name); });
       for (const method of client.methods) {

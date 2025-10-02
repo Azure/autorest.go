@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // ServiceQuxClient contains the methods for the ServiceQux group.
@@ -18,7 +17,6 @@ import (
 type ServiceQuxClient struct {
 	internal *azcore.Client
 	endpoint string
-	client   ClientType
 }
 
 // NewServiceQuxBarClient creates a new instance of [ServiceQuxBarClient].
@@ -26,7 +24,6 @@ func (client *ServiceQuxClient) NewServiceQuxBarClient() *ServiceQuxBarClient {
 	return &ServiceQuxBarClient{
 		internal: client.internal,
 		endpoint: client.endpoint,
-		client:   client.client,
 	}
 }
 
@@ -56,11 +53,8 @@ func (client *ServiceQuxClient) Eight(ctx context.Context, options *ServiceQuxCl
 
 // eightCreateRequest creates the Eight request.
 func (client *ServiceQuxClient) eightCreateRequest(ctx context.Context, _ *ServiceQuxClientEightOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/eight"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

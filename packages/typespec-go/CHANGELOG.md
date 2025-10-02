@@ -15,6 +15,7 @@
 ### Other Changes
 
 * Updated to the latest tsp toolset.
+* Moved handling of templated endpoints to client constructors.
 
 ## 0.8.2 (2025-09-10)
 

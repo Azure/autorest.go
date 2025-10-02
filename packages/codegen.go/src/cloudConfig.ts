@@ -22,7 +22,10 @@ export function generateCloudConfig(codeModel: go.CodeModel): string {
   // check if this SDK uses token auth
   let tokenCred: go.TokenAuthentication | undefined;
   for (const client of codeModel.clients) {
-    for (const constructor of client.constructors) {
+    if (client.instance?.kind !== 'constructable') {
+      continue;
+    }
+    for (const constructor of client.instance.constructors) {
       if (constructor.authentication.kind === 'token') {
         tokenCred = constructor.authentication;
         break;

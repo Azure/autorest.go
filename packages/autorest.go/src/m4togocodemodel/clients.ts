@@ -24,7 +24,7 @@ const paramGroups = new Map<string, go.ParameterGroup>();
 
 export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
   for (const group of values(m4CodeModel.operationGroups)) {
-    const client = adaptClient(codeModel.type, group);
+    const client = adaptClient(group);
 
     for (const op of values(group.operations)) {
       const httpPath = <string>op.requests![0].protocol.http!.path;
@@ -83,7 +83,8 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
       for (const param of client.parameters) {
         ctor.parameters.push(param);
       }
-      client.constructors.push(ctor);
+      client.instance = new go.Constructable(go.newClientOptions(codeModel.type, group.language.go!.clientName));
+      client.instance.constructors.push(ctor);
     }
 
     codeModel.clients.push(client);
@@ -163,11 +164,11 @@ function adaptURIPrameterType(schema: m4.Schema): go.URIParameterType {
   throw new Error(`unexpected URI parameter type ${schema.type}`);
 }
 
-function adaptClient(type: go.CodeModelType, group: m4.OperationGroup): go.Client {
+function adaptClient(group: m4.OperationGroup): go.Client {
   const description = `${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.`;
-  const client = new go.Client(group.language.go!.clientName, {description: description}, go.newClientOptions(type, group.language.go!.clientName));
+  const client = new go.Client(group.language.go!.clientName, {description: description});
   if (group.language.go!.complexHostParams) {
-    client.templatedHost = group.language.go!.host;
+    client.instance = new go.TemplatedHost(group.language.go!.host);
   }
   if (group.language.go!.hostParams) {
     for (const hostParam of values(<Array<m4.Parameter>>group.language.go!.hostParams)) {
