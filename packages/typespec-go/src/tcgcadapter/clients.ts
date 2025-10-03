@@ -89,7 +89,7 @@ export class clientAdapter {
       docs.summary = `${clientName} contains the methods for the service.`;
     }
 
-    const goClient = new go.Client(clientName, docs, go.newClientOptions(this.ta.codeModel.type, clientName));
+    const goClient = new go.Client(clientName, docs);
     goClient.parent = parent;
 
     // NOTE: per tcgc convention, if there is no param of kind credential
@@ -125,15 +125,16 @@ export class clientAdapter {
      * processes a credendial, potentially adding its supporting client constructor
      * 
      * @param goClient the Go client for which to add the constructor
+     * @param constructable the constructable for the current Go client
      * @param cred the credential type to process
      * @returns the AuthTypes enum for the credential that was handled, or AuthTypes.Default if none were specified/handled
      */
-    const processCredential = (goClient: go.Client, cred: http.HttpAuth): AuthTypes => {
+    const processCredential = (goClient: go.Client, constructable: go.Constructable, cred: http.HttpAuth): AuthTypes => {
       switch (cred.type) {
         case 'noAuth':
           return AuthTypes.NoAuth;
         case 'oauth2': {
-          goClient.constructors.push(this.createTokenCredentialCtor(goClient, cred));
+          constructable.constructors.push(this.createTokenCredentialCtor(goClient, cred));
           return AuthTypes.WithAuth;
         }
         default:
@@ -158,6 +159,7 @@ export class clientAdapter {
 
     // anything other than public means non-instantiable client
     if (sdkClient.clientInitialization.initializedBy & tcgc.InitializedByFlags.Individually) {
+      goClient.instance = new go.Constructable(go.newClientOptions(this.ta.codeModel.type, clientName));
       for (const param of sdkClient.clientInitialization.parameters) {
         switch (param.kind) {
           case 'credential':
@@ -166,7 +168,7 @@ export class clientAdapter {
             }
             switch (param.type.kind) {
               case 'credential':
-                authType |= processCredential(goClient, param.type.scheme);
+                authType |= processCredential(goClient, goClient.instance, param.type.scheme);
                 break;
               case 'union': {
                 const variantKinds = new Array<string>();
@@ -175,7 +177,7 @@ export class clientAdapter {
                   // emit the support credential kinds and skip any unsupported ones.
                   // this prevents emitting the WithNoCredential constructor in cases
                   // where it might not actually be supported.
-                  authType |= processCredential(goClient, variantType.scheme);
+                  authType |= processCredential(goClient, goClient.instance, variantType.scheme);
                 }
 
                 // no supported credential types were specified
@@ -225,7 +227,11 @@ export class clientAdapter {
                   break;
                 }
 
-                goClient.templatedHost = endpointType.serverUrl;
+                // there's either a suffix on the endpoint param, more template arguments, or both.
+                // either way we need to create supplemental info on the constructable.
+                // strip off the first segment which corresponds to the endpoint param as it's not needed.
+                const serverUrl = endpointType.serverUrl.replace(`{${templateArg.serializedName}}/`, '');
+                goClient.instance.endpoint = new go.SupplementalEndpoint(serverUrl);
                 continue;
               }
 
@@ -233,7 +239,7 @@ export class clientAdapter {
               adaptedParam.docs.summary = templateArg.summary;
               adaptedParam.docs.description = templateArg.doc;
               adaptedParam.isApiVersion = templateArg.isApiVersionParam;
-              goClient.parameters.push(adaptedParam);
+              goClient.instance.endpoint?.parameters.push(adaptedParam);
             }
             break;
           }
@@ -257,13 +263,27 @@ export class clientAdapter {
       // if no authentication type was specified, or the noAuth scheme was
       // explicitly specified, then include the WithNoCredential constructor
       if (authType === AuthTypes.Default || <AuthTypes>(authType & AuthTypes.NoAuth) === AuthTypes.NoAuth) {
-        goClient.constructors.push(new go.Constructor(`New${clientName}WithNoCredential`, new go.NoAuthentication()));
+        goClient.instance.constructors.push(new go.Constructor(`New${clientName}WithNoCredential`, new go.NoAuthentication()));
+      }
+
+      // propagate optional params to the optional params group
+      for (const param of goClient.parameters) {
+        if (!go.isRequiredParameter(param.style) && !go.isLiteralParameter(param.style) && goClient.instance.options.kind === 'clientOptions') {
+          goClient.instance.options.params.push(param);
+        }
+      }
+
+      // if we created constructors, propagate the persisted client params to them
+      for (const constructor of goClient.instance.constructors) {
+        constructor.parameters = goClient.parameters;
       }
     } else if (parent) {
       // this is a sub-client. it will share the client/host params of the parent.
       // NOTE: we must propagate parant params before a potential recursive call
       // to create a child client that will need to inherit our client params.
-      goClient.templatedHost = parent.templatedHost;
+      if (parent.instance?.kind === 'templatedHost') {
+        goClient.instance = parent.instance;
+      }
 
       // make a copy of the client params. this is to prevent
       // client method params from being shared across clients
@@ -271,18 +291,6 @@ export class clientAdapter {
       goClient.parameters = new Array<go.ClientParameter>(...parent.parameters);
     } else {
       throw new AdapterError('InternalError', `uninstantiable client ${sdkClient.name} has no parent`, NoTarget);
-    }
-
-    // propagate optional params to the optional params group
-    for (const param of goClient.parameters) {
-      if (!go.isRequiredParameter(param.style) && !go.isLiteralParameter(param.style) && goClient.options.kind === 'clientOptions') {
-        goClient.options.params.push(param);
-      }
-    }
-
-    // if we created constructors, propagate the persisted client params to them
-    for (const constructor of goClient.constructors) {
-      constructor.parameters = goClient.parameters;
     }
 
     if (sdkClient.children && sdkClient.children.length > 0) {

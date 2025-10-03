@@ -84,6 +84,10 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
         }
         // TODO: client optional parameters
 
+        if (client.instance?.kind !== 'constructable') {
+          throw new CodegenError('InternalError', `attempt to emit sample for non-instantiable client ${client.name}`);
+        }
+
         let clientRef = '';
         if (azureARM) {
           // since not all operation has all the client factory required parameters, we need to fake for the missing ones
@@ -100,7 +104,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
           exampleText += `\tif err != nil {\n`;
           exampleText += `\t\tlog.Fatalf("failed to create client: %v", err)\n`;
           exampleText += `\t}\n`;
-          clientRef = `clientFactory.${client.constructors[0]?.name}(`;
+          clientRef = `clientFactory.${client.instance.constructors[0].name}(`;
           const clientPrivateParameters: go.ParameterExample[] = [];
           for (const clientParam of clientParameters) {
             if (!clientFactoryParamsMap.has(clientParam.parameter.name)) {
@@ -112,7 +116,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
           }
           clientRef += `)`;
         } else {
-          exampleText += `\tclient, err := ${codeModel.packageName}.${client.constructors[0]?.name}(${clientParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}, cred, nil)\n`;
+          exampleText += `\tclient, err := ${codeModel.packageName}.${client.instance.constructors[0].name}(${clientParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}, cred, nil)\n`;
           exampleText += `\tif err != nil {\n`;
           exampleText += `\t\tlog.Fatalf("failed to create client: %v", err)\n`;
           exampleText += `\t}\n`;

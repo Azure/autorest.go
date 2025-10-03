@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // SecondGroup5Client contains the methods for the SecondGroup5 group.
@@ -18,7 +17,6 @@ import (
 type SecondGroup5Client struct {
 	internal *azcore.Client
 	endpoint string
-	client   ClientType
 }
 
 // Six -
@@ -47,11 +45,8 @@ func (client *SecondGroup5Client) Six(ctx context.Context, options *SecondGroup5
 
 // sixCreateRequest creates the Six request.
 func (client *SecondGroup5Client) sixCreateRequest(ctx context.Context, _ *SecondGroup5ClientSixOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/six"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

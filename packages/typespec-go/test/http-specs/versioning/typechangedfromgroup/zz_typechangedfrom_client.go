@@ -18,7 +18,6 @@ import (
 type TypeChangedFromClient struct {
 	internal *azcore.Client
 	endpoint string
-	version  string
 }
 
 // TypeChangedFromClientOptions contains the optional values for creating a [TypeChangedFromClient].
@@ -45,9 +44,11 @@ func NewTypeChangedFromClientWithNoCredential(endpoint string, options *TypeChan
 	if options.APIVersion != "" {
 		version = options.APIVersion
 	}
+	host := "versioning/type-changed-from/api-version:{version}"
+	host = strings.ReplaceAll(host, "{version}", version)
+	endpoint = runtime.JoinPaths(endpoint, host)
 	client := &TypeChangedFromClient{
 		endpoint: endpoint,
-		version:  version,
 		internal: cl,
 	}
 	return client, nil
@@ -80,11 +81,8 @@ func (client *TypeChangedFromClient) Test(ctx context.Context, body TestModel, p
 
 // testCreateRequest creates the Test request.
 func (client *TypeChangedFromClient) testCreateRequest(ctx context.Context, body TestModel, param string, _ *TypeChangedFromClientTestOptions) (*policy.Request, error) {
-	host := "{endpoint}/versioning/type-changed-from/api-version:{version}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{version}", client.version)
 	urlPath := "/test"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -22,14 +22,11 @@ export interface Client {
   /** any docs for the client */
   docs: type.Docs;
 
-  /** the client options type. for ARM, this will be a QualifiedType (arm.ClientOptions) */
-  options: ClientOptions;
+  /** contains info for client instances */
+  instance?: Constructable | TemplatedHost;
 
   /** constructor params that are persisted as fields on the client, can be empty */
   parameters: Array<ClientParameter>;
-
-  /** all the constructors for this client, can be empty */
-  constructors: Array<Constructor>;
 
   /** contains client methods. can be empty */
   methods: Array<MethodType>;
@@ -37,15 +34,28 @@ export interface Client {
   /** contains any client accessor methods. can be empty */
   clientAccessors: Array<ClientAccessor>;
 
-  /**
-   * templatedHost indicates that there's one or more URIParameters
-   * required to construct the complete host. the parameters can
-   * be solely on the client or span client and method params.
-   */
-  templatedHost?: string;
-
   /** the parent client in a hierarchical client */
   parent?: Client;
+}
+
+/** contains data for instantiable clients. */
+export interface Constructable {
+  kind: 'constructable';
+
+  /**
+   * the client options type used in the constructors.
+   * for ARM, this will be a QualifiedType (arm.ClientOptions)
+   */
+  options: ClientOptions;
+
+  /** the constructor functions for a client. */
+  constructors: Array<Constructor>;
+
+  /**
+   * indicates that the endpoint requires additional host configuration. i.e. the
+   * endpoint passed by the caller will be augmented with supplemental path info.
+   */
+  endpoint?: SupplementalEndpoint;
 }
 
 /** the possible types used for the client options type */
@@ -97,6 +107,28 @@ export interface NoAuthentication {
   kind: 'none';
 }
 
+/** contains data on how to supplement a client endpoint */
+export interface SupplementalEndpoint {
+  /** the supplemental path used to construct the complete endpoint */
+  path: string;
+
+  /** the parameters used to replace segments in the path */
+  parameters: Array<param.URIParameter>;
+}
+
+/**
+ * NOTE: this is for compat with Autorest, tsp MUST NOT use this!
+ * templatedHost indicates that there's one or more URIParameters
+ * required to construct the complete host. the parameters can
+ * be solely on the client or span client and method params.
+ */
+export interface TemplatedHost {
+  kind: 'templatedHost';
+
+  /** the templated host path */
+  path: string;
+}
+
 /** an azcore.TokenCredential */
 export interface TokenAuthentication {
   kind: 'token';
@@ -104,6 +136,10 @@ export interface TokenAuthentication {
   /** the scopes for the token */
   scopes: Array<string>;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// methods
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 /** the possible values defining the "final state via" behavior for LROs */
 export type FinalStateVia = 'azure-async-operation' | 'location' | 'operation-location' | 'original-uri';
@@ -266,14 +302,12 @@ class HttpMethodBase extends method.Method<Client, result.ResponseEnvelope> impl
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class Client implements Client {
-  constructor(name: string, docs: type.Docs, options: ClientOptions) {
+  constructor(name: string, docs: type.Docs) {
     this.name = name;
-    this.constructors = new Array<Constructor>();
     this.docs = docs;
     this.methods = new Array<MethodType>();
     this.clientAccessors = new Array<ClientAccessor>();
     this.parameters = new Array<ClientParameter>();
-    this.options = options;
   }
 }
 
@@ -281,6 +315,14 @@ export class ClientAccessor implements ClientAccessor {
   constructor(name: string, subClient: Client) {
     this.name = name;
     this.subClient = subClient;
+  }
+}
+
+export class Constructable implements Constructable {
+  constructor(options: ClientOptions) {
+    this.kind = 'constructable';
+    this.options = options;
+    this.constructors = new Array<Constructor>();
   }
 }
 
@@ -356,6 +398,20 @@ export class PageableMethod extends HttpMethodBase implements PageableMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     super(name, client, httpPath, httpMethod, statusCodes, naming);
     this.kind = 'pageableMethod';
+  }
+}
+
+export class SupplementalEndpoint implements SupplementalEndpoint {
+  constructor(path: string) {
+    this.path = path;
+    this.parameters = new Array<param.URIParameter>();
+  }
+}
+
+export class TemplatedHost implements TemplatedHost {
+  constructor(path: string) {
+    this.kind = 'templatedHost';
+    this.path = path;
   }
 }
 

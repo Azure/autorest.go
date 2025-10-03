@@ -19,6 +19,11 @@ type CustomClient struct {
 	endpoint string
 }
 
+// CustomClientOptions contains the optional values for creating a [CustomClient].
+type CustomClientOptions struct {
+	azcore.ClientOptions
+}
+
 // Invalid - Check whether client is authenticated.
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - CustomClientInvalidOptions contains the optional parameters for the CustomClient.Invalid method.

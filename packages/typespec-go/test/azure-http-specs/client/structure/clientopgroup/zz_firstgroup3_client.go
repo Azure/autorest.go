@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // FirstGroup3Client contains the methods for the FirstGroup3 group.
@@ -18,7 +17,6 @@ import (
 type FirstGroup3Client struct {
 	internal *azcore.Client
 	endpoint string
-	client   ClientType
 }
 
 // Three -
@@ -47,11 +45,8 @@ func (client *FirstGroup3Client) Three(ctx context.Context, options *FirstGroup3
 
 // threeCreateRequest creates the Three request.
 func (client *FirstGroup3Client) threeCreateRequest(ctx context.Context, _ *FirstGroup3ClientThreeOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/three"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -84,11 +79,8 @@ func (client *FirstGroup3Client) Two(ctx context.Context, options *FirstGroup3Cl
 
 // twoCreateRequest creates the Two request.
 func (client *FirstGroup3Client) twoCreateRequest(ctx context.Context, _ *FirstGroup3ClientTwoOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/two"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
