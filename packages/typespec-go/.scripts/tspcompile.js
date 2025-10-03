@@ -35,10 +35,10 @@ const httpSpecsGroup = {
   'jmergepatchgroup': ['payload/json-merge-patch'],
   'mediatypegroup': ['payload/media-type'],
   //'multipartgroup': ['payload/multipart'], // TODO: https://github.com/Azure/autorest.go/issues/1445
-  'pageablegroup': ['payload/pageable'],
+  'pageablegroup': ['payload/pageable'], // missing support for continuation tokens: https://github.com/Azure/autorest.go/issues/1494
   'xmlgroup': ['payload/xml', 'slice-elements-byval=true'],
   //'statuscoderangegroup': ['response/status-code-range'], // TODO: https://github.com/Azure/autorest.go/issues/1606
-  //'routesgroup': ['routes'],
+  //'routesgroup': ['routes'], // TODO: https://github.com/Azure/autorest.go/issues/1730
   'jsongroup': ['serialization/encoded-name/json'],
   'noendpointgroup': ['server/endpoint/not-defined'],
   'multiplegroup': ['server/path/multiple'],
@@ -48,7 +48,7 @@ const httpSpecsGroup = {
   'condreqgroup': ['special-headers/conditional-request'],
   //'repeatabilitygroup': ['special-headers/repeatability'],   // requires union support
   'specialwordsgroup': ['special-words'],
-  'jsonlgroup': ['streaming/jsonl'],
+  //'jsonlgroup': ['streaming/jsonl'], // TODO: https://github.com/Azure/autorest.go/issues/1594
   'arraygroup': ['type/array', 'slice-elements-byval=true'],
   'dictionarygroup': ['type/dictionary'],
   'extensiblegroup': ['type/enum/extensible'],

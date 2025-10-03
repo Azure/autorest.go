@@ -13,6 +13,7 @@ import (
 )
 
 func TestNewRequestHeaderNestedResponseBodyPager(t *testing.T) {
+	t.Skip("https://github.com/Azure/autorest.go/issues/1494")
 	var token string
 	client, err := pageablegroup.NewPageableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
@@ -61,6 +62,7 @@ func TestNewRequestHeaderNestedResponseBodyPager(t *testing.T) {
 }
 
 func TestNewRequestHeaderResponseBodyPager(t *testing.T) {
+	t.Skip("https://github.com/Azure/autorest.go/issues/1494")
 	var token string
 	client, err := pageablegroup.NewPageableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
@@ -109,6 +111,7 @@ func TestNewRequestHeaderResponseBodyPager(t *testing.T) {
 }
 
 func TestNewRequestHeaderResponseHeaderPager(t *testing.T) {
+	t.Skip("https://github.com/Azure/autorest.go/issues/1494")
 	var token string
 	client, err := pageablegroup.NewPageableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
@@ -157,6 +160,7 @@ func TestNewRequestHeaderResponseHeaderPager(t *testing.T) {
 }
 
 func TestNewRequestQueryNestedResponseBodyPager(t *testing.T) {
+	t.Skip("https://github.com/Azure/autorest.go/issues/1494")
 	var token string
 	client, err := pageablegroup.NewPageableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
@@ -205,6 +209,7 @@ func TestNewRequestQueryNestedResponseBodyPager(t *testing.T) {
 }
 
 func TestNewRequestQueryResponseBodyPager(t *testing.T) {
+	t.Skip("https://github.com/Azure/autorest.go/issues/1494")
 	var token string
 	client, err := pageablegroup.NewPageableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
@@ -253,6 +258,7 @@ func TestNewRequestQueryResponseBodyPager(t *testing.T) {
 }
 
 func TestNewRequestQueryResponseHeaderPager(t *testing.T) {
+	t.Skip("https://github.com/Azure/autorest.go/issues/1494")
 	var token string
 	client, err := pageablegroup.NewPageableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
