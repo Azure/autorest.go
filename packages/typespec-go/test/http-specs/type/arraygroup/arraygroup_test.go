@@ -213,7 +213,7 @@ func TestNullableStringValueClientGet(t *testing.T) {
 func TestNullableStringValueClientPut(t *testing.T) {
 	client, err := arraygroup.NewArrayClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	resp, err := client.NewArrayNullableModelValueClient().Put(context.Background(), []*arraygroup.InnerModel{{Property: to.Ptr("hello")}, nil, {Property: to.Ptr("world")}}, nil)
+	resp, err := client.NewArrayNullableStringValueClient().Put(context.Background(), []*string{to.Ptr("hello"), nil, to.Ptr("world")}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

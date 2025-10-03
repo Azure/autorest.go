@@ -38,6 +38,7 @@ const httpSpecsGroup = {
   'pageablegroup': ['payload/pageable'],
   'xmlgroup': ['payload/xml', 'slice-elements-byval=true'],
   //'statuscoderangegroup': ['response/status-code-range'], // TODO: https://github.com/Azure/autorest.go/issues/1606
+  //'routesgroup': ['routes'],
   'jsongroup': ['serialization/encoded-name/json'],
   'noendpointgroup': ['server/endpoint/not-defined'],
   'multiplegroup': ['server/path/multiple'],
@@ -47,6 +48,7 @@ const httpSpecsGroup = {
   'condreqgroup': ['special-headers/conditional-request'],
   //'repeatabilitygroup': ['special-headers/repeatability'],   // requires union support
   'specialwordsgroup': ['special-words'],
+  'jsonlgroup': ['streaming/jsonl'],
   'arraygroup': ['type/array', 'slice-elements-byval=true'],
   'dictionarygroup': ['type/dictionary'],
   'extensiblegroup': ['type/enum/extensible'],
@@ -71,7 +73,6 @@ const httpSpecsGroup = {
   //'renamedfromgroup': ['versioning/renamedFrom'], // requires union support
   'rettypechangedfromgroup': ['versioning/returnTypeChangedFrom'],
   'typechangedfromgroup': ['versioning/typeChangedFrom'],
-  'jsonlgroup': ['streaming/jsonl']
 };
 
 const azureHttpSpecsGroup = {
