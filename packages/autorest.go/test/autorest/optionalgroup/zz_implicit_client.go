@@ -22,9 +22,9 @@ import (
 type ImplicitClient struct {
 	internal            *azcore.Client
 	endpoint            string
+	optionalGlobalQuery *int32
 	requiredGlobalPath  string
 	requiredGlobalQuery string
-	optionalGlobalQuery *int32
 }
 
 // GetOptionalGlobalQuery - Test implicitly optional query parameter
