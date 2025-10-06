@@ -18,9 +18,8 @@ import (
 // MultipleClient contains the methods for the Multiple group.
 // Don't use this type directly, use NewMultipleClientWithNoCredential() instead.
 type MultipleClient struct {
-	internal   *azcore.Client
-	endpoint   string
-	apiVersion string
+	internal *azcore.Client
+	endpoint string
 }
 
 // MultipleClientOptions contains the optional values for creating a [MultipleClient].
@@ -47,10 +46,12 @@ func NewMultipleClientWithNoCredential(endpoint string, options *MultipleClientO
 	if options.APIVersion != "" {
 		apiVersion = options.APIVersion
 	}
+	host := "server/path/multiple/{apiVersion}"
+	host = strings.ReplaceAll(host, "{apiVersion}", apiVersion)
+	endpoint = runtime.JoinPaths(endpoint, host)
 	client := &MultipleClient{
-		endpoint:   endpoint,
-		apiVersion: apiVersion,
-		internal:   cl,
+		endpoint: endpoint,
+		internal: cl,
 	}
 	return client, nil
 }
@@ -82,10 +83,7 @@ func (client *MultipleClient) NoOperationParams(ctx context.Context, options *Mu
 
 // noOperationParamsCreateRequest creates the NoOperationParams request.
 func (client *MultipleClient) noOperationParamsCreateRequest(ctx context.Context, _ *MultipleClientNoOperationParamsOptions) (*policy.Request, error) {
-	host := "{endpoint}/server/path/multiple/{apiVersion}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{apiVersion}", client.apiVersion)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, host)
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -119,15 +117,12 @@ func (client *MultipleClient) WithOperationPathParam(ctx context.Context, keywor
 
 // withOperationPathParamCreateRequest creates the WithOperationPathParam request.
 func (client *MultipleClient) withOperationPathParamCreateRequest(ctx context.Context, keyword string, _ *MultipleClientWithOperationPathParamOptions) (*policy.Request, error) {
-	host := "{endpoint}/server/path/multiple/{apiVersion}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{apiVersion}", client.apiVersion)
 	urlPath := "/{keyword}"
 	if keyword == "" {
 		return nil, errors.New("parameter keyword cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{keyword}", url.PathEscape(keyword))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

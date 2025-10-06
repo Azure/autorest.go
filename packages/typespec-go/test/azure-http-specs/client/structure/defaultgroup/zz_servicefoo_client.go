@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // ServiceFooClient contains the methods for the ServiceFoo group.
@@ -18,7 +17,6 @@ import (
 type ServiceFooClient struct {
 	internal *azcore.Client
 	endpoint string
-	client   ClientType
 }
 
 // Four -
@@ -47,11 +45,8 @@ func (client *ServiceFooClient) Four(ctx context.Context, options *ServiceFooCli
 
 // fourCreateRequest creates the Four request.
 func (client *ServiceFooClient) fourCreateRequest(ctx context.Context, _ *ServiceFooClientFourOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/four"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -84,11 +79,8 @@ func (client *ServiceFooClient) Three(ctx context.Context, options *ServiceFooCl
 
 // threeCreateRequest creates the Three request.
 func (client *ServiceFooClient) threeCreateRequest(ctx context.Context, _ *ServiceFooClientThreeOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/three"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

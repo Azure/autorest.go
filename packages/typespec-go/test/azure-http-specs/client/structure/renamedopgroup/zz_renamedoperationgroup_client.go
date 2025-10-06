@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // RenamedOperationGroupClient contains the methods for the RenamedOperationGroup group.
@@ -18,7 +17,6 @@ import (
 type RenamedOperationGroupClient struct {
 	internal *azcore.Client
 	endpoint string
-	client   ClientType
 }
 
 // RenamedFour -
@@ -48,11 +46,8 @@ func (client *RenamedOperationGroupClient) RenamedFour(ctx context.Context, opti
 
 // renamedFourCreateRequest creates the RenamedFour request.
 func (client *RenamedOperationGroupClient) renamedFourCreateRequest(ctx context.Context, _ *RenamedOperationGroupClientRenamedFourOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/four"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -86,11 +81,8 @@ func (client *RenamedOperationGroupClient) RenamedSix(ctx context.Context, optio
 
 // renamedSixCreateRequest creates the RenamedSix request.
 func (client *RenamedOperationGroupClient) renamedSixCreateRequest(ctx context.Context, _ *RenamedOperationGroupClientRenamedSixOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/six"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -124,11 +116,8 @@ func (client *RenamedOperationGroupClient) RenamedTwo(ctx context.Context, optio
 
 // renamedTwoCreateRequest creates the RenamedTwo request.
 func (client *RenamedOperationGroupClient) renamedTwoCreateRequest(ctx context.Context, _ *RenamedOperationGroupClientRenamedTwoOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/two"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // ServiceBarClient contains the methods for the ServiceBar group.
@@ -18,7 +17,6 @@ import (
 type ServiceBarClient struct {
 	internal *azcore.Client
 	endpoint string
-	client   ClientType
 }
 
 // Five -
@@ -47,11 +45,8 @@ func (client *ServiceBarClient) Five(ctx context.Context, options *ServiceBarCli
 
 // fiveCreateRequest creates the Five request.
 func (client *ServiceBarClient) fiveCreateRequest(ctx context.Context, _ *ServiceBarClientFiveOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/five"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -84,11 +79,8 @@ func (client *ServiceBarClient) Six(ctx context.Context, options *ServiceBarClie
 
 // sixCreateRequest creates the Six request.
 func (client *ServiceBarClient) sixCreateRequest(ctx context.Context, _ *ServiceBarClientSixOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/six"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

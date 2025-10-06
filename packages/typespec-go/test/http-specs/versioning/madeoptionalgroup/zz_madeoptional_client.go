@@ -18,7 +18,6 @@ import (
 type MadeOptionalClient struct {
 	internal *azcore.Client
 	endpoint string
-	version  string
 }
 
 // MadeOptionalClientOptions contains the optional values for creating a [MadeOptionalClient].
@@ -45,9 +44,11 @@ func NewMadeOptionalClientWithNoCredential(endpoint string, options *MadeOptiona
 	if options.APIVersion != "" {
 		version = options.APIVersion
 	}
+	host := "versioning/made-optional/api-version:{version}"
+	host = strings.ReplaceAll(host, "{version}", version)
+	endpoint = runtime.JoinPaths(endpoint, host)
 	client := &MadeOptionalClient{
 		endpoint: endpoint,
-		version:  version,
 		internal: cl,
 	}
 	return client, nil
@@ -80,11 +81,8 @@ func (client *MadeOptionalClient) Test(ctx context.Context, body TestModel, opti
 
 // testCreateRequest creates the Test request.
 func (client *MadeOptionalClient) testCreateRequest(ctx context.Context, body TestModel, options *MadeOptionalClientTestOptions) (*policy.Request, error) {
-	host := "{endpoint}/versioning/made-optional/api-version:{version}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{version}", client.version)
 	urlPath := "/test"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

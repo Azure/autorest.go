@@ -18,7 +18,6 @@ import (
 type ReturnTypeChangedFromClient struct {
 	internal *azcore.Client
 	endpoint string
-	version  string
 }
 
 // ReturnTypeChangedFromClientOptions contains the optional values for creating a [ReturnTypeChangedFromClient].
@@ -45,9 +44,11 @@ func NewReturnTypeChangedFromClientWithNoCredential(endpoint string, options *Re
 	if options.APIVersion != "" {
 		version = options.APIVersion
 	}
+	host := "versioning/return-type-changed-from/api-version:{version}"
+	host = strings.ReplaceAll(host, "{version}", version)
+	endpoint = runtime.JoinPaths(endpoint, host)
 	client := &ReturnTypeChangedFromClient{
 		endpoint: endpoint,
-		version:  version,
 		internal: cl,
 	}
 	return client, nil
@@ -81,11 +82,8 @@ func (client *ReturnTypeChangedFromClient) Test(ctx context.Context, body string
 
 // testCreateRequest creates the Test request.
 func (client *ReturnTypeChangedFromClient) testCreateRequest(ctx context.Context, body string, _ *ReturnTypeChangedFromClientTestOptions) (*policy.Request, error) {
-	host := "{endpoint}/versioning/return-type-changed-from/api-version:{version}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{version}", client.version)
 	urlPath := "/test"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

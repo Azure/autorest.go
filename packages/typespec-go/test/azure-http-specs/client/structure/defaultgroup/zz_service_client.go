@@ -25,7 +25,6 @@ import (
 type ServiceClient struct {
 	internal *azcore.Client
 	endpoint string
-	client   ClientType
 }
 
 // ServiceClientOptions contains the optional values for creating a [ServiceClient].
@@ -45,9 +44,11 @@ func NewServiceClientWithNoCredential(endpoint string, client ClientType, option
 	if err != nil {
 		return nil, err
 	}
+	host := "client/structure/{client}"
+	host = strings.ReplaceAll(host, "{client}", string(client))
+	endpoint = runtime.JoinPaths(endpoint, host)
 	serviceClient := &ServiceClient{
 		endpoint: endpoint,
-		client:   client,
 		internal: cl,
 	}
 	return serviceClient, nil
@@ -58,7 +59,6 @@ func (client *ServiceClient) NewServiceBarClient() *ServiceBarClient {
 	return &ServiceBarClient{
 		internal: client.internal,
 		endpoint: client.endpoint,
-		client:   client.client,
 	}
 }
 
@@ -67,7 +67,6 @@ func (client *ServiceClient) NewServiceBazClient() *ServiceBazClient {
 	return &ServiceBazClient{
 		internal: client.internal,
 		endpoint: client.endpoint,
-		client:   client.client,
 	}
 }
 
@@ -76,7 +75,6 @@ func (client *ServiceClient) NewServiceFooClient() *ServiceFooClient {
 	return &ServiceFooClient{
 		internal: client.internal,
 		endpoint: client.endpoint,
-		client:   client.client,
 	}
 }
 
@@ -85,7 +83,6 @@ func (client *ServiceClient) NewServiceQuxClient() *ServiceQuxClient {
 	return &ServiceQuxClient{
 		internal: client.internal,
 		endpoint: client.endpoint,
-		client:   client.client,
 	}
 }
 
@@ -115,11 +112,8 @@ func (client *ServiceClient) One(ctx context.Context, options *ServiceClientOneO
 
 // oneCreateRequest creates the One request.
 func (client *ServiceClient) oneCreateRequest(ctx context.Context, _ *ServiceClientOneOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/one"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -152,11 +146,8 @@ func (client *ServiceClient) Two(ctx context.Context, options *ServiceClientTwoO
 
 // twoCreateRequest creates the Two request.
 func (client *ServiceClient) twoCreateRequest(ctx context.Context, _ *ServiceClientTwoOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/two"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
