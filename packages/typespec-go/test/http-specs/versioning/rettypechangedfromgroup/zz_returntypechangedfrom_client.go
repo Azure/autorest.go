@@ -27,7 +27,7 @@ type ReturnTypeChangedFromClientOptions struct {
 
 // NewReturnTypeChangedFromClientWithNoCredential creates a new instance of ReturnTypeChangedFromClient with the specified values.
 //   - endpoint - Service host
-//   - options - ReturnTypeChangedFromClientOptions contains the optional values for creating a [ReturnTypeChangedFromClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewReturnTypeChangedFromClientWithNoCredential(endpoint string, options *ReturnTypeChangedFromClientOptions) (*ReturnTypeChangedFromClient, error) {
 	if options == nil {
 		options = &ReturnTypeChangedFromClientOptions{}

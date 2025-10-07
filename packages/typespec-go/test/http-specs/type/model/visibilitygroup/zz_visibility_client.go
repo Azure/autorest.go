@@ -27,7 +27,7 @@ type VisibilityClientOptions struct {
 
 // NewVisibilityClientWithNoCredential creates a new instance of VisibilityClient with the specified values.
 //   - endpoint - Service host
-//   - options - VisibilityClientOptions contains the optional values for creating a [VisibilityClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewVisibilityClientWithNoCredential(endpoint string, options *VisibilityClientOptions) (*VisibilityClient, error) {
 	if options == nil {
 		options = &VisibilityClientOptions{}

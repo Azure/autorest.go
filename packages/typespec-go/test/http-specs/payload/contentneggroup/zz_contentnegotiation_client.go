@@ -23,7 +23,7 @@ type ContentNegotiationClientOptions struct {
 
 // NewContentNegotiationClientWithNoCredential creates a new instance of ContentNegotiationClient with the specified values.
 //   - endpoint - Service host
-//   - options - ContentNegotiationClientOptions contains the optional values for creating a [ContentNegotiationClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewContentNegotiationClientWithNoCredential(endpoint string, options *ContentNegotiationClientOptions) (*ContentNegotiationClient, error) {
 	if options == nil {
 		options = &ContentNegotiationClientOptions{}

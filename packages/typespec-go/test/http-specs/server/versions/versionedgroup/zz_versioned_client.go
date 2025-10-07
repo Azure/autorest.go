@@ -28,7 +28,7 @@ type VersionedClientOptions struct {
 
 // NewVersionedClientWithNoCredential creates a new instance of VersionedClient with the specified values.
 //   - endpoint - Service host
-//   - options - VersionedClientOptions contains the optional values for creating a [VersionedClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewVersionedClientWithNoCredential(endpoint string, options *VersionedClientOptions) (*VersionedClient, error) {
 	if options == nil {
 		options = &VersionedClientOptions{}

@@ -27,7 +27,7 @@ type MadeOptionalClientOptions struct {
 
 // NewMadeOptionalClientWithNoCredential creates a new instance of MadeOptionalClient with the specified values.
 //   - endpoint - Service host
-//   - options - MadeOptionalClientOptions contains the optional values for creating a [MadeOptionalClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewMadeOptionalClientWithNoCredential(endpoint string, options *MadeOptionalClientOptions) (*MadeOptionalClient, error) {
 	if options == nil {
 		options = &MadeOptionalClientOptions{}

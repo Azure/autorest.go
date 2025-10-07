@@ -24,7 +24,7 @@ type SubscriptionResource2OperationsClient struct {
 
 // NewSubscriptionResource2OperationsClient creates a new instance of SubscriptionResource2OperationsClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
-//   - options - pass nil to accept the default values.
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewSubscriptionResource2OperationsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*SubscriptionResource2OperationsClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {

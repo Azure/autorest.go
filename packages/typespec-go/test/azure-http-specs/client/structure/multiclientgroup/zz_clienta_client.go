@@ -28,7 +28,7 @@ type ClientAClientOptions struct {
 // NewClientAClientWithNoCredential creates a new instance of ClientAClient with the specified values.
 //   - endpoint - Service host
 //   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
-//   - options - ClientAClientOptions contains the optional values for creating a [ClientAClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewClientAClientWithNoCredential(endpoint string, client ClientType, options *ClientAClientOptions) (*ClientAClient, error) {
 	if options == nil {
 		options = &ClientAClientOptions{}

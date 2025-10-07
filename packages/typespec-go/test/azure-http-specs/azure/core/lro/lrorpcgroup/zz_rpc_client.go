@@ -26,7 +26,7 @@ type RPCClientOptions struct {
 
 // NewRPCClientWithNoCredential creates a new instance of RPCClient with the specified values.
 //   - endpoint - Service host
-//   - options - RPCClientOptions contains the optional values for creating a [RPCClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewRPCClientWithNoCredential(endpoint string, options *RPCClientOptions) (*RPCClient, error) {
 	if options == nil {
 		options = &RPCClientOptions{}

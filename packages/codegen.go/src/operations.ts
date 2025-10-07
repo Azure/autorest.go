@@ -322,7 +322,7 @@ function generateConstructors(client: go.Client, imports: ImportManager): string
 
     // add client options last
     ctorParams.push(`options ${helpers.formatParameterTypeName(clientOptions)}`);
-    paramDocs.push(helpers.formatCommentAsBulletItem('options', clientOptions.docs));
+    paramDocs.push(helpers.formatCommentAsBulletItem('options', { summary: 'Contains optional client configuration. Pass nil to accept the default values.' }));
 
     ctorText += `// ${constructor.name} creates a new instance of ${client.name} with the specified values.\n`;
     for (const doc of paramDocs) {

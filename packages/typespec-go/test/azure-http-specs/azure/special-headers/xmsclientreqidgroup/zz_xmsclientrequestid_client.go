@@ -26,7 +26,7 @@ type XMSClientRequestIDClientOptions struct {
 
 // NewXMSClientRequestIDClientWithNoCredential creates a new instance of XMSClientRequestIDClient with the specified values.
 //   - endpoint - Service host
-//   - options - XMSClientRequestIDClientOptions contains the optional values for creating a [XMSClientRequestIDClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewXMSClientRequestIDClientWithNoCredential(endpoint string, options *XMSClientRequestIDClientOptions) (*XMSClientRequestIDClient, error) {
 	if options == nil {
 		options = &XMSClientRequestIDClientOptions{}
