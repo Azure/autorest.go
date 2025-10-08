@@ -27,7 +27,7 @@ type NotDefinedClientOptions struct {
 
 // NewNotDefinedClientWithNoCredential creates a new instance of NotDefinedClient with the specified values.
 //   - endpoint - Service host
-//   - options - NotDefinedClientOptions contains the optional values for creating a [NotDefinedClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewNotDefinedClientWithNoCredential(endpoint string, options *NotDefinedClientOptions) (*NotDefinedClient, error) {
 	if options == nil {
 		options = &NotDefinedClientOptions{}

@@ -35,7 +35,7 @@ type ServiceClientOptions struct {
 // NewServiceClientWithNoCredential creates a new instance of ServiceClient with the specified values.
 //   - endpoint - Service host
 //   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
-//   - options - ServiceClientOptions contains the optional values for creating a [ServiceClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewServiceClientWithNoCredential(endpoint string, client ClientType, options *ServiceClientOptions) (*ServiceClient, error) {
 	if options == nil {
 		options = &ServiceClientOptions{}

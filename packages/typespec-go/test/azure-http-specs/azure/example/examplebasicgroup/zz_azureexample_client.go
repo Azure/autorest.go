@@ -26,7 +26,7 @@ type AzureExampleClientOptions struct {
 
 // NewAzureExampleClientWithNoCredential creates a new instance of AzureExampleClient with the specified values.
 //   - endpoint - Service host
-//   - options - AzureExampleClientOptions contains the optional values for creating a [AzureExampleClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewAzureExampleClientWithNoCredential(endpoint string, options *AzureExampleClientOptions) (*AzureExampleClient, error) {
 	if options == nil {
 		options = &AzureExampleClientOptions{}

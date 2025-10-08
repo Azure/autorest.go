@@ -23,7 +23,7 @@ type EventsClient struct {
 
 // NewEventsClient creates a new instance of EventsClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
-//   - options - pass nil to accept the default values.
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*EventsClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {

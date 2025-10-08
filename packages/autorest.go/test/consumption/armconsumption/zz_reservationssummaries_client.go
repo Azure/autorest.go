@@ -25,7 +25,7 @@ type ReservationsSummariesClient struct {
 
 // NewReservationsSummariesClient creates a new instance of ReservationsSummariesClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
-//   - options - pass nil to accept the default values.
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewReservationsSummariesClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*ReservationsSummariesClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {

@@ -27,7 +27,7 @@ type NodesClient struct {
 // NewNodesClient creates a new instance of NodesClient with the specified values.
 //   - subscriptionID - The subscription ID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
-//   - options - pass nil to accept the default values.
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewNodesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*NodesClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {

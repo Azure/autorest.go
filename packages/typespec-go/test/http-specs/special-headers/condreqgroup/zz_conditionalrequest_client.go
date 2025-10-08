@@ -27,7 +27,7 @@ type ConditionalRequestClientOptions struct {
 
 // NewConditionalRequestClientWithNoCredential creates a new instance of ConditionalRequestClient with the specified values.
 //   - endpoint - Service host
-//   - options - ConditionalRequestClientOptions contains the optional values for creating a [ConditionalRequestClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewConditionalRequestClientWithNoCredential(endpoint string, options *ConditionalRequestClientOptions) (*ConditionalRequestClient, error) {
 	if options == nil {
 		options = &ConditionalRequestClientOptions{}

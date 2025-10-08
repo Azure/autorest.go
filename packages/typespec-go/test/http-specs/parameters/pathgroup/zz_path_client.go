@@ -29,7 +29,7 @@ type PathClientOptions struct {
 
 // NewPathClientWithNoCredential creates a new instance of PathClient with the specified values.
 //   - endpoint - Service host
-//   - options - PathClientOptions contains the optional values for creating a [PathClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewPathClientWithNoCredential(endpoint string, options *PathClientOptions) (*PathClient, error) {
 	if options == nil {
 		options = &PathClientOptions{}

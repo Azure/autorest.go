@@ -25,7 +25,7 @@ type AggregatedCostClient struct {
 
 // NewAggregatedCostClient creates a new instance of AggregatedCostClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
-//   - options - pass nil to accept the default values.
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewAggregatedCostClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*AggregatedCostClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
