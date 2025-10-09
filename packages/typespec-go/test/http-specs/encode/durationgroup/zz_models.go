@@ -9,9 +9,24 @@ type DefaultDurationProperty struct {
 	Value *string
 }
 
+type Float64MillisecondsDurationProperty struct {
+	// REQUIRED
+	Value *float64
+}
+
 type Float64SecondsDurationProperty struct {
 	// REQUIRED
 	Value *float64
+}
+
+type FloatMillisecondsDurationArrayProperty struct {
+	// REQUIRED
+	Value []*float32
+}
+
+type FloatMillisecondsDurationProperty struct {
+	// REQUIRED
+	Value *float32
 }
 
 type FloatSecondsDurationArrayProperty struct {
@@ -27,6 +42,11 @@ type FloatSecondsDurationProperty struct {
 type ISO8601DurationProperty struct {
 	// REQUIRED
 	Value *string
+}
+
+type Int32MillisecondsDurationProperty struct {
+	// REQUIRED
+	Value *int32
 }
 
 type Int32SecondsDurationProperty struct {

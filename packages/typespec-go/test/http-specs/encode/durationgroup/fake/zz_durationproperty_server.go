@@ -21,9 +21,21 @@ type DurationPropertyServer struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	Default func(ctx context.Context, body durationgroup.DefaultDurationProperty, options *durationgroup.DurationPropertyClientDefaultOptions) (resp azfake.Responder[durationgroup.DurationPropertyClientDefaultResponse], errResp azfake.ErrorResponder)
 
+	// Float64Milliseconds is the fake for method DurationPropertyClient.Float64Milliseconds
+	// HTTP status codes to indicate success: http.StatusOK
+	Float64Milliseconds func(ctx context.Context, body durationgroup.Float64MillisecondsDurationProperty, options *durationgroup.DurationPropertyClientFloat64MillisecondsOptions) (resp azfake.Responder[durationgroup.DurationPropertyClientFloat64MillisecondsResponse], errResp azfake.ErrorResponder)
+
 	// Float64Seconds is the fake for method DurationPropertyClient.Float64Seconds
 	// HTTP status codes to indicate success: http.StatusOK
 	Float64Seconds func(ctx context.Context, body durationgroup.Float64SecondsDurationProperty, options *durationgroup.DurationPropertyClientFloat64SecondsOptions) (resp azfake.Responder[durationgroup.DurationPropertyClientFloat64SecondsResponse], errResp azfake.ErrorResponder)
+
+	// FloatMilliseconds is the fake for method DurationPropertyClient.FloatMilliseconds
+	// HTTP status codes to indicate success: http.StatusOK
+	FloatMilliseconds func(ctx context.Context, body durationgroup.FloatMillisecondsDurationProperty, options *durationgroup.DurationPropertyClientFloatMillisecondsOptions) (resp azfake.Responder[durationgroup.DurationPropertyClientFloatMillisecondsResponse], errResp azfake.ErrorResponder)
+
+	// FloatMillisecondsArray is the fake for method DurationPropertyClient.FloatMillisecondsArray
+	// HTTP status codes to indicate success: http.StatusOK
+	FloatMillisecondsArray func(ctx context.Context, body durationgroup.FloatMillisecondsDurationArrayProperty, options *durationgroup.DurationPropertyClientFloatMillisecondsArrayOptions) (resp azfake.Responder[durationgroup.DurationPropertyClientFloatMillisecondsArrayResponse], errResp azfake.ErrorResponder)
 
 	// FloatSeconds is the fake for method DurationPropertyClient.FloatSeconds
 	// HTTP status codes to indicate success: http.StatusOK
@@ -36,6 +48,10 @@ type DurationPropertyServer struct {
 	// ISO8601 is the fake for method DurationPropertyClient.ISO8601
 	// HTTP status codes to indicate success: http.StatusOK
 	ISO8601 func(ctx context.Context, body durationgroup.ISO8601DurationProperty, options *durationgroup.DurationPropertyClientISO8601Options) (resp azfake.Responder[durationgroup.DurationPropertyClientISO8601Response], errResp azfake.ErrorResponder)
+
+	// Int32Milliseconds is the fake for method DurationPropertyClient.Int32Milliseconds
+	// HTTP status codes to indicate success: http.StatusOK
+	Int32Milliseconds func(ctx context.Context, body durationgroup.Int32MillisecondsDurationProperty, options *durationgroup.DurationPropertyClientInt32MillisecondsOptions) (resp azfake.Responder[durationgroup.DurationPropertyClientInt32MillisecondsResponse], errResp azfake.ErrorResponder)
 
 	// Int32Seconds is the fake for method DurationPropertyClient.Int32Seconds
 	// HTTP status codes to indicate success: http.StatusOK
@@ -80,14 +96,22 @@ func (d *DurationPropertyServerTransport) dispatchToMethodFake(req *http.Request
 			switch method {
 			case "DurationPropertyClient.Default":
 				res.resp, res.err = d.dispatchDefault(req)
+			case "DurationPropertyClient.Float64Milliseconds":
+				res.resp, res.err = d.dispatchFloat64Milliseconds(req)
 			case "DurationPropertyClient.Float64Seconds":
 				res.resp, res.err = d.dispatchFloat64Seconds(req)
+			case "DurationPropertyClient.FloatMilliseconds":
+				res.resp, res.err = d.dispatchFloatMilliseconds(req)
+			case "DurationPropertyClient.FloatMillisecondsArray":
+				res.resp, res.err = d.dispatchFloatMillisecondsArray(req)
 			case "DurationPropertyClient.FloatSeconds":
 				res.resp, res.err = d.dispatchFloatSeconds(req)
 			case "DurationPropertyClient.FloatSecondsArray":
 				res.resp, res.err = d.dispatchFloatSecondsArray(req)
 			case "DurationPropertyClient.ISO8601":
 				res.resp, res.err = d.dispatchISO8601(req)
+			case "DurationPropertyClient.Int32Milliseconds":
+				res.resp, res.err = d.dispatchInt32Milliseconds(req)
 			case "DurationPropertyClient.Int32Seconds":
 				res.resp, res.err = d.dispatchInt32Seconds(req)
 			default:
@@ -132,6 +156,29 @@ func (d *DurationPropertyServerTransport) dispatchDefault(req *http.Request) (*h
 	return resp, nil
 }
 
+func (d *DurationPropertyServerTransport) dispatchFloat64Milliseconds(req *http.Request) (*http.Response, error) {
+	if d.srv.Float64Milliseconds == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Float64Milliseconds not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[durationgroup.Float64MillisecondsDurationProperty](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := d.srv.Float64Milliseconds(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Float64MillisecondsDurationProperty, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (d *DurationPropertyServerTransport) dispatchFloat64Seconds(req *http.Request) (*http.Response, error) {
 	if d.srv.Float64Seconds == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Float64Seconds not implemented")}
@@ -149,6 +196,52 @@ func (d *DurationPropertyServerTransport) dispatchFloat64Seconds(req *http.Reque
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Float64SecondsDurationProperty, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (d *DurationPropertyServerTransport) dispatchFloatMilliseconds(req *http.Request) (*http.Response, error) {
+	if d.srv.FloatMilliseconds == nil {
+		return nil, &nonRetriableError{errors.New("fake for method FloatMilliseconds not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[durationgroup.FloatMillisecondsDurationProperty](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := d.srv.FloatMilliseconds(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).FloatMillisecondsDurationProperty, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (d *DurationPropertyServerTransport) dispatchFloatMillisecondsArray(req *http.Request) (*http.Response, error) {
+	if d.srv.FloatMillisecondsArray == nil {
+		return nil, &nonRetriableError{errors.New("fake for method FloatMillisecondsArray not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[durationgroup.FloatMillisecondsDurationArrayProperty](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := d.srv.FloatMillisecondsArray(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).FloatMillisecondsDurationArrayProperty, req)
 	if err != nil {
 		return nil, err
 	}
@@ -218,6 +311,29 @@ func (d *DurationPropertyServerTransport) dispatchISO8601(req *http.Request) (*h
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ISO8601DurationProperty, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (d *DurationPropertyServerTransport) dispatchInt32Milliseconds(req *http.Request) (*http.Response, error) {
+	if d.srv.Int32Milliseconds == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Int32Milliseconds not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[durationgroup.Int32MillisecondsDurationProperty](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := d.srv.Int32Milliseconds(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Int32MillisecondsDurationProperty, req)
 	if err != nil {
 		return nil, err
 	}

@@ -4,8 +4,13 @@
 
 package pageablegroup
 
-// PageableClientListWithoutContinuationResponse contains the response from method PageableClient.NewListWithoutContinuationPager.
-type PageableClientListWithoutContinuationResponse struct {
+// PageablePageSizeClientListWithPageSizeResponse contains the response from method PageablePageSizeClient.NewListWithPageSizePager.
+type PageablePageSizeClientListWithPageSizeResponse struct {
+	ListWithPageSizeResponse
+}
+
+// PageablePageSizeClientListWithoutContinuationResponse contains the response from method PageablePageSizeClient.NewListWithoutContinuationPager.
+type PageablePageSizeClientListWithoutContinuationResponse struct {
 	ListWithoutContinuationResponse
 }
 
