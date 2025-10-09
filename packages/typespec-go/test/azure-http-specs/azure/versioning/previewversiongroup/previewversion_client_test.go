@@ -14,8 +14,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-type apiVersionKeyType string
-
 func TestPreviewVersionClient_GetWidget(t *testing.T) {
 	const fakeID = "widget-123"
 	client, err := previewversiongroup.NewPreviewVersionClientWithNoCredential("http://localhost:3000", &previewversiongroup.PreviewVersionClientOptions{
@@ -26,6 +24,7 @@ func TestPreviewVersionClient_GetWidget(t *testing.T) {
 	require.NoError(t, err)
 	ctx := context.Background()
 	resp, err := client.GetWidget(ctx, fakeID, nil)
+
 	require.NoError(t, err)
 	require.Equal(t, "widget-123", *resp.ID)
 	require.Equal(t, "Sample Widget", *resp.Name)
@@ -47,7 +46,6 @@ func TestPreviewVersionClient_ListWidgets(t *testing.T) {
 func TestPreviewVersionClient_UpdateWidgetColor(t *testing.T) {
 	const fakeID = "widget-1"
 	const newColor = "green"
-
 	client, err := previewversiongroup.NewPreviewVersionClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 
