@@ -26,22 +26,30 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package
             logging.error(f"package.json not found at {package_json_path}")
             raise FileNotFoundError(f"package.json not found at {package_json_path}")
         
-        # Use PowerShell script to generate emitter-package.json
-        logging.info("Update emitter-package.json using New-EmitterPackageJson.ps1")
-        try:
-            check_call([
-                "pwsh",
-                "./eng/common/scripts/typespec/New-EmitterPackageJson.ps1",
-                "-PackageJsonPath",
-                str(package_json_path.absolute()),
-                "-OutputDirectory",
-                "eng"
-            ], cwd=sdk_root)
-        except Exception as e:
-            logging.error("Failed to run New-EmitterPackageJson.ps1")
-            logging.error(e)
-            raise
+        # Load package.json to get dependency versions
+        logging.info("Reading package.json to get dependency versions")
+        with open(package_json_path, "r") as f:
+            package_json = json.load(f)
         
+        # Update emitter-package.json with aligned dependency versions
+        emitter_package_path = Path(sdk_root) / "eng/emitter-package.json"
+        
+        if not emitter_package_path.exists():
+            logging.error(f"emitter-package.json not found at {emitter_package_path}")
+            raise FileNotFoundError(f"emitter-package.json not found at {emitter_package_path}")
+        
+        logging.info("Updating emitter-package.json dependency versions to align with package.json")
+        with open(emitter_package_path, "r") as f:
+            emitter_package = json.load(f)
+
+        # Get packages that exist in both peerDependencies and devDependencies in package.json
+        dev_deps = package_json.get("devDependencies", {})
+        
+        # For packages that exist in both peer and dev dependencies, use the dev version
+        for package_name in package_json.keys():
+            emitter_package["devDependencies"][package_name] = dev_deps[package_name]
+            logging.info(f"Updated {package_name} to version {dev_deps[package_name]}")
+
         # Find the typespec-go.tgz file
         typespec_go_tgz = None
         for item in Path(typespec_go_root).iterdir():
@@ -53,11 +61,7 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package
             logging.error("Cannot find .tgz for typespec-go")
             raise FileNotFoundError("Cannot find .tgz for typespec-go")
         
-        # Update emitter-package.json to use the dev package path
-        emitter_package_path = Path(sdk_root) / "eng/emitter-package.json"
-        with open(emitter_package_path, "r") as f:
-            emitter_package = json.load(f)
-        
+        # Update emitter-package.json to use the dev package path        
         emitter_package["dependencies"]["@azure-tools/typespec-go"] = typespec_go_tgz.absolute().as_posix()
         
         with open(emitter_package_path, "w") as f:
