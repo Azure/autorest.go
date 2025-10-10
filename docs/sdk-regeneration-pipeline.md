@@ -46,7 +46,7 @@ The SDK regeneration pipeline automates the process of updating Azure SDK packag
 |-----------|------|---------|-------------|
 | `UseLatestSpec` | boolean | `false` | Whether to use the latest API specifications from [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) or the original commit of `tsp-location.yml` |
 | `ServiceFilter` | string | `.*` | Regex pattern to filter which services to regenerate. Matches against the service package name (e.g., `armcompute`, `armstorage`) |
-| `UseDevPackage` | boolean | `false` | Whether to use dev package (.tgz) from current branch or the released package from npm registry |
+| `UseDevPackage` | boolean | `false` | Whether to use dev package (.tgz) from current branch or the recent released package from npm registry |
 
 #### Usage Examples
 
@@ -92,7 +92,7 @@ The pipeline supports two package modes controlled by the `UseDevPackage` parame
 - Uses the published TypeSpec Go emitter package from npm registry
 - Calls `tsp-client generate-config-files` to generate emitter configuration
 - Uses the version specified in `package.json`
-- Ideal for validating released versions and regular SDK refresh
+- Ideal for validating recent released versions and regular SDK refresh
 
 ## Pipeline Usage
 
