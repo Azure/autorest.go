@@ -23,7 +23,7 @@ The SDK regeneration pipeline automates the process of updating Azure SDK packag
 #### 1. Setup & Build
 - Sets up environment (Node.js, Go, pnpm, tsp-client)
 - Builds the current TypeSpec Go emitter from current branch
-- Update emitter version of Azure Go SDK `emitter-package.json`
+- Updates emitter configuration in Azure Go SDK based on package mode (dev vs released)
 
 #### 2. Package Discovery
 - Scans `sdk/resourcemanager` for packages with `tsp-location.yaml`
@@ -46,6 +46,7 @@ The SDK regeneration pipeline automates the process of updating Azure SDK packag
 |-----------|------|---------|-------------|
 | `UseLatestSpec` | boolean | `false` | Whether to use the latest API specifications from [azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) or the original commit of `tsp-location.yml` |
 | `ServiceFilter` | string | `.*` | Regex pattern to filter which services to regenerate. Matches against the service package name (e.g., `armcompute`, `armstorage`) |
+| `UseDevPackage` | boolean | `false` | Whether to use dev package (.tgz) from current branch or the released package from npm registry |
 
 #### Usage Examples
 
@@ -53,19 +54,45 @@ The SDK regeneration pipeline automates the process of updating Azure SDK packag
 ```yaml
 UseLatestSpec: true
 ServiceFilter: '.*'
+UseDevPackage: false
 ```
 
-##### Generate Specific Services
+##### Generate All SDKs with Dev Package
+```yaml
+UseLatestSpec: false
+ServiceFilter: '.*'
+UseDevPackage: true
+```
+
+##### Generate Specific Services with Dev Package
 ```yaml
 UseLatestSpec: false
 ServiceFilter: 'armcompute|armstorage|armchaos'
+UseDevPackage: true
 ```
 
-##### Generate One Service
+##### Generate One Service with Released Package
 ```yaml
 UseLatestSpec: true
 ServiceFilter: 'armcompute'
+UseDevPackage: false
 ```
+
+### Package Modes
+
+The pipeline supports two package modes controlled by the `UseDevPackage` parameter:
+
+#### Dev Package Mode (`UseDevPackage: true`)
+- Uses the locally built TypeSpec Go emitter package (.tgz) from the current branch
+- Calls `New-EmitterPackageJson.ps1` PowerShell script to generate `emitter-package.json` 
+- Updates the package path to point to the local .tgz file
+- Ideal for testing unreleased emitter changes during development
+
+#### Released Package Mode (`UseDevPackage: false`) 
+- Uses the published TypeSpec Go emitter package from npm registry
+- Calls `tsp-client generate-config-files` to generate emitter configuration
+- Uses the version specified in `package.json`
+- Ideal for validating released versions and regular SDK refresh
 
 ## Pipeline Usage
 
@@ -78,6 +105,7 @@ This pipeline has been scheduled to run at 2 AM UTC on Monday weekly
 3. Configure parameters:
    - Set `UseLatestSpec` to `true` for latest API specs, `false` for the original commit of `tsp-location.yml`
    - Set `ServiceFilter` for specific services (use `.*` for all)
+   - Set `UseDevPackage` to `true` for dev package mode, `false` for released package mode
 4. Click "Run"
 
 ## Pipeline Result
@@ -121,14 +149,14 @@ graph TB
 
 #### For Development Validation
 1. **Develop & Test**: Complete TypeSpec Go emitter development and testing on feature branch
-2. **Trigger Pipeline**: Trigger regeneration pipeline for your feature branch
+2. **Trigger Pipeline**: Trigger regeneration pipeline for your feature branch with `UseDevPackage: true`
 3. **Review Changes**: Review the generated PR to ensure all changes are due to TypeSpec or Go emitter release
 4. **Merge Emitter**: Merge TypeSpec Go emitter PR into main branch
 5. **Close Regeneration PR**: Close/abandon the regeneration PR (it was only for validation)
 
 #### For Regular SDK Refresh
 After each TypeSpec or Go emitter version release:
-1. **Trigger Pipeline**: Trigger regeneration pipeline for `main` branch
+1. **Trigger Pipeline**: Trigger regeneration pipeline for `main` branch with `UseDevPackage: false` 
 2. **Review Changes**: Review the generated PR to ensure all changes are due to TypeSpec or Go emitter release
 3. **Merge Regeneration PR**: Merge the refresh PR to keep SDK up-to-date
 
