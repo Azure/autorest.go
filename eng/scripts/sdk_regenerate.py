@@ -46,7 +46,7 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package
         dev_deps = package_json.get("devDependencies", {})
         emitter_package.setdefault("devDependencies", {})
 
-        # For packages that exist in both peer and dev dependencies, use the dev version
+        # For packages that exist in dev dependencies, use the dev version
         for package_name in dev_deps.keys():
             emitter_package["devDependencies"][package_name] = dev_deps[package_name]
             logging.info(f"Updated {package_name} to version {dev_deps[package_name]}")
