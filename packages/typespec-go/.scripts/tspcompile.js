@@ -105,6 +105,7 @@ const azureHttpSpecsGroup = {
   'methodsubscriptionidgroup' : ['/azure/resource-manager/method-subscription-id/client.tsp'],
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
   'naminggroup': ['client/naming'],
+  'enumconflictgroup': ['client/naming/enum-conflict/client.tsp'],
   'defaultgroup': ['client/structure/default/client.tsp'],
   'multiclientgroup': ['client/structure/multi-client/client.tsp'],
   'renamedopgroup': ['client/structure/renamed-operation/client.tsp'],
