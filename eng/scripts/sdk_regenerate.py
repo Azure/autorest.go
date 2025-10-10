@@ -36,7 +36,7 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package
                 str(package_json_path.absolute()),
                 "-OutputDirectory",
                 "eng"
-            ], cwd=sdk_root, shell=True)
+            ], cwd=sdk_root)
         except Exception as e:
             logging.error("Failed to run New-EmitterPackageJson.ps1")
             logging.error(e)
@@ -68,7 +68,7 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package
         # Update emitter-package-lock.json
         logging.info("Update emitter-package-lock.json")
         try:
-            check_call("tsp-client generate-lock-file", shell=True, cwd=sdk_root)
+            check_call(["tsp-client", "generate-lock-file"], cwd=sdk_root)
         except Exception as e:
             logging.error("Failed to update emitter-package-lock.json")
             logging.error(e)
@@ -90,7 +90,7 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package
                 "generate-config-files", 
                 "--package-json", 
                 str(package_json_path.absolute())
-            ], cwd=sdk_root, shell=True)
+            ], cwd=sdk_root)
         except Exception as e:
             logging.error("Failed to generate config files with tsp-client")
             logging.error(e)
