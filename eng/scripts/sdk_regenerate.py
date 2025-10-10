@@ -28,7 +28,7 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package
         
         # Load package.json to get dependency versions
         logging.info("Reading package.json to get dependency versions")
-        with open(package_json_path, "r") as f:
+        with open(package_json_path, "r", encoding="utf-8") as f:
             package_json = json.load(f)
         
         # Update emitter-package.json with aligned dependency versions
@@ -39,14 +39,15 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package
             raise FileNotFoundError(f"emitter-package.json not found at {emitter_package_path}")
         
         logging.info("Updating emitter-package.json dependency versions to align with package.json")
-        with open(emitter_package_path, "r") as f:
+        with open(emitter_package_path, "r", encoding="utf-8") as f:
             emitter_package = json.load(f)
 
         # Get packages that exist in both peerDependencies and devDependencies in package.json
         dev_deps = package_json.get("devDependencies", {})
-        
+        emitter_package.setdefault("devDependencies", {})
+
         # For packages that exist in both peer and dev dependencies, use the dev version
-        for package_name in package_json.keys():
+        for package_name in dev_deps.keys():
             emitter_package["devDependencies"][package_name] = dev_deps[package_name]
             logging.info(f"Updated {package_name} to version {dev_deps[package_name]}")
 
@@ -64,7 +65,7 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package
         # Update emitter-package.json to use the dev package path        
         emitter_package["dependencies"]["@azure-tools/typespec-go"] = typespec_go_tgz.absolute().as_posix()
         
-        with open(emitter_package_path, "w") as f:
+        with open(emitter_package_path, "w", encoding="utf-8") as f:
             json.dump(emitter_package, f, indent=2)
         
         logging.info(f"Updated emitter-package.json to use typespec-go from \"{typespec_go_tgz.absolute()}\"")
