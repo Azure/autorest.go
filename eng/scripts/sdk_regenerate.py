@@ -44,12 +44,15 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package
 
         # Get packages that exist in both peerDependencies and devDependencies in package.json
         dev_deps = package_json.get("devDependencies", {})
-        emitter_package.setdefault("devDependencies", {})
-
-        # For packages that exist in dev dependencies, use the dev version
-        for package_name in dev_deps.keys():
-            emitter_package["devDependencies"][package_name] = dev_deps[package_name]
-            logging.info(f"Updated {package_name} to version {dev_deps[package_name]}")
+        
+        # Only update dependencies that already exist in emitter-package.json
+        if "devDependencies" in emitter_package:
+            for package_name in emitter_package["devDependencies"].keys():
+                if package_name in dev_deps:
+                    emitter_package["devDependencies"][package_name] = dev_deps[package_name]
+                    logging.info(f"Updated {package_name} to version {dev_deps[package_name]}")
+                else:
+                    logging.info(f"Package {package_name} not found in package.json devDependencies, keeping existing version")
 
         # Find the typespec-go.tgz file
         typespec_go_tgz = None
@@ -64,6 +67,10 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package
         
         # Update emitter-package.json to use the dev package path        
         emitter_package["dependencies"]["@azure-tools/typespec-go"] = typespec_go_tgz.absolute().as_posix()
+        
+        # Print the complete emitter_package before writing
+        logging.info("Complete emitter-package.json content:")
+        logging.info(json.dumps(emitter_package, indent=2))
         
         with open(emitter_package_path, "w", encoding="utf-8") as f:
             json.dump(emitter_package, f, indent=2)
