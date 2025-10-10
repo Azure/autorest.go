@@ -23,7 +23,7 @@ The SDK regeneration pipeline automates the process of updating Azure SDK packag
 #### 1. Setup & Build
 - Sets up environment (Node.js, Go, pnpm, tsp-client)
 - Builds the current TypeSpec Go emitter from current branch
-- Updates emitter configuration in Azure Go SDK based on package mode (dev vs released)
+- Update emitter version of Azure Go SDK `emitter-package.json`
 
 #### 2. Package Discovery
 - Scans `sdk/resourcemanager` for packages with `tsp-location.yaml`
