@@ -16,33 +16,85 @@ import re
 import glob
 
 
-def update_emitter_package(sdk_root: str, typespec_go_root: str):
-    # find the typespec-go.tgz
-    typespec_go_tgz = None
-    for item in (Path(typespec_go_root)).iterdir():
-        if "typespec-go" in item.name and item.name.endswith(".tgz"):
-            typespec_go_tgz = item
-            break
-    if not typespec_go_tgz:
-        logging.error("can not find .tgz for typespec-go")
-        raise FileNotFoundError("can not find .tgz for typespec-go")
-
-    # update the emitter-package.json
-    emitter_package_folder = Path(sdk_root) / "eng/emitter-package.json"
-    with open(emitter_package_folder, "r") as f:
-        emitter_package = json.load(f)
-    emitter_package["dependencies"]["@azure-tools/typespec-go"] = typespec_go_tgz.absolute().as_posix()
-    with open(emitter_package_folder, "w") as f:
-        json.dump(emitter_package, f, indent=2)
-    logging.info("updated emitter-package.json, content:%s", json.dumps(emitter_package, indent=2))
-
-    # update the emitter-package-lock.json
-    try:
-        check_call("tsp-client generate-lock-file", shell=True)
-    except Exception as e:
-        logging.error("failed to update emitter-package-lock.json")
-        logging.error(e)
-        raise
+def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package: bool):
+    if use_dev_package:
+        logging.info("Using dev package mode")
+        
+        # Find the package.json in typespec-go root
+        package_json_path = Path(typespec_go_root) / "package.json"
+        if not package_json_path.exists():
+            logging.error(f"package.json not found at {package_json_path}")
+            raise FileNotFoundError(f"package.json not found at {package_json_path}")
+        
+        # Use PowerShell script to generate emitter-package.json
+        logging.info("Update emitter-package.json using New-EmitterPackageJson.ps1")
+        try:
+            check_call([
+                "pwsh",
+                "./eng/common/scripts/typespec/New-EmitterPackageJson.ps1",
+                "-PackageJsonPath",
+                str(package_json_path.absolute()),
+                "-OutputDirectory",
+                "eng"
+            ], cwd=sdk_root)
+        except Exception as e:
+            logging.error("Failed to run New-EmitterPackageJson.ps1")
+            logging.error(e)
+            raise
+        
+        # Find the typespec-go.tgz file
+        typespec_go_tgz = None
+        for item in Path(typespec_go_root).iterdir():
+            if "typespec-go" in item.name and item.name.endswith(".tgz"):
+                typespec_go_tgz = item
+                break
+        
+        if not typespec_go_tgz:
+            logging.error("Cannot find .tgz for typespec-go")
+            raise FileNotFoundError("Cannot find .tgz for typespec-go")
+        
+        # Update emitter-package.json to use the dev package path
+        emitter_package_path = Path(sdk_root) / "eng/emitter-package.json"
+        with open(emitter_package_path, "r") as f:
+            emitter_package = json.load(f)
+        
+        emitter_package["dependencies"]["@azure-tools/typespec-go"] = typespec_go_tgz.absolute().as_posix()
+        
+        with open(emitter_package_path, "w") as f:
+            json.dump(emitter_package, f, indent=2)
+        
+        logging.info(f"Updated emitter-package.json to use typespec-go from \"{typespec_go_tgz.absolute()}\"")
+        
+        # Update emitter-package-lock.json
+        logging.info("Update emitter-package-lock.json")
+        try:
+            check_call(["tsp-client", "generate-lock-file"], cwd=sdk_root)
+        except Exception as e:
+            logging.error("Failed to update emitter-package-lock.json")
+            logging.error(e)
+            raise
+    else:
+        logging.info("Using released package mode")
+        
+        # Find the package.json in typespec-go root
+        package_json_path = Path(typespec_go_root) / "package.json"
+        if not package_json_path.exists():
+            logging.error(f"package.json not found at {package_json_path}")
+            raise FileNotFoundError(f"package.json not found at {package_json_path}")
+        
+        # Use tsp-client to generate config files with released package
+        logging.info("Update emitter-package.json and emitter-package-lock.json using released package")
+        try:
+            check_call([
+                "tsp-client", 
+                "generate-config-files", 
+                "--package-json", 
+                str(package_json_path.absolute())
+            ], cwd=sdk_root)
+        except Exception as e:
+            logging.error("Failed to generate config files with tsp-client")
+            logging.error(e)
+            raise
 
 def get_latest_commit_id() -> str:
     return (
@@ -246,7 +298,7 @@ def git_add():
     check_call("git add .", shell=True)
 
 
-def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str, use_latest_spec: bool, service_filter: str):
+def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str, use_latest_spec: bool, service_filter: str, use_dev_package: bool):
     # Configure logging for better pipeline visibility
     logging.basicConfig(
         level=logging.INFO,
@@ -257,7 +309,7 @@ def main(sdk_root: str, typespec_go_root: str, typespec_go_branch: str, use_late
     )
     
     prepare_branch(typespec_go_branch)
-    update_emitter_package(sdk_root, typespec_go_root)
+    update_emitter_package(sdk_root, typespec_go_root, use_dev_package)
     result = regenerate_sdk(use_latest_spec, service_filter, sdk_root, typespec_go_root)
     with open("regenerate-sdk-result.json", "w") as f:
         json.dump(result, f, indent=2)
@@ -298,6 +350,13 @@ if __name__ == "__main__":
         type=str,
     )
 
+    parser.add_argument(
+        "--use-dev-package",
+        help="Whether to use dev package or released package",
+        type=lambda x: x.lower() == 'true',
+        default=False,
+    )
+
     args = parser.parse_args()
 
-    main(args.sdk_root, args.typespec_go_root, args.typespec_go_branch, args.use_latest_spec, args.service_filter)
+    main(args.sdk_root, args.typespec_go_root, args.typespec_go_branch, args.use_latest_spec, args.service_filter, args.use_dev_package)

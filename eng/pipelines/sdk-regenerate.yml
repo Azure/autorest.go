@@ -15,6 +15,9 @@ parameters:
 - name: ServiceFilter
   type: string
   default: '.*'
+- name: UseDevPackage
+  default: false
+  type: boolean
 
 variables:
   - template: /eng/pipelines/templates/variables/globals.yml
@@ -67,7 +70,7 @@ jobs:
     displayName: 'Install tsp-client'
 
   - script: |
-      python3 $(Build.SourcesDirectory)/autorest.go/eng/scripts/sdk_regenerate.py --sdk-root=$(Build.SourcesDirectory)/azure-sdk-for-go --typespec-go-root=$(Build.SourcesDirectory)/autorest.go/packages/typespec-go --typespec-go-branch=$(Build.SourceBranchName) --use-latest-spec=${{ parameters.UseLatestSpec }} --service-filter="${{ parameters.ServiceFilter }}"
+      python3 $(Build.SourcesDirectory)/autorest.go/eng/scripts/sdk_regenerate.py --sdk-root=$(Build.SourcesDirectory)/azure-sdk-for-go --typespec-go-root=$(Build.SourcesDirectory)/autorest.go/packages/typespec-go --typespec-go-branch=$(Build.SourceBranchName) --use-latest-spec=${{ parameters.UseLatestSpec }} --service-filter="${{ parameters.ServiceFilter }}" --use-dev-package=${{ parameters.UseDevPackage }}
     displayName: 'Generate SDK'
     workingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-go
 
