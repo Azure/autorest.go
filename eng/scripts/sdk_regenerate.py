@@ -14,9 +14,55 @@ import logging
 import json
 import re
 import glob
+import urllib.request
+
+
+def get_latest_typespec_go_package_info():
+    """Get the latest version and dependencies of @azure-tools/typespec-go from npm registry."""
+    try:
+        logging.info("Fetching latest @azure-tools/typespec-go info from npm registry")
+        
+        # Get package info from npm registry
+        url = "https://registry.npmjs.org/@azure-tools/typespec-go/latest"
+        with urllib.request.urlopen(url) as response:
+            package_info = json.loads(response.read().decode())
+        
+        version = package_info.get("version")
+        dev_dependencies = package_info.get("devDependencies", {})
+        
+        logging.info(f"Latest @azure-tools/typespec-go version: {version}")
+        
+        return {
+            "version": version,
+            "devDependencies": dev_dependencies
+        }
+    except Exception as e:
+        logging.error(f"Failed to fetch latest typespec-go info: {e}")
+        raise
+
+
+def update_dev_dependencies(emitter_package: dict, source_deps: dict):
+    """Update devDependencies in emitter_package with versions from source_deps."""
+    if "devDependencies" not in emitter_package:
+        return
+    for package_name in emitter_package["devDependencies"].keys():
+        if package_name in source_deps:
+            emitter_package["devDependencies"][package_name] = source_deps[package_name]
+            logging.info(f"Updated {package_name} to version {source_deps[package_name]}")
+        else:
+            logging.info(f"Package {package_name} not found in dependencies, keeping existing version")
 
 
 def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package: bool):
+    # Load existing emitter-package.json
+    emitter_package_path = Path(sdk_root) / "eng/emitter-package.json"
+    if not emitter_package_path.exists():
+        logging.error(f"emitter-package.json not found at {emitter_package_path}")
+        raise FileNotFoundError(f"emitter-package.json not found at {emitter_package_path}")
+    logging.info("Loading existing emitter-package.json")
+    with open(emitter_package_path, "r", encoding="utf-8") as f:
+        emitter_package = json.load(f)
+    
     if use_dev_package:
         logging.info("Using dev package mode")
         
@@ -26,22 +72,15 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package
             logging.error(f"package.json not found at {package_json_path}")
             raise FileNotFoundError(f"package.json not found at {package_json_path}")
         
-        # Use PowerShell script to generate emitter-package.json
-        logging.info("Update emitter-package.json using New-EmitterPackageJson.ps1")
-        try:
-            check_call([
-                "pwsh",
-                "./eng/common/scripts/typespec/New-EmitterPackageJson.ps1",
-                "-PackageJsonPath",
-                str(package_json_path.absolute()),
-                "-OutputDirectory",
-                "eng"
-            ], cwd=sdk_root)
-        except Exception as e:
-            logging.error("Failed to run New-EmitterPackageJson.ps1")
-            logging.error(e)
-            raise
-        
+        # Load package.json to get dependency versions
+        logging.info("Reading package.json to get dependency versions")
+        with open(package_json_path, "r", encoding="utf-8") as f:
+            package_json = json.load(f)
+        dev_deps = package_json.get("devDependencies", {})
+
+        # Update devDependencies in emitter_package
+        update_dev_dependencies(emitter_package, dev_deps)
+
         # Find the typespec-go.tgz file
         typespec_go_tgz = None
         for item in Path(typespec_go_root).iterdir():
@@ -53,48 +92,40 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package
             logging.error("Cannot find .tgz for typespec-go")
             raise FileNotFoundError("Cannot find .tgz for typespec-go")
         
-        # Update emitter-package.json to use the dev package path
-        emitter_package_path = Path(sdk_root) / "eng/emitter-package.json"
-        with open(emitter_package_path, "r") as f:
-            emitter_package = json.load(f)
-        
+        # Update emitter-package.json to use the dev package path        
         emitter_package["dependencies"]["@azure-tools/typespec-go"] = typespec_go_tgz.absolute().as_posix()
-        
-        with open(emitter_package_path, "w") as f:
-            json.dump(emitter_package, f, indent=2)
-        
-        logging.info(f"Updated emitter-package.json to use typespec-go from \"{typespec_go_tgz.absolute()}\"")
-        
-        # Update emitter-package-lock.json
-        logging.info("Update emitter-package-lock.json")
-        try:
-            check_call(["tsp-client", "generate-lock-file"], cwd=sdk_root)
-        except Exception as e:
-            logging.error("Failed to update emitter-package-lock.json")
-            logging.error(e)
-            raise
     else:
         logging.info("Using released package mode")
-        
-        # Find the package.json in typespec-go root
-        package_json_path = Path(typespec_go_root) / "package.json"
-        if not package_json_path.exists():
-            logging.error(f"package.json not found at {package_json_path}")
-            raise FileNotFoundError(f"package.json not found at {package_json_path}")
-        
-        # Use tsp-client to generate config files with released package
-        logging.info("Update emitter-package.json and emitter-package-lock.json using released package")
-        try:
-            check_call([
-                "tsp-client", 
-                "generate-config-files", 
-                "--package-json", 
-                str(package_json_path.absolute())
-            ], cwd=sdk_root)
-        except Exception as e:
-            logging.error("Failed to generate config files with tsp-client")
-            logging.error(e)
-            raise
+
+        # Find the package.json in recent released typespec-go
+        package_info = get_latest_typespec_go_package_info()
+
+        # Update emitter-package.json to use the released package version
+        if "dependencies" not in emitter_package:
+            emitter_package["dependencies"] = {}
+        emitter_package["dependencies"]["@azure-tools/typespec-go"] = package_info["version"]
+        logging.info(f"Updated @azure-tools/typespec-go to version {package_info['version']}")
+
+        # Update devDependencies in emitter_package
+        dev_deps = package_info["devDependencies"]
+        update_dev_dependencies(emitter_package, dev_deps)
+    
+    # Print the complete emitter_package before writing
+    logging.info("Complete emitter-package.json content:")
+    logging.info(json.dumps(emitter_package, indent=2))
+    
+    # Write the updated emitter-package.json
+    with open(emitter_package_path, "w", encoding="utf-8") as f:
+        json.dump(emitter_package, f, indent=2)
+    
+    # Update emitter-package-lock.json
+    logging.info("Update emitter-package-lock.json")
+    try:
+        check_call(["tsp-client", "generate-lock-file"], cwd=sdk_root)
+    except Exception as e:
+        logging.error("Failed to update emitter-package-lock.json")
+        logging.error(e)
+        raise
 
 def get_latest_commit_id() -> str:
     return (
