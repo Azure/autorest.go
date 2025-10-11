@@ -17,7 +17,7 @@ import glob
 import urllib.request
 
 
-def get_latest_typespec_go_info():
+def get_latest_typespec_go_package_info():
     """Get the latest version and dependencies of @azure-tools/typespec-go from npm registry."""
     try:
         logging.info("Fetching latest @azure-tools/typespec-go info from npm registry")
@@ -54,14 +54,11 @@ def update_dev_dependencies(emitter_package: dict, source_deps: dict):
 
 
 def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package: bool):
-    # Common setup
+    # Load existing emitter-package.json
     emitter_package_path = Path(sdk_root) / "eng/emitter-package.json"
-    
     if not emitter_package_path.exists():
         logging.error(f"emitter-package.json not found at {emitter_package_path}")
         raise FileNotFoundError(f"emitter-package.json not found at {emitter_package_path}")
-    
-    # Load existing emitter-package.json
     logging.info("Loading existing emitter-package.json")
     with open(emitter_package_path, "r", encoding="utf-8") as f:
         emitter_package = json.load(f)
@@ -80,7 +77,10 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package
         with open(package_json_path, "r", encoding="utf-8") as f:
             package_json = json.load(f)
         dev_deps = package_json.get("devDependencies", {})
+
+        # Update devDependencies in emitter_package
         update_dev_dependencies(emitter_package, dev_deps)
+
         # Find the typespec-go.tgz file
         typespec_go_tgz = None
         for item in Path(typespec_go_root).iterdir():
@@ -96,11 +96,17 @@ def update_emitter_package(sdk_root: str, typespec_go_root: str, use_dev_package
         emitter_package["dependencies"]["@azure-tools/typespec-go"] = typespec_go_tgz.absolute().as_posix()
     else:
         logging.info("Using released package mode")
-        package_info = get_latest_typespec_go_info()
+
+        # Find the package.json in recent released typespec-go
+        package_info = get_latest_typespec_go_package_info()
+
+        # Update emitter-package.json to use the released package version
         if "dependencies" not in emitter_package:
             emitter_package["dependencies"] = {}
         emitter_package["dependencies"]["@azure-tools/typespec-go"] = package_info["version"]
         logging.info(f"Updated @azure-tools/typespec-go to version {package_info['version']}")
+
+        # Update devDependencies in emitter_package
         dev_deps = package_info["devDependencies"]
         update_dev_dependencies(emitter_package, dev_deps)
     
