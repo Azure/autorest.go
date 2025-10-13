@@ -17,9 +17,8 @@ func TestEnumConflictSecondOperationsClient_Second(t *testing.T) {
 	enumClient, err := enumconflictgroup.NewEnumConflictClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 
-	status := enumconflictgroup.SecondStatus(enumconflictgroup.SecondStatusRunning)
 	body := enumconflictgroup.SecondModel{
-		Status:      &status,
+		Status:      to.Ptr(enumconflictgroup.SecondStatusRunning)?,
 		Description: to.Ptr("test description"),
 	}
 

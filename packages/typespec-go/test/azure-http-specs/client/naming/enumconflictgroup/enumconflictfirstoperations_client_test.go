@@ -17,9 +17,8 @@ func TestEnumConflictFirstOperationsClient_First(t *testing.T) {
 	enumClient, err := enumconflictgroup.NewEnumConflictClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 
-	status := enumconflictgroup.StatusActive
 	body := enumconflictgroup.FirstModel{
-		Status: &status,
+		Status: to.Ptr(enumconflictgroup.StatusActive),
 		Name:   to.Ptr("test"),
 	}
 
