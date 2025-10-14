@@ -18,7 +18,7 @@ func TestEnumConflictSecondOperationsClient_Second(t *testing.T) {
 	require.NoError(t, err)
 
 	body := enumconflictgroup.SecondModel{
-		Status:      to.Ptr(enumconflictgroup.SecondStatusRunning)?,
+		Status:      to.Ptr(enumconflictgroup.SecondStatusRunning),
 		Description: to.Ptr("test description"),
 	}
 
