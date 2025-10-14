@@ -8,7 +8,7 @@ import * as param from './param.js';
 import * as result from './result.js';
 import * as type from './type.js';
 
-export type ExampleType = AnyExample | ArrayExample | BooleanExample | DictionaryExample | NullExample | NumberExample | StringExample | StructExample;
+export type ExampleType = AnyExample | ArrayExample | BooleanExample | DictionaryExample | NullExample | NumberExample | StringExample | StructExample | TokenCredentialExample;
 
 export interface AnyExample {
   kind: 'any';
@@ -42,9 +42,9 @@ export interface MethodExample {
 
   filePath: string;
 
-  parameters: Array<ParameterExample>;
+  parameters: Array<ParameterExample<param.MethodParameter>>;
 
-  optionalParamsGroup: Array<ParameterExample>;
+  optionalParamsGroup: Array<ParameterExample<param.MethodParameter>>;
 
   responseEnvelope?: ResponseEnvelopeExample;
 }
@@ -61,15 +61,15 @@ export interface NumberExample {
   type: type.Constant | type.Literal | type.Scalar | type.Time;
 }
 
-export interface ParameterExample {
-  parameter: client.ClientParameter;
+export interface ParameterExample<T extends client.ClientParameter = client.ClientParameter> {
+  parameter: T;
   value: ExampleType;
 }
 
 export interface ResponseEnvelopeExample {
   response: result.ResponseEnvelope;
   headers: Array<ResponseHeaderExample>;
-  result: ExampleType;
+  result: Exclude<ExampleType, TokenCredentialExample>;
 }
 
 export interface ResponseHeaderExample {
@@ -88,6 +88,11 @@ export interface StructExample {
   value: Record<string, ExampleType>;
   additionalProperties?: Record<string, ExampleType>;
   type: type.Model | type.PolymorphicModel;
+}
+
+export interface TokenCredentialExample {
+  kind: 'tokenCredential';
+  value: string;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -150,8 +155,8 @@ export class NumberExample implements NumberExample {
   }
 }
 
-export class ParameterExample implements ParameterExample {
-  constructor(parameter: param.MethodParameter, value: ExampleType) {
+export class ParameterExample<T> implements ParameterExample<T> {
+  constructor(parameter: T, value: ExampleType) {
     this.parameter = parameter;
     this.value = value;
   }
@@ -184,5 +189,12 @@ export class StructExample implements StructExample {
     this.kind = 'model';
     this.type = type;
     this.value = {};
+  }
+}
+
+export class TokenCredentialExample implements TokenCredentialExample {
+  constructor(value: string) {
+    this.kind = 'tokenCredential';
+    this.value = value;
   }
 }
