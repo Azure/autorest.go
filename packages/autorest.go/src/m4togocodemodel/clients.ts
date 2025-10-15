@@ -77,13 +77,14 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
     }
 
     if (codeModel.type === 'azure-arm') {
-      // we don't need the scopes for ARM, it's handled by pipeline policy
-      const ctor = new go.Constructor(`New${client.name}`, new go.TokenAuthentication([]));
+      const ctor = new go.Constructor(`New${client.name}`);
       // add any modeled parameter first, which should only be the subscriptionID, then add TokenCredential
       for (const param of client.parameters) {
         ctor.parameters.push(param);
       }
       client.instance = new go.Constructable(go.newClientOptions(codeModel.type, group.language.go!.clientName));
+      // we don't need the scopes for ARM, it's handled by pipeline policy
+      ctor.parameters.push(new go.ClientCredentialParameter('credential', new go.TokenCredential([])));
       client.instance.constructors.push(ctor);
     }
 
@@ -164,6 +165,18 @@ function adaptURIPrameterType(schema: m4.Schema): go.URIParameterType {
   throw new Error(`unexpected URI parameter type ${schema.type}`);
 }
 
+/**
+ * returns true if the parameter should be passed by value
+ * 
+ * @param style the style of the parameter
+ * @param location the location of the parameter
+ * @param param the parameter type (needed for schema)
+ * @returns true if the param should be passed by value
+ */
+function calculateParamByValue(style: go.ParameterStyle, location: go.ParameterLocation, param: m4.Parameter): boolean {
+  return helpers.isTypePassedByValue(param.schema) ? true : (go.isRequiredParameter(style) || (location === 'client' && go.isClientSideDefault(style)));
+}
+
 function adaptClient(group: m4.OperationGroup): go.Client {
   const description = `${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.`;
   const client = new go.Client(group.language.go!.clientName, {description: description});
@@ -172,8 +185,10 @@ function adaptClient(group: m4.OperationGroup): go.Client {
   }
   if (group.language.go!.hostParams) {
     for (const hostParam of values(<Array<m4.Parameter>>group.language.go!.hostParams)) {
+      const style = adaptParameterStyle(hostParam);
+      const location = adaptMethodLocation(hostParam.implementation);
       const uriParam = new go.URIParameter(hostParam.language.go!.name, hostParam.language.go!.serializedName, adaptURIPrameterType(hostParam.schema),
-        adaptParameterStyle(hostParam), hostParam.language.go!.byValue, adaptMethodLocation(hostParam.implementation));
+        style, calculateParamByValue(style, location, hostParam), location);
       client.parameters.push(uriParam);
     }
   }
@@ -333,7 +348,7 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
 
   // unfortunately param.language.go!.byValue isn't always populated.
   // since we can't trust it, we calculate the value instead.
-  const byValue = helpers.isTypePassedByValue(param.schema) ? true : (go.isRequiredParameter(style) || (location === 'client' && go.isClientSideDefault(style)));
+  const byValue = calculateParamByValue(style, location, param);
 
   switch (param.protocol.http?.in) {
     case 'body': {

@@ -220,6 +220,7 @@ export class clientAdapter {
                 adaptedParam.docs.summary = param.summary;
                 adaptedParam.docs.description = param.doc;
                 goClient.parameters.push(adaptedParam);
+                goClient.instance.endpoint = new go.ClientEndpoint(adaptedParam);
 
                 // if the server's URL is *only* the endpoint parameter then we're done.
                 // this is the param.type.kind === 'endpoint' case.
@@ -231,7 +232,7 @@ export class clientAdapter {
                 // either way we need to create supplemental info on the constructable.
                 // strip off the first segment which corresponds to the endpoint param as it's not needed.
                 const serverUrl = endpointType.serverUrl.replace(`{${templateArg.serializedName}}/`, '');
-                goClient.instance.endpoint = new go.SupplementalEndpoint(serverUrl);
+                goClient.instance.endpoint.supplemental = new go.SupplementalEndpoint(serverUrl);
                 continue;
               }
 
@@ -239,7 +240,14 @@ export class clientAdapter {
               adaptedParam.docs.summary = templateArg.summary;
               adaptedParam.docs.description = templateArg.doc;
               adaptedParam.isApiVersion = templateArg.isApiVersionParam;
-              goClient.instance.endpoint?.parameters.push(adaptedParam);
+              goClient.instance.endpoint?.supplemental?.parameters.push(adaptedParam);
+              if (!go.isRequiredParameter(adaptedParam.style)) {
+                if (goClient.instance.options.kind === 'clientOptions') {
+                  goClient.instance.options.parameters.push(adaptedParam);
+                } else {
+                  throw new AdapterError('UnsupportedTsp', 'optional client parameters for ARM is not supported', templateArg.__raw?.node ?? NoTarget);
+                }
+              }
             }
             break;
           }
@@ -263,19 +271,12 @@ export class clientAdapter {
       // if no authentication type was specified, or the noAuth scheme was
       // explicitly specified, then include the WithNoCredential constructor
       if (authType === AuthTypes.Default || <AuthTypes>(authType & AuthTypes.NoAuth) === AuthTypes.NoAuth) {
-        goClient.instance.constructors.push(new go.Constructor(`New${clientName}WithNoCredential`, new go.NoAuthentication()));
+        goClient.instance.constructors.push(new go.Constructor(`New${clientName}WithNoCredential`));
       }
 
-      // propagate optional params to the optional params group
-      for (const param of goClient.parameters) {
-        if (!go.isRequiredParameter(param.style) && !go.isLiteralParameter(param.style) && goClient.instance.options.kind === 'clientOptions') {
-          goClient.instance.options.params.push(param);
-        }
-      }
-
-      // if we created constructors, propagate the persisted client params to them
+      // propagate ctor params to all client ctors
       for (const constructor of goClient.instance.constructors) {
-        constructor.parameters = goClient.parameters;
+        constructor.parameters.push(...goClient.parameters);
       }
     } else if (parent) {
       // this is a sub-client. it will share the client/host params of the parent.
@@ -301,6 +302,7 @@ export class clientAdapter {
         }
       }
     }
+
     for (const sdkMethod of sdkClient.methods) {
       this.adaptMethod(sdkMethod, goClient);
     }
@@ -330,7 +332,9 @@ export class clientAdapter {
     } else if (cred.flows[0].scopes.length > 1) {
       throw new AdapterError('InternalError', `too many scopes defined for credential type ${cred.type}`, cred.model);
     }
-    return new go.Constructor(`New${goClient.name}`, new go.TokenAuthentication(cred.flows[0].scopes.map(each => each.value)));
+    const ctor = new go.Constructor(`New${goClient.name}`);
+    ctor.parameters.push(new go.ClientCredentialParameter('credential', new go.TokenCredential(cred.flows[0].scopes.map(each => each.value))));
+    return ctor;
   }
 
   /**
@@ -350,17 +354,20 @@ export class clientAdapter {
 
     if (go.isURIParameterType(paramType)) {
       const style = forceRequired ? 'required' : this.adaptParameterStyle(sdkParam);
-      // TODO: follow up with tcgc if serializedName should actually be optional
-      const uriParam = new go.URIParameter(sdkParam.name, sdkParam.serializedName ? sdkParam.serializedName : sdkParam.name, paramType,
+      if (this.ta.codeModel.type === 'azure-arm' && !go.isRequiredParameter(style)) {
+        throw new AdapterError('UnsupportedTsp', 'optional client parameters for ARM is not supported', sdkParam.__raw?.node ?? NoTarget);
+      }
+      const uriParam = new go.URIParameter(sdkParam.name, sdkParam.serializedName, paramType,
         style, isTypePassedByValue(sdkParam.type) || !sdkParam.optional, 'client');
       uriParam.docs.summary = sdkParam.summary;
       uriParam.docs.description = sdkParam.doc;
+      uriParam.isApiVersion = sdkParam.isApiVersionParam;
       return uriParam;
     }
     throw new AdapterError('UnsupportedTsp', `unsupported URI parameter type ${paramType.kind}`, sdkParam.__raw?.node ?? NoTarget);
   }
 
-  private adaptMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, goClient: go.Client) {
+  private adaptMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, goClient: go.Client): void {
     let method: go.MethodType;
     const naming = new go.MethodNaming(getEscapedReservedName(uncapitalize(ensureNameCase(sdkMethod.name)), 'Operation'), ensureNameCase(`${sdkMethod.name}CreateRequest`, true),
       ensureNameCase(`${sdkMethod.name}HandleResponse`, true));
@@ -659,7 +666,17 @@ export class clientAdapter {
         if (!method.receiver.type.parameters.find((v: go.ClientParameter) => {
           return v.name === adaptedParam.name;
         })) {
+          if (this.ta.codeModel.type === 'azure-arm' && adaptedParam.style !== 'literal' && adaptedParam.style !== 'required') {
+            throw new AdapterError('UnsupportedTsp', 'optional client parameters for ARM is not supported', opParam.__raw?.node ?? NoTarget);
+          }
           method.receiver.type.parameters.push(adaptedParam);
+          if (method.receiver.type.instance?.kind === 'constructable') {
+            // if this is an instantiable client then also add
+            // the client parameter to all constructors
+            for (const ctor of method.receiver.type.instance.constructors) {
+              ctor.parameters.push(adaptedParam);
+            }
+          }
         }
       }
     }
@@ -1174,7 +1191,7 @@ export class clientAdapter {
     }
   }
 
-  private adaptExampleType(exampleType: tcgc.SdkExampleValue, goType: go.WireType): go.ExampleType {
+  private adaptExampleType(exampleType: tcgc.SdkExampleValue, goType: go.WireType): Exclude<go.ExampleType, go.TokenCredentialExample> {
     switch (exampleType.kind) {
       case 'string':
         switch (goType.kind) {
