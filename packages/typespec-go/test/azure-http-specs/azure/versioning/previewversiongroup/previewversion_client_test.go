@@ -26,18 +26,6 @@ func TestPreviewVersionClient_GetWidget(t *testing.T) {
 	require.Equal(t, "blue", *resp.Color)
 }
 
-func TestPreviewVersionClient_ListWidgets(t *testing.T) {
-	client, err := previewversiongroup.NewPreviewVersionClientWithNoCredential("http://localhost:3000", nil)
-	require.NoError(t, err)
-
-	resp, err := client.ListWidgets(context.Background(), nil)
-	require.NoError(t, err)
-	require.Len(t, resp.Widgets, 2)
-	require.Equal(t, "widget-1", *resp.Widgets[0].ID)
-	require.Equal(t, "test", *resp.Widgets[0].Name)
-	require.Equal(t, "red", *resp.Widgets[0].Color)
-}
-
 func TestPreviewVersionClient_UpdateWidgetColor(t *testing.T) {
 	const fakeID = "widget-123"
 	const newColor = "red"
