@@ -81,7 +81,7 @@ const azureHttpSpecsGroup = {
   'coreusagegroup': ['azure/client-generator-core/usage'],
   // 'overridegroup': ['azure/client-generator-core/override'], TODO: https://github.com/Azure/autorest.go/issues/1718
   'hierarchygroup': ['azure/client-generator-core/hierarchy-building'],
-  // 'clientinitializationgroup': ['azure/client-generator-core/client-initialization'],
+  'clientinitializationgroup': ['azure/client-generator-core/client-initialization'],
   // 'apiversionheadergroup' : ['azure/client-generator-core/api-version/header'],
   // 'apiversionpathgroup' : ['azure/client-generator-core/api-version/path'],
   // 'apiversionquerygroup' : ['azure/client-generator-core/api-version/query'],
