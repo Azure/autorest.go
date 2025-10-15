@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // FirstGroup4Client contains the methods for the FirstGroup4 group.
@@ -18,7 +17,6 @@ import (
 type FirstGroup4Client struct {
 	internal *azcore.Client
 	endpoint string
-	client   ClientType
 }
 
 // Four -
@@ -47,11 +45,8 @@ func (client *FirstGroup4Client) Four(ctx context.Context, options *FirstGroup4C
 
 // fourCreateRequest creates the Four request.
 func (client *FirstGroup4Client) fourCreateRequest(ctx context.Context, _ *FirstGroup4ClientFourOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/four"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

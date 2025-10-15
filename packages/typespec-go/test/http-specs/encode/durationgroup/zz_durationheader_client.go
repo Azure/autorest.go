@@ -6,6 +6,7 @@ package durationgroup
 
 import (
 	"context"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -56,6 +57,42 @@ func (client *DurationHeaderClient) defaultCreateRequest(ctx context.Context, du
 	return req, nil
 }
 
+// Float64Milliseconds -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationHeaderClientFloat64MillisecondsOptions contains the optional parameters for the DurationHeaderClient.Float64Milliseconds
+//     method.
+func (client *DurationHeaderClient) Float64Milliseconds(ctx context.Context, duration float64, options *DurationHeaderClientFloat64MillisecondsOptions) (DurationHeaderClientFloat64MillisecondsResponse, error) {
+	var err error
+	const operationName = "DurationHeaderClient.Float64Milliseconds"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.float64MillisecondsCreateRequest(ctx, duration, options)
+	if err != nil {
+		return DurationHeaderClientFloat64MillisecondsResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationHeaderClientFloat64MillisecondsResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationHeaderClientFloat64MillisecondsResponse{}, err
+	}
+	return DurationHeaderClientFloat64MillisecondsResponse{}, nil
+}
+
+// float64MillisecondsCreateRequest creates the Float64Milliseconds request.
+func (client *DurationHeaderClient) float64MillisecondsCreateRequest(ctx context.Context, duration float64, _ *DurationHeaderClientFloat64MillisecondsOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/header/float64-milliseconds"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["duration"] = []string{strconv.FormatFloat(duration, 'f', -1, 64)}
+	return req, nil
+}
+
 // Float64Seconds -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationHeaderClientFloat64SecondsOptions contains the optional parameters for the DurationHeaderClient.Float64Seconds
@@ -89,6 +126,42 @@ func (client *DurationHeaderClient) float64SecondsCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	req.Raw().Header["duration"] = []string{strconv.FormatFloat(duration, 'f', -1, 64)}
+	return req, nil
+}
+
+// FloatMilliseconds -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationHeaderClientFloatMillisecondsOptions contains the optional parameters for the DurationHeaderClient.FloatMilliseconds
+//     method.
+func (client *DurationHeaderClient) FloatMilliseconds(ctx context.Context, duration float32, options *DurationHeaderClientFloatMillisecondsOptions) (DurationHeaderClientFloatMillisecondsResponse, error) {
+	var err error
+	const operationName = "DurationHeaderClient.FloatMilliseconds"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.floatMillisecondsCreateRequest(ctx, duration, options)
+	if err != nil {
+		return DurationHeaderClientFloatMillisecondsResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationHeaderClientFloatMillisecondsResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationHeaderClientFloatMillisecondsResponse{}, err
+	}
+	return DurationHeaderClientFloatMillisecondsResponse{}, nil
+}
+
+// floatMillisecondsCreateRequest creates the FloatMilliseconds request.
+func (client *DurationHeaderClient) floatMillisecondsCreateRequest(ctx context.Context, duration float32, _ *DurationHeaderClientFloatMillisecondsOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/header/float-milliseconds"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["duration"] = []string{strconv.FormatFloat(float64(duration), 'f', -1, 32)}
 	return req, nil
 }
 
@@ -196,6 +269,78 @@ func (client *DurationHeaderClient) iso8601ArrayCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Raw().Header["duration"] = []string{strings.Join(duration, ",")}
+	return req, nil
+}
+
+// Int32Milliseconds -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationHeaderClientInt32MillisecondsOptions contains the optional parameters for the DurationHeaderClient.Int32Milliseconds
+//     method.
+func (client *DurationHeaderClient) Int32Milliseconds(ctx context.Context, duration int32, options *DurationHeaderClientInt32MillisecondsOptions) (DurationHeaderClientInt32MillisecondsResponse, error) {
+	var err error
+	const operationName = "DurationHeaderClient.Int32Milliseconds"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.int32MillisecondsCreateRequest(ctx, duration, options)
+	if err != nil {
+		return DurationHeaderClientInt32MillisecondsResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationHeaderClientInt32MillisecondsResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationHeaderClientInt32MillisecondsResponse{}, err
+	}
+	return DurationHeaderClientInt32MillisecondsResponse{}, nil
+}
+
+// int32MillisecondsCreateRequest creates the Int32Milliseconds request.
+func (client *DurationHeaderClient) int32MillisecondsCreateRequest(ctx context.Context, duration int32, _ *DurationHeaderClientInt32MillisecondsOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/header/int32-milliseconds"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["duration"] = []string{strconv.FormatInt(int64(duration), 10)}
+	return req, nil
+}
+
+// Int32MillisecondsArray -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationHeaderClientInt32MillisecondsArrayOptions contains the optional parameters for the DurationHeaderClient.Int32MillisecondsArray
+//     method.
+func (client *DurationHeaderClient) Int32MillisecondsArray(ctx context.Context, duration []int32, options *DurationHeaderClientInt32MillisecondsArrayOptions) (DurationHeaderClientInt32MillisecondsArrayResponse, error) {
+	var err error
+	const operationName = "DurationHeaderClient.Int32MillisecondsArray"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.int32MillisecondsArrayCreateRequest(ctx, duration, options)
+	if err != nil {
+		return DurationHeaderClientInt32MillisecondsArrayResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationHeaderClientInt32MillisecondsArrayResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationHeaderClientInt32MillisecondsArrayResponse{}, err
+	}
+	return DurationHeaderClientInt32MillisecondsArrayResponse{}, nil
+}
+
+// int32MillisecondsArrayCreateRequest creates the Int32MillisecondsArray request.
+func (client *DurationHeaderClient) int32MillisecondsArrayCreateRequest(ctx context.Context, duration []int32, _ *DurationHeaderClientInt32MillisecondsArrayOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/header/int32-milliseconds-array"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["duration"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(duration), "[]")), ",")}
 	return req, nil
 }
 

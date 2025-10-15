@@ -23,7 +23,7 @@ type MediaTypeClientOptions struct {
 
 // NewMediaTypeClientWithNoCredential creates a new instance of MediaTypeClient with the specified values.
 //   - endpoint - Service host
-//   - options - MediaTypeClientOptions contains the optional values for creating a [MediaTypeClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewMediaTypeClientWithNoCredential(endpoint string, options *MediaTypeClientOptions) (*MediaTypeClient, error) {
 	if options == nil {
 		options = &MediaTypeClientOptions{}

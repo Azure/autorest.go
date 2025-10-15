@@ -24,7 +24,7 @@ type DiscountsOperationGroupClient struct {
 
 // NewDiscountsOperationGroupClient creates a new instance of DiscountsOperationGroupClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
-//   - options - pass nil to accept the default values.
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewDiscountsOperationGroupClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*DiscountsOperationGroupClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {

@@ -26,7 +26,7 @@ type SingleClientOptions struct {
 
 // NewSingleClientWithNoCredential creates a new instance of SingleClient with the specified values.
 //   - endpoint - Service host
-//   - options - SingleClientOptions contains the optional values for creating a [SingleClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewSingleClientWithNoCredential(endpoint string, options *SingleClientOptions) (*SingleClient, error) {
 	if options == nil {
 		options = &SingleClientOptions{}

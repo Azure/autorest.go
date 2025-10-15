@@ -19,6 +19,11 @@ type APIKeyClient struct {
 	endpoint string
 }
 
+// APIKeyClientOptions contains the optional values for creating a [APIKeyClient].
+type APIKeyClientOptions struct {
+	azcore.ClientOptions
+}
+
 // Invalid - Check whether client is authenticated.
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - APIKeyClientInvalidOptions contains the optional parameters for the APIKeyClient.Invalid method.

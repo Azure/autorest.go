@@ -18,7 +18,6 @@ import (
 type SecondClient struct {
 	internal *azcore.Client
 	endpoint string
-	client   ClientType
 }
 
 // SecondClientOptions contains the optional values for creating a [SecondClient].
@@ -29,7 +28,7 @@ type SecondClientOptions struct {
 // NewSecondClientWithNoCredential creates a new instance of SecondClient with the specified values.
 //   - endpoint - Service host
 //   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
-//   - options - SecondClientOptions contains the optional values for creating a [SecondClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewSecondClientWithNoCredential(endpoint string, client ClientType, options *SecondClientOptions) (*SecondClient, error) {
 	if options == nil {
 		options = &SecondClientOptions{}
@@ -38,9 +37,11 @@ func NewSecondClientWithNoCredential(endpoint string, client ClientType, options
 	if err != nil {
 		return nil, err
 	}
+	host := "client/structure/{client}"
+	host = strings.ReplaceAll(host, "{client}", string(client))
+	endpoint = runtime.JoinPaths(endpoint, host)
 	secondClient := &SecondClient{
 		endpoint: endpoint,
-		client:   client,
 		internal: cl,
 	}
 	return secondClient, nil
@@ -51,7 +52,6 @@ func (client *SecondClient) NewSecondGroup5Client() *SecondGroup5Client {
 	return &SecondGroup5Client{
 		internal: client.internal,
 		endpoint: client.endpoint,
-		client:   client.client,
 	}
 }
 
@@ -81,11 +81,8 @@ func (client *SecondClient) Five(ctx context.Context, options *SecondClientFiveO
 
 // fiveCreateRequest creates the Five request.
 func (client *SecondClient) fiveCreateRequest(ctx context.Context, _ *SecondClientFiveOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/five"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

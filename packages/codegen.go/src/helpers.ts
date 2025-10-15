@@ -53,7 +53,13 @@ export function sortAscending(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0;
 }
 
-// returns the type name with possible * prefix
+/**
+ * returns the parameter's type definition with a possible '*' prefix
+ * 
+ * @param param the parameter for which to emit the type definition
+ * @param pkgName optional package name in which the type resides
+ * @returns the parameter type definition text
+ */
 export function formatParameterTypeName(param: go.ClientOptionsParameter | go.ClientParameter | go.ParameterGroup, pkgName?: string): string {
   let typeName: string;
   switch (param.kind) {
@@ -71,16 +77,11 @@ export function formatParameterTypeName(param: go.ClientOptionsParameter | go.Cl
       break;
     default:
       typeName = go.getTypeDeclaration(param.type, pkgName);
-      if (parameterByValue(param)) {
-        // client parameters with default values aren't emitted as pointer-to-type
+      if (param.byValue) {
         return typeName;
       }
   }
   return `*${typeName}`;
-}
-
-export function parameterByValue(param: go.ClientParameter): boolean {
-  return go.isRequiredParameter(param.style) || (param.location === 'client' && go.isClientSideDefault(param.style))
 }
 
 // sorts parameters by their required state, ordering required before optional

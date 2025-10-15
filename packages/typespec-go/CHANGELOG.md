@@ -1,11 +1,12 @@
 # Release History
 
-## 0.8.3 (unreleased)
+## 0.8.3 (2025-10-14)
 
 ### Bugs Fixed
 
 * Fixed missing empty path param check for unencoded path params.
 * Emit empty path param check for path collection parameters.
+* Fixed incorrect handling of optional path parameters.
 
 ### Features Added
 
@@ -14,6 +15,7 @@
 ### Other Changes
 
 * Updated to the latest tsp toolset.
+* Moved handling of templated endpoints to client constructors.
 
 ## 0.8.2 (2025-09-10)
 

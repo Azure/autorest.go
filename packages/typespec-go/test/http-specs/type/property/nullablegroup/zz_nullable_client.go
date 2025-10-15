@@ -23,7 +23,7 @@ type NullableClientOptions struct {
 
 // NewNullableClientWithNoCredential creates a new instance of NullableClient with the specified values.
 //   - endpoint - Service host
-//   - options - NullableClientOptions contains the optional values for creating a [NullableClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewNullableClientWithNoCredential(endpoint string, options *NullableClientOptions) (*NullableClient, error) {
 	if options == nil {
 		options = &NullableClientOptions{}

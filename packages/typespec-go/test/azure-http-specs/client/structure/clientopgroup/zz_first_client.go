@@ -18,7 +18,6 @@ import (
 type FirstClient struct {
 	internal *azcore.Client
 	endpoint string
-	client   ClientType
 }
 
 // FirstClientOptions contains the optional values for creating a [FirstClient].
@@ -29,7 +28,7 @@ type FirstClientOptions struct {
 // NewFirstClientWithNoCredential creates a new instance of FirstClient with the specified values.
 //   - endpoint - Service host
 //   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
-//   - options - FirstClientOptions contains the optional values for creating a [FirstClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewFirstClientWithNoCredential(endpoint string, client ClientType, options *FirstClientOptions) (*FirstClient, error) {
 	if options == nil {
 		options = &FirstClientOptions{}
@@ -38,9 +37,11 @@ func NewFirstClientWithNoCredential(endpoint string, client ClientType, options 
 	if err != nil {
 		return nil, err
 	}
+	host := "client/structure/{client}"
+	host = strings.ReplaceAll(host, "{client}", string(client))
+	endpoint = runtime.JoinPaths(endpoint, host)
 	firstClient := &FirstClient{
 		endpoint: endpoint,
-		client:   client,
 		internal: cl,
 	}
 	return firstClient, nil
@@ -51,7 +52,6 @@ func (client *FirstClient) NewFirstGroup3Client() *FirstGroup3Client {
 	return &FirstGroup3Client{
 		internal: client.internal,
 		endpoint: client.endpoint,
-		client:   client.client,
 	}
 }
 
@@ -60,7 +60,6 @@ func (client *FirstClient) NewFirstGroup4Client() *FirstGroup4Client {
 	return &FirstGroup4Client{
 		internal: client.internal,
 		endpoint: client.endpoint,
-		client:   client.client,
 	}
 }
 
@@ -90,11 +89,8 @@ func (client *FirstClient) One(ctx context.Context, options *FirstClientOneOptio
 
 // oneCreateRequest creates the One request.
 func (client *FirstClient) oneCreateRequest(ctx context.Context, _ *FirstClientOneOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/one"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

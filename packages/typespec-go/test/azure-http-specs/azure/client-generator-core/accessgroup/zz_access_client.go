@@ -23,7 +23,7 @@ type AccessClientOptions struct {
 
 // NewAccessClientWithNoCredential creates a new instance of AccessClient with the specified values.
 //   - endpoint - Service host
-//   - options - AccessClientOptions contains the optional values for creating a [AccessClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewAccessClientWithNoCredential(endpoint string, options *AccessClientOptions) (*AccessClient, error) {
 	if options == nil {
 		options = &AccessClientOptions{}

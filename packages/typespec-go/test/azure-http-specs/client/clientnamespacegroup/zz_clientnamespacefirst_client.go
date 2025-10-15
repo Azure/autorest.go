@@ -26,7 +26,7 @@ type ClientNamespaceFirstClientOptions struct {
 
 // NewClientNamespaceFirstClientWithNoCredential creates a new instance of ClientNamespaceFirstClient with the specified values.
 //   - endpoint - Service host
-//   - options - ClientNamespaceFirstClientOptions contains the optional values for creating a [ClientNamespaceFirstClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewClientNamespaceFirstClientWithNoCredential(endpoint string, options *ClientNamespaceFirstClientOptions) (*ClientNamespaceFirstClient, error) {
 	if options == nil {
 		options = &ClientNamespaceFirstClientOptions{}

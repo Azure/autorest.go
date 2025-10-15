@@ -4,9 +4,15 @@
 
 package pageablegroup
 
-// PageableClientListWithoutContinuationOptions contains the optional parameters for the PageableClient.NewListWithoutContinuationPager
+// PageablePageSizeClientListWithPageSizeOptions contains the optional parameters for the PageablePageSizeClient.NewListWithPageSizePager
 // method.
-type PageableClientListWithoutContinuationOptions struct {
+type PageablePageSizeClientListWithPageSizeOptions struct {
+	PageSize *int32
+}
+
+// PageablePageSizeClientListWithoutContinuationOptions contains the optional parameters for the PageablePageSizeClient.NewListWithoutContinuationPager
+// method.
+type PageablePageSizeClientListWithoutContinuationOptions struct {
 	// placeholder for future optional parameters
 }
 

@@ -21,9 +21,9 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type Client struct {
 	internal            *azcore.Client
-	geography           Geography
 	clientGroup         ClientGroup
 	clientOptionalGroup *ClientOptionalGroup
+	geography           Geography
 	optionalString      *string
 }
 

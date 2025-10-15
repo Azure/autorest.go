@@ -18,7 +18,6 @@ import (
 type ClientAClient struct {
 	internal *azcore.Client
 	endpoint string
-	client   ClientType
 }
 
 // ClientAClientOptions contains the optional values for creating a [ClientAClient].
@@ -29,7 +28,7 @@ type ClientAClientOptions struct {
 // NewClientAClientWithNoCredential creates a new instance of ClientAClient with the specified values.
 //   - endpoint - Service host
 //   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
-//   - options - ClientAClientOptions contains the optional values for creating a [ClientAClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewClientAClientWithNoCredential(endpoint string, client ClientType, options *ClientAClientOptions) (*ClientAClient, error) {
 	if options == nil {
 		options = &ClientAClientOptions{}
@@ -38,9 +37,11 @@ func NewClientAClientWithNoCredential(endpoint string, client ClientType, option
 	if err != nil {
 		return nil, err
 	}
+	host := "client/structure/{client}"
+	host = strings.ReplaceAll(host, "{client}", string(client))
+	endpoint = runtime.JoinPaths(endpoint, host)
 	clientAClient := &ClientAClient{
 		endpoint: endpoint,
-		client:   client,
 		internal: cl,
 	}
 	return clientAClient, nil
@@ -72,11 +73,8 @@ func (client *ClientAClient) RenamedFive(ctx context.Context, options *ClientACl
 
 // renamedFiveCreateRequest creates the RenamedFive request.
 func (client *ClientAClient) renamedFiveCreateRequest(ctx context.Context, _ *ClientAClientRenamedFiveOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/five"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -109,11 +107,8 @@ func (client *ClientAClient) RenamedOne(ctx context.Context, options *ClientACli
 
 // renamedOneCreateRequest creates the RenamedOne request.
 func (client *ClientAClient) renamedOneCreateRequest(ctx context.Context, _ *ClientAClientRenamedOneOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/one"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -146,11 +141,8 @@ func (client *ClientAClient) RenamedThree(ctx context.Context, options *ClientAC
 
 // renamedThreeCreateRequest creates the RenamedThree request.
 func (client *ClientAClient) renamedThreeCreateRequest(ctx context.Context, _ *ClientAClientRenamedThreeOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/three"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

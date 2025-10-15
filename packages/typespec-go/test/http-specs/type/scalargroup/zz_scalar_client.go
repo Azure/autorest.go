@@ -23,7 +23,7 @@ type ScalarClientOptions struct {
 
 // NewScalarClientWithNoCredential creates a new instance of ScalarClient with the specified values.
 //   - endpoint - Service host
-//   - options - ScalarClientOptions contains the optional values for creating a [ScalarClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewScalarClientWithNoCredential(endpoint string, options *ScalarClientOptions) (*ScalarClient, error) {
 	if options == nil {
 		options = &ScalarClientOptions{}

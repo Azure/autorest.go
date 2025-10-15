@@ -29,15 +29,16 @@ const httpSpecsGroup = {
   'basicparamsgroup': ['parameters/basic'],
   'bodyoptionalgroup': ['parameters/body-optionality'],
   'collectionfmtgroup': ['parameters/collection-format'],
-  //'pathgroup': ['parameters/path'], // requires optional path parameter support https://github.com/Azure/autorest.go/issues/1575
+  'pathgroup': ['parameters/path'],
   'spreadgroup': ['parameters/spread'],
   'contentneggroup': ['payload/content-negotiation'],
   'jmergepatchgroup': ['payload/json-merge-patch'],
   'mediatypegroup': ['payload/media-type'],
   //'multipartgroup': ['payload/multipart'], // TODO: https://github.com/Azure/autorest.go/issues/1445
-  'pageablegroup': ['payload/pageable'],
+  'pageablegroup': ['payload/pageable'], // missing support for continuation tokens: https://github.com/Azure/autorest.go/issues/1494
   'xmlgroup': ['payload/xml', 'slice-elements-byval=true'],
   //'statuscoderangegroup': ['response/status-code-range'], // TODO: https://github.com/Azure/autorest.go/issues/1606
+  //'routesgroup': ['routes'], // TODO: https://github.com/Azure/autorest.go/issues/1730
   'jsongroup': ['serialization/encoded-name/json'],
   'noendpointgroup': ['server/endpoint/not-defined'],
   'multiplegroup': ['server/path/multiple'],
@@ -47,6 +48,7 @@ const httpSpecsGroup = {
   'condreqgroup': ['special-headers/conditional-request'],
   //'repeatabilitygroup': ['special-headers/repeatability'],   // requires union support
   'specialwordsgroup': ['special-words'],
+  //'jsonlgroup': ['streaming/jsonl'], // TODO: https://github.com/Azure/autorest.go/issues/1594
   'arraygroup': ['type/array', 'slice-elements-byval=true'],
   'dictionarygroup': ['type/dictionary'],
   'extensiblegroup': ['type/enum/extensible'],
@@ -61,7 +63,7 @@ const httpSpecsGroup = {
   'visibilitygroup': ['type/model/visibility'],
   //'addlpropsgroup': ['type/property/additional-properties'], // requires union support (remove hand-written client when done)
   'nullablegroup': ['type/property/nullable'],
-  'optionalitygroup': ['type/property/optionality', 'slice-elements-byval=true'],
+  'optionalitygroup': ['type/property/optionality', 'slice-elements-byval=true'], // missing support for plain time https://github.com/Azure/autorest.go/issues/1732
   'valuetypesgroup': ['type/property/value-types', 'slice-elements-byval=true'],
   'scalargroup': ['type/scalar', 'slice-elements-byval=true'],
   //'uniongroup': ['type/union'], // requires union support
@@ -71,7 +73,6 @@ const httpSpecsGroup = {
   //'renamedfromgroup': ['versioning/renamedFrom'], // requires union support
   'rettypechangedfromgroup': ['versioning/returnTypeChangedFrom'],
   'typechangedfromgroup': ['versioning/typeChangedFrom'],
-  'jsonlgroup': ['streaming/jsonl']
 };
 
 const azureHttpSpecsGroup = {
@@ -101,9 +102,11 @@ const azureHttpSpecsGroup = {
   'nonresourcegroup' : ['azure/resource-manager/non-resource'],
   'templatesgroup' : ['azure/resource-manager/operation-templates'],
   'largeheadergroup' : ['azure/resource-manager/large-header'],
+  'methodsubscriptionidgroup' : ['/azure/resource-manager/method-subscription-id/client.tsp'],
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
   'previewversiongroup': ['azure/versioning/previewVersion'],
   'naminggroup': ['client/naming'],
+  'enumconflictgroup': ['client/naming/enum-conflict/client.tsp'],
   'defaultgroup': ['client/structure/default/client.tsp'],
   'multiclientgroup': ['client/structure/multi-client/client.tsp'],
   'renamedopgroup': ['client/structure/renamed-operation/client.tsp'],

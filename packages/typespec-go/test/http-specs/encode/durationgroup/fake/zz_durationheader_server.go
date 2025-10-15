@@ -22,9 +22,17 @@ type DurationHeaderServer struct {
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Default func(ctx context.Context, duration string, options *durationgroup.DurationHeaderClientDefaultOptions) (resp azfake.Responder[durationgroup.DurationHeaderClientDefaultResponse], errResp azfake.ErrorResponder)
 
+	// Float64Milliseconds is the fake for method DurationHeaderClient.Float64Milliseconds
+	// HTTP status codes to indicate success: http.StatusNoContent
+	Float64Milliseconds func(ctx context.Context, duration float64, options *durationgroup.DurationHeaderClientFloat64MillisecondsOptions) (resp azfake.Responder[durationgroup.DurationHeaderClientFloat64MillisecondsResponse], errResp azfake.ErrorResponder)
+
 	// Float64Seconds is the fake for method DurationHeaderClient.Float64Seconds
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Float64Seconds func(ctx context.Context, duration float64, options *durationgroup.DurationHeaderClientFloat64SecondsOptions) (resp azfake.Responder[durationgroup.DurationHeaderClientFloat64SecondsResponse], errResp azfake.ErrorResponder)
+
+	// FloatMilliseconds is the fake for method DurationHeaderClient.FloatMilliseconds
+	// HTTP status codes to indicate success: http.StatusNoContent
+	FloatMilliseconds func(ctx context.Context, duration float32, options *durationgroup.DurationHeaderClientFloatMillisecondsOptions) (resp azfake.Responder[durationgroup.DurationHeaderClientFloatMillisecondsResponse], errResp azfake.ErrorResponder)
 
 	// FloatSeconds is the fake for method DurationHeaderClient.FloatSeconds
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -37,6 +45,14 @@ type DurationHeaderServer struct {
 	// ISO8601Array is the fake for method DurationHeaderClient.ISO8601Array
 	// HTTP status codes to indicate success: http.StatusNoContent
 	ISO8601Array func(ctx context.Context, duration []string, options *durationgroup.DurationHeaderClientISO8601ArrayOptions) (resp azfake.Responder[durationgroup.DurationHeaderClientISO8601ArrayResponse], errResp azfake.ErrorResponder)
+
+	// Int32Milliseconds is the fake for method DurationHeaderClient.Int32Milliseconds
+	// HTTP status codes to indicate success: http.StatusNoContent
+	Int32Milliseconds func(ctx context.Context, duration int32, options *durationgroup.DurationHeaderClientInt32MillisecondsOptions) (resp azfake.Responder[durationgroup.DurationHeaderClientInt32MillisecondsResponse], errResp azfake.ErrorResponder)
+
+	// Int32MillisecondsArray is the fake for method DurationHeaderClient.Int32MillisecondsArray
+	// HTTP status codes to indicate success: http.StatusNoContent
+	Int32MillisecondsArray func(ctx context.Context, duration []int32, options *durationgroup.DurationHeaderClientInt32MillisecondsArrayOptions) (resp azfake.Responder[durationgroup.DurationHeaderClientInt32MillisecondsArrayResponse], errResp azfake.ErrorResponder)
 
 	// Int32Seconds is the fake for method DurationHeaderClient.Int32Seconds
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -81,14 +97,22 @@ func (d *DurationHeaderServerTransport) dispatchToMethodFake(req *http.Request, 
 			switch method {
 			case "DurationHeaderClient.Default":
 				res.resp, res.err = d.dispatchDefault(req)
+			case "DurationHeaderClient.Float64Milliseconds":
+				res.resp, res.err = d.dispatchFloat64Milliseconds(req)
 			case "DurationHeaderClient.Float64Seconds":
 				res.resp, res.err = d.dispatchFloat64Seconds(req)
+			case "DurationHeaderClient.FloatMilliseconds":
+				res.resp, res.err = d.dispatchFloatMilliseconds(req)
 			case "DurationHeaderClient.FloatSeconds":
 				res.resp, res.err = d.dispatchFloatSeconds(req)
 			case "DurationHeaderClient.ISO8601":
 				res.resp, res.err = d.dispatchISO8601(req)
 			case "DurationHeaderClient.ISO8601Array":
 				res.resp, res.err = d.dispatchISO8601Array(req)
+			case "DurationHeaderClient.Int32Milliseconds":
+				res.resp, res.err = d.dispatchInt32Milliseconds(req)
+			case "DurationHeaderClient.Int32MillisecondsArray":
+				res.resp, res.err = d.dispatchInt32MillisecondsArray(req)
 			case "DurationHeaderClient.Int32Seconds":
 				res.resp, res.err = d.dispatchInt32Seconds(req)
 			default:
@@ -129,6 +153,29 @@ func (d *DurationHeaderServerTransport) dispatchDefault(req *http.Request) (*htt
 	return resp, nil
 }
 
+func (d *DurationHeaderServerTransport) dispatchFloat64Milliseconds(req *http.Request) (*http.Response, error) {
+	if d.srv.Float64Milliseconds == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Float64Milliseconds not implemented")}
+	}
+	durationParam, err := strconv.ParseFloat(getHeaderValue(req.Header, "duration"), 64)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := d.srv.Float64Milliseconds(req.Context(), durationParam, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (d *DurationHeaderServerTransport) dispatchFloat64Seconds(req *http.Request) (*http.Response, error) {
 	if d.srv.Float64Seconds == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Float64Seconds not implemented")}
@@ -138,6 +185,35 @@ func (d *DurationHeaderServerTransport) dispatchFloat64Seconds(req *http.Request
 		return nil, err
 	}
 	respr, errRespr := d.srv.Float64Seconds(req.Context(), durationParam, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (d *DurationHeaderServerTransport) dispatchFloatMilliseconds(req *http.Request) (*http.Response, error) {
+	if d.srv.FloatMilliseconds == nil {
+		return nil, &nonRetriableError{errors.New("fake for method FloatMilliseconds not implemented")}
+	}
+	durationParam, err := parseWithCast(getHeaderValue(req.Header, "duration"), func(v string) (float32, error) {
+		p, parseErr := strconv.ParseFloat(v, 32)
+		if parseErr != nil {
+			return 0, parseErr
+		}
+		return float32(p), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := d.srv.FloatMilliseconds(req.Context(), durationParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -205,6 +281,63 @@ func (d *DurationHeaderServerTransport) dispatchISO8601Array(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("fake for method ISO8601Array not implemented")}
 	}
 	respr, errRespr := d.srv.ISO8601Array(req.Context(), splitHelper(getHeaderValue(req.Header, "duration"), ","), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (d *DurationHeaderServerTransport) dispatchInt32Milliseconds(req *http.Request) (*http.Response, error) {
+	if d.srv.Int32Milliseconds == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Int32Milliseconds not implemented")}
+	}
+	durationParam, err := parseWithCast(getHeaderValue(req.Header, "duration"), func(v string) (int32, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
+		}
+		return int32(p), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := d.srv.Int32Milliseconds(req.Context(), durationParam, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (d *DurationHeaderServerTransport) dispatchInt32MillisecondsArray(req *http.Request) (*http.Response, error) {
+	if d.srv.Int32MillisecondsArray == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Int32MillisecondsArray not implemented")}
+	}
+	durationElements := splitHelper(getHeaderValue(req.Header, "duration"), ",")
+	durationParam := make([]int32, len(durationElements))
+	for i := 0; i < len(durationElements); i++ {
+		parsedInt32, parseErr := strconv.ParseInt(durationElements[i], 10, 32)
+		if parseErr != nil {
+			return nil, parseErr
+		}
+		durationParam[i] = int32(parsedInt32)
+	}
+	respr, errRespr := d.srv.Int32MillisecondsArray(req.Context(), durationParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

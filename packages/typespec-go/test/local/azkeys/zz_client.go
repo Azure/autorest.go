@@ -33,7 +33,7 @@ type ClientOptions struct {
 // NewClient creates a new instance of Client with the specified values.
 //   - vaultBaseUrl - Service host
 //   - credential - used to authorize requests. Usually a credential from azidentity.
-//   - options - ClientOptions contains the optional values for creating a [Client]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewClient(vaultBaseUrl string, credential azcore.TokenCredential, options *ClientOptions) (*Client, error) {
 	if options == nil {
 		options = &ClientOptions{}

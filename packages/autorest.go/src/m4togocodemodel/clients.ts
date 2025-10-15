@@ -24,7 +24,7 @@ const paramGroups = new Map<string, go.ParameterGroup>();
 
 export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
   for (const group of values(m4CodeModel.operationGroups)) {
-    const client = adaptClient(codeModel.type, group);
+    const client = adaptClient(group);
 
     for (const op of values(group.operations)) {
       const httpPath = <string>op.requests![0].protocol.http!.path;
@@ -83,7 +83,8 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
       for (const param of client.parameters) {
         ctor.parameters.push(param);
       }
-      client.constructors.push(ctor);
+      client.instance = new go.Constructable(go.newClientOptions(codeModel.type, group.language.go!.clientName));
+      client.instance.constructors.push(ctor);
     }
 
     codeModel.clients.push(client);
@@ -163,11 +164,11 @@ function adaptURIPrameterType(schema: m4.Schema): go.URIParameterType {
   throw new Error(`unexpected URI parameter type ${schema.type}`);
 }
 
-function adaptClient(type: go.CodeModelType, group: m4.OperationGroup): go.Client {
+function adaptClient(group: m4.OperationGroup): go.Client {
   const description = `${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.`;
-  const client = new go.Client(group.language.go!.clientName, {description: description}, go.newClientOptions(type, group.language.go!.clientName));
+  const client = new go.Client(group.language.go!.clientName, {description: description});
   if (group.language.go!.complexHostParams) {
-    client.templatedHost = group.language.go!.host;
+    client.instance = new go.TemplatedHost(group.language.go!.host);
   }
   if (group.language.go!.hostParams) {
     for (const hostParam of values(<Array<m4.Parameter>>group.language.go!.hostParams)) {
@@ -330,6 +331,10 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
 
   const style = adaptParameterStyle(param);
 
+  // unfortunately param.language.go!.byValue isn't always populated.
+  // since we can't trust it, we calculate the value instead.
+  const byValue = helpers.isTypePassedByValue(param.schema) ? true : (go.isRequiredParameter(style) || (location === 'client' && go.isClientSideDefault(style)));
+
   switch (param.protocol.http?.in) {
     case 'body': {
       if (!op.requests![0].protocol.http!.mediaTypes) {
@@ -352,15 +357,15 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
           if (bodyType.kind !== 'slice') {
             throw new Error(`unexpected type ${go.getTypeDeclaration(bodyType)} for FormBodyCollectionParameter ${param.language.go!.name}`);
           }
-          adaptedParam = new go.FormBodyCollectionParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, collectionFormat, style, param.language.go!.byValue);
+          adaptedParam = new go.FormBodyCollectionParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, collectionFormat, style, byValue);
         } else {
-          adaptedParam = new go.FormBodyScalarParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, style, param.language.go!.byValue);
+          adaptedParam = new go.FormBodyScalarParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, style, byValue);
         }
       } else if (op.requests![0].protocol.http!.knownMediaType === KnownMediaType.Multipart) {
-        adaptedParam = new go.MultipartFormBodyParameter(param.language.go!.name, bodyType, style, param.language.go!.byValue);
+        adaptedParam = new go.MultipartFormBodyParameter(param.language.go!.name, bodyType, style, byValue);
       } else {
         const format = adaptBodyFormat(op.requests![0].protocol);
-        adaptedParam = new go.BodyParameter(param.language.go!.name, format, contentType, bodyType, style, param.language.go!.byValue);
+        adaptedParam = new go.BodyParameter(param.language.go!.name, format, contentType, bodyType, style, byValue);
         adaptedParam.xml = adaptXMLInfo(param.schema);
       }
 
@@ -373,18 +378,16 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
         if (headerType.kind !== 'map') {
           throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderMapParameter ${param.language.go!.name}`);
         }
-        adaptedParam = new go.HeaderMapParameter(param.language.go!.name, param.schema.language.go!.headerCollectionPrefix, headerType, style,
-          param.language.go!.byValue, location);
+        adaptedParam = new go.HeaderMapParameter(param.language.go!.name, param.schema.language.go!.headerCollectionPrefix, headerType, style, byValue, location);
       } else if (collectionFormat) {
         const headerType = adaptWireType(param.schema, true);
         if (headerType.kind !== 'slice') {
           throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderCollectionParameter ${param.language.go!.name}`);
         }
-        adaptedParam = new go.HeaderCollectionParameter(param.language.go!.name, param.language.go!.serializedName, headerType, collectionFormat, style,
-          param.language.go!.byValue, location);
+        adaptedParam = new go.HeaderCollectionParameter(param.language.go!.name, param.language.go!.serializedName, headerType, collectionFormat, style, byValue, location);
       } else {
         adaptedParam = new go.HeaderScalarParameter(param.language.go!.name, param.language.go!.serializedName, adaptHeaderScalarType(param.schema, true),
-          style, param.language.go!.byValue, location);
+          style, byValue, location);
       }
       break;
     }
@@ -396,11 +399,11 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
           throw new Error(`unexpected type ${go.getTypeDeclaration(pathType)} for PathCollectionParameter ${param.language.go!.name}`);
         }
         adaptedParam = new go.PathCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          pathType, collectionFormat, style, param.language.go!.byValue, location);
+          pathType, collectionFormat, style, byValue, location);
       } else {
         const skipUrlEncoding = skipURLEncoding(param);
         adaptedParam = new go.PathScalarParameter(param.language.go!.name, param.language.go!.serializedName, !skipUrlEncoding,
-          adaptPathScalarParameterType(param.schema), style, param.language.go!.byValue, location);
+          adaptPathScalarParameterType(param.schema), style, byValue, location);
         // this is a legacy hack to work around the fact that
         // swagger doesn't allow path params to be empty.
         adaptedParam.omitEmptyStringCheck = skipUrlEncoding && (adaptedParam.type.kind === 'string' || (adaptedParam.type.kind === 'constant' && adaptedParam.type.type === 'string'));
@@ -415,16 +418,16 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
           throw new Error(`unexpected type ${go.getTypeDeclaration(queryType)} for QueryCollectionParameter ${param.language.go!.name}`);
         }
         adaptedParam = new go.QueryCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          queryType, collectionFormat, style, param.language.go!.byValue, location);
+          queryType, collectionFormat, style, byValue, location);
       } else {
         adaptedParam = new go.QueryScalarParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          adaptQueryScalarParameterType(param.schema), style, param.language.go!.byValue, location);
+          adaptQueryScalarParameterType(param.schema), style, byValue, location);
       }
       break;
     }
     case 'uri':
       adaptedParam = new go.URIParameter(param.language.go!.name, param.language.go!.serializedName, adaptURIPrameterType(param.schema),
-        style, param.language.go!.byValue, adaptParameterlocation(param));
+        style, byValue, adaptParameterlocation(param));
       break;
     default: {
       if (param.protocol.http?.in) {

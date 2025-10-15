@@ -26,7 +26,7 @@ type EnumDiscriminatorClientOptions struct {
 
 // NewEnumDiscriminatorClientWithNoCredential creates a new instance of EnumDiscriminatorClient with the specified values.
 //   - endpoint - Service host
-//   - options - EnumDiscriminatorClientOptions contains the optional values for creating a [EnumDiscriminatorClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewEnumDiscriminatorClientWithNoCredential(endpoint string, options *EnumDiscriminatorClientOptions) (*EnumDiscriminatorClient, error) {
 	if options == nil {
 		options = &EnumDiscriminatorClientOptions{}

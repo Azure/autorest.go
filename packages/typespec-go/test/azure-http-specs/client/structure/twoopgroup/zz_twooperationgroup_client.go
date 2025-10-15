@@ -7,6 +7,7 @@ package twoopgroup
 import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"strings"
 )
 
 // TwoOperationGroupClient contains the methods for the TwoOperationGroup group.
@@ -14,7 +15,6 @@ import (
 type TwoOperationGroupClient struct {
 	internal *azcore.Client
 	endpoint string
-	client   ClientType
 }
 
 // TwoOperationGroupClientOptions contains the optional values for creating a [TwoOperationGroupClient].
@@ -25,7 +25,7 @@ type TwoOperationGroupClientOptions struct {
 // NewTwoOperationGroupClientWithNoCredential creates a new instance of TwoOperationGroupClient with the specified values.
 //   - endpoint - Service host
 //   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
-//   - options - TwoOperationGroupClientOptions contains the optional values for creating a [TwoOperationGroupClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewTwoOperationGroupClientWithNoCredential(endpoint string, client ClientType, options *TwoOperationGroupClientOptions) (*TwoOperationGroupClient, error) {
 	if options == nil {
 		options = &TwoOperationGroupClientOptions{}
@@ -34,9 +34,11 @@ func NewTwoOperationGroupClientWithNoCredential(endpoint string, client ClientTy
 	if err != nil {
 		return nil, err
 	}
+	host := "client/structure/{client}"
+	host = strings.ReplaceAll(host, "{client}", string(client))
+	endpoint = runtime.JoinPaths(endpoint, host)
 	twoOperationGroupClient := &TwoOperationGroupClient{
 		endpoint: endpoint,
-		client:   client,
 		internal: cl,
 	}
 	return twoOperationGroupClient, nil
@@ -47,7 +49,6 @@ func (client *TwoOperationGroupClient) NewTwoOperationGroupGroup1Client() *TwoOp
 	return &TwoOperationGroupGroup1Client{
 		internal: client.internal,
 		endpoint: client.endpoint,
-		client:   client.client,
 	}
 }
 
@@ -56,6 +57,5 @@ func (client *TwoOperationGroupClient) NewTwoOperationGroupGroup2Client() *TwoOp
 	return &TwoOperationGroupGroup2Client{
 		internal: client.internal,
 		endpoint: client.endpoint,
-		client:   client.client,
 	}
 }

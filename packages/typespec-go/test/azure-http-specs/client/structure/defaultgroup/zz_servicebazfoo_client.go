@@ -10,7 +10,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // ServiceBazFooClient contains the methods for the ServiceBazFoo group.
@@ -18,7 +17,6 @@ import (
 type ServiceBazFooClient struct {
 	internal *azcore.Client
 	endpoint string
-	client   ClientType
 }
 
 // Seven -
@@ -47,11 +45,8 @@ func (client *ServiceBazFooClient) Seven(ctx context.Context, options *ServiceBa
 
 // sevenCreateRequest creates the Seven request.
 func (client *ServiceBazFooClient) sevenCreateRequest(ctx context.Context, _ *ServiceBazFooClientSevenOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/seven"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -17,10 +17,8 @@ import (
 // with full client support.
 // Don't use this type directly, use NewResiliencyServiceDrivenClientWithNoCredential() instead.
 type ResiliencyServiceDrivenClient struct {
-	internal                 *azcore.Client
-	endpoint                 string
-	serviceDeploymentVersion string
-	apiVersion               string
+	internal *azcore.Client
+	endpoint string
 }
 
 // ResiliencyServiceDrivenClientOptions contains the optional values for creating a [ResiliencyServiceDrivenClient].
@@ -33,7 +31,7 @@ type ResiliencyServiceDrivenClientOptions struct {
 //   - serviceDeploymentVersion - Pass in either 'v1' or 'v2'. This represents a version of the service deployment in history.
 //     'v1' is for the deployment when the service had only one api version. 'v2' is for the deployment when the service had api-versions
 //     'v1' and 'v2'.
-//   - options - ResiliencyServiceDrivenClientOptions contains the optional values for creating a [ResiliencyServiceDrivenClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewResiliencyServiceDrivenClientWithNoCredential(endpoint string, serviceDeploymentVersion string, options *ResiliencyServiceDrivenClientOptions) (*ResiliencyServiceDrivenClient, error) {
 	if options == nil {
 		options = &ResiliencyServiceDrivenClientOptions{}
@@ -50,11 +48,13 @@ func NewResiliencyServiceDrivenClientWithNoCredential(endpoint string, serviceDe
 	if options.APIVersion != "" {
 		apiVersion = options.APIVersion
 	}
+	host := "resiliency/service-driven/client:v1/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
+	host = strings.ReplaceAll(host, "{serviceDeploymentVersion}", serviceDeploymentVersion)
+	host = strings.ReplaceAll(host, "{apiVersion}", apiVersion)
+	endpoint = runtime.JoinPaths(endpoint, host)
 	client := &ResiliencyServiceDrivenClient{
-		endpoint:                 endpoint,
-		serviceDeploymentVersion: serviceDeploymentVersion,
-		apiVersion:               apiVersion,
-		internal:                 cl,
+		endpoint: endpoint,
+		internal: cl,
 	}
 	return client, nil
 }
@@ -86,12 +86,8 @@ func (client *ResiliencyServiceDrivenClient) FromNone(ctx context.Context, optio
 
 // fromNoneCreateRequest creates the FromNone request.
 func (client *ResiliencyServiceDrivenClient) fromNoneCreateRequest(ctx context.Context, _ *ResiliencyServiceDrivenClientFromNoneOptions) (*policy.Request, error) {
-	host := "{endpoint}/resiliency/service-driven/client:v1/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{serviceDeploymentVersion}", client.serviceDeploymentVersion)
-	host = strings.ReplaceAll(host, "{apiVersion}", client.apiVersion)
 	urlPath := "/add-optional-param/from-none"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -126,12 +122,8 @@ func (client *ResiliencyServiceDrivenClient) FromOneOptional(ctx context.Context
 
 // fromOneOptionalCreateRequest creates the FromOneOptional request.
 func (client *ResiliencyServiceDrivenClient) fromOneOptionalCreateRequest(ctx context.Context, options *ResiliencyServiceDrivenClientFromOneOptionalOptions) (*policy.Request, error) {
-	host := "{endpoint}/resiliency/service-driven/client:v1/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{serviceDeploymentVersion}", client.serviceDeploymentVersion)
-	host = strings.ReplaceAll(host, "{apiVersion}", client.apiVersion)
 	urlPath := "/add-optional-param/from-one-optional"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -172,12 +164,8 @@ func (client *ResiliencyServiceDrivenClient) FromOneRequired(ctx context.Context
 
 // fromOneRequiredCreateRequest creates the FromOneRequired request.
 func (client *ResiliencyServiceDrivenClient) fromOneRequiredCreateRequest(ctx context.Context, parameter string, _ *ResiliencyServiceDrivenClientFromOneRequiredOptions) (*policy.Request, error) {
-	host := "{endpoint}/resiliency/service-driven/client:v1/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{serviceDeploymentVersion}", client.serviceDeploymentVersion)
-	host = strings.ReplaceAll(host, "{apiVersion}", client.apiVersion)
 	urlPath := "/add-optional-param/from-one-required"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -25,7 +25,7 @@ type ExtensionsResourcesClient struct {
 
 // NewExtensionsResourcesClient creates a new instance of ExtensionsResourcesClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
-//   - options - pass nil to accept the default values.
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewExtensionsResourcesClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*ExtensionsResourcesClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {

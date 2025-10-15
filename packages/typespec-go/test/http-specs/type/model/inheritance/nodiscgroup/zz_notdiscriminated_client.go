@@ -26,7 +26,7 @@ type NotDiscriminatedClientOptions struct {
 
 // NewNotDiscriminatedClientWithNoCredential creates a new instance of NotDiscriminatedClient with the specified values.
 //   - endpoint - Service host
-//   - options - NotDiscriminatedClientOptions contains the optional values for creating a [NotDiscriminatedClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewNotDiscriminatedClientWithNoCredential(endpoint string, options *NotDiscriminatedClientOptions) (*NotDiscriminatedClient, error) {
 	if options == nil {
 		options = &NotDiscriminatedClientOptions{}

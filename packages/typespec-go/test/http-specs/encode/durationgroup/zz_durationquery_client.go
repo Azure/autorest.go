@@ -59,6 +59,44 @@ func (client *DurationQueryClient) defaultCreateRequest(ctx context.Context, inp
 	return req, nil
 }
 
+// Float64Milliseconds -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationQueryClientFloat64MillisecondsOptions contains the optional parameters for the DurationQueryClient.Float64Milliseconds
+//     method.
+func (client *DurationQueryClient) Float64Milliseconds(ctx context.Context, input float64, options *DurationQueryClientFloat64MillisecondsOptions) (DurationQueryClientFloat64MillisecondsResponse, error) {
+	var err error
+	const operationName = "DurationQueryClient.Float64Milliseconds"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.float64MillisecondsCreateRequest(ctx, input, options)
+	if err != nil {
+		return DurationQueryClientFloat64MillisecondsResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationQueryClientFloat64MillisecondsResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationQueryClientFloat64MillisecondsResponse{}, err
+	}
+	return DurationQueryClientFloat64MillisecondsResponse{}, nil
+}
+
+// float64MillisecondsCreateRequest creates the Float64Milliseconds request.
+func (client *DurationQueryClient) float64MillisecondsCreateRequest(ctx context.Context, input float64, _ *DurationQueryClientFloat64MillisecondsOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/query/float64-milliseconds"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("input", strconv.FormatFloat(input, 'f', -1, 64))
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	return req, nil
+}
+
 // Float64Seconds -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationQueryClientFloat64SecondsOptions contains the optional parameters for the DurationQueryClient.Float64Seconds
@@ -93,6 +131,44 @@ func (client *DurationQueryClient) float64SecondsCreateRequest(ctx context.Conte
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", strconv.FormatFloat(input, 'f', -1, 64))
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	return req, nil
+}
+
+// FloatMilliseconds -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationQueryClientFloatMillisecondsOptions contains the optional parameters for the DurationQueryClient.FloatMilliseconds
+//     method.
+func (client *DurationQueryClient) FloatMilliseconds(ctx context.Context, input float32, options *DurationQueryClientFloatMillisecondsOptions) (DurationQueryClientFloatMillisecondsResponse, error) {
+	var err error
+	const operationName = "DurationQueryClient.FloatMilliseconds"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.floatMillisecondsCreateRequest(ctx, input, options)
+	if err != nil {
+		return DurationQueryClientFloatMillisecondsResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationQueryClientFloatMillisecondsResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationQueryClientFloatMillisecondsResponse{}, err
+	}
+	return DurationQueryClientFloatMillisecondsResponse{}, nil
+}
+
+// floatMillisecondsCreateRequest creates the FloatMilliseconds request.
+func (client *DurationQueryClient) floatMillisecondsCreateRequest(ctx context.Context, input float32, _ *DurationQueryClientFloatMillisecondsOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/query/float-milliseconds"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("input", strconv.FormatFloat(float64(input), 'f', -1, 32))
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
@@ -168,6 +244,82 @@ func (client *DurationQueryClient) iso8601CreateRequest(ctx context.Context, inp
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", input)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	return req, nil
+}
+
+// Int32Milliseconds -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationQueryClientInt32MillisecondsOptions contains the optional parameters for the DurationQueryClient.Int32Milliseconds
+//     method.
+func (client *DurationQueryClient) Int32Milliseconds(ctx context.Context, input int32, options *DurationQueryClientInt32MillisecondsOptions) (DurationQueryClientInt32MillisecondsResponse, error) {
+	var err error
+	const operationName = "DurationQueryClient.Int32Milliseconds"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.int32MillisecondsCreateRequest(ctx, input, options)
+	if err != nil {
+		return DurationQueryClientInt32MillisecondsResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationQueryClientInt32MillisecondsResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationQueryClientInt32MillisecondsResponse{}, err
+	}
+	return DurationQueryClientInt32MillisecondsResponse{}, nil
+}
+
+// int32MillisecondsCreateRequest creates the Int32Milliseconds request.
+func (client *DurationQueryClient) int32MillisecondsCreateRequest(ctx context.Context, input int32, _ *DurationQueryClientInt32MillisecondsOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/query/int32-milliseconds"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("input", strconv.FormatInt(int64(input), 10))
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	return req, nil
+}
+
+// Int32MillisecondsArray -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationQueryClientInt32MillisecondsArrayOptions contains the optional parameters for the DurationQueryClient.Int32MillisecondsArray
+//     method.
+func (client *DurationQueryClient) Int32MillisecondsArray(ctx context.Context, input []int32, options *DurationQueryClientInt32MillisecondsArrayOptions) (DurationQueryClientInt32MillisecondsArrayResponse, error) {
+	var err error
+	const operationName = "DurationQueryClient.Int32MillisecondsArray"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.int32MillisecondsArrayCreateRequest(ctx, input, options)
+	if err != nil {
+		return DurationQueryClientInt32MillisecondsArrayResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationQueryClientInt32MillisecondsArrayResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationQueryClientInt32MillisecondsArrayResponse{}, err
+	}
+	return DurationQueryClientInt32MillisecondsArrayResponse{}, nil
+}
+
+// int32MillisecondsArrayCreateRequest creates the Int32MillisecondsArray request.
+func (client *DurationQueryClient) int32MillisecondsArrayCreateRequest(ctx context.Context, input []int32, _ *DurationQueryClientInt32MillisecondsArrayOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/query/int32-milliseconds-array"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("input", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(input), "[]")), ","))
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }

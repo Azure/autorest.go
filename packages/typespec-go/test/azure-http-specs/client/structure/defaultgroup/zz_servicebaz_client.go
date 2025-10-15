@@ -11,7 +11,6 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 type ServiceBazClient struct {
 	internal *azcore.Client
 	endpoint string
-	client   ClientType
 }
 
 // NewServiceBazFooClient creates a new instance of [ServiceBazFooClient].
@@ -19,6 +18,5 @@ func (client *ServiceBazClient) NewServiceBazFooClient() *ServiceBazFooClient {
 	return &ServiceBazFooClient{
 		internal: client.internal,
 		endpoint: client.endpoint,
-		client:   client.client,
 	}
 }

@@ -18,7 +18,6 @@ import (
 type ClientBClient struct {
 	internal *azcore.Client
 	endpoint string
-	client   ClientType
 }
 
 // ClientBClientOptions contains the optional values for creating a [ClientBClient].
@@ -29,7 +28,7 @@ type ClientBClientOptions struct {
 // NewClientBClientWithNoCredential creates a new instance of ClientBClient with the specified values.
 //   - endpoint - Service host
 //   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
-//   - options - ClientBClientOptions contains the optional values for creating a [ClientBClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewClientBClientWithNoCredential(endpoint string, client ClientType, options *ClientBClientOptions) (*ClientBClient, error) {
 	if options == nil {
 		options = &ClientBClientOptions{}
@@ -38,9 +37,11 @@ func NewClientBClientWithNoCredential(endpoint string, client ClientType, option
 	if err != nil {
 		return nil, err
 	}
+	host := "client/structure/{client}"
+	host = strings.ReplaceAll(host, "{client}", string(client))
+	endpoint = runtime.JoinPaths(endpoint, host)
 	clientBClient := &ClientBClient{
 		endpoint: endpoint,
-		client:   client,
 		internal: cl,
 	}
 	return clientBClient, nil
@@ -72,11 +73,8 @@ func (client *ClientBClient) RenamedFour(ctx context.Context, options *ClientBCl
 
 // renamedFourCreateRequest creates the RenamedFour request.
 func (client *ClientBClient) renamedFourCreateRequest(ctx context.Context, _ *ClientBClientRenamedFourOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/four"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -109,11 +107,8 @@ func (client *ClientBClient) RenamedSix(ctx context.Context, options *ClientBCli
 
 // renamedSixCreateRequest creates the RenamedSix request.
 func (client *ClientBClient) renamedSixCreateRequest(ctx context.Context, _ *ClientBClientRenamedSixOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/six"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -146,11 +141,8 @@ func (client *ClientBClient) RenamedTwo(ctx context.Context, options *ClientBCli
 
 // renamedTwoCreateRequest creates the RenamedTwo request.
 func (client *ClientBClient) renamedTwoCreateRequest(ctx context.Context, _ *ClientBClientRenamedTwoOptions) (*policy.Request, error) {
-	host := "{endpoint}/client/structure/{client}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/two"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
