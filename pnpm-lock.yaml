@@ -248,7 +248,7 @@ importers:
     devDependencies:
       '@azure-tools/azure-http-specs':
         specifier: 0.1.0-alpha.31
-        version: 0.1.0-alpha.31(f62ea912328429f54bfd1f403089335c)
+        version: 0.1.0-alpha.31(d29be29623eb9c3d60543652c6fa0e07)
       '@azure-tools/typespec-autorest':
         specifier: 0.61.0
         version: 0.61.0(3b2acaa094d29f400d1290cb183401d5)
@@ -5625,7 +5625,7 @@ snapshots:
       '@azure-tools/tasks': 4.0.246
       proper-lockfile: 2.0.1
 
-  '@azure-tools/azure-http-specs@0.1.0-alpha.31(f62ea912328429f54bfd1f403089335c)':
+  '@azure-tools/azure-http-specs@0.1.0-alpha.31(d29be29623eb9c3d60543652c6fa0e07)':
     dependencies:
       '@azure-tools/typespec-azure-core': 0.61.0(@typespec/compiler@1.5.0(@types/node@20.17.40))(@typespec/http@1.5.0(@typespec/compiler@1.5.0(@types/node@20.17.40))(@typespec/streams@0.75.0(@typespec/compiler@1.5.0(@types/node@20.17.40))))(@typespec/rest@0.75.0(@typespec/compiler@1.5.0(@types/node@20.17.40))(@typespec/http@1.5.0(@typespec/compiler@1.5.0(@types/node@20.17.40))(@typespec/streams@0.75.0(@typespec/compiler@1.5.0(@types/node@20.17.40)))))
       '@typespec/compiler': 1.5.0(@types/node@20.17.40)

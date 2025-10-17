@@ -11,9 +11,6 @@ import * as param from './param.js';
 import * as result from './result.js';
 import * as type from './type.js';
 
-// temporary until more param types refactor
-export { Receiver } from './method.js';
-
 /** an SDK client */
 export interface Client {
   /** the name of the client */
@@ -38,31 +35,37 @@ export interface Client {
   parent?: Client;
 }
 
-/** contains data for instantiable clients. */
-export interface Constructable {
-  kind: 'constructable';
-
-  /**
-   * the client options type used in the constructors.
-   * for ARM, this will be a QualifiedType (arm.ClientOptions)
-   */
-  options: ClientOptions;
-
-  /** the constructor functions for a client. */
-  constructors: Array<Constructor>;
+/** contains client endpoint configuration */
+export interface ClientEndpoint {
+  /** the parameter that contains the service endpoint */
+  parameter: param.URIParameter;
 
   /**
    * indicates that the endpoint requires additional host configuration. i.e. the
    * endpoint passed by the caller will be augmented with supplemental path info.
    */
-  endpoint?: SupplementalEndpoint;
+  supplemental?: SupplementalEndpoint;
+}
+
+/** contains data for instantiable clients. */
+export interface Constructable {
+  kind: 'constructable';
+
+  /** the client options type used in the constructors */
+  options: ClientOptionsType;
+
+  /** the constructor functions for a client */
+  constructors: Array<Constructor>;
+
+  /** the client endpoint configuration */
+  endpoint?: ClientEndpoint;
 }
 
 /** the possible types used for the client options type */
-export type ClientOptions = ClientOptionsParameter | param.Parameter;
+export type ClientOptionsType = type.ArmClientOptions | ClientOptions;
 
 /** the possible client parameter types */
-export type ClientParameter = param.MethodParameter | param.Parameter;
+export type ClientParameter = ClientCredentialParameter | param.MethodParameter;
 
 /** a client method that returns a sub-client instance */
 export interface ClientAccessor {
@@ -73,8 +76,20 @@ export interface ClientAccessor {
   subClient: Client;
 }
 
+/** a credential constructor parameter */
+export interface ClientCredentialParameter extends method.Parameter {
+  kind: 'credentialParam';
+
+  /** the parameter's type */
+  type: type.TokenCredential;
+
+  style: 'required';
+
+  group: never;
+}
+
 /** the client options parameter type */
-export interface ClientOptionsParameter {
+export interface ClientOptions {
   kind: 'clientOptions';
 
   /** the name of the type */
@@ -84,7 +99,7 @@ export interface ClientOptionsParameter {
   docs: type.Docs;
 
   /** the parameters that belong to this options */
-  params: Array<ClientParameter>;
+  parameters: Array<param.MethodParameter>;
 }
 
 /** a client constructor function */
@@ -94,17 +109,6 @@ export interface Constructor {
 
   /** the modeled parameters. can be empty */
   parameters: Array<ClientParameter>;
-
-  /** the type of authentication for this constructor */
-  authentication: AuthenticationType;
-}
-
-/** the supported types of client authentication */
-export type AuthenticationType = NoAuthentication | TokenAuthentication;
-
-/** the client supports unauthenticated requests */
-export interface NoAuthentication {
-  kind: 'none';
 }
 
 /** contains data on how to supplement a client endpoint */
@@ -129,12 +133,22 @@ export interface TemplatedHost {
   path: string;
 }
 
-/** an azcore.TokenCredential */
-export interface TokenAuthentication {
-  kind: 'token';
-
-  /** the scopes for the token */
-  scopes: Array<string>;
+/**
+ * returns true if the provided parameter is for the service API version
+ * 
+ * @param param the parameter to inspect
+ * @returns true if the parameter is for the API version
+ */
+export function isAPIVersionParameter(param: ClientParameter): boolean {
+  switch (param.kind) {
+    case 'headerScalarParam':
+    case 'pathScalarParam':
+    case 'queryScalarParam':
+    case 'uriParam':
+      return param.isApiVersion;
+    default:
+      return false;
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -222,16 +236,14 @@ export function isPageableMethod(method: MethodType): method is LROPageableMetho
 }
 
 /** creates the ClientOptions type from the specified input */
-export function newClientOptions(modelType: pkg.CodeModelType, clientName: string): ClientOptions {
-  let options: ClientOptions;
+export function newClientOptions(modelType: pkg.CodeModelType, clientName: string): ClientOptionsType {
   if (modelType === 'azure-arm') {
-    options = new param.Parameter('options', new type.ArmClientOptions(), 'optional', false, 'client');
-    options.docs.summary = 'pass nil to accept the default values.';
-  } else {
-    const optionsTypeName = `${clientName}Options`;
-    options = new ClientOptionsParameter(optionsTypeName);
-    options.docs.summary = `${optionsTypeName} contains the optional values for creating a [${clientName}]`;
+    return new type.ArmClientOptions();
   }
+
+  const optionsTypeName = `${clientName}Options`;
+  let options = new ClientOptions(optionsTypeName);
+  options.docs.summary = `${optionsTypeName} contains the optional values for creating a [${clientName}]`;
   return options;
 }
 
@@ -311,6 +323,12 @@ export class Client implements Client {
   }
 }
 
+export class ClientEndpoint implements ClientEndpoint {
+  constructor(parameter: param.URIParameter) {
+    this.parameter = parameter;
+  }
+}
+
 export class ClientAccessor implements ClientAccessor {
   constructor(name: string, subClient: Client) {
     this.name = name;
@@ -319,26 +337,33 @@ export class ClientAccessor implements ClientAccessor {
 }
 
 export class Constructable implements Constructable {
-  constructor(options: ClientOptions) {
+  constructor(options: ClientOptionsType) {
     this.kind = 'constructable';
     this.options = options;
     this.constructors = new Array<Constructor>();
   }
 }
 
-export class ClientOptionsParameter implements ClientOptionsParameter {
+export class ClientCredentialParameter extends method.Parameter implements ClientCredentialParameter {
+  constructor(name: string, type: type.TokenCredential) {
+    super(name, type, true);
+    this.kind = 'credentialParam';
+    this.style = 'required';
+  }
+}
+
+export class ClientOptions implements ClientOptions {
   constructor(name: string) {
     this.kind = 'clientOptions';
     this.name = name;
     this.docs = {};
-    this.params = new Array<ClientParameter>();
+    this.parameters = new Array<param.MethodParameter>();
   }
 }
 
 export class Constructor implements Constructor {
-  constructor(name: string, authentication: AuthenticationType) {
+  constructor(name: string) {
     this.name = name;
-    this.authentication = authentication;
     this.parameters = new Array<ClientParameter>();
   }
 }
@@ -388,12 +413,6 @@ export class NextPageMethod implements NextPageMethod {
   }
 }
 
-export class NoAuthentication implements NoAuthentication {
-  constructor() {
-    this.kind = 'none';
-  }
-}
-
 export class PageableMethod extends HttpMethodBase implements PageableMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     super(name, client, httpPath, httpMethod, statusCodes, naming);
@@ -412,12 +431,5 @@ export class TemplatedHost implements TemplatedHost {
   constructor(path: string) {
     this.kind = 'templatedHost';
     this.path = path;
-  }
-}
-
-export class TokenAuthentication implements TokenAuthentication {
-  constructor(scopes: Array<string>) {
-    this.kind = 'token';
-    this.scopes = scopes;
   }
 }
