@@ -111,6 +111,7 @@ const azureHttpSpecsGroup = {
   'renamedopgroup': ['client/structure/renamed-operation/client.tsp'],
   'clientopgroup': ['client/structure/client-operation-group/client.tsp'],
   'clientnamespacegroup': ['client/namespace'],
+  'overloadgroup': ['client/overload/client.tsp'],
   'twoopgroup': ['client/structure/two-operation-group/client.tsp'],
   'srvdrivenoldgroup': ['resiliency/srv-driven/old.tsp'],
   'srvdrivennewgroup': ['resiliency/srv-driven'],
