@@ -10,7 +10,7 @@ schedules:
 
 parameters:
 - name: UseLatestSpec
-  default: false
+  default: true
   type: boolean
 - name: ServiceFilter
   type: string
