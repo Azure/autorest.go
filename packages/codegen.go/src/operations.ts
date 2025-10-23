@@ -107,7 +107,9 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     // end of client definition
     clientText += '}\n\n';
 
-    clientText += generateConstructors(client, codeModel.type, imports);
+    if (codeModel.options['omitConstructors'] === false) {
+      clientText += generateConstructors(client, codeModel.type, imports);
+    }
 
     // generate client accessors and operations
     let opText = '';
