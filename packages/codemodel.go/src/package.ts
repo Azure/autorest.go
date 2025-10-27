@@ -61,6 +61,12 @@ export interface Options {
   /** the header text to emit per file. usually contains license and copyright info */
   headerText: string;
 
+  /**
+   * custom content for the LICENSE.txt file to be emitted.
+   * the default is the MIT license with a Microsoft copyright.
+   */
+  licenseText?: string;
+
   /** indicates if fakes should be emitted. the default is false */
   generateFakes: boolean;
 
