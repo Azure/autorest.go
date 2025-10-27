@@ -557,7 +557,6 @@ export class clientAdapter {
       // operation param. each param corresponds to a field within the operation param.
       // Additionally, for grouped parameters, there might be a one-to-many mapping. i.e.
       // a single method param maps to multiple operation params within the group.
-      
       // property-level mapping
       let opParams: OperationParamType[] = [];
       if (param.type.kind === 'model') {
