@@ -8,13 +8,14 @@ import (
 	"overridegroup"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
-func TestOverrideReorderParametersClient_Reorder(t *testing.T) {
+func TestOverrideRemoveOptionalParametersClient_Group(t *testing.T) {
 	client, err := overridegroup.NewOverrideClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	resp, err := client.NewOverrideReorderParametersClient().Reorder(context.Background(), "param1", "param2", &overridegroup.OverrideReorderParametersClientReorderOptions{})
+	resp, err := client.NewOverrideRemoveOptionalParameterClient().RemoveOptional(context.Background(), "param1", &overridegroup.OverrideRemoveOptionalParameterClientRemoveOptionalOptions{to.Ptr("param2")})
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
