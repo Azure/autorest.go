@@ -80,7 +80,7 @@ const azureHttpSpecsGroup = {
   'flattengroup': ['azure/client-generator-core/flatten-property'],
   'nextlinkverbgroup': ['azure/client-generator-core/next-link-verb', 'slice-elements-byval=true'],
   'coreusagegroup': ['azure/client-generator-core/usage'],
-  'overridegroup': ['azure/client-generator-core/override'],
+  'overridegroup': ['azure/client-generator-core/override/client.tsp'],
   'hierarchygroup': ['azure/client-generator-core/hierarchy-building'],
   // 'clientinitializationgroup': ['azure/client-generator-core/client-initialization'],
   'apiversionheadergroup' : ['azure/client-generator-core/api-version/header/client.tsp'],
