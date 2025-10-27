@@ -18,8 +18,14 @@ type OverrideServer struct {
 	// OverrideGroupParametersServer contains the fakes for client OverrideGroupParametersClient
 	OverrideGroupParametersServer OverrideGroupParametersServer
 
+	// OverrideRemoveOptionalParameterServer contains the fakes for client OverrideRemoveOptionalParameterClient
+	OverrideRemoveOptionalParameterServer OverrideRemoveOptionalParameterServer
+
 	// OverrideReorderParametersServer contains the fakes for client OverrideReorderParametersClient
 	OverrideReorderParametersServer OverrideReorderParametersServer
+
+	// OverrideRequireOptionalParameterServer contains the fakes for client OverrideRequireOptionalParameterClient
+	OverrideRequireOptionalParameterServer OverrideRequireOptionalParameterServer
 }
 
 // NewOverrideServerTransport creates a new instance of OverrideServerTransport with the provided implementation.
@@ -32,10 +38,12 @@ func NewOverrideServerTransport(srv *OverrideServer) *OverrideServerTransport {
 // OverrideServerTransport connects instances of overridegroup.OverrideClient to instances of OverrideServer.
 // Don't use this type directly, use NewOverrideServerTransport instead.
 type OverrideServerTransport struct {
-	srv                               *OverrideServer
-	trMu                              sync.Mutex
-	trOverrideGroupParametersServer   *OverrideGroupParametersServerTransport
-	trOverrideReorderParametersServer *OverrideReorderParametersServerTransport
+	srv                                      *OverrideServer
+	trMu                                     sync.Mutex
+	trOverrideGroupParametersServer          *OverrideGroupParametersServerTransport
+	trOverrideRemoveOptionalParameterServer  *OverrideRemoveOptionalParameterServerTransport
+	trOverrideReorderParametersServer        *OverrideReorderParametersServerTransport
+	trOverrideRequireOptionalParameterServer *OverrideRequireOptionalParameterServerTransport
 }
 
 // Do implements the policy.Transporter interface for OverrideServerTransport.
@@ -59,11 +67,21 @@ func (o *OverrideServerTransport) dispatchToClientFake(req *http.Request, client
 			return NewOverrideGroupParametersServerTransport(&o.srv.OverrideGroupParametersServer)
 		})
 		resp, err = o.trOverrideGroupParametersServer.Do(req)
+	case "OverrideRemoveOptionalParameterClient":
+		initServer(&o.trMu, &o.trOverrideRemoveOptionalParameterServer, func() *OverrideRemoveOptionalParameterServerTransport {
+			return NewOverrideRemoveOptionalParameterServerTransport(&o.srv.OverrideRemoveOptionalParameterServer)
+		})
+		resp, err = o.trOverrideRemoveOptionalParameterServer.Do(req)
 	case "OverrideReorderParametersClient":
 		initServer(&o.trMu, &o.trOverrideReorderParametersServer, func() *OverrideReorderParametersServerTransport {
 			return NewOverrideReorderParametersServerTransport(&o.srv.OverrideReorderParametersServer)
 		})
 		resp, err = o.trOverrideReorderParametersServer.Do(req)
+	case "OverrideRequireOptionalParameterClient":
+		initServer(&o.trMu, &o.trOverrideRequireOptionalParameterServer, func() *OverrideRequireOptionalParameterServerTransport {
+			return NewOverrideRequireOptionalParameterServerTransport(&o.srv.OverrideRequireOptionalParameterServer)
+		})
+		resp, err = o.trOverrideRequireOptionalParameterServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

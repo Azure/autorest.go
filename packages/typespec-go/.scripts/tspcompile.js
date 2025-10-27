@@ -80,7 +80,7 @@ const azureHttpSpecsGroup = {
   'flattengroup': ['azure/client-generator-core/flatten-property'],
   'nextlinkverbgroup': ['azure/client-generator-core/next-link-verb', 'slice-elements-byval=true'],
   'coreusagegroup': ['azure/client-generator-core/usage'],
-  // 'overridegroup': ['azure/client-generator-core/override'], TODO: https://github.com/Azure/autorest.go/issues/1718
+  'overridegroup': ['azure/client-generator-core/override'],
   'hierarchygroup': ['azure/client-generator-core/hierarchy-building'],
   // 'clientinitializationgroup': ['azure/client-generator-core/client-initialization'],
   'apiversionheadergroup' : ['azure/client-generator-core/api-version/header/client.tsp'],
