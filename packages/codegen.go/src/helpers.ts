@@ -60,9 +60,12 @@ export function sortAscending(a: string, b: string): number {
  * @param pkgName optional package name in which the type resides
  * @returns the parameter type definition text
  */
-export function formatParameterTypeName(param: go.ClientOptionsParameter | go.ClientParameter | go.ParameterGroup, pkgName?: string): string {
+export function formatParameterTypeName(param: go.ClientOptionsType | go.ClientParameter | go.ParameterGroup, pkgName?: string): string {
   let typeName: string;
   switch (param.kind) {
+    case 'armClientOptions':
+      typeName = go.getTypeDeclaration(param, pkgName);
+      break;
     case 'clientOptions':
       typeName = param.name;
       break;
@@ -113,6 +116,28 @@ export function sortParametersByRequired(a: go.ClientParameter | go.ParameterGro
     return -1;
   }
   return 1;
+}
+
+/**
+ * sort client parameters based on the API design guidelines.
+ * the params array is sorted in place and returned to the caller.
+ *
+ * @param params the client parameters to sort
+ * @param type the Go code model type
+ * @returns the provided array after it's been sorted
+ */
+export function sortClientParameters(params: Array<go.ClientParameter>, type: go.CodeModelType): Array<go.ClientParameter> {
+  // ARM will never have uriParams but it will likely have a scalar path
+  // param for the subscription ID, so we sort by that instead.
+  const sortBy = type === 'azure-arm' ? 'pathScalarParam' : 'uriParam';
+  params.sort((a: go.ClientParameter, b: go.ClientParameter): number => {
+    if (a.kind === sortBy || (a.kind === 'credentialParam' && b.kind !== sortBy)) {
+      // sortBy always comes first, followed by credential (if applicable)
+      return -1;
+    }
+    return 0;
+  });
+  return params;
 }
 
 // returns the parameters for the internal request creator method.
@@ -700,7 +725,7 @@ export function star(byValue: boolean): string {
  * @param param the param for which to create a zero value
  * @returns the zero-value expression
  */
-export function zeroValue(param: go.ClientParameter | go.MethodParameter): string {
+export function zeroValue(param: go.MethodParameter): string {
   // even though API version params typically have a client-side default which makes
   // them optional, the azcore.ClientOptions.APIVersion field isn't pointer-to-type.
   if (go.isRequiredParameter(param.style) || go.isAPIVersionParameter(param)) {
@@ -811,43 +836,50 @@ export function getSerDeFormat(model: go.Model | go.PolymorphicModel, codeModel:
 // return combined client parameters for all the clients
 export function getAllClientParameters(codeModel: go.CodeModel): Array<go.ClientParameter> {
   const allClientParams = new Array<go.ClientParameter>();
-  for (const clients of codeModel.clients) {
-    for (const clientParam of values(clients.parameters)) {
-      if (go.isLiteralParameter(clientParam.style)) {
-        continue;
+  for (const client of codeModel.clients) {
+    if (client.instance?.kind === 'constructable') {
+      for (const ctor of client.instance.constructors) {
+        for (const ctorParam of ctor.parameters) {
+          if (go.isAPIVersionParameter(ctorParam)) {
+            continue;
+          } else if (values(allClientParams).where(param => param.name === ctorParam.name).any()) {
+            continue;
+          }
+          allClientParams.push(ctorParam);
+        }
       }
-      if (values(allClientParams).where(param => param.name === clientParam.name).any()) {
-        continue;
-      }
-      allClientParams.push(clientParam);
     }
   }
-  allClientParams.sort(sortParametersByRequired);
-  return allClientParams;
+  return sortClientParameters(allClientParams, codeModel.type);
 }
 
 // returns common client parameters for all the clients
 export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.ClientParameter> {
   const paramCount = new Map<string, { uses: number, param: go.ClientParameter }>();
   let numClients = 0; // track client count since we might skip some
-  for (const clients of codeModel.clients) {
+  for (const client of codeModel.clients) {
     // special cases: some ARM clients always don't contain any parameters (OperationsClient will be depracated in the future)
-    if (codeModel.type === 'azure-arm' && clients.name.match(/^OperationsClient$/)) {
+    if (codeModel.type === 'azure-arm' && client.name.match(/^OperationsClient$/)) {
       continue; 
     }
 
     ++numClients;
-    for (const clientParam of values(clients.parameters)) {
-      if (go.isLiteralParameter(clientParam.style)) {
-        continue;
-      }
-      let entry = paramCount.get(clientParam.name);
-      if (!entry) {
-        entry = { uses: 0, param: clientParam };
-        paramCount.set(clientParam.name, entry);
-      }
 
-      ++entry.uses;
+    if (client.instance?.kind === 'constructable') {
+      for (const ctor of client.instance.constructors) {
+        for (const ctorParam of ctor.parameters) {
+          if (go.isAPIVersionParameter(ctorParam)) {
+            continue;
+          }
+          let entry = paramCount.get(ctorParam.name);
+          if (!entry) {
+            entry = { uses: 0, param: ctorParam };
+            paramCount.set(ctorParam.name, entry);
+          }
+
+          ++entry.uses;
+        }
+      }
     }
   }
 
@@ -860,7 +892,7 @@ export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.Cli
     }
   }
 
-  return commonClientParams.sort(sortParametersByRequired);
+  return sortClientParameters(commonClientParams, codeModel.type);
 }
 
 /**

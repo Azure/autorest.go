@@ -100,7 +100,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
               clientFactoryParamsExample.push({ parameter: clientParam, value: generateFakeExample(clientParam.type, clientParam.name) });
             }
           }
-          exampleText += `\tclientFactory, err := ${codeModel.packageName}.NewClientFactory(${clientFactoryParamsExample.map(p => getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${clientFactoryParams.length > 0 ? ', ' : ''}cred, nil)\n`;
+          exampleText += `\tclientFactory, err := ${codeModel.packageName}.NewClientFactory(${clientFactoryParamsExample.map(p => getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue)).join(', ')}, nil)\n`;
           exampleText += `\tif err != nil {\n`;
           exampleText += `\t\tlog.Fatalf("failed to create client: %v", err)\n`;
           exampleText += `\t}\n`;
@@ -317,6 +317,8 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
       exampleText += `${indent}}`;
       return exampleText;
     }
+    case 'tokenCredential':
+      return example.value;
   }
 }
 
@@ -424,7 +426,7 @@ function jsonToGo(value: any, indent: string): string {
   return '';
 }
 
-function generateFakeExample(goType: go.WireType, name?: string): go.ExampleType {
+function generateFakeExample(goType: go.Type, name?: string): go.ExampleType {
   switch (goType.kind) {
     case 'any':
       return new go.NullExample(goType);
@@ -451,6 +453,9 @@ function generateFakeExample(goType: go.WireType, name?: string): go.ExampleType
       }
     case 'string':
       return new go.StringExample(`<${name ?? 'test'}>`, goType);
+    case 'tokenCredential':
+      // we hard code the credential var name to cred
+      return new go.TokenCredentialExample('cred');
     default:
       throw new CodegenError('InternalError', `unhandled fake example kind ${goType.kind}`);
   }

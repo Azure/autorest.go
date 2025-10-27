@@ -3,6 +3,9 @@
 *  Licensed under the MIT License. See License.txt in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
+import { ClientOptions } from './client.js';
+import { ParameterGroup } from './param.js';
+
 /** Docs contains the values used in doc comment generation. */
 export interface Docs {
   /** the high level summary */
@@ -13,10 +16,10 @@ export interface Docs {
 }
 
 /** defines types used in generated code but do not go across the wire */
-export type SdkType = ArmClientOptions;
+export type SdkType = ArmClientOptions | ClientOptions | ParameterGroup | TokenCredential;
 
 /** defines types that go across the wire */
-export type WireType = ArmClientOptions | Any | Constant | EncodedBytes | ETag | Interface | Literal | Map | Model | MultipartContent | PolymorphicModel | RawJSON | ReadCloser | ReadSeekCloser | Scalar | Slice | String | Time;
+export type WireType = Any | Constant | EncodedBytes | ETag | Interface | Literal | Map | Model | MultipartContent | PolymorphicModel | RawJSON | ReadCloser | ReadSeekCloser | Scalar | Slice | String | Time;
 
 /** defines a type within the Go type system */
 export type Type = SdkType | WireType;
@@ -144,6 +147,9 @@ export type MapValueType = WireType;
 
 /** a field within a model */
 export interface ModelField extends StructField {
+  /** the field's underlying type */
+  type: WireType;
+
   /** the name of the field as it's sent/received over the wire */
   serializedName: string;
 
@@ -255,15 +261,8 @@ export interface String {
 }
 
 /** a vanilla struct definition (pretty much exclusively used for parameter groups/options bag types) */
-export interface Struct {
-  /** the name of the struct */
-  name: string;
-
-  /** and docs for this struct */
-  docs: Docs;
-
-  /** the fields in this struct. can be empty */
-  fields: Array<StructField>;
+export interface Struct extends StructBase {
+  kind: 'struct';
 }
 
 /** a field definition within a struct */
@@ -275,7 +274,7 @@ export interface StructField {
   docs: Docs;
 
   /** the field's underlying type */
-  type: WireType;
+  type: Type;
 
   /** indicates if the field is pointer-to-type or not */
   byValue: boolean;
@@ -294,6 +293,14 @@ export interface Time extends QualifiedType {
 
 /** the set of time serde formats */
 export type TimeFormat = 'dateType' | 'dateTimeRFC1123' | 'dateTimeRFC3339' | 'timeRFC3339' | 'timeUnix';
+
+/** an azcore.TokenCredential */
+export interface TokenCredential extends QualifiedType {
+  kind: 'tokenCredential';
+
+  /** the scopes to include for the credential */
+  scopes: Array<string>;
+}
 
 /** bit flags indicating how a model/polymorphic type is used */
 export enum UsageFlags {
@@ -359,9 +366,11 @@ export function getTypeDeclaration(type: Type, pkgName?: string): string {
     case 'any':
     case 'string':
       return type.kind;
+    case 'clientOptions':
     case 'constant':
     case 'interface':
     case 'model':
+    case 'paramGroup':
     case 'polymorphicModel':
       if (pkgName) {
         return `${pkgName}.${type.name}`;
@@ -384,7 +393,8 @@ export function getTypeDeclaration(type: Type, pkgName?: string): string {
     case 'etag':
     case 'multipartContent':
     case 'readCloser':
-    case 'readSeekCloser': {
+    case 'readSeekCloser':
+    case 'tokenCredential': {
       // strip module to just the leaf package as required
       let pkg = type.module;
       const pathChar = pkg.lastIndexOf('/');
@@ -415,18 +425,10 @@ export function isLiteralValueType(type: WireType): type is LiteralType {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class StructField implements StructField {
-  constructor(name: string, type: WireType, byValue: boolean) {
+  constructor(name: string, type: Type, byValue: boolean) {
     this.name = name;
     this.type = type;
     this.byValue = byValue;
-    this.docs = {};
-  }
-}
-
-export class Struct implements Struct {
-  constructor(name: string) {
-    this.fields = new Array<StructField>();
-    this.name = name;
     this.docs = {};
   }
 }
@@ -451,7 +453,18 @@ export class QualifiedType implements QualifiedType {
 // base types
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-interface ModelBase extends Struct {
+interface StructBase {
+  /** the name of the struct */
+  name: string;
+
+  /** and docs for this struct */
+  docs: Docs;
+
+  /** the fields in this struct. can be empty */
+  fields: Array<StructField>;
+}
+
+interface ModelBase extends StructBase {
   /** the fields in this model. can be empty */
   fields: Array<ModelField>;
 
@@ -465,7 +478,15 @@ interface ModelBase extends Struct {
   xml?: XMLInfo;
 }
 
-class ModelBase extends Struct implements ModelBase {
+class StructBase implements StructBase {
+  constructor(name: string) {
+    this.name = name;
+    this.fields = new Array<StructField>();
+    this.docs = {};
+  }
+}
+
+class ModelBase extends StructBase implements ModelBase {
   constructor(name: string, annotations: ModelAnnotations, usage: UsageFlags) {
     super(name);
     this.annotations = annotations;
@@ -645,12 +666,27 @@ export class String implements String {
   }
 }
 
+export class Struct extends StructBase implements Struct {
+  constructor(name: string) {
+    super(name);
+    this.kind = 'struct';
+  }
+}
+
 export class Time extends QualifiedType implements Time {
   constructor(format: TimeFormat, utc: boolean) {
     super('Time', 'time');
     this.kind = 'time';
     this.format = format;
     this.utc = utc;
+  }
+}
+
+export class TokenCredential extends QualifiedType implements TokenCredential {
+  constructor(scopes: Array<string>) {
+    super('TokenCredential', 'github.com/Azure/azure-sdk-for-go/sdk/azcore');
+    this.kind = 'tokenCredential';
+    this.scopes = scopes;
   }
 }
 
