@@ -557,19 +557,21 @@ export class clientAdapter {
       // operation param. each param corresponds to a field within the operation param.
       // Additionally, for grouped parameters, there might be a one-to-many mapping. i.e.
       // a single method param maps to multiple operation params within the group.
-      // property-level mapping
+      
+      // First, check if this param has properties that map to operation parameters (property-level mapping)
       let opParams: OperationParamType[] = [];
       if (param.type.kind === 'model') {
         for (const property of param.type.properties) {
-          opParams = values(allOpParams).where((opParam: OperationParamType) => {
+          const propertyOpParams = values(allOpParams).where((opParam: OperationParamType) => {
             return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
               return methodParam === property;
             }).any();
           }).toArray();
+          opParams.push(...propertyOpParams);
         }
       }
 
-      // param-level mapping
+      // If we found property-level operation params, use those; otherwise find param-level operation params
       if (opParams.length === 0) {
         // Find operation params that directly match this method param
         opParams = values(allOpParams).where((opParam: OperationParamType) => {
