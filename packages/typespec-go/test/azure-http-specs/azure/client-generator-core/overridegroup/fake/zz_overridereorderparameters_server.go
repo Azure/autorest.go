@@ -21,7 +21,7 @@ import (
 type OverrideReorderParametersServer struct {
 	// Reorder is the fake for method OverrideReorderParametersClient.Reorder
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Reorder func(ctx context.Context, param2 string, param1 string, options *overridegroup.OverrideReorderParametersClientReorderOptions) (resp azfake.Responder[overridegroup.OverrideReorderParametersClientReorderResponse], errResp azfake.ErrorResponder)
+	Reorder func(ctx context.Context, param1 string, param2 string, options *overridegroup.OverrideReorderParametersClientReorderOptions) (resp azfake.Responder[overridegroup.OverrideReorderParametersClientReorderResponse], errResp azfake.ErrorResponder)
 }
 
 // NewOverrideReorderParametersServerTransport creates a new instance of OverrideReorderParametersServerTransport with the provided implementation.
@@ -91,15 +91,15 @@ func (o *OverrideReorderParametersServerTransport) dispatchReorder(req *http.Req
 	if len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	param2Param, err := url.PathUnescape(matches[regex.SubexpIndex("param2")])
-	if err != nil {
-		return nil, err
-	}
 	param1Param, err := url.PathUnescape(matches[regex.SubexpIndex("param1")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := o.srv.Reorder(req.Context(), param2Param, param1Param, nil)
+	param2Param, err := url.PathUnescape(matches[regex.SubexpIndex("param2")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := o.srv.Reorder(req.Context(), param1Param, param2Param, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

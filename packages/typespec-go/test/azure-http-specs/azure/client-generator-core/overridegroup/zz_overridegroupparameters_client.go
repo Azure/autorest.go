@@ -21,15 +21,15 @@ type OverrideGroupParametersClient struct {
 
 // Group -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - options - OverrideGroupParametersClientGroupOptions contains the optional parameters for the OverrideGroupParametersClient.Group
+//   - opts - OverrideGroupParametersClientGroupOptions contains the optional parameters for the OverrideGroupParametersClient.Group
 //     method.
-func (client *OverrideGroupParametersClient) Group(ctx context.Context, param1 string, param2 string, options *OverrideGroupParametersClientGroupOptions) (OverrideGroupParametersClientGroupResponse, error) {
+func (client *OverrideGroupParametersClient) Group(ctx context.Context, param1 string, param2 string, opts *OverrideGroupParametersClientGroupOptions) (OverrideGroupParametersClientGroupResponse, error) {
 	var err error
 	const operationName = "OverrideGroupParametersClient.Group"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.groupCreateRequest(ctx, param1, param2, options)
+	req, err := client.groupCreateRequest(ctx, param1, param2, opts)
 	if err != nil {
 		return OverrideGroupParametersClientGroupResponse{}, err
 	}
