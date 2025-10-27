@@ -10,8 +10,20 @@ type OverrideGroupParametersClientGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
+// OverrideRemoveOptionalParameterClientRemoveOptionalOptions contains the optional parameters for the OverrideRemoveOptionalParameterClient.RemoveOptional
+// method.
+type OverrideRemoveOptionalParameterClientRemoveOptionalOptions struct {
+	Param2 *string
+}
+
 // OverrideReorderParametersClientReorderOptions contains the optional parameters for the OverrideReorderParametersClient.Reorder
 // method.
 type OverrideReorderParametersClientReorderOptions struct {
+	// placeholder for future optional parameters
+}
+
+// OverrideRequireOptionalParameterClientRequireOptionalOptions contains the optional parameters for the OverrideRequireOptionalParameterClient.RequireOptional
+// method.
+type OverrideRequireOptionalParameterClientRequireOptionalOptions struct {
 	// placeholder for future optional parameters
 }
