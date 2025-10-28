@@ -159,7 +159,8 @@ export class clientAdapter {
 
     // anything other than public means non-instantiable client
     if (sdkClient.clientInitialization.initializedBy & tcgc.InitializedByFlags.Individually) {
-      goClient.instance = new go.Constructable(go.newClientOptions(this.ta.codeModel.type, clientName));
+      const options = (authType === AuthTypes.OmitAuth) ? new go.OmitOptions() : go.newClientOptions(this.ta.codeModel.type, clientName);
+      goClient.instance = new go.Constructable(options);
       for (const param of sdkClient.clientInitialization.parameters) {
         switch (param.kind) {
           case 'credential':
@@ -242,7 +243,9 @@ export class clientAdapter {
               adaptedParam.isApiVersion = templateArg.isApiVersionParam;
               goClient.instance.endpoint?.supplemental?.parameters.push(adaptedParam);
               if (!go.isRequiredParameter(adaptedParam.style)) {
-                if (goClient.instance.options.kind === 'clientOptions') {
+                if (!goClient.instance.options) {
+                  continue;
+                } else if (goClient.instance.options.kind === 'clientOptions') {
                   goClient.instance.options.parameters.push(adaptedParam);
                 } else {
                   throw new AdapterError('UnsupportedTsp', 'optional client parameters for ARM is not supported', templateArg.__raw?.node ?? NoTarget);
@@ -280,7 +283,7 @@ export class clientAdapter {
       }
     } else if (parent) {
       // this is a sub-client. it will share the client/host params of the parent.
-      // NOTE: we must propagate parant params before a potential recursive call
+      // NOTE: we must propagate parent params before a potential recursive call
       // to create a child client that will need to inherit our client params.
       if (parent.instance?.kind === 'templatedHost') {
         goClient.instance = parent.instance;

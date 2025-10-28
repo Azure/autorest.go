@@ -63,6 +63,9 @@ export function sortAscending(a: string, b: string): number {
 export function formatParameterTypeName(param: go.ClientOptionsType | go.ClientParameter | go.ParameterGroup, pkgName?: string): string {
   let typeName: string;
   switch (param.kind) {
+    case 'omitOptions':
+      // When constructors are omitted, no parameter type is generated
+      return '';
     case 'armClientOptions':
       typeName = go.getTypeDeclaration(param, pkgName);
       break;

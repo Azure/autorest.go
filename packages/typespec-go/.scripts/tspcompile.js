@@ -188,7 +188,7 @@ const azmodelsonly = pkgRoot + 'test/tsp/ModelsOnlyWithBaseTypes';
 generate('azmodelsonly', azmodelsonly, 'test/local/azmodelsonly');
 
 const azkeys = pkgRoot + 'test/tsp/KeyVault.Keys/client.tsp';
-generate('azkeys', azkeys, 'test/local/azkeys', ['single-client=true']);
+generate('azkeys', azkeys, 'test/local/azkeys', ['single-client=true', 'omit-constructors=true']);
 
 const armtest = pkgRoot + 'test/tsp/Test.Management';
 generate('armtest', armtest, 'test/local/armtest');
