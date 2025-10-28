@@ -41,7 +41,9 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
     }
 
-    if (!azureARM) {
+    if (azureARM) {
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
+    } else {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     }
 
@@ -320,7 +322,6 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
             }
             case 'armClientOptions':
               // this is the ARM case
-              imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
               prolog = '\tcl, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
               break;
           }
