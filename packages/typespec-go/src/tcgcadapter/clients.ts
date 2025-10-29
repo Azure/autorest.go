@@ -555,54 +555,52 @@ export class clientAdapter {
       // most params have a one-to-one mapping. however, for spread params, there will
       // be a many-to-one mapping. i.e. multiple params will map to the same underlying
       // operation param. each param corresponds to a field within the operation param.
-      // Additionally, for grouped parameters, there might be a one-to-many mapping. i.e.
-      // a single method param maps to multiple operation params within the group.
-      
-      // First, check if this param has properties that map to operation parameters (property-level mapping)
-      let opParams: OperationParamType[] = [];
-      if (param.type.kind === 'model') {
-        for (const property of param.type.properties) {
-          const propertyOpParams = values(allOpParams).where((opParam: OperationParamType) => {
-            return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
-              return methodParam === property;
-            }).any();
-          }).toArray();
-          opParams.push(...propertyOpParams);
-        }
-      }
-
-      // If we found property-level operation params, use those; otherwise find param-level operation params
-      if (opParams.length === 0) {
-        // Find operation params that directly match this method param
-        opParams = values(allOpParams).where((opParam: OperationParamType) => {
-          return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
-            return methodParam === param;
-          }).any();
-        }).toArray();
-      }
+      let opParam = values(allOpParams).where((opParam: OperationParamType) => {
+        return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
+          if (param.type.kind === 'model') {
+            for (const property of param.type.properties) {
+              if (property === methodParam) {
+                return true;
+              }
+            }
+          }
+          return methodParam === param;
+        }).any();
+      }).first();
 
       // special handling for constants that used in path, this will not be in operation parameters since it has been resolved in the url
-      if (opParams.length === 0 && param.type.kind === 'constant') {
+      if (!opParam && param.type.kind === 'constant') {
         continue;
       }
 
-      if (opParams.length === 0) {
+      // special handling for `@bodyRoot`/`@body` on model param's property
+      if (!opParam && param.type.kind === 'model') {
+        for (const property of param.type.properties) {
+          opParam = values(allOpParams).where((opParam: OperationParamType) => {
+            return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
+              return methodParam === property;
+            }).any();
+          }).first();
+          if (opParam) {
+            break;
+          }
+        }
+      }
+
+      if (!opParam) {
         throw new AdapterError('InternalError', `didn't find operation parameter for method ${sdkMethod.name} parameter ${param.name}`, sdkMethod.__raw?.node ?? NoTarget);
       }
 
-      // Process each operation parameter that corresponds to this method parameter
-      for (const opParam of opParams) {
-
-        if (opParam.kind === 'header' && opParam.serializedName.match(/^content-type$/i) && param.type.kind === 'constant') {
-          // if the body param is optional, then the content-type param is also optional.
-          // for optional constants, this has the side effect of the param being treated like
-          // a flag which isn't what we want. so, we mark it as required. we ONLY do this
-          // if the content-type is a constant (i.e. literal value).
-          // the content-type will be conditionally set based on the requiredness of the body.
-          // NOTE: we set this on the corresponding method param as it's used when adapting the style.
-          // header param will only have one corresponding method param.
-          opParam.correspondingMethodParams[0].optional = false;
-        }
+      if (opParam.kind === 'header' && opParam.serializedName.match(/^content-type$/i) && param.type.kind === 'constant') {
+        // if the body param is optional, then the content-type param is also optional.
+        // for optional constants, this has the side effect of the param being treated like
+        // a flag which isn't what we want. so, we mark it as required. we ONLY do this
+        // if the content-type is a constant (i.e. literal value).
+        // the content-type will be conditionally set based on the requiredness of the body.
+        // NOTE: we set this on the corresponding method param as it's used when adapting the style.
+        // header param will only have one corresponding method param.
+        opParam.correspondingMethodParams[0].optional = false;
+      }
 
       let adaptedParam: go.MethodParameter;
       // for the @bodyRoot decorator opParam.type !== param.type which is obviously not a
@@ -656,22 +654,21 @@ export class clientAdapter {
         adaptedParam = this.adaptMethodParameter(opParam, method.httpMethod);
       }
 
-        adaptedParam.docs.summary = param.summary;
-        adaptedParam.docs.description = param.doc;
-        method.parameters.push(adaptedParam);
-        if (!paramMapping.has(opParam)) {
-          paramMapping.set(opParam, new Array<go.MethodParameter>());
-        }
-        paramMapping.get(opParam)?.push(adaptedParam);
+      adaptedParam.docs.summary = param.summary;
+      adaptedParam.docs.description = param.doc;
+      method.parameters.push(adaptedParam);
+      if (!paramMapping.has(opParam)) {
+        paramMapping.set(opParam, new Array<go.MethodParameter>());
+      }
+      paramMapping.get(opParam)?.push(adaptedParam);
 
-        if (adaptedParam.style !== 'required' && adaptedParam.style !== 'literal') {
-          // add optional method param to the options param group
-          if (!optionalGroup) {
-            throw new AdapterError('InternalError', `optional parameter ${param.name} has no optional parameter group`, param.__raw?.node ?? NoTarget);
-          }
-          adaptedParam.group = optionalGroup;
-          optionalGroup.params.push(adaptedParam);
+      if (adaptedParam.style !== 'required' && adaptedParam.style !== 'literal') {
+        // add optional method param to the options param group
+        if (!optionalGroup) {
+          throw new AdapterError('InternalError', `optional parameter ${param.name} has no optional parameter group`, param.__raw?.node ?? NoTarget);
         }
+        adaptedParam.group = optionalGroup;
+        optionalGroup.params.push(adaptedParam);
       }
     }
 
