@@ -289,6 +289,12 @@ interface HttpMethodBase extends method.Method<Client, result.ResponseEnvelope> 
 interface PageableMethodBase extends HttpMethodBase {
   nextLinkName?: string;
 
+  /**
+   * the HTTP verb when fetching from the next link URL.
+   * the default is get
+   */
+  nextLinkVerb: 'get' | 'post';
+
   nextPageMethod?: NextPageMethod;
 }
 
@@ -379,6 +385,7 @@ export class LROPageableMethod extends HttpMethodBase implements LROPageableMeth
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     super(name, client, httpPath, httpMethod, statusCodes, naming);
     this.kind = 'lroPageableMethod';
+    this.nextLinkVerb = 'get';
   }
 }
 
@@ -417,6 +424,7 @@ export class PageableMethod extends HttpMethodBase implements PageableMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
     super(name, client, httpPath, httpMethod, statusCodes, naming);
     this.kind = 'pageableMethod';
+    this.nextLinkVerb = 'get';
   }
 }
 
