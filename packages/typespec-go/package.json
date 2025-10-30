@@ -1,6 +1,6 @@
 {
   "name": "@azure-tools/typespec-go",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "TypeSpec emitter for Go SDKs",
   "type": "module",
   "exports": {

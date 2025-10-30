@@ -1,5 +1,11 @@
 # Release History
 
+## 0.8.4 (unreleased)
+
+### Features Added
+
+* Emit `LICENSE.txt` file (defaults to MIT license with a Microsoft Copyright).
+
 ## 0.8.3 (2025-10-14)
 
 ### Bugs Fixed
