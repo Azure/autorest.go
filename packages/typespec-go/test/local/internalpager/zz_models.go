@@ -14,5 +14,8 @@ type widget struct {
 
 type widgetList struct {
 	// REQUIRED
+	NextLink *string
+
+	// REQUIRED
 	Values []*widget
 }

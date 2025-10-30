@@ -45,6 +45,7 @@ func (w *widget) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type widgetList.
 func (w widgetList) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
+	populate(objectMap, "nextLink", w.NextLink)
 	populate(objectMap, "values", w.Values)
 	return json.Marshal(objectMap)
 }
@@ -58,6 +59,9 @@ func (w *widgetList) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "nextLink":
+			err = unpopulate(val, "NextLink", &w.NextLink)
+			delete(rawMsg, key)
 		case "values":
 			err = unpopulate(val, "Values", &w.Values)
 			delete(rawMsg, key)
