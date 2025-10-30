@@ -20,7 +20,7 @@ import (
 type OverrideGroupParametersServer struct {
 	// Group is the fake for method OverrideGroupParametersClient.Group
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Group func(ctx context.Context, param1 string, param2 string, opts *overridegroup.OverrideGroupParametersClientGroupOptions) (resp azfake.Responder[overridegroup.OverrideGroupParametersClientGroupResponse], errResp azfake.ErrorResponder)
+	Group func(ctx context.Context, options overridegroup.GroupParametersOptions, opts *overridegroup.OverrideGroupParametersClientGroupOptions) (resp azfake.Responder[overridegroup.OverrideGroupParametersClientGroupResponse], errResp azfake.ErrorResponder)
 }
 
 // NewOverrideGroupParametersServerTransport creates a new instance of OverrideGroupParametersServerTransport with the provided implementation.
@@ -93,7 +93,11 @@ func (o *OverrideGroupParametersServerTransport) dispatchGroup(req *http.Request
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := o.srv.Group(req.Context(), param1Param, param2Param, nil)
+	options := overridegroup.GroupParametersOptions{
+		Param1: param1Param,
+		Param2: param2Param,
+	}
+	respr, errRespr := o.srv.Group(req.Context(), options, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

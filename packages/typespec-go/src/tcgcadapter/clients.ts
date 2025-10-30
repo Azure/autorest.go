@@ -548,6 +548,9 @@ export class clientAdapter {
       allOpParams.push(sdkMethod.operation.bodyParam);
     }
 
+    // track parameter groups created from model types
+    const parameterGroups = new Map<string, go.ParameterGroup>();
+
     // we must enumerate parameters, not operation.parameters, as it
     // contains the params in tsp order as well as any spread params.
     for (const param of sdkMethod.parameters) {
@@ -589,6 +592,77 @@ export class clientAdapter {
 
       if (!opParam) {
         throw new AdapterError('InternalError', `didn't find operation parameter for method ${sdkMethod.name} parameter ${param.name}`, sdkMethod.__raw?.node ?? NoTarget);
+      }
+
+      // Check if it is a parameter group
+      if (param.type.kind === 'model' && opParam.kind !== 'body') {
+        const modelProperties = param.type.properties;
+        const correspondingOpParams = new Array<OperationParamType>();
+        let isParameterGroup = true;
+
+        for (const property of modelProperties) {
+          const propertyOpParam = values(allOpParams).where((op: OperationParamType) => {
+            return values(op.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
+              return methodParam === property;
+            }).any();
+          }).first();
+
+          if (!propertyOpParam || propertyOpParam.kind === 'body') {
+            // If any property doesn't map to an HTTP param or is a body param, it's not a parameter group
+            isParameterGroup = false;
+            break;
+          }
+          correspondingOpParams.push(propertyOpParam);
+        }
+
+        // special handling for parameter group
+        if (isParameterGroup && correspondingOpParams.length > 0) {
+          // Create parameter group metadata to track which parameters belong to it.
+          const paramStyle = this.adaptParameterStyle(param);
+          const isRequired = go.isRequiredParameter(paramStyle);
+          
+          // Use the same naming approach as regular parameters for consistency
+          const paramGroupName = ensureNameCase(param.type.name);
+          const paramName = getEscapedReservedName(ensureNameCase(param.name, isRequired), 'Param');
+          
+          // Remove the model from codeModel.models if it is a parameter group
+          const modelIndex = this.ta.codeModel.models.findIndex(m => m.name === paramGroupName);
+          if (modelIndex >= 0) {
+            this.ta.codeModel.models.splice(modelIndex, 1);
+          }
+          
+          // Check if parameter group already exists
+          let paramGroup = parameterGroups.get(paramGroupName);
+          if (!paramGroup) {
+            paramGroup = new go.ParameterGroup(
+              paramName,
+              paramGroupName,
+              isRequired,
+              'method'
+            );
+            paramGroup.docs.summary = `${paramGroupName} contains a group of parameters for the ${method.receiver.type.name}.${method.name} method.`;
+            parameterGroups.set(paramGroupName, paramGroup);
+          }
+
+          // Add each property as a method parameter and associate with the group
+          for (let i = 0; i < modelProperties.length; i++) {
+            const property = modelProperties[i];
+            const propertyOpParam = correspondingOpParams[i];
+            const adaptedParam = this.adaptMethodParameter(propertyOpParam, method.httpMethod);
+            adaptedParam.docs.summary = property.summary;
+            adaptedParam.docs.description = property.doc;
+            adaptedParam.group = paramGroup;
+            method.parameters.push(adaptedParam);
+            paramGroup.params.push(adaptedParam);
+            
+            if (!paramMapping.has(propertyOpParam)) {
+              paramMapping.set(propertyOpParam, new Array<go.MethodParameter>());
+            }
+            paramMapping.get(propertyOpParam)?.push(adaptedParam);
+          }
+
+          continue;
+        }
       }
 
       if (opParam.kind === 'header' && opParam.serializedName.match(/^content-type$/i) && param.type.kind === 'constant') {
@@ -712,6 +786,11 @@ export class clientAdapter {
           }
         }
       }
+    }
+
+    // Add all parameter groups to the code model
+    for (const paramGroup of parameterGroups.values()) {
+      this.ta.codeModel.paramGroups.push(this.adaptParameterGroup(paramGroup));
     }
 
     return paramMapping;
