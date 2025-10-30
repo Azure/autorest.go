@@ -2,6 +2,10 @@
 
 ## 4.0.0-preview.75 (unreleased)
 
+### Breaking Changes
+
+* Automatic capitalization of acronym `ISO` has been removed.
+
 ### Bugs Fixed
 
 * Emit empty path param check for path collection parameters.
