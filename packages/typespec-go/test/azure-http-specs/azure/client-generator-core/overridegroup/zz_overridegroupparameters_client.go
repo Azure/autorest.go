@@ -21,15 +21,16 @@ type OverrideGroupParametersClient struct {
 
 // Group -
 // If the operation fails it returns an *azcore.ResponseError type.
+//   - options - GroupParametersOptions contains a group of parameters for the OverrideGroupParametersClient.Group method.
 //   - opts - OverrideGroupParametersClientGroupOptions contains the optional parameters for the OverrideGroupParametersClient.Group
 //     method.
-func (client *OverrideGroupParametersClient) Group(ctx context.Context, param1 string, param2 string, opts *OverrideGroupParametersClientGroupOptions) (OverrideGroupParametersClientGroupResponse, error) {
+func (client *OverrideGroupParametersClient) Group(ctx context.Context, options GroupParametersOptions, opts *OverrideGroupParametersClientGroupOptions) (OverrideGroupParametersClientGroupResponse, error) {
 	var err error
 	const operationName = "OverrideGroupParametersClient.Group"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.groupCreateRequest(ctx, param1, param2, opts)
+	req, err := client.groupCreateRequest(ctx, options, opts)
 	if err != nil {
 		return OverrideGroupParametersClientGroupResponse{}, err
 	}
@@ -45,15 +46,15 @@ func (client *OverrideGroupParametersClient) Group(ctx context.Context, param1 s
 }
 
 // groupCreateRequest creates the Group request.
-func (client *OverrideGroupParametersClient) groupCreateRequest(ctx context.Context, param1 string, param2 string, _ *OverrideGroupParametersClientGroupOptions) (*policy.Request, error) {
+func (client *OverrideGroupParametersClient) groupCreateRequest(ctx context.Context, options GroupParametersOptions, _ *OverrideGroupParametersClientGroupOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/override/group"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("param1", param1)
-	reqQP.Set("param2", param2)
+	reqQP.Set("param1", options.Param1)
+	reqQP.Set("param2", options.Param2)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }

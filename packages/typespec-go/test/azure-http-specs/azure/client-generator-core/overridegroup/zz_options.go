@@ -4,6 +4,12 @@
 
 package overridegroup
 
+// GroupParametersOptions contains a group of parameters for the OverrideGroupParametersClient.Group method.
+type GroupParametersOptions struct {
+	Param1 string
+	Param2 string
+}
+
 // OverrideGroupParametersClientGroupOptions contains the optional parameters for the OverrideGroupParametersClient.Group
 // method.
 type OverrideGroupParametersClientGroupOptions struct {
