@@ -115,6 +115,15 @@ export class clientAdapter {
         target: sdkClient.__raw.type ?? NoTarget,
       });
     }
+    if ((this.ta.codeModel.options.omitConstructors || this.ta.codeModel.options.containingModule) && this.ta.codeModel.options.generateExamples) {
+      // emit a diagnostic indicating that no ctors will be emitted due to containing-module.
+      this.ctx.program.reportDiagnostic({
+        code: 'UnsupportedConfiguration',
+        severity: 'warning',
+        message: 'cannot emit examples when containing-module or omit-constructors is set',
+        target: sdkClient.__raw.type ?? NoTarget,
+      });
+    }
 
     /**
      * processes a credendial, potentially adding its supporting client constructor
