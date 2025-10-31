@@ -12,7 +12,6 @@ import { capitalize, createOptionsTypeDescription, createResponseEnvelopeDescrip
 import { AdapterError } from './errors.js';
 import { GoEmitterOptions } from '../lib.js';
 import { isTypePassedByValue, typeAdapter } from './types.js';
-import { ClientOptionsType } from '../../../codemodel.go/src/index.js';
 
 // used to convert SDK clients and their methods to Go code model types
 export class clientAdapter {
@@ -104,14 +103,9 @@ export class clientAdapter {
       Default = 0, // unspecified
       NoAuth  = 1, // explicit NoAuth
       WithAuth = 2, // explicit credential
-      OmitAuth = 4, // omit-constructors was specified
     }
 
-    // we skip generating client constructors when emitting into
-    // an existing module. this is because the constructor(s) require
-    // the module name and version info, and we can't make any
-    // assumptions about the names/location.
-    let authType = (this.ta.codeModel.options.omitConstructors || this.ta.codeModel.options.containingModule) ? AuthTypes.OmitAuth : AuthTypes.Default;
+    let authType = AuthTypes.Default;
     if (!this.ta.codeModel.options.omitConstructors && this.ta.codeModel.options.containingModule) {
       // emit a diagnostic indicating that no ctors will be emitted due to containing-module.
       this.ctx.program.reportDiagnostic({
@@ -160,20 +154,23 @@ export class clientAdapter {
 
     // anything other than public means non-instantiable client
     if (sdkClient.clientInitialization.initializedBy & tcgc.InitializedByFlags.Individually) {
-      let options : ClientOptionsType | undefined;
-      if (authType !== AuthTypes.OmitAuth) {
-        options = go.newClientOptions(this.ta.codeModel.type, clientName);
+      let constructable: go.Constructable | undefined;
+      // we skip generating client constructors when emitting into
+      // an existing module. this is because the constructor(s) require
+      // the module name and version info, and we can't make any
+      // assumptions about the names/location.
+      if (!this.ta.codeModel.options.omitConstructors && !this.ta.codeModel.options.containingModule) {
+        constructable = new go.Constructable(go.newClientOptions(this.ta.codeModel.type, clientName));
       }
-      goClient.instance = new go.Constructable(options);
       for (const param of sdkClient.clientInitialization.parameters) {
         switch (param.kind) {
           case 'credential':
-            if (authType === AuthTypes.OmitAuth) {
+            if (!constructable) {
               continue;
             }
             switch (param.type.kind) {
               case 'credential':
-                authType |= processCredential(goClient, goClient.instance, param.type.scheme);
+                authType |= processCredential(goClient, constructable, param.type.scheme);
                 break;
               case 'union': {
                 const variantKinds = new Array<string>();
@@ -182,7 +179,7 @@ export class clientAdapter {
                   // emit the support credential kinds and skip any unsupported ones.
                   // this prevents emitting the WithNoCredential constructor in cases
                   // where it might not actually be supported.
-                  authType |= processCredential(goClient, goClient.instance, variantType.scheme);
+                  authType |= processCredential(goClient, constructable, variantType.scheme);
                 }
 
                 // no supported credential types were specified
@@ -192,7 +189,7 @@ export class clientAdapter {
                 continue;
               }
             }
-            continue;
+            break;
           case 'endpoint': {
             if (this.ta.codeModel.type === 'azure-arm') {
               // for ARM, the endpoint is handled via the azcore/arm.Client
@@ -225,34 +222,36 @@ export class clientAdapter {
                 adaptedParam.docs.summary = param.summary;
                 adaptedParam.docs.description = param.doc;
                 goClient.parameters.push(adaptedParam);
-                goClient.instance.endpoint = new go.ClientEndpoint(adaptedParam);
+                if (constructable) {
+                  constructable.endpoint = new go.ClientEndpoint(adaptedParam);
 
-                // if the server's URL is *only* the endpoint parameter then we're done.
-                // this is the param.type.kind === 'endpoint' case.
-                if (endpointType.serverUrl === `{${templateArg.serializedName}}`) {
-                  break;
+                  // if the server's URL is *only* the endpoint parameter then we're done.
+                  // this is the param.type.kind === 'endpoint' case.
+                  if (endpointType.serverUrl === `{${templateArg.serializedName}}`) {
+                    break;
+                  }
+
+                  // there's either a suffix on the endpoint param, more template arguments, or both.
+                  // either way we need to create supplemental info on the constructable.
+                  // strip off the first segment which corresponds to the endpoint param as it's not needed.
+                  const serverUrl = endpointType.serverUrl.replace(`{${templateArg.serializedName}}/`, '');
+                  constructable.endpoint.supplemental = new go.SupplementalEndpoint(serverUrl);
                 }
-
-                // there's either a suffix on the endpoint param, more template arguments, or both.
-                // either way we need to create supplemental info on the constructable.
-                // strip off the first segment which corresponds to the endpoint param as it's not needed.
-                const serverUrl = endpointType.serverUrl.replace(`{${templateArg.serializedName}}/`, '');
-                goClient.instance.endpoint.supplemental = new go.SupplementalEndpoint(serverUrl);
                 continue;
               }
 
-              const adaptedParam = this.adaptURIParam(templateArg, false);
-              adaptedParam.docs.summary = templateArg.summary;
-              adaptedParam.docs.description = templateArg.doc;
-              adaptedParam.isApiVersion = templateArg.isApiVersionParam;
-              goClient.instance.endpoint?.supplemental?.parameters.push(adaptedParam);
-              if (!go.isRequiredParameter(adaptedParam.style)) {
-                if (!goClient.instance.options) {
-                  continue;
-                } else if (goClient.instance.options.kind === 'clientOptions') {
-                  goClient.instance.options.parameters.push(adaptedParam);
-                } else {
-                  throw new AdapterError('UnsupportedTsp', 'optional client parameters for ARM is not supported', templateArg.__raw?.node ?? NoTarget);
+              if (constructable) {
+                const adaptedParam = this.adaptURIParam(templateArg, false);
+                adaptedParam.docs.summary = templateArg.summary;
+                adaptedParam.docs.description = templateArg.doc;
+                adaptedParam.isApiVersion = templateArg.isApiVersionParam;
+                constructable.endpoint?.supplemental?.parameters.push(adaptedParam);
+                if (!go.isRequiredParameter(adaptedParam.style)) {
+                  if (constructable.options.kind === 'clientOptions') {
+                    constructable.options.parameters.push(adaptedParam);
+                  } else {
+                    throw new AdapterError('UnsupportedTsp', 'optional client parameters for ARM is not supported', templateArg.__raw?.node ?? NoTarget);
+                  }
                 }
               }
             }
@@ -275,15 +274,19 @@ export class clientAdapter {
         }
       }
 
-      // if no authentication type was specified, or the noAuth scheme was
-      // explicitly specified, then include the WithNoCredential constructor
-      if (authType === AuthTypes.Default || <AuthTypes>(authType & AuthTypes.NoAuth) === AuthTypes.NoAuth) {
-        goClient.instance.constructors.push(new go.Constructor(`New${clientName}WithNoCredential`));
-      }
+      if (constructable) {
+        goClient.instance = constructable;
 
-      // propagate ctor params to all client ctors
-      for (const constructor of goClient.instance.constructors) {
-        constructor.parameters.push(...goClient.parameters);
+        // if no authentication type was specified, or the noAuth scheme was
+        // explicitly specified, then include the WithNoCredential constructor
+        if (authType === AuthTypes.Default || <AuthTypes>(authType & AuthTypes.NoAuth) === AuthTypes.NoAuth) {
+          goClient.instance.constructors.push(new go.Constructor(`New${clientName}WithNoCredential`));
+        }
+
+        // propagate ctor params to all client ctors
+        for (const constructor of goClient.instance.constructors) {
+          constructor.parameters.push(...goClient.parameters);
+        }
       }
     } else if (parent) {
       // this is a sub-client. it will share the client/host params of the parent.

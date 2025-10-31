@@ -157,7 +157,7 @@ export class CodeModel implements CodeModel {
     for (const client of this.clients) {
       if (client.instance?.kind === 'constructable') {
         client.instance.constructors.sort((a: client.Constructor, b: client.Constructor) => sortAscending(a.name, b.name));
-        if (client.instance.options?.kind === 'clientOptions') {
+        if (client.instance.options.kind === 'clientOptions') {
           client.instance.options.parameters.sort((a: client.ClientParameter, b: client.ClientParameter) => sortAscending(a.name, b.name));
         }
       }

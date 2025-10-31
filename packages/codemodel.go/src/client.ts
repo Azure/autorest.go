@@ -52,7 +52,7 @@ export interface Constructable {
   kind: 'constructable';
 
   /** the client options type used in the constructors */
-  options?: ClientOptionsType;
+  options: ClientOptionsType;
 
   /** the constructor functions for a client */
   constructors: Array<Constructor>;
@@ -337,7 +337,7 @@ export class ClientAccessor implements ClientAccessor {
 }
 
 export class Constructable implements Constructable {
-  constructor(options?: ClientOptionsType) {
+  constructor(options: ClientOptionsType) {
     this.kind = 'constructable';
     this.options = options;
     this.constructors = new Array<Constructor>();
