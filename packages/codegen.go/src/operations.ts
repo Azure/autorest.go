@@ -41,9 +41,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
     }
 
-    if (!azureARM) {
-      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-    }
+    imports.add(azureARM  ? 'github.com/Azure/azure-sdk-for-go/sdk/azcore/arm' : 'github.com/Azure/azure-sdk-for-go/sdk/azcore');
 
     // generate client type
 

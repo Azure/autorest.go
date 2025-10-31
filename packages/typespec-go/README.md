@@ -96,6 +96,12 @@ Enables generation of spans for distributed tracing. The default is false.
 
 The module identity to use in go.mod. Mutually exclusive with containing-module.
 
+### `omit-constructors`
+
+**Type:** `boolean`
+
+When true, client constructors are not emitted. The default is false.
+
 ### `rawjson-as-bytes`
 
 **Type:** `boolean`

@@ -32,6 +32,10 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
   const azureARM = codeModel.type === 'azure-arm';
 
   for (const client of codeModel.clients) {
+    // client must be constructable to create a sample
+    if (client.instance?.kind != 'constructable') {
+      continue;
+    }
     const imports = new ImportManager();
     // the list of packages to import
     if (client.methods.length > 0) {
@@ -83,10 +87,6 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
           }
         }
         // TODO: client optional parameters
-
-        if (client.instance?.kind !== 'constructable') {
-          throw new CodegenError('InternalError', `attempt to emit sample for non-instantiable client ${client.name}`);
-        }
 
         let clientRef = '';
         if (azureARM) {
