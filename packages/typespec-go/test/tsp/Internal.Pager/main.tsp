@@ -14,6 +14,9 @@ namespace Microsoft.Internal.Pager;
 model WidgetList {
   @pageItems
   values: Widget[];
+
+  @nextLink
+  nextLink: url;
 }
 
 model Widget {
@@ -32,7 +35,8 @@ union WidgetColor {
 @tag("Widgets")
 interface Widgets {
   @access(Access.internal)
-  @get
+  @post
   @list
+  @Azure.ClientGenerator.Core.Legacy.nextLinkVerb("POST")
   list(): WidgetList;
 }

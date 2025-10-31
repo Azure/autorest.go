@@ -23,19 +23,20 @@ type PagerWidgetsClient struct {
 func (client *PagerWidgetsClient) newListPager(options *pagerWidgetsClientlistOptions) *runtime.Pager[pagerWidgetsClientlistResponse] {
 	return runtime.NewPager(runtime.PagingHandler[pagerWidgetsClientlistResponse]{
 		More: func(page pagerWidgetsClientlistResponse) bool {
-			return false
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *pagerWidgetsClientlistResponse) (pagerWidgetsClientlistResponse, error) {
-			req, err := client.listCreateRequest(ctx, options)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, options)
+			}, &runtime.FetcherForNextLinkOptions{
+				HTTPVerb: http.MethodPost,
+			})
 			if err != nil {
 				return pagerWidgetsClientlistResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return pagerWidgetsClientlistResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return pagerWidgetsClientlistResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -46,7 +47,7 @@ func (client *PagerWidgetsClient) newListPager(options *pagerWidgetsClientlistOp
 // listCreateRequest creates the list request.
 func (client *PagerWidgetsClient) listCreateRequest(ctx context.Context, _ *pagerWidgetsClientlistOptions) (*policy.Request, error) {
 	urlPath := "/widgets"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
