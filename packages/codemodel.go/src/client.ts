@@ -52,7 +52,7 @@ export interface Constructable {
   kind: 'constructable';
 
   /** the client options type used in the constructors */
-  options: ClientOptionsType;
+  options?: ClientOptionsType;
 
   /** the constructor functions for a client */
   constructors: Array<Constructor>;
@@ -62,7 +62,7 @@ export interface Constructable {
 }
 
 /** the possible types used for the client options type */
-export type ClientOptionsType = type.ArmClientOptions | ClientOptions | OmitOptions;
+export type ClientOptionsType = type.ArmClientOptions | ClientOptions;
 
 /** the possible client parameter types */
 export type ClientParameter = ClientCredentialParameter | param.MethodParameter;
@@ -100,10 +100,6 @@ export interface ClientOptions {
 
   /** the parameters that belong to this options */
   parameters: Array<param.MethodParameter>;
-}
-
-export interface OmitOptions {
-  kind: 'omitOptions';
 }
 
 /** a client constructor function */
@@ -341,7 +337,7 @@ export class ClientAccessor implements ClientAccessor {
 }
 
 export class Constructable implements Constructable {
-  constructor(options: ClientOptionsType) {
+  constructor(options?: ClientOptionsType) {
     this.kind = 'constructable';
     this.options = options;
     this.constructors = new Array<Constructor>();
@@ -362,12 +358,6 @@ export class ClientOptions implements ClientOptions {
     this.name = name;
     this.docs = {};
     this.parameters = new Array<param.MethodParameter>();
-  }
-}
-
-export class OmitOptions implements OmitOptions {
-  constructor() {
-    this.kind = 'omitOptions';
   }
 }
 

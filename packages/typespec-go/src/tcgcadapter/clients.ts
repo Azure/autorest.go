@@ -12,6 +12,7 @@ import { capitalize, createOptionsTypeDescription, createResponseEnvelopeDescrip
 import { AdapterError } from './errors.js';
 import { GoEmitterOptions } from '../lib.js';
 import { isTypePassedByValue, typeAdapter } from './types.js';
+import { ClientOptionsType } from '../../../codemodel.go/src/index.js';
 
 // used to convert SDK clients and their methods to Go code model types
 export class clientAdapter {
@@ -159,7 +160,10 @@ export class clientAdapter {
 
     // anything other than public means non-instantiable client
     if (sdkClient.clientInitialization.initializedBy & tcgc.InitializedByFlags.Individually) {
-      const options = (authType === AuthTypes.OmitAuth) ? new go.OmitOptions() : go.newClientOptions(this.ta.codeModel.type, clientName);
+      let options : ClientOptionsType | undefined;
+      if (authType !== AuthTypes.OmitAuth) {
+        options = go.newClientOptions(this.ta.codeModel.type, clientName);
+      }
       goClient.instance = new go.Constructable(options);
       for (const param of sdkClient.clientInitialization.parameters) {
         switch (param.kind) {

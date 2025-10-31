@@ -171,7 +171,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
  * @returns the client constructor code or the empty string
  */
 function generateConstructors(client: go.Client, type: go.CodeModelType, imports: ImportManager): string {
-  if (client.instance?.kind !== 'constructable' || client.instance?.options.kind === 'omitOptions') {
+  if (client.instance?.kind !== 'constructable' || client.instance.options === undefined) {
     return '';
   }
 
