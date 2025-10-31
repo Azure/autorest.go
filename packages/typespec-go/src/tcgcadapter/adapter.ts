@@ -40,6 +40,7 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
     context.options['disallow-unknown-fields'] === true,
     context.options['generate-examples'] === true || context.options['generate-samples'] === true // generate-examples has been deprecated, for compat we still support it.
   );
+  options.licenseText = sdkContext.sdkPackage.licenseInfo?.description;
   if (context.options['azcore-version']) {
     options.azcoreVersion = context.options['azcore-version'];
   }
