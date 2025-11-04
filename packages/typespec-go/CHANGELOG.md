@@ -4,7 +4,7 @@
 
 ### Bugs Fixed
 
-* Fixed so ClientOptions is not generated when omit-constructors is set to true
+* Omit client options type when `omit-constructors` is set to true
 
 ### Features Added
 
