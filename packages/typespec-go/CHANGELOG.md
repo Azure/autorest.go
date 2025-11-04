@@ -1,5 +1,9 @@
 # Release History
 
+## 0.8.3 (unreleased)
+
+* Fixed so ClientOptions is not generated when omit-constructors is set to true
+
 ## 0.8.3 (2025-10-14)
 
 ### Bugs Fixed
