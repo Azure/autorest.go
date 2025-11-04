@@ -21,6 +21,7 @@ import { generateTimeHelpers } from '../../codegen.go/src/time.js';
 import { generateServers } from '../../codegen.go/src/fake/servers.js';
 import { generateServerFactory } from '../../codegen.go/src/fake/factory.js';
 import { generateXMLAdditionalPropsHelpers } from '../../codegen.go/src/xmlAdditionalProps.js';
+import { generateLicenseTxt } from '../../codegen.go/src/license.js';
 import { generateMetadataFile } from '../../codegen.go/src/metadata.js';
 import { generateVersionInfo } from '../../codegen.go/src/version.js';
 import { CodeModelError } from '../../codemodel.go/src/errors.js';
@@ -224,6 +225,13 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
     const metedataDir = context.emitterOutputDir + '/testdata';
     await mkdir(metedataDir, { recursive: true });
     await writeFile(`${metedataDir}/_metadata.json`, metadata);
+  }
+
+  // don't overwrite an existing LICENSE.txt file
+  const licenseTxt = generateLicenseTxt(codeModel);
+  const licenseTxtFileName = `${context.emitterOutputDir}/LICENSE.txt`;
+  if (licenseTxt && !existsSync(licenseTxtFileName)) {
+    await writeFile(licenseTxtFileName, licenseTxt);
   }
 
   let filePrefix = '';

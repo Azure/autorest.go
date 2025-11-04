@@ -3,6 +3,12 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+// NOTE: you MUST NOT change anything in this
+// as it's shared between the autorest and tsp
+// emitters! if you need to add to this list, do
+// it per emitter!
+
+/** acronyms that will automatically be upper-cased */
 export const CommonAcronyms = [
   '^aad$',
   '^acl', // to match Acls
@@ -25,7 +31,6 @@ export const CommonAcronyms = [
   '^(ip)s?$',
   '^(ips)ec',
   '^(ip)[vV]\\d',
-  '^iso\\d+$',
   '^json$',
   '^lhs$',
   '^mbcs$',

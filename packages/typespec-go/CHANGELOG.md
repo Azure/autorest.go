@@ -1,8 +1,14 @@
 # Release History
 
-## 0.8.3 (unreleased)
+## 0.8.4 (unreleased)
+
+### Bugs Fixed
 
 * Fixed so ClientOptions is not generated when omit-constructors is set to true
+
+### Features Added
+
+* Emit `LICENSE.txt` file (defaults to MIT license with a Microsoft Copyright).
 
 ## 0.8.3 (2025-10-14)
 
