@@ -2,6 +2,10 @@
 
 ## 0.8.4 (unreleased)
 
+### Bugs Fixed
+
+* Omit client options type when `omit-constructors` is set to true
+
 ### Features Added
 
 * Emit `LICENSE.txt` file (defaults to MIT license with a Microsoft Copyright).
