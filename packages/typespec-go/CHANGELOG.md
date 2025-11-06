@@ -10,6 +10,10 @@
 
 * Emit `LICENSE.txt` file (defaults to MIT license with a Microsoft Copyright).
 
+### Other Changes
+
+* Updated the minimum version of `azcore` to `v1.20.0`.
+
 ## 0.8.3 (2025-10-14)
 
 ### Bugs Fixed
