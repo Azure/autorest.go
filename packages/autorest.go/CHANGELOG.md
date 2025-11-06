@@ -10,6 +10,10 @@
 
 * Emit empty path param check for path collection parameters.
 
+### Other Changes
+
+* Updated the minimum version of `azcore` to `v1.20.0`.
+
 ## 4.0.0-preview.74 (2025-09-05)
 
 ### Breaking Changes
