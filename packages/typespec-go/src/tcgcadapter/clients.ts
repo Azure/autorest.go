@@ -558,7 +558,7 @@ export class clientAdapter {
       // most params have a one-to-one mapping. however, for spread params, there will
       // be a many-to-one mapping. i.e. multiple params will map to the same underlying
       // operation param. each param corresponds to a field within the operation param.
-      let opParam = values(allOpParams).where((opParam: OperationParamType) => {
+      const opParam = values(allOpParams).where((opParam: OperationParamType) => {
         return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
           if (param.type.kind === 'model') {
             for (const property of param.type.properties) {
