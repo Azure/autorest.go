@@ -1,6 +1,6 @@
 # Release History
 
-## 4.0.0-preview.75 (unreleased)
+## 4.0.0-preview.75 (2025-11-07)
 
 ### Breaking Changes
 
@@ -12,6 +12,7 @@
 
 ### Other Changes
 
+* Fixed doc comment for client options parameter.
 * Updated the minimum version of `azcore` to `v1.20.0`.
 
 ## 4.0.0-preview.74 (2025-09-05)
