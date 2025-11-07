@@ -576,20 +576,6 @@ export class clientAdapter {
         continue;
       }
 
-      // special handling for `@bodyRoot`/`@body` on model param's property
-      if (!opParam && param.type.kind === 'model') {
-        for (const property of param.type.properties) {
-          opParam = values(allOpParams).where((opParam: OperationParamType) => {
-            return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
-              return methodParam === property;
-            }).any();
-          }).first();
-          if (opParam) {
-            break;
-          }
-        }
-      }
-
       if (!opParam) {
         throw new AdapterError('InternalError', `didn't find operation parameter for method ${sdkMethod.name} parameter ${param.name}`, sdkMethod.__raw?.node ?? NoTarget);
       }
