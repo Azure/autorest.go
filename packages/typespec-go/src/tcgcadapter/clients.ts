@@ -595,6 +595,7 @@ export class clientAdapter {
 
           if (!propertyOpParam || propertyOpParam.kind === 'body') {
             // If any property doesn't map to an HTTP param or is a body param, it's not a parameter group
+            // TODO: Leverage body parameter as a part of parameter group
             isParameterGroup = false;
             break;
           }
