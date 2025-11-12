@@ -269,6 +269,56 @@ func (client *DurationPropertyClient) floatMillisecondsArrayHandleResponse(resp 
 	return result, nil
 }
 
+// FloatMillisecondsLargerUnit -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationPropertyClientFloatMillisecondsLargerUnitOptions contains the optional parameters for the DurationPropertyClient.FloatMillisecondsLargerUnit
+//     method.
+func (client *DurationPropertyClient) FloatMillisecondsLargerUnit(ctx context.Context, body FloatMillisecondsLargerUnitDurationProperty, options *DurationPropertyClientFloatMillisecondsLargerUnitOptions) (DurationPropertyClientFloatMillisecondsLargerUnitResponse, error) {
+	var err error
+	const operationName = "DurationPropertyClient.FloatMillisecondsLargerUnit"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.floatMillisecondsLargerUnitCreateRequest(ctx, body, options)
+	if err != nil {
+		return DurationPropertyClientFloatMillisecondsLargerUnitResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationPropertyClientFloatMillisecondsLargerUnitResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationPropertyClientFloatMillisecondsLargerUnitResponse{}, err
+	}
+	resp, err := client.floatMillisecondsLargerUnitHandleResponse(httpResp)
+	return resp, err
+}
+
+// floatMillisecondsLargerUnitCreateRequest creates the FloatMillisecondsLargerUnit request.
+func (client *DurationPropertyClient) floatMillisecondsLargerUnitCreateRequest(ctx context.Context, body FloatMillisecondsLargerUnitDurationProperty, _ *DurationPropertyClientFloatMillisecondsLargerUnitOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/property/float-milliseconds-larger-unit"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// floatMillisecondsLargerUnitHandleResponse handles the FloatMillisecondsLargerUnit response.
+func (client *DurationPropertyClient) floatMillisecondsLargerUnitHandleResponse(resp *http.Response) (DurationPropertyClientFloatMillisecondsLargerUnitResponse, error) {
+	result := DurationPropertyClientFloatMillisecondsLargerUnitResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.FloatMillisecondsLargerUnitDurationProperty); err != nil {
+		return DurationPropertyClientFloatMillisecondsLargerUnitResponse{}, err
+	}
+	return result, nil
+}
+
 // FloatSeconds -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationPropertyClientFloatSecondsOptions contains the optional parameters for the DurationPropertyClient.FloatSeconds
@@ -365,6 +415,56 @@ func (client *DurationPropertyClient) floatSecondsArrayHandleResponse(resp *http
 	result := DurationPropertyClientFloatSecondsArrayResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FloatSecondsDurationArrayProperty); err != nil {
 		return DurationPropertyClientFloatSecondsArrayResponse{}, err
+	}
+	return result, nil
+}
+
+// FloatSecondsLargerUnit -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationPropertyClientFloatSecondsLargerUnitOptions contains the optional parameters for the DurationPropertyClient.FloatSecondsLargerUnit
+//     method.
+func (client *DurationPropertyClient) FloatSecondsLargerUnit(ctx context.Context, body FloatSecondsLargerUnitDurationProperty, options *DurationPropertyClientFloatSecondsLargerUnitOptions) (DurationPropertyClientFloatSecondsLargerUnitResponse, error) {
+	var err error
+	const operationName = "DurationPropertyClient.FloatSecondsLargerUnit"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.floatSecondsLargerUnitCreateRequest(ctx, body, options)
+	if err != nil {
+		return DurationPropertyClientFloatSecondsLargerUnitResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationPropertyClientFloatSecondsLargerUnitResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationPropertyClientFloatSecondsLargerUnitResponse{}, err
+	}
+	resp, err := client.floatSecondsLargerUnitHandleResponse(httpResp)
+	return resp, err
+}
+
+// floatSecondsLargerUnitCreateRequest creates the FloatSecondsLargerUnit request.
+func (client *DurationPropertyClient) floatSecondsLargerUnitCreateRequest(ctx context.Context, body FloatSecondsLargerUnitDurationProperty, _ *DurationPropertyClientFloatSecondsLargerUnitOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/property/float-seconds-larger-unit"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// floatSecondsLargerUnitHandleResponse handles the FloatSecondsLargerUnit response.
+func (client *DurationPropertyClient) floatSecondsLargerUnitHandleResponse(resp *http.Response) (DurationPropertyClientFloatSecondsLargerUnitResponse, error) {
+	result := DurationPropertyClientFloatSecondsLargerUnitResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.FloatSecondsLargerUnitDurationProperty); err != nil {
+		return DurationPropertyClientFloatSecondsLargerUnitResponse{}, err
 	}
 	return result, nil
 }
@@ -469,6 +569,56 @@ func (client *DurationPropertyClient) int32MillisecondsHandleResponse(resp *http
 	return result, nil
 }
 
+// Int32MillisecondsLargerUnit -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationPropertyClientInt32MillisecondsLargerUnitOptions contains the optional parameters for the DurationPropertyClient.Int32MillisecondsLargerUnit
+//     method.
+func (client *DurationPropertyClient) Int32MillisecondsLargerUnit(ctx context.Context, body Int32MillisecondsLargerUnitDurationProperty, options *DurationPropertyClientInt32MillisecondsLargerUnitOptions) (DurationPropertyClientInt32MillisecondsLargerUnitResponse, error) {
+	var err error
+	const operationName = "DurationPropertyClient.Int32MillisecondsLargerUnit"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.int32MillisecondsLargerUnitCreateRequest(ctx, body, options)
+	if err != nil {
+		return DurationPropertyClientInt32MillisecondsLargerUnitResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationPropertyClientInt32MillisecondsLargerUnitResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationPropertyClientInt32MillisecondsLargerUnitResponse{}, err
+	}
+	resp, err := client.int32MillisecondsLargerUnitHandleResponse(httpResp)
+	return resp, err
+}
+
+// int32MillisecondsLargerUnitCreateRequest creates the Int32MillisecondsLargerUnit request.
+func (client *DurationPropertyClient) int32MillisecondsLargerUnitCreateRequest(ctx context.Context, body Int32MillisecondsLargerUnitDurationProperty, _ *DurationPropertyClientInt32MillisecondsLargerUnitOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/property/int32-milliseconds-larger-unit"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// int32MillisecondsLargerUnitHandleResponse handles the Int32MillisecondsLargerUnit response.
+func (client *DurationPropertyClient) int32MillisecondsLargerUnitHandleResponse(resp *http.Response) (DurationPropertyClientInt32MillisecondsLargerUnitResponse, error) {
+	result := DurationPropertyClientInt32MillisecondsLargerUnitResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Int32MillisecondsLargerUnitDurationProperty); err != nil {
+		return DurationPropertyClientInt32MillisecondsLargerUnitResponse{}, err
+	}
+	return result, nil
+}
+
 // Int32Seconds -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationPropertyClientInt32SecondsOptions contains the optional parameters for the DurationPropertyClient.Int32Seconds
@@ -515,6 +665,56 @@ func (client *DurationPropertyClient) int32SecondsHandleResponse(resp *http.Resp
 	result := DurationPropertyClientInt32SecondsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32SecondsDurationProperty); err != nil {
 		return DurationPropertyClientInt32SecondsResponse{}, err
+	}
+	return result, nil
+}
+
+// Int32SecondsLargerUnit -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationPropertyClientInt32SecondsLargerUnitOptions contains the optional parameters for the DurationPropertyClient.Int32SecondsLargerUnit
+//     method.
+func (client *DurationPropertyClient) Int32SecondsLargerUnit(ctx context.Context, body Int32SecondsLargerUnitDurationProperty, options *DurationPropertyClientInt32SecondsLargerUnitOptions) (DurationPropertyClientInt32SecondsLargerUnitResponse, error) {
+	var err error
+	const operationName = "DurationPropertyClient.Int32SecondsLargerUnit"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.int32SecondsLargerUnitCreateRequest(ctx, body, options)
+	if err != nil {
+		return DurationPropertyClientInt32SecondsLargerUnitResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationPropertyClientInt32SecondsLargerUnitResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationPropertyClientInt32SecondsLargerUnitResponse{}, err
+	}
+	resp, err := client.int32SecondsLargerUnitHandleResponse(httpResp)
+	return resp, err
+}
+
+// int32SecondsLargerUnitCreateRequest creates the Int32SecondsLargerUnit request.
+func (client *DurationPropertyClient) int32SecondsLargerUnitCreateRequest(ctx context.Context, body Int32SecondsLargerUnitDurationProperty, _ *DurationPropertyClientInt32SecondsLargerUnitOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/property/int32-seconds-larger-unit"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// int32SecondsLargerUnitHandleResponse handles the Int32SecondsLargerUnit response.
+func (client *DurationPropertyClient) int32SecondsLargerUnitHandleResponse(resp *http.Response) (DurationPropertyClientInt32SecondsLargerUnitResponse, error) {
+	result := DurationPropertyClientInt32SecondsLargerUnitResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Int32SecondsLargerUnitDurationProperty); err != nil {
+		return DurationPropertyClientInt32SecondsLargerUnitResponse{}, err
 	}
 	return result, nil
 }

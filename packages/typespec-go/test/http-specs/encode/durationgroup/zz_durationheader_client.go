@@ -165,6 +165,42 @@ func (client *DurationHeaderClient) floatMillisecondsCreateRequest(ctx context.C
 	return req, nil
 }
 
+// FloatMillisecondsLargerUnit -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationHeaderClientFloatMillisecondsLargerUnitOptions contains the optional parameters for the DurationHeaderClient.FloatMillisecondsLargerUnit
+//     method.
+func (client *DurationHeaderClient) FloatMillisecondsLargerUnit(ctx context.Context, duration float32, options *DurationHeaderClientFloatMillisecondsLargerUnitOptions) (DurationHeaderClientFloatMillisecondsLargerUnitResponse, error) {
+	var err error
+	const operationName = "DurationHeaderClient.FloatMillisecondsLargerUnit"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.floatMillisecondsLargerUnitCreateRequest(ctx, duration, options)
+	if err != nil {
+		return DurationHeaderClientFloatMillisecondsLargerUnitResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationHeaderClientFloatMillisecondsLargerUnitResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationHeaderClientFloatMillisecondsLargerUnitResponse{}, err
+	}
+	return DurationHeaderClientFloatMillisecondsLargerUnitResponse{}, nil
+}
+
+// floatMillisecondsLargerUnitCreateRequest creates the FloatMillisecondsLargerUnit request.
+func (client *DurationHeaderClient) floatMillisecondsLargerUnitCreateRequest(ctx context.Context, duration float32, _ *DurationHeaderClientFloatMillisecondsLargerUnitOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/header/float-milliseconds-larger-unit"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["duration"] = []string{strconv.FormatFloat(float64(duration), 'f', -1, 32)}
+	return req, nil
+}
+
 // FloatSeconds -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationHeaderClientFloatSecondsOptions contains the optional parameters for the DurationHeaderClient.FloatSeconds
@@ -193,6 +229,42 @@ func (client *DurationHeaderClient) FloatSeconds(ctx context.Context, duration f
 // floatSecondsCreateRequest creates the FloatSeconds request.
 func (client *DurationHeaderClient) floatSecondsCreateRequest(ctx context.Context, duration float32, _ *DurationHeaderClientFloatSecondsOptions) (*policy.Request, error) {
 	urlPath := "/encode/duration/header/float-seconds"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["duration"] = []string{strconv.FormatFloat(float64(duration), 'f', -1, 32)}
+	return req, nil
+}
+
+// FloatSecondsLargerUnit -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationHeaderClientFloatSecondsLargerUnitOptions contains the optional parameters for the DurationHeaderClient.FloatSecondsLargerUnit
+//     method.
+func (client *DurationHeaderClient) FloatSecondsLargerUnit(ctx context.Context, duration float32, options *DurationHeaderClientFloatSecondsLargerUnitOptions) (DurationHeaderClientFloatSecondsLargerUnitResponse, error) {
+	var err error
+	const operationName = "DurationHeaderClient.FloatSecondsLargerUnit"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.floatSecondsLargerUnitCreateRequest(ctx, duration, options)
+	if err != nil {
+		return DurationHeaderClientFloatSecondsLargerUnitResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationHeaderClientFloatSecondsLargerUnitResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationHeaderClientFloatSecondsLargerUnitResponse{}, err
+	}
+	return DurationHeaderClientFloatSecondsLargerUnitResponse{}, nil
+}
+
+// floatSecondsLargerUnitCreateRequest creates the FloatSecondsLargerUnit request.
+func (client *DurationHeaderClient) floatSecondsLargerUnitCreateRequest(ctx context.Context, duration float32, _ *DurationHeaderClientFloatSecondsLargerUnitOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/header/float-seconds-larger-unit"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
@@ -344,6 +416,42 @@ func (client *DurationHeaderClient) int32MillisecondsArrayCreateRequest(ctx cont
 	return req, nil
 }
 
+// Int32MillisecondsLargerUnit -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationHeaderClientInt32MillisecondsLargerUnitOptions contains the optional parameters for the DurationHeaderClient.Int32MillisecondsLargerUnit
+//     method.
+func (client *DurationHeaderClient) Int32MillisecondsLargerUnit(ctx context.Context, duration int32, options *DurationHeaderClientInt32MillisecondsLargerUnitOptions) (DurationHeaderClientInt32MillisecondsLargerUnitResponse, error) {
+	var err error
+	const operationName = "DurationHeaderClient.Int32MillisecondsLargerUnit"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.int32MillisecondsLargerUnitCreateRequest(ctx, duration, options)
+	if err != nil {
+		return DurationHeaderClientInt32MillisecondsLargerUnitResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationHeaderClientInt32MillisecondsLargerUnitResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationHeaderClientInt32MillisecondsLargerUnitResponse{}, err
+	}
+	return DurationHeaderClientInt32MillisecondsLargerUnitResponse{}, nil
+}
+
+// int32MillisecondsLargerUnitCreateRequest creates the Int32MillisecondsLargerUnit request.
+func (client *DurationHeaderClient) int32MillisecondsLargerUnitCreateRequest(ctx context.Context, duration int32, _ *DurationHeaderClientInt32MillisecondsLargerUnitOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/header/int32-milliseconds-larger-unit"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["duration"] = []string{strconv.FormatInt(int64(duration), 10)}
+	return req, nil
+}
+
 // Int32Seconds -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationHeaderClientInt32SecondsOptions contains the optional parameters for the DurationHeaderClient.Int32Seconds
@@ -372,6 +480,42 @@ func (client *DurationHeaderClient) Int32Seconds(ctx context.Context, duration i
 // int32SecondsCreateRequest creates the Int32Seconds request.
 func (client *DurationHeaderClient) int32SecondsCreateRequest(ctx context.Context, duration int32, _ *DurationHeaderClientInt32SecondsOptions) (*policy.Request, error) {
 	urlPath := "/encode/duration/header/int32-seconds"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["duration"] = []string{strconv.FormatInt(int64(duration), 10)}
+	return req, nil
+}
+
+// Int32SecondsLargerUnit -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationHeaderClientInt32SecondsLargerUnitOptions contains the optional parameters for the DurationHeaderClient.Int32SecondsLargerUnit
+//     method.
+func (client *DurationHeaderClient) Int32SecondsLargerUnit(ctx context.Context, duration int32, options *DurationHeaderClientInt32SecondsLargerUnitOptions) (DurationHeaderClientInt32SecondsLargerUnitResponse, error) {
+	var err error
+	const operationName = "DurationHeaderClient.Int32SecondsLargerUnit"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.int32SecondsLargerUnitCreateRequest(ctx, duration, options)
+	if err != nil {
+		return DurationHeaderClientInt32SecondsLargerUnitResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationHeaderClientInt32SecondsLargerUnitResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationHeaderClientInt32SecondsLargerUnitResponse{}, err
+	}
+	return DurationHeaderClientInt32SecondsLargerUnitResponse{}, nil
+}
+
+// int32SecondsLargerUnitCreateRequest creates the Int32SecondsLargerUnit request.
+func (client *DurationHeaderClient) int32SecondsLargerUnitCreateRequest(ctx context.Context, duration int32, _ *DurationHeaderClientInt32SecondsLargerUnitOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/header/int32-seconds-larger-unit"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err

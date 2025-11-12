@@ -13,6 +13,7 @@
 ### Other Changes
 
 * Updated the minimum version of `azcore` to `v1.20.0`.
+* Updated to the latest tsp toolset.
 
 ## 0.8.3 (2025-10-14)
 
