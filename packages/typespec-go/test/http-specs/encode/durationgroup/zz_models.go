@@ -29,12 +29,22 @@ type FloatMillisecondsDurationProperty struct {
 	Value *float32
 }
 
+type FloatMillisecondsLargerUnitDurationProperty struct {
+	// REQUIRED
+	Value *float32
+}
+
 type FloatSecondsDurationArrayProperty struct {
 	// REQUIRED
 	Value []*float32
 }
 
 type FloatSecondsDurationProperty struct {
+	// REQUIRED
+	Value *float32
+}
+
+type FloatSecondsLargerUnitDurationProperty struct {
 	// REQUIRED
 	Value *float32
 }
@@ -49,7 +59,17 @@ type Int32MillisecondsDurationProperty struct {
 	Value *int32
 }
 
+type Int32MillisecondsLargerUnitDurationProperty struct {
+	// REQUIRED
+	Value *int32
+}
+
 type Int32SecondsDurationProperty struct {
+	// REQUIRED
+	Value *int32
+}
+
+type Int32SecondsLargerUnitDurationProperty struct {
 	// REQUIRED
 	Value *int32
 }
