@@ -580,78 +580,6 @@ export class clientAdapter {
         throw new AdapterError('InternalError', `didn't find operation parameter for method ${sdkMethod.name} parameter ${param.name}`, sdkMethod.__raw?.node ?? NoTarget);
       }
 
-      // Check if it is a parameter group
-      if (param.type.kind === 'model' && opParam.kind !== 'body') {
-        const modelProperties = param.type.properties;
-        const correspondingOpParams = new Array<OperationParamType>();
-        let isParameterGroup = true;
-
-        for (const property of modelProperties) {
-          const propertyOpParam = values(allOpParams).where((op: OperationParamType) => {
-            return values(op.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
-              return methodParam === property;
-            }).any();
-          }).first();
-
-          if (!propertyOpParam || propertyOpParam.kind === 'body') {
-            // If any property doesn't map to an HTTP param or is a body param, it's not a parameter group
-            // TODO: Leverage body parameter as a part of parameter group
-            isParameterGroup = false;
-            break;
-          }
-          correspondingOpParams.push(propertyOpParam);
-        }
-
-        // special handling for parameter group
-        if (isParameterGroup && correspondingOpParams.length > 0) {
-          // Create parameter group metadata to track which parameters belong to it.
-          const paramStyle = this.adaptParameterStyle(param);
-          const isRequired = go.isRequiredParameter(paramStyle);
-          
-          // Use the same naming approach as regular parameters for consistency
-          const paramGroupName = ensureNameCase(param.type.name);
-          const paramName = getEscapedReservedName(ensureNameCase(param.name, isRequired), 'Param');
-          
-          // Remove the model from codeModel.models if it is a parameter group
-          const modelIndex = this.ta.codeModel.models.findIndex(m => m.name === paramGroupName);
-          if (modelIndex >= 0) {
-            this.ta.codeModel.models.splice(modelIndex, 1);
-          }
-          
-          // Check if parameter group already exists
-          let paramGroup = parameterGroups.get(paramGroupName);
-          if (!paramGroup) {
-            paramGroup = new go.ParameterGroup(
-              paramName,
-              paramGroupName,
-              isRequired,
-              'method'
-            );
-            paramGroup.docs.summary = `${paramGroupName} contains a group of parameters for the ${method.receiver.type.name}.${method.name} method.`;
-            parameterGroups.set(paramGroupName, paramGroup);
-          }
-
-          // Add each property as a method parameter and associate with the group
-          for (let i = 0; i < modelProperties.length; i++) {
-            const property = modelProperties[i];
-            const propertyOpParam = correspondingOpParams[i];
-            const adaptedParam = this.adaptMethodParameter(propertyOpParam, method.httpMethod);
-            adaptedParam.docs.summary = property.summary;
-            adaptedParam.docs.description = property.doc;
-            adaptedParam.group = paramGroup;
-            method.parameters.push(adaptedParam);
-            paramGroup.params.push(adaptedParam);
-            
-            if (!paramMapping.has(propertyOpParam)) {
-              paramMapping.set(propertyOpParam, new Array<go.MethodParameter>());
-            }
-            paramMapping.get(propertyOpParam)?.push(adaptedParam);
-          }
-
-          continue;
-        }
-      }
-
       if (opParam.kind === 'header' && opParam.serializedName.match(/^content-type$/i) && param.type.kind === 'constant') {
         // if the body param is optional, then the content-type param is also optional.
         // for optional constants, this has the side effect of the param being treated like
@@ -710,6 +638,75 @@ export class clientAdapter {
             break;
           default:
             throw new AdapterError('UnsupportedTsp', `unsupported spread param content type ${contentType}`, opParam.__raw?.node ?? NoTarget);
+        }
+      } else if (param.type.kind === 'model' && opParam.kind !== 'body') {
+        // Attempt to handle as a parameter group for non-body parameter
+        // TODO: Leverage body parameter as a part of parameter group
+        const modelProperties = param.type.properties;
+        const correspondingOpParams = new Array<OperationParamType>();
+
+        // Validate all properties map to HTTP params
+        for (const property of modelProperties) {
+          const propertyOpParam = values(allOpParams).where((op: OperationParamType) => {
+            return values(op.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
+              return methodParam === property;
+            }).any();
+          }).first();
+
+          if (!propertyOpParam) {
+            // If any property doesn't map to HTTP param it's not a parameter group
+            break;
+          }
+          correspondingOpParams.push(propertyOpParam);
+        }
+        if (correspondingOpParams.length === 0) {
+          // No properties mapped to HTTP params, treat as regular parameter
+          adaptedParam = this.adaptMethodParameter(opParam, method.httpMethod);
+        } else {
+          // Create parameter group metadata to track which parameters belong to it.
+          const paramStyle = this.adaptParameterStyle(param);
+          const isRequired = go.isRequiredParameter(paramStyle);
+          
+          // Use the same naming approach as regular parameters for consistency
+          const paramGroupName = ensureNameCase(param.type.name);
+          const paramName = getEscapedReservedName(ensureNameCase(param.name, isRequired), 'Param');
+          
+          // Remove the model from codeModel.models if it is a parameter group
+          const modelIndex = this.ta.codeModel.models.findIndex(m => m.name === paramGroupName);
+          if (modelIndex >= 0) {
+            this.ta.codeModel.models.splice(modelIndex, 1);
+          }
+          
+          // Check if parameter group already exists
+          let paramGroup = parameterGroups.get(paramGroupName);
+          if (!paramGroup) {
+            paramGroup = new go.ParameterGroup(
+              paramName,
+              paramGroupName,
+              isRequired,
+              'method'
+            );
+            paramGroup.docs.summary = `${paramGroupName} contains a group of parameters for the ${method.receiver.type.name}.${method.name} method.`;
+            parameterGroups.set(paramGroupName, paramGroup);
+          }
+
+          // Add each property as a method parameter and associate with the group
+          for (let i = 0; i < modelProperties.length; i++) {
+            const property = modelProperties[i];
+            const propertyOpParam = correspondingOpParams[i];
+            const adaptedPropertyParam = this.adaptMethodParameter(propertyOpParam, method.httpMethod);
+            adaptedPropertyParam.docs.summary = property.summary;
+            adaptedPropertyParam.docs.description = property.doc;
+            adaptedPropertyParam.group = paramGroup;
+            method.parameters.push(adaptedPropertyParam);
+            paramGroup.params.push(adaptedPropertyParam);
+            
+            if (!paramMapping.has(propertyOpParam)) {
+              paramMapping.set(propertyOpParam, new Array<go.MethodParameter>());
+            }
+            paramMapping.get(propertyOpParam)?.push(adaptedPropertyParam);
+          }
+          continue; // Skip regular parameter handling
         }
       } else {
         adaptedParam = this.adaptMethodParameter(opParam, method.httpMethod);
