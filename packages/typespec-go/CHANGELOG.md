@@ -1,6 +1,6 @@
 # Release History
 
-## 0.8.4 (unreleased)
+## 0.8.4 (2025-11-13)
 
 ### Bugs Fixed
 
