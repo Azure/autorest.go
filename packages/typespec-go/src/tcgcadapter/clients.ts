@@ -426,9 +426,11 @@ export class clientAdapter {
         throw new AdapterError('UnsupportedTsp', `paging with re-injected parameters is not supported`, sdkMethod.__raw?.node ?? NoTarget);
       }
       method = new go.PageableMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
-      if (sdkMethod.pagingMetadata.nextLinkVerb && sdkMethod.pagingMetadata.nextLinkVerb !== 'GET') {
-        // we default to GET in the ctor for PageableMethod
+      if (sdkMethod.pagingMetadata.nextLinkVerb) {
         switch (sdkMethod.pagingMetadata.nextLinkVerb) {
+          case 'GET':
+            // we default to GET in the ctor for PageableMethod
+            break;
           case 'POST':
             method.nextLinkVerb = 'post';
             break;
