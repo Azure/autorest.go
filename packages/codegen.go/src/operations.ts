@@ -568,6 +568,8 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, i
       // add a definition for the nextReq func that uses the nextLinkOperation
       text += '&runtime.FetcherForNextLinkOptions{\n\t\t\t\tNextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {\n';
       text += `\t\t\t\t\treturn client.${method.nextPageMethod.name}(${nextOpParams.join(', ')})\n\t\t\t\t},\n\t\t\t})\n`;
+    } else if (method.nextLinkVerb !== 'get') {
+      text += `&runtime.FetcherForNextLinkOptions{\n\t\t\t\tHTTPVerb: http.Method${capitalize(method.nextLinkVerb)},\n\t\t\t})\n`;
     } else {
       text += 'nil)\n';
     }

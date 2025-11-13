@@ -1,6 +1,6 @@
 # Release History
 
-## 0.8.4 (unreleased)
+## 0.8.4 (2025-11-13)
 
 ### Bugs Fixed
 
@@ -9,6 +9,7 @@
 ### Features Added
 
 * Emit `LICENSE.txt` file (defaults to MIT license with a Microsoft Copyright).
+* Added support for `nextLinkVerb` for pageable operations.
 
 ### Other Changes
 
