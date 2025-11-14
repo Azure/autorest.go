@@ -9,7 +9,17 @@ type OverrideGroupParametersClientGroupResponse struct {
 	// placeholder for future response values
 }
 
+// OverrideRemoveOptionalParameterClientRemoveOptionalResponse contains the response from method OverrideRemoveOptionalParameterClient.RemoveOptional.
+type OverrideRemoveOptionalParameterClientRemoveOptionalResponse struct {
+	// placeholder for future response values
+}
+
 // OverrideReorderParametersClientReorderResponse contains the response from method OverrideReorderParametersClient.Reorder.
 type OverrideReorderParametersClientReorderResponse struct {
+	// placeholder for future response values
+}
+
+// OverrideRequireOptionalParameterClientRequireOptionalResponse contains the response from method OverrideRequireOptionalParameterClient.RequireOptional.
+type OverrideRequireOptionalParameterClientRequireOptionalResponse struct {
 	// placeholder for future response values
 }

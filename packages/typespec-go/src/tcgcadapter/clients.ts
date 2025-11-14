@@ -548,6 +548,9 @@ export class clientAdapter {
       allOpParams.push(sdkMethod.operation.bodyParam);
     }
 
+    // track parameter groups created from model types
+    const parameterGroups = new Map<string, go.ParameterGroup>();
+
     // we must enumerate parameters, not operation.parameters, as it
     // contains the params in tsp order as well as any spread params.
     for (const param of sdkMethod.parameters) {
@@ -555,7 +558,7 @@ export class clientAdapter {
       // most params have a one-to-one mapping. however, for spread params, there will
       // be a many-to-one mapping. i.e. multiple params will map to the same underlying
       // operation param. each param corresponds to a field within the operation param.
-      let opParam = values(allOpParams).where((opParam: OperationParamType) => {
+      const opParam = values(allOpParams).where((opParam: OperationParamType) => {
         return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
           if (param.type.kind === 'model') {
             for (const property of param.type.properties) {
@@ -571,20 +574,6 @@ export class clientAdapter {
       // special handling for constants that used in path, this will not be in operation parameters since it has been resolved in the url
       if (!opParam && param.type.kind === 'constant') {
         continue;
-      }
-
-      // special handling for `@bodyRoot`/`@body` on model param's property
-      if (!opParam && param.type.kind === 'model') {
-        for (const property of param.type.properties) {
-          opParam = values(allOpParams).where((opParam: OperationParamType) => {
-            return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
-              return methodParam === property;
-            }).any();
-          }).first();
-          if (opParam) {
-            break;
-          }
-        }
       }
 
       if (!opParam) {
@@ -648,6 +637,75 @@ export class clientAdapter {
           default:
             throw new AdapterError('UnsupportedTsp', `unsupported spread param content type ${contentType}`, opParam.__raw?.node ?? NoTarget);
         }
+      } else if (param.type.kind === 'model' && opParam.kind !== 'body') {
+        // Attempt to handle as a parameter group for non-body parameter
+        // TODO: Leverage body parameter as a part of parameter group
+        const modelProperties = param.type.properties;
+        const correspondingOpParams = new Array<OperationParamType>();
+
+        // Validate all properties map to HTTP params
+        for (const property of modelProperties) {
+          const propertyOpParam = values(allOpParams).where((op: OperationParamType) => {
+            return values(op.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
+              return methodParam === property;
+            }).any();
+          }).first();
+
+          if (!propertyOpParam) {
+            // If any property doesn't map to HTTP param it's not a parameter group
+            break;
+          }
+          correspondingOpParams.push(propertyOpParam);
+        }
+        if (correspondingOpParams.length === 0) {
+          // No properties mapped to HTTP params, treat as regular parameter
+          adaptedParam = this.adaptMethodParameter(opParam, method.httpMethod);
+        } else {
+          // Create parameter group metadata to track which parameters belong to it.
+          const paramStyle = this.adaptParameterStyle(param);
+          const isRequired = go.isRequiredParameter(paramStyle);
+          
+          // Use the same naming approach as regular parameters for consistency
+          const paramGroupName = ensureNameCase(param.type.name);
+          const paramName = getEscapedReservedName(ensureNameCase(param.name, isRequired), 'Param');
+          
+          // Remove the model from codeModel.models if it is a parameter group
+          const modelIndex = this.ta.codeModel.models.findIndex(m => m.name === paramGroupName);
+          if (modelIndex >= 0) {
+            this.ta.codeModel.models.splice(modelIndex, 1);
+          }
+          
+          // Check if parameter group already exists
+          let paramGroup = parameterGroups.get(paramGroupName);
+          if (!paramGroup) {
+            paramGroup = new go.ParameterGroup(
+              paramName,
+              paramGroupName,
+              isRequired,
+              'method'
+            );
+            paramGroup.docs.summary = `${paramGroupName} contains a group of parameters for the ${method.receiver.type.name}.${method.name} method.`;
+            parameterGroups.set(paramGroupName, paramGroup);
+          }
+
+          // Add each property as a method parameter and associate with the group
+          for (let i = 0; i < modelProperties.length; i++) {
+            const property = modelProperties[i];
+            const propertyOpParam = correspondingOpParams[i];
+            const adaptedPropertyParam = this.adaptMethodParameter(propertyOpParam, method.httpMethod);
+            adaptedPropertyParam.docs.summary = property.summary;
+            adaptedPropertyParam.docs.description = property.doc;
+            adaptedPropertyParam.group = paramGroup;
+            method.parameters.push(adaptedPropertyParam);
+            paramGroup.params.push(adaptedPropertyParam);
+            
+            if (!paramMapping.has(propertyOpParam)) {
+              paramMapping.set(propertyOpParam, new Array<go.MethodParameter>());
+            }
+            paramMapping.get(propertyOpParam)?.push(adaptedPropertyParam);
+          }
+          continue; // Skip regular parameter handling
+        }
       } else {
         adaptedParam = this.adaptMethodParameter(opParam, method.httpMethod);
       }
@@ -710,6 +768,11 @@ export class clientAdapter {
           }
         }
       }
+    }
+
+    // Add all parameter groups to the code model
+    for (const paramGroup of parameterGroups.values()) {
+      this.ta.codeModel.paramGroups.push(this.adaptParameterGroup(paramGroup));
     }
 
     return paramMapping;
