@@ -1220,7 +1220,10 @@ export class clientAdapter {
           }
           method.examples.push(goExample);
         } catch (error) {
+          if (error instanceof AdapterError) {
             throw new AdapterError(error.code, `${error.message} (example file: '${example.filePath}')`, error.target);
+          }
+          throw error;
         }
       }
     }
