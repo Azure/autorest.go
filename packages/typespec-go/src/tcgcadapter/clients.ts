@@ -1293,13 +1293,13 @@ export class clientAdapter {
             concreteType = goType;
           }
           if (concreteType === undefined) {
-            throw new AdapterError('InternalError', `can not find concrete type for example type ${exampleType.type.name}`, exampleType.type.__raw?.node ?? NoTarget);
+            throw new AdapterError('InternalError', `can not find concrete type for example type ${exampleType.type.name}`, NoTarget);
           }
           const ret = new go.StructExample(concreteType);
           for (const [k, v] of Object.entries(exampleType.value)) {
             const field = concreteType.fields.find(f => f.serializedName === k);
             if (!field) {
-              throw new AdapterError('InternalError', `field with serializedName '${k}' not found in model '${concreteType.name}'.`, exampleType.type.__raw?.node ?? NoTarget);
+              throw new AdapterError('InternalError', `field with serializedName '${k}' not found in model '${concreteType.name}'.`, NoTarget);
             }
             ret.value[field.name] = this.adaptExampleType(v, field.type);
           }
@@ -1308,12 +1308,12 @@ export class clientAdapter {
             for (const [k, v] of Object.entries(exampleType.additionalPropertiesValue)) {
               const filed = concreteType.fields.find(f => f.annotations.isAdditionalProperties);
               if (!filed) {
-                throw new AdapterError('InternalError', `additional properties field not found in model '${concreteType.name}'.`, exampleType.type.__raw?.node ?? NoTarget);
+                throw new AdapterError('InternalError', `additional properties field not found in model '${concreteType.name}'.`,NoTarget);
               }
               if (filed.type.kind === 'map') {
                 ret.additionalProperties[k] = this.adaptExampleType(v, filed.type.valueType);
               } else {
-                throw new AdapterError('InternalError', `additional properties field type should be map type, but got '${filed.type.kind}' in model '${concreteType.name}'`, exampleType.type.__raw?.node ?? NoTarget);
+                throw new AdapterError('InternalError', `additional properties field type should be map type, but got '${filed.type.kind}' in model '${concreteType.name}'`, NoTarget);
               }
             }
           }
