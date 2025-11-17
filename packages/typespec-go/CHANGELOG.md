@@ -2,6 +2,10 @@
 
 ## 0.8.6 (unreleased)
 
+### Bugs Fixed
+
+* Fixed etag example generation for escape string.
+
 ### Other Changes
 
 * Updated the minimum version of Go to `v1.24.0`.
