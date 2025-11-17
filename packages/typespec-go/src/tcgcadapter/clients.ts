@@ -1299,7 +1299,7 @@ export class clientAdapter {
           for (const [k, v] of Object.entries(exampleType.value)) {
             const field = concreteType.fields.find(f => f.serializedName === k);
             if (!field) {
-              throw new AdapterError('InternalError', `field with serializedName '${k}' not found in model '${concreteType.name}'. Available fields: ${concreteType.fields.map(f => f.serializedName).join(', ')}`, exampleType.type.__raw?.node ?? NoTarget);
+              throw new AdapterError('InternalError', `field with serializedName '${k}' not found in model '${concreteType.name}'.`, exampleType.type.__raw?.node ?? NoTarget);
             }
             ret.value[field.name] = this.adaptExampleType(v, field.type);
           }
@@ -1308,7 +1308,7 @@ export class clientAdapter {
             for (const [k, v] of Object.entries(exampleType.additionalPropertiesValue)) {
               const filed = concreteType.fields.find(f => f.annotations.isAdditionalProperties);
               if (!filed) {
-                throw new AdapterError('InternalError', `additional properties field not found in model '${concreteType.name}'. Ensure the model has a field marked with isAdditionalProperties annotation.`, exampleType.type.__raw?.node ?? NoTarget);
+                throw new AdapterError('InternalError', `additional properties field not found in model '${concreteType.name}'.`, exampleType.type.__raw?.node ?? NoTarget);
               }
               if (filed.type.kind === 'map') {
                 ret.additionalProperties[k] = this.adaptExampleType(v, filed.type.valueType);
