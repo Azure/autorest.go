@@ -31,7 +31,7 @@
           "lastModifiedBy": "User2",
           "lastModifiedByType": "User"
         },
-        "etag": "etag"
+        "etag": "\"etag\""
       }
     }
   },
