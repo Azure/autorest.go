@@ -4,7 +4,7 @@
 
 ### Bugs Fixed
 
-* Fixed etag example generation to escape string.
+* Fixed etag example generation for escaped string.
 
 ## 0.8.4 (2025-11-13)
 
