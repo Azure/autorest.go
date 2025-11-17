@@ -1284,7 +1284,7 @@ export class clientAdapter {
           let concreteType: go.Model | go.PolymorphicModel | undefined;
           if (goType.kind === 'interface') {
             /* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */
-            concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue)!;
+            concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue);
             if (concreteType === undefined) {
               // can't find the sub type of a discriminated type, fallback to the base type
               concreteType = goType.rootType;
@@ -1293,21 +1293,27 @@ export class clientAdapter {
             concreteType = goType;
           }
           if (concreteType === undefined) {
-            throw new AdapterError('InternalError', `can not find concrete type for example type ${exampleType.type.name}`, NoTarget);
+            throw new AdapterError('InternalError', `can not find concrete type for example type ${exampleType.type.name}`, exampleType.type.__raw?.node ?? NoTarget);
           }
           const ret = new go.StructExample(concreteType);
           for (const [k, v] of Object.entries(exampleType.value)) {
-            const field = concreteType.fields.find(f => f.serializedName === k)!;
+            const field = concreteType.fields.find(f => f.serializedName === k);
+            if (!field) {
+              throw new AdapterError('InternalError', `field with serializedName '${k}' not found in model '${concreteType.name}'. Available fields: ${concreteType.fields.map(f => f.serializedName).join(', ')}`, exampleType.type.__raw?.node ?? NoTarget);
+            }
             ret.value[field.name] = this.adaptExampleType(v, field.type);
           }
           if (exampleType.additionalPropertiesValue) {
             ret.additionalProperties = {};
             for (const [k, v] of Object.entries(exampleType.additionalPropertiesValue)) {
-              const filed = concreteType.fields.find(f => f.annotations.isAdditionalProperties)!;
+              const filed = concreteType.fields.find(f => f.annotations.isAdditionalProperties);
+              if (!filed) {
+                throw new AdapterError('InternalError', `additional properties field not found in model '${concreteType.name}'. Ensure the model has a field marked with isAdditionalProperties annotation.`, exampleType.type.__raw?.node ?? NoTarget);
+              }
               if (filed.type.kind === 'map') {
                 ret.additionalProperties[k] = this.adaptExampleType(v, filed.type.valueType);
               } else {
-                throw new AdapterError('InternalError', `additional properties field type should be map type`, NoTarget);
+                throw new AdapterError('InternalError', `additional properties field type should be map type, but got '${filed.type.kind}' in model '${concreteType.name}'`, exampleType.type.__raw?.node ?? NoTarget);
               }
             }
           }
