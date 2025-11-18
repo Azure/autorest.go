@@ -1,5 +1,11 @@
 # Release History
 
+## 0.8.5 (unreleased)
+
+### Bugs Fixed
+
+* Fixed etag example generation for escaped string.
+
 ## 0.8.4 (2025-11-13)
 
 ### Bugs Fixed

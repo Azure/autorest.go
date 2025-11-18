@@ -240,7 +240,7 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
         exampleText = getConstantValue(codeModel, example.type.type, example.type.literal.value);
       } else if (example.type.kind === 'etag') {
         imports?.add(example.type.module);
-        return `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}(${jsonToGo(example.value, '')})`;
+        exampleText = `${go.getTypeDeclaration(example.type, codeModel.packageName)}("${escapeString(example.value)}")`;
       }
       return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
     }
@@ -371,6 +371,7 @@ function getPointerValue(type: go.WireType, valueString: string, byValue: boolea
   switch (type.kind) {
     case 'any':
     case 'constant':
+    case 'etag':
     case 'literal':
     case 'string':
     case 'time':
