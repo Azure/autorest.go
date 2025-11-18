@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 import { exec, execSync } from 'child_process';
-import { existsSync, readFileSync, writeFileSync } from 'fs';
+import { existsSync, opendirSync, unlinkSync, readFileSync, writeFileSync } from 'fs';
 import { semaphore } from '../../../.scripts/semaphore.js';
 
 // limit to 8 concurrent builds
@@ -220,6 +220,9 @@ generate('nooptionalbody', nooptionalbody, 'test/local/nooptionalbody', ['genera
 const rawjson = pkgRoot + 'test/tsp/RawJson';
 generate('rawjson', rawjson, 'test/local/rawjson/subpkg', ['containing-module=rawjson/v2', 'rawjson-as-bytes=true']);
 
+const azregressions = pkgRoot + 'test/tsp/Regressions';
+generate('azregressions', azregressions, 'test/local/azregressions');
+
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
 
@@ -333,6 +336,9 @@ function generate(moduleName, input, outputDir, perTestOptions) {
             metadata.emitterVersion = '0.0.0';
             writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
           }
+        } else {
+          // delete files on error so it's easy to spot codegen failures
+          cleanGeneratedFiles(fullOutputDir);
         }
       });
     } catch (err) {
@@ -350,6 +356,25 @@ function generate(moduleName, input, outputDir, perTestOptions) {
       sem.leave();
     }
   });
+}
+
+function cleanGeneratedFiles(outputDir) {
+  if (!existsSync(outputDir)) {
+      return;
+  }
+  const dir = opendirSync(outputDir);
+  while (true) {
+      const dirEnt = dir.readSync()
+      if (dirEnt === null) {
+          break;
+      }
+      // preserve the version.go file so we can test the v2+ major version scenario
+      if (dirEnt.isFile() && dirEnt.name.startsWith('zz_') && dirEnt.name !== 'zz_version.go') {
+          unlinkSync(dir.path + '/' + dirEnt.name);
+      }
+  }
+  dir.close();
+  cleanGeneratedFiles(outputDir + '/fake');
 }
 
 function logResult(error, stdout, stderr) {

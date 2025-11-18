@@ -1,5 +1,13 @@
 # Release History
 
+## 0.8.5 (2025-11-18)
+
+### Bugs Fixed
+
+* Fixed improper handling of spread params in some cases which would cause code generation to fail.
+* Fixed missing package prefix for types in spread params models used in fakes.
+* Fixed handling of supplemental endpoint data that could cause an unused import of `strings` in some cases.
+
 ## 0.8.4 (2025-11-13)
 
 ### Bugs Fixed

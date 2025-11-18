@@ -603,7 +603,9 @@ export class clientAdapter {
       }
 
       let adaptedParam: go.MethodParameter;
-      if (opParam.kind === 'body' && opParam.type.kind === 'model' && opParam.type.kind !== param.type.kind) {
+      // for the @bodyRoot decorator opParam.type !== param.type which is obviously not a
+      // spread parameter. we also need to check the usage flag to disambiguate these cases.
+      if (opParam.kind === 'body' && opParam.type.kind === 'model' && opParam.type !== param.type && (opParam.type.usage & tcgc.UsageFlags.Spread)) {
         const paramStyle = this.adaptParameterStyle(param);
         const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');
         // if the param is required then it's always passed by value

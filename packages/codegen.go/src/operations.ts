@@ -361,14 +361,19 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
 
     // construct the supplemental path and join it to the endpoint
     if (client.instance.endpoint?.supplemental) {
-      imports.add('strings');
-      ctorText += `\thost := "${client.instance.endpoint.supplemental.path}"\n`;
-      for (const param of client.instance.endpoint.supplemental.parameters) {
-        ctorText += `\thost = strings.ReplaceAll(host, "{${param.uriPathSegment}}", ${helpers.formatValue(param.name, param.type, imports)})\n`;
-      }
       // the endpoint param is always the first ctor param
       const endpointParam = client.instance.constructors[0].parameters[0];
-      ctorText += `\t${endpointParam.name} = runtime.JoinPaths(${endpointParam.name}, host)\n`;
+      if (client.instance.endpoint.supplemental.parameters.length > 0) {
+        imports.add('strings');
+        ctorText += `\thost := "${client.instance.endpoint.supplemental.path}"\n`;
+        for (const param of client.instance.endpoint.supplemental.parameters) {
+          ctorText += `\thost = strings.ReplaceAll(host, "{${param.uriPathSegment}}", ${helpers.formatValue(param.name, param.type, imports)})\n`;
+        }
+        ctorText += `\t${endpointParam.name} = runtime.JoinPaths(${endpointParam.name}, host)\n`;
+      } else {
+        // there are no params for the supplemental host, so just append it
+        ctorText += `\t${endpointParam.name} = runtime.JoinPaths(${endpointParam.name}, "${client.instance.endpoint.supplemental.path}")\n`;
+      }
     }
 
     // construct client literal
