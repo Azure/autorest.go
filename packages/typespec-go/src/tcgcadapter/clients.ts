@@ -1220,6 +1220,7 @@ export class clientAdapter {
           }
           method.examples.push(goExample);
         } catch (error) {
+          // Only added try-catch block to output error message and example file path
           if (error instanceof AdapterError) {
             throw new AdapterError(error.code, `${error.message} (example file: '${example.filePath}')`, error.target);
           }
