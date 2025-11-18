@@ -603,7 +603,7 @@ export class clientAdapter {
       }
 
       let adaptedParam: go.MethodParameter;
-      if (opParam.kind === 'body' && opParam.type.kind === 'model' && (opParam.type.usage & tcgc.UsageFlags.Spread)) {
+      if (opParam.kind === 'body' && opParam.type.kind === 'model' && opParam.type !== param.type) {
         const paramStyle = this.adaptParameterStyle(param);
         const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');
         // if the param is required then it's always passed by value
