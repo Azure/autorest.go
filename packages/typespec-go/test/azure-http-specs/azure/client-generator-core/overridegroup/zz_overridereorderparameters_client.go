@@ -26,13 +26,13 @@ type OverrideReorderParametersClient struct {
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OverrideReorderParametersClientReorderOptions contains the optional parameters for the OverrideReorderParametersClient.Reorder
 //     method.
-func (client *OverrideReorderParametersClient) Reorder(ctx context.Context, param2 string, param1 string, options *OverrideReorderParametersClientReorderOptions) (OverrideReorderParametersClientReorderResponse, error) {
+func (client *OverrideReorderParametersClient) Reorder(ctx context.Context, param1 string, param2 string, options *OverrideReorderParametersClientReorderOptions) (OverrideReorderParametersClientReorderResponse, error) {
 	var err error
 	const operationName = "OverrideReorderParametersClient.Reorder"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.reorderCreateRequest(ctx, param2, param1, options)
+	req, err := client.reorderCreateRequest(ctx, param1, param2, options)
 	if err != nil {
 		return OverrideReorderParametersClientReorderResponse{}, err
 	}
@@ -48,16 +48,16 @@ func (client *OverrideReorderParametersClient) Reorder(ctx context.Context, para
 }
 
 // reorderCreateRequest creates the Reorder request.
-func (client *OverrideReorderParametersClient) reorderCreateRequest(ctx context.Context, param2 string, param1 string, _ *OverrideReorderParametersClientReorderOptions) (*policy.Request, error) {
+func (client *OverrideReorderParametersClient) reorderCreateRequest(ctx context.Context, param1 string, param2 string, _ *OverrideReorderParametersClientReorderOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/override/reorder/{param2}/{param1}"
-	if param2 == "" {
-		return nil, errors.New("parameter param2 cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{param2}", url.PathEscape(param2))
 	if param1 == "" {
 		return nil, errors.New("parameter param1 cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{param1}", url.PathEscape(param1))
+	if param2 == "" {
+		return nil, errors.New("parameter param2 cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{param2}", url.PathEscape(param2))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
