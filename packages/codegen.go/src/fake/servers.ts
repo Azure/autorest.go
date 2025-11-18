@@ -693,7 +693,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     // construct the partial body params type and unmarshal it
     content += '\ttype partialBodyParams struct {\n';
     for (const partialBodyParam of partialBodyParams) {
-      content += `\t\t${capitalize(partialBodyParam.name)} ${helpers.star(partialBodyParam.byValue)}${go.getTypeDeclaration(partialBodyParam.type)} \`json:"${partialBodyParam.serializedName}"\`\n`;
+      content += `\t\t${capitalize(partialBodyParam.name)} ${helpers.star(partialBodyParam.byValue)}${go.getTypeDeclaration(partialBodyParam.type, clientPkg)} \`json:"${partialBodyParam.serializedName}"\`\n`;
     }
     content += '\t}\n';
     content += `\tbody, err := server.UnmarshalRequestAs${partialBodyParams[0].format}[partialBodyParams](req)\n`;

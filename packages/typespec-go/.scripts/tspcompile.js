@@ -220,6 +220,9 @@ generate('nooptionalbody', nooptionalbody, 'test/local/nooptionalbody', ['genera
 const rawjson = pkgRoot + 'test/tsp/RawJson';
 generate('rawjson', rawjson, 'test/local/rawjson/subpkg', ['containing-module=rawjson/v2', 'rawjson-as-bytes=true']);
 
+const azregressions = pkgRoot + 'test/tsp/Regressions';
+generate('azregressions', azregressions, 'test/local/azregressions');
+
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
 
