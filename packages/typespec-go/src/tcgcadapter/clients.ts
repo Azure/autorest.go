@@ -551,6 +551,15 @@ export class clientAdapter {
     // track parameter groups created from model types
     const parameterGroups = new Map<string, go.ParameterGroup>();
 
+    // Helper function to add a parameter to method.parameters and paramMapping
+    const addParameterToMethod = (adaptedParam: go.MethodParameter, opParam: OperationParamType) => {
+      method.parameters.push(adaptedParam);
+      if (!paramMapping.has(opParam)) {
+        paramMapping.set(opParam, new Array<go.MethodParameter>());
+      }
+      paramMapping.get(opParam)?.push(adaptedParam);
+    };
+
     // we must enumerate parameters, not operation.parameters, as it
     // contains the params in tsp order as well as any spread params.
     for (const param of sdkMethod.parameters) {
@@ -705,13 +714,8 @@ export class clientAdapter {
             adaptedPropertyParam.docs.summary = property.summary;
             adaptedPropertyParam.docs.description = property.doc;
             adaptedPropertyParam.group = paramGroup;
-            method.parameters.push(adaptedPropertyParam);
+            addParameterToMethod(adaptedPropertyParam, propertyOpParam);
             paramGroup.params.push(adaptedPropertyParam);
-            
-            if (!paramMapping.has(propertyOpParam)) {
-              paramMapping.set(propertyOpParam, new Array<go.MethodParameter>());
-            }
-            paramMapping.get(propertyOpParam)?.push(adaptedPropertyParam);
           }
           continue; // Skip regular parameter handling
         }
@@ -721,11 +725,7 @@ export class clientAdapter {
 
       adaptedParam.docs.summary = param.summary;
       adaptedParam.docs.description = param.doc;
-      method.parameters.push(adaptedParam);
-      if (!paramMapping.has(opParam)) {
-        paramMapping.set(opParam, new Array<go.MethodParameter>());
-      }
-      paramMapping.get(opParam)?.push(adaptedParam);
+      addParameterToMethod(adaptedParam, opParam);
 
       if (adaptedParam.style !== 'required' && adaptedParam.style !== 'literal') {
         // add optional method param to the options param group
