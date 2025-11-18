@@ -1153,71 +1153,79 @@ export class clientAdapter {
   private adaptHttpOperationExamples(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType, paramMapping: Map<tcgc.SdkHttpParameter, Array<go.MethodParameter>>) {
     if (sdkMethod.operation.examples && sdkMethod.access !== 'internal') {
       for (const example of sdkMethod.operation.examples) {
-        const goExample = new go.MethodExample(example.name, {summary: example.doc}, example.filePath);
-        for (const param of example.parameters) {
-          if (param.parameter.isApiVersionParam && param.parameter.clientDefaultValue) {
-            // skip the api-version param as it's not a formal parameter
-            continue;
-          }
-          const goParams = paramMapping.get(param.parameter);
-          if (!goParams) {
-            throw new AdapterError('InternalError', `can not find go param for example param ${param.parameter.name}`, NoTarget);
-          }
-          if (goParams.length > 1) {
-            // spread case
-            for (const goParam of goParams) {
-              const propertyValue = (<tcgc.SdkModelExampleValue>param.value).value[(<go.PartialBodyParameter>goParam).serializedName];
-              const paramExample = new go.ParameterExample(goParam, this.adaptExampleType(propertyValue, goParam?.type));
-              if (goParam.group) {
+        try {
+          const goExample = new go.MethodExample(example.name, {summary: example.doc}, example.filePath);
+          for (const param of example.parameters) {
+            if (param.parameter.isApiVersionParam && param.parameter.clientDefaultValue) {
+              // skip the api-version param as it's not a formal parameter
+              continue;
+            }
+            const goParams = paramMapping.get(param.parameter);
+            if (!goParams) {
+              throw new AdapterError('InternalError', `can not find go param for example param ${param.parameter.name}`, NoTarget);
+            }
+            if (goParams.length > 1) {
+              // spread case
+              for (const goParam of goParams) {
+                const propertyValue = (<tcgc.SdkModelExampleValue>param.value).value[(<go.PartialBodyParameter>goParam).serializedName];
+                const paramExample = new go.ParameterExample(goParam, this.adaptExampleType(propertyValue, goParam?.type));
+                if (goParam.group) {
+                  goExample.optionalParamsGroup.push(paramExample);
+                } else {
+                  goExample.parameters.push(paramExample);
+                }
+              }
+            } else {
+              const paramExample = new go.ParameterExample(goParams[0], this.adaptExampleType(param.value, goParams[0]?.type));
+              if (goParams[0]?.group) {
                 goExample.optionalParamsGroup.push(paramExample);
               } else {
                 goExample.parameters.push(paramExample);
               }
             }
-          } else {
-            const paramExample = new go.ParameterExample(goParams[0], this.adaptExampleType(param.value, goParams[0]?.type));
-            if (goParams[0]?.group) {
-              goExample.optionalParamsGroup.push(paramExample);
-            } else {
-              goExample.parameters.push(paramExample);
+          }
+          // only handle 200 response
+          const response = example.responses.find((v) => { return v.statusCode === 200; });
+          if (response) {
+            goExample.responseEnvelope = new go.ResponseEnvelopeExample(method.returns);
+            for (const header of response.headers) {
+              const goHeader = method.returns.headers.find(h => h.headerName === header.header.serializedName);
+              if (!goHeader) {
+                throw new AdapterError('InternalError', `can not find go header for example header ${header.header.serializedName}`, NoTarget);
+              }
+              goExample.responseEnvelope.headers.push(new go.ResponseHeaderExample(goHeader, this.adaptExampleType(header.value, goHeader.type)));
+            }
+            // there are some problems with LROs at present which can cause the result
+            // to be undefined even though the operation returns a response.
+            // TODO: https://github.com/Azure/typespec-azure/issues/1688
+            if (response.bodyValue && method.returns.result) {
+              switch (method.returns.result.kind) {
+                case 'anyResult':
+                  goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.Any());
+                  break;
+                case 'binaryResult':
+                  goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.Scalar('byte', false));
+                  break;
+                case 'modelResult':
+                  goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.returns.result.modelType);
+                  break;
+                case 'monomorphicResult':
+                  goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.returns.result.monomorphicType);
+                  break;
+                case 'polymorphicResult':
+                  goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.returns.result.interface);
+                  break;
+              }
             }
           }
+          method.examples.push(goExample);
+        } catch (error) {
+          // Only added try-catch block to output error message and example file path
+          if (error instanceof AdapterError) {
+            throw new AdapterError(error.code, `${error.message} (example file: '${example.filePath}')`, error.target);
+          }
+          throw error;
         }
-        // only handle 200 response
-        const response = example.responses.find((v) => { return v.statusCode === 200; });
-        if (response) {
-          goExample.responseEnvelope = new go.ResponseEnvelopeExample(method.returns);
-          for (const header of response.headers) {
-            const goHeader = method.returns.headers.find(h => h.headerName === header.header.serializedName);
-            if (!goHeader) {
-              throw new AdapterError('InternalError', `can not find go header for example header ${header.header.serializedName}`, NoTarget);
-            }
-            goExample.responseEnvelope.headers.push(new go.ResponseHeaderExample(goHeader, this.adaptExampleType(header.value, goHeader.type)));
-          }
-          // there are some problems with LROs at present which can cause the result
-          // to be undefined even though the operation returns a response.
-          // TODO: https://github.com/Azure/typespec-azure/issues/1688
-          if (response.bodyValue && method.returns.result) {
-            switch (method.returns.result.kind) {
-              case 'anyResult':
-                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.Any());
-                break;
-              case 'binaryResult':
-                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.Scalar('byte', false));
-                break;
-              case 'modelResult':
-                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.returns.result.modelType);
-                break;
-              case 'monomorphicResult':
-                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.returns.result.monomorphicType);
-                break;
-              case 'polymorphicResult':
-                goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.returns.result.interface);
-                break;
-            }
-          }
-        }
-        method.examples.push(goExample);
       }
     }
   }
@@ -1284,7 +1292,7 @@ export class clientAdapter {
           let concreteType: go.Model | go.PolymorphicModel | undefined;
           if (goType.kind === 'interface') {
             /* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */
-            concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue)!;
+            concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue);
             if (concreteType === undefined) {
               // can't find the sub type of a discriminated type, fallback to the base type
               concreteType = goType.rootType;
@@ -1297,17 +1305,23 @@ export class clientAdapter {
           }
           const ret = new go.StructExample(concreteType);
           for (const [k, v] of Object.entries(exampleType.value)) {
-            const field = concreteType.fields.find(f => f.serializedName === k)!;
+            const field = concreteType.fields.find(f => f.serializedName === k);
+            if (!field) {
+              throw new AdapterError('InternalError', `field with serializedName '${k}' not found in model '${concreteType.name}'.`, NoTarget);
+            }
             ret.value[field.name] = this.adaptExampleType(v, field.type);
           }
           if (exampleType.additionalPropertiesValue) {
             ret.additionalProperties = {};
             for (const [k, v] of Object.entries(exampleType.additionalPropertiesValue)) {
-              const filed = concreteType.fields.find(f => f.annotations.isAdditionalProperties)!;
+              const filed = concreteType.fields.find(f => f.annotations.isAdditionalProperties);
+              if (!filed) {
+                throw new AdapterError('InternalError', `additional properties field not found in model '${concreteType.name}'.`,NoTarget);
+              }
               if (filed.type.kind === 'map') {
                 ret.additionalProperties[k] = this.adaptExampleType(v, filed.type.valueType);
               } else {
-                throw new AdapterError('InternalError', `additional properties field type should be map type`, NoTarget);
+                throw new AdapterError('InternalError', `additional properties field type should be map type, but got '${filed.type.kind}' in model '${concreteType.name}'`, NoTarget);
               }
             }
           }
