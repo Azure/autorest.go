@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 import { exec, execSync } from 'child_process';
-import { existsSync, readFileSync, writeFileSync } from 'fs';
+import { existsSync, opendirSync, unlinkSync, readFileSync, writeFileSync } from 'fs';
 import { semaphore } from '../../../.scripts/semaphore.js';
 
 // limit to 8 concurrent builds
@@ -324,6 +324,7 @@ function generate(moduleName, input, outputDir, perTestOptions) {
       if (switches.includes('--verbose')) {
         console.log(command);
       }
+      cleanGeneratedFiles(fullOutputDir);
       exec(command, function(error, stdout, stderr) {
         // print any output or error from the tsp compile command
         logResult(error, stdout, stderr);
@@ -353,6 +354,25 @@ function generate(moduleName, input, outputDir, perTestOptions) {
       sem.leave();
     }
   });
+}
+
+function cleanGeneratedFiles(outputDir) {
+  if (!existsSync(outputDir)) {
+      return;
+  }
+  const dir = opendirSync(outputDir);
+  while (true) {
+      const dirEnt = dir.readSync()
+      if (dirEnt === null) {
+          break;
+      }
+      // preserve the version.go file so we can test the v2+ major version scenario
+      if (dirEnt.isFile() && dirEnt.name.startsWith('zz_') && dirEnt.name !== 'zz_version.go') {
+          unlinkSync(dir.path + '/' + dirEnt.name);
+      }
+  }
+  dir.close();
+  cleanGeneratedFiles(outputDir + '/fake');
 }
 
 function logResult(error, stdout, stderr) {
