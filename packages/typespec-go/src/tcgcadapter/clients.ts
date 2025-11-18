@@ -680,7 +680,7 @@ export class clientAdapter {
           // Check if parameter group already exists
           let paramGroup = parameterGroups.get(paramGroupName);
           if (paramGroup) {
-            continue; // Parameter group already exists, skip to next parameter
+            continue;
           }
           paramGroup = new go.ParameterGroup(
             paramName,
@@ -688,7 +688,13 @@ export class clientAdapter {
             isRequired,
             'method'
           );
-          paramGroup.docs.summary = `${paramGroupName} contains a group of parameters for the ${method.receiver.type.name}.${method.name} method.`;
+          // Use docs from model if present, otherwise generate default description
+          if (param.type.summary || param.type.doc) {
+            paramGroup.docs.summary = param.type.summary
+            paramGroup.docs.description = param.type.doc;
+          } else {
+            paramGroup.docs.summary = `${paramGroupName} contains a group of parameters for the ${method.receiver.type.name}.${method.name} method.`;
+          }
           parameterGroups.set(paramGroupName, paramGroup);
 
           // Add each property as a method parameter and associate with the group
