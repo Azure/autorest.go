@@ -324,7 +324,6 @@ function generate(moduleName, input, outputDir, perTestOptions) {
       if (switches.includes('--verbose')) {
         console.log(command);
       }
-      cleanGeneratedFiles(fullOutputDir);
       exec(command, function(error, stdout, stderr) {
         // print any output or error from the tsp compile command
         logResult(error, stdout, stderr);
@@ -337,6 +336,9 @@ function generate(moduleName, input, outputDir, perTestOptions) {
             metadata.emitterVersion = '0.0.0';
             writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
           }
+        } else {
+          // delete files on error so it's easy to spot codegen failures
+          cleanGeneratedFiles(fullOutputDir);
         }
       });
     } catch (err) {
