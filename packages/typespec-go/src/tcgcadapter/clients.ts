@@ -679,16 +679,17 @@ export class clientAdapter {
           
           // Check if parameter group already exists
           let paramGroup = parameterGroups.get(paramGroupName);
-          if (!paramGroup) {
-            paramGroup = new go.ParameterGroup(
-              paramName,
-              paramGroupName,
-              isRequired,
-              'method'
-            );
-            paramGroup.docs.summary = `${paramGroupName} contains a group of parameters for the ${method.receiver.type.name}.${method.name} method.`;
-            parameterGroups.set(paramGroupName, paramGroup);
+          if (paramGroup) {
+            continue; // Parameter group already exists, skip to next parameter
           }
+          paramGroup = new go.ParameterGroup(
+            paramName,
+            paramGroupName,
+            isRequired,
+            'method'
+          );
+          paramGroup.docs.summary = `${paramGroupName} contains a group of parameters for the ${method.receiver.type.name}.${method.name} method.`;
+          parameterGroups.set(paramGroupName, paramGroup);
 
           // Add each property as a method parameter and associate with the group
           for (let i = 0; i < modelProperties.length; i++) {
