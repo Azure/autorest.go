@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"reflect"
 )
@@ -142,7 +143,7 @@ func (c *CollectionsModelProperty) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type DatetimeProperty.
 func (d DatetimeProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateDateTimeRFC3339(objectMap, "property", d.Property)
+	datetime.PopulateDateTimeRFC3339(objectMap, "property", d.Property)
 	return json.Marshal(objectMap)
 }
 
@@ -156,7 +157,7 @@ func (d *DatetimeProperty) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "property":
-			err = unpopulateDateTimeRFC3339(val, "Property", &d.Property)
+			err = datetime.UnpopulateDateTimeRFC3339(val, "Property", &d.Property)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -254,7 +255,7 @@ func (i *IntLiteralProperty) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type PlainDateProperty.
 func (p PlainDateProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateDateType(objectMap, "property", p.Property)
+	datetime.PopulateDateType(objectMap, "property", p.Property)
 	return json.Marshal(objectMap)
 }
 
@@ -268,7 +269,7 @@ func (p *PlainDateProperty) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "property":
-			err = unpopulateDateType(val, "Property", &p.Property)
+			err = datetime.UnpopulateDateType(val, "Property", &p.Property)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -281,7 +282,7 @@ func (p *PlainDateProperty) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type PlainTimeProperty.
 func (p PlainTimeProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateTimeRFC3339(objectMap, "property", p.Property)
+	datetime.PopulateTimeRFC3339(objectMap, "property", p.Property)
 	return json.Marshal(objectMap)
 }
 
@@ -295,7 +296,7 @@ func (p *PlainTimeProperty) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "property":
-			err = unpopulateTimeRFC3339(val, "Property", &p.Property)
+			err = datetime.UnpopulateTimeRFC3339(val, "Property", &p.Property)
 			delete(rawMsg, key)
 		}
 		if err != nil {

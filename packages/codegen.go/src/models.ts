@@ -365,14 +365,16 @@ function generateJSONMarshallerBody(modelType: go.Model | go.PolymorphicModel, m
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
         marshaller += `\tif ${receiver}.${field.name} == nil {\n\t\t${receiver}.${field.name} = to.Ptr(${helpers.formatLiteralValue(field.defaultValue, true)})\n\t}\n`;
       }
-      let populate = 'populate';
+      let populate: string;
       if (field.type.kind === 'time') {
-        populate += capitalize(field.type.format);
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
+        populate = 'datetime.Populate' + capitalize(field.type.format);
         modelDef.SerDe.needsJSONPopulate = true;
       } else if (field.type.kind === 'any') {
-        populate += 'Any';
+        populate = 'populateAny';
         modelDef.SerDe.needsJSONPopulateAny = true;
       } else {
+        populate = 'populate'
         modelDef.SerDe.needsJSONPopulate = true;
       }
       if (field.type.kind === 'scalar' && (field.type.type.startsWith('uint') || field.type.type.startsWith('int')) && field.type.encodeAsString) {
@@ -469,17 +471,19 @@ function generateJSONUnmarshallerBody(modelType: go.Model | go.PolymorphicModel,
         unmarshalBody += generateDiscriminatorUnmarshaller(field, receiver);
         needsErrCheck = true;
       } else if (field.type.kind === 'time') {
-        unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(field.type.format)}(val, "${field.name}", &${receiver}.${field.name})\n`;
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
+        unmarshalBody += `\t\t\t\terr = datetime.Unpopulate${capitalize(field.type.format)}(val, "${field.name}", &${receiver}.${field.name})\n`;
         modelDef.SerDe.needsJSONUnpopulate = true;
         needsErrCheck = true;
       } else if (field.type.kind === 'slice' && field.type.elementType.kind === 'time') {
         imports.add('time');
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
         let elementPtr = '*';
         if (field.type.elementTypeByValue) {
           elementPtr = '';
         }
         unmarshalBody += `\t\t\tvar aux []${elementPtr}${field.type.elementType.format}\n`;
-        unmarshalBody += `\t\t\terr = unpopulate(val, "${field.name}", &aux)\n`;
+        unmarshalBody += `\t\t\terr = datetime.Unpopulate${capitalize(field.type.elementType.format)}(val, "${field.name}", &aux)\n`;
         unmarshalBody += '\t\t\tfor _, au := range aux {\n';
         unmarshalBody += `\t\t\t\t${receiver}.${field.name} = append(${receiver}.${field.name}, (${elementPtr}time.Time)(au))\n`;
         unmarshalBody += '\t\t\t}\n';

@@ -17,7 +17,6 @@ import { generateOperations } from '../../codegen.go/src/operations.js';
 import { generateOptions } from '../../codegen.go/src/options.js';
 import { generatePolymorphicHelpers } from '../../codegen.go/src/polymorphics.js';
 import { generateResponses } from '../../codegen.go/src/responses.js';
-import { generateTimeHelpers } from '../../codegen.go/src/time.js';
 import { generateServers } from '../../codegen.go/src/fake/servers.js';
 import { generateServerFactory } from '../../codegen.go/src/fake/factory.js';
 import { generateXMLAdditionalPropsHelpers } from '../../codegen.go/src/xmlAdditionalProps.js';
@@ -312,11 +311,6 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
     await writeFile(`${context.emitterOutputDir}/${filePrefix}responses_serde.go`, responses.serDe);
   }
 
-  const timeHelpers = await generateTimeHelpers(codeModel);
-  for (const helper of timeHelpers) {
-    await writeFile(`${context.emitterOutputDir}/${filePrefix}${helper.name.toLowerCase()}.go`, helper.content);
-  }
-
   // don't overwrite an existing version.go file
   const versionGo = await generateVersionInfo(codeModel);
   const versionGoFileName = `${context.emitterOutputDir}/${filePrefix}version.go`;
@@ -356,11 +350,6 @@ async function generate(context: EmitContext<GoEmitterOptions>) {
       }
 
       await writeFile(`${fakesDir}/${filePrefix}internal.go`, serverContent.internals);
-
-      const timeHelpers = await generateTimeHelpers(codeModel, 'fake');
-      for (const helper of timeHelpers) {
-        await writeFile(`${fakesDir}/${filePrefix}${helper.name.toLowerCase()}.go`, helper.content);
-      }
 
       const polymorphics = await generatePolymorphicHelpers(codeModel, 'fake');
       if (polymorphics.length > 0) {
