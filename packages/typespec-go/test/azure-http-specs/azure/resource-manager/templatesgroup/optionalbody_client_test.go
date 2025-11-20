@@ -67,7 +67,7 @@ func TestOptionalBodyClient_Patch(t *testing.T) {
 	resp, err = client.Patch(context.Background(), resourceGroupExpected, widgetName, widget, &templatesgroup.OptionalBodyClientPatchOptions{})
 	require.NoError(t, err)
 	require.NotNil(t, resp)
-	require.EqualValues(t, widget.Name, resp.Properties.Name)
+	require.EqualValues(t, widget.Properties.Name, resp.Properties.Name)
 	require.EqualValues(t, widget.Properties.Description, resp.Properties.Description)
 	require.EqualValues(t, widget.Name, resp.Name)
 }
