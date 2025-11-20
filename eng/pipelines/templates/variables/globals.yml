@@ -6,4 +6,4 @@ variables:
   - name: NodeVersion
     value: "20.x"
   - name: GoLintCLIVersion
-    value: "v1.64.8"
+    value: "v2.6.2"

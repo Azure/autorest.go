@@ -36,7 +36,7 @@ steps:
       go version
       go install github.com/jstemmer/go-junit-report@v1.0.0
       go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow@latest
-      curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin $(GoLintCLIVersion)
+      curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin $(GoLintCLIVersion)
       ~/go/bin/golangci-lint --version
     displayName: "Install Dependencies"
     workingDirectory: "${{ parameters.GoTestPath }}"
