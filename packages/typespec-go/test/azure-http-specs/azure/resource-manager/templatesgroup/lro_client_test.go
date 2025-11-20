@@ -70,5 +70,5 @@ func TestNewLroClient_BeginExport(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp.Content)
 	require.NotEmpty(t, resp.Content)
-	require.Equal(t, "order1,product1,1", *resp.ExportResult.Content)
+	require.Equal(t, "order1,product1,1", *resp.Content)
 }
