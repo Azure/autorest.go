@@ -29,8 +29,8 @@ func TestTraitsClient_RepeatableAction(t *testing.T) {
 		RepeatabilityRequestID: to.Ptr("86aede1f-96fa-4e7f-b1e1-bf8a947cb804"),
 	})
 	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.Equal(t, "test", *resp.UserActionResponse.UserActionResult)
+	require.NotNil(t, resp.UserActionResult)
+	require.Equal(t, "test", *resp.UserActionResult)
 }
 
 func TestTraitsClient_SmokeTest(t *testing.T) {
@@ -55,7 +55,8 @@ func TestTraitsClient_SmokeTest(t *testing.T) {
 		ClientRequestID:   to.Ptr("86aede1f-96fa-4e7f-b1e1-bf8a947cb804"),
 	})
 	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.Equal(t, id, *resp.User.ID)
-	require.Equal(t, "Madge", *resp.User.Name)
+	require.NotNil(t, resp.ID)
+	require.NotNil(t, resp.Name)
+	require.Equal(t, id, *resp.ID)
+	require.Equal(t, "Madge", *resp.Name)
 }

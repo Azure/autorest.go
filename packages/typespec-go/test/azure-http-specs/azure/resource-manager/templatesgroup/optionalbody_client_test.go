@@ -67,9 +67,9 @@ func TestOptionalBodyClient_Patch(t *testing.T) {
 	resp, err = client.Patch(context.Background(), resourceGroupExpected, widgetName, widget, &templatesgroup.OptionalBodyClientPatchOptions{})
 	require.NoError(t, err)
 	require.NotNil(t, resp)
-	require.EqualValues(t, widget.Properties.Name, resp.Widget.Properties.Name)
-	require.EqualValues(t, widget.Properties.Description, resp.Widget.Properties.Description)
-	require.EqualValues(t, widget.Name, resp.Widget.Name)
+	require.EqualValues(t, widget.Name, resp.Properties.Name)
+	require.EqualValues(t, widget.Properties.Description, resp.Properties.Description)
+	require.EqualValues(t, widget.Name, resp.Name)
 }
 
 func TestOptionalBodyClient_Post(t *testing.T) {
@@ -77,8 +77,8 @@ func TestOptionalBodyClient_Post(t *testing.T) {
 	require.NotNil(t, client)
 	resp, err := client.Post(context.Background(), resourceGroupExpected, widgetName, &templatesgroup.OptionalBodyClientPostOptions{})
 	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.EqualValues(t, "Action completed successfully", *resp.ActionResult.Result)
+	require.NotNil(t, resp.Result)
+	require.EqualValues(t, "Action completed successfully", *resp.Result)
 
 	resp, err = client.Post(context.Background(), resourceGroupExpected, widgetName, &templatesgroup.OptionalBodyClientPostOptions{
 		Body: &templatesgroup.ActionRequest{
@@ -87,8 +87,8 @@ func TestOptionalBodyClient_Post(t *testing.T) {
 		},
 	})
 	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.EqualValues(t, "Action completed successfully with parameters", *resp.ActionResult.Result)
+	require.NotNil(t, resp.Result)
+	require.EqualValues(t, "Action completed successfully with parameters", *resp.Result)
 }
 
 func TestOptionalBodyClient_ProviderPost(t *testing.T) {

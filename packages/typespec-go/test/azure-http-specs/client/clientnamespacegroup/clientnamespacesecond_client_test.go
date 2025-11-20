@@ -16,8 +16,6 @@ func TestClientNamespaceSecondClient_GetSecond(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.GetSecond(context.Background(), nil)
 	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.NotNil(t, resp.SecondClientResult)
-	require.NotNil(t, resp.SecondClientResult.Type)
-	require.Equal(t, clientnamespacegroup.SecondClientEnumTypeSecond, *resp.SecondClientResult.Type)
+	require.NotNil(t, resp.Type)
+	require.Equal(t, clientnamespacegroup.SecondClientEnumTypeSecond, *resp.Type)
 }

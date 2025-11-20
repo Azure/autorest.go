@@ -24,6 +24,6 @@ func TestEnumConflictSecondOperationsClient_Second(t *testing.T) {
 
 	resp, err := enumClient.NewEnumConflictSecondOperationsClient().Second(context.Background(), body, nil)
 	require.NoError(t, err)
-	require.Equal(t, body.Status, resp.SecondModel.Status)
-	require.Equal(t, body.Description, resp.SecondModel.Description)
+	require.Equal(t, body.Status, resp.Status)
+	require.Equal(t, body.Description, resp.Description)
 }
