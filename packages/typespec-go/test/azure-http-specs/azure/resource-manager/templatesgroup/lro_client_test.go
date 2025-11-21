@@ -46,8 +46,8 @@ func TestNewLroClient_BeginCreateOrReplace(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
-	require.NotNil(t, resp.Order)
-	require.Equal(t, "order1", *resp.Order.Name)
+	require.NotNil(t, resp.Name)
+	require.Equal(t, "order1", *resp.Name)
 	require.Equal(t, "Succeeded", *resp.Properties.ProvisioningState)
 
 }
@@ -68,7 +68,7 @@ func TestNewLroClient_BeginExport(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
-	require.NotNil(t, resp.ExportResult)
-	require.NotEmpty(t, resp.ExportResult.Content)
-	require.Equal(t, "order1,product1,1", *resp.ExportResult.Content)
+	require.NotNil(t, resp.Content)
+	require.NotEmpty(t, resp.Content)
+	require.Equal(t, "order1,product1,1", *resp.Content)
 }

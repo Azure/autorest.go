@@ -1,5 +1,11 @@
 # Release History
 
+## 0.8.6 (unreleased)
+
+### Other Changes
+
+* Updated the minimum version of Go to `v1.24.0`.
+
 ## 0.8.5 (2025-11-18)
 
 ### Bugs Fixed

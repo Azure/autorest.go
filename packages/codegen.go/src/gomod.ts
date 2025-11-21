@@ -33,7 +33,7 @@ export async function generateGoModFile(codeModel: go.CodeModel, existingGoMod?:
   if (!existingGoMod) {
     // no preexisting go.mod file, generate the default one
     let text = `module ${modName}\n\n`;
-    text += 'go 1.23.0\n\n';
+    text += 'go 1.24.0\n\n';
     text += `require ${azcore}\n`;
     return text;
   }
