@@ -128,7 +128,7 @@ func ExamplePrivateEndpointConnectionsClient_Get() {
 	// 			LastModifiedBy: to.Ptr("User2"),
 	// 			LastModifiedByType: to.Ptr(armhardwaresecuritymodules.CreatedByTypeUser),
 	// 		},
-	// 		Etag: &azcore.ETag("etag"),
+	// 		Etag: to.Ptr(azcore.ETag("\"etag\"")),
 	// 	},
 	// }
 }
