@@ -99,7 +99,7 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
 
     // format after transforms in case any formatting gets munged
     try {
-      execSync('gofmt -w .', { cwd: context.emitterOutputDir, encoding: 'ascii' });
+      execSync('gofmt -s -w .', { cwd: context.emitterOutputDir, encoding: 'ascii' });
     } catch (err) {
       context.program.reportDiagnostic({
         code: 'gofmt',

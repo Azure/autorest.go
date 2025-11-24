@@ -9,6 +9,7 @@
 ### Other Changes
 
 * Updated the minimum version of Go to `v1.24.0`.
+* Execute `gofmt -s -w .` instead of `gofmt -w .` to keep consistent with SDK repo's CI check.
 
 ## 0.8.5 (2025-11-18)
 
