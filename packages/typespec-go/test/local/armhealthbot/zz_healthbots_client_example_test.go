@@ -28,8 +28,8 @@ func ExampleHealthBotsClient_BeginCreate() {
 			Type: to.Ptr(armhealthbot.ResourceIdentityTypeSystemAssignedUserAssigned),
 			UserAssignedIdentities: &armhealthbot.UserAssignedIdentityMap{
 				AdditionalProperties: map[string]*armhealthbot.UserAssignedIdentity{
-					"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi":  &armhealthbot.UserAssignedIdentity{},
-					"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi2": &armhealthbot.UserAssignedIdentity{},
+					"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi":  {},
+					"/subscriptions/subscription-id/resourcegroups/myrg/providers/microsoft.managedidentity/userassignedidentities/my-mi2": {},
 				},
 			},
 		},
