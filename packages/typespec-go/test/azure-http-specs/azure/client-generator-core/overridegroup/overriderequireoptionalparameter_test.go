@@ -11,13 +11,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestOverrideGroupParametersClient_Group(t *testing.T) {
+func TestOverrideRequireOptionalParametersClient_Group(t *testing.T) {
 	client, err := overridegroup.NewOverrideClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	resp, err := client.NewOverrideGroupParametersClient().Group(context.Background(), overridegroup.GroupParametersOptions{
-		Param1: "param1",
-		Param2: "param2",
-	}, &overridegroup.OverrideGroupParametersClientGroupOptions{})
+	resp, err := client.NewOverrideRequireOptionalParameterClient().RequireOptional(context.Background(), "param1", "param2", &overridegroup.OverrideRequireOptionalParameterClientRequireOptionalOptions{})
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
