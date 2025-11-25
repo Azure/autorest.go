@@ -1,10 +1,14 @@
 # Release History
 
-## 0.8.6 (unreleased)
+## 0.8.6 (2025-11-25)
 
 ### Bugs Fixed
 
 * Fixed etag example generation for escape string.
+
+### Features Added
+
+* Added support for grouped params via override.
 
 ### Other Changes
 
