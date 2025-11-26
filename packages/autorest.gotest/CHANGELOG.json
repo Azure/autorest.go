@@ -2,6 +2,18 @@
   "name": "@autorest/gotest",
   "entries": [
     {
+      "version": "4.7.6",
+      "tag": "@autorest/gotest_v4.7.6",
+      "date": "Wed, 26 Nov 2025 06:27:02 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Remove useless Go version header in generated files"
+          }
+        ]
+      }
+    },
+    {
       "version": "4.7.5",
       "tag": "@autorest/gotest_v4.7.5",
       "date": "Tue, 01 Jul 2025 05:17:10 GMT",

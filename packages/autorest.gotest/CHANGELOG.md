@@ -1,6 +1,13 @@
 # Change Log - @autorest/gotest
 
-This log was last generated on Tue, 01 Jul 2025 05:17:10 GMT and should not be manually modified.
+This log was last generated on Wed, 26 Nov 2025 06:27:02 GMT and should not be manually modified.
+
+## 4.7.6
+Wed, 26 Nov 2025 06:27:02 GMT
+
+### Patches
+
+- Remove useless Go version header in generated files
 
 ## 4.7.5
 Tue, 01 Jul 2025 05:17:10 GMT
