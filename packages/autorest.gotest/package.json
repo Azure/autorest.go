@@ -1,6 +1,6 @@
 {
   "name": "@autorest/gotest",
-  "version": "4.7.5",
+  "version": "4.7.6",
   "description": "Autorest extension for go test generation",
   "main": "dist/src/index.js",
   "scripts": {
