@@ -109,7 +109,7 @@
 
 ### Bugs Fixed
 
-* Fix illegal example funtion name.
+* Fix illegal example function name.
 
 ## 4.2.1 (2022-08-04)
 
