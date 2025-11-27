@@ -203,7 +203,7 @@
 
 ### Bugs Fixed
 
-* Operation has no subscriptionID param but client has, need to handle it seperately.
+* Operation has no subscriptionID param but client has, need to handle it separately.
 
 ### Other Changes
 
