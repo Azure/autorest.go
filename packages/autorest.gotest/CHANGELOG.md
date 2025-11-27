@@ -208,7 +208,7 @@
 ### Other Changes
 
 * Update to latest azcore for mock test.
-* Change from go get to go install to prevent warnning.
+* Change from go get to go install to prevent warning.
 
 ## 2.1.4 (2022-03-07)
 
