@@ -264,7 +264,7 @@
 
 * Fix result check problem for lro operation with pageable config.
 * Fix result log problem for multiple response operation.
-* Fix wrong param name for pageable opeation with custom item name.
+* Fix wrong param name for pageable operation with custom item name.
 * Different conversion for choice and sealedchoice.
 * Fix wrong generation of null value for object.
 * Fix some generated problems including: polymorphism response type, client param, pager response check.
