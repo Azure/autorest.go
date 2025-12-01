@@ -66,6 +66,7 @@ const httpSpecsGroup = {
   'optionalitygroup': ['type/property/optionality', 'slice-elements-byval=true'], // missing support for plain time https://github.com/Azure/autorest.go/issues/1732
   'valuetypesgroup': ['type/property/value-types', 'slice-elements-byval=true'],
   'scalargroup': ['type/scalar', 'slice-elements-byval=true'],
+  //'uniondiscriminatedgroup': ['type/union/discriminated'], // requires union support
   //'uniongroup': ['type/union'], // requires union support
   //'addedgroup': ['versioning/added'], // requires union support
   'madeoptionalgroup': ['versioning/madeOptional'],
