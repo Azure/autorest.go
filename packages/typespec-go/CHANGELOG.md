@@ -1,5 +1,11 @@
 # Release History
 
+## 0.8.7 (unreleased)
+
+### Bugs Fixed
+
+* Generate fake values for required parameters when missing example values.
+
 ## 0.8.6 (2025-11-25)
 
 ### Bugs Fixed
