@@ -286,7 +286,8 @@ export function formatParamValue(param: go.MethodParameter, imports: ImportManag
           return `strings.Join(${paramName}, "${separator}")`;
         case 'time':
           imports.add('strings');
-          return emitConvertOver(param.name, `${param.type.elementType.format}(${param.name}[i]).String()`);
+          imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
+          return emitConvertOver(param.name, `datetime.${capitalize(param.type.elementType.format)}(${param.name}[i]).String()`);
         default:
           imports.add('fmt');
           imports.add('strings');
@@ -319,6 +320,13 @@ export function getDelimiterForCollectionFormat(cf: go.CollectionFormat): string
     default:
       throw new CodegenError('InternalError', `unhandled CollectionFormat ${cf}`);
   }
+}
+
+export function formatTime(format?: go.TimeFormat): string {
+  if (!format) {
+    return '';
+  }
+  return `datetime.${capitalize(format)}`;
 }
 
 export function formatValue(paramName: string, type: go.WireType, imports: ImportManager, defef?: boolean): string {
@@ -373,9 +381,11 @@ export function formatValue(paramName: string, type: go.WireType, imports: Impor
         case 'dateType':
           return `${paramName}.Format("${dateFormat}")`;
         case 'timeRFC3339':
-          return `timeRFC3339(${star}${paramName}).String()`;
+          imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
+          return `datetime.TimeRFC3339(${star}${paramName}).String()`;
         case 'timeUnix':
-          return `timeUnix(${star}${paramName}).String()`;
+          imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
+          return `datetime.TimeUnix(${star}${paramName}).String()`;
       }
     default:
       return `${star}${paramName}`;

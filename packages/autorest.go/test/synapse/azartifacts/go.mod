@@ -2,12 +2,9 @@ module azartifacts
 
 go 1.24.0
 
-require (
-	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.20.0
-	github.com/Azure/azure-sdk-for-go/sdk/internal v1.11.2
-)
+require github.com/Azure/azure-sdk-for-go/sdk/azcore v1.20.0
 
-replace github.com/Azure/azure-sdk-for-go/sdk/internal => /home/grace/code/azure-sdk-for-go/sdk/internal
+replace github.com/Azure/azure-sdk-for-go/sdk/azcore => /home/grace/code/azure-sdk-for-go/sdk/azcore
 
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/internal v1.11.2 // indirect

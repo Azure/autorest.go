@@ -4988,9 +4988,9 @@ func (s ScheduleBasedBackupCriteria) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "daysOfTheWeek", s.DaysOfTheWeek)
 	populate(objectMap, "monthsOfYear", s.MonthsOfYear)
 	objectMap["objectType"] = "ScheduleBasedBackupCriteria"
-	aux := make([]*dateTimeRFC3339, len(s.ScheduleTimes), len(s.ScheduleTimes))
+	aux := make([]*datetime.DateTimeRFC3339, len(s.ScheduleTimes), len(s.ScheduleTimes))
 	for i := 0; i < len(s.ScheduleTimes); i++ {
-		aux[i] = (*dateTimeRFC3339)(s.ScheduleTimes[i])
+		aux[i] = (*datetime.DateTimeRFC3339)(s.ScheduleTimes[i])
 	}
 	populate(objectMap, "scheduleTimes", aux)
 	populate(objectMap, "weeksOfTheMonth", s.WeeksOfTheMonth)
@@ -5022,7 +5022,7 @@ func (s *ScheduleBasedBackupCriteria) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ObjectType", &s.ObjectType)
 			delete(rawMsg, key)
 		case "scheduleTimes":
-			var aux []*dateTimeRFC3339
+			var aux []*datetime.DateTimeRFC3339
 			err = datetime.UnpopulateDateTimeRFC3339(val, "ScheduleTimes", &aux)
 			for _, au := range aux {
 				s.ScheduleTimes = append(s.ScheduleTimes, (*time.Time)(au))

@@ -4,13 +4,13 @@ go 1.24.0
 
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.20.0
-	github.com/Azure/azure-sdk-for-go/sdk/internal v1.11.2
 	github.com/stretchr/testify v1.11.1
 )
 
-replace github.com/Azure/azure-sdk-for-go/sdk/internal => /home/grace/code/azure-sdk-for-go/sdk/internal
+replace github.com/Azure/azure-sdk-for-go/sdk/azcore v1.20.0 => /home/grace/code/azure-sdk-for-go/sdk/azcore
 
 require (
+	github.com/Azure/azure-sdk-for-go/sdk/internal v1.11.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	golang.org/x/net v0.47.0 // indirect

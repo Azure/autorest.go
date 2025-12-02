@@ -97,9 +97,9 @@ func (r *RFC7231DatetimeProperty) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type UnixTimestampArrayDatetimeProperty.
 func (u UnixTimestampArrayDatetimeProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	aux := make([]timeUnix, len(u.Value), len(u.Value))
+	aux := make([]datetime.TimeUnix, len(u.Value), len(u.Value))
 	for i := 0; i < len(u.Value); i++ {
-		aux[i] = (timeUnix)(u.Value[i])
+		aux[i] = (datetime.TimeUnix)(u.Value[i])
 	}
 	populate(objectMap, "value", aux)
 	return json.Marshal(objectMap)
@@ -115,7 +115,7 @@ func (u *UnixTimestampArrayDatetimeProperty) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			var aux []timeUnix
+			var aux []datetime.TimeUnix
 			err = datetime.UnpopulateTimeUnix(val, "Value", &aux)
 			for _, au := range aux {
 				u.Value = append(u.Value, (time.Time)(au))

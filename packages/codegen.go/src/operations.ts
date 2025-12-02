@@ -1056,7 +1056,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
         // wrap the body in the internal time type
         // no need for dateTimeRFC3339 as the JSON marshaler defaults to that.
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
-        body = `${convertTimeFormat(bodyParam.type.format)}(${body})`;
+        body = `${helpers.formatTime(bodyParam.type.format)}(${body})`;
       } else if (isArrayOfDateTimeForMarshalling(bodyParam.type)) {
         const timeInfo = isArrayOfDateTimeForMarshalling(bodyParam.type);
         let elementPtr = '*';
@@ -1064,17 +1064,17 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
           elementPtr = '';
         }
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
-        text += `\taux := make([]${elementPtr}${convertTimeFormat(timeInfo?.format)}, len(${body}))\n`;
+        text += `\taux := make([]${elementPtr}${helpers.formatTime(timeInfo?.format)}, len(${body}))\n`;
         text += `\tfor i := 0; i < len(${body}); i++ {\n`;
-        text += `\t\taux[i] = (${elementPtr}${convertTimeFormat(timeInfo?.format)})(${body}[i])\n`;
+        text += `\t\taux[i] = (${elementPtr}${helpers.formatTime(timeInfo?.format)})(${body}[i])\n`;
         text += '\t}\n';
         body = 'aux';
       } else if (isMapOfDateTime(bodyParam.type)) {
         let timeType = isMapOfDateTime(bodyParam.type);
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
-        text += `\taux := map[string]*${convertTimeFormat(timeType)}{}\n`;
+        text += `\taux := map[string]*${helpers.formatTime(timeType)}{}\n`;
         text += `\tfor k, v := range ${body} {\n`;
-        text += `\t\taux[k] = (*${timeType})(v)\n`;
+        text += `\t\taux[k] = (*${helpers.formatTime(timeType)})(v)\n`;
         text += '\t}\n';
         body = 'aux';
       }
@@ -1251,13 +1251,6 @@ function isArrayOfDateTimeForMarshalling(paramType: go.WireType): { format: go.T
   }
 }
 
-function convertTimeFormat(format?: go.TimeFormat): string {
-  if (!format) {
-    return '';
-  }
-  return `datetime.${capitalize(format)}`;
-}
-
 // returns true if the method requires a response handler.
 // this is used to unmarshal the response body, parse response headers, or both.
 function needsResponseHandler(method: go.MethodType): boolean {
@@ -1270,7 +1263,7 @@ function generateResponseUnmarshaller(method: go.MethodType, type: go.WireType, 
   if (type.kind === 'time') {
     // use the designated time type for unmarshalling
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
-    unmarshallerText += `\tvar aux *${convertTimeFormat(type.format)}\n`;
+    unmarshallerText += `\tvar aux *${helpers.formatTime(type.format)}\n`;
     unmarshallerText += `\tif err := runtime.UnmarshalAs${format}(resp, &aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
@@ -1284,7 +1277,7 @@ function generateResponseUnmarshaller(method: go.MethodType, type: go.WireType, 
       elementPtr = '';
     }
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
-    unmarshallerText += `\tvar aux []${elementPtr}${convertTimeFormat(timeInfo?.format)}\n`;
+    unmarshallerText += `\tvar aux []${elementPtr}${helpers.formatTime(timeInfo?.format)}\n`;
     unmarshallerText += `\tif err := runtime.UnmarshalAs${format}(resp, &aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
@@ -1297,7 +1290,7 @@ function generateResponseUnmarshaller(method: go.MethodType, type: go.WireType, 
   } else if (isMapOfDateTime(type)) {
     let timeType = isMapOfDateTime(type);
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
-    unmarshallerText += `\taux := map[string]*${convertTimeFormat(timeType)}{}\n`;
+    unmarshallerText += `\taux := map[string]*${helpers.formatTime(timeType)}{}\n`;
     unmarshallerText += `\tif err := runtime.UnmarshalAs${format}(resp, &aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';

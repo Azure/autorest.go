@@ -2667,7 +2667,7 @@ func (client *DictionaryClient) putDateTimeRFC1123ValidCreateRequest(ctx context
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	aux := map[string]*datetime.DateTimeRFC1123{}
 	for k, v := range arrayBody {
-		aux[k] = (*dateTimeRFC1123)(v)
+		aux[k] = (*datetime.DateTimeRFC1123)(v)
 	}
 	if err := runtime.MarshalAsJSON(req, aux); err != nil {
 		return nil, err
@@ -2712,7 +2712,7 @@ func (client *DictionaryClient) putDateTimeValidCreateRequest(ctx context.Contex
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	aux := map[string]*datetime.DateTimeRFC3339{}
 	for k, v := range arrayBody {
-		aux[k] = (*dateTimeRFC3339)(v)
+		aux[k] = (*datetime.DateTimeRFC3339)(v)
 	}
 	if err := runtime.MarshalAsJSON(req, aux); err != nil {
 		return nil, err
@@ -2756,7 +2756,7 @@ func (client *DictionaryClient) putDateValidCreateRequest(ctx context.Context, a
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	aux := map[string]*datetime.DateType{}
 	for k, v := range arrayBody {
-		aux[k] = (*dateType)(v)
+		aux[k] = (*datetime.DateType)(v)
 	}
 	if err := runtime.MarshalAsJSON(req, aux); err != nil {
 		return nil, err

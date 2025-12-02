@@ -7,6 +7,7 @@ package datetimegroup
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -158,7 +159,7 @@ func (client *DatetimeHeaderClient) unixTimestampCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["value"] = []string{timeUnix(value).String()}
+	req.Raw().Header["value"] = []string{datetime.TimeUnix(value).String()}
 	return req, nil
 }
 
@@ -197,7 +198,7 @@ func (client *DatetimeHeaderClient) unixTimestampArrayCreateRequest(ctx context.
 	req.Raw().Header["value"] = []string{strings.Join(func() []string {
 		encodedValue := make([]string, len(value))
 		for i := 0; i < len(value); i++ {
-			encodedValue[i] = timeUnix(value[i]).String()
+			encodedValue[i] = datetime.TimeUnix(value[i]).String()
 		}
 		return encodedValue
 	}(), ",")}

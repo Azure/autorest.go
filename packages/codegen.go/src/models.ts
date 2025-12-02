@@ -344,9 +344,10 @@ function generateJSONMarshallerBody(modelType: go.Model | go.PolymorphicModel, m
       if (field.type.elementTypeByValue) {
         elementPtr = '';
       }
-      marshaller += `\taux := make([]${elementPtr}${field.type.elementType.format}, len(${source}), len(${source}))\n`;
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
+      marshaller += `\taux := make([]${elementPtr}${helpers.formatTime(field.type.elementType.format)}, len(${source}), len(${source}))\n`;
       marshaller += `\tfor i := 0; i < len(${source}); i++ {\n`;
-      marshaller += `\t\taux[i] = (${elementPtr}${field.type.elementType.format})(${source}[i])\n`;
+      marshaller += `\t\taux[i] = (${elementPtr}${helpers.formatTime(field.type.elementType.format)})(${source}[i])\n`;
       marshaller += '\t}\n';
       marshaller += `\tpopulate(objectMap, "${field.serializedName}", aux)\n`;
       modelDef.SerDe.needsJSONPopulate = true;
@@ -482,7 +483,7 @@ function generateJSONUnmarshallerBody(modelType: go.Model | go.PolymorphicModel,
         if (field.type.elementTypeByValue) {
           elementPtr = '';
         }
-        unmarshalBody += `\t\t\tvar aux []${elementPtr}${field.type.elementType.format}\n`;
+        unmarshalBody += `\t\t\tvar aux []${elementPtr}${helpers.formatTime(field.type.elementType.format)}\n`;
         unmarshalBody += `\t\t\terr = datetime.Unpopulate${capitalize(field.type.elementType.format)}(val, "${field.name}", &aux)\n`;
         unmarshalBody += '\t\t\tfor _, au := range aux {\n';
         unmarshalBody += `\t\t\t\t${receiver}.${field.name} = append(${receiver}.${field.name}, (${elementPtr}time.Time)(au))\n`;
@@ -697,7 +698,7 @@ function generateXMLMarshaller(modelType: go.Model, modelDef: ModelDef, imports:
   if (modelType.xml?.wrapper) {
     text += `\tstart.Name.Local = "${modelType.xml.wrapper}"\n`;
   }
-  text += generateAliasType(modelType, receiver, true);
+  text += generateAliasType(modelType, receiver, true, imports);
   for (const field of values(modelDef.Fields)) {
     if (field.type.kind === 'slice') {
       text += `\tif ${receiver}.${field.name} != nil {\n`;
@@ -723,7 +724,7 @@ function generateXMLUnmarshaller(modelType: go.Model, modelDef: ModelDef, import
   const receiver = modelDef.receiverName();
   const desc = `UnmarshalXML implements the xml.Unmarshaller interface for type ${modelDef.Name}.`;
   let text = `func (${receiver} *${modelDef.Name}) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {\n`;
-  text += generateAliasType(modelType, receiver, false);
+  text += generateAliasType(modelType, receiver, false, imports);
   text += '\tif err := dec.DecodeElement(aux, &start); err != nil {\n';
   text += '\t\treturn err\n';
   text += '\t}\n';
@@ -748,14 +749,15 @@ function generateXMLUnmarshaller(modelType: go.Model, modelDef: ModelDef, import
 }
 
 // generates an alias type used by custom XML marshaller/unmarshaller
-function generateAliasType(modelType: go.Model, receiver: string, forMarshal: boolean): string {
+function generateAliasType(modelType: go.Model, receiver: string, forMarshal: boolean, imports: ImportManager): string {
   let text = `\ttype alias ${modelType.name}\n`;
   text += '\taux := &struct {\n';
   text += '\t\t*alias\n';
   for (const field of values(modelType.fields)) {
     const sn = getXMLSerialization(field, false);
     if (field.type.kind === 'time') {
-      text += `\t\t${field.name} *${field.type.format} \`xml:"${sn}"\`\n`;
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
+      text += `\t\t${field.name} *${helpers.formatTime(field.type.format)} \`xml:"${sn}"\`\n`;
     } else if (field.annotations.isAdditionalProperties || field.type.kind === 'map') {
       text += `\t\t${field.name} additionalProperties \`xml:"${sn}"\`\n`;
     } else if (field.type.kind === 'slice') {
@@ -776,7 +778,8 @@ function generateAliasType(modelType: go.Model, receiver: string, forMarshal: bo
       if (field.type.kind !== 'time') {
         continue;
       }
-      text += `\t\t${field.name}: (*${field.type.format})(${receiver}.${field.name}),\n`;
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
+      text += `\t\t${field.name}: (*${helpers.formatTime(field.type.format)})(${receiver}.${field.name}),\n`;
     }
   }
   text += '\t}\n';

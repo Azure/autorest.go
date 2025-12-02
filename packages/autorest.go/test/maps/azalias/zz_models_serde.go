@@ -650,9 +650,9 @@ func (t *TypeWithRawJSON) UnmarshalJSON(data []byte) error {
 func (t TypeWithSliceOfTimes) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	datetime.PopulateTimeRFC3339(objectMap, "interval", t.Interval)
-	aux := make([]dateTimeRFC3339, len(t.Times), len(t.Times))
+	aux := make([]datetime.DateTimeRFC3339, len(t.Times), len(t.Times))
 	for i := 0; i < len(t.Times); i++ {
-		aux[i] = (dateTimeRFC3339)(t.Times[i])
+		aux[i] = (datetime.DateTimeRFC3339)(t.Times[i])
 	}
 	populate(objectMap, "times", aux)
 	return json.Marshal(objectMap)
@@ -671,7 +671,7 @@ func (t *TypeWithSliceOfTimes) UnmarshalJSON(data []byte) error {
 			err = datetime.UnpopulateTimeRFC3339(val, "Interval", &t.Interval)
 			delete(rawMsg, key)
 		case "times":
-			var aux []dateTimeRFC3339
+			var aux []datetime.DateTimeRFC3339
 			err = datetime.UnpopulateDateTimeRFC3339(val, "Times", &aux)
 			for _, au := range aux {
 				t.Times = append(t.Times, (time.Time)(au))
