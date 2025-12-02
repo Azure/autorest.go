@@ -130,7 +130,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
             const methodParam = example.parameters.find(p => p.parameter.name === param.name);
             if (methodParam) {
               methodParameters.push(methodParam);
-            } else if (go.isRequiredParameter(param.style) && !go.isLiteralParameter(param.style)) {
+            } else if (go.isRequiredParameter(param.style)) {
               // if the parameter is required but lacks example value, generate a fake example
               methodParameters.push({ parameter: param, value: generateFakeExample(param.type, param.name) });
             }
