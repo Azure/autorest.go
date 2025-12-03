@@ -2,10 +2,6 @@
 
 ## 4.0.0-preview.76 (unreleased)
 
-### Bugs Fixed
-
-* Generate fake values for required parameters when missing example values.
-
 ### Other Changes
 
 * Updated the minimum version of Go to `v1.24.0`.
