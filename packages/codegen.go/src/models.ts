@@ -484,7 +484,7 @@ function generateJSONUnmarshallerBody(modelType: go.Model | go.PolymorphicModel,
           elementPtr = '';
         }
         unmarshalBody += `\t\t\tvar aux []${elementPtr}${helpers.formatTime(field.type.elementType.format)}\n`;
-        unmarshalBody += `\t\t\terr = datetime.Unpopulate${capitalize(field.type.elementType.format)}(val, "${field.name}", &aux)\n`;
+        unmarshalBody += `\t\t\terr = unpopulate(val, "${field.name}", &aux)\n`;
         unmarshalBody += '\t\t\tfor _, au := range aux {\n';
         unmarshalBody += `\t\t\t\t${receiver}.${field.name} = append(${receiver}.${field.name}, (${elementPtr}time.Time)(au))\n`;
         unmarshalBody += '\t\t\t}\n';

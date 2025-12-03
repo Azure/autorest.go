@@ -116,7 +116,7 @@ func (u *UnixTimestampArrayDatetimeProperty) UnmarshalJSON(data []byte) error {
 		switch key {
 		case "value":
 			var aux []datetime.TimeUnix
-			err = datetime.UnpopulateTimeUnix(val, "Value", &aux)
+			err = unpopulate(val, "Value", &aux)
 			for _, au := range aux {
 				u.Value = append(u.Value, (time.Time)(au))
 			}

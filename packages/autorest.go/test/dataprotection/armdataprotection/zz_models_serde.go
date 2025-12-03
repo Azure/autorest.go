@@ -5023,7 +5023,7 @@ func (s *ScheduleBasedBackupCriteria) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "scheduleTimes":
 			var aux []*datetime.DateTimeRFC3339
-			err = datetime.UnpopulateDateTimeRFC3339(val, "ScheduleTimes", &aux)
+			err = unpopulate(val, "ScheduleTimes", &aux)
 			for _, au := range aux {
 				s.ScheduleTimes = append(s.ScheduleTimes, (*time.Time)(au))
 			}

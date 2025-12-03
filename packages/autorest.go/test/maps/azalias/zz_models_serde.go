@@ -672,7 +672,7 @@ func (t *TypeWithSliceOfTimes) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "times":
 			var aux []datetime.DateTimeRFC3339
-			err = datetime.UnpopulateDateTimeRFC3339(val, "Times", &aux)
+			err = unpopulate(val, "Times", &aux)
 			for _, au := range aux {
 				t.Times = append(t.Times, (time.Time)(au))
 			}
