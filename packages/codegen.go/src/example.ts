@@ -130,6 +130,9 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
             const methodParam = example.parameters.find(p => p.parameter.name === param.name);
             if (methodParam) {
               methodParameters.push(methodParam);
+            } else if (go.isRequiredParameter(param.style)) {
+              // if the parameter is required but lacks example value, generate a fake example
+              methodParameters.push({ parameter: param, value: generateFakeExample(param.type, param.name) });
             }
           }
         }
@@ -457,6 +460,26 @@ function generateFakeExample(goType: go.Type, name?: string): go.ExampleType {
     case 'tokenCredential':
       // we hard code the credential var name to cred
       return new go.TokenCredentialExample('cred');
+    case 'encodedBytes':
+      return new go.StringExample(`<${name ?? 'test'}>`, goType);
+    case 'time':
+      // use a placeholder date value for time types
+      return new go.StringExample('2006-01-02T15:04:05Z', goType);
+    case 'etag':
+      return new go.StringExample(`<${name ?? 'etag'}>`, goType);
+    case 'model':
+    case 'polymorphicModel':
+      // return an empty struct example for model types
+      return new go.StructExample(goType);
+    case 'slice':
+      // return an empty array example for slice types
+      return new go.ArrayExample(goType);
+    case 'map':
+      // return an empty map example for map types
+      return new go.DictionaryExample(goType);
+    case 'interface':
+      // for interface types, use the root type (which is a PolymorphicModel) to create an example
+      return new go.StructExample(goType.rootType);
     default:
       throw new CodegenError('InternalError', `unhandled fake example kind ${goType.kind}`);
   }
