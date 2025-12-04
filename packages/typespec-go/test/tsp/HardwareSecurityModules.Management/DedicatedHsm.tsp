@@ -36,7 +36,6 @@ model DedicatedHsm extends Foundations.TrackedResource {
    * Properties of the dedicated HSM
    */
   #suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-invalid-envelope-property"
-  @Azure.ResourceManager.Private.conditionalClientFlatten
   @Azure.ResourceManager.Private.armResourcePropertiesOptionality(false)
   properties: DedicatedHsmProperties;
 }
