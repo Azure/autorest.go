@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"reflect"
 )
@@ -82,11 +83,11 @@ func (a *AdministratorDetails) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type Attributes.
 func (a Attributes) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateTimeUnix(objectMap, "created", a.Created)
+	datetime.PopulateTimeUnix(objectMap, "created", a.Created)
 	populate(objectMap, "enabled", a.Enabled)
-	populateTimeUnix(objectMap, "exp", a.Expires)
-	populateTimeUnix(objectMap, "nbf", a.NotBefore)
-	populateTimeUnix(objectMap, "updated", a.Updated)
+	datetime.PopulateTimeUnix(objectMap, "exp", a.Expires)
+	datetime.PopulateTimeUnix(objectMap, "nbf", a.NotBefore)
+	datetime.PopulateTimeUnix(objectMap, "updated", a.Updated)
 	return json.Marshal(objectMap)
 }
 
@@ -100,19 +101,19 @@ func (a *Attributes) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "created":
-			err = unpopulateTimeUnix(val, "Created", &a.Created)
+			err = datetime.UnpopulateTimeUnix(val, "Created", &a.Created)
 			delete(rawMsg, key)
 		case "enabled":
 			err = unpopulate(val, "Enabled", &a.Enabled)
 			delete(rawMsg, key)
 		case "exp":
-			err = unpopulateTimeUnix(val, "Expires", &a.Expires)
+			err = datetime.UnpopulateTimeUnix(val, "Expires", &a.Expires)
 			delete(rawMsg, key)
 		case "nbf":
-			err = unpopulateTimeUnix(val, "NotBefore", &a.NotBefore)
+			err = datetime.UnpopulateTimeUnix(val, "NotBefore", &a.NotBefore)
 			delete(rawMsg, key)
 		case "updated":
-			err = unpopulateTimeUnix(val, "Updated", &a.Updated)
+			err = datetime.UnpopulateTimeUnix(val, "Updated", &a.Updated)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -249,13 +250,13 @@ func (b *BackupStorageResult) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type CertificateAttributes.
 func (c CertificateAttributes) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateTimeUnix(objectMap, "created", c.Created)
+	datetime.PopulateTimeUnix(objectMap, "created", c.Created)
 	populate(objectMap, "enabled", c.Enabled)
-	populateTimeUnix(objectMap, "exp", c.Expires)
-	populateTimeUnix(objectMap, "nbf", c.NotBefore)
+	datetime.PopulateTimeUnix(objectMap, "exp", c.Expires)
+	datetime.PopulateTimeUnix(objectMap, "nbf", c.NotBefore)
 	populate(objectMap, "recoverableDays", c.RecoverableDays)
 	populate(objectMap, "recoveryLevel", c.RecoveryLevel)
-	populateTimeUnix(objectMap, "updated", c.Updated)
+	datetime.PopulateTimeUnix(objectMap, "updated", c.Updated)
 	return json.Marshal(objectMap)
 }
 
@@ -269,16 +270,16 @@ func (c *CertificateAttributes) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "created":
-			err = unpopulateTimeUnix(val, "Created", &c.Created)
+			err = datetime.UnpopulateTimeUnix(val, "Created", &c.Created)
 			delete(rawMsg, key)
 		case "enabled":
 			err = unpopulate(val, "Enabled", &c.Enabled)
 			delete(rawMsg, key)
 		case "exp":
-			err = unpopulateTimeUnix(val, "Expires", &c.Expires)
+			err = datetime.UnpopulateTimeUnix(val, "Expires", &c.Expires)
 			delete(rawMsg, key)
 		case "nbf":
-			err = unpopulateTimeUnix(val, "NotBefore", &c.NotBefore)
+			err = datetime.UnpopulateTimeUnix(val, "NotBefore", &c.NotBefore)
 			delete(rawMsg, key)
 		case "recoverableDays":
 			err = unpopulate(val, "RecoverableDays", &c.RecoverableDays)
@@ -287,7 +288,7 @@ func (c *CertificateAttributes) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "RecoveryLevel", &c.RecoveryLevel)
 			delete(rawMsg, key)
 		case "updated":
-			err = unpopulateTimeUnix(val, "Updated", &c.Updated)
+			err = datetime.UnpopulateTimeUnix(val, "Updated", &c.Updated)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -1016,12 +1017,12 @@ func (d DeletedCertificateBundle) MarshalJSON() ([]byte, error) {
 		return runtime.EncodeByteArray(d.Cer, runtime.Base64StdFormat)
 	})
 	populate(objectMap, "contentType", d.ContentType)
-	populateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
+	datetime.PopulateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
 	populate(objectMap, "id", d.ID)
 	populate(objectMap, "kid", d.Kid)
 	populate(objectMap, "policy", d.Policy)
 	populate(objectMap, "recoveryId", d.RecoveryID)
-	populateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
+	datetime.PopulateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
 	populate(objectMap, "sid", d.Sid)
 	populate(objectMap, "tags", d.Tags)
 	populateByteArray(objectMap, "x5t", d.X509Thumbprint, func() any {
@@ -1051,7 +1052,7 @@ func (d *DeletedCertificateBundle) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ContentType", &d.ContentType)
 			delete(rawMsg, key)
 		case "deletedDate":
-			err = unpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
+			err = datetime.UnpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
 			delete(rawMsg, key)
 		case "id":
 			err = unpopulate(val, "ID", &d.ID)
@@ -1066,7 +1067,7 @@ func (d *DeletedCertificateBundle) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "RecoveryID", &d.RecoveryID)
 			delete(rawMsg, key)
 		case "scheduledPurgeDate":
-			err = unpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
+			err = datetime.UnpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
 			delete(rawMsg, key)
 		case "sid":
 			err = unpopulate(val, "Sid", &d.Sid)
@@ -1091,10 +1092,10 @@ func (d *DeletedCertificateBundle) UnmarshalJSON(data []byte) error {
 func (d DeletedCertificateItem) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "attributes", d.Attributes)
-	populateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
+	datetime.PopulateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
 	populate(objectMap, "id", d.ID)
 	populate(objectMap, "recoveryId", d.RecoveryID)
-	populateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
+	datetime.PopulateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
 	populate(objectMap, "tags", d.Tags)
 	populateByteArray(objectMap, "x5t", d.X509Thumbprint, func() any {
 		return runtime.EncodeByteArray(d.X509Thumbprint, runtime.Base64URLFormat)
@@ -1115,7 +1116,7 @@ func (d *DeletedCertificateItem) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Attributes", &d.Attributes)
 			delete(rawMsg, key)
 		case "deletedDate":
-			err = unpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
+			err = datetime.UnpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
 			delete(rawMsg, key)
 		case "id":
 			err = unpopulate(val, "ID", &d.ID)
@@ -1124,7 +1125,7 @@ func (d *DeletedCertificateItem) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "RecoveryID", &d.RecoveryID)
 			delete(rawMsg, key)
 		case "scheduledPurgeDate":
-			err = unpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
+			err = datetime.UnpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
 			delete(rawMsg, key)
 		case "tags":
 			err = unpopulate(val, "Tags", &d.Tags)
@@ -1177,11 +1178,11 @@ func (d *DeletedCertificateListResult) UnmarshalJSON(data []byte) error {
 func (d DeletedKeyBundle) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "attributes", d.Attributes)
-	populateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
+	datetime.PopulateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
 	populate(objectMap, "key", d.Key)
 	populate(objectMap, "managed", d.Managed)
 	populate(objectMap, "recoveryId", d.RecoveryID)
-	populateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
+	datetime.PopulateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
 	populate(objectMap, "tags", d.Tags)
 	return json.Marshal(objectMap)
 }
@@ -1199,7 +1200,7 @@ func (d *DeletedKeyBundle) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Attributes", &d.Attributes)
 			delete(rawMsg, key)
 		case "deletedDate":
-			err = unpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
+			err = datetime.UnpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
 			delete(rawMsg, key)
 		case "key":
 			err = unpopulate(val, "Key", &d.Key)
@@ -1211,7 +1212,7 @@ func (d *DeletedKeyBundle) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "RecoveryID", &d.RecoveryID)
 			delete(rawMsg, key)
 		case "scheduledPurgeDate":
-			err = unpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
+			err = datetime.UnpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
 			delete(rawMsg, key)
 		case "tags":
 			err = unpopulate(val, "Tags", &d.Tags)
@@ -1228,11 +1229,11 @@ func (d *DeletedKeyBundle) UnmarshalJSON(data []byte) error {
 func (d DeletedKeyItem) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "attributes", d.Attributes)
-	populateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
+	datetime.PopulateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
 	populate(objectMap, "kid", d.Kid)
 	populate(objectMap, "managed", d.Managed)
 	populate(objectMap, "recoveryId", d.RecoveryID)
-	populateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
+	datetime.PopulateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
 	populate(objectMap, "tags", d.Tags)
 	return json.Marshal(objectMap)
 }
@@ -1250,7 +1251,7 @@ func (d *DeletedKeyItem) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Attributes", &d.Attributes)
 			delete(rawMsg, key)
 		case "deletedDate":
-			err = unpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
+			err = datetime.UnpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
 			delete(rawMsg, key)
 		case "kid":
 			err = unpopulate(val, "Kid", &d.Kid)
@@ -1262,7 +1263,7 @@ func (d *DeletedKeyItem) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "RecoveryID", &d.RecoveryID)
 			delete(rawMsg, key)
 		case "scheduledPurgeDate":
-			err = unpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
+			err = datetime.UnpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
 			delete(rawMsg, key)
 		case "tags":
 			err = unpopulate(val, "Tags", &d.Tags)
@@ -1310,11 +1311,11 @@ func (d *DeletedKeyListResult) UnmarshalJSON(data []byte) error {
 func (d DeletedSasDefinitionBundle) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "attributes", d.Attributes)
-	populateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
+	datetime.PopulateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
 	populate(objectMap, "id", d.ID)
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "sasType", d.SasType)
-	populateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
+	datetime.PopulateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
 	populate(objectMap, "sid", d.SecretID)
 	populate(objectMap, "tags", d.Tags)
 	populate(objectMap, "templateUri", d.TemplateURI)
@@ -1335,7 +1336,7 @@ func (d *DeletedSasDefinitionBundle) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Attributes", &d.Attributes)
 			delete(rawMsg, key)
 		case "deletedDate":
-			err = unpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
+			err = datetime.UnpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
 			delete(rawMsg, key)
 		case "id":
 			err = unpopulate(val, "ID", &d.ID)
@@ -1347,7 +1348,7 @@ func (d *DeletedSasDefinitionBundle) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "SasType", &d.SasType)
 			delete(rawMsg, key)
 		case "scheduledPurgeDate":
-			err = unpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
+			err = datetime.UnpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
 			delete(rawMsg, key)
 		case "sid":
 			err = unpopulate(val, "SecretID", &d.SecretID)
@@ -1373,10 +1374,10 @@ func (d *DeletedSasDefinitionBundle) UnmarshalJSON(data []byte) error {
 func (d DeletedSasDefinitionItem) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "attributes", d.Attributes)
-	populateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
+	datetime.PopulateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
 	populate(objectMap, "id", d.ID)
 	populate(objectMap, "recoveryId", d.RecoveryID)
-	populateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
+	datetime.PopulateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
 	populate(objectMap, "sid", d.SecretID)
 	populate(objectMap, "tags", d.Tags)
 	return json.Marshal(objectMap)
@@ -1395,7 +1396,7 @@ func (d *DeletedSasDefinitionItem) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Attributes", &d.Attributes)
 			delete(rawMsg, key)
 		case "deletedDate":
-			err = unpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
+			err = datetime.UnpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
 			delete(rawMsg, key)
 		case "id":
 			err = unpopulate(val, "ID", &d.ID)
@@ -1404,7 +1405,7 @@ func (d *DeletedSasDefinitionItem) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "RecoveryID", &d.RecoveryID)
 			delete(rawMsg, key)
 		case "scheduledPurgeDate":
-			err = unpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
+			err = datetime.UnpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
 			delete(rawMsg, key)
 		case "sid":
 			err = unpopulate(val, "SecretID", &d.SecretID)
@@ -1456,12 +1457,12 @@ func (d DeletedSecretBundle) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "attributes", d.Attributes)
 	populate(objectMap, "contentType", d.ContentType)
-	populateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
+	datetime.PopulateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
 	populate(objectMap, "id", d.ID)
 	populate(objectMap, "kid", d.Kid)
 	populate(objectMap, "managed", d.Managed)
 	populate(objectMap, "recoveryId", d.RecoveryID)
-	populateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
+	datetime.PopulateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
 	populate(objectMap, "tags", d.Tags)
 	populate(objectMap, "value", d.Value)
 	return json.Marshal(objectMap)
@@ -1483,7 +1484,7 @@ func (d *DeletedSecretBundle) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ContentType", &d.ContentType)
 			delete(rawMsg, key)
 		case "deletedDate":
-			err = unpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
+			err = datetime.UnpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
 			delete(rawMsg, key)
 		case "id":
 			err = unpopulate(val, "ID", &d.ID)
@@ -1498,7 +1499,7 @@ func (d *DeletedSecretBundle) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "RecoveryID", &d.RecoveryID)
 			delete(rawMsg, key)
 		case "scheduledPurgeDate":
-			err = unpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
+			err = datetime.UnpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
 			delete(rawMsg, key)
 		case "tags":
 			err = unpopulate(val, "Tags", &d.Tags)
@@ -1519,11 +1520,11 @@ func (d DeletedSecretItem) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "attributes", d.Attributes)
 	populate(objectMap, "contentType", d.ContentType)
-	populateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
+	datetime.PopulateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
 	populate(objectMap, "id", d.ID)
 	populate(objectMap, "managed", d.Managed)
 	populate(objectMap, "recoveryId", d.RecoveryID)
-	populateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
+	datetime.PopulateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
 	populate(objectMap, "tags", d.Tags)
 	return json.Marshal(objectMap)
 }
@@ -1544,7 +1545,7 @@ func (d *DeletedSecretItem) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ContentType", &d.ContentType)
 			delete(rawMsg, key)
 		case "deletedDate":
-			err = unpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
+			err = datetime.UnpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
 			delete(rawMsg, key)
 		case "id":
 			err = unpopulate(val, "ID", &d.ID)
@@ -1556,7 +1557,7 @@ func (d *DeletedSecretItem) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "RecoveryID", &d.RecoveryID)
 			delete(rawMsg, key)
 		case "scheduledPurgeDate":
-			err = unpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
+			err = datetime.UnpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
 			delete(rawMsg, key)
 		case "tags":
 			err = unpopulate(val, "Tags", &d.Tags)
@@ -1604,11 +1605,11 @@ func (d *DeletedSecretListResult) UnmarshalJSON(data []byte) error {
 func (d DeletedStorageAccountItem) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "attributes", d.Attributes)
-	populateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
+	datetime.PopulateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
 	populate(objectMap, "id", d.ID)
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "resourceId", d.ResourceID)
-	populateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
+	datetime.PopulateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
 	populate(objectMap, "tags", d.Tags)
 	return json.Marshal(objectMap)
 }
@@ -1626,7 +1627,7 @@ func (d *DeletedStorageAccountItem) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Attributes", &d.Attributes)
 			delete(rawMsg, key)
 		case "deletedDate":
-			err = unpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
+			err = datetime.UnpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
 			delete(rawMsg, key)
 		case "id":
 			err = unpopulate(val, "ID", &d.ID)
@@ -1638,7 +1639,7 @@ func (d *DeletedStorageAccountItem) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ResourceID", &d.ResourceID)
 			delete(rawMsg, key)
 		case "scheduledPurgeDate":
-			err = unpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
+			err = datetime.UnpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
 			delete(rawMsg, key)
 		case "tags":
 			err = unpopulate(val, "Tags", &d.Tags)
@@ -1657,12 +1658,12 @@ func (d DeletedStorageBundle) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "activeKeyName", d.ActiveKeyName)
 	populate(objectMap, "attributes", d.Attributes)
 	populate(objectMap, "autoRegenerateKey", d.AutoRegenerateKey)
-	populateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
+	datetime.PopulateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
 	populate(objectMap, "id", d.ID)
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "regenerationPeriod", d.RegenerationPeriod)
 	populate(objectMap, "resourceId", d.ResourceID)
-	populateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
+	datetime.PopulateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
 	populate(objectMap, "tags", d.Tags)
 	return json.Marshal(objectMap)
 }
@@ -1686,7 +1687,7 @@ func (d *DeletedStorageBundle) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "AutoRegenerateKey", &d.AutoRegenerateKey)
 			delete(rawMsg, key)
 		case "deletedDate":
-			err = unpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
+			err = datetime.UnpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
 			delete(rawMsg, key)
 		case "id":
 			err = unpopulate(val, "ID", &d.ID)
@@ -1701,7 +1702,7 @@ func (d *DeletedStorageBundle) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ResourceID", &d.ResourceID)
 			delete(rawMsg, key)
 		case "scheduledPurgeDate":
-			err = unpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
+			err = datetime.UnpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
 			delete(rawMsg, key)
 		case "tags":
 			err = unpopulate(val, "Tags", &d.Tags)
@@ -1811,10 +1812,10 @@ func (e *ErrorInfo) UnmarshalJSON(data []byte) error {
 func (f FullBackupOperation) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "azureStorageBlobContainerUri", f.AzureStorageBlobContainerURI)
-	populateTimeUnix(objectMap, "endTime", f.EndTime)
+	datetime.PopulateTimeUnix(objectMap, "endTime", f.EndTime)
 	populate(objectMap, "error", f.Error)
 	populate(objectMap, "jobId", f.JobID)
-	populateTimeUnix(objectMap, "startTime", f.StartTime)
+	datetime.PopulateTimeUnix(objectMap, "startTime", f.StartTime)
 	populate(objectMap, "status", f.Status)
 	populate(objectMap, "statusDetails", f.StatusDetails)
 	return json.Marshal(objectMap)
@@ -1833,7 +1834,7 @@ func (f *FullBackupOperation) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "AzureStorageBlobContainerURI", &f.AzureStorageBlobContainerURI)
 			delete(rawMsg, key)
 		case "endTime":
-			err = unpopulateTimeUnix(val, "EndTime", &f.EndTime)
+			err = datetime.UnpopulateTimeUnix(val, "EndTime", &f.EndTime)
 			delete(rawMsg, key)
 		case "error":
 			err = unpopulate(val, "Error", &f.Error)
@@ -1842,7 +1843,7 @@ func (f *FullBackupOperation) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "JobID", &f.JobID)
 			delete(rawMsg, key)
 		case "startTime":
-			err = unpopulateTimeUnix(val, "StartTime", &f.StartTime)
+			err = datetime.UnpopulateTimeUnix(val, "StartTime", &f.StartTime)
 			delete(rawMsg, key)
 		case "status":
 			err = unpopulate(val, "Status", &f.Status)
@@ -1861,9 +1862,9 @@ func (f *FullBackupOperation) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type IssuerAttributes.
 func (i IssuerAttributes) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateTimeUnix(objectMap, "created", i.Created)
+	datetime.PopulateTimeUnix(objectMap, "created", i.Created)
 	populate(objectMap, "enabled", i.Enabled)
-	populateTimeUnix(objectMap, "updated", i.Updated)
+	datetime.PopulateTimeUnix(objectMap, "updated", i.Updated)
 	return json.Marshal(objectMap)
 }
 
@@ -1877,13 +1878,13 @@ func (i *IssuerAttributes) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "created":
-			err = unpopulateTimeUnix(val, "Created", &i.Created)
+			err = datetime.UnpopulateTimeUnix(val, "Created", &i.Created)
 			delete(rawMsg, key)
 		case "enabled":
 			err = unpopulate(val, "Enabled", &i.Enabled)
 			delete(rawMsg, key)
 		case "updated":
-			err = unpopulateTimeUnix(val, "Updated", &i.Updated)
+			err = datetime.UnpopulateTimeUnix(val, "Updated", &i.Updated)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2140,13 +2141,13 @@ func (j *JSONWebKey) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type KeyAttributes.
 func (k KeyAttributes) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateTimeUnix(objectMap, "created", k.Created)
+	datetime.PopulateTimeUnix(objectMap, "created", k.Created)
 	populate(objectMap, "enabled", k.Enabled)
-	populateTimeUnix(objectMap, "exp", k.Expires)
-	populateTimeUnix(objectMap, "nbf", k.NotBefore)
+	datetime.PopulateTimeUnix(objectMap, "exp", k.Expires)
+	datetime.PopulateTimeUnix(objectMap, "nbf", k.NotBefore)
 	populate(objectMap, "recoverableDays", k.RecoverableDays)
 	populate(objectMap, "recoveryLevel", k.RecoveryLevel)
-	populateTimeUnix(objectMap, "updated", k.Updated)
+	datetime.PopulateTimeUnix(objectMap, "updated", k.Updated)
 	return json.Marshal(objectMap)
 }
 
@@ -2160,16 +2161,16 @@ func (k *KeyAttributes) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "created":
-			err = unpopulateTimeUnix(val, "Created", &k.Created)
+			err = datetime.UnpopulateTimeUnix(val, "Created", &k.Created)
 			delete(rawMsg, key)
 		case "enabled":
 			err = unpopulate(val, "Enabled", &k.Enabled)
 			delete(rawMsg, key)
 		case "exp":
-			err = unpopulateTimeUnix(val, "Expires", &k.Expires)
+			err = datetime.UnpopulateTimeUnix(val, "Expires", &k.Expires)
 			delete(rawMsg, key)
 		case "nbf":
-			err = unpopulateTimeUnix(val, "NotBefore", &k.NotBefore)
+			err = datetime.UnpopulateTimeUnix(val, "NotBefore", &k.NotBefore)
 			delete(rawMsg, key)
 		case "recoverableDays":
 			err = unpopulate(val, "RecoverableDays", &k.RecoverableDays)
@@ -2178,7 +2179,7 @@ func (k *KeyAttributes) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "RecoveryLevel", &k.RecoveryLevel)
 			delete(rawMsg, key)
 		case "updated":
-			err = unpopulateTimeUnix(val, "Updated", &k.Updated)
+			err = datetime.UnpopulateTimeUnix(val, "Updated", &k.Updated)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2850,10 +2851,10 @@ func (p *Permission) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type RestoreOperation.
 func (r RestoreOperation) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateTimeUnix(objectMap, "endTime", r.EndTime)
+	datetime.PopulateTimeUnix(objectMap, "endTime", r.EndTime)
 	populate(objectMap, "error", r.Error)
 	populate(objectMap, "jobId", r.JobID)
-	populateTimeUnix(objectMap, "startTime", r.StartTime)
+	datetime.PopulateTimeUnix(objectMap, "startTime", r.StartTime)
 	populate(objectMap, "status", r.Status)
 	populate(objectMap, "statusDetails", r.StatusDetails)
 	return json.Marshal(objectMap)
@@ -2869,7 +2870,7 @@ func (r *RestoreOperation) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "endTime":
-			err = unpopulateTimeUnix(val, "EndTime", &r.EndTime)
+			err = datetime.UnpopulateTimeUnix(val, "EndTime", &r.EndTime)
 			delete(rawMsg, key)
 		case "error":
 			err = unpopulate(val, "Error", &r.Error)
@@ -2878,7 +2879,7 @@ func (r *RestoreOperation) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "JobID", &r.JobID)
 			delete(rawMsg, key)
 		case "startTime":
-			err = unpopulateTimeUnix(val, "StartTime", &r.StartTime)
+			err = datetime.UnpopulateTimeUnix(val, "StartTime", &r.StartTime)
 			delete(rawMsg, key)
 		case "status":
 			err = unpopulate(val, "Status", &r.Status)
@@ -3316,11 +3317,11 @@ func (s *SASTokenParameter) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type SasDefinitionAttributes.
 func (s SasDefinitionAttributes) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateTimeUnix(objectMap, "created", s.Created)
+	datetime.PopulateTimeUnix(objectMap, "created", s.Created)
 	populate(objectMap, "enabled", s.Enabled)
 	populate(objectMap, "recoverableDays", s.RecoverableDays)
 	populate(objectMap, "recoveryLevel", s.RecoveryLevel)
-	populateTimeUnix(objectMap, "updated", s.Updated)
+	datetime.PopulateTimeUnix(objectMap, "updated", s.Updated)
 	return json.Marshal(objectMap)
 }
 
@@ -3334,7 +3335,7 @@ func (s *SasDefinitionAttributes) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "created":
-			err = unpopulateTimeUnix(val, "Created", &s.Created)
+			err = datetime.UnpopulateTimeUnix(val, "Created", &s.Created)
 			delete(rawMsg, key)
 		case "enabled":
 			err = unpopulate(val, "Enabled", &s.Enabled)
@@ -3346,7 +3347,7 @@ func (s *SasDefinitionAttributes) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "RecoveryLevel", &s.RecoveryLevel)
 			delete(rawMsg, key)
 		case "updated":
-			err = unpopulateTimeUnix(val, "Updated", &s.Updated)
+			err = datetime.UnpopulateTimeUnix(val, "Updated", &s.Updated)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -3566,13 +3567,13 @@ func (s *SasDefinitionUpdateParameters) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type SecretAttributes.
 func (s SecretAttributes) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateTimeUnix(objectMap, "created", s.Created)
+	datetime.PopulateTimeUnix(objectMap, "created", s.Created)
 	populate(objectMap, "enabled", s.Enabled)
-	populateTimeUnix(objectMap, "exp", s.Expires)
-	populateTimeUnix(objectMap, "nbf", s.NotBefore)
+	datetime.PopulateTimeUnix(objectMap, "exp", s.Expires)
+	datetime.PopulateTimeUnix(objectMap, "nbf", s.NotBefore)
 	populate(objectMap, "recoverableDays", s.RecoverableDays)
 	populate(objectMap, "recoveryLevel", s.RecoveryLevel)
-	populateTimeUnix(objectMap, "updated", s.Updated)
+	datetime.PopulateTimeUnix(objectMap, "updated", s.Updated)
 	return json.Marshal(objectMap)
 }
 
@@ -3586,16 +3587,16 @@ func (s *SecretAttributes) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "created":
-			err = unpopulateTimeUnix(val, "Created", &s.Created)
+			err = datetime.UnpopulateTimeUnix(val, "Created", &s.Created)
 			delete(rawMsg, key)
 		case "enabled":
 			err = unpopulate(val, "Enabled", &s.Enabled)
 			delete(rawMsg, key)
 		case "exp":
-			err = unpopulateTimeUnix(val, "Expires", &s.Expires)
+			err = datetime.UnpopulateTimeUnix(val, "Expires", &s.Expires)
 			delete(rawMsg, key)
 		case "nbf":
-			err = unpopulateTimeUnix(val, "NotBefore", &s.NotBefore)
+			err = datetime.UnpopulateTimeUnix(val, "NotBefore", &s.NotBefore)
 			delete(rawMsg, key)
 		case "recoverableDays":
 			err = unpopulate(val, "RecoverableDays", &s.RecoverableDays)
@@ -3604,7 +3605,7 @@ func (s *SecretAttributes) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "RecoveryLevel", &s.RecoveryLevel)
 			delete(rawMsg, key)
 		case "updated":
-			err = unpopulateTimeUnix(val, "Updated", &s.Updated)
+			err = datetime.UnpopulateTimeUnix(val, "Updated", &s.Updated)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -3995,10 +3996,10 @@ func (s *SecurityDomainOperationStatus) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type SelectiveKeyRestoreOperation.
 func (s SelectiveKeyRestoreOperation) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateTimeUnix(objectMap, "endTime", s.EndTime)
+	datetime.PopulateTimeUnix(objectMap, "endTime", s.EndTime)
 	populate(objectMap, "error", s.Error)
 	populate(objectMap, "jobId", s.JobID)
-	populateTimeUnix(objectMap, "startTime", s.StartTime)
+	datetime.PopulateTimeUnix(objectMap, "startTime", s.StartTime)
 	populate(objectMap, "status", s.Status)
 	populate(objectMap, "statusDetails", s.StatusDetails)
 	return json.Marshal(objectMap)
@@ -4014,7 +4015,7 @@ func (s *SelectiveKeyRestoreOperation) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "endTime":
-			err = unpopulateTimeUnix(val, "EndTime", &s.EndTime)
+			err = datetime.UnpopulateTimeUnix(val, "EndTime", &s.EndTime)
 			delete(rawMsg, key)
 		case "error":
 			err = unpopulate(val, "Error", &s.Error)
@@ -4023,7 +4024,7 @@ func (s *SelectiveKeyRestoreOperation) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "JobID", &s.JobID)
 			delete(rawMsg, key)
 		case "startTime":
-			err = unpopulateTimeUnix(val, "StartTime", &s.StartTime)
+			err = datetime.UnpopulateTimeUnix(val, "StartTime", &s.StartTime)
 			delete(rawMsg, key)
 		case "status":
 			err = unpopulate(val, "Status", &s.Status)
@@ -4073,11 +4074,11 @@ func (s *SelectiveKeyRestoreOperationParameters) UnmarshalJSON(data []byte) erro
 // MarshalJSON implements the json.Marshaller interface for type StorageAccountAttributes.
 func (s StorageAccountAttributes) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateTimeUnix(objectMap, "created", s.Created)
+	datetime.PopulateTimeUnix(objectMap, "created", s.Created)
 	populate(objectMap, "enabled", s.Enabled)
 	populate(objectMap, "recoverableDays", s.RecoverableDays)
 	populate(objectMap, "recoveryLevel", s.RecoveryLevel)
-	populateTimeUnix(objectMap, "updated", s.Updated)
+	datetime.PopulateTimeUnix(objectMap, "updated", s.Updated)
 	return json.Marshal(objectMap)
 }
 
@@ -4091,7 +4092,7 @@ func (s *StorageAccountAttributes) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "created":
-			err = unpopulateTimeUnix(val, "Created", &s.Created)
+			err = datetime.UnpopulateTimeUnix(val, "Created", &s.Created)
 			delete(rawMsg, key)
 		case "enabled":
 			err = unpopulate(val, "Enabled", &s.Enabled)
@@ -4103,7 +4104,7 @@ func (s *StorageAccountAttributes) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "RecoveryLevel", &s.RecoveryLevel)
 			delete(rawMsg, key)
 		case "updated":
-			err = unpopulateTimeUnix(val, "Updated", &s.Updated)
+			err = datetime.UnpopulateTimeUnix(val, "Updated", &s.Updated)
 			delete(rawMsg, key)
 		}
 		if err != nil {

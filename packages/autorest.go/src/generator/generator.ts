@@ -14,7 +14,6 @@ import { generateOptions } from '../../../codegen.go/src/options.js';
 import { generateInterfaces } from '../../../codegen.go/src/interfaces.js';
 import { generateResponses } from '../../../codegen.go/src/responses.js';
 import { generateConstants } from '../../../codegen.go/src/constants.js';
-import { generateTimeHelpers } from '../../../codegen.go/src/time.js';
 import { generatePolymorphicHelpers } from '../../../codegen.go/src/polymorphics.js';
 import { generateGoModFile } from '../../../codegen.go/src/gomod.js';
 import { generateXMLAdditionalPropsHelpers } from '../../../codegen.go/src/xmlAdditionalProps.js';
@@ -127,15 +126,6 @@ export async function generateCode(host: AutorestExtensionHost) {
       });
     }
 
-    const timeHelpers = await generateTimeHelpers(session.model);
-    for (const helper of values(timeHelpers)) {
-      host.writeFile({
-        filename: `${filePrefix}${helper.name.toLowerCase()}.go`,
-        content: helper.content,
-        artifactType: 'source-file-go'
-      });
-    }
-
     const polymorphics = await generatePolymorphicHelpers(session.model);
     if (polymorphics.length > 0) {
       host.writeFile({
@@ -209,15 +199,6 @@ export async function generateCode(host: AutorestExtensionHost) {
         content: serverContent.internals,
         artifactType: 'source-file-go'
       });
-
-      const timeHelpers = await generateTimeHelpers(session.model, 'fake');
-      for (const helper of values(timeHelpers)) {
-        host.writeFile({
-          filename: `fake/${filePrefix}${helper.name.toLowerCase()}.go`,
-          content: helper.content,
-          artifactType: 'source-file-go'
-        });
-      }
 
       const polymorphics = await generatePolymorphicHelpers(session.model, 'fake');
       if (polymorphics.length > 0) {

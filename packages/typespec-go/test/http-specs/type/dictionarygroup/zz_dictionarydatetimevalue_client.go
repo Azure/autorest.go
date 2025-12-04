@@ -7,6 +7,7 @@ package dictionarygroup
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -60,7 +61,7 @@ func (client *DictionaryDatetimeValueClient) getCreateRequest(ctx context.Contex
 // getHandleResponse handles the Get response.
 func (client *DictionaryDatetimeValueClient) getHandleResponse(resp *http.Response) (DictionaryDatetimeValueClientGetResponse, error) {
 	result := DictionaryDatetimeValueClientGetResponse{}
-	aux := map[string]*dateTimeRFC3339{}
+	aux := map[string]*datetime.DateTimeRFC3339{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DictionaryDatetimeValueClientGetResponse{}, err
 	}
@@ -104,9 +105,9 @@ func (client *DictionaryDatetimeValueClient) putCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	aux := map[string]*dateTimeRFC3339{}
+	aux := map[string]*datetime.DateTimeRFC3339{}
 	for k, v := range body {
-		aux[k] = (*dateTimeRFC3339)(v)
+		aux[k] = (*datetime.DateTimeRFC3339)(v)
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, aux); err != nil {

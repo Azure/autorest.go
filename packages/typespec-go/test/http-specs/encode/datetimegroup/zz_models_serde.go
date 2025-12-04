@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime"
 	"reflect"
 	"time"
 )
@@ -15,7 +16,7 @@ import (
 // MarshalJSON implements the json.Marshaller interface for type DefaultDatetimeProperty.
 func (d DefaultDatetimeProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateDateTimeRFC3339(objectMap, "value", d.Value)
+	datetime.PopulateDateTimeRFC3339(objectMap, "value", d.Value)
 	return json.Marshal(objectMap)
 }
 
@@ -29,7 +30,7 @@ func (d *DefaultDatetimeProperty) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = unpopulateDateTimeRFC3339(val, "Value", &d.Value)
+			err = datetime.UnpopulateDateTimeRFC3339(val, "Value", &d.Value)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -42,7 +43,7 @@ func (d *DefaultDatetimeProperty) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type RFC3339DatetimeProperty.
 func (r RFC3339DatetimeProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateDateTimeRFC3339(objectMap, "value", r.Value)
+	datetime.PopulateDateTimeRFC3339(objectMap, "value", r.Value)
 	return json.Marshal(objectMap)
 }
 
@@ -56,7 +57,7 @@ func (r *RFC3339DatetimeProperty) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = unpopulateDateTimeRFC3339(val, "Value", &r.Value)
+			err = datetime.UnpopulateDateTimeRFC3339(val, "Value", &r.Value)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -69,7 +70,7 @@ func (r *RFC3339DatetimeProperty) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type RFC7231DatetimeProperty.
 func (r RFC7231DatetimeProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateDateTimeRFC1123(objectMap, "value", r.Value)
+	datetime.PopulateDateTimeRFC1123(objectMap, "value", r.Value)
 	return json.Marshal(objectMap)
 }
 
@@ -83,7 +84,7 @@ func (r *RFC7231DatetimeProperty) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = unpopulateDateTimeRFC1123(val, "Value", &r.Value)
+			err = datetime.UnpopulateDateTimeRFC1123(val, "Value", &r.Value)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -96,9 +97,9 @@ func (r *RFC7231DatetimeProperty) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type UnixTimestampArrayDatetimeProperty.
 func (u UnixTimestampArrayDatetimeProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	aux := make([]timeUnix, len(u.Value), len(u.Value))
+	aux := make([]datetime.TimeUnix, len(u.Value), len(u.Value))
 	for i := 0; i < len(u.Value); i++ {
-		aux[i] = (timeUnix)(u.Value[i])
+		aux[i] = (datetime.TimeUnix)(u.Value[i])
 	}
 	populate(objectMap, "value", aux)
 	return json.Marshal(objectMap)
@@ -114,7 +115,7 @@ func (u *UnixTimestampArrayDatetimeProperty) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			var aux []timeUnix
+			var aux []datetime.TimeUnix
 			err = unpopulate(val, "Value", &aux)
 			for _, au := range aux {
 				u.Value = append(u.Value, (time.Time)(au))
@@ -131,7 +132,7 @@ func (u *UnixTimestampArrayDatetimeProperty) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type UnixTimestampDatetimeProperty.
 func (u UnixTimestampDatetimeProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateTimeUnix(objectMap, "value", u.Value)
+	datetime.PopulateTimeUnix(objectMap, "value", u.Value)
 	return json.Marshal(objectMap)
 }
 
@@ -145,7 +146,7 @@ func (u *UnixTimestampDatetimeProperty) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = unpopulateTimeUnix(val, "Value", &u.Value)
+			err = datetime.UnpopulateTimeUnix(val, "Value", &u.Value)
 			delete(rawMsg, key)
 		}
 		if err != nil {

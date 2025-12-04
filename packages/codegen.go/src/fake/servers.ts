@@ -388,7 +388,8 @@ function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport
             }
             let responseField = `server.GetResponse(respr)${respField}`;
             if (method.returns.result.monomorphicType.kind === 'time') {
-              responseField = `(*${method.returns.result.monomorphicType.format})(${responseField})`;
+              imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
+              responseField = `(*datetime.${capitalize(method.returns.result.monomorphicType.format)})(${responseField})`;
             }
             content += `\tresp, err := server.MarshalResponseAs${method.returns.result.format}(respContent, ${responseField}, req)\n`;
           }
@@ -482,7 +483,8 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
             default: {
               let bodyTypeName = go.getTypeDeclaration(bodyParam.type, clientPkg);
               if (bodyParam.type.kind === 'time') {
-                bodyTypeName = bodyParam.type.format;
+                imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime');
+                bodyTypeName = `datetime.${capitalize(bodyParam.type.format)}`;
               }
               content += `\tbody, err := server.UnmarshalRequestAs${bodyParam.bodyFormat}[${bodyTypeName}](req)\n`;
               content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';

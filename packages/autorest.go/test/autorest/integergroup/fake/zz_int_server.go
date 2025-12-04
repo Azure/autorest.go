@@ -10,6 +10,7 @@ import (
 	"errors"
 	"fmt"
 	"generatortests/integergroup"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime"
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -190,7 +191,7 @@ func (i *IntServerTransport) dispatchGetInvalidUnixTime(req *http.Request) (*htt
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*timeUnix)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.TimeUnix)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -228,7 +229,7 @@ func (i *IntServerTransport) dispatchGetNullUnixTime(req *http.Request) (*http.R
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*timeUnix)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.TimeUnix)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -323,7 +324,7 @@ func (i *IntServerTransport) dispatchGetUnixTime(req *http.Request) (*http.Respo
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*timeUnix)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.TimeUnix)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -426,7 +427,7 @@ func (i *IntServerTransport) dispatchPutUnixTimeDate(req *http.Request) (*http.R
 	if i.srv.PutUnixTimeDate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutUnixTimeDate not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[timeUnix](req)
+	body, err := server.UnmarshalRequestAsJSON[datetime.TimeUnix](req)
 	if err != nil {
 		return nil, err
 	}

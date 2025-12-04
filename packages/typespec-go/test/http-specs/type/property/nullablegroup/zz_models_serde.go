@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/datetime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"reflect"
 )
@@ -156,7 +157,7 @@ func (c *CollectionsStringProperty) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type DatetimeProperty.
 func (d DatetimeProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateDateTimeRFC3339(objectMap, "nullableProperty", d.NullableProperty)
+	datetime.PopulateDateTimeRFC3339(objectMap, "nullableProperty", d.NullableProperty)
 	populate(objectMap, "requiredProperty", d.RequiredProperty)
 	return json.Marshal(objectMap)
 }
@@ -171,7 +172,7 @@ func (d *DatetimeProperty) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "nullableProperty":
-			err = unpopulateDateTimeRFC3339(val, "NullableProperty", &d.NullableProperty)
+			err = datetime.UnpopulateDateTimeRFC3339(val, "NullableProperty", &d.NullableProperty)
 			delete(rawMsg, key)
 		case "requiredProperty":
 			err = unpopulate(val, "RequiredProperty", &d.RequiredProperty)
