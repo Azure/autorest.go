@@ -40,9 +40,7 @@ model HealthBot extends Foundations.TrackedResource {
   identity?: Identity;
 
   #suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-invalid-envelope-property" ""
-  #suppress "@azure-tools/typespec-azure-core/no-private-usage" ""
   @doc("The set of properties specific to Azure Health Bot resource.")
-  @Azure.ResourceManager.Private.conditionalClientFlatten
   @Azure.ResourceManager.Private.armResourcePropertiesOptionality(true)
   properties?: HealthBotProperties;
 }

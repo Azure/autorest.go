@@ -446,8 +446,6 @@ model PrivateLinkResource extends Resource {
   /**
    * Resource properties.
    */
-  #suppress "@azure-tools/typespec-azure-core/no-private-usage" "For backward compatibility"
-  @Azure.ResourceManager.Private.conditionalClientFlatten
   properties?: PrivateLinkResourceProperties;
 }
 
@@ -503,8 +501,6 @@ model BackupResult {
   /**
    * Properties of the Cloud HSM Cluster
    */
-  #suppress "@azure-tools/typespec-azure-core/no-private-usage" "For backward compatibility"
-  @Azure.ResourceManager.Private.conditionalClientFlatten
   properties?: BackupResultProperties;
 }
 
