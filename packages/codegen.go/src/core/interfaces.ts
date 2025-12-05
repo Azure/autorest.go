@@ -14,7 +14,7 @@ export function generateInterfaces(codeModel: go.CodeModel): string {
     return '';
   }
 
-  let text = contentPreamble(codeModel);
+  let text = contentPreamble(codeModel.packageName);
 
   for (const iface of codeModel.interfaces) {
     const methodName = `Get${iface.rootType.name}`;

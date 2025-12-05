@@ -22,7 +22,7 @@ export function generateVersionInfo(codeModel: go.CodeModel): string {
     throw new CodegenError('InvalidArgument', 'missing --module or --containing-module argument');
   }
 
-  let text = helpers.contentPreamble(codeModel, false);
+  let text = helpers.contentPreamble(codeModel.packageName, false);
 
   text += 'const (\n';
   // strip off any major version suffix. this is for telemetry

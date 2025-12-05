@@ -24,7 +24,7 @@ export function generateServerFactory(codeModel: go.CodeModel): string {
   imports.add('sync');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
 
-  let text = helpers.contentPreamble(codeModel, true, 'fake');
+  let text = helpers.contentPreamble('fake');
   text += imports.text();
 
   text += `// ServerFactory is a fake server for instances of the ${codeModel.packageName}.ClientFactory type.\n`;

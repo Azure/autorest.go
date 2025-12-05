@@ -26,7 +26,7 @@ export function generateResponses(codeModel: go.CodeModel): ResponsesSerDe {
 
   const imports = new ImportManager();
   const serdeImports = new ImportManager();
-  let responses = helpers.contentPreamble(codeModel);
+  let responses = helpers.contentPreamble(codeModel.packageName);
   let serDe = '';
   let respContent = '';
   let serdeContent = '';
@@ -43,7 +43,7 @@ export function generateResponses(codeModel: go.CodeModel): ResponsesSerDe {
   responses += respContent;
 
   if (serdeContent.length > 0) {
-    serDe = helpers.contentPreamble(codeModel);
+    serDe = helpers.contentPreamble(codeModel.packageName);
     serDe += serdeImports.text();
     serDe += serdeContent;
   }

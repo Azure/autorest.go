@@ -33,7 +33,7 @@ export function generateServerInternal(codeModel: go.CodeModel, requiredHelpers:
   if (codeModel.clients.length === 0) {
     return '';
   }
-  const text = contentPreamble(codeModel, true, 'fake');
+  const text = contentPreamble('fake');
   const imports = new ImportManager();
   let body = alwaysUsed;
   imports.add('net/http');

@@ -16,7 +16,7 @@ export function generateOptions(codeModel: go.CodeModel): string {
   }
 
   const imports = new ImportManager();
-  let optionsText = helpers.contentPreamble(codeModel);
+  let optionsText = helpers.contentPreamble(codeModel.packageName);
   let content = '';
 
   for (const paramGroup of values(codeModel.paramGroups)) {

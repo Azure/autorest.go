@@ -13,7 +13,7 @@ export function generateConstants(codeModel: go.CodeModel): string {
     return '';
   }
 
-  let text = helpers.contentPreamble(codeModel);
+  let text = helpers.contentPreamble(codeModel.packageName);
 
   for (const enm of values(codeModel.constants)) {
     text += helpers.formatDocCommentWithPrefix(enm.name, enm.docs);

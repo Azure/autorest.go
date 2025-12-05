@@ -26,7 +26,7 @@ export function generateModels(codeModel: go.CodeModel): ModelsSerDe {
   // this list of packages to import
   const modelImports = new ImportManager();
   const serdeImports = new ImportManager();
-  let modelText = helpers.contentPreamble(codeModel);
+  let modelText = helpers.contentPreamble(codeModel.packageName);
 
   // we do model generation first as it can add imports to the imports list
   const modelDefs = generateModelDefs(modelImports, serdeImports, codeModel);
@@ -134,7 +134,7 @@ export function generateModels(codeModel: go.CodeModel): ModelsSerDe {
   }
   let serdeText = '';
   if (serdeTextBody.length > 0) {
-    serdeText = helpers.contentPreamble(codeModel);
+    serdeText = helpers.contentPreamble(codeModel.packageName);
     serdeText += serdeImports.text();
     serdeText += serdeTextBody;
   }

@@ -58,8 +58,11 @@ export interface Info {
  * most of the values come from command-line args.
  */
 export interface Options {
-  /** the header text to emit per file. usually contains license and copyright info */
-  headerText: string;
+  /**
+   * the header text to emit per file. usually contains license and copyright info.
+   * the default is the MIT license with a Microsoft copyright.
+   */
+  headerText?: string;
 
   /**
    * custom content for the LICENSE.txt file to be emitted.
@@ -135,8 +138,7 @@ export class Info implements Info {
 }
 
 export class Options implements Options {
-  constructor(headerText: string, generateFakes: boolean, injectSpans: boolean, disallowUnknownFields: boolean, generateExamples: boolean) {
-    this.headerText = headerText;
+  constructor(generateFakes: boolean, injectSpans: boolean, disallowUnknownFields: boolean, generateExamples: boolean) {
     this.generateFakes = generateFakes;
     this.injectSpans = injectSpans;
     this.omitConstructors = false;

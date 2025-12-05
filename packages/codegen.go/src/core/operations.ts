@@ -149,7 +149,7 @@ export function generateOperations(codeModel: go.CodeModel): Array<OperationGrou
     }
 
     // stitch it all together
-    let text = helpers.contentPreamble(codeModel);
+    let text = helpers.contentPreamble(codeModel.packageName);
     text += imports.text();
     text += clientText;
     text += opText;
