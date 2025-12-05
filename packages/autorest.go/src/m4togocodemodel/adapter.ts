@@ -24,11 +24,11 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
 
     const info = new go.Info(session.model.info.title);
     const options = new go.Options(
-      await session.getValue('header-text', 'MISSING LICENSE HEADER'), 
       await session.getValue('generate-fakes', session.model.language.go!.azureARM), 
       await session.getValue('inject-spans', session.model.language.go!.azureARM),
       await session.getValue('disallow-unknown-fields', false),
       await session.getValue('generate-sdk-example', false));
+    options.headerText = await session.getValue('header-text', 'MISSING LICENSE HEADER');
     options.factoryGatherAllParams = await session.getValue('factory-gather-all-params', true);
 
     const azcoreVersion = await session.getValue('azcore-version', '');

@@ -229,7 +229,7 @@ export function generateServers(codeModel: go.CodeModel): ServerContent {
     ///////////////////////////////////////////////////////////////////////////
 
     // stitch everything together
-    let text = helpers.contentPreamble(codeModel, true, 'fake');
+    let text = helpers.contentPreamble('fake');
     text += imports.text();
     text += content;
     operations.push(new OperationGroupContent(serverName, text));

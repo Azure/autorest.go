@@ -119,6 +119,6 @@ export function generateClientFactory(codeModel: go.CodeModel): string {
     result += '}\n\n';
   }
 
-  result = helpers.contentPreamble(codeModel) + imports.text() + result;
+  result = helpers.contentPreamble(codeModel.packageName) + imports.text() + result;
   return result;
 }

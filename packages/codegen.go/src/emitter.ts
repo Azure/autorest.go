@@ -9,6 +9,7 @@ import { generateCloudConfig } from './core/cloudConfig.js';
 import { generateConstants } from './core/constants.js';
 import { generateExamples } from './core/example.js';
 import { generateGoModFile } from './core/gomod.js';
+import { setCustomHeaderText } from './core/helpers.js';
 import { generateInterfaces } from './core/interfaces.js';
 import { generateLicenseTxt } from './core/license.js';
 import { generateMetadataFile } from './core/metadata.js';
@@ -51,6 +52,9 @@ export class Emitter {
       this.filePrefix = options?.filePrefix;
     } else {
       this.filePrefix = '';
+    }
+    if (this.codeModel.options.headerText) {
+      setCustomHeaderText(this.codeModel.options.headerText);
     }
     sortContent(this.codeModel);
   }

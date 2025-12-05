@@ -15,7 +15,7 @@ export function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeServerPk
     return '';
   }
 
-  let text = helpers.contentPreamble(codeModel, true, fakeServerPkg);
+  let text = helpers.contentPreamble(fakeServerPkg ?? codeModel.packageName);
   const imports = new ImportManager();
   imports.add('encoding/json');
   if (fakeServerPkg) {

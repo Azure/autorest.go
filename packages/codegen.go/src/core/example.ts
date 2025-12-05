@@ -221,7 +221,7 @@ export function generateExamples(codeModel: go.CodeModel): Array<ExampleContent>
     if (exampleText === '') continue;
 
     // stitch it all together
-    let text = helpers.contentPreamble(codeModel, true, codeModel.packageName + '_test');
+    let text = helpers.contentPreamble(codeModel.packageName + '_test');
     text += imports.text();
     text += exampleText;
     examples.push(new ExampleContent(client.name, text));

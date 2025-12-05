@@ -136,7 +136,7 @@ export function generateTimeHelpers(codeModel: go.CodeModel, packageName?: strin
     return content;
   }
 
-  const preamble = contentPreamble(codeModel, true, packageName);
+  const preamble = contentPreamble(packageName ?? codeModel.packageName, true);
   if (needsDateTimeRFC1123Helper) {
     content.push(new Content('time_rfc1123', generateRFC1123Helper(preamble, needsSerDeHelpers)));
   }
