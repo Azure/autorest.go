@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { values } from '@azure-tools/linq';
-import * as go from '../../codemodel.go/src/index.js';
+import * as go from '../../../codemodel.go/src/index.js';
 import { contentPreamble, getSerDeFormat, recursiveUnwrapMapSlice } from './helpers.js';
 import { ImportManager } from './imports.js';
 import { CodegenError } from './errors.js';
@@ -22,7 +22,7 @@ export class Content {
 
 // Creates the content for required time marshalling helpers.
 // Will be empty if no helpers are required.
-export async function generateTimeHelpers(codeModel: go.CodeModel, packageName?: string): Promise<Array<Content>> {
+export function generateTimeHelpers(codeModel: go.CodeModel, packageName?: string): Array<Content> {
   let needsDateHelper = false;
   let needsDateTimeRFC1123Helper = false;
   let needsDateTimeRFC3339Helper = false;

@@ -5,10 +5,10 @@
 
 import { values } from '@azure-tools/linq';
 import * as helpers from './helpers.js';
-import * as go from '../../codemodel.go/src/index.js';
+import * as go from '../../../codemodel.go/src/index.js';
 
 // Creates the content in constants.go
-export async function generateConstants(codeModel: go.CodeModel): Promise<string> {
+export function generateConstants(codeModel: go.CodeModel): string {
   if (codeModel.constants.length === 0) {
     return '';
   }

@@ -5,12 +5,12 @@
 
 import { capitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import * as go from '../../codemodel.go/src/index.js';
+import * as go from '../../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 
 // Creates the content in options.go
-export async function generateOptions(codeModel: go.CodeModel): Promise<string> {
+export function generateOptions(codeModel: go.CodeModel): string {
   if (codeModel.paramGroups.length === 0) {
     return '';
   }

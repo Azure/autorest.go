@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { camelCase, capitalize } from '@azure-tools/codegen';
-import * as go from '../../codemodel.go/src/index.js';
+import * as go from '../../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 import { fixUpMethodName } from './operations.js';
@@ -22,7 +22,7 @@ export class ExampleContent {
 }
 
 // Creates the content for all <example>.go files
-export async function generateExamples(codeModel: go.CodeModel): Promise<Array<ExampleContent>> {
+export function generateExamples(codeModel: go.CodeModel): Array<ExampleContent> {
   // generate examples
   const examples = new Array<ExampleContent>();
   if (codeModel.clients.length === 0) {

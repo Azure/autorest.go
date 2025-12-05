@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../../codemodel.go/src/index.js';
-import { ensureNameCase } from '../../naming.go/src/naming.js';
+import * as go from '../../../codemodel.go/src/index.js';
+import { ensureNameCase } from '../../../naming.go/src/naming.js';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import * as helpers from './helpers.js';
@@ -23,7 +23,7 @@ export class OperationGroupContent {
 }
 
 // Creates the content for all <operation>.go files
-export async function generateOperations(codeModel: go.CodeModel): Promise<Array<OperationGroupContent>> {
+export function generateOperations(codeModel: go.CodeModel): Array<OperationGroupContent> {
   // generate protocol operations
   const operations = new Array<OperationGroupContent>();
   if (codeModel.clients.length === 0) {

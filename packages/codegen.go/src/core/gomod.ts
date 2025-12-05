@@ -3,13 +3,13 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../../codemodel.go/src/index.js';
+import * as go from '../../../codemodel.go/src/index.js';
 import { lt, toSemver } from '@azure-tools/codegen';
 import { CodegenError } from './errors.js';
 
 // Creates the content in go.mod if the --module switch was specified.
 // if there's a preexisting go.mod file, update its specified version of azcore as needed.
-export async function generateGoModFile(codeModel: go.CodeModel, existingGoMod?: string): Promise<string> {
+export function generateGoModFile(codeModel: go.CodeModel, existingGoMod?: string): string {
   if (!codeModel.options.module) {
     // must be containing-module, so we're emitting a package into a module that already has a go.mod
     return '';

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as helpers from './helpers.js';
-import * as go from '../../codemodel.go/src/index.js';
+import * as go from '../../../codemodel.go/src/index.js';
 
 /**
  * generates the contents for the cloud_config.go file.

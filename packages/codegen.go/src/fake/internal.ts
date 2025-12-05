@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as go from '../../../codemodel.go/src/index.js';
-import { contentPreamble } from '../helpers.js';
-import { ImportManager } from '../imports.js';
+import { contentPreamble } from '../core/helpers.js';
+import { ImportManager } from '../core/imports.js';
 
 export class RequiredHelpers {
   getHeaderValue: boolean;
