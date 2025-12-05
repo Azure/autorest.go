@@ -85,7 +85,6 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
 
   const ca = new clientAdapter(ta, context);
   ca.adaptClients(sdkContext.sdkPackage);
-  codeModel.sortContent();
 
   return codeModel;
 }
