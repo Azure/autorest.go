@@ -126,55 +126,6 @@ export class CodeModel implements CodeModel {
     this.responseEnvelopes = new Array<result.ResponseEnvelope>();
     this.type = type;
   }
-
-  sortContent() {
-    const sortAscending = function(a: string, b: string): number {
-      return a < b ? -1 : a > b ? 1 : 0;
-    };
-
-    this.constants.sort((a: type.Constant, b: type.Constant) => { return sortAscending(a.name, b.name); });
-    for (const enm of this.constants) {
-      enm.values.sort((a: type.ConstantValue, b: type.ConstantValue) => { return sortAscending(a.name, b.name); });
-    }
-  
-    this.interfaces.sort((a: type.Interface, b: type.Interface) => { return sortAscending(a.name, b.name); });
-    for (const iface of this.interfaces) {
-      // we sort by literal value so that the switch/case statements in polymorphic_helpers.go
-      // are ordered by the literal value which can be somewhat different from the model name.
-      iface.possibleTypes.sort((a: type.PolymorphicModel, b: type.PolymorphicModel) => { return sortAscending(a.discriminatorValue!.literal, b.discriminatorValue!.literal); });
-    }
-  
-    this.models.sort((a: type.Model | type.PolymorphicModel, b: type.Model | type.PolymorphicModel) => { return sortAscending(a.name, b.name); });
-    for (const model of this.models) {
-      model.fields.sort((a: type.ModelField, b: type.ModelField) => { return sortAscending(a.name, b.name); });
-    }
-  
-    this.paramGroups.sort((a: type.Struct, b: type.Struct) => { return sortAscending(a.name, b.name); });
-    for (const paramGroup of this.paramGroups) {
-      paramGroup.fields.sort((a: type.StructField, b: type.StructField) => { return sortAscending(a.name, b.name); });
-    }
-  
-    this.responseEnvelopes.sort((a: result.ResponseEnvelope, b: result.ResponseEnvelope) => { return sortAscending(a.name, b.name); });
-    for (const respEnv of this.responseEnvelopes) {
-      respEnv.headers.sort((a: result.HeaderScalarResponse | result.HeaderMapResponse, b: result.HeaderScalarResponse | result.HeaderMapResponse) => { return sortAscending(a.fieldName, b.fieldName); });
-    }
-  
-    this.clients.sort((a: client.Client, b: client.Client) => { return sortAscending(a.name, b.name); });
-    for (const client of this.clients) {
-      if (client.instance?.kind === 'constructable') {
-        client.instance.constructors.sort((a: client.Constructor, b: client.Constructor) => sortAscending(a.name, b.name));
-        if (client.instance.options.kind === 'clientOptions') {
-          client.instance.options.parameters.sort((a: client.ClientParameter, b: client.ClientParameter) => sortAscending(a.name, b.name));
-        }
-      }
-      client.parameters.sort((a: client.ClientParameter, b: client.ClientParameter) => sortAscending(a.name, b.name));
-      client.methods.sort((a: client.MethodType, b: client.MethodType) => { return sortAscending(a.name, b.name); });
-      client.clientAccessors.sort((a: client.ClientAccessor, b: client.ClientAccessor) => { return sortAscending(a.name, b.name); });
-      for (const method of client.methods) {
-        method.httpStatusCodes.sort();
-      }
-    }
-  }
 }
 
 export class Info implements Info {

@@ -52,6 +52,7 @@ export class Emitter {
     } else {
       this.filePrefix = '';
     }
+    sortContent(this.codeModel);
   }
 
   /**
@@ -220,4 +221,58 @@ function snakeClientFileName(clientName: string, suffix: string = 'client'): str
     clientName = `${clientName.substring(0, clientName.length - suffix.length)}_${suffix}`;
   }
   return clientName;
+}
+
+/**
+ * sorts code model contents by name in alphabetical order.
+ * 
+ * @param codeModel the contents to sort
+ */
+function sortContent(codeModel: go.CodeModel): void {
+  const sortAscending = function(a: string, b: string): number {
+    return a < b ? -1 : a > b ? 1 : 0;
+  };
+
+  codeModel.constants.sort((a: go.Constant, b: go.Constant) => { return sortAscending(a.name, b.name); });
+  for (const enm of codeModel.constants) {
+    enm.values.sort((a: go.ConstantValue, b: go.ConstantValue) => { return sortAscending(a.name, b.name); });
+  }
+
+  codeModel.interfaces.sort((a: go.Interface, b: go.Interface) => { return sortAscending(a.name, b.name); });
+  for (const iface of codeModel.interfaces) {
+    // we sort by literal value so that the switch/case statements in polymorphic_helpers.go
+    // are ordered by the literal value which can be somewhat different from the model name.
+    iface.possibleTypes.sort((a: go.PolymorphicModel, b: go.PolymorphicModel) => { return sortAscending(a.discriminatorValue!.literal, b.discriminatorValue!.literal); });
+  }
+
+  codeModel.models.sort((a: go.Model | go.PolymorphicModel, b: go.Model | go.PolymorphicModel) => { return sortAscending(a.name, b.name); });
+  for (const model of codeModel.models) {
+    model.fields.sort((a: go.ModelField, b: go.ModelField) => { return sortAscending(a.name, b.name); });
+  }
+
+  codeModel.paramGroups.sort((a: go.Struct, b: go.Struct) => { return sortAscending(a.name, b.name); });
+  for (const paramGroup of codeModel.paramGroups) {
+    paramGroup.fields.sort((a: go.StructField, b: go.StructField) => { return sortAscending(a.name, b.name); });
+  }
+
+  codeModel.responseEnvelopes.sort((a: go.ResponseEnvelope, b: go.ResponseEnvelope) => { return sortAscending(a.name, b.name); });
+  for (const respEnv of codeModel.responseEnvelopes) {
+    respEnv.headers.sort((a: go.HeaderScalarResponse | go.HeaderMapResponse, b: go.HeaderScalarResponse | go.HeaderMapResponse) => { return sortAscending(a.fieldName, b.fieldName); });
+  }
+
+  codeModel.clients.sort((a: go.Client, b: go.Client) => { return sortAscending(a.name, b.name); });
+  for (const client of codeModel.clients) {
+    if (client.instance?.kind === 'constructable') {
+      client.instance.constructors.sort((a: go.Constructor, b: go.Constructor) => sortAscending(a.name, b.name));
+      if (client.instance.options.kind === 'clientOptions') {
+        client.instance.options.parameters.sort((a: go.ClientParameter, b: go.ClientParameter) => sortAscending(a.name, b.name));
+      }
+    }
+    client.parameters.sort((a: go.ClientParameter, b: go.ClientParameter) => sortAscending(a.name, b.name));
+    client.methods.sort((a: go.MethodType, b: go.MethodType) => { return sortAscending(a.name, b.name); });
+    client.clientAccessors.sort((a: go.ClientAccessor, b: go.ClientAccessor) => { return sortAscending(a.name, b.name); });
+    for (const method of client.methods) {
+      method.httpStatusCodes.sort();
+    }
+  }
 }
