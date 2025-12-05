@@ -3,13 +3,13 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../../codemodel.go/src/index.js';
+import * as go from '../../../codemodel.go/src/index.js';
 import { contentPreamble, getSerDeFormat } from './helpers.js';
 import { ImportManager } from './imports.js';
 
 // Creates the content for required additional properties XML marshalling helpers.
 // Will be empty if no helpers are required.
-export async function generateXMLAdditionalPropsHelpers(codeModel: go.CodeModel): Promise<string> {
+export function generateXMLAdditionalPropsHelpers(codeModel: go.CodeModel): string {
   // check if any models need this helper
   let required = false;
   for (const model of codeModel.models) {

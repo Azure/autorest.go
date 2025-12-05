@@ -5,7 +5,7 @@
 
 import { comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import * as go from '../../codemodel.go/src/index.js';
+import * as go from '../../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 import { CodegenError } from './errors.js';
@@ -16,7 +16,7 @@ export interface ResponsesSerDe {
 }
 
 // Creates the content in responses.go
-export async function generateResponses(codeModel: go.CodeModel): Promise<ResponsesSerDe> {
+export function generateResponses(codeModel: go.CodeModel): ResponsesSerDe {
   if (codeModel.responseEnvelopes. length === 0) {
     return {
       responses: '',

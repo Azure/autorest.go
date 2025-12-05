@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as helpers from './helpers.js';
-import * as go from '../../codemodel.go/src/index.js';
+import * as go from '../../../codemodel.go/src/index.js';
 import { CodegenError } from './errors.js';
 
 /**
@@ -14,7 +14,7 @@ import { CodegenError } from './errors.js';
  * @param codeModel the code model for which to generate version.go
  * @returns the contents of version.go or the empty string
  */
-export async function generateVersionInfo(codeModel: go.CodeModel): Promise<string> {
+export function generateVersionInfo(codeModel: go.CodeModel): string {
   if (codeModel.options.containingModule) {
     // code is being emitted into an existing module
     return '';

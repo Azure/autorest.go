@@ -6,8 +6,8 @@
 import { values } from '@azure-tools/linq';
 import * as go from '../../../codemodel.go/src/index.js';
 import { getServerName } from './servers.js';
-import * as helpers from '../helpers.js';
-import { ImportManager } from '../imports.js';
+import * as helpers from '../core/helpers.js';
+import { ImportManager } from '../core/imports.js';
 
 export function generateServerFactory(codeModel: go.CodeModel): string {
   // generate server factory only for ARM

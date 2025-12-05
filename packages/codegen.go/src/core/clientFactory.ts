@@ -3,12 +3,12 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../../codemodel.go/src/index.js';
+import * as go from '../../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 
 // Creates the content for client_factory.go (ARM only)
-export async function generateClientFactory(codeModel: go.CodeModel): Promise<string> {
+export function generateClientFactory(codeModel: go.CodeModel): string {
   // generate client factory only for ARM
   if (codeModel.type !== 'azure-arm' || codeModel.clients.length === 0) {
     return '';

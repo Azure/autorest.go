@@ -3,13 +3,13 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../../codemodel.go/src/index.js';
+import * as go from '../../../codemodel.go/src/index.js';
 import { values } from '@azure-tools/linq';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 
 // Creates the content in polymorphic_helpers.go
-export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeServerPkg?: string): Promise<string> {
+export function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeServerPkg?: string): string {
   if (codeModel.interfaces.length === 0) {
     // no polymorphic types
     return '';

@@ -6,11 +6,11 @@
 import { camelCase, capitalize, uncapitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import * as go from '../../../codemodel.go/src/index.js';
-import * as helpers from '../helpers.js';
-import { ImportManager } from '../imports.js';
-import { fixUpMethodName } from '../operations.js';
+import * as helpers from '../core/helpers.js';
+import { ImportManager } from '../core/imports.js';
+import { fixUpMethodName } from '../core/operations.js';
 import { generateServerInternal, RequiredHelpers } from './internal.js';
-import { CodegenError } from '../errors.js';
+import { CodegenError } from '../core/errors.js';
 
 // contains the generated content for all servers and the required helpers
 export class ServerContent {
@@ -42,7 +42,7 @@ export function getServerName(client: go.Client): string {
   return capitalize(client.name.replace(/[C|c]lient$/, 'Server'));
 }
 
-export async function generateServers(codeModel: go.CodeModel): Promise<ServerContent> {
+export function generateServers(codeModel: go.CodeModel): ServerContent {
   const operations = new Array<OperationGroupContent>();
   const clientPkg = codeModel.packageName;
   for (const client of values(codeModel.clients)) {

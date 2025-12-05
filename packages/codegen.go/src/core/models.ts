@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../../codemodel.go/src/index.js';
+import * as go from '../../../codemodel.go/src/index.js';
 import { capitalize, comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import * as helpers from './helpers.js';
@@ -15,7 +15,7 @@ export interface ModelsSerDe {
 }
 
 // Creates the content in models.go
-export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSerDe> {
+export function generateModels(codeModel: go.CodeModel): ModelsSerDe {
   if (codeModel.models.length === 0) {
     return {
       models: '',
