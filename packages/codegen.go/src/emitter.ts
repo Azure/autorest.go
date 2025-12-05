@@ -223,6 +223,11 @@ function snakeClientFileName(clientName: string, suffix: string = 'client'): str
   return clientName;
 }
 
+/**
+ * sorts code model contents by name in alphabetical order.
+ * 
+ * @param codeModel the contents to sort
+ */
 function sortContent(codeModel: go.CodeModel): void {
   const sortAscending = function(a: string, b: string): number {
     return a < b ? -1 : a > b ? 1 : 0;
