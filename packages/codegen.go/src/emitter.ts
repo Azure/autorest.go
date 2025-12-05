@@ -28,7 +28,10 @@ export interface FsFacilities {
   /** checks if a file exists */
   exists: (name: string) => Promise<boolean>;
 
-  /** reads the contents of a file */
+  /**
+   * reads the contents of a file.
+   * this function assumes the file exists.
+   */
   read: (name: string) => Promise<string>;
 
   /** writes contents to a file */
@@ -214,7 +217,7 @@ function snakeClientFileName(clientName: string, suffix: string = 'client'): str
   // insert a _ before Client, i.e. Foo_Client
   // if the name isn't simply Client.
   if (clientName !== suffix) {
-    clientName = `${clientName.substring(0, clientName.length - 6)}_${suffix}`;
+    clientName = `${clientName.substring(0, clientName.length - suffix.length)}_${suffix}`;
   }
   return clientName;
 }
