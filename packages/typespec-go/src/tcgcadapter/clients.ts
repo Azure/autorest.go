@@ -43,6 +43,16 @@ export class clientAdapter {
     }
   }
 
+  /**
+   * returns the package for the adapted tcgc code model.
+   * 
+   * NOTE: this is temporary and will go away with namespaces.
+   * @returns the module or package to contain the adpated tcgc model
+   */
+  private getPkg(): go.PackageContent {
+    return this.ta.codeModel.root.kind === 'containingModule' ? this.ta.codeModel.root.package : this.ta.codeModel.root;
+  }
+
   private recursiveAdaptClient(sdkClient: tcgc.SdkClientType<tcgc.SdkHttpOperation>, parent?: go.Client): go.Client | undefined {
     if (sdkClient.methods.length === 0 && (sdkClient.children === undefined || sdkClient.children.length === 0)) {
       // skip generating empty clients
@@ -106,7 +116,7 @@ export class clientAdapter {
     }
 
     let authType = AuthTypes.Default;
-    if (!this.ta.codeModel.options.omitConstructors && this.ta.codeModel.options.containingModule) {
+    if (!this.ta.codeModel.options.omitConstructors && this.ta.codeModel.root.kind === 'containingModule') {
       // emit a diagnostic indicating that no ctors will be emitted due to containing-module.
       this.ctx.program.reportDiagnostic({
         code: 'UnsupportedConfiguration',
@@ -115,7 +125,7 @@ export class clientAdapter {
         target: sdkClient.__raw.type ?? NoTarget,
       });
     }
-    if ((this.ta.codeModel.options.omitConstructors || this.ta.codeModel.options.containingModule) && this.ta.codeModel.options.generateExamples) {
+    if ((this.ta.codeModel.options.omitConstructors || this.ta.codeModel.root.kind === 'containingModule') && this.ta.codeModel.options.generateExamples) {
       // emit a diagnostic indicating that no ctors will be emitted due to containing-module.
       this.ctx.program.reportDiagnostic({
         code: 'UnsupportedConfiguration',
@@ -168,7 +178,7 @@ export class clientAdapter {
       // an existing module. this is because the constructor(s) require
       // the module name and version info, and we can't make any
       // assumptions about the names/location.
-      if (!this.ta.codeModel.options.omitConstructors && !this.ta.codeModel.options.containingModule) {
+      if (!this.ta.codeModel.options.omitConstructors && this.ta.codeModel.root.kind !== 'containingModule') {
         constructable = new go.Constructable(go.newClientOptions(this.ta.codeModel.type, clientName));
       }
       for (const param of sdkClient.clientInitialization.parameters) {
@@ -331,7 +341,7 @@ export class clientAdapter {
       // ARM SDKs we skip adding it to the code model in favor of
       // the synthesized client factory.
     } else {
-      this.ta.codeModel.clients.push(goClient);
+      this.getPkg().clients.push(goClient);
     }
     return goClient;
   }
@@ -521,7 +531,7 @@ export class clientAdapter {
     const paramMapping = this.adaptMethodParameters(sdkMethod, method);
 
     // we must do this after adapting method params as it can add optional params
-    this.ta.codeModel.paramGroups.push(this.adaptParameterGroup(method.optionalParamsGroup));
+    this.getPkg().paramGroups.push(this.adaptParameterGroup(method.optionalParamsGroup));
 
     if (this.ta.codeModel.options.generateExamples) {
       this.adaptHttpOperationExamples(sdkMethod, method, paramMapping);
@@ -681,9 +691,9 @@ export class clientAdapter {
           const paramName = getEscapedReservedName(ensureNameCase(param.name, isRequired), 'Param');
           
           // Remove the model from codeModel.models if it is a parameter group
-          const modelIndex = this.ta.codeModel.models.findIndex(m => m.name === paramGroupName);
+          const modelIndex = this.getPkg().models.findIndex(m => m.name === paramGroupName);
           if (modelIndex >= 0) {
-            this.ta.codeModel.models.splice(modelIndex, 1);
+            this.getPkg().models.splice(modelIndex, 1);
           }
           
           // Check if parameter group already exists
@@ -781,7 +791,7 @@ export class clientAdapter {
 
     // Add all parameter groups to the code model
     for (const paramGroup of parameterGroups.values()) {
-      this.ta.codeModel.paramGroups.push(this.adaptParameterGroup(paramGroup));
+      this.getPkg().paramGroups.push(this.adaptParameterGroup(paramGroup));
     }
 
     return paramMapping;
@@ -960,7 +970,7 @@ export class clientAdapter {
       respEnvName = uncapitalize(respEnvName);
     }
     const respEnv = new go.ResponseEnvelope(respEnvName, {summary: createResponseEnvelopeDescription(respEnvName, this.getMethodNameForDocComment(method))}, method);
-    this.ta.codeModel.responseEnvelopes.push(respEnv);
+    this.getPkg().responseEnvelopes.push(respEnv);
 
     // add any headers
     const addedHeaders = new Set<string>();
@@ -1038,7 +1048,7 @@ export class clientAdapter {
     } else if (sdkResponseType.kind === 'model') {
       let modelType: go.Model | go.PolymorphicModel | undefined;
       const modelName = ensureNameCase(sdkResponseType.name).toUpperCase();
-      for (const model of this.ta.codeModel.models) {
+      for (const model of this.getPkg().models) {
         if (model.name.toUpperCase() === modelName) {
           modelType = model;
           break;

@@ -28,6 +28,33 @@ export class ImportManager {
     this.imports.push({ imp: imp, alias: alias });
   }
 
+  /**
+   * adds the specified package for importing if not already in the list.
+   * @param pkg the package to import
+   * @param alias optional package alias
+   */
+  addForPkg(pkg: go.PackageContent, alias?: string): void {
+    let pkgPath: string;
+    switch (pkg.kind) {
+      case 'module':
+        pkgPath = pkg.identity;
+        break;
+      case 'package': {
+        // build the full path to the package
+        pkgPath = pkg.name;
+        let cur = pkg.parent;
+        while (cur.kind === 'package') {
+          pkgPath = `${cur.name}/${pkgPath}`;
+          cur = cur.parent;
+        }
+        pkgPath = `${cur.identity}/${pkgPath}`;
+        break;
+      }
+    }
+
+    this.add(pkgPath, alias);
+  }
+
   // returns the number of packages in the list
   length(): number {
     return this.imports.length;

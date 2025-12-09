@@ -21,17 +21,24 @@ export class ExampleContent {
   }
 }
 
-// Creates the content for all <example>.go files
-export function generateExamples(codeModel: go.CodeModel): Array<ExampleContent> {
+/**
+ * Creates the content for all the *_example_test.go files.
+ * 
+ * @param pkg contains the package content
+ * @param target the codegen target for the module
+ * @param options the emitter options
+ * @returns the text for the files or the empty string
+ */
+export function generateExamples(pkg: go.PackageContent, target: go.CodeModelType, options: go.Options): Array<ExampleContent> {
   // generate examples
   const examples = new Array<ExampleContent>();
-  if (codeModel.clients.length === 0) {
+  if (pkg.clients.length === 0) {
     return examples;
   }
 
-  const azureARM = codeModel.type === 'azure-arm';
+  const azureARM = target === 'azure-arm';
 
-  for (const client of codeModel.clients) {
+  for (const client of pkg.clients) {
     // client must be constructable to create a sample
     if (client.instance?.kind != 'constructable') {
       continue;
@@ -44,19 +51,21 @@ export function generateExamples(codeModel: go.CodeModel): Array<ExampleContent>
       imports.add('context');
       imports.add('log');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azidentity');
-      imports.add(codeModel.options.module!);
+      imports.addForPkg(pkg);
     }
 
     let clientFactoryParams = new Array<go.ClientParameter>();
-    if (codeModel.options.factoryGatherAllParams) {
-      clientFactoryParams =  helpers.getAllClientParameters(codeModel);
+    if (options.factoryGatherAllParams) {
+      clientFactoryParams =  helpers.getAllClientParameters(pkg, target);
     } else {
-      clientFactoryParams = helpers.getCommonClientParameters(codeModel);
+      clientFactoryParams = helpers.getCommonClientParameters(pkg, target);
     }
     const clientFactoryParamsMap = new Map<string, go.ClientParameter>();
     for (const param of clientFactoryParams) {
       clientFactoryParamsMap.set(param.name, param);
     }
+
+    const pkgName = helpers.getPackageName(pkg);
 
     let exampleText = '';
     for (const method of client.methods) {
@@ -100,7 +109,7 @@ export function generateExamples(codeModel: go.CodeModel): Array<ExampleContent>
               clientFactoryParamsExample.push({ parameter: clientParam, value: generateFakeExample(clientParam.type, clientParam.name) });
             }
           }
-          exampleText += `\tclientFactory, err := ${codeModel.packageName}.NewClientFactory(${clientFactoryParamsExample.map(p => getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue)).join(', ')}, nil)\n`;
+          exampleText += `\tclientFactory, err := ${pkgName}.NewClientFactory(${clientFactoryParamsExample.map(p => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue)).join(', ')}, nil)\n`;
           exampleText += `\tif err != nil {\n`;
           exampleText += `\t\tlog.Fatalf("failed to create client: %v", err)\n`;
           exampleText += `\t}\n`;
@@ -112,11 +121,11 @@ export function generateExamples(codeModel: go.CodeModel): Array<ExampleContent>
             }
           }
           if (clientPrivateParameters.length > 0) {
-            clientRef += `${clientPrivateParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}`;
+            clientRef += `${clientPrivateParameters.map(p => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}`;
           }
           clientRef += `)`;
         } else {
-          exampleText += `\tclient, err := ${codeModel.packageName}.${client.instance.constructors[0].name}(${clientParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}, cred, nil)\n`;
+          exampleText += `\tclient, err := ${pkgName}.${client.instance.constructors[0].name}(${clientParameters.map(p => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}, cred, nil)\n`;
           exampleText += `\tif err != nil {\n`;
           exampleText += `\t\tlog.Fatalf("failed to create client: %v", err)\n`;
           exampleText += `\t}\n`;
@@ -142,15 +151,15 @@ export function generateExamples(codeModel: go.CodeModel): Array<ExampleContent>
 
         let methodOptionalParametersText = 'nil';
         if (methodOptionalParameters.length > 0) {
-          methodOptionalParametersText = `&${codeModel.packageName}.${method.optionalParamsGroup.groupName}{\n`;
-          methodOptionalParametersText += methodOptionalParameters.map(p => `${capitalize(p.parameter.name)}: ${getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue).slice(1)}`).join(',\n');
+          methodOptionalParametersText = `&${pkgName}.${method.optionalParamsGroup.groupName}{\n`;
+          methodOptionalParametersText += methodOptionalParameters.map(p => `${capitalize(p.parameter.name)}: ${getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)}`).join(',\n');
           methodOptionalParametersText += `}`;
         }
 
         switch (method.kind) {
           case 'lroMethod':
           case 'lroPageableMethod':
-            exampleText += `\tpoller, err := ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
+            exampleText += `\tpoller, err := ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
             exampleText += `\tif err != nil {\n`;
             exampleText += `\t\tlog.Fatalf("failed to finish the request: %v", err)\n`;
             exampleText += `\t}\n`;
@@ -161,13 +170,13 @@ export function generateExamples(codeModel: go.CodeModel): Array<ExampleContent>
             exampleText += `\t}\n`;
             break;
           case 'method':
-            exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
+            exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
             exampleText += `\tif err != nil {\n`;
             exampleText += `\t\tlog.Fatalf("failed to finish the request: %v", err)\n`;
             exampleText += `\t}\n`;
             break;
           case 'pageableMethod':
-            exampleText += `\tpager := ${clientRef}.${fixUpMethodName(method)}(${methodParameters.map(p => getExampleValue(codeModel, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
+            exampleText += `\tpager := ${clientRef}.${fixUpMethodName(method)}(${methodParameters.map(p => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
             break;
           default:
             method satisfies never;
@@ -190,11 +199,11 @@ export function generateExamples(codeModel: go.CodeModel): Array<ExampleContent>
           exampleText += `\t\t\t_ = v\n`;
           exampleText += `\t\t}\n`;
           exampleText += `\t\t// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.\n`;
-          exampleText += `\t\t// page = ${codeModel.packageName}.${example.responseEnvelope?.response.name}{\n`;
+          exampleText += `\t\t// page = ${pkgName}.${example.responseEnvelope?.response.name}{\n`;
           for (const header of example.responseEnvelope?.headers ?? []) {
-            exampleText += `\t\t// \t${header.header.fieldName}: ${getExampleValue(codeModel, header.value, '', undefined, true).split('\n').join('\n\t\t// \t')}\n`;
+            exampleText += `\t\t// \t${header.header.fieldName}: ${getExampleValue(pkg, header.value, '', undefined, true).split('\n').join('\n\t\t// \t')}\n`;
           }
-          exampleText += `\t\t// \t${(example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(codeModel, example.responseEnvelope?.result!, '', undefined, true).split('\n').join('\n\t\t// \t')},\n`;
+          exampleText += `\t\t// \t${(example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope?.result!, '', undefined, true).split('\n').join('\n\t\t// \t')},\n`;
           exampleText += '\t\t// }\n';
           exampleText += `\t}\n`;
         } else if (checkResponse) {
@@ -204,12 +213,12 @@ export function generateExamples(codeModel: go.CodeModel): Array<ExampleContent>
           exampleText += `\t_ = res\n`;
 
           exampleText += `\t// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.\n`;
-          exampleText += `\t// res = ${codeModel.packageName}.${example.responseEnvelope?.response.name}{\n`;
+          exampleText += `\t// res = ${pkgName}.${example.responseEnvelope?.response.name}{\n`;
           for (const header of example.responseEnvelope?.headers ?? []) {
-            exampleText += `\t// \t${header.header.fieldName}: ${getExampleValue(codeModel, header.value, '', undefined, true).split('\n').join('\n\t// \t')}\n`;
+            exampleText += `\t// \t${header.header.fieldName}: ${getExampleValue(pkg, header.value, '', undefined, true).split('\n').join('\n\t// \t')}\n`;
           }
           if (example.responseEnvelope?.result) {
-            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(codeModel, example.responseEnvelope.result, '').split('\n').join('\n\t// \t')},\n`;
+            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result, '').split('\n').join('\n\t// \t')},\n`;
           }
           exampleText += '\t// }\n';
         }
@@ -221,7 +230,7 @@ export function generateExamples(codeModel: go.CodeModel): Array<ExampleContent>
     if (exampleText === '') continue;
 
     // stitch it all together
-    let text = helpers.contentPreamble(codeModel.packageName + '_test');
+    let text = helpers.contentPreamble(pkgName + '_test');
     text += imports.text();
     text += exampleText;
     examples.push(new ExampleContent(client.name, text));
@@ -229,21 +238,22 @@ export function generateExamples(codeModel: go.CodeModel): Array<ExampleContent>
   return examples;
 }
 
-function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, indent: string, imports?: ImportManager, byValue: boolean = false, inArray: boolean = false): string {
+function getExampleValue(src: go.Module | go.Package, example: go.ExampleType, indent: string, imports?: ImportManager, byValue: boolean = false, inArray: boolean = false): string {
+  const pkgName = helpers.getPackageName(src);
   switch (example.kind) {
     case 'string': {
       let exampleText = `"${escapeString(example.value)}"`;
       if (example.type.kind === 'constant') {
-        exampleText = getConstantValue(codeModel, example.type, example.value);
+        exampleText = getConstantValue(src, example.type, example.value);
       } else if (example.type.kind === 'time') {
         exampleText = getTimeValue(example.type, example.value, imports);
       } else if (example.type.kind === 'encodedBytes') {
         exampleText = `[]byte("${escapeString(example.value)}")`
       } else if (example.type.kind === 'literal' && example.type.type.kind === 'constant') {
-        exampleText = getConstantValue(codeModel, example.type.type, example.type.literal.value);
+        exampleText = getConstantValue(src, example.type.type, example.type.literal.value);
       } else if (example.type.kind === 'etag') {
         imports?.add(example.type.module);
-        exampleText = `${go.getTypeDeclaration(example.type, codeModel.packageName)}("${escapeString(example.value)}")`;
+        exampleText = `${go.getTypeDeclaration(example.type, pkgName)}("${escapeString(example.value)}")`;
       }
       return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
     }
@@ -251,7 +261,7 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
       let exampleText = `${example.value}`;
       switch (example.type.kind) {
         case 'constant':
-          exampleText = `${indent}${getConstantValue(codeModel, example.type, example.value)}`;
+          exampleText = `${indent}${getConstantValue(src, example.type, example.value)}`;
           break;
         case 'time':
           exampleText = getTimeValue(example.type, example.value, imports);
@@ -262,7 +272,7 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
     case 'boolean': {
       let exampleText = `${example.value}`;
       if (example.type.kind === 'constant') {
-        exampleText = `${indent}${getConstantValue(codeModel, example.type, example.value)}`;
+        exampleText = `${indent}${getConstantValue(src, example.type, example.value)}`;
       }
       return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
     }
@@ -275,26 +285,26 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
       // if polymorphic, need to add type name in array, so inArray will be set to false
       // if other case, no need to add type name in array, so inArray will be set to true
       const isElementPolymorphic = example.type.elementType.kind === 'interface';
-      let exampleText = `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}{\n`;
+      let exampleText = `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, pkgName)}{\n`;
       for (const element of example.value) {
-        exampleText += `${getExampleValue(codeModel, element, indent + '\t', imports, isElementByValue && !isElementPolymorphic, !isElementPolymorphic)},\n`;
+        exampleText += `${getExampleValue(src, element, indent + '\t', imports, isElementByValue && !isElementPolymorphic, !isElementPolymorphic)},\n`;
       }
       exampleText += `${indent}}`;
       return exampleText;
     }
     case 'dictionary': {
-      let exampleText = `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, codeModel.packageName)}{\n`;
+      let exampleText = `${indent}${getRef(byValue)}${go.getTypeDeclaration(example.type, pkgName)}{\n`;
       const isValueByValue = example.type.valueTypeByValue;
       const isValuePolymorphic = example.type.valueType.kind === 'interface';
       for (const key in example.value) {
-        exampleText += `${indent}\t"${key}": ${getExampleValue(codeModel, example.value[key], indent + '\t', imports, isValueByValue && !isValuePolymorphic).slice(indent.length + 1)},\n`;
+        exampleText += `${indent}\t"${key}": ${getExampleValue(src, example.value[key], indent + '\t', imports, isValueByValue && !isValuePolymorphic).slice(indent.length + 1)},\n`;
       }
       exampleText += `${indent}}`;
       return exampleText;
     }
     case 'model': {
       const isModelPolymorphic = example.type.kind === 'polymorphicModel';
-      let exampleText = `${indent}${getRef(byValue && !isModelPolymorphic)}${go.getTypeDeclaration(example.type, codeModel.packageName)}{\n`;
+      let exampleText = `${indent}${getRef(byValue && !isModelPolymorphic)}${go.getTypeDeclaration(example.type, pkgName)}{\n`;
       if (inArray) {
         exampleText = `${indent}{\n`;
       }
@@ -302,7 +312,7 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
         const goField = example.type.fields.find(f => f.name === field)!;
         const isFieldByValue = goField.byValue ?? false;
         const isFieldPolymorphic = goField.type.kind === 'interface';
-        exampleText += `${indent}\t${field}: ${getExampleValue(codeModel, example.value[field], indent + '\t', imports, isFieldByValue && !isFieldPolymorphic).slice(indent.length + 1)},\n`;
+        exampleText += `${indent}\t${field}: ${getExampleValue(src, example.value[field], indent + '\t', imports, isFieldByValue && !isFieldPolymorphic).slice(indent.length + 1)},\n`;
       }
       if (example.additionalProperties) {
         const additionalPropertiesField = example.type.fields.find(f => f.annotations.isAdditionalProperties)!;
@@ -311,9 +321,9 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
         }
         const isAdditionalPropertiesFieldByValue = additionalPropertiesField.type.valueTypeByValue ?? false;
         const isAdditionalPropertiesPolymorphic = additionalPropertiesField.type.valueType.kind === 'interface';
-        exampleText += `${indent}\t${additionalPropertiesField.name}: ${getRef(additionalPropertiesField.byValue)}${go.getTypeDeclaration(additionalPropertiesField.type, codeModel.packageName)}{\n`;
+        exampleText += `${indent}\t${additionalPropertiesField.name}: ${getRef(additionalPropertiesField.byValue)}${go.getTypeDeclaration(additionalPropertiesField.type, pkgName)}{\n`;
         for (const key in example.additionalProperties) {
-          exampleText += `${indent}\t"${key}": ${getExampleValue(codeModel, example.additionalProperties[key], indent + '\t', imports, isAdditionalPropertiesFieldByValue && !isAdditionalPropertiesPolymorphic).slice(indent.length + 1)},\n`;
+          exampleText += `${indent}\t"${key}": ${getExampleValue(src, example.additionalProperties[key], indent + '\t', imports, isAdditionalPropertiesFieldByValue && !isAdditionalPropertiesPolymorphic).slice(indent.length + 1)},\n`;
         }
         exampleText += `${indent}},\n`;
       }
@@ -330,17 +340,17 @@ function getRef(byValue: boolean): string {
 
 }
 
-function getConstantValue(codeModel: go.CodeModel, type: go.Constant, value: any): string {
+function getConstantValue(src: go.Module | go.Package, type: go.Constant, value: any): string {
   for (const constantValue of type.values) {
     if (constantValue.value === value) {
-      return `${codeModel.packageName}.${constantValue.name}`
+      return `${helpers.getPackageName(src)}.${constantValue.name}`
     }
   }
   switch (type.type) {
     case 'string':
-      return `${codeModel.packageName}.${type.name}("${value}")`;
+      return `${helpers.getPackageName(src)}.${type.name}("${value}")`;
     default:
-      return `${codeModel.packageName}.${type.name}(${value})`;
+      return `${helpers.getPackageName(src)}.${type.name}(${value})`;
   }
 }
 

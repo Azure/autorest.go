@@ -23,6 +23,10 @@ const clientParams = new Map<string, go.MethodParameter>();
 const paramGroups = new Map<string, go.ParameterGroup>();
 
 export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
+  // since we only support single packages in autorest, the root will
+  // either be the package in the containing module or the module itself.
+  const pkg = codeModel.root.kind === 'containingModule' ? codeModel.root.package : codeModel.root;
+
   for (const group of values(m4CodeModel.operationGroups)) {
     const client = adaptClient(group);
 
@@ -39,7 +43,7 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
         if (op.language.go!.paging.nextLinkOperation) {
           // adapt the next link operation
           const nextPageMethod = new go.NextPageMethod(op.language.go!.paging.nextLinkOperation.language.go.name, client, httpPath, httpMethod, getStatusCodes(op.language.go!.paging.nextLinkOperation));
-          populateMethod(op.language.go!.paging.nextLinkOperation, nextPageMethod, m4CodeModel, codeModel);
+          populateMethod(op.language.go!.paging.nextLinkOperation, nextPageMethod, m4CodeModel, pkg);
           method.nextPageMethod = nextPageMethod;
         }
       } else if (helpers.isLROOperation(op)) {
@@ -53,14 +57,14 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
         method.nextLinkName = op.language.go!.paging.nextLinkName;
         if (op.language.go!.paging.nextLinkOperation) {
           // adapt the next link operation
-          const nextPageMethod = adaptNextPageMethod(op, m4CodeModel, client, codeModel);
+          const nextPageMethod = adaptNextPageMethod(op, m4CodeModel, client, pkg);
           method.nextPageMethod = nextPageMethod;
         }
       } else {
         method = new go.SyncMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
       }
 
-      populateMethod(op, method, m4CodeModel, codeModel);
+      populateMethod(op, method, m4CodeModel, pkg);
 
       client.methods.push(method);
     }
@@ -88,7 +92,7 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
       client.instance.constructors.push(ctor);
     }
 
-    codeModel.clients.push(client);
+    pkg.clients.push(client);
   }
 }
 
@@ -96,20 +100,20 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
 // only adaptNextPageMethod should touch this!
 const adaptedNextPageMethods = new Map<string, go.NextPageMethod>();
 
-function adaptNextPageMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, client: go.Client, codeModel: go.CodeModel): go.NextPageMethod {
+function adaptNextPageMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, client: go.Client, pkg: go.PackageContent): go.NextPageMethod {
   const nextPageMethodName = op.language.go!.paging.nextLinkOperation.language.go.name;
   let nextPageMethod = adaptedNextPageMethods.get(nextPageMethodName);
   if (!nextPageMethod) {
     const httpPath = <string>op.language.go!.paging.nextLinkOperation.requests![0].protocol.http!.path;
     const httpMethod = <go.HTTPMethod>op.language.go!.paging.nextLinkOperation.requests![0].protocol.http!.method;
     nextPageMethod = new go.NextPageMethod(nextPageMethodName, client, httpPath, httpMethod, getStatusCodes(op.language.go!.paging.nextLinkOperation));
-    populateMethod(op.language.go!.paging.nextLinkOperation, nextPageMethod, m4CodeModel, codeModel);
+    populateMethod(op.language.go!.paging.nextLinkOperation, nextPageMethod, m4CodeModel, pkg);
     adaptedNextPageMethods.set(nextPageMethodName, nextPageMethod);
   }
   return nextPageMethod;
 }
 
-function populateMethod(op: m4.Operation, method: go.MethodType | go.NextPageMethod, m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
+function populateMethod(op: m4.Operation, method: go.MethodType | go.NextPageMethod, m4CodeModel: m4.CodeModel, pkg: go.PackageContent) {
   if (method.kind !== 'nextPageMethod') {
     if (hasDescription(op.language.go!)) {
       method.docs.description = op.language.go!.description;
@@ -122,7 +126,7 @@ function populateMethod(op: m4.Operation, method: go.MethodType | go.NextPageMet
     }
 
     method.optionalParamsGroup = optionalParamsGroup;
-    method.returns = adaptResponseEnvelope(m4CodeModel, codeModel, op, method);
+    method.returns = adaptResponseEnvelope(m4CodeModel, pkg, op, method);
   }
 
   adaptMethodParameters(op, method);
@@ -221,7 +225,7 @@ function adaptMethodParameters(op: m4.Operation, method: go.MethodType | go.Next
   }
 }
 
-function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel, op: m4.Operation, forMethod: go.MethodType): go.ResponseEnvelope {
+function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, pkg: go.PackageContent, op: m4.Operation, forMethod: go.MethodType): go.ResponseEnvelope {
   const respEnvSchema = <m4.ObjectSchema>op.language.go!.responseEnv;
   const respEnv = new go.ResponseEnvelope(respEnvSchema.language.go!.name, {description: respEnvSchema.language.go!.description}, forMethod);
 
@@ -267,7 +271,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
     }
   } else if (resultProp.isDiscriminator) {
     let ifaceResult: go.Interface | undefined;
-    for (const iface of values(codeModel.interfaces)) {
+    for (const iface of values(pkg.interfaces)) {
       if (iface.name === resultProp.schema.language.go!.name) {
         ifaceResult = iface;
         break;
@@ -283,7 +287,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
    * is a concrete type from a polymorphic hierarchy
    */
     let modelType: go.Model | go.PolymorphicModel | undefined;
-    for (const model of codeModel.models) {
+    for (const model of pkg.models) {
       if ((model.kind === 'model' || model.kind === 'polymorphicModel') && model.name === resultProp.schema.language.go!.name) {
         modelType = model;
         break;

@@ -9,17 +9,22 @@ import * as go from '../../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 
-// Creates the content in options.go
-export function generateOptions(codeModel: go.CodeModel): string {
-  if (codeModel.paramGroups.length === 0) {
+/**
+ * Creates the content for the options.go file.
+ * 
+ * @param pkg contains the package content
+ * @returns the text for the file or the empty string
+ */
+export function generateOptions(pkg: go.PackageContent): string {
+  if (pkg.paramGroups.length === 0) {
     return '';
   }
 
   const imports = new ImportManager();
-  let optionsText = helpers.contentPreamble(codeModel.packageName);
+  let optionsText = helpers.contentPreamble(helpers.getPackageName(pkg));
   let content = '';
 
-  for (const paramGroup of values(codeModel.paramGroups)) {
+  for (const paramGroup of pkg.paramGroups) {
     content += emit(paramGroup, imports);
   }
 

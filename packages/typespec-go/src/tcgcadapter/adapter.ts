@@ -46,7 +46,17 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
     options.omitConstructors = context.options['omit-constructors'];
   }
 
-  const codeModel = new go.CodeModel(info, codeModelType, naming.packageNameFromOutputFolder(context.emitterOutputDir), options);
+  let root: go.ContainingModule | go.Module;
+  if (context.options.module) {
+    root = new go.Module(context.options.module);
+  } else if (context.options['containing-module']) {
+    root = new go.ContainingModule(context.options['containing-module']);
+    root.package = new go.Package(naming.packageNameFromOutputFolder(context.emitterOutputDir), root);
+  } else {
+    throw new AdapterError('InvalidArgument', 'missing argument module or containing-module', NoTarget);
+  }
+
+  const codeModel = new go.CodeModel(info, codeModelType, options, root);
 
   const packageJson = createRequire(import.meta.url)('../../../../package.json') as Record<string, never>;
   codeModel.metadata = {
@@ -56,14 +66,6 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
 
   if (context.options['containing-module'] && context.options.module) {
     throw new AdapterError('InvalidArgument', 'module and containing-module are mutually exclusive', NoTarget);
-  }
-
-  if (context.options.module) {
-    codeModel.options.module = context.options.module;
-  } else if (context.options['containing-module']) {
-    codeModel.options.containingModule = context.options['containing-module'];
-  } else {
-    throw new AdapterError('InvalidArgument', 'missing argument module or containing-module', NoTarget);
   }
 
   if (context.options['rawjson-as-bytes']) {
@@ -76,7 +78,10 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
   if (context.options['factory-gather-all-params'] === false) {
     codeModel.options.factoryGatherAllParams = false;
   }
-  fixStutteringTypeNames(sdkContext.sdkPackage, codeModel, context.options);
+
+  // TODO: stuttering fix-ups will need some rethinking for namespaces
+  const packageName = codeModel.root.kind === 'containingModule' ? codeModel.root.package.name : naming.packageNameFromOutputFolder(codeModel.root.identity);
+  fixStutteringTypeNames(sdkContext.sdkPackage, packageName, context.options);
 
   const ta = new typeAdapter(codeModel);
   ta.adaptTypes(sdkContext);
@@ -87,8 +92,8 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
   return codeModel;
 }
 
-function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperation>, codeModel: go.CodeModel, options: GoEmitterOptions): void {
-  let stutteringPrefix = codeModel.packageName;
+function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperation>, packageName: string, options: GoEmitterOptions): void {
+  let stutteringPrefix = packageName;
 
   if (options.stutter) {
     stutteringPrefix = options.stutter;

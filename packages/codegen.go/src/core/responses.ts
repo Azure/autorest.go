@@ -15,9 +15,15 @@ export interface ResponsesSerDe {
   serDe: string;
 }
 
-// Creates the content in responses.go
-export function generateResponses(codeModel: go.CodeModel): ResponsesSerDe {
-  if (codeModel.responseEnvelopes. length === 0) {
+/**
+ * Creates the content for the responses.go file.
+ * 
+ * @param pkg contains the package content
+ * @param options the emitter options
+ * @returns the text for the file or the empty string
+ */
+export function generateResponses(pkg: go.PackageContent, options: go.Options): ResponsesSerDe {
+  if (pkg.responseEnvelopes. length === 0) {
     return {
       responses: '',
       serDe: ''
@@ -26,14 +32,14 @@ export function generateResponses(codeModel: go.CodeModel): ResponsesSerDe {
 
   const imports = new ImportManager();
   const serdeImports = new ImportManager();
-  let responses = helpers.contentPreamble(codeModel.packageName);
+  let responses = helpers.contentPreamble(helpers.getPackageName(pkg));
   let serDe = '';
   let respContent = '';
   let serdeContent = '';
 
-  for (const respEnv of codeModel.responseEnvelopes) {
+  for (const respEnv of pkg.responseEnvelopes) {
     respContent += emit(respEnv, imports);
-    if (codeModel.options.generateFakes) {
+    if (options.generateFakes) {
       serdeContent += generateMarshaller(respEnv, serdeImports);
     }
     serdeContent += generateUnmarshaller(respEnv, serdeImports);
@@ -43,7 +49,7 @@ export function generateResponses(codeModel: go.CodeModel): ResponsesSerDe {
   responses += respContent;
 
   if (serdeContent.length > 0) {
-    serDe = helpers.contentPreamble(codeModel.packageName);
+    serDe = helpers.contentPreamble(helpers.getPackageName(pkg));
     serDe += serdeImports.text();
     serDe += serdeContent;
   }

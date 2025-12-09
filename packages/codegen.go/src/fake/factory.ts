@@ -9,9 +9,16 @@ import { getServerName } from './servers.js';
 import * as helpers from '../core/helpers.js';
 import { ImportManager } from '../core/imports.js';
 
-export function generateServerFactory(codeModel: go.CodeModel): string {
+/**
+ * Generates the contents for the *_server_factory.go file.
+ * 
+ * @param pkg contains the package content
+ * @param target the codegen target for the module
+ * @returns the text for the file or the empty string
+ */
+export function generateServerFactory(pkg: go.PackageContent, target: go.CodeModelType): string {
   // generate server factory only for ARM
-  if (codeModel.type !== 'azure-arm' || !codeModel.clients) {
+  if (target !== 'azure-arm' || !pkg.clients) {
     return '';
   }
 
@@ -27,13 +34,14 @@ export function generateServerFactory(codeModel: go.CodeModel): string {
   let text = helpers.contentPreamble('fake');
   text += imports.text();
 
-  text += `// ServerFactory is a fake server for instances of the ${codeModel.packageName}.ClientFactory type.\n`;
+  const pkgName = helpers.getPackageName(pkg);
+  text += `// ServerFactory is a fake server for instances of the ${pkgName}.ClientFactory type.\n`;
   text += 'type ServerFactory struct {\n';
 
   // add server transports for client accessors
   // we might remove some clients from the list
   const finalSubClients = new Array<go.Client>();
-  for (const client of codeModel.clients) {
+  for (const client of pkg.clients) {
     if (client.clientAccessors.length === 0 && values(client.methods).all(method => { return helpers.isMethodInternal(method) })) {
       // client has no client accessors and no exported methods, skip it
       continue;
@@ -46,12 +54,12 @@ export function generateServerFactory(codeModel: go.CodeModel): string {
   text += '}\n\n';
 
   text += '// NewServerFactoryTransport creates a new instance of ServerFactoryTransport with the provided implementation.\n';
-  text += `// The returned ServerFactoryTransport instance is connected to an instance of ${codeModel.packageName}.ClientFactory via the\n`;
+  text += `// The returned ServerFactoryTransport instance is connected to an instance of ${pkgName}.ClientFactory via the\n`;
   text += '// azcore.ClientOptions.Transporter field in the client\'s constructor parameters.\n';
   text += 'func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {\n';
   text += `${indent.get()}return &ServerFactoryTransport{\n${indent.push().get()}srv: srv,\n${indent.pop().get()}}\n}\n\n`;
 
-  text += `// ServerFactoryTransport connects instances of ${codeModel.packageName}.ClientFactory to instances of ServerFactory.\n`;
+  text += `// ServerFactoryTransport connects instances of ${pkgName}.ClientFactory to instances of ServerFactory.\n`;
   text += '// Don\'t use this type directly, use NewServerFactoryTransport instead.\n';
   text += 'type ServerFactoryTransport struct {\n';
   text += `${indent.get()}srv *ServerFactory\n`;

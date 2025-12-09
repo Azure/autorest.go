@@ -3,9 +3,7 @@
 *  Licensed under the MIT License. See License.txt in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import * as client from './client.js';
-import * as result from './result.js';
-import * as type from './type.js';
+import * as module from './module.js';
 
 /** a Go-specific abstraction over REST endpoints */
 export interface CodeModel {
@@ -15,34 +13,14 @@ export interface CodeModel {
   /** the service type for this code model */
   type: CodeModelType;
 
-  /** the Go package name for this code model */
-  packageName: string;
-
   /** contains the options for this code model */
   options: Options;
 
-  /** all of the struct model types to generate (models.go file). can be empty */
-  models: Array<type.Model | type.PolymorphicModel>;
-
-  /** all of the const types to generate (constants.go file). can be empty */
-  constants: Array<type.Constant>;
-
-  /**
-   * all of the operation clients. can be empty (models-only build)
-   */
-  clients: Array<client.Client>;
-
-  /** all of the parameter groups including the options types (options.go file) */
-  paramGroups: Array<type.Struct>;
-
-  /** all of the response envelopes (responses.go file). can be empty */
-  responseEnvelopes: Array<result.ResponseEnvelope>;
-
-  /** all of the interfaces for discriminated types (interfaces.go file) */
-  interfaces: Array<type.Interface>;
-
   /** package metadata */
   metadata?: {};
+
+  /** the root container of content to emit */
+  root: module.ContainingModule | module.Module;
 }
 
 /** the service type that the code model represents */
@@ -85,18 +63,6 @@ export interface Options {
    */
   disallowUnknownFields: boolean;
 
-  /**
-   * the module into which the package is being generated.
-   * this is mutually exclusive with module
-   */
-  containingModule?: string;
-
-  /**
-   * the module identity including any major version suffix.
-   * this is mutually exclusive with containingModule.
-   */
-  module?: string;
-
   /** custom version of azcore to use instead of the emitter's default value */
   azcoreVersion?: string;
 
@@ -117,17 +83,11 @@ export interface Options {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class CodeModel implements CodeModel {
-  constructor(info: Info, type: CodeModelType, packageName: string, options: Options) {
-    this.clients = new Array<client.Client>();
-    this.constants = new Array<type.Constant>();
+  constructor(info: Info, type: CodeModelType, options: Options, root: module.ContainingModule | module.Module) {
     this.info = info;
-    this.interfaces = new Array<type.Interface>();
-    this.models = new Array<type.Model | type.PolymorphicModel>();
     this.options = options;
-    this.packageName = packageName;
-    this.paramGroups = new Array<type.Struct>();
-    this.responseEnvelopes = new Array<result.ResponseEnvelope>();
     this.type = type;
+    this.root = root;
   }
 }
 

@@ -42,10 +42,16 @@ export function getServerName(client: go.Client): string {
   return capitalize(client.name.replace(/[C|c]lient$/, 'Server'));
 }
 
-export function generateServers(codeModel: go.CodeModel): ServerContent {
+/**
+ * Generates the contents for the *_server.go files.
+ * 
+ * @param pkg contains the package content
+ * @returns the contents to generate or an empty object
+ */
+export function generateServers(pkg: go.PackageContent): ServerContent {
   const operations = new Array<OperationGroupContent>();
-  const clientPkg = codeModel.packageName;
-  for (const client of values(codeModel.clients)) {
+  const clientPkg = helpers.getPackageName(pkg);
+  for (const client of values(pkg.clients)) {
     if (client.clientAccessors.length === 0 && values(client.methods).all(method => { return helpers.isMethodInternal(method) })) {
       // client has no client accessors and no exported methods, skip it
       continue;
@@ -219,7 +225,7 @@ export function generateServers(codeModel: go.CodeModel): ServerContent {
     content += generateServerTransportDo(serverTransport, client, finalSubClients, finalMethods);
     content += generateServerTransportClientDispatch(serverTransport, finalSubClients, imports);
     content += generateServerTransportMethodDispatch(serverTransport, client, finalMethods);
-    content += generateServerTransportMethods(codeModel, serverTransport, finalMethods, imports);
+    content += generateServerTransportMethods(pkg, serverTransport, finalMethods, imports);
 
     content += `// set this to conditionally intercept incoming requests to ${serverTransport}\n`;
     content += `var ${getTransportInterceptorVarName(client)} interface {\n`;
@@ -234,7 +240,7 @@ export function generateServers(codeModel: go.CodeModel): ServerContent {
     text += content;
     operations.push(new OperationGroupContent(serverName, text));
   }
-  return new ServerContent(operations, generateServerInternal(codeModel, requiredHelpers));
+  return new ServerContent(operations, generateServerInternal(pkg, requiredHelpers));
 }
 
 function getTransportInterceptorVarName(client: go.Client): string {
@@ -333,16 +339,18 @@ function generateServerTransportMethodDispatch(serverTransport: string, client: 
   return content;
 }
 
-function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport: string, finalMethods: Array<go.MethodType>, imports: ImportManager): string {
+function generateServerTransportMethods(pkg: go.PackageContent, serverTransport: string, finalMethods: Array<go.MethodType>, imports: ImportManager): string {
   if (finalMethods.length === 0) {
     return '';
   }
 
-  imports.add(helpers.getParentImport(codeModel));
+  imports.addForPkg(pkg);
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server');
 
+  const clientPkg = helpers.getPackageName(pkg);
   const receiverName = serverTransport[0].toLowerCase();
+
   let content = '';
   for (const method of values(finalMethods)) {
     content += `func (${receiverName} *${serverTransport}) dispatch${fixUpMethodName(method)}(req *http.Request) (*http.Response, error) {\n`;
@@ -353,10 +361,10 @@ function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport
       case 'lroMethod':
       case 'lroPageableMethod':
         // must check LRO before pager as you can have paged LROs
-        content += dispatchForLROBody(codeModel.packageName, receiverName, method, imports);
+        content += dispatchForLROBody(clientPkg, receiverName, method, imports);
         break;
       case 'method': {
-        content += dispatchForOperationBody(codeModel.packageName, receiverName, method, imports);
+        content += dispatchForOperationBody(clientPkg, receiverName, method, imports);
         content += '\trespContent := server.GetResponseContent(respr)\n';
         const formattedStatusCodes = helpers.formatStatusCodes(method.httpStatusCodes);
         content += `\tif !contains([]int{${formattedStatusCodes}}, respContent.HTTPStatus) {\n`;
@@ -418,7 +426,7 @@ function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport
         break;
       }
       case 'pageableMethod':
-        content += dispatchForPagerBody(codeModel.packageName, receiverName, method, imports);
+        content += dispatchForPagerBody(clientPkg, receiverName, method, imports);
         break;
       default:
         method satisfies never;
