@@ -244,7 +244,7 @@ export class Emitter {
     const recursiveEmit = async (pkg: go.PackageContent, dir: string): Promise<void> => {
       await emitForPkg(pkg, async (name: string, content: string, subdir?: string) => {
         return await this.fs.write(`${dir}${subdir ? `${subdir}/` : ''}${this.filePrefix}${name}`, content);
-      })
+      });
 
       // recursively emit any sub-packages
       for (const subPkg of pkg.packages) {
@@ -254,7 +254,7 @@ export class Emitter {
 
     switch (this.codeModel.root.kind) {
       case 'containingModule':
-          await recursiveEmit(this.codeModel.root.package, '');
+        await recursiveEmit(this.codeModel.root.package, '');
         break;
       case 'module':
         // when emitting a module, the root directory is the module directory

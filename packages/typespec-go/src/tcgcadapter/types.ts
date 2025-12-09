@@ -31,7 +31,7 @@ export class typeAdapter {
    * returns the package for the adapted tcgc code model.
    * 
    * NOTE: this is temporary and will go away with namespaces.
-   * @returns the module or package to contain the adpated tcgc model
+   * @returns the module or package to contain the adapted tcgc model
    */
   private getPkg(): go.PackageContent {
     return this.codeModel.root.kind === 'containingModule' ? this.codeModel.root.package : this.codeModel.root;

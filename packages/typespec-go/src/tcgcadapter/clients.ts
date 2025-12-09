@@ -47,7 +47,7 @@ export class clientAdapter {
    * returns the package for the adapted tcgc code model.
    * 
    * NOTE: this is temporary and will go away with namespaces.
-   * @returns the module or package to contain the adpated tcgc model
+   * @returns the module or package to contain the adapted tcgc model
    */
   private getPkg(): go.PackageContent {
     return this.ta.codeModel.root.kind === 'containingModule' ? this.ta.codeModel.root.package : this.ta.codeModel.root;

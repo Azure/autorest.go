@@ -7,7 +7,6 @@ import * as go from '../../../codemodel.go/src/index.js';
 
 /**
  * returns the content for the LICENSE.txt file.
- * if no file should be emitted, undefined is returned.
  * 
  * @param module the module for which to generate LICENSE.txt
  * @returns the contents for the LICENSE.txt file

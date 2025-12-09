@@ -23,7 +23,7 @@ export interface ResponsesSerDe {
  * @returns the text for the file or the empty string
  */
 export function generateResponses(pkg: go.PackageContent, options: go.Options): ResponsesSerDe {
-  if (pkg.responseEnvelopes. length === 0) {
+  if (pkg.responseEnvelopes.length === 0) {
     return {
       responses: '',
       serDe: ''

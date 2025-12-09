@@ -18,7 +18,10 @@ export interface ContainingModule {
   /** the containing module's identity */
   identity: string;
 
-  /** the subpackage to emit */
+  /**
+   * the subpackage to emit.
+   * NOTE: callers MUST set this post construction
+   */
   package: Package;
 }
 
