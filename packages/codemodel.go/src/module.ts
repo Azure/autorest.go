@@ -15,7 +15,10 @@ import * as type from './type.js';
 export interface ContainingModule {
   kind: 'containingModule';
 
-  /** the containing module's identity */
+  /**
+   * the containing module's identity.
+   * e.g. github.com/contoso/module
+   */
   identity: string;
 
   /**
@@ -29,7 +32,10 @@ export interface ContainingModule {
 export interface Module extends PackageBase {
   kind: 'module';
 
-  /** the module's identity */
+  /**
+   * the module's identity.
+   * e.g. github.com/contoso/module
+   */
   identity: string;
 }
 
