@@ -1111,7 +1111,9 @@ export function isMethodInternal(method: go.MethodType): boolean {
 }
 
 /**
- * returns the package name for the specified input
+ * returns the package name for the specified input.
+ * for module github.com/contoso/module, 'module' is returned.
+ * any major version suffix on the module is removed.
  * 
  * @param pkg is the package source
  * @returns the package name for pkg
