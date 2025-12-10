@@ -7,11 +7,11 @@ import * as go from '../../../codemodel.go/src/index.js';
 
 /**
  * returns the content for the LICENSE.txt file.
+ * NOTE: this is only required when emitting a module.
  * 
- * @param module the module for which to generate LICENSE.txt
  * @returns the contents for the LICENSE.txt file
  */
-export function generateLicenseTxt(_: go.Module, options: go.Options): string {
+export function generateLicenseTxt(options: go.Options): string {
   return options.licenseText ?? mitLicenseForMSFT;
 }
 

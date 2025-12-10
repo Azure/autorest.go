@@ -216,7 +216,7 @@ export class Emitter {
     }
 
     // don't overwrite an existing LICENSE.txt file
-    const licenseTxt = generateLicenseTxt(this.codeModel.root, this.codeModel.options);
+    const licenseTxt = generateLicenseTxt(this.codeModel.options);
     const licenseTxtFileName = 'LICENSE.txt';
     if (licenseTxt && !await this.fs.exists(licenseTxtFileName)) {
       await this.fs.write(licenseTxtFileName, licenseTxt);
