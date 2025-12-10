@@ -25,9 +25,9 @@ export async function generateCode(host: AutorestExtensionHost) {
       artifactType: 'code-model-v4'
     });
 
-    let filePrefix = await session.getValue('file-prefix', '');
+    let filePrefix = <string | undefined>await session.getValue('file-prefix', undefined);
     // if a file prefix was specified, ensure it's properly snaked
-    if (filePrefix.length > 0 && filePrefix[filePrefix.length - 1] !== '_') {
+    if (filePrefix && filePrefix[filePrefix.length - 1] !== '_') {
       filePrefix += '_';
     }
 
