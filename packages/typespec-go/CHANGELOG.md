@@ -6,6 +6,10 @@
 
 * Generate fake values for required parameters when missing example values.
 
+### Other Changes
+
+* Updated to the latest tsp toolset.
+
 ## 0.8.6 (2025-11-25)
 
 ### Bugs Fixed

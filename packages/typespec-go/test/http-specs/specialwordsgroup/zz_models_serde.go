@@ -308,6 +308,69 @@ func (d *Del) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the json.Marshaller interface for type DictMethods.
+func (d DictMethods) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "clear", d.Clear)
+	populate(objectMap, "copy", d.Copy)
+	populate(objectMap, "get", d.Get)
+	populate(objectMap, "items", d.Items)
+	populate(objectMap, "keys", d.Keys)
+	populate(objectMap, "pop", d.Pop)
+	populate(objectMap, "popitem", d.Popitem)
+	populate(objectMap, "setdefault", d.Setdefault)
+	populate(objectMap, "update", d.Update)
+	populate(objectMap, "values", d.Values)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DictMethods.
+func (d *DictMethods) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", d, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "clear":
+			err = unpopulate(val, "Clear", &d.Clear)
+			delete(rawMsg, key)
+		case "copy":
+			err = unpopulate(val, "Copy", &d.Copy)
+			delete(rawMsg, key)
+		case "get":
+			err = unpopulate(val, "Get", &d.Get)
+			delete(rawMsg, key)
+		case "items":
+			err = unpopulate(val, "Items", &d.Items)
+			delete(rawMsg, key)
+		case "keys":
+			err = unpopulate(val, "Keys", &d.Keys)
+			delete(rawMsg, key)
+		case "pop":
+			err = unpopulate(val, "Pop", &d.Pop)
+			delete(rawMsg, key)
+		case "popitem":
+			err = unpopulate(val, "Popitem", &d.Popitem)
+			delete(rawMsg, key)
+		case "setdefault":
+			err = unpopulate(val, "Setdefault", &d.Setdefault)
+			delete(rawMsg, key)
+		case "update":
+			err = unpopulate(val, "Update", &d.Update)
+			delete(rawMsg, key)
+		case "values":
+			err = unpopulate(val, "Values", &d.Values)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", d, err)
+		}
+	}
+	return nil
+}
+
 // MarshalJSON implements the json.Marshaller interface for type Elif.
 func (e Elif) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)

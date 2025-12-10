@@ -19,6 +19,45 @@ type SpecialWordsModelPropertiesClient struct {
 	endpoint string
 }
 
+// DictMethods -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - SpecialWordsModelPropertiesClientDictMethodsOptions contains the optional parameters for the SpecialWordsModelPropertiesClient.DictMethods
+//     method.
+func (client *SpecialWordsModelPropertiesClient) DictMethods(ctx context.Context, body DictMethods, options *SpecialWordsModelPropertiesClientDictMethodsOptions) (SpecialWordsModelPropertiesClientDictMethodsResponse, error) {
+	var err error
+	const operationName = "SpecialWordsModelPropertiesClient.DictMethods"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.dictMethodsCreateRequest(ctx, body, options)
+	if err != nil {
+		return SpecialWordsModelPropertiesClientDictMethodsResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return SpecialWordsModelPropertiesClientDictMethodsResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return SpecialWordsModelPropertiesClientDictMethodsResponse{}, err
+	}
+	return SpecialWordsModelPropertiesClientDictMethodsResponse{}, nil
+}
+
+// dictMethodsCreateRequest creates the DictMethods request.
+func (client *SpecialWordsModelPropertiesClient) dictMethodsCreateRequest(ctx context.Context, body DictMethods, _ *SpecialWordsModelPropertiesClientDictMethodsOptions) (*policy.Request, error) {
+	urlPath := "/special-words/model-properties/dict-methods"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
 // SameAsModel -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelPropertiesClientSameAsModelOptions contains the optional parameters for the SpecialWordsModelPropertiesClient.SameAsModel

@@ -4,6 +4,12 @@
 
 package specialwordsgroup
 
+// SpecialWordsModelPropertiesClientDictMethodsOptions contains the optional parameters for the SpecialWordsModelPropertiesClient.DictMethods
+// method.
+type SpecialWordsModelPropertiesClientDictMethodsOptions struct {
+	// placeholder for future optional parameters
+}
+
 // SpecialWordsModelPropertiesClientSameAsModelOptions contains the optional parameters for the SpecialWordsModelPropertiesClient.SameAsModel
 // method.
 type SpecialWordsModelPropertiesClientSameAsModelOptions struct {
