@@ -6,7 +6,7 @@
 import { CodeModelError } from './errors.js';
 import { MethodExample } from './examples.js';
 import * as method from './method.js';
-import * as pkg from './package.js';
+import * as pkg from './codeModel.js';
 import * as param from './param.js';
 import * as result from './result.js';
 import * as type from './type.js';

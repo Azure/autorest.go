@@ -22,15 +22,22 @@ export class OperationGroupContent {
   }
 }
 
-// Creates the content for all <operation>.go files
-export function generateOperations(codeModel: go.CodeModel): Array<OperationGroupContent> {
+/**
+ * Creates the content for all the *_client.go files.
+ * 
+ * @param pkg contains the package content
+ * @param target the codegen target for the module
+ * @param options the emitter options
+ * @returns the text for the files or the empty string
+ */
+export function generateOperations(pkg: go.PackageContent, target: go.CodeModelType, options: go.Options): Array<OperationGroupContent> {
   // generate protocol operations
   const operations = new Array<OperationGroupContent>();
-  if (codeModel.clients.length === 0) {
+  if (pkg.clients.length === 0) {
     return operations;
   }
-  const azureARM = codeModel.type === 'azure-arm';
-  for (const client of codeModel.clients) {
+  const azureARM = target === 'azure-arm';
+  for (const client of pkg.clients) {
     // the list of packages to import
     const imports = new ImportManager();
     if (client.methods.length > 0) {
@@ -105,7 +112,7 @@ export function generateOperations(codeModel: go.CodeModel): Array<OperationGrou
     // end of client definition
     clientText += '}\n\n';
 
-    clientText += generateConstructors(client, codeModel.type, imports);
+    clientText += generateConstructors(client, target, imports);
 
     // generate client accessors and operations
     let opText = '';
@@ -130,9 +137,9 @@ export function generateOperations(codeModel: go.CodeModel): Array<OperationGrou
       // it must be done before the imports are written out
       if (go.isLROMethod(method)) {
         // generate Begin method
-        opText += generateLROBeginMethod(method, imports, codeModel.options.injectSpans, codeModel.options.generateFakes);
+        opText += generateLROBeginMethod(method, imports, options);
       }
-      opText += generateOperation(method, imports, codeModel.options.injectSpans, codeModel.options.generateFakes);
+      opText += generateOperation(method, imports, options);
       opText += createProtocolRequest(azureARM, method, imports);
       if (method.kind !== 'lroMethod') {
         // LRO responses are handled elsewhere, with the exception of pageable LROs
@@ -149,7 +156,7 @@ export function generateOperations(codeModel: go.CodeModel): Array<OperationGrou
     }
 
     // stitch it all together
-    let text = helpers.contentPreamble(codeModel.packageName);
+    let text = helpers.contentPreamble(helpers.getPackageName(pkg));
     text += imports.text();
     text += clientText;
     text += opText;
@@ -527,7 +534,7 @@ function generateNilChecks(path: string, prefix: string = 'page'): string {
   return checks.join(' && ');
 }
 
-function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
+function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, imports: ImportManager, options: go.Options): string {
   imports.add('context');
   let text = `runtime.NewPager(runtime.PagingHandler[${method.returns.name}]{\n`;
   text += `\t\tMore: func(page ${method.returns.name}) bool {\n`;
@@ -542,7 +549,7 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, i
   }
   text += `\t\tFetcher: func(ctx context.Context, page *${method.returns.name}) (${method.returns.name}, error) {\n`;
   const reqParams = helpers.getCreateRequestParameters(method);
-  if (generateFakes) {
+  if (options.generateFakes) {
     text += `\t\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "${method.receiver.type.name}.${fixUpMethodName(method)}")\n`;
   }
   if (method.nextLinkName) {
@@ -597,7 +604,7 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, i
     text += `\t\t\treturn client.${method.naming.responseMethod}(resp)\n`;
     text += '\t\t},\n';
   }
-  if (injectSpans) {
+  if (options.injectSpans) {
     text += '\t\tTracer: client.internal.Tracer(),\n';
   }
   text += '\t})\n';
@@ -630,7 +637,7 @@ function getClientReceiverDefinition(receiver: go.Receiver<go.Client>): string {
   return `(${receiver.name} ${receiver.byValue ? '' : '*'}${receiver.type.name})`;
 }
 
-function generateOperation(method: go.MethodType, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
+function generateOperation(method: go.MethodType, imports: ImportManager, options: go.Options): string {
   const params = getAPIParametersSig(method, imports);
   const returns = generateReturnsInfo(method, 'op');
   let methodName = method.name;
@@ -661,20 +668,20 @@ function generateOperation(method: go.MethodType, imports: ImportManager, inject
   const reqParams = helpers.getCreateRequestParameters(method);
   if (method.kind === 'pageableMethod') {
     text += '\treturn ';
-    text += emitPagerDefinition(method, imports, injectSpans, generateFakes);
+    text += emitPagerDefinition(method, imports, options);
     text += '}\n\n';
     return text;
   }
   text += '\tvar err error\n';
   let operationName = `"${method.receiver.type.name}.${fixUpMethodName(method)}"`;
-  if (generateFakes && injectSpans) {
+  if (options.generateFakes && options.injectSpans) {
     text += `\tconst operationName = ${operationName}\n`;
     operationName = 'operationName';
   }
-  if (generateFakes) {
+  if (options.generateFakes) {
     text += `\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, ${operationName})\n`;
   }
-  if (injectSpans) {
+  if (options.injectSpans) {
     text += `\tctx, endSpan := runtime.StartSpan(ctx, ${operationName}, client.internal.Tracer(), nil)\n`;
     text += '\tdefer func() { endSpan(err) }()\n';
   }
@@ -1479,7 +1486,7 @@ function generateReturnsInfo(method: go.MethodType, apiType: 'api' | 'op' | 'han
   return [returnType, 'error'];
 }
 
-function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
+function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imports: ImportManager, options: go.Options): string {
   const params = getAPIParametersSig(method, imports);
   const returns = generateReturnsInfo(method, 'api');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
@@ -1502,7 +1509,7 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imp
     pollerTypeParam = `[*runtime.Pager${pollerTypeParam}]`;
     pollerType = '&pager';
     text += '\tpager := ';
-    text += emitPagerDefinition(method, imports, injectSpans, generateFakes);
+    text += emitPagerDefinition(method, imports, options);
   }
 
   text += '\tif options == nil || options.ResumeToken == "" {\n';
@@ -1538,13 +1545,13 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imp
   }
 
   text += '\t\tpoller, err := runtime.NewPoller';
-  if (finalStateVia === '' && pollerType === 'nil' && !injectSpans) {
+  if (finalStateVia === '' && pollerType === 'nil' && !options.injectSpans) {
     // the generic type param is redundant when it's also specified in the
     // options struct so we only include it when there's no options.
     text += pollerTypeParam;
   }
   text += '(resp, client.internal.Pipeline(), ';
-  if (finalStateVia === '' && pollerType === 'nil' && !injectSpans && !method.operationLocationResultPath) {
+  if (finalStateVia === '' && pollerType === 'nil' && !options.injectSpans && !method.operationLocationResultPath) {
     // no options
     text += 'nil)\n';
   } else {
@@ -1559,7 +1566,7 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imp
     if (pollerType !== 'nil') {
       text += `\t\t\tResponse: ${pollerType},\n`;
     }
-    if (injectSpans) {
+    if (options.injectSpans) {
       text += '\t\t\tTracer: client.internal.Tracer(),\n';
     }
     text += '\t\t})\n';
@@ -1570,18 +1577,18 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imp
   // creating the poller from resume token branch
 
   text += '\t\treturn runtime.NewPollerFromResumeToken';
-  if (pollerType === 'nil' && !injectSpans) {
+  if (pollerType === 'nil' && !options.injectSpans) {
     text += pollerTypeParam;
   }
   text += '(options.ResumeToken, client.internal.Pipeline(), ';
-  if (pollerType === 'nil' && !injectSpans) {
+  if (pollerType === 'nil' && !options.injectSpans) {
     text += 'nil)\n';
   } else {
     text += `&runtime.NewPollerFromResumeTokenOptions${pollerTypeParam}{\n`;
     if (pollerType !== 'nil') {
       text += `\t\t\tResponse: ${pollerType},\n`;
     }
-    if (injectSpans) {
+    if (options.injectSpans) {
       text += '\t\t\tTracer: client.internal.Tracer(),\n';
     }
     text  += '\t\t})\n';

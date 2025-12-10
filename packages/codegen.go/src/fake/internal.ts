@@ -29,8 +29,15 @@ export class RequiredHelpers {
   }
 }
 
-export function generateServerInternal(codeModel: go.CodeModel, requiredHelpers: RequiredHelpers): string {
-  if (codeModel.clients.length === 0) {
+/**
+ * Generates the content for the required fake helpers in fake/internal.go.
+ * 
+ * @param pkg contains the package content
+ * @param requiredHelpers contains data about the helpers to emit
+ * @returns the text for the file or the empty string
+ */
+export function generateServerInternal(pkg: go.PackageContent, requiredHelpers: RequiredHelpers): string {
+  if (pkg.clients.length === 0) {
     return '';
   }
   const text = contentPreamble('fake');

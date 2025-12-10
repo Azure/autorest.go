@@ -8,19 +8,25 @@ import { values } from '@azure-tools/linq';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 
-// Creates the content in polymorphic_helpers.go
-export function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeServerPkg?: string): string {
-  if (codeModel.interfaces.length === 0) {
+/**
+ * Creates the content for the polymorphic_helpers.go file.
+ * 
+ * @param pkg contains the package content
+ * @param fakeServerPkg optional name when emitting into the fake package
+ * @returns the text for the file or the empty string
+ */
+export function generatePolymorphicHelpers(pkg: go.PackageContent, fakeServerPkg?: string): string {
+  if (pkg.interfaces.length === 0) {
     // no polymorphic types
     return '';
   }
 
-  let text = helpers.contentPreamble(fakeServerPkg ?? codeModel.packageName);
+  let text = helpers.contentPreamble(fakeServerPkg ?? helpers.getPackageName(pkg));
   const imports = new ImportManager();
   imports.add('encoding/json');
   if (fakeServerPkg) {
     // content is being generated into a separate package, add the necessary import
-    imports.add(helpers.getParentImport(codeModel));
+    imports.addForPkg(pkg);
   }
 
   text += imports.text();
@@ -60,7 +66,7 @@ export function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeServerPk
   
   if (fakeServerPkg) {
     // when generating for the fakes server, we must look at operation parameters instead of return values
-    for (const client of values(codeModel.clients)) {
+    for (const client of pkg.clients) {
       for (const method of values(client.methods)) {
         for (const param of values(method.parameters)) {
           trackDisciminator(param.type);
@@ -68,13 +74,13 @@ export function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeServerPk
       }
     }
   } else {
-    for (const model of codeModel.models) {
+    for (const model of pkg.models) {
       for (const field of model.fields) {
         trackDisciminator(field.type);
       }
     }
 
-    for (const respEnv of values(codeModel.responseEnvelopes)) {
+    for (const respEnv of pkg.responseEnvelopes) {
       switch (respEnv.result?.kind) {
         case 'monomorphicResult':
           switch (respEnv.result.monomorphicType.kind) {
@@ -104,10 +110,10 @@ export function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeServerPk
   let prefix = '';
   if (fakeServerPkg) {
     // content is being generated into a separate package, set the type name prefix
-    prefix = `${codeModel.packageName}.`;
+    prefix = `${helpers.getPackageName(pkg)}.`;
   }
 
-  for (const interfaceType of codeModel.interfaces) {
+  for (const interfaceType of pkg.interfaces) {
     // generate unmarshallers for each discriminator
 
     // scalar unmarshaller

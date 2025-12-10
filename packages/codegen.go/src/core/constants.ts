@@ -7,15 +7,20 @@ import { values } from '@azure-tools/linq';
 import * as helpers from './helpers.js';
 import * as go from '../../../codemodel.go/src/index.js';
 
-// Creates the content in constants.go
-export function generateConstants(codeModel: go.CodeModel): string {
-  if (codeModel.constants.length === 0) {
+/**
+ * Creates the content for the constants.go file.
+ * 
+ * @param pkg contains the package content
+ * @returns the text for the file or the empty string
+ */
+export function generateConstants(pkg: go.PackageContent): string {
+  if (pkg.constants.length === 0) {
     return '';
   }
 
-  let text = helpers.contentPreamble(codeModel.packageName);
+  let text = helpers.contentPreamble(helpers.getPackageName(pkg));
 
-  for (const enm of values(codeModel.constants)) {
+  for (const enm of values(pkg.constants)) {
     text += helpers.formatDocCommentWithPrefix(enm.name, enm.docs);
     text += `type ${enm.name} ${enm.type}\n\n`;
     const vals = new Array<string>();

@@ -7,22 +7,12 @@ import * as go from '../../../codemodel.go/src/index.js';
 
 /**
  * returns the content for the LICENSE.txt file.
- * if no file should be emitted, undefined is returned.
+ * NOTE: this is only required when emitting a module.
  * 
- * @param codeModel the code model for which to generate LICENSE.txt
- * @returns the contents for the LICENSE.txt file or undefined
+ * @returns the contents for the LICENSE.txt file
  */
-export function generateLicenseTxt(codeModel: go.CodeModel): string | undefined {
-  if (codeModel.options.containingModule) {
-    // we're emitting a subpackage into a module
-    // so skip the license generation
-    return undefined;
-  }
-
-  if (codeModel.options.licenseText) {
-    return codeModel.options.licenseText;
-  }
-  return mitLicenseForMSFT;
+export function generateLicenseTxt(options: go.Options): string {
+  return options.licenseText ?? mitLicenseForMSFT;
 }
 
 const mitLicenseForMSFT = 

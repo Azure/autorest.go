@@ -27,6 +27,16 @@ export class typeAdapter {
     this.constValues = new Map<string, go.ConstantValue>();
   }
 
+  /**
+   * returns the package for the adapted tcgc code model.
+   * 
+   * NOTE: this is temporary and will go away with namespaces.
+   * @returns the module or package to contain the adapted tcgc model
+   */
+  private getPkg(): go.PackageContent {
+    return this.codeModel.root.kind === 'containingModule' ? this.codeModel.root.package : this.codeModel.root;
+  }
+
   // converts all model/enum SDK types to Go code model types
   adaptTypes(sdkContext: tcgc.SdkContext) {
     for (const enumType of sdkContext.sdkPackage.enums) {
@@ -38,7 +48,7 @@ export class typeAdapter {
         continue;
       }
       const constType = this.getConstantType(enumType);
-      this.codeModel.constants.push(constType);
+      this.getPkg().constants.push(constType);
     }
 
     // we must adapt all interface/model types first. this is because models can contain cyclic references
@@ -60,7 +70,7 @@ export class typeAdapter {
       if (modelType.discriminatedSubtypes) {
         // this is a root discriminated type
         const iface = this.getInterfaceType(modelType);
-        this.codeModel.interfaces.push(iface);
+        this.getPkg().interfaces.push(iface);
         ifaceTypes.push({go: iface, tcgc: modelType});
       }
       // TODO: what's the equivalent of x-ms-external?
@@ -102,7 +112,7 @@ export class typeAdapter {
         const addlProps = new go.ModelField('AdditionalProperties', addlPropsType, true, '', annotations);
         modelType.go.fields.push(addlProps);
       }
-      this.codeModel.models.push(modelType.go);
+      this.getPkg().models.push(modelType.go);
     }
   }
 

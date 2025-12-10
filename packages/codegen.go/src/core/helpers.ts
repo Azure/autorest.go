@@ -3,6 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+import * as path from 'path';
 import * as go from '../../../codemodel.go/src/index.js';
 import { values } from '@azure-tools/linq';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
@@ -681,17 +682,6 @@ export function formatDocComment(docs: go.Docs): string {
   return docComment;
 }
 
-export function getParentImport(codeModel: go.CodeModel): string {
-  const clientPkg = codeModel.packageName;
-  if (codeModel.options.module) {
-    return codeModel.options.module;
-  } else if (codeModel.options.containingModule) {
-    return codeModel.options.containingModule + '/' + clientPkg;
-  } else {
-    throw new CodegenError('InvalidArgument', 'unable to determine containing module for fakes. specify either the module or containing-module switch');
-  }
-}
-
 export function getBitSizeForNumber(intSize: 'float32' | 'float64' | 'int8' | 'int16' | 'int32' | 'int64'): string {
   switch (intSize) {
     case 'int8':
@@ -759,14 +749,14 @@ const serDeFormatCache = new Map<string, SerDeFormat>();
 
 // returns the wire format for the named model.
 // at present this assumes the formats to be mutually exclusive.
-export function getSerDeFormat(model: go.Model | go.PolymorphicModel, codeModel: go.CodeModel): SerDeFormat {
+export function getSerDeFormat(model: go.Model | go.PolymorphicModel, pkg: go.PackageContent): SerDeFormat {
   let serDeFormat = serDeFormatCache.get(model.name);
   if (serDeFormat) {
     return serDeFormat;
   }
 
   // for model-only builds we assume the format to be JSON
-  if (codeModel.clients.length === 0) {
+  if (pkg.clients.length === 0) {
     return 'JSON';
   }
 
@@ -797,7 +787,7 @@ export function getSerDeFormat(model: go.Model | go.PolymorphicModel, codeModel:
   };
 
   // walk the methods, indexing the model formats
-  for (const client of codeModel.clients) {
+  for (const client of pkg.clients) {
     for (const method of client.methods) {
       for (const param of method.parameters) {
         if (param.kind !== 'bodyParam' || (param.bodyFormat !== 'JSON' && param.bodyFormat !== 'XML')) {
@@ -845,9 +835,9 @@ export function getSerDeFormat(model: go.Model | go.PolymorphicModel, codeModel:
 }
 
 // return combined client parameters for all the clients
-export function getAllClientParameters(codeModel: go.CodeModel): Array<go.ClientParameter> {
+export function getAllClientParameters(pkg: go.PackageContent, target: go.CodeModelType): Array<go.ClientParameter> {
   const allClientParams = new Array<go.ClientParameter>();
-  for (const client of codeModel.clients) {
+  for (const client of pkg.clients) {
     if (client.instance?.kind === 'constructable') {
       for (const ctor of client.instance.constructors) {
         for (const ctorParam of ctor.parameters) {
@@ -861,16 +851,16 @@ export function getAllClientParameters(codeModel: go.CodeModel): Array<go.Client
       }
     }
   }
-  return sortClientParameters(allClientParams, codeModel.type);
+  return sortClientParameters(allClientParams, target);
 }
 
 // returns common client parameters for all the clients
-export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.ClientParameter> {
+export function getCommonClientParameters(pkg: go.PackageContent, target: go.CodeModelType): Array<go.ClientParameter> {
   const paramCount = new Map<string, { uses: number, param: go.ClientParameter }>();
   let numClients = 0; // track client count since we might skip some
-  for (const client of codeModel.clients) {
+  for (const client of pkg.clients) {
     // special cases: some ARM clients always don't contain any parameters (OperationsClient will be depracated in the future)
-    if (codeModel.type === 'azure-arm' && client.name.match(/^OperationsClient$/)) {
+    if (target === 'azure-arm' && client.name.match(/^OperationsClient$/)) {
       continue; 
     }
 
@@ -903,7 +893,7 @@ export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.Cli
     }
   }
 
-  return sortClientParameters(commonClientParams, codeModel.type);
+  return sortClientParameters(commonClientParams, target);
 }
 
 /**
@@ -1118,4 +1108,21 @@ export function splitScope(scope: string): { audience: string, scope: string } {
 /** returns true if the specified method is internal */
 export function isMethodInternal(method: go.MethodType): boolean {
   return !!method.name.match(/^[a-z]{1}/);
+}
+
+/**
+ * returns the package name for the specified input.
+ * for module github.com/contoso/module, 'module' is returned.
+ * any major version suffix on the module is removed.
+ * 
+ * @param pkg is the package source
+ * @returns the package name for pkg
+ */
+export function getPackageName(pkg: go.PackageContent): string {
+  switch (pkg.kind) {
+    case 'module':
+      return path.basename(pkg.identity.replace(/\/v\d+$/, ''));
+    case 'package':
+      return pkg.name;
+  }
 }

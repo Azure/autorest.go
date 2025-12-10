@@ -7,26 +7,28 @@ import * as go from '../../../codemodel.go/src/index.js';
 import { lt, toSemver } from '@azure-tools/codegen';
 import { CodegenError } from './errors.js';
 
-// Creates the content in go.mod if the --module switch was specified.
-// if there's a preexisting go.mod file, update its specified version of azcore as needed.
-export function generateGoModFile(codeModel: go.CodeModel, existingGoMod?: string): string {
-  if (!codeModel.options.module) {
-    // must be containing-module, so we're emitting a package into a module that already has a go.mod
-    return '';
-  }
-
-  const modName = codeModel.options.module;
+/**
+ * Creates the content for the go.mod file.
+ * If there's a preexisting go.mod file, update its specified version of azcore as needed.
+ * 
+ * @param module the module for which to generate version.go
+ * @param options the emitter options
+ * @param existingGoMod preexisting go.mod file content
+ * @returns the contents for the go.mod file
+ */
+export function generateGoModFile(module: go.Module, options: go.Options, existingGoMod?: string): string {
+  const modName = module.identity;
 
   // here we specify the minimum version of azcore as required by the code generator.
   // the version can be overwritten by passing the --azcore-version switch during generation.
   let version = '1.20.0';
-  if (codeModel.options.azcoreVersion) {
+  if (options.azcoreVersion) {
     // when matching versions, we need to handle beta, non-beta, and pseudo versions
     // 1.2.3-beta.1, 1.2.3, 0.22.1-0.20220315231014-ed309e73db6b
-    if (!codeModel.options.azcoreVersion.match(/^\d+\.\d+\.\d+(?:-[a-zA-Z0-9_.-]+)?$/)) {
+    if (!options.azcoreVersion.match(/^\d+\.\d+\.\d+(?:-[a-zA-Z0-9_.-]+)?$/)) {
       throw new CodegenError('InvalidArgument', `azcore version ${version} must be in the format major.minor.patch[-beta.N]`);
     }
-    version = codeModel.options.azcoreVersion;
+    version = options.azcoreVersion;
   }
 
   const azcore = 'github.com/Azure/azure-sdk-for-go/sdk/azcore v' + version;

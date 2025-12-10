@@ -14,9 +14,15 @@ export interface ModelsSerDe {
   serDe: string;
 }
 
-// Creates the content in models.go
-export function generateModels(codeModel: go.CodeModel): ModelsSerDe {
-  if (codeModel.models.length === 0) {
+/**
+ * Creates the content for the models.go file.
+ * 
+ * @param pkg contains the package content
+ * @param options the emitter options
+ * @returns the text for the files or the empty string
+ */
+export function generateModels(pkg: go.PackageContent, options: go.Options): ModelsSerDe {
+  if (pkg.models.length === 0) {
     return {
       models: '',
       serDe: ''
@@ -26,10 +32,10 @@ export function generateModels(codeModel: go.CodeModel): ModelsSerDe {
   // this list of packages to import
   const modelImports = new ImportManager();
   const serdeImports = new ImportManager();
-  let modelText = helpers.contentPreamble(codeModel.packageName);
+  let modelText = helpers.contentPreamble(helpers.getPackageName(pkg));
 
   // we do model generation first as it can add imports to the imports list
-  const modelDefs = generateModelDefs(modelImports, serdeImports, codeModel);
+  const modelDefs = generateModelDefs(modelImports, serdeImports, pkg, options);
 
   modelText += modelImports.text();
 
@@ -134,7 +140,7 @@ export function generateModels(codeModel: go.CodeModel): ModelsSerDe {
   }
   let serdeText = '';
   if (serdeTextBody.length > 0) {
-    serdeText = helpers.contentPreamble(codeModel.packageName);
+    serdeText = helpers.contentPreamble(helpers.getPackageName(pkg));
     serdeText += serdeImports.text();
     serdeText += serdeTextBody;
   }
@@ -144,8 +150,8 @@ export function generateModels(codeModel: go.CodeModel): ModelsSerDe {
   };
 }
 
-function generateModelDefs(modelImports: ImportManager, serdeImports: ImportManager, codeModel: go.CodeModel): Array<ModelDef> {
-  const models = codeModel.models;
+function generateModelDefs(modelImports: ImportManager, serdeImports: ImportManager, pkg: go.PackageContent, options: go.Options): Array<ModelDef> {
+  const models = pkg.models;
   const modelDefs = new Array<ModelDef>();
   for (const model of models) {
     for (const field of model.fields) {
@@ -178,7 +184,7 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       field.docs.description = descriptionMods.join('; ');
     }
 
-    const serDeFormat = helpers.getSerDeFormat(model, codeModel);
+    const serDeFormat = helpers.getSerDeFormat(model, pkg);
     const modelDef = new ModelDef(model.name, serDeFormat, model.fields, model.docs);
     for (const field of values(modelDef.Fields)) {
       modelImports.addImportForType(field.type);
@@ -220,7 +226,7 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       modelDef.SerDe.needsJSONPopulateMultipart = true;
     } else if (!model.annotations.omitSerDeMethods) {
       generateJSONMarshaller(model, modelDef, serdeImports);
-      generateJSONUnmarshaller(model, modelDef, serdeImports, codeModel.options);
+      generateJSONUnmarshaller(model, modelDef, serdeImports, options);
     }
     modelDefs.push(modelDef);
   }

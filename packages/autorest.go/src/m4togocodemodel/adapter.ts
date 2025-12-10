@@ -30,6 +30,7 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
       await session.getValue('generate-sdk-example', false));
     options.headerText = await session.getValue('header-text', 'MISSING LICENSE HEADER');
     options.factoryGatherAllParams = await session.getValue('factory-gather-all-params', true);
+    options.omitConstructors = true;
 
     const azcoreVersion = await session.getValue('azcore-version', '');
     if (azcoreVersion !== '') {
@@ -41,24 +42,34 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
       type = 'azure-arm';
     }
 
-    const codeModel = new go.CodeModel(info, type, session.model.language.go!.packageName, options);
+    let root: go.ContainingModule | go.Module;
     if (session.model.language.go!.module) {
-      codeModel.options.module = <string>session.model.language.go!.module;
+      root = new go.Module(<string>session.model.language.go!.module);
     } else if (session.model.language.go!.containingModule !== '') {
-      codeModel.options.containingModule = <string>session.model.language.go!.containingModule;
+      root = new go.ContainingModule(<string>session.model.language.go!.containingModule);
+      root.package = new go.Package(session.model.language.go!.packageName, root);
+    } else {
+      // this was validated earlier but is required
+      // to avoid root from being unassigned.
+      throw new Error('missing module and containing-module');
     }
 
-    codeModel.options.omitConstructors = true;
-    adaptConstantTypes(session.model, codeModel);
-    adaptInterfaceTypes(session.model, codeModel);
-    adaptModels(session.model, codeModel);
+    const codeModel = new go.CodeModel(info, type, options, root);
+
+    // since we only support single packages in autorest, the root will
+    // either be the package in the containing module or the module itself.
+    const pkg = codeModel.root.kind === 'containingModule' ? codeModel.root.package : codeModel.root;
+
+    adaptConstantTypes(session.model, pkg);
+    adaptInterfaceTypes(session.model, pkg);
+    adaptModels(session.model, pkg);
     adaptClients(session.model, codeModel);
 
     const paramGroups = new Map<string, go.ParameterGroup>();
 
-    for (const client of values(codeModel.clients)) {
+    for (const client of values(pkg.clients)) {
       for (const method of client.methods) {
-        codeModel.responseEnvelopes.push(method.returns);
+        pkg.responseEnvelopes.push(method.returns);
         for (const param of values(method.parameters)) {
           if (param.group) {
             if (!paramGroups.has(param.group.groupName)) {
@@ -77,7 +88,7 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
       // adapt all of the parameter groups
       for (const groupName of paramGroups.keys()) {
         const paramGroup = paramGroups.get(groupName);
-        codeModel.paramGroups.push(adaptParameterGroup(paramGroup!));
+        pkg.paramGroups.push(adaptParameterGroup(paramGroup!));
       }
     }
 
@@ -95,21 +106,21 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
   }
 }
 
-function adaptConstantTypes(m4CodeModel: m4.CodeModel, goCodeModel: go.CodeModel) {
+function adaptConstantTypes(m4CodeModel: m4.CodeModel, pkg: go.PackageContent) {
   // group all enum categories into a single array so they can be sorted
   for (const choice of values(m4CodeModel.schemas.choices)) {
     if (choice.language.go!.omitType) {
       continue;
     }
     const constType = adaptConstantType(choice);
-    goCodeModel.constants.push(constType);
+    pkg.constants.push(constType);
   }
   for (const choice of values(m4CodeModel.schemas.sealedChoices)) {
     if (choice.language.go!.omitType || choice.choices.length === 1) {
       continue;
     }
     const constType = adaptConstantType(choice);
-    goCodeModel.constants.push(constType);
+    pkg.constants.push(constType);
   }
 }
 
@@ -140,7 +151,7 @@ interface InterfaceTypeObjectSchema {
   obj: m4.ObjectSchema;
 }
 
-function adaptInterfaceTypes(m4CodeModel: m4.CodeModel, goCodeModel: go.CodeModel) {
+function adaptInterfaceTypes(m4CodeModel: m4.CodeModel, pkg: go.PackageContent) {
   if (!m4CodeModel.language.go!.discriminators) {
     return;
   }
@@ -155,7 +166,7 @@ function adaptInterfaceTypes(m4CodeModel: m4.CodeModel, goCodeModel: go.CodeMode
     }
     // we must adapt all InterfaceTypes first. this is because ModelTypes/PolymorphicTypes can
     // contain references to InterfaceTypes and/or cyclic references
-    recursiveAdaptInterfaceType(discriminator, goCodeModel.interfaces, ifaceObjs);
+    recursiveAdaptInterfaceType(discriminator, pkg.interfaces, ifaceObjs);
   }
 
   // now that the InterfaceTypes have been created, we can populate the rootType and possibleTypes
@@ -190,7 +201,7 @@ interface ModelTypeObjectSchema {
   obj: m4.ObjectSchema;
 }
 
-function adaptModels(m4CodeModel: m4.CodeModel, goCodeModel: go.CodeModel) {
+function adaptModels(m4CodeModel: m4.CodeModel, pkg: go.PackageContent) {
   const modelObjs = new Array<ModelTypeObjectSchema>();
   for (const obj of values(m4CodeModel.schemas.objects)) {
     if (obj.language.go!.omitType || obj.extensions?.['x-ms-external']) {
@@ -198,7 +209,7 @@ function adaptModels(m4CodeModel: m4.CodeModel, goCodeModel: go.CodeModel) {
     }
     // we must adapt all model types first. this is because models can contain cyclic references
     const modelType = adaptModel(obj);
-    goCodeModel.models.push(modelType);
+    pkg.models.push(modelType);
     modelObjs.push({type: modelType, obj: obj});
   }
 
