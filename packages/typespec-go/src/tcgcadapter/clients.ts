@@ -5,37 +5,38 @@
 
 import { values } from '@azure-tools/linq';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
-import { EmitContext, ModelProperty, NoTarget } from '@typespec/compiler';
+import { ModelProperty, NoTarget } from '@typespec/compiler';
 import * as http from '@typespec/http';
 import * as go from '../../../codemodel.go/src/index.js';
 import { capitalize, createOptionsTypeDescription, createResponseEnvelopeDescription, ensureNameCase, getEscapedReservedName, uncapitalize } from '../../../naming.go/src/naming.js';
 import { AdapterError } from './errors.js';
-import { GoEmitterOptions } from '../lib.js';
-import { isTypePassedByValue, typeAdapter } from './types.js';
+import { isTypePassedByValue, TypeAdapter } from './types.js';
 
-// used to convert SDK clients and their methods to Go code model types
-export class clientAdapter {
-  private ta: typeAdapter;
-  private ctx: EmitContext<GoEmitterOptions>;
+/**
+ * used to convert tcgc clients and their methods to Go code model types
+ */
+export class ClientAdapter {
+  private ta: TypeAdapter;
 
   // track all of the client and parameter group params across all operations
   // as not every option might contain them, and parameter groups can be shared
   // across multiple operations
   private clientParams: Map<string, go.MethodParameter>;
 
-  constructor(ta: typeAdapter, ctx: EmitContext<GoEmitterOptions>) {
+  constructor(ta: TypeAdapter) {
     this.ta = ta;
-    this.ctx = ctx;
     this.clientParams = new Map<string, go.MethodParameter>();
   }
 
-  // converts all clients and their methods to Go code model types.
-  // this includes parameter groups/options types and response envelopes.
-  adaptClients(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperation>) {
-    if (this.ctx.options['single-client'] && sdkPackage.clients.length > 1) {
-      throw new AdapterError('InvalidArgument', 'single-client cannot be enabled when there are multiple clients', NoTarget);
+  /**
+   * converts all clients and their methods to Go code model types.
+   * this includes parameter groups/options types and response envelopes.
+   */
+  adaptClients() {
+    if (this.ta.ctx.emitContext.options['single-client'] && this.ta.ctx.sdkPackage.clients.length > 1) {
+      throw new AdapterError('InvalidArgument', 'single-client cannot be enabled when there are multiple clients');
     }
-    for (const sdkClient of sdkPackage.clients) {
+    for (const sdkClient of this.ta.ctx.sdkPackage.clients) {
       // start with instantiable clients and recursively work down
       if (sdkClient.clientInitialization.initializedBy & tcgc.InitializedByFlags.Individually) {
         this.recursiveAdaptClient(sdkClient);
@@ -118,7 +119,7 @@ export class clientAdapter {
     let authType = AuthTypes.Default;
     if (!this.ta.codeModel.options.omitConstructors && this.ta.codeModel.root.kind === 'containingModule') {
       // emit a diagnostic indicating that no ctors will be emitted due to containing-module.
-      this.ctx.program.reportDiagnostic({
+      this.ta.ctx.program.reportDiagnostic({
         code: 'UnsupportedConfiguration',
         severity: 'warning',
         message: 'cannot emit client constructors when containing-module is set',
@@ -127,7 +128,7 @@ export class clientAdapter {
     }
     if ((this.ta.codeModel.options.omitConstructors || this.ta.codeModel.root.kind === 'containingModule') && this.ta.codeModel.options.generateExamples) {
       // emit a diagnostic indicating that no ctors will be emitted due to containing-module.
-      this.ctx.program.reportDiagnostic({
+      this.ta.ctx.program.reportDiagnostic({
         code: 'UnsupportedConfiguration',
         severity: 'warning',
         message: 'cannot emit examples when containing-module or omit-constructors is set',
@@ -152,7 +153,7 @@ export class clientAdapter {
           return AuthTypes.WithAuth;
         }
         default:
-          this.ctx.program.reportDiagnostic({
+          this.ta.ctx.program.reportDiagnostic({
             code: 'UnsupportedAuthenticationScheme',
             severity: 'warning',
             message: `unsupported authentication scheme ${cred.type} will be omitted`,
@@ -203,7 +204,7 @@ export class clientAdapter {
 
                 // no supported credential types were specified
                 if (authType === AuthTypes.Default) {
-                  throw new AdapterError('UnsupportedTsp', `credential scheme types ${variantKinds.join()} NYI`, param.__raw?.node ?? NoTarget);
+                  throw new AdapterError('UnsupportedTsp', `credential scheme types ${variantKinds.join()} NYI`, param.__raw?.node);
                 }
                 continue;
               }
@@ -269,7 +270,7 @@ export class clientAdapter {
                   if (constructable.options.kind === 'clientOptions') {
                     constructable.options.parameters.push(adaptedParam);
                   } else {
-                    throw new AdapterError('UnsupportedTsp', 'optional client parameters for ARM is not supported', templateArg.__raw?.node ?? NoTarget);
+                    throw new AdapterError('UnsupportedTsp', 'optional client parameters for ARM is not supported', templateArg.__raw?.node);
                   }
                 }
               }
@@ -320,7 +321,7 @@ export class clientAdapter {
       // as not all client method params might be uniform.
       goClient.parameters = new Array<go.ClientParameter>(...parent.parameters);
     } else {
-      throw new AdapterError('InternalError', `uninstantiable client ${sdkClient.name} has no parent`, NoTarget);
+      throw new AdapterError('InternalError', `uninstantiable client ${sdkClient.name} has no parent`);
     }
 
     if (sdkClient.children && sdkClient.children.length > 0) {
@@ -384,7 +385,7 @@ export class clientAdapter {
     if (go.isURIParameterType(paramType)) {
       const style = forceRequired ? 'required' : this.adaptParameterStyle(sdkParam);
       if (this.ta.codeModel.type === 'azure-arm' && !go.isRequiredParameter(style)) {
-        throw new AdapterError('UnsupportedTsp', 'optional client parameters for ARM is not supported', sdkParam.__raw?.node ?? NoTarget);
+        throw new AdapterError('UnsupportedTsp', 'optional client parameters for ARM is not supported', sdkParam.__raw?.node);
       }
       const uriParam = new go.URIParameter(sdkParam.name, sdkParam.serializedName, paramType,
         style, isTypePassedByValue(sdkParam.type) || !sdkParam.optional, 'client');
@@ -393,7 +394,7 @@ export class clientAdapter {
       uriParam.isApiVersion = sdkParam.isApiVersionParam;
       return uriParam;
     }
-    throw new AdapterError('UnsupportedTsp', `unsupported URI parameter type ${paramType.kind}`, sdkParam.__raw?.node ?? NoTarget);
+    throw new AdapterError('UnsupportedTsp', `unsupported URI parameter type ${paramType.kind}`, sdkParam.__raw?.node);
   }
 
   private adaptMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, goClient: go.Client): void {
@@ -433,7 +434,7 @@ export class clientAdapter {
       method = new go.SyncMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
     } else if (sdkMethod.kind === 'paging') {
       if (sdkMethod.pagingMetadata.nextLinkReInjectedParametersSegments !== undefined && sdkMethod.pagingMetadata.nextLinkReInjectedParametersSegments.length > 0) {
-        throw new AdapterError('UnsupportedTsp', `paging with re-injected parameters is not supported`, sdkMethod.__raw?.node ?? NoTarget);
+        throw new AdapterError('UnsupportedTsp', `paging with re-injected parameters is not supported`, sdkMethod.__raw?.node);
       }
       method = new go.PageableMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
       if (sdkMethod.pagingMetadata.nextLinkVerb) {
@@ -453,7 +454,7 @@ export class clientAdapter {
           if (segment.kind === 'property') {
             return ensureNameCase(segment.name);
           } else {
-            throw new AdapterError('UnsupportedTsp', `unsupported next link segment kind ${segment.kind}`, sdkMethod.__raw?.node ?? NoTarget);
+            throw new AdapterError('UnsupportedTsp', `unsupported next link segment kind ${segment.kind}`, sdkMethod.__raw?.node);
           }
         }).join('.'));
       }
@@ -470,7 +471,7 @@ export class clientAdapter {
         }).join('.');
       }
     } else {
-      throw new AdapterError('UnsupportedTsp', `unsupported method kind ${sdkMethod.kind}`, sdkMethod.__raw?.node ?? NoTarget);
+      throw new AdapterError('UnsupportedTsp', `unsupported method kind ${sdkMethod.kind}`, sdkMethod.__raw?.node);
     }
 
     method.docs.summary = sdkMethod.summary;
@@ -491,11 +492,11 @@ export class clientAdapter {
 
   private populateMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType | go.NextPageMethod) {
     if (method.kind === 'nextPageMethod') {
-      throw new AdapterError('UnsupportedTsp', `unsupported method kind ${sdkMethod.kind}`, sdkMethod.__raw?.node ?? NoTarget);
+      throw new AdapterError('UnsupportedTsp', `unsupported method kind ${sdkMethod.kind}`, sdkMethod.__raw?.node);
     }
 
     let prefix = method.receiver.type.name;
-    if (this.ctx.options['single-client']) {
+    if (this.ta.ctx.emitContext.options['single-client']) {
       prefix = '';
     }
     if (go.isLROMethod(method)) {
@@ -596,7 +597,7 @@ export class clientAdapter {
       }
 
       if (!opParam) {
-        throw new AdapterError('InternalError', `didn't find operation parameter for method ${sdkMethod.name} parameter ${param.name}`, sdkMethod.__raw?.node ?? NoTarget);
+        throw new AdapterError('InternalError', `didn't find operation parameter for method ${sdkMethod.name} parameter ${param.name}`, sdkMethod.__raw?.node);
       }
 
       if (opParam.kind === 'header' && opParam.serializedName.match(/^content-type$/i) && param.type.kind === 'constant') {
@@ -643,7 +644,7 @@ export class clientAdapter {
               }
             }
             if (!serializedName) {
-              throw new AdapterError('InternalError', `didn't find body model property for spread parameter ${param.name}`, param.__raw?.node ?? NoTarget);
+              throw new AdapterError('InternalError', `didn't find body model property for spread parameter ${param.name}`, param.__raw?.node);
             }
             adaptedParam = new go.PartialBodyParameter(paramName, serializedName, contentType, this.ta.getWireType(param.type, true, true), paramStyle, byVal);
             break;
@@ -656,7 +657,7 @@ export class clientAdapter {
             }
             break;
           default:
-            throw new AdapterError('UnsupportedTsp', `unsupported spread param content type ${contentType}`, opParam.__raw?.node ?? NoTarget);
+            throw new AdapterError('UnsupportedTsp', `unsupported spread param content type ${contentType}`, opParam.__raw?.node);
         }
       } else if (param.type.kind === 'model' && opParam.kind !== 'body') {
         // Attempt to handle as a parameter group for non-body parameter
@@ -740,7 +741,7 @@ export class clientAdapter {
       if (adaptedParam.style !== 'required' && adaptedParam.style !== 'literal') {
         // add optional method param to the options param group
         if (!optionalGroup) {
-          throw new AdapterError('InternalError', `optional parameter ${param.name} has no optional parameter group`, param.__raw?.node ?? NoTarget);
+          throw new AdapterError('InternalError', `optional parameter ${param.name} has no optional parameter group`, param.__raw?.node);
         }
         adaptedParam.group = optionalGroup;
         optionalGroup.params.push(adaptedParam);
@@ -775,7 +776,7 @@ export class clientAdapter {
           return v.name === adaptedParam.name;
         })) {
           if (this.ta.codeModel.type === 'azure-arm' && adaptedParam.style !== 'literal' && adaptedParam.style !== 'required') {
-            throw new AdapterError('UnsupportedTsp', 'optional client parameters for ARM is not supported', opParam.__raw?.node ?? NoTarget);
+            throw new AdapterError('UnsupportedTsp', 'optional client parameters for ARM is not supported', opParam.__raw?.node);
           }
           method.receiver.type.parameters.push(adaptedParam);
           if (method.receiver.type.instance?.kind === 'constructable') {
@@ -837,7 +838,7 @@ export class clientAdapter {
           apiVersionParam = new go.QueryScalarParameter('apiVersion', opParam.serializedName, true, paramType, paramStyle, true, paramLoc);
           break;
         default:
-          throw new AdapterError('UnsupportedTsp', `unsupported API version param kind ${opParam.kind}`, opParam.__raw?.node ?? NoTarget);
+          throw new AdapterError('UnsupportedTsp', `unsupported API version param kind ${opParam.kind}`, opParam.__raw?.node);
       }
       apiVersionParam.isApiVersion = true;
       return apiVersionParam;
@@ -869,7 +870,7 @@ export class clientAdapter {
       // this is only applicable to spread params
       // which should have been handled earlier.
       // so, if we get here, we have a bug elsewhere
-      throw new AdapterError('InternalError', `unexpected correspondingMethodParams.length of ${opParam.correspondingMethodParams.length}`, opParam.__raw?.node ?? NoTarget);
+      throw new AdapterError('InternalError', `unexpected correspondingMethodParams.length of ${opParam.correspondingMethodParams.length}`, opParam.__raw?.node);
     }
 
     const methodParam = opParam.correspondingMethodParams[0];
@@ -900,16 +901,16 @@ export class clientAdapter {
         break;
       case 'cookie':
         // TODO: currently we don't have Azure service using cookie parameter. need to add support if needed in the future.
-        throw new AdapterError('UnsupportedTsp', 'unsupported parameter type cookie', opParam.__raw?.node ?? NoTarget);
+        throw new AdapterError('UnsupportedTsp', 'unsupported parameter type cookie', opParam.__raw?.node);
       case 'header':
         if (opParam.collectionFormat) {
           if (opParam.collectionFormat === 'multi' || opParam.collectionFormat === 'form') {
-            throw new AdapterError('InternalError', `unexpected collection format ${opParam.collectionFormat} for HeaderCollectionParameter`, opParam.__raw?.node ?? NoTarget);
+            throw new AdapterError('InternalError', `unexpected collection format ${opParam.collectionFormat} for HeaderCollectionParameter`, opParam.__raw?.node);
           }
           // TODO: is hard-coded false for element type by value correct?
           const type = this.ta.getWireType(methodParam.type, true, false);
           if (type.kind !== 'slice') {
-            throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${methodParam.name}`, opParam.__raw?.node ?? NoTarget);
+            throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${methodParam.name}`, opParam.__raw?.node);
           }
           adaptedParam = new go.HeaderCollectionParameter(paramName, opParam.serializedName, type, opParam.collectionFormat === 'simple' ? 'csv' : opParam.collectionFormat, paramStyle, byVal, location);
         } else {
@@ -923,7 +924,7 @@ export class clientAdapter {
         if (opParam.collectionFormat) {
           const type = this.ta.getWireType(methodParam.type, true, false);
           if (type.kind !== 'slice') {
-            throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${methodParam.name}`, opParam.__raw?.node ?? NoTarget);
+            throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${methodParam.name}`, opParam.__raw?.node);
           }
           // TODO: unencoded query param
           adaptedParam = new go.QueryCollectionParameter(paramName, opParam.serializedName, true, type, opParam.collectionFormat === 'simple' ? 'csv' : (opParam.collectionFormat === 'form' ? 'multi' : opParam.collectionFormat), paramStyle, byVal, location);
@@ -962,7 +963,7 @@ export class clientAdapter {
   private adaptResponseEnvelope(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType): go.ResponseEnvelope {
     // TODO: add Envelope suffix if name collides with existing type
     let prefix = method.receiver.type.name;
-    if (this.ctx.options['single-client']) {
+    if (this.ta.ctx.emitContext.options['single-client']) {
       prefix = '';
     }
     let respEnvName = `${prefix}${method.name}Response`;
@@ -995,7 +996,7 @@ export class clientAdapter {
     let sdkResponseType = sdkMethod.response.type;
 
     // since HEAD requests don't return a type, we must check this before checking sdkResponseType
-    if (method.httpMethod === 'head' && this.ctx.options['head-as-boolean'] === true) {
+    if (method.httpMethod === 'head' && this.ta.ctx.emitContext.options['head-as-boolean'] === true) {
       respEnv.result = new go.HeadAsBooleanResult('Success');
       respEnv.result.docs.summary = 'Success indicates if the operation succeeded or failed.';
     }
@@ -1037,7 +1038,7 @@ export class clientAdapter {
         break;
       }
       if (!foundResp) {
-        throw new AdapterError('InternalError', `didn't find HTTP response for kind ${sdkResponseType.kind} in method ${method.name}`, sdkResponseType.__raw?.node ?? NoTarget);
+        throw new AdapterError('InternalError', `didn't find HTTP response for kind ${sdkResponseType.kind} in method ${method.name}`, sdkResponseType.__raw?.node);
       }
     }
 
@@ -1055,7 +1056,7 @@ export class clientAdapter {
         }
       }
       if (!modelType) {
-        throw new AdapterError('InternalError', `didn't find model type name ${sdkResponseType.name} for response envelope ${respEnv.name}`, sdkResponseType.__raw?.node ?? NoTarget);
+        throw new AdapterError('InternalError', `didn't find model type name ${sdkResponseType.name} for response envelope ${respEnv.name}`, sdkResponseType.__raw?.node);
       }
       if (modelType.kind === 'polymorphicModel') {
         // For polymorphic models, check if we can find a concrete type that matches the discriminator value
@@ -1068,7 +1069,7 @@ export class clientAdapter {
       }
       if (respEnv.result === undefined) {
         if (contentType !== 'JSON' && contentType !== 'XML') {
-          throw new AdapterError('InternalError', `unexpected content type ${contentType} for model ${modelType.name}`, NoTarget);
+          throw new AdapterError('InternalError', `unexpected content type ${contentType} for model ${modelType.name}`);
         }
         respEnv.result = new go.ModelResult(modelType, contentType);
       }
@@ -1079,7 +1080,7 @@ export class clientAdapter {
       if (go.isMonomorphicResultType(resultType)) {
         respEnv.result = new go.MonomorphicResult(this.recursiveTypeName(sdkResponseType, false), contentType, resultType, isTypePassedByValue(sdkResponseType));
       } else {
-        throw new AdapterError('InternalError', `invalid monomorphic result type ${resultType.kind}`, sdkResponseType.__raw?.node ?? NoTarget);
+        throw new AdapterError('InternalError', `invalid monomorphic result type ${resultType.kind}`, sdkResponseType.__raw?.node);
       }
     }
 
@@ -1175,7 +1176,7 @@ export class clientAdapter {
     if (go.isHeaderScalarType(type)) {
       return type;
     }
-    throw new AdapterError('InternalError', `unexpected header scalar parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
+    throw new AdapterError('InternalError', `unexpected header scalar parameter type ${sdkType.kind}`, sdkType.__raw?.node);
   }
 
   private adaptPathScalarParameterType(sdkType: tcgc.SdkType): go.PathScalarParameterType {
@@ -1183,7 +1184,7 @@ export class clientAdapter {
     if (go.isPathScalarParameterType(type)) {
       return type;
     }
-    throw new AdapterError('InternalError', `unexpected path scalar parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
+    throw new AdapterError('InternalError', `unexpected path scalar parameter type ${sdkType.kind}`, sdkType.__raw?.node);
   }
 
   private adaptQueryScalarParameterType(sdkType: tcgc.SdkType): go.QueryScalarParameterType {
@@ -1191,7 +1192,7 @@ export class clientAdapter {
     if (go.isQueryScalarParameterType(type)) {
       return type;
     }
-    throw new AdapterError('InternalError', `unexpected query scalar parameter type ${sdkType.kind}`, sdkType.__raw?.node ?? NoTarget);
+    throw new AdapterError('InternalError', `unexpected query scalar parameter type ${sdkType.kind}`, sdkType.__raw?.node);
   }
 
   private adaptParameterStyle(param: ParameterStyleInfo): go.ParameterStyle {
@@ -1210,7 +1211,7 @@ export class clientAdapter {
       } else {
         const adaptedWireType = this.ta.getWireType(param.type, false, false);
         if (!go.isLiteralValueType(adaptedWireType)) {
-          throw new AdapterError('InternalError', `unexpected client side default type ${go.getTypeDeclaration(adaptedWireType)} for parameter ${param.name}`, param.__raw?.node ?? NoTarget);
+          throw new AdapterError('InternalError', `unexpected client side default type ${go.getTypeDeclaration(adaptedWireType)} for parameter ${param.name}`, param.__raw?.node);
         }
         adaptedType = adaptedWireType;
       }
@@ -1221,7 +1222,7 @@ export class clientAdapter {
             return new go.ClientSideDefault(new go.Literal(adaptedType, constValue));
           }
         }
-        throw new AdapterError('InternalError', `didn't find clientDefaultValue constant with value ${<string>param.clientDefaultValue} for parameter`, param.__raw?.node ?? NoTarget);
+        throw new AdapterError('InternalError', `didn't find clientDefaultValue constant with value ${<string>param.clientDefaultValue} for parameter`, param.__raw?.node);
       }
       // non-constant clientDefaultValue
       return new go.ClientSideDefault(new go.Literal(adaptedType, param.clientDefaultValue));
@@ -1244,7 +1245,7 @@ export class clientAdapter {
             }
             const goParams = paramMapping.get(param.parameter);
             if (!goParams) {
-              throw new AdapterError('InternalError', `can not find go param for example param ${param.parameter.name}`, NoTarget);
+              throw new AdapterError('InternalError', `can not find go param for example param ${param.parameter.name}`);
             }
             if (goParams.length > 1) {
               // spread case
@@ -1273,7 +1274,7 @@ export class clientAdapter {
             for (const header of response.headers) {
               const goHeader = method.returns.headers.find(h => h.headerName === header.header.serializedName);
               if (!goHeader) {
-                throw new AdapterError('InternalError', `can not find go header for example header ${header.header.serializedName}`, NoTarget);
+                throw new AdapterError('InternalError', `can not find go header for example header ${header.header.serializedName}`);
               }
               goExample.responseEnvelope.headers.push(new go.ResponseHeaderExample(goHeader, this.adaptExampleType(header.value, goHeader.type)));
             }
@@ -1304,7 +1305,7 @@ export class clientAdapter {
         } catch (error) {
           // Only added try-catch block to output error message and example file path
           if (error instanceof AdapterError) {
-            throw new AdapterError(error.code, `${error.message} (example file: '${example.filePath}')`, error.target);
+            throw new AdapterError(error.code, `${error.message} (example file: '${example.filePath}')`);
           }
           throw error;
         }
@@ -1368,7 +1369,7 @@ export class clientAdapter {
         }
         break;
       case 'union':
-        throw new AdapterError('UnsupportedTsp', 'unsupported example type kind union', NoTarget);
+        throw new AdapterError('UnsupportedTsp', 'unsupported example type kind union');
       case 'model':
         if (goType.kind === 'interface' || goType.kind === 'model' || goType.kind === 'polymorphicModel') {
           let concreteType: go.Model | go.PolymorphicModel | undefined;
@@ -1383,13 +1384,13 @@ export class clientAdapter {
             concreteType = goType;
           }
           if (concreteType === undefined) {
-            throw new AdapterError('InternalError', `can not find concrete type for example type ${exampleType.type.name}`, NoTarget);
+            throw new AdapterError('InternalError', `can not find concrete type for example type ${exampleType.type.name}`);
           }
           const ret = new go.StructExample(concreteType);
           for (const [k, v] of Object.entries(exampleType.value)) {
             const field = concreteType.fields.find(f => f.serializedName === k);
             if (!field) {
-              throw new AdapterError('InternalError', `field with serializedName '${k}' not found in model '${concreteType.name}'.`, NoTarget);
+              throw new AdapterError('InternalError', `field with serializedName '${k}' not found in model '${concreteType.name}'.`);
             }
             ret.value[field.name] = this.adaptExampleType(v, field.type);
           }
@@ -1398,12 +1399,12 @@ export class clientAdapter {
             for (const [k, v] of Object.entries(exampleType.additionalPropertiesValue)) {
               const filed = concreteType.fields.find(f => f.annotations.isAdditionalProperties);
               if (!filed) {
-                throw new AdapterError('InternalError', `additional properties field not found in model '${concreteType.name}'.`,NoTarget);
+                throw new AdapterError('InternalError', `additional properties field not found in model '${concreteType.name}'.`);
               }
               if (filed.type.kind === 'map') {
                 ret.additionalProperties[k] = this.adaptExampleType(v, filed.type.valueType);
               } else {
-                throw new AdapterError('InternalError', `additional properties field type should be map type, but got '${filed.type.kind}' in model '${concreteType.name}'`, NoTarget);
+                throw new AdapterError('InternalError', `additional properties field type should be map type, but got '${filed.type.kind}' in model '${concreteType.name}'`);
               }
             }
           }
@@ -1411,7 +1412,7 @@ export class clientAdapter {
         }
         break;
     }
-    throw new AdapterError('InternalError', `can not map go type into example type ${exampleType.kind}`, NoTarget);
+    throw new AdapterError('InternalError', `can not map go type into example type ${exampleType.kind}`);
   }
 }
 
