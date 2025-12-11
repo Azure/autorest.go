@@ -25,7 +25,7 @@ export class Adapter {
    * Creates an Adapter for the specified EmitContext.
    * 
    * @param context the compiler context from which to create the Adapter
-   * @returns 
+   * @returns a new Adapter for the provided context
    */
   static async create(context: tsp.EmitContext<GoEmitterOptions>): Promise<Adapter> {
     naming.CommonAcronyms.push('^iso\\d+$');
@@ -87,7 +87,7 @@ export class Adapter {
     }
 
     const info = new go.Info(this.ctx.sdkPackage.crossLanguagePackageId);
-    const codeModelType: go.CodeModelType = this.ctx.arm == true ? 'azure-arm' : 'data-plane';
+    const codeModelType: go.CodeModelType = this.ctx.arm === true ? 'azure-arm' : 'data-plane';
     this.codeModel = new go.CodeModel(info, codeModelType, goOptions, root);
 
     // get the emitter version from our package.json
