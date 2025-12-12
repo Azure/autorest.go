@@ -308,13 +308,13 @@ function generateToMultipartForm(modelDef: ModelDef) {
 }
 
 /**
- * generates the MarshalJSON method for the provided type
+ * generates the MarshalJSON method for the provided type.
+ * the method impl is added to modelDef.SerDe.methods.
  * 
  * @param modelDef the type for which to emit the method
  * @param imports the import manager currently in scope
- * @returns the text for the MarshalJSON method
  */
-function generateJSONMarshaller(modelDef: ModelDef, imports: ImportManager) {
+function generateJSONMarshaller(modelDef: ModelDef, imports: ImportManager): void {
   if (modelDef.Model.kind === 'model' && modelDef.Model.fields.length === 0) {
     // non-discriminated types without content don't need a custom marshaller.
     // there is a case in network where child is allOf base and child has no properties.
@@ -434,12 +434,12 @@ function generateJSONMarshallerBody(modelDef: ModelDef, receiver: string, import
 }
 
 /**
- * generates the UnmarshalJSON method for the provided type
+ * generates the UnmarshalJSON method for the provided type.
+ * the method impl is added to modelDef.SerDe.methods.
  * 
  * @param modelDef the type for which to emit the method
  * @param imports the import manager currently in scope
  * @param options the Go emitter options
- * @returns the text for the UnmarshalJSON method
  */
 function generateJSONUnmarshaller(modelDef: ModelDef, imports: ImportManager, options: go.Options): void {
   // there's a corner-case where a derived type might not add any new fields (Cookiecuttershark).
@@ -819,7 +819,7 @@ function generateXMLUnmarshaller(modelDef: ModelDef, imports: ImportManager): vo
  * 
  * @param modelType the type for which to create the alias
  * @param receiver the name of the receiver for the type's serde method
- * @param forMarshal when true, indicates type is to be used in a marshaler (else an unmarshaler)
+ * @param forMarshal when true, indicates type is to be used in a marshaller (else an unmarshaller)
  * @returns the text for an initialized type alias
  */
 function generateAliasType(modelType: go.Model | go.PolymorphicModel, receiver: string, forMarshal: boolean): string {
