@@ -1272,6 +1272,10 @@ export class ClientAdapter {
           if (response) {
             goExample.responseEnvelope = new go.ResponseEnvelopeExample(method.returns);
             for (const header of response.headers) {
+              // filter out LRO polling headers as they aren't useful on the response envelope
+              if (go.isLROMethod(method) && header.header.serializedName.match(/Azure-AsyncOperation|Location|Operation-Location|Retry-After/i)) {
+                continue;
+              }
               const goHeader = method.returns.headers.find(h => h.headerName === header.header.serializedName);
               if (!goHeader) {
                 throw new AdapterError('InternalError', `can not find go header for example header ${header.header.serializedName}`);
