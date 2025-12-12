@@ -164,7 +164,7 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
             exampleText += `\t\tlog.Fatalf("failed to finish the request: %v", err)\n`;
             exampleText += `\t}\n`;
 
-            exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} poller.PollUntilDone(ctx, nil)\n`
+            exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} poller.PollUntilDone(ctx, nil)\n`;
             exampleText += `\tif err != nil {\n`;
             exampleText += `\t\tlog.Fatalf("failed to pull the result: %v", err)\n`;
             exampleText += `\t}\n`;
@@ -248,7 +248,7 @@ function getExampleValue(src: go.PackageContent, example: go.ExampleType, indent
       } else if (example.type.kind === 'time') {
         exampleText = getTimeValue(example.type, example.value, imports);
       } else if (example.type.kind === 'encodedBytes') {
-        exampleText = `[]byte("${escapeString(example.value)}")`
+        exampleText = `[]byte("${escapeString(example.value)}")`;
       } else if (example.type.kind === 'literal' && example.type.type.kind === 'constant') {
         exampleText = getConstantValue(src, example.type.type, example.type.literal.value);
       } else if (example.type.kind === 'etag') {
