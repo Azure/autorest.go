@@ -13,14 +13,8 @@ namespace Microsoft.Web;
 /**
  */
 #suppress "@azure-tools/typespec-azure-core/casing-style" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
-model StaticSiteARMResource
-  is Azure.ResourceManager.TrackedResource<StaticSite> {
-  ...ResourceNameParameter<
-    Resource = StaticSiteARMResource,
-    KeyName = "name",
-    SegmentName = "staticSites",
-    NamePattern = ""
-  >;
+model StaticSiteARMResource is Azure.ResourceManager.TrackedResource<StaticSite> {
+  ...ResourceNameParameter<Resource = StaticSiteARMResource, KeyName = "name", SegmentName = "staticSites", NamePattern = "">;
 
   /**
    * Kind of resource.
@@ -54,9 +48,7 @@ alias StaticSiteUserOps = Azure.ResourceManager.Legacy.RoutedOperations<
     @key
     name: string;
   },
-  ResourceRoute = #{
-    route: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/staticSites",
-  }
+  ResourceRoute = #{ route: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/staticSites" }
 >;
 
 #suppress "@azure-tools/typespec-azure-core/casing-style" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
@@ -66,10 +58,7 @@ interface StaticSiteARMResources {
    * Description for Gets the details of a static site.
    */
   @summary("Gets the details of a static site.")
-  getStaticSite is ArmResourceRead<
-    StaticSiteARMResource,
-    Error = DefaultErrorResponse
-  >;
+  getStaticSite is ArmResourceRead<StaticSiteARMResource, Error = DefaultErrorResponse>;
 
   /**
    * Description for Creates a new static site in an existing resource group, or updates an existing static site.
@@ -108,31 +97,19 @@ interface StaticSiteARMResources {
    */
   #suppress "@azure-tools/typespec-azure-resource-manager/arm-delete-operation-response-codes" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
   @summary("Deletes a static site.")
-  deleteStaticSite is ArmResourceDeleteWithoutOkAsync<
-    StaticSiteARMResource,
-    Response = ArmDeletedResponse | ArmDeleteAcceptedLroResponse,
-    Error = DefaultErrorResponse
-  >;
+  deleteStaticSite is ArmResourceDeleteWithoutOkAsync<StaticSiteARMResource, Response = ArmDeletedResponse | ArmDeleteAcceptedLroResponse, Error = DefaultErrorResponse>;
 
   /**
    * Description for Gets all static sites in the specified resource group.
    */
   @summary("Gets all static sites in the specified resource group.")
-  getStaticSitesByResourceGroup is ArmResourceListByParent<
-    StaticSiteARMResource,
-    Response = ArmResponse<StaticSiteCollection>,
-    Error = DefaultErrorResponse
-  >;
+  getStaticSitesByResourceGroup is ArmResourceListByParent<StaticSiteARMResource, Response = ArmResponse<StaticSiteCollection>, Error = DefaultErrorResponse>;
 
   /**
    * Description for Get all Static Sites for a subscription.
    */
   @summary("Get all Static Sites for a subscription.")
-  list is ArmListBySubscription<
-    StaticSiteARMResource,
-    Response = ArmResponse<StaticSiteCollection>,
-    Error = DefaultErrorResponse
-  >;
+  list is ArmListBySubscription<StaticSiteARMResource, Response = ArmResponse<StaticSiteCollection>, Error = DefaultErrorResponse>;
 
   /**
    * Description for Gets the list of users of a static site.
@@ -208,12 +185,7 @@ interface StaticSiteARMResources {
   @summary("Creates or updates the app settings of a static site.")
   @put
   @action("config/appsettings")
-  createOrUpdateStaticSiteAppSettings is ArmResourceActionSync<
-    StaticSiteARMResource,
-    StringDictionary,
-    ArmResponse<StringDictionary>,
-    Error = DefaultErrorResponse
-  >;
+  createOrUpdateStaticSiteAppSettings is ArmResourceActionSync<StaticSiteARMResource, StringDictionary, ArmResponse<StringDictionary>, Error = DefaultErrorResponse>;
 
   /**
    * Description for Creates or updates the function app settings of a static site.
@@ -222,12 +194,7 @@ interface StaticSiteARMResources {
   @summary("Creates or updates the function app settings of a static site.")
   @put
   @action("config/functionappsettings")
-  createOrUpdateStaticSiteFunctionAppSettings is ArmResourceActionSync<
-    StaticSiteARMResource,
-    StringDictionary,
-    ArmResponse<StringDictionary>,
-    Error = DefaultErrorResponse
-  >;
+  createOrUpdateStaticSiteFunctionAppSettings is ArmResourceActionSync<StaticSiteARMResource, StringDictionary, ArmResponse<StringDictionary>, Error = DefaultErrorResponse>;
 
   /**
    * Description for Creates an invitation link for a user with the role
@@ -246,7 +213,7 @@ interface StaticSiteARMResources {
    */
   @summary("Detaches a static site.")
   @action("detach")
-  detachStaticSite is ArmResourceActionAsync<
+  detachStaticSite is ArmResourceActionSync<
     StaticSiteARMResource,
     void,
     {
@@ -262,60 +229,35 @@ interface StaticSiteARMResources {
   @get
   @action("functions")
   @list
-  listStaticSiteFunctions is ArmResourceActionSync<
-    StaticSiteARMResource,
-    void,
-    ArmResponse<StaticSiteFunctionOverviewCollection>,
-    Error = DefaultErrorResponse
-  >;
+  listStaticSiteFunctions is ArmResourceActionSync<StaticSiteARMResource, void, ArmResponse<StaticSiteFunctionOverviewCollection>, Error = DefaultErrorResponse>;
 
   /**
    * Description for Gets the application settings of a static site.
    */
   @summary("Gets the application settings of a static site.")
   @action("listAppSettings")
-  listStaticSiteAppSettings is ArmResourceActionSync<
-    StaticSiteARMResource,
-    void,
-    ArmResponse<StringDictionary>,
-    Error = DefaultErrorResponse
-  >;
+  listStaticSiteAppSettings is ArmResourceActionSync<StaticSiteARMResource, void, ArmResponse<StringDictionary>, Error = DefaultErrorResponse>;
 
   /**
    * Description for Lists the roles configured for the static site.
    */
   @summary("Lists the roles configured for the static site.")
   @action("listConfiguredRoles")
-  listStaticSiteConfiguredRoles is ArmResourceActionSync<
-    StaticSiteARMResource,
-    void,
-    ArmResponse<StringList>,
-    Error = DefaultErrorResponse
-  >;
+  listStaticSiteConfiguredRoles is ArmResourceActionSync<StaticSiteARMResource, void, ArmResponse<StringList>, Error = DefaultErrorResponse>;
 
   /**
    * Description for Gets the application settings of a static site.
    */
   @summary("Gets the application settings of a static site.")
   @action("listFunctionAppSettings")
-  listStaticSiteFunctionAppSettings is ArmResourceActionSync<
-    StaticSiteARMResource,
-    void,
-    ArmResponse<StringDictionary>,
-    Error = DefaultErrorResponse
-  >;
+  listStaticSiteFunctionAppSettings is ArmResourceActionSync<StaticSiteARMResource, void, ArmResponse<StringDictionary>, Error = DefaultErrorResponse>;
 
   /**
    * Description for Lists the secrets for an existing static site.
    */
   @summary("Lists the secrets for an existing static site.")
   @action("listSecrets")
-  listStaticSiteSecrets is ArmResourceActionSync<
-    StaticSiteARMResource,
-    void,
-    ArmResponse<StringDictionary>,
-    Error = DefaultErrorResponse
-  >;
+  listStaticSiteSecrets is ArmResourceActionSync<StaticSiteARMResource, void, ArmResponse<StringDictionary>, Error = DefaultErrorResponse>;
 
   /**
    * Description for Gets the private link resources
@@ -323,12 +265,7 @@ interface StaticSiteARMResources {
   @summary("Gets the private link resources")
   @get
   @action("privateLinkResources")
-  getPrivateLinkResources is ArmResourceActionSync<
-    StaticSiteARMResource,
-    void,
-    ArmResponse<PrivateLinkResourcesWrapper>,
-    Error = DefaultErrorResponse
-  >;
+  getPrivateLinkResources is ArmResourceActionSync<StaticSiteARMResource, void, ArmResponse<PrivateLinkResourcesWrapper>, Error = DefaultErrorResponse>;
 
   /**
    * Description for Resets the api key for an existing static site.
@@ -350,12 +287,7 @@ interface StaticSiteARMResources {
   @summary("Returns details of database connections for a static site")
   @action("showDatabaseConnections")
   @list
-  getDatabaseConnectionsWithDetails is ArmResourceActionSync<
-    StaticSiteARMResource,
-    void,
-    ArmResponse<DatabaseConnectionCollection>,
-    Error = DefaultErrorResponse
-  >;
+  getDatabaseConnectionsWithDetails is ArmResourceActionSync<StaticSiteARMResource, void, ArmResponse<DatabaseConnectionCollection>, Error = DefaultErrorResponse>;
 
   /**
    * Description for Deploys zipped content to a static site.
@@ -369,32 +301,17 @@ interface StaticSiteARMResources {
       @body body: void;
     },
     Error = DefaultErrorResponse,
-    LroHeaders = Azure.Core.Foundations.RetryAfterHeader &
-      ArmLroLocationHeader<FinalResult = void>
+    LroHeaders = Azure.Core.Foundations.RetryAfterHeader & ArmLroLocationHeader<FinalResult = void>
   >;
 }
 
 @@doc(StaticSiteARMResource.name, "Name of the static site.");
 @@doc(StaticSiteARMResource.properties, "Core resource properties");
-@@doc(StaticSiteARMResources.createOrUpdateStaticSite::parameters.resource,
-  "A JSON representation of the staticsite properties. See example."
-);
-@@doc(StaticSiteARMResources.updateStaticSite::parameters.properties,
-  "A JSON representation of the staticsite properties. See example."
-);
-@@doc(StaticSiteARMResources.updateStaticSiteUser::parameters.body,
-  "A JSON representation of the StaticSiteUser properties. See example."
-);
-@@doc(StaticSiteARMResources.createOrUpdateStaticSiteAppSettings::parameters.body,
-  "The dictionary containing the static site app settings to update."
-);
-@@doc(StaticSiteARMResources.createOrUpdateStaticSiteFunctionAppSettings::parameters.body,
-  "The dictionary containing the static site function app settings to update."
-);
-@@doc(StaticSiteARMResources.createUserRolesInvitationLink::parameters.body,
-  ""
-);
+@@doc(StaticSiteARMResources.createOrUpdateStaticSite::parameters.resource, "A JSON representation of the staticsite properties. See example.");
+@@doc(StaticSiteARMResources.updateStaticSite::parameters.properties, "A JSON representation of the staticsite properties. See example.");
+@@doc(StaticSiteARMResources.updateStaticSiteUser::parameters.body, "A JSON representation of the StaticSiteUser properties. See example.");
+@@doc(StaticSiteARMResources.createOrUpdateStaticSiteAppSettings::parameters.body, "The dictionary containing the static site app settings to update.");
+@@doc(StaticSiteARMResources.createOrUpdateStaticSiteFunctionAppSettings::parameters.body, "The dictionary containing the static site function app settings to update.");
+@@doc(StaticSiteARMResources.createUserRolesInvitationLink::parameters.body, "");
 @@doc(StaticSiteARMResources.resetStaticSiteApiKey::parameters.body, "");
-@@doc(StaticSiteARMResources.createZipDeploymentForStaticSite::parameters.body,
-  "A JSON representation of the StaticSiteZipDeployment properties. See example."
-);
+@@doc(StaticSiteARMResources.createZipDeploymentForStaticSite::parameters.body, "A JSON representation of the StaticSiteZipDeployment properties. See example.");
