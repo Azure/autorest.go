@@ -150,6 +150,15 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
   };
 }
 
+/**
+ * converts model types to an array of ModelDef types
+ * 
+ * @param modelImports the import manager for the models file
+ * @param serdeImports the import manager for the models_serde file
+ * @param pkg contains the package content
+ * @param options the Go emitter options
+ * @returns an array of ModelDefs
+ */
 function generateModelDefs(modelImports: ImportManager, serdeImports: ImportManager, pkg: go.PackageContent, options: go.Options): Array<ModelDef> {
   const models = pkg.models;
   const modelDefs = new Array<ModelDef>();
@@ -185,8 +194,8 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
     }
 
     const serDeFormat = helpers.getSerDeFormat(model, pkg);
-    const modelDef = new ModelDef(model.name, serDeFormat, model.fields, model.docs);
-    for (const field of values(modelDef.Fields)) {
+    const modelDef = new ModelDef(model, serDeFormat);
+    for (const field of modelDef.Model.fields) {
       modelImports.addImportForType(field.type);
     }
 
@@ -204,13 +213,13 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       }
       // due to differences in XML marshallers/unmarshallers, we use different codegen than for JSON
       if (needsDateTimeMarshalling || model.xml?.wrapper || needsXMLArrayMarshalling(model) || byteArrayFormat) {
-        generateXMLMarshaller(model, modelDef, serdeImports);
+        generateXMLMarshaller(modelDef, serdeImports);
         if (needsDateTimeMarshalling || byteArrayFormat) {
-          generateXMLUnmarshaller(model, modelDef, serdeImports);
+          generateXMLUnmarshaller(modelDef, serdeImports);
         }
       } else if (needsXMLDictionaryHelper(model)) {
-        generateXMLMarshaller(model, modelDef, serdeImports);
-        generateXMLUnmarshaller(model, modelDef, serdeImports);
+        generateXMLMarshaller(modelDef, serdeImports);
+        generateXMLUnmarshaller(modelDef, serdeImports);
       }
       modelDefs.push(modelDef);
       continue;
@@ -225,8 +234,8 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       generateToMultipartForm(modelDef);
       modelDef.SerDe.needsJSONPopulateMultipart = true;
     } else if (!model.annotations.omitSerDeMethods) {
-      generateJSONMarshaller(model, modelDef, serdeImports);
-      generateJSONUnmarshaller(model, modelDef, serdeImports, options);
+      generateJSONMarshaller(modelDef, serdeImports);
+      generateJSONUnmarshaller(modelDef, serdeImports, options);
     }
     modelDefs.push(modelDef);
   }
@@ -257,8 +266,8 @@ function generateDiscriminatorMarkerMethod(type: go.Interface, modelDef: ModelDe
   const typeName = type.rootType.name;
   const receiver = modelDef.receiverName();
   const interfaceMethod = `Get${typeName}`;
-  let method = `func (${receiver} *${modelDef.Name}) ${interfaceMethod}() *${typeName} {`;
-  if (type.rootType.name === modelDef.Name) {
+  let method = `func (${receiver} *${modelDef.Model.name}) ${interfaceMethod}() *${typeName} {`;
+  if (type.rootType.name === modelDef.Model.name) {
     // the marker method is on the discriminator itself, so just return the receiver
     method += ` return ${receiver} }\n\n`;
   } else {
@@ -270,14 +279,14 @@ function generateDiscriminatorMarkerMethod(type: go.Interface, modelDef: ModelDe
     }
     method += '\t}\n}\n\n';
   }
-  modelDef.Methods.push({ name: interfaceMethod, desc: `${interfaceMethod} implements the ${type.name} interface for type ${modelDef.Name}.`, text: method });
+  modelDef.Methods.push({ name: interfaceMethod, desc: `${interfaceMethod} implements the ${type.name} interface for type ${modelDef.Model.name}.`, text: method });
 }
 
 function generateToMultipartForm(modelDef: ModelDef) {
   const receiver = modelDef.receiverName();
-  let method = `func (${receiver} ${modelDef.Name}) toMultipartFormData() (map[string]any, error) {\n`;
+  let method = `func (${receiver} ${modelDef.Model.name}) toMultipartFormData() (map[string]any, error) {\n`;
   method += '\tobjectMap := make(map[string]any)\n';
-  for (const field of modelDef.Fields) {
+  for (const field of modelDef.Model.fields) {
     const fieldType = helpers.recursiveUnwrapMapSlice(field.type);
     let setField: string;
     let star = '';
@@ -295,30 +304,45 @@ function generateToMultipartForm(modelDef: ModelDef) {
     method += setField;
   }
   method += '\treturn objectMap, nil\n}\n\n';
-  modelDef.SerDe.methods.push({ name: 'toMultipartFormData', desc: `toMultipartFormData converts ${modelDef.Name} to multipart/form data.`, text: method });
+  modelDef.SerDe.methods.push({ name: 'toMultipartFormData', desc: `toMultipartFormData converts ${modelDef.Model.name} to multipart/form data.`, text: method });
 }
 
-function generateJSONMarshaller(modelType: go.Model | go.PolymorphicModel, modelDef: ModelDef, imports: ImportManager) {
-  if (modelType.kind === 'model' && modelType.fields.length === 0) {
+/**
+ * generates the MarshalJSON method for the provided type
+ * 
+ * @param modelDef the type for which to emit the method
+ * @param imports the import manager currently in scope
+ * @returns the text for the MarshalJSON method
+ */
+function generateJSONMarshaller(modelDef: ModelDef, imports: ImportManager) {
+  if (modelDef.Model.kind === 'model' && modelDef.Model.fields.length === 0) {
     // non-discriminated types without content don't need a custom marshaller.
     // there is a case in network where child is allOf base and child has no properties.
     return;
   }
   imports.add('encoding/json');
-  const typeName = modelDef.Name;
+  const typeName = modelDef.Model.name;
   const receiver = modelDef.receiverName();
   let marshaller = `func (${receiver} ${typeName}) MarshalJSON() ([]byte, error) {\n`;
   marshaller += '\tobjectMap := make(map[string]any)\n';
-  marshaller += generateJSONMarshallerBody(modelType, modelDef, receiver, imports);
+  marshaller += generateJSONMarshallerBody(modelDef, receiver, imports);
   marshaller += '\treturn json.Marshal(objectMap)\n';
   marshaller += '}\n\n';
   modelDef.SerDe.methods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
 }
 
-function generateJSONMarshallerBody(modelType: go.Model | go.PolymorphicModel, modelDef: ModelDef, receiver: string, imports: ImportManager): string {
+/**
+ * generates the contents of MarshalJSON that encode the target type
+ * 
+ * @param modelDef the type being encoded
+ * @param receiver the name of the receiver in the MarshalJSON method
+ * @param imports the import manager currently in scope
+ * @returns the text for encoding the target type
+ */
+function generateJSONMarshallerBody(modelDef: ModelDef, receiver: string, imports: ImportManager): string {
   let marshaller = '';
   let addlProps: go.Map | undefined;
-  for (const field of values(modelType.fields)) {
+  for (const field of modelDef.Model.fields) {
     if (field.type.kind === 'map' && field.annotations.isAdditionalProperties) {
       addlProps = field.type;
       continue;
@@ -409,27 +433,44 @@ function generateJSONMarshallerBody(modelType: go.Model | go.PolymorphicModel, m
   return marshaller;
 }
 
-function generateJSONUnmarshaller(modelType: go.Model | go.PolymorphicModel, modelDef: ModelDef, imports: ImportManager, options: go.Options) {
+/**
+ * generates the UnmarshalJSON method for the provided type
+ * 
+ * @param modelDef the type for which to emit the method
+ * @param imports the import manager currently in scope
+ * @param options the Go emitter options
+ * @returns the text for the UnmarshalJSON method
+ */
+function generateJSONUnmarshaller(modelDef: ModelDef, imports: ImportManager, options: go.Options): void {
   // there's a corner-case where a derived type might not add any new fields (Cookiecuttershark).
   // in this case skip adding the unmarshaller as it's not necessary and doesn't compile.
-  if (modelDef.Fields.length === 0) {
+  if (modelDef.Model.fields.length === 0) {
     return;
   }
   imports.add('encoding/json');
   imports.add('fmt');
-  const typeName = modelDef.Name;
+  const typeName = modelDef.Model.name;
   const receiver = modelDef.receiverName();
   let unmarshaller = `func (${receiver} *${typeName}) UnmarshalJSON(data []byte) error {\n`;
   unmarshaller += '\tvar rawMsg map[string]json.RawMessage\n';
   unmarshaller += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';
   unmarshaller += `\t\treturn fmt.Errorf("unmarshalling type %T: %v", ${receiver}, err)\n`;
   unmarshaller += '\t}\n';
-  unmarshaller += generateJSONUnmarshallerBody(modelType, modelDef, receiver, imports, options);
+  unmarshaller += generateJSONUnmarshallerBody(modelDef, receiver, imports, options);
   unmarshaller += '}\n\n';
   modelDef.SerDe.methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });
 }
 
-function generateJSONUnmarshallerBody(modelType: go.Model | go.PolymorphicModel, modelDef: ModelDef, receiver: string, imports: ImportManager, options: go.Options): string {
+/**
+ * generates the contents of UnmarshalJSON that decode the target type
+ * 
+ * @param modelDef the type being decoded
+ * @param receiver the receiver for the UnmarshalJSON method
+ * @param imports the import manager currently in scope
+ * @param options the Go emitter options
+ * @returns the text for decoding the target type
+ */
+function generateJSONUnmarshallerBody(modelDef: ModelDef, receiver: string, imports: ImportManager, options: go.Options): string {
   // we almost always need to have an error check when unmarshaling the values.
   // however, fields that are raw JSON don't require any unmarshaling. so, if all
   // of the fields in a type are raw JSON, then the error check isn't necessary
@@ -465,7 +506,7 @@ function generateJSONUnmarshallerBody(modelType: go.Model | go.PolymorphicModel,
     let unmarshalBody = '';
     let addlProps: go.Map | undefined;
     unmarshalBody += '\t\tswitch key {\n';
-    for (const field of values(modelType.fields)) {
+    for (const field of modelDef.Model.fields) {
       if (field.type.kind === 'map' && field.annotations.isAdditionalProperties) {
         addlProps = field.type;
         continue;
@@ -641,7 +682,17 @@ function recursiveGetDiscriminatorTypeName(item: go.WireType, raw: boolean): str
   return go.getTypeDeclaration(item);
 }
 
-// recursively constructs the text to populate a nested discriminator
+/**
+ * recursively constructs the text to populate a nested discriminator
+ * 
+ * @param item the type for which to create the population
+ * @param receiver the name of the receiver for the method to contain the expression
+ * @param rawSrc contains the raw unmarshaled JSON source
+ * @param dest the variable that will contain the result of the expression
+ * @param indent the current level of indentation (increases with each recursive call)
+ * @param nesting the current level of nesting (increments with each recursive call)
+ * @returns the text populating the discriminator
+ */
 function recursivePopulateDiscriminator(item: go.WireType, receiver: string, rawSrc: string, dest: string, indent: string, nesting: number): string {
   let text = '';
   let interfaceName = '';
@@ -691,16 +742,23 @@ function recursivePopulateDiscriminator(item: go.WireType, receiver: string, raw
   return text;
 }
 
-function generateXMLMarshaller(modelType: go.Model, modelDef: ModelDef, imports: ImportManager) {
+/**
+ * generates an implementation of MarshalXML for the provided type.
+ * the method impl is added to modelDef.SerDe.methods.
+ * 
+ * @param modelDef the type for which to implement MarshalXML
+ * @param imports the import manager currently in scope
+ */
+function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager): void {
   // only needed for types with time.Time, maps, or where the XML name doesn't match the type name
   const receiver = modelDef.receiverName();
-  const desc = `MarshalXML implements the xml.Marshaller interface for type ${modelDef.Name}.`;
-  let text = `func (${receiver} ${modelDef.Name}) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {\n`;
-  if (modelType.xml?.wrapper) {
-    text += `\tstart.Name.Local = "${modelType.xml.wrapper}"\n`;
+  const desc = `MarshalXML implements the xml.Marshaller interface for type ${modelDef.Model.name}.`;
+  let text = `func (${receiver} ${modelDef.Model.name}) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {\n`;
+  if (modelDef.Model.xml?.wrapper) {
+    text += `\tstart.Name.Local = "${modelDef.Model.xml.wrapper}"\n`;
   }
-  text += generateAliasType(modelType, receiver, true);
-  for (const field of values(modelDef.Fields)) {
+  text += generateAliasType(modelDef.Model, receiver, true);
+  for (const field of modelDef.Model.fields) {
     if (field.type.kind === 'slice') {
       text += `\tif ${receiver}.${field.name} != nil {\n`;
       text += `\t\taux.${field.name} = &${receiver}.${field.name}\n`;
@@ -720,16 +778,23 @@ function generateXMLMarshaller(modelType: go.Model, modelDef: ModelDef, imports:
   modelDef.SerDe.methods.push({ name: 'MarshalXML', desc: desc, text: text });
 }
 
-function generateXMLUnmarshaller(modelType: go.Model, modelDef: ModelDef, imports: ImportManager) {
+/**
+ * generates an implementation of UnmarshalXML for the provided type.
+ * the method impl is added to modelDef.SerDe.methods.
+ * 
+ * @param modelDef the type for which to implement UnmarshalXML
+ * @param imports the import manager currently in scope
+ */
+function generateXMLUnmarshaller(modelDef: ModelDef, imports: ImportManager): void {
   // non-polymorphic case, must be something with time.Time
   const receiver = modelDef.receiverName();
-  const desc = `UnmarshalXML implements the xml.Unmarshaller interface for type ${modelDef.Name}.`;
-  let text = `func (${receiver} *${modelDef.Name}) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {\n`;
-  text += generateAliasType(modelType, receiver, false);
+  const desc = `UnmarshalXML implements the xml.Unmarshaller interface for type ${modelDef.Model.name}.`;
+  let text = `func (${receiver} *${modelDef.Model.name}) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {\n`;
+  text += generateAliasType(modelDef.Model, receiver, false);
   text += '\tif err := dec.DecodeElement(aux, &start); err != nil {\n';
   text += '\t\treturn err\n';
   text += '\t}\n';
-  for (const field of values(modelDef.Fields)) {
+  for (const field of modelDef.Model.fields) {
     if (field.type.kind === 'time') {
       text += `\tif aux.${field.name} != nil && !(*time.Time)(aux.${field.name}).IsZero() {\n`;
       text += `\t\t${receiver}.${field.name} = (*time.Time)(aux.${field.name})\n\t}\n`;
@@ -749,13 +814,20 @@ function generateXMLUnmarshaller(modelType: go.Model, modelDef: ModelDef, import
   modelDef.SerDe.methods.push({ name: 'UnmarshalXML', desc: desc, text: text });
 }
 
-// generates an alias type used by custom XML marshaller/unmarshaller
-function generateAliasType(modelType: go.Model, receiver: string, forMarshal: boolean): string {
+/**
+ * generates an alias type used by custom XML marshaller/unmarshaller
+ * 
+ * @param modelType the type for which to create the alias
+ * @param receiver the name of the receiver for the type's serde method
+ * @param forMarshal when true, indicates type is to be used in a marshaler (else an unmarshaler)
+ * @returns the text for an initialized type alias
+ */
+function generateAliasType(modelType: go.Model | go.PolymorphicModel, receiver: string, forMarshal: boolean): string {
   let text = `\ttype alias ${modelType.name}\n`;
   text += '\taux := &struct {\n';
   text += '\t\t*alias\n';
   for (const field of values(modelType.fields)) {
-    const sn = getXMLSerialization(field, false);
+    const sn = getXMLSerialization(field);
     if (field.type.kind === 'time') {
       text += `\t\t${field.name} *${field.type.format} \`xml:"${sn}"\`\n`;
     } else if (field.annotations.isAdditionalProperties || field.type.kind === 'map') {
@@ -785,13 +857,14 @@ function generateAliasType(modelType: go.Model, receiver: string, forMarshal: bo
   return text;
 }
 
-// represents a method on a model
+/** represents a method on a model */
 interface ModelMethod {
   name: string;
   desc: string;
   text: string;
 }
 
+/** used to track which serde helpers and methods are required for a struct */
 class SerDeInfo {
   methods: Array<ModelMethod>;
   needsJSONPopulate: boolean;
@@ -810,30 +883,27 @@ class SerDeInfo {
   }
 }
 
-// represents model definition as a Go struct
+/** represents model definition as a Go struct */
 class ModelDef {
-  readonly Name: string;
+  readonly Model: go.Model | go.PolymorphicModel;
   readonly Format: helpers.SerDeFormat;
-  readonly Docs: go.Docs;
-  readonly Fields: Array<go.ModelField>;
   readonly SerDe: SerDeInfo;
   readonly Methods: Array<ModelMethod>;
 
-  constructor(name: string, format: helpers.SerDeFormat, fields: Array<go.ModelField>, docs: go.Docs) {
-    this.Name = name;
+  constructor(model: go.Model | go.PolymorphicModel, format: helpers.SerDeFormat) {
+    this.Model = model;
     this.Format = format;
-    this.Docs = docs;
-    this.Fields = fields;
     this.SerDe = new SerDeInfo();
     this.Methods = new Array<ModelMethod>();
   }
 
+  /** returns the text for the struct definition */
   text(): string {
-    let text = helpers.formatDocComment(this.Docs);
-    text += `type ${this.Name} struct {\n`;
+    let text = helpers.formatDocComment(this.Model.docs);
+    text += `type ${this.Model.name} struct {\n`;
 
     // group fields by required/optional/read-only in that order
-    this.Fields?.sort((lhs: go.ModelField, rhs: go.ModelField): number => {
+    this.Model.fields.sort((lhs: go.ModelField, rhs: go.ModelField): number => {
       if ((lhs.annotations.required && !rhs.annotations.required) || (!lhs.annotations.readOnly && rhs.annotations.readOnly)) {
         return -1;
       } else if ((rhs.annotations.readOnly && !lhs.annotations.readOnly) || (!rhs.annotations.readOnly && lhs.annotations.readOnly)) {
@@ -846,7 +916,7 @@ class ModelDef {
     // used to track when to add an extra \n between fields that have comments
     let first = true;
 
-    for (const field of values(this.Fields)) {
+    for (const field of this.Model.fields) {
       if (field.docs.summary || field.docs.description) {
         if (!first) {
           // add an extra new-line between fields IFF the field
@@ -864,7 +934,7 @@ class ModelDef {
       if (this.Format === 'JSON') {
         serialization += ',omitempty';
       } else if (this.Format === 'XML') {
-        serialization = getXMLSerialization(field, false);
+        serialization = getXMLSerialization(field);
       }
       let tag = '';
       // only emit tags for XML; JSON uses custom marshallers/unmarshallers
@@ -879,13 +949,20 @@ class ModelDef {
     return text;
   }
 
+  /** returns the name to use for method receivers on this struct */
   receiverName(): string {
-    const typeName = this.Name;
+    const typeName = this.Model.name;
     return typeName[0].toLowerCase();
   }
 }
 
-export function getXMLSerialization(field: go.ModelField, isResponseEnvelope: boolean): string {
+/**
+ * returns the serialization options to use in the XML tag on a model field
+ * 
+ * @param field the field for which to construct the tag's contents
+ * @returns the contents for the XML tag
+ */
+function getXMLSerialization(field: go.ModelField): string {
   let serialization = field.serializedName;
   // default to using the serialization name
   if (field.xml?.name) {
@@ -927,7 +1004,7 @@ export function getXMLSerialization(field: go.ModelField, isResponseEnvelope: bo
 
     // arrays in the response type are handled slightly different as we
     // unmarshal directly into them so no need to add the unwrapping.
-    if (field.xml?.wraps && !isResponseEnvelope) {
+    if (field.xml?.wraps) {
       serialization += `>${field.xml.wraps}`;
     } else {
       serialization = inner;
