@@ -213,14 +213,7 @@ interface StaticSiteARMResources {
    */
   @summary("Detaches a static site.")
   @action("detach")
-  detachStaticSite is ArmResourceActionSync<
-    StaticSiteARMResource,
-    void,
-    {
-      @body body: void;
-    },
-    Error = DefaultErrorResponse
-  >;
+  detachStaticSite is ArmResourceActionSync<StaticSiteARMResource, void, void, Error = DefaultErrorResponse>;
 
   /**
    * Description for Gets the functions of a static site.
