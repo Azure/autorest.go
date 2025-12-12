@@ -35,7 +35,7 @@ export function generateXMLAdditionalPropsHelpers(pkg: go.PackageContent): strin
     return '';
   }
 
-  let text = helpers.contentPreamble(helpers.getPackageName(pkg));
+  let text = helpers.contentPreamble(pkg);
   // add standard imports
   const imports = new ImportManager();
   imports.add('encoding/xml');

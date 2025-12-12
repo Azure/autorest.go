@@ -3,6 +3,7 @@
 *  Licensed under the MIT License. See License.txt in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
+import * as path from 'path';
 import * as client from './client.js';
 import * as result from './result.js';
 import * as type from './type.js';
@@ -28,6 +29,14 @@ export interface ContainingModule {
   package: Package;
 }
 
+/** represents the package used for fakes content */
+export interface FakePackage {
+  kind: 'fake';
+
+  /** the container for this package */
+  parent: PackageContent;
+}
+
 /** represents a Go module */
 export interface Module extends PackageBase {
   kind: 'module';
@@ -50,8 +59,41 @@ export interface Package extends PackageBase {
   parent: ContainingModule | Module | Package;
 }
 
+/** represents the _test package for an existing package */
+export interface TestPackage {
+  kind: 'test';
+
+  /** the package containing the source for the test package */
+  src: PackageContent;
+}
+
 /** provides access to module and package contents */
 export type PackageContent = Module | Package;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// helpers
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * returns the package name for the specified input.
+ * for module github.com/contoso/module, 'module' is returned.
+ * any major version suffix on the module is removed.
+ * 
+ * @param pkg is the package source
+ * @returns the package name for pkg
+ */
+export function getPackageName(pkg: FakePackage | PackageContent | TestPackage): string {
+  switch (pkg.kind) {
+    case 'fake':
+      return pkg.kind;
+    case 'module':
+      return path.basename(pkg.identity.replace(/\/v\d+$/, ''));
+    case 'package':
+      return pkg.name;
+    case 'test':
+      return `${getPackageName(pkg.src)}_test`;
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // base types
@@ -102,6 +144,13 @@ export class ContainingModule implements ContainingModule {
   }
 }
 
+export class FakePackage implements FakePackage {
+  constructor(parent: PackageContent) {
+    this.kind = 'fake';
+    this.parent = parent;
+  }
+}
+
 export class Module extends PackageBase implements Module {
   constructor(identity: string) {
     super();
@@ -116,5 +165,12 @@ export class Package extends PackageBase implements Package {
     this.kind = 'package';
     this.name = name;
     this.parent = parent;
+  }
+}
+
+export class TestPackage implements TestPackage {
+  constructor(src: PackageContent) {
+    this.kind = 'test';
+    this.src = src;
   }
 }

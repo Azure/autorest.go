@@ -32,7 +32,7 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
   // this list of packages to import
   const modelImports = new ImportManager();
   const serdeImports = new ImportManager();
-  let modelText = helpers.contentPreamble(helpers.getPackageName(pkg));
+  let modelText = helpers.contentPreamble(pkg);
 
   // we do model generation first as it can add imports to the imports list
   const modelDefs = generateModelDefs(modelImports, serdeImports, pkg, options);
@@ -140,7 +140,7 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
   }
   let serdeText = '';
   if (serdeTextBody.length > 0) {
-    serdeText = helpers.contentPreamble(helpers.getPackageName(pkg));
+    serdeText = helpers.contentPreamble(pkg);
     serdeText += serdeImports.text();
     serdeText += serdeTextBody;
   }

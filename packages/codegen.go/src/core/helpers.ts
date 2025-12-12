@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as path from 'path';
 import * as go from '../../../codemodel.go/src/index.js';
 import { values } from '@azure-tools/linq';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
@@ -38,11 +37,11 @@ export function setCustomHeaderText(headerText: string): void {
 /**
  * returns the common source-file preamble (license comment, package name etc)
  * 
- * @param packageName the name of the package to use in the package declaration
+ * @param pkg the package to use in the package declaration
  * @param doNotEdit when false the 'DO NOT EDIT' clause is omitted
  * @returns the source file preamble
  */
-export function contentPreamble(packageName: string, doNotEdit = true): string {
+export function contentPreamble(pkg: go.FakePackage | go.PackageContent | go.TestPackage, doNotEdit = true): string {
   const headerText = comment(overrideHeaderText ?? defaultHeaderText, '// ');
   let text = headerText;
   if (doNotEdit) {
@@ -56,7 +55,7 @@ export function contentPreamble(packageName: string, doNotEdit = true): string {
     // remove the blurb about the changes being lost
     text = text.replace(/^\/\/ Changes may cause incorrect behavior and will be lost if the code is regenerated\.$/m, '');
   }
-  text += `\n\npackage ${packageName}\n\n`;
+  text += `\n\npackage ${go.getPackageName(pkg)}\n\n`;
   return text;
 }
 
@@ -1108,21 +1107,4 @@ export function splitScope(scope: string): { audience: string, scope: string } {
 /** returns true if the specified method is internal */
 export function isMethodInternal(method: go.MethodType): boolean {
   return !!method.name.match(/^[a-z]{1}/);
-}
-
-/**
- * returns the package name for the specified input.
- * for module github.com/contoso/module, 'module' is returned.
- * any major version suffix on the module is removed.
- * 
- * @param pkg is the package source
- * @returns the package name for pkg
- */
-export function getPackageName(pkg: go.PackageContent): string {
-  switch (pkg.kind) {
-    case 'module':
-      return path.basename(pkg.identity.replace(/\/v\d+$/, ''));
-    case 'package':
-      return pkg.name;
-  }
 }

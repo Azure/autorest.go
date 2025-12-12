@@ -12,21 +12,21 @@ import { ImportManager } from './imports.js';
  * Creates the content for the polymorphic_helpers.go file.
  * 
  * @param pkg contains the package content
- * @param fakeServerPkg optional name when emitting into the fake package
  * @returns the text for the file or the empty string
  */
-export function generatePolymorphicHelpers(pkg: go.PackageContent, fakeServerPkg?: string): string {
-  if (pkg.interfaces.length === 0) {
+export function generatePolymorphicHelpers(pkg: go.FakePackage | go.PackageContent): string {
+  const content = pkg.kind === 'fake' ? pkg.parent : pkg;
+  if (content.interfaces.length === 0) {
     // no polymorphic types
     return '';
   }
 
-  let text = helpers.contentPreamble(fakeServerPkg ?? helpers.getPackageName(pkg));
+  let text = helpers.contentPreamble(pkg);
   const imports = new ImportManager();
   imports.add('encoding/json');
-  if (fakeServerPkg) {
+  if (pkg.kind === 'fake') {
     // content is being generated into a separate package, add the necessary import
-    imports.addForPkg(pkg);
+    imports.addForPkg(pkg.parent);
   }
 
   text += imports.text();
@@ -63,10 +63,10 @@ export function generatePolymorphicHelpers(pkg: go.PackageContent, fakeServerPkg
   };
 
   // calculate which discriminator helpers we actually need to generate
-  
-  if (fakeServerPkg) {
+
+  if (pkg.kind === 'fake') {
     // when generating for the fakes server, we must look at operation parameters instead of return values
-    for (const client of pkg.clients) {
+    for (const client of pkg.parent.clients) {
       for (const method of values(client.methods)) {
         for (const param of values(method.parameters)) {
           trackDisciminator(param.type);
@@ -108,12 +108,12 @@ export function generatePolymorphicHelpers(pkg: go.PackageContent, fakeServerPkg
   }
 
   let prefix = '';
-  if (fakeServerPkg) {
+  if (pkg.kind === 'fake') {
     // content is being generated into a separate package, set the type name prefix
-    prefix = `${helpers.getPackageName(pkg)}.`;
+    prefix = `${go.getPackageName(pkg.parent)}.`;
   }
 
-  for (const interfaceType of pkg.interfaces) {
+  for (const interfaceType of content.interfaces) {
     // generate unmarshallers for each discriminator
 
     // scalar unmarshaller

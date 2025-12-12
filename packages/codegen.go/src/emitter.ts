@@ -145,7 +145,7 @@ export class Emitter {
       }
 
       if (this.codeModel.options.generateFakes) {
-        const serverContent = generateServers(pkg);
+        const serverContent = generateServers(new go.FakePackage(pkg));
         if (serverContent.servers.length > 0) {
           const fakesDir = 'fake';
           for (const op of serverContent.servers) {
@@ -153,19 +153,19 @@ export class Emitter {
             await write(fileName, op.content, fakesDir);
           }
 
-          const serverFactory = generateServerFactory(pkg, this.codeModel.type);
+          const serverFactory = generateServerFactory(new go.FakePackage(pkg), this.codeModel.type);
           if (serverFactory.length > 0) {
             await write('server_factory.go', serverFactory, fakesDir);
           }
 
           await write('internal.go', serverContent.internals, fakesDir);
 
-          const timeHelpers = generateTimeHelpers(pkg, 'fake');
+          const timeHelpers = generateTimeHelpers(new go.FakePackage(pkg));
           for (const helper of timeHelpers) {
             await write(`${helper.name.toLowerCase()}.go`, helper.content, fakesDir);
           }
 
-          const polymorphics = generatePolymorphicHelpers(pkg, 'fake');
+          const polymorphics = generatePolymorphicHelpers(new go.FakePackage(pkg));
           if (polymorphics.length > 0) {
             await write('polymorphic_helpers.go', polymorphics, fakesDir);
           }
@@ -202,7 +202,7 @@ export class Emitter {
     }
 
     await this.recursiveEmit(async (pkg: go.PackageContent, write: (name: string, content: string) => Promise<void>): Promise<void> => {
-      const examples = generateExamples(pkg, this.codeModel.type, this.codeModel.options);
+      const examples = generateExamples(new go.TestPackage(pkg), this.codeModel.type, this.codeModel.options);
       for (const example of examples) {
         await write(`${snakeClientFileName(example.name)}_example_test.go`, example.content);
       }

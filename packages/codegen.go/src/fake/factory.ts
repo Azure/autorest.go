@@ -16,9 +16,9 @@ import { ImportManager } from '../core/imports.js';
  * @param target the codegen target for the module
  * @returns the text for the file or the empty string
  */
-export function generateServerFactory(pkg: go.PackageContent, target: go.CodeModelType): string {
+export function generateServerFactory(pkg: go.FakePackage, target: go.CodeModelType): string {
   // generate server factory only for ARM
-  if (target !== 'azure-arm' || !pkg.clients) {
+  if (target !== 'azure-arm' || !pkg.parent.clients) {
     return '';
   }
 
@@ -31,17 +31,17 @@ export function generateServerFactory(pkg: go.PackageContent, target: go.CodeMod
   imports.add('sync');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
 
-  let text = helpers.contentPreamble('fake');
+  let text = helpers.contentPreamble(pkg);
   text += imports.text();
 
-  const pkgName = helpers.getPackageName(pkg);
+  const pkgName = go.getPackageName(pkg.parent);
   text += `// ServerFactory is a fake server for instances of the ${pkgName}.ClientFactory type.\n`;
   text += 'type ServerFactory struct {\n';
 
   // add server transports for client accessors
   // we might remove some clients from the list
   const finalSubClients = new Array<go.Client>();
-  for (const client of pkg.clients) {
+  for (const client of pkg.parent.clients) {
     if (client.clientAccessors.length === 0 && values(client.methods).all(method => { return helpers.isMethodInternal(method) })) {
       // client has no client accessors and no exported methods, skip it
       continue;

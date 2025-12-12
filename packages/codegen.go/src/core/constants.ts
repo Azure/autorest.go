@@ -18,7 +18,7 @@ export function generateConstants(pkg: go.PackageContent): string {
     return '';
   }
 
-  let text = helpers.contentPreamble(helpers.getPackageName(pkg));
+  let text = helpers.contentPreamble(pkg);
 
   for (const enm of values(pkg.constants)) {
     text += helpers.formatDocCommentWithPrefix(enm.name, enm.docs);

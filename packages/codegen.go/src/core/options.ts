@@ -21,7 +21,7 @@ export function generateOptions(pkg: go.PackageContent): string {
   }
 
   const imports = new ImportManager();
-  let optionsText = helpers.contentPreamble(helpers.getPackageName(pkg));
+  let optionsText = helpers.contentPreamble(pkg);
   let content = '';
 
   for (const paramGroup of pkg.paramGroups) {
