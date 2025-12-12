@@ -223,6 +223,10 @@ generate('rawjson', rawjson, 'test/local/rawjson/subpkg', ['containing-module=ra
 const azregressions = pkgRoot + 'test/tsp/Regressions';
 generate('azregressions', azregressions, 'test/local/azregressions');
 
+const armAppService = pkgRoot + 'test/tsp/web/Combine.Management';
+generate('armAppService', armAppService, 'test/local/armAppService', [`examples-directory=${armAppService}/examples`, 'generate-samples=true']);
+
+
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
 
