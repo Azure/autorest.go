@@ -226,6 +226,8 @@ generate('azregressions', azregressions, 'test/local/azregressions');
 const armAppService = pkgRoot + 'test/tsp/web/Combine.Management';
 generate('armAppService', armAppService, 'test/local/armAppService', [`examples-directory=${armAppService}/examples`, 'generate-samples=true']);
 
+const armRedisEnterprise = pkgRoot + 'test/tsp/RedisEnterprise.Management';
+generate('armRedisEnterprise', armRedisEnterprise, 'test/local/armRedisEnterprise', [`examples-directory=${armRedisEnterprise}/examples`, 'generate-samples=true']);
 
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')

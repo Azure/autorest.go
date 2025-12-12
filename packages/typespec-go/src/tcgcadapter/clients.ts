@@ -977,6 +977,9 @@ export class ClientAdapter {
     const addedHeaders = new Set<string>();
     for (const httpResp of sdkMethod.operation.responses) {
       for (const httpHeader of httpResp.headers) {
+        if (!httpHeader.serializedName) {
+          continue;
+        }
         if (addedHeaders.has(httpHeader.serializedName)) {
           continue;
         } else if (go.isLROMethod(method) && httpHeader.serializedName.match(/Azure-AsyncOperation|Location|Operation-Location|Retry-After/i)) {
