@@ -39,3 +39,11 @@ func (c *ClientFactory) NewBodyRootsClient() *BodyRootsClient {
 		internal:       c.internal,
 	}
 }
+
+// NewLROClient creates a new instance of LROClient.
+func (c *ClientFactory) NewLROClient() *LROClient {
+	return &LROClient{
+		subscriptionID: c.subscriptionID,
+		internal:       c.internal,
+	}
+}

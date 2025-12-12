@@ -1,5 +1,11 @@
 # Release History
 
+## 0.8.8 (unreleased)
+
+### Bugs Fixed
+
+* Fixed mismatch for LRO polling headers in example generation.
+
 ## 0.8.7 (2025-12-10)
 
 ### Bugs Fixed

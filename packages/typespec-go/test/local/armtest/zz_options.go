@@ -13,3 +13,10 @@ type BodyRootsClientActionOptions struct {
 type BodyRootsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
+
+// LROClientBeginOkResponseWithAsyncHeaderOptions contains the optional parameters for the LROClient.BeginOkResponseWithAsyncHeader
+// method.
+type LROClientBeginOkResponseWithAsyncHeaderOptions struct {
+	// Resumes the long-running operation from the provided token.
+	ResumeToken string
+}

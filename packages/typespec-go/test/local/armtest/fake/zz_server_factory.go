@@ -17,6 +17,9 @@ import (
 type ServerFactory struct {
 	// BodyRootsServer contains the fakes for client BodyRootsClient
 	BodyRootsServer BodyRootsServer
+
+	// LROServer contains the fakes for client LROClient
+	LROServer LROServer
 }
 
 // NewServerFactoryTransport creates a new instance of ServerFactoryTransport with the provided implementation.
@@ -34,6 +37,7 @@ type ServerFactoryTransport struct {
 	srv               *ServerFactory
 	trMu              sync.Mutex
 	trBodyRootsServer *BodyRootsServerTransport
+	trLROServer       *LROServerTransport
 }
 
 // Do implements the policy.Transporter interface for ServerFactoryTransport.
@@ -52,6 +56,9 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	case "BodyRootsClient":
 		initServer(s, &s.trBodyRootsServer, func() *BodyRootsServerTransport { return NewBodyRootsServerTransport(&s.srv.BodyRootsServer) })
 		resp, err = s.trBodyRootsServer.Do(req)
+	case "LROClient":
+		initServer(s, &s.trLROServer, func() *LROServerTransport { return NewLROServerTransport(&s.srv.LROServer) })
+		resp, err = s.trLROServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}
