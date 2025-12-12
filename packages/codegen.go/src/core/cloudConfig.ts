@@ -47,7 +47,7 @@ export function generateCloudConfig(module: go.Module, target: go.CodeModelType)
     return '';
   }
 
-  let cloudConfig = helpers.contentPreamble(helpers.getPackageName(module));
+  let cloudConfig = helpers.contentPreamble(module);
   cloudConfig += 'import "github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"\n\n';
 
   cloudConfig += '// ServiceName is the [cloud.ServiceName] for this module, used to identify the respective [cloud.ServiceConfiguration].\n';

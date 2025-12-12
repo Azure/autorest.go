@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as go from '../../../codemodel.go/src/index.js';
-import * as helpers from './helpers.js';
 import { comment } from '@azure-tools/codegen';
 import { contentPreamble, sortAscending } from './helpers.js';
 
@@ -20,7 +19,7 @@ export function generateInterfaces(pkg: go.PackageContent): string {
     return '';
   }
 
-  let text = contentPreamble(helpers.getPackageName(pkg));
+  let text = contentPreamble(pkg);
 
   for (const iface of pkg.interfaces) {
     const methodName = `Get${iface.rootType.name}`;
