@@ -1331,7 +1331,7 @@ function getRawParamValue(param: go.MethodParameter): string {
  * this is usually the value in paramValues but can be slightly
  * different for some cases.
  * 
- * @param pkg the contens of the package
+ * @param pkg the contents of the package
  * @param param the parameter being evaluated
  * @param paramValues maps a parameter name to the value to be passed to the fake
  * @returns the value to pass for the provided parameter
