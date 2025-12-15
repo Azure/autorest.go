@@ -30,8 +30,8 @@ export function generateResponses(pkg: go.PackageContent, options: go.Options): 
     };
   }
 
-  const imports = new ImportManager();
-  const serdeImports = new ImportManager();
+  const imports = new ImportManager(pkg);
+  const serdeImports = new ImportManager(pkg);
   let responses = helpers.contentPreamble(pkg);
   let serDe = '';
   let respContent = '';
@@ -60,6 +60,14 @@ export function generateResponses(pkg: go.PackageContent, options: go.Options): 
   };
 }
 
+/**
+ * generates a marshaler for the provided response envelope.
+ * note that this is only required for fakes.
+ * 
+ * @param respEnv the response envelope for which to create a marshaler
+ * @param imports the import manager currently in scope
+ * @returns the text for the response envelope's marshaler
+ */
 function generateMarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
   let text = '';
   if (go.isLROMethod(respEnv.method) && respEnv.result?.kind === 'polymorphicResult') {
@@ -70,12 +78,19 @@ function generateMarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager
     text += `${comment(`MarshalJSON implements the json.Marshaller interface for type ${respEnv.name}.`, '// ', undefined, helpers.commentLength)}\n`;
     text += `func (${receiver} ${respEnv.name}) MarshalJSON() ([]byte, error) {\n`;
     // TODO: this doesn't include any headers. however, LROs with header responses are currently broken :(
-    text += `\treturn json.Marshal(${receiver}.${go.getTypeDeclaration(respEnv.result.interface)})\n}\n\n`;
+    text += `\treturn json.Marshal(${receiver}.${go.getTypeDeclaration(respEnv.result.interface, respEnv.method.receiver.type.pkg)})\n}\n\n`;
   }
   return text;
 }
 
-// check if the response envelope requires an unmarshaller
+/**
+ * generates an unmarshaler for the provided response envelope.
+ * note that not all response envelopes require one.
+ * 
+ * @param respEnv the response envelope for which to create an unmarshaler
+ * @param imports the import manager currently in scope
+ * @returns he text for the response envelope's unmarshaler or the empty string
+ */
 function generateUnmarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
   // if the response envelope contains a discriminated type we need an unmarshaller
   let polymorphicRes: go.PolymorphicResult | undefined;
@@ -115,6 +130,14 @@ function generateUnmarshaller(respEnv: go.ResponseEnvelope, imports: ImportManag
   return unmarshaller;
 }
 
+/**
+ * emits the type definition for the provided response envelope.
+ * 
+ * @param pkg the package to contain the response envelope
+ * @param respEnv the response envelope for which to emit the definition
+ * @param imports the import manager currently in scope
+ * @returns the text for the response enveloipe type definition
+ */
 function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
   let text = helpers.formatDocComment(respEnv.docs);
 
@@ -133,11 +156,11 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
       if (respEnv.result.kind === 'modelResult' || respEnv.result.kind === 'polymorphicResult') {
         // anonymously embedded type always goes first
         text += helpers.formatDocComment(respEnv.result.docs);
-        text += `\t${go.getTypeDeclaration(go.getResultType(respEnv.result))}\n`;
+        text += `\t${go.getTypeDeclaration(go.getResultType(respEnv.result), respEnv.method.receiver.type.pkg)}\n`;
         first = false;
       } else {
         const type = go.getResultType(respEnv.result);
-        imports.addImportForType(type);
+        imports.addForType(type);
 
         let tag = '';
         if (respEnv.result.kind === 'monomorphicResult' && respEnv.result.format === 'XML') {
@@ -154,17 +177,17 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
           byValue = respEnv.result.byValue;
         }
 
-        fields.push({docs: respEnv.result.docs, field: `\t${respEnv.result.fieldName} ${helpers.star(byValue)}${go.getTypeDeclaration(type)}${tag}\n`});
+        fields.push({docs: respEnv.result.docs, field: `\t${respEnv.result.fieldName} ${helpers.star(byValue)}${go.getTypeDeclaration(type, respEnv.method.receiver.type.pkg)}${tag}\n`});
       }
     }
 
     for (const header of values(respEnv.headers)) {
-      imports.addImportForType(header.type);
+      imports.addForType(header.type);
       let byValue = true;
       if (header.kind === 'headerScalarResponse') {
         byValue = header.byValue;
       }
-      fields.push({docs: header.docs, field: `\t${header.fieldName} ${helpers.star(byValue)}${go.getTypeDeclaration(header.type)}\n`});
+      fields.push({docs: header.docs, field: `\t${header.fieldName} ${helpers.star(byValue)}${go.getTypeDeclaration(header.type, respEnv.method.receiver.type.pkg)}\n`});
     }
 
     fields.sort((a: {desc?: string, field: string}, b: {desc?: string, field: string}) => { return helpers.sortAscending(a.field, b.field); });

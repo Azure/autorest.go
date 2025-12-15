@@ -67,35 +67,31 @@ export function sortAscending(a: string, b: string): number {
 /**
  * returns the parameter's type definition with a possible '*' prefix
  * 
+ * @param scope the package into which the type definition is being emitted
  * @param param the parameter for which to emit the type definition
- * @param pkgName optional package name in which the type resides
  * @returns the parameter type definition text
  */
-export function formatParameterTypeName(param: go.ClientOptionsType | go.ClientParameter | go.ParameterGroup, pkgName?: string): string {
+export function formatParameterTypeName(scope: go.PackageType, param: go.ClientOptionsType | go.ClientParameter | go.ParameterGroup): string {
   let typeName: string;
+  let required: boolean;
   switch (param.kind) {
     case 'armClientOptions':
-      typeName = go.getTypeDeclaration(param, pkgName);
+      typeName = go.getTypeDeclaration(param, scope);
+      required = false;
       break;
     case 'clientOptions':
-      typeName = param.name;
+      typeName = go.getTypeDeclaration(param, scope);
+      required = false;
       break;
     case 'paramGroup':
-      typeName = param.groupName;
-      if (pkgName) {
-        typeName = `${pkgName}.${typeName}`;
-      }
-      if (param.required) {
-        return typeName;
-      }
+      typeName = go.getTypeDeclaration(param, scope);
+      required = param.required;
       break;
     default:
-      typeName = go.getTypeDeclaration(param.type, pkgName);
-      if (param.byValue) {
-        return typeName;
-      }
+      typeName = go.getTypeDeclaration(param.type, scope);
+      required = param.byValue;
   }
-  return `*${typeName}`;
+  return required ? typeName : `*${typeName}`;
 }
 
 // sorts parameters by their required state, ordering required before optional
@@ -164,7 +160,7 @@ export function getCreateRequestParametersSig(method: go.MethodType | go.NextPag
     if (methodParam.kind === 'paramGroup' && (methodParam.params.length === 0 || (methodParam.params.length === 1 && methodParam.params[0].kind === 'resumeTokenParam'))) {
       paramName = '_';
     }
-    params.push(`${paramName} ${formatParameterTypeName(methodParam)}`);
+    params.push(`${paramName} ${formatParameterTypeName(method.receiver.type.pkg, methodParam)}`);
   }
   return params.join(', ');
 }

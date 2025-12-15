@@ -24,7 +24,7 @@ export function generateClientFactory(pkg: go.PackageContent, target: go.CodeMod
 
   let result = '';
   // the list of packages to import
-  const imports = new ImportManager();
+  const imports = new ImportManager(pkg);
 
   let clientFactoryParams:  Array<go.ClientParameter>;
   if (options.factoryGatherAllParams) {
@@ -48,7 +48,7 @@ export function generateClientFactory(pkg: go.PackageContent, target: go.CodeMod
       // credentials aren't persisted on the client
       continue;
     }
-    result += `\t${clientParam.name} ${helpers.formatParameterTypeName(clientParam)}\n`;
+    result += `\t${clientParam.name} ${helpers.formatParameterTypeName(pkg, clientParam)}\n`;
   }
   result += '\tinternal *arm.Client\n';
   result += '}\n\n';
@@ -63,7 +63,7 @@ export function generateClientFactory(pkg: go.PackageContent, target: go.CodeMod
   result += helpers.formatCommentAsBulletItem('credential', {summary: 'used to authorize requests. Usually a credential from azidentity.'});
   result += helpers.formatCommentAsBulletItem('options', {summary: 'pass nil to accept the default values.'});
 
-  result += `func NewClientFactory(${clientFactoryParams.map(param => { return `${param.name} ${helpers.formatParameterTypeName(param)}`; }).join(', ')}${clientFactoryParams.length>0 ? ',' : ''} options *arm.ClientOptions) (*ClientFactory, error) {\n`;
+  result += `func NewClientFactory(${clientFactoryParams.map(param => { return `${param.name} ${helpers.formatParameterTypeName(pkg, param)}`; }).join(', ')}${clientFactoryParams.length>0 ? ',' : ''} options *arm.ClientOptions) (*ClientFactory, error) {\n`;
   result += '\tinternal, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
   result += '\tif err != nil {\n';
   result += '\t\treturn nil, err\n';
@@ -103,7 +103,7 @@ export function generateClientFactory(pkg: go.PackageContent, target: go.CodeMod
     result += `func (c *ClientFactory) ${ctorName}(`;
     if (clientPrivateParams.length > 0) {
       result += `${clientPrivateParams.map(param => { 
-        return `${param.name} ${helpers.formatParameterTypeName(param)}`; 
+        return `${param.name} ${helpers.formatParameterTypeName(pkg, param)}`; 
       }).join(', ')}`;
     }
     result += `) *${client.name} {\n`;

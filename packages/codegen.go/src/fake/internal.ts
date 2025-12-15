@@ -41,7 +41,7 @@ export function generateServerInternal(pkg: go.FakePackage, requiredHelpers: Req
     return '';
   }
   const text = contentPreamble(pkg);
-  const imports = new ImportManager();
+  const imports = new ImportManager(pkg);
   let body = alwaysUsed;
   imports.add('net/http');
 

@@ -142,22 +142,30 @@ export function generateTimeHelpers(pkg: go.FakePackage | go.PackageContent): Ar
 
   const preamble = helpers.contentPreamble(pkg, true);
   if (needsDateTimeRFC1123Helper) {
-    content.push(new Content('time_rfc1123', generateRFC1123Helper(preamble, needsSerDeHelpers)));
+    content.push(new Content('time_rfc1123', generateRFC1123Helper(pkg, preamble, needsSerDeHelpers)));
   }
   if (needsDateTimeRFC3339Helper || needsTimeRFC3339Helper) {
-    content.push(new Content('time_rfc3339', generateRFC3339Helper(preamble, needsDateTimeRFC3339Helper, needsTimeRFC3339Helper, needsSerDeHelpers)));
+    content.push(new Content('time_rfc3339', generateRFC3339Helper(pkg, preamble, needsDateTimeRFC3339Helper, needsTimeRFC3339Helper, needsSerDeHelpers)));
   }
   if (needsUnixTimeHelper) {
-    content.push(new Content('time_unix', generateUnixTimeHelper(preamble, needsSerDeHelpers)));
+    content.push(new Content('time_unix', generateUnixTimeHelper(pkg, preamble, needsSerDeHelpers)));
   }
   if (needsDateHelper) {
-    content.push(new Content('date_type', generateDateHelper(preamble, needsSerDeHelpers)));
+    content.push(new Content('date_type', generateDateHelper(pkg, preamble, needsSerDeHelpers)));
   }
   return content;
 }
 
-function generateRFC1123Helper(preamble: string, needsPopulate: boolean): string {
-  const imports = new ImportManager();
+/**
+ * generates the content for the RFC1123 helpers file
+ * 
+ * @param pkg the package to contain the helpers
+ * @param preamble the content preamble for the file
+ * @param needsPopulate indicates that the populate helper is required
+ * @returns the text for the RFC1123 helper file
+ */
+function generateRFC1123Helper(pkg: go.FakePackage | go.PackageContent, preamble: string, needsPopulate: boolean): string {
+  const imports = new ImportManager(pkg);
   imports.add('strings');
   imports.add('time');
   if (needsPopulate) {
@@ -237,8 +245,18 @@ func unpopulateDateTimeRFC1123(data json.RawMessage, fn string, t **time.Time) e
   return text;
 }
 
-function generateRFC3339Helper(preamble: string, dateTime: boolean, time: boolean, needsPopulate: boolean): string {
-  const imports = new ImportManager();
+/**
+ * generates the content for the RFC3339 helpers file
+ * 
+ * @param pkg the package to contain the helpers
+ * @param preamble the content preamble for the file
+ * @param dateTime indicates if the helper for date-time is required
+ * @param time indicates if the helper for time-only is required
+ * @param needsPopulate indicates that the populate helper is required
+ * @returns the text for the RFC3339 helper file
+ */
+function generateRFC3339Helper(pkg: go.FakePackage | go.PackageContent, preamble: string, dateTime: boolean, time: boolean, needsPopulate: boolean): string {
+  const imports = new ImportManager(pkg);
   imports.add('regexp');
   imports.add('strings');
   imports.add('time');
@@ -438,8 +456,16 @@ func unpopulateTimeRFC3339(data json.RawMessage, fn string, t **time.Time) error
   return text;
 }
 
-function generateUnixTimeHelper(preamble: string, needsPopulate: boolean): string {
-  const imports = new ImportManager();
+/**
+ * generates the content for the Unix time helpers file
+ * 
+ * @param pkg the package to contain the helpers
+ * @param preamble the content preamble for the file
+ * @param needsPopulate indicates that the populate helper is required
+ * @returns the text for the Unix time helper file
+ */
+function generateUnixTimeHelper(pkg: go.FakePackage | go.PackageContent, preamble: string, needsPopulate: boolean): string {
+  const imports = new ImportManager(pkg);
   imports.add('encoding/json');
   imports.add('fmt');
   imports.add('time');
@@ -501,8 +527,16 @@ func unpopulateTimeUnix(data json.RawMessage, fn string, t **time.Time) error {
   return text;
 }
 
-function generateDateHelper(preamble: string, needsPopulate: boolean): string {
-  const imports = new ImportManager();
+/**
+ * generates the content for the date-only helpers file
+ * 
+ * @param pkg the package to contain the helpers
+ * @param preamble the content preamble for the file
+ * @param needsPopulate indicates that the populate helper is required
+ * @returns the text for the date-only time helper file
+ */
+function generateDateHelper(pkg: go.FakePackage | go.PackageContent, preamble: string, needsPopulate: boolean): string {
+  const imports = new ImportManager(pkg);
   imports.add('fmt');
   imports.add('time');
   if (needsPopulate) {

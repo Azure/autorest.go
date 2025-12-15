@@ -22,7 +22,7 @@ export function generatePolymorphicHelpers(pkg: go.FakePackage | go.PackageConte
   }
 
   let text = helpers.contentPreamble(pkg);
-  const imports = new ImportManager();
+  const imports = new ImportManager(pkg);
   imports.add('encoding/json');
   if (pkg.kind === 'fake') {
     // content is being generated into a separate package, add the necessary import
