@@ -398,7 +398,6 @@ export class ClientAdapter {
   }
 
   private adaptMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, goClient: go.Client): void {
-    let method: go.MethodType;
     const naming = new go.MethodNaming(getEscapedReservedName(uncapitalize(ensureNameCase(sdkMethod.name)), 'Operation'), ensureNameCase(`${sdkMethod.name}CreateRequest`, true),
       ensureNameCase(`${sdkMethod.name}HandleResponse`, true));
 
@@ -428,29 +427,34 @@ export class ClientAdapter {
       }
     }
 
-    const statusCodes = getStatusCodes(sdkMethod.operation);
-
-    if (sdkMethod.kind === 'basic') {
-      method = new go.SyncMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
-    } else if (sdkMethod.kind === 'paging') {
-      if (sdkMethod.pagingMetadata.nextLinkReInjectedParametersSegments !== undefined && sdkMethod.pagingMetadata.nextLinkReInjectedParametersSegments.length > 0) {
-        throw new AdapterError('UnsupportedTsp', `paging with re-injected parameters is not supported`, sdkMethod.__raw?.node);
+    const setLROInfo = function(goMethod: go.LROMethod | go.LROPageableMethod, sdkMethod: tcgc.SdkLroPagingServiceMethod<tcgc.SdkHttpOperation> | tcgc.SdkLroServiceMethod<tcgc.SdkHttpOperation>): void {
+      const lroOptions = hasDecorator('Azure.Core.@useFinalStateVia', sdkMethod.decorators);
+      if (lroOptions) {
+        goMethod.finalStateVia = <go.FinalStateVia>lroOptions['finalState'];
       }
-      method = new go.PageableMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
+      if (sdkMethod.lroMetadata.finalResponse?.resultSegments) {
+        // 'resultSegments' is designed for furture extensibility, currently only has one segment
+        goMethod.operationLocationResultPath = sdkMethod.lroMetadata.finalResponse.resultSegments.map((segment) => {
+          return segment.serializationOptions.json?.name;
+        }).join('.');
+      }
+    };
+
+    const setPageableInfo = function(goMethod: go.LROPageableMethod | go.PageableMethod, sdkMethod: tcgc.SdkLroPagingServiceMethod<tcgc.SdkHttpOperation> | tcgc.SdkPagingServiceMethod<tcgc.SdkHttpOperation>): void {
       if (sdkMethod.pagingMetadata.nextLinkVerb) {
         switch (sdkMethod.pagingMetadata.nextLinkVerb) {
           case 'GET':
             // we default to GET in the ctor for PageableMethod
             break;
           case 'POST':
-            method.nextLinkVerb = 'post';
+            goMethod.nextLinkVerb = 'post';
             break;
           default:
             sdkMethod.pagingMetadata.nextLinkVerb satisfies never;
         }
       }
       if (sdkMethod.pagingMetadata.nextLinkSegments) {
-        method.nextLinkName = capitalize(sdkMethod.pagingMetadata.nextLinkSegments.map((segment) => {
+        goMethod.nextLinkName = capitalize(sdkMethod.pagingMetadata.nextLinkSegments.map((segment) => {
           if (segment.kind === 'property') {
             return ensureNameCase(segment.name);
           } else {
@@ -458,36 +462,40 @@ export class ClientAdapter {
           }
         }).join('.'));
       }
-    } else if (sdkMethod.kind === 'lro') {
-      method = new go.LROMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
-      const lroOptions = this.hasDecorator('Azure.Core.@useFinalStateVia', sdkMethod.decorators);
-      if (lroOptions) {
-        method.finalStateVia = <go.FinalStateVia>lroOptions['finalState'];
-      }
-      if (sdkMethod.lroMetadata.finalResponse?.resultSegments) {
-        // 'resultSegments' is designed for furture extensibility, currently only has one segment
-        method.operationLocationResultPath = sdkMethod.lroMetadata.finalResponse.resultSegments.map((segment) => {
-          return segment.serializationOptions.json?.name;
-        }).join('.');
-      }
-    } else {
-      throw new AdapterError('UnsupportedTsp', `unsupported method kind ${sdkMethod.kind}`, sdkMethod.__raw?.node);
+    };
+
+    const statusCodes = getStatusCodes(sdkMethod.operation);
+
+    let method: go.MethodType;
+    switch (sdkMethod.kind) {
+      case 'basic':
+        method = new go.SyncMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
+        break;
+      case 'paging':
+        if (sdkMethod.pagingMetadata.nextLinkReInjectedParametersSegments !== undefined && sdkMethod.pagingMetadata.nextLinkReInjectedParametersSegments.length > 0) {
+          throw new AdapterError('UnsupportedTsp', `paging with re-injected parameters is not supported`, sdkMethod.__raw?.node);
+        }
+        method = new go.PageableMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
+        setPageableInfo(method, sdkMethod);
+        break;
+      case 'lro':
+        method = new go.LROMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
+        setLROInfo(method, sdkMethod);
+        break;
+      case 'lropaging':
+        method = new go.LROPageableMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
+        setLROInfo(method, sdkMethod);
+        setPageableInfo(method, sdkMethod);
+        break;
+      default:
+        sdkMethod satisfies never;
+        throw new AdapterError('UnsupportedTsp', 'unreachable');
     }
 
     method.docs.summary = sdkMethod.summary;
     method.docs.description = sdkMethod.doc;
     goClient.methods.push(method);
     this.populateMethod(sdkMethod, method);
-  }
-
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  private hasDecorator(name: string, decorators: Array<tcgc.DecoratorInfo>): Record<string, any> | undefined {
-    for (const decorator of decorators) {
-      if (decorator.name === name) {
-        return decorator.arguments;
-      }
-    }
-    return undefined;
   }
 
   private populateMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType | go.NextPageMethod) {
@@ -1013,14 +1021,19 @@ export class ClientAdapter {
 
     // for paged methods, tcgc models the method response type as an Array<T>.
     // however, we want the synthesized paged response envelope as that's what Go returns.
-    if (sdkMethod.kind === 'paging') {
+    if (sdkMethod.kind === 'lropaging' || sdkMethod.kind === 'paging') {
       // grab the paged response envelope type from the first response
-      sdkResponseType = values(sdkMethod.operation.responses).first()!.type!;
+      sdkResponseType = sdkMethod.operation.responses[0].type;
+      if (!sdkResponseType) {
+        throw new AdapterError('InternalError', `paged method ${method.name} has no synthesized response type`, sdkMethod.__raw?.node);
+      } else if (sdkResponseType.kind !== 'model') {
+        throw new AdapterError('UnsupportedTsp', `paged method ${method.name} synthesized response type has unexpected kind ${sdkResponseType.kind}`, sdkMethod.__raw?.node);
+      }
     }
 
     // we have a response type, determine the content type
     let contentType: go.BodyFormat = 'binary';
-    if (sdkMethod.kind === 'lro') {
+    if (sdkMethod.kind === 'lro' || sdkMethod.kind === 'lropaging') {
       // we can't grovel through the operation responses for LROs as some of them
       // return only headers, thus have no content type. while it's highly likely
       // to only ever be JSON, this will be broken for LROs that return text/plain
@@ -1418,6 +1431,23 @@ export class ClientAdapter {
     }
     throw new AdapterError('InternalError', `can not map go type into example type ${exampleType.kind}`);
   }
+}
+
+/**
+ * returns the record for the specified decorator's arguments if it exists
+ * 
+ * @param name the name of the decorator to find
+ * @param decorators the array of decorators to search
+ * @returns the decorator's record of arguments or undefined
+ */
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+function hasDecorator(name: string, decorators: Array<tcgc.DecoratorInfo>): Record<string, any> | undefined {
+  for (const decorator of decorators) {
+    if (decorator.name === name) {
+      return decorator.arguments;
+    }
+  }
+  return undefined;
 }
 
 interface HttpStatusCodeRange {

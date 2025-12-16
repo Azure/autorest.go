@@ -24,10 +24,9 @@ export class Content {
  * Creates the content for the required time marshalling helpers.
  * 
  * @param pkg contains the package content
- * @param packageName optional name when emitting into the fake package
  * @returns the text for the file or the empty string
  */
-export function generateTimeHelpers(pkg: go.PackageContent, packageName?: string): Array<Content> {
+export function generateTimeHelpers(pkg: go.FakePackage | go.PackageContent): Array<Content> {
   let needsDateHelper = false;
   let needsDateTimeRFC1123Helper = false;
   let needsDateTimeRFC3339Helper = false;
@@ -62,7 +61,7 @@ export function generateTimeHelpers(pkg: go.PackageContent, packageName?: string
   // find the required helpers.
   // for most packages, we must check params, response envelopes, and models
   // for fakes, we check a subset
-  if (packageName !== 'fake') {
+  if (pkg.kind !== 'fake') {
     for (const client of pkg.clients) {
       for (const method of client.methods) {
         for (const param of method.parameters) {
@@ -108,7 +107,7 @@ export function generateTimeHelpers(pkg: go.PackageContent, packageName?: string
   } else {
 	// for fakes, only need to check the if the body params are of type time.Time.
 	// otherwise, the conversion happens in place
-    for (const client of pkg.clients) {
+    for (const client of pkg.parent.clients) {
       for (const method of client.methods) {
         for (const param of method.parameters) {
           if (param.kind === 'bodyParam' && param.type.kind === 'time') {
@@ -118,7 +117,7 @@ export function generateTimeHelpers(pkg: go.PackageContent, packageName?: string
       }
     }
 
-    for (const respEnv of pkg.responseEnvelopes) {
+    for (const respEnv of pkg.parent.responseEnvelopes) {
       for (const header of respEnv.headers) {
         // for header/path/query params, the conversion happens in place. the only
         // exceptions are for timeRFC3339 and timeUnix
@@ -141,7 +140,7 @@ export function generateTimeHelpers(pkg: go.PackageContent, packageName?: string
     return content;
   }
 
-  const preamble = helpers.contentPreamble(packageName ?? helpers.getPackageName(pkg), true);
+  const preamble = helpers.contentPreamble(pkg, true);
   if (needsDateTimeRFC1123Helper) {
     content.push(new Content('time_rfc1123', generateRFC1123Helper(preamble, needsSerDeHelpers)));
   }

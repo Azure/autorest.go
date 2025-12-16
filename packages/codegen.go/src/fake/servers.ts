@@ -48,10 +48,10 @@ export function getServerName(client: go.Client): string {
  * @param pkg contains the package content
  * @returns the contents to generate or an empty object
  */
-export function generateServers(pkg: go.PackageContent): ServerContent {
+export function generateServers(pkg: go.FakePackage): ServerContent {
   const operations = new Array<OperationGroupContent>();
-  const clientPkg = helpers.getPackageName(pkg);
-  for (const client of values(pkg.clients)) {
+  const clientPkg = go.getPackageName(pkg.parent);
+  for (const client of values(pkg.parent.clients)) {
     if (client.clientAccessors.length === 0 && values(client.methods).all(method => { return helpers.isMethodInternal(method) })) {
       // client has no client accessors and no exported methods, skip it
       continue;
@@ -225,7 +225,7 @@ export function generateServers(pkg: go.PackageContent): ServerContent {
     content += generateServerTransportDo(serverTransport, client, finalSubClients, finalMethods);
     content += generateServerTransportClientDispatch(serverTransport, finalSubClients, imports);
     content += generateServerTransportMethodDispatch(serverTransport, client, finalMethods);
-    content += generateServerTransportMethods(pkg, serverTransport, finalMethods, imports);
+    content += generateServerTransportMethods(pkg.parent, serverTransport, finalMethods, imports);
 
     content += `// set this to conditionally intercept incoming requests to ${serverTransport}\n`;
     content += `var ${getTransportInterceptorVarName(client)} interface {\n`;
@@ -235,7 +235,7 @@ export function generateServers(pkg: go.PackageContent): ServerContent {
     ///////////////////////////////////////////////////////////////////////////
 
     // stitch everything together
-    let text = helpers.contentPreamble('fake');
+    let text = helpers.contentPreamble(pkg);
     text += imports.text();
     text += content;
     operations.push(new OperationGroupContent(serverName, text));
@@ -348,7 +348,7 @@ function generateServerTransportMethods(pkg: go.PackageContent, serverTransport:
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server');
 
-  const clientPkg = helpers.getPackageName(pkg);
+  const clientPkg = go.getPackageName(pkg);
   const receiverName = serverTransport[0].toLowerCase();
 
   let content = '';

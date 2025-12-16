@@ -223,6 +223,9 @@ generate('rawjson', rawjson, 'test/local/rawjson/subpkg', ['containing-module=ra
 const azregressions = pkgRoot + 'test/tsp/Regressions';
 generate('azregressions', azregressions, 'test/local/azregressions');
 
+const armpageablelros = pkgRoot + 'test/tsp/PageableLROs';
+generate('armpageablelros', armpageablelros, 'test/local/armpageablelros');
+
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
 

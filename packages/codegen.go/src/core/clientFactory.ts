@@ -127,6 +127,6 @@ export function generateClientFactory(pkg: go.PackageContent, target: go.CodeMod
     result += '}\n\n';
   }
 
-  result = helpers.contentPreamble(helpers.getPackageName(pkg)) + imports.text() + result;
+  result = helpers.contentPreamble(pkg) + imports.text() + result;
   return result;
 }

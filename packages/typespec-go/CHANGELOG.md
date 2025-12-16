@@ -6,6 +6,10 @@
 
 * Fixed mismatch for LRO polling headers in example generation.
 
+### Features Added
+
+* Added support for pageable LROs.
+
 ## 0.8.7 (2025-12-10)
 
 ### Bugs Fixed
