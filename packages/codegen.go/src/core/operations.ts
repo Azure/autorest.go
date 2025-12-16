@@ -39,7 +39,7 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
   const azureARM = target === 'azure-arm';
   for (const client of pkg.clients) {
     // the list of packages to import
-    const imports = new ImportManager();
+    const imports = new ImportManager(pkg);
     if (client.methods.length > 0) {
       // add standard imports for clients with methods.
       // clients that are purely hierarchical (i.e. having no APIs) won't need them.
@@ -99,9 +99,9 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
         }
         clientText += `\t${clientParam.name} `;
         if (!isParamPointer(clientParam)) {
-          clientText += `${go.getTypeDeclaration(clientParam.type)}\n`;
+          clientText += `${go.getTypeDeclaration(clientParam.type, client.pkg)}\n`;
         } else {
-          clientText += `${helpers.formatParameterTypeName(clientParam)}\n`;
+          clientText += `${helpers.formatParameterTypeName(client.pkg, clientParam)}\n`;
         }
         if (!go.isRequiredParameter(clientParam.style)) {
           optionalParams.push(clientParam);
@@ -198,7 +198,7 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
         }
         ctorText += `\t${comment(`The default value is ${helpers.formatLiteralValue(param.style.defaultValue, false)}`, '// ')}.\n`;
       }
-      ctorText += `\t${ensureNameCase(param.name)} *${go.getTypeDeclaration(param.type)}\n`;
+      ctorText += `\t${ensureNameCase(param.name)} *${go.getTypeDeclaration(param.type, client.pkg)}\n`;
     }
     ctorText += '}\n\n';
   }
@@ -227,8 +227,8 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
         // param is part of the options group
         continue;
       }
-      imports.addImportForType(ctorParam.type);
-      ctorParams.push(`${ctorParam.name} ${helpers.formatParameterTypeName(ctorParam)}`);
+      imports.addForType(ctorParam.type);
+      ctorParams.push(`${ctorParam.name} ${helpers.formatParameterTypeName(client.pkg, ctorParam)}`);
       if (ctorParam.docs.summary || ctorParam.docs.description) {
         paramDocs.push(helpers.formatCommentAsBulletItem(ctorParam.name, ctorParam.docs));
       }
@@ -320,7 +320,7 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
               const tokenPolicyOpts = '&policy.BearerTokenOptions{\n\t\t\tInsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,\n\t\t}';
               // we assume a single scope. this is enforced when adapting the data from tcgc
               const tokenPolicy = `\n\t\tPerCall: []policy.Policy{\n\t\truntime.NewBearerTokenPolicy(credential, []string{c.Audience + "${helpers.splitScope(credentialParam.type.scopes[0]).scope}"}, ${tokenPolicyOpts}),\n\t\t},\n`;
-              prolog = emitProlog(go.getTypeDeclaration(clientOptions), true, tokenPolicy);
+              prolog = emitProlog(go.getTypeDeclaration(clientOptions, client.pkg), true, tokenPolicy);
               break;
             }
             case 'armClientOptions':
@@ -332,11 +332,11 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
           break;
       }
     } else {
-      prolog = emitProlog(go.getTypeDeclaration(clientOptions), false);
+      prolog = emitProlog(go.getTypeDeclaration(clientOptions, client.pkg), false);
     }
 
     // add client options last
-    ctorParams.push(`options ${helpers.formatParameterTypeName(clientOptions)}`);
+    ctorParams.push(`options ${helpers.formatParameterTypeName(client.pkg, clientOptions)}`);
     paramDocs.push(helpers.formatCommentAsBulletItem('options', { summary: 'Contains optional client configuration. Pass nil to accept the default values.' }));
 
     ctorText += `// ${constructor.name} creates a new instance of ${client.name} with the specified values.\n`;
@@ -728,7 +728,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     if (param.location !== 'method' || !go.isRequiredParameter(param.style)) {
       continue;
     }
-    imports.addImportForType(param.type);
+    imports.addForType(param.type);
   }
 
   const returns = ['*policy.Request', 'error'];
@@ -1042,17 +1042,17 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
         // for XML payloads, create a wrapper type if the payload is an array
         imports.add('encoding/xml');
         text += '\ttype wrapper struct {\n';
-        let tagName = go.getTypeDeclaration(bodyParam.type);
+        let tagName = go.getTypeDeclaration(bodyParam.type, method.receiver.type.pkg);
         if (bodyParam.xml?.name) {
           tagName = bodyParam.xml.name;
         }
         text += `\t\tXMLName xml.Name \`xml:"${tagName}"\`\n`;
         const fieldName = capitalize(bodyParam.name);
-        let tag = go.getTypeDeclaration(bodyParam.type.elementType);
+        let tag = go.getTypeDeclaration(bodyParam.type.elementType, method.receiver.type.pkg);
         if (bodyParam.type.elementType.kind === 'model' && bodyParam.type.elementType.xml?.name) {
           tag = bodyParam.type.elementType.xml.name;
         }
-        text += `\t\t${fieldName} *${go.getTypeDeclaration(bodyParam.type)} \`xml:"${tag}"\`\n`;
+        text += `\t\t${fieldName} *${go.getTypeDeclaration(bodyParam.type, method.receiver.type.pkg)} \`xml:"${tag}"\`\n`;
         text += '\t}\n';
         let addr = '&';
         if (!go.isRequiredParameter(bodyParam.style) && !bodyParam.byValue) {
@@ -1130,7 +1130,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     // define and instantiate an instance of the wire type, using the values from each param.
     text += '\tbody := struct {\n';
     for (const partialBodyParam of partialBodyParams) {
-      text += `\t\t${capitalize(partialBodyParam.serializedName)} ${helpers.star(partialBodyParam.byValue)}${go.getTypeDeclaration(partialBodyParam.type)} \`${partialBodyParam.format.toLowerCase()}:"${partialBodyParam.serializedName}"\`\n`;
+      text += `\t\t${capitalize(partialBodyParam.serializedName)} ${helpers.star(partialBodyParam.byValue)}${go.getTypeDeclaration(partialBodyParam.type, method.receiver.type.pkg)} \`${partialBodyParam.format.toLowerCase()}:"${partialBodyParam.serializedName}"\`\n`;
     }
     text += '\t}{\n';
     // required params are emitted as initializers in the struct literal
@@ -1360,7 +1360,7 @@ function createProtocolResponse(method: go.SyncMethod | go.LROPageableMethod | g
             // the operation contains a mix of schemas and non-schema responses
             continue;
           }
-          text += `\tvar val ${go.getTypeDeclaration(resultType)}\n`;
+          text += `\tvar val ${go.getTypeDeclaration(resultType, method.receiver.type.pkg)}\n`;
           text += generateResponseUnmarshaller(method, resultType, result.format, 'val');
           text += '\tresult.Value = val\n';
         }
@@ -1431,7 +1431,7 @@ function isMapOfDateTime(paramType: go.WireType): string | undefined {
 
 // returns the parameters for the public API
 // e.g. "ctx context.Context, i int, s string"
-function getAPIParametersSig(method: go.MethodType, imports: ImportManager, pkgName?: string): string {
+function getAPIParametersSig(method: go.MethodType, imports: ImportManager): string {
   const methodParams = helpers.getMethodParameters(method);
   const params = new Array<string>();
   if (method.kind !== 'pageableMethod') {
@@ -1439,7 +1439,7 @@ function getAPIParametersSig(method: go.MethodType, imports: ImportManager, pkgN
     params.push('ctx context.Context');
   }
   for (const methodParam of values(methodParams)) {
-    params.push(`${uncapitalize(methodParam.name)} ${helpers.formatParameterTypeName(methodParam, pkgName)}`);
+    params.push(`${uncapitalize(methodParam.name)} ${helpers.formatParameterTypeName(method.receiver.type.pkg, methodParam)}`);
   }
   return params.join(', ');
 }

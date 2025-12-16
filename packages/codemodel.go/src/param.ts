@@ -4,6 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import * as method from './method.js';
+import * as module from './module.js';
 import * as type from './type.js';
 
 /** indicates the wire format for request bodies */
@@ -161,6 +162,9 @@ export interface ParameterGroup {
 
   /** the parameters that belong to this group */
   params: Array<MethodParameter>;
+
+  /** the package to which this type belongs */
+  pkg: module.PackageContent;
 }
 
 /** a parameter that's a field within a type passed via the HTTP request body */
@@ -486,7 +490,7 @@ export class MultipartFormBodyParameter extends HttpParameterBase implements Mul
 }
 
 export class ParameterGroup implements ParameterGroup {
-  constructor(name: string, groupName: string, required: boolean, location: ParameterLocation) {
+  constructor(pkg: module.PackageContent, name: string, groupName: string, required: boolean, location: ParameterLocation) {
     this.kind = 'paramGroup';
     this.groupName = groupName;
     this.location = location;
@@ -495,6 +499,7 @@ export class ParameterGroup implements ParameterGroup {
     this.params = new Array<MethodParameter>();
     this.required = required;
     this.docs = {};
+    this.pkg = pkg;
   }
 }
 

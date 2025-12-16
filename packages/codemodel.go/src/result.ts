@@ -170,6 +170,8 @@ export interface PolymorphicResult {
  * this combines response headers with any response body.
  */
 export interface ResponseEnvelope {
+  kind: 'responseEnvelope';
+
   /** the name of the type */
   name: string;
 
@@ -309,6 +311,7 @@ export class PolymorphicResult implements PolymorphicResult {
 
 export class ResponseEnvelope implements ResponseEnvelope {
   constructor(name: string, docs: type.Docs, forMethod: client.MethodType) {
+    this.kind = 'responseEnvelope';
     this.docs = docs;
     this.headers = new Array<HeaderScalarResponse | HeaderMapResponse>();
     this.method = forMethod;

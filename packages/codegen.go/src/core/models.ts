@@ -30,8 +30,8 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
   }
 
   // this list of packages to import
-  const modelImports = new ImportManager();
-  const serdeImports = new ImportManager();
+  const modelImports = new ImportManager(pkg);
+  const serdeImports = new ImportManager(pkg);
   let modelText = helpers.contentPreamble(pkg);
 
   // we do model generation first as it can add imports to the imports list
@@ -196,7 +196,7 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
     const serDeFormat = helpers.getSerDeFormat(model, pkg);
     const modelDef = new ModelDef(model, serDeFormat);
     for (const field of modelDef.Model.fields) {
-      modelImports.addImportForType(field.type);
+      modelImports.addForType(field.type);
     }
 
     if (model.kind === 'model' && serDeFormat === 'XML' && !model.annotations.omitSerDeMethods) {
@@ -204,7 +204,7 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       let needsDateTimeMarshalling = false;
       let byteArrayFormat = false;
       for (const field of values(model.fields)) {
-        serdeImports.addImportForType(field.type);
+        serdeImports.addForType(field.type);
         if (field.type.kind === 'time') {
           needsDateTimeMarshalling = true;
         } else if (field.type.kind === 'encodedBytes') {
@@ -483,10 +483,10 @@ function generateJSONUnmarshallerBody(modelDef: ModelDef, receiver: string, impo
     if (!addlProps.valueTypeByValue) {
       ref = '&';
     }
-    addlPropsText += `${tab}\t\t\t${receiver}.AdditionalProperties = ${go.getTypeDeclaration(addlProps)}{}\n`;
+    addlPropsText += `${tab}\t\t\t${receiver}.AdditionalProperties = ${go.getTypeDeclaration(addlProps, modelDef.Model.pkg)}{}\n`;
     addlPropsText += `${tab}\t\t}\n`;
     addlPropsText += `${tab}\t\tif val != nil {\n`;
-    let auxType = go.getTypeDeclaration(addlProps.valueType);
+    let auxType = go.getTypeDeclaration(addlProps.valueType, modelDef.Model.pkg);
     let assignment = `${ref}aux`;
     if (addlProps.valueType.kind === 'time') {
       imports.add('time');
@@ -513,7 +513,7 @@ function generateJSONUnmarshallerBody(modelDef: ModelDef, receiver: string, impo
       }
       unmarshalBody += `\t\tcase "${field.serializedName}":\n`;
       if (hasDiscriminatorInterface(field.type)) {
-        unmarshalBody += generateDiscriminatorUnmarshaller(field, receiver);
+        unmarshalBody += generateDiscriminatorUnmarshaller(modelDef.Model, field, receiver);
         needsErrCheck = true;
       } else if (field.type.kind === 'time') {
         unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(field.type.format)}(val, "${field.name}", &${receiver}.${field.name})\n`;
@@ -623,7 +623,7 @@ function hasDiscriminatorInterface(item: go.WireType): boolean {
 }
 
 // returns the text for unmarshalling a discriminated type
-function generateDiscriminatorUnmarshaller(field: go.ModelField, receiver: string): string {
+function generateDiscriminatorUnmarshaller(modelType: go.Model | go.PolymorphicModel, field: go.ModelField, receiver: string): string {
   const startingIndentation = '\t\t\t';
   const propertyName = field.name;
 
@@ -639,13 +639,13 @@ function generateDiscriminatorUnmarshaller(field: go.ModelField, receiver: strin
   // nested case (e.g. [][]InterfaceType, map[string]map[string]InterfaceType etc)
   // first, unmarshal the raw data
   const rawTargetVar = `${field.serializedName}Raw`;
-  let text = `${startingIndentation}var ${rawTargetVar} ${recursiveGetDiscriminatorTypeName(field.type, true)}\n`;
+  let text = `${startingIndentation}var ${rawTargetVar} ${recursiveGetDiscriminatorTypeName(modelType, field.type, true)}\n`;
   text += `${startingIndentation}if err = json.Unmarshal(val, &${rawTargetVar}); err != nil {\n`;
   text += `${startingIndentation}\treturn err\n${startingIndentation}}\n`;
 
   // create a local instantiation of the final type
   const finalTargetVar = field.serializedName;
-  let finalTargetCtor = recursiveGetDiscriminatorTypeName(field.type, false);
+  let finalTargetCtor = recursiveGetDiscriminatorTypeName(modelType, field.type, false);
   if (field.type.kind === 'slice') {
     finalTargetCtor = `make(${finalTargetCtor}, len(${rawTargetVar}))`;
   } else {
@@ -655,7 +655,7 @@ function generateDiscriminatorUnmarshaller(field: go.ModelField, receiver: strin
   text += `${startingIndentation}${finalTargetVar} := ${finalTargetCtor}\n`;
 
   // now populate the final type
-  text += recursivePopulateDiscriminator(field.type, receiver, rawTargetVar, finalTargetVar, startingIndentation, 1);
+  text += recursivePopulateDiscriminator(modelType, field.type, receiver, rawTargetVar, finalTargetVar, startingIndentation, 1);
 
   // finally, assign the final target to the property
   text += `${startingIndentation}${receiver}.${propertyName} = ${finalTargetVar}\n`;
@@ -665,26 +665,27 @@ function generateDiscriminatorUnmarshaller(field: go.ModelField, receiver: strin
 // constructs the type name for a nested discriminated type
 // raw e.g. map[string]json.RawMessage, []json.RawMessage etc
 // !raw e.g. map[string]map[string]InterfaceType, [][]InterfaceType etc
-function recursiveGetDiscriminatorTypeName(item: go.WireType, raw: boolean): string {
+function recursiveGetDiscriminatorTypeName(modelType: go.Model | go.PolymorphicModel, item: go.WireType, raw: boolean): string {
   // when raw is true, stop recursing at the level before the leaf schema
   if (item.kind === 'slice') {
     if (!raw || item.elementType.kind !== 'interface') {
-      return `[]${recursiveGetDiscriminatorTypeName(item.elementType, raw)}`;
+      return `[]${recursiveGetDiscriminatorTypeName(modelType, item.elementType, raw)}`;
     }
   } else if (item.kind === 'map') {
     if (!raw || item.valueType.kind !== 'interface') {
-      return `map[string]${recursiveGetDiscriminatorTypeName(item.valueType, raw)}`;
+      return `map[string]${recursiveGetDiscriminatorTypeName(modelType, item.valueType, raw)}`;
     }
   }
   if (raw) {
     return 'json.RawMessage';
   }
-  return go.getTypeDeclaration(item);
+  return go.getTypeDeclaration(item, modelType.pkg);
 }
 
 /**
  * recursively constructs the text to populate a nested discriminator
  * 
+ * @param modelType the type that contains item
  * @param item the type for which to create the population
  * @param receiver the name of the receiver for the method to contain the expression
  * @param rawSrc contains the raw unmarshaled JSON source
@@ -693,7 +694,7 @@ function recursiveGetDiscriminatorTypeName(item: go.WireType, raw: boolean): str
  * @param nesting the current level of nesting (increments with each recursive call)
  * @returns the text populating the discriminator
  */
-function recursivePopulateDiscriminator(item: go.WireType, receiver: string, rawSrc: string, dest: string, indent: string, nesting: number): string {
+function recursivePopulateDiscriminator(modelType: go.Model | go.PolymorphicModel, item: go.WireType, receiver: string, rawSrc: string, dest: string, indent: string, nesting: number): string {
   let text = '';
   let interfaceName = '';
   let targetType = '';
@@ -702,37 +703,37 @@ function recursivePopulateDiscriminator(item: go.WireType, receiver: string, raw
     if (item.elementType.kind !== 'interface') {
       if (nesting > 1) {
         // at nestling level 1, the destination var was already created in generateDiscriminatorUnmarshaller()
-        text += `${indent}${dest} = make(${recursiveGetDiscriminatorTypeName(item, false)}, len(${rawSrc}))\n`;
+        text += `${indent}${dest} = make(${recursiveGetDiscriminatorTypeName(modelType, item, false)}, len(${rawSrc}))\n`;
       }
 
       text += `${indent}for i${nesting} := range ${rawSrc} {\n`;
       rawSrc = `${rawSrc}[i${nesting}]`; // source becomes each element in the source slice
       dest = `${dest}[i${nesting}]`; // update destination to each element in the destination slice
-      text += recursivePopulateDiscriminator(item.elementType, receiver, rawSrc, dest, indent+'\t', nesting+1);
+      text += recursivePopulateDiscriminator(modelType, item.elementType, receiver, rawSrc, dest, indent+'\t', nesting+1);
       text += `${indent}}\n`;
       return text;
     }
 
     // we're at leaf node - 1, so get the interface from the element's type
-    interfaceName = go.getTypeDeclaration(item.elementType);
+    interfaceName = go.getTypeDeclaration(item.elementType, modelType.pkg);
     targetType = 'Array';
   } else if (item.kind === 'map') {
     if (item.valueType.kind !== 'interface') {
       if (nesting > 1) {
         // at nestling level 1, the destination var was already created in generateDiscriminatorUnmarshaller()
-        text += `${indent}${dest} = ${recursiveGetDiscriminatorTypeName(item, false)}{}\n`;
+        text += `${indent}${dest} = ${recursiveGetDiscriminatorTypeName(modelType, item, false)}{}\n`;
       }
 
       text += `${indent}for k${nesting}, v${nesting} := range ${rawSrc} {\n`;
       rawSrc = `v${nesting}`; // source becomes the current value in the source map
       dest = `${dest}[k${nesting}]`; // update destination to the destination map's value for the current key
-      text += recursivePopulateDiscriminator(item.valueType, receiver, rawSrc, dest, indent+'\t', nesting+1);
+      text += recursivePopulateDiscriminator(modelType, item.valueType, receiver, rawSrc, dest, indent+'\t', nesting+1);
       text += `${indent}}\n`;
       return text;
     }
 
     // we're at leaf node - 1, so get the interface from the element's type
-    interfaceName = go.getTypeDeclaration(item.valueType);
+    interfaceName = go.getTypeDeclaration(item.valueType, modelType.pkg);
     targetType = 'Map';
   }
 
@@ -827,13 +828,13 @@ function generateAliasType(modelType: go.Model | go.PolymorphicModel, receiver: 
   text += '\taux := &struct {\n';
   text += '\t\t*alias\n';
   for (const field of values(modelType.fields)) {
-    const sn = getXMLSerialization(field);
+    const sn = getXMLSerialization(modelType, field);
     if (field.type.kind === 'time') {
       text += `\t\t${field.name} *${field.type.format} \`xml:"${sn}"\`\n`;
     } else if (field.annotations.isAdditionalProperties || field.type.kind === 'map') {
       text += `\t\t${field.name} additionalProperties \`xml:"${sn}"\`\n`;
     } else if (field.type.kind === 'slice') {
-      text += `\t\t${field.name} *${go.getTypeDeclaration(field.type)} \`xml:"${sn}"\`\n`;
+      text += `\t\t${field.name} *${go.getTypeDeclaration(field.type, modelType.pkg)} \`xml:"${sn}"\`\n`;
     } else if (field.type.kind === 'encodedBytes') {
       text += `\t\t${field.name} *string \`xml:"${sn}"\`\n`;
     }
@@ -925,7 +926,7 @@ class ModelDef {
         }
         text += helpers.formatDocComment(field.docs);
       }
-      let typeName = go.getTypeDeclaration(field.type);
+      let typeName = go.getTypeDeclaration(field.type, this.Model.pkg);
       if (field.type.kind === 'literal') {
         // for constants we use the underlying type name
         typeName = go.getLiteralTypeDeclaration(field.type.type);
@@ -934,7 +935,7 @@ class ModelDef {
       if (this.Format === 'JSON') {
         serialization += ',omitempty';
       } else if (this.Format === 'XML') {
-        serialization = getXMLSerialization(field);
+        serialization = getXMLSerialization(this.Model, field);
       }
       let tag = '';
       // only emit tags for XML; JSON uses custom marshallers/unmarshallers
@@ -959,10 +960,11 @@ class ModelDef {
 /**
  * returns the serialization options to use in the XML tag on a model field
  * 
+ * @param modelType the type that contains the field
  * @param field the field for which to construct the tag's contents
  * @returns the contents for the XML tag
  */
-function getXMLSerialization(field: go.ModelField): string {
+function getXMLSerialization(modelType: go.Model | go.PolymorphicModel, field: go.ModelField): string {
   let serialization = field.serializedName;
   // default to using the serialization name
   if (field.xml?.name) {
@@ -978,7 +980,7 @@ function getXMLSerialization(field: go.ModelField): string {
     serialization += ',attr';
   } else if (field.type.kind === 'slice') {
     // start with the serialized name of the element, preferring xml name if available
-    let inner = go.getTypeDeclaration(field.type.elementType);
+    let inner = go.getTypeDeclaration(field.type.elementType, modelType.pkg);
     if (field.xml?.name) {
       inner = field.xml.name;
     }

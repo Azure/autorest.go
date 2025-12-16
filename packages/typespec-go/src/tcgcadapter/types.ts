@@ -451,7 +451,7 @@ export class TypeAdapter {
       return <go.Constant>constType;
     }
     const accessPrefix = enumType.access === 'internal' ? 'p' : 'P';
-    constType = new go.Constant(constTypeName, getPrimitiveType(enumType.valueType), `${accessPrefix}ossible${constTypeName}Values`);
+    constType = new go.Constant(this.getPkg(), constTypeName, getPrimitiveType(enumType.valueType), `${accessPrefix}ossible${constTypeName}Values`);
     constType.values = this.getConstantValues(constType, enumType.values);
     constType.docs.summary = enumType.summary;
     constType.docs.description = enumType.doc;
@@ -486,7 +486,7 @@ export class TypeAdapter {
     if (!discriminatorField) {
       throw new AdapterError('InternalError', `failed to find discriminator field for type ${model.name}`);
     }
-    iface = new go.Interface(ifaceName, discriminatorField);
+    iface = new go.Interface(this.getPkg(), ifaceName, discriminatorField);
     if (model.baseModel && model.baseModel.discriminatedSubtypes) {
       iface.parent = this.getInterfaceType(model.baseModel);
     }
@@ -546,12 +546,12 @@ export class TypeAdapter {
         }
       }
 
-      modelType = new go.PolymorphicModel(modelName, iface, annotations, usage);
+      modelType = new go.PolymorphicModel(this.getPkg(), modelName, iface, annotations, usage);
       modelType.discriminatorValue = discriminatorLiteral;
     } else {
-      modelType = new go.Model(modelName, annotations, usage);
+      modelType = new go.Model(this.getPkg(), modelName, annotations, usage);
       // polymorphic types don't have XMLInfo
-      modelType.xml = adaptXMLInfo(model.decorators);
+      modelType.xml = adaptXMLInfo(this.getPkg(), model.decorators);
     }
 
     modelType.docs.summary = model.summary;
@@ -614,7 +614,7 @@ export class TypeAdapter {
       field.defaultValue = this.getDiscriminatorLiteral(prop);
     }
   
-    field.xml = adaptXMLInfo(prop.decorators, field);
+    field.xml = adaptXMLInfo(this.getPkg(), prop.decorators, field);
   
     return field;
   }
@@ -897,7 +897,7 @@ function aggregateProperties(sdkContext: tcgc.SdkContext, model: tcgc.SdkModelTy
 }
 
 // called for models and model fields. for the former, the field param will be undefined
-export function adaptXMLInfo(decorators: Array<tcgc.DecoratorInfo>, field?: go.ModelField): go.XMLInfo | undefined {
+export function adaptXMLInfo(pkg: go.PackageContent, decorators: Array<tcgc.DecoratorInfo>, field?: go.ModelField): go.XMLInfo | undefined {
   // if there are no decorators and this isn't a slice
   // type in a model field then do nothing
   if (decorators.length === 0 && (!field || (field.type.kind !== 'slice'))) {
@@ -907,7 +907,7 @@ export function adaptXMLInfo(decorators: Array<tcgc.DecoratorInfo>, field?: go.M
   const xmlInfo = new go.XMLInfo();
   if (field && field.type.kind === 'slice') {
     // for tsp, arrays are wrapped by default
-    xmlInfo.wraps = go.getTypeDeclaration(field.type.elementType);
+    xmlInfo.wraps = go.getTypeDeclaration(field.type.elementType, pkg);
   }
 
   const handleName = (decorator: tcgc.DecoratorInfo): void => {

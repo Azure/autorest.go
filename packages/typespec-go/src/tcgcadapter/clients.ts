@@ -100,7 +100,7 @@ export class ClientAdapter {
       docs.summary = `${clientName} contains the methods for the service.`;
     }
 
-    const goClient = new go.Client(clientName, docs);
+    const goClient = new go.Client(this.getPkg(), clientName, docs);
     goClient.parent = parent;
 
     // NOTE: per tcgc convention, if there is no param of kind credential
@@ -180,7 +180,7 @@ export class ClientAdapter {
       // the module name and version info, and we can't make any
       // assumptions about the names/location.
       if (!this.ta.codeModel.options.omitConstructors && this.ta.codeModel.root.kind !== 'containingModule') {
-        constructable = new go.Constructable(go.newClientOptions(this.ta.codeModel.type, clientName));
+        constructable = new go.Constructable(go.newClientOptions(this.getPkg(), this.ta.codeModel.type, clientName));
       }
       for (const param of sdkClient.clientInitialization.parameters) {
         switch (param.kind) {
@@ -300,7 +300,7 @@ export class ClientAdapter {
         // if no authentication type was specified, or the noAuth scheme was
         // explicitly specified, then include the WithNoCredential constructor
         if (authType === AuthTypes.Default || <AuthTypes>(authType & AuthTypes.NoAuth) === AuthTypes.NoAuth) {
-          goClient.instance.constructors.push(new go.Constructor(`New${clientName}WithNoCredential`));
+          goClient.instance.constructors.push(new go.Constructor(this.getPkg(), `New${clientName}WithNoCredential`));
         }
 
         // propagate ctor params to all client ctors
@@ -362,7 +362,7 @@ export class ClientAdapter {
     } else if (cred.flows[0].scopes.length > 1) {
       throw new AdapterError('InternalError', `too many scopes defined for credential type ${cred.type}`, cred.model);
     }
-    const ctor = new go.Constructor(`New${goClient.name}`);
+    const ctor = new go.Constructor(this.getPkg(), `New${goClient.name}`);
     ctor.parameters.push(new go.ClientCredentialParameter('credential', new go.TokenCredential(cred.flows[0].scopes.map(each => each.value))));
     return ctor;
   }
@@ -523,7 +523,7 @@ export class ClientAdapter {
         break;
       }
     }
-    method.optionalParamsGroup = new go.ParameterGroup(optsGroupName, optionalParamsGroupName, false, 'method');
+    method.optionalParamsGroup = new go.ParameterGroup(this.getPkg(), optsGroupName, optionalParamsGroupName, false, 'method');
     method.optionalParamsGroup.docs.summary = createOptionsTypeDescription(optionalParamsGroupName, this.getMethodNameForDocComment(method));
     method.returns = this.adaptResponseEnvelope(sdkMethod, method);
 
@@ -711,6 +711,7 @@ export class ClientAdapter {
             continue;
           }
           paramGroup = new go.ParameterGroup(
+            this.getPkg(),
             paramName,
             paramGroupName,
             isRequired,
@@ -918,7 +919,7 @@ export class ClientAdapter {
           // TODO: is hard-coded false for element type by value correct?
           const type = this.ta.getWireType(methodParam.type, true, false);
           if (type.kind !== 'slice') {
-            throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${methodParam.name}`, opParam.__raw?.node);
+            throw new AdapterError('InternalError', `unexpected kind ${type.kind} for HeaderCollectionParameter ${methodParam.name}`, opParam.__raw?.node);
           }
           adaptedParam = new go.HeaderCollectionParameter(paramName, opParam.serializedName, type, opParam.collectionFormat === 'simple' ? 'csv' : opParam.collectionFormat, paramStyle, byVal, location);
         } else {
@@ -932,7 +933,7 @@ export class ClientAdapter {
         if (opParam.collectionFormat) {
           const type = this.ta.getWireType(methodParam.type, true, false);
           if (type.kind !== 'slice') {
-            throw new AdapterError('InternalError', `unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${methodParam.name}`, opParam.__raw?.node);
+            throw new AdapterError('InternalError', `unexpected kind ${type.kind} for QueryCollectionParameter ${methodParam.name}`, opParam.__raw?.node);
           }
           // TODO: unencoded query param
           adaptedParam = new go.QueryCollectionParameter(paramName, opParam.serializedName, true, type, opParam.collectionFormat === 'simple' ? 'csv' : (opParam.collectionFormat === 'form' ? 'multi' : opParam.collectionFormat), paramStyle, byVal, location);
@@ -1164,7 +1165,7 @@ export class ClientAdapter {
   }
 
   private adaptParameterGroup(paramGroup: go.ParameterGroup): go.Struct {
-    const structType = new go.Struct(paramGroup.groupName);
+    const structType = new go.Struct(this.getPkg(), paramGroup.groupName);
     structType.docs = paramGroup.docs;
     for (const param of paramGroup.params) {
       if (param.style === 'literal') {
@@ -1224,7 +1225,7 @@ export class ClientAdapter {
       } else {
         const adaptedWireType = this.ta.getWireType(param.type, false, false);
         if (!go.isLiteralValueType(adaptedWireType)) {
-          throw new AdapterError('InternalError', `unexpected client side default type ${go.getTypeDeclaration(adaptedWireType)} for parameter ${param.name}`, param.__raw?.node);
+          throw new AdapterError('InternalError', `unexpected client side default kind ${adaptedWireType.kind} for parameter ${param.name}`, param.__raw?.node);
         }
         adaptedType = adaptedWireType;
       }

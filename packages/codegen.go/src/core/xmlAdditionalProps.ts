@@ -37,7 +37,7 @@ export function generateXMLAdditionalPropsHelpers(pkg: go.PackageContent): strin
 
   let text = helpers.contentPreamble(pkg);
   // add standard imports
-  const imports = new ImportManager();
+  const imports = new ImportManager(pkg);
   imports.add('encoding/xml');
   imports.add('errors');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
