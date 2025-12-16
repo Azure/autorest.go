@@ -14,7 +14,7 @@ import * as go from '../../../codemodel.go/src/index.js';
  * @returns the contents of version.go or the empty string
  */
 export function generateVersionInfo(module: go.Module): string {
-  let text = helpers.contentPreamble(helpers.getPackageName(module), false);
+  let text = helpers.contentPreamble(module, false);
 
   text += 'const (\n';
   // strip off any major version suffix. this is for telemetry

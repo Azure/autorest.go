@@ -32,7 +32,7 @@ export function generateResponses(pkg: go.PackageContent, options: go.Options): 
 
   const imports = new ImportManager();
   const serdeImports = new ImportManager();
-  let responses = helpers.contentPreamble(helpers.getPackageName(pkg));
+  let responses = helpers.contentPreamble(pkg);
   let serDe = '';
   let respContent = '';
   let serdeContent = '';
@@ -49,7 +49,7 @@ export function generateResponses(pkg: go.PackageContent, options: go.Options): 
   responses += respContent;
 
   if (serdeContent.length > 0) {
-    serDe = helpers.contentPreamble(helpers.getPackageName(pkg));
+    serDe = helpers.contentPreamble(pkg);
     serDe += serdeImports.text();
     serDe += serdeContent;
   }

@@ -156,7 +156,7 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
     }
 
     // stitch it all together
-    let text = helpers.contentPreamble(helpers.getPackageName(pkg));
+    let text = helpers.contentPreamble(pkg);
     text += imports.text();
     text += clientText;
     text += opText;
