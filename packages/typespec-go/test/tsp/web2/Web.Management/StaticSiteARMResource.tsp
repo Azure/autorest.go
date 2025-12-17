@@ -250,7 +250,7 @@ interface StaticSiteARMResources {
     StaticSiteARMResource,
     void,
     {
-      @body body: void;
+      @body body: DetachStaticSiteResponse;
     },
     Error = DefaultErrorResponse
   >;
