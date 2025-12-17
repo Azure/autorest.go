@@ -80,14 +80,14 @@ export function generateServers(pkg: go.FakePackage): ServerContent {
     // we might remove some clients from the list
     const finalSubClients = new Array<go.Client>();
     for (const clientAccessor of client.clientAccessors) {
-      if (values(clientAccessor.subClient.methods).all(method => { return helpers.isMethodInternal(method) })) {
+      if (values(clientAccessor.returns.methods).all(method => { return helpers.isMethodInternal(method) })) {
         // client has no exported methods, skip it
         continue;
       }
-      const serverName = getServerName(clientAccessor.subClient);
-      content += `\t// ${serverName} contains the fakes for client ${clientAccessor.subClient.name}\n`;
+      const serverName = getServerName(clientAccessor.returns);
+      content += `\t// ${serverName} contains the fakes for client ${clientAccessor.returns.name}\n`;
       content += `\t${serverName} ${serverName}\n\n`;
-      finalSubClients.push(clientAccessor.subClient);
+      finalSubClients.push(clientAccessor.returns);
     }
 
     for (const method of values(client.methods)) {

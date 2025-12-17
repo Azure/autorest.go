@@ -60,7 +60,7 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
       // find the accessor method
       let accessorMethod: string | undefined;
       for (const clientAccessor of client.parent.clientAccessors) {
-        if (clientAccessor.subClient === client) {
+        if (clientAccessor.returns === client) {
           accessorMethod = clientAccessor.name;
           break;
         }
@@ -117,13 +117,21 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
     // generate client accessors and operations
     let opText = '';
     for (const clientAccessor of client.clientAccessors) {
-      imports.addForType(clientAccessor.subClient);
-      const subClientDecl = go.getTypeDeclaration(clientAccessor.subClient, pkg);
-      opText += `// ${clientAccessor.name} creates a new instance of [${subClientDecl}].\n`;
-      opText += `func (client *${client.name}) ${clientAccessor.name}() *${subClientDecl} {\n`;
+      imports.addForType(clientAccessor.returns);
+      const subClientDecl = go.getTypeDeclaration(clientAccessor.returns, pkg);
+      opText += helpers.formatDocComment(clientAccessor.docs);
+      opText += `func (client *${client.name}) ${clientAccessor.name}(${getAPIParametersSig(clientAccessor, imports)}) *${subClientDecl} {\n`;
       opText += `\treturn &${subClientDecl}{\n`;
       const initFields = new Array<string>('internal: client.internal');
       // propagate all client params
+      for (const param of clientAccessor.parameters) {
+        // by convention, the client accessor params have the
+        // same name as their corresponding client fields.
+        initFields.push(`${param.name}: ${param.name}`);
+      }
+
+      // accessor params and client fields are mutually exclusive
+      // so we don't need to worry about potentials for duplication.
       for (const param of client.parameters) {
         if (go.isLiteralParameter(param.style)) {
           continue;
@@ -1436,17 +1444,35 @@ function isMapOfDateTime(paramType: go.WireType): string | undefined {
   return paramType.valueType.format;
 }
 
-// returns the parameters for the public API
-// e.g. "ctx context.Context, i int, s string"
-function getAPIParametersSig(method: go.MethodType, imports: ImportManager): string {
-  const methodParams = helpers.getMethodParameters(method);
+/**
+ * returns the parameters for the public API
+ * e.g. "ctx context.Context, i int, s string"
+ * 
+ * @param method the method for which to emit the parameters
+ * @param imports the import manager currently in scope
+ * @returns the text for the method parameters
+ */
+function getAPIParametersSig(method: go.ClientAccessor | go.MethodType, imports: ImportManager): string {
   const params = new Array<string>();
-  if (method.kind !== 'pageableMethod') {
-    imports.add('context');
-    params.push('ctx context.Context');
-  }
-  for (const methodParam of values(methodParams)) {
-    params.push(`${uncapitalize(methodParam.name)} ${helpers.formatParameterTypeName(method.receiver.type.pkg, methodParam)}`);
+  if (method.kind === 'clientAccessor') {
+    // client accessor params don't have a concept
+    // of optionality nor do they contain literals
+    for (const param of method.parameters) {
+      imports.addForType(param.type);
+      params.push(`${param.name} ${go.getTypeDeclaration(param.type, method.receiver.type.pkg)}`);
+    }
+  } else {
+    const methodParams = helpers.getMethodParameters(method);
+    if (method.kind !== 'pageableMethod') {
+      imports.add('context');
+      params.push('ctx context.Context');
+    }
+    for (const methodParam of values(methodParams)) {
+      if (methodParam.kind !== 'paramGroup') {
+        imports.addForType(methodParam.type);
+      }
+      params.push(`${uncapitalize(methodParam.name)} ${helpers.formatParameterTypeName(method.receiver.type.pkg, methodParam)}`);
+    }
   }
   return params.join(', ');
 }

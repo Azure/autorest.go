@@ -318,7 +318,7 @@ export class ClientAdapter {
       for (const child of sdkClient.children) {
         const subClient = this.recursiveAdaptClient(child, goClient);
         if (subClient) {
-          goClient.clientAccessors.push(new go.ClientAccessor(`New${subClient.name}`, subClient));
+          this.adaptClientAccessor(sdkClient, child, goClient, subClient);
         }
       }
     }
@@ -355,6 +355,39 @@ export class ClientAdapter {
     const ctor = new go.Constructor(this.ta.getPkg(), `New${goClient.name}`);
     ctor.parameters.push(new go.ClientCredentialParameter('credential', new go.TokenCredential(cred.flows[0].scopes.map(each => each.value))));
     return ctor;
+  }
+
+  /**
+   * converts a tcgc client accessor method to a Go client accessor method
+   * 
+   * @param sdkParent the tcgc client that contains the accessor method
+   * @param sdkChild the tcgc client accessor method to convert
+   * @param goClient the client to which the method belongs
+   * @param subClient the sub-client type that the method returns
+   */
+  private adaptClientAccessor(sdkParent: tcgc.SdkClientType<tcgc.SdkHttpOperation>, sdkChild: tcgc.SdkClientType<tcgc.SdkHttpOperation>, goClient: go.Client, subClient: go.Client): void {
+    const clientAccessor = new go.ClientAccessor(`New${subClient.name}`, goClient, subClient);
+    clientAccessor.docs.summary = `${clientAccessor.name} creates a new instance of [${go.getTypeDeclaration(subClient, goClient.pkg)}].`;
+    for (const param of sdkChild.clientInitialization.parameters) {
+      // check if the parent's initializer already has this parameter.
+      // if it does then omit it from the method sig as we'll populate
+      // the child client's value from the parent.
+      let existsOnParent = false;
+      for (const clientParam of sdkParent.clientInitialization.parameters) {
+        if (clientParam.name === param.name) {
+          existsOnParent = true;
+          break;
+        }
+      }
+      if (existsOnParent) {
+        continue;
+      }
+      const adaptedParam = new go.Parameter(getEscapedReservedName(uncapitalize(ensureNameCase(param.name)), 'Param'), this.ta.getWireType(param.type, true, true), true);
+      adaptedParam.docs.summary = param.summary;
+      adaptedParam.docs.description = param.doc;
+      clientAccessor.parameters.push(adaptedParam);
+    }
+    goClient.clientAccessors.push(clientAccessor);
   }
 
   /**
