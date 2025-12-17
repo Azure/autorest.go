@@ -27,12 +27,11 @@ func TestPathParamClient_GetStandalone(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.GetStandalone(context.Background(), nil)
 	require.NoError(t, err)
-	require.NotNil(t, resp.BlobProperties)
-	require.Equal(t, "sample-blob", *resp.BlobProperties.Name)
-	require.Equal(t, int64(42), *resp.BlobProperties.Size)
-	require.Equal(t, "text/plain", *resp.BlobProperties.ContentType)
-	require.NotNil(t, resp.BlobProperties.CreatedOn)
-	require.Equal(t, time.Date(2025, time.April, 1, 12, 0, 0, 0, time.UTC), *resp.BlobProperties.CreatedOn)
+	require.Equal(t, "sample-blob", *resp.Name)
+	require.Equal(t, int64(42), *resp.Size)
+	require.Equal(t, "text/plain", *resp.ContentType)
+	require.NotNil(t, resp.CreatedOn)
+	require.Equal(t, time.Date(2025, time.April, 1, 12, 0, 0, 0, time.UTC), *resp.CreatedOn)
 }
 
 func TestPathParamClient_DeleteStandalone(t *testing.T) {
