@@ -21,8 +21,8 @@ export class TypeAdapter {
   readonly codeModel: go.CodeModel;
 
   // cache of previously created types/constant values
-  private types: Map<string, go.WireType>;
-  private constValues: Map<string, go.ConstantValue>;
+  private readonly types: Map<string, go.WireType>;
+  private readonly constValues: Map<string, go.ConstantValue>;
 
   constructor(ctx: tcgc.SdkContext, codeModel: go.CodeModel) {
     this.ctx = ctx;
@@ -37,7 +37,7 @@ export class TypeAdapter {
    * NOTE: this is temporary and will go away with namespaces.
    * @returns the module or package to contain the adapted tcgc model
    */
-  private getPkg(): go.PackageContent {
+  getPkg(): go.PackageContent {
     return this.codeModel.root.kind === 'containingModule' ? this.codeModel.root.package : this.codeModel.root;
   }
 

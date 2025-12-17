@@ -145,29 +145,29 @@ export class Emitter {
       }
 
       if (this.codeModel.options.generateFakes) {
-        const serverContent = generateServers(new go.FakePackage(pkg));
+        const fakePkg = new go.FakePackage(pkg);
+        const serverContent = generateServers(fakePkg);
         if (serverContent.servers.length > 0) {
-          const fakesDir = 'fake';
           for (const op of serverContent.servers) {
             const fileName = `${snakeClientFileName(op.name, 'server')}.go`;
-            await write(fileName, op.content, fakesDir);
+            await write(fileName, op.content, fakePkg.kind);
           }
 
-          const serverFactory = generateServerFactory(new go.FakePackage(pkg), this.codeModel.type);
+          const serverFactory = generateServerFactory(fakePkg, this.codeModel.type);
           if (serverFactory.length > 0) {
-            await write('server_factory.go', serverFactory, fakesDir);
+            await write('server_factory.go', serverFactory, fakePkg.kind);
           }
 
-          await write('internal.go', serverContent.internals, fakesDir);
+          await write('internal.go', serverContent.internals, fakePkg.kind);
 
-          const timeHelpers = generateTimeHelpers(new go.FakePackage(pkg));
+          const timeHelpers = generateTimeHelpers(fakePkg);
           for (const helper of timeHelpers) {
-            await write(`${helper.name.toLowerCase()}.go`, helper.content, fakesDir);
+            await write(`${helper.name.toLowerCase()}.go`, helper.content, fakePkg.kind);
           }
 
-          const polymorphics = generatePolymorphicHelpers(new go.FakePackage(pkg));
+          const polymorphics = generatePolymorphicHelpers(fakePkg);
           if (polymorphics.length > 0) {
-            await write('polymorphic_helpers.go', polymorphics, fakesDir);
+            await write('polymorphic_helpers.go', polymorphics, fakePkg.kind);
           }
         }
       }

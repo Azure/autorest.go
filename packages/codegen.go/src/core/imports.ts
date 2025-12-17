@@ -97,7 +97,7 @@ export class ImportManager {
    * 
    * @param type the type for which to add the import
    */
-  addForType(type: go.Type): void {
+  addForType(type: go.Client | go.Type): void {
     switch (type.kind) {
       case 'map':
         this.addForType(type.valueType);
@@ -105,6 +105,7 @@ export class ImportManager {
       case 'slice':
         this.addForType(type.elementType);
         break;
+      case 'client':
       case 'constant':
       case 'interface':
       case 'model':

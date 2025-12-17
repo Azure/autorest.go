@@ -117,9 +117,11 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
     // generate client accessors and operations
     let opText = '';
     for (const clientAccessor of client.clientAccessors) {
-      opText += `// ${clientAccessor.name} creates a new instance of [${clientAccessor.subClient.name}].\n`;
-      opText += `func (client *${client.name}) ${clientAccessor.name}() *${clientAccessor.subClient.name} {\n`;
-      opText += `\treturn &${clientAccessor.subClient.name}{\n`;
+      imports.addForType(clientAccessor.subClient);
+      const subClientDecl = go.getTypeDeclaration(clientAccessor.subClient, pkg);
+      opText += `// ${clientAccessor.name} creates a new instance of [${subClientDecl}].\n`;
+      opText += `func (client *${client.name}) ${clientAccessor.name}() *${subClientDecl} {\n`;
+      opText += `\treturn &${subClientDecl}{\n`;
       opText += '\t\tinternal: client.internal,\n';
       // propagate all client params
       for (const param of client.parameters) {
