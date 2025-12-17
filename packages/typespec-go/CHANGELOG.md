@@ -2,6 +2,10 @@
 
 ## 0.8.8 (unreleased)
 
+### Bugs Fixed
+
+* Fixed mismatch for LRO polling headers in example generation.
+
 ### Features Added
 
 * Added support for pageable LROs.

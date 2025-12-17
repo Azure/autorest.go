@@ -988,7 +988,7 @@ export class ClientAdapter {
       for (const httpHeader of httpResp.headers) {
         if (addedHeaders.has(httpHeader.serializedName)) {
           continue;
-        } else if (go.isLROMethod(method) && httpHeader.serializedName.match(/Azure-AsyncOperation|Location|Operation-Location|Retry-After/i)) {
+        } else if (go.isLROMethod(method) && isLROPollingHeader(httpHeader.serializedName)) {
           // we omit the LRO polling headers as they aren't useful on the response envelope
           continue;
         }
@@ -1286,6 +1286,10 @@ export class ClientAdapter {
           if (response) {
             goExample.responseEnvelope = new go.ResponseEnvelopeExample(method.returns);
             for (const header of response.headers) {
+              // filter out LRO polling headers as they aren't useful on the response envelope
+              if (go.isLROMethod(method) && isLROPollingHeader(header.header.serializedName)){
+                continue;
+              }
               const goHeader = method.returns.headers.find(h => h.headerName === header.header.serializedName);
               if (!goHeader) {
                 throw new AdapterError('InternalError', `can not find go header for example header ${header.header.serializedName}`);
@@ -1465,3 +1469,13 @@ interface ParameterStyleInfo {
   optional: boolean;
   type: tcgc.SdkType;
 };
+
+/**
+ * checks if the specified header is an LRO polling header.
+ * LRO polling headers are not useful on the response envelope and should be filtered out.
+ * @param headerName - the serialized name of the header to check
+ * @returns true if the header is an LRO polling header, false otherwise
+ */
+function isLROPollingHeader(headerName: string): boolean {
+  return /Azure-AsyncOperation|Location|Operation-Location|Retry-After/i.test(headerName);
+}
