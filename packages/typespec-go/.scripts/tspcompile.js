@@ -214,6 +214,12 @@ generate('armcomputeschedule', armcomputeschedule, 'test/local/armcomputeschedul
 const armbillingbenefits = pkgRoot + 'test/tsp/BillingBenefits.Management';
 generate('armbillingbenefits', armbillingbenefits, 'test/local/armbillingbenefits', [`examples-directory=${armbillingbenefits}/examples`, 'generate-samples=true']);
 
+const armAppService = pkgRoot + 'test/tsp/web2/Combine.Management';
+generate('armAppService', armAppService, 'test/local/armAppService', [`examples-directory=${armAppService}/examples`, 'generate-samples=true']);
+
+const armHybridNetwork = pkgRoot + 'test/tsp/HybridNetwork.Management';
+generate('armHybridNetwork', armHybridNetwork, 'test/local/armHybridNetwork', [`examples-directory=${armHybridNetwork}/examples`, 'generate-samples=true']);
+
 const nooptionalbody = pkgRoot + 'test/tsp/NoOptionalBody';
 generate('nooptionalbody', nooptionalbody, 'test/local/nooptionalbody', ['generate-fakes=false', 'go-generate=after_generate.go', 'no-optional-body=true']);
 
