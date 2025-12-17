@@ -42,7 +42,7 @@ func NewPagerClientWithNoCredential(endpoint string, options *PagerClientOptions
 // NewPagerWidgetsClient creates a new instance of [PagerWidgetsClient].
 func (client *PagerClient) NewPagerWidgetsClient() *PagerWidgetsClient {
 	return &PagerWidgetsClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

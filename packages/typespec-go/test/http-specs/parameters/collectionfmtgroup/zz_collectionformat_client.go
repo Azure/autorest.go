@@ -42,15 +42,15 @@ func NewCollectionFormatClientWithNoCredential(endpoint string, options *Collect
 // NewCollectionFormatHeaderClient creates a new instance of [CollectionFormatHeaderClient].
 func (client *CollectionFormatClient) NewCollectionFormatHeaderClient() *CollectionFormatHeaderClient {
 	return &CollectionFormatHeaderClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewCollectionFormatQueryClient creates a new instance of [CollectionFormatQueryClient].
 func (client *CollectionFormatClient) NewCollectionFormatQueryClient() *CollectionFormatQueryClient {
 	return &CollectionFormatQueryClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

@@ -42,87 +42,87 @@ func NewDictionaryClientWithNoCredential(endpoint string, options *DictionaryCli
 // NewDictionaryBooleanValueClient creates a new instance of [DictionaryBooleanValueClient].
 func (client *DictionaryClient) NewDictionaryBooleanValueClient() *DictionaryBooleanValueClient {
 	return &DictionaryBooleanValueClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewDictionaryDatetimeValueClient creates a new instance of [DictionaryDatetimeValueClient].
 func (client *DictionaryClient) NewDictionaryDatetimeValueClient() *DictionaryDatetimeValueClient {
 	return &DictionaryDatetimeValueClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewDictionaryDurationValueClient creates a new instance of [DictionaryDurationValueClient].
 func (client *DictionaryClient) NewDictionaryDurationValueClient() *DictionaryDurationValueClient {
 	return &DictionaryDurationValueClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewDictionaryFloat32ValueClient creates a new instance of [DictionaryFloat32ValueClient].
 func (client *DictionaryClient) NewDictionaryFloat32ValueClient() *DictionaryFloat32ValueClient {
 	return &DictionaryFloat32ValueClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewDictionaryInt32ValueClient creates a new instance of [DictionaryInt32ValueClient].
 func (client *DictionaryClient) NewDictionaryInt32ValueClient() *DictionaryInt32ValueClient {
 	return &DictionaryInt32ValueClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewDictionaryInt64ValueClient creates a new instance of [DictionaryInt64ValueClient].
 func (client *DictionaryClient) NewDictionaryInt64ValueClient() *DictionaryInt64ValueClient {
 	return &DictionaryInt64ValueClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewDictionaryModelValueClient creates a new instance of [DictionaryModelValueClient].
 func (client *DictionaryClient) NewDictionaryModelValueClient() *DictionaryModelValueClient {
 	return &DictionaryModelValueClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewDictionaryNullableFloatValueClient creates a new instance of [DictionaryNullableFloatValueClient].
 func (client *DictionaryClient) NewDictionaryNullableFloatValueClient() *DictionaryNullableFloatValueClient {
 	return &DictionaryNullableFloatValueClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewDictionaryRecursiveModelValueClient creates a new instance of [DictionaryRecursiveModelValueClient].
 func (client *DictionaryClient) NewDictionaryRecursiveModelValueClient() *DictionaryRecursiveModelValueClient {
 	return &DictionaryRecursiveModelValueClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewDictionaryStringValueClient creates a new instance of [DictionaryStringValueClient].
 func (client *DictionaryClient) NewDictionaryStringValueClient() *DictionaryStringValueClient {
 	return &DictionaryStringValueClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewDictionaryUnknownValueClient creates a new instance of [DictionaryUnknownValueClient].
 func (client *DictionaryClient) NewDictionaryUnknownValueClient() *DictionaryUnknownValueClient {
 	return &DictionaryUnknownValueClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

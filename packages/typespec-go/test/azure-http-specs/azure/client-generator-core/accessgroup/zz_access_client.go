@@ -42,31 +42,31 @@ func NewAccessClientWithNoCredential(endpoint string, options *AccessClientOptio
 // NewAccessInternalOperationClient creates a new instance of [AccessInternalOperationClient].
 func (client *AccessClient) NewAccessInternalOperationClient() *AccessInternalOperationClient {
 	return &AccessInternalOperationClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewAccessPublicOperationClient creates a new instance of [AccessPublicOperationClient].
 func (client *AccessClient) NewAccessPublicOperationClient() *AccessPublicOperationClient {
 	return &AccessPublicOperationClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewAccessRelativeModelInOperationClient creates a new instance of [AccessRelativeModelInOperationClient].
 func (client *AccessClient) NewAccessRelativeModelInOperationClient() *AccessRelativeModelInOperationClient {
 	return &AccessRelativeModelInOperationClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewAccessSharedModelInOperationClient creates a new instance of [AccessSharedModelInOperationClient].
 func (client *AccessClient) NewAccessSharedModelInOperationClient() *AccessSharedModelInOperationClient {
 	return &AccessSharedModelInOperationClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

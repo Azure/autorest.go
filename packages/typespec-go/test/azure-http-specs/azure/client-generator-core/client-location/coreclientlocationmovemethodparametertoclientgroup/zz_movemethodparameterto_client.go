@@ -42,7 +42,7 @@ func NewMoveMethodParameterToClientWithNoCredential(endpoint string, options *Mo
 // NewMoveMethodParameterToBlobOperationsClient creates a new instance of [MoveMethodParameterToBlobOperationsClient].
 func (client *MoveMethodParameterToClient) NewMoveMethodParameterToBlobOperationsClient() *MoveMethodParameterToBlobOperationsClient {
 	return &MoveMethodParameterToBlobOperationsClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

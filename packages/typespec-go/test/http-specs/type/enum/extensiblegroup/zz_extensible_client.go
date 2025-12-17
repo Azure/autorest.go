@@ -42,7 +42,7 @@ func NewExtensibleClientWithNoCredential(endpoint string, options *ExtensibleCli
 // NewExtensibleStringClient creates a new instance of [ExtensibleStringClient].
 func (client *ExtensibleClient) NewExtensibleStringClient() *ExtensibleStringClient {
 	return &ExtensibleStringClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

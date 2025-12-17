@@ -42,23 +42,23 @@ func NewDurationClientWithNoCredential(endpoint string, options *DurationClientO
 // NewDurationHeaderClient creates a new instance of [DurationHeaderClient].
 func (client *DurationClient) NewDurationHeaderClient() *DurationHeaderClient {
 	return &DurationHeaderClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewDurationPropertyClient creates a new instance of [DurationPropertyClient].
 func (client *DurationClient) NewDurationPropertyClient() *DurationPropertyClient {
 	return &DurationPropertyClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewDurationQueryClient creates a new instance of [DurationQueryClient].
 func (client *DurationClient) NewDurationQueryClient() *DurationQueryClient {
 	return &DurationQueryClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

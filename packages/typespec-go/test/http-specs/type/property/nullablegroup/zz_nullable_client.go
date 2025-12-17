@@ -42,55 +42,55 @@ func NewNullableClientWithNoCredential(endpoint string, options *NullableClientO
 // NewNullableBytesClient creates a new instance of [NullableBytesClient].
 func (client *NullableClient) NewNullableBytesClient() *NullableBytesClient {
 	return &NullableBytesClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewNullableCollectionsByteClient creates a new instance of [NullableCollectionsByteClient].
 func (client *NullableClient) NewNullableCollectionsByteClient() *NullableCollectionsByteClient {
 	return &NullableCollectionsByteClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewNullableCollectionsModelClient creates a new instance of [NullableCollectionsModelClient].
 func (client *NullableClient) NewNullableCollectionsModelClient() *NullableCollectionsModelClient {
 	return &NullableCollectionsModelClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewNullableCollectionsStringClient creates a new instance of [NullableCollectionsStringClient].
 func (client *NullableClient) NewNullableCollectionsStringClient() *NullableCollectionsStringClient {
 	return &NullableCollectionsStringClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewNullableDatetimeClient creates a new instance of [NullableDatetimeClient].
 func (client *NullableClient) NewNullableDatetimeClient() *NullableDatetimeClient {
 	return &NullableDatetimeClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewNullableDurationClient creates a new instance of [NullableDurationClient].
 func (client *NullableClient) NewNullableDurationClient() *NullableDurationClient {
 	return &NullableDurationClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewNullableStringClient creates a new instance of [NullableStringClient].
 func (client *NullableClient) NewNullableStringClient() *NullableStringClient {
 	return &NullableStringClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

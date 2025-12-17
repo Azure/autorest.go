@@ -22,8 +22,8 @@ type PageableServerDrivenPaginationClient struct {
 // NewPageableServerDrivenPaginationContinuationTokenClient creates a new instance of [PageableServerDrivenPaginationContinuationTokenClient].
 func (client *PageableServerDrivenPaginationClient) NewPageableServerDrivenPaginationContinuationTokenClient() *PageableServerDrivenPaginationContinuationTokenClient {
 	return &PageableServerDrivenPaginationContinuationTokenClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
