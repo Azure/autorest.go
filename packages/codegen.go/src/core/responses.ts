@@ -153,15 +153,14 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
     let first = true;
 
     if (respEnv.result) {
+      const respType = go.getResultType(respEnv.result);
+      imports.addForType(respType);
       if (respEnv.result.kind === 'modelResult' || respEnv.result.kind === 'polymorphicResult') {
         // anonymously embedded type always goes first
         text += helpers.formatDocComment(respEnv.result.docs);
-        text += `\t${go.getTypeDeclaration(go.getResultType(respEnv.result), respEnv.method.receiver.type.pkg)}\n`;
+        text += `\t${go.getTypeDeclaration(respType, respEnv.method.receiver.type.pkg)}\n`;
         first = false;
       } else {
-        const type = go.getResultType(respEnv.result);
-        imports.addForType(type);
-
         let tag = '';
         if (respEnv.result.kind === 'monomorphicResult' && respEnv.result.format === 'XML') {
           // only emit tags for XML; JSON uses custom marshallers/unmarshallers
@@ -177,7 +176,7 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
           byValue = respEnv.result.byValue;
         }
 
-        fields.push({docs: respEnv.result.docs, field: `\t${respEnv.result.fieldName} ${helpers.star(byValue)}${go.getTypeDeclaration(type, respEnv.method.receiver.type.pkg)}${tag}\n`});
+        fields.push({docs: respEnv.result.docs, field: `\t${respEnv.result.fieldName} ${helpers.star(byValue)}${go.getTypeDeclaration(respType, respEnv.method.receiver.type.pkg)}${tag}\n`});
       }
     }
 
