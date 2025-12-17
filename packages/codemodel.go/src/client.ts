@@ -74,12 +74,14 @@ export type ClientOptionsType = type.ArmClientOptions | ClientOptions;
 export type ClientParameter = ClientCredentialParameter | param.MethodParameter;
 
 /** a client method that returns a sub-client instance */
-export interface ClientAccessor {
+export interface ClientAccessor extends method.Method<Client, Client> {
+  kind: 'clientAccessor';
+
   /** the name of the client accessor method */
   name: string;
 
-  /** the client returned by the accessor method */
-  subClient: Client;
+  /** the method's return type */
+  returns: Client;
 }
 
 /** a credential constructor parameter */
@@ -349,10 +351,11 @@ export class ClientEndpoint implements ClientEndpoint {
   }
 }
 
-export class ClientAccessor implements ClientAccessor {
-  constructor(name: string, subClient: Client) {
-    this.name = name;
-    this.subClient = subClient;
+export class ClientAccessor extends method.Method<Client, Client> implements ClientAccessor {
+  constructor(name: string, client: Client, returns: Client) {
+    super(name, new method.Receiver('client', client, false));
+    this.kind = 'clientAccessor';
+    this.returns = returns;
   }
 }
 
