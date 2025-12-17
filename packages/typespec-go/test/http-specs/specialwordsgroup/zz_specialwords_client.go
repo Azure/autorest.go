@@ -78,31 +78,31 @@ func NewSpecialWordsClientWithNoCredential(endpoint string, options *SpecialWord
 // NewSpecialWordsModelPropertiesClient creates a new instance of [SpecialWordsModelPropertiesClient].
 func (client *SpecialWordsClient) NewSpecialWordsModelPropertiesClient() *SpecialWordsModelPropertiesClient {
 	return &SpecialWordsModelPropertiesClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewSpecialWordsModelsClient creates a new instance of [SpecialWordsModelsClient].
 func (client *SpecialWordsClient) NewSpecialWordsModelsClient() *SpecialWordsModelsClient {
 	return &SpecialWordsModelsClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewSpecialWordsOperationsClient creates a new instance of [SpecialWordsOperationsClient].
 func (client *SpecialWordsClient) NewSpecialWordsOperationsClient() *SpecialWordsOperationsClient {
 	return &SpecialWordsOperationsClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewSpecialWordsParametersClient creates a new instance of [SpecialWordsParametersClient].
 func (client *SpecialWordsClient) NewSpecialWordsParametersClient() *SpecialWordsParametersClient {
 	return &SpecialWordsParametersClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

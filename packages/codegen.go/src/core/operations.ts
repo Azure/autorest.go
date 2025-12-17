@@ -122,13 +122,18 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
       opText += `// ${clientAccessor.name} creates a new instance of [${subClientDecl}].\n`;
       opText += `func (client *${client.name}) ${clientAccessor.name}() *${subClientDecl} {\n`;
       opText += `\treturn &${subClientDecl}{\n`;
-      opText += '\t\tinternal: client.internal,\n';
+      const initFields = new Array<string>('internal: client.internal');
       // propagate all client params
       for (const param of client.parameters) {
         if (go.isLiteralParameter(param.style)) {
           continue;
         }
-        opText += `\t\t${param.name}: client.${param.name},\n`;
+        initFields.push(`${param.name}: client.${param.name}`);
+      }
+
+      initFields.sort();
+      for (const initField of initFields) {
+        opText += `\t\t${initField},\n`;
       }
       opText += '\t}\n}\n\n';
     }

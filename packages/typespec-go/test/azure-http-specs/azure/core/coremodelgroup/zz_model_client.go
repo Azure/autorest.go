@@ -42,7 +42,7 @@ func NewModelClientWithNoCredential(endpoint string, options *ModelClientOptions
 // NewModelAzureCoreEmbeddingVectorClient creates a new instance of [ModelAzureCoreEmbeddingVectorClient].
 func (client *ModelClient) NewModelAzureCoreEmbeddingVectorClient() *ModelAzureCoreEmbeddingVectorClient {
 	return &ModelAzureCoreEmbeddingVectorClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

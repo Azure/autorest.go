@@ -50,8 +50,8 @@ func NewSecondClientWithNoCredential(endpoint string, client ClientType, options
 // NewSecondGroup5Client creates a new instance of [SecondGroup5Client].
 func (client *SecondClient) NewSecondGroup5Client() *SecondGroup5Client {
 	return &SecondGroup5Client{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 

@@ -42,15 +42,15 @@ func NewMoveToExistingSubClientWithNoCredential(endpoint string, options *MoveTo
 // NewMoveToExistingSubAdminOperationsClient creates a new instance of [MoveToExistingSubAdminOperationsClient].
 func (client *MoveToExistingSubClient) NewMoveToExistingSubAdminOperationsClient() *MoveToExistingSubAdminOperationsClient {
 	return &MoveToExistingSubAdminOperationsClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewMoveToExistingSubUserOperationsClient creates a new instance of [MoveToExistingSubUserOperationsClient].
 func (client *MoveToExistingSubClient) NewMoveToExistingSubUserOperationsClient() *MoveToExistingSubUserOperationsClient {
 	return &MoveToExistingSubUserOperationsClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

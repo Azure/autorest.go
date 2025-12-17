@@ -50,8 +50,8 @@ func NewRenamedOperationClientWithNoCredential(endpoint string, client ClientTyp
 // NewRenamedOperationGroupClient creates a new instance of [RenamedOperationGroupClient].
 func (client *RenamedOperationClient) NewRenamedOperationGroupClient() *RenamedOperationGroupClient {
 	return &RenamedOperationGroupClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 

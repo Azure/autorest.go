@@ -42,15 +42,15 @@ func NewMoveToNewSubClientWithNoCredential(endpoint string, options *MoveToNewSu
 // NewMoveToNewSubArchiveOperationsClient creates a new instance of [MoveToNewSubArchiveOperationsClient].
 func (client *MoveToNewSubClient) NewMoveToNewSubArchiveOperationsClient() *MoveToNewSubArchiveOperationsClient {
 	return &MoveToNewSubArchiveOperationsClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewMoveToNewSubProductOperationsClient creates a new instance of [MoveToNewSubProductOperationsClient].
 func (client *MoveToNewSubClient) NewMoveToNewSubProductOperationsClient() *MoveToNewSubProductOperationsClient {
 	return &MoveToNewSubProductOperationsClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

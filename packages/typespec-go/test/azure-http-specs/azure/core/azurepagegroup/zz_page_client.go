@@ -50,8 +50,8 @@ func NewPageClientWithNoCredential(endpoint string, options *PageClientOptions) 
 // NewPageTwoModelsAsPageItemClient creates a new instance of [PageTwoModelsAsPageItemClient].
 func (client *PageClient) NewPageTwoModelsAsPageItemClient() *PageTwoModelsAsPageItemClient {
 	return &PageTwoModelsAsPageItemClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 

@@ -42,55 +42,55 @@ func NewScalarClientWithNoCredential(endpoint string, options *ScalarClientOptio
 // NewScalarBooleanClient creates a new instance of [ScalarBooleanClient].
 func (client *ScalarClient) NewScalarBooleanClient() *ScalarBooleanClient {
 	return &ScalarBooleanClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewScalarDecimal128TypeClient creates a new instance of [ScalarDecimal128TypeClient].
 func (client *ScalarClient) NewScalarDecimal128TypeClient() *ScalarDecimal128TypeClient {
 	return &ScalarDecimal128TypeClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewScalarDecimal128VerifyClient creates a new instance of [ScalarDecimal128VerifyClient].
 func (client *ScalarClient) NewScalarDecimal128VerifyClient() *ScalarDecimal128VerifyClient {
 	return &ScalarDecimal128VerifyClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewScalarDecimalTypeClient creates a new instance of [ScalarDecimalTypeClient].
 func (client *ScalarClient) NewScalarDecimalTypeClient() *ScalarDecimalTypeClient {
 	return &ScalarDecimalTypeClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewScalarDecimalVerifyClient creates a new instance of [ScalarDecimalVerifyClient].
 func (client *ScalarClient) NewScalarDecimalVerifyClient() *ScalarDecimalVerifyClient {
 	return &ScalarDecimalVerifyClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewScalarStringClient creates a new instance of [ScalarStringClient].
 func (client *ScalarClient) NewScalarStringClient() *ScalarStringClient {
 	return &ScalarStringClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewScalarUnknownClient creates a new instance of [ScalarUnknownClient].
 func (client *ScalarClient) NewScalarUnknownClient() *ScalarUnknownClient {
 	return &ScalarUnknownClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

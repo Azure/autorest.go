@@ -45,8 +45,8 @@ func NewMoveToRootClientWithNoCredential(endpoint string, options *MoveToRootCli
 // NewMoveToRootResourceOperationsClient creates a new instance of [MoveToRootResourceOperationsClient].
 func (client *MoveToRootClient) NewMoveToRootResourceOperationsClient() *MoveToRootResourceOperationsClient {
 	return &MoveToRootResourceOperationsClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
