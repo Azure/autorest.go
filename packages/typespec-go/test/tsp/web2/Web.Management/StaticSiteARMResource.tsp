@@ -250,8 +250,10 @@ interface StaticSiteARMResources {
     StaticSiteARMResource,
     void,
     {
-      @body body: DetachStaticSiteResponse;
+      @body body: void;
     },
+    LroHeaders = Azure.Core.Foundations.RetryAfterHeader &
+      ArmLroLocationHeader<FinalResult = void>,
     Error = DefaultErrorResponse
   >;
 

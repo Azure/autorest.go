@@ -54,9 +54,6 @@ union LoadBalancingMode {
   `Web, Publishing`: "Web, Publishing",
 }
 
-model DetachStaticSiteResponse {
-  id: string;
-}
 /**
  * Upgrade Preference
  */
