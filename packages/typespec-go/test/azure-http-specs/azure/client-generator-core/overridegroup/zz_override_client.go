@@ -42,31 +42,31 @@ func NewOverrideClientWithNoCredential(endpoint string, options *OverrideClientO
 // NewOverrideGroupParametersClient creates a new instance of [OverrideGroupParametersClient].
 func (client *OverrideClient) NewOverrideGroupParametersClient() *OverrideGroupParametersClient {
 	return &OverrideGroupParametersClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewOverrideRemoveOptionalParameterClient creates a new instance of [OverrideRemoveOptionalParameterClient].
 func (client *OverrideClient) NewOverrideRemoveOptionalParameterClient() *OverrideRemoveOptionalParameterClient {
 	return &OverrideRemoveOptionalParameterClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewOverrideReorderParametersClient creates a new instance of [OverrideReorderParametersClient].
 func (client *OverrideClient) NewOverrideReorderParametersClient() *OverrideReorderParametersClient {
 	return &OverrideReorderParametersClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewOverrideRequireOptionalParameterClient creates a new instance of [OverrideRequireOptionalParameterClient].
 func (client *OverrideClient) NewOverrideRequireOptionalParameterClient() *OverrideRequireOptionalParameterClient {
 	return &OverrideRequireOptionalParameterClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

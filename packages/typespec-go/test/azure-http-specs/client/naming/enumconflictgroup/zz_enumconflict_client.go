@@ -42,15 +42,15 @@ func NewEnumConflictClientWithNoCredential(endpoint string, options *EnumConflic
 // NewEnumConflictFirstOperationsClient creates a new instance of [EnumConflictFirstOperationsClient].
 func (client *EnumConflictClient) NewEnumConflictFirstOperationsClient() *EnumConflictFirstOperationsClient {
 	return &EnumConflictFirstOperationsClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewEnumConflictSecondOperationsClient creates a new instance of [EnumConflictSecondOperationsClient].
 func (client *EnumConflictClient) NewEnumConflictSecondOperationsClient() *EnumConflictSecondOperationsClient {
 	return &EnumConflictSecondOperationsClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

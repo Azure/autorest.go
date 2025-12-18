@@ -50,7 +50,6 @@ export function getServerName(client: go.Client): string {
  */
 export function generateServers(pkg: go.FakePackage): ServerContent {
   const operations = new Array<OperationGroupContent>();
-  const clientPkg = go.getPackageName(pkg.parent);
   for (const client of values(pkg.parent.clients)) {
     if (client.clientAccessors.length === 0 && values(client.methods).all(method => { return helpers.isMethodInternal(method) })) {
       // client has no client accessors and no exported methods, skip it
@@ -58,7 +57,7 @@ export function generateServers(pkg: go.FakePackage): ServerContent {
     }
 
     // the list of packages to import
-    const imports = new ImportManager();
+    const imports = new ImportManager(pkg);
 
     // add standard imports
     imports.add('errors');
@@ -69,7 +68,7 @@ export function generateServers(pkg: go.FakePackage): ServerContent {
     const serverName = getServerName(client);
 
     let content: string;
-    content = `// ${serverName} is a fake server for instances of the ${clientPkg}.${client.name} type.\n`;
+    content = `// ${serverName} is a fake server for instances of the ${go.getTypeDeclaration(client, pkg)} type.\n`;
     content += `type ${serverName} struct{\n`;
 
     // we might remove some operations from the list
@@ -81,14 +80,14 @@ export function generateServers(pkg: go.FakePackage): ServerContent {
     // we might remove some clients from the list
     const finalSubClients = new Array<go.Client>();
     for (const clientAccessor of client.clientAccessors) {
-      if (values(clientAccessor.subClient.methods).all(method => { return helpers.isMethodInternal(method) })) {
+      if (values(clientAccessor.returns.methods).all(method => { return helpers.isMethodInternal(method) })) {
         // client has no exported methods, skip it
         continue;
       }
-      const serverName = getServerName(clientAccessor.subClient);
-      content += `\t// ${serverName} contains the fakes for client ${clientAccessor.subClient.name}\n`;
+      const serverName = getServerName(clientAccessor.returns);
+      content += `\t// ${serverName} contains the fakes for client ${clientAccessor.returns.name}\n`;
       content += `\t${serverName} ${serverName}\n\n`;
-      finalSubClients.push(clientAccessor.subClient);
+      finalSubClients.push(clientAccessor.returns);
     }
 
     for (const method of values(client.methods)) {
@@ -102,17 +101,17 @@ export function generateServers(pkg: go.FakePackage): ServerContent {
       switch (method.kind) {
         case 'lroMethod':
         case 'lroPageableMethod':
-          let respType = `${clientPkg}.${method.returns.name}`;
+          let respType = go.getTypeDeclaration(method.returns, pkg);
           if (method.kind === 'lroPageableMethod') {
-            respType = `azfake.PagerResponder[${clientPkg}.${method.returns.name}]`;
+            respType = `azfake.PagerResponder[${respType}]`;
           }
           serverResponse = `resp azfake.PollerResponder[${respType}], errResp azfake.ErrorResponder`;
           break;
         case 'method':
-          serverResponse = `resp azfake.Responder[${clientPkg}.${method.returns.name}], errResp azfake.ErrorResponder`;
+          serverResponse = `resp azfake.Responder[${go.getTypeDeclaration(method.returns, pkg)}], errResp azfake.ErrorResponder`;
           break;
         case 'pageableMethod':
-          serverResponse = `resp azfake.PagerResponder[${clientPkg}.${method.returns.name}]`;
+          serverResponse = `resp azfake.PagerResponder[${go.getTypeDeclaration(method.returns, pkg)}]`;
           break;
       }
 
@@ -127,7 +126,7 @@ export function generateServers(pkg: go.FakePackage): ServerContent {
             successCodes.push(`${helpers.formatStatusCode(httpStatus)} (no return type)`);
             continue;
           }
-          successCodes.push(`${helpers.formatStatusCode(httpStatus)} (returns ${go.getTypeDeclaration(result, clientPkg)})`);
+          successCodes.push(`${helpers.formatStatusCode(httpStatus)} (returns ${go.getTypeDeclaration(result, pkg)})`);
         }
         content += '\t// HTTP status codes to indicate success:\n';
         for (const successCode of successCodes) {
@@ -139,7 +138,7 @@ export function generateServers(pkg: go.FakePackage): ServerContent {
         }
         content += `\t// HTTP status codes to indicate success: ${successCodes.join(', ')}\n`;
       }
-      content += `\t${operationName} func(${getAPIParametersSig(method, imports, clientPkg)}) (${serverResponse})\n\n`;
+      content += `\t${operationName} func(${getAPIParametersSig(pkg, method, imports)}) (${serverResponse})\n\n`;
       finalMethods.push(method);
       switch (method.kind) {
         case 'lroMethod':
@@ -159,7 +158,7 @@ export function generateServers(pkg: go.FakePackage): ServerContent {
     const serverTransport = `${serverName}Transport`;
 
     content += `// New${serverTransport} creates a new instance of ${serverTransport} with the provided implementation.\n`;
-    content += `// The returned ${serverTransport} instance is connected to an instance of ${clientPkg}.${client.name} via the\n`;
+    content += `// The returned ${serverTransport} instance is connected to an instance of ${go.getTypeDeclaration(client, pkg)} via the\n`;
     content += '// azcore.ClientOptions.Transporter field in the client\'s constructor parameters.\n';
     content += `func New${serverTransport}(srv *${serverName}) *${serverTransport} {\n`;
     if (countLROs === 0 && countPagers === 0) {
@@ -167,12 +166,12 @@ export function generateServers(pkg: go.FakePackage): ServerContent {
     } else {
       content += `\treturn &${serverTransport}{\n\t\tsrv: srv,\n`;
       for (const method of values(finalMethods)) {
-        let respType = `${clientPkg}.${method.returns.name}`;
+        let respType = go.getTypeDeclaration(method.returns, pkg);
         switch (method.kind) {
           case 'lroMethod':
           case 'lroPageableMethod':
             if (method.kind === 'lroPageableMethod') {
-              respType = `azfake.PagerResponder[${clientPkg}.${method.returns.name}]`;
+              respType = `azfake.PagerResponder[${go.getTypeDeclaration(method.returns, pkg)}]`;
             }
             requiredHelpers.tracker = true;
             content += `\t\t${uncapitalize(fixUpMethodName(method))}: newTracker[azfake.PollerResponder[${respType}]](),\n`;
@@ -186,7 +185,7 @@ export function generateServers(pkg: go.FakePackage): ServerContent {
       content += '\t}\n}\n\n';
     }
 
-    content += `// ${serverTransport} connects instances of ${clientPkg}.${client.name} to instances of ${serverName}.\n`;
+    content += `// ${serverTransport} connects instances of ${go.getTypeDeclaration(client, pkg)} to instances of ${serverName}.\n`;
     content += `// Don't use this type directly, use New${serverTransport} instead.\n`;
     content += `type ${serverTransport} struct {\n`;
     content += `\tsrv *${serverName}\n`;
@@ -204,19 +203,19 @@ export function generateServers(pkg: go.FakePackage): ServerContent {
 
     for (const method of values(finalMethods)) {
       // create state machines for any pager/poller operations
-      let respType = `${clientPkg}.${method.returns.name}`;
+      let respType = go.getTypeDeclaration(method.returns, pkg);
       switch (method.kind) {
         case 'lroMethod':
         case 'lroPageableMethod':
           if (method.kind === 'lroPageableMethod') {
-            respType = `azfake.PagerResponder[${clientPkg}.${method.returns.name}]`;
+            respType = `azfake.PagerResponder[${go.getTypeDeclaration(method.returns, pkg)}]`;
           }
           requiredHelpers.tracker = true;
           content += `\t${uncapitalize(fixUpMethodName(method))} *tracker[azfake.PollerResponder[${respType}]]\n`;
           break;
         case 'pageableMethod':
           requiredHelpers.tracker = true;
-          content += `\t${uncapitalize(fixUpMethodName(method))} *tracker[azfake.PagerResponder[${clientPkg}.${method.returns.name}]]\n`;
+          content += `\t${uncapitalize(fixUpMethodName(method))} *tracker[azfake.PagerResponder[${go.getTypeDeclaration(method.returns, pkg)}]]\n`;
           break;
       }
     }
@@ -225,7 +224,7 @@ export function generateServers(pkg: go.FakePackage): ServerContent {
     content += generateServerTransportDo(serverTransport, client, finalSubClients, finalMethods);
     content += generateServerTransportClientDispatch(serverTransport, finalSubClients, imports);
     content += generateServerTransportMethodDispatch(serverTransport, client, finalMethods);
-    content += generateServerTransportMethods(pkg.parent, serverTransport, finalMethods, imports);
+    content += generateServerTransportMethods(pkg, serverTransport, finalMethods, imports);
 
     content += `// set this to conditionally intercept incoming requests to ${serverTransport}\n`;
     content += `var ${getTransportInterceptorVarName(client)} interface {\n`;
@@ -339,16 +338,24 @@ function generateServerTransportMethodDispatch(serverTransport: string, client: 
   return content;
 }
 
-function generateServerTransportMethods(pkg: go.PackageContent, serverTransport: string, finalMethods: Array<go.MethodType>, imports: ImportManager): string {
+/**
+ * generates the server transport methods for a fake server transport
+ * 
+ * @param pkg contains the package content
+ * @param serverTransport the name of the server transport type
+ * @param finalMethods the array of methods for which to generate the fake transports
+ * @param imports the import manager currently in scope
+ * @returns the text for the server transport methods
+ */
+function generateServerTransportMethods(pkg: go.FakePackage, serverTransport: string, finalMethods: Array<go.MethodType>, imports: ImportManager): string {
   if (finalMethods.length === 0) {
     return '';
   }
 
-  imports.addForPkg(pkg);
+  imports.addForPkg(pkg.parent);
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server');
 
-  const clientPkg = go.getPackageName(pkg);
   const receiverName = serverTransport[0].toLowerCase();
 
   let content = '';
@@ -361,10 +368,10 @@ function generateServerTransportMethods(pkg: go.PackageContent, serverTransport:
       case 'lroMethod':
       case 'lroPageableMethod':
         // must check LRO before pager as you can have paged LROs
-        content += dispatchForLROBody(clientPkg, receiverName, method, imports);
+        content += dispatchForLROBody(pkg, receiverName, method, imports);
         break;
       case 'method': {
-        content += dispatchForOperationBody(clientPkg, receiverName, method, imports);
+        content += dispatchForOperationBody(pkg, receiverName, method, imports);
         content += '\trespContent := server.GetResponseContent(respr)\n';
         const formattedStatusCodes = helpers.formatStatusCodes(method.httpStatusCodes);
         content += `\tif !contains([]int{${formattedStatusCodes}}, respContent.HTTPStatus) {\n`;
@@ -426,7 +433,7 @@ function generateServerTransportMethods(pkg: go.PackageContent, serverTransport:
         break;
       }
       case 'pageableMethod':
-        content += dispatchForPagerBody(clientPkg, receiverName, method, imports);
+        content += dispatchForPagerBody(pkg, receiverName, method, imports);
         break;
       default:
         method satisfies never;
@@ -437,7 +444,17 @@ function generateServerTransportMethods(pkg: go.PackageContent, serverTransport:
   return content;
 }
 
-function dispatchForOperationBody(clientPkg: string, receiverName: string, method: go.MethodType, imports: ImportManager): string {
+/**
+ * generates the core dispatching logic for a server dispatch method.
+ * this code is common to all method types.
+ * 
+ * @param pkg contains the package content
+ * @param receiverName the name of the receiver for the dispatch method
+ * @param method the method for which to emit dispatching logic
+ * @param imports the import manager currently in scope
+ * @returns the text for dispatching logic
+ */
+function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, method: go.MethodType, imports: ImportManager): string {
   const methodParamGroups = helpers.getMethodParamGroups(method);
   const numPathParams = values(methodParamGroups.pathParams).where((each: go.PathParameter) => { return !go.isLiteralParameter(each.style); }).count();
   let content = '';
@@ -488,7 +505,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
               content += '\treq.Body.Close()\n';
               break;
             default: {
-              let bodyTypeName = go.getTypeDeclaration(bodyParam.type, clientPkg);
+              let bodyTypeName = go.getTypeDeclaration(bodyParam.type, pkg);
               if (bodyParam.type.kind === 'time') {
                 bodyTypeName = bodyParam.type.format;
               }
@@ -515,15 +532,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     content += '\treader := multipart.NewReader(req.Body, params["boundary"])\n';
     for (const param of multipartBodyParams) {
-      let pkgPrefix = '';
-      switch (param.type.kind) {
-        case 'constant':
-        case 'model':
-        case 'polymorphicModel':
-          pkgPrefix = clientPkg + '.';
-          break;
-      }
-      content += `\tvar ${param.name} ${pkgPrefix}${go.getTypeDeclaration(param.type)}\n`;
+      content += `\tvar ${param.name} ${go.getTypeDeclaration(param.type, pkg)}\n`;
     }
 
     content += '\tfor {\n';
@@ -600,7 +609,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
             from = 'content';
             break;
         }
-        assignedValue = `${clientPkg}.${type.name}(${from})`;
+        assignedValue = `${go.getTypeDeclaration(type, pkg)}(${from})`;
       } else if (type.kind === 'scalar') {
         switch (type.type) {
           case 'bool':
@@ -671,11 +680,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     content += '\t}\n'; // end for
   } else if (formBodyParams.length > 0) {
     for (const param of formBodyParams) {
-      let pkgPrefix = '';
-      if (param.type.kind === 'constant') {
-        pkgPrefix = clientPkg + '.';
-      }
-      content += `\tvar ${param.name} ${pkgPrefix}${go.getTypeDeclaration(param.type)}\n`;
+      content += `\tvar ${param.name} ${go.getTypeDeclaration(param.type, pkg)}\n`;
     }
     content += '\tif err := req.ParseForm(); err != nil {\n\t\treturn nil, &nonRetriableError{fmt.Errorf("failed parsing form data: %v", err)}\n\t}\n';
     content += '\tfor key := range req.Form {\n';
@@ -685,7 +690,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
       let assignedValue: string;
       switch (param.type.kind) {
         case 'constant':
-          assignedValue = `${go.getTypeDeclaration(param.type, clientPkg)}(req.FormValue(key))`;
+          assignedValue = `${go.getTypeDeclaration(param.type, pkg)}(req.FormValue(key))`;
           break;
         case 'string':
           assignedValue = 'req.FormValue(key)';
@@ -701,14 +706,14 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     // construct the partial body params type and unmarshal it
     content += '\ttype partialBodyParams struct {\n';
     for (const partialBodyParam of partialBodyParams) {
-      content += `\t\t${capitalize(partialBodyParam.name)} ${helpers.star(partialBodyParam.byValue)}${go.getTypeDeclaration(partialBodyParam.type, clientPkg)} \`json:"${partialBodyParam.serializedName}"\`\n`;
+      content += `\t\t${capitalize(partialBodyParam.name)} ${helpers.star(partialBodyParam.byValue)}${go.getTypeDeclaration(partialBodyParam.type, pkg)} \`json:"${partialBodyParam.serializedName}"\`\n`;
     }
     content += '\t}\n';
     content += `\tbody, err := server.UnmarshalRequestAs${partialBodyParams[0].format}[partialBodyParams](req)\n`;
     content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
   }
 
-  const result = parseHeaderPathQueryParams(clientPkg, method, imports);
+  const result = parseHeaderPathQueryParams(pkg, method, imports);
   content += result.content;
 
   // translate each partial body param to its field within the unmarshalled body
@@ -716,7 +721,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     result.params.set(partialBodyParam.name, `${helpers.star(partialBodyParam.byValue)}body.${capitalize(partialBodyParam.name)}`);
   }
 
-  const apiCall = `:= ${receiverName}.srv.${fixUpMethodName(method)}(${populateApiParams(clientPkg, method, result.params, imports)})`;
+  const apiCall = `:= ${receiverName}.srv.${fixUpMethodName(method)}(${populateApiParams(pkg, method, result.params, imports)})`;
   if (method.kind === 'pageableMethod') {
     content += `resp ${apiCall}\n`;
     return content;
@@ -746,13 +751,22 @@ function getMethodStatusCodes(method: go.MethodType): Array<number> {
   return statusCodes;
 }
 
-function dispatchForLROBody(clientPkg: string, receiverName: string, method: go.LROMethod | go.LROPageableMethod, imports: ImportManager): string {
+/**
+ * generates the dispatching logic for an LRO server dispatch method
+ * 
+ * @param pkg contains the package contents
+ * @param receiverName the name of the receiver for the dispatch method
+ * @param method the LRO method for which to emit the dispatch logic
+ * @param imports the import manager currently in scope
+ * @returns the text for the LRO dispatch logic
+ */
+function dispatchForLROBody(pkg: go.FakePackage, receiverName: string, method: go.LROMethod | go.LROPageableMethod, imports: ImportManager): string {
   const operationName = fixUpMethodName(method);
   const localVarName = uncapitalize(operationName);
   const operationStateMachine = `${receiverName}.${uncapitalize(operationName)}`;
   let content = `\t${localVarName} := ${operationStateMachine}.get(req)\n`;
   content += `\tif ${localVarName} == nil {\n`;
-  content += dispatchForOperationBody(clientPkg, receiverName, method, imports);
+  content += dispatchForOperationBody(pkg, receiverName, method, imports);
   content += `\t\t${localVarName} = &respr\n`;
   content += `\t\t${operationStateMachine}.add(req, ${localVarName})\n`;
   content += '\t}\n\n';
@@ -771,18 +785,27 @@ function dispatchForLROBody(clientPkg: string, receiverName: string, method: go.
   return content;
 }
 
-function dispatchForPagerBody(clientPkg: string, receiverName: string, method: go.PageableMethod, imports: ImportManager): string {
+/**
+ * generates the dispatching logic for a paged server dispatch method
+ * 
+ * @param pkg contains the package contents
+ * @param receiverName the name of the receiver for the dispatch method
+ * @param method the pageable method for which to emit the dispatch logic
+ * @param imports the import manager currently in scope
+ * @returns the text for the pageable dispatch logic
+ */
+function dispatchForPagerBody(pkg: go.FakePackage, receiverName: string, method: go.PageableMethod, imports: ImportManager): string {
   const operationName = fixUpMethodName(method);
   const localVarName = uncapitalize(operationName);
   const operationStateMachine = `${receiverName}.${uncapitalize(operationName)}`;
   let content = `\t${localVarName} := ${operationStateMachine}.get(req)\n`;
   content += `\tif ${localVarName} == nil {\n`;
-  content += dispatchForOperationBody(clientPkg, receiverName, method, imports);
+  content += dispatchForOperationBody(pkg, receiverName, method, imports);
   content += `\t\t${localVarName} = &resp\n`;
   content += `\t\t${operationStateMachine}.add(req, ${localVarName})\n`;
   if (method.nextLinkName) {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
-    content += `\t\tserver.PagerResponderInjectNextLinks(${localVarName}, req, func(page *${clientPkg}.${method.returns.name}, createLink func() string) {\n`;
+    content += `\t\tserver.PagerResponderInjectNextLinks(${localVarName}, req, func(page *${go.getTypeDeclaration(method.returns, pkg)}, createLink func() string) {\n`;
     content += `\t\t\tpage.${method.nextLinkName} = to.Ptr(createLink())\n`;
     content += '\t\t})\n';
   }
@@ -835,9 +858,15 @@ interface parseResult {
   params: Map<string, string>;
 }
 
-// parses header/path/query params as required.
-// returns the parsing code and the params that contain the parsed values.
-function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, imports: ImportManager): parseResult {
+/**
+ * parses header/path/query params as required
+ * 
+ * @param pkg contains the package contents
+ * @param method the method for which to emit parameter parsing logic
+ * @param imports the import manager currently in scope
+ * @returns the parsing code and the params that contain the parsed values
+ */
+function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, imports: ImportManager): parseResult {
   let content = '';
   const paramValues = new Map<string, string>();
 
@@ -936,10 +965,10 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
         // for string-based enums, we perform the conversion as part of unescaping
         requiredHelpers.parseWithCast = true;
         paramVar = createLocalVariableName(param, 'Param');
-        content += `\t${paramVar}, err := parseWithCast(${paramValue}, func (v string) (${go.getTypeDeclaration(param.type, clientPkg)}, error) {\n`;
+        content += `\t${paramVar}, err := parseWithCast(${paramValue}, func (v string) (${go.getTypeDeclaration(param.type, pkg)}, error) {\n`;
         content += `\t\tp, unescapeErr := url.${where}Unescape(v)\n`;
         content += '\t\tif unescapeErr != nil {\n\t\t\treturn "", unescapeErr\n\t\t}\n';
-        content += `\t\treturn ${go.getTypeDeclaration(param.type, clientPkg)}(p), nil\n\t})\n`;
+        content += `\t\treturn ${go.getTypeDeclaration(param.type, pkg)}(p), nil\n\t})\n`;
       } else {
         if (go.isRequiredParameter(param.style) &&
           (param.type.kind === 'string' || (param.type.kind === 'slice' && param.type.elementType.kind === 'string'))) {
@@ -982,10 +1011,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
             throw new CodegenError('InternalError', `unhandled element kind ${param.type.elementType.kind}`);
         }
 
-        let toType = go.getTypeDeclaration(param.type.elementType);
-        if (param.type.elementType.kind === 'constant') {
-          toType = `${clientPkg}.${toType}`;
-        }
+        const toType = go.getTypeDeclaration(param.type.elementType, pkg);
         content += `\t${paramVar} := make([]${toType}, len(${paramValue}))\n`;
         content += `\tfor i := 0; i < len(${paramValue}); i++ {\n`;
         let fromVar: string;
@@ -1147,7 +1173,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
         parse = emitNumericConversion('v', param.type.type);
         zeroValue = '0';
       }
-      const toConstType = go.getTypeDeclaration(param.type, clientPkg);
+      const toConstType = go.getTypeDeclaration(param.type, pkg);
       content += `\t${createLocalVariableName(param, 'Param')}, err := ${parseHelper}(${paramValue}, func(v string) (${toConstType}, error) {\n`;
       content += `\t\tp, parseErr := ${parse}\n`;
       content += `\t\tif parseErr != nil {\n\t\t\treturn ${zeroValue}, parseErr\n\t\t}\n`;
@@ -1157,7 +1183,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
       // we check this last as it's a superset of the previous conditions
       requiredHelpers.getOptional = true;
       if (param.type.kind === 'constant') {
-        paramValue = `${go.getTypeDeclaration(param.type, clientPkg)}(${paramValue})`;
+        paramValue = `${go.getTypeDeclaration(param.type, pkg)}(${paramValue})`;
       }
       content += `\t${createLocalVariableName(param, 'Param')} := getOptional(${paramValue})\n`;
     }
@@ -1166,19 +1192,19 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
   // create the param groups and populate their values
   for (const paramGroup of values(paramGroups.keys())) {
     if (paramGroup.required) {
-      content += `\t${uncapitalize(paramGroup.name)} := ${clientPkg}.${paramGroup.groupName}{\n`;
+      content += `\t${uncapitalize(paramGroup.name)} := ${go.getTypeDeclaration(paramGroup, pkg)}{\n`;
       for (const param of values(paramGroups.get(paramGroup))) {
-        content += `\t\t${capitalize(param.name)}: ${getFinalParamValue(clientPkg, param, paramValues)},\n`;
+        content += `\t\t${capitalize(param.name)}: ${getFinalParamValue(pkg, param, paramValues)},\n`;
       }
       content += '\t}\n';
     } else {
-      content += `\tvar ${uncapitalize(paramGroup.name)} *${clientPkg}.${paramGroup.groupName}\n`;
+      content += `\tvar ${uncapitalize(paramGroup.name)} *${go.getTypeDeclaration(paramGroup, pkg)}\n`;
       const params = paramGroups.get(paramGroup);
       const paramNilCheck = new Array<string>();
       for (const param of values(params)) {
         // check array before body in case the body is just an array
         if (param.type.kind === 'slice') {
-          paramNilCheck.push(`len(${getFinalParamValue(clientPkg, param, paramValues)}) > 0`);
+          paramNilCheck.push(`len(${getFinalParamValue(pkg, param, paramValues)}) > 0`);
         } else if (param.kind === 'bodyParam') {
           if (param.bodyFormat === 'binary') {
             imports.add('io');
@@ -1191,17 +1217,17 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
           imports.add('reflect');
           paramNilCheck.push(`!reflect.ValueOf(${param.name}).IsZero()`);
         } else {
-          paramNilCheck.push(`${getFinalParamValue(clientPkg, param, paramValues)} != nil`);
+          paramNilCheck.push(`${getFinalParamValue(pkg, param, paramValues)} != nil`);
         }
       }
       content += `\tif ${paramNilCheck.join(' || ')} {\n`;
-      content += `\t\t${uncapitalize(paramGroup.name)} = &${clientPkg}.${paramGroup.groupName}{\n`;
+      content += `\t\t${uncapitalize(paramGroup.name)} = &${go.getTypeDeclaration(paramGroup, pkg)}{\n`;
       for (const param of values(params)) {
         let byRef = '&';
         if (param.byValue || (!go.isRequiredParameter(param.style) && param.kind !== 'bodyParam' && !go.isFormBodyParameter(param) && param.kind !== 'multipartFormBodyParam')) {
           byRef = '';
         }
-        content += `\t\t\t${capitalize(param.name)}: ${byRef}${getFinalParamValue(clientPkg, param, paramValues)},\n`;
+        content += `\t\t\t${capitalize(param.name)}: ${byRef}${getFinalParamValue(pkg, param, paramValues)},\n`;
       }
       content += '\t\t}\n';
       content += '\t}\n';
@@ -1214,8 +1240,16 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.MethodType, im
   };
 }
 
-// works in conjunction with parseHeaderPathQueryParams
-function populateApiParams(clientPkg: string, method: go.MethodType, paramValues: Map<string, string>, imports: ImportManager): string {
+/**
+ * generates the code to populate the method parameters that get passed to the fake
+ * 
+ * @param pkg contains the package contents
+ * @param method the method to be called with the parsed parameters
+ * @param paramValues maps a parameter name to the value to be passed to the fake
+ * @param imports the import manager currently in scope
+ * @returns the text for the parameters to be passed to the fake
+ */
+function populateApiParams(pkg: go.FakePackage, method: go.MethodType, paramValues: Map<string, string>, imports: ImportManager): string {
   // FooOperation(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], qp.Get("api-version"), nil)
   // this assumes that our caller has created matches and qp as required
   const params = new Array<string>();
@@ -1243,8 +1277,8 @@ function populateApiParams(clientPkg: string, method: go.MethodType, paramValues
       params.push(uncapitalize(param.name));
       continue;
     }
-    imports.addImportForType(param.type);
-    params.push(getFinalParamValue(clientPkg, param, paramValues));
+    imports.addForType(param.type);
+    params.push(getFinalParamValue(pkg, param, paramValues));
   }
 
   return params.join(', ');
@@ -1292,8 +1326,17 @@ function getRawParamValue(param: go.MethodParameter): string {
   }
 }
 
-// getFinalParamValue returns the "final" value of param to be passed to the fake.
-function getFinalParamValue(clientPkg: string, param: go.MethodParameter, paramValues: Map<string, string>): string {
+/**
+ * returns the final value of param to be passed to the fake.
+ * this is usually the value in paramValues but can be slightly
+ * different for some cases.
+ * 
+ * @param pkg the contents of the package
+ * @param param the parameter being evaluated
+ * @param paramValues maps a parameter name to the value to be passed to the fake
+ * @returns the value to pass for the provided parameter
+ */
+function getFinalParamValue(pkg: go.FakePackage, param: go.MethodParameter, paramValues: Map<string, string>): string {
   let paramValue = paramValues.get(param.name);
   if (!paramValue) {
     // the param didn't require parsing so the "raw" value can be used
@@ -1316,7 +1359,7 @@ function getFinalParamValue(clientPkg: string, param: go.MethodParameter, paramV
       }
     } else if (go.isHeaderParameter(param) && param.type.kind === 'constant' && param.type.type === 'string') {
       // since headers aren't escaped, we cast required, string-based enums inline
-      return `${go.getTypeDeclaration(param.type, clientPkg)}(${paramValue})`;
+      return `${go.getTypeDeclaration(param.type, pkg)}(${paramValue})`;
     }
   } else if (param.kind === 'partialBodyParam') {
     // use the value from the unmarshaled, intermediate struct type
@@ -1352,8 +1395,15 @@ function consolidateHostParams(params: Array<go.MethodParameter>): Array<go.Meth
   return consolidatedParams;
 }
 
-// copied from generator/operations.ts but with a slight tweak to consolidate host parameters
-function getAPIParametersSig(method: go.MethodType, imports: ImportManager, pkgName?: string): string {
+/**
+ * copied from generator/operations.ts but with a slight tweak to consolidate host parameters
+ * 
+ * @param pkg the contents of the package
+ * @param method the method for which to generate the parameter signature
+ * @param imports the import manager currently in scope
+ * @returns the text for the method's parameter signature
+ */
+function getAPIParametersSig(pkg: go.FakePackage, method: go.MethodType, imports: ImportManager): string {
   const methodParams = helpers.getMethodParameters(method, consolidateHostParams);
   const params = new Array<string>();
   if (method.kind !== 'pageableMethod') {
@@ -1365,7 +1415,7 @@ function getAPIParametersSig(method: go.MethodType, imports: ImportManager, pkgN
     if (methodParam.kind === 'uriParam') {
       paramName = 'host';
     }
-    params.push(`${paramName} ${helpers.formatParameterTypeName(methodParam, pkgName)}`);
+    params.push(`${paramName} ${helpers.formatParameterTypeName(pkg, methodParam)}`);
   }
   return params.join(', ');
 }

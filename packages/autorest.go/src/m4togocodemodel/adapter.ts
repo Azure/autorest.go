@@ -88,7 +88,7 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
       // adapt all of the parameter groups
       for (const groupName of paramGroups.keys()) {
         const paramGroup = paramGroups.get(groupName);
-        pkg.paramGroups.push(adaptParameterGroup(paramGroup!));
+        pkg.paramGroups.push(adaptParameterGroup(pkg, paramGroup!));
       }
     }
 
@@ -106,26 +106,26 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
   }
 }
 
-function adaptConstantTypes(m4CodeModel: m4.CodeModel, pkg: go.PackageContent) {
+function adaptConstantTypes(m4CodeModel: m4.CodeModel, pkg: go.PackageContent): void {
   // group all enum categories into a single array so they can be sorted
   for (const choice of values(m4CodeModel.schemas.choices)) {
     if (choice.language.go!.omitType) {
       continue;
     }
-    const constType = adaptConstantType(choice);
+    const constType = adaptConstantType(choice, pkg);
     pkg.constants.push(constType);
   }
   for (const choice of values(m4CodeModel.schemas.sealedChoices)) {
     if (choice.language.go!.omitType || choice.choices.length === 1) {
       continue;
     }
-    const constType = adaptConstantType(choice);
+    const constType = adaptConstantType(choice, pkg);
     pkg.constants.push(constType);
   }
 }
 
-function adaptParameterGroup(paramGroup: go.ParameterGroup): go.Struct {
-  const structType = new go.Struct(paramGroup.groupName);
+function adaptParameterGroup(pkg: go.PackageContent, paramGroup: go.ParameterGroup): go.Struct {
+  const structType = new go.Struct(pkg, paramGroup.groupName);
   structType.docs = paramGroup.docs;
   if (paramGroup.params.length > 0) {
     for (const param of values(paramGroup.params)) {
@@ -166,22 +166,22 @@ function adaptInterfaceTypes(m4CodeModel: m4.CodeModel, pkg: go.PackageContent) 
     }
     // we must adapt all InterfaceTypes first. this is because ModelTypes/PolymorphicTypes can
     // contain references to InterfaceTypes and/or cyclic references
-    recursiveAdaptInterfaceType(discriminator, pkg.interfaces, ifaceObjs);
+    recursiveAdaptInterfaceType(discriminator, pkg.interfaces, ifaceObjs, pkg);
   }
 
   // now that the InterfaceTypes have been created, we can populate the rootType and possibleTypes
   for (const ifaceObj of values(ifaceObjs)) {
-    ifaceObj.iface.rootType = <go.PolymorphicModel>adaptModel(ifaceObj.obj);
+    ifaceObj.iface.rootType = <go.PolymorphicModel>adaptModel(ifaceObj.obj, pkg);
     ifaceObj.iface.possibleTypes = new Array<go.PolymorphicModel>();
     for (const disc of values(ifaceObj.obj.discriminator!.all)) {
-      const possibleType = adaptModel(<m4.ObjectSchema>disc);
+      const possibleType = adaptModel(<m4.ObjectSchema>disc, pkg);
       ifaceObj.iface.possibleTypes.push(<go.PolymorphicModel>possibleType);
     }
   }
 }
 
-function recursiveAdaptInterfaceType(obj: m4.ObjectSchema, ifaces: Array<go.Interface>, ifaceObjs: Array<InterfaceTypeObjectSchema>, parent?: go.Interface) {
-  const iface = adaptInterfaceType(obj, parent);
+function recursiveAdaptInterfaceType(obj: m4.ObjectSchema, ifaces: Array<go.Interface>, ifaceObjs: Array<InterfaceTypeObjectSchema>, pkg: go.PackageContent, parent?: go.Interface) {
+  const iface = adaptInterfaceType(obj, pkg, parent);
   if (ifaces.includes(iface)) {
     return;
   }
@@ -191,7 +191,7 @@ function recursiveAdaptInterfaceType(obj: m4.ObjectSchema, ifaces: Array<go.Inte
   for (const val of values(obj.discriminator!.immediate)) {
     const asObj = <m4.ObjectSchema>val;
     if (asObj.discriminator) {
-      recursiveAdaptInterfaceType(asObj, ifaces, ifaceObjs, iface);
+      recursiveAdaptInterfaceType(asObj, ifaces, ifaceObjs, pkg, iface);
     }
   }
 }
@@ -208,7 +208,7 @@ function adaptModels(m4CodeModel: m4.CodeModel, pkg: go.PackageContent) {
       continue;
     }
     // we must adapt all model types first. this is because models can contain cyclic references
-    const modelType = adaptModel(obj);
+    const modelType = adaptModel(obj, pkg);
     pkg.models.push(modelType);
     modelObjs.push({type: modelType, obj: obj});
   }
@@ -216,7 +216,7 @@ function adaptModels(m4CodeModel: m4.CodeModel, pkg: go.PackageContent) {
   for (const modelObj of values(modelObjs)) {
     const props = aggregateProperties(modelObj.obj);
     for (const prop of values(props)) {
-      const field = adaptModelField(prop, modelObj.obj);
+      const field = adaptModelField(prop, modelObj.obj, pkg);
       modelObj.type.fields.push(field);
     }
   }

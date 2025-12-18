@@ -1,6 +1,16 @@
 # Release History
 
-## 0.8.8 (unreleased)
+## 0.8.9 (unreleased)
+
+### Features Added
+
+* Added support for client initializers with parameters.
+
+## 0.8.8 (2025-12-17)
+
+### Bugs Fixed
+
+* Fixed mismatch for LRO polling headers in example generation.
 
 ### Features Added
 

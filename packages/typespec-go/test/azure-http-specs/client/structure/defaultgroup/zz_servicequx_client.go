@@ -22,8 +22,8 @@ type ServiceQuxClient struct {
 // NewServiceQuxBarClient creates a new instance of [ServiceQuxBarClient].
 func (client *ServiceQuxClient) NewServiceQuxBarClient() *ServiceQuxBarClient {
 	return &ServiceQuxBarClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 

@@ -14,3 +14,9 @@ type BodyRootsClientGetResponse struct {
 	// Body root resource.
 	BodyRoot
 }
+
+// LROClientOkResponseWithAsyncHeaderResponse contains the response from method LROClient.BeginOkResponseWithAsyncHeader.
+type LROClientOkResponseWithAsyncHeaderResponse struct {
+	// LRO model resource.
+	LROModel
+}

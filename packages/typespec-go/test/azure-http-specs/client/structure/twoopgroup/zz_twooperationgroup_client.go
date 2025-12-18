@@ -47,15 +47,15 @@ func NewTwoOperationGroupClientWithNoCredential(endpoint string, client ClientTy
 // NewTwoOperationGroupGroup1Client creates a new instance of [TwoOperationGroupGroup1Client].
 func (client *TwoOperationGroupClient) NewTwoOperationGroupGroup1Client() *TwoOperationGroupGroup1Client {
 	return &TwoOperationGroupGroup1Client{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewTwoOperationGroupGroup2Client creates a new instance of [TwoOperationGroupGroup2Client].
 func (client *TwoOperationGroupClient) NewTwoOperationGroupGroup2Client() *TwoOperationGroupGroup2Client {
 	return &TwoOperationGroupGroup2Client{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

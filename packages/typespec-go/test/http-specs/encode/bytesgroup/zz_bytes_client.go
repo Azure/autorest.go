@@ -42,39 +42,39 @@ func NewBytesClientWithNoCredential(endpoint string, options *BytesClientOptions
 // NewBytesHeaderClient creates a new instance of [BytesHeaderClient].
 func (client *BytesClient) NewBytesHeaderClient() *BytesHeaderClient {
 	return &BytesHeaderClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewBytesPropertyClient creates a new instance of [BytesPropertyClient].
 func (client *BytesClient) NewBytesPropertyClient() *BytesPropertyClient {
 	return &BytesPropertyClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewBytesQueryClient creates a new instance of [BytesQueryClient].
 func (client *BytesClient) NewBytesQueryClient() *BytesQueryClient {
 	return &BytesQueryClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewBytesRequestBodyClient creates a new instance of [BytesRequestBodyClient].
 func (client *BytesClient) NewBytesRequestBodyClient() *BytesRequestBodyClient {
 	return &BytesRequestBodyClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewBytesResponseBodyClient creates a new instance of [BytesResponseBodyClient].
 func (client *BytesClient) NewBytesResponseBodyClient() *BytesResponseBodyClient {
 	return &BytesResponseBodyClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

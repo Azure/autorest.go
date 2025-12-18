@@ -42,15 +42,15 @@ func NewBasicClientWithNoCredential(endpoint string, options *BasicClientOptions
 // NewBasicExplicitBodyClient creates a new instance of [BasicExplicitBodyClient].
 func (client *BasicClient) NewBasicExplicitBodyClient() *BasicExplicitBodyClient {
 	return &BasicExplicitBodyClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewBasicImplicitBodyClient creates a new instance of [BasicImplicitBodyClient].
 func (client *BasicClient) NewBasicImplicitBodyClient() *BasicImplicitBodyClient {
 	return &BasicImplicitBodyClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

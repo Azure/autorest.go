@@ -82,7 +82,7 @@ const azureHttpSpecsGroup = {
   'coreusagegroup': ['azure/client-generator-core/usage'],
   'overridegroup': ['azure/client-generator-core/override/client.tsp'],
   'hierarchygroup': ['azure/client-generator-core/hierarchy-building'],
-  // 'clientinitializationgroup': ['azure/client-generator-core/client-initialization'],
+  'clientinitgroup': ['azure/client-generator-core/client-initialization'],
   'apiversionheadergroup' : ['azure/client-generator-core/api-version/header/client.tsp'],
   'apiversionpathgroup' : ['azure/client-generator-core/api-version/path/client.tsp'],
   'apiversionquerygroup' : ['azure/client-generator-core/api-version/query/client.tsp'],
@@ -92,7 +92,10 @@ const azureHttpSpecsGroup = {
   'azurepagegroup': ['azure/core/page/client.tsp'], // requires paging with re-injection support
   'corescalargroup': ['azure/core/scalar'],
   'coremodelgroup': ['azure/core/model'],
-  'coreclientlocationgroup': ['azure/client-generator-core/client-location'],
+  'coreclientlocationmovemethodparametertoclientgroup': ['azure/client-generator-core/client-location/move-method-parameter-to-client'],
+  'coreclientlocationmoveexistingsubclientgroup': ['azure/client-generator-core/client-location/move-to-existing-sub-client'],
+  'coreclientlocationmovenewsubclientgroup': ['azure/client-generator-core/client-location/move-to-new-sub-client'],
+  'coreclientlocationmoverootclientgroup': ['azure/client-generator-core/client-location/move-to-root-client'],
   // 'coredeserializegroup': ['azure/client-generator-core/deserialize-empty-string-as-null'],
   'traitsgroup': ['azure/core/traits'], // requires union support
   'encodedurationgroup': ['azure/encode/duration'],

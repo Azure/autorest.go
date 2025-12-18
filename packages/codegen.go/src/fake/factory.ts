@@ -22,7 +22,7 @@ export function generateServerFactory(pkg: go.FakePackage, target: go.CodeModelT
     return '';
   }
 
-  const imports = new ImportManager();
+  const imports = new ImportManager(pkg);
   const indent = new helpers.indentation();
   imports.add('errors');
   imports.add('fmt');
@@ -34,8 +34,8 @@ export function generateServerFactory(pkg: go.FakePackage, target: go.CodeModelT
   let text = helpers.contentPreamble(pkg);
   text += imports.text();
 
-  const pkgName = go.getPackageName(pkg.parent);
-  text += `// ServerFactory is a fake server for instances of the ${pkgName}.ClientFactory type.\n`;
+  const clientPkgName = go.getPackageName(pkg.parent);
+  text += `// ServerFactory is a fake server for instances of the ${clientPkgName}.ClientFactory type.\n`;
   text += 'type ServerFactory struct {\n';
 
   // add server transports for client accessors
@@ -54,12 +54,12 @@ export function generateServerFactory(pkg: go.FakePackage, target: go.CodeModelT
   text += '}\n\n';
 
   text += '// NewServerFactoryTransport creates a new instance of ServerFactoryTransport with the provided implementation.\n';
-  text += `// The returned ServerFactoryTransport instance is connected to an instance of ${pkgName}.ClientFactory via the\n`;
+  text += `// The returned ServerFactoryTransport instance is connected to an instance of ${clientPkgName}.ClientFactory via the\n`;
   text += '// azcore.ClientOptions.Transporter field in the client\'s constructor parameters.\n';
   text += 'func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {\n';
   text += `${indent.get()}return &ServerFactoryTransport{\n${indent.push().get()}srv: srv,\n${indent.pop().get()}}\n}\n\n`;
 
-  text += `// ServerFactoryTransport connects instances of ${pkgName}.ClientFactory to instances of ServerFactory.\n`;
+  text += `// ServerFactoryTransport connects instances of ${clientPkgName}.ClientFactory to instances of ServerFactory.\n`;
   text += '// Don\'t use this type directly, use NewServerFactoryTransport instead.\n';
   text += 'type ServerFactoryTransport struct {\n';
   text += `${indent.get()}srv *ServerFactory\n`;
