@@ -2178,3 +2178,24 @@ using Microsoft.Web;
 @@clientName(AppServiceCertificateOrdersOperationGroup.validatePurchaseInformation::parameters.body,
   "appServiceCertificateOrder"
 );
+
+
+@@clientLocation(CheckNameAvailability, "WebSiteManagement", "go");
+@@clientLocation(GetPublishingUser, "WebSiteManagement", "go");
+@@clientLocation(GetSourceControl, "WebSiteManagement", "go");
+@@clientLocation(GetSubscriptionDeploymentLocations, "WebSiteManagement", "go");
+@@clientLocation(ListAseRegions, "WebSiteManagement", "go");
+@@clientLocation(ListBillingMeters, "WebSiteManagement", "go");
+@@clientLocation(ListCustomHostNameSites, "WebSiteManagement", "go");
+@@clientLocation(ListGeoRegions, "WebSiteManagement", "go");
+@@clientLocation(ListPremierAddOnOffers, "WebSiteManagement", "go");
+@@clientLocation(ListSKUs, "WebSiteManagement", "go");
+@@clientLocation(ListSiteIdentifiersAssignedToHostName, "WebSiteManagement", "go");
+@@clientLocation(ListSourceControls, "WebSiteManagement", "go");
+@@clientLocation(Move, "WebSiteManagement", "go");
+@@clientLocation(RegionalCheckNameAvailability, "WebSiteManagement", "go");
+@@clientLocation(Users.UpdatePublishingUser, "WebSiteManagement", "go");
+@@clientLocation(Users.UpdateSourceControl, "WebSiteManagement", "go");
+@@clientLocation(Validate, "WebSiteManagement", "go");
+@@clientLocation(ValidateMove, "WebSiteManagement", "go");
+@@clientLocation(VerifyHostingEnvironmentVnet, "WebSiteManagement", "go");

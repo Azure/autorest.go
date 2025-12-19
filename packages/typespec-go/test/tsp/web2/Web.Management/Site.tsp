@@ -14,12 +14,7 @@ namespace Microsoft.Web;
  * A web app, a mobile app backend, or an API app.
  */
 model Site is Azure.ResourceManager.TrackedResource<SiteProperties> {
-  ...ResourceNameParameter<
-    Resource = Site,
-    KeyName = "name",
-    SegmentName = "sites",
-    NamePattern = ""
-  >;
+  ...ResourceNameParameter<Resource = Site, KeyName = "name", SegmentName = "sites", NamePattern = "">;
 
   /**
    * Managed service identity.
@@ -104,11 +99,7 @@ interface Sites {
    * Description for Gets the details of a web, mobile, or API app.
    */
   @summary("Gets the details of a web, mobile, or API app.")
-  get is SiteOps.Read<
-    Site,
-    Response = ArmResponse<Site> | ArmNotFoundResponse,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  get is SiteOps.Read<Site, Response = ArmResponse<Site> | ArmNotFoundResponse, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
@@ -171,12 +162,7 @@ interface Sites {
    * Description for Get all apps for a subscription.
    */
   @summary("Get all apps for a subscription.")
-  list is Azure.ResourceManager.Extension.ListByTarget<
-    Extension.Subscription,
-    Site,
-    Response = ArmResponse<WebAppCollection>,
-    Error = DefaultErrorResponse
-  >;
+  list is Azure.ResourceManager.Extension.ListByTarget<Extension.Subscription, Site, Response = ArmResponse<WebAppCollection>, Error = DefaultErrorResponse>;
 
   /**
    * Description for Get past recommendations for an app, optionally specified by the time range.
@@ -244,12 +230,7 @@ interface Sites {
   @post
   @action("recommendations/disable")
   @Azure.ResourceManager.Legacy.renamePathParameter("name", "siteName")
-  disableAllForWebApp is ArmResourceActionSync<
-    Site,
-    Request = void,
-    Response = NoContentResponse,
-    Error = DefaultErrorResponse
-  >;
+  disableAllForWebApp is ArmResourceActionSync<Site, Request = void, Response = NoContentResponse, Error = DefaultErrorResponse>;
 
   /**
    * Description for Reset all recommendation opt-out settings for an app.
@@ -259,12 +240,7 @@ interface Sites {
   @summary("Reset all recommendation opt-out settings for an app.")
   @action("recommendations/reset")
   @Azure.ResourceManager.Legacy.renamePathParameter("name", "siteName")
-  resetAllFiltersForWebApp is ArmResourceActionSync<
-    Site,
-    Request = void,
-    Response = NoContentResponse,
-    Error = DefaultErrorResponse
-  >;
+  resetAllFiltersForWebApp is ArmResourceActionSync<Site, Request = void, Response = NoContentResponse, Error = DefaultErrorResponse>;
 
   /**
    * Description for Analyze a custom hostname.
@@ -304,12 +280,7 @@ interface Sites {
    */
   #suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-operation-response" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
   @summary("Creates a backup of an app.")
-  backup is SiteOps.ActionSync<
-    Site,
-    BackupRequest,
-    ArmResponse<BackupItem>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  backup is SiteOps.ActionSync<Site, BackupRequest, ArmResponse<BackupItem>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Replaces the application settings of an app.
@@ -318,24 +289,14 @@ interface Sites {
   @summary("Replaces the application settings of an app.")
   @put
   @action("config/appsettings")
-  updateApplicationSettings is SiteOps.ActionSync<
-    Site,
-    StringDictionary,
-    ArmResponse<StringDictionary>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  updateApplicationSettings is SiteOps.ActionSync<Site, StringDictionary, ArmResponse<StringDictionary>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the application settings of an app.
    */
   @summary("Gets the application settings of an app.")
   @action("config/appsettings/list")
-  listApplicationSettings is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<StringDictionary>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listApplicationSettings is SiteOps.ActionSync<Site, void, ArmResponse<StringDictionary>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Updates the Authentication / Authorization settings associated with web app.
@@ -344,24 +305,14 @@ interface Sites {
   @summary("Updates the Authentication / Authorization settings associated with web app.")
   @put
   @action("config/authsettings")
-  updateAuthSettings is SiteOps.ActionSync<
-    Site,
-    SiteAuthSettings,
-    ArmResponse<SiteAuthSettings>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  updateAuthSettings is SiteOps.ActionSync<Site, SiteAuthSettings, ArmResponse<SiteAuthSettings>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the Authentication/Authorization settings of an app.
    */
   @summary("Gets the Authentication/Authorization settings of an app.")
   @action("config/authsettings/list")
-  getAuthSettings is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<SiteAuthSettings>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  getAuthSettings is SiteOps.ActionSync<Site, void, ArmResponse<SiteAuthSettings>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Updates the Azure storage account configurations of an app.
@@ -382,12 +333,7 @@ interface Sites {
    */
   @summary("Gets the Azure storage account configurations of an app.")
   @action("config/azurestorageaccounts/list")
-  listAzureStorageAccounts is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<AzureStoragePropertyDictionaryResource>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listAzureStorageAccounts is SiteOps.ActionSync<Site, void, ArmResponse<AzureStoragePropertyDictionaryResource>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Updates the backup configuration of an app.
@@ -396,12 +342,7 @@ interface Sites {
   @summary("Updates the backup configuration of an app.")
   @put
   @action("config/backup")
-  updateBackupConfiguration is SiteOps.ActionSync<
-    Site,
-    BackupRequest,
-    ArmResponse<BackupRequest>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  updateBackupConfiguration is SiteOps.ActionSync<Site, BackupRequest, ArmResponse<BackupRequest>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Deletes the backup configuration of an app.
@@ -423,12 +364,7 @@ interface Sites {
    */
   @summary("Gets the backup configuration of an app.")
   @action("config/backup/list")
-  getBackupConfiguration is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<BackupRequest>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  getBackupConfiguration is SiteOps.ActionSync<Site, void, ArmResponse<BackupRequest>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Replaces the connection strings of an app.
@@ -437,24 +373,14 @@ interface Sites {
   @summary("Replaces the connection strings of an app.")
   @put
   @action("config/connectionstrings")
-  updateConnectionStrings is SiteOps.ActionSync<
-    Site,
-    ConnectionStringDictionary,
-    ArmResponse<ConnectionStringDictionary>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  updateConnectionStrings is SiteOps.ActionSync<Site, ConnectionStringDictionary, ArmResponse<ConnectionStringDictionary>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the connection strings of an app.
    */
   @summary("Gets the connection strings of an app.")
   @action("config/connectionstrings/list")
-  listConnectionStrings is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<ConnectionStringDictionary>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listConnectionStrings is SiteOps.ActionSync<Site, void, ArmResponse<ConnectionStringDictionary>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Replaces the metadata of an app.
@@ -463,24 +389,14 @@ interface Sites {
   @summary("Replaces the metadata of an app.")
   @put
   @action("config/metadata")
-  updateMetadata is SiteOps.ActionSync<
-    Site,
-    StringDictionary,
-    ArmResponse<StringDictionary>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  updateMetadata is SiteOps.ActionSync<Site, StringDictionary, ArmResponse<StringDictionary>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the metadata of an app.
    */
   @summary("Gets the metadata of an app.")
   @action("config/metadata/list")
-  listMetadata is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<StringDictionary>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listMetadata is SiteOps.ActionSync<Site, void, ArmResponse<StringDictionary>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the Git/FTP publishing credentials of an app.
@@ -504,24 +420,14 @@ interface Sites {
   @summary("Updates the Push settings associated with web app.")
   @put
   @action("config/pushsettings")
-  updateSitePushSettings is SiteOps.ActionSync<
-    Site,
-    PushSettings,
-    ArmResponse<PushSettings>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  updateSitePushSettings is SiteOps.ActionSync<Site, PushSettings, ArmResponse<PushSettings>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the Push settings associated with web app.
    */
   @summary("Gets the Push settings associated with web app.")
   @action("config/pushsettings/list")
-  listSitePushSettings is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<PushSettings>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listSitePushSettings is SiteOps.ActionSync<Site, void, ArmResponse<PushSettings>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the last lines of docker logs for the given site
@@ -568,12 +474,7 @@ interface Sites {
    */
   @summary("Discovers an existing app backup that can be restored from a blob in Azure storage. Use this to get information about the databases stored in a backup.")
   @action("discoverbackup")
-  discoverBackup is SiteOps.ActionSync<
-    Site,
-    RestoreRequest,
-    ArmResponse<RestoreRequest>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  discoverBackup is SiteOps.ActionSync<Site, RestoreRequest, ArmResponse<RestoreRequest>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Invoke onedeploy status API /api/deployments and gets the deployment status for the site
@@ -581,12 +482,7 @@ interface Sites {
   @summary("Invoke onedeploy status API /api/deployments and gets the deployment status for the site")
   @get
   @action("extensions/onedeploy")
-  getOneDeployStatus is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<unknown>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  getOneDeployStatus is SiteOps.ActionSync<Site, void, ArmResponse<unknown>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Invoke the OneDeploy publish web app extension.
@@ -595,12 +491,7 @@ interface Sites {
   @summary("Invoke the OneDeploy publish web app extension.")
   @put
   @action("extensions/onedeploy")
-  createOneDeployOperation is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<unknown>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  createOneDeployOperation is SiteOps.ActionSync<Site, void, ArmResponse<unknown>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Fetch a short lived token that can be exchanged for a master key.
@@ -608,48 +499,28 @@ interface Sites {
   @summary("Fetch a short lived token that can be exchanged for a master key.")
   @get
   @action("functions/admin/token")
-  getFunctionsAdminToken is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<stringApplicationJson>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  getFunctionsAdminToken is SiteOps.ActionSync<Site, void, ArmResponse<stringApplicationJson>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Get host secrets for a function app.
    */
   @summary("Get host secrets for a function app.")
   @action("host/default/listkeys")
-  listHostKeys is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<HostKeys>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listHostKeys is SiteOps.ActionSync<Site, void, ArmResponse<HostKeys>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for This is to allow calling via powershell and ARM template.
    */
   @summary("This is to allow calling via powershell and ARM template.")
   @action("host/default/listsyncstatus")
-  listSyncStatus is SiteOps.ActionSync<
-    Site,
-    void,
-    NoContentResponse,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listSyncStatus is SiteOps.ActionSync<Site, void, NoContentResponse, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Syncs function trigger metadata to the management database
    */
   @summary("Syncs function trigger metadata to the management database")
   @action("host/default/sync")
-  syncFunctions is SiteOps.ActionSync<
-    Site,
-    void,
-    NoContentResponse,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  syncFunctions is SiteOps.ActionSync<Site, void, NoContentResponse, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Add or update a host level secret.
@@ -710,12 +581,7 @@ interface Sites {
   @summary("Retrieves all Service Bus Hybrid Connections used by this Web App.")
   @get
   @action("hybridConnectionRelays")
-  listHybridConnections is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<HybridConnection>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listHybridConnections is SiteOps.ActionSync<Site, void, ArmResponse<HybridConnection>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets hybrid connections configured for an app (or deployment slot, if specified).
@@ -724,24 +590,14 @@ interface Sites {
   @summary("Gets hybrid connections configured for an app (or deployment slot, if specified).")
   @get
   @action("hybridconnection")
-  listRelayServiceConnections is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<RelayServiceConnectionEntity>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listRelayServiceConnections is SiteOps.ActionSync<Site, void, ArmResponse<RelayServiceConnectionEntity>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Shows whether an app can be cloned to another resource group or subscription.
    */
   @summary("Shows whether an app can be cloned to another resource group or subscription.")
   @action("iscloneable")
-  isCloneable is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<SiteCloneability>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  isCloneable is SiteOps.ActionSync<Site, void, ArmResponse<SiteCloneability>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets existing backups of an app.
@@ -749,36 +605,21 @@ interface Sites {
   @summary("Gets existing backups of an app.")
   @action("listbackups")
   @list
-  listSiteBackups is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<BackupItemCollection>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listSiteBackups is SiteOps.ActionSync<Site, void, ArmResponse<BackupItemCollection>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for This is to allow calling via powershell and ARM template.
    */
   @summary("This is to allow calling via powershell and ARM template.")
   @action("listsyncfunctiontriggerstatus")
-  listSyncFunctionTriggers is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<FunctionSecrets>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listSyncFunctionTriggers is SiteOps.ActionSync<Site, void, ArmResponse<FunctionSecrets>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Updates the machine key of an app.
    */
   @summary("Updates the machine key of an app.")
   @action("updatemachinekey")
-  updateMachineKey is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<unknown>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  updateMachineKey is SiteOps.ActionSync<Site, void, ArmResponse<unknown>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Restores a web app.
@@ -790,8 +631,7 @@ interface Sites {
   migrateStorage is Azure.ResourceManager.ArmResourceActionAsyncBase<
     Site,
     StorageMigrationOptions,
-    ArmResponse<StorageMigrationResponse> &
-      ArmLroLocationHeader<FinalResult = StorageMigrationResponse>,
+    ArmResponse<StorageMigrationResponse> & ArmLroLocationHeader<FinalResult = StorageMigrationResponse>,
     BaseParameters = Azure.ResourceManager.Foundations.DefaultBaseParameters<Site>,
     Parameters = {
       /**
@@ -1032,12 +872,7 @@ interface Sites {
   @summary("Gets web app's event logs.")
   @get
   @action("phplogging")
-  getSitePhpErrorLogFlag is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<SitePhpErrorLogFlag>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  getSitePhpErrorLogFlag is SiteOps.ActionSync<Site, void, ArmResponse<SitePhpErrorLogFlag>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the premier add-ons of an app.
@@ -1046,12 +881,7 @@ interface Sites {
   @summary("Gets the premier add-ons of an app.")
   @get
   @action("premieraddons")
-  listPremierAddOns is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<PremierAddOn>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listPremierAddOns is SiteOps.ActionSync<Site, void, ArmResponse<PremierAddOn>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the private link resources
@@ -1059,12 +889,7 @@ interface Sites {
   @summary("Gets the private link resources")
   @get
   @action("privateLinkResources")
-  getPrivateLinkResources is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<PrivateLinkResourcesWrapper>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  getPrivateLinkResources is SiteOps.ActionSync<Site, void, ArmResponse<PrivateLinkResourcesWrapper>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the publishing profile for an app (or deployment slot, if specified).
@@ -1136,8 +961,7 @@ interface Sites {
       @body body: void;
     },
     OverrideErrorType = DefaultErrorResponse,
-    LroHeaders = Azure.Core.Foundations.RetryAfterHeader &
-      ArmLroLocationHeader<FinalResult = void>
+    LroHeaders = Azure.Core.Foundations.RetryAfterHeader & ArmLroLocationHeader<FinalResult = void>
   >;
 
   /**
@@ -1151,8 +975,7 @@ interface Sites {
       @body body: void;
     },
     OverrideErrorType = DefaultErrorResponse,
-    LroHeaders = Azure.Core.Foundations.RetryAfterHeader &
-      ArmLroLocationHeader<FinalResult = void>
+    LroHeaders = Azure.Core.Foundations.RetryAfterHeader & ArmLroLocationHeader<FinalResult = void>
   >;
 
   /**
@@ -1166,8 +989,7 @@ interface Sites {
       @body body: void;
     },
     OverrideErrorType = DefaultErrorResponse,
-    LroHeaders = Azure.Core.Foundations.RetryAfterHeader &
-      ArmLroLocationHeader<FinalResult = void>
+    LroHeaders = Azure.Core.Foundations.RetryAfterHeader & ArmLroLocationHeader<FinalResult = void>
   >;
 
   /**
@@ -1176,12 +998,7 @@ interface Sites {
   @summary("Get the difference in configuration settings between two web app slots.")
   @action("slotsdiffs")
   @list
-  listSlotDifferencesFromProduction is SiteOps.ActionSync<
-    Site,
-    CsmSlotEntity,
-    ArmResponse<SlotDifferenceCollection>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listSlotDifferencesFromProduction is SiteOps.ActionSync<Site, CsmSlotEntity, ArmResponse<SlotDifferenceCollection>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Swaps two deployment slots of an app.
@@ -1195,8 +1012,7 @@ interface Sites {
       @body body: void;
     },
     OverrideErrorType = DefaultErrorResponse,
-    LroHeaders = Azure.Core.Foundations.RetryAfterHeader &
-      ArmLroLocationHeader<FinalResult = void>
+    LroHeaders = Azure.Core.Foundations.RetryAfterHeader & ArmLroLocationHeader<FinalResult = void>
   >;
 
   /**
@@ -1206,12 +1022,7 @@ interface Sites {
   @get
   @action("snapshots")
   @list
-  listSnapshots is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<SnapshotCollection>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listSnapshots is SiteOps.ActionSync<Site, void, ArmResponse<SnapshotCollection>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Returns all Snapshots to the user from DRSecondary endpoint.
@@ -1221,12 +1032,7 @@ interface Sites {
   @get
   @list
   @action("snapshotsdr")
-  listSnapshotsFromDRSecondary is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<SnapshotCollection>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listSnapshotsFromDRSecondary is SiteOps.ActionSync<Site, void, ArmResponse<SnapshotCollection>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Starts an app (or deployment slot, if specified).
@@ -1325,12 +1131,7 @@ interface Sites {
    */
   @summary("Syncs function trigger metadata to the management database")
   @action("syncfunctiontriggers")
-  syncFunctionTriggers is SiteOps.ActionSync<
-    Site,
-    void,
-    NoContentResponse,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  syncFunctionTriggers is SiteOps.ActionSync<Site, void, NoContentResponse, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the quota usage information of an app (or deployment slot, if specified).
@@ -1372,12 +1173,7 @@ interface Sites {
    */
   #suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-operation-response" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
   @summary("Lists logic app's connections for web site, or a deployment slot.")
-  listWorkflowsConnections is SiteOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<WorkflowEnvelope>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listWorkflowsConnections is SiteOps.ActionSync<Site, void, ArmResponse<WorkflowEnvelope>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Regenerates the callback URL access key for request triggers.
@@ -1447,9 +1243,7 @@ alias ActionParameterSlotWebAppOps = Azure.ResourceManager.Legacy.RoutedOperatio
     @key
     slot: string;
   },
-  ResourceRoute = #{
-    route: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/sites/{name}/slots",
-  }
+  ResourceRoute = #{ route: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/sites/{name}/slots" }
 >;
 
 alias ActionParameterSiteWebAppOps = Azure.ResourceManager.Legacy.RoutedOperations<
@@ -1465,30 +1259,20 @@ alias ActionParameterSiteWebAppOps = Azure.ResourceManager.Legacy.RoutedOperatio
     name: string;
   },
   {},
-  ResourceRoute = #{
-    route: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/sites",
-  }
+  ResourceRoute = #{ route: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/sites" }
 >;
 
 @armResourceOperations(#{ allowStaticRoutes: true })
 interface WebApps {
   @summary("Gets an app's deployment slots.")
   @doc("Description for Gets an app's deployment slots.")
-  listSlots is WebAppOps.List<
-    Site,
-    Response = ArmResponse<WebAppCollection>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listSlots is WebAppOps.List<Site, Response = ArmResponse<WebAppCollection>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the details of a web, mobile, or API app.
    */
   @summary("Gets the details of a web, mobile, or API app.")
-  getSlot is WebAppOps.Read<
-    Site,
-    Response = ArmResponse<Site> | ArmNotFoundResponse,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  getSlot is WebAppOps.Read<Site, Response = ArmResponse<Site> | ArmNotFoundResponse, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
@@ -1604,12 +1388,7 @@ interface WebApps {
   #suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-operation-response" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
   @summary("Creates a backup of an app.")
   @action("backup")
-  backupSlot is WebAppOps.ActionSync<
-    Site,
-    BackupRequest,
-    ArmResponse<BackupItem>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  backupSlot is WebAppOps.ActionSync<Site, BackupRequest, ArmResponse<BackupItem>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Replaces the application settings of an app.
@@ -1618,24 +1397,14 @@ interface WebApps {
   @summary("Replaces the application settings of an app.")
   @put
   @action("config/appsettings")
-  updateApplicationSettingsSlot is WebAppOps.ActionSync<
-    Site,
-    StringDictionary,
-    ArmResponse<StringDictionary>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  updateApplicationSettingsSlot is WebAppOps.ActionSync<Site, StringDictionary, ArmResponse<StringDictionary>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the application settings of an app.
    */
   @summary("Gets the application settings of an app.")
   @action("config/appsettings/list")
-  listApplicationSettingsSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<StringDictionary>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listApplicationSettingsSlot is WebAppOps.ActionSync<Site, void, ArmResponse<StringDictionary>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Updates the Authentication / Authorization settings associated with web app.
@@ -1644,24 +1413,14 @@ interface WebApps {
   @summary("Updates the Authentication / Authorization settings associated with web app.")
   @put
   @action("config/authsettings")
-  updateAuthSettingsSlot is WebAppOps.ActionSync<
-    Site,
-    SiteAuthSettings,
-    ArmResponse<SiteAuthSettings>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  updateAuthSettingsSlot is WebAppOps.ActionSync<Site, SiteAuthSettings, ArmResponse<SiteAuthSettings>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the Authentication/Authorization settings of an app.
    */
   @summary("Gets the Authentication/Authorization settings of an app.")
   @action("config/authsettings/list")
-  getAuthSettingsSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<SiteAuthSettings>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  getAuthSettingsSlot is WebAppOps.ActionSync<Site, void, ArmResponse<SiteAuthSettings>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Updates the Azure storage account configurations of an app.
@@ -1682,12 +1441,7 @@ interface WebApps {
    */
   @summary("Gets the Azure storage account configurations of an app.")
   @action("config/azurestorageaccounts/list")
-  listAzureStorageAccountsSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<AzureStoragePropertyDictionaryResource>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listAzureStorageAccountsSlot is WebAppOps.ActionSync<Site, void, ArmResponse<AzureStoragePropertyDictionaryResource>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Updates the backup configuration of an app.
@@ -1696,12 +1450,7 @@ interface WebApps {
   @summary("Updates the backup configuration of an app.")
   @put
   @action("config/backup")
-  updateBackupConfigurationSlot is WebAppOps.ActionSync<
-    Site,
-    BackupRequest,
-    ArmResponse<BackupRequest>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  updateBackupConfigurationSlot is WebAppOps.ActionSync<Site, BackupRequest, ArmResponse<BackupRequest>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Deletes the backup configuration of an app.
@@ -1723,12 +1472,7 @@ interface WebApps {
    */
   @summary("Gets the backup configuration of an app.")
   @action("config/backup/list")
-  getBackupConfigurationSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<BackupRequest>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  getBackupConfigurationSlot is WebAppOps.ActionSync<Site, void, ArmResponse<BackupRequest>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Replaces the connection strings of an app.
@@ -1737,24 +1481,14 @@ interface WebApps {
   @summary("Replaces the connection strings of an app.")
   @put
   @action("config/connectionstrings")
-  updateConnectionStringsSlot is WebAppOps.ActionSync<
-    Site,
-    ConnectionStringDictionary,
-    ArmResponse<ConnectionStringDictionary>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  updateConnectionStringsSlot is WebAppOps.ActionSync<Site, ConnectionStringDictionary, ArmResponse<ConnectionStringDictionary>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the connection strings of an app.
    */
   @summary("Gets the connection strings of an app.")
   @action("config/connectionstrings/list")
-  listConnectionStringsSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<ConnectionStringDictionary>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listConnectionStringsSlot is WebAppOps.ActionSync<Site, void, ArmResponse<ConnectionStringDictionary>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Replaces the metadata of an app.
@@ -1763,24 +1497,14 @@ interface WebApps {
   @summary("Replaces the metadata of an app.")
   @put
   @action("config/metadata")
-  updateMetadataSlot is WebAppOps.ActionSync<
-    Site,
-    StringDictionary,
-    ArmResponse<StringDictionary>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  updateMetadataSlot is WebAppOps.ActionSync<Site, StringDictionary, ArmResponse<StringDictionary>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the metadata of an app.
    */
   @summary("Gets the metadata of an app.")
   @action("config/metadata/list")
-  listMetadataSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<StringDictionary>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listMetadataSlot is WebAppOps.ActionSync<Site, void, ArmResponse<StringDictionary>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the Git/FTP publishing credentials of an app.
@@ -1812,24 +1536,14 @@ interface WebApps {
   @summary("Updates the Push settings associated with web app.")
   @put
   @action("config/pushsettings")
-  updateSitePushSettingsSlot is WebAppOps.ActionSync<
-    Site,
-    PushSettings,
-    ArmResponse<PushSettings>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  updateSitePushSettingsSlot is WebAppOps.ActionSync<Site, PushSettings, ArmResponse<PushSettings>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the Push settings associated with web app.
    */
   @summary("Gets the Push settings associated with web app.")
   @action("config/pushsettings/list")
-  listSitePushSettingsSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<PushSettings>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listSitePushSettingsSlot is WebAppOps.ActionSync<Site, void, ArmResponse<PushSettings>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the last lines of docker logs for the given site
@@ -1878,12 +1592,7 @@ interface WebApps {
    */
   @summary("Discovers an existing app backup that can be restored from a blob in Azure storage. Use this to get information about the databases stored in a backup.")
   @action("discoverbackup")
-  discoverBackupSlot is WebAppOps.ActionSync<
-    Site,
-    RestoreRequest,
-    ArmResponse<RestoreRequest>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  discoverBackupSlot is WebAppOps.ActionSync<Site, RestoreRequest, ArmResponse<RestoreRequest>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Fetch a short lived token that can be exchanged for a master key.
@@ -1891,48 +1600,28 @@ interface WebApps {
   @summary("Fetch a short lived token that can be exchanged for a master key.")
   @get
   @action("functions/admin/token")
-  getFunctionsAdminTokenSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<stringApplicationJson>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  getFunctionsAdminTokenSlot is WebAppOps.ActionSync<Site, void, ArmResponse<stringApplicationJson>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Get host secrets for a function app.
    */
   @summary("Get host secrets for a function app.")
   @action("host/default/listkeys")
-  listHostKeysSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<HostKeys>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listHostKeysSlot is WebAppOps.ActionSync<Site, void, ArmResponse<HostKeys>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for This is to allow calling via powershell and ARM template.
    */
   @summary("This is to allow calling via powershell and ARM template.")
   @action("host/default/listsyncstatus")
-  listSyncStatusSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    NoContentResponse,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listSyncStatusSlot is WebAppOps.ActionSync<Site, void, NoContentResponse, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Syncs function trigger metadata to the management database
    */
   @summary("Syncs function trigger metadata to the management database")
   @action("host/default/sync")
-  syncFunctionsSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    NoContentResponse,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  syncFunctionsSlot is WebAppOps.ActionSync<Site, void, NoContentResponse, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Add or update a host level secret.
@@ -1994,12 +1683,7 @@ interface WebApps {
   @summary("Retrieves all Service Bus Hybrid Connections used by this Web App.")
   @get
   @action("hybridConnectionRelays")
-  listHybridConnectionsSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<HybridConnection>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listHybridConnectionsSlot is WebAppOps.ActionSync<Site, void, ArmResponse<HybridConnection>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets hybrid connections configured for an app (or deployment slot, if specified).
@@ -2008,24 +1692,14 @@ interface WebApps {
   @summary("Gets hybrid connections configured for an app (or deployment slot, if specified).")
   @get
   @action("hybridconnection")
-  listRelayServiceConnectionsSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<RelayServiceConnectionEntity>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listRelayServiceConnectionsSlot is WebAppOps.ActionSync<Site, void, ArmResponse<RelayServiceConnectionEntity>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Shows whether an app can be cloned to another resource group or subscription.
    */
   @summary("Shows whether an app can be cloned to another resource group or subscription.")
   @action("iscloneable")
-  isCloneableSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<SiteCloneability>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  isCloneableSlot is WebAppOps.ActionSync<Site, void, ArmResponse<SiteCloneability>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets existing backups of an app.
@@ -2033,24 +1707,14 @@ interface WebApps {
   @summary("Gets existing backups of an app.")
   @list
   @action("listbackups")
-  listSiteBackupsSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<BackupItemCollection>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listSiteBackupsSlot is WebAppOps.ActionSync<Site, void, ArmResponse<BackupItemCollection>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for This is to allow calling via powershell and ARM template.
    */
   @summary("This is to allow calling via powershell and ARM template.")
   @action("listsyncfunctiontriggerstatus")
-  listSyncFunctionTriggersSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<FunctionSecrets>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listSyncFunctionTriggersSlot is WebAppOps.ActionSync<Site, void, ArmResponse<FunctionSecrets>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets a named operation for a network trace capturing (or deployment slot, if specified).
@@ -2264,12 +1928,7 @@ interface WebApps {
   @summary("Gets web app's event logs.")
   @get
   @action("phplogging")
-  getSitePhpErrorLogFlagSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<SitePhpErrorLogFlag>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  getSitePhpErrorLogFlagSlot is WebAppOps.ActionSync<Site, void, ArmResponse<SitePhpErrorLogFlag>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the premier add-ons of an app.
@@ -2278,12 +1937,7 @@ interface WebApps {
   @summary("Gets the premier add-ons of an app.")
   @get
   @action("premieraddons")
-  listPremierAddOnsSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<PremierAddOn>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listPremierAddOnsSlot is WebAppOps.ActionSync<Site, void, ArmResponse<PremierAddOn>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the private link resources
@@ -2291,12 +1945,7 @@ interface WebApps {
   @summary("Gets the private link resources")
   @get
   @action("privateLinkResources")
-  getPrivateLinkResourcesSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<PrivateLinkResourcesWrapper>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  getPrivateLinkResourcesSlot is WebAppOps.ActionSync<Site, void, ArmResponse<PrivateLinkResourcesWrapper>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the publishing profile for an app (or deployment slot, if specified).
@@ -2370,8 +2019,7 @@ interface WebApps {
       @body body: void;
     },
     OverrideErrorType = DefaultErrorResponse,
-    LroHeaders = Azure.Core.Foundations.RetryAfterHeader &
-      ArmLroLocationHeader<FinalResult = void>
+    LroHeaders = Azure.Core.Foundations.RetryAfterHeader & ArmLroLocationHeader<FinalResult = void>
   >;
 
   /**
@@ -2386,8 +2034,7 @@ interface WebApps {
       @body body: void;
     },
     OverrideErrorType = DefaultErrorResponse,
-    LroHeaders = Azure.Core.Foundations.RetryAfterHeader &
-      ArmLroLocationHeader<FinalResult = void>
+    LroHeaders = Azure.Core.Foundations.RetryAfterHeader & ArmLroLocationHeader<FinalResult = void>
   >;
 
   /**
@@ -2402,8 +2049,7 @@ interface WebApps {
       @body body: void;
     },
     OverrideErrorType = DefaultErrorResponse,
-    LroHeaders = Azure.Core.Foundations.RetryAfterHeader &
-      ArmLroLocationHeader<FinalResult = void>
+    LroHeaders = Azure.Core.Foundations.RetryAfterHeader & ArmLroLocationHeader<FinalResult = void>
   >;
 
   /**
@@ -2412,12 +2058,7 @@ interface WebApps {
   @summary("Get the difference in configuration settings between two web app slots.")
   @action("slotsdiffs")
   @list
-  listSlotDifferencesSlot is WebAppOps.ActionSync<
-    Site,
-    CsmSlotEntity,
-    ArmResponse<SlotDifferenceCollection>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listSlotDifferencesSlot is WebAppOps.ActionSync<Site, CsmSlotEntity, ArmResponse<SlotDifferenceCollection>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Swaps two deployment slots of an app.
@@ -2431,8 +2072,7 @@ interface WebApps {
       @body body: void;
     },
     OverrideErrorType = DefaultErrorResponse,
-    LroHeaders = Azure.Core.Foundations.RetryAfterHeader &
-      ArmLroLocationHeader<FinalResult = void>
+    LroHeaders = Azure.Core.Foundations.RetryAfterHeader & ArmLroLocationHeader<FinalResult = void>
   >;
 
   /**
@@ -2442,12 +2082,7 @@ interface WebApps {
   @get
   @action("snapshots")
   @list
-  listSnapshotsSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<SnapshotCollection>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listSnapshotsSlot is WebAppOps.ActionSync<Site, void, ArmResponse<SnapshotCollection>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Returns all Snapshots to the user from DRSecondary endpoint.
@@ -2457,12 +2092,7 @@ interface WebApps {
   @get
   @list
   @action("snapshotsdr")
-  listSnapshotsFromDRSecondarySlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<SnapshotCollection>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listSnapshotsFromDRSecondarySlot is WebAppOps.ActionSync<Site, void, ArmResponse<SnapshotCollection>, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Starts an app (or deployment slot, if specified).
@@ -2562,12 +2192,7 @@ interface WebApps {
    */
   @summary("Syncs function trigger metadata to the management database")
   @action("syncfunctiontriggers")
-  syncFunctionTriggersSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    NoContentResponse,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  syncFunctionTriggersSlot is WebAppOps.ActionSync<Site, void, NoContentResponse, OverrideErrorType = DefaultErrorResponse>;
 
   /**
    * Description for Gets the quota usage information of an app (or deployment slot, if specified).
@@ -2611,137 +2236,56 @@ interface WebApps {
   #suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-operation-response" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
   @summary("Lists logic app's connections for web site, or a deployment slot.")
   @action("listWorkflowsConnections")
-  listWorkflowsConnectionsSlot is WebAppOps.ActionSync<
-    Site,
-    void,
-    ArmResponse<WorkflowEnvelope>,
-    OverrideErrorType = DefaultErrorResponse
-  >;
+  listWorkflowsConnectionsSlot is WebAppOps.ActionSync<Site, void, ArmResponse<WorkflowEnvelope>, OverrideErrorType = DefaultErrorResponse>;
 }
 
 @@doc(Site.name, "Name of the app.");
 @@doc(Site.properties, "Site resource specific properties");
-@@doc(Sites.createOrUpdate::parameters.resource,
-  "A JSON representation of the app properties. See example."
-);
-@@doc(Sites.update::parameters.properties,
-  "A JSON representation of the app properties. See example."
-);
-@@doc(Sites.applySlotConfigToProduction::parameters.body,
-  "JSON object that contains the target slot name. See example."
-);
-@@doc(Sites.backup::parameters.body,
-  "Backup configuration. You can use the JSON response from the POST action as input here."
-);
-@@doc(Sites.updateApplicationSettings::parameters.body,
-  "Application settings of the app."
-);
-@@doc(Sites.updateAuthSettings::parameters.body,
-  "Auth settings associated with web app."
-);
-@@doc(Sites.updateAzureStorageAccounts::parameters.body,
-  "Azure storage accounts of the app."
-);
-@@doc(Sites.updateBackupConfiguration::parameters.body,
-  "Edited backup configuration."
-);
-@@doc(Sites.updateConnectionStrings::parameters.body,
-  "Connection strings of the app or deployment slot. See example."
-);
-@@doc(Sites.updateMetadata::parameters.body,
-  "Edited metadata of the app or deployment slot. See example."
-);
-@@doc(Sites.updateSitePushSettings::parameters.body,
-  "Push settings associated with web app."
-);
-@@doc(Sites.discoverBackup::parameters.body,
-  "A RestoreRequest object that includes Azure storage URL and blog name for discovery of backup."
-);
-@@doc(Sites.createOrUpdateHostSecret::parameters.body,
-  "The key to create or update"
-);
+@@doc(Sites.createOrUpdate::parameters.resource, "A JSON representation of the app properties. See example.");
+@@doc(Sites.update::parameters.properties, "A JSON representation of the app properties. See example.");
+@@doc(Sites.applySlotConfigToProduction::parameters.body, "JSON object that contains the target slot name. See example.");
+@@doc(Sites.backup::parameters.body, "Backup configuration. You can use the JSON response from the POST action as input here.");
+@@doc(Sites.updateApplicationSettings::parameters.body, "Application settings of the app.");
+@@doc(Sites.updateAuthSettings::parameters.body, "Auth settings associated with web app.");
+@@doc(Sites.updateAzureStorageAccounts::parameters.body, "Azure storage accounts of the app.");
+@@doc(Sites.updateBackupConfiguration::parameters.body, "Edited backup configuration.");
+@@doc(Sites.updateConnectionStrings::parameters.body, "Connection strings of the app or deployment slot. See example.");
+@@doc(Sites.updateMetadata::parameters.body, "Edited metadata of the app or deployment slot. See example.");
+@@doc(Sites.updateSitePushSettings::parameters.body, "Push settings associated with web app.");
+@@doc(Sites.discoverBackup::parameters.body, "A RestoreRequest object that includes Azure storage URL and blog name for discovery of backup.");
+@@doc(Sites.createOrUpdateHostSecret::parameters.body, "The key to create or update");
 @@doc(Sites.migrateStorage::parameters.body, "Migration migrationOptions.");
 @@doc(Sites.migrateMySql::parameters.body, "MySql migration options.");
 @@doc(Sites.listPublishingProfileXmlWithSecrets::parameters.body,
   "Specifies publishingProfileOptions for publishing profile. For example, use {\" format\": \"FileZilla3\"} to get a FileZilla publishing profile."
 );
-@@doc(Sites.restoreFromBackupBlob::parameters.body,
-  "Information on restore request ."
-);
-@@doc(Sites.restoreFromDeletedApp::parameters.body,
-  "Deleted web app restore information."
-);
-@@doc(Sites.restoreSnapshot::parameters.body,
-  "Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API."
-);
-@@doc(Sites.listSlotDifferencesFromProduction::parameters.body,
-  "JSON object that contains the target slot name. See example."
-);
-@@doc(Sites.swapSlotWithProduction::parameters.body,
-  "JSON object that contains the target slot name. See example."
-);
-@@doc(Sites.deployWorkflowArtifacts::parameters.body,
-  "Application settings and files of the workflow."
-);
+@@doc(Sites.restoreFromBackupBlob::parameters.body, "Information on restore request .");
+@@doc(Sites.restoreFromDeletedApp::parameters.body, "Deleted web app restore information.");
+@@doc(Sites.restoreSnapshot::parameters.body, "Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API.");
+@@doc(Sites.listSlotDifferencesFromProduction::parameters.body, "JSON object that contains the target slot name. See example.");
+@@doc(Sites.swapSlotWithProduction::parameters.body, "JSON object that contains the target slot name. See example.");
+@@doc(Sites.deployWorkflowArtifacts::parameters.body, "Application settings and files of the workflow.");
 @@doc(Sites.regenerateAccessKey::parameters.body, "The access key type.");
 @@doc(Sites.validate::parameters.body, "The workflow.");
-@@doc(WebApps.createOrUpdateSlot::parameters.resource,
-  "A JSON representation of the app properties. See example."
-);
-@@doc(WebApps.updateSlot::parameters.properties,
-  "A JSON representation of the app properties. See example."
-);
-@@doc(WebApps.applySlotConfigurationSlot::parameters.body,
-  "JSON object that contains the target slot name. See example."
-);
-@@doc(WebApps.backupSlot::parameters.body,
-  "Backup configuration. You can use the JSON response from the POST action as input here."
-);
-@@doc(WebApps.updateApplicationSettingsSlot::parameters.body,
-  "Application settings of the app."
-);
-@@doc(WebApps.updateAuthSettingsSlot::parameters.body,
-  "Auth settings associated with web app."
-);
-@@doc(WebApps.updateAzureStorageAccountsSlot::parameters.body,
-  "Azure storage accounts of the app."
-);
-@@doc(WebApps.updateBackupConfigurationSlot::parameters.body,
-  "Edited backup configuration."
-);
-@@doc(WebApps.updateConnectionStringsSlot::parameters.body,
-  "Connection strings of the app or deployment slot. See example."
-);
-@@doc(WebApps.updateMetadataSlot::parameters.body,
-  "Edited metadata of the app or deployment slot. See example."
-);
-@@doc(WebApps.updateSitePushSettingsSlot::parameters.body,
-  "Push settings associated with web app."
-);
-@@doc(WebApps.discoverBackupSlot::parameters.body,
-  "A RestoreRequest object that includes Azure storage URL and blog name for discovery of backup."
-);
-@@doc(WebApps.createOrUpdateHostSecretSlot::parameters.body,
-  "The key to create or update"
-);
+@@doc(WebApps.createOrUpdateSlot::parameters.resource, "A JSON representation of the app properties. See example.");
+@@doc(WebApps.updateSlot::parameters.properties, "A JSON representation of the app properties. See example.");
+@@doc(WebApps.applySlotConfigurationSlot::parameters.body, "JSON object that contains the target slot name. See example.");
+@@doc(WebApps.backupSlot::parameters.body, "Backup configuration. You can use the JSON response from the POST action as input here.");
+@@doc(WebApps.updateApplicationSettingsSlot::parameters.body, "Application settings of the app.");
+@@doc(WebApps.updateAuthSettingsSlot::parameters.body, "Auth settings associated with web app.");
+@@doc(WebApps.updateAzureStorageAccountsSlot::parameters.body, "Azure storage accounts of the app.");
+@@doc(WebApps.updateBackupConfigurationSlot::parameters.body, "Edited backup configuration.");
+@@doc(WebApps.updateConnectionStringsSlot::parameters.body, "Connection strings of the app or deployment slot. See example.");
+@@doc(WebApps.updateMetadataSlot::parameters.body, "Edited metadata of the app or deployment slot. See example.");
+@@doc(WebApps.updateSitePushSettingsSlot::parameters.body, "Push settings associated with web app.");
+@@doc(WebApps.discoverBackupSlot::parameters.body, "A RestoreRequest object that includes Azure storage URL and blog name for discovery of backup.");
+@@doc(WebApps.createOrUpdateHostSecretSlot::parameters.body, "The key to create or update");
 @@doc(WebApps.listPublishingProfileXmlWithSecretsSlot::parameters.body,
   "Specifies publishingProfileOptions for publishing profile. For example, use {\" format\": \"FileZilla3\"} to get a FileZilla publishing profile."
 );
-@@doc(WebApps.restoreFromBackupBlobSlot::parameters.body,
-  "Information on restore request ."
-);
-@@doc(WebApps.restoreFromDeletedAppSlot::parameters.body,
-  "Deleted web app restore information."
-);
-@@doc(WebApps.restoreSnapshotSlot::parameters.body,
-  "Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API."
-);
-@@doc(WebApps.listSlotDifferencesSlot::parameters.body,
-  "JSON object that contains the target slot name. See example."
-);
-@@doc(WebApps.swapSlotSlot::parameters.body,
-  "JSON object that contains the target slot name. See example."
-);
-@@doc(WebApps.deployWorkflowArtifactsSlot::parameters.body,
-  "Application settings and files of the workflow."
-);
+@@doc(WebApps.restoreFromBackupBlobSlot::parameters.body, "Information on restore request .");
+@@doc(WebApps.restoreFromDeletedAppSlot::parameters.body, "Deleted web app restore information.");
+@@doc(WebApps.restoreSnapshotSlot::parameters.body, "Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API.");
+@@doc(WebApps.listSlotDifferencesSlot::parameters.body, "JSON object that contains the target slot name. See example.");
+@@doc(WebApps.swapSlotSlot::parameters.body, "JSON object that contains the target slot name. See example.");
+@@doc(WebApps.deployWorkflowArtifactsSlot::parameters.body, "Application settings and files of the workflow.");
