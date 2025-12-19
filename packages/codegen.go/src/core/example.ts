@@ -352,17 +352,17 @@ function getConstantValue(pkg: go.TestPackage, type: go.Constant, value: any): s
 }
 
 function getTimeValue(type: go.Time, value: any, imports?: ImportManager): string {
-  if (type.format === 'dateType' || type.format === 'timeRFC3339') {
+  if (type.format === 'PlainDate' || type.format === 'PlainTime') {
     if (imports) imports.add('time');
     let format = helpers.dateFormat;
-    if (type.format === 'timeRFC3339') {
+    if (type.format === 'PlainTime') {
       format = helpers.timeRFC3339Format;
     }
     return `func() time.Time { t, _ := time.Parse("${format}", "${value}"); return t}()`;
-  } else if (type.format === 'dateTimeRFC1123' || type.format === 'dateTimeRFC3339') {
+  } else if (type.format === 'RFC1123' || type.format === 'RFC3339') {
     if (imports) imports.add('time');
     let format = helpers.datetimeRFC3339Format;
-    if (type.format === 'dateTimeRFC1123') {
+    if (type.format === 'RFC1123') {
       format = helpers.datetimeRFC1123Format;
     }
     return `func() time.Time { t, _ := time.Parse(${format}, "${value}"); return t}()`;
