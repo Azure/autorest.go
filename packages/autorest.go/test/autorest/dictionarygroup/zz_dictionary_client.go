@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"net/http"
 	"time"
 )
@@ -833,7 +834,7 @@ func (client *DictionaryClient) getDateInvalidCharsCreateRequest(ctx context.Con
 // getDateInvalidCharsHandleResponse handles the GetDateInvalidChars response.
 func (client *DictionaryClient) getDateInvalidCharsHandleResponse(resp *http.Response) (DictionaryClientGetDateInvalidCharsResponse, error) {
 	result := DictionaryClientGetDateInvalidCharsResponse{}
-	aux := map[string]*dateType{}
+	aux := map[string]*datetime.PlainDate{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DictionaryClientGetDateInvalidCharsResponse{}, err
 	}
@@ -887,7 +888,7 @@ func (client *DictionaryClient) getDateInvalidNullCreateRequest(ctx context.Cont
 // getDateInvalidNullHandleResponse handles the GetDateInvalidNull response.
 func (client *DictionaryClient) getDateInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetDateInvalidNullResponse, error) {
 	result := DictionaryClientGetDateInvalidNullResponse{}
-	aux := map[string]*dateType{}
+	aux := map[string]*datetime.PlainDate{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DictionaryClientGetDateInvalidNullResponse{}, err
 	}
@@ -941,7 +942,7 @@ func (client *DictionaryClient) getDateTimeInvalidCharsCreateRequest(ctx context
 // getDateTimeInvalidCharsHandleResponse handles the GetDateTimeInvalidChars response.
 func (client *DictionaryClient) getDateTimeInvalidCharsHandleResponse(resp *http.Response) (DictionaryClientGetDateTimeInvalidCharsResponse, error) {
 	result := DictionaryClientGetDateTimeInvalidCharsResponse{}
-	aux := map[string]*dateTimeRFC3339{}
+	aux := map[string]*datetime.RFC3339{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DictionaryClientGetDateTimeInvalidCharsResponse{}, err
 	}
@@ -995,7 +996,7 @@ func (client *DictionaryClient) getDateTimeInvalidNullCreateRequest(ctx context.
 // getDateTimeInvalidNullHandleResponse handles the GetDateTimeInvalidNull response.
 func (client *DictionaryClient) getDateTimeInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetDateTimeInvalidNullResponse, error) {
 	result := DictionaryClientGetDateTimeInvalidNullResponse{}
-	aux := map[string]*dateTimeRFC3339{}
+	aux := map[string]*datetime.RFC3339{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DictionaryClientGetDateTimeInvalidNullResponse{}, err
 	}
@@ -1050,7 +1051,7 @@ func (client *DictionaryClient) getDateTimeRFC1123ValidCreateRequest(ctx context
 // getDateTimeRFC1123ValidHandleResponse handles the GetDateTimeRFC1123Valid response.
 func (client *DictionaryClient) getDateTimeRFC1123ValidHandleResponse(resp *http.Response) (DictionaryClientGetDateTimeRFC1123ValidResponse, error) {
 	result := DictionaryClientGetDateTimeRFC1123ValidResponse{}
-	aux := map[string]*dateTimeRFC1123{}
+	aux := map[string]*datetime.RFC1123{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DictionaryClientGetDateTimeRFC1123ValidResponse{}, err
 	}
@@ -1105,7 +1106,7 @@ func (client *DictionaryClient) getDateTimeValidCreateRequest(ctx context.Contex
 // getDateTimeValidHandleResponse handles the GetDateTimeValid response.
 func (client *DictionaryClient) getDateTimeValidHandleResponse(resp *http.Response) (DictionaryClientGetDateTimeValidResponse, error) {
 	result := DictionaryClientGetDateTimeValidResponse{}
-	aux := map[string]*dateTimeRFC3339{}
+	aux := map[string]*datetime.RFC3339{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DictionaryClientGetDateTimeValidResponse{}, err
 	}
@@ -1158,7 +1159,7 @@ func (client *DictionaryClient) getDateValidCreateRequest(ctx context.Context, _
 // getDateValidHandleResponse handles the GetDateValid response.
 func (client *DictionaryClient) getDateValidHandleResponse(resp *http.Response) (DictionaryClientGetDateValidResponse, error) {
 	result := DictionaryClientGetDateValidResponse{}
-	aux := map[string]*dateType{}
+	aux := map[string]*datetime.PlainDate{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DictionaryClientGetDateValidResponse{}, err
 	}
@@ -2664,9 +2665,9 @@ func (client *DictionaryClient) putDateTimeRFC1123ValidCreateRequest(ctx context
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	aux := map[string]*dateTimeRFC1123{}
+	aux := map[string]*datetime.RFC1123{}
 	for k, v := range arrayBody {
-		aux[k] = (*dateTimeRFC1123)(v)
+		aux[k] = (*datetime.RFC1123)(v)
 	}
 	if err := runtime.MarshalAsJSON(req, aux); err != nil {
 		return nil, err
@@ -2709,9 +2710,9 @@ func (client *DictionaryClient) putDateTimeValidCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	aux := map[string]*dateTimeRFC3339{}
+	aux := map[string]*datetime.RFC3339{}
 	for k, v := range arrayBody {
-		aux[k] = (*dateTimeRFC3339)(v)
+		aux[k] = (*datetime.RFC3339)(v)
 	}
 	if err := runtime.MarshalAsJSON(req, aux); err != nil {
 		return nil, err
@@ -2753,9 +2754,9 @@ func (client *DictionaryClient) putDateValidCreateRequest(ctx context.Context, a
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	aux := map[string]*dateType{}
+	aux := map[string]*datetime.PlainDate{}
 	for k, v := range arrayBody {
-		aux[k] = (*dateType)(v)
+		aux[k] = (*datetime.PlainDate)(v)
 	}
 	if err := runtime.MarshalAsJSON(req, aux); err != nil {
 		return nil, err

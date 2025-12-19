@@ -13,6 +13,7 @@ import (
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"net/http"
 	"time"
 )
@@ -135,7 +136,7 @@ func (d *DateServerTransport) dispatchGetInvalidDate(req *http.Request) (*http.R
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateType)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.PlainDate)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -154,7 +155,7 @@ func (d *DateServerTransport) dispatchGetMaxDate(req *http.Request) (*http.Respo
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateType)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.PlainDate)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +174,7 @@ func (d *DateServerTransport) dispatchGetMinDate(req *http.Request) (*http.Respo
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateType)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.PlainDate)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -192,7 +193,7 @@ func (d *DateServerTransport) dispatchGetNull(req *http.Request) (*http.Response
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateType)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.PlainDate)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -211,7 +212,7 @@ func (d *DateServerTransport) dispatchGetOverflowDate(req *http.Request) (*http.
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateType)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.PlainDate)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -230,7 +231,7 @@ func (d *DateServerTransport) dispatchGetUnderflowDate(req *http.Request) (*http
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateType)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.PlainDate)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -241,7 +242,7 @@ func (d *DateServerTransport) dispatchPutMaxDate(req *http.Request) (*http.Respo
 	if d.srv.PutMaxDate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutMaxDate not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[dateType](req)
+	body, err := server.UnmarshalRequestAsJSON[datetime.PlainDate](req)
 	if err != nil {
 		return nil, err
 	}
@@ -264,7 +265,7 @@ func (d *DateServerTransport) dispatchPutMinDate(req *http.Request) (*http.Respo
 	if d.srv.PutMinDate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutMinDate not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[dateType](req)
+	body, err := server.UnmarshalRequestAsJSON[datetime.PlainDate](req)
 	if err != nil {
 		return nil, err
 	}

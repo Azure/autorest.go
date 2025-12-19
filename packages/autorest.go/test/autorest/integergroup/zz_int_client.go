@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"net/http"
 	"time"
 )
@@ -109,7 +110,7 @@ func (client *IntClient) getInvalidUnixTimeCreateRequest(ctx context.Context, _ 
 // getInvalidUnixTimeHandleResponse handles the GetInvalidUnixTime response.
 func (client *IntClient) getInvalidUnixTimeHandleResponse(resp *http.Response) (IntClientGetInvalidUnixTimeResponse, error) {
 	result := IntClientGetInvalidUnixTimeResponse{}
-	var aux *timeUnix
+	var aux *datetime.Unix
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return IntClientGetInvalidUnixTimeResponse{}, err
 	}
@@ -205,7 +206,7 @@ func (client *IntClient) getNullUnixTimeCreateRequest(ctx context.Context, _ *In
 // getNullUnixTimeHandleResponse handles the GetNullUnixTime response.
 func (client *IntClient) getNullUnixTimeHandleResponse(resp *http.Response) (IntClientGetNullUnixTimeResponse, error) {
 	result := IntClientGetNullUnixTimeResponse{}
-	var aux *timeUnix
+	var aux *datetime.Unix
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return IntClientGetNullUnixTimeResponse{}, err
 	}
@@ -442,7 +443,7 @@ func (client *IntClient) getUnixTimeCreateRequest(ctx context.Context, _ *IntCli
 // getUnixTimeHandleResponse handles the GetUnixTime response.
 func (client *IntClient) getUnixTimeHandleResponse(resp *http.Response) (IntClientGetUnixTimeResponse, error) {
 	result := IntClientGetUnixTimeResponse{}
-	var aux *timeUnix
+	var aux *datetime.Unix
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return IntClientGetUnixTimeResponse{}, err
 	}
@@ -649,7 +650,7 @@ func (client *IntClient) putUnixTimeDateCreateRequest(ctx context.Context, intBo
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, timeUnix(intBody)); err != nil {
+	if err := runtime.MarshalAsJSON(req, datetime.Unix(intBody)); err != nil {
 		return nil, err
 	}
 	return req, nil

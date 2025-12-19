@@ -13,6 +13,7 @@ import (
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"net/http"
 	"time"
 )
@@ -219,7 +220,7 @@ func (d *DatetimeServerTransport) dispatchGetInvalid(req *http.Request) (*http.R
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC3339)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC3339)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -238,7 +239,7 @@ func (d *DatetimeServerTransport) dispatchGetLocalNegativeOffsetLowercaseMaxDate
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC3339)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC3339)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +258,7 @@ func (d *DatetimeServerTransport) dispatchGetLocalNegativeOffsetMinDateTime(req 
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC3339)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC3339)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -276,7 +277,7 @@ func (d *DatetimeServerTransport) dispatchGetLocalNegativeOffsetUppercaseMaxDate
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC3339)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC3339)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -295,7 +296,7 @@ func (d *DatetimeServerTransport) dispatchGetLocalNoOffsetMinDateTime(req *http.
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC3339)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC3339)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -314,7 +315,7 @@ func (d *DatetimeServerTransport) dispatchGetLocalPositiveOffsetLowercaseMaxDate
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC3339)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC3339)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -333,7 +334,7 @@ func (d *DatetimeServerTransport) dispatchGetLocalPositiveOffsetMinDateTime(req 
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC3339)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC3339)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -352,7 +353,7 @@ func (d *DatetimeServerTransport) dispatchGetLocalPositiveOffsetUppercaseMaxDate
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC3339)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC3339)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -371,7 +372,7 @@ func (d *DatetimeServerTransport) dispatchGetNull(req *http.Request) (*http.Resp
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC3339)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC3339)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -390,7 +391,7 @@ func (d *DatetimeServerTransport) dispatchGetOverflow(req *http.Request) (*http.
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC3339)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC3339)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -409,7 +410,7 @@ func (d *DatetimeServerTransport) dispatchGetUTCLowercaseMaxDateTime(req *http.R
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC3339)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC3339)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -428,7 +429,7 @@ func (d *DatetimeServerTransport) dispatchGetUTCMinDateTime(req *http.Request) (
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC3339)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC3339)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -447,7 +448,7 @@ func (d *DatetimeServerTransport) dispatchGetUTCUppercaseMaxDateTime(req *http.R
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC3339)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC3339)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -466,7 +467,7 @@ func (d *DatetimeServerTransport) dispatchGetUTCUppercaseMaxDateTime7Digits(req 
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC3339)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC3339)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -485,7 +486,7 @@ func (d *DatetimeServerTransport) dispatchGetUnderflow(req *http.Request) (*http
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC3339)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC3339)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -496,7 +497,7 @@ func (d *DatetimeServerTransport) dispatchPutLocalNegativeOffsetMaxDateTime(req 
 	if d.srv.PutLocalNegativeOffsetMaxDateTime == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutLocalNegativeOffsetMaxDateTime not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[dateTimeRFC3339](req)
+	body, err := server.UnmarshalRequestAsJSON[datetime.RFC3339](req)
 	if err != nil {
 		return nil, err
 	}
@@ -519,7 +520,7 @@ func (d *DatetimeServerTransport) dispatchPutLocalNegativeOffsetMinDateTime(req 
 	if d.srv.PutLocalNegativeOffsetMinDateTime == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutLocalNegativeOffsetMinDateTime not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[dateTimeRFC3339](req)
+	body, err := server.UnmarshalRequestAsJSON[datetime.RFC3339](req)
 	if err != nil {
 		return nil, err
 	}
@@ -542,7 +543,7 @@ func (d *DatetimeServerTransport) dispatchPutLocalPositiveOffsetMaxDateTime(req 
 	if d.srv.PutLocalPositiveOffsetMaxDateTime == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutLocalPositiveOffsetMaxDateTime not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[dateTimeRFC3339](req)
+	body, err := server.UnmarshalRequestAsJSON[datetime.RFC3339](req)
 	if err != nil {
 		return nil, err
 	}
@@ -565,7 +566,7 @@ func (d *DatetimeServerTransport) dispatchPutLocalPositiveOffsetMinDateTime(req 
 	if d.srv.PutLocalPositiveOffsetMinDateTime == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutLocalPositiveOffsetMinDateTime not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[dateTimeRFC3339](req)
+	body, err := server.UnmarshalRequestAsJSON[datetime.RFC3339](req)
 	if err != nil {
 		return nil, err
 	}
@@ -588,7 +589,7 @@ func (d *DatetimeServerTransport) dispatchPutUTCMaxDateTime(req *http.Request) (
 	if d.srv.PutUTCMaxDateTime == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutUTCMaxDateTime not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[dateTimeRFC3339](req)
+	body, err := server.UnmarshalRequestAsJSON[datetime.RFC3339](req)
 	if err != nil {
 		return nil, err
 	}
@@ -611,7 +612,7 @@ func (d *DatetimeServerTransport) dispatchPutUTCMaxDateTime7Digits(req *http.Req
 	if d.srv.PutUTCMaxDateTime7Digits == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutUTCMaxDateTime7Digits not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[dateTimeRFC3339](req)
+	body, err := server.UnmarshalRequestAsJSON[datetime.RFC3339](req)
 	if err != nil {
 		return nil, err
 	}
@@ -634,7 +635,7 @@ func (d *DatetimeServerTransport) dispatchPutUTCMinDateTime(req *http.Request) (
 	if d.srv.PutUTCMinDateTime == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutUTCMinDateTime not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[dateTimeRFC3339](req)
+	body, err := server.UnmarshalRequestAsJSON[datetime.RFC3339](req)
 	if err != nil {
 		return nil, err
 	}
