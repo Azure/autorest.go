@@ -1,6 +1,10 @@
 # Release History
 
-## 0.8.9 (unreleased)
+## 0.9.0 (unreleased)
+
+### Breaking Changes
+
+* Optional streaming bodies are no longer forced to be required.
 
 ### Features Added
 

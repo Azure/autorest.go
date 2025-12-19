@@ -205,16 +205,15 @@ func (client *ContainerRegistryBlobClient) checkChunkExistsHandleResponse(resp *
 // Generated from API version 2021-07-01
 //   - digest - Digest of a BLOB
 //   - location - Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) )
-//   - value - Optional raw data of blob
 //   - options - ContainerRegistryBlobClientCompleteUploadOptions contains the optional parameters for the ContainerRegistryBlobClient.CompleteUpload
 //     method.
-func (client *ContainerRegistryBlobClient) CompleteUpload(ctx context.Context, digest string, location string, value io.ReadSeekCloser, options *ContainerRegistryBlobClientCompleteUploadOptions) (ContainerRegistryBlobClientCompleteUploadResponse, error) {
+func (client *ContainerRegistryBlobClient) CompleteUpload(ctx context.Context, digest string, location string, options *ContainerRegistryBlobClientCompleteUploadOptions) (ContainerRegistryBlobClientCompleteUploadResponse, error) {
 	var err error
 	const operationName = "ContainerRegistryBlobClient.CompleteUpload"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.completeUploadCreateRequest(ctx, digest, location, value, options)
+	req, err := client.completeUploadCreateRequest(ctx, digest, location, options)
 	if err != nil {
 		return ContainerRegistryBlobClientCompleteUploadResponse{}, err
 	}
@@ -231,7 +230,7 @@ func (client *ContainerRegistryBlobClient) CompleteUpload(ctx context.Context, d
 }
 
 // completeUploadCreateRequest creates the CompleteUpload request.
-func (client *ContainerRegistryBlobClient) completeUploadCreateRequest(ctx context.Context, digest string, location string, value io.ReadSeekCloser, _ *ContainerRegistryBlobClientCompleteUploadOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) completeUploadCreateRequest(ctx context.Context, digest string, location string, options *ContainerRegistryBlobClientCompleteUploadOptions) (*policy.Request, error) {
 	urlPath := "/{nextBlobUuidLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{nextBlobUuidLink}", location)
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
@@ -242,8 +241,11 @@ func (client *ContainerRegistryBlobClient) completeUploadCreateRequest(ctx conte
 	reqQP.Set("digest", digest)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := req.SetBody(value, "application/octet-stream"); err != nil {
-		return nil, err
+	if options != nil && options.Value != nil {
+		if err := req.SetBody(options.Value, "application/octet-stream"); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
