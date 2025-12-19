@@ -4,11 +4,6 @@
 
 package specialwordsgroup
 
-// SpecialWordsModelPropertiesClientDictMethodsResponse contains the response from method SpecialWordsModelPropertiesClient.DictMethods.
-type SpecialWordsModelPropertiesClientDictMethodsResponse struct {
-	// placeholder for future response values
-}
-
 // SpecialWordsModelPropertiesClientSameAsModelResponse contains the response from method SpecialWordsModelPropertiesClient.SameAsModel.
 type SpecialWordsModelPropertiesClientSameAsModelResponse struct {
 	// placeholder for future response values
