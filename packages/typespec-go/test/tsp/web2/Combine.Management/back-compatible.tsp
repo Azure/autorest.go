@@ -2181,21 +2181,21 @@ using Microsoft.Web;
 
 
 @@clientLocation(checkNameAvailability, "WebSiteManagement", "go");
-@@clientLocation(getPublishingUser, "WebSiteManagement", "go");
-@@clientLocation(getSourceControl, "WebSiteManagement", "go");
+@@clientLocation(Users.getPublishingUser, "WebSiteManagement", "go");
+@@clientLocation(SourceControls.getSourceControl, "WebSiteManagement", "go");
 @@clientLocation(getSubscriptionDeploymentLocations, "WebSiteManagement", "go");
 @@clientLocation(listAseRegions, "WebSiteManagement", "go");
 @@clientLocation(listBillingMeters, "WebSiteManagement", "go");
 @@clientLocation(listCustomHostNameSites, "WebSiteManagement", "go");
 @@clientLocation(listGeoRegions, "WebSiteManagement", "go");
 @@clientLocation(listPremierAddOnOffers, "WebSiteManagement", "go");
-@@clientLocation(listSKUs, "WebSiteManagement", "go");
+@@clientLocation(listSkus, "WebSiteManagement", "go");
 @@clientLocation(listSiteIdentifiersAssignedToHostName, "WebSiteManagement", "go");
-@@clientLocation(listSourceControls, "WebSiteManagement", "go");
+@@clientLocation(SourceControls.listSourceControls, "WebSiteManagement", "go");
 @@clientLocation(move, "WebSiteManagement", "go");
 @@clientLocation(regionalCheckNameAvailability, "WebSiteManagement", "go");
 @@clientLocation(Users.updatePublishingUser, "WebSiteManagement", "go");
-@@clientLocation(Users.updateSourceControl, "WebSiteManagement", "go");
+@@clientLocation(SourceControls.updateSourceControl, "WebSiteManagement", "go");
 @@clientLocation(validate, "WebSiteManagement", "go");
 @@clientLocation(validateMove, "WebSiteManagement", "go");
 @@clientLocation(verifyHostingEnvironmentVnet, "WebSiteManagement", "go");
