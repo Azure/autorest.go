@@ -1123,6 +1123,24 @@ type SiteCertificatesClientUpdateSlotResponse struct {
 	Certificate
 }
 
+// SourceControlsClientGetSourceControlResponse contains the response from method SourceControlsClient.GetSourceControl.
+type SourceControlsClientGetSourceControlResponse struct {
+	// The source control OAuth token.
+	SourceControl
+}
+
+// SourceControlsClientListSourceControlsResponse contains the response from method SourceControlsClient.NewListSourceControlsPager.
+type SourceControlsClientListSourceControlsResponse struct {
+	// Collection of source controls.
+	SourceControlCollection
+}
+
+// SourceControlsClientUpdateSourceControlResponse contains the response from method SourceControlsClient.UpdateSourceControl.
+type SourceControlsClientUpdateSourceControlResponse struct {
+	// The source control OAuth token.
+	SourceControl
+}
+
 // StaticSitesClientApproveOrRejectPrivateEndpointConnectionResponse contains the response from method StaticSitesClient.BeginApproveOrRejectPrivateEndpointConnection.
 type StaticSitesClientApproveOrRejectPrivateEndpointConnectionResponse struct {
 	// Remote Private Endpoint Connection ARM resource.
@@ -1573,6 +1591,18 @@ type TopLevelDomainsClientListResponse struct {
 	TopLevelDomainCollection
 }
 
+// UsersClientGetPublishingUserResponse contains the response from method UsersClient.GetPublishingUser.
+type UsersClientGetPublishingUserResponse struct {
+	// User credentials used for publishing activity.
+	User
+}
+
+// UsersClientUpdatePublishingUserResponse contains the response from method UsersClient.UpdatePublishingUser.
+type UsersClientUpdatePublishingUserResponse struct {
+	// User credentials used for publishing activity.
+	User
+}
+
 // WebAppsClientAddPremierAddOnResponse contains the response from method WebAppsClient.AddPremierAddOn.
 type WebAppsClientAddPremierAddOnResponse struct {
 	// Premier add-on.
@@ -1655,26 +1685,22 @@ type WebAppsClientCreateInstanceFunctionSlotResponse struct {
 
 // WebAppsClientCreateInstanceMSDeployOperationResponse contains the response from method WebAppsClient.BeginCreateInstanceMSDeployOperation.
 type WebAppsClientCreateInstanceMSDeployOperationResponse struct {
-	// MSDeploy ARM response
-	MSDeployStatus
+	// placeholder for future response values
 }
 
 // WebAppsClientCreateInstanceMSDeployOperationSlotResponse contains the response from method WebAppsClient.BeginCreateInstanceMSDeployOperationSlot.
 type WebAppsClientCreateInstanceMSDeployOperationSlotResponse struct {
-	// MSDeploy ARM response
-	MSDeployStatus
+	// placeholder for future response values
 }
 
 // WebAppsClientCreateMSDeployOperationResponse contains the response from method WebAppsClient.BeginCreateMSDeployOperation.
 type WebAppsClientCreateMSDeployOperationResponse struct {
-	// MSDeploy ARM response
-	MSDeployStatus
+	// placeholder for future response values
 }
 
 // WebAppsClientCreateMSDeployOperationSlotResponse contains the response from method WebAppsClient.BeginCreateMSDeployOperationSlot.
 type WebAppsClientCreateMSDeployOperationSlotResponse struct {
-	// MSDeploy ARM response
-	MSDeployStatus
+	// placeholder for future response values
 }
 
 // WebAppsClientCreateOneDeployOperationResponse contains the response from method WebAppsClient.CreateOneDeployOperation.
@@ -3964,115 +3990,85 @@ type WebAppsClientUpdateVnetConnectionSlotResponse struct {
 	VnetInfoResource
 }
 
-// WebSiteManagementClientCheckNameAvailabilityResponse contains the response from method WebSiteManagementClient.CheckNameAvailability.
-type WebSiteManagementClientCheckNameAvailabilityResponse struct {
+// WebClientCheckNameAvailabilityResponse contains the response from method WebClient.CheckNameAvailability.
+type WebClientCheckNameAvailabilityResponse struct {
 	// Information regarding availability of a resource name.
 	ResourceNameAvailability
 }
 
-// WebSiteManagementClientGetPublishingUserResponse contains the response from method WebSiteManagementClient.GetPublishingUser.
-type WebSiteManagementClientGetPublishingUserResponse struct {
-	// User credentials used for publishing activity.
-	User
-}
-
-// WebSiteManagementClientGetSourceControlResponse contains the response from method WebSiteManagementClient.GetSourceControl.
-type WebSiteManagementClientGetSourceControlResponse struct {
-	// The source control OAuth token.
-	SourceControl
-}
-
-// WebSiteManagementClientGetSubscriptionDeploymentLocationsResponse contains the response from method WebSiteManagementClient.GetSubscriptionDeploymentLocations.
-type WebSiteManagementClientGetSubscriptionDeploymentLocationsResponse struct {
+// WebClientGetSubscriptionDeploymentLocationsResponse contains the response from method WebClient.GetSubscriptionDeploymentLocations.
+type WebClientGetSubscriptionDeploymentLocationsResponse struct {
 	// List of available locations (regions or App Service Environments) for
 	// deployment of App Service resources.
 	DeploymentLocations
 }
 
-// WebSiteManagementClientListAseRegionsResponse contains the response from method WebSiteManagementClient.NewListAseRegionsPager.
-type WebSiteManagementClientListAseRegionsResponse struct {
+// WebClientListAseRegionsResponse contains the response from method WebClient.NewListAseRegionsPager.
+type WebClientListAseRegionsResponse struct {
 	// Collection of ASE regions.
 	AseRegionCollection
 }
 
-// WebSiteManagementClientListBillingMetersResponse contains the response from method WebSiteManagementClient.NewListBillingMetersPager.
-type WebSiteManagementClientListBillingMetersResponse struct {
+// WebClientListBillingMetersResponse contains the response from method WebClient.NewListBillingMetersPager.
+type WebClientListBillingMetersResponse struct {
 	// Collection of Billing Meters
 	BillingMeterCollection
 }
 
-// WebSiteManagementClientListCustomHostNameSitesResponse contains the response from method WebSiteManagementClient.NewListCustomHostNameSitesPager.
-type WebSiteManagementClientListCustomHostNameSitesResponse struct {
+// WebClientListCustomHostNameSitesResponse contains the response from method WebClient.NewListCustomHostNameSitesPager.
+type WebClientListCustomHostNameSitesResponse struct {
 	// Collection of custom hostname sites
 	CustomHostnameSitesCollection
 }
 
-// WebSiteManagementClientListGeoRegionsResponse contains the response from method WebSiteManagementClient.NewListGeoRegionsPager.
-type WebSiteManagementClientListGeoRegionsResponse struct {
+// WebClientListGeoRegionsResponse contains the response from method WebClient.NewListGeoRegionsPager.
+type WebClientListGeoRegionsResponse struct {
 	// Collection of geographical regions.
 	GeoRegionCollection
 }
 
-// WebSiteManagementClientListPremierAddOnOffersResponse contains the response from method WebSiteManagementClient.NewListPremierAddOnOffersPager.
-type WebSiteManagementClientListPremierAddOnOffersResponse struct {
+// WebClientListPremierAddOnOffersResponse contains the response from method WebClient.NewListPremierAddOnOffersPager.
+type WebClientListPremierAddOnOffersResponse struct {
 	// Collection of premier add-on offers.
 	PremierAddOnOfferCollection
 }
 
-// WebSiteManagementClientListSKUsResponse contains the response from method WebSiteManagementClient.ListSKUs.
-type WebSiteManagementClientListSKUsResponse struct {
+// WebClientListSKUsResponse contains the response from method WebClient.ListSKUs.
+type WebClientListSKUsResponse struct {
 	// Collection of SKU information.
 	SKUInfos
 }
 
-// WebSiteManagementClientListSiteIdentifiersAssignedToHostNameResponse contains the response from method WebSiteManagementClient.NewListSiteIdentifiersAssignedToHostNamePager.
-type WebSiteManagementClientListSiteIdentifiersAssignedToHostNameResponse struct {
+// WebClientListSiteIdentifiersAssignedToHostNameResponse contains the response from method WebClient.NewListSiteIdentifiersAssignedToHostNamePager.
+type WebClientListSiteIdentifiersAssignedToHostNameResponse struct {
 	// Collection of identifiers.
 	IdentifierCollection
 }
 
-// WebSiteManagementClientListSourceControlsResponse contains the response from method WebSiteManagementClient.NewListSourceControlsPager.
-type WebSiteManagementClientListSourceControlsResponse struct {
-	// Collection of source controls.
-	SourceControlCollection
-}
-
-// WebSiteManagementClientMoveResponse contains the response from method WebSiteManagementClient.Move.
-type WebSiteManagementClientMoveResponse struct {
+// WebClientMoveResponse contains the response from method WebClient.Move.
+type WebClientMoveResponse struct {
 	// placeholder for future response values
 }
 
-// WebSiteManagementClientRegionalCheckNameAvailabilityResponse contains the response from method WebSiteManagementClient.RegionalCheckNameAvailability.
-type WebSiteManagementClientRegionalCheckNameAvailabilityResponse struct {
+// WebClientRegionalCheckNameAvailabilityResponse contains the response from method WebClient.RegionalCheckNameAvailability.
+type WebClientRegionalCheckNameAvailabilityResponse struct {
 	// Information regarding availability of a resource name for DNL apps with regionalized default hostnames.
 	DnlResourceNameAvailability
 }
 
-// WebSiteManagementClientUpdatePublishingUserResponse contains the response from method WebSiteManagementClient.UpdatePublishingUser.
-type WebSiteManagementClientUpdatePublishingUserResponse struct {
-	// User credentials used for publishing activity.
-	User
-}
-
-// WebSiteManagementClientUpdateSourceControlResponse contains the response from method WebSiteManagementClient.UpdateSourceControl.
-type WebSiteManagementClientUpdateSourceControlResponse struct {
-	// The source control OAuth token.
-	SourceControl
-}
-
-// WebSiteManagementClientValidateMoveResponse contains the response from method WebSiteManagementClient.ValidateMove.
-type WebSiteManagementClientValidateMoveResponse struct {
+// WebClientValidateMoveResponse contains the response from method WebClient.ValidateMove.
+type WebClientValidateMoveResponse struct {
 	// placeholder for future response values
 }
 
-// WebSiteManagementClientValidateResponse contains the response from method WebSiteManagementClient.Validate.
-type WebSiteManagementClientValidateResponse struct {
+// WebClientValidateResponse contains the response from method WebClient.Validate.
+type WebClientValidateResponse struct {
 	// Describes the result of resource validation.
 	ValidateResponse
 }
 
-// WebSiteManagementClientVerifyHostingEnvironmentVnetResponse contains the response from method WebSiteManagementClient.VerifyHostingEnvironmentVnet.
-type WebSiteManagementClientVerifyHostingEnvironmentVnetResponse struct {
+// WebClientVerifyHostingEnvironmentVnetResponse contains the response from method WebClient.VerifyHostingEnvironmentVnet.
+type WebClientVerifyHostingEnvironmentVnetResponse struct {
 	// A class that describes the reason for a validation failure.
 	VnetValidationFailureDetails
 }

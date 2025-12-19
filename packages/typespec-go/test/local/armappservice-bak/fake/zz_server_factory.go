@@ -60,17 +60,23 @@ type ServerFactory struct {
 	// SiteCertificatesServer contains the fakes for client SiteCertificatesClient
 	SiteCertificatesServer SiteCertificatesServer
 
+	// SourceControlsServer contains the fakes for client SourceControlsClient
+	SourceControlsServer SourceControlsServer
+
 	// StaticSitesServer contains the fakes for client StaticSitesClient
 	StaticSitesServer StaticSitesServer
 
 	// TopLevelDomainsServer contains the fakes for client TopLevelDomainsClient
 	TopLevelDomainsServer TopLevelDomainsServer
 
+	// UsersServer contains the fakes for client UsersClient
+	UsersServer UsersServer
+
 	// WebAppsServer contains the fakes for client WebAppsClient
 	WebAppsServer WebAppsServer
 
-	// WebSiteManagementServer contains the fakes for client WebSiteManagementClient
-	WebSiteManagementServer WebSiteManagementServer
+	// WebServer contains the fakes for client WebClient
+	WebServer WebServer
 
 	// WorkflowRunActionRepetitionsServer contains the fakes for client WorkflowRunActionRepetitionsClient
 	WorkflowRunActionRepetitionsServer WorkflowRunActionRepetitionsServer
@@ -129,10 +135,12 @@ type ServerFactoryTransport struct {
 	trRecommendationsServer                              *RecommendationsServerTransport
 	trResourceHealthMetadataServer                       *ResourceHealthMetadataServerTransport
 	trSiteCertificatesServer                             *SiteCertificatesServerTransport
+	trSourceControlsServer                               *SourceControlsServerTransport
 	trStaticSitesServer                                  *StaticSitesServerTransport
 	trTopLevelDomainsServer                              *TopLevelDomainsServerTransport
+	trUsersServer                                        *UsersServerTransport
 	trWebAppsServer                                      *WebAppsServerTransport
-	trWebSiteManagementServer                            *WebSiteManagementServerTransport
+	trWebServer                                          *WebServerTransport
 	trWorkflowRunActionRepetitionsServer                 *WorkflowRunActionRepetitionsServerTransport
 	trWorkflowRunActionRepetitionsRequestHistoriesServer *WorkflowRunActionRepetitionsRequestHistoriesServerTransport
 	trWorkflowRunActionScopeRepetitionsServer            *WorkflowRunActionScopeRepetitionsServerTransport
@@ -218,6 +226,11 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 			return NewSiteCertificatesServerTransport(&s.srv.SiteCertificatesServer)
 		})
 		resp, err = s.trSiteCertificatesServer.Do(req)
+	case "SourceControlsClient":
+		initServer(s, &s.trSourceControlsServer, func() *SourceControlsServerTransport {
+			return NewSourceControlsServerTransport(&s.srv.SourceControlsServer)
+		})
+		resp, err = s.trSourceControlsServer.Do(req)
 	case "StaticSitesClient":
 		initServer(s, &s.trStaticSitesServer, func() *StaticSitesServerTransport { return NewStaticSitesServerTransport(&s.srv.StaticSitesServer) })
 		resp, err = s.trStaticSitesServer.Do(req)
@@ -226,14 +239,15 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 			return NewTopLevelDomainsServerTransport(&s.srv.TopLevelDomainsServer)
 		})
 		resp, err = s.trTopLevelDomainsServer.Do(req)
+	case "UsersClient":
+		initServer(s, &s.trUsersServer, func() *UsersServerTransport { return NewUsersServerTransport(&s.srv.UsersServer) })
+		resp, err = s.trUsersServer.Do(req)
 	case "WebAppsClient":
 		initServer(s, &s.trWebAppsServer, func() *WebAppsServerTransport { return NewWebAppsServerTransport(&s.srv.WebAppsServer) })
 		resp, err = s.trWebAppsServer.Do(req)
-	case "WebSiteManagementClient":
-		initServer(s, &s.trWebSiteManagementServer, func() *WebSiteManagementServerTransport {
-			return NewWebSiteManagementServerTransport(&s.srv.WebSiteManagementServer)
-		})
-		resp, err = s.trWebSiteManagementServer.Do(req)
+	case "WebClient":
+		initServer(s, &s.trWebServer, func() *WebServerTransport { return NewWebServerTransport(&s.srv.WebServer) })
+		resp, err = s.trWebServer.Do(req)
 	case "WorkflowRunActionRepetitionsClient":
 		initServer(s, &s.trWorkflowRunActionRepetitionsServer, func() *WorkflowRunActionRepetitionsServerTransport {
 			return NewWorkflowRunActionRepetitionsServerTransport(&s.srv.WorkflowRunActionRepetitionsServer)

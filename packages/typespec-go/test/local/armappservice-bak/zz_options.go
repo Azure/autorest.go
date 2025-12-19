@@ -1226,6 +1226,24 @@ type SiteCertificatesClientUpdateSlotOptions struct {
 	// placeholder for future optional parameters
 }
 
+// SourceControlsClientGetSourceControlOptions contains the optional parameters for the SourceControlsClient.GetSourceControl
+// method.
+type SourceControlsClientGetSourceControlOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SourceControlsClientListSourceControlsOptions contains the optional parameters for the SourceControlsClient.NewListSourceControlsPager
+// method.
+type SourceControlsClientListSourceControlsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SourceControlsClientUpdateSourceControlOptions contains the optional parameters for the SourceControlsClient.UpdateSourceControl
+// method.
+type SourceControlsClientUpdateSourceControlOptions struct {
+	// placeholder for future optional parameters
+}
+
 // StaticSitesClientBeginApproveOrRejectPrivateEndpointConnectionOptions contains the optional parameters for the StaticSitesClient.BeginApproveOrRejectPrivateEndpointConnection
 // method.
 type StaticSitesClientBeginApproveOrRejectPrivateEndpointConnectionOptions struct {
@@ -1708,6 +1726,16 @@ type TopLevelDomainsClientListAgreementsOptions struct {
 
 // TopLevelDomainsClientListOptions contains the optional parameters for the TopLevelDomainsClient.NewListPager method.
 type TopLevelDomainsClientListOptions struct {
+	// placeholder for future optional parameters
+}
+
+// UsersClientGetPublishingUserOptions contains the optional parameters for the UsersClient.GetPublishingUser method.
+type UsersClientGetPublishingUserOptions struct {
+	// placeholder for future optional parameters
+}
+
+// UsersClientUpdatePublishingUserOptions contains the optional parameters for the UsersClient.UpdatePublishingUser method.
+type UsersClientUpdatePublishingUserOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -4179,39 +4207,24 @@ type WebAppsClientUpdateVnetConnectionSlotOptions struct {
 	// placeholder for future optional parameters
 }
 
-// WebSiteManagementClientCheckNameAvailabilityOptions contains the optional parameters for the WebSiteManagementClient.CheckNameAvailability
-// method.
-type WebSiteManagementClientCheckNameAvailabilityOptions struct {
+// WebClientCheckNameAvailabilityOptions contains the optional parameters for the WebClient.CheckNameAvailability method.
+type WebClientCheckNameAvailabilityOptions struct {
 	// placeholder for future optional parameters
 }
 
-// WebSiteManagementClientGetPublishingUserOptions contains the optional parameters for the WebSiteManagementClient.GetPublishingUser
+// WebClientGetSubscriptionDeploymentLocationsOptions contains the optional parameters for the WebClient.GetSubscriptionDeploymentLocations
 // method.
-type WebSiteManagementClientGetPublishingUserOptions struct {
+type WebClientGetSubscriptionDeploymentLocationsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// WebSiteManagementClientGetSourceControlOptions contains the optional parameters for the WebSiteManagementClient.GetSourceControl
-// method.
-type WebSiteManagementClientGetSourceControlOptions struct {
+// WebClientListAseRegionsOptions contains the optional parameters for the WebClient.NewListAseRegionsPager method.
+type WebClientListAseRegionsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// WebSiteManagementClientGetSubscriptionDeploymentLocationsOptions contains the optional parameters for the WebSiteManagementClient.GetSubscriptionDeploymentLocations
-// method.
-type WebSiteManagementClientGetSubscriptionDeploymentLocationsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// WebSiteManagementClientListAseRegionsOptions contains the optional parameters for the WebSiteManagementClient.NewListAseRegionsPager
-// method.
-type WebSiteManagementClientListAseRegionsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// WebSiteManagementClientListBillingMetersOptions contains the optional parameters for the WebSiteManagementClient.NewListBillingMetersPager
-// method.
-type WebSiteManagementClientListBillingMetersOptions struct {
+// WebClientListBillingMetersOptions contains the optional parameters for the WebClient.NewListBillingMetersPager method.
+type WebClientListBillingMetersOptions struct {
 	// Azure Location of billable resource
 	BillingLocation *string
 
@@ -4219,16 +4232,15 @@ type WebSiteManagementClientListBillingMetersOptions struct {
 	OSType *string
 }
 
-// WebSiteManagementClientListCustomHostNameSitesOptions contains the optional parameters for the WebSiteManagementClient.NewListCustomHostNameSitesPager
+// WebClientListCustomHostNameSitesOptions contains the optional parameters for the WebClient.NewListCustomHostNameSitesPager
 // method.
-type WebSiteManagementClientListCustomHostNameSitesOptions struct {
+type WebClientListCustomHostNameSitesOptions struct {
 	// Specific hostname
 	Hostname *string
 }
 
-// WebSiteManagementClientListGeoRegionsOptions contains the optional parameters for the WebSiteManagementClient.NewListGeoRegionsPager
-// method.
-type WebSiteManagementClientListGeoRegionsOptions struct {
+// WebClientListGeoRegionsOptions contains the optional parameters for the WebClient.NewListGeoRegionsPager method.
+type WebClientListGeoRegionsOptions struct {
 	// Specify <code>true</code> if you want to filter to only regions that support App Service Plans with <code>IsCustomMode</code>
 	// set to <code>true</code>.
 	CustomModeWorkersEnabled *bool
@@ -4246,66 +4258,47 @@ type WebSiteManagementClientListGeoRegionsOptions struct {
 	XenonWorkersEnabled *bool
 }
 
-// WebSiteManagementClientListPremierAddOnOffersOptions contains the optional parameters for the WebSiteManagementClient.NewListPremierAddOnOffersPager
+// WebClientListPremierAddOnOffersOptions contains the optional parameters for the WebClient.NewListPremierAddOnOffersPager
 // method.
-type WebSiteManagementClientListPremierAddOnOffersOptions struct {
+type WebClientListPremierAddOnOffersOptions struct {
 	// placeholder for future optional parameters
 }
 
-// WebSiteManagementClientListSKUsOptions contains the optional parameters for the WebSiteManagementClient.ListSKUs method.
-type WebSiteManagementClientListSKUsOptions struct {
+// WebClientListSKUsOptions contains the optional parameters for the WebClient.ListSKUs method.
+type WebClientListSKUsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// WebSiteManagementClientListSiteIdentifiersAssignedToHostNameOptions contains the optional parameters for the WebSiteManagementClient.NewListSiteIdentifiersAssignedToHostNamePager
+// WebClientListSiteIdentifiersAssignedToHostNameOptions contains the optional parameters for the WebClient.NewListSiteIdentifiersAssignedToHostNamePager
 // method.
-type WebSiteManagementClientListSiteIdentifiersAssignedToHostNameOptions struct {
+type WebClientListSiteIdentifiersAssignedToHostNameOptions struct {
 	// placeholder for future optional parameters
 }
 
-// WebSiteManagementClientListSourceControlsOptions contains the optional parameters for the WebSiteManagementClient.NewListSourceControlsPager
+// WebClientMoveOptions contains the optional parameters for the WebClient.Move method.
+type WebClientMoveOptions struct {
+	// placeholder for future optional parameters
+}
+
+// WebClientRegionalCheckNameAvailabilityOptions contains the optional parameters for the WebClient.RegionalCheckNameAvailability
 // method.
-type WebSiteManagementClientListSourceControlsOptions struct {
+type WebClientRegionalCheckNameAvailabilityOptions struct {
 	// placeholder for future optional parameters
 }
 
-// WebSiteManagementClientMoveOptions contains the optional parameters for the WebSiteManagementClient.Move method.
-type WebSiteManagementClientMoveOptions struct {
+// WebClientValidateMoveOptions contains the optional parameters for the WebClient.ValidateMove method.
+type WebClientValidateMoveOptions struct {
 	// placeholder for future optional parameters
 }
 
-// WebSiteManagementClientRegionalCheckNameAvailabilityOptions contains the optional parameters for the WebSiteManagementClient.RegionalCheckNameAvailability
+// WebClientValidateOptions contains the optional parameters for the WebClient.Validate method.
+type WebClientValidateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// WebClientVerifyHostingEnvironmentVnetOptions contains the optional parameters for the WebClient.VerifyHostingEnvironmentVnet
 // method.
-type WebSiteManagementClientRegionalCheckNameAvailabilityOptions struct {
-	// placeholder for future optional parameters
-}
-
-// WebSiteManagementClientUpdatePublishingUserOptions contains the optional parameters for the WebSiteManagementClient.UpdatePublishingUser
-// method.
-type WebSiteManagementClientUpdatePublishingUserOptions struct {
-	// placeholder for future optional parameters
-}
-
-// WebSiteManagementClientUpdateSourceControlOptions contains the optional parameters for the WebSiteManagementClient.UpdateSourceControl
-// method.
-type WebSiteManagementClientUpdateSourceControlOptions struct {
-	// placeholder for future optional parameters
-}
-
-// WebSiteManagementClientValidateMoveOptions contains the optional parameters for the WebSiteManagementClient.ValidateMove
-// method.
-type WebSiteManagementClientValidateMoveOptions struct {
-	// placeholder for future optional parameters
-}
-
-// WebSiteManagementClientValidateOptions contains the optional parameters for the WebSiteManagementClient.Validate method.
-type WebSiteManagementClientValidateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// WebSiteManagementClientVerifyHostingEnvironmentVnetOptions contains the optional parameters for the WebSiteManagementClient.VerifyHostingEnvironmentVnet
-// method.
-type WebSiteManagementClientVerifyHostingEnvironmentVnetOptions struct {
+type WebClientVerifyHostingEnvironmentVnetOptions struct {
 	// placeholder for future optional parameters
 }
 

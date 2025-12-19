@@ -151,6 +151,13 @@ func (c *ClientFactory) NewSiteCertificatesClient() *SiteCertificatesClient {
 	}
 }
 
+// NewSourceControlsClient creates a new instance of SourceControlsClient.
+func (c *ClientFactory) NewSourceControlsClient() *SourceControlsClient {
+	return &SourceControlsClient{
+		internal: c.internal,
+	}
+}
+
 // NewStaticSitesClient creates a new instance of StaticSitesClient.
 func (c *ClientFactory) NewStaticSitesClient() *StaticSitesClient {
 	return &StaticSitesClient{
@@ -167,6 +174,13 @@ func (c *ClientFactory) NewTopLevelDomainsClient() *TopLevelDomainsClient {
 	}
 }
 
+// NewUsersClient creates a new instance of UsersClient.
+func (c *ClientFactory) NewUsersClient() *UsersClient {
+	return &UsersClient{
+		internal: c.internal,
+	}
+}
+
 // NewWebAppsClient creates a new instance of WebAppsClient.
 func (c *ClientFactory) NewWebAppsClient() *WebAppsClient {
 	return &WebAppsClient{
@@ -175,9 +189,9 @@ func (c *ClientFactory) NewWebAppsClient() *WebAppsClient {
 	}
 }
 
-// NewWebSiteManagementClient creates a new instance of WebSiteManagementClient.
-func (c *ClientFactory) NewWebSiteManagementClient() *WebSiteManagementClient {
-	return &WebSiteManagementClient{
+// NewWebClient creates a new instance of WebClient.
+func (c *ClientFactory) NewWebClient() *WebClient {
+	return &WebClient{
 		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}

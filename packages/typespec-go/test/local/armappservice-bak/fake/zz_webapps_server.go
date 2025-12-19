@@ -79,19 +79,19 @@ type WebAppsServer struct {
 	BeginCreateInstanceFunctionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, functionEnvelope armappservice.FunctionEnvelope, options *armappservice.WebAppsClientBeginCreateInstanceFunctionSlotOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientCreateInstanceFunctionSlotResponse], errResp azfake.ErrorResponder)
 
 	// BeginCreateInstanceMSDeployOperation is the fake for method WebAppsClient.BeginCreateInstanceMSDeployOperation
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated, http.StatusNoContent
 	BeginCreateInstanceMSDeployOperation func(ctx context.Context, resourceGroupName string, name string, instanceID string, msDeploy armappservice.MSDeploy, options *armappservice.WebAppsClientBeginCreateInstanceMSDeployOperationOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientCreateInstanceMSDeployOperationResponse], errResp azfake.ErrorResponder)
 
 	// BeginCreateInstanceMSDeployOperationSlot is the fake for method WebAppsClient.BeginCreateInstanceMSDeployOperationSlot
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated, http.StatusNoContent
 	BeginCreateInstanceMSDeployOperationSlot func(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, msDeploy armappservice.MSDeploy, options *armappservice.WebAppsClientBeginCreateInstanceMSDeployOperationSlotOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientCreateInstanceMSDeployOperationSlotResponse], errResp azfake.ErrorResponder)
 
 	// BeginCreateMSDeployOperation is the fake for method WebAppsClient.BeginCreateMSDeployOperation
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated, http.StatusNoContent
 	BeginCreateMSDeployOperation func(ctx context.Context, resourceGroupName string, name string, msDeploy armappservice.MSDeploy, options *armappservice.WebAppsClientBeginCreateMSDeployOperationOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientCreateMSDeployOperationResponse], errResp azfake.ErrorResponder)
 
 	// BeginCreateMSDeployOperationSlot is the fake for method WebAppsClient.BeginCreateMSDeployOperationSlot
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated, http.StatusNoContent
 	BeginCreateMSDeployOperationSlot func(ctx context.Context, resourceGroupName string, name string, slot string, msDeploy armappservice.MSDeploy, options *armappservice.WebAppsClientBeginCreateMSDeployOperationSlotOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientCreateMSDeployOperationSlotResponse], errResp azfake.ErrorResponder)
 
 	// CreateOneDeployOperation is the fake for method WebAppsClient.CreateOneDeployOperation
@@ -3465,9 +3465,9 @@ func (w *WebAppsServerTransport) dispatchBeginCreateInstanceMSDeployOperation(re
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusCreated}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusNoContent}, resp.StatusCode) {
 		w.beginCreateInstanceMSDeployOperation.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginCreateInstanceMSDeployOperation) {
 		w.beginCreateInstanceMSDeployOperation.remove(req)
@@ -3521,9 +3521,9 @@ func (w *WebAppsServerTransport) dispatchBeginCreateInstanceMSDeployOperationSlo
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusCreated}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusNoContent}, resp.StatusCode) {
 		w.beginCreateInstanceMSDeployOperationSlot.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginCreateInstanceMSDeployOperationSlot) {
 		w.beginCreateInstanceMSDeployOperationSlot.remove(req)
@@ -3569,9 +3569,9 @@ func (w *WebAppsServerTransport) dispatchBeginCreateMSDeployOperation(req *http.
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusCreated}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusNoContent}, resp.StatusCode) {
 		w.beginCreateMSDeployOperation.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginCreateMSDeployOperation) {
 		w.beginCreateMSDeployOperation.remove(req)
@@ -3621,9 +3621,9 @@ func (w *WebAppsServerTransport) dispatchBeginCreateMSDeployOperationSlot(req *h
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusCreated}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusCreated, http.StatusNoContent}, resp.StatusCode) {
 		w.beginCreateMSDeployOperationSlot.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginCreateMSDeployOperationSlot) {
 		w.beginCreateMSDeployOperationSlot.remove(req)
