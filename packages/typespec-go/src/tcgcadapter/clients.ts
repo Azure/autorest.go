@@ -908,8 +908,12 @@ export class ClientAdapter {
     const methodParam = opParam.correspondingMethodParams[0];
 
     let paramStyle = this.adaptParameterStyle(methodParam);
-    if (opParam.kind === 'body' && (verb === 'patch' || verb === 'put')) {
-      paramStyle = 'required';
+    if (opParam.kind === 'body') {
+      const contentType = this.adaptContentType(opParam.defaultContentType);
+      // only force modeled body params to be required (binary payloads can be optional)
+      if (contentType !== 'binary' && (verb === 'patch' || verb === 'put')) {
+        paramStyle = 'required';
+      }
     }
 
     const paramName = getEscapedReservedName(ensureNameCase(methodParam.name, paramStyle === 'required'), 'Param');

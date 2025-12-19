@@ -4,6 +4,26 @@
 
 package azregressions
 
+// ClientForceRequiredBodyPatchResponse contains the response from method Client.ForceRequiredBodyPatch.
+type ClientForceRequiredBodyPatchResponse struct {
+	// placeholder for future response values
+}
+
+// ClientForceRequiredBodyPutResponse contains the response from method Client.ForceRequiredBodyPut.
+type ClientForceRequiredBodyPutResponse struct {
+	// placeholder for future response values
+}
+
+// ClientOptionalBinaryBodyResponse contains the response from method Client.OptionalBinaryBody.
+type ClientOptionalBinaryBodyResponse struct {
+	// placeholder for future response values
+}
+
+// ClientOptionalBodyPostResponse contains the response from method Client.OptionalBodyPost.
+type ClientOptionalBodyPostResponse struct {
+	// placeholder for future response values
+}
+
 // ClientSpreadWithModelResponse contains the response from method Client.SpreadWithModel.
 type ClientSpreadWithModelResponse struct {
 	// placeholder for future response values

@@ -5,6 +5,8 @@
 
 package azacr
 
+import "io"
+
 // AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions contains the optional parameters for the AuthenticationClient.ExchangeAADAccessTokenForAcrRefreshToken
 // method.
 type AuthenticationClientExchangeAADAccessTokenForAcrRefreshTokenOptions struct {
@@ -52,7 +54,8 @@ type ContainerRegistryBlobClientCheckChunkExistsOptions struct {
 // ContainerRegistryBlobClientCompleteUploadOptions contains the optional parameters for the ContainerRegistryBlobClient.CompleteUpload
 // method.
 type ContainerRegistryBlobClientCompleteUploadOptions struct {
-	// placeholder for future optional parameters
+	// Optional raw data of blob
+	Value io.ReadSeekCloser
 }
 
 // ContainerRegistryBlobClientDeleteBlobOptions contains the optional parameters for the ContainerRegistryBlobClient.DeleteBlob

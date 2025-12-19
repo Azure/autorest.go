@@ -8,7 +8,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 import { Session } from '@autorest/extension-base';
-import { ChoiceSchema, CodeModel, HttpHeader, HttpMethod, Language, SealedChoiceSchema } from '@autorest/codemodel';
+import { ChoiceSchema, CodeModel, HttpHeader, HttpMethod, Language, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
 import { createPolymorphicInterfaceName, ensureNameCase, getEscapedReservedName, packageNameFromOutputFolder, trimPackagePrefix, uncapitalize } from '../../../naming.go/src/naming.js';
 import { aggregateParameters, hasAdditionalProperties } from './helpers.js';
@@ -251,8 +251,8 @@ export async function namer(session: Session<CodeModel>) {
         }
         if (!honorBodyPlacement) {
           const opMethod = op.requests![0].protocol.http!.method;
-          if (param.protocol.http?.in === 'body' && (opMethod === HttpMethod.Patch || opMethod === HttpMethod.Put)) {
-            // we enforce PATCH/PUT body parameters to be required.  do this before fixing up the parameter name
+          if (param.protocol.http?.in === 'body' && param.schema.type !== SchemaType.Binary && (opMethod === HttpMethod.Patch || opMethod === HttpMethod.Put)) {
+            // we enforce PATCH/PUT body parameters that aren't raw binary payloads to be required.  do this before fixing up the parameter name
             param.required = true;
           }
         }

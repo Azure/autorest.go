@@ -27,5 +27,24 @@ model InnerSpreadParam {
   code: int32;
 }
 
+model SomeModel {
+  name: string;
+}
+
 @route("/spread-with-model")
 op spreadWithModel(...SpreadParams): void;
+
+@route("/optional-binary-payload")
+op optionalBinaryBody(@body payload?: bytes): void;
+
+@patch
+@route("/force-required-body-patch")
+op forceRequiredBodyPatch(@body body?: SomeModel): void;
+
+@put
+@route("/force-required-body-put")
+op forceRequiredBodyPut(@body body?: SomeModel): void;
+
+@post
+@route("/optional-body-post")
+op optionalBodyPost(@body body?: SomeModel): void;

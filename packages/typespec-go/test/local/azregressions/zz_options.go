@@ -4,6 +4,28 @@
 
 package azregressions
 
+import "io"
+
+// ClientForceRequiredBodyPatchOptions contains the optional parameters for the Client.ForceRequiredBodyPatch method.
+type ClientForceRequiredBodyPatchOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientForceRequiredBodyPutOptions contains the optional parameters for the Client.ForceRequiredBodyPut method.
+type ClientForceRequiredBodyPutOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientOptionalBinaryBodyOptions contains the optional parameters for the Client.OptionalBinaryBody method.
+type ClientOptionalBinaryBodyOptions struct {
+	Payload io.ReadSeekCloser
+}
+
+// ClientOptionalBodyPostOptions contains the optional parameters for the Client.OptionalBodyPost method.
+type ClientOptionalBodyPostOptions struct {
+	Body *SomeModel
+}
+
 // ClientSpreadWithModelOptions contains the optional parameters for the Client.SpreadWithModel method.
 type ClientSpreadWithModelOptions struct {
 	Color *string
