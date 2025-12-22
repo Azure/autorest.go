@@ -23,7 +23,7 @@ var (
 
 func TestMain(m *testing.M) {
 	ctx = context.Background()
-	clientFactory, _ = armmultipleservicegroup.NewClientFactory(subscriptionIdExpected, &azfake.TokenCredential{}, &arm.ClientOptions{
+	clientFactory, _ = nonresourcegroup.NewClientFactory(subscriptionIdExpected, &azfake.TokenCredential{}, &arm.ClientOptions{
 		ClientOptions: azcore.ClientOptions{
 			Cloud: cloud.Configuration{
 				Services: map[cloud.ServiceName]cloud.ServiceConfiguration{
