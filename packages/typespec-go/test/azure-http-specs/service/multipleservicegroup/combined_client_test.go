@@ -18,7 +18,7 @@ func TestCombinedClient(t *testing.T) {
 	resp, err := client.NewCombinedFooClient().Test(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp)
-	resp, err = client.NewCombinedBarClient().Test(context.Background(), nil)
+	resp2, err := client.NewCombinedBarClient().Test(context.Background(), nil)
 	require.NoError(t, err)
-	require.NotNil(t, resp)
+	require.NotNil(t, resp2)
 }
