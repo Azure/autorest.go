@@ -2060,6 +2060,7 @@ using Microsoft.Web;
   "staticSiteUserEnvelope"
 );
 
+
 @@clientLocation(checkNameAvailability, "WebSiteManagement", "go");
 @@clientLocation(Users.getPublishingUser, "WebSiteManagement", "go");
 @@clientLocation(SourceControls.getSourceControl, "WebSiteManagement", "go");
