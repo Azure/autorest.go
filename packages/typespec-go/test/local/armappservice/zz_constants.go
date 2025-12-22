@@ -4,6 +4,30 @@
 
 package armappservice
 
+// AppServicePlanRestrictions - App Service plans this offer is restricted to.
+type AppServicePlanRestrictions string
+
+const (
+	AppServicePlanRestrictionsBasic    AppServicePlanRestrictions = "Basic"
+	AppServicePlanRestrictionsFree     AppServicePlanRestrictions = "Free"
+	AppServicePlanRestrictionsNone     AppServicePlanRestrictions = "None"
+	AppServicePlanRestrictionsPremium  AppServicePlanRestrictions = "Premium"
+	AppServicePlanRestrictionsShared   AppServicePlanRestrictions = "Shared"
+	AppServicePlanRestrictionsStandard AppServicePlanRestrictions = "Standard"
+)
+
+// PossibleAppServicePlanRestrictionsValues returns the possible values for the AppServicePlanRestrictions const type.
+func PossibleAppServicePlanRestrictionsValues() []AppServicePlanRestrictions {
+	return []AppServicePlanRestrictions{
+		AppServicePlanRestrictionsBasic,
+		AppServicePlanRestrictionsFree,
+		AppServicePlanRestrictionsNone,
+		AppServicePlanRestrictionsPremium,
+		AppServicePlanRestrictionsShared,
+		AppServicePlanRestrictionsStandard,
+	}
+}
+
 // AuthType - Auth Type
 type AuthType string
 
@@ -1480,30 +1504,6 @@ func PossibleParameterTypeValues() []ParameterType {
 		ParameterTypeSecureObject,
 		ParameterTypeSecureString,
 		ParameterTypeString,
-	}
-}
-
-// PlanRestrictions - App Service plans this offer is restricted to.
-type PlanRestrictions string
-
-const (
-	PlanRestrictionsBasic    PlanRestrictions = "Basic"
-	PlanRestrictionsFree     PlanRestrictions = "Free"
-	PlanRestrictionsNone     PlanRestrictions = "None"
-	PlanRestrictionsPremium  PlanRestrictions = "Premium"
-	PlanRestrictionsShared   PlanRestrictions = "Shared"
-	PlanRestrictionsStandard PlanRestrictions = "Standard"
-)
-
-// PossiblePlanRestrictionsValues returns the possible values for the PlanRestrictions const type.
-func PossiblePlanRestrictionsValues() []PlanRestrictions {
-	return []PlanRestrictions{
-		PlanRestrictionsBasic,
-		PlanRestrictionsFree,
-		PlanRestrictionsNone,
-		PlanRestrictionsPremium,
-		PlanRestrictionsShared,
-		PlanRestrictionsStandard,
 	}
 }
 
