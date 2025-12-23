@@ -49,12 +49,12 @@
   "homepage": "https://github.com/Azure/autorest.go#readme",
   "readme": "https://github.com/Azure/autorest.go/blob/main/readme.md",
   "devDependencies": {
-    "@azure-tools/azure-http-specs": "0.1.0-alpha.34-dev.4",
+    "@azure-tools/azure-http-specs": "0.1.0-alpha.35-dev.7",
     "@azure-tools/typespec-autorest": "0.63.0",
     "@azure-tools/typespec-azure-core": "0.63.0",
     "@azure-tools/typespec-azure-resource-manager": "0.63.0",
     "@azure-tools/typespec-azure-rulesets": "0.63.0",
-    "@azure-tools/typespec-client-generator-core": "0.63.0",
+    "@azure-tools/typespec-client-generator-core": "0.63.1",
     "@types/node": "catalog:",
     "@typespec/compiler": "1.7.0",
     "@typespec/events": "0.77.0",
@@ -76,7 +76,7 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@azure-tools/typespec-client-generator-core": "^0.63.0",
+    "@azure-tools/typespec-client-generator-core": "^0.63.1",
     "@typespec/compiler": "^1.7.0",
     "@typespec/http": "^1.7.0"
   },

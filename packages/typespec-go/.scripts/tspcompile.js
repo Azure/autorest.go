@@ -107,6 +107,7 @@ const azureHttpSpecsGroup = {
   'templatesgroup' : ['azure/resource-manager/operation-templates'],
   'largeheadergroup' : ['azure/resource-manager/large-header'],
   'methodsubscriptionidgroup' : ['/azure/resource-manager/method-subscription-id/client.tsp'],
+  'armmultipleservicegroup' : ['/azure/resource-manager/multi-service/client.tsp'],
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
   'previewversiongroup': ['azure/versioning/previewVersion', 'api-version=2024-12-01-preview'],
   'previewversiongroupspecificversion': ['azure/versioning/previewVersion', 'api-version=2024-06-01'],
@@ -121,6 +122,7 @@ const azureHttpSpecsGroup = {
   'twoopgroup': ['client/structure/two-operation-group/client.tsp'],
   'srvdrivenoldgroup': ['resiliency/srv-driven/old.tsp'],
   'srvdrivennewgroup': ['resiliency/srv-driven'],
+  'multipleservicegroup' : ['/service/multi-service/client.tsp'],
 };
 
 // default to using the locally built emitter

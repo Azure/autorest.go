@@ -6,6 +6,10 @@
 
 * Added support for client initializers with parameters.
 
+### Other Changes
+
+* Updated to the latest TCGC to support multiple services and add related tests.
+
 ## 0.8.8 (2025-12-17)
 
 ### Bugs Fixed
