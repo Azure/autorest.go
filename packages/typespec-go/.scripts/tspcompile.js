@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 import { exec, execSync } from 'child_process';
-import { existsSync, readFileSync, writeFileSync } from 'fs';
+import { existsSync, opendirSync, unlinkSync, readFileSync, writeFileSync } from 'fs';
 import { semaphore } from '../../../.scripts/semaphore.js';
 
 // limit to 8 concurrent builds
@@ -78,20 +78,24 @@ const httpSpecsGroup = {
 const azureHttpSpecsGroup = {
   'accessgroup': ['azure/client-generator-core/access'],
   'flattengroup': ['azure/client-generator-core/flatten-property'],
+  'nextlinkverbgroup': ['azure/client-generator-core/next-link-verb', 'slice-elements-byval=true'],
   'coreusagegroup': ['azure/client-generator-core/usage'],
-  // 'overridegroup': ['azure/client-generator-core/override'], TODO: https://github.com/Azure/autorest.go/issues/1718
+  'overridegroup': ['azure/client-generator-core/override/client.tsp'],
   'hierarchygroup': ['azure/client-generator-core/hierarchy-building'],
-  'clientinitializationgroup': ['azure/client-generator-core/client-initialization'],
-  // 'apiversionheadergroup' : ['azure/client-generator-core/api-version/header'],
-  // 'apiversionpathgroup' : ['azure/client-generator-core/api-version/path'],
-  // 'apiversionquerygroup' : ['azure/client-generator-core/api-version/query'],
+  'clientinitgroup': ['azure/client-generator-core/client-initialization'],
+  'apiversionheadergroup' : ['azure/client-generator-core/api-version/header/client.tsp'],
+  'apiversionpathgroup' : ['azure/client-generator-core/api-version/path/client.tsp'],
+  'apiversionquerygroup' : ['azure/client-generator-core/api-version/query/client.tsp'],
   'basicgroup': ['azure/core/basic'],
   'lrorpcgroup': ['azure/core/lro/rpc'],
   'lrostdgroup': ['azure/core/lro/standard'],
   'azurepagegroup': ['azure/core/page/client.tsp'], // requires paging with re-injection support
   'corescalargroup': ['azure/core/scalar'],
   'coremodelgroup': ['azure/core/model'],
-  'coreclientlocationgroup': ['azure/client-generator-core/client-location'],
+  'coreclientlocationmovemethodparametertoclientgroup': ['azure/client-generator-core/client-location/move-method-parameter-to-client'],
+  'coreclientlocationmoveexistingsubclientgroup': ['azure/client-generator-core/client-location/move-to-existing-sub-client'],
+  'coreclientlocationmovenewsubclientgroup': ['azure/client-generator-core/client-location/move-to-new-sub-client'],
+  'coreclientlocationmoverootclientgroup': ['azure/client-generator-core/client-location/move-to-root-client'],
   // 'coredeserializegroup': ['azure/client-generator-core/deserialize-empty-string-as-null'],
   'traitsgroup': ['azure/core/traits'], // requires union support
   'encodedurationgroup': ['azure/encode/duration'],
@@ -104,6 +108,8 @@ const azureHttpSpecsGroup = {
   'largeheadergroup' : ['azure/resource-manager/large-header'],
   'methodsubscriptionidgroup' : ['/azure/resource-manager/method-subscription-id/client.tsp'],
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
+  'previewversiongroup': ['azure/versioning/previewVersion', 'api-version=2024-12-01-preview'],
+  'previewversiongroupspecificversion': ['azure/versioning/previewVersion', 'api-version=2024-06-01'],
   'naminggroup': ['client/naming'],
   'enumconflictgroup': ['client/naming/enum-conflict/client.tsp'],
   'defaultgroup': ['client/structure/default/client.tsp'],
@@ -111,6 +117,7 @@ const azureHttpSpecsGroup = {
   'renamedopgroup': ['client/structure/renamed-operation/client.tsp'],
   'clientopgroup': ['client/structure/client-operation-group/client.tsp'],
   'clientnamespacegroup': ['client/namespace'],
+  'overloadgroup': ['client/overload/client.tsp'],
   'twoopgroup': ['client/structure/two-operation-group/client.tsp'],
   'srvdrivenoldgroup': ['resiliency/srv-driven/old.tsp'],
   'srvdrivennewgroup': ['resiliency/srv-driven'],
@@ -187,10 +194,10 @@ const azmodelsonly = pkgRoot + 'test/tsp/ModelsOnlyWithBaseTypes';
 generate('azmodelsonly', azmodelsonly, 'test/local/azmodelsonly');
 
 const azkeys = pkgRoot + 'test/tsp/KeyVault.Keys/client.tsp';
-generate('azkeys', azkeys, 'test/local/azkeys', ['single-client=true']);
+generate('azkeys', azkeys, 'test/local/azkeys', ['single-client=true', 'omit-constructors=true']);
 
 const armtest = pkgRoot + 'test/tsp/Test.Management';
-generate('armtest', armtest, 'test/local/armtest');
+generate('armtest', armtest, 'test/local/armtest', [`examples-directory=${armtest}/examples`, 'generate-samples=true']);
 
 const internalpager = pkgRoot + 'test/tsp/Internal.Pager';
 generate('internalpager', internalpager, 'test/local/internalpager', ['generate-fakes=false']);
@@ -215,6 +222,12 @@ generate('nooptionalbody', nooptionalbody, 'test/local/nooptionalbody', ['genera
 
 const rawjson = pkgRoot + 'test/tsp/RawJson';
 generate('rawjson', rawjson, 'test/local/rawjson/subpkg', ['containing-module=rawjson/v2', 'rawjson-as-bytes=true']);
+
+const azregressions = pkgRoot + 'test/tsp/Regressions';
+generate('azregressions', azregressions, 'test/local/azregressions');
+
+const armpageablelros = pkgRoot + 'test/tsp/PageableLROs';
+generate('armpageablelros', armpageablelros, 'test/local/armpageablelros');
 
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
@@ -329,6 +342,9 @@ function generate(moduleName, input, outputDir, perTestOptions) {
             metadata.emitterVersion = '0.0.0';
             writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
           }
+        } else {
+          // delete files on error so it's easy to spot codegen failures
+          cleanGeneratedFiles(fullOutputDir);
         }
       });
     } catch (err) {
@@ -346,6 +362,25 @@ function generate(moduleName, input, outputDir, perTestOptions) {
       sem.leave();
     }
   });
+}
+
+function cleanGeneratedFiles(outputDir) {
+  if (!existsSync(outputDir)) {
+      return;
+  }
+  const dir = opendirSync(outputDir);
+  while (true) {
+      const dirEnt = dir.readSync()
+      if (dirEnt === null) {
+          break;
+      }
+      // preserve the version.go file so we can test the v2+ major version scenario
+      if (dirEnt.isFile() && dirEnt.name.startsWith('zz_') && dirEnt.name !== 'zz_version.go') {
+          unlinkSync(dir.path + '/' + dirEnt.name);
+      }
+  }
+  dir.close();
+  cleanGeneratedFiles(outputDir + '/fake');
 }
 
 function logResult(error, stdout, stderr) {

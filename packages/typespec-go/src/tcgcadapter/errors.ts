@@ -15,9 +15,9 @@ export class AdapterError extends Error {
   readonly code: ErrorCode;
   readonly target: tsp.DiagnosticTarget | typeof tsp.NoTarget;
 
-  constructor(code: ErrorCode, message: string, target: tsp.DiagnosticTarget | typeof tsp.NoTarget) {
+  constructor(code: ErrorCode, message: string, target?: tsp.DiagnosticTarget) {
     super(message);
     this.code = code;
-    this.target = target;
+    this.target = target ?? tsp.NoTarget;
   }
 }

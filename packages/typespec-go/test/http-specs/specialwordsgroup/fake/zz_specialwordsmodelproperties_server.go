@@ -17,6 +17,10 @@ import (
 
 // SpecialWordsModelPropertiesServer is a fake server for instances of the specialwordsgroup.SpecialWordsModelPropertiesClient type.
 type SpecialWordsModelPropertiesServer struct {
+	// DictMethods is the fake for method SpecialWordsModelPropertiesClient.DictMethods
+	// HTTP status codes to indicate success: http.StatusNoContent
+	DictMethods func(ctx context.Context, body specialwordsgroup.DictMethods, options *specialwordsgroup.SpecialWordsModelPropertiesClientDictMethodsOptions) (resp azfake.Responder[specialwordsgroup.SpecialWordsModelPropertiesClientDictMethodsResponse], errResp azfake.ErrorResponder)
+
 	// SameAsModel is the fake for method SpecialWordsModelPropertiesClient.SameAsModel
 	// HTTP status codes to indicate success: http.StatusNoContent
 	SameAsModel func(ctx context.Context, body specialwordsgroup.SameAsModel, options *specialwordsgroup.SpecialWordsModelPropertiesClientSameAsModelOptions) (resp azfake.Responder[specialwordsgroup.SpecialWordsModelPropertiesClientSameAsModelResponse], errResp azfake.ErrorResponder)
@@ -58,6 +62,8 @@ func (s *SpecialWordsModelPropertiesServerTransport) dispatchToMethodFake(req *h
 		}
 		if !intercepted {
 			switch method {
+			case "SpecialWordsModelPropertiesClient.DictMethods":
+				res.resp, res.err = s.dispatchDictMethods(req)
 			case "SpecialWordsModelPropertiesClient.SameAsModel":
 				res.resp, res.err = s.dispatchSameAsModel(req)
 			default:
@@ -77,6 +83,29 @@ func (s *SpecialWordsModelPropertiesServerTransport) dispatchToMethodFake(req *h
 	case res := <-resultChan:
 		return res.resp, res.err
 	}
+}
+
+func (s *SpecialWordsModelPropertiesServerTransport) dispatchDictMethods(req *http.Request) (*http.Response, error) {
+	if s.srv.DictMethods == nil {
+		return nil, &nonRetriableError{errors.New("fake for method DictMethods not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[specialwordsgroup.DictMethods](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.DictMethods(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (s *SpecialWordsModelPropertiesServerTransport) dispatchSameAsModel(req *http.Request) (*http.Response, error) {

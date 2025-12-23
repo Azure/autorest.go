@@ -23,7 +23,7 @@ type OverrideClientOptions struct {
 
 // NewOverrideClientWithNoCredential creates a new instance of OverrideClient with the specified values.
 //   - endpoint - Service host
-//   - options - OverrideClientOptions contains the optional values for creating a [OverrideClient]
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
 func NewOverrideClientWithNoCredential(endpoint string, options *OverrideClientOptions) (*OverrideClient, error) {
 	if options == nil {
 		options = &OverrideClientOptions{}
@@ -42,15 +42,31 @@ func NewOverrideClientWithNoCredential(endpoint string, options *OverrideClientO
 // NewOverrideGroupParametersClient creates a new instance of [OverrideGroupParametersClient].
 func (client *OverrideClient) NewOverrideGroupParametersClient() *OverrideGroupParametersClient {
 	return &OverrideGroupParametersClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
+	}
+}
+
+// NewOverrideRemoveOptionalParameterClient creates a new instance of [OverrideRemoveOptionalParameterClient].
+func (client *OverrideClient) NewOverrideRemoveOptionalParameterClient() *OverrideRemoveOptionalParameterClient {
+	return &OverrideRemoveOptionalParameterClient{
+		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewOverrideReorderParametersClient creates a new instance of [OverrideReorderParametersClient].
 func (client *OverrideClient) NewOverrideReorderParametersClient() *OverrideReorderParametersClient {
 	return &OverrideReorderParametersClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
+	}
+}
+
+// NewOverrideRequireOptionalParameterClient creates a new instance of [OverrideRequireOptionalParameterClient].
+func (client *OverrideClient) NewOverrideRequireOptionalParameterClient() *OverrideRequireOptionalParameterClient {
+	return &OverrideRequireOptionalParameterClient{
+		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

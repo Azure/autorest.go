@@ -1,5 +1,70 @@
 # Release History
 
+## 0.8.9 (unreleased)
+
+### Features Added
+
+* Added support for client initializers with parameters.
+
+## 0.8.8 (2025-12-17)
+
+### Bugs Fixed
+
+* Fixed mismatch for LRO polling headers in example generation.
+
+### Features Added
+
+* Added support for pageable LROs.
+
+## 0.8.7 (2025-12-10)
+
+### Bugs Fixed
+
+* Generate fake values for required parameters when missing example values.
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
+
+## 0.8.6 (2025-11-25)
+
+### Bugs Fixed
+
+* Fixed etag example generation for escape string.
+
+### Features Added
+
+* Added support for grouped params via override.
+
+### Other Changes
+
+* Updated the minimum version of Go to `v1.24.0`.
+* Execute `gofmt -s -w .` instead of `gofmt -w .` to keep consistent with SDK repo's CI check.
+
+## 0.8.5 (2025-11-18)
+
+### Bugs Fixed
+
+* Fixed improper handling of spread params in some cases which would cause code generation to fail.
+* Fixed missing package prefix for types in spread params models used in fakes.
+* Fixed handling of supplemental endpoint data that could cause an unused import of `strings` in some cases.
+
+## 0.8.4 (2025-11-13)
+
+### Bugs Fixed
+
+* Omit client options type when `omit-constructors` is set to true
+
+### Features Added
+
+* Emit `LICENSE.txt` file (defaults to MIT license with a Microsoft Copyright).
+* Added support for `nextLinkVerb` for pageable operations.
+
+### Other Changes
+
+* Updated the minimum version of `azcore` to `v1.20.0`.
+* Updated to the latest tsp toolset.
+
 ## 0.8.3 (2025-10-14)
 
 ### Bugs Fixed

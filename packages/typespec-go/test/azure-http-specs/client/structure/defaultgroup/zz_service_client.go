@@ -57,32 +57,32 @@ func NewServiceClientWithNoCredential(endpoint string, client ClientType, option
 // NewServiceBarClient creates a new instance of [ServiceBarClient].
 func (client *ServiceClient) NewServiceBarClient() *ServiceBarClient {
 	return &ServiceBarClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewServiceBazClient creates a new instance of [ServiceBazClient].
 func (client *ServiceClient) NewServiceBazClient() *ServiceBazClient {
 	return &ServiceBazClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewServiceFooClient creates a new instance of [ServiceFooClient].
 func (client *ServiceClient) NewServiceFooClient() *ServiceFooClient {
 	return &ServiceFooClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewServiceQuxClient creates a new instance of [ServiceQuxClient].
 func (client *ServiceClient) NewServiceQuxClient() *ServiceQuxClient {
 	return &ServiceQuxClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 

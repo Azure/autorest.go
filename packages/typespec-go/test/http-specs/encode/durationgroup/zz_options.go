@@ -21,9 +21,21 @@ type DurationHeaderClientFloat64SecondsOptions struct {
 	// placeholder for future optional parameters
 }
 
+// DurationHeaderClientFloatMillisecondsLargerUnitOptions contains the optional parameters for the DurationHeaderClient.FloatMillisecondsLargerUnit
+// method.
+type DurationHeaderClientFloatMillisecondsLargerUnitOptions struct {
+	// placeholder for future optional parameters
+}
+
 // DurationHeaderClientFloatMillisecondsOptions contains the optional parameters for the DurationHeaderClient.FloatMilliseconds
 // method.
 type DurationHeaderClientFloatMillisecondsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DurationHeaderClientFloatSecondsLargerUnitOptions contains the optional parameters for the DurationHeaderClient.FloatSecondsLargerUnit
+// method.
+type DurationHeaderClientFloatSecondsLargerUnitOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -48,9 +60,21 @@ type DurationHeaderClientInt32MillisecondsArrayOptions struct {
 	// placeholder for future optional parameters
 }
 
+// DurationHeaderClientInt32MillisecondsLargerUnitOptions contains the optional parameters for the DurationHeaderClient.Int32MillisecondsLargerUnit
+// method.
+type DurationHeaderClientInt32MillisecondsLargerUnitOptions struct {
+	// placeholder for future optional parameters
+}
+
 // DurationHeaderClientInt32MillisecondsOptions contains the optional parameters for the DurationHeaderClient.Int32Milliseconds
 // method.
 type DurationHeaderClientInt32MillisecondsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DurationHeaderClientInt32SecondsLargerUnitOptions contains the optional parameters for the DurationHeaderClient.Int32SecondsLargerUnit
+// method.
+type DurationHeaderClientInt32SecondsLargerUnitOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -82,6 +106,12 @@ type DurationPropertyClientFloatMillisecondsArrayOptions struct {
 	// placeholder for future optional parameters
 }
 
+// DurationPropertyClientFloatMillisecondsLargerUnitOptions contains the optional parameters for the DurationPropertyClient.FloatMillisecondsLargerUnit
+// method.
+type DurationPropertyClientFloatMillisecondsLargerUnitOptions struct {
+	// placeholder for future optional parameters
+}
+
 // DurationPropertyClientFloatMillisecondsOptions contains the optional parameters for the DurationPropertyClient.FloatMilliseconds
 // method.
 type DurationPropertyClientFloatMillisecondsOptions struct {
@@ -91,6 +121,12 @@ type DurationPropertyClientFloatMillisecondsOptions struct {
 // DurationPropertyClientFloatSecondsArrayOptions contains the optional parameters for the DurationPropertyClient.FloatSecondsArray
 // method.
 type DurationPropertyClientFloatSecondsArrayOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DurationPropertyClientFloatSecondsLargerUnitOptions contains the optional parameters for the DurationPropertyClient.FloatSecondsLargerUnit
+// method.
+type DurationPropertyClientFloatSecondsLargerUnitOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -105,9 +141,21 @@ type DurationPropertyClientISO8601Options struct {
 	// placeholder for future optional parameters
 }
 
+// DurationPropertyClientInt32MillisecondsLargerUnitOptions contains the optional parameters for the DurationPropertyClient.Int32MillisecondsLargerUnit
+// method.
+type DurationPropertyClientInt32MillisecondsLargerUnitOptions struct {
+	// placeholder for future optional parameters
+}
+
 // DurationPropertyClientInt32MillisecondsOptions contains the optional parameters for the DurationPropertyClient.Int32Milliseconds
 // method.
 type DurationPropertyClientInt32MillisecondsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DurationPropertyClientInt32SecondsLargerUnitOptions contains the optional parameters for the DurationPropertyClient.Int32SecondsLargerUnit
+// method.
+type DurationPropertyClientInt32SecondsLargerUnitOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -133,9 +181,21 @@ type DurationQueryClientFloat64SecondsOptions struct {
 	// placeholder for future optional parameters
 }
 
+// DurationQueryClientFloatMillisecondsLargerUnitOptions contains the optional parameters for the DurationQueryClient.FloatMillisecondsLargerUnit
+// method.
+type DurationQueryClientFloatMillisecondsLargerUnitOptions struct {
+	// placeholder for future optional parameters
+}
+
 // DurationQueryClientFloatMillisecondsOptions contains the optional parameters for the DurationQueryClient.FloatMilliseconds
 // method.
 type DurationQueryClientFloatMillisecondsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DurationQueryClientFloatSecondsLargerUnitOptions contains the optional parameters for the DurationQueryClient.FloatSecondsLargerUnit
+// method.
+type DurationQueryClientFloatSecondsLargerUnitOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -155,6 +215,12 @@ type DurationQueryClientInt32MillisecondsArrayOptions struct {
 	// placeholder for future optional parameters
 }
 
+// DurationQueryClientInt32MillisecondsLargerUnitOptions contains the optional parameters for the DurationQueryClient.Int32MillisecondsLargerUnit
+// method.
+type DurationQueryClientInt32MillisecondsLargerUnitOptions struct {
+	// placeholder for future optional parameters
+}
+
 // DurationQueryClientInt32MillisecondsOptions contains the optional parameters for the DurationQueryClient.Int32Milliseconds
 // method.
 type DurationQueryClientInt32MillisecondsOptions struct {
@@ -164,6 +230,12 @@ type DurationQueryClientInt32MillisecondsOptions struct {
 // DurationQueryClientInt32SecondsArrayOptions contains the optional parameters for the DurationQueryClient.Int32SecondsArray
 // method.
 type DurationQueryClientInt32SecondsArrayOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DurationQueryClientInt32SecondsLargerUnitOptions contains the optional parameters for the DurationQueryClient.Int32SecondsLargerUnit
+// method.
+type DurationQueryClientInt32SecondsLargerUnitOptions struct {
 	// placeholder for future optional parameters
 }
 

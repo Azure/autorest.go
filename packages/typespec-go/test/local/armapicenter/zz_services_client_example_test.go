@@ -30,7 +30,7 @@ func ExampleServicesClient_CreateOrUpdate() {
 		Identity: &armapicenter.ManagedServiceIdentity{
 			Type: to.Ptr(armapicenter.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
 			UserAssignedIdentities: map[string]*armapicenter.UserAssignedIdentity{
-				"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ManagedIdentity/userAssignedIdentities/contoso-identity": &armapicenter.UserAssignedIdentity{},
+				"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ManagedIdentity/userAssignedIdentities/contoso-identity": {},
 			},
 		},
 	}, nil)
@@ -286,7 +286,7 @@ func ExampleServicesClient_Update() {
 		Identity: &armapicenter.ManagedServiceIdentity{
 			Type: to.Ptr(armapicenter.ManagedServiceIdentityType("SystemAssigned, UserAssigned")),
 			UserAssignedIdentities: map[string]*armapicenter.UserAssignedIdentity{
-				"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ManagedIdentity/userAssignedIdentities/contoso-identity": &armapicenter.UserAssignedIdentity{},
+				"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ManagedIdentity/userAssignedIdentities/contoso-identity": {},
 			},
 		},
 	}, nil)

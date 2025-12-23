@@ -42,7 +42,7 @@ func NewNumericClientWithNoCredential(endpoint string, options *NumericClientOpt
 // NewNumericPropertyClient creates a new instance of [NumericPropertyClient].
 func (client *NumericClient) NewNumericPropertyClient() *NumericPropertyClient {
 	return &NumericPropertyClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

@@ -4,9 +4,10 @@
 *--------------------------------------------------------------------------------------------*/
 
 export * from './client.js';
-//export * from './method.js';
-export * from './package.js';
+export * from './codeModel.js';
+export * from './examples.js';
+export * from './method.js';
+export * from './module.js';
 export * from './param.js';
 export * from './result.js';
 export * from './type.js';
-export * from './examples.js';

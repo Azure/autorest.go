@@ -13,31 +13,26 @@ type RawJSONClient struct {
 	endpoint string
 }
 
-// RawJSONClientOptions contains the optional values for creating a [RawJSONClient].
-type RawJSONClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewRawJSONInputOnlyClient creates a new instance of [RawJSONInputOnlyClient].
 func (client *RawJSONClient) NewRawJSONInputOnlyClient() *RawJSONInputOnlyClient {
 	return &RawJSONInputOnlyClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewRawJSONModelCaseClient creates a new instance of [RawJSONModelCaseClient].
 func (client *RawJSONClient) NewRawJSONModelCaseClient() *RawJSONModelCaseClient {
 	return &RawJSONModelCaseClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewRawJSONOutputOnlyClient creates a new instance of [RawJSONOutputOnlyClient].
 func (client *RawJSONClient) NewRawJSONOutputOnlyClient() *RawJSONOutputOnlyClient {
 	return &RawJSONOutputOnlyClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

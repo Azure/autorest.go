@@ -4,6 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import * as method from './method.js';
+import * as module from './module.js';
 import * as type from './type.js';
 
 /** indicates the wire format for request bodies */
@@ -140,11 +141,6 @@ export type ParameterStyle = 'required' | 'optional' | 'literal' | 'flag' | Clie
 /** indicates where the value of a parameter originates */
 export type ParameterLocation = 'client' | 'method';
 
-/** a parameter that's not used for creating HTTP requests (e.g. a credential parameter) */
-export interface Parameter extends HttpParameterBase {
-  kind: 'parameter';
-}
-
 /** a struct that contains a grouping of parameters */
 export interface ParameterGroup {
   kind: 'paramGroup';
@@ -166,6 +162,9 @@ export interface ParameterGroup {
 
   /** the parameters that belong to this group */
   params: Array<MethodParameter>;
+
+  /** the package to which this type belongs */
+  pkg: module.PackageContent;
 }
 
 /** a parameter that's a field within a type passed via the HTTP request body */
@@ -292,24 +291,6 @@ export interface URIParameter extends HttpParameterBase {
 
 /** defines the possible types for a URIParameter */
 export type URIParameterType = type.Constant | type.Scalar | type.String;
-
-/**
- * returns true if the provided parameter is for the service API version
- * 
- * @param param the parameter to inspect
- * @returns true if the parameter is for the API version
- */
-export function isAPIVersionParameter(param: MethodParameter | Parameter): boolean {
-  switch (param.kind) {
-    case 'headerScalarParam':
-    case 'pathScalarParam':
-    case 'queryScalarParam':
-    case 'uriParam':
-      return param.isApiVersion;
-    default:
-      return false;
-  }
-}
 
 /** narrows style to a ClientSideDefault within the conditional block */
 export function isClientSideDefault(style: ParameterStyle): style is ClientSideDefault {
@@ -508,15 +489,8 @@ export class MultipartFormBodyParameter extends HttpParameterBase implements Mul
   }
 }
 
-export class Parameter extends HttpParameterBase implements Parameter {
-  constructor(name: string, type: type.WireType, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
-    super(name, type, style, byValue, location);
-    this.kind = 'parameter';
-  }
-}
-
 export class ParameterGroup implements ParameterGroup {
-  constructor(name: string, groupName: string, required: boolean, location: ParameterLocation) {
+  constructor(pkg: module.PackageContent, name: string, groupName: string, required: boolean, location: ParameterLocation) {
     this.kind = 'paramGroup';
     this.groupName = groupName;
     this.location = location;
@@ -525,6 +499,7 @@ export class ParameterGroup implements ParameterGroup {
     this.params = new Array<MethodParameter>();
     this.required = required;
     this.docs = {};
+    this.pkg = pkg;
   }
 }
 

@@ -23,8 +23,12 @@ const clientParams = new Map<string, go.MethodParameter>();
 const paramGroups = new Map<string, go.ParameterGroup>();
 
 export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
+  // since we only support single packages in autorest, the root will
+  // either be the package in the containing module or the module itself.
+  const pkg = codeModel.root.kind === 'containingModule' ? codeModel.root.package : codeModel.root;
+
   for (const group of values(m4CodeModel.operationGroups)) {
-    const client = adaptClient(group);
+    const client = adaptClient(group, pkg);
 
     for (const op of values(group.operations)) {
       const httpPath = <string>op.requests![0].protocol.http!.path;
@@ -39,7 +43,7 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
         if (op.language.go!.paging.nextLinkOperation) {
           // adapt the next link operation
           const nextPageMethod = new go.NextPageMethod(op.language.go!.paging.nextLinkOperation.language.go.name, client, httpPath, httpMethod, getStatusCodes(op.language.go!.paging.nextLinkOperation));
-          populateMethod(op.language.go!.paging.nextLinkOperation, nextPageMethod, m4CodeModel, codeModel);
+          populateMethod(op.language.go!.paging.nextLinkOperation, m4CodeModel, nextPageMethod);
           method.nextPageMethod = nextPageMethod;
         }
       } else if (helpers.isLROOperation(op)) {
@@ -53,14 +57,14 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
         method.nextLinkName = op.language.go!.paging.nextLinkName;
         if (op.language.go!.paging.nextLinkOperation) {
           // adapt the next link operation
-          const nextPageMethod = adaptNextPageMethod(op, m4CodeModel, client, codeModel);
+          const nextPageMethod = adaptNextPageMethod(op, m4CodeModel, client);
           method.nextPageMethod = nextPageMethod;
         }
       } else {
         method = new go.SyncMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
       }
 
-      populateMethod(op, method, m4CodeModel, codeModel);
+      populateMethod(op, m4CodeModel, method);
 
       client.methods.push(method);
     }
@@ -77,17 +81,18 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
     }
 
     if (codeModel.type === 'azure-arm') {
-      // we don't need the scopes for ARM, it's handled by pipeline policy
-      const ctor = new go.Constructor(`New${client.name}`, new go.TokenAuthentication([]));
+      const ctor = new go.Constructor(pkg, `New${client.name}`);
       // add any modeled parameter first, which should only be the subscriptionID, then add TokenCredential
       for (const param of client.parameters) {
         ctor.parameters.push(param);
       }
-      client.instance = new go.Constructable(go.newClientOptions(codeModel.type, group.language.go!.clientName));
+      client.instance = new go.Constructable(go.newClientOptions(pkg, codeModel.type, group.language.go!.clientName));
+      // we don't need the scopes for ARM, it's handled by pipeline policy
+      ctor.parameters.push(new go.ClientCredentialParameter('credential', new go.TokenCredential([])));
       client.instance.constructors.push(ctor);
     }
 
-    codeModel.clients.push(client);
+    pkg.clients.push(client);
   }
 }
 
@@ -95,20 +100,20 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
 // only adaptNextPageMethod should touch this!
 const adaptedNextPageMethods = new Map<string, go.NextPageMethod>();
 
-function adaptNextPageMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, client: go.Client, codeModel: go.CodeModel): go.NextPageMethod {
+function adaptNextPageMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, client: go.Client): go.NextPageMethod {
   const nextPageMethodName = op.language.go!.paging.nextLinkOperation.language.go.name;
   let nextPageMethod = adaptedNextPageMethods.get(nextPageMethodName);
   if (!nextPageMethod) {
     const httpPath = <string>op.language.go!.paging.nextLinkOperation.requests![0].protocol.http!.path;
     const httpMethod = <go.HTTPMethod>op.language.go!.paging.nextLinkOperation.requests![0].protocol.http!.method;
     nextPageMethod = new go.NextPageMethod(nextPageMethodName, client, httpPath, httpMethod, getStatusCodes(op.language.go!.paging.nextLinkOperation));
-    populateMethod(op.language.go!.paging.nextLinkOperation, nextPageMethod, m4CodeModel, codeModel);
+    populateMethod(op.language.go!.paging.nextLinkOperation, m4CodeModel, nextPageMethod);
     adaptedNextPageMethods.set(nextPageMethodName, nextPageMethod);
   }
   return nextPageMethod;
 }
 
-function populateMethod(op: m4.Operation, method: go.MethodType | go.NextPageMethod, m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
+function populateMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, method: go.MethodType | go.NextPageMethod): void {
   if (method.kind !== 'nextPageMethod') {
     if (hasDescription(op.language.go!)) {
       method.docs.description = op.language.go!.description;
@@ -116,12 +121,12 @@ function populateMethod(op: m4.Operation, method: go.MethodType | go.NextPageMet
 
     let optionalParamsGroup = paramGroups.get(op.language.go!.optionalParamGroup.schema.language.go!.name);
     if (!optionalParamsGroup) {
-      optionalParamsGroup = adaptParameterGroup('method', op.language.go!.optionalParamGroup);
+      optionalParamsGroup = adaptParameterGroup(op.language.go!.optionalParamGroup, method.receiver.type.pkg, 'method');
       paramGroups.set(op.language.go!.optionalParamGroup.schema.language.go!.name, optionalParamsGroup);
     }
 
     method.optionalParamsGroup = optionalParamsGroup;
-    method.returns = adaptResponseEnvelope(m4CodeModel, codeModel, op, method);
+    method.returns = adaptResponseEnvelope(m4CodeModel, op, method.receiver.type.pkg, method);
   }
 
   adaptMethodParameters(op, method);
@@ -131,49 +136,63 @@ function populateMethod(op: m4.Operation, method: go.MethodType | go.NextPageMet
   }
 }
 
-function adaptHeaderScalarType(schema: m4.Schema, forParam: boolean): go.HeaderScalarType {
+function adaptHeaderScalarType(schema: m4.Schema, forParam: boolean, pkg: go.PackageContent): go.HeaderScalarType {
   // for header params, we never pass the element type by pointer
-  const type = adaptWireType(schema, forParam);
+  const type = adaptWireType(schema, pkg, forParam);
   if (go.isHeaderScalarType(type)) {
     return type;
   }
   throw new Error(`unexpected header scalar parameter type ${schema.type}`);
 }
 
-function adaptPathScalarParameterType(schema: m4.Schema): go.PathScalarParameterType {
-  const type = adaptWireType(schema);
+function adaptPathScalarParameterType(schema: m4.Schema, pkg: go.PackageContent): go.PathScalarParameterType {
+  const type = adaptWireType(schema, pkg);
   if (go.isPathScalarParameterType(type)) {
     return type;
   }
   throw new Error(`unexpected path scalar parameter type ${schema.type}`);
 }
 
-function adaptQueryScalarParameterType(schema: m4.Schema): go.QueryScalarParameterType {
-  const type = adaptWireType(schema);
+function adaptQueryScalarParameterType(schema: m4.Schema, pkg: go.PackageContent): go.QueryScalarParameterType {
+  const type = adaptWireType(schema, pkg);
   if (go.isQueryScalarParameterType(type)) {
     return type;
   }
   throw new Error(`unexpected query scalar parameter type ${schema.type}`);
 }
 
-function adaptURIPrameterType(schema: m4.Schema): go.URIParameterType {
-  const type = adaptWireType(schema);
+function adaptURIPrameterType(schema: m4.Schema, pkg: go.PackageContent): go.URIParameterType {
+  const type = adaptWireType(schema, pkg);
   if (go.isURIParameterType(type)) {
     return type;
   }
   throw new Error(`unexpected URI parameter type ${schema.type}`);
 }
 
-function adaptClient(group: m4.OperationGroup): go.Client {
+/**
+ * returns true if the parameter should be passed by value
+ * 
+ * @param style the style of the parameter
+ * @param location the location of the parameter
+ * @param param the parameter type (needed for schema)
+ * @returns true if the param should be passed by value
+ */
+function calculateParamByValue(param: m4.Parameter, style: go.ParameterStyle, location: go.ParameterLocation): boolean {
+  return helpers.isTypePassedByValue(param.schema) ? true : (go.isRequiredParameter(style) || (location === 'client' && go.isClientSideDefault(style)));
+}
+
+function adaptClient(group: m4.OperationGroup, pkg: go.PackageContent): go.Client {
   const description = `${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.`;
-  const client = new go.Client(group.language.go!.clientName, {description: description});
+  const client = new go.Client(pkg, group.language.go!.clientName, {description: description});
   if (group.language.go!.complexHostParams) {
     client.instance = new go.TemplatedHost(group.language.go!.host);
   }
   if (group.language.go!.hostParams) {
     for (const hostParam of values(<Array<m4.Parameter>>group.language.go!.hostParams)) {
-      const uriParam = new go.URIParameter(hostParam.language.go!.name, hostParam.language.go!.serializedName, adaptURIPrameterType(hostParam.schema),
-        adaptParameterStyle(hostParam), hostParam.language.go!.byValue, adaptMethodLocation(hostParam.implementation));
+      const style = adaptParameterStyle(hostParam, pkg);
+      const location = adaptMethodLocation(hostParam.implementation);
+      const uriParam = new go.URIParameter(hostParam.language.go!.name, hostParam.language.go!.serializedName, adaptURIPrameterType(hostParam.schema, pkg),
+        style, calculateParamByValue(hostParam, style, location), location);
       client.parameters.push(uriParam);
     }
   }
@@ -201,12 +220,12 @@ function adaptMethodParameters(op: m4.Operation, method: go.MethodType | go.Next
   }
 
   for (const param of values(helpers.aggregateParameters(op))) {
-    const methodParam = adaptMethodParameter(op, param);
+    const methodParam = adaptMethodParameter(op, param, method.receiver.type.pkg);
     method.parameters.push(methodParam);
   }
 }
 
-function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel, op: m4.Operation, forMethod: go.MethodType): go.ResponseEnvelope {
+function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, op: m4.Operation, pkg: go.PackageContent, forMethod: go.MethodType): go.ResponseEnvelope {
   const respEnvSchema = <m4.ObjectSchema>op.language.go!.responseEnv;
   const respEnv = new go.ResponseEnvelope(respEnvSchema.language.go!.name, {description: respEnvSchema.language.go!.description}, forMethod);
 
@@ -215,13 +234,13 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
     if (prop.language.go!.fromHeader) {
       let headerResp: go.HeaderScalarResponse | go.HeaderMapResponse;
       if (prop.schema.language.go!.headerCollectionPrefix) {
-        const headerType = adaptWireType(prop.schema, false);
+        const headerType = adaptWireType(prop.schema, forMethod.receiver.type.pkg, false);
         if (headerType.kind !== 'map') {
-          throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderMapResponse ${prop.language.go!.name}`);
+          throw new Error(`unexpected type ${headerType.kind} for HeaderMapResponse ${prop.language.go!.name}`);
         }
         headerResp = new go.HeaderMapResponse(prop.language.go!.name, headerType, prop.schema.language.go!.headerCollectionPrefix);
       } else {
-        headerResp = new go.HeaderScalarResponse(prop.language.go!.name, adaptHeaderScalarType(prop.schema, false), prop.language.go!.fromHeader, prop.language.go!.byValue);
+        headerResp = new go.HeaderScalarResponse(prop.language.go!.name, adaptHeaderScalarType(prop.schema, false, pkg), prop.language.go!.fromHeader, prop.language.go!.byValue);
       }
       if (hasDescription(prop.language.go!)) {
         headerResp.docs.description = prop.language.go!.description;
@@ -237,13 +256,13 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
   // now add the result field
   const resultProp = <m4.Property>respEnvSchema.language.go!.resultProp;
   if (helpers.isMultiRespOperation(op)) {
-    respEnv.result = adaptAnyResult(op);
+    respEnv.result = adaptAnyResult(op, pkg);
   } else if (resultProp.schema.type === m4.SchemaType.Binary) {
     respEnv.result = new go.BinaryResult(resultProp.language.go!.name);
   } else if (m4CodeModel.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head') {
     respEnv.result = new go.HeadAsBooleanResult(resultProp.language.go!.name);
   } else if (!resultProp.language.go!.embeddedType) {
-    const resultType = adaptWireType(resultProp.schema);
+    const resultType = adaptWireType(resultProp.schema, forMethod.receiver.type.pkg);
     if (go.isMonomorphicResultType(resultType)) {
       respEnv.result = new go.MonomorphicResult(resultProp.language.go!.name, adaptResultFormat(helpers.getSchemaResponse(op)!.protocol), resultType, resultProp.language.go!.byValue);
       respEnv.result.xml = adaptXMLInfo(resultProp.schema);
@@ -252,7 +271,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
     }
   } else if (resultProp.isDiscriminator) {
     let ifaceResult: go.Interface | undefined;
-    for (const iface of values(codeModel.interfaces)) {
+    for (const iface of values(forMethod.receiver.type.pkg.interfaces)) {
       if (iface.name === resultProp.schema.language.go!.name) {
         ifaceResult = iface;
         break;
@@ -268,7 +287,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
    * is a concrete type from a polymorphic hierarchy
    */
     let modelType: go.Model | go.PolymorphicModel | undefined;
-    for (const model of codeModel.models) {
+    for (const model of forMethod.receiver.type.pkg.models) {
       if ((model.kind === 'model' || model.kind === 'polymorphicModel') && model.name === resultProp.schema.language.go!.name) {
         modelType = model;
         break;
@@ -316,7 +335,7 @@ function getStatusCodes(op: m4.Operation): Array<number> {
   return statusCodes;
 }
 
-function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodParameter {
+function adaptMethodParameter(op: m4.Operation, param: m4.Parameter, pkg: go.PackageContent): go.MethodParameter {
   let adaptedParam: go.MethodParameter;
   let location: go.ParameterLocation = 'method';
   if (param.implementation === m4.ImplementationLocation.Client) {
@@ -329,11 +348,11 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
     location = 'client';
   }
 
-  const style = adaptParameterStyle(param);
+  const style = adaptParameterStyle(param, pkg);
 
   // unfortunately param.language.go!.byValue isn't always populated.
   // since we can't trust it, we calculate the value instead.
-  const byValue = helpers.isTypePassedByValue(param.schema) ? true : (go.isRequiredParameter(style) || (location === 'client' && go.isClientSideDefault(style)));
+  const byValue = calculateParamByValue(param, style, location);
 
   switch (param.protocol.http?.in) {
     case 'body': {
@@ -350,12 +369,12 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
           }
         }
       }
-      const bodyType = adaptWireType(param.schema);
+      const bodyType = adaptWireType(param.schema, pkg);
       if (op.requests![0].protocol.http!.knownMediaType === KnownMediaType.Form) {
         const collectionFormat = adaptCollectionFormat(param);
         if (collectionFormat) {
           if (bodyType.kind !== 'slice') {
-            throw new Error(`unexpected type ${go.getTypeDeclaration(bodyType)} for FormBodyCollectionParameter ${param.language.go!.name}`);
+            throw new Error(`unexpected type ${bodyType.kind} for FormBodyCollectionParameter ${param.language.go!.name}`);
           }
           adaptedParam = new go.FormBodyCollectionParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, collectionFormat, style, byValue);
         } else {
@@ -374,19 +393,19 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
     case 'header': {
       const collectionFormat = adaptCollectionFormat(param);
       if (param.schema.language.go!.headerCollectionPrefix) {
-        const headerType = adaptWireType(param.schema, true);
+        const headerType = adaptWireType(param.schema, pkg, true);
         if (headerType.kind !== 'map') {
-          throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderMapParameter ${param.language.go!.name}`);
+          throw new Error(`unexpected type ${headerType.kind} for HeaderMapParameter ${param.language.go!.name}`);
         }
         adaptedParam = new go.HeaderMapParameter(param.language.go!.name, param.schema.language.go!.headerCollectionPrefix, headerType, style, byValue, location);
       } else if (collectionFormat) {
-        const headerType = adaptWireType(param.schema, true);
+        const headerType = adaptWireType(param.schema, pkg, true);
         if (headerType.kind !== 'slice') {
-          throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderCollectionParameter ${param.language.go!.name}`);
+          throw new Error(`unexpected type ${headerType.kind} for HeaderCollectionParameter ${param.language.go!.name}`);
         }
         adaptedParam = new go.HeaderCollectionParameter(param.language.go!.name, param.language.go!.serializedName, headerType, collectionFormat, style, byValue, location);
       } else {
-        adaptedParam = new go.HeaderScalarParameter(param.language.go!.name, param.language.go!.serializedName, adaptHeaderScalarType(param.schema, true),
+        adaptedParam = new go.HeaderScalarParameter(param.language.go!.name, param.language.go!.serializedName, adaptHeaderScalarType(param.schema, true, pkg),
           style, byValue, location);
       }
       break;
@@ -394,16 +413,16 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
     case 'path': {
       const collectionFormat = adaptCollectionFormat(param);
       if (collectionFormat) {
-        const pathType = adaptWireType(param.schema);
+        const pathType = adaptWireType(param.schema, pkg);
         if (pathType.kind !== 'slice') {
-          throw new Error(`unexpected type ${go.getTypeDeclaration(pathType)} for PathCollectionParameter ${param.language.go!.name}`);
+          throw new Error(`unexpected type ${pathType.kind} for PathCollectionParameter ${param.language.go!.name}`);
         }
         adaptedParam = new go.PathCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
           pathType, collectionFormat, style, byValue, location);
       } else {
         const skipUrlEncoding = skipURLEncoding(param);
         adaptedParam = new go.PathScalarParameter(param.language.go!.name, param.language.go!.serializedName, !skipUrlEncoding,
-          adaptPathScalarParameterType(param.schema), style, byValue, location);
+          adaptPathScalarParameterType(param.schema, pkg), style, byValue, location);
         // this is a legacy hack to work around the fact that
         // swagger doesn't allow path params to be empty.
         adaptedParam.omitEmptyStringCheck = skipUrlEncoding && (adaptedParam.type.kind === 'string' || (adaptedParam.type.kind === 'constant' && adaptedParam.type.type === 'string'));
@@ -413,20 +432,20 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
     case 'query': {
       const collectionFormat = adaptExtendedCollectionFormat(param);
       if (collectionFormat) {
-        const queryType = adaptWireType(param.schema);
+        const queryType = adaptWireType(param.schema, pkg);
         if (queryType.kind !== 'slice') {
-          throw new Error(`unexpected type ${go.getTypeDeclaration(queryType)} for QueryCollectionParameter ${param.language.go!.name}`);
+          throw new Error(`unexpected type ${queryType.kind} for QueryCollectionParameter ${param.language.go!.name}`);
         }
         adaptedParam = new go.QueryCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
           queryType, collectionFormat, style, byValue, location);
       } else {
         adaptedParam = new go.QueryScalarParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          adaptQueryScalarParameterType(param.schema), style, byValue, location);
+          adaptQueryScalarParameterType(param.schema, pkg), style, byValue, location);
       }
       break;
     }
     case 'uri':
-      adaptedParam = new go.URIParameter(param.language.go!.name, param.language.go!.serializedName, adaptURIPrameterType(param.schema),
+      adaptedParam = new go.URIParameter(param.language.go!.name, param.language.go!.serializedName, adaptURIPrameterType(param.schema, pkg),
         style, byValue, adaptParameterlocation(param));
       break;
     default: {
@@ -450,9 +469,9 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.MethodP
   if (adaptedParam.location === 'client') {
     clientParams.set(param.language.go!.name, adaptedParam);
   }
-  
+
   if (param.language.go!.paramGroup) {
-    const paramGroup = findOrAdaptParamsGroup(param);
+    const paramGroup = findOrAdaptParamsGroup(param, pkg);
     // parameter groups can be shared across methods so don't add any duplicate parameters
     if (values(paramGroup.params).where((each: go.MethodParameter) => { return each.name === adaptedParam.name; }).count() === 0) {
       paramGroup.params.push(adaptedParam);
@@ -526,11 +545,11 @@ function adaptParameterlocation(param: m4.Parameter): go.ParameterLocation {
   }
 }
 
-function adaptParameterStyle(param: m4.Parameter): go.ParameterStyle {
+function adaptParameterStyle(param: m4.Parameter, pkg: go.PackageContent): go.ParameterStyle {
   if (param.clientDefaultValue) {
-    const adaptedType = adaptWireType(param.schema);
+    const adaptedType = adaptWireType(param.schema, pkg);
     if (!go.isLiteralValueType(adaptedType)) {
-      throw new Error(`unsupported client side default type ${go.getTypeDeclaration(adaptedType)} for parameter ${param.language.go!.name}`);
+      throw new Error(`unsupported client side default type ${adaptedType.kind} for parameter ${param.language.go!.name}`);
     }
     return new go.ClientSideDefault(new go.Literal(adaptedType, param.clientDefaultValue));
   } else if (param.schema.type === m4.SchemaType.Constant) {
@@ -545,19 +564,19 @@ function adaptParameterStyle(param: m4.Parameter): go.ParameterStyle {
   }
 }
 
-function findOrAdaptParamsGroup(param: m4.Parameter): go.ParameterGroup {
+function findOrAdaptParamsGroup(param: m4.Parameter, pkg: go.PackageContent): go.ParameterGroup {
   const groupProp = <m4.GroupProperty>param.language.go!.paramGroup;
   let paramGroup = paramGroups.get(groupProp.schema.language.go!.name);
   if (!paramGroup) {
-    paramGroup = adaptParameterGroup(adaptParameterlocation(param), groupProp);
+    paramGroup = adaptParameterGroup(groupProp, pkg, adaptParameterlocation(param));
     paramGroups.set(groupProp.schema.language.go!.name, paramGroup);
   }
 
   return paramGroup;
 }
 
-function adaptParameterGroup(location: go.ParameterLocation, groupProp: m4.GroupProperty): go.ParameterGroup {
-  const paramGroup = new go.ParameterGroup(groupProp.language.go!.name, groupProp.schema.language.go!.name, groupProp.required === true, location);
+function adaptParameterGroup(groupProp: m4.GroupProperty, pkg: go.PackageContent, location: go.ParameterLocation): go.ParameterGroup {
+  const paramGroup = new go.ParameterGroup(pkg, groupProp.language.go!.name, groupProp.schema.language.go!.name, groupProp.required === true, location);
   paramGroup.docs.description = groupProp.language.go!.description;
   return paramGroup;
 }
@@ -578,12 +597,12 @@ function adaptBodyFormat(protocol: m4.Protocols): go.BodyFormat {
   }
 }
 
-function adaptAnyResult(op: m4.Operation): go.AnyResult {
+function adaptAnyResult(op: m4.Operation, pkg: go.PackageContent): go.AnyResult {
   const resultTypes: Record<number, go.WireType> = {};
   for (const resp of values(op.responses)) {
     let wireType: go.WireType;
     if (helpers.isSchemaResponse(resp)) {
-      wireType = adaptWireType(resp.schema);
+      wireType = adaptWireType(resp.schema, pkg);
     } else {
       // the operation contains a mix of schemas and non-schema responses
       continue;

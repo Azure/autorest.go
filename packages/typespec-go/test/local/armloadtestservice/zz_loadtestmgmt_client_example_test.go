@@ -72,7 +72,7 @@ func ExampleLoadTestMgmtClient_BeginCreateOrUpdateLoadtest() {
 		Identity: &armloadtestservice.ManagedServiceIdentity{
 			Type: to.Ptr(armloadtestservice.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
 			UserAssignedIdentities: map[string]*armloadtestservice.UserAssignedIdentity{
-				"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1": &armloadtestservice.UserAssignedIdentity{},
+				"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1": {},
 			},
 		},
 		Properties: &armloadtestservice.LoadTestProperties{
@@ -524,7 +524,7 @@ func ExampleLoadTestMgmtClient_BeginUpdateLoadtest() {
 		Identity: &armloadtestservice.ManagedServiceIdentity{
 			Type: to.Ptr(armloadtestservice.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
 			UserAssignedIdentities: map[string]*armloadtestservice.UserAssignedIdentity{
-				"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1": &armloadtestservice.UserAssignedIdentity{},
+				"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1": {},
 			},
 		},
 		Properties: &armloadtestservice.LoadTestResourceUpdateProperties{

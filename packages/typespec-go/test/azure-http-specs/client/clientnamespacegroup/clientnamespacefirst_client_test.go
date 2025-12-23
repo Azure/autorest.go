@@ -17,8 +17,6 @@ func TestClientNamespaceFirstClient_GetFirst(t *testing.T) {
 	require.NotNil(t, client)
 	resp, err := client.GetFirst(context.Background(), nil) // Use appropriate context and options
 	require.NoError(t, err)
-	require.NotNil(t, resp)
-	require.NotNil(t, resp.FirstClientResult)
-	require.NotNil(t, resp.FirstClientResult.Name)
-	require.Equal(t, "first", *resp.FirstClientResult.Name)
+	require.NotNil(t, resp.Name)
+	require.Equal(t, "first", *resp.Name)
 }

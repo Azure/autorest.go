@@ -42,7 +42,7 @@ func NewFixedClientWithNoCredential(endpoint string, options *FixedClientOptions
 // NewFixedStringClient creates a new instance of [FixedStringClient].
 func (client *FixedClient) NewFixedStringClient() *FixedStringClient {
 	return &FixedStringClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

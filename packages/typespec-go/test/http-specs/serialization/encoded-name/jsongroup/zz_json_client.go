@@ -42,7 +42,7 @@ func NewJSONClientWithNoCredential(endpoint string, options *JSONClientOptions) 
 // NewJSONPropertyClient creates a new instance of [JSONPropertyClient].
 func (client *JSONClient) NewJSONPropertyClient() *JSONPropertyClient {
 	return &JSONPropertyClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

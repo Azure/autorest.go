@@ -34,10 +34,8 @@ func TestFakeBackupKey(t *testing.T) {
 		},
 	}
 
-	client, err := azkeys.NewClient("https://fake.vault.azure.net", &azfake.TokenCredential{}, &azkeys.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServerTransport(&server),
-		},
+	client, err := azkeys.NewClient("https://fake.vault.azure.net", &azcore.ClientOptions{
+		Transport: fake.NewServerTransport(&server),
 	})
 	require.NoError(t, err)
 

@@ -59,6 +59,38 @@ type Del struct {
 	Name *string
 }
 
+type DictMethods struct {
+	// REQUIRED
+	Clear *string
+
+	// REQUIRED
+	Copy *string
+
+	// REQUIRED
+	Get *string
+
+	// REQUIRED
+	Items *string
+
+	// REQUIRED
+	Keys *string
+
+	// REQUIRED
+	Pop *string
+
+	// REQUIRED
+	Popitem *string
+
+	// REQUIRED
+	Setdefault *string
+
+	// REQUIRED
+	Update *string
+
+	// REQUIRED
+	Values *string
+}
+
 type Elif struct {
 	// REQUIRED
 	Name *string

@@ -42,15 +42,15 @@ func NewContentNegotiationClientWithNoCredential(endpoint string, options *Conte
 // NewContentNegotiationDifferentBodyClient creates a new instance of [ContentNegotiationDifferentBodyClient].
 func (client *ContentNegotiationClient) NewContentNegotiationDifferentBodyClient() *ContentNegotiationDifferentBodyClient {
 	return &ContentNegotiationDifferentBodyClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewContentNegotiationSameBodyClient creates a new instance of [ContentNegotiationSameBodyClient].
 func (client *ContentNegotiationClient) NewContentNegotiationSameBodyClient() *ContentNegotiationSameBodyClient {
 	return &ContentNegotiationSameBodyClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

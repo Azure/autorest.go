@@ -42,7 +42,7 @@ func NewScalarClientWithNoCredential(endpoint string, options *ScalarClientOptio
 // NewScalarAzureLocationScalarClient creates a new instance of [ScalarAzureLocationScalarClient].
 func (client *ScalarClient) NewScalarAzureLocationScalarClient() *ScalarAzureLocationScalarClient {
 	return &ScalarAzureLocationScalarClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

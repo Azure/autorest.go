@@ -173,6 +173,44 @@ func (client *DurationQueryClient) floatMillisecondsCreateRequest(ctx context.Co
 	return req, nil
 }
 
+// FloatMillisecondsLargerUnit -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationQueryClientFloatMillisecondsLargerUnitOptions contains the optional parameters for the DurationQueryClient.FloatMillisecondsLargerUnit
+//     method.
+func (client *DurationQueryClient) FloatMillisecondsLargerUnit(ctx context.Context, input float32, options *DurationQueryClientFloatMillisecondsLargerUnitOptions) (DurationQueryClientFloatMillisecondsLargerUnitResponse, error) {
+	var err error
+	const operationName = "DurationQueryClient.FloatMillisecondsLargerUnit"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.floatMillisecondsLargerUnitCreateRequest(ctx, input, options)
+	if err != nil {
+		return DurationQueryClientFloatMillisecondsLargerUnitResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationQueryClientFloatMillisecondsLargerUnitResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationQueryClientFloatMillisecondsLargerUnitResponse{}, err
+	}
+	return DurationQueryClientFloatMillisecondsLargerUnitResponse{}, nil
+}
+
+// floatMillisecondsLargerUnitCreateRequest creates the FloatMillisecondsLargerUnit request.
+func (client *DurationQueryClient) floatMillisecondsLargerUnitCreateRequest(ctx context.Context, input float32, _ *DurationQueryClientFloatMillisecondsLargerUnitOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/query/float-milliseconds-larger-unit"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("input", strconv.FormatFloat(float64(input), 'f', -1, 32))
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	return req, nil
+}
+
 // FloatSeconds -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationQueryClientFloatSecondsOptions contains the optional parameters for the DurationQueryClient.FloatSeconds
@@ -201,6 +239,44 @@ func (client *DurationQueryClient) FloatSeconds(ctx context.Context, input float
 // floatSecondsCreateRequest creates the FloatSeconds request.
 func (client *DurationQueryClient) floatSecondsCreateRequest(ctx context.Context, input float32, _ *DurationQueryClientFloatSecondsOptions) (*policy.Request, error) {
 	urlPath := "/encode/duration/query/float-seconds"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("input", strconv.FormatFloat(float64(input), 'f', -1, 32))
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	return req, nil
+}
+
+// FloatSecondsLargerUnit -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationQueryClientFloatSecondsLargerUnitOptions contains the optional parameters for the DurationQueryClient.FloatSecondsLargerUnit
+//     method.
+func (client *DurationQueryClient) FloatSecondsLargerUnit(ctx context.Context, input float32, options *DurationQueryClientFloatSecondsLargerUnitOptions) (DurationQueryClientFloatSecondsLargerUnitResponse, error) {
+	var err error
+	const operationName = "DurationQueryClient.FloatSecondsLargerUnit"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.floatSecondsLargerUnitCreateRequest(ctx, input, options)
+	if err != nil {
+		return DurationQueryClientFloatSecondsLargerUnitResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationQueryClientFloatSecondsLargerUnitResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationQueryClientFloatSecondsLargerUnitResponse{}, err
+	}
+	return DurationQueryClientFloatSecondsLargerUnitResponse{}, nil
+}
+
+// floatSecondsLargerUnitCreateRequest creates the FloatSecondsLargerUnit request.
+func (client *DurationQueryClient) floatSecondsLargerUnitCreateRequest(ctx context.Context, input float32, _ *DurationQueryClientFloatSecondsLargerUnitOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/query/float-seconds-larger-unit"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
@@ -324,6 +400,44 @@ func (client *DurationQueryClient) int32MillisecondsArrayCreateRequest(ctx conte
 	return req, nil
 }
 
+// Int32MillisecondsLargerUnit -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationQueryClientInt32MillisecondsLargerUnitOptions contains the optional parameters for the DurationQueryClient.Int32MillisecondsLargerUnit
+//     method.
+func (client *DurationQueryClient) Int32MillisecondsLargerUnit(ctx context.Context, input int32, options *DurationQueryClientInt32MillisecondsLargerUnitOptions) (DurationQueryClientInt32MillisecondsLargerUnitResponse, error) {
+	var err error
+	const operationName = "DurationQueryClient.Int32MillisecondsLargerUnit"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.int32MillisecondsLargerUnitCreateRequest(ctx, input, options)
+	if err != nil {
+		return DurationQueryClientInt32MillisecondsLargerUnitResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationQueryClientInt32MillisecondsLargerUnitResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationQueryClientInt32MillisecondsLargerUnitResponse{}, err
+	}
+	return DurationQueryClientInt32MillisecondsLargerUnitResponse{}, nil
+}
+
+// int32MillisecondsLargerUnitCreateRequest creates the Int32MillisecondsLargerUnit request.
+func (client *DurationQueryClient) int32MillisecondsLargerUnitCreateRequest(ctx context.Context, input int32, _ *DurationQueryClientInt32MillisecondsLargerUnitOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/query/int32-milliseconds-larger-unit"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("input", strconv.FormatInt(int64(input), 10))
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	return req, nil
+}
+
 // Int32Seconds -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationQueryClientInt32SecondsOptions contains the optional parameters for the DurationQueryClient.Int32Seconds
@@ -396,6 +510,44 @@ func (client *DurationQueryClient) int32SecondsArrayCreateRequest(ctx context.Co
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(input), "[]")), ","))
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	return req, nil
+}
+
+// Int32SecondsLargerUnit -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationQueryClientInt32SecondsLargerUnitOptions contains the optional parameters for the DurationQueryClient.Int32SecondsLargerUnit
+//     method.
+func (client *DurationQueryClient) Int32SecondsLargerUnit(ctx context.Context, input int32, options *DurationQueryClientInt32SecondsLargerUnitOptions) (DurationQueryClientInt32SecondsLargerUnitResponse, error) {
+	var err error
+	const operationName = "DurationQueryClient.Int32SecondsLargerUnit"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.int32SecondsLargerUnitCreateRequest(ctx, input, options)
+	if err != nil {
+		return DurationQueryClientInt32SecondsLargerUnitResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationQueryClientInt32SecondsLargerUnitResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationQueryClientInt32SecondsLargerUnitResponse{}, err
+	}
+	return DurationQueryClientInt32SecondsLargerUnitResponse{}, nil
+}
+
+// int32SecondsLargerUnitCreateRequest creates the Int32SecondsLargerUnit request.
+func (client *DurationQueryClient) int32SecondsLargerUnitCreateRequest(ctx context.Context, input int32, _ *DurationQueryClientInt32SecondsLargerUnitOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/query/int32-seconds-larger-unit"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("input", strconv.FormatInt(int64(input), 10))
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }

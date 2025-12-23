@@ -42,15 +42,15 @@ func NewPageableClientWithNoCredential(endpoint string, options *PageableClientO
 // NewPageablePageSizeClient creates a new instance of [PageablePageSizeClient].
 func (client *PageableClient) NewPageablePageSizeClient() *PageablePageSizeClient {
 	return &PageablePageSizeClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewPageableServerDrivenPaginationClient creates a new instance of [PageableServerDrivenPaginationClient].
 func (client *PageableClient) NewPageableServerDrivenPaginationClient() *PageableServerDrivenPaginationClient {
 	return &PageableServerDrivenPaginationClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

@@ -19,15 +19,15 @@ func TestNewNonResourceOperationsClient_Create(t *testing.T) {
 
 	resp, err := clientFactory.NewNonResourceOperationsClient().Create(ctx, locationExpected, "hello", body, nil)
 	require.NoError(t, err)
-	require.Equal(t, resp.NonResource.ID, to.Ptr("id"))
-	require.Equal(t, resp.NonResource.Name, to.Ptr("hello"))
-	require.Equal(t, resp.NonResource.Type, to.Ptr("nonResource"))
+	require.Equal(t, resp.ID, to.Ptr("id"))
+	require.Equal(t, resp.Name, to.Ptr("hello"))
+	require.Equal(t, resp.Type, to.Ptr("nonResource"))
 }
 
 func TestNewNonResourceOperationsClient_Get(t *testing.T) {
 	resp, err := clientFactory.NewNonResourceOperationsClient().Get(ctx, locationExpected, "hello", nil)
 	require.NoError(t, err)
-	require.Equal(t, resp.NonResource.ID, to.Ptr("id"))
-	require.Equal(t, resp.NonResource.Name, to.Ptr("hello"))
-	require.Equal(t, resp.NonResource.Type, to.Ptr("nonResource"))
+	require.Equal(t, resp.ID, to.Ptr("id"))
+	require.Equal(t, resp.Name, to.Ptr("hello"))
+	require.Equal(t, resp.Type, to.Ptr("nonResource"))
 }

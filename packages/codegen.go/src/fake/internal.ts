@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as go from '../../../codemodel.go/src/index.js';
-import { contentPreamble } from '../helpers.js';
-import { ImportManager } from '../imports.js';
+import { contentPreamble } from '../core/helpers.js';
+import { ImportManager } from '../core/imports.js';
 
 export class RequiredHelpers {
   getHeaderValue: boolean;
@@ -29,12 +29,19 @@ export class RequiredHelpers {
   }
 }
 
-export function generateServerInternal(codeModel: go.CodeModel, requiredHelpers: RequiredHelpers): string {
-  if (codeModel.clients.length === 0) {
+/**
+ * Generates the content for the required fake helpers in fake/internal.go.
+ * 
+ * @param pkg contains the package content
+ * @param requiredHelpers contains data about the helpers to emit
+ * @returns the text for the file or the empty string
+ */
+export function generateServerInternal(pkg: go.FakePackage, requiredHelpers: RequiredHelpers): string {
+  if (pkg.parent.clients.length === 0) {
     return '';
   }
-  const text = contentPreamble(codeModel, true, 'fake');
-  const imports = new ImportManager();
+  const text = contentPreamble(pkg);
+  const imports = new ImportManager(pkg);
   let body = alwaysUsed;
   imports.add('net/http');
 
