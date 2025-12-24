@@ -217,8 +217,8 @@ generate('armcomputeschedule', armcomputeschedule, 'test/local/armcomputeschedul
 const armbillingbenefits = pkgRoot + 'test/tsp/BillingBenefits.Management';
 generate('armbillingbenefits', armbillingbenefits, 'test/local/armbillingbenefits', [`examples-directory=${armbillingbenefits}/examples`, 'generate-samples=true']);
 
-const armappservice = pkgRoot + 'test/tsp/web2/Combine.Management';
-generate('armappservice', armappservice, 'test/local/armappservice', [`examples-directory=${armappservice}/examples`, 'generate-samples=true', "fix-const-stuttering=false"]);
+// const armappservice = pkgRoot + 'test/tsp/web2/Combine.Management';
+// generate('armappservice', armappservice, 'test/local/armappservice', [`examples-directory=${armappservice}/examples`, 'generate-samples=true', "fix-const-stuttering=false"]);
 
 const armHybridNetwork = pkgRoot + 'test/tsp/HybridNetwork.Management';
 generate('armHybridNetwork', armHybridNetwork, 'test/local/armHybridNetwork', [`examples-directory=${armHybridNetwork}/examples`, 'generate-samples=true']);
@@ -238,9 +238,9 @@ generate('armbatch', armbatch, 'test/local/armbatch', [`examples-directory=${arm
 // const armappservice = pkgRoot + 'test/tsp/DomainRegistration.Management';
 // generate('armappservice', armappservice, 'test/local/armDomainRegistration', [`examples-directory=${armappservice}/examples`, 'generate-samples=true']);
 
-// Web.Management
-// const armAppService = pkgRoot + 'test/tsp/Web2.Management';
-// generate('armAppService', armAppService, 'test/local/Web', [`examples-directory=${armAppService}/examples`, 'generate-samples=true']);
+// test2.Management
+const armappservice = pkgRoot + 'test/tsp/test2.Management';
+generate('armappservice', armappservice, 'test/local/test2Service', [`examples-directory=${armappservice}/examples`, 'generate-samples=true']);
 
 
 const nooptionalbody = pkgRoot + 'test/tsp/NoOptionalBody';
