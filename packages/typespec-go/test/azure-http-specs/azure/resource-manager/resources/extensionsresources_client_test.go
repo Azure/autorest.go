@@ -43,7 +43,6 @@ func TestExtensionsResourcesClient_BeginCreateOrUpdate(t *testing.T) {
 		Type: to.Ptr("Azure.ResourceManager.Resources/extensionsResources"),
 	}, resp.ExtensionsResource)
 
-
 	poller2, err := clientFactory.NewExtensionsResourcesClient().BeginCreateOrUpdate(context.Background(), "/subscriptions/00000000-0000-0000-0000-000000000000", "extension", resources.ExtensionsResource{
 		Properties: &resources.ExtensionsResourceProperties{
 			Description: to.Ptr("valid"),
@@ -71,7 +70,6 @@ func TestExtensionsResourcesClient_BeginCreateOrUpdate(t *testing.T) {
 		},
 		Type: to.Ptr("Azure.ResourceManager.Resources/extensionsResources"),
 	}, resp.ExtensionsResource)
-
 
 	poller3, err := clientFactory.NewExtensionsResourcesClient().BeginCreateOrUpdate(context.Background(), "/", "extension", resources.ExtensionsResource{
 		Properties: &resources.ExtensionsResourceProperties{
@@ -256,7 +254,6 @@ func TestExtensionsResourcesClient_NewListByScopePager(t *testing.T) {
 	}
 	require.EqualValues(t, 1, pageCount)
 
-
 	pager = clientFactory.NewExtensionsResourcesClient().NewListByScopePager("/subscriptions/00000000-0000-0000-0000-000000000000", nil)
 	pageCount = 0
 	for pager.More() {
@@ -311,7 +308,6 @@ func TestExtensionsResourcesClient_NewListByScopePager(t *testing.T) {
 	}
 	require.EqualValues(t, 1, pageCount)
 
-	
 	pager = clientFactory.NewExtensionsResourcesClient().NewListByScopePager("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Azure.ResourceManager.Resources/topLevelTrackedResources/top", nil)
 	pageCount = 0
 	for pager.More() {
