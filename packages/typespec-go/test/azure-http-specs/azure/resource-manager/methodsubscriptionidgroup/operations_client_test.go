@@ -25,18 +25,13 @@ func TestOperationsClient_NewListPager(t *testing.T) {
 			Description: to.Ptr("Lists registered services"),
 		},
 	}
-	foundValidOperation := false
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
 		require.NoError(t, err)
 		require.NotNil(t, page)
 		require.NotEmpty(t, page.Value)
 		for _, op := range page.Value {
-			if op != nil && *op == validOperation {
-				foundValidOperation = true
-				break
-			}
+			require.Equal(t, validOperation, *op)
 		}
 	}
-	require.True(t, foundValidOperation)
 }
