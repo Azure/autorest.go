@@ -61,7 +61,7 @@ const httpSpecsGroup = {
   'singlediscgroup': ['type/model/inheritance/single-discriminator'],
   'usagegroup': ['type/model/usage'],
   'visibilitygroup': ['type/model/visibility'],
-  //'addlpropsgroup': ['type/property/additional-properties'], // requires union support (remove hand-written client when done)
+  'addlpropsgroup': ['type/property/additional-properties'], // requires union support (remove hand-written client when done)
   'nullablegroup': ['type/property/nullable'],
   'optionalitygroup': ['type/property/optionality', 'slice-elements-byval=true'], // missing support for plain time https://github.com/Azure/autorest.go/issues/1732
   'valuetypesgroup': ['type/property/value-types', 'slice-elements-byval=true'],
