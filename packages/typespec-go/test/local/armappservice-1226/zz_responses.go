@@ -125,7 +125,7 @@ type CertificateRegistrationProviderClientListOperationsResponse struct {
 // CertificatesClientCreateOrUpdateResponse contains the response from method CertificatesClient.CreateOrUpdate.
 type CertificatesClientCreateOrUpdateResponse struct {
 	// SSL certificate for an app.
-	AppCertificate
+	Certificate
 }
 
 // CertificatesClientDeleteResponse contains the response from method CertificatesClient.Delete.
@@ -136,25 +136,25 @@ type CertificatesClientDeleteResponse struct {
 // CertificatesClientGetResponse contains the response from method CertificatesClient.Get.
 type CertificatesClientGetResponse struct {
 	// SSL certificate for an app.
-	AppCertificate
+	Certificate
 }
 
 // CertificatesClientListByResourceGroupResponse contains the response from method CertificatesClient.NewListByResourceGroupPager.
 type CertificatesClientListByResourceGroupResponse struct {
 	// Collection of certificates.
-	AppCertificateCollection
+	CertificateCollection
 }
 
 // CertificatesClientListResponse contains the response from method CertificatesClient.NewListPager.
 type CertificatesClientListResponse struct {
 	// Collection of certificates.
-	AppCertificateCollection
+	CertificateCollection
 }
 
 // CertificatesClientUpdateResponse contains the response from method CertificatesClient.Update.
 type CertificatesClientUpdateResponse struct {
 	// SSL certificate for an app.
-	AppCertificate
+	Certificate
 }
 
 // DeletedWebAppsClientGetDeletedWebAppByLocationResponse contains the response from method DeletedWebAppsClient.GetDeletedWebAppByLocation.
@@ -1068,13 +1068,13 @@ type ResourceHealthMetadataClientListResponse struct {
 // SiteCertificatesClientCreateOrUpdateResponse contains the response from method SiteCertificatesClient.CreateOrUpdate.
 type SiteCertificatesClientCreateOrUpdateResponse struct {
 	// SSL certificate for an app.
-	AppCertificate
+	Certificate
 }
 
 // SiteCertificatesClientCreateOrUpdateSlotResponse contains the response from method SiteCertificatesClient.CreateOrUpdateSlot.
 type SiteCertificatesClientCreateOrUpdateSlotResponse struct {
 	// SSL certificate for an app.
-	AppCertificate
+	Certificate
 }
 
 // SiteCertificatesClientDeleteResponse contains the response from method SiteCertificatesClient.Delete.
@@ -1090,37 +1090,37 @@ type SiteCertificatesClientDeleteSlotResponse struct {
 // SiteCertificatesClientGetResponse contains the response from method SiteCertificatesClient.Get.
 type SiteCertificatesClientGetResponse struct {
 	// SSL certificate for an app.
-	AppCertificate
+	Certificate
 }
 
 // SiteCertificatesClientGetSlotResponse contains the response from method SiteCertificatesClient.GetSlot.
 type SiteCertificatesClientGetSlotResponse struct {
 	// SSL certificate for an app.
-	AppCertificate
+	Certificate
 }
 
 // SiteCertificatesClientListResponse contains the response from method SiteCertificatesClient.NewListPager.
 type SiteCertificatesClientListResponse struct {
 	// Collection of certificates.
-	AppCertificateCollection
+	CertificateCollection
 }
 
 // SiteCertificatesClientListSlotResponse contains the response from method SiteCertificatesClient.NewListSlotPager.
 type SiteCertificatesClientListSlotResponse struct {
 	// Collection of certificates.
-	AppCertificateCollection
+	CertificateCollection
 }
 
 // SiteCertificatesClientUpdateResponse contains the response from method SiteCertificatesClient.Update.
 type SiteCertificatesClientUpdateResponse struct {
 	// SSL certificate for an app.
-	AppCertificate
+	Certificate
 }
 
 // SiteCertificatesClientUpdateSlotResponse contains the response from method SiteCertificatesClient.UpdateSlot.
 type SiteCertificatesClientUpdateSlotResponse struct {
 	// SSL certificate for an app.
-	AppCertificate
+	Certificate
 }
 
 // StaticSitesClientApproveOrRejectPrivateEndpointConnectionResponse contains the response from method StaticSitesClient.BeginApproveOrRejectPrivateEndpointConnection.

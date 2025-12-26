@@ -123,15 +123,19 @@ func (client *WebAppsClient) addPremierAddOnHandleResponse(resp *http.Response) 
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get the named add-on for the production slot.
+//   - premierAddOnName - Add-on name.
+//   - premierAddOn - A JSON representation of the edited premier add-on.
 //   - options - WebAppsClientAddPremierAddOnSlotOptions contains the optional parameters for the WebAppsClient.AddPremierAddOnSlot
 //     method.
-func (client *WebAppsClient) AddPremierAddOnSlot(ctx context.Context, resourceGroupName string, name string, premierAddOnName string, slot string, premierAddOn PremierAddOn, options *WebAppsClientAddPremierAddOnSlotOptions) (WebAppsClientAddPremierAddOnSlotResponse, error) {
+func (client *WebAppsClient) AddPremierAddOnSlot(ctx context.Context, resourceGroupName string, name string, slot string, premierAddOnName string, premierAddOn PremierAddOn, options *WebAppsClientAddPremierAddOnSlotOptions) (WebAppsClientAddPremierAddOnSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.AddPremierAddOnSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.addPremierAddOnSlotCreateRequest(ctx, resourceGroupName, name, premierAddOnName, slot, premierAddOn, options)
+	req, err := client.addPremierAddOnSlotCreateRequest(ctx, resourceGroupName, name, slot, premierAddOnName, premierAddOn, options)
 	if err != nil {
 		return WebAppsClientAddPremierAddOnSlotResponse{}, err
 	}
@@ -148,7 +152,7 @@ func (client *WebAppsClient) AddPremierAddOnSlot(ctx context.Context, resourceGr
 }
 
 // addPremierAddOnSlotCreateRequest creates the AddPremierAddOnSlot request.
-func (client *WebAppsClient) addPremierAddOnSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, premierAddOnName string, slot string, premierAddOn PremierAddOn, _ *WebAppsClientAddPremierAddOnSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) addPremierAddOnSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, premierAddOnName string, premierAddOn PremierAddOn, _ *WebAppsClientAddPremierAddOnSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -162,14 +166,14 @@ func (client *WebAppsClient) addPremierAddOnSlotCreateRequest(ctx context.Contex
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if premierAddOnName == "" {
-		return nil, errors.New("parameter premierAddOnName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{premierAddOnName}", url.PathEscape(premierAddOnName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if premierAddOnName == "" {
+		return nil, errors.New("parameter premierAddOnName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{premierAddOnName}", url.PathEscape(premierAddOnName))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -562,11 +566,14 @@ func (client *WebAppsClient) approveOrRejectPrivateEndpointConnectionCreateReque
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the site.
+//   - slot - Name of the site deployment slot.
+//   - privateEndpointConnectionName - Name of the private endpoint connection.
 //   - options - WebAppsClientBeginApproveOrRejectPrivateEndpointConnectionSlotOptions contains the optional parameters for the
 //     WebAppsClient.BeginApproveOrRejectPrivateEndpointConnectionSlot method.
-func (client *WebAppsClient) BeginApproveOrRejectPrivateEndpointConnectionSlot(ctx context.Context, resourceGroupName string, name string, privateEndpointConnectionName string, slot string, privateEndpointWrapper RemotePrivateEndpointConnectionARMResource, options *WebAppsClientBeginApproveOrRejectPrivateEndpointConnectionSlotOptions) (*runtime.Poller[WebAppsClientApproveOrRejectPrivateEndpointConnectionSlotResponse], error) {
+func (client *WebAppsClient) BeginApproveOrRejectPrivateEndpointConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, privateEndpointConnectionName string, privateEndpointWrapper RemotePrivateEndpointConnectionARMResource, options *WebAppsClientBeginApproveOrRejectPrivateEndpointConnectionSlotOptions) (*runtime.Poller[WebAppsClientApproveOrRejectPrivateEndpointConnectionSlotResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.approveOrRejectPrivateEndpointConnectionSlot(ctx, resourceGroupName, name, privateEndpointConnectionName, slot, privateEndpointWrapper, options)
+		resp, err := client.approveOrRejectPrivateEndpointConnectionSlot(ctx, resourceGroupName, name, slot, privateEndpointConnectionName, privateEndpointWrapper, options)
 		if err != nil {
 			return nil, err
 		}
@@ -587,13 +594,13 @@ func (client *WebAppsClient) BeginApproveOrRejectPrivateEndpointConnectionSlot(c
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2025-03-01
-func (client *WebAppsClient) approveOrRejectPrivateEndpointConnectionSlot(ctx context.Context, resourceGroupName string, name string, privateEndpointConnectionName string, slot string, privateEndpointWrapper RemotePrivateEndpointConnectionARMResource, options *WebAppsClientBeginApproveOrRejectPrivateEndpointConnectionSlotOptions) (*http.Response, error) {
+func (client *WebAppsClient) approveOrRejectPrivateEndpointConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, privateEndpointConnectionName string, privateEndpointWrapper RemotePrivateEndpointConnectionARMResource, options *WebAppsClientBeginApproveOrRejectPrivateEndpointConnectionSlotOptions) (*http.Response, error) {
 	var err error
 	const operationName = "WebAppsClient.BeginApproveOrRejectPrivateEndpointConnectionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.approveOrRejectPrivateEndpointConnectionSlotCreateRequest(ctx, resourceGroupName, name, privateEndpointConnectionName, slot, privateEndpointWrapper, options)
+	req, err := client.approveOrRejectPrivateEndpointConnectionSlotCreateRequest(ctx, resourceGroupName, name, slot, privateEndpointConnectionName, privateEndpointWrapper, options)
 	if err != nil {
 		return nil, err
 	}
@@ -609,7 +616,7 @@ func (client *WebAppsClient) approveOrRejectPrivateEndpointConnectionSlot(ctx co
 }
 
 // approveOrRejectPrivateEndpointConnectionSlotCreateRequest creates the ApproveOrRejectPrivateEndpointConnectionSlot request.
-func (client *WebAppsClient) approveOrRejectPrivateEndpointConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, privateEndpointConnectionName string, slot string, privateEndpointWrapper RemotePrivateEndpointConnectionARMResource, _ *WebAppsClientBeginApproveOrRejectPrivateEndpointConnectionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) approveOrRejectPrivateEndpointConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, privateEndpointConnectionName string, privateEndpointWrapper RemotePrivateEndpointConnectionARMResource, _ *WebAppsClientBeginApproveOrRejectPrivateEndpointConnectionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateEndpointConnections/{privateEndpointConnectionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -623,14 +630,14 @@ func (client *WebAppsClient) approveOrRejectPrivateEndpointConnectionSlotCreateR
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if privateEndpointConnectionName == "" {
-		return nil, errors.New("parameter privateEndpointConnectionName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{privateEndpointConnectionName}", url.PathEscape(privateEndpointConnectionName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if privateEndpointConnectionName == "" {
+		return nil, errors.New("parameter privateEndpointConnectionName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{privateEndpointConnectionName}", url.PathEscape(privateEndpointConnectionName))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -877,15 +884,19 @@ func (client *WebAppsClient) createDeploymentHandleResponse(resp *http.Response)
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API gets a deployment for the production slot.
+//   - id - Deployment ID.
+//   - deployment - Deployment details.
 //   - options - WebAppsClientCreateDeploymentSlotOptions contains the optional parameters for the WebAppsClient.CreateDeploymentSlot
 //     method.
-func (client *WebAppsClient) CreateDeploymentSlot(ctx context.Context, resourceGroupName string, name string, id string, slot string, deployment Deployment, options *WebAppsClientCreateDeploymentSlotOptions) (WebAppsClientCreateDeploymentSlotResponse, error) {
+func (client *WebAppsClient) CreateDeploymentSlot(ctx context.Context, resourceGroupName string, name string, slot string, id string, deployment Deployment, options *WebAppsClientCreateDeploymentSlotOptions) (WebAppsClientCreateDeploymentSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.CreateDeploymentSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createDeploymentSlotCreateRequest(ctx, resourceGroupName, name, id, slot, deployment, options)
+	req, err := client.createDeploymentSlotCreateRequest(ctx, resourceGroupName, name, slot, id, deployment, options)
 	if err != nil {
 		return WebAppsClientCreateDeploymentSlotResponse{}, err
 	}
@@ -902,7 +913,7 @@ func (client *WebAppsClient) CreateDeploymentSlot(ctx context.Context, resourceG
 }
 
 // createDeploymentSlotCreateRequest creates the CreateDeploymentSlot request.
-func (client *WebAppsClient) createDeploymentSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, id string, slot string, deployment Deployment, _ *WebAppsClientCreateDeploymentSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) createDeploymentSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, id string, deployment Deployment, _ *WebAppsClientCreateDeploymentSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -916,14 +927,14 @@ func (client *WebAppsClient) createDeploymentSlotCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if id == "" {
-		return nil, errors.New("parameter id cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(id))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if id == "" {
+		return nil, errors.New("parameter id cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(id))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -1045,11 +1056,15 @@ func (client *WebAppsClient) createFunctionCreateRequest(ctx context.Context, re
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot.
+//   - functionName - Function name.
+//   - functionEnvelope - Function details.
 //   - options - WebAppsClientBeginCreateInstanceFunctionSlotOptions contains the optional parameters for the WebAppsClient.BeginCreateInstanceFunctionSlot
 //     method.
-func (client *WebAppsClient) BeginCreateInstanceFunctionSlot(ctx context.Context, resourceGroupName string, name string, functionName string, slot string, functionEnvelope FunctionEnvelope, options *WebAppsClientBeginCreateInstanceFunctionSlotOptions) (*runtime.Poller[WebAppsClientCreateInstanceFunctionSlotResponse], error) {
+func (client *WebAppsClient) BeginCreateInstanceFunctionSlot(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, functionEnvelope FunctionEnvelope, options *WebAppsClientBeginCreateInstanceFunctionSlotOptions) (*runtime.Poller[WebAppsClientCreateInstanceFunctionSlotResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.createInstanceFunctionSlot(ctx, resourceGroupName, name, functionName, slot, functionEnvelope, options)
+		resp, err := client.createInstanceFunctionSlot(ctx, resourceGroupName, name, slot, functionName, functionEnvelope, options)
 		if err != nil {
 			return nil, err
 		}
@@ -1070,13 +1085,13 @@ func (client *WebAppsClient) BeginCreateInstanceFunctionSlot(ctx context.Context
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2025-03-01
-func (client *WebAppsClient) createInstanceFunctionSlot(ctx context.Context, resourceGroupName string, name string, functionName string, slot string, functionEnvelope FunctionEnvelope, options *WebAppsClientBeginCreateInstanceFunctionSlotOptions) (*http.Response, error) {
+func (client *WebAppsClient) createInstanceFunctionSlot(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, functionEnvelope FunctionEnvelope, options *WebAppsClientBeginCreateInstanceFunctionSlotOptions) (*http.Response, error) {
 	var err error
 	const operationName = "WebAppsClient.BeginCreateInstanceFunctionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createInstanceFunctionSlotCreateRequest(ctx, resourceGroupName, name, functionName, slot, functionEnvelope, options)
+	req, err := client.createInstanceFunctionSlotCreateRequest(ctx, resourceGroupName, name, slot, functionName, functionEnvelope, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1092,7 +1107,7 @@ func (client *WebAppsClient) createInstanceFunctionSlot(ctx context.Context, res
 }
 
 // createInstanceFunctionSlotCreateRequest creates the CreateInstanceFunctionSlot request.
-func (client *WebAppsClient) createInstanceFunctionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, functionName string, slot string, functionEnvelope FunctionEnvelope, _ *WebAppsClientBeginCreateInstanceFunctionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) createInstanceFunctionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, functionEnvelope FunctionEnvelope, _ *WebAppsClientBeginCreateInstanceFunctionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -1106,14 +1121,14 @@ func (client *WebAppsClient) createInstanceFunctionSlotCreateRequest(ctx context
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if functionName == "" {
-		return nil, errors.New("parameter functionName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{functionName}", url.PathEscape(functionName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if functionName == "" {
+		return nil, errors.New("parameter functionName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{functionName}", url.PathEscape(functionName))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -1876,15 +1891,19 @@ func (client *WebAppsClient) createOrUpdateDomainOwnershipIdentifierHandleRespon
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot.
+//   - domainOwnershipIdentifierName - Name of domain ownership identifier.
+//   - domainOwnershipIdentifier - A JSON representation of the domain ownership properties.
 //   - options - WebAppsClientCreateOrUpdateDomainOwnershipIdentifierSlotOptions contains the optional parameters for the WebAppsClient.CreateOrUpdateDomainOwnershipIdentifierSlot
 //     method.
-func (client *WebAppsClient) CreateOrUpdateDomainOwnershipIdentifierSlot(ctx context.Context, resourceGroupName string, name string, domainOwnershipIdentifierName string, slot string, domainOwnershipIdentifier Identifier, options *WebAppsClientCreateOrUpdateDomainOwnershipIdentifierSlotOptions) (WebAppsClientCreateOrUpdateDomainOwnershipIdentifierSlotResponse, error) {
+func (client *WebAppsClient) CreateOrUpdateDomainOwnershipIdentifierSlot(ctx context.Context, resourceGroupName string, name string, slot string, domainOwnershipIdentifierName string, domainOwnershipIdentifier Identifier, options *WebAppsClientCreateOrUpdateDomainOwnershipIdentifierSlotOptions) (WebAppsClientCreateOrUpdateDomainOwnershipIdentifierSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.CreateOrUpdateDomainOwnershipIdentifierSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createOrUpdateDomainOwnershipIdentifierSlotCreateRequest(ctx, resourceGroupName, name, domainOwnershipIdentifierName, slot, domainOwnershipIdentifier, options)
+	req, err := client.createOrUpdateDomainOwnershipIdentifierSlotCreateRequest(ctx, resourceGroupName, name, slot, domainOwnershipIdentifierName, domainOwnershipIdentifier, options)
 	if err != nil {
 		return WebAppsClientCreateOrUpdateDomainOwnershipIdentifierSlotResponse{}, err
 	}
@@ -1901,7 +1920,7 @@ func (client *WebAppsClient) CreateOrUpdateDomainOwnershipIdentifierSlot(ctx con
 }
 
 // createOrUpdateDomainOwnershipIdentifierSlotCreateRequest creates the CreateOrUpdateDomainOwnershipIdentifierSlot request.
-func (client *WebAppsClient) createOrUpdateDomainOwnershipIdentifierSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, domainOwnershipIdentifierName string, slot string, domainOwnershipIdentifier Identifier, _ *WebAppsClientCreateOrUpdateDomainOwnershipIdentifierSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) createOrUpdateDomainOwnershipIdentifierSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, domainOwnershipIdentifierName string, domainOwnershipIdentifier Identifier, _ *WebAppsClientCreateOrUpdateDomainOwnershipIdentifierSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -1915,14 +1934,14 @@ func (client *WebAppsClient) createOrUpdateDomainOwnershipIdentifierSlotCreateRe
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if domainOwnershipIdentifierName == "" {
-		return nil, errors.New("parameter domainOwnershipIdentifierName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{domainOwnershipIdentifierName}", url.PathEscape(domainOwnershipIdentifierName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if domainOwnershipIdentifierName == "" {
+		return nil, errors.New("parameter domainOwnershipIdentifierName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{domainOwnershipIdentifierName}", url.PathEscape(domainOwnershipIdentifierName))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -2033,15 +2052,16 @@ func (client *WebAppsClient) createOrUpdateFunctionSecretHandleResponse(resp *ht
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - key - The key to create or update
 //   - options - WebAppsClientCreateOrUpdateFunctionSecretSlotOptions contains the optional parameters for the WebAppsClient.CreateOrUpdateFunctionSecretSlot
 //     method.
-func (client *WebAppsClient) CreateOrUpdateFunctionSecretSlot(ctx context.Context, resourceGroupName string, name string, functionName string, keyName string, slot string, key KeyInfo, options *WebAppsClientCreateOrUpdateFunctionSecretSlotOptions) (WebAppsClientCreateOrUpdateFunctionSecretSlotResponse, error) {
+func (client *WebAppsClient) CreateOrUpdateFunctionSecretSlot(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, keyName string, key KeyInfo, options *WebAppsClientCreateOrUpdateFunctionSecretSlotOptions) (WebAppsClientCreateOrUpdateFunctionSecretSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.CreateOrUpdateFunctionSecretSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createOrUpdateFunctionSecretSlotCreateRequest(ctx, resourceGroupName, name, functionName, keyName, slot, key, options)
+	req, err := client.createOrUpdateFunctionSecretSlotCreateRequest(ctx, resourceGroupName, name, slot, functionName, keyName, key, options)
 	if err != nil {
 		return WebAppsClientCreateOrUpdateFunctionSecretSlotResponse{}, err
 	}
@@ -2058,7 +2078,7 @@ func (client *WebAppsClient) CreateOrUpdateFunctionSecretSlot(ctx context.Contex
 }
 
 // createOrUpdateFunctionSecretSlotCreateRequest creates the CreateOrUpdateFunctionSecretSlot request.
-func (client *WebAppsClient) createOrUpdateFunctionSecretSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, functionName string, keyName string, slot string, key KeyInfo, _ *WebAppsClientCreateOrUpdateFunctionSecretSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) createOrUpdateFunctionSecretSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, keyName string, key KeyInfo, _ *WebAppsClientCreateOrUpdateFunctionSecretSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/keys/{keyName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -2072,6 +2092,10 @@ func (client *WebAppsClient) createOrUpdateFunctionSecretSlotCreateRequest(ctx c
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
+	if slot == "" {
+		return nil, errors.New("parameter slot cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	if functionName == "" {
 		return nil, errors.New("parameter functionName cannot be empty")
 	}
@@ -2080,10 +2104,6 @@ func (client *WebAppsClient) createOrUpdateFunctionSecretSlotCreateRequest(ctx c
 		return nil, errors.New("parameter keyName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
-	if slot == "" {
-		return nil, errors.New("parameter slot cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -2192,15 +2212,19 @@ func (client *WebAppsClient) createOrUpdateHostNameBindingHandleResponse(resp *h
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API the named binding for the production slot.
+//   - hostName - Hostname in the hostname binding.
+//   - hostNameBinding - Binding details. This is the JSON representation of a HostNameBinding object.
 //   - options - WebAppsClientCreateOrUpdateHostNameBindingSlotOptions contains the optional parameters for the WebAppsClient.CreateOrUpdateHostNameBindingSlot
 //     method.
-func (client *WebAppsClient) CreateOrUpdateHostNameBindingSlot(ctx context.Context, resourceGroupName string, name string, hostName string, slot string, hostNameBinding HostNameBinding, options *WebAppsClientCreateOrUpdateHostNameBindingSlotOptions) (WebAppsClientCreateOrUpdateHostNameBindingSlotResponse, error) {
+func (client *WebAppsClient) CreateOrUpdateHostNameBindingSlot(ctx context.Context, resourceGroupName string, name string, slot string, hostName string, hostNameBinding HostNameBinding, options *WebAppsClientCreateOrUpdateHostNameBindingSlotOptions) (WebAppsClientCreateOrUpdateHostNameBindingSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.CreateOrUpdateHostNameBindingSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createOrUpdateHostNameBindingSlotCreateRequest(ctx, resourceGroupName, name, hostName, slot, hostNameBinding, options)
+	req, err := client.createOrUpdateHostNameBindingSlotCreateRequest(ctx, resourceGroupName, name, slot, hostName, hostNameBinding, options)
 	if err != nil {
 		return WebAppsClientCreateOrUpdateHostNameBindingSlotResponse{}, err
 	}
@@ -2217,7 +2241,7 @@ func (client *WebAppsClient) CreateOrUpdateHostNameBindingSlot(ctx context.Conte
 }
 
 // createOrUpdateHostNameBindingSlotCreateRequest creates the CreateOrUpdateHostNameBindingSlot request.
-func (client *WebAppsClient) createOrUpdateHostNameBindingSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, hostName string, slot string, hostNameBinding HostNameBinding, _ *WebAppsClientCreateOrUpdateHostNameBindingSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) createOrUpdateHostNameBindingSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, hostName string, hostNameBinding HostNameBinding, _ *WebAppsClientCreateOrUpdateHostNameBindingSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -2231,14 +2255,14 @@ func (client *WebAppsClient) createOrUpdateHostNameBindingSlotCreateRequest(ctx 
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if hostName == "" {
-		return nil, errors.New("parameter hostName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{hostName}", url.PathEscape(hostName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if hostName == "" {
+		return nil, errors.New("parameter hostName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{hostName}", url.PathEscape(hostName))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -2352,15 +2376,20 @@ func (client *WebAppsClient) createOrUpdateHostSecretHandleResponse(resp *http.R
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. By default, this API returns the production slot.
+//   - keyType - The type of host key.
+//   - keyName - The name of the key.
+//   - key - The key to create or update
 //   - options - WebAppsClientCreateOrUpdateHostSecretSlotOptions contains the optional parameters for the WebAppsClient.CreateOrUpdateHostSecretSlot
 //     method.
-func (client *WebAppsClient) CreateOrUpdateHostSecretSlot(ctx context.Context, resourceGroupName string, name string, keyType string, keyName string, slot string, key KeyInfo, options *WebAppsClientCreateOrUpdateHostSecretSlotOptions) (WebAppsClientCreateOrUpdateHostSecretSlotResponse, error) {
+func (client *WebAppsClient) CreateOrUpdateHostSecretSlot(ctx context.Context, resourceGroupName string, name string, slot string, keyType string, keyName string, key KeyInfo, options *WebAppsClientCreateOrUpdateHostSecretSlotOptions) (WebAppsClientCreateOrUpdateHostSecretSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.CreateOrUpdateHostSecretSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createOrUpdateHostSecretSlotCreateRequest(ctx, resourceGroupName, name, keyType, keyName, slot, key, options)
+	req, err := client.createOrUpdateHostSecretSlotCreateRequest(ctx, resourceGroupName, name, slot, keyType, keyName, key, options)
 	if err != nil {
 		return WebAppsClientCreateOrUpdateHostSecretSlotResponse{}, err
 	}
@@ -2377,7 +2406,7 @@ func (client *WebAppsClient) CreateOrUpdateHostSecretSlot(ctx context.Context, r
 }
 
 // createOrUpdateHostSecretSlotCreateRequest creates the CreateOrUpdateHostSecretSlot request.
-func (client *WebAppsClient) createOrUpdateHostSecretSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, keyType string, keyName string, slot string, key KeyInfo, _ *WebAppsClientCreateOrUpdateHostSecretSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) createOrUpdateHostSecretSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, keyType string, keyName string, key KeyInfo, _ *WebAppsClientCreateOrUpdateHostSecretSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/sites/{name}/slots/{slot}/host/default/{keyType}/{keyName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -2391,6 +2420,10 @@ func (client *WebAppsClient) createOrUpdateHostSecretSlotCreateRequest(ctx conte
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
+	if slot == "" {
+		return nil, errors.New("parameter slot cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	if keyType == "" {
 		return nil, errors.New("parameter keyType cannot be empty")
 	}
@@ -2399,10 +2432,6 @@ func (client *WebAppsClient) createOrUpdateHostSecretSlotCreateRequest(ctx conte
 		return nil, errors.New("parameter keyName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
-	if slot == "" {
-		return nil, errors.New("parameter slot cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -2516,15 +2545,20 @@ func (client *WebAppsClient) createOrUpdateHybridConnectionHandleResponse(resp *
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - The name of the web app.
+//   - slot - The name of the slot for the web app.
+//   - namespaceName - The namespace for this hybrid connection.
+//   - relayName - The relay name for this hybrid connection.
+//   - connectionEnvelope - The details of the hybrid connection.
 //   - options - WebAppsClientCreateOrUpdateHybridConnectionSlotOptions contains the optional parameters for the WebAppsClient.CreateOrUpdateHybridConnectionSlot
 //     method.
-func (client *WebAppsClient) CreateOrUpdateHybridConnectionSlot(ctx context.Context, resourceGroupName string, name string, namespaceName string, relayName string, slot string, connectionEnvelope HybridConnection, options *WebAppsClientCreateOrUpdateHybridConnectionSlotOptions) (WebAppsClientCreateOrUpdateHybridConnectionSlotResponse, error) {
+func (client *WebAppsClient) CreateOrUpdateHybridConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, namespaceName string, relayName string, connectionEnvelope HybridConnection, options *WebAppsClientCreateOrUpdateHybridConnectionSlotOptions) (WebAppsClientCreateOrUpdateHybridConnectionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.CreateOrUpdateHybridConnectionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createOrUpdateHybridConnectionSlotCreateRequest(ctx, resourceGroupName, name, namespaceName, relayName, slot, connectionEnvelope, options)
+	req, err := client.createOrUpdateHybridConnectionSlotCreateRequest(ctx, resourceGroupName, name, slot, namespaceName, relayName, connectionEnvelope, options)
 	if err != nil {
 		return WebAppsClientCreateOrUpdateHybridConnectionSlotResponse{}, err
 	}
@@ -2541,7 +2575,7 @@ func (client *WebAppsClient) CreateOrUpdateHybridConnectionSlot(ctx context.Cont
 }
 
 // createOrUpdateHybridConnectionSlotCreateRequest creates the CreateOrUpdateHybridConnectionSlot request.
-func (client *WebAppsClient) createOrUpdateHybridConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, namespaceName string, relayName string, slot string, connectionEnvelope HybridConnection, _ *WebAppsClientCreateOrUpdateHybridConnectionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) createOrUpdateHybridConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, namespaceName string, relayName string, connectionEnvelope HybridConnection, _ *WebAppsClientCreateOrUpdateHybridConnectionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -2555,6 +2589,10 @@ func (client *WebAppsClient) createOrUpdateHybridConnectionSlotCreateRequest(ctx
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
+	if slot == "" {
+		return nil, errors.New("parameter slot cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	if namespaceName == "" {
 		return nil, errors.New("parameter namespaceName cannot be empty")
 	}
@@ -2563,10 +2601,6 @@ func (client *WebAppsClient) createOrUpdateHybridConnectionSlotCreateRequest(ctx
 		return nil, errors.New("parameter relayName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{relayName}", url.PathEscape(relayName))
-	if slot == "" {
-		return nil, errors.New("parameter slot cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -2675,15 +2709,19 @@ func (client *WebAppsClient) createOrUpdatePublicCertificateHandleResponse(resp 
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API the named binding for the production slot.
+//   - publicCertificateName - Public certificate name.
+//   - publicCertificate - Public certificate details. This is the JSON representation of a PublicCertificate object.
 //   - options - WebAppsClientCreateOrUpdatePublicCertificateSlotOptions contains the optional parameters for the WebAppsClient.CreateOrUpdatePublicCertificateSlot
 //     method.
-func (client *WebAppsClient) CreateOrUpdatePublicCertificateSlot(ctx context.Context, resourceGroupName string, name string, publicCertificateName string, slot string, publicCertificate PublicCertificate, options *WebAppsClientCreateOrUpdatePublicCertificateSlotOptions) (WebAppsClientCreateOrUpdatePublicCertificateSlotResponse, error) {
+func (client *WebAppsClient) CreateOrUpdatePublicCertificateSlot(ctx context.Context, resourceGroupName string, name string, slot string, publicCertificateName string, publicCertificate PublicCertificate, options *WebAppsClientCreateOrUpdatePublicCertificateSlotOptions) (WebAppsClientCreateOrUpdatePublicCertificateSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.CreateOrUpdatePublicCertificateSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createOrUpdatePublicCertificateSlotCreateRequest(ctx, resourceGroupName, name, publicCertificateName, slot, publicCertificate, options)
+	req, err := client.createOrUpdatePublicCertificateSlotCreateRequest(ctx, resourceGroupName, name, slot, publicCertificateName, publicCertificate, options)
 	if err != nil {
 		return WebAppsClientCreateOrUpdatePublicCertificateSlotResponse{}, err
 	}
@@ -2700,7 +2738,7 @@ func (client *WebAppsClient) CreateOrUpdatePublicCertificateSlot(ctx context.Con
 }
 
 // createOrUpdatePublicCertificateSlotCreateRequest creates the CreateOrUpdatePublicCertificateSlot request.
-func (client *WebAppsClient) createOrUpdatePublicCertificateSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, publicCertificateName string, slot string, publicCertificate PublicCertificate, _ *WebAppsClientCreateOrUpdatePublicCertificateSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) createOrUpdatePublicCertificateSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, publicCertificateName string, publicCertificate PublicCertificate, _ *WebAppsClientCreateOrUpdatePublicCertificateSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -2714,14 +2752,14 @@ func (client *WebAppsClient) createOrUpdatePublicCertificateSlotCreateRequest(ct
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if publicCertificateName == "" {
-		return nil, errors.New("parameter publicCertificateName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{publicCertificateName}", url.PathEscape(publicCertificateName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if publicCertificateName == "" {
+		return nil, errors.New("parameter publicCertificateName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{publicCertificateName}", url.PathEscape(publicCertificateName))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -2832,15 +2870,20 @@ func (client *WebAppsClient) createOrUpdateRelayServiceConnectionHandleResponse(
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get a hybrid connection for the production
+//     slot.
+//   - entityName - Name of the hybrid connection.
+//   - connectionEnvelope - Details of the hybrid connection configuration.
 //   - options - WebAppsClientCreateOrUpdateRelayServiceConnectionSlotOptions contains the optional parameters for the WebAppsClient.CreateOrUpdateRelayServiceConnectionSlot
 //     method.
-func (client *WebAppsClient) CreateOrUpdateRelayServiceConnectionSlot(ctx context.Context, resourceGroupName string, name string, entityName string, slot string, connectionEnvelope RelayServiceConnectionEntity, options *WebAppsClientCreateOrUpdateRelayServiceConnectionSlotOptions) (WebAppsClientCreateOrUpdateRelayServiceConnectionSlotResponse, error) {
+func (client *WebAppsClient) CreateOrUpdateRelayServiceConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, entityName string, connectionEnvelope RelayServiceConnectionEntity, options *WebAppsClientCreateOrUpdateRelayServiceConnectionSlotOptions) (WebAppsClientCreateOrUpdateRelayServiceConnectionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.CreateOrUpdateRelayServiceConnectionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createOrUpdateRelayServiceConnectionSlotCreateRequest(ctx, resourceGroupName, name, entityName, slot, connectionEnvelope, options)
+	req, err := client.createOrUpdateRelayServiceConnectionSlotCreateRequest(ctx, resourceGroupName, name, slot, entityName, connectionEnvelope, options)
 	if err != nil {
 		return WebAppsClientCreateOrUpdateRelayServiceConnectionSlotResponse{}, err
 	}
@@ -2857,7 +2900,7 @@ func (client *WebAppsClient) CreateOrUpdateRelayServiceConnectionSlot(ctx contex
 }
 
 // createOrUpdateRelayServiceConnectionSlotCreateRequest creates the CreateOrUpdateRelayServiceConnectionSlot request.
-func (client *WebAppsClient) createOrUpdateRelayServiceConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, entityName string, slot string, connectionEnvelope RelayServiceConnectionEntity, _ *WebAppsClientCreateOrUpdateRelayServiceConnectionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) createOrUpdateRelayServiceConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, entityName string, connectionEnvelope RelayServiceConnectionEntity, _ *WebAppsClientCreateOrUpdateRelayServiceConnectionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -2871,14 +2914,14 @@ func (client *WebAppsClient) createOrUpdateRelayServiceConnectionSlotCreateReque
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if entityName == "" {
-		return nil, errors.New("parameter entityName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{entityName}", url.PathEscape(entityName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if entityName == "" {
+		return nil, errors.New("parameter entityName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{entityName}", url.PathEscape(entityName))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -3656,15 +3699,21 @@ func (client *WebAppsClient) createOrUpdateVnetConnectionGatewayHandleResponse(r
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get a gateway for the production slot's Virtual
+//     Network.
+//   - vnetName - Name of the Virtual Network.
+//   - gatewayName - Name of the gateway. Currently, the only supported string is "primary".
+//   - connectionEnvelope - The properties to update this gateway with.
 //   - options - WebAppsClientCreateOrUpdateVnetConnectionGatewaySlotOptions contains the optional parameters for the WebAppsClient.CreateOrUpdateVnetConnectionGatewaySlot
 //     method.
-func (client *WebAppsClient) CreateOrUpdateVnetConnectionGatewaySlot(ctx context.Context, resourceGroupName string, name string, vnetName string, gatewayName string, slot string, connectionEnvelope VnetGateway, options *WebAppsClientCreateOrUpdateVnetConnectionGatewaySlotOptions) (WebAppsClientCreateOrUpdateVnetConnectionGatewaySlotResponse, error) {
+func (client *WebAppsClient) CreateOrUpdateVnetConnectionGatewaySlot(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, gatewayName string, connectionEnvelope VnetGateway, options *WebAppsClientCreateOrUpdateVnetConnectionGatewaySlotOptions) (WebAppsClientCreateOrUpdateVnetConnectionGatewaySlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.CreateOrUpdateVnetConnectionGatewaySlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createOrUpdateVnetConnectionGatewaySlotCreateRequest(ctx, resourceGroupName, name, vnetName, gatewayName, slot, connectionEnvelope, options)
+	req, err := client.createOrUpdateVnetConnectionGatewaySlotCreateRequest(ctx, resourceGroupName, name, slot, vnetName, gatewayName, connectionEnvelope, options)
 	if err != nil {
 		return WebAppsClientCreateOrUpdateVnetConnectionGatewaySlotResponse{}, err
 	}
@@ -3681,7 +3730,7 @@ func (client *WebAppsClient) CreateOrUpdateVnetConnectionGatewaySlot(ctx context
 }
 
 // createOrUpdateVnetConnectionGatewaySlotCreateRequest creates the CreateOrUpdateVnetConnectionGatewaySlot request.
-func (client *WebAppsClient) createOrUpdateVnetConnectionGatewaySlotCreateRequest(ctx context.Context, resourceGroupName string, name string, vnetName string, gatewayName string, slot string, connectionEnvelope VnetGateway, _ *WebAppsClientCreateOrUpdateVnetConnectionGatewaySlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) createOrUpdateVnetConnectionGatewaySlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, gatewayName string, connectionEnvelope VnetGateway, _ *WebAppsClientCreateOrUpdateVnetConnectionGatewaySlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -3695,6 +3744,10 @@ func (client *WebAppsClient) createOrUpdateVnetConnectionGatewaySlotCreateReques
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
+	if slot == "" {
+		return nil, errors.New("parameter slot cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	if vnetName == "" {
 		return nil, errors.New("parameter vnetName cannot be empty")
 	}
@@ -3703,10 +3756,6 @@ func (client *WebAppsClient) createOrUpdateVnetConnectionGatewaySlotCreateReques
 		return nil, errors.New("parameter gatewayName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
-	if slot == "" {
-		return nil, errors.New("parameter slot cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -3739,15 +3788,20 @@ func (client *WebAppsClient) createOrUpdateVnetConnectionGatewaySlotHandleRespon
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get the named virtual network for the production
+//     slot.
+//   - vnetName - Name of the virtual network.
+//   - connectionEnvelope - Properties of the Virtual Network connection. See example.
 //   - options - WebAppsClientCreateOrUpdateVnetConnectionSlotOptions contains the optional parameters for the WebAppsClient.CreateOrUpdateVnetConnectionSlot
 //     method.
-func (client *WebAppsClient) CreateOrUpdateVnetConnectionSlot(ctx context.Context, resourceGroupName string, name string, vnetName string, slot string, connectionEnvelope VnetInfoResource, options *WebAppsClientCreateOrUpdateVnetConnectionSlotOptions) (WebAppsClientCreateOrUpdateVnetConnectionSlotResponse, error) {
+func (client *WebAppsClient) CreateOrUpdateVnetConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, connectionEnvelope VnetInfoResource, options *WebAppsClientCreateOrUpdateVnetConnectionSlotOptions) (WebAppsClientCreateOrUpdateVnetConnectionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.CreateOrUpdateVnetConnectionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createOrUpdateVnetConnectionSlotCreateRequest(ctx, resourceGroupName, name, vnetName, slot, connectionEnvelope, options)
+	req, err := client.createOrUpdateVnetConnectionSlotCreateRequest(ctx, resourceGroupName, name, slot, vnetName, connectionEnvelope, options)
 	if err != nil {
 		return WebAppsClientCreateOrUpdateVnetConnectionSlotResponse{}, err
 	}
@@ -3764,7 +3818,7 @@ func (client *WebAppsClient) CreateOrUpdateVnetConnectionSlot(ctx context.Contex
 }
 
 // createOrUpdateVnetConnectionSlotCreateRequest creates the CreateOrUpdateVnetConnectionSlot request.
-func (client *WebAppsClient) createOrUpdateVnetConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, vnetName string, slot string, connectionEnvelope VnetInfoResource, _ *WebAppsClientCreateOrUpdateVnetConnectionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) createOrUpdateVnetConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, connectionEnvelope VnetInfoResource, _ *WebAppsClientCreateOrUpdateVnetConnectionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -3778,14 +3832,14 @@ func (client *WebAppsClient) createOrUpdateVnetConnectionSlotCreateRequest(ctx c
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if vnetName == "" {
-		return nil, errors.New("parameter vnetName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{vnetName}", url.PathEscape(vnetName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if vnetName == "" {
+		return nil, errors.New("parameter vnetName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{vnetName}", url.PathEscape(vnetName))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -4055,15 +4109,18 @@ func (client *WebAppsClient) deleteBackupConfigurationSlotCreateRequest(ctx cont
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get a backup of the production slot.
+//   - backupID - ID of the backup.
 //   - options - WebAppsClientDeleteBackupSlotOptions contains the optional parameters for the WebAppsClient.DeleteBackupSlot
 //     method.
-func (client *WebAppsClient) DeleteBackupSlot(ctx context.Context, resourceGroupName string, name string, backupID string, slot string, options *WebAppsClientDeleteBackupSlotOptions) (WebAppsClientDeleteBackupSlotResponse, error) {
+func (client *WebAppsClient) DeleteBackupSlot(ctx context.Context, resourceGroupName string, name string, slot string, backupID string, options *WebAppsClientDeleteBackupSlotOptions) (WebAppsClientDeleteBackupSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.DeleteBackupSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteBackupSlotCreateRequest(ctx, resourceGroupName, name, backupID, slot, options)
+	req, err := client.deleteBackupSlotCreateRequest(ctx, resourceGroupName, name, slot, backupID, options)
 	if err != nil {
 		return WebAppsClientDeleteBackupSlotResponse{}, err
 	}
@@ -4079,7 +4136,7 @@ func (client *WebAppsClient) DeleteBackupSlot(ctx context.Context, resourceGroup
 }
 
 // deleteBackupSlotCreateRequest creates the DeleteBackupSlot request.
-func (client *WebAppsClient) deleteBackupSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, backupID string, slot string, _ *WebAppsClientDeleteBackupSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deleteBackupSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, backupID string, _ *WebAppsClientDeleteBackupSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backups/{backupId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -4093,14 +4150,14 @@ func (client *WebAppsClient) deleteBackupSlotCreateRequest(ctx context.Context, 
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if backupID == "" {
-		return nil, errors.New("parameter backupID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{backupId}", url.PathEscape(backupID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if backupID == "" {
+		return nil, errors.New("parameter backupID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{backupId}", url.PathEscape(backupID))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -4179,15 +4236,18 @@ func (client *WebAppsClient) deleteContinuousWebJobCreateRequest(ctx context.Con
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot.
+//   - webJobName - Name of Web Job.
 //   - options - WebAppsClientDeleteContinuousWebJobSlotOptions contains the optional parameters for the WebAppsClient.DeleteContinuousWebJobSlot
 //     method.
-func (client *WebAppsClient) DeleteContinuousWebJobSlot(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, options *WebAppsClientDeleteContinuousWebJobSlotOptions) (WebAppsClientDeleteContinuousWebJobSlotResponse, error) {
+func (client *WebAppsClient) DeleteContinuousWebJobSlot(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, options *WebAppsClientDeleteContinuousWebJobSlotOptions) (WebAppsClientDeleteContinuousWebJobSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.DeleteContinuousWebJobSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteContinuousWebJobSlotCreateRequest(ctx, resourceGroupName, name, webJobName, slot, options)
+	req, err := client.deleteContinuousWebJobSlotCreateRequest(ctx, resourceGroupName, name, slot, webJobName, options)
 	if err != nil {
 		return WebAppsClientDeleteContinuousWebJobSlotResponse{}, err
 	}
@@ -4203,7 +4263,7 @@ func (client *WebAppsClient) DeleteContinuousWebJobSlot(ctx context.Context, res
 }
 
 // deleteContinuousWebJobSlotCreateRequest creates the DeleteContinuousWebJobSlot request.
-func (client *WebAppsClient) deleteContinuousWebJobSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, _ *WebAppsClientDeleteContinuousWebJobSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deleteContinuousWebJobSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, _ *WebAppsClientDeleteContinuousWebJobSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -4217,14 +4277,14 @@ func (client *WebAppsClient) deleteContinuousWebJobSlotCreateRequest(ctx context
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if webJobName == "" {
-		return nil, errors.New("parameter webJobName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if webJobName == "" {
+		return nil, errors.New("parameter webJobName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -4303,15 +4363,18 @@ func (client *WebAppsClient) deleteDeploymentCreateRequest(ctx context.Context, 
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API gets a deployment for the production slot.
+//   - id - Deployment ID.
 //   - options - WebAppsClientDeleteDeploymentSlotOptions contains the optional parameters for the WebAppsClient.DeleteDeploymentSlot
 //     method.
-func (client *WebAppsClient) DeleteDeploymentSlot(ctx context.Context, resourceGroupName string, name string, id string, slot string, options *WebAppsClientDeleteDeploymentSlotOptions) (WebAppsClientDeleteDeploymentSlotResponse, error) {
+func (client *WebAppsClient) DeleteDeploymentSlot(ctx context.Context, resourceGroupName string, name string, slot string, id string, options *WebAppsClientDeleteDeploymentSlotOptions) (WebAppsClientDeleteDeploymentSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.DeleteDeploymentSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteDeploymentSlotCreateRequest(ctx, resourceGroupName, name, id, slot, options)
+	req, err := client.deleteDeploymentSlotCreateRequest(ctx, resourceGroupName, name, slot, id, options)
 	if err != nil {
 		return WebAppsClientDeleteDeploymentSlotResponse{}, err
 	}
@@ -4327,7 +4390,7 @@ func (client *WebAppsClient) DeleteDeploymentSlot(ctx context.Context, resourceG
 }
 
 // deleteDeploymentSlotCreateRequest creates the DeleteDeploymentSlot request.
-func (client *WebAppsClient) deleteDeploymentSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, id string, slot string, _ *WebAppsClientDeleteDeploymentSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deleteDeploymentSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, id string, _ *WebAppsClientDeleteDeploymentSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -4341,14 +4404,14 @@ func (client *WebAppsClient) deleteDeploymentSlotCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if id == "" {
-		return nil, errors.New("parameter id cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(id))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if id == "" {
+		return nil, errors.New("parameter id cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(id))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -4427,15 +4490,18 @@ func (client *WebAppsClient) deleteDomainOwnershipIdentifierCreateRequest(ctx co
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot.
+//   - domainOwnershipIdentifierName - Name of domain ownership identifier.
 //   - options - WebAppsClientDeleteDomainOwnershipIdentifierSlotOptions contains the optional parameters for the WebAppsClient.DeleteDomainOwnershipIdentifierSlot
 //     method.
-func (client *WebAppsClient) DeleteDomainOwnershipIdentifierSlot(ctx context.Context, resourceGroupName string, name string, domainOwnershipIdentifierName string, slot string, options *WebAppsClientDeleteDomainOwnershipIdentifierSlotOptions) (WebAppsClientDeleteDomainOwnershipIdentifierSlotResponse, error) {
+func (client *WebAppsClient) DeleteDomainOwnershipIdentifierSlot(ctx context.Context, resourceGroupName string, name string, slot string, domainOwnershipIdentifierName string, options *WebAppsClientDeleteDomainOwnershipIdentifierSlotOptions) (WebAppsClientDeleteDomainOwnershipIdentifierSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.DeleteDomainOwnershipIdentifierSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteDomainOwnershipIdentifierSlotCreateRequest(ctx, resourceGroupName, name, domainOwnershipIdentifierName, slot, options)
+	req, err := client.deleteDomainOwnershipIdentifierSlotCreateRequest(ctx, resourceGroupName, name, slot, domainOwnershipIdentifierName, options)
 	if err != nil {
 		return WebAppsClientDeleteDomainOwnershipIdentifierSlotResponse{}, err
 	}
@@ -4451,7 +4517,7 @@ func (client *WebAppsClient) DeleteDomainOwnershipIdentifierSlot(ctx context.Con
 }
 
 // deleteDomainOwnershipIdentifierSlotCreateRequest creates the DeleteDomainOwnershipIdentifierSlot request.
-func (client *WebAppsClient) deleteDomainOwnershipIdentifierSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, domainOwnershipIdentifierName string, slot string, _ *WebAppsClientDeleteDomainOwnershipIdentifierSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deleteDomainOwnershipIdentifierSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, domainOwnershipIdentifierName string, _ *WebAppsClientDeleteDomainOwnershipIdentifierSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -4465,14 +4531,14 @@ func (client *WebAppsClient) deleteDomainOwnershipIdentifierSlotCreateRequest(ct
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if domainOwnershipIdentifierName == "" {
-		return nil, errors.New("parameter domainOwnershipIdentifierName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{domainOwnershipIdentifierName}", url.PathEscape(domainOwnershipIdentifierName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if domainOwnershipIdentifierName == "" {
+		return nil, errors.New("parameter domainOwnershipIdentifierName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{domainOwnershipIdentifierName}", url.PathEscape(domainOwnershipIdentifierName))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -4615,13 +4681,13 @@ func (client *WebAppsClient) deleteFunctionSecretCreateRequest(ctx context.Conte
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - WebAppsClientDeleteFunctionSecretSlotOptions contains the optional parameters for the WebAppsClient.DeleteFunctionSecretSlot
 //     method.
-func (client *WebAppsClient) DeleteFunctionSecretSlot(ctx context.Context, resourceGroupName string, name string, functionName string, keyName string, slot string, options *WebAppsClientDeleteFunctionSecretSlotOptions) (WebAppsClientDeleteFunctionSecretSlotResponse, error) {
+func (client *WebAppsClient) DeleteFunctionSecretSlot(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, keyName string, options *WebAppsClientDeleteFunctionSecretSlotOptions) (WebAppsClientDeleteFunctionSecretSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.DeleteFunctionSecretSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteFunctionSecretSlotCreateRequest(ctx, resourceGroupName, name, functionName, keyName, slot, options)
+	req, err := client.deleteFunctionSecretSlotCreateRequest(ctx, resourceGroupName, name, slot, functionName, keyName, options)
 	if err != nil {
 		return WebAppsClientDeleteFunctionSecretSlotResponse{}, err
 	}
@@ -4637,7 +4703,7 @@ func (client *WebAppsClient) DeleteFunctionSecretSlot(ctx context.Context, resou
 }
 
 // deleteFunctionSecretSlotCreateRequest creates the DeleteFunctionSecretSlot request.
-func (client *WebAppsClient) deleteFunctionSecretSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, functionName string, keyName string, slot string, _ *WebAppsClientDeleteFunctionSecretSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deleteFunctionSecretSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, keyName string, _ *WebAppsClientDeleteFunctionSecretSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/keys/{keyName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -4651,6 +4717,10 @@ func (client *WebAppsClient) deleteFunctionSecretSlotCreateRequest(ctx context.C
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
+	if slot == "" {
+		return nil, errors.New("parameter slot cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	if functionName == "" {
 		return nil, errors.New("parameter functionName cannot be empty")
 	}
@@ -4659,10 +4729,6 @@ func (client *WebAppsClient) deleteFunctionSecretSlotCreateRequest(ctx context.C
 		return nil, errors.New("parameter keyName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
-	if slot == "" {
-		return nil, errors.New("parameter slot cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -4873,15 +4939,19 @@ func (client *WebAppsClient) deleteHostSecretCreateRequest(ctx context.Context, 
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. By default, this API returns the production slot.
+//   - keyType - The type of host key.
+//   - keyName - The name of the key.
 //   - options - WebAppsClientDeleteHostSecretSlotOptions contains the optional parameters for the WebAppsClient.DeleteHostSecretSlot
 //     method.
-func (client *WebAppsClient) DeleteHostSecretSlot(ctx context.Context, resourceGroupName string, name string, keyType string, keyName string, slot string, options *WebAppsClientDeleteHostSecretSlotOptions) (WebAppsClientDeleteHostSecretSlotResponse, error) {
+func (client *WebAppsClient) DeleteHostSecretSlot(ctx context.Context, resourceGroupName string, name string, slot string, keyType string, keyName string, options *WebAppsClientDeleteHostSecretSlotOptions) (WebAppsClientDeleteHostSecretSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.DeleteHostSecretSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteHostSecretSlotCreateRequest(ctx, resourceGroupName, name, keyType, keyName, slot, options)
+	req, err := client.deleteHostSecretSlotCreateRequest(ctx, resourceGroupName, name, slot, keyType, keyName, options)
 	if err != nil {
 		return WebAppsClientDeleteHostSecretSlotResponse{}, err
 	}
@@ -4897,7 +4967,7 @@ func (client *WebAppsClient) DeleteHostSecretSlot(ctx context.Context, resourceG
 }
 
 // deleteHostSecretSlotCreateRequest creates the DeleteHostSecretSlot request.
-func (client *WebAppsClient) deleteHostSecretSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, keyType string, keyName string, slot string, _ *WebAppsClientDeleteHostSecretSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deleteHostSecretSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, keyType string, keyName string, _ *WebAppsClientDeleteHostSecretSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/sites/{name}/slots/{slot}/host/default/{keyType}/{keyName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -4911,6 +4981,10 @@ func (client *WebAppsClient) deleteHostSecretSlotCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
+	if slot == "" {
+		return nil, errors.New("parameter slot cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	if keyType == "" {
 		return nil, errors.New("parameter keyType cannot be empty")
 	}
@@ -4919,10 +4993,6 @@ func (client *WebAppsClient) deleteHostSecretSlotCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter keyName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
-	if slot == "" {
-		return nil, errors.New("parameter slot cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -5006,15 +5076,19 @@ func (client *WebAppsClient) deleteHybridConnectionCreateRequest(ctx context.Con
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - The name of the web app.
+//   - slot - The name of the slot for the web app.
+//   - namespaceName - The namespace for this hybrid connection.
+//   - relayName - The relay name for this hybrid connection.
 //   - options - WebAppsClientDeleteHybridConnectionSlotOptions contains the optional parameters for the WebAppsClient.DeleteHybridConnectionSlot
 //     method.
-func (client *WebAppsClient) DeleteHybridConnectionSlot(ctx context.Context, resourceGroupName string, name string, namespaceName string, relayName string, slot string, options *WebAppsClientDeleteHybridConnectionSlotOptions) (WebAppsClientDeleteHybridConnectionSlotResponse, error) {
+func (client *WebAppsClient) DeleteHybridConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, namespaceName string, relayName string, options *WebAppsClientDeleteHybridConnectionSlotOptions) (WebAppsClientDeleteHybridConnectionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.DeleteHybridConnectionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteHybridConnectionSlotCreateRequest(ctx, resourceGroupName, name, namespaceName, relayName, slot, options)
+	req, err := client.deleteHybridConnectionSlotCreateRequest(ctx, resourceGroupName, name, slot, namespaceName, relayName, options)
 	if err != nil {
 		return WebAppsClientDeleteHybridConnectionSlotResponse{}, err
 	}
@@ -5030,7 +5104,7 @@ func (client *WebAppsClient) DeleteHybridConnectionSlot(ctx context.Context, res
 }
 
 // deleteHybridConnectionSlotCreateRequest creates the DeleteHybridConnectionSlot request.
-func (client *WebAppsClient) deleteHybridConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, namespaceName string, relayName string, slot string, _ *WebAppsClientDeleteHybridConnectionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deleteHybridConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, namespaceName string, relayName string, _ *WebAppsClientDeleteHybridConnectionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -5044,6 +5118,10 @@ func (client *WebAppsClient) deleteHybridConnectionSlotCreateRequest(ctx context
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
+	if slot == "" {
+		return nil, errors.New("parameter slot cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	if namespaceName == "" {
 		return nil, errors.New("parameter namespaceName cannot be empty")
 	}
@@ -5052,10 +5130,6 @@ func (client *WebAppsClient) deleteHybridConnectionSlotCreateRequest(ctx context
 		return nil, errors.New("parameter relayName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{relayName}", url.PathEscape(relayName))
-	if slot == "" {
-		return nil, errors.New("parameter slot cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -5073,15 +5147,18 @@ func (client *WebAppsClient) deleteHybridConnectionSlotCreateRequest(ctx context
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot.
+//   - functionName - Function name.
 //   - options - WebAppsClientDeleteInstanceFunctionSlotOptions contains the optional parameters for the WebAppsClient.DeleteInstanceFunctionSlot
 //     method.
-func (client *WebAppsClient) DeleteInstanceFunctionSlot(ctx context.Context, resourceGroupName string, name string, functionName string, slot string, options *WebAppsClientDeleteInstanceFunctionSlotOptions) (WebAppsClientDeleteInstanceFunctionSlotResponse, error) {
+func (client *WebAppsClient) DeleteInstanceFunctionSlot(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, options *WebAppsClientDeleteInstanceFunctionSlotOptions) (WebAppsClientDeleteInstanceFunctionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.DeleteInstanceFunctionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteInstanceFunctionSlotCreateRequest(ctx, resourceGroupName, name, functionName, slot, options)
+	req, err := client.deleteInstanceFunctionSlotCreateRequest(ctx, resourceGroupName, name, slot, functionName, options)
 	if err != nil {
 		return WebAppsClientDeleteInstanceFunctionSlotResponse{}, err
 	}
@@ -5097,7 +5174,7 @@ func (client *WebAppsClient) DeleteInstanceFunctionSlot(ctx context.Context, res
 }
 
 // deleteInstanceFunctionSlotCreateRequest creates the DeleteInstanceFunctionSlot request.
-func (client *WebAppsClient) deleteInstanceFunctionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, functionName string, slot string, _ *WebAppsClientDeleteInstanceFunctionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deleteInstanceFunctionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, _ *WebAppsClientDeleteInstanceFunctionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -5111,14 +5188,14 @@ func (client *WebAppsClient) deleteInstanceFunctionSlotCreateRequest(ctx context
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if functionName == "" {
-		return nil, errors.New("parameter functionName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{functionName}", url.PathEscape(functionName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if functionName == "" {
+		return nil, errors.New("parameter functionName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{functionName}", url.PathEscape(functionName))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -5138,15 +5215,19 @@ func (client *WebAppsClient) deleteInstanceFunctionSlotCreateRequest(ctx context
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - instanceID - ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET
+//     api/sites/{siteName}/instances".
+//   - processID - PID.
 //   - options - WebAppsClientDeleteInstanceProcessOptions contains the optional parameters for the WebAppsClient.DeleteInstanceProcess
 //     method.
-func (client *WebAppsClient) DeleteInstanceProcess(ctx context.Context, resourceGroupName string, name string, processID string, instanceID string, options *WebAppsClientDeleteInstanceProcessOptions) (WebAppsClientDeleteInstanceProcessResponse, error) {
+func (client *WebAppsClient) DeleteInstanceProcess(ctx context.Context, resourceGroupName string, name string, instanceID string, processID string, options *WebAppsClientDeleteInstanceProcessOptions) (WebAppsClientDeleteInstanceProcessResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.DeleteInstanceProcess"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteInstanceProcessCreateRequest(ctx, resourceGroupName, name, processID, instanceID, options)
+	req, err := client.deleteInstanceProcessCreateRequest(ctx, resourceGroupName, name, instanceID, processID, options)
 	if err != nil {
 		return WebAppsClientDeleteInstanceProcessResponse{}, err
 	}
@@ -5162,7 +5243,7 @@ func (client *WebAppsClient) DeleteInstanceProcess(ctx context.Context, resource
 }
 
 // deleteInstanceProcessCreateRequest creates the DeleteInstanceProcess request.
-func (client *WebAppsClient) deleteInstanceProcessCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, instanceID string, _ *WebAppsClientDeleteInstanceProcessOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deleteInstanceProcessCreateRequest(ctx context.Context, resourceGroupName string, name string, instanceID string, processID string, _ *WebAppsClientDeleteInstanceProcessOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -5176,14 +5257,14 @@ func (client *WebAppsClient) deleteInstanceProcessCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if processID == "" {
-		return nil, errors.New("parameter processID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	if instanceID == "" {
 		return nil, errors.New("parameter instanceID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceID))
+	if processID == "" {
+		return nil, errors.New("parameter processID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -5203,15 +5284,20 @@ func (client *WebAppsClient) deleteInstanceProcessCreateRequest(ctx context.Cont
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot.
+//   - instanceID - ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET
+//     api/sites/{siteName}/instances".
+//   - processID - PID.
 //   - options - WebAppsClientDeleteInstanceProcessSlotOptions contains the optional parameters for the WebAppsClient.DeleteInstanceProcessSlot
 //     method.
-func (client *WebAppsClient) DeleteInstanceProcessSlot(ctx context.Context, resourceGroupName string, name string, processID string, slot string, instanceID string, options *WebAppsClientDeleteInstanceProcessSlotOptions) (WebAppsClientDeleteInstanceProcessSlotResponse, error) {
+func (client *WebAppsClient) DeleteInstanceProcessSlot(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, processID string, options *WebAppsClientDeleteInstanceProcessSlotOptions) (WebAppsClientDeleteInstanceProcessSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.DeleteInstanceProcessSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteInstanceProcessSlotCreateRequest(ctx, resourceGroupName, name, processID, slot, instanceID, options)
+	req, err := client.deleteInstanceProcessSlotCreateRequest(ctx, resourceGroupName, name, slot, instanceID, processID, options)
 	if err != nil {
 		return WebAppsClientDeleteInstanceProcessSlotResponse{}, err
 	}
@@ -5227,7 +5313,7 @@ func (client *WebAppsClient) DeleteInstanceProcessSlot(ctx context.Context, reso
 }
 
 // deleteInstanceProcessSlotCreateRequest creates the DeleteInstanceProcessSlot request.
-func (client *WebAppsClient) deleteInstanceProcessSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, slot string, instanceID string, _ *WebAppsClientDeleteInstanceProcessSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deleteInstanceProcessSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, processID string, _ *WebAppsClientDeleteInstanceProcessSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -5241,10 +5327,6 @@ func (client *WebAppsClient) deleteInstanceProcessSlotCreateRequest(ctx context.
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if processID == "" {
-		return nil, errors.New("parameter processID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
@@ -5253,6 +5335,10 @@ func (client *WebAppsClient) deleteInstanceProcessSlotCreateRequest(ctx context.
 		return nil, errors.New("parameter instanceID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceID))
+	if processID == "" {
+		return nil, errors.New("parameter processID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -5331,15 +5417,18 @@ func (client *WebAppsClient) deletePremierAddOnCreateRequest(ctx context.Context
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get the named add-on for the production slot.
+//   - premierAddOnName - Add-on name.
 //   - options - WebAppsClientDeletePremierAddOnSlotOptions contains the optional parameters for the WebAppsClient.DeletePremierAddOnSlot
 //     method.
-func (client *WebAppsClient) DeletePremierAddOnSlot(ctx context.Context, resourceGroupName string, name string, premierAddOnName string, slot string, options *WebAppsClientDeletePremierAddOnSlotOptions) (WebAppsClientDeletePremierAddOnSlotResponse, error) {
+func (client *WebAppsClient) DeletePremierAddOnSlot(ctx context.Context, resourceGroupName string, name string, slot string, premierAddOnName string, options *WebAppsClientDeletePremierAddOnSlotOptions) (WebAppsClientDeletePremierAddOnSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.DeletePremierAddOnSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deletePremierAddOnSlotCreateRequest(ctx, resourceGroupName, name, premierAddOnName, slot, options)
+	req, err := client.deletePremierAddOnSlotCreateRequest(ctx, resourceGroupName, name, slot, premierAddOnName, options)
 	if err != nil {
 		return WebAppsClientDeletePremierAddOnSlotResponse{}, err
 	}
@@ -5355,7 +5444,7 @@ func (client *WebAppsClient) DeletePremierAddOnSlot(ctx context.Context, resourc
 }
 
 // deletePremierAddOnSlotCreateRequest creates the DeletePremierAddOnSlot request.
-func (client *WebAppsClient) deletePremierAddOnSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, premierAddOnName string, slot string, _ *WebAppsClientDeletePremierAddOnSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deletePremierAddOnSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, premierAddOnName string, _ *WebAppsClientDeletePremierAddOnSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -5369,14 +5458,14 @@ func (client *WebAppsClient) deletePremierAddOnSlotCreateRequest(ctx context.Con
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if premierAddOnName == "" {
-		return nil, errors.New("parameter premierAddOnName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{premierAddOnName}", url.PathEscape(premierAddOnName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if premierAddOnName == "" {
+		return nil, errors.New("parameter premierAddOnName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{premierAddOnName}", url.PathEscape(premierAddOnName))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -5479,11 +5568,14 @@ func (client *WebAppsClient) deletePrivateEndpointConnectionCreateRequest(ctx co
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the site.
+//   - slot - Name of the site deployment slot.
+//   - privateEndpointConnectionName - Name of the private endpoint connection.
 //   - options - WebAppsClientBeginDeletePrivateEndpointConnectionSlotOptions contains the optional parameters for the WebAppsClient.BeginDeletePrivateEndpointConnectionSlot
 //     method.
-func (client *WebAppsClient) BeginDeletePrivateEndpointConnectionSlot(ctx context.Context, resourceGroupName string, name string, privateEndpointConnectionName string, slot string, options *WebAppsClientBeginDeletePrivateEndpointConnectionSlotOptions) (*runtime.Poller[WebAppsClientDeletePrivateEndpointConnectionSlotResponse], error) {
+func (client *WebAppsClient) BeginDeletePrivateEndpointConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, privateEndpointConnectionName string, options *WebAppsClientBeginDeletePrivateEndpointConnectionSlotOptions) (*runtime.Poller[WebAppsClientDeletePrivateEndpointConnectionSlotResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.deletePrivateEndpointConnectionSlot(ctx, resourceGroupName, name, privateEndpointConnectionName, slot, options)
+		resp, err := client.deletePrivateEndpointConnectionSlot(ctx, resourceGroupName, name, slot, privateEndpointConnectionName, options)
 		if err != nil {
 			return nil, err
 		}
@@ -5504,13 +5596,13 @@ func (client *WebAppsClient) BeginDeletePrivateEndpointConnectionSlot(ctx contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2025-03-01
-func (client *WebAppsClient) deletePrivateEndpointConnectionSlot(ctx context.Context, resourceGroupName string, name string, privateEndpointConnectionName string, slot string, options *WebAppsClientBeginDeletePrivateEndpointConnectionSlotOptions) (*http.Response, error) {
+func (client *WebAppsClient) deletePrivateEndpointConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, privateEndpointConnectionName string, options *WebAppsClientBeginDeletePrivateEndpointConnectionSlotOptions) (*http.Response, error) {
 	var err error
 	const operationName = "WebAppsClient.BeginDeletePrivateEndpointConnectionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deletePrivateEndpointConnectionSlotCreateRequest(ctx, resourceGroupName, name, privateEndpointConnectionName, slot, options)
+	req, err := client.deletePrivateEndpointConnectionSlotCreateRequest(ctx, resourceGroupName, name, slot, privateEndpointConnectionName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -5526,7 +5618,7 @@ func (client *WebAppsClient) deletePrivateEndpointConnectionSlot(ctx context.Con
 }
 
 // deletePrivateEndpointConnectionSlotCreateRequest creates the DeletePrivateEndpointConnectionSlot request.
-func (client *WebAppsClient) deletePrivateEndpointConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, privateEndpointConnectionName string, slot string, _ *WebAppsClientBeginDeletePrivateEndpointConnectionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deletePrivateEndpointConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, privateEndpointConnectionName string, _ *WebAppsClientBeginDeletePrivateEndpointConnectionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateEndpointConnections/{privateEndpointConnectionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -5540,14 +5632,14 @@ func (client *WebAppsClient) deletePrivateEndpointConnectionSlotCreateRequest(ct
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if privateEndpointConnectionName == "" {
-		return nil, errors.New("parameter privateEndpointConnectionName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{privateEndpointConnectionName}", url.PathEscape(privateEndpointConnectionName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if privateEndpointConnectionName == "" {
+		return nil, errors.New("parameter privateEndpointConnectionName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{privateEndpointConnectionName}", url.PathEscape(privateEndpointConnectionName))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -5630,15 +5722,18 @@ func (client *WebAppsClient) deleteProcessCreateRequest(ctx context.Context, res
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot.
+//   - processID - PID.
 //   - options - WebAppsClientDeleteProcessSlotOptions contains the optional parameters for the WebAppsClient.DeleteProcessSlot
 //     method.
-func (client *WebAppsClient) DeleteProcessSlot(ctx context.Context, resourceGroupName string, name string, processID string, slot string, options *WebAppsClientDeleteProcessSlotOptions) (WebAppsClientDeleteProcessSlotResponse, error) {
+func (client *WebAppsClient) DeleteProcessSlot(ctx context.Context, resourceGroupName string, name string, slot string, processID string, options *WebAppsClientDeleteProcessSlotOptions) (WebAppsClientDeleteProcessSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.DeleteProcessSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteProcessSlotCreateRequest(ctx, resourceGroupName, name, processID, slot, options)
+	req, err := client.deleteProcessSlotCreateRequest(ctx, resourceGroupName, name, slot, processID, options)
 	if err != nil {
 		return WebAppsClientDeleteProcessSlotResponse{}, err
 	}
@@ -5654,7 +5749,7 @@ func (client *WebAppsClient) DeleteProcessSlot(ctx context.Context, resourceGrou
 }
 
 // deleteProcessSlotCreateRequest creates the DeleteProcessSlot request.
-func (client *WebAppsClient) deleteProcessSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, slot string, _ *WebAppsClientDeleteProcessSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deleteProcessSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, processID string, _ *WebAppsClientDeleteProcessSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -5668,14 +5763,14 @@ func (client *WebAppsClient) deleteProcessSlotCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if processID == "" {
-		return nil, errors.New("parameter processID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if processID == "" {
+		return nil, errors.New("parameter processID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -5881,15 +5976,19 @@ func (client *WebAppsClient) deleteRelayServiceConnectionCreateRequest(ctx conte
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get a hybrid connection for the production
+//     slot.
+//   - entityName - Name of the hybrid connection.
 //   - options - WebAppsClientDeleteRelayServiceConnectionSlotOptions contains the optional parameters for the WebAppsClient.DeleteRelayServiceConnectionSlot
 //     method.
-func (client *WebAppsClient) DeleteRelayServiceConnectionSlot(ctx context.Context, resourceGroupName string, name string, entityName string, slot string, options *WebAppsClientDeleteRelayServiceConnectionSlotOptions) (WebAppsClientDeleteRelayServiceConnectionSlotResponse, error) {
+func (client *WebAppsClient) DeleteRelayServiceConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, entityName string, options *WebAppsClientDeleteRelayServiceConnectionSlotOptions) (WebAppsClientDeleteRelayServiceConnectionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.DeleteRelayServiceConnectionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteRelayServiceConnectionSlotCreateRequest(ctx, resourceGroupName, name, entityName, slot, options)
+	req, err := client.deleteRelayServiceConnectionSlotCreateRequest(ctx, resourceGroupName, name, slot, entityName, options)
 	if err != nil {
 		return WebAppsClientDeleteRelayServiceConnectionSlotResponse{}, err
 	}
@@ -5905,7 +6004,7 @@ func (client *WebAppsClient) DeleteRelayServiceConnectionSlot(ctx context.Contex
 }
 
 // deleteRelayServiceConnectionSlotCreateRequest creates the DeleteRelayServiceConnectionSlot request.
-func (client *WebAppsClient) deleteRelayServiceConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, entityName string, slot string, _ *WebAppsClientDeleteRelayServiceConnectionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deleteRelayServiceConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, entityName string, _ *WebAppsClientDeleteRelayServiceConnectionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -5919,14 +6018,14 @@ func (client *WebAppsClient) deleteRelayServiceConnectionSlotCreateRequest(ctx c
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if entityName == "" {
-		return nil, errors.New("parameter entityName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{entityName}", url.PathEscape(entityName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if entityName == "" {
+		return nil, errors.New("parameter entityName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{entityName}", url.PathEscape(entityName))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -6133,15 +6232,18 @@ func (client *WebAppsClient) deleteSiteExtensionCreateRequest(ctx context.Contex
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API uses the production slot.
+//   - siteExtensionID - Site extension name.
 //   - options - WebAppsClientDeleteSiteExtensionSlotOptions contains the optional parameters for the WebAppsClient.DeleteSiteExtensionSlot
 //     method.
-func (client *WebAppsClient) DeleteSiteExtensionSlot(ctx context.Context, resourceGroupName string, name string, siteExtensionID string, slot string, options *WebAppsClientDeleteSiteExtensionSlotOptions) (WebAppsClientDeleteSiteExtensionSlotResponse, error) {
+func (client *WebAppsClient) DeleteSiteExtensionSlot(ctx context.Context, resourceGroupName string, name string, slot string, siteExtensionID string, options *WebAppsClientDeleteSiteExtensionSlotOptions) (WebAppsClientDeleteSiteExtensionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.DeleteSiteExtensionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteSiteExtensionSlotCreateRequest(ctx, resourceGroupName, name, siteExtensionID, slot, options)
+	req, err := client.deleteSiteExtensionSlotCreateRequest(ctx, resourceGroupName, name, slot, siteExtensionID, options)
 	if err != nil {
 		return WebAppsClientDeleteSiteExtensionSlotResponse{}, err
 	}
@@ -6157,7 +6259,7 @@ func (client *WebAppsClient) DeleteSiteExtensionSlot(ctx context.Context, resour
 }
 
 // deleteSiteExtensionSlotCreateRequest creates the DeleteSiteExtensionSlot request.
-func (client *WebAppsClient) deleteSiteExtensionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, siteExtensionID string, slot string, _ *WebAppsClientDeleteSiteExtensionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deleteSiteExtensionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, siteExtensionID string, _ *WebAppsClientDeleteSiteExtensionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -6171,14 +6273,14 @@ func (client *WebAppsClient) deleteSiteExtensionSlotCreateRequest(ctx context.Co
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if siteExtensionID == "" {
-		return nil, errors.New("parameter siteExtensionID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{siteExtensionId}", url.PathEscape(siteExtensionID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if siteExtensionID == "" {
+		return nil, errors.New("parameter siteExtensionID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{siteExtensionId}", url.PathEscape(siteExtensionID))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -6565,15 +6667,18 @@ func (client *WebAppsClient) deleteTriggeredWebJobCreateRequest(ctx context.Cont
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API uses the production slot.
+//   - webJobName - Name of Web Job.
 //   - options - WebAppsClientDeleteTriggeredWebJobSlotOptions contains the optional parameters for the WebAppsClient.DeleteTriggeredWebJobSlot
 //     method.
-func (client *WebAppsClient) DeleteTriggeredWebJobSlot(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, options *WebAppsClientDeleteTriggeredWebJobSlotOptions) (WebAppsClientDeleteTriggeredWebJobSlotResponse, error) {
+func (client *WebAppsClient) DeleteTriggeredWebJobSlot(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, options *WebAppsClientDeleteTriggeredWebJobSlotOptions) (WebAppsClientDeleteTriggeredWebJobSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.DeleteTriggeredWebJobSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteTriggeredWebJobSlotCreateRequest(ctx, resourceGroupName, name, webJobName, slot, options)
+	req, err := client.deleteTriggeredWebJobSlotCreateRequest(ctx, resourceGroupName, name, slot, webJobName, options)
 	if err != nil {
 		return WebAppsClientDeleteTriggeredWebJobSlotResponse{}, err
 	}
@@ -6589,7 +6694,7 @@ func (client *WebAppsClient) DeleteTriggeredWebJobSlot(ctx context.Context, reso
 }
 
 // deleteTriggeredWebJobSlotCreateRequest creates the DeleteTriggeredWebJobSlot request.
-func (client *WebAppsClient) deleteTriggeredWebJobSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, _ *WebAppsClientDeleteTriggeredWebJobSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deleteTriggeredWebJobSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, _ *WebAppsClientDeleteTriggeredWebJobSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -6603,14 +6708,14 @@ func (client *WebAppsClient) deleteTriggeredWebJobSlotCreateRequest(ctx context.
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if webJobName == "" {
-		return nil, errors.New("parameter webJobName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if webJobName == "" {
+		return nil, errors.New("parameter webJobName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -6689,15 +6794,19 @@ func (client *WebAppsClient) deleteVnetConnectionCreateRequest(ctx context.Conte
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get the named virtual network for the production
+//     slot.
+//   - vnetName - Name of the virtual network.
 //   - options - WebAppsClientDeleteVnetConnectionSlotOptions contains the optional parameters for the WebAppsClient.DeleteVnetConnectionSlot
 //     method.
-func (client *WebAppsClient) DeleteVnetConnectionSlot(ctx context.Context, resourceGroupName string, name string, vnetName string, slot string, options *WebAppsClientDeleteVnetConnectionSlotOptions) (WebAppsClientDeleteVnetConnectionSlotResponse, error) {
+func (client *WebAppsClient) DeleteVnetConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, options *WebAppsClientDeleteVnetConnectionSlotOptions) (WebAppsClientDeleteVnetConnectionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.DeleteVnetConnectionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteVnetConnectionSlotCreateRequest(ctx, resourceGroupName, name, vnetName, slot, options)
+	req, err := client.deleteVnetConnectionSlotCreateRequest(ctx, resourceGroupName, name, slot, vnetName, options)
 	if err != nil {
 		return WebAppsClientDeleteVnetConnectionSlotResponse{}, err
 	}
@@ -6713,7 +6822,7 @@ func (client *WebAppsClient) DeleteVnetConnectionSlot(ctx context.Context, resou
 }
 
 // deleteVnetConnectionSlotCreateRequest creates the DeleteVnetConnectionSlot request.
-func (client *WebAppsClient) deleteVnetConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, vnetName string, slot string, _ *WebAppsClientDeleteVnetConnectionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) deleteVnetConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, _ *WebAppsClientDeleteVnetConnectionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -6727,14 +6836,14 @@ func (client *WebAppsClient) deleteVnetConnectionSlotCreateRequest(ctx context.C
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if vnetName == "" {
-		return nil, errors.New("parameter vnetName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{vnetName}", url.PathEscape(vnetName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if vnetName == "" {
+		return nil, errors.New("parameter vnetName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{vnetName}", url.PathEscape(vnetName))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -7290,15 +7399,17 @@ func (client *WebAppsClient) getAppSettingKeyVaultReferenceHandleResponse(resp *
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - appSettingKey - App Setting key name.
 //   - options - WebAppsClientGetAppSettingKeyVaultReferenceSlotOptions contains the optional parameters for the WebAppsClient.GetAppSettingKeyVaultReferenceSlot
 //     method.
-func (client *WebAppsClient) GetAppSettingKeyVaultReferenceSlot(ctx context.Context, resourceGroupName string, name string, appSettingKey string, slot string, options *WebAppsClientGetAppSettingKeyVaultReferenceSlotOptions) (WebAppsClientGetAppSettingKeyVaultReferenceSlotResponse, error) {
+func (client *WebAppsClient) GetAppSettingKeyVaultReferenceSlot(ctx context.Context, resourceGroupName string, name string, slot string, appSettingKey string, options *WebAppsClientGetAppSettingKeyVaultReferenceSlotOptions) (WebAppsClientGetAppSettingKeyVaultReferenceSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetAppSettingKeyVaultReferenceSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getAppSettingKeyVaultReferenceSlotCreateRequest(ctx, resourceGroupName, name, appSettingKey, slot, options)
+	req, err := client.getAppSettingKeyVaultReferenceSlotCreateRequest(ctx, resourceGroupName, name, slot, appSettingKey, options)
 	if err != nil {
 		return WebAppsClientGetAppSettingKeyVaultReferenceSlotResponse{}, err
 	}
@@ -7315,7 +7426,7 @@ func (client *WebAppsClient) GetAppSettingKeyVaultReferenceSlot(ctx context.Cont
 }
 
 // getAppSettingKeyVaultReferenceSlotCreateRequest creates the GetAppSettingKeyVaultReferenceSlot request.
-func (client *WebAppsClient) getAppSettingKeyVaultReferenceSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, appSettingKey string, slot string, _ *WebAppsClientGetAppSettingKeyVaultReferenceSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getAppSettingKeyVaultReferenceSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, appSettingKey string, _ *WebAppsClientGetAppSettingKeyVaultReferenceSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -7329,14 +7440,14 @@ func (client *WebAppsClient) getAppSettingKeyVaultReferenceSlotCreateRequest(ctx
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if appSettingKey == "" {
-		return nil, errors.New("parameter appSettingKey cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{appSettingKey}", url.PathEscape(appSettingKey))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if appSettingKey == "" {
+		return nil, errors.New("parameter appSettingKey cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{appSettingKey}", url.PathEscape(appSettingKey))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -8128,15 +8239,18 @@ func (client *WebAppsClient) getBackupStatusHandleResponse(resp *http.Response) 
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get a backup of the production slot.
+//   - backupID - ID of the backup.
 //   - options - WebAppsClientGetBackupStatusSlotOptions contains the optional parameters for the WebAppsClient.GetBackupStatusSlot
 //     method.
-func (client *WebAppsClient) GetBackupStatusSlot(ctx context.Context, resourceGroupName string, name string, backupID string, slot string, options *WebAppsClientGetBackupStatusSlotOptions) (WebAppsClientGetBackupStatusSlotResponse, error) {
+func (client *WebAppsClient) GetBackupStatusSlot(ctx context.Context, resourceGroupName string, name string, slot string, backupID string, options *WebAppsClientGetBackupStatusSlotOptions) (WebAppsClientGetBackupStatusSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetBackupStatusSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getBackupStatusSlotCreateRequest(ctx, resourceGroupName, name, backupID, slot, options)
+	req, err := client.getBackupStatusSlotCreateRequest(ctx, resourceGroupName, name, slot, backupID, options)
 	if err != nil {
 		return WebAppsClientGetBackupStatusSlotResponse{}, err
 	}
@@ -8153,7 +8267,7 @@ func (client *WebAppsClient) GetBackupStatusSlot(ctx context.Context, resourceGr
 }
 
 // getBackupStatusSlotCreateRequest creates the GetBackupStatusSlot request.
-func (client *WebAppsClient) getBackupStatusSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, backupID string, slot string, _ *WebAppsClientGetBackupStatusSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getBackupStatusSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, backupID string, _ *WebAppsClientGetBackupStatusSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backups/{backupId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -8167,14 +8281,14 @@ func (client *WebAppsClient) getBackupStatusSlotCreateRequest(ctx context.Contex
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if backupID == "" {
-		return nil, errors.New("parameter backupID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{backupId}", url.PathEscape(backupID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if backupID == "" {
+		return nil, errors.New("parameter backupID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{backupId}", url.PathEscape(backupID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -8417,15 +8531,18 @@ func (client *WebAppsClient) getConfigurationSnapshotHandleResponse(resp *http.R
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot.
+//   - snapshotID - The ID of the snapshot to read.
 //   - options - WebAppsClientGetConfigurationSnapshotSlotOptions contains the optional parameters for the WebAppsClient.GetConfigurationSnapshotSlot
 //     method.
-func (client *WebAppsClient) GetConfigurationSnapshotSlot(ctx context.Context, resourceGroupName string, name string, snapshotID string, slot string, options *WebAppsClientGetConfigurationSnapshotSlotOptions) (WebAppsClientGetConfigurationSnapshotSlotResponse, error) {
+func (client *WebAppsClient) GetConfigurationSnapshotSlot(ctx context.Context, resourceGroupName string, name string, slot string, snapshotID string, options *WebAppsClientGetConfigurationSnapshotSlotOptions) (WebAppsClientGetConfigurationSnapshotSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetConfigurationSnapshotSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getConfigurationSnapshotSlotCreateRequest(ctx, resourceGroupName, name, snapshotID, slot, options)
+	req, err := client.getConfigurationSnapshotSlotCreateRequest(ctx, resourceGroupName, name, slot, snapshotID, options)
 	if err != nil {
 		return WebAppsClientGetConfigurationSnapshotSlotResponse{}, err
 	}
@@ -8442,7 +8559,7 @@ func (client *WebAppsClient) GetConfigurationSnapshotSlot(ctx context.Context, r
 }
 
 // getConfigurationSnapshotSlotCreateRequest creates the GetConfigurationSnapshotSlot request.
-func (client *WebAppsClient) getConfigurationSnapshotSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, snapshotID string, slot string, _ *WebAppsClientGetConfigurationSnapshotSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getConfigurationSnapshotSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, snapshotID string, _ *WebAppsClientGetConfigurationSnapshotSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -8456,14 +8573,14 @@ func (client *WebAppsClient) getConfigurationSnapshotSlotCreateRequest(ctx conte
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if snapshotID == "" {
-		return nil, errors.New("parameter snapshotID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{snapshotId}", url.PathEscape(snapshotID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if snapshotID == "" {
+		return nil, errors.New("parameter snapshotID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{snapshotId}", url.PathEscape(snapshotID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -8704,15 +8821,18 @@ func (client *WebAppsClient) getContinuousWebJobHandleResponse(resp *http.Respon
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot.
+//   - webJobName - Name of Web Job.
 //   - options - WebAppsClientGetContinuousWebJobSlotOptions contains the optional parameters for the WebAppsClient.GetContinuousWebJobSlot
 //     method.
-func (client *WebAppsClient) GetContinuousWebJobSlot(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, options *WebAppsClientGetContinuousWebJobSlotOptions) (WebAppsClientGetContinuousWebJobSlotResponse, error) {
+func (client *WebAppsClient) GetContinuousWebJobSlot(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, options *WebAppsClientGetContinuousWebJobSlotOptions) (WebAppsClientGetContinuousWebJobSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetContinuousWebJobSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getContinuousWebJobSlotCreateRequest(ctx, resourceGroupName, name, webJobName, slot, options)
+	req, err := client.getContinuousWebJobSlotCreateRequest(ctx, resourceGroupName, name, slot, webJobName, options)
 	if err != nil {
 		return WebAppsClientGetContinuousWebJobSlotResponse{}, err
 	}
@@ -8729,7 +8849,7 @@ func (client *WebAppsClient) GetContinuousWebJobSlot(ctx context.Context, resour
 }
 
 // getContinuousWebJobSlotCreateRequest creates the GetContinuousWebJobSlot request.
-func (client *WebAppsClient) getContinuousWebJobSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, _ *WebAppsClientGetContinuousWebJobSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getContinuousWebJobSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, _ *WebAppsClientGetContinuousWebJobSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -8743,14 +8863,14 @@ func (client *WebAppsClient) getContinuousWebJobSlotCreateRequest(ctx context.Co
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if webJobName == "" {
-		return nil, errors.New("parameter webJobName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if webJobName == "" {
+		return nil, errors.New("parameter webJobName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -8849,15 +8969,18 @@ func (client *WebAppsClient) getDeploymentHandleResponse(resp *http.Response) (W
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API gets a deployment for the production slot.
+//   - id - Deployment ID.
 //   - options - WebAppsClientGetDeploymentSlotOptions contains the optional parameters for the WebAppsClient.GetDeploymentSlot
 //     method.
-func (client *WebAppsClient) GetDeploymentSlot(ctx context.Context, resourceGroupName string, name string, id string, slot string, options *WebAppsClientGetDeploymentSlotOptions) (WebAppsClientGetDeploymentSlotResponse, error) {
+func (client *WebAppsClient) GetDeploymentSlot(ctx context.Context, resourceGroupName string, name string, slot string, id string, options *WebAppsClientGetDeploymentSlotOptions) (WebAppsClientGetDeploymentSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetDeploymentSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getDeploymentSlotCreateRequest(ctx, resourceGroupName, name, id, slot, options)
+	req, err := client.getDeploymentSlotCreateRequest(ctx, resourceGroupName, name, slot, id, options)
 	if err != nil {
 		return WebAppsClientGetDeploymentSlotResponse{}, err
 	}
@@ -8874,7 +8997,7 @@ func (client *WebAppsClient) GetDeploymentSlot(ctx context.Context, resourceGrou
 }
 
 // getDeploymentSlotCreateRequest creates the GetDeploymentSlot request.
-func (client *WebAppsClient) getDeploymentSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, id string, slot string, _ *WebAppsClientGetDeploymentSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getDeploymentSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, id string, _ *WebAppsClientGetDeploymentSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -8888,14 +9011,14 @@ func (client *WebAppsClient) getDeploymentSlotCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if id == "" {
-		return nil, errors.New("parameter id cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(id))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if id == "" {
+		return nil, errors.New("parameter id cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(id))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -9135,15 +9258,18 @@ func (client *WebAppsClient) getDomainOwnershipIdentifierHandleResponse(resp *ht
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot.
+//   - domainOwnershipIdentifierName - Name of domain ownership identifier.
 //   - options - WebAppsClientGetDomainOwnershipIdentifierSlotOptions contains the optional parameters for the WebAppsClient.GetDomainOwnershipIdentifierSlot
 //     method.
-func (client *WebAppsClient) GetDomainOwnershipIdentifierSlot(ctx context.Context, resourceGroupName string, name string, domainOwnershipIdentifierName string, slot string, options *WebAppsClientGetDomainOwnershipIdentifierSlotOptions) (WebAppsClientGetDomainOwnershipIdentifierSlotResponse, error) {
+func (client *WebAppsClient) GetDomainOwnershipIdentifierSlot(ctx context.Context, resourceGroupName string, name string, slot string, domainOwnershipIdentifierName string, options *WebAppsClientGetDomainOwnershipIdentifierSlotOptions) (WebAppsClientGetDomainOwnershipIdentifierSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetDomainOwnershipIdentifierSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getDomainOwnershipIdentifierSlotCreateRequest(ctx, resourceGroupName, name, domainOwnershipIdentifierName, slot, options)
+	req, err := client.getDomainOwnershipIdentifierSlotCreateRequest(ctx, resourceGroupName, name, slot, domainOwnershipIdentifierName, options)
 	if err != nil {
 		return WebAppsClientGetDomainOwnershipIdentifierSlotResponse{}, err
 	}
@@ -9160,7 +9286,7 @@ func (client *WebAppsClient) GetDomainOwnershipIdentifierSlot(ctx context.Contex
 }
 
 // getDomainOwnershipIdentifierSlotCreateRequest creates the GetDomainOwnershipIdentifierSlot request.
-func (client *WebAppsClient) getDomainOwnershipIdentifierSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, domainOwnershipIdentifierName string, slot string, _ *WebAppsClientGetDomainOwnershipIdentifierSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getDomainOwnershipIdentifierSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, domainOwnershipIdentifierName string, _ *WebAppsClientGetDomainOwnershipIdentifierSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -9174,14 +9300,14 @@ func (client *WebAppsClient) getDomainOwnershipIdentifierSlotCreateRequest(ctx c
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if domainOwnershipIdentifierName == "" {
-		return nil, errors.New("parameter domainOwnershipIdentifierName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{domainOwnershipIdentifierName}", url.PathEscape(domainOwnershipIdentifierName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if domainOwnershipIdentifierName == "" {
+		return nil, errors.New("parameter domainOwnershipIdentifierName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{domainOwnershipIdentifierName}", url.PathEscape(domainOwnershipIdentifierName))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -9782,15 +9908,19 @@ func (client *WebAppsClient) getHybridConnectionHandleResponse(resp *http.Respon
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - The name of the web app.
+//   - slot - The name of the slot for the web app.
+//   - namespaceName - The namespace for this hybrid connection.
+//   - relayName - The relay name for this hybrid connection.
 //   - options - WebAppsClientGetHybridConnectionSlotOptions contains the optional parameters for the WebAppsClient.GetHybridConnectionSlot
 //     method.
-func (client *WebAppsClient) GetHybridConnectionSlot(ctx context.Context, resourceGroupName string, name string, namespaceName string, relayName string, slot string, options *WebAppsClientGetHybridConnectionSlotOptions) (WebAppsClientGetHybridConnectionSlotResponse, error) {
+func (client *WebAppsClient) GetHybridConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, namespaceName string, relayName string, options *WebAppsClientGetHybridConnectionSlotOptions) (WebAppsClientGetHybridConnectionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetHybridConnectionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getHybridConnectionSlotCreateRequest(ctx, resourceGroupName, name, namespaceName, relayName, slot, options)
+	req, err := client.getHybridConnectionSlotCreateRequest(ctx, resourceGroupName, name, slot, namespaceName, relayName, options)
 	if err != nil {
 		return WebAppsClientGetHybridConnectionSlotResponse{}, err
 	}
@@ -9807,7 +9937,7 @@ func (client *WebAppsClient) GetHybridConnectionSlot(ctx context.Context, resour
 }
 
 // getHybridConnectionSlotCreateRequest creates the GetHybridConnectionSlot request.
-func (client *WebAppsClient) getHybridConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, namespaceName string, relayName string, slot string, _ *WebAppsClientGetHybridConnectionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getHybridConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, namespaceName string, relayName string, _ *WebAppsClientGetHybridConnectionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -9821,6 +9951,10 @@ func (client *WebAppsClient) getHybridConnectionSlotCreateRequest(ctx context.Co
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
+	if slot == "" {
+		return nil, errors.New("parameter slot cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	if namespaceName == "" {
 		return nil, errors.New("parameter namespaceName cannot be empty")
 	}
@@ -9829,10 +9963,6 @@ func (client *WebAppsClient) getHybridConnectionSlotCreateRequest(ctx context.Co
 		return nil, errors.New("parameter relayName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{relayName}", url.PathEscape(relayName))
-	if slot == "" {
-		return nil, errors.New("parameter slot cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -9860,15 +9990,18 @@ func (client *WebAppsClient) getHybridConnectionSlotHandleResponse(resp *http.Re
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot.
+//   - functionName - Function name.
 //   - options - WebAppsClientGetInstanceFunctionSlotOptions contains the optional parameters for the WebAppsClient.GetInstanceFunctionSlot
 //     method.
-func (client *WebAppsClient) GetInstanceFunctionSlot(ctx context.Context, resourceGroupName string, name string, functionName string, slot string, options *WebAppsClientGetInstanceFunctionSlotOptions) (WebAppsClientGetInstanceFunctionSlotResponse, error) {
+func (client *WebAppsClient) GetInstanceFunctionSlot(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, options *WebAppsClientGetInstanceFunctionSlotOptions) (WebAppsClientGetInstanceFunctionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetInstanceFunctionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getInstanceFunctionSlotCreateRequest(ctx, resourceGroupName, name, functionName, slot, options)
+	req, err := client.getInstanceFunctionSlotCreateRequest(ctx, resourceGroupName, name, slot, functionName, options)
 	if err != nil {
 		return WebAppsClientGetInstanceFunctionSlotResponse{}, err
 	}
@@ -9885,7 +10018,7 @@ func (client *WebAppsClient) GetInstanceFunctionSlot(ctx context.Context, resour
 }
 
 // getInstanceFunctionSlotCreateRequest creates the GetInstanceFunctionSlot request.
-func (client *WebAppsClient) getInstanceFunctionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, functionName string, slot string, _ *WebAppsClientGetInstanceFunctionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getInstanceFunctionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, _ *WebAppsClientGetInstanceFunctionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -9899,14 +10032,14 @@ func (client *WebAppsClient) getInstanceFunctionSlotCreateRequest(ctx context.Co
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if functionName == "" {
-		return nil, errors.New("parameter functionName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{functionName}", url.PathEscape(functionName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if functionName == "" {
+		return nil, errors.New("parameter functionName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{functionName}", url.PathEscape(functionName))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -10004,15 +10137,17 @@ func (client *WebAppsClient) getInstanceInfoHandleResponse(resp *http.Response) 
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API gets the production slot instances.
 //   - options - WebAppsClientGetInstanceInfoSlotOptions contains the optional parameters for the WebAppsClient.GetInstanceInfoSlot
 //     method.
-func (client *WebAppsClient) GetInstanceInfoSlot(ctx context.Context, resourceGroupName string, name string, instanceID string, slot string, options *WebAppsClientGetInstanceInfoSlotOptions) (WebAppsClientGetInstanceInfoSlotResponse, error) {
+func (client *WebAppsClient) GetInstanceInfoSlot(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, options *WebAppsClientGetInstanceInfoSlotOptions) (WebAppsClientGetInstanceInfoSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetInstanceInfoSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getInstanceInfoSlotCreateRequest(ctx, resourceGroupName, name, instanceID, slot, options)
+	req, err := client.getInstanceInfoSlotCreateRequest(ctx, resourceGroupName, name, slot, instanceID, options)
 	if err != nil {
 		return WebAppsClientGetInstanceInfoSlotResponse{}, err
 	}
@@ -10029,7 +10164,7 @@ func (client *WebAppsClient) GetInstanceInfoSlot(ctx context.Context, resourceGr
 }
 
 // getInstanceInfoSlotCreateRequest creates the GetInstanceInfoSlot request.
-func (client *WebAppsClient) getInstanceInfoSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, instanceID string, slot string, _ *WebAppsClientGetInstanceInfoSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getInstanceInfoSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, _ *WebAppsClientGetInstanceInfoSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -10043,14 +10178,14 @@ func (client *WebAppsClient) getInstanceInfoSlotCreateRequest(ctx context.Contex
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if instanceID == "" {
-		return nil, errors.New("parameter instanceID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if instanceID == "" {
+		return nil, errors.New("parameter instanceID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -10376,15 +10511,19 @@ func (client *WebAppsClient) getInstanceMsDeployStatusSlotHandleResponse(resp *h
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - instanceID - ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET
+//     api/sites/{siteName}/instances".
+//   - processID - PID.
 //   - options - WebAppsClientGetInstanceProcessOptions contains the optional parameters for the WebAppsClient.GetInstanceProcess
 //     method.
-func (client *WebAppsClient) GetInstanceProcess(ctx context.Context, resourceGroupName string, name string, processID string, instanceID string, options *WebAppsClientGetInstanceProcessOptions) (WebAppsClientGetInstanceProcessResponse, error) {
+func (client *WebAppsClient) GetInstanceProcess(ctx context.Context, resourceGroupName string, name string, instanceID string, processID string, options *WebAppsClientGetInstanceProcessOptions) (WebAppsClientGetInstanceProcessResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetInstanceProcess"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getInstanceProcessCreateRequest(ctx, resourceGroupName, name, processID, instanceID, options)
+	req, err := client.getInstanceProcessCreateRequest(ctx, resourceGroupName, name, instanceID, processID, options)
 	if err != nil {
 		return WebAppsClientGetInstanceProcessResponse{}, err
 	}
@@ -10401,7 +10540,7 @@ func (client *WebAppsClient) GetInstanceProcess(ctx context.Context, resourceGro
 }
 
 // getInstanceProcessCreateRequest creates the GetInstanceProcess request.
-func (client *WebAppsClient) getInstanceProcessCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, instanceID string, _ *WebAppsClientGetInstanceProcessOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getInstanceProcessCreateRequest(ctx context.Context, resourceGroupName string, name string, instanceID string, processID string, _ *WebAppsClientGetInstanceProcessOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -10415,14 +10554,14 @@ func (client *WebAppsClient) getInstanceProcessCreateRequest(ctx context.Context
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if processID == "" {
-		return nil, errors.New("parameter processID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	if instanceID == "" {
 		return nil, errors.New("parameter instanceID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceID))
+	if processID == "" {
+		return nil, errors.New("parameter processID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -10450,15 +10589,19 @@ func (client *WebAppsClient) getInstanceProcessHandleResponse(resp *http.Respons
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - instanceID - ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET
+//     api/sites/{siteName}/instances".
+//   - processID - PID.
 //   - options - WebAppsClientGetInstanceProcessDumpOptions contains the optional parameters for the WebAppsClient.GetInstanceProcessDump
 //     method.
-func (client *WebAppsClient) GetInstanceProcessDump(ctx context.Context, resourceGroupName string, name string, processID string, instanceID string, options *WebAppsClientGetInstanceProcessDumpOptions) (WebAppsClientGetInstanceProcessDumpResponse, error) {
+func (client *WebAppsClient) GetInstanceProcessDump(ctx context.Context, resourceGroupName string, name string, instanceID string, processID string, options *WebAppsClientGetInstanceProcessDumpOptions) (WebAppsClientGetInstanceProcessDumpResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetInstanceProcessDump"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getInstanceProcessDumpCreateRequest(ctx, resourceGroupName, name, processID, instanceID, options)
+	req, err := client.getInstanceProcessDumpCreateRequest(ctx, resourceGroupName, name, instanceID, processID, options)
 	if err != nil {
 		return WebAppsClientGetInstanceProcessDumpResponse{}, err
 	}
@@ -10475,7 +10618,7 @@ func (client *WebAppsClient) GetInstanceProcessDump(ctx context.Context, resourc
 }
 
 // getInstanceProcessDumpCreateRequest creates the GetInstanceProcessDump request.
-func (client *WebAppsClient) getInstanceProcessDumpCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, instanceID string, _ *WebAppsClientGetInstanceProcessDumpOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getInstanceProcessDumpCreateRequest(ctx context.Context, resourceGroupName string, name string, instanceID string, processID string, _ *WebAppsClientGetInstanceProcessDumpOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/dump"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -10489,14 +10632,14 @@ func (client *WebAppsClient) getInstanceProcessDumpCreateRequest(ctx context.Con
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if processID == "" {
-		return nil, errors.New("parameter processID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	if instanceID == "" {
 		return nil, errors.New("parameter instanceID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceID))
+	if processID == "" {
+		return nil, errors.New("parameter processID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -10525,15 +10668,20 @@ func (client *WebAppsClient) getInstanceProcessDumpHandleResponse(resp *http.Res
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot.
+//   - instanceID - ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET
+//     api/sites/{siteName}/instances".
+//   - processID - PID.
 //   - options - WebAppsClientGetInstanceProcessDumpSlotOptions contains the optional parameters for the WebAppsClient.GetInstanceProcessDumpSlot
 //     method.
-func (client *WebAppsClient) GetInstanceProcessDumpSlot(ctx context.Context, resourceGroupName string, name string, processID string, slot string, instanceID string, options *WebAppsClientGetInstanceProcessDumpSlotOptions) (WebAppsClientGetInstanceProcessDumpSlotResponse, error) {
+func (client *WebAppsClient) GetInstanceProcessDumpSlot(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, processID string, options *WebAppsClientGetInstanceProcessDumpSlotOptions) (WebAppsClientGetInstanceProcessDumpSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetInstanceProcessDumpSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getInstanceProcessDumpSlotCreateRequest(ctx, resourceGroupName, name, processID, slot, instanceID, options)
+	req, err := client.getInstanceProcessDumpSlotCreateRequest(ctx, resourceGroupName, name, slot, instanceID, processID, options)
 	if err != nil {
 		return WebAppsClientGetInstanceProcessDumpSlotResponse{}, err
 	}
@@ -10550,7 +10698,7 @@ func (client *WebAppsClient) GetInstanceProcessDumpSlot(ctx context.Context, res
 }
 
 // getInstanceProcessDumpSlotCreateRequest creates the GetInstanceProcessDumpSlot request.
-func (client *WebAppsClient) getInstanceProcessDumpSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, slot string, instanceID string, _ *WebAppsClientGetInstanceProcessDumpSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getInstanceProcessDumpSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, processID string, _ *WebAppsClientGetInstanceProcessDumpSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/dump"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -10564,10 +10712,6 @@ func (client *WebAppsClient) getInstanceProcessDumpSlotCreateRequest(ctx context
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if processID == "" {
-		return nil, errors.New("parameter processID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
@@ -10576,6 +10720,10 @@ func (client *WebAppsClient) getInstanceProcessDumpSlotCreateRequest(ctx context
 		return nil, errors.New("parameter instanceID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceID))
+	if processID == "" {
+		return nil, errors.New("parameter processID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -10604,15 +10752,20 @@ func (client *WebAppsClient) getInstanceProcessDumpSlotHandleResponse(resp *http
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - instanceID - ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET
+//     api/sites/{siteName}/instances".
+//   - processID - PID.
+//   - baseAddress - Module base address.
 //   - options - WebAppsClientGetInstanceProcessModuleOptions contains the optional parameters for the WebAppsClient.GetInstanceProcessModule
 //     method.
-func (client *WebAppsClient) GetInstanceProcessModule(ctx context.Context, resourceGroupName string, name string, processID string, baseAddress string, instanceID string, options *WebAppsClientGetInstanceProcessModuleOptions) (WebAppsClientGetInstanceProcessModuleResponse, error) {
+func (client *WebAppsClient) GetInstanceProcessModule(ctx context.Context, resourceGroupName string, name string, instanceID string, processID string, baseAddress string, options *WebAppsClientGetInstanceProcessModuleOptions) (WebAppsClientGetInstanceProcessModuleResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetInstanceProcessModule"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getInstanceProcessModuleCreateRequest(ctx, resourceGroupName, name, processID, baseAddress, instanceID, options)
+	req, err := client.getInstanceProcessModuleCreateRequest(ctx, resourceGroupName, name, instanceID, processID, baseAddress, options)
 	if err != nil {
 		return WebAppsClientGetInstanceProcessModuleResponse{}, err
 	}
@@ -10629,7 +10782,7 @@ func (client *WebAppsClient) GetInstanceProcessModule(ctx context.Context, resou
 }
 
 // getInstanceProcessModuleCreateRequest creates the GetInstanceProcessModule request.
-func (client *WebAppsClient) getInstanceProcessModuleCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, baseAddress string, instanceID string, _ *WebAppsClientGetInstanceProcessModuleOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getInstanceProcessModuleCreateRequest(ctx context.Context, resourceGroupName string, name string, instanceID string, processID string, baseAddress string, _ *WebAppsClientGetInstanceProcessModuleOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -10643,6 +10796,10 @@ func (client *WebAppsClient) getInstanceProcessModuleCreateRequest(ctx context.C
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
+	if instanceID == "" {
+		return nil, errors.New("parameter instanceID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceID))
 	if processID == "" {
 		return nil, errors.New("parameter processID cannot be empty")
 	}
@@ -10651,10 +10808,6 @@ func (client *WebAppsClient) getInstanceProcessModuleCreateRequest(ctx context.C
 		return nil, errors.New("parameter baseAddress cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{baseAddress}", url.PathEscape(baseAddress))
-	if instanceID == "" {
-		return nil, errors.New("parameter instanceID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -10682,15 +10835,21 @@ func (client *WebAppsClient) getInstanceProcessModuleHandleResponse(resp *http.R
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot.
+//   - instanceID - ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET
+//     api/sites/{siteName}/instances".
+//   - processID - PID.
+//   - baseAddress - Module base address.
 //   - options - WebAppsClientGetInstanceProcessModuleSlotOptions contains the optional parameters for the WebAppsClient.GetInstanceProcessModuleSlot
 //     method.
-func (client *WebAppsClient) GetInstanceProcessModuleSlot(ctx context.Context, resourceGroupName string, name string, processID string, baseAddress string, slot string, instanceID string, options *WebAppsClientGetInstanceProcessModuleSlotOptions) (WebAppsClientGetInstanceProcessModuleSlotResponse, error) {
+func (client *WebAppsClient) GetInstanceProcessModuleSlot(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, processID string, baseAddress string, options *WebAppsClientGetInstanceProcessModuleSlotOptions) (WebAppsClientGetInstanceProcessModuleSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetInstanceProcessModuleSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getInstanceProcessModuleSlotCreateRequest(ctx, resourceGroupName, name, processID, baseAddress, slot, instanceID, options)
+	req, err := client.getInstanceProcessModuleSlotCreateRequest(ctx, resourceGroupName, name, slot, instanceID, processID, baseAddress, options)
 	if err != nil {
 		return WebAppsClientGetInstanceProcessModuleSlotResponse{}, err
 	}
@@ -10707,7 +10866,7 @@ func (client *WebAppsClient) GetInstanceProcessModuleSlot(ctx context.Context, r
 }
 
 // getInstanceProcessModuleSlotCreateRequest creates the GetInstanceProcessModuleSlot request.
-func (client *WebAppsClient) getInstanceProcessModuleSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, baseAddress string, slot string, instanceID string, _ *WebAppsClientGetInstanceProcessModuleSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getInstanceProcessModuleSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, processID string, baseAddress string, _ *WebAppsClientGetInstanceProcessModuleSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -10721,14 +10880,6 @@ func (client *WebAppsClient) getInstanceProcessModuleSlotCreateRequest(ctx conte
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if processID == "" {
-		return nil, errors.New("parameter processID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
-	if baseAddress == "" {
-		return nil, errors.New("parameter baseAddress cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{baseAddress}", url.PathEscape(baseAddress))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
@@ -10737,6 +10888,14 @@ func (client *WebAppsClient) getInstanceProcessModuleSlotCreateRequest(ctx conte
 		return nil, errors.New("parameter instanceID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceID))
+	if processID == "" {
+		return nil, errors.New("parameter processID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
+	if baseAddress == "" {
+		return nil, errors.New("parameter baseAddress cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{baseAddress}", url.PathEscape(baseAddress))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -10764,15 +10923,20 @@ func (client *WebAppsClient) getInstanceProcessModuleSlotHandleResponse(resp *ht
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot.
+//   - instanceID - ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET
+//     api/sites/{siteName}/instances".
+//   - processID - PID.
 //   - options - WebAppsClientGetInstanceProcessSlotOptions contains the optional parameters for the WebAppsClient.GetInstanceProcessSlot
 //     method.
-func (client *WebAppsClient) GetInstanceProcessSlot(ctx context.Context, resourceGroupName string, name string, processID string, slot string, instanceID string, options *WebAppsClientGetInstanceProcessSlotOptions) (WebAppsClientGetInstanceProcessSlotResponse, error) {
+func (client *WebAppsClient) GetInstanceProcessSlot(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, processID string, options *WebAppsClientGetInstanceProcessSlotOptions) (WebAppsClientGetInstanceProcessSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetInstanceProcessSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getInstanceProcessSlotCreateRequest(ctx, resourceGroupName, name, processID, slot, instanceID, options)
+	req, err := client.getInstanceProcessSlotCreateRequest(ctx, resourceGroupName, name, slot, instanceID, processID, options)
 	if err != nil {
 		return WebAppsClientGetInstanceProcessSlotResponse{}, err
 	}
@@ -10789,7 +10953,7 @@ func (client *WebAppsClient) GetInstanceProcessSlot(ctx context.Context, resourc
 }
 
 // getInstanceProcessSlotCreateRequest creates the GetInstanceProcessSlot request.
-func (client *WebAppsClient) getInstanceProcessSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, slot string, instanceID string, _ *WebAppsClientGetInstanceProcessSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getInstanceProcessSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, processID string, _ *WebAppsClientGetInstanceProcessSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -10803,10 +10967,6 @@ func (client *WebAppsClient) getInstanceProcessSlotCreateRequest(ctx context.Con
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if processID == "" {
-		return nil, errors.New("parameter processID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
@@ -10815,6 +10975,10 @@ func (client *WebAppsClient) getInstanceProcessSlotCreateRequest(ctx context.Con
 		return nil, errors.New("parameter instanceID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceID))
+	if processID == "" {
+		return nil, errors.New("parameter processID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -11409,15 +11573,18 @@ func (client *WebAppsClient) getNetworkTraceOperationHandleResponse(resp *http.R
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. By default, this API returns the production slot.
+//   - operationID - GUID of the operation.
 //   - options - WebAppsClientGetNetworkTraceOperationSlotOptions contains the optional parameters for the WebAppsClient.GetNetworkTraceOperationSlot
 //     method.
-func (client *WebAppsClient) GetNetworkTraceOperationSlot(ctx context.Context, resourceGroupName string, name string, operationID string, slot string, options *WebAppsClientGetNetworkTraceOperationSlotOptions) (WebAppsClientGetNetworkTraceOperationSlotResponse, error) {
+func (client *WebAppsClient) GetNetworkTraceOperationSlot(ctx context.Context, resourceGroupName string, name string, slot string, operationID string, options *WebAppsClientGetNetworkTraceOperationSlotOptions) (WebAppsClientGetNetworkTraceOperationSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetNetworkTraceOperationSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getNetworkTraceOperationSlotCreateRequest(ctx, resourceGroupName, name, operationID, slot, options)
+	req, err := client.getNetworkTraceOperationSlotCreateRequest(ctx, resourceGroupName, name, slot, operationID, options)
 	if err != nil {
 		return WebAppsClientGetNetworkTraceOperationSlotResponse{}, err
 	}
@@ -11434,7 +11601,7 @@ func (client *WebAppsClient) GetNetworkTraceOperationSlot(ctx context.Context, r
 }
 
 // getNetworkTraceOperationSlotCreateRequest creates the GetNetworkTraceOperationSlot request.
-func (client *WebAppsClient) getNetworkTraceOperationSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, operationID string, slot string, _ *WebAppsClientGetNetworkTraceOperationSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getNetworkTraceOperationSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, operationID string, _ *WebAppsClientGetNetworkTraceOperationSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/sites/{name}/slots/{slot}/networkTrace/operationresults/{operationId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -11448,14 +11615,14 @@ func (client *WebAppsClient) getNetworkTraceOperationSlotCreateRequest(ctx conte
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if operationID == "" {
-		return nil, errors.New("parameter operationID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{operationId}", url.PathEscape(operationID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if operationID == "" {
+		return nil, errors.New("parameter operationID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{operationId}", url.PathEscape(operationID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -11483,15 +11650,18 @@ func (client *WebAppsClient) getNetworkTraceOperationSlotHandleResponse(resp *ht
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. By default, this API returns the production slot.
+//   - operationID - GUID of the operation.
 //   - options - WebAppsClientGetNetworkTraceOperationSlotV2Options contains the optional parameters for the WebAppsClient.GetNetworkTraceOperationSlotV2
 //     method.
-func (client *WebAppsClient) GetNetworkTraceOperationSlotV2(ctx context.Context, resourceGroupName string, name string, operationID string, slot string, options *WebAppsClientGetNetworkTraceOperationSlotV2Options) (WebAppsClientGetNetworkTraceOperationSlotV2Response, error) {
+func (client *WebAppsClient) GetNetworkTraceOperationSlotV2(ctx context.Context, resourceGroupName string, name string, slot string, operationID string, options *WebAppsClientGetNetworkTraceOperationSlotV2Options) (WebAppsClientGetNetworkTraceOperationSlotV2Response, error) {
 	var err error
 	const operationName = "WebAppsClient.GetNetworkTraceOperationSlotV2"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getNetworkTraceOperationSlotV2CreateRequest(ctx, resourceGroupName, name, operationID, slot, options)
+	req, err := client.getNetworkTraceOperationSlotV2CreateRequest(ctx, resourceGroupName, name, slot, operationID, options)
 	if err != nil {
 		return WebAppsClientGetNetworkTraceOperationSlotV2Response{}, err
 	}
@@ -11508,7 +11678,7 @@ func (client *WebAppsClient) GetNetworkTraceOperationSlotV2(ctx context.Context,
 }
 
 // getNetworkTraceOperationSlotV2CreateRequest creates the GetNetworkTraceOperationSlotV2 request.
-func (client *WebAppsClient) getNetworkTraceOperationSlotV2CreateRequest(ctx context.Context, resourceGroupName string, name string, operationID string, slot string, _ *WebAppsClientGetNetworkTraceOperationSlotV2Options) (*policy.Request, error) {
+func (client *WebAppsClient) getNetworkTraceOperationSlotV2CreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, operationID string, _ *WebAppsClientGetNetworkTraceOperationSlotV2Options) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/sites/{name}/slots/{slot}/networkTraces/current/operationresults/{operationId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -11522,14 +11692,14 @@ func (client *WebAppsClient) getNetworkTraceOperationSlotV2CreateRequest(ctx con
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if operationID == "" {
-		return nil, errors.New("parameter operationID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{operationId}", url.PathEscape(operationID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if operationID == "" {
+		return nil, errors.New("parameter operationID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{operationId}", url.PathEscape(operationID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -11701,15 +11871,18 @@ func (client *WebAppsClient) getNetworkTracesHandleResponse(resp *http.Response)
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. By default, this API returns the production slot.
+//   - operationID - GUID of the operation.
 //   - options - WebAppsClientGetNetworkTracesSlotOptions contains the optional parameters for the WebAppsClient.GetNetworkTracesSlot
 //     method.
-func (client *WebAppsClient) GetNetworkTracesSlot(ctx context.Context, resourceGroupName string, name string, operationID string, slot string, options *WebAppsClientGetNetworkTracesSlotOptions) (WebAppsClientGetNetworkTracesSlotResponse, error) {
+func (client *WebAppsClient) GetNetworkTracesSlot(ctx context.Context, resourceGroupName string, name string, slot string, operationID string, options *WebAppsClientGetNetworkTracesSlotOptions) (WebAppsClientGetNetworkTracesSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetNetworkTracesSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getNetworkTracesSlotCreateRequest(ctx, resourceGroupName, name, operationID, slot, options)
+	req, err := client.getNetworkTracesSlotCreateRequest(ctx, resourceGroupName, name, slot, operationID, options)
 	if err != nil {
 		return WebAppsClientGetNetworkTracesSlotResponse{}, err
 	}
@@ -11726,7 +11899,7 @@ func (client *WebAppsClient) GetNetworkTracesSlot(ctx context.Context, resourceG
 }
 
 // getNetworkTracesSlotCreateRequest creates the GetNetworkTracesSlot request.
-func (client *WebAppsClient) getNetworkTracesSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, operationID string, slot string, _ *WebAppsClientGetNetworkTracesSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getNetworkTracesSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, operationID string, _ *WebAppsClientGetNetworkTracesSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/sites/{name}/slots/{slot}/networkTrace/{operationId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -11740,14 +11913,14 @@ func (client *WebAppsClient) getNetworkTracesSlotCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if operationID == "" {
-		return nil, errors.New("parameter operationID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{operationId}", url.PathEscape(operationID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if operationID == "" {
+		return nil, errors.New("parameter operationID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{operationId}", url.PathEscape(operationID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -11775,15 +11948,18 @@ func (client *WebAppsClient) getNetworkTracesSlotHandleResponse(resp *http.Respo
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. By default, this API returns the production slot.
+//   - operationID - GUID of the operation.
 //   - options - WebAppsClientGetNetworkTracesSlotV2Options contains the optional parameters for the WebAppsClient.GetNetworkTracesSlotV2
 //     method.
-func (client *WebAppsClient) GetNetworkTracesSlotV2(ctx context.Context, resourceGroupName string, name string, operationID string, slot string, options *WebAppsClientGetNetworkTracesSlotV2Options) (WebAppsClientGetNetworkTracesSlotV2Response, error) {
+func (client *WebAppsClient) GetNetworkTracesSlotV2(ctx context.Context, resourceGroupName string, name string, slot string, operationID string, options *WebAppsClientGetNetworkTracesSlotV2Options) (WebAppsClientGetNetworkTracesSlotV2Response, error) {
 	var err error
 	const operationName = "WebAppsClient.GetNetworkTracesSlotV2"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getNetworkTracesSlotV2CreateRequest(ctx, resourceGroupName, name, operationID, slot, options)
+	req, err := client.getNetworkTracesSlotV2CreateRequest(ctx, resourceGroupName, name, slot, operationID, options)
 	if err != nil {
 		return WebAppsClientGetNetworkTracesSlotV2Response{}, err
 	}
@@ -11800,7 +11976,7 @@ func (client *WebAppsClient) GetNetworkTracesSlotV2(ctx context.Context, resourc
 }
 
 // getNetworkTracesSlotV2CreateRequest creates the GetNetworkTracesSlotV2 request.
-func (client *WebAppsClient) getNetworkTracesSlotV2CreateRequest(ctx context.Context, resourceGroupName string, name string, operationID string, slot string, _ *WebAppsClientGetNetworkTracesSlotV2Options) (*policy.Request, error) {
+func (client *WebAppsClient) getNetworkTracesSlotV2CreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, operationID string, _ *WebAppsClientGetNetworkTracesSlotV2Options) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/sites/{name}/slots/{slot}/networkTraces/{operationId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -11814,14 +11990,14 @@ func (client *WebAppsClient) getNetworkTracesSlotV2CreateRequest(ctx context.Con
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if operationID == "" {
-		return nil, errors.New("parameter operationID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{operationId}", url.PathEscape(operationID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if operationID == "" {
+		return nil, errors.New("parameter operationID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{operationId}", url.PathEscape(operationID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -12059,15 +12235,18 @@ func (client *WebAppsClient) getPremierAddOnHandleResponse(resp *http.Response) 
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get the named add-on for the production slot.
+//   - premierAddOnName - Add-on name.
 //   - options - WebAppsClientGetPremierAddOnSlotOptions contains the optional parameters for the WebAppsClient.GetPremierAddOnSlot
 //     method.
-func (client *WebAppsClient) GetPremierAddOnSlot(ctx context.Context, resourceGroupName string, name string, premierAddOnName string, slot string, options *WebAppsClientGetPremierAddOnSlotOptions) (WebAppsClientGetPremierAddOnSlotResponse, error) {
+func (client *WebAppsClient) GetPremierAddOnSlot(ctx context.Context, resourceGroupName string, name string, slot string, premierAddOnName string, options *WebAppsClientGetPremierAddOnSlotOptions) (WebAppsClientGetPremierAddOnSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetPremierAddOnSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getPremierAddOnSlotCreateRequest(ctx, resourceGroupName, name, premierAddOnName, slot, options)
+	req, err := client.getPremierAddOnSlotCreateRequest(ctx, resourceGroupName, name, slot, premierAddOnName, options)
 	if err != nil {
 		return WebAppsClientGetPremierAddOnSlotResponse{}, err
 	}
@@ -12084,7 +12263,7 @@ func (client *WebAppsClient) GetPremierAddOnSlot(ctx context.Context, resourceGr
 }
 
 // getPremierAddOnSlotCreateRequest creates the GetPremierAddOnSlot request.
-func (client *WebAppsClient) getPremierAddOnSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, premierAddOnName string, slot string, _ *WebAppsClientGetPremierAddOnSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getPremierAddOnSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, premierAddOnName string, _ *WebAppsClientGetPremierAddOnSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -12098,14 +12277,14 @@ func (client *WebAppsClient) getPremierAddOnSlotCreateRequest(ctx context.Contex
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if premierAddOnName == "" {
-		return nil, errors.New("parameter premierAddOnName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{premierAddOnName}", url.PathEscape(premierAddOnName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if premierAddOnName == "" {
+		return nil, errors.New("parameter premierAddOnName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{premierAddOnName}", url.PathEscape(premierAddOnName))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -12485,15 +12664,18 @@ func (client *WebAppsClient) getPrivateEndpointConnectionListSlotHandleResponse(
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the site.
+//   - slot - Name of the site deployment slot.
+//   - privateEndpointConnectionName - Name of the private endpoint connection.
 //   - options - WebAppsClientGetPrivateEndpointConnectionSlotOptions contains the optional parameters for the WebAppsClient.GetPrivateEndpointConnectionSlot
 //     method.
-func (client *WebAppsClient) GetPrivateEndpointConnectionSlot(ctx context.Context, resourceGroupName string, name string, privateEndpointConnectionName string, slot string, options *WebAppsClientGetPrivateEndpointConnectionSlotOptions) (WebAppsClientGetPrivateEndpointConnectionSlotResponse, error) {
+func (client *WebAppsClient) GetPrivateEndpointConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, privateEndpointConnectionName string, options *WebAppsClientGetPrivateEndpointConnectionSlotOptions) (WebAppsClientGetPrivateEndpointConnectionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetPrivateEndpointConnectionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getPrivateEndpointConnectionSlotCreateRequest(ctx, resourceGroupName, name, privateEndpointConnectionName, slot, options)
+	req, err := client.getPrivateEndpointConnectionSlotCreateRequest(ctx, resourceGroupName, name, slot, privateEndpointConnectionName, options)
 	if err != nil {
 		return WebAppsClientGetPrivateEndpointConnectionSlotResponse{}, err
 	}
@@ -12510,7 +12692,7 @@ func (client *WebAppsClient) GetPrivateEndpointConnectionSlot(ctx context.Contex
 }
 
 // getPrivateEndpointConnectionSlotCreateRequest creates the GetPrivateEndpointConnectionSlot request.
-func (client *WebAppsClient) getPrivateEndpointConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, privateEndpointConnectionName string, slot string, _ *WebAppsClientGetPrivateEndpointConnectionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getPrivateEndpointConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, privateEndpointConnectionName string, _ *WebAppsClientGetPrivateEndpointConnectionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateEndpointConnections/{privateEndpointConnectionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -12524,14 +12706,14 @@ func (client *WebAppsClient) getPrivateEndpointConnectionSlotCreateRequest(ctx c
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if privateEndpointConnectionName == "" {
-		return nil, errors.New("parameter privateEndpointConnectionName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{privateEndpointConnectionName}", url.PathEscape(privateEndpointConnectionName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if privateEndpointConnectionName == "" {
+		return nil, errors.New("parameter privateEndpointConnectionName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{privateEndpointConnectionName}", url.PathEscape(privateEndpointConnectionName))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -12841,15 +13023,18 @@ func (client *WebAppsClient) getProcessDumpHandleResponse(resp *http.Response) (
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot.
+//   - processID - PID.
 //   - options - WebAppsClientGetProcessDumpSlotOptions contains the optional parameters for the WebAppsClient.GetProcessDumpSlot
 //     method.
-func (client *WebAppsClient) GetProcessDumpSlot(ctx context.Context, resourceGroupName string, name string, processID string, slot string, options *WebAppsClientGetProcessDumpSlotOptions) (WebAppsClientGetProcessDumpSlotResponse, error) {
+func (client *WebAppsClient) GetProcessDumpSlot(ctx context.Context, resourceGroupName string, name string, slot string, processID string, options *WebAppsClientGetProcessDumpSlotOptions) (WebAppsClientGetProcessDumpSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetProcessDumpSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getProcessDumpSlotCreateRequest(ctx, resourceGroupName, name, processID, slot, options)
+	req, err := client.getProcessDumpSlotCreateRequest(ctx, resourceGroupName, name, slot, processID, options)
 	if err != nil {
 		return WebAppsClientGetProcessDumpSlotResponse{}, err
 	}
@@ -12866,7 +13051,7 @@ func (client *WebAppsClient) GetProcessDumpSlot(ctx context.Context, resourceGro
 }
 
 // getProcessDumpSlotCreateRequest creates the GetProcessDumpSlot request.
-func (client *WebAppsClient) getProcessDumpSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, slot string, _ *WebAppsClientGetProcessDumpSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getProcessDumpSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, processID string, _ *WebAppsClientGetProcessDumpSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/dump"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -12880,14 +13065,14 @@ func (client *WebAppsClient) getProcessDumpSlotCreateRequest(ctx context.Context
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if processID == "" {
-		return nil, errors.New("parameter processID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if processID == "" {
+		return nil, errors.New("parameter processID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -12993,15 +13178,19 @@ func (client *WebAppsClient) getProcessModuleHandleResponse(resp *http.Response)
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot.
+//   - processID - PID.
+//   - baseAddress - Module base address.
 //   - options - WebAppsClientGetProcessModuleSlotOptions contains the optional parameters for the WebAppsClient.GetProcessModuleSlot
 //     method.
-func (client *WebAppsClient) GetProcessModuleSlot(ctx context.Context, resourceGroupName string, name string, processID string, baseAddress string, slot string, options *WebAppsClientGetProcessModuleSlotOptions) (WebAppsClientGetProcessModuleSlotResponse, error) {
+func (client *WebAppsClient) GetProcessModuleSlot(ctx context.Context, resourceGroupName string, name string, slot string, processID string, baseAddress string, options *WebAppsClientGetProcessModuleSlotOptions) (WebAppsClientGetProcessModuleSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetProcessModuleSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getProcessModuleSlotCreateRequest(ctx, resourceGroupName, name, processID, baseAddress, slot, options)
+	req, err := client.getProcessModuleSlotCreateRequest(ctx, resourceGroupName, name, slot, processID, baseAddress, options)
 	if err != nil {
 		return WebAppsClientGetProcessModuleSlotResponse{}, err
 	}
@@ -13018,7 +13207,7 @@ func (client *WebAppsClient) GetProcessModuleSlot(ctx context.Context, resourceG
 }
 
 // getProcessModuleSlotCreateRequest creates the GetProcessModuleSlot request.
-func (client *WebAppsClient) getProcessModuleSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, baseAddress string, slot string, _ *WebAppsClientGetProcessModuleSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getProcessModuleSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, processID string, baseAddress string, _ *WebAppsClientGetProcessModuleSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules/{baseAddress}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -13032,6 +13221,10 @@ func (client *WebAppsClient) getProcessModuleSlotCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
+	if slot == "" {
+		return nil, errors.New("parameter slot cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	if processID == "" {
 		return nil, errors.New("parameter processID cannot be empty")
 	}
@@ -13040,10 +13233,6 @@ func (client *WebAppsClient) getProcessModuleSlotCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter baseAddress cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{baseAddress}", url.PathEscape(baseAddress))
-	if slot == "" {
-		return nil, errors.New("parameter slot cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -13071,14 +13260,17 @@ func (client *WebAppsClient) getProcessModuleSlotHandleResponse(resp *http.Respo
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot.
+//   - processID - PID.
 //   - options - WebAppsClientGetProcessSlotOptions contains the optional parameters for the WebAppsClient.GetProcessSlot method.
-func (client *WebAppsClient) GetProcessSlot(ctx context.Context, resourceGroupName string, name string, processID string, slot string, options *WebAppsClientGetProcessSlotOptions) (WebAppsClientGetProcessSlotResponse, error) {
+func (client *WebAppsClient) GetProcessSlot(ctx context.Context, resourceGroupName string, name string, slot string, processID string, options *WebAppsClientGetProcessSlotOptions) (WebAppsClientGetProcessSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetProcessSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getProcessSlotCreateRequest(ctx, resourceGroupName, name, processID, slot, options)
+	req, err := client.getProcessSlotCreateRequest(ctx, resourceGroupName, name, slot, processID, options)
 	if err != nil {
 		return WebAppsClientGetProcessSlotResponse{}, err
 	}
@@ -13095,7 +13287,7 @@ func (client *WebAppsClient) GetProcessSlot(ctx context.Context, resourceGroupNa
 }
 
 // getProcessSlotCreateRequest creates the GetProcessSlot request.
-func (client *WebAppsClient) getProcessSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, slot string, _ *WebAppsClientGetProcessSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getProcessSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, processID string, _ *WebAppsClientGetProcessSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -13109,14 +13301,14 @@ func (client *WebAppsClient) getProcessSlotCreateRequest(ctx context.Context, re
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if processID == "" {
-		return nil, errors.New("parameter processID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if processID == "" {
+		return nil, errors.New("parameter processID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -13450,15 +13642,19 @@ func (client *WebAppsClient) getRelayServiceConnectionHandleResponse(resp *http.
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get a hybrid connection for the production
+//     slot.
+//   - entityName - Name of the hybrid connection.
 //   - options - WebAppsClientGetRelayServiceConnectionSlotOptions contains the optional parameters for the WebAppsClient.GetRelayServiceConnectionSlot
 //     method.
-func (client *WebAppsClient) GetRelayServiceConnectionSlot(ctx context.Context, resourceGroupName string, name string, entityName string, slot string, options *WebAppsClientGetRelayServiceConnectionSlotOptions) (WebAppsClientGetRelayServiceConnectionSlotResponse, error) {
+func (client *WebAppsClient) GetRelayServiceConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, entityName string, options *WebAppsClientGetRelayServiceConnectionSlotOptions) (WebAppsClientGetRelayServiceConnectionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetRelayServiceConnectionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getRelayServiceConnectionSlotCreateRequest(ctx, resourceGroupName, name, entityName, slot, options)
+	req, err := client.getRelayServiceConnectionSlotCreateRequest(ctx, resourceGroupName, name, slot, entityName, options)
 	if err != nil {
 		return WebAppsClientGetRelayServiceConnectionSlotResponse{}, err
 	}
@@ -13475,7 +13671,7 @@ func (client *WebAppsClient) GetRelayServiceConnectionSlot(ctx context.Context, 
 }
 
 // getRelayServiceConnectionSlotCreateRequest creates the GetRelayServiceConnectionSlot request.
-func (client *WebAppsClient) getRelayServiceConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, entityName string, slot string, _ *WebAppsClientGetRelayServiceConnectionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getRelayServiceConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, entityName string, _ *WebAppsClientGetRelayServiceConnectionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -13489,14 +13685,14 @@ func (client *WebAppsClient) getRelayServiceConnectionSlotCreateRequest(ctx cont
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if entityName == "" {
-		return nil, errors.New("parameter entityName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{entityName}", url.PathEscape(entityName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if entityName == "" {
+		return nil, errors.New("parameter entityName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{entityName}", url.PathEscape(entityName))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -13732,15 +13928,16 @@ func (client *WebAppsClient) getSiteConnectionStringKeyVaultReferenceHandleRespo
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
 //   - options - WebAppsClientGetSiteConnectionStringKeyVaultReferenceSlotOptions contains the optional parameters for the WebAppsClient.GetSiteConnectionStringKeyVaultReferenceSlot
 //     method.
-func (client *WebAppsClient) GetSiteConnectionStringKeyVaultReferenceSlot(ctx context.Context, resourceGroupName string, name string, connectionStringKey string, slot string, options *WebAppsClientGetSiteConnectionStringKeyVaultReferenceSlotOptions) (WebAppsClientGetSiteConnectionStringKeyVaultReferenceSlotResponse, error) {
+func (client *WebAppsClient) GetSiteConnectionStringKeyVaultReferenceSlot(ctx context.Context, resourceGroupName string, name string, slot string, connectionStringKey string, options *WebAppsClientGetSiteConnectionStringKeyVaultReferenceSlotOptions) (WebAppsClientGetSiteConnectionStringKeyVaultReferenceSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetSiteConnectionStringKeyVaultReferenceSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getSiteConnectionStringKeyVaultReferenceSlotCreateRequest(ctx, resourceGroupName, name, connectionStringKey, slot, options)
+	req, err := client.getSiteConnectionStringKeyVaultReferenceSlotCreateRequest(ctx, resourceGroupName, name, slot, connectionStringKey, options)
 	if err != nil {
 		return WebAppsClientGetSiteConnectionStringKeyVaultReferenceSlotResponse{}, err
 	}
@@ -13757,7 +13954,7 @@ func (client *WebAppsClient) GetSiteConnectionStringKeyVaultReferenceSlot(ctx co
 }
 
 // getSiteConnectionStringKeyVaultReferenceSlotCreateRequest creates the GetSiteConnectionStringKeyVaultReferenceSlot request.
-func (client *WebAppsClient) getSiteConnectionStringKeyVaultReferenceSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, connectionStringKey string, slot string, _ *WebAppsClientGetSiteConnectionStringKeyVaultReferenceSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getSiteConnectionStringKeyVaultReferenceSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, connectionStringKey string, _ *WebAppsClientGetSiteConnectionStringKeyVaultReferenceSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings/{connectionStringKey}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -13771,14 +13968,14 @@ func (client *WebAppsClient) getSiteConnectionStringKeyVaultReferenceSlotCreateR
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if connectionStringKey == "" {
-		return nil, errors.New("parameter connectionStringKey cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{connectionStringKey}", url.PathEscape(connectionStringKey))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if connectionStringKey == "" {
+		return nil, errors.New("parameter connectionStringKey cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{connectionStringKey}", url.PathEscape(connectionStringKey))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -14166,15 +14363,18 @@ func (client *WebAppsClient) getSiteExtensionHandleResponse(resp *http.Response)
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API uses the production slot.
+//   - siteExtensionID - Site extension name.
 //   - options - WebAppsClientGetSiteExtensionSlotOptions contains the optional parameters for the WebAppsClient.GetSiteExtensionSlot
 //     method.
-func (client *WebAppsClient) GetSiteExtensionSlot(ctx context.Context, resourceGroupName string, name string, siteExtensionID string, slot string, options *WebAppsClientGetSiteExtensionSlotOptions) (WebAppsClientGetSiteExtensionSlotResponse, error) {
+func (client *WebAppsClient) GetSiteExtensionSlot(ctx context.Context, resourceGroupName string, name string, slot string, siteExtensionID string, options *WebAppsClientGetSiteExtensionSlotOptions) (WebAppsClientGetSiteExtensionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetSiteExtensionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getSiteExtensionSlotCreateRequest(ctx, resourceGroupName, name, siteExtensionID, slot, options)
+	req, err := client.getSiteExtensionSlotCreateRequest(ctx, resourceGroupName, name, slot, siteExtensionID, options)
 	if err != nil {
 		return WebAppsClientGetSiteExtensionSlotResponse{}, err
 	}
@@ -14191,7 +14391,7 @@ func (client *WebAppsClient) GetSiteExtensionSlot(ctx context.Context, resourceG
 }
 
 // getSiteExtensionSlotCreateRequest creates the GetSiteExtensionSlot request.
-func (client *WebAppsClient) getSiteExtensionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, siteExtensionID string, slot string, _ *WebAppsClientGetSiteExtensionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getSiteExtensionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, siteExtensionID string, _ *WebAppsClientGetSiteExtensionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -14205,14 +14405,14 @@ func (client *WebAppsClient) getSiteExtensionSlotCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if siteExtensionID == "" {
-		return nil, errors.New("parameter siteExtensionID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{siteExtensionId}", url.PathEscape(siteExtensionID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if siteExtensionID == "" {
+		return nil, errors.New("parameter siteExtensionID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{siteExtensionId}", url.PathEscape(siteExtensionID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -14970,15 +15170,19 @@ func (client *WebAppsClient) getTriggeredWebJobHistoryHandleResponse(resp *http.
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API uses the production slot.
+//   - webJobName - Name of Web Job.
+//   - id - History ID.
 //   - options - WebAppsClientGetTriggeredWebJobHistorySlotOptions contains the optional parameters for the WebAppsClient.GetTriggeredWebJobHistorySlot
 //     method.
-func (client *WebAppsClient) GetTriggeredWebJobHistorySlot(ctx context.Context, resourceGroupName string, name string, webJobName string, id string, slot string, options *WebAppsClientGetTriggeredWebJobHistorySlotOptions) (WebAppsClientGetTriggeredWebJobHistorySlotResponse, error) {
+func (client *WebAppsClient) GetTriggeredWebJobHistorySlot(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, id string, options *WebAppsClientGetTriggeredWebJobHistorySlotOptions) (WebAppsClientGetTriggeredWebJobHistorySlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetTriggeredWebJobHistorySlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getTriggeredWebJobHistorySlotCreateRequest(ctx, resourceGroupName, name, webJobName, id, slot, options)
+	req, err := client.getTriggeredWebJobHistorySlotCreateRequest(ctx, resourceGroupName, name, slot, webJobName, id, options)
 	if err != nil {
 		return WebAppsClientGetTriggeredWebJobHistorySlotResponse{}, err
 	}
@@ -14995,7 +15199,7 @@ func (client *WebAppsClient) GetTriggeredWebJobHistorySlot(ctx context.Context, 
 }
 
 // getTriggeredWebJobHistorySlotCreateRequest creates the GetTriggeredWebJobHistorySlot request.
-func (client *WebAppsClient) getTriggeredWebJobHistorySlotCreateRequest(ctx context.Context, resourceGroupName string, name string, webJobName string, id string, slot string, _ *WebAppsClientGetTriggeredWebJobHistorySlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getTriggeredWebJobHistorySlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, id string, _ *WebAppsClientGetTriggeredWebJobHistorySlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -15009,6 +15213,10 @@ func (client *WebAppsClient) getTriggeredWebJobHistorySlotCreateRequest(ctx cont
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
+	if slot == "" {
+		return nil, errors.New("parameter slot cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	if webJobName == "" {
 		return nil, errors.New("parameter webJobName cannot be empty")
 	}
@@ -15017,10 +15225,6 @@ func (client *WebAppsClient) getTriggeredWebJobHistorySlotCreateRequest(ctx cont
 		return nil, errors.New("parameter id cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(id))
-	if slot == "" {
-		return nil, errors.New("parameter slot cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -15048,15 +15252,18 @@ func (client *WebAppsClient) getTriggeredWebJobHistorySlotHandleResponse(resp *h
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API uses the production slot.
+//   - webJobName - Name of Web Job.
 //   - options - WebAppsClientGetTriggeredWebJobSlotOptions contains the optional parameters for the WebAppsClient.GetTriggeredWebJobSlot
 //     method.
-func (client *WebAppsClient) GetTriggeredWebJobSlot(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, options *WebAppsClientGetTriggeredWebJobSlotOptions) (WebAppsClientGetTriggeredWebJobSlotResponse, error) {
+func (client *WebAppsClient) GetTriggeredWebJobSlot(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, options *WebAppsClientGetTriggeredWebJobSlotOptions) (WebAppsClientGetTriggeredWebJobSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetTriggeredWebJobSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getTriggeredWebJobSlotCreateRequest(ctx, resourceGroupName, name, webJobName, slot, options)
+	req, err := client.getTriggeredWebJobSlotCreateRequest(ctx, resourceGroupName, name, slot, webJobName, options)
 	if err != nil {
 		return WebAppsClientGetTriggeredWebJobSlotResponse{}, err
 	}
@@ -15073,7 +15280,7 @@ func (client *WebAppsClient) GetTriggeredWebJobSlot(ctx context.Context, resourc
 }
 
 // getTriggeredWebJobSlotCreateRequest creates the GetTriggeredWebJobSlot request.
-func (client *WebAppsClient) getTriggeredWebJobSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, _ *WebAppsClientGetTriggeredWebJobSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getTriggeredWebJobSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, _ *WebAppsClientGetTriggeredWebJobSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -15087,14 +15294,14 @@ func (client *WebAppsClient) getTriggeredWebJobSlotCreateRequest(ctx context.Con
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if webJobName == "" {
-		return nil, errors.New("parameter webJobName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if webJobName == "" {
+		return nil, errors.New("parameter webJobName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -15271,15 +15478,20 @@ func (client *WebAppsClient) getVnetConnectionGatewayHandleResponse(resp *http.R
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get a gateway for the production slot's Virtual
+//     Network.
+//   - vnetName - Name of the Virtual Network.
+//   - gatewayName - Name of the gateway. Currently, the only supported string is "primary".
 //   - options - WebAppsClientGetVnetConnectionGatewaySlotOptions contains the optional parameters for the WebAppsClient.GetVnetConnectionGatewaySlot
 //     method.
-func (client *WebAppsClient) GetVnetConnectionGatewaySlot(ctx context.Context, resourceGroupName string, name string, vnetName string, gatewayName string, slot string, options *WebAppsClientGetVnetConnectionGatewaySlotOptions) (WebAppsClientGetVnetConnectionGatewaySlotResponse, error) {
+func (client *WebAppsClient) GetVnetConnectionGatewaySlot(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, gatewayName string, options *WebAppsClientGetVnetConnectionGatewaySlotOptions) (WebAppsClientGetVnetConnectionGatewaySlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetVnetConnectionGatewaySlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getVnetConnectionGatewaySlotCreateRequest(ctx, resourceGroupName, name, vnetName, gatewayName, slot, options)
+	req, err := client.getVnetConnectionGatewaySlotCreateRequest(ctx, resourceGroupName, name, slot, vnetName, gatewayName, options)
 	if err != nil {
 		return WebAppsClientGetVnetConnectionGatewaySlotResponse{}, err
 	}
@@ -15296,7 +15508,7 @@ func (client *WebAppsClient) GetVnetConnectionGatewaySlot(ctx context.Context, r
 }
 
 // getVnetConnectionGatewaySlotCreateRequest creates the GetVnetConnectionGatewaySlot request.
-func (client *WebAppsClient) getVnetConnectionGatewaySlotCreateRequest(ctx context.Context, resourceGroupName string, name string, vnetName string, gatewayName string, slot string, _ *WebAppsClientGetVnetConnectionGatewaySlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getVnetConnectionGatewaySlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, gatewayName string, _ *WebAppsClientGetVnetConnectionGatewaySlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -15310,6 +15522,10 @@ func (client *WebAppsClient) getVnetConnectionGatewaySlotCreateRequest(ctx conte
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
+	if slot == "" {
+		return nil, errors.New("parameter slot cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	if vnetName == "" {
 		return nil, errors.New("parameter vnetName cannot be empty")
 	}
@@ -15318,10 +15534,6 @@ func (client *WebAppsClient) getVnetConnectionGatewaySlotCreateRequest(ctx conte
 		return nil, errors.New("parameter gatewayName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
-	if slot == "" {
-		return nil, errors.New("parameter slot cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -15349,15 +15561,19 @@ func (client *WebAppsClient) getVnetConnectionGatewaySlotHandleResponse(resp *ht
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get the named virtual network for the production
+//     slot.
+//   - vnetName - Name of the virtual network.
 //   - options - WebAppsClientGetVnetConnectionSlotOptions contains the optional parameters for the WebAppsClient.GetVnetConnectionSlot
 //     method.
-func (client *WebAppsClient) GetVnetConnectionSlot(ctx context.Context, resourceGroupName string, name string, vnetName string, slot string, options *WebAppsClientGetVnetConnectionSlotOptions) (WebAppsClientGetVnetConnectionSlotResponse, error) {
+func (client *WebAppsClient) GetVnetConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, options *WebAppsClientGetVnetConnectionSlotOptions) (WebAppsClientGetVnetConnectionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetVnetConnectionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getVnetConnectionSlotCreateRequest(ctx, resourceGroupName, name, vnetName, slot, options)
+	req, err := client.getVnetConnectionSlotCreateRequest(ctx, resourceGroupName, name, slot, vnetName, options)
 	if err != nil {
 		return WebAppsClientGetVnetConnectionSlotResponse{}, err
 	}
@@ -15374,7 +15590,7 @@ func (client *WebAppsClient) GetVnetConnectionSlot(ctx context.Context, resource
 }
 
 // getVnetConnectionSlotCreateRequest creates the GetVnetConnectionSlot request.
-func (client *WebAppsClient) getVnetConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, vnetName string, slot string, _ *WebAppsClientGetVnetConnectionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getVnetConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, _ *WebAppsClientGetVnetConnectionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -15388,14 +15604,14 @@ func (client *WebAppsClient) getVnetConnectionSlotCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if vnetName == "" {
-		return nil, errors.New("parameter vnetName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{vnetName}", url.PathEscape(vnetName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if vnetName == "" {
+		return nil, errors.New("parameter vnetName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{vnetName}", url.PathEscape(vnetName))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -15494,14 +15710,17 @@ func (client *WebAppsClient) getWebJobHandleResponse(resp *http.Response) (WebAp
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot.
+//   - webJobName - Name of the web job.
 //   - options - WebAppsClientGetWebJobSlotOptions contains the optional parameters for the WebAppsClient.GetWebJobSlot method.
-func (client *WebAppsClient) GetWebJobSlot(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, options *WebAppsClientGetWebJobSlotOptions) (WebAppsClientGetWebJobSlotResponse, error) {
+func (client *WebAppsClient) GetWebJobSlot(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, options *WebAppsClientGetWebJobSlotOptions) (WebAppsClientGetWebJobSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.GetWebJobSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getWebJobSlotCreateRequest(ctx, resourceGroupName, name, webJobName, slot, options)
+	req, err := client.getWebJobSlotCreateRequest(ctx, resourceGroupName, name, slot, webJobName, options)
 	if err != nil {
 		return WebAppsClientGetWebJobSlotResponse{}, err
 	}
@@ -15518,7 +15737,7 @@ func (client *WebAppsClient) GetWebJobSlot(ctx context.Context, resourceGroupNam
 }
 
 // getWebJobSlotCreateRequest creates the GetWebJobSlot request.
-func (client *WebAppsClient) getWebJobSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, _ *WebAppsClientGetWebJobSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) getWebJobSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, _ *WebAppsClientGetWebJobSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/webjobs/{webJobName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -15532,14 +15751,14 @@ func (client *WebAppsClient) getWebJobSlotCreateRequest(ctx context.Context, res
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if webJobName == "" {
-		return nil, errors.New("parameter webJobName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if webJobName == "" {
+		return nil, errors.New("parameter webJobName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -15864,11 +16083,14 @@ func (client *WebAppsClient) installSiteExtensionCreateRequest(ctx context.Conte
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API uses the production slot.
+//   - siteExtensionID - Site extension name.
 //   - options - WebAppsClientBeginInstallSiteExtensionSlotOptions contains the optional parameters for the WebAppsClient.BeginInstallSiteExtensionSlot
 //     method.
-func (client *WebAppsClient) BeginInstallSiteExtensionSlot(ctx context.Context, resourceGroupName string, name string, siteExtensionID string, slot string, options *WebAppsClientBeginInstallSiteExtensionSlotOptions) (*runtime.Poller[WebAppsClientInstallSiteExtensionSlotResponse], error) {
+func (client *WebAppsClient) BeginInstallSiteExtensionSlot(ctx context.Context, resourceGroupName string, name string, slot string, siteExtensionID string, options *WebAppsClientBeginInstallSiteExtensionSlotOptions) (*runtime.Poller[WebAppsClientInstallSiteExtensionSlotResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.installSiteExtensionSlot(ctx, resourceGroupName, name, siteExtensionID, slot, options)
+		resp, err := client.installSiteExtensionSlot(ctx, resourceGroupName, name, slot, siteExtensionID, options)
 		if err != nil {
 			return nil, err
 		}
@@ -15889,13 +16111,13 @@ func (client *WebAppsClient) BeginInstallSiteExtensionSlot(ctx context.Context, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2025-03-01
-func (client *WebAppsClient) installSiteExtensionSlot(ctx context.Context, resourceGroupName string, name string, siteExtensionID string, slot string, options *WebAppsClientBeginInstallSiteExtensionSlotOptions) (*http.Response, error) {
+func (client *WebAppsClient) installSiteExtensionSlot(ctx context.Context, resourceGroupName string, name string, slot string, siteExtensionID string, options *WebAppsClientBeginInstallSiteExtensionSlotOptions) (*http.Response, error) {
 	var err error
 	const operationName = "WebAppsClient.BeginInstallSiteExtensionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.installSiteExtensionSlotCreateRequest(ctx, resourceGroupName, name, siteExtensionID, slot, options)
+	req, err := client.installSiteExtensionSlotCreateRequest(ctx, resourceGroupName, name, slot, siteExtensionID, options)
 	if err != nil {
 		return nil, err
 	}
@@ -15911,7 +16133,7 @@ func (client *WebAppsClient) installSiteExtensionSlot(ctx context.Context, resou
 }
 
 // installSiteExtensionSlotCreateRequest creates the InstallSiteExtensionSlot request.
-func (client *WebAppsClient) installSiteExtensionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, siteExtensionID string, slot string, _ *WebAppsClientBeginInstallSiteExtensionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) installSiteExtensionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, siteExtensionID string, _ *WebAppsClientBeginInstallSiteExtensionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -15925,14 +16147,14 @@ func (client *WebAppsClient) installSiteExtensionSlotCreateRequest(ctx context.C
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if siteExtensionID == "" {
-		return nil, errors.New("parameter siteExtensionID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{siteExtensionId}", url.PathEscape(siteExtensionID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if siteExtensionID == "" {
+		return nil, errors.New("parameter siteExtensionID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{siteExtensionId}", url.PathEscape(siteExtensionID))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -16507,15 +16729,19 @@ func (client *WebAppsClient) listBackupStatusSecretsHandleResponse(resp *http.Re
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get a backup of the production slot.
+//   - backupID - ID of the backup.
+//   - request - Information on backup request.
 //   - options - WebAppsClientListBackupStatusSecretsSlotOptions contains the optional parameters for the WebAppsClient.ListBackupStatusSecretsSlot
 //     method.
-func (client *WebAppsClient) ListBackupStatusSecretsSlot(ctx context.Context, resourceGroupName string, name string, backupID string, slot string, request BackupRequest, options *WebAppsClientListBackupStatusSecretsSlotOptions) (WebAppsClientListBackupStatusSecretsSlotResponse, error) {
+func (client *WebAppsClient) ListBackupStatusSecretsSlot(ctx context.Context, resourceGroupName string, name string, slot string, backupID string, request BackupRequest, options *WebAppsClientListBackupStatusSecretsSlotOptions) (WebAppsClientListBackupStatusSecretsSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.ListBackupStatusSecretsSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.listBackupStatusSecretsSlotCreateRequest(ctx, resourceGroupName, name, backupID, slot, request, options)
+	req, err := client.listBackupStatusSecretsSlotCreateRequest(ctx, resourceGroupName, name, slot, backupID, request, options)
 	if err != nil {
 		return WebAppsClientListBackupStatusSecretsSlotResponse{}, err
 	}
@@ -16532,7 +16758,7 @@ func (client *WebAppsClient) ListBackupStatusSecretsSlot(ctx context.Context, re
 }
 
 // listBackupStatusSecretsSlotCreateRequest creates the ListBackupStatusSecretsSlot request.
-func (client *WebAppsClient) listBackupStatusSecretsSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, backupID string, slot string, request BackupRequest, _ *WebAppsClientListBackupStatusSecretsSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) listBackupStatusSecretsSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, backupID string, request BackupRequest, _ *WebAppsClientListBackupStatusSecretsSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backups/{backupId}/list"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -16546,14 +16772,14 @@ func (client *WebAppsClient) listBackupStatusSecretsSlotCreateRequest(ctx contex
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if backupID == "" {
-		return nil, errors.New("parameter backupID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{backupId}", url.PathEscape(backupID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if backupID == "" {
+		return nil, errors.New("parameter backupID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{backupId}", url.PathEscape(backupID))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -17560,15 +17786,18 @@ func (client *WebAppsClient) listDeploymentLogHandleResponse(resp *http.Response
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API gets a deployment for the production slot.
+//   - id - Deployment ID.
 //   - options - WebAppsClientListDeploymentLogSlotOptions contains the optional parameters for the WebAppsClient.ListDeploymentLogSlot
 //     method.
-func (client *WebAppsClient) ListDeploymentLogSlot(ctx context.Context, resourceGroupName string, name string, id string, slot string, options *WebAppsClientListDeploymentLogSlotOptions) (WebAppsClientListDeploymentLogSlotResponse, error) {
+func (client *WebAppsClient) ListDeploymentLogSlot(ctx context.Context, resourceGroupName string, name string, slot string, id string, options *WebAppsClientListDeploymentLogSlotOptions) (WebAppsClientListDeploymentLogSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.ListDeploymentLogSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.listDeploymentLogSlotCreateRequest(ctx, resourceGroupName, name, id, slot, options)
+	req, err := client.listDeploymentLogSlotCreateRequest(ctx, resourceGroupName, name, slot, id, options)
 	if err != nil {
 		return WebAppsClientListDeploymentLogSlotResponse{}, err
 	}
@@ -17585,7 +17814,7 @@ func (client *WebAppsClient) ListDeploymentLogSlot(ctx context.Context, resource
 }
 
 // listDeploymentLogSlotCreateRequest creates the ListDeploymentLogSlot request.
-func (client *WebAppsClient) listDeploymentLogSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, id string, slot string, _ *WebAppsClientListDeploymentLogSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) listDeploymentLogSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, id string, _ *WebAppsClientListDeploymentLogSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}/log"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -17599,14 +17828,14 @@ func (client *WebAppsClient) listDeploymentLogSlotCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if id == "" {
-		return nil, errors.New("parameter id cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(id))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if id == "" {
+		return nil, errors.New("parameter id cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(id))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -17986,13 +18215,13 @@ func (client *WebAppsClient) listFunctionKeysHandleResponse(resp *http.Response)
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - WebAppsClientListFunctionKeysSlotOptions contains the optional parameters for the WebAppsClient.ListFunctionKeysSlot
 //     method.
-func (client *WebAppsClient) ListFunctionKeysSlot(ctx context.Context, resourceGroupName string, name string, functionName string, slot string, options *WebAppsClientListFunctionKeysSlotOptions) (WebAppsClientListFunctionKeysSlotResponse, error) {
+func (client *WebAppsClient) ListFunctionKeysSlot(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, options *WebAppsClientListFunctionKeysSlotOptions) (WebAppsClientListFunctionKeysSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.ListFunctionKeysSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.listFunctionKeysSlotCreateRequest(ctx, resourceGroupName, name, functionName, slot, options)
+	req, err := client.listFunctionKeysSlotCreateRequest(ctx, resourceGroupName, name, slot, functionName, options)
 	if err != nil {
 		return WebAppsClientListFunctionKeysSlotResponse{}, err
 	}
@@ -18009,7 +18238,7 @@ func (client *WebAppsClient) ListFunctionKeysSlot(ctx context.Context, resourceG
 }
 
 // listFunctionKeysSlotCreateRequest creates the ListFunctionKeysSlot request.
-func (client *WebAppsClient) listFunctionKeysSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, functionName string, slot string, _ *WebAppsClientListFunctionKeysSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) listFunctionKeysSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, _ *WebAppsClientListFunctionKeysSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/listkeys"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -18023,14 +18252,14 @@ func (client *WebAppsClient) listFunctionKeysSlotCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if functionName == "" {
-		return nil, errors.New("parameter functionName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{functionName}", url.PathEscape(functionName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if functionName == "" {
+		return nil, errors.New("parameter functionName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{functionName}", url.PathEscape(functionName))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -18130,15 +18359,18 @@ func (client *WebAppsClient) listFunctionSecretsHandleResponse(resp *http.Respon
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot.
+//   - functionName - Function name.
 //   - options - WebAppsClientListFunctionSecretsSlotOptions contains the optional parameters for the WebAppsClient.ListFunctionSecretsSlot
 //     method.
-func (client *WebAppsClient) ListFunctionSecretsSlot(ctx context.Context, resourceGroupName string, name string, functionName string, slot string, options *WebAppsClientListFunctionSecretsSlotOptions) (WebAppsClientListFunctionSecretsSlotResponse, error) {
+func (client *WebAppsClient) ListFunctionSecretsSlot(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, options *WebAppsClientListFunctionSecretsSlotOptions) (WebAppsClientListFunctionSecretsSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.ListFunctionSecretsSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.listFunctionSecretsSlotCreateRequest(ctx, resourceGroupName, name, functionName, slot, options)
+	req, err := client.listFunctionSecretsSlotCreateRequest(ctx, resourceGroupName, name, slot, functionName, options)
 	if err != nil {
 		return WebAppsClientListFunctionSecretsSlotResponse{}, err
 	}
@@ -18155,7 +18387,7 @@ func (client *WebAppsClient) ListFunctionSecretsSlot(ctx context.Context, resour
 }
 
 // listFunctionSecretsSlotCreateRequest creates the ListFunctionSecretsSlot request.
-func (client *WebAppsClient) listFunctionSecretsSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, functionName string, slot string, _ *WebAppsClientListFunctionSecretsSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) listFunctionSecretsSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, _ *WebAppsClientListFunctionSecretsSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/listsecrets"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -18169,14 +18401,14 @@ func (client *WebAppsClient) listFunctionSecretsSlotCreateRequest(ctx context.Co
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if functionName == "" {
-		return nil, errors.New("parameter functionName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{functionName}", url.PathEscape(functionName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if functionName == "" {
+		return nil, errors.New("parameter functionName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{functionName}", url.PathEscape(functionName))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -18898,9 +19130,13 @@ func (client *WebAppsClient) listInstanceIdentifiersSlotHandleResponse(resp *htt
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - instanceID - ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET
+//     api/sites/{siteName}/instances".
+//   - processID - PID.
 //   - options - WebAppsClientListInstanceProcessModulesOptions contains the optional parameters for the WebAppsClient.NewListInstanceProcessModulesPager
 //     method.
-func (client *WebAppsClient) NewListInstanceProcessModulesPager(resourceGroupName string, name string, processID string, instanceID string, options *WebAppsClientListInstanceProcessModulesOptions) *runtime.Pager[WebAppsClientListInstanceProcessModulesResponse] {
+func (client *WebAppsClient) NewListInstanceProcessModulesPager(resourceGroupName string, name string, instanceID string, processID string, options *WebAppsClientListInstanceProcessModulesOptions) *runtime.Pager[WebAppsClientListInstanceProcessModulesResponse] {
 	return runtime.NewPager(runtime.PagingHandler[WebAppsClientListInstanceProcessModulesResponse]{
 		More: func(page WebAppsClientListInstanceProcessModulesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -18912,7 +19148,7 @@ func (client *WebAppsClient) NewListInstanceProcessModulesPager(resourceGroupNam
 				nextLink = *page.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
-				return client.listInstanceProcessModulesCreateRequest(ctx, resourceGroupName, name, processID, instanceID, options)
+				return client.listInstanceProcessModulesCreateRequest(ctx, resourceGroupName, name, instanceID, processID, options)
 			}, nil)
 			if err != nil {
 				return WebAppsClientListInstanceProcessModulesResponse{}, err
@@ -18924,7 +19160,7 @@ func (client *WebAppsClient) NewListInstanceProcessModulesPager(resourceGroupNam
 }
 
 // listInstanceProcessModulesCreateRequest creates the ListInstanceProcessModules request.
-func (client *WebAppsClient) listInstanceProcessModulesCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, instanceID string, _ *WebAppsClientListInstanceProcessModulesOptions) (*policy.Request, error) {
+func (client *WebAppsClient) listInstanceProcessModulesCreateRequest(ctx context.Context, resourceGroupName string, name string, instanceID string, processID string, _ *WebAppsClientListInstanceProcessModulesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/modules"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -18938,14 +19174,14 @@ func (client *WebAppsClient) listInstanceProcessModulesCreateRequest(ctx context
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if processID == "" {
-		return nil, errors.New("parameter processID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	if instanceID == "" {
 		return nil, errors.New("parameter instanceID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceID))
+	if processID == "" {
+		return nil, errors.New("parameter processID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -18973,9 +19209,14 @@ func (client *WebAppsClient) listInstanceProcessModulesHandleResponse(resp *http
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot.
+//   - instanceID - ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET
+//     api/sites/{siteName}/instances".
+//   - processID - PID.
 //   - options - WebAppsClientListInstanceProcessModulesSlotOptions contains the optional parameters for the WebAppsClient.NewListInstanceProcessModulesSlotPager
 //     method.
-func (client *WebAppsClient) NewListInstanceProcessModulesSlotPager(resourceGroupName string, name string, processID string, slot string, instanceID string, options *WebAppsClientListInstanceProcessModulesSlotOptions) *runtime.Pager[WebAppsClientListInstanceProcessModulesSlotResponse] {
+func (client *WebAppsClient) NewListInstanceProcessModulesSlotPager(resourceGroupName string, name string, slot string, instanceID string, processID string, options *WebAppsClientListInstanceProcessModulesSlotOptions) *runtime.Pager[WebAppsClientListInstanceProcessModulesSlotResponse] {
 	return runtime.NewPager(runtime.PagingHandler[WebAppsClientListInstanceProcessModulesSlotResponse]{
 		More: func(page WebAppsClientListInstanceProcessModulesSlotResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -18987,7 +19228,7 @@ func (client *WebAppsClient) NewListInstanceProcessModulesSlotPager(resourceGrou
 				nextLink = *page.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
-				return client.listInstanceProcessModulesSlotCreateRequest(ctx, resourceGroupName, name, processID, slot, instanceID, options)
+				return client.listInstanceProcessModulesSlotCreateRequest(ctx, resourceGroupName, name, slot, instanceID, processID, options)
 			}, nil)
 			if err != nil {
 				return WebAppsClientListInstanceProcessModulesSlotResponse{}, err
@@ -18999,7 +19240,7 @@ func (client *WebAppsClient) NewListInstanceProcessModulesSlotPager(resourceGrou
 }
 
 // listInstanceProcessModulesSlotCreateRequest creates the ListInstanceProcessModulesSlot request.
-func (client *WebAppsClient) listInstanceProcessModulesSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, slot string, instanceID string, _ *WebAppsClientListInstanceProcessModulesSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) listInstanceProcessModulesSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, processID string, _ *WebAppsClientListInstanceProcessModulesSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/modules"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -19013,10 +19254,6 @@ func (client *WebAppsClient) listInstanceProcessModulesSlotCreateRequest(ctx con
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if processID == "" {
-		return nil, errors.New("parameter processID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
@@ -19025,6 +19262,10 @@ func (client *WebAppsClient) listInstanceProcessModulesSlotCreateRequest(ctx con
 		return nil, errors.New("parameter instanceID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceID))
+	if processID == "" {
+		return nil, errors.New("parameter processID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -19052,9 +19293,13 @@ func (client *WebAppsClient) listInstanceProcessModulesSlotHandleResponse(resp *
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - instanceID - ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET
+//     api/sites/{siteName}/instances".
+//   - processID - PID.
 //   - options - WebAppsClientListInstanceProcessThreadsOptions contains the optional parameters for the WebAppsClient.NewListInstanceProcessThreadsPager
 //     method.
-func (client *WebAppsClient) NewListInstanceProcessThreadsPager(resourceGroupName string, name string, processID string, instanceID string, options *WebAppsClientListInstanceProcessThreadsOptions) *runtime.Pager[WebAppsClientListInstanceProcessThreadsResponse] {
+func (client *WebAppsClient) NewListInstanceProcessThreadsPager(resourceGroupName string, name string, instanceID string, processID string, options *WebAppsClientListInstanceProcessThreadsOptions) *runtime.Pager[WebAppsClientListInstanceProcessThreadsResponse] {
 	return runtime.NewPager(runtime.PagingHandler[WebAppsClientListInstanceProcessThreadsResponse]{
 		More: func(page WebAppsClientListInstanceProcessThreadsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -19066,7 +19311,7 @@ func (client *WebAppsClient) NewListInstanceProcessThreadsPager(resourceGroupNam
 				nextLink = *page.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
-				return client.listInstanceProcessThreadsCreateRequest(ctx, resourceGroupName, name, processID, instanceID, options)
+				return client.listInstanceProcessThreadsCreateRequest(ctx, resourceGroupName, name, instanceID, processID, options)
 			}, nil)
 			if err != nil {
 				return WebAppsClientListInstanceProcessThreadsResponse{}, err
@@ -19078,7 +19323,7 @@ func (client *WebAppsClient) NewListInstanceProcessThreadsPager(resourceGroupNam
 }
 
 // listInstanceProcessThreadsCreateRequest creates the ListInstanceProcessThreads request.
-func (client *WebAppsClient) listInstanceProcessThreadsCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, instanceID string, _ *WebAppsClientListInstanceProcessThreadsOptions) (*policy.Request, error) {
+func (client *WebAppsClient) listInstanceProcessThreadsCreateRequest(ctx context.Context, resourceGroupName string, name string, instanceID string, processID string, _ *WebAppsClientListInstanceProcessThreadsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/threads"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -19092,14 +19337,14 @@ func (client *WebAppsClient) listInstanceProcessThreadsCreateRequest(ctx context
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if processID == "" {
-		return nil, errors.New("parameter processID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	if instanceID == "" {
 		return nil, errors.New("parameter instanceID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceID))
+	if processID == "" {
+		return nil, errors.New("parameter processID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -19127,9 +19372,14 @@ func (client *WebAppsClient) listInstanceProcessThreadsHandleResponse(resp *http
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot.
+//   - instanceID - ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET
+//     api/sites/{siteName}/instances".
+//   - processID - PID.
 //   - options - WebAppsClientListInstanceProcessThreadsSlotOptions contains the optional parameters for the WebAppsClient.NewListInstanceProcessThreadsSlotPager
 //     method.
-func (client *WebAppsClient) NewListInstanceProcessThreadsSlotPager(resourceGroupName string, name string, processID string, slot string, instanceID string, options *WebAppsClientListInstanceProcessThreadsSlotOptions) *runtime.Pager[WebAppsClientListInstanceProcessThreadsSlotResponse] {
+func (client *WebAppsClient) NewListInstanceProcessThreadsSlotPager(resourceGroupName string, name string, slot string, instanceID string, processID string, options *WebAppsClientListInstanceProcessThreadsSlotOptions) *runtime.Pager[WebAppsClientListInstanceProcessThreadsSlotResponse] {
 	return runtime.NewPager(runtime.PagingHandler[WebAppsClientListInstanceProcessThreadsSlotResponse]{
 		More: func(page WebAppsClientListInstanceProcessThreadsSlotResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -19141,7 +19391,7 @@ func (client *WebAppsClient) NewListInstanceProcessThreadsSlotPager(resourceGrou
 				nextLink = *page.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
-				return client.listInstanceProcessThreadsSlotCreateRequest(ctx, resourceGroupName, name, processID, slot, instanceID, options)
+				return client.listInstanceProcessThreadsSlotCreateRequest(ctx, resourceGroupName, name, slot, instanceID, processID, options)
 			}, nil)
 			if err != nil {
 				return WebAppsClientListInstanceProcessThreadsSlotResponse{}, err
@@ -19153,7 +19403,7 @@ func (client *WebAppsClient) NewListInstanceProcessThreadsSlotPager(resourceGrou
 }
 
 // listInstanceProcessThreadsSlotCreateRequest creates the ListInstanceProcessThreadsSlot request.
-func (client *WebAppsClient) listInstanceProcessThreadsSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, slot string, instanceID string, _ *WebAppsClientListInstanceProcessThreadsSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) listInstanceProcessThreadsSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, processID string, _ *WebAppsClientListInstanceProcessThreadsSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/threads"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -19167,10 +19417,6 @@ func (client *WebAppsClient) listInstanceProcessThreadsSlotCreateRequest(ctx con
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if processID == "" {
-		return nil, errors.New("parameter processID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
@@ -19179,6 +19425,10 @@ func (client *WebAppsClient) listInstanceProcessThreadsSlotCreateRequest(ctx con
 		return nil, errors.New("parameter instanceID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{instanceId}", url.PathEscape(instanceID))
+	if processID == "" {
+		return nil, errors.New("parameter processID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -19643,15 +19893,18 @@ func (client *WebAppsClient) listNetworkFeaturesHandleResponse(resp *http.Respon
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get network features for the production slot.
+//   - view - The type of view. Only "summary" is supported at this time.
 //   - options - WebAppsClientListNetworkFeaturesSlotOptions contains the optional parameters for the WebAppsClient.ListNetworkFeaturesSlot
 //     method.
-func (client *WebAppsClient) ListNetworkFeaturesSlot(ctx context.Context, resourceGroupName string, name string, view string, slot string, options *WebAppsClientListNetworkFeaturesSlotOptions) (WebAppsClientListNetworkFeaturesSlotResponse, error) {
+func (client *WebAppsClient) ListNetworkFeaturesSlot(ctx context.Context, resourceGroupName string, name string, slot string, view string, options *WebAppsClientListNetworkFeaturesSlotOptions) (WebAppsClientListNetworkFeaturesSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.ListNetworkFeaturesSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.listNetworkFeaturesSlotCreateRequest(ctx, resourceGroupName, name, view, slot, options)
+	req, err := client.listNetworkFeaturesSlotCreateRequest(ctx, resourceGroupName, name, slot, view, options)
 	if err != nil {
 		return WebAppsClientListNetworkFeaturesSlotResponse{}, err
 	}
@@ -19668,7 +19921,7 @@ func (client *WebAppsClient) ListNetworkFeaturesSlot(ctx context.Context, resour
 }
 
 // listNetworkFeaturesSlotCreateRequest creates the ListNetworkFeaturesSlot request.
-func (client *WebAppsClient) listNetworkFeaturesSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, view string, slot string, _ *WebAppsClientListNetworkFeaturesSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) listNetworkFeaturesSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, view string, _ *WebAppsClientListNetworkFeaturesSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -19682,14 +19935,14 @@ func (client *WebAppsClient) listNetworkFeaturesSlotCreateRequest(ctx context.Co
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if view == "" {
-		return nil, errors.New("parameter view cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{view}", url.PathEscape(view))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if view == "" {
+		return nil, errors.New("parameter view cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{view}", url.PathEscape(view))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -20074,9 +20327,12 @@ func (client *WebAppsClient) listProcessModulesHandleResponse(resp *http.Respons
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot.
+//   - processID - PID.
 //   - options - WebAppsClientListProcessModulesSlotOptions contains the optional parameters for the WebAppsClient.NewListProcessModulesSlotPager
 //     method.
-func (client *WebAppsClient) NewListProcessModulesSlotPager(resourceGroupName string, name string, processID string, slot string, options *WebAppsClientListProcessModulesSlotOptions) *runtime.Pager[WebAppsClientListProcessModulesSlotResponse] {
+func (client *WebAppsClient) NewListProcessModulesSlotPager(resourceGroupName string, name string, slot string, processID string, options *WebAppsClientListProcessModulesSlotOptions) *runtime.Pager[WebAppsClientListProcessModulesSlotResponse] {
 	return runtime.NewPager(runtime.PagingHandler[WebAppsClientListProcessModulesSlotResponse]{
 		More: func(page WebAppsClientListProcessModulesSlotResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -20088,7 +20344,7 @@ func (client *WebAppsClient) NewListProcessModulesSlotPager(resourceGroupName st
 				nextLink = *page.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
-				return client.listProcessModulesSlotCreateRequest(ctx, resourceGroupName, name, processID, slot, options)
+				return client.listProcessModulesSlotCreateRequest(ctx, resourceGroupName, name, slot, processID, options)
 			}, nil)
 			if err != nil {
 				return WebAppsClientListProcessModulesSlotResponse{}, err
@@ -20100,7 +20356,7 @@ func (client *WebAppsClient) NewListProcessModulesSlotPager(resourceGroupName st
 }
 
 // listProcessModulesSlotCreateRequest creates the ListProcessModulesSlot request.
-func (client *WebAppsClient) listProcessModulesSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, slot string, _ *WebAppsClientListProcessModulesSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) listProcessModulesSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, processID string, _ *WebAppsClientListProcessModulesSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -20114,14 +20370,14 @@ func (client *WebAppsClient) listProcessModulesSlotCreateRequest(ctx context.Con
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if processID == "" {
-		return nil, errors.New("parameter processID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if processID == "" {
+		return nil, errors.New("parameter processID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -20220,9 +20476,12 @@ func (client *WebAppsClient) listProcessThreadsHandleResponse(resp *http.Respons
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot.
+//   - processID - PID.
 //   - options - WebAppsClientListProcessThreadsSlotOptions contains the optional parameters for the WebAppsClient.NewListProcessThreadsSlotPager
 //     method.
-func (client *WebAppsClient) NewListProcessThreadsSlotPager(resourceGroupName string, name string, processID string, slot string, options *WebAppsClientListProcessThreadsSlotOptions) *runtime.Pager[WebAppsClientListProcessThreadsSlotResponse] {
+func (client *WebAppsClient) NewListProcessThreadsSlotPager(resourceGroupName string, name string, slot string, processID string, options *WebAppsClientListProcessThreadsSlotOptions) *runtime.Pager[WebAppsClientListProcessThreadsSlotResponse] {
 	return runtime.NewPager(runtime.PagingHandler[WebAppsClientListProcessThreadsSlotResponse]{
 		More: func(page WebAppsClientListProcessThreadsSlotResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -20234,7 +20493,7 @@ func (client *WebAppsClient) NewListProcessThreadsSlotPager(resourceGroupName st
 				nextLink = *page.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
-				return client.listProcessThreadsSlotCreateRequest(ctx, resourceGroupName, name, processID, slot, options)
+				return client.listProcessThreadsSlotCreateRequest(ctx, resourceGroupName, name, slot, processID, options)
 			}, nil)
 			if err != nil {
 				return WebAppsClientListProcessThreadsSlotResponse{}, err
@@ -20246,7 +20505,7 @@ func (client *WebAppsClient) NewListProcessThreadsSlotPager(resourceGroupName st
 }
 
 // listProcessThreadsSlotCreateRequest creates the ListProcessThreadsSlot request.
-func (client *WebAppsClient) listProcessThreadsSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, processID string, slot string, _ *WebAppsClientListProcessThreadsSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) listProcessThreadsSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, processID string, _ *WebAppsClientListProcessThreadsSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/threads"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -20260,14 +20519,14 @@ func (client *WebAppsClient) listProcessThreadsSlotCreateRequest(ctx context.Con
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if processID == "" {
-		return nil, errors.New("parameter processID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if processID == "" {
+		return nil, errors.New("parameter processID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{processId}", url.PathEscape(processID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -22621,9 +22880,12 @@ func (client *WebAppsClient) listTriggeredWebJobHistoryHandleResponse(resp *http
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API uses the production slot.
+//   - webJobName - Name of Web Job.
 //   - options - WebAppsClientListTriggeredWebJobHistorySlotOptions contains the optional parameters for the WebAppsClient.NewListTriggeredWebJobHistorySlotPager
 //     method.
-func (client *WebAppsClient) NewListTriggeredWebJobHistorySlotPager(resourceGroupName string, name string, webJobName string, slot string, options *WebAppsClientListTriggeredWebJobHistorySlotOptions) *runtime.Pager[WebAppsClientListTriggeredWebJobHistorySlotResponse] {
+func (client *WebAppsClient) NewListTriggeredWebJobHistorySlotPager(resourceGroupName string, name string, slot string, webJobName string, options *WebAppsClientListTriggeredWebJobHistorySlotOptions) *runtime.Pager[WebAppsClientListTriggeredWebJobHistorySlotResponse] {
 	return runtime.NewPager(runtime.PagingHandler[WebAppsClientListTriggeredWebJobHistorySlotResponse]{
 		More: func(page WebAppsClientListTriggeredWebJobHistorySlotResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -22635,7 +22897,7 @@ func (client *WebAppsClient) NewListTriggeredWebJobHistorySlotPager(resourceGrou
 				nextLink = *page.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
-				return client.listTriggeredWebJobHistorySlotCreateRequest(ctx, resourceGroupName, name, webJobName, slot, options)
+				return client.listTriggeredWebJobHistorySlotCreateRequest(ctx, resourceGroupName, name, slot, webJobName, options)
 			}, nil)
 			if err != nil {
 				return WebAppsClientListTriggeredWebJobHistorySlotResponse{}, err
@@ -22647,7 +22909,7 @@ func (client *WebAppsClient) NewListTriggeredWebJobHistorySlotPager(resourceGrou
 }
 
 // listTriggeredWebJobHistorySlotCreateRequest creates the ListTriggeredWebJobHistorySlot request.
-func (client *WebAppsClient) listTriggeredWebJobHistorySlotCreateRequest(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, _ *WebAppsClientListTriggeredWebJobHistorySlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) listTriggeredWebJobHistorySlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, _ *WebAppsClientListTriggeredWebJobHistorySlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -22661,14 +22923,14 @@ func (client *WebAppsClient) listTriggeredWebJobHistorySlotCreateRequest(ctx con
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if webJobName == "" {
-		return nil, errors.New("parameter webJobName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if webJobName == "" {
+		return nil, errors.New("parameter webJobName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -23548,11 +23810,14 @@ func (client *WebAppsClient) migrateMySQLCreateRequest(ctx context.Context, reso
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - subscriptionName - Azure subscription
+//   - migrationOptions - Migration migrationOptions.
 //   - options - WebAppsClientBeginMigrateStorageOptions contains the optional parameters for the WebAppsClient.BeginMigrateStorage
 //     method.
-func (client *WebAppsClient) BeginMigrateStorage(ctx context.Context, subscriptionName string, resourceGroupName string, name string, migrationOptions StorageMigrationOptions, options *WebAppsClientBeginMigrateStorageOptions) (*runtime.Poller[WebAppsClientMigrateStorageResponse], error) {
+func (client *WebAppsClient) BeginMigrateStorage(ctx context.Context, resourceGroupName string, name string, subscriptionName string, migrationOptions StorageMigrationOptions, options *WebAppsClientBeginMigrateStorageOptions) (*runtime.Poller[WebAppsClientMigrateStorageResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.migrateStorage(ctx, subscriptionName, resourceGroupName, name, migrationOptions, options)
+		resp, err := client.migrateStorage(ctx, resourceGroupName, name, subscriptionName, migrationOptions, options)
 		if err != nil {
 			return nil, err
 		}
@@ -23573,13 +23838,13 @@ func (client *WebAppsClient) BeginMigrateStorage(ctx context.Context, subscripti
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2025-03-01
-func (client *WebAppsClient) migrateStorage(ctx context.Context, subscriptionName string, resourceGroupName string, name string, migrationOptions StorageMigrationOptions, options *WebAppsClientBeginMigrateStorageOptions) (*http.Response, error) {
+func (client *WebAppsClient) migrateStorage(ctx context.Context, resourceGroupName string, name string, subscriptionName string, migrationOptions StorageMigrationOptions, options *WebAppsClientBeginMigrateStorageOptions) (*http.Response, error) {
 	var err error
 	const operationName = "WebAppsClient.BeginMigrateStorage"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.migrateStorageCreateRequest(ctx, subscriptionName, resourceGroupName, name, migrationOptions, options)
+	req, err := client.migrateStorageCreateRequest(ctx, resourceGroupName, name, subscriptionName, migrationOptions, options)
 	if err != nil {
 		return nil, err
 	}
@@ -23595,7 +23860,7 @@ func (client *WebAppsClient) migrateStorage(ctx context.Context, subscriptionNam
 }
 
 // migrateStorageCreateRequest creates the MigrateStorage request.
-func (client *WebAppsClient) migrateStorageCreateRequest(ctx context.Context, subscriptionName string, resourceGroupName string, name string, migrationOptions StorageMigrationOptions, _ *WebAppsClientBeginMigrateStorageOptions) (*policy.Request, error) {
+func (client *WebAppsClient) migrateStorageCreateRequest(ctx context.Context, resourceGroupName string, name string, subscriptionName string, migrationOptions StorageMigrationOptions, _ *WebAppsClientBeginMigrateStorageOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/migrate"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -23844,15 +24109,18 @@ func (client *WebAppsClient) recoverSiteConfigurationSnapshotCreateRequest(ctx c
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will return configuration for the production slot.
+//   - snapshotID - The ID of the snapshot to read.
 //   - options - WebAppsClientRecoverSiteConfigurationSnapshotSlotOptions contains the optional parameters for the WebAppsClient.RecoverSiteConfigurationSnapshotSlot
 //     method.
-func (client *WebAppsClient) RecoverSiteConfigurationSnapshotSlot(ctx context.Context, resourceGroupName string, name string, snapshotID string, slot string, options *WebAppsClientRecoverSiteConfigurationSnapshotSlotOptions) (WebAppsClientRecoverSiteConfigurationSnapshotSlotResponse, error) {
+func (client *WebAppsClient) RecoverSiteConfigurationSnapshotSlot(ctx context.Context, resourceGroupName string, name string, slot string, snapshotID string, options *WebAppsClientRecoverSiteConfigurationSnapshotSlotOptions) (WebAppsClientRecoverSiteConfigurationSnapshotSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.RecoverSiteConfigurationSnapshotSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.recoverSiteConfigurationSnapshotSlotCreateRequest(ctx, resourceGroupName, name, snapshotID, slot, options)
+	req, err := client.recoverSiteConfigurationSnapshotSlotCreateRequest(ctx, resourceGroupName, name, slot, snapshotID, options)
 	if err != nil {
 		return WebAppsClientRecoverSiteConfigurationSnapshotSlotResponse{}, err
 	}
@@ -23868,7 +24136,7 @@ func (client *WebAppsClient) RecoverSiteConfigurationSnapshotSlot(ctx context.Co
 }
 
 // recoverSiteConfigurationSnapshotSlotCreateRequest creates the RecoverSiteConfigurationSnapshotSlot request.
-func (client *WebAppsClient) recoverSiteConfigurationSnapshotSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, snapshotID string, slot string, _ *WebAppsClientRecoverSiteConfigurationSnapshotSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) recoverSiteConfigurationSnapshotSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, snapshotID string, _ *WebAppsClientRecoverSiteConfigurationSnapshotSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}/recover"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -23882,14 +24150,14 @@ func (client *WebAppsClient) recoverSiteConfigurationSnapshotSlotCreateRequest(c
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if snapshotID == "" {
-		return nil, errors.New("parameter snapshotID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{snapshotId}", url.PathEscape(snapshotID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if snapshotID == "" {
+		return nil, errors.New("parameter snapshotID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{snapshotId}", url.PathEscape(snapshotID))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -24589,11 +24857,15 @@ func (client *WebAppsClient) restoreFromDeletedAppSlotCreateRequest(ctx context.
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get a backup of the production slot.
+//   - backupID - ID of the backup.
+//   - request - Information on restore request .
 //   - options - WebAppsClientBeginRestoreSlotOptions contains the optional parameters for the WebAppsClient.BeginRestoreSlot
 //     method.
-func (client *WebAppsClient) BeginRestoreSlot(ctx context.Context, resourceGroupName string, name string, backupID string, slot string, request RestoreRequest, options *WebAppsClientBeginRestoreSlotOptions) (*runtime.Poller[WebAppsClientRestoreSlotResponse], error) {
+func (client *WebAppsClient) BeginRestoreSlot(ctx context.Context, resourceGroupName string, name string, slot string, backupID string, request RestoreRequest, options *WebAppsClientBeginRestoreSlotOptions) (*runtime.Poller[WebAppsClientRestoreSlotResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.restoreSlot(ctx, resourceGroupName, name, backupID, slot, request, options)
+		resp, err := client.restoreSlot(ctx, resourceGroupName, name, slot, backupID, request, options)
 		if err != nil {
 			return nil, err
 		}
@@ -24614,13 +24886,13 @@ func (client *WebAppsClient) BeginRestoreSlot(ctx context.Context, resourceGroup
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2025-03-01
-func (client *WebAppsClient) restoreSlot(ctx context.Context, resourceGroupName string, name string, backupID string, slot string, request RestoreRequest, options *WebAppsClientBeginRestoreSlotOptions) (*http.Response, error) {
+func (client *WebAppsClient) restoreSlot(ctx context.Context, resourceGroupName string, name string, slot string, backupID string, request RestoreRequest, options *WebAppsClientBeginRestoreSlotOptions) (*http.Response, error) {
 	var err error
 	const operationName = "WebAppsClient.BeginRestoreSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.restoreSlotCreateRequest(ctx, resourceGroupName, name, backupID, slot, request, options)
+	req, err := client.restoreSlotCreateRequest(ctx, resourceGroupName, name, slot, backupID, request, options)
 	if err != nil {
 		return nil, err
 	}
@@ -24636,7 +24908,7 @@ func (client *WebAppsClient) restoreSlot(ctx context.Context, resourceGroupName 
 }
 
 // restoreSlotCreateRequest creates the RestoreSlot request.
-func (client *WebAppsClient) restoreSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, backupID string, slot string, request RestoreRequest, _ *WebAppsClientBeginRestoreSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) restoreSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, backupID string, request RestoreRequest, _ *WebAppsClientBeginRestoreSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backups/{backupId}/restore"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -24650,14 +24922,14 @@ func (client *WebAppsClient) restoreSlotCreateRequest(ctx context.Context, resou
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if backupID == "" {
-		return nil, errors.New("parameter backupID cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{backupId}", url.PathEscape(backupID))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if backupID == "" {
+		return nil, errors.New("parameter backupID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{backupId}", url.PathEscape(backupID))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -24915,15 +25187,18 @@ func (client *WebAppsClient) runTriggeredWebJobCreateRequest(ctx context.Context
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API uses the production slot.
+//   - webJobName - Name of Web Job.
 //   - options - WebAppsClientRunTriggeredWebJobSlotOptions contains the optional parameters for the WebAppsClient.RunTriggeredWebJobSlot
 //     method.
-func (client *WebAppsClient) RunTriggeredWebJobSlot(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, options *WebAppsClientRunTriggeredWebJobSlotOptions) (WebAppsClientRunTriggeredWebJobSlotResponse, error) {
+func (client *WebAppsClient) RunTriggeredWebJobSlot(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, options *WebAppsClientRunTriggeredWebJobSlotOptions) (WebAppsClientRunTriggeredWebJobSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.RunTriggeredWebJobSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.runTriggeredWebJobSlotCreateRequest(ctx, resourceGroupName, name, webJobName, slot, options)
+	req, err := client.runTriggeredWebJobSlotCreateRequest(ctx, resourceGroupName, name, slot, webJobName, options)
 	if err != nil {
 		return WebAppsClientRunTriggeredWebJobSlotResponse{}, err
 	}
@@ -24939,7 +25214,7 @@ func (client *WebAppsClient) RunTriggeredWebJobSlot(ctx context.Context, resourc
 }
 
 // runTriggeredWebJobSlotCreateRequest creates the RunTriggeredWebJobSlot request.
-func (client *WebAppsClient) runTriggeredWebJobSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, _ *WebAppsClientRunTriggeredWebJobSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) runTriggeredWebJobSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, _ *WebAppsClientRunTriggeredWebJobSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/run"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -24953,14 +25228,14 @@ func (client *WebAppsClient) runTriggeredWebJobSlotCreateRequest(ctx context.Con
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if webJobName == "" {
-		return nil, errors.New("parameter webJobName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if webJobName == "" {
+		return nil, errors.New("parameter webJobName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -25094,15 +25369,18 @@ func (client *WebAppsClient) startContinuousWebJobCreateRequest(ctx context.Cont
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot.
+//   - webJobName - Name of Web Job.
 //   - options - WebAppsClientStartContinuousWebJobSlotOptions contains the optional parameters for the WebAppsClient.StartContinuousWebJobSlot
 //     method.
-func (client *WebAppsClient) StartContinuousWebJobSlot(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, options *WebAppsClientStartContinuousWebJobSlotOptions) (WebAppsClientStartContinuousWebJobSlotResponse, error) {
+func (client *WebAppsClient) StartContinuousWebJobSlot(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, options *WebAppsClientStartContinuousWebJobSlotOptions) (WebAppsClientStartContinuousWebJobSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.StartContinuousWebJobSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.startContinuousWebJobSlotCreateRequest(ctx, resourceGroupName, name, webJobName, slot, options)
+	req, err := client.startContinuousWebJobSlotCreateRequest(ctx, resourceGroupName, name, slot, webJobName, options)
 	if err != nil {
 		return WebAppsClientStartContinuousWebJobSlotResponse{}, err
 	}
@@ -25118,7 +25396,7 @@ func (client *WebAppsClient) StartContinuousWebJobSlot(ctx context.Context, reso
 }
 
 // startContinuousWebJobSlotCreateRequest creates the StartContinuousWebJobSlot request.
-func (client *WebAppsClient) startContinuousWebJobSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, _ *WebAppsClientStartContinuousWebJobSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) startContinuousWebJobSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, _ *WebAppsClientStartContinuousWebJobSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}/start"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -25132,14 +25410,14 @@ func (client *WebAppsClient) startContinuousWebJobSlotCreateRequest(ctx context.
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if webJobName == "" {
-		return nil, errors.New("parameter webJobName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if webJobName == "" {
+		return nil, errors.New("parameter webJobName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -25856,15 +26134,18 @@ func (client *WebAppsClient) stopContinuousWebJobCreateRequest(ctx context.Conte
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Site name.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API deletes a deployment for the production slot.
+//   - webJobName - Name of Web Job.
 //   - options - WebAppsClientStopContinuousWebJobSlotOptions contains the optional parameters for the WebAppsClient.StopContinuousWebJobSlot
 //     method.
-func (client *WebAppsClient) StopContinuousWebJobSlot(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, options *WebAppsClientStopContinuousWebJobSlotOptions) (WebAppsClientStopContinuousWebJobSlotResponse, error) {
+func (client *WebAppsClient) StopContinuousWebJobSlot(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, options *WebAppsClientStopContinuousWebJobSlotOptions) (WebAppsClientStopContinuousWebJobSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.StopContinuousWebJobSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.stopContinuousWebJobSlotCreateRequest(ctx, resourceGroupName, name, webJobName, slot, options)
+	req, err := client.stopContinuousWebJobSlotCreateRequest(ctx, resourceGroupName, name, slot, webJobName, options)
 	if err != nil {
 		return WebAppsClientStopContinuousWebJobSlotResponse{}, err
 	}
@@ -25880,7 +26161,7 @@ func (client *WebAppsClient) StopContinuousWebJobSlot(ctx context.Context, resou
 }
 
 // stopContinuousWebJobSlotCreateRequest creates the StopContinuousWebJobSlot request.
-func (client *WebAppsClient) stopContinuousWebJobSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, _ *WebAppsClientStopContinuousWebJobSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) stopContinuousWebJobSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, _ *WebAppsClientStopContinuousWebJobSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}/stop"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -25894,14 +26175,14 @@ func (client *WebAppsClient) stopContinuousWebJobSlotCreateRequest(ctx context.C
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if webJobName == "" {
-		return nil, errors.New("parameter webJobName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if webJobName == "" {
+		return nil, errors.New("parameter webJobName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{webJobName}", url.PathEscape(webJobName))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -28077,15 +28358,19 @@ func (client *WebAppsClient) updateDomainOwnershipIdentifierHandleResponse(resp 
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will delete the binding for the production slot.
+//   - domainOwnershipIdentifierName - Name of domain ownership identifier.
+//   - domainOwnershipIdentifier - A JSON representation of the domain ownership properties.
 //   - options - WebAppsClientUpdateDomainOwnershipIdentifierSlotOptions contains the optional parameters for the WebAppsClient.UpdateDomainOwnershipIdentifierSlot
 //     method.
-func (client *WebAppsClient) UpdateDomainOwnershipIdentifierSlot(ctx context.Context, resourceGroupName string, name string, domainOwnershipIdentifierName string, slot string, domainOwnershipIdentifier Identifier, options *WebAppsClientUpdateDomainOwnershipIdentifierSlotOptions) (WebAppsClientUpdateDomainOwnershipIdentifierSlotResponse, error) {
+func (client *WebAppsClient) UpdateDomainOwnershipIdentifierSlot(ctx context.Context, resourceGroupName string, name string, slot string, domainOwnershipIdentifierName string, domainOwnershipIdentifier Identifier, options *WebAppsClientUpdateDomainOwnershipIdentifierSlotOptions) (WebAppsClientUpdateDomainOwnershipIdentifierSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.UpdateDomainOwnershipIdentifierSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.updateDomainOwnershipIdentifierSlotCreateRequest(ctx, resourceGroupName, name, domainOwnershipIdentifierName, slot, domainOwnershipIdentifier, options)
+	req, err := client.updateDomainOwnershipIdentifierSlotCreateRequest(ctx, resourceGroupName, name, slot, domainOwnershipIdentifierName, domainOwnershipIdentifier, options)
 	if err != nil {
 		return WebAppsClientUpdateDomainOwnershipIdentifierSlotResponse{}, err
 	}
@@ -28102,7 +28387,7 @@ func (client *WebAppsClient) UpdateDomainOwnershipIdentifierSlot(ctx context.Con
 }
 
 // updateDomainOwnershipIdentifierSlotCreateRequest creates the UpdateDomainOwnershipIdentifierSlot request.
-func (client *WebAppsClient) updateDomainOwnershipIdentifierSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, domainOwnershipIdentifierName string, slot string, domainOwnershipIdentifier Identifier, _ *WebAppsClientUpdateDomainOwnershipIdentifierSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) updateDomainOwnershipIdentifierSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, domainOwnershipIdentifierName string, domainOwnershipIdentifier Identifier, _ *WebAppsClientUpdateDomainOwnershipIdentifierSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -28116,14 +28401,14 @@ func (client *WebAppsClient) updateDomainOwnershipIdentifierSlotCreateRequest(ct
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if domainOwnershipIdentifierName == "" {
-		return nil, errors.New("parameter domainOwnershipIdentifierName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{domainOwnershipIdentifierName}", url.PathEscape(domainOwnershipIdentifierName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if domainOwnershipIdentifierName == "" {
+		return nil, errors.New("parameter domainOwnershipIdentifierName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{domainOwnershipIdentifierName}", url.PathEscape(domainOwnershipIdentifierName))
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -28383,15 +28668,20 @@ func (client *WebAppsClient) updateHybridConnectionHandleResponse(resp *http.Res
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - The name of the web app.
+//   - slot - The name of the slot for the web app.
+//   - namespaceName - The namespace for this hybrid connection.
+//   - relayName - The relay name for this hybrid connection.
+//   - connectionEnvelope - The details of the hybrid connection.
 //   - options - WebAppsClientUpdateHybridConnectionSlotOptions contains the optional parameters for the WebAppsClient.UpdateHybridConnectionSlot
 //     method.
-func (client *WebAppsClient) UpdateHybridConnectionSlot(ctx context.Context, resourceGroupName string, name string, namespaceName string, relayName string, slot string, connectionEnvelope HybridConnection, options *WebAppsClientUpdateHybridConnectionSlotOptions) (WebAppsClientUpdateHybridConnectionSlotResponse, error) {
+func (client *WebAppsClient) UpdateHybridConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, namespaceName string, relayName string, connectionEnvelope HybridConnection, options *WebAppsClientUpdateHybridConnectionSlotOptions) (WebAppsClientUpdateHybridConnectionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.UpdateHybridConnectionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.updateHybridConnectionSlotCreateRequest(ctx, resourceGroupName, name, namespaceName, relayName, slot, connectionEnvelope, options)
+	req, err := client.updateHybridConnectionSlotCreateRequest(ctx, resourceGroupName, name, slot, namespaceName, relayName, connectionEnvelope, options)
 	if err != nil {
 		return WebAppsClientUpdateHybridConnectionSlotResponse{}, err
 	}
@@ -28408,7 +28698,7 @@ func (client *WebAppsClient) UpdateHybridConnectionSlot(ctx context.Context, res
 }
 
 // updateHybridConnectionSlotCreateRequest creates the UpdateHybridConnectionSlot request.
-func (client *WebAppsClient) updateHybridConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, namespaceName string, relayName string, slot string, connectionEnvelope HybridConnection, _ *WebAppsClientUpdateHybridConnectionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) updateHybridConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, namespaceName string, relayName string, connectionEnvelope HybridConnection, _ *WebAppsClientUpdateHybridConnectionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -28422,6 +28712,10 @@ func (client *WebAppsClient) updateHybridConnectionSlotCreateRequest(ctx context
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
+	if slot == "" {
+		return nil, errors.New("parameter slot cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	if namespaceName == "" {
 		return nil, errors.New("parameter namespaceName cannot be empty")
 	}
@@ -28430,10 +28724,6 @@ func (client *WebAppsClient) updateHybridConnectionSlotCreateRequest(ctx context
 		return nil, errors.New("parameter relayName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{relayName}", url.PathEscape(relayName))
-	if slot == "" {
-		return nil, errors.New("parameter slot cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -28757,15 +29047,19 @@ func (client *WebAppsClient) updatePremierAddOnHandleResponse(resp *http.Respons
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get the named add-on for the production slot.
+//   - premierAddOnName - Add-on name.
+//   - premierAddOn - A JSON representation of the edited premier add-on.
 //   - options - WebAppsClientUpdatePremierAddOnSlotOptions contains the optional parameters for the WebAppsClient.UpdatePremierAddOnSlot
 //     method.
-func (client *WebAppsClient) UpdatePremierAddOnSlot(ctx context.Context, resourceGroupName string, name string, premierAddOnName string, slot string, premierAddOn PremierAddOnPatchResource, options *WebAppsClientUpdatePremierAddOnSlotOptions) (WebAppsClientUpdatePremierAddOnSlotResponse, error) {
+func (client *WebAppsClient) UpdatePremierAddOnSlot(ctx context.Context, resourceGroupName string, name string, slot string, premierAddOnName string, premierAddOn PremierAddOnPatchResource, options *WebAppsClientUpdatePremierAddOnSlotOptions) (WebAppsClientUpdatePremierAddOnSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.UpdatePremierAddOnSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.updatePremierAddOnSlotCreateRequest(ctx, resourceGroupName, name, premierAddOnName, slot, premierAddOn, options)
+	req, err := client.updatePremierAddOnSlotCreateRequest(ctx, resourceGroupName, name, slot, premierAddOnName, premierAddOn, options)
 	if err != nil {
 		return WebAppsClientUpdatePremierAddOnSlotResponse{}, err
 	}
@@ -28782,7 +29076,7 @@ func (client *WebAppsClient) UpdatePremierAddOnSlot(ctx context.Context, resourc
 }
 
 // updatePremierAddOnSlotCreateRequest creates the UpdatePremierAddOnSlot request.
-func (client *WebAppsClient) updatePremierAddOnSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, premierAddOnName string, slot string, premierAddOn PremierAddOnPatchResource, _ *WebAppsClientUpdatePremierAddOnSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) updatePremierAddOnSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, premierAddOnName string, premierAddOn PremierAddOnPatchResource, _ *WebAppsClientUpdatePremierAddOnSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -28796,14 +29090,14 @@ func (client *WebAppsClient) updatePremierAddOnSlotCreateRequest(ctx context.Con
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if premierAddOnName == "" {
-		return nil, errors.New("parameter premierAddOnName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{premierAddOnName}", url.PathEscape(premierAddOnName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if premierAddOnName == "" {
+		return nil, errors.New("parameter premierAddOnName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{premierAddOnName}", url.PathEscape(premierAddOnName))
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -28912,15 +29206,20 @@ func (client *WebAppsClient) updateRelayServiceConnectionHandleResponse(resp *ht
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get a hybrid connection for the production
+//     slot.
+//   - entityName - Name of the hybrid connection.
+//   - connectionEnvelope - Details of the hybrid connection configuration.
 //   - options - WebAppsClientUpdateRelayServiceConnectionSlotOptions contains the optional parameters for the WebAppsClient.UpdateRelayServiceConnectionSlot
 //     method.
-func (client *WebAppsClient) UpdateRelayServiceConnectionSlot(ctx context.Context, resourceGroupName string, name string, entityName string, slot string, connectionEnvelope RelayServiceConnectionEntity, options *WebAppsClientUpdateRelayServiceConnectionSlotOptions) (WebAppsClientUpdateRelayServiceConnectionSlotResponse, error) {
+func (client *WebAppsClient) UpdateRelayServiceConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, entityName string, connectionEnvelope RelayServiceConnectionEntity, options *WebAppsClientUpdateRelayServiceConnectionSlotOptions) (WebAppsClientUpdateRelayServiceConnectionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.UpdateRelayServiceConnectionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.updateRelayServiceConnectionSlotCreateRequest(ctx, resourceGroupName, name, entityName, slot, connectionEnvelope, options)
+	req, err := client.updateRelayServiceConnectionSlotCreateRequest(ctx, resourceGroupName, name, slot, entityName, connectionEnvelope, options)
 	if err != nil {
 		return WebAppsClientUpdateRelayServiceConnectionSlotResponse{}, err
 	}
@@ -28937,7 +29236,7 @@ func (client *WebAppsClient) UpdateRelayServiceConnectionSlot(ctx context.Contex
 }
 
 // updateRelayServiceConnectionSlotCreateRequest creates the UpdateRelayServiceConnectionSlot request.
-func (client *WebAppsClient) updateRelayServiceConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, entityName string, slot string, connectionEnvelope RelayServiceConnectionEntity, _ *WebAppsClientUpdateRelayServiceConnectionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) updateRelayServiceConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, entityName string, connectionEnvelope RelayServiceConnectionEntity, _ *WebAppsClientUpdateRelayServiceConnectionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -28951,14 +29250,14 @@ func (client *WebAppsClient) updateRelayServiceConnectionSlotCreateRequest(ctx c
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if entityName == "" {
-		return nil, errors.New("parameter entityName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{entityName}", url.PathEscape(entityName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if entityName == "" {
+		return nil, errors.New("parameter entityName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{entityName}", url.PathEscape(entityName))
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -29902,15 +30201,21 @@ func (client *WebAppsClient) updateVnetConnectionGatewayHandleResponse(resp *htt
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get a gateway for the production slot's Virtual
+//     Network.
+//   - vnetName - Name of the Virtual Network.
+//   - gatewayName - Name of the gateway. Currently, the only supported string is "primary".
+//   - connectionEnvelope - The properties to update this gateway with.
 //   - options - WebAppsClientUpdateVnetConnectionGatewaySlotOptions contains the optional parameters for the WebAppsClient.UpdateVnetConnectionGatewaySlot
 //     method.
-func (client *WebAppsClient) UpdateVnetConnectionGatewaySlot(ctx context.Context, resourceGroupName string, name string, vnetName string, gatewayName string, slot string, connectionEnvelope VnetGateway, options *WebAppsClientUpdateVnetConnectionGatewaySlotOptions) (WebAppsClientUpdateVnetConnectionGatewaySlotResponse, error) {
+func (client *WebAppsClient) UpdateVnetConnectionGatewaySlot(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, gatewayName string, connectionEnvelope VnetGateway, options *WebAppsClientUpdateVnetConnectionGatewaySlotOptions) (WebAppsClientUpdateVnetConnectionGatewaySlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.UpdateVnetConnectionGatewaySlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.updateVnetConnectionGatewaySlotCreateRequest(ctx, resourceGroupName, name, vnetName, gatewayName, slot, connectionEnvelope, options)
+	req, err := client.updateVnetConnectionGatewaySlotCreateRequest(ctx, resourceGroupName, name, slot, vnetName, gatewayName, connectionEnvelope, options)
 	if err != nil {
 		return WebAppsClientUpdateVnetConnectionGatewaySlotResponse{}, err
 	}
@@ -29927,7 +30232,7 @@ func (client *WebAppsClient) UpdateVnetConnectionGatewaySlot(ctx context.Context
 }
 
 // updateVnetConnectionGatewaySlotCreateRequest creates the UpdateVnetConnectionGatewaySlot request.
-func (client *WebAppsClient) updateVnetConnectionGatewaySlotCreateRequest(ctx context.Context, resourceGroupName string, name string, vnetName string, gatewayName string, slot string, connectionEnvelope VnetGateway, _ *WebAppsClientUpdateVnetConnectionGatewaySlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) updateVnetConnectionGatewaySlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, gatewayName string, connectionEnvelope VnetGateway, _ *WebAppsClientUpdateVnetConnectionGatewaySlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -29941,6 +30246,10 @@ func (client *WebAppsClient) updateVnetConnectionGatewaySlotCreateRequest(ctx co
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
+	if slot == "" {
+		return nil, errors.New("parameter slot cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	if vnetName == "" {
 		return nil, errors.New("parameter vnetName cannot be empty")
 	}
@@ -29949,10 +30258,6 @@ func (client *WebAppsClient) updateVnetConnectionGatewaySlotCreateRequest(ctx co
 		return nil, errors.New("parameter gatewayName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{gatewayName}", url.PathEscape(gatewayName))
-	if slot == "" {
-		return nil, errors.New("parameter slot cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -29985,15 +30290,20 @@ func (client *WebAppsClient) updateVnetConnectionGatewaySlotHandleResponse(resp 
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - name - Name of the app.
+//   - slot - Name of the deployment slot. If a slot is not specified, the API will get the named virtual network for the production
+//     slot.
+//   - vnetName - Name of the virtual network.
+//   - connectionEnvelope - Properties of the Virtual Network connection. See example.
 //   - options - WebAppsClientUpdateVnetConnectionSlotOptions contains the optional parameters for the WebAppsClient.UpdateVnetConnectionSlot
 //     method.
-func (client *WebAppsClient) UpdateVnetConnectionSlot(ctx context.Context, resourceGroupName string, name string, vnetName string, slot string, connectionEnvelope VnetInfoResource, options *WebAppsClientUpdateVnetConnectionSlotOptions) (WebAppsClientUpdateVnetConnectionSlotResponse, error) {
+func (client *WebAppsClient) UpdateVnetConnectionSlot(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, connectionEnvelope VnetInfoResource, options *WebAppsClientUpdateVnetConnectionSlotOptions) (WebAppsClientUpdateVnetConnectionSlotResponse, error) {
 	var err error
 	const operationName = "WebAppsClient.UpdateVnetConnectionSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.updateVnetConnectionSlotCreateRequest(ctx, resourceGroupName, name, vnetName, slot, connectionEnvelope, options)
+	req, err := client.updateVnetConnectionSlotCreateRequest(ctx, resourceGroupName, name, slot, vnetName, connectionEnvelope, options)
 	if err != nil {
 		return WebAppsClientUpdateVnetConnectionSlotResponse{}, err
 	}
@@ -30010,7 +30320,7 @@ func (client *WebAppsClient) UpdateVnetConnectionSlot(ctx context.Context, resou
 }
 
 // updateVnetConnectionSlotCreateRequest creates the UpdateVnetConnectionSlot request.
-func (client *WebAppsClient) updateVnetConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, vnetName string, slot string, connectionEnvelope VnetInfoResource, _ *WebAppsClientUpdateVnetConnectionSlotOptions) (*policy.Request, error) {
+func (client *WebAppsClient) updateVnetConnectionSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, connectionEnvelope VnetInfoResource, _ *WebAppsClientUpdateVnetConnectionSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -30024,14 +30334,14 @@ func (client *WebAppsClient) updateVnetConnectionSlotCreateRequest(ctx context.C
 		return nil, errors.New("parameter name cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
-	if vnetName == "" {
-		return nil, errors.New("parameter vnetName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{vnetName}", url.PathEscape(vnetName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if vnetName == "" {
+		return nil, errors.New("parameter vnetName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{vnetName}", url.PathEscape(vnetName))
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

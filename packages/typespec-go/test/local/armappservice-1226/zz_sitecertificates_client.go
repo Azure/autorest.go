@@ -51,7 +51,7 @@ func NewSiteCertificatesClient(subscriptionID string, credential azcore.TokenCre
 //   - certificateEnvelope - Details of certificate, if it exists already.
 //   - options - SiteCertificatesClientCreateOrUpdateOptions contains the optional parameters for the SiteCertificatesClient.CreateOrUpdate
 //     method.
-func (client *SiteCertificatesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, name string, certificateName string, certificateEnvelope AppCertificate, options *SiteCertificatesClientCreateOrUpdateOptions) (SiteCertificatesClientCreateOrUpdateResponse, error) {
+func (client *SiteCertificatesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, name string, certificateName string, certificateEnvelope Certificate, options *SiteCertificatesClientCreateOrUpdateOptions) (SiteCertificatesClientCreateOrUpdateResponse, error) {
 	var err error
 	const operationName = "SiteCertificatesClient.CreateOrUpdate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -74,7 +74,7 @@ func (client *SiteCertificatesClient) CreateOrUpdate(ctx context.Context, resour
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *SiteCertificatesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, name string, certificateName string, certificateEnvelope AppCertificate, _ *SiteCertificatesClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *SiteCertificatesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, name string, certificateName string, certificateEnvelope Certificate, _ *SiteCertificatesClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/certificates/{certificateName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -110,7 +110,7 @@ func (client *SiteCertificatesClient) createOrUpdateCreateRequest(ctx context.Co
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *SiteCertificatesClient) createOrUpdateHandleResponse(resp *http.Response) (SiteCertificatesClientCreateOrUpdateResponse, error) {
 	result := SiteCertificatesClientCreateOrUpdateResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AppCertificate); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Certificate); err != nil {
 		return SiteCertificatesClientCreateOrUpdateResponse{}, err
 	}
 	return result, nil
@@ -129,7 +129,7 @@ func (client *SiteCertificatesClient) createOrUpdateHandleResponse(resp *http.Re
 //   - certificateEnvelope - Details of certificate, if it exists already.
 //   - options - SiteCertificatesClientCreateOrUpdateSlotOptions contains the optional parameters for the SiteCertificatesClient.CreateOrUpdateSlot
 //     method.
-func (client *SiteCertificatesClient) CreateOrUpdateSlot(ctx context.Context, resourceGroupName string, name string, slot string, certificateName string, certificateEnvelope AppCertificate, options *SiteCertificatesClientCreateOrUpdateSlotOptions) (SiteCertificatesClientCreateOrUpdateSlotResponse, error) {
+func (client *SiteCertificatesClient) CreateOrUpdateSlot(ctx context.Context, resourceGroupName string, name string, slot string, certificateName string, certificateEnvelope Certificate, options *SiteCertificatesClientCreateOrUpdateSlotOptions) (SiteCertificatesClientCreateOrUpdateSlotResponse, error) {
 	var err error
 	const operationName = "SiteCertificatesClient.CreateOrUpdateSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -152,7 +152,7 @@ func (client *SiteCertificatesClient) CreateOrUpdateSlot(ctx context.Context, re
 }
 
 // createOrUpdateSlotCreateRequest creates the CreateOrUpdateSlot request.
-func (client *SiteCertificatesClient) createOrUpdateSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, certificateName string, certificateEnvelope AppCertificate, _ *SiteCertificatesClientCreateOrUpdateSlotOptions) (*policy.Request, error) {
+func (client *SiteCertificatesClient) createOrUpdateSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, certificateName string, certificateEnvelope Certificate, _ *SiteCertificatesClientCreateOrUpdateSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/certificates/{certificateName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -192,7 +192,7 @@ func (client *SiteCertificatesClient) createOrUpdateSlotCreateRequest(ctx contex
 // createOrUpdateSlotHandleResponse handles the CreateOrUpdateSlot response.
 func (client *SiteCertificatesClient) createOrUpdateSlotHandleResponse(resp *http.Response) (SiteCertificatesClientCreateOrUpdateSlotResponse, error) {
 	result := SiteCertificatesClientCreateOrUpdateSlotResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AppCertificate); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Certificate); err != nil {
 		return SiteCertificatesClientCreateOrUpdateSlotResponse{}, err
 	}
 	return result, nil
@@ -389,7 +389,7 @@ func (client *SiteCertificatesClient) getCreateRequest(ctx context.Context, reso
 // getHandleResponse handles the Get response.
 func (client *SiteCertificatesClient) getHandleResponse(resp *http.Response) (SiteCertificatesClientGetResponse, error) {
 	result := SiteCertificatesClientGetResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AppCertificate); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Certificate); err != nil {
 		return SiteCertificatesClientGetResponse{}, err
 	}
 	return result, nil
@@ -466,7 +466,7 @@ func (client *SiteCertificatesClient) getSlotCreateRequest(ctx context.Context, 
 // getSlotHandleResponse handles the GetSlot response.
 func (client *SiteCertificatesClient) getSlotHandleResponse(resp *http.Response) (SiteCertificatesClientGetSlotResponse, error) {
 	result := SiteCertificatesClientGetSlotResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AppCertificate); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Certificate); err != nil {
 		return SiteCertificatesClientGetSlotResponse{}, err
 	}
 	return result, nil
@@ -533,7 +533,7 @@ func (client *SiteCertificatesClient) listCreateRequest(ctx context.Context, res
 // listHandleResponse handles the List response.
 func (client *SiteCertificatesClient) listHandleResponse(resp *http.Response) (SiteCertificatesClientListResponse, error) {
 	result := SiteCertificatesClientListResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AppCertificateCollection); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateCollection); err != nil {
 		return SiteCertificatesClientListResponse{}, err
 	}
 	return result, nil
@@ -605,7 +605,7 @@ func (client *SiteCertificatesClient) listSlotCreateRequest(ctx context.Context,
 // listSlotHandleResponse handles the ListSlot response.
 func (client *SiteCertificatesClient) listSlotHandleResponse(resp *http.Response) (SiteCertificatesClientListSlotResponse, error) {
 	result := SiteCertificatesClientListSlotResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AppCertificateCollection); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateCollection); err != nil {
 		return SiteCertificatesClientListSlotResponse{}, err
 	}
 	return result, nil
@@ -622,7 +622,7 @@ func (client *SiteCertificatesClient) listSlotHandleResponse(resp *http.Response
 //   - certificateName - Name of the certificate.
 //   - certificateEnvelope - Details of certificate, if it exists already.
 //   - options - SiteCertificatesClientUpdateOptions contains the optional parameters for the SiteCertificatesClient.Update method.
-func (client *SiteCertificatesClient) Update(ctx context.Context, resourceGroupName string, name string, certificateName string, certificateEnvelope AppCertificatePatchResource, options *SiteCertificatesClientUpdateOptions) (SiteCertificatesClientUpdateResponse, error) {
+func (client *SiteCertificatesClient) Update(ctx context.Context, resourceGroupName string, name string, certificateName string, certificateEnvelope CertificatePatchResource, options *SiteCertificatesClientUpdateOptions) (SiteCertificatesClientUpdateResponse, error) {
 	var err error
 	const operationName = "SiteCertificatesClient.Update"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -645,7 +645,7 @@ func (client *SiteCertificatesClient) Update(ctx context.Context, resourceGroupN
 }
 
 // updateCreateRequest creates the Update request.
-func (client *SiteCertificatesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, name string, certificateName string, certificateEnvelope AppCertificatePatchResource, _ *SiteCertificatesClientUpdateOptions) (*policy.Request, error) {
+func (client *SiteCertificatesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, name string, certificateName string, certificateEnvelope CertificatePatchResource, _ *SiteCertificatesClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/certificates/{certificateName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -681,7 +681,7 @@ func (client *SiteCertificatesClient) updateCreateRequest(ctx context.Context, r
 // updateHandleResponse handles the Update response.
 func (client *SiteCertificatesClient) updateHandleResponse(resp *http.Response) (SiteCertificatesClientUpdateResponse, error) {
 	result := SiteCertificatesClientUpdateResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AppCertificate); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Certificate); err != nil {
 		return SiteCertificatesClientUpdateResponse{}, err
 	}
 	return result, nil
@@ -700,7 +700,7 @@ func (client *SiteCertificatesClient) updateHandleResponse(resp *http.Response) 
 //   - certificateEnvelope - Details of certificate, if it exists already.
 //   - options - SiteCertificatesClientUpdateSlotOptions contains the optional parameters for the SiteCertificatesClient.UpdateSlot
 //     method.
-func (client *SiteCertificatesClient) UpdateSlot(ctx context.Context, resourceGroupName string, name string, slot string, certificateName string, certificateEnvelope AppCertificatePatchResource, options *SiteCertificatesClientUpdateSlotOptions) (SiteCertificatesClientUpdateSlotResponse, error) {
+func (client *SiteCertificatesClient) UpdateSlot(ctx context.Context, resourceGroupName string, name string, slot string, certificateName string, certificateEnvelope CertificatePatchResource, options *SiteCertificatesClientUpdateSlotOptions) (SiteCertificatesClientUpdateSlotResponse, error) {
 	var err error
 	const operationName = "SiteCertificatesClient.UpdateSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -723,7 +723,7 @@ func (client *SiteCertificatesClient) UpdateSlot(ctx context.Context, resourceGr
 }
 
 // updateSlotCreateRequest creates the UpdateSlot request.
-func (client *SiteCertificatesClient) updateSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, certificateName string, certificateEnvelope AppCertificatePatchResource, _ *SiteCertificatesClientUpdateSlotOptions) (*policy.Request, error) {
+func (client *SiteCertificatesClient) updateSlotCreateRequest(ctx context.Context, resourceGroupName string, name string, slot string, certificateName string, certificateEnvelope CertificatePatchResource, _ *SiteCertificatesClientUpdateSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/certificates/{certificateName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -763,7 +763,7 @@ func (client *SiteCertificatesClient) updateSlotCreateRequest(ctx context.Contex
 // updateSlotHandleResponse handles the UpdateSlot response.
 func (client *SiteCertificatesClient) updateSlotHandleResponse(resp *http.Response) (SiteCertificatesClientUpdateSlotResponse, error) {
 	result := SiteCertificatesClientUpdateSlotResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AppCertificate); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Certificate); err != nil {
 		return SiteCertificatesClientUpdateSlotResponse{}, err
 	}
 	return result, nil

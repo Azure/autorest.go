@@ -22,11 +22,11 @@ import (
 type SiteCertificatesServer struct {
 	// CreateOrUpdate is the fake for method SiteCertificatesClient.CreateOrUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	CreateOrUpdate func(ctx context.Context, resourceGroupName string, name string, certificateName string, certificateEnvelope armappservice.AppCertificate, options *armappservice.SiteCertificatesClientCreateOrUpdateOptions) (resp azfake.Responder[armappservice.SiteCertificatesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdate func(ctx context.Context, resourceGroupName string, name string, certificateName string, certificateEnvelope armappservice.Certificate, options *armappservice.SiteCertificatesClientCreateOrUpdateOptions) (resp azfake.Responder[armappservice.SiteCertificatesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// CreateOrUpdateSlot is the fake for method SiteCertificatesClient.CreateOrUpdateSlot
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	CreateOrUpdateSlot func(ctx context.Context, resourceGroupName string, name string, slot string, certificateName string, certificateEnvelope armappservice.AppCertificate, options *armappservice.SiteCertificatesClientCreateOrUpdateSlotOptions) (resp azfake.Responder[armappservice.SiteCertificatesClientCreateOrUpdateSlotResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdateSlot func(ctx context.Context, resourceGroupName string, name string, slot string, certificateName string, certificateEnvelope armappservice.Certificate, options *armappservice.SiteCertificatesClientCreateOrUpdateSlotOptions) (resp azfake.Responder[armappservice.SiteCertificatesClientCreateOrUpdateSlotResponse], errResp azfake.ErrorResponder)
 
 	// Delete is the fake for method SiteCertificatesClient.Delete
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
@@ -54,11 +54,11 @@ type SiteCertificatesServer struct {
 
 	// Update is the fake for method SiteCertificatesClient.Update
 	// HTTP status codes to indicate success: http.StatusOK
-	Update func(ctx context.Context, resourceGroupName string, name string, certificateName string, certificateEnvelope armappservice.AppCertificatePatchResource, options *armappservice.SiteCertificatesClientUpdateOptions) (resp azfake.Responder[armappservice.SiteCertificatesClientUpdateResponse], errResp azfake.ErrorResponder)
+	Update func(ctx context.Context, resourceGroupName string, name string, certificateName string, certificateEnvelope armappservice.CertificatePatchResource, options *armappservice.SiteCertificatesClientUpdateOptions) (resp azfake.Responder[armappservice.SiteCertificatesClientUpdateResponse], errResp azfake.ErrorResponder)
 
 	// UpdateSlot is the fake for method SiteCertificatesClient.UpdateSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	UpdateSlot func(ctx context.Context, resourceGroupName string, name string, slot string, certificateName string, certificateEnvelope armappservice.AppCertificatePatchResource, options *armappservice.SiteCertificatesClientUpdateSlotOptions) (resp azfake.Responder[armappservice.SiteCertificatesClientUpdateSlotResponse], errResp azfake.ErrorResponder)
+	UpdateSlot func(ctx context.Context, resourceGroupName string, name string, slot string, certificateName string, certificateEnvelope armappservice.CertificatePatchResource, options *armappservice.SiteCertificatesClientUpdateSlotOptions) (resp azfake.Responder[armappservice.SiteCertificatesClientUpdateSlotResponse], errResp azfake.ErrorResponder)
 }
 
 // NewSiteCertificatesServerTransport creates a new instance of SiteCertificatesServerTransport with the provided implementation.
@@ -152,7 +152,7 @@ func (s *SiteCertificatesServerTransport) dispatchCreateOrUpdate(req *http.Reque
 	if len(matches) < 5 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[armappservice.AppCertificate](req)
+	body, err := server.UnmarshalRequestAsJSON[armappservice.Certificate](req)
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +176,7 @@ func (s *SiteCertificatesServerTransport) dispatchCreateOrUpdate(req *http.Reque
 	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AppCertificate, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Certificate, req)
 	if err != nil {
 		return nil, err
 	}
@@ -193,7 +193,7 @@ func (s *SiteCertificatesServerTransport) dispatchCreateOrUpdateSlot(req *http.R
 	if len(matches) < 6 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[armappservice.AppCertificate](req)
+	body, err := server.UnmarshalRequestAsJSON[armappservice.Certificate](req)
 	if err != nil {
 		return nil, err
 	}
@@ -221,7 +221,7 @@ func (s *SiteCertificatesServerTransport) dispatchCreateOrUpdateSlot(req *http.R
 	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AppCertificate, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Certificate, req)
 	if err != nil {
 		return nil, err
 	}
@@ -336,7 +336,7 @@ func (s *SiteCertificatesServerTransport) dispatchGet(req *http.Request) (*http.
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AppCertificate, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Certificate, req)
 	if err != nil {
 		return nil, err
 	}
@@ -377,7 +377,7 @@ func (s *SiteCertificatesServerTransport) dispatchGetSlot(req *http.Request) (*h
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AppCertificate, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Certificate, req)
 	if err != nil {
 		return nil, err
 	}
@@ -480,7 +480,7 @@ func (s *SiteCertificatesServerTransport) dispatchUpdate(req *http.Request) (*ht
 	if len(matches) < 5 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[armappservice.AppCertificatePatchResource](req)
+	body, err := server.UnmarshalRequestAsJSON[armappservice.CertificatePatchResource](req)
 	if err != nil {
 		return nil, err
 	}
@@ -504,7 +504,7 @@ func (s *SiteCertificatesServerTransport) dispatchUpdate(req *http.Request) (*ht
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AppCertificate, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Certificate, req)
 	if err != nil {
 		return nil, err
 	}
@@ -521,7 +521,7 @@ func (s *SiteCertificatesServerTransport) dispatchUpdateSlot(req *http.Request) 
 	if len(matches) < 6 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[armappservice.AppCertificatePatchResource](req)
+	body, err := server.UnmarshalRequestAsJSON[armappservice.CertificatePatchResource](req)
 	if err != nil {
 		return nil, err
 	}
@@ -549,7 +549,7 @@ func (s *SiteCertificatesServerTransport) dispatchUpdateSlot(req *http.Request) 
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AppCertificate, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Certificate, req)
 	if err != nil {
 		return nil, err
 	}

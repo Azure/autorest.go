@@ -31,7 +31,7 @@ type RecommendationsServer struct {
 
 	// DisableRecommendationForHostingEnvironment is the fake for method RecommendationsClient.DisableRecommendationForHostingEnvironment
 	// HTTP status codes to indicate success: http.StatusOK
-	DisableRecommendationForHostingEnvironment func(ctx context.Context, resourceGroupName string, environmentName string, name string, hostingEnvironmentName string, options *armappservice.RecommendationsClientDisableRecommendationForHostingEnvironmentOptions) (resp azfake.Responder[armappservice.RecommendationsClientDisableRecommendationForHostingEnvironmentResponse], errResp azfake.ErrorResponder)
+	DisableRecommendationForHostingEnvironment func(ctx context.Context, resourceGroupName string, hostingEnvironmentName string, name string, environmentName string, options *armappservice.RecommendationsClientDisableRecommendationForHostingEnvironmentOptions) (resp azfake.Responder[armappservice.RecommendationsClientDisableRecommendationForHostingEnvironmentResponse], errResp azfake.ErrorResponder)
 
 	// DisableRecommendationForSite is the fake for method RecommendationsClient.DisableRecommendationForSite
 	// HTTP status codes to indicate success: http.StatusOK
@@ -265,7 +265,7 @@ func (r *RecommendationsServerTransport) dispatchDisableRecommendationForHosting
 	if err != nil {
 		return nil, err
 	}
-	environmentNameParam, err := url.QueryUnescape(qp.Get("environmentName"))
+	hostingEnvironmentNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostingEnvironmentName")])
 	if err != nil {
 		return nil, err
 	}
@@ -273,11 +273,11 @@ func (r *RecommendationsServerTransport) dispatchDisableRecommendationForHosting
 	if err != nil {
 		return nil, err
 	}
-	hostingEnvironmentNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostingEnvironmentName")])
+	environmentNameParam, err := url.QueryUnescape(qp.Get("environmentName"))
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := r.srv.DisableRecommendationForHostingEnvironment(req.Context(), resourceGroupNameParam, environmentNameParam, nameParam, hostingEnvironmentNameParam, nil)
+	respr, errRespr := r.srv.DisableRecommendationForHostingEnvironment(req.Context(), resourceGroupNameParam, hostingEnvironmentNameParam, nameParam, environmentNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

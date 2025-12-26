@@ -22,7 +22,7 @@ import (
 type CertificatesServer struct {
 	// CreateOrUpdate is the fake for method CertificatesClient.CreateOrUpdate
 	// HTTP status codes to indicate success: http.StatusOK
-	CreateOrUpdate func(ctx context.Context, resourceGroupName string, name string, certificateEnvelope armappservice.AppCertificate, options *armappservice.CertificatesClientCreateOrUpdateOptions) (resp azfake.Responder[armappservice.CertificatesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdate func(ctx context.Context, resourceGroupName string, name string, certificateEnvelope armappservice.Certificate, options *armappservice.CertificatesClientCreateOrUpdateOptions) (resp azfake.Responder[armappservice.CertificatesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// Delete is the fake for method CertificatesClient.Delete
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
@@ -42,7 +42,7 @@ type CertificatesServer struct {
 
 	// Update is the fake for method CertificatesClient.Update
 	// HTTP status codes to indicate success: http.StatusOK
-	Update func(ctx context.Context, resourceGroupName string, name string, certificateEnvelope armappservice.AppCertificatePatchResource, options *armappservice.CertificatesClientUpdateOptions) (resp azfake.Responder[armappservice.CertificatesClientUpdateResponse], errResp azfake.ErrorResponder)
+	Update func(ctx context.Context, resourceGroupName string, name string, certificateEnvelope armappservice.CertificatePatchResource, options *armappservice.CertificatesClientUpdateOptions) (resp azfake.Responder[armappservice.CertificatesClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewCertificatesServerTransport creates a new instance of CertificatesServerTransport with the provided implementation.
@@ -128,7 +128,7 @@ func (c *CertificatesServerTransport) dispatchCreateOrUpdate(req *http.Request) 
 	if len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[armappservice.AppCertificate](req)
+	body, err := server.UnmarshalRequestAsJSON[armappservice.Certificate](req)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +148,7 @@ func (c *CertificatesServerTransport) dispatchCreateOrUpdate(req *http.Request) 
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AppCertificate, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Certificate, req)
 	if err != nil {
 		return nil, err
 	}
@@ -214,7 +214,7 @@ func (c *CertificatesServerTransport) dispatchGet(req *http.Request) (*http.Resp
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AppCertificate, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Certificate, req)
 	if err != nil {
 		return nil, err
 	}
@@ -313,7 +313,7 @@ func (c *CertificatesServerTransport) dispatchUpdate(req *http.Request) (*http.R
 	if len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[armappservice.AppCertificatePatchResource](req)
+	body, err := server.UnmarshalRequestAsJSON[armappservice.CertificatePatchResource](req)
 	if err != nil {
 		return nil, err
 	}
@@ -333,7 +333,7 @@ func (c *CertificatesServerTransport) dispatchUpdate(req *http.Request) (*http.R
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AppCertificate, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Certificate, req)
 	if err != nil {
 		return nil, err
 	}

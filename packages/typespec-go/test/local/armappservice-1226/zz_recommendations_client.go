@@ -161,15 +161,18 @@ func (client *RecommendationsClient) disableAllForWebAppCreateRequest(ctx contex
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - hostingEnvironmentName - Name of the hosting environment.
+//   - name - Name of the recommendation.
+//   - environmentName - Site name
 //   - options - RecommendationsClientDisableRecommendationForHostingEnvironmentOptions contains the optional parameters for the
 //     RecommendationsClient.DisableRecommendationForHostingEnvironment method.
-func (client *RecommendationsClient) DisableRecommendationForHostingEnvironment(ctx context.Context, resourceGroupName string, environmentName string, name string, hostingEnvironmentName string, options *RecommendationsClientDisableRecommendationForHostingEnvironmentOptions) (RecommendationsClientDisableRecommendationForHostingEnvironmentResponse, error) {
+func (client *RecommendationsClient) DisableRecommendationForHostingEnvironment(ctx context.Context, resourceGroupName string, hostingEnvironmentName string, name string, environmentName string, options *RecommendationsClientDisableRecommendationForHostingEnvironmentOptions) (RecommendationsClientDisableRecommendationForHostingEnvironmentResponse, error) {
 	var err error
 	const operationName = "RecommendationsClient.DisableRecommendationForHostingEnvironment"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.disableRecommendationForHostingEnvironmentCreateRequest(ctx, resourceGroupName, environmentName, name, hostingEnvironmentName, options)
+	req, err := client.disableRecommendationForHostingEnvironmentCreateRequest(ctx, resourceGroupName, hostingEnvironmentName, name, environmentName, options)
 	if err != nil {
 		return RecommendationsClientDisableRecommendationForHostingEnvironmentResponse{}, err
 	}
@@ -185,7 +188,7 @@ func (client *RecommendationsClient) DisableRecommendationForHostingEnvironment(
 }
 
 // disableRecommendationForHostingEnvironmentCreateRequest creates the DisableRecommendationForHostingEnvironment request.
-func (client *RecommendationsClient) disableRecommendationForHostingEnvironmentCreateRequest(ctx context.Context, resourceGroupName string, environmentName string, name string, hostingEnvironmentName string, _ *RecommendationsClientDisableRecommendationForHostingEnvironmentOptions) (*policy.Request, error) {
+func (client *RecommendationsClient) disableRecommendationForHostingEnvironmentCreateRequest(ctx context.Context, resourceGroupName string, hostingEnvironmentName string, name string, environmentName string, _ *RecommendationsClientDisableRecommendationForHostingEnvironmentOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}/disable"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -195,14 +198,14 @@ func (client *RecommendationsClient) disableRecommendationForHostingEnvironmentC
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	if name == "" {
-		return nil, errors.New("parameter name cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
 	if hostingEnvironmentName == "" {
 		return nil, errors.New("parameter hostingEnvironmentName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{hostingEnvironmentName}", url.PathEscape(hostingEnvironmentName))
+	if name == "" {
+		return nil, errors.New("parameter name cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{name}", url.PathEscape(name))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

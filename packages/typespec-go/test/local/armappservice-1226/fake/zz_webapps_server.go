@@ -28,7 +28,7 @@ type WebAppsServer struct {
 
 	// AddPremierAddOnSlot is the fake for method WebAppsClient.AddPremierAddOnSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	AddPremierAddOnSlot func(ctx context.Context, resourceGroupName string, name string, premierAddOnName string, slot string, premierAddOn armappservice.PremierAddOn, options *armappservice.WebAppsClientAddPremierAddOnSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientAddPremierAddOnSlotResponse], errResp azfake.ErrorResponder)
+	AddPremierAddOnSlot func(ctx context.Context, resourceGroupName string, name string, slot string, premierAddOnName string, premierAddOn armappservice.PremierAddOn, options *armappservice.WebAppsClientAddPremierAddOnSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientAddPremierAddOnSlotResponse], errResp azfake.ErrorResponder)
 
 	// AnalyzeCustomHostname is the fake for method WebAppsClient.AnalyzeCustomHostname
 	// HTTP status codes to indicate success: http.StatusOK
@@ -52,7 +52,7 @@ type WebAppsServer struct {
 
 	// BeginApproveOrRejectPrivateEndpointConnectionSlot is the fake for method WebAppsClient.BeginApproveOrRejectPrivateEndpointConnectionSlot
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginApproveOrRejectPrivateEndpointConnectionSlot func(ctx context.Context, resourceGroupName string, name string, privateEndpointConnectionName string, slot string, privateEndpointWrapper armappservice.RemotePrivateEndpointConnectionARMResource, options *armappservice.WebAppsClientBeginApproveOrRejectPrivateEndpointConnectionSlotOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientApproveOrRejectPrivateEndpointConnectionSlotResponse], errResp azfake.ErrorResponder)
+	BeginApproveOrRejectPrivateEndpointConnectionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, privateEndpointConnectionName string, privateEndpointWrapper armappservice.RemotePrivateEndpointConnectionARMResource, options *armappservice.WebAppsClientBeginApproveOrRejectPrivateEndpointConnectionSlotOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientApproveOrRejectPrivateEndpointConnectionSlotResponse], errResp azfake.ErrorResponder)
 
 	// Backup is the fake for method WebAppsClient.Backup
 	// HTTP status codes to indicate success: http.StatusOK
@@ -68,7 +68,7 @@ type WebAppsServer struct {
 
 	// CreateDeploymentSlot is the fake for method WebAppsClient.CreateDeploymentSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	CreateDeploymentSlot func(ctx context.Context, resourceGroupName string, name string, id string, slot string, deployment armappservice.Deployment, options *armappservice.WebAppsClientCreateDeploymentSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateDeploymentSlotResponse], errResp azfake.ErrorResponder)
+	CreateDeploymentSlot func(ctx context.Context, resourceGroupName string, name string, slot string, id string, deployment armappservice.Deployment, options *armappservice.WebAppsClientCreateDeploymentSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateDeploymentSlotResponse], errResp azfake.ErrorResponder)
 
 	// BeginCreateFunction is the fake for method WebAppsClient.BeginCreateFunction
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
@@ -76,7 +76,7 @@ type WebAppsServer struct {
 
 	// BeginCreateInstanceFunctionSlot is the fake for method WebAppsClient.BeginCreateInstanceFunctionSlot
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	BeginCreateInstanceFunctionSlot func(ctx context.Context, resourceGroupName string, name string, functionName string, slot string, functionEnvelope armappservice.FunctionEnvelope, options *armappservice.WebAppsClientBeginCreateInstanceFunctionSlotOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientCreateInstanceFunctionSlotResponse], errResp azfake.ErrorResponder)
+	BeginCreateInstanceFunctionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, functionEnvelope armappservice.FunctionEnvelope, options *armappservice.WebAppsClientBeginCreateInstanceFunctionSlotOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientCreateInstanceFunctionSlotResponse], errResp azfake.ErrorResponder)
 
 	// BeginCreateInstanceMSDeployOperation is the fake for method WebAppsClient.BeginCreateInstanceMSDeployOperation
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
@@ -116,7 +116,7 @@ type WebAppsServer struct {
 
 	// CreateOrUpdateDomainOwnershipIdentifierSlot is the fake for method WebAppsClient.CreateOrUpdateDomainOwnershipIdentifierSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	CreateOrUpdateDomainOwnershipIdentifierSlot func(ctx context.Context, resourceGroupName string, name string, domainOwnershipIdentifierName string, slot string, domainOwnershipIdentifier armappservice.Identifier, options *armappservice.WebAppsClientCreateOrUpdateDomainOwnershipIdentifierSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdateDomainOwnershipIdentifierSlotResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdateDomainOwnershipIdentifierSlot func(ctx context.Context, resourceGroupName string, name string, slot string, domainOwnershipIdentifierName string, domainOwnershipIdentifier armappservice.Identifier, options *armappservice.WebAppsClientCreateOrUpdateDomainOwnershipIdentifierSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdateDomainOwnershipIdentifierSlotResponse], errResp azfake.ErrorResponder)
 
 	// CreateOrUpdateFunctionSecret is the fake for method WebAppsClient.CreateOrUpdateFunctionSecret
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
@@ -124,7 +124,7 @@ type WebAppsServer struct {
 
 	// CreateOrUpdateFunctionSecretSlot is the fake for method WebAppsClient.CreateOrUpdateFunctionSecretSlot
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	CreateOrUpdateFunctionSecretSlot func(ctx context.Context, resourceGroupName string, name string, functionName string, keyName string, slot string, key armappservice.KeyInfo, options *armappservice.WebAppsClientCreateOrUpdateFunctionSecretSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdateFunctionSecretSlotResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdateFunctionSecretSlot func(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, keyName string, key armappservice.KeyInfo, options *armappservice.WebAppsClientCreateOrUpdateFunctionSecretSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdateFunctionSecretSlotResponse], errResp azfake.ErrorResponder)
 
 	// CreateOrUpdateHostNameBinding is the fake for method WebAppsClient.CreateOrUpdateHostNameBinding
 	// HTTP status codes to indicate success: http.StatusOK
@@ -132,7 +132,7 @@ type WebAppsServer struct {
 
 	// CreateOrUpdateHostNameBindingSlot is the fake for method WebAppsClient.CreateOrUpdateHostNameBindingSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	CreateOrUpdateHostNameBindingSlot func(ctx context.Context, resourceGroupName string, name string, hostName string, slot string, hostNameBinding armappservice.HostNameBinding, options *armappservice.WebAppsClientCreateOrUpdateHostNameBindingSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdateHostNameBindingSlotResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdateHostNameBindingSlot func(ctx context.Context, resourceGroupName string, name string, slot string, hostName string, hostNameBinding armappservice.HostNameBinding, options *armappservice.WebAppsClientCreateOrUpdateHostNameBindingSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdateHostNameBindingSlotResponse], errResp azfake.ErrorResponder)
 
 	// CreateOrUpdateHostSecret is the fake for method WebAppsClient.CreateOrUpdateHostSecret
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
@@ -140,7 +140,7 @@ type WebAppsServer struct {
 
 	// CreateOrUpdateHostSecretSlot is the fake for method WebAppsClient.CreateOrUpdateHostSecretSlot
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	CreateOrUpdateHostSecretSlot func(ctx context.Context, resourceGroupName string, name string, keyType string, keyName string, slot string, key armappservice.KeyInfo, options *armappservice.WebAppsClientCreateOrUpdateHostSecretSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdateHostSecretSlotResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdateHostSecretSlot func(ctx context.Context, resourceGroupName string, name string, slot string, keyType string, keyName string, key armappservice.KeyInfo, options *armappservice.WebAppsClientCreateOrUpdateHostSecretSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdateHostSecretSlotResponse], errResp azfake.ErrorResponder)
 
 	// CreateOrUpdateHybridConnection is the fake for method WebAppsClient.CreateOrUpdateHybridConnection
 	// HTTP status codes to indicate success: http.StatusOK
@@ -148,7 +148,7 @@ type WebAppsServer struct {
 
 	// CreateOrUpdateHybridConnectionSlot is the fake for method WebAppsClient.CreateOrUpdateHybridConnectionSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	CreateOrUpdateHybridConnectionSlot func(ctx context.Context, resourceGroupName string, name string, namespaceName string, relayName string, slot string, connectionEnvelope armappservice.HybridConnection, options *armappservice.WebAppsClientCreateOrUpdateHybridConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdateHybridConnectionSlotResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdateHybridConnectionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, namespaceName string, relayName string, connectionEnvelope armappservice.HybridConnection, options *armappservice.WebAppsClientCreateOrUpdateHybridConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdateHybridConnectionSlotResponse], errResp azfake.ErrorResponder)
 
 	// CreateOrUpdatePublicCertificate is the fake for method WebAppsClient.CreateOrUpdatePublicCertificate
 	// HTTP status codes to indicate success: http.StatusOK
@@ -156,7 +156,7 @@ type WebAppsServer struct {
 
 	// CreateOrUpdatePublicCertificateSlot is the fake for method WebAppsClient.CreateOrUpdatePublicCertificateSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	CreateOrUpdatePublicCertificateSlot func(ctx context.Context, resourceGroupName string, name string, publicCertificateName string, slot string, publicCertificate armappservice.PublicCertificate, options *armappservice.WebAppsClientCreateOrUpdatePublicCertificateSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdatePublicCertificateSlotResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdatePublicCertificateSlot func(ctx context.Context, resourceGroupName string, name string, slot string, publicCertificateName string, publicCertificate armappservice.PublicCertificate, options *armappservice.WebAppsClientCreateOrUpdatePublicCertificateSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdatePublicCertificateSlotResponse], errResp azfake.ErrorResponder)
 
 	// CreateOrUpdateRelayServiceConnection is the fake for method WebAppsClient.CreateOrUpdateRelayServiceConnection
 	// HTTP status codes to indicate success: http.StatusOK
@@ -164,7 +164,7 @@ type WebAppsServer struct {
 
 	// CreateOrUpdateRelayServiceConnectionSlot is the fake for method WebAppsClient.CreateOrUpdateRelayServiceConnectionSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	CreateOrUpdateRelayServiceConnectionSlot func(ctx context.Context, resourceGroupName string, name string, entityName string, slot string, connectionEnvelope armappservice.RelayServiceConnectionEntity, options *armappservice.WebAppsClientCreateOrUpdateRelayServiceConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdateRelayServiceConnectionSlotResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdateRelayServiceConnectionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, entityName string, connectionEnvelope armappservice.RelayServiceConnectionEntity, options *armappservice.WebAppsClientCreateOrUpdateRelayServiceConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdateRelayServiceConnectionSlotResponse], errResp azfake.ErrorResponder)
 
 	// CreateOrUpdateSiteContainer is the fake for method WebAppsClient.CreateOrUpdateSiteContainer
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
@@ -204,11 +204,11 @@ type WebAppsServer struct {
 
 	// CreateOrUpdateVnetConnectionGatewaySlot is the fake for method WebAppsClient.CreateOrUpdateVnetConnectionGatewaySlot
 	// HTTP status codes to indicate success: http.StatusOK
-	CreateOrUpdateVnetConnectionGatewaySlot func(ctx context.Context, resourceGroupName string, name string, vnetName string, gatewayName string, slot string, connectionEnvelope armappservice.VnetGateway, options *armappservice.WebAppsClientCreateOrUpdateVnetConnectionGatewaySlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdateVnetConnectionGatewaySlotResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdateVnetConnectionGatewaySlot func(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, gatewayName string, connectionEnvelope armappservice.VnetGateway, options *armappservice.WebAppsClientCreateOrUpdateVnetConnectionGatewaySlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdateVnetConnectionGatewaySlotResponse], errResp azfake.ErrorResponder)
 
 	// CreateOrUpdateVnetConnectionSlot is the fake for method WebAppsClient.CreateOrUpdateVnetConnectionSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	CreateOrUpdateVnetConnectionSlot func(ctx context.Context, resourceGroupName string, name string, vnetName string, slot string, connectionEnvelope armappservice.VnetInfoResource, options *armappservice.WebAppsClientCreateOrUpdateVnetConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdateVnetConnectionSlotResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdateVnetConnectionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, connectionEnvelope armappservice.VnetInfoResource, options *armappservice.WebAppsClientCreateOrUpdateVnetConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientCreateOrUpdateVnetConnectionSlotResponse], errResp azfake.ErrorResponder)
 
 	// Delete is the fake for method WebAppsClient.Delete
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
@@ -228,7 +228,7 @@ type WebAppsServer struct {
 
 	// DeleteBackupSlot is the fake for method WebAppsClient.DeleteBackupSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	DeleteBackupSlot func(ctx context.Context, resourceGroupName string, name string, backupID string, slot string, options *armappservice.WebAppsClientDeleteBackupSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteBackupSlotResponse], errResp azfake.ErrorResponder)
+	DeleteBackupSlot func(ctx context.Context, resourceGroupName string, name string, slot string, backupID string, options *armappservice.WebAppsClientDeleteBackupSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteBackupSlotResponse], errResp azfake.ErrorResponder)
 
 	// DeleteContinuousWebJob is the fake for method WebAppsClient.DeleteContinuousWebJob
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
@@ -236,7 +236,7 @@ type WebAppsServer struct {
 
 	// DeleteContinuousWebJobSlot is the fake for method WebAppsClient.DeleteContinuousWebJobSlot
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
-	DeleteContinuousWebJobSlot func(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, options *armappservice.WebAppsClientDeleteContinuousWebJobSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteContinuousWebJobSlotResponse], errResp azfake.ErrorResponder)
+	DeleteContinuousWebJobSlot func(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, options *armappservice.WebAppsClientDeleteContinuousWebJobSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteContinuousWebJobSlotResponse], errResp azfake.ErrorResponder)
 
 	// DeleteDeployment is the fake for method WebAppsClient.DeleteDeployment
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
@@ -244,7 +244,7 @@ type WebAppsServer struct {
 
 	// DeleteDeploymentSlot is the fake for method WebAppsClient.DeleteDeploymentSlot
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
-	DeleteDeploymentSlot func(ctx context.Context, resourceGroupName string, name string, id string, slot string, options *armappservice.WebAppsClientDeleteDeploymentSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteDeploymentSlotResponse], errResp azfake.ErrorResponder)
+	DeleteDeploymentSlot func(ctx context.Context, resourceGroupName string, name string, slot string, id string, options *armappservice.WebAppsClientDeleteDeploymentSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteDeploymentSlotResponse], errResp azfake.ErrorResponder)
 
 	// DeleteDomainOwnershipIdentifier is the fake for method WebAppsClient.DeleteDomainOwnershipIdentifier
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
@@ -252,7 +252,7 @@ type WebAppsServer struct {
 
 	// DeleteDomainOwnershipIdentifierSlot is the fake for method WebAppsClient.DeleteDomainOwnershipIdentifierSlot
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
-	DeleteDomainOwnershipIdentifierSlot func(ctx context.Context, resourceGroupName string, name string, domainOwnershipIdentifierName string, slot string, options *armappservice.WebAppsClientDeleteDomainOwnershipIdentifierSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteDomainOwnershipIdentifierSlotResponse], errResp azfake.ErrorResponder)
+	DeleteDomainOwnershipIdentifierSlot func(ctx context.Context, resourceGroupName string, name string, slot string, domainOwnershipIdentifierName string, options *armappservice.WebAppsClientDeleteDomainOwnershipIdentifierSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteDomainOwnershipIdentifierSlotResponse], errResp azfake.ErrorResponder)
 
 	// DeleteFunction is the fake for method WebAppsClient.DeleteFunction
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -264,7 +264,7 @@ type WebAppsServer struct {
 
 	// DeleteFunctionSecretSlot is the fake for method WebAppsClient.DeleteFunctionSecretSlot
 	// HTTP status codes to indicate success: http.StatusNoContent
-	DeleteFunctionSecretSlot func(ctx context.Context, resourceGroupName string, name string, functionName string, keyName string, slot string, options *armappservice.WebAppsClientDeleteFunctionSecretSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteFunctionSecretSlotResponse], errResp azfake.ErrorResponder)
+	DeleteFunctionSecretSlot func(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, keyName string, options *armappservice.WebAppsClientDeleteFunctionSecretSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteFunctionSecretSlotResponse], errResp azfake.ErrorResponder)
 
 	// DeleteHostNameBinding is the fake for method WebAppsClient.DeleteHostNameBinding
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
@@ -280,7 +280,7 @@ type WebAppsServer struct {
 
 	// DeleteHostSecretSlot is the fake for method WebAppsClient.DeleteHostSecretSlot
 	// HTTP status codes to indicate success: http.StatusNoContent
-	DeleteHostSecretSlot func(ctx context.Context, resourceGroupName string, name string, keyType string, keyName string, slot string, options *armappservice.WebAppsClientDeleteHostSecretSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteHostSecretSlotResponse], errResp azfake.ErrorResponder)
+	DeleteHostSecretSlot func(ctx context.Context, resourceGroupName string, name string, slot string, keyType string, keyName string, options *armappservice.WebAppsClientDeleteHostSecretSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteHostSecretSlotResponse], errResp azfake.ErrorResponder)
 
 	// DeleteHybridConnection is the fake for method WebAppsClient.DeleteHybridConnection
 	// HTTP status codes to indicate success: http.StatusOK
@@ -288,19 +288,19 @@ type WebAppsServer struct {
 
 	// DeleteHybridConnectionSlot is the fake for method WebAppsClient.DeleteHybridConnectionSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	DeleteHybridConnectionSlot func(ctx context.Context, resourceGroupName string, name string, namespaceName string, relayName string, slot string, options *armappservice.WebAppsClientDeleteHybridConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteHybridConnectionSlotResponse], errResp azfake.ErrorResponder)
+	DeleteHybridConnectionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, namespaceName string, relayName string, options *armappservice.WebAppsClientDeleteHybridConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteHybridConnectionSlotResponse], errResp azfake.ErrorResponder)
 
 	// DeleteInstanceFunctionSlot is the fake for method WebAppsClient.DeleteInstanceFunctionSlot
 	// HTTP status codes to indicate success: http.StatusNoContent
-	DeleteInstanceFunctionSlot func(ctx context.Context, resourceGroupName string, name string, functionName string, slot string, options *armappservice.WebAppsClientDeleteInstanceFunctionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteInstanceFunctionSlotResponse], errResp azfake.ErrorResponder)
+	DeleteInstanceFunctionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, options *armappservice.WebAppsClientDeleteInstanceFunctionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteInstanceFunctionSlotResponse], errResp azfake.ErrorResponder)
 
 	// DeleteInstanceProcess is the fake for method WebAppsClient.DeleteInstanceProcess
 	// HTTP status codes to indicate success: http.StatusNoContent
-	DeleteInstanceProcess func(ctx context.Context, resourceGroupName string, name string, processID string, instanceID string, options *armappservice.WebAppsClientDeleteInstanceProcessOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteInstanceProcessResponse], errResp azfake.ErrorResponder)
+	DeleteInstanceProcess func(ctx context.Context, resourceGroupName string, name string, instanceID string, processID string, options *armappservice.WebAppsClientDeleteInstanceProcessOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteInstanceProcessResponse], errResp azfake.ErrorResponder)
 
 	// DeleteInstanceProcessSlot is the fake for method WebAppsClient.DeleteInstanceProcessSlot
 	// HTTP status codes to indicate success: http.StatusNoContent
-	DeleteInstanceProcessSlot func(ctx context.Context, resourceGroupName string, name string, processID string, slot string, instanceID string, options *armappservice.WebAppsClientDeleteInstanceProcessSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteInstanceProcessSlotResponse], errResp azfake.ErrorResponder)
+	DeleteInstanceProcessSlot func(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, processID string, options *armappservice.WebAppsClientDeleteInstanceProcessSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteInstanceProcessSlotResponse], errResp azfake.ErrorResponder)
 
 	// DeletePremierAddOn is the fake for method WebAppsClient.DeletePremierAddOn
 	// HTTP status codes to indicate success: http.StatusOK
@@ -308,7 +308,7 @@ type WebAppsServer struct {
 
 	// DeletePremierAddOnSlot is the fake for method WebAppsClient.DeletePremierAddOnSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	DeletePremierAddOnSlot func(ctx context.Context, resourceGroupName string, name string, premierAddOnName string, slot string, options *armappservice.WebAppsClientDeletePremierAddOnSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeletePremierAddOnSlotResponse], errResp azfake.ErrorResponder)
+	DeletePremierAddOnSlot func(ctx context.Context, resourceGroupName string, name string, slot string, premierAddOnName string, options *armappservice.WebAppsClientDeletePremierAddOnSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeletePremierAddOnSlotResponse], errResp azfake.ErrorResponder)
 
 	// BeginDeletePrivateEndpointConnection is the fake for method WebAppsClient.BeginDeletePrivateEndpointConnection
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
@@ -316,7 +316,7 @@ type WebAppsServer struct {
 
 	// BeginDeletePrivateEndpointConnectionSlot is the fake for method WebAppsClient.BeginDeletePrivateEndpointConnectionSlot
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
-	BeginDeletePrivateEndpointConnectionSlot func(ctx context.Context, resourceGroupName string, name string, privateEndpointConnectionName string, slot string, options *armappservice.WebAppsClientBeginDeletePrivateEndpointConnectionSlotOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientDeletePrivateEndpointConnectionSlotResponse], errResp azfake.ErrorResponder)
+	BeginDeletePrivateEndpointConnectionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, privateEndpointConnectionName string, options *armappservice.WebAppsClientBeginDeletePrivateEndpointConnectionSlotOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientDeletePrivateEndpointConnectionSlotResponse], errResp azfake.ErrorResponder)
 
 	// DeleteProcess is the fake for method WebAppsClient.DeleteProcess
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -324,7 +324,7 @@ type WebAppsServer struct {
 
 	// DeleteProcessSlot is the fake for method WebAppsClient.DeleteProcessSlot
 	// HTTP status codes to indicate success: http.StatusNoContent
-	DeleteProcessSlot func(ctx context.Context, resourceGroupName string, name string, processID string, slot string, options *armappservice.WebAppsClientDeleteProcessSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteProcessSlotResponse], errResp azfake.ErrorResponder)
+	DeleteProcessSlot func(ctx context.Context, resourceGroupName string, name string, slot string, processID string, options *armappservice.WebAppsClientDeleteProcessSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteProcessSlotResponse], errResp azfake.ErrorResponder)
 
 	// DeletePublicCertificate is the fake for method WebAppsClient.DeletePublicCertificate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
@@ -340,7 +340,7 @@ type WebAppsServer struct {
 
 	// DeleteRelayServiceConnectionSlot is the fake for method WebAppsClient.DeleteRelayServiceConnectionSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	DeleteRelayServiceConnectionSlot func(ctx context.Context, resourceGroupName string, name string, entityName string, slot string, options *armappservice.WebAppsClientDeleteRelayServiceConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteRelayServiceConnectionSlotResponse], errResp azfake.ErrorResponder)
+	DeleteRelayServiceConnectionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, entityName string, options *armappservice.WebAppsClientDeleteRelayServiceConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteRelayServiceConnectionSlotResponse], errResp azfake.ErrorResponder)
 
 	// DeleteSiteContainer is the fake for method WebAppsClient.DeleteSiteContainer
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
@@ -356,7 +356,7 @@ type WebAppsServer struct {
 
 	// DeleteSiteExtensionSlot is the fake for method WebAppsClient.DeleteSiteExtensionSlot
 	// HTTP status codes to indicate success: http.StatusNoContent
-	DeleteSiteExtensionSlot func(ctx context.Context, resourceGroupName string, name string, siteExtensionID string, slot string, options *armappservice.WebAppsClientDeleteSiteExtensionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteSiteExtensionSlotResponse], errResp azfake.ErrorResponder)
+	DeleteSiteExtensionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, siteExtensionID string, options *armappservice.WebAppsClientDeleteSiteExtensionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteSiteExtensionSlotResponse], errResp azfake.ErrorResponder)
 
 	// DeleteSlot is the fake for method WebAppsClient.DeleteSlot
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
@@ -384,7 +384,7 @@ type WebAppsServer struct {
 
 	// DeleteTriggeredWebJobSlot is the fake for method WebAppsClient.DeleteTriggeredWebJobSlot
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
-	DeleteTriggeredWebJobSlot func(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, options *armappservice.WebAppsClientDeleteTriggeredWebJobSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteTriggeredWebJobSlotResponse], errResp azfake.ErrorResponder)
+	DeleteTriggeredWebJobSlot func(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, options *armappservice.WebAppsClientDeleteTriggeredWebJobSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteTriggeredWebJobSlotResponse], errResp azfake.ErrorResponder)
 
 	// DeleteVnetConnection is the fake for method WebAppsClient.DeleteVnetConnection
 	// HTTP status codes to indicate success: http.StatusOK
@@ -392,7 +392,7 @@ type WebAppsServer struct {
 
 	// DeleteVnetConnectionSlot is the fake for method WebAppsClient.DeleteVnetConnectionSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	DeleteVnetConnectionSlot func(ctx context.Context, resourceGroupName string, name string, vnetName string, slot string, options *armappservice.WebAppsClientDeleteVnetConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteVnetConnectionSlotResponse], errResp azfake.ErrorResponder)
+	DeleteVnetConnectionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, options *armappservice.WebAppsClientDeleteVnetConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientDeleteVnetConnectionSlotResponse], errResp azfake.ErrorResponder)
 
 	// DeployWorkflowArtifacts is the fake for method WebAppsClient.DeployWorkflowArtifacts
 	// HTTP status codes to indicate success: http.StatusOK
@@ -428,7 +428,7 @@ type WebAppsServer struct {
 
 	// GetAppSettingKeyVaultReferenceSlot is the fake for method WebAppsClient.GetAppSettingKeyVaultReferenceSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetAppSettingKeyVaultReferenceSlot func(ctx context.Context, resourceGroupName string, name string, appSettingKey string, slot string, options *armappservice.WebAppsClientGetAppSettingKeyVaultReferenceSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetAppSettingKeyVaultReferenceSlotResponse], errResp azfake.ErrorResponder)
+	GetAppSettingKeyVaultReferenceSlot func(ctx context.Context, resourceGroupName string, name string, slot string, appSettingKey string, options *armappservice.WebAppsClientGetAppSettingKeyVaultReferenceSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetAppSettingKeyVaultReferenceSlotResponse], errResp azfake.ErrorResponder)
 
 	// NewGetAppSettingsKeyVaultReferencesPager is the fake for method WebAppsClient.NewGetAppSettingsKeyVaultReferencesPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -476,7 +476,7 @@ type WebAppsServer struct {
 
 	// GetBackupStatusSlot is the fake for method WebAppsClient.GetBackupStatusSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetBackupStatusSlot func(ctx context.Context, resourceGroupName string, name string, backupID string, slot string, options *armappservice.WebAppsClientGetBackupStatusSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetBackupStatusSlotResponse], errResp azfake.ErrorResponder)
+	GetBackupStatusSlot func(ctx context.Context, resourceGroupName string, name string, slot string, backupID string, options *armappservice.WebAppsClientGetBackupStatusSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetBackupStatusSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetConfiguration is the fake for method WebAppsClient.GetConfiguration
 	// HTTP status codes to indicate success: http.StatusOK
@@ -492,7 +492,7 @@ type WebAppsServer struct {
 
 	// GetConfigurationSnapshotSlot is the fake for method WebAppsClient.GetConfigurationSnapshotSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetConfigurationSnapshotSlot func(ctx context.Context, resourceGroupName string, name string, snapshotID string, slot string, options *armappservice.WebAppsClientGetConfigurationSnapshotSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetConfigurationSnapshotSlotResponse], errResp azfake.ErrorResponder)
+	GetConfigurationSnapshotSlot func(ctx context.Context, resourceGroupName string, name string, slot string, snapshotID string, options *armappservice.WebAppsClientGetConfigurationSnapshotSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetConfigurationSnapshotSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetContainerLogsZip is the fake for method WebAppsClient.GetContainerLogsZip
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
@@ -508,7 +508,7 @@ type WebAppsServer struct {
 
 	// GetContinuousWebJobSlot is the fake for method WebAppsClient.GetContinuousWebJobSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetContinuousWebJobSlot func(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, options *armappservice.WebAppsClientGetContinuousWebJobSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetContinuousWebJobSlotResponse], errResp azfake.ErrorResponder)
+	GetContinuousWebJobSlot func(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, options *armappservice.WebAppsClientGetContinuousWebJobSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetContinuousWebJobSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetDeployment is the fake for method WebAppsClient.GetDeployment
 	// HTTP status codes to indicate success: http.StatusOK
@@ -516,7 +516,7 @@ type WebAppsServer struct {
 
 	// GetDeploymentSlot is the fake for method WebAppsClient.GetDeploymentSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetDeploymentSlot func(ctx context.Context, resourceGroupName string, name string, id string, slot string, options *armappservice.WebAppsClientGetDeploymentSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetDeploymentSlotResponse], errResp azfake.ErrorResponder)
+	GetDeploymentSlot func(ctx context.Context, resourceGroupName string, name string, slot string, id string, options *armappservice.WebAppsClientGetDeploymentSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetDeploymentSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetDiagnosticLogsConfiguration is the fake for method WebAppsClient.GetDiagnosticLogsConfiguration
 	// HTTP status codes to indicate success: http.StatusOK
@@ -532,7 +532,7 @@ type WebAppsServer struct {
 
 	// GetDomainOwnershipIdentifierSlot is the fake for method WebAppsClient.GetDomainOwnershipIdentifierSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetDomainOwnershipIdentifierSlot func(ctx context.Context, resourceGroupName string, name string, domainOwnershipIdentifierName string, slot string, options *armappservice.WebAppsClientGetDomainOwnershipIdentifierSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetDomainOwnershipIdentifierSlotResponse], errResp azfake.ErrorResponder)
+	GetDomainOwnershipIdentifierSlot func(ctx context.Context, resourceGroupName string, name string, slot string, domainOwnershipIdentifierName string, options *armappservice.WebAppsClientGetDomainOwnershipIdentifierSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetDomainOwnershipIdentifierSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetFtpAllowed is the fake for method WebAppsClient.GetFtpAllowed
 	// HTTP status codes to indicate success: http.StatusOK
@@ -568,11 +568,11 @@ type WebAppsServer struct {
 
 	// GetHybridConnectionSlot is the fake for method WebAppsClient.GetHybridConnectionSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetHybridConnectionSlot func(ctx context.Context, resourceGroupName string, name string, namespaceName string, relayName string, slot string, options *armappservice.WebAppsClientGetHybridConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetHybridConnectionSlotResponse], errResp azfake.ErrorResponder)
+	GetHybridConnectionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, namespaceName string, relayName string, options *armappservice.WebAppsClientGetHybridConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetHybridConnectionSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetInstanceFunctionSlot is the fake for method WebAppsClient.GetInstanceFunctionSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetInstanceFunctionSlot func(ctx context.Context, resourceGroupName string, name string, functionName string, slot string, options *armappservice.WebAppsClientGetInstanceFunctionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetInstanceFunctionSlotResponse], errResp azfake.ErrorResponder)
+	GetInstanceFunctionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, options *armappservice.WebAppsClientGetInstanceFunctionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetInstanceFunctionSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetInstanceInfo is the fake for method WebAppsClient.GetInstanceInfo
 	// HTTP status codes to indicate success: http.StatusOK
@@ -580,7 +580,7 @@ type WebAppsServer struct {
 
 	// GetInstanceInfoSlot is the fake for method WebAppsClient.GetInstanceInfoSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetInstanceInfoSlot func(ctx context.Context, resourceGroupName string, name string, instanceID string, slot string, options *armappservice.WebAppsClientGetInstanceInfoSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetInstanceInfoSlotResponse], errResp azfake.ErrorResponder)
+	GetInstanceInfoSlot func(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, options *armappservice.WebAppsClientGetInstanceInfoSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetInstanceInfoSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetInstanceMSDeployLog is the fake for method WebAppsClient.GetInstanceMSDeployLog
 	// HTTP status codes to indicate success: http.StatusOK
@@ -600,27 +600,27 @@ type WebAppsServer struct {
 
 	// GetInstanceProcess is the fake for method WebAppsClient.GetInstanceProcess
 	// HTTP status codes to indicate success: http.StatusOK
-	GetInstanceProcess func(ctx context.Context, resourceGroupName string, name string, processID string, instanceID string, options *armappservice.WebAppsClientGetInstanceProcessOptions) (resp azfake.Responder[armappservice.WebAppsClientGetInstanceProcessResponse], errResp azfake.ErrorResponder)
+	GetInstanceProcess func(ctx context.Context, resourceGroupName string, name string, instanceID string, processID string, options *armappservice.WebAppsClientGetInstanceProcessOptions) (resp azfake.Responder[armappservice.WebAppsClientGetInstanceProcessResponse], errResp azfake.ErrorResponder)
 
 	// GetInstanceProcessDump is the fake for method WebAppsClient.GetInstanceProcessDump
 	// HTTP status codes to indicate success: http.StatusOK
-	GetInstanceProcessDump func(ctx context.Context, resourceGroupName string, name string, processID string, instanceID string, options *armappservice.WebAppsClientGetInstanceProcessDumpOptions) (resp azfake.Responder[armappservice.WebAppsClientGetInstanceProcessDumpResponse], errResp azfake.ErrorResponder)
+	GetInstanceProcessDump func(ctx context.Context, resourceGroupName string, name string, instanceID string, processID string, options *armappservice.WebAppsClientGetInstanceProcessDumpOptions) (resp azfake.Responder[armappservice.WebAppsClientGetInstanceProcessDumpResponse], errResp azfake.ErrorResponder)
 
 	// GetInstanceProcessDumpSlot is the fake for method WebAppsClient.GetInstanceProcessDumpSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetInstanceProcessDumpSlot func(ctx context.Context, resourceGroupName string, name string, processID string, slot string, instanceID string, options *armappservice.WebAppsClientGetInstanceProcessDumpSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetInstanceProcessDumpSlotResponse], errResp azfake.ErrorResponder)
+	GetInstanceProcessDumpSlot func(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, processID string, options *armappservice.WebAppsClientGetInstanceProcessDumpSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetInstanceProcessDumpSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetInstanceProcessModule is the fake for method WebAppsClient.GetInstanceProcessModule
 	// HTTP status codes to indicate success: http.StatusOK
-	GetInstanceProcessModule func(ctx context.Context, resourceGroupName string, name string, processID string, baseAddress string, instanceID string, options *armappservice.WebAppsClientGetInstanceProcessModuleOptions) (resp azfake.Responder[armappservice.WebAppsClientGetInstanceProcessModuleResponse], errResp azfake.ErrorResponder)
+	GetInstanceProcessModule func(ctx context.Context, resourceGroupName string, name string, instanceID string, processID string, baseAddress string, options *armappservice.WebAppsClientGetInstanceProcessModuleOptions) (resp azfake.Responder[armappservice.WebAppsClientGetInstanceProcessModuleResponse], errResp azfake.ErrorResponder)
 
 	// GetInstanceProcessModuleSlot is the fake for method WebAppsClient.GetInstanceProcessModuleSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetInstanceProcessModuleSlot func(ctx context.Context, resourceGroupName string, name string, processID string, baseAddress string, slot string, instanceID string, options *armappservice.WebAppsClientGetInstanceProcessModuleSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetInstanceProcessModuleSlotResponse], errResp azfake.ErrorResponder)
+	GetInstanceProcessModuleSlot func(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, processID string, baseAddress string, options *armappservice.WebAppsClientGetInstanceProcessModuleSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetInstanceProcessModuleSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetInstanceProcessSlot is the fake for method WebAppsClient.GetInstanceProcessSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetInstanceProcessSlot func(ctx context.Context, resourceGroupName string, name string, processID string, slot string, instanceID string, options *armappservice.WebAppsClientGetInstanceProcessSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetInstanceProcessSlotResponse], errResp azfake.ErrorResponder)
+	GetInstanceProcessSlot func(ctx context.Context, resourceGroupName string, name string, slot string, instanceID string, processID string, options *armappservice.WebAppsClientGetInstanceProcessSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetInstanceProcessSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetInstanceWorkflowSlot is the fake for method WebAppsClient.GetInstanceWorkflowSlot
 	// HTTP status codes to indicate success: http.StatusOK
@@ -656,11 +656,11 @@ type WebAppsServer struct {
 
 	// GetNetworkTraceOperationSlot is the fake for method WebAppsClient.GetNetworkTraceOperationSlot
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	GetNetworkTraceOperationSlot func(ctx context.Context, resourceGroupName string, name string, operationID string, slot string, options *armappservice.WebAppsClientGetNetworkTraceOperationSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetNetworkTraceOperationSlotResponse], errResp azfake.ErrorResponder)
+	GetNetworkTraceOperationSlot func(ctx context.Context, resourceGroupName string, name string, slot string, operationID string, options *armappservice.WebAppsClientGetNetworkTraceOperationSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetNetworkTraceOperationSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetNetworkTraceOperationSlotV2 is the fake for method WebAppsClient.GetNetworkTraceOperationSlotV2
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	GetNetworkTraceOperationSlotV2 func(ctx context.Context, resourceGroupName string, name string, operationID string, slot string, options *armappservice.WebAppsClientGetNetworkTraceOperationSlotV2Options) (resp azfake.Responder[armappservice.WebAppsClientGetNetworkTraceOperationSlotV2Response], errResp azfake.ErrorResponder)
+	GetNetworkTraceOperationSlotV2 func(ctx context.Context, resourceGroupName string, name string, slot string, operationID string, options *armappservice.WebAppsClientGetNetworkTraceOperationSlotV2Options) (resp azfake.Responder[armappservice.WebAppsClientGetNetworkTraceOperationSlotV2Response], errResp azfake.ErrorResponder)
 
 	// GetNetworkTraceOperationV2 is the fake for method WebAppsClient.GetNetworkTraceOperationV2
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
@@ -672,11 +672,11 @@ type WebAppsServer struct {
 
 	// GetNetworkTracesSlot is the fake for method WebAppsClient.GetNetworkTracesSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetNetworkTracesSlot func(ctx context.Context, resourceGroupName string, name string, operationID string, slot string, options *armappservice.WebAppsClientGetNetworkTracesSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetNetworkTracesSlotResponse], errResp azfake.ErrorResponder)
+	GetNetworkTracesSlot func(ctx context.Context, resourceGroupName string, name string, slot string, operationID string, options *armappservice.WebAppsClientGetNetworkTracesSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetNetworkTracesSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetNetworkTracesSlotV2 is the fake for method WebAppsClient.GetNetworkTracesSlotV2
 	// HTTP status codes to indicate success: http.StatusOK
-	GetNetworkTracesSlotV2 func(ctx context.Context, resourceGroupName string, name string, operationID string, slot string, options *armappservice.WebAppsClientGetNetworkTracesSlotV2Options) (resp azfake.Responder[armappservice.WebAppsClientGetNetworkTracesSlotV2Response], errResp azfake.ErrorResponder)
+	GetNetworkTracesSlotV2 func(ctx context.Context, resourceGroupName string, name string, slot string, operationID string, options *armappservice.WebAppsClientGetNetworkTracesSlotV2Options) (resp azfake.Responder[armappservice.WebAppsClientGetNetworkTracesSlotV2Response], errResp azfake.ErrorResponder)
 
 	// GetNetworkTracesV2 is the fake for method WebAppsClient.GetNetworkTracesV2
 	// HTTP status codes to indicate success: http.StatusOK
@@ -692,7 +692,7 @@ type WebAppsServer struct {
 
 	// GetPremierAddOnSlot is the fake for method WebAppsClient.GetPremierAddOnSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetPremierAddOnSlot func(ctx context.Context, resourceGroupName string, name string, premierAddOnName string, slot string, options *armappservice.WebAppsClientGetPremierAddOnSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetPremierAddOnSlotResponse], errResp azfake.ErrorResponder)
+	GetPremierAddOnSlot func(ctx context.Context, resourceGroupName string, name string, slot string, premierAddOnName string, options *armappservice.WebAppsClientGetPremierAddOnSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetPremierAddOnSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetPrivateAccess is the fake for method WebAppsClient.GetPrivateAccess
 	// HTTP status codes to indicate success: http.StatusOK
@@ -716,7 +716,7 @@ type WebAppsServer struct {
 
 	// GetPrivateEndpointConnectionSlot is the fake for method WebAppsClient.GetPrivateEndpointConnectionSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetPrivateEndpointConnectionSlot func(ctx context.Context, resourceGroupName string, name string, privateEndpointConnectionName string, slot string, options *armappservice.WebAppsClientGetPrivateEndpointConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetPrivateEndpointConnectionSlotResponse], errResp azfake.ErrorResponder)
+	GetPrivateEndpointConnectionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, privateEndpointConnectionName string, options *armappservice.WebAppsClientGetPrivateEndpointConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetPrivateEndpointConnectionSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetPrivateLinkResources is the fake for method WebAppsClient.GetPrivateLinkResources
 	// HTTP status codes to indicate success: http.StatusOK
@@ -736,7 +736,7 @@ type WebAppsServer struct {
 
 	// GetProcessDumpSlot is the fake for method WebAppsClient.GetProcessDumpSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetProcessDumpSlot func(ctx context.Context, resourceGroupName string, name string, processID string, slot string, options *armappservice.WebAppsClientGetProcessDumpSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetProcessDumpSlotResponse], errResp azfake.ErrorResponder)
+	GetProcessDumpSlot func(ctx context.Context, resourceGroupName string, name string, slot string, processID string, options *armappservice.WebAppsClientGetProcessDumpSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetProcessDumpSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetProcessModule is the fake for method WebAppsClient.GetProcessModule
 	// HTTP status codes to indicate success: http.StatusOK
@@ -744,11 +744,11 @@ type WebAppsServer struct {
 
 	// GetProcessModuleSlot is the fake for method WebAppsClient.GetProcessModuleSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetProcessModuleSlot func(ctx context.Context, resourceGroupName string, name string, processID string, baseAddress string, slot string, options *armappservice.WebAppsClientGetProcessModuleSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetProcessModuleSlotResponse], errResp azfake.ErrorResponder)
+	GetProcessModuleSlot func(ctx context.Context, resourceGroupName string, name string, slot string, processID string, baseAddress string, options *armappservice.WebAppsClientGetProcessModuleSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetProcessModuleSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetProcessSlot is the fake for method WebAppsClient.GetProcessSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetProcessSlot func(ctx context.Context, resourceGroupName string, name string, processID string, slot string, options *armappservice.WebAppsClientGetProcessSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetProcessSlotResponse], errResp azfake.ErrorResponder)
+	GetProcessSlot func(ctx context.Context, resourceGroupName string, name string, slot string, processID string, options *armappservice.WebAppsClientGetProcessSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetProcessSlotResponse], errResp azfake.ErrorResponder)
 
 	// BeginGetProductionSiteDeploymentStatus is the fake for method WebAppsClient.BeginGetProductionSiteDeploymentStatus
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
@@ -768,7 +768,7 @@ type WebAppsServer struct {
 
 	// GetRelayServiceConnectionSlot is the fake for method WebAppsClient.GetRelayServiceConnectionSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetRelayServiceConnectionSlot func(ctx context.Context, resourceGroupName string, name string, entityName string, slot string, options *armappservice.WebAppsClientGetRelayServiceConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetRelayServiceConnectionSlotResponse], errResp azfake.ErrorResponder)
+	GetRelayServiceConnectionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, entityName string, options *armappservice.WebAppsClientGetRelayServiceConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetRelayServiceConnectionSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetScmAllowed is the fake for method WebAppsClient.GetScmAllowed
 	// HTTP status codes to indicate success: http.StatusOK
@@ -784,7 +784,7 @@ type WebAppsServer struct {
 
 	// GetSiteConnectionStringKeyVaultReferenceSlot is the fake for method WebAppsClient.GetSiteConnectionStringKeyVaultReferenceSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetSiteConnectionStringKeyVaultReferenceSlot func(ctx context.Context, resourceGroupName string, name string, connectionStringKey string, slot string, options *armappservice.WebAppsClientGetSiteConnectionStringKeyVaultReferenceSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetSiteConnectionStringKeyVaultReferenceSlotResponse], errResp azfake.ErrorResponder)
+	GetSiteConnectionStringKeyVaultReferenceSlot func(ctx context.Context, resourceGroupName string, name string, slot string, connectionStringKey string, options *armappservice.WebAppsClientGetSiteConnectionStringKeyVaultReferenceSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetSiteConnectionStringKeyVaultReferenceSlotResponse], errResp azfake.ErrorResponder)
 
 	// NewGetSiteConnectionStringKeyVaultReferencesPager is the fake for method WebAppsClient.NewGetSiteConnectionStringKeyVaultReferencesPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -808,7 +808,7 @@ type WebAppsServer struct {
 
 	// GetSiteExtensionSlot is the fake for method WebAppsClient.GetSiteExtensionSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetSiteExtensionSlot func(ctx context.Context, resourceGroupName string, name string, siteExtensionID string, slot string, options *armappservice.WebAppsClientGetSiteExtensionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetSiteExtensionSlotResponse], errResp azfake.ErrorResponder)
+	GetSiteExtensionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, siteExtensionID string, options *armappservice.WebAppsClientGetSiteExtensionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetSiteExtensionSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetSitePhpErrorLogFlag is the fake for method WebAppsClient.GetSitePhpErrorLogFlag
 	// HTTP status codes to indicate success: http.StatusOK
@@ -852,11 +852,11 @@ type WebAppsServer struct {
 
 	// GetTriggeredWebJobHistorySlot is the fake for method WebAppsClient.GetTriggeredWebJobHistorySlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetTriggeredWebJobHistorySlot func(ctx context.Context, resourceGroupName string, name string, webJobName string, id string, slot string, options *armappservice.WebAppsClientGetTriggeredWebJobHistorySlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetTriggeredWebJobHistorySlotResponse], errResp azfake.ErrorResponder)
+	GetTriggeredWebJobHistorySlot func(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, id string, options *armappservice.WebAppsClientGetTriggeredWebJobHistorySlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetTriggeredWebJobHistorySlotResponse], errResp azfake.ErrorResponder)
 
 	// GetTriggeredWebJobSlot is the fake for method WebAppsClient.GetTriggeredWebJobSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetTriggeredWebJobSlot func(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, options *armappservice.WebAppsClientGetTriggeredWebJobSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetTriggeredWebJobSlotResponse], errResp azfake.ErrorResponder)
+	GetTriggeredWebJobSlot func(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, options *armappservice.WebAppsClientGetTriggeredWebJobSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetTriggeredWebJobSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetVnetConnection is the fake for method WebAppsClient.GetVnetConnection
 	// HTTP status codes to indicate success: http.StatusOK
@@ -868,11 +868,11 @@ type WebAppsServer struct {
 
 	// GetVnetConnectionGatewaySlot is the fake for method WebAppsClient.GetVnetConnectionGatewaySlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetVnetConnectionGatewaySlot func(ctx context.Context, resourceGroupName string, name string, vnetName string, gatewayName string, slot string, options *armappservice.WebAppsClientGetVnetConnectionGatewaySlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetVnetConnectionGatewaySlotResponse], errResp azfake.ErrorResponder)
+	GetVnetConnectionGatewaySlot func(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, gatewayName string, options *armappservice.WebAppsClientGetVnetConnectionGatewaySlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetVnetConnectionGatewaySlotResponse], errResp azfake.ErrorResponder)
 
 	// GetVnetConnectionSlot is the fake for method WebAppsClient.GetVnetConnectionSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetVnetConnectionSlot func(ctx context.Context, resourceGroupName string, name string, vnetName string, slot string, options *armappservice.WebAppsClientGetVnetConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetVnetConnectionSlotResponse], errResp azfake.ErrorResponder)
+	GetVnetConnectionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, options *armappservice.WebAppsClientGetVnetConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetVnetConnectionSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetWebJob is the fake for method WebAppsClient.GetWebJob
 	// HTTP status codes to indicate success: http.StatusOK
@@ -880,7 +880,7 @@ type WebAppsServer struct {
 
 	// GetWebJobSlot is the fake for method WebAppsClient.GetWebJobSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetWebJobSlot func(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, options *armappservice.WebAppsClientGetWebJobSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetWebJobSlotResponse], errResp azfake.ErrorResponder)
+	GetWebJobSlot func(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, options *armappservice.WebAppsClientGetWebJobSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientGetWebJobSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetWebSiteContainerLogs is the fake for method WebAppsClient.GetWebSiteContainerLogs
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
@@ -900,7 +900,7 @@ type WebAppsServer struct {
 
 	// BeginInstallSiteExtensionSlot is the fake for method WebAppsClient.BeginInstallSiteExtensionSlot
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	BeginInstallSiteExtensionSlot func(ctx context.Context, resourceGroupName string, name string, siteExtensionID string, slot string, options *armappservice.WebAppsClientBeginInstallSiteExtensionSlotOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientInstallSiteExtensionSlotResponse], errResp azfake.ErrorResponder)
+	BeginInstallSiteExtensionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, siteExtensionID string, options *armappservice.WebAppsClientBeginInstallSiteExtensionSlotOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientInstallSiteExtensionSlotResponse], errResp azfake.ErrorResponder)
 
 	// IsCloneable is the fake for method WebAppsClient.IsCloneable
 	// HTTP status codes to indicate success: http.StatusOK
@@ -936,7 +936,7 @@ type WebAppsServer struct {
 
 	// ListBackupStatusSecretsSlot is the fake for method WebAppsClient.ListBackupStatusSecretsSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	ListBackupStatusSecretsSlot func(ctx context.Context, resourceGroupName string, name string, backupID string, slot string, request armappservice.BackupRequest, options *armappservice.WebAppsClientListBackupStatusSecretsSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientListBackupStatusSecretsSlotResponse], errResp azfake.ErrorResponder)
+	ListBackupStatusSecretsSlot func(ctx context.Context, resourceGroupName string, name string, slot string, backupID string, request armappservice.BackupRequest, options *armappservice.WebAppsClientListBackupStatusSecretsSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientListBackupStatusSecretsSlotResponse], errResp azfake.ErrorResponder)
 
 	// NewListBackupsPager is the fake for method WebAppsClient.NewListBackupsPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -996,7 +996,7 @@ type WebAppsServer struct {
 
 	// ListDeploymentLogSlot is the fake for method WebAppsClient.ListDeploymentLogSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	ListDeploymentLogSlot func(ctx context.Context, resourceGroupName string, name string, id string, slot string, options *armappservice.WebAppsClientListDeploymentLogSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientListDeploymentLogSlotResponse], errResp azfake.ErrorResponder)
+	ListDeploymentLogSlot func(ctx context.Context, resourceGroupName string, name string, slot string, id string, options *armappservice.WebAppsClientListDeploymentLogSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientListDeploymentLogSlotResponse], errResp azfake.ErrorResponder)
 
 	// NewListDeploymentsPager is the fake for method WebAppsClient.NewListDeploymentsPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -1020,7 +1020,7 @@ type WebAppsServer struct {
 
 	// ListFunctionKeysSlot is the fake for method WebAppsClient.ListFunctionKeysSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	ListFunctionKeysSlot func(ctx context.Context, resourceGroupName string, name string, functionName string, slot string, options *armappservice.WebAppsClientListFunctionKeysSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientListFunctionKeysSlotResponse], errResp azfake.ErrorResponder)
+	ListFunctionKeysSlot func(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, options *armappservice.WebAppsClientListFunctionKeysSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientListFunctionKeysSlotResponse], errResp azfake.ErrorResponder)
 
 	// ListFunctionSecrets is the fake for method WebAppsClient.ListFunctionSecrets
 	// HTTP status codes to indicate success: http.StatusOK
@@ -1028,7 +1028,7 @@ type WebAppsServer struct {
 
 	// ListFunctionSecretsSlot is the fake for method WebAppsClient.ListFunctionSecretsSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	ListFunctionSecretsSlot func(ctx context.Context, resourceGroupName string, name string, functionName string, slot string, options *armappservice.WebAppsClientListFunctionSecretsSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientListFunctionSecretsSlotResponse], errResp azfake.ErrorResponder)
+	ListFunctionSecretsSlot func(ctx context.Context, resourceGroupName string, name string, slot string, functionName string, options *armappservice.WebAppsClientListFunctionSecretsSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientListFunctionSecretsSlotResponse], errResp azfake.ErrorResponder)
 
 	// NewListFunctionsPager is the fake for method WebAppsClient.NewListFunctionsPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -1072,19 +1072,19 @@ type WebAppsServer struct {
 
 	// NewListInstanceProcessModulesPager is the fake for method WebAppsClient.NewListInstanceProcessModulesPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListInstanceProcessModulesPager func(resourceGroupName string, name string, processID string, instanceID string, options *armappservice.WebAppsClientListInstanceProcessModulesOptions) (resp azfake.PagerResponder[armappservice.WebAppsClientListInstanceProcessModulesResponse])
+	NewListInstanceProcessModulesPager func(resourceGroupName string, name string, instanceID string, processID string, options *armappservice.WebAppsClientListInstanceProcessModulesOptions) (resp azfake.PagerResponder[armappservice.WebAppsClientListInstanceProcessModulesResponse])
 
 	// NewListInstanceProcessModulesSlotPager is the fake for method WebAppsClient.NewListInstanceProcessModulesSlotPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListInstanceProcessModulesSlotPager func(resourceGroupName string, name string, processID string, slot string, instanceID string, options *armappservice.WebAppsClientListInstanceProcessModulesSlotOptions) (resp azfake.PagerResponder[armappservice.WebAppsClientListInstanceProcessModulesSlotResponse])
+	NewListInstanceProcessModulesSlotPager func(resourceGroupName string, name string, slot string, instanceID string, processID string, options *armappservice.WebAppsClientListInstanceProcessModulesSlotOptions) (resp azfake.PagerResponder[armappservice.WebAppsClientListInstanceProcessModulesSlotResponse])
 
 	// NewListInstanceProcessThreadsPager is the fake for method WebAppsClient.NewListInstanceProcessThreadsPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListInstanceProcessThreadsPager func(resourceGroupName string, name string, processID string, instanceID string, options *armappservice.WebAppsClientListInstanceProcessThreadsOptions) (resp azfake.PagerResponder[armappservice.WebAppsClientListInstanceProcessThreadsResponse])
+	NewListInstanceProcessThreadsPager func(resourceGroupName string, name string, instanceID string, processID string, options *armappservice.WebAppsClientListInstanceProcessThreadsOptions) (resp azfake.PagerResponder[armappservice.WebAppsClientListInstanceProcessThreadsResponse])
 
 	// NewListInstanceProcessThreadsSlotPager is the fake for method WebAppsClient.NewListInstanceProcessThreadsSlotPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListInstanceProcessThreadsSlotPager func(resourceGroupName string, name string, processID string, slot string, instanceID string, options *armappservice.WebAppsClientListInstanceProcessThreadsSlotOptions) (resp azfake.PagerResponder[armappservice.WebAppsClientListInstanceProcessThreadsSlotResponse])
+	NewListInstanceProcessThreadsSlotPager func(resourceGroupName string, name string, slot string, instanceID string, processID string, options *armappservice.WebAppsClientListInstanceProcessThreadsSlotOptions) (resp azfake.PagerResponder[armappservice.WebAppsClientListInstanceProcessThreadsSlotResponse])
 
 	// NewListInstanceProcessesPager is the fake for method WebAppsClient.NewListInstanceProcessesPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -1112,7 +1112,7 @@ type WebAppsServer struct {
 
 	// ListNetworkFeaturesSlot is the fake for method WebAppsClient.ListNetworkFeaturesSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	ListNetworkFeaturesSlot func(ctx context.Context, resourceGroupName string, name string, view string, slot string, options *armappservice.WebAppsClientListNetworkFeaturesSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientListNetworkFeaturesSlotResponse], errResp azfake.ErrorResponder)
+	ListNetworkFeaturesSlot func(ctx context.Context, resourceGroupName string, name string, slot string, view string, options *armappservice.WebAppsClientListNetworkFeaturesSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientListNetworkFeaturesSlotResponse], errResp azfake.ErrorResponder)
 
 	// NewListPerfMonCountersPager is the fake for method WebAppsClient.NewListPerfMonCountersPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -1136,7 +1136,7 @@ type WebAppsServer struct {
 
 	// NewListProcessModulesSlotPager is the fake for method WebAppsClient.NewListProcessModulesSlotPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListProcessModulesSlotPager func(resourceGroupName string, name string, processID string, slot string, options *armappservice.WebAppsClientListProcessModulesSlotOptions) (resp azfake.PagerResponder[armappservice.WebAppsClientListProcessModulesSlotResponse])
+	NewListProcessModulesSlotPager func(resourceGroupName string, name string, slot string, processID string, options *armappservice.WebAppsClientListProcessModulesSlotOptions) (resp azfake.PagerResponder[armappservice.WebAppsClientListProcessModulesSlotResponse])
 
 	// NewListProcessThreadsPager is the fake for method WebAppsClient.NewListProcessThreadsPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -1144,7 +1144,7 @@ type WebAppsServer struct {
 
 	// NewListProcessThreadsSlotPager is the fake for method WebAppsClient.NewListProcessThreadsSlotPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListProcessThreadsSlotPager func(resourceGroupName string, name string, processID string, slot string, options *armappservice.WebAppsClientListProcessThreadsSlotOptions) (resp azfake.PagerResponder[armappservice.WebAppsClientListProcessThreadsSlotResponse])
+	NewListProcessThreadsSlotPager func(resourceGroupName string, name string, slot string, processID string, options *armappservice.WebAppsClientListProcessThreadsSlotOptions) (resp azfake.PagerResponder[armappservice.WebAppsClientListProcessThreadsSlotResponse])
 
 	// NewListProcessesPager is the fake for method WebAppsClient.NewListProcessesPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -1280,7 +1280,7 @@ type WebAppsServer struct {
 
 	// NewListTriggeredWebJobHistorySlotPager is the fake for method WebAppsClient.NewListTriggeredWebJobHistorySlotPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListTriggeredWebJobHistorySlotPager func(resourceGroupName string, name string, webJobName string, slot string, options *armappservice.WebAppsClientListTriggeredWebJobHistorySlotOptions) (resp azfake.PagerResponder[armappservice.WebAppsClientListTriggeredWebJobHistorySlotResponse])
+	NewListTriggeredWebJobHistorySlotPager func(resourceGroupName string, name string, slot string, webJobName string, options *armappservice.WebAppsClientListTriggeredWebJobHistorySlotOptions) (resp azfake.PagerResponder[armappservice.WebAppsClientListTriggeredWebJobHistorySlotResponse])
 
 	// NewListTriggeredWebJobsPager is the fake for method WebAppsClient.NewListTriggeredWebJobsPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -1332,7 +1332,7 @@ type WebAppsServer struct {
 
 	// BeginMigrateStorage is the fake for method WebAppsClient.BeginMigrateStorage
 	// HTTP status codes to indicate success: http.StatusOK
-	BeginMigrateStorage func(ctx context.Context, subscriptionName string, resourceGroupName string, name string, migrationOptions armappservice.StorageMigrationOptions, options *armappservice.WebAppsClientBeginMigrateStorageOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientMigrateStorageResponse], errResp azfake.ErrorResponder)
+	BeginMigrateStorage func(ctx context.Context, resourceGroupName string, name string, subscriptionName string, migrationOptions armappservice.StorageMigrationOptions, options *armappservice.WebAppsClientBeginMigrateStorageOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientMigrateStorageResponse], errResp azfake.ErrorResponder)
 
 	// PutPrivateAccessVnet is the fake for method WebAppsClient.PutPrivateAccessVnet
 	// HTTP status codes to indicate success: http.StatusOK
@@ -1348,7 +1348,7 @@ type WebAppsServer struct {
 
 	// RecoverSiteConfigurationSnapshotSlot is the fake for method WebAppsClient.RecoverSiteConfigurationSnapshotSlot
 	// HTTP status codes to indicate success: http.StatusNoContent
-	RecoverSiteConfigurationSnapshotSlot func(ctx context.Context, resourceGroupName string, name string, snapshotID string, slot string, options *armappservice.WebAppsClientRecoverSiteConfigurationSnapshotSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientRecoverSiteConfigurationSnapshotSlotResponse], errResp azfake.ErrorResponder)
+	RecoverSiteConfigurationSnapshotSlot func(ctx context.Context, resourceGroupName string, name string, slot string, snapshotID string, options *armappservice.WebAppsClientRecoverSiteConfigurationSnapshotSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientRecoverSiteConfigurationSnapshotSlotResponse], errResp azfake.ErrorResponder)
 
 	// ResetProductionSlotConfig is the fake for method WebAppsClient.ResetProductionSlotConfig
 	// HTTP status codes to indicate success: http.StatusOK
@@ -1388,7 +1388,7 @@ type WebAppsServer struct {
 
 	// BeginRestoreSlot is the fake for method WebAppsClient.BeginRestoreSlot
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
-	BeginRestoreSlot func(ctx context.Context, resourceGroupName string, name string, backupID string, slot string, request armappservice.RestoreRequest, options *armappservice.WebAppsClientBeginRestoreSlotOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientRestoreSlotResponse], errResp azfake.ErrorResponder)
+	BeginRestoreSlot func(ctx context.Context, resourceGroupName string, name string, slot string, backupID string, request armappservice.RestoreRequest, options *armappservice.WebAppsClientBeginRestoreSlotOptions) (resp azfake.PollerResponder[armappservice.WebAppsClientRestoreSlotResponse], errResp azfake.ErrorResponder)
 
 	// BeginRestoreSnapshot is the fake for method WebAppsClient.BeginRestoreSnapshot
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
@@ -1404,7 +1404,7 @@ type WebAppsServer struct {
 
 	// RunTriggeredWebJobSlot is the fake for method WebAppsClient.RunTriggeredWebJobSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	RunTriggeredWebJobSlot func(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, options *armappservice.WebAppsClientRunTriggeredWebJobSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientRunTriggeredWebJobSlotResponse], errResp azfake.ErrorResponder)
+	RunTriggeredWebJobSlot func(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, options *armappservice.WebAppsClientRunTriggeredWebJobSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientRunTriggeredWebJobSlotResponse], errResp azfake.ErrorResponder)
 
 	// Start is the fake for method WebAppsClient.Start
 	// HTTP status codes to indicate success: http.StatusOK
@@ -1416,7 +1416,7 @@ type WebAppsServer struct {
 
 	// StartContinuousWebJobSlot is the fake for method WebAppsClient.StartContinuousWebJobSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	StartContinuousWebJobSlot func(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, options *armappservice.WebAppsClientStartContinuousWebJobSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientStartContinuousWebJobSlotResponse], errResp azfake.ErrorResponder)
+	StartContinuousWebJobSlot func(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, options *armappservice.WebAppsClientStartContinuousWebJobSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientStartContinuousWebJobSlotResponse], errResp azfake.ErrorResponder)
 
 	// BeginStartNetworkTrace is the fake for method WebAppsClient.BeginStartNetworkTrace
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
@@ -1456,7 +1456,7 @@ type WebAppsServer struct {
 
 	// StopContinuousWebJobSlot is the fake for method WebAppsClient.StopContinuousWebJobSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	StopContinuousWebJobSlot func(ctx context.Context, resourceGroupName string, name string, webJobName string, slot string, options *armappservice.WebAppsClientStopContinuousWebJobSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientStopContinuousWebJobSlotResponse], errResp azfake.ErrorResponder)
+	StopContinuousWebJobSlot func(ctx context.Context, resourceGroupName string, name string, slot string, webJobName string, options *armappservice.WebAppsClientStopContinuousWebJobSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientStopContinuousWebJobSlotResponse], errResp azfake.ErrorResponder)
 
 	// StopNetworkTrace is the fake for method WebAppsClient.StopNetworkTrace
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
@@ -1584,7 +1584,7 @@ type WebAppsServer struct {
 
 	// UpdateDomainOwnershipIdentifierSlot is the fake for method WebAppsClient.UpdateDomainOwnershipIdentifierSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	UpdateDomainOwnershipIdentifierSlot func(ctx context.Context, resourceGroupName string, name string, domainOwnershipIdentifierName string, slot string, domainOwnershipIdentifier armappservice.Identifier, options *armappservice.WebAppsClientUpdateDomainOwnershipIdentifierSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientUpdateDomainOwnershipIdentifierSlotResponse], errResp azfake.ErrorResponder)
+	UpdateDomainOwnershipIdentifierSlot func(ctx context.Context, resourceGroupName string, name string, slot string, domainOwnershipIdentifierName string, domainOwnershipIdentifier armappservice.Identifier, options *armappservice.WebAppsClientUpdateDomainOwnershipIdentifierSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientUpdateDomainOwnershipIdentifierSlotResponse], errResp azfake.ErrorResponder)
 
 	// UpdateFtpAllowed is the fake for method WebAppsClient.UpdateFtpAllowed
 	// HTTP status codes to indicate success: http.StatusOK
@@ -1600,7 +1600,7 @@ type WebAppsServer struct {
 
 	// UpdateHybridConnectionSlot is the fake for method WebAppsClient.UpdateHybridConnectionSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	UpdateHybridConnectionSlot func(ctx context.Context, resourceGroupName string, name string, namespaceName string, relayName string, slot string, connectionEnvelope armappservice.HybridConnection, options *armappservice.WebAppsClientUpdateHybridConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientUpdateHybridConnectionSlotResponse], errResp azfake.ErrorResponder)
+	UpdateHybridConnectionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, namespaceName string, relayName string, connectionEnvelope armappservice.HybridConnection, options *armappservice.WebAppsClientUpdateHybridConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientUpdateHybridConnectionSlotResponse], errResp azfake.ErrorResponder)
 
 	// UpdateMachineKey is the fake for method WebAppsClient.UpdateMachineKey
 	// HTTP status codes to indicate success: http.StatusOK
@@ -1620,7 +1620,7 @@ type WebAppsServer struct {
 
 	// UpdatePremierAddOnSlot is the fake for method WebAppsClient.UpdatePremierAddOnSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	UpdatePremierAddOnSlot func(ctx context.Context, resourceGroupName string, name string, premierAddOnName string, slot string, premierAddOn armappservice.PremierAddOnPatchResource, options *armappservice.WebAppsClientUpdatePremierAddOnSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientUpdatePremierAddOnSlotResponse], errResp azfake.ErrorResponder)
+	UpdatePremierAddOnSlot func(ctx context.Context, resourceGroupName string, name string, slot string, premierAddOnName string, premierAddOn armappservice.PremierAddOnPatchResource, options *armappservice.WebAppsClientUpdatePremierAddOnSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientUpdatePremierAddOnSlotResponse], errResp azfake.ErrorResponder)
 
 	// UpdateRelayServiceConnection is the fake for method WebAppsClient.UpdateRelayServiceConnection
 	// HTTP status codes to indicate success: http.StatusOK
@@ -1628,7 +1628,7 @@ type WebAppsServer struct {
 
 	// UpdateRelayServiceConnectionSlot is the fake for method WebAppsClient.UpdateRelayServiceConnectionSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	UpdateRelayServiceConnectionSlot func(ctx context.Context, resourceGroupName string, name string, entityName string, slot string, connectionEnvelope armappservice.RelayServiceConnectionEntity, options *armappservice.WebAppsClientUpdateRelayServiceConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientUpdateRelayServiceConnectionSlotResponse], errResp azfake.ErrorResponder)
+	UpdateRelayServiceConnectionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, entityName string, connectionEnvelope armappservice.RelayServiceConnectionEntity, options *armappservice.WebAppsClientUpdateRelayServiceConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientUpdateRelayServiceConnectionSlotResponse], errResp azfake.ErrorResponder)
 
 	// UpdateScmAllowed is the fake for method WebAppsClient.UpdateScmAllowed
 	// HTTP status codes to indicate success: http.StatusOK
@@ -1680,11 +1680,11 @@ type WebAppsServer struct {
 
 	// UpdateVnetConnectionGatewaySlot is the fake for method WebAppsClient.UpdateVnetConnectionGatewaySlot
 	// HTTP status codes to indicate success: http.StatusOK
-	UpdateVnetConnectionGatewaySlot func(ctx context.Context, resourceGroupName string, name string, vnetName string, gatewayName string, slot string, connectionEnvelope armappservice.VnetGateway, options *armappservice.WebAppsClientUpdateVnetConnectionGatewaySlotOptions) (resp azfake.Responder[armappservice.WebAppsClientUpdateVnetConnectionGatewaySlotResponse], errResp azfake.ErrorResponder)
+	UpdateVnetConnectionGatewaySlot func(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, gatewayName string, connectionEnvelope armappservice.VnetGateway, options *armappservice.WebAppsClientUpdateVnetConnectionGatewaySlotOptions) (resp azfake.Responder[armappservice.WebAppsClientUpdateVnetConnectionGatewaySlotResponse], errResp azfake.ErrorResponder)
 
 	// UpdateVnetConnectionSlot is the fake for method WebAppsClient.UpdateVnetConnectionSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	UpdateVnetConnectionSlot func(ctx context.Context, resourceGroupName string, name string, vnetName string, slot string, connectionEnvelope armappservice.VnetInfoResource, options *armappservice.WebAppsClientUpdateVnetConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientUpdateVnetConnectionSlotResponse], errResp azfake.ErrorResponder)
+	UpdateVnetConnectionSlot func(ctx context.Context, resourceGroupName string, name string, slot string, vnetName string, connectionEnvelope armappservice.VnetInfoResource, options *armappservice.WebAppsClientUpdateVnetConnectionSlotOptions) (resp azfake.Responder[armappservice.WebAppsClientUpdateVnetConnectionSlotResponse], errResp azfake.ErrorResponder)
 }
 
 // NewWebAppsServerTransport creates a new instance of WebAppsServerTransport with the provided implementation.
@@ -2849,15 +2849,15 @@ func (w *WebAppsServerTransport) dispatchAddPremierAddOnSlot(req *http.Request) 
 	if err != nil {
 		return nil, err
 	}
-	premierAddOnNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("premierAddOnName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.AddPremierAddOnSlot(req.Context(), resourceGroupNameParam, nameParam, premierAddOnNameParam, slotParam, body, nil)
+	premierAddOnNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("premierAddOnName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.AddPremierAddOnSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, premierAddOnNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -3120,15 +3120,15 @@ func (w *WebAppsServerTransport) dispatchBeginApproveOrRejectPrivateEndpointConn
 		if err != nil {
 			return nil, err
 		}
-		privateEndpointConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointConnectionName")])
-		if err != nil {
-			return nil, err
-		}
 		slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := w.srv.BeginApproveOrRejectPrivateEndpointConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, privateEndpointConnectionNameParam, slotParam, body, nil)
+		privateEndpointConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointConnectionName")])
+		if err != nil {
+			return nil, err
+		}
+		respr, errRespr := w.srv.BeginApproveOrRejectPrivateEndpointConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, privateEndpointConnectionNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -3293,15 +3293,15 @@ func (w *WebAppsServerTransport) dispatchCreateDeploymentSlot(req *http.Request)
 	if err != nil {
 		return nil, err
 	}
-	idParam, err := url.PathUnescape(matches[regex.SubexpIndex("id")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.CreateDeploymentSlot(req.Context(), resourceGroupNameParam, nameParam, idParam, slotParam, body, nil)
+	idParam, err := url.PathUnescape(matches[regex.SubexpIndex("id")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.CreateDeploymentSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, idParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -3392,15 +3392,15 @@ func (w *WebAppsServerTransport) dispatchBeginCreateInstanceFunctionSlot(req *ht
 		if err != nil {
 			return nil, err
 		}
-		functionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("functionName")])
-		if err != nil {
-			return nil, err
-		}
 		slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := w.srv.BeginCreateInstanceFunctionSlot(req.Context(), resourceGroupNameParam, nameParam, functionNameParam, slotParam, body, nil)
+		functionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("functionName")])
+		if err != nil {
+			return nil, err
+		}
+		respr, errRespr := w.srv.BeginCreateInstanceFunctionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, functionNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -3854,15 +3854,15 @@ func (w *WebAppsServerTransport) dispatchCreateOrUpdateDomainOwnershipIdentifier
 	if err != nil {
 		return nil, err
 	}
-	domainOwnershipIdentifierNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("domainOwnershipIdentifierName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.CreateOrUpdateDomainOwnershipIdentifierSlot(req.Context(), resourceGroupNameParam, nameParam, domainOwnershipIdentifierNameParam, slotParam, body, nil)
+	domainOwnershipIdentifierNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("domainOwnershipIdentifierName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.CreateOrUpdateDomainOwnershipIdentifierSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, domainOwnershipIdentifierNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -3944,6 +3944,10 @@ func (w *WebAppsServerTransport) dispatchCreateOrUpdateFunctionSecretSlot(req *h
 	if err != nil {
 		return nil, err
 	}
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	if err != nil {
+		return nil, err
+	}
 	functionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("functionName")])
 	if err != nil {
 		return nil, err
@@ -3952,11 +3956,7 @@ func (w *WebAppsServerTransport) dispatchCreateOrUpdateFunctionSecretSlot(req *h
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := w.srv.CreateOrUpdateFunctionSecretSlot(req.Context(), resourceGroupNameParam, nameParam, functionNameParam, keyNameParam, slotParam, body, nil)
+	respr, errRespr := w.srv.CreateOrUpdateFunctionSecretSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, functionNameParam, keyNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -4034,15 +4034,15 @@ func (w *WebAppsServerTransport) dispatchCreateOrUpdateHostNameBindingSlot(req *
 	if err != nil {
 		return nil, err
 	}
-	hostNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.CreateOrUpdateHostNameBindingSlot(req.Context(), resourceGroupNameParam, nameParam, hostNameParam, slotParam, body, nil)
+	hostNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.CreateOrUpdateHostNameBindingSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, hostNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -4124,6 +4124,10 @@ func (w *WebAppsServerTransport) dispatchCreateOrUpdateHostSecretSlot(req *http.
 	if err != nil {
 		return nil, err
 	}
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	if err != nil {
+		return nil, err
+	}
 	keyTypeParam, err := url.PathUnescape(matches[regex.SubexpIndex("keyType")])
 	if err != nil {
 		return nil, err
@@ -4132,11 +4136,7 @@ func (w *WebAppsServerTransport) dispatchCreateOrUpdateHostSecretSlot(req *http.
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := w.srv.CreateOrUpdateHostSecretSlot(req.Context(), resourceGroupNameParam, nameParam, keyTypeParam, keyNameParam, slotParam, body, nil)
+	respr, errRespr := w.srv.CreateOrUpdateHostSecretSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, keyTypeParam, keyNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -4218,6 +4218,10 @@ func (w *WebAppsServerTransport) dispatchCreateOrUpdateHybridConnectionSlot(req 
 	if err != nil {
 		return nil, err
 	}
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	if err != nil {
+		return nil, err
+	}
 	namespaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("namespaceName")])
 	if err != nil {
 		return nil, err
@@ -4226,11 +4230,7 @@ func (w *WebAppsServerTransport) dispatchCreateOrUpdateHybridConnectionSlot(req 
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := w.srv.CreateOrUpdateHybridConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, namespaceNameParam, relayNameParam, slotParam, body, nil)
+	respr, errRespr := w.srv.CreateOrUpdateHybridConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, namespaceNameParam, relayNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -4308,15 +4308,15 @@ func (w *WebAppsServerTransport) dispatchCreateOrUpdatePublicCertificateSlot(req
 	if err != nil {
 		return nil, err
 	}
-	publicCertificateNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("publicCertificateName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.CreateOrUpdatePublicCertificateSlot(req.Context(), resourceGroupNameParam, nameParam, publicCertificateNameParam, slotParam, body, nil)
+	publicCertificateNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("publicCertificateName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.CreateOrUpdatePublicCertificateSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, publicCertificateNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -4394,15 +4394,15 @@ func (w *WebAppsServerTransport) dispatchCreateOrUpdateRelayServiceConnectionSlo
 	if err != nil {
 		return nil, err
 	}
-	entityNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("entityName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.CreateOrUpdateRelayServiceConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, entityNameParam, slotParam, body, nil)
+	entityNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("entityName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.CreateOrUpdateRelayServiceConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, entityNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -4841,6 +4841,10 @@ func (w *WebAppsServerTransport) dispatchCreateOrUpdateVnetConnectionGatewaySlot
 	if err != nil {
 		return nil, err
 	}
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	if err != nil {
+		return nil, err
+	}
 	vnetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vnetName")])
 	if err != nil {
 		return nil, err
@@ -4849,11 +4853,7 @@ func (w *WebAppsServerTransport) dispatchCreateOrUpdateVnetConnectionGatewaySlot
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := w.srv.CreateOrUpdateVnetConnectionGatewaySlot(req.Context(), resourceGroupNameParam, nameParam, vnetNameParam, gatewayNameParam, slotParam, body, nil)
+	respr, errRespr := w.srv.CreateOrUpdateVnetConnectionGatewaySlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, vnetNameParam, gatewayNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -4890,15 +4890,15 @@ func (w *WebAppsServerTransport) dispatchCreateOrUpdateVnetConnectionSlot(req *h
 	if err != nil {
 		return nil, err
 	}
-	vnetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vnetName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.CreateOrUpdateVnetConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, vnetNameParam, slotParam, body, nil)
+	vnetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vnetName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.CreateOrUpdateVnetConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, vnetNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -5095,15 +5095,15 @@ func (w *WebAppsServerTransport) dispatchDeleteBackupSlot(req *http.Request) (*h
 	if err != nil {
 		return nil, err
 	}
-	backupIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("backupId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.DeleteBackupSlot(req.Context(), resourceGroupNameParam, nameParam, backupIDParam, slotParam, nil)
+	backupIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("backupId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.DeleteBackupSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, backupIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -5173,15 +5173,15 @@ func (w *WebAppsServerTransport) dispatchDeleteContinuousWebJobSlot(req *http.Re
 	if err != nil {
 		return nil, err
 	}
-	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.DeleteContinuousWebJobSlot(req.Context(), resourceGroupNameParam, nameParam, webJobNameParam, slotParam, nil)
+	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.DeleteContinuousWebJobSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, webJobNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -5251,15 +5251,15 @@ func (w *WebAppsServerTransport) dispatchDeleteDeploymentSlot(req *http.Request)
 	if err != nil {
 		return nil, err
 	}
-	idParam, err := url.PathUnescape(matches[regex.SubexpIndex("id")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.DeleteDeploymentSlot(req.Context(), resourceGroupNameParam, nameParam, idParam, slotParam, nil)
+	idParam, err := url.PathUnescape(matches[regex.SubexpIndex("id")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.DeleteDeploymentSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, idParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -5329,15 +5329,15 @@ func (w *WebAppsServerTransport) dispatchDeleteDomainOwnershipIdentifierSlot(req
 	if err != nil {
 		return nil, err
 	}
-	domainOwnershipIdentifierNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("domainOwnershipIdentifierName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.DeleteDomainOwnershipIdentifierSlot(req.Context(), resourceGroupNameParam, nameParam, domainOwnershipIdentifierNameParam, slotParam, nil)
+	domainOwnershipIdentifierNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("domainOwnershipIdentifierName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.DeleteDomainOwnershipIdentifierSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, domainOwnershipIdentifierNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -5448,6 +5448,10 @@ func (w *WebAppsServerTransport) dispatchDeleteFunctionSecretSlot(req *http.Requ
 	if err != nil {
 		return nil, err
 	}
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	if err != nil {
+		return nil, err
+	}
 	functionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("functionName")])
 	if err != nil {
 		return nil, err
@@ -5456,11 +5460,7 @@ func (w *WebAppsServerTransport) dispatchDeleteFunctionSecretSlot(req *http.Requ
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := w.srv.DeleteFunctionSecretSlot(req.Context(), resourceGroupNameParam, nameParam, functionNameParam, keyNameParam, slotParam, nil)
+	respr, errRespr := w.srv.DeleteFunctionSecretSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, functionNameParam, keyNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -5612,6 +5612,10 @@ func (w *WebAppsServerTransport) dispatchDeleteHostSecretSlot(req *http.Request)
 	if err != nil {
 		return nil, err
 	}
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	if err != nil {
+		return nil, err
+	}
 	keyTypeParam, err := url.PathUnescape(matches[regex.SubexpIndex("keyType")])
 	if err != nil {
 		return nil, err
@@ -5620,11 +5624,7 @@ func (w *WebAppsServerTransport) dispatchDeleteHostSecretSlot(req *http.Request)
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := w.srv.DeleteHostSecretSlot(req.Context(), resourceGroupNameParam, nameParam, keyTypeParam, keyNameParam, slotParam, nil)
+	respr, errRespr := w.srv.DeleteHostSecretSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, keyTypeParam, keyNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -5698,6 +5698,10 @@ func (w *WebAppsServerTransport) dispatchDeleteHybridConnectionSlot(req *http.Re
 	if err != nil {
 		return nil, err
 	}
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	if err != nil {
+		return nil, err
+	}
 	namespaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("namespaceName")])
 	if err != nil {
 		return nil, err
@@ -5706,11 +5710,7 @@ func (w *WebAppsServerTransport) dispatchDeleteHybridConnectionSlot(req *http.Re
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := w.srv.DeleteHybridConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, namespaceNameParam, relayNameParam, slotParam, nil)
+	respr, errRespr := w.srv.DeleteHybridConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, namespaceNameParam, relayNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -5743,15 +5743,15 @@ func (w *WebAppsServerTransport) dispatchDeleteInstanceFunctionSlot(req *http.Re
 	if err != nil {
 		return nil, err
 	}
-	functionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("functionName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.DeleteInstanceFunctionSlot(req.Context(), resourceGroupNameParam, nameParam, functionNameParam, slotParam, nil)
+	functionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("functionName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.DeleteInstanceFunctionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, functionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -5784,15 +5784,15 @@ func (w *WebAppsServerTransport) dispatchDeleteInstanceProcess(req *http.Request
 	if err != nil {
 		return nil, err
 	}
-	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
-	if err != nil {
-		return nil, err
-	}
 	instanceIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.DeleteInstanceProcess(req.Context(), resourceGroupNameParam, nameParam, processIDParam, instanceIDParam, nil)
+	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.DeleteInstanceProcess(req.Context(), resourceGroupNameParam, nameParam, instanceIDParam, processIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -5825,10 +5825,6 @@ func (w *WebAppsServerTransport) dispatchDeleteInstanceProcessSlot(req *http.Req
 	if err != nil {
 		return nil, err
 	}
-	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
@@ -5837,7 +5833,11 @@ func (w *WebAppsServerTransport) dispatchDeleteInstanceProcessSlot(req *http.Req
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.DeleteInstanceProcessSlot(req.Context(), resourceGroupNameParam, nameParam, processIDParam, slotParam, instanceIDParam, nil)
+	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.DeleteInstanceProcessSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, instanceIDParam, processIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -5907,15 +5907,15 @@ func (w *WebAppsServerTransport) dispatchDeletePremierAddOnSlot(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	premierAddOnNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("premierAddOnName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.DeletePremierAddOnSlot(req.Context(), resourceGroupNameParam, nameParam, premierAddOnNameParam, slotParam, nil)
+	premierAddOnNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("premierAddOnName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.DeletePremierAddOnSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, premierAddOnNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -5998,15 +5998,15 @@ func (w *WebAppsServerTransport) dispatchBeginDeletePrivateEndpointConnectionSlo
 		if err != nil {
 			return nil, err
 		}
-		privateEndpointConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointConnectionName")])
-		if err != nil {
-			return nil, err
-		}
 		slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := w.srv.BeginDeletePrivateEndpointConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, privateEndpointConnectionNameParam, slotParam, nil)
+		privateEndpointConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointConnectionName")])
+		if err != nil {
+			return nil, err
+		}
+		respr, errRespr := w.srv.BeginDeletePrivateEndpointConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, privateEndpointConnectionNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -6085,15 +6085,15 @@ func (w *WebAppsServerTransport) dispatchDeleteProcessSlot(req *http.Request) (*
 	if err != nil {
 		return nil, err
 	}
-	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.DeleteProcessSlot(req.Context(), resourceGroupNameParam, nameParam, processIDParam, slotParam, nil)
+	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.DeleteProcessSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, processIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -6241,15 +6241,15 @@ func (w *WebAppsServerTransport) dispatchDeleteRelayServiceConnectionSlot(req *h
 	if err != nil {
 		return nil, err
 	}
-	entityNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("entityName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.DeleteRelayServiceConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, entityNameParam, slotParam, nil)
+	entityNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("entityName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.DeleteRelayServiceConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, entityNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -6397,15 +6397,15 @@ func (w *WebAppsServerTransport) dispatchDeleteSiteExtensionSlot(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	siteExtensionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("siteExtensionId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.DeleteSiteExtensionSlot(req.Context(), resourceGroupNameParam, nameParam, siteExtensionIDParam, slotParam, nil)
+	siteExtensionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("siteExtensionId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.DeleteSiteExtensionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, siteExtensionIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -6700,15 +6700,15 @@ func (w *WebAppsServerTransport) dispatchDeleteTriggeredWebJobSlot(req *http.Req
 	if err != nil {
 		return nil, err
 	}
-	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.DeleteTriggeredWebJobSlot(req.Context(), resourceGroupNameParam, nameParam, webJobNameParam, slotParam, nil)
+	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.DeleteTriggeredWebJobSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, webJobNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -6778,15 +6778,15 @@ func (w *WebAppsServerTransport) dispatchDeleteVnetConnectionSlot(req *http.Requ
 	if err != nil {
 		return nil, err
 	}
-	vnetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vnetName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.DeleteVnetConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, vnetNameParam, slotParam, nil)
+	vnetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vnetName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.DeleteVnetConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, vnetNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -7127,15 +7127,15 @@ func (w *WebAppsServerTransport) dispatchGetAppSettingKeyVaultReferenceSlot(req 
 	if err != nil {
 		return nil, err
 	}
-	appSettingKeyParam, err := url.PathUnescape(matches[regex.SubexpIndex("appSettingKey")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetAppSettingKeyVaultReferenceSlot(req.Context(), resourceGroupNameParam, nameParam, appSettingKeyParam, slotParam, nil)
+	appSettingKeyParam, err := url.PathUnescape(matches[regex.SubexpIndex("appSettingKey")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetAppSettingKeyVaultReferenceSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, appSettingKeyParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -7571,15 +7571,15 @@ func (w *WebAppsServerTransport) dispatchGetBackupStatusSlot(req *http.Request) 
 	if err != nil {
 		return nil, err
 	}
-	backupIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("backupId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetBackupStatusSlot(req.Context(), resourceGroupNameParam, nameParam, backupIDParam, slotParam, nil)
+	backupIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("backupId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetBackupStatusSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, backupIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -7719,15 +7719,15 @@ func (w *WebAppsServerTransport) dispatchGetConfigurationSnapshotSlot(req *http.
 	if err != nil {
 		return nil, err
 	}
-	snapshotIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("snapshotId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetConfigurationSnapshotSlot(req.Context(), resourceGroupNameParam, nameParam, snapshotIDParam, slotParam, nil)
+	snapshotIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("snapshotId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetConfigurationSnapshotSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, snapshotIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -7879,15 +7879,15 @@ func (w *WebAppsServerTransport) dispatchGetContinuousWebJobSlot(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetContinuousWebJobSlot(req.Context(), resourceGroupNameParam, nameParam, webJobNameParam, slotParam, nil)
+	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetContinuousWebJobSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, webJobNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -7957,15 +7957,15 @@ func (w *WebAppsServerTransport) dispatchGetDeploymentSlot(req *http.Request) (*
 	if err != nil {
 		return nil, err
 	}
-	idParam, err := url.PathUnescape(matches[regex.SubexpIndex("id")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetDeploymentSlot(req.Context(), resourceGroupNameParam, nameParam, idParam, slotParam, nil)
+	idParam, err := url.PathUnescape(matches[regex.SubexpIndex("id")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetDeploymentSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, idParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -8105,15 +8105,15 @@ func (w *WebAppsServerTransport) dispatchGetDomainOwnershipIdentifierSlot(req *h
 	if err != nil {
 		return nil, err
 	}
-	domainOwnershipIdentifierNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("domainOwnershipIdentifierName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetDomainOwnershipIdentifierSlot(req.Context(), resourceGroupNameParam, nameParam, domainOwnershipIdentifierNameParam, slotParam, nil)
+	domainOwnershipIdentifierNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("domainOwnershipIdentifierName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetDomainOwnershipIdentifierSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, domainOwnershipIdentifierNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -8442,6 +8442,10 @@ func (w *WebAppsServerTransport) dispatchGetHybridConnectionSlot(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	if err != nil {
+		return nil, err
+	}
 	namespaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("namespaceName")])
 	if err != nil {
 		return nil, err
@@ -8450,11 +8454,7 @@ func (w *WebAppsServerTransport) dispatchGetHybridConnectionSlot(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := w.srv.GetHybridConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, namespaceNameParam, relayNameParam, slotParam, nil)
+	respr, errRespr := w.srv.GetHybridConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, namespaceNameParam, relayNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -8487,15 +8487,15 @@ func (w *WebAppsServerTransport) dispatchGetInstanceFunctionSlot(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	functionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("functionName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetInstanceFunctionSlot(req.Context(), resourceGroupNameParam, nameParam, functionNameParam, slotParam, nil)
+	functionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("functionName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetInstanceFunctionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, functionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -8565,15 +8565,15 @@ func (w *WebAppsServerTransport) dispatchGetInstanceInfoSlot(req *http.Request) 
 	if err != nil {
 		return nil, err
 	}
-	instanceIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetInstanceInfoSlot(req.Context(), resourceGroupNameParam, nameParam, instanceIDParam, slotParam, nil)
+	instanceIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetInstanceInfoSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, instanceIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -8762,15 +8762,15 @@ func (w *WebAppsServerTransport) dispatchGetInstanceProcess(req *http.Request) (
 	if err != nil {
 		return nil, err
 	}
-	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
-	if err != nil {
-		return nil, err
-	}
 	instanceIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetInstanceProcess(req.Context(), resourceGroupNameParam, nameParam, processIDParam, instanceIDParam, nil)
+	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetInstanceProcess(req.Context(), resourceGroupNameParam, nameParam, instanceIDParam, processIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -8803,15 +8803,15 @@ func (w *WebAppsServerTransport) dispatchGetInstanceProcessDump(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
-	if err != nil {
-		return nil, err
-	}
 	instanceIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetInstanceProcessDump(req.Context(), resourceGroupNameParam, nameParam, processIDParam, instanceIDParam, nil)
+	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetInstanceProcessDump(req.Context(), resourceGroupNameParam, nameParam, instanceIDParam, processIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -8850,10 +8850,6 @@ func (w *WebAppsServerTransport) dispatchGetInstanceProcessDumpSlot(req *http.Re
 	if err != nil {
 		return nil, err
 	}
-	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
@@ -8862,7 +8858,11 @@ func (w *WebAppsServerTransport) dispatchGetInstanceProcessDumpSlot(req *http.Re
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetInstanceProcessDumpSlot(req.Context(), resourceGroupNameParam, nameParam, processIDParam, slotParam, instanceIDParam, nil)
+	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetInstanceProcessDumpSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, instanceIDParam, processIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -8901,6 +8901,10 @@ func (w *WebAppsServerTransport) dispatchGetInstanceProcessModule(req *http.Requ
 	if err != nil {
 		return nil, err
 	}
+	instanceIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
+	if err != nil {
+		return nil, err
+	}
 	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
 	if err != nil {
 		return nil, err
@@ -8909,11 +8913,7 @@ func (w *WebAppsServerTransport) dispatchGetInstanceProcessModule(req *http.Requ
 	if err != nil {
 		return nil, err
 	}
-	instanceIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := w.srv.GetInstanceProcessModule(req.Context(), resourceGroupNameParam, nameParam, processIDParam, baseAddressParam, instanceIDParam, nil)
+	respr, errRespr := w.srv.GetInstanceProcessModule(req.Context(), resourceGroupNameParam, nameParam, instanceIDParam, processIDParam, baseAddressParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -8946,14 +8946,6 @@ func (w *WebAppsServerTransport) dispatchGetInstanceProcessModuleSlot(req *http.
 	if err != nil {
 		return nil, err
 	}
-	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
-	if err != nil {
-		return nil, err
-	}
-	baseAddressParam, err := url.PathUnescape(matches[regex.SubexpIndex("baseAddress")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
@@ -8962,7 +8954,15 @@ func (w *WebAppsServerTransport) dispatchGetInstanceProcessModuleSlot(req *http.
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetInstanceProcessModuleSlot(req.Context(), resourceGroupNameParam, nameParam, processIDParam, baseAddressParam, slotParam, instanceIDParam, nil)
+	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
+	if err != nil {
+		return nil, err
+	}
+	baseAddressParam, err := url.PathUnescape(matches[regex.SubexpIndex("baseAddress")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetInstanceProcessModuleSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, instanceIDParam, processIDParam, baseAddressParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -8995,10 +8995,6 @@ func (w *WebAppsServerTransport) dispatchGetInstanceProcessSlot(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
@@ -9007,7 +9003,11 @@ func (w *WebAppsServerTransport) dispatchGetInstanceProcessSlot(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetInstanceProcessSlot(req.Context(), resourceGroupNameParam, nameParam, processIDParam, slotParam, instanceIDParam, nil)
+	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetInstanceProcessSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, instanceIDParam, processIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -9328,15 +9328,15 @@ func (w *WebAppsServerTransport) dispatchGetNetworkTraceOperationSlot(req *http.
 	if err != nil {
 		return nil, err
 	}
-	operationIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("operationId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetNetworkTraceOperationSlot(req.Context(), resourceGroupNameParam, nameParam, operationIDParam, slotParam, nil)
+	operationIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("operationId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetNetworkTraceOperationSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, operationIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -9369,15 +9369,15 @@ func (w *WebAppsServerTransport) dispatchGetNetworkTraceOperationSlotV2(req *htt
 	if err != nil {
 		return nil, err
 	}
-	operationIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("operationId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetNetworkTraceOperationSlotV2(req.Context(), resourceGroupNameParam, nameParam, operationIDParam, slotParam, nil)
+	operationIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("operationId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetNetworkTraceOperationSlotV2(req.Context(), resourceGroupNameParam, nameParam, slotParam, operationIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -9484,15 +9484,15 @@ func (w *WebAppsServerTransport) dispatchGetNetworkTracesSlot(req *http.Request)
 	if err != nil {
 		return nil, err
 	}
-	operationIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("operationId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetNetworkTracesSlot(req.Context(), resourceGroupNameParam, nameParam, operationIDParam, slotParam, nil)
+	operationIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("operationId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetNetworkTracesSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, operationIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -9525,15 +9525,15 @@ func (w *WebAppsServerTransport) dispatchGetNetworkTracesSlotV2(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	operationIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("operationId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetNetworkTracesSlotV2(req.Context(), resourceGroupNameParam, nameParam, operationIDParam, slotParam, nil)
+	operationIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("operationId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetNetworkTracesSlotV2(req.Context(), resourceGroupNameParam, nameParam, slotParam, operationIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -9673,15 +9673,15 @@ func (w *WebAppsServerTransport) dispatchGetPremierAddOnSlot(req *http.Request) 
 	if err != nil {
 		return nil, err
 	}
-	premierAddOnNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("premierAddOnName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetPremierAddOnSlot(req.Context(), resourceGroupNameParam, nameParam, premierAddOnNameParam, slotParam, nil)
+	premierAddOnNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("premierAddOnName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetPremierAddOnSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, premierAddOnNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -9907,15 +9907,15 @@ func (w *WebAppsServerTransport) dispatchGetPrivateEndpointConnectionSlot(req *h
 	if err != nil {
 		return nil, err
 	}
-	privateEndpointConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointConnectionName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetPrivateEndpointConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, privateEndpointConnectionNameParam, slotParam, nil)
+	privateEndpointConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointConnectionName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetPrivateEndpointConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, privateEndpointConnectionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -10098,15 +10098,15 @@ func (w *WebAppsServerTransport) dispatchGetProcessDumpSlot(req *http.Request) (
 	if err != nil {
 		return nil, err
 	}
-	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetProcessDumpSlot(req.Context(), resourceGroupNameParam, nameParam, processIDParam, slotParam, nil)
+	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetProcessDumpSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, processIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -10186,6 +10186,10 @@ func (w *WebAppsServerTransport) dispatchGetProcessModuleSlot(req *http.Request)
 	if err != nil {
 		return nil, err
 	}
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	if err != nil {
+		return nil, err
+	}
 	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
 	if err != nil {
 		return nil, err
@@ -10194,11 +10198,7 @@ func (w *WebAppsServerTransport) dispatchGetProcessModuleSlot(req *http.Request)
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := w.srv.GetProcessModuleSlot(req.Context(), resourceGroupNameParam, nameParam, processIDParam, baseAddressParam, slotParam, nil)
+	respr, errRespr := w.srv.GetProcessModuleSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, processIDParam, baseAddressParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -10231,15 +10231,15 @@ func (w *WebAppsServerTransport) dispatchGetProcessSlot(req *http.Request) (*htt
 	if err != nil {
 		return nil, err
 	}
-	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetProcessSlot(req.Context(), resourceGroupNameParam, nameParam, processIDParam, slotParam, nil)
+	processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetProcessSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, processIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -10435,15 +10435,15 @@ func (w *WebAppsServerTransport) dispatchGetRelayServiceConnectionSlot(req *http
 	if err != nil {
 		return nil, err
 	}
-	entityNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("entityName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetRelayServiceConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, entityNameParam, slotParam, nil)
+	entityNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("entityName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetRelayServiceConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, entityNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -10583,15 +10583,15 @@ func (w *WebAppsServerTransport) dispatchGetSiteConnectionStringKeyVaultReferenc
 	if err != nil {
 		return nil, err
 	}
-	connectionStringKeyParam, err := url.PathUnescape(matches[regex.SubexpIndex("connectionStringKey")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetSiteConnectionStringKeyVaultReferenceSlot(req.Context(), resourceGroupNameParam, nameParam, connectionStringKeyParam, slotParam, nil)
+	connectionStringKeyParam, err := url.PathUnescape(matches[regex.SubexpIndex("connectionStringKey")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetSiteConnectionStringKeyVaultReferenceSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, connectionStringKeyParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -10825,15 +10825,15 @@ func (w *WebAppsServerTransport) dispatchGetSiteExtensionSlot(req *http.Request)
 	if err != nil {
 		return nil, err
 	}
-	siteExtensionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("siteExtensionId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetSiteExtensionSlot(req.Context(), resourceGroupNameParam, nameParam, siteExtensionIDParam, slotParam, nil)
+	siteExtensionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("siteExtensionId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetSiteExtensionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, siteExtensionIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -11243,6 +11243,10 @@ func (w *WebAppsServerTransport) dispatchGetTriggeredWebJobHistorySlot(req *http
 	if err != nil {
 		return nil, err
 	}
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	if err != nil {
+		return nil, err
+	}
 	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
 	if err != nil {
 		return nil, err
@@ -11251,11 +11255,7 @@ func (w *WebAppsServerTransport) dispatchGetTriggeredWebJobHistorySlot(req *http
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := w.srv.GetTriggeredWebJobHistorySlot(req.Context(), resourceGroupNameParam, nameParam, webJobNameParam, idParam, slotParam, nil)
+	respr, errRespr := w.srv.GetTriggeredWebJobHistorySlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, webJobNameParam, idParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -11288,15 +11288,15 @@ func (w *WebAppsServerTransport) dispatchGetTriggeredWebJobSlot(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetTriggeredWebJobSlot(req.Context(), resourceGroupNameParam, nameParam, webJobNameParam, slotParam, nil)
+	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetTriggeredWebJobSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, webJobNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -11407,6 +11407,10 @@ func (w *WebAppsServerTransport) dispatchGetVnetConnectionGatewaySlot(req *http.
 	if err != nil {
 		return nil, err
 	}
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	if err != nil {
+		return nil, err
+	}
 	vnetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vnetName")])
 	if err != nil {
 		return nil, err
@@ -11415,11 +11419,7 @@ func (w *WebAppsServerTransport) dispatchGetVnetConnectionGatewaySlot(req *http.
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := w.srv.GetVnetConnectionGatewaySlot(req.Context(), resourceGroupNameParam, nameParam, vnetNameParam, gatewayNameParam, slotParam, nil)
+	respr, errRespr := w.srv.GetVnetConnectionGatewaySlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, vnetNameParam, gatewayNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -11452,15 +11452,15 @@ func (w *WebAppsServerTransport) dispatchGetVnetConnectionSlot(req *http.Request
 	if err != nil {
 		return nil, err
 	}
-	vnetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vnetName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetVnetConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, vnetNameParam, slotParam, nil)
+	vnetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vnetName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetVnetConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, vnetNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -11530,15 +11530,15 @@ func (w *WebAppsServerTransport) dispatchGetWebJobSlot(req *http.Request) (*http
 	if err != nil {
 		return nil, err
 	}
-	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.GetWebJobSlot(req.Context(), resourceGroupNameParam, nameParam, webJobNameParam, slotParam, nil)
+	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.GetWebJobSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, webJobNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -11740,15 +11740,15 @@ func (w *WebAppsServerTransport) dispatchBeginInstallSiteExtensionSlot(req *http
 		if err != nil {
 			return nil, err
 		}
-		siteExtensionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("siteExtensionId")])
-		if err != nil {
-			return nil, err
-		}
 		slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := w.srv.BeginInstallSiteExtensionSlot(req.Context(), resourceGroupNameParam, nameParam, siteExtensionIDParam, slotParam, nil)
+		siteExtensionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("siteExtensionId")])
+		if err != nil {
+			return nil, err
+		}
+		respr, errRespr := w.srv.BeginInstallSiteExtensionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, siteExtensionIDParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -12078,15 +12078,15 @@ func (w *WebAppsServerTransport) dispatchListBackupStatusSecretsSlot(req *http.R
 	if err != nil {
 		return nil, err
 	}
-	backupIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("backupId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.ListBackupStatusSecretsSlot(req.Context(), resourceGroupNameParam, nameParam, backupIDParam, slotParam, body, nil)
+	backupIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("backupId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.ListBackupStatusSecretsSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, backupIDParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -12708,15 +12708,15 @@ func (w *WebAppsServerTransport) dispatchListDeploymentLogSlot(req *http.Request
 	if err != nil {
 		return nil, err
 	}
-	idParam, err := url.PathUnescape(matches[regex.SubexpIndex("id")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.ListDeploymentLogSlot(req.Context(), resourceGroupNameParam, nameParam, idParam, slotParam, nil)
+	idParam, err := url.PathUnescape(matches[regex.SubexpIndex("id")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.ListDeploymentLogSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, idParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -12958,15 +12958,15 @@ func (w *WebAppsServerTransport) dispatchListFunctionKeysSlot(req *http.Request)
 	if err != nil {
 		return nil, err
 	}
-	functionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("functionName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.ListFunctionKeysSlot(req.Context(), resourceGroupNameParam, nameParam, functionNameParam, slotParam, nil)
+	functionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("functionName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.ListFunctionKeysSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, functionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -13036,15 +13036,15 @@ func (w *WebAppsServerTransport) dispatchListFunctionSecretsSlot(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	functionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("functionName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.ListFunctionSecretsSlot(req.Context(), resourceGroupNameParam, nameParam, functionNameParam, slotParam, nil)
+	functionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("functionName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.ListFunctionSecretsSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, functionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -13477,15 +13477,15 @@ func (w *WebAppsServerTransport) dispatchNewListInstanceProcessModulesPager(req 
 		if err != nil {
 			return nil, err
 		}
-		processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
-		if err != nil {
-			return nil, err
-		}
 		instanceIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
 		if err != nil {
 			return nil, err
 		}
-		resp := w.srv.NewListInstanceProcessModulesPager(resourceGroupNameParam, nameParam, processIDParam, instanceIDParam, nil)
+		processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
+		if err != nil {
+			return nil, err
+		}
+		resp := w.srv.NewListInstanceProcessModulesPager(resourceGroupNameParam, nameParam, instanceIDParam, processIDParam, nil)
 		newListInstanceProcessModulesPager = &resp
 		w.newListInstanceProcessModulesPager.add(req, newListInstanceProcessModulesPager)
 		server.PagerResponderInjectNextLinks(newListInstanceProcessModulesPager, req, func(page *armappservice.WebAppsClientListInstanceProcessModulesResponse, createLink func() string) {
@@ -13526,10 +13526,6 @@ func (w *WebAppsServerTransport) dispatchNewListInstanceProcessModulesSlotPager(
 		if err != nil {
 			return nil, err
 		}
-		processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
-		if err != nil {
-			return nil, err
-		}
 		slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 		if err != nil {
 			return nil, err
@@ -13538,7 +13534,11 @@ func (w *WebAppsServerTransport) dispatchNewListInstanceProcessModulesSlotPager(
 		if err != nil {
 			return nil, err
 		}
-		resp := w.srv.NewListInstanceProcessModulesSlotPager(resourceGroupNameParam, nameParam, processIDParam, slotParam, instanceIDParam, nil)
+		processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
+		if err != nil {
+			return nil, err
+		}
+		resp := w.srv.NewListInstanceProcessModulesSlotPager(resourceGroupNameParam, nameParam, slotParam, instanceIDParam, processIDParam, nil)
 		newListInstanceProcessModulesSlotPager = &resp
 		w.newListInstanceProcessModulesSlotPager.add(req, newListInstanceProcessModulesSlotPager)
 		server.PagerResponderInjectNextLinks(newListInstanceProcessModulesSlotPager, req, func(page *armappservice.WebAppsClientListInstanceProcessModulesSlotResponse, createLink func() string) {
@@ -13579,15 +13579,15 @@ func (w *WebAppsServerTransport) dispatchNewListInstanceProcessThreadsPager(req 
 		if err != nil {
 			return nil, err
 		}
-		processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
-		if err != nil {
-			return nil, err
-		}
 		instanceIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
 		if err != nil {
 			return nil, err
 		}
-		resp := w.srv.NewListInstanceProcessThreadsPager(resourceGroupNameParam, nameParam, processIDParam, instanceIDParam, nil)
+		processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
+		if err != nil {
+			return nil, err
+		}
+		resp := w.srv.NewListInstanceProcessThreadsPager(resourceGroupNameParam, nameParam, instanceIDParam, processIDParam, nil)
 		newListInstanceProcessThreadsPager = &resp
 		w.newListInstanceProcessThreadsPager.add(req, newListInstanceProcessThreadsPager)
 		server.PagerResponderInjectNextLinks(newListInstanceProcessThreadsPager, req, func(page *armappservice.WebAppsClientListInstanceProcessThreadsResponse, createLink func() string) {
@@ -13628,10 +13628,6 @@ func (w *WebAppsServerTransport) dispatchNewListInstanceProcessThreadsSlotPager(
 		if err != nil {
 			return nil, err
 		}
-		processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
-		if err != nil {
-			return nil, err
-		}
 		slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 		if err != nil {
 			return nil, err
@@ -13640,7 +13636,11 @@ func (w *WebAppsServerTransport) dispatchNewListInstanceProcessThreadsSlotPager(
 		if err != nil {
 			return nil, err
 		}
-		resp := w.srv.NewListInstanceProcessThreadsSlotPager(resourceGroupNameParam, nameParam, processIDParam, slotParam, instanceIDParam, nil)
+		processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
+		if err != nil {
+			return nil, err
+		}
+		resp := w.srv.NewListInstanceProcessThreadsSlotPager(resourceGroupNameParam, nameParam, slotParam, instanceIDParam, processIDParam, nil)
 		newListInstanceProcessThreadsSlotPager = &resp
 		w.newListInstanceProcessThreadsSlotPager.add(req, newListInstanceProcessThreadsSlotPager)
 		server.PagerResponderInjectNextLinks(newListInstanceProcessThreadsSlotPager, req, func(page *armappservice.WebAppsClientListInstanceProcessThreadsSlotResponse, createLink func() string) {
@@ -13925,15 +13925,15 @@ func (w *WebAppsServerTransport) dispatchListNetworkFeaturesSlot(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	viewParam, err := url.PathUnescape(matches[regex.SubexpIndex("view")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.ListNetworkFeaturesSlot(req.Context(), resourceGroupNameParam, nameParam, viewParam, slotParam, nil)
+	viewParam, err := url.PathUnescape(matches[regex.SubexpIndex("view")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.ListNetworkFeaturesSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, viewParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -14193,15 +14193,15 @@ func (w *WebAppsServerTransport) dispatchNewListProcessModulesSlotPager(req *htt
 		if err != nil {
 			return nil, err
 		}
-		processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
-		if err != nil {
-			return nil, err
-		}
 		slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 		if err != nil {
 			return nil, err
 		}
-		resp := w.srv.NewListProcessModulesSlotPager(resourceGroupNameParam, nameParam, processIDParam, slotParam, nil)
+		processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
+		if err != nil {
+			return nil, err
+		}
+		resp := w.srv.NewListProcessModulesSlotPager(resourceGroupNameParam, nameParam, slotParam, processIDParam, nil)
 		newListProcessModulesSlotPager = &resp
 		w.newListProcessModulesSlotPager.add(req, newListProcessModulesSlotPager)
 		server.PagerResponderInjectNextLinks(newListProcessModulesSlotPager, req, func(page *armappservice.WebAppsClientListProcessModulesSlotResponse, createLink func() string) {
@@ -14287,15 +14287,15 @@ func (w *WebAppsServerTransport) dispatchNewListProcessThreadsSlotPager(req *htt
 		if err != nil {
 			return nil, err
 		}
-		processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
-		if err != nil {
-			return nil, err
-		}
 		slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 		if err != nil {
 			return nil, err
 		}
-		resp := w.srv.NewListProcessThreadsSlotPager(resourceGroupNameParam, nameParam, processIDParam, slotParam, nil)
+		processIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("processId")])
+		if err != nil {
+			return nil, err
+		}
+		resp := w.srv.NewListProcessThreadsSlotPager(resourceGroupNameParam, nameParam, slotParam, processIDParam, nil)
 		newListProcessThreadsSlotPager = &resp
 		w.newListProcessThreadsSlotPager.add(req, newListProcessThreadsSlotPager)
 		server.PagerResponderInjectNextLinks(newListProcessThreadsSlotPager, req, func(page *armappservice.WebAppsClientListProcessThreadsSlotResponse, createLink func() string) {
@@ -15693,15 +15693,15 @@ func (w *WebAppsServerTransport) dispatchNewListTriggeredWebJobHistorySlotPager(
 		if err != nil {
 			return nil, err
 		}
-		webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
-		if err != nil {
-			return nil, err
-		}
 		slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 		if err != nil {
 			return nil, err
 		}
-		resp := w.srv.NewListTriggeredWebJobHistorySlotPager(resourceGroupNameParam, nameParam, webJobNameParam, slotParam, nil)
+		webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
+		if err != nil {
+			return nil, err
+		}
+		resp := w.srv.NewListTriggeredWebJobHistorySlotPager(resourceGroupNameParam, nameParam, slotParam, webJobNameParam, nil)
 		newListTriggeredWebJobHistorySlotPager = &resp
 		w.newListTriggeredWebJobHistorySlotPager.add(req, newListTriggeredWebJobHistorySlotPager)
 		server.PagerResponderInjectNextLinks(newListTriggeredWebJobHistorySlotPager, req, func(page *armappservice.WebAppsClientListTriggeredWebJobHistorySlotResponse, createLink func() string) {
@@ -16250,10 +16250,6 @@ func (w *WebAppsServerTransport) dispatchBeginMigrateStorage(req *http.Request) 
 		if err != nil {
 			return nil, err
 		}
-		subscriptionNameParam, err := url.QueryUnescape(qp.Get("subscriptionName"))
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -16262,7 +16258,11 @@ func (w *WebAppsServerTransport) dispatchBeginMigrateStorage(req *http.Request) 
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := w.srv.BeginMigrateStorage(req.Context(), subscriptionNameParam, resourceGroupNameParam, nameParam, body, nil)
+		subscriptionNameParam, err := url.QueryUnescape(qp.Get("subscriptionName"))
+		if err != nil {
+			return nil, err
+		}
+		respr, errRespr := w.srv.BeginMigrateStorage(req.Context(), resourceGroupNameParam, nameParam, subscriptionNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -16419,15 +16419,15 @@ func (w *WebAppsServerTransport) dispatchRecoverSiteConfigurationSnapshotSlot(re
 	if err != nil {
 		return nil, err
 	}
-	snapshotIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("snapshotId")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.RecoverSiteConfigurationSnapshotSlot(req.Context(), resourceGroupNameParam, nameParam, snapshotIDParam, slotParam, nil)
+	snapshotIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("snapshotId")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.RecoverSiteConfigurationSnapshotSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, snapshotIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -16906,15 +16906,15 @@ func (w *WebAppsServerTransport) dispatchBeginRestoreSlot(req *http.Request) (*h
 		if err != nil {
 			return nil, err
 		}
-		backupIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("backupId")])
-		if err != nil {
-			return nil, err
-		}
 		slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := w.srv.BeginRestoreSlot(req.Context(), resourceGroupNameParam, nameParam, backupIDParam, slotParam, body, nil)
+		backupIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("backupId")])
+		if err != nil {
+			return nil, err
+		}
+		respr, errRespr := w.srv.BeginRestoreSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, backupIDParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -17093,15 +17093,15 @@ func (w *WebAppsServerTransport) dispatchRunTriggeredWebJobSlot(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.RunTriggeredWebJobSlot(req.Context(), resourceGroupNameParam, nameParam, webJobNameParam, slotParam, nil)
+	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.RunTriggeredWebJobSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, webJobNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -17204,15 +17204,15 @@ func (w *WebAppsServerTransport) dispatchStartContinuousWebJobSlot(req *http.Req
 	if err != nil {
 		return nil, err
 	}
-	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.StartContinuousWebJobSlot(req.Context(), resourceGroupNameParam, nameParam, webJobNameParam, slotParam, nil)
+	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.StartContinuousWebJobSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, webJobNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -17858,15 +17858,15 @@ func (w *WebAppsServerTransport) dispatchStopContinuousWebJobSlot(req *http.Requ
 	if err != nil {
 		return nil, err
 	}
-	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.StopContinuousWebJobSlot(req.Context(), resourceGroupNameParam, nameParam, webJobNameParam, slotParam, nil)
+	webJobNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("webJobName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.StopContinuousWebJobSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, webJobNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -19092,15 +19092,15 @@ func (w *WebAppsServerTransport) dispatchUpdateDomainOwnershipIdentifierSlot(req
 	if err != nil {
 		return nil, err
 	}
-	domainOwnershipIdentifierNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("domainOwnershipIdentifierName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.UpdateDomainOwnershipIdentifierSlot(req.Context(), resourceGroupNameParam, nameParam, domainOwnershipIdentifierNameParam, slotParam, body, nil)
+	domainOwnershipIdentifierNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("domainOwnershipIdentifierName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.UpdateDomainOwnershipIdentifierSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, domainOwnershipIdentifierNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -19260,6 +19260,10 @@ func (w *WebAppsServerTransport) dispatchUpdateHybridConnectionSlot(req *http.Re
 	if err != nil {
 		return nil, err
 	}
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	if err != nil {
+		return nil, err
+	}
 	namespaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("namespaceName")])
 	if err != nil {
 		return nil, err
@@ -19268,11 +19272,7 @@ func (w *WebAppsServerTransport) dispatchUpdateHybridConnectionSlot(req *http.Re
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := w.srv.UpdateHybridConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, namespaceNameParam, relayNameParam, slotParam, body, nil)
+	respr, errRespr := w.srv.UpdateHybridConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, namespaceNameParam, relayNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -19461,15 +19461,15 @@ func (w *WebAppsServerTransport) dispatchUpdatePremierAddOnSlot(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	premierAddOnNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("premierAddOnName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.UpdatePremierAddOnSlot(req.Context(), resourceGroupNameParam, nameParam, premierAddOnNameParam, slotParam, body, nil)
+	premierAddOnNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("premierAddOnName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.UpdatePremierAddOnSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, premierAddOnNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -19547,15 +19547,15 @@ func (w *WebAppsServerTransport) dispatchUpdateRelayServiceConnectionSlot(req *h
 	if err != nil {
 		return nil, err
 	}
-	entityNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("entityName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.UpdateRelayServiceConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, entityNameParam, slotParam, body, nil)
+	entityNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("entityName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.UpdateRelayServiceConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, entityNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -20068,6 +20068,10 @@ func (w *WebAppsServerTransport) dispatchUpdateVnetConnectionGatewaySlot(req *ht
 	if err != nil {
 		return nil, err
 	}
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	if err != nil {
+		return nil, err
+	}
 	vnetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vnetName")])
 	if err != nil {
 		return nil, err
@@ -20076,11 +20080,7 @@ func (w *WebAppsServerTransport) dispatchUpdateVnetConnectionGatewaySlot(req *ht
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := w.srv.UpdateVnetConnectionGatewaySlot(req.Context(), resourceGroupNameParam, nameParam, vnetNameParam, gatewayNameParam, slotParam, body, nil)
+	respr, errRespr := w.srv.UpdateVnetConnectionGatewaySlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, vnetNameParam, gatewayNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -20117,15 +20117,15 @@ func (w *WebAppsServerTransport) dispatchUpdateVnetConnectionSlot(req *http.Requ
 	if err != nil {
 		return nil, err
 	}
-	vnetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vnetName")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.UpdateVnetConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, vnetNameParam, slotParam, body, nil)
+	vnetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vnetName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := w.srv.UpdateVnetConnectionSlot(req.Context(), resourceGroupNameParam, nameParam, slotParam, vnetNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

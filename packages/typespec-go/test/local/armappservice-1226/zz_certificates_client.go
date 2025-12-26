@@ -50,7 +50,7 @@ func NewCertificatesClient(subscriptionID string, credential azcore.TokenCredent
 //   - certificateEnvelope - Details of certificate, if it exists already.
 //   - options - CertificatesClientCreateOrUpdateOptions contains the optional parameters for the CertificatesClient.CreateOrUpdate
 //     method.
-func (client *CertificatesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, name string, certificateEnvelope AppCertificate, options *CertificatesClientCreateOrUpdateOptions) (CertificatesClientCreateOrUpdateResponse, error) {
+func (client *CertificatesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, name string, certificateEnvelope Certificate, options *CertificatesClientCreateOrUpdateOptions) (CertificatesClientCreateOrUpdateResponse, error) {
 	var err error
 	const operationName = "CertificatesClient.CreateOrUpdate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -73,7 +73,7 @@ func (client *CertificatesClient) CreateOrUpdate(ctx context.Context, resourceGr
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *CertificatesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, name string, certificateEnvelope AppCertificate, _ *CertificatesClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *CertificatesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, name string, certificateEnvelope Certificate, _ *CertificatesClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -105,7 +105,7 @@ func (client *CertificatesClient) createOrUpdateCreateRequest(ctx context.Contex
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *CertificatesClient) createOrUpdateHandleResponse(resp *http.Response) (CertificatesClientCreateOrUpdateResponse, error) {
 	result := CertificatesClientCreateOrUpdateResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AppCertificate); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Certificate); err != nil {
 		return CertificatesClientCreateOrUpdateResponse{}, err
 	}
 	return result, nil
@@ -226,7 +226,7 @@ func (client *CertificatesClient) getCreateRequest(ctx context.Context, resource
 // getHandleResponse handles the Get response.
 func (client *CertificatesClient) getHandleResponse(resp *http.Response) (CertificatesClientGetResponse, error) {
 	result := CertificatesClientGetResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AppCertificate); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Certificate); err != nil {
 		return CertificatesClientGetResponse{}, err
 	}
 	return result, nil
@@ -285,7 +285,7 @@ func (client *CertificatesClient) listCreateRequest(ctx context.Context, options
 // listHandleResponse handles the List response.
 func (client *CertificatesClient) listHandleResponse(resp *http.Response) (CertificatesClientListResponse, error) {
 	result := CertificatesClientListResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AppCertificateCollection); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateCollection); err != nil {
 		return CertificatesClientListResponse{}, err
 	}
 	return result, nil
@@ -347,7 +347,7 @@ func (client *CertificatesClient) listByResourceGroupCreateRequest(ctx context.C
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *CertificatesClient) listByResourceGroupHandleResponse(resp *http.Response) (CertificatesClientListByResourceGroupResponse, error) {
 	result := CertificatesClientListByResourceGroupResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AppCertificateCollection); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateCollection); err != nil {
 		return CertificatesClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
@@ -363,7 +363,7 @@ func (client *CertificatesClient) listByResourceGroupHandleResponse(resp *http.R
 //   - name - Name of the certificate.
 //   - certificateEnvelope - Details of certificate, if it exists already.
 //   - options - CertificatesClientUpdateOptions contains the optional parameters for the CertificatesClient.Update method.
-func (client *CertificatesClient) Update(ctx context.Context, resourceGroupName string, name string, certificateEnvelope AppCertificatePatchResource, options *CertificatesClientUpdateOptions) (CertificatesClientUpdateResponse, error) {
+func (client *CertificatesClient) Update(ctx context.Context, resourceGroupName string, name string, certificateEnvelope CertificatePatchResource, options *CertificatesClientUpdateOptions) (CertificatesClientUpdateResponse, error) {
 	var err error
 	const operationName = "CertificatesClient.Update"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -386,7 +386,7 @@ func (client *CertificatesClient) Update(ctx context.Context, resourceGroupName 
 }
 
 // updateCreateRequest creates the Update request.
-func (client *CertificatesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, name string, certificateEnvelope AppCertificatePatchResource, _ *CertificatesClientUpdateOptions) (*policy.Request, error) {
+func (client *CertificatesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, name string, certificateEnvelope CertificatePatchResource, _ *CertificatesClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -418,7 +418,7 @@ func (client *CertificatesClient) updateCreateRequest(ctx context.Context, resou
 // updateHandleResponse handles the Update response.
 func (client *CertificatesClient) updateHandleResponse(resp *http.Response) (CertificatesClientUpdateResponse, error) {
 	result := CertificatesClientUpdateResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AppCertificate); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Certificate); err != nil {
 		return CertificatesClientUpdateResponse{}, err
 	}
 	return result, nil

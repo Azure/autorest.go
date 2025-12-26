@@ -133,15 +133,19 @@ func (client *DiagnosticsClient) executeSiteAnalysisHandleResponse(resp *http.Re
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - siteName - Site Name
+//   - slot - Slot - optional
+//   - diagnosticCategory - Diagnostic Category
+//   - analysisName - Analysis Name
 //   - options - DiagnosticsClientExecuteSiteAnalysisSlotOptions contains the optional parameters for the DiagnosticsClient.ExecuteSiteAnalysisSlot
 //     method.
-func (client *DiagnosticsClient) ExecuteSiteAnalysisSlot(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, analysisName string, slot string, options *DiagnosticsClientExecuteSiteAnalysisSlotOptions) (DiagnosticsClientExecuteSiteAnalysisSlotResponse, error) {
+func (client *DiagnosticsClient) ExecuteSiteAnalysisSlot(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, analysisName string, options *DiagnosticsClientExecuteSiteAnalysisSlotOptions) (DiagnosticsClientExecuteSiteAnalysisSlotResponse, error) {
 	var err error
 	const operationName = "DiagnosticsClient.ExecuteSiteAnalysisSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.executeSiteAnalysisSlotCreateRequest(ctx, resourceGroupName, siteName, diagnosticCategory, analysisName, slot, options)
+	req, err := client.executeSiteAnalysisSlotCreateRequest(ctx, resourceGroupName, siteName, slot, diagnosticCategory, analysisName, options)
 	if err != nil {
 		return DiagnosticsClientExecuteSiteAnalysisSlotResponse{}, err
 	}
@@ -158,7 +162,7 @@ func (client *DiagnosticsClient) ExecuteSiteAnalysisSlot(ctx context.Context, re
 }
 
 // executeSiteAnalysisSlotCreateRequest creates the ExecuteSiteAnalysisSlot request.
-func (client *DiagnosticsClient) executeSiteAnalysisSlotCreateRequest(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, analysisName string, slot string, options *DiagnosticsClientExecuteSiteAnalysisSlotOptions) (*policy.Request, error) {
+func (client *DiagnosticsClient) executeSiteAnalysisSlotCreateRequest(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, analysisName string, options *DiagnosticsClientExecuteSiteAnalysisSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}/execute"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -172,6 +176,10 @@ func (client *DiagnosticsClient) executeSiteAnalysisSlotCreateRequest(ctx contex
 		return nil, errors.New("parameter siteName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{siteName}", url.PathEscape(siteName))
+	if slot == "" {
+		return nil, errors.New("parameter slot cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	if diagnosticCategory == "" {
 		return nil, errors.New("parameter diagnosticCategory cannot be empty")
 	}
@@ -180,10 +188,6 @@ func (client *DiagnosticsClient) executeSiteAnalysisSlotCreateRequest(ctx contex
 		return nil, errors.New("parameter analysisName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{analysisName}", url.PathEscape(analysisName))
-	if slot == "" {
-		return nil, errors.New("parameter slot cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -220,15 +224,18 @@ func (client *DiagnosticsClient) executeSiteAnalysisSlotHandleResponse(resp *htt
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - siteName - Site Name
+//   - diagnosticCategory - Diagnostic Category
+//   - detectorName - Detector Name
 //   - options - DiagnosticsClientExecuteSiteDetectorOptions contains the optional parameters for the DiagnosticsClient.ExecuteSiteDetector
 //     method.
-func (client *DiagnosticsClient) ExecuteSiteDetector(ctx context.Context, resourceGroupName string, siteName string, detectorName string, diagnosticCategory string, options *DiagnosticsClientExecuteSiteDetectorOptions) (DiagnosticsClientExecuteSiteDetectorResponse, error) {
+func (client *DiagnosticsClient) ExecuteSiteDetector(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, detectorName string, options *DiagnosticsClientExecuteSiteDetectorOptions) (DiagnosticsClientExecuteSiteDetectorResponse, error) {
 	var err error
 	const operationName = "DiagnosticsClient.ExecuteSiteDetector"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.executeSiteDetectorCreateRequest(ctx, resourceGroupName, siteName, detectorName, diagnosticCategory, options)
+	req, err := client.executeSiteDetectorCreateRequest(ctx, resourceGroupName, siteName, diagnosticCategory, detectorName, options)
 	if err != nil {
 		return DiagnosticsClientExecuteSiteDetectorResponse{}, err
 	}
@@ -245,7 +252,7 @@ func (client *DiagnosticsClient) ExecuteSiteDetector(ctx context.Context, resour
 }
 
 // executeSiteDetectorCreateRequest creates the ExecuteSiteDetector request.
-func (client *DiagnosticsClient) executeSiteDetectorCreateRequest(ctx context.Context, resourceGroupName string, siteName string, detectorName string, diagnosticCategory string, options *DiagnosticsClientExecuteSiteDetectorOptions) (*policy.Request, error) {
+func (client *DiagnosticsClient) executeSiteDetectorCreateRequest(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, detectorName string, options *DiagnosticsClientExecuteSiteDetectorOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors/{detectorName}/execute"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -259,14 +266,14 @@ func (client *DiagnosticsClient) executeSiteDetectorCreateRequest(ctx context.Co
 		return nil, errors.New("parameter siteName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{siteName}", url.PathEscape(siteName))
-	if detectorName == "" {
-		return nil, errors.New("parameter detectorName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{detectorName}", url.PathEscape(detectorName))
 	if diagnosticCategory == "" {
 		return nil, errors.New("parameter diagnosticCategory cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diagnosticCategory}", url.PathEscape(diagnosticCategory))
+	if detectorName == "" {
+		return nil, errors.New("parameter detectorName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{detectorName}", url.PathEscape(detectorName))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -303,15 +310,19 @@ func (client *DiagnosticsClient) executeSiteDetectorHandleResponse(resp *http.Re
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - siteName - Site Name
+//   - slot - Slot Name
+//   - diagnosticCategory - Diagnostic Category
+//   - detectorName - Detector Name
 //   - options - DiagnosticsClientExecuteSiteDetectorSlotOptions contains the optional parameters for the DiagnosticsClient.ExecuteSiteDetectorSlot
 //     method.
-func (client *DiagnosticsClient) ExecuteSiteDetectorSlot(ctx context.Context, resourceGroupName string, siteName string, detectorName string, diagnosticCategory string, slot string, options *DiagnosticsClientExecuteSiteDetectorSlotOptions) (DiagnosticsClientExecuteSiteDetectorSlotResponse, error) {
+func (client *DiagnosticsClient) ExecuteSiteDetectorSlot(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, detectorName string, options *DiagnosticsClientExecuteSiteDetectorSlotOptions) (DiagnosticsClientExecuteSiteDetectorSlotResponse, error) {
 	var err error
 	const operationName = "DiagnosticsClient.ExecuteSiteDetectorSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.executeSiteDetectorSlotCreateRequest(ctx, resourceGroupName, siteName, detectorName, diagnosticCategory, slot, options)
+	req, err := client.executeSiteDetectorSlotCreateRequest(ctx, resourceGroupName, siteName, slot, diagnosticCategory, detectorName, options)
 	if err != nil {
 		return DiagnosticsClientExecuteSiteDetectorSlotResponse{}, err
 	}
@@ -328,7 +339,7 @@ func (client *DiagnosticsClient) ExecuteSiteDetectorSlot(ctx context.Context, re
 }
 
 // executeSiteDetectorSlotCreateRequest creates the ExecuteSiteDetectorSlot request.
-func (client *DiagnosticsClient) executeSiteDetectorSlotCreateRequest(ctx context.Context, resourceGroupName string, siteName string, detectorName string, diagnosticCategory string, slot string, options *DiagnosticsClientExecuteSiteDetectorSlotOptions) (*policy.Request, error) {
+func (client *DiagnosticsClient) executeSiteDetectorSlotCreateRequest(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, detectorName string, options *DiagnosticsClientExecuteSiteDetectorSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/detectors/{detectorName}/execute"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -342,18 +353,18 @@ func (client *DiagnosticsClient) executeSiteDetectorSlotCreateRequest(ctx contex
 		return nil, errors.New("parameter siteName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{siteName}", url.PathEscape(siteName))
-	if detectorName == "" {
-		return nil, errors.New("parameter detectorName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{detectorName}", url.PathEscape(detectorName))
-	if diagnosticCategory == "" {
-		return nil, errors.New("parameter diagnosticCategory cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{diagnosticCategory}", url.PathEscape(diagnosticCategory))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if diagnosticCategory == "" {
+		return nil, errors.New("parameter diagnosticCategory cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{diagnosticCategory}", url.PathEscape(diagnosticCategory))
+	if detectorName == "" {
+		return nil, errors.New("parameter detectorName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{detectorName}", url.PathEscape(detectorName))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -548,15 +559,19 @@ func (client *DiagnosticsClient) getSiteAnalysisHandleResponse(resp *http.Respon
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - siteName - Site Name
+//   - slot - Slot - optional
+//   - diagnosticCategory - Diagnostic Category
+//   - analysisName - Analysis Name
 //   - options - DiagnosticsClientGetSiteAnalysisSlotOptions contains the optional parameters for the DiagnosticsClient.GetSiteAnalysisSlot
 //     method.
-func (client *DiagnosticsClient) GetSiteAnalysisSlot(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, analysisName string, slot string, options *DiagnosticsClientGetSiteAnalysisSlotOptions) (DiagnosticsClientGetSiteAnalysisSlotResponse, error) {
+func (client *DiagnosticsClient) GetSiteAnalysisSlot(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, analysisName string, options *DiagnosticsClientGetSiteAnalysisSlotOptions) (DiagnosticsClientGetSiteAnalysisSlotResponse, error) {
 	var err error
 	const operationName = "DiagnosticsClient.GetSiteAnalysisSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getSiteAnalysisSlotCreateRequest(ctx, resourceGroupName, siteName, diagnosticCategory, analysisName, slot, options)
+	req, err := client.getSiteAnalysisSlotCreateRequest(ctx, resourceGroupName, siteName, slot, diagnosticCategory, analysisName, options)
 	if err != nil {
 		return DiagnosticsClientGetSiteAnalysisSlotResponse{}, err
 	}
@@ -573,7 +588,7 @@ func (client *DiagnosticsClient) GetSiteAnalysisSlot(ctx context.Context, resour
 }
 
 // getSiteAnalysisSlotCreateRequest creates the GetSiteAnalysisSlot request.
-func (client *DiagnosticsClient) getSiteAnalysisSlotCreateRequest(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, analysisName string, slot string, _ *DiagnosticsClientGetSiteAnalysisSlotOptions) (*policy.Request, error) {
+func (client *DiagnosticsClient) getSiteAnalysisSlotCreateRequest(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, analysisName string, _ *DiagnosticsClientGetSiteAnalysisSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -587,6 +602,10 @@ func (client *DiagnosticsClient) getSiteAnalysisSlotCreateRequest(ctx context.Co
 		return nil, errors.New("parameter siteName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{siteName}", url.PathEscape(siteName))
+	if slot == "" {
+		return nil, errors.New("parameter slot cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	if diagnosticCategory == "" {
 		return nil, errors.New("parameter diagnosticCategory cannot be empty")
 	}
@@ -595,10 +614,6 @@ func (client *DiagnosticsClient) getSiteAnalysisSlotCreateRequest(ctx context.Co
 		return nil, errors.New("parameter analysisName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{analysisName}", url.PathEscape(analysisName))
-	if slot == "" {
-		return nil, errors.New("parameter slot cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -784,15 +799,18 @@ func (client *DiagnosticsClient) getSiteDetectorResponseHandleResponse(resp *htt
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - siteName - Site Name
+//   - slot - Slot Name
+//   - detectorName - Detector Resource Name
 //   - options - DiagnosticsClientGetSiteDetectorResponseSlotOptions contains the optional parameters for the DiagnosticsClient.GetSiteDetectorResponseSlot
 //     method.
-func (client *DiagnosticsClient) GetSiteDetectorResponseSlot(ctx context.Context, resourceGroupName string, siteName string, detectorName string, slot string, options *DiagnosticsClientGetSiteDetectorResponseSlotOptions) (DiagnosticsClientGetSiteDetectorResponseSlotResponse, error) {
+func (client *DiagnosticsClient) GetSiteDetectorResponseSlot(ctx context.Context, resourceGroupName string, siteName string, slot string, detectorName string, options *DiagnosticsClientGetSiteDetectorResponseSlotOptions) (DiagnosticsClientGetSiteDetectorResponseSlotResponse, error) {
 	var err error
 	const operationName = "DiagnosticsClient.GetSiteDetectorResponseSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getSiteDetectorResponseSlotCreateRequest(ctx, resourceGroupName, siteName, detectorName, slot, options)
+	req, err := client.getSiteDetectorResponseSlotCreateRequest(ctx, resourceGroupName, siteName, slot, detectorName, options)
 	if err != nil {
 		return DiagnosticsClientGetSiteDetectorResponseSlotResponse{}, err
 	}
@@ -809,7 +827,7 @@ func (client *DiagnosticsClient) GetSiteDetectorResponseSlot(ctx context.Context
 }
 
 // getSiteDetectorResponseSlotCreateRequest creates the GetSiteDetectorResponseSlot request.
-func (client *DiagnosticsClient) getSiteDetectorResponseSlotCreateRequest(ctx context.Context, resourceGroupName string, siteName string, detectorName string, slot string, options *DiagnosticsClientGetSiteDetectorResponseSlotOptions) (*policy.Request, error) {
+func (client *DiagnosticsClient) getSiteDetectorResponseSlotCreateRequest(ctx context.Context, resourceGroupName string, siteName string, slot string, detectorName string, options *DiagnosticsClientGetSiteDetectorResponseSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors/{detectorName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -823,14 +841,14 @@ func (client *DiagnosticsClient) getSiteDetectorResponseSlotCreateRequest(ctx co
 		return nil, errors.New("parameter siteName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{siteName}", url.PathEscape(siteName))
-	if detectorName == "" {
-		return nil, errors.New("parameter detectorName cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{detectorName}", url.PathEscape(detectorName))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if detectorName == "" {
+		return nil, errors.New("parameter detectorName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{detectorName}", url.PathEscape(detectorName))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -867,15 +885,19 @@ func (client *DiagnosticsClient) getSiteDetectorResponseSlotHandleResponse(resp 
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - siteName - Site Name
+//   - slot - Slot Name
+//   - diagnosticCategory - Diagnostic Category
+//   - detectorName - Detector Name
 //   - options - DiagnosticsClientGetSiteDetectorSlotOptions contains the optional parameters for the DiagnosticsClient.GetSiteDetectorSlot
 //     method.
-func (client *DiagnosticsClient) GetSiteDetectorSlot(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, detectorName string, slot string, options *DiagnosticsClientGetSiteDetectorSlotOptions) (DiagnosticsClientGetSiteDetectorSlotResponse, error) {
+func (client *DiagnosticsClient) GetSiteDetectorSlot(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, detectorName string, options *DiagnosticsClientGetSiteDetectorSlotOptions) (DiagnosticsClientGetSiteDetectorSlotResponse, error) {
 	var err error
 	const operationName = "DiagnosticsClient.GetSiteDetectorSlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getSiteDetectorSlotCreateRequest(ctx, resourceGroupName, siteName, diagnosticCategory, detectorName, slot, options)
+	req, err := client.getSiteDetectorSlotCreateRequest(ctx, resourceGroupName, siteName, slot, diagnosticCategory, detectorName, options)
 	if err != nil {
 		return DiagnosticsClientGetSiteDetectorSlotResponse{}, err
 	}
@@ -892,7 +914,7 @@ func (client *DiagnosticsClient) GetSiteDetectorSlot(ctx context.Context, resour
 }
 
 // getSiteDetectorSlotCreateRequest creates the GetSiteDetectorSlot request.
-func (client *DiagnosticsClient) getSiteDetectorSlotCreateRequest(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, detectorName string, slot string, _ *DiagnosticsClientGetSiteDetectorSlotOptions) (*policy.Request, error) {
+func (client *DiagnosticsClient) getSiteDetectorSlotCreateRequest(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, detectorName string, _ *DiagnosticsClientGetSiteDetectorSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/detectors/{detectorName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -906,6 +928,10 @@ func (client *DiagnosticsClient) getSiteDetectorSlotCreateRequest(ctx context.Co
 		return nil, errors.New("parameter siteName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{siteName}", url.PathEscape(siteName))
+	if slot == "" {
+		return nil, errors.New("parameter slot cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	if diagnosticCategory == "" {
 		return nil, errors.New("parameter diagnosticCategory cannot be empty")
 	}
@@ -914,10 +940,6 @@ func (client *DiagnosticsClient) getSiteDetectorSlotCreateRequest(ctx context.Co
 		return nil, errors.New("parameter detectorName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{detectorName}", url.PathEscape(detectorName))
-	if slot == "" {
-		return nil, errors.New("parameter slot cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -1017,15 +1039,18 @@ func (client *DiagnosticsClient) getSiteDiagnosticCategoryHandleResponse(resp *h
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - siteName - Site Name
+//   - slot - Slot Name
+//   - diagnosticCategory - Diagnostic Category
 //   - options - DiagnosticsClientGetSiteDiagnosticCategorySlotOptions contains the optional parameters for the DiagnosticsClient.GetSiteDiagnosticCategorySlot
 //     method.
-func (client *DiagnosticsClient) GetSiteDiagnosticCategorySlot(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, slot string, options *DiagnosticsClientGetSiteDiagnosticCategorySlotOptions) (DiagnosticsClientGetSiteDiagnosticCategorySlotResponse, error) {
+func (client *DiagnosticsClient) GetSiteDiagnosticCategorySlot(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, options *DiagnosticsClientGetSiteDiagnosticCategorySlotOptions) (DiagnosticsClientGetSiteDiagnosticCategorySlotResponse, error) {
 	var err error
 	const operationName = "DiagnosticsClient.GetSiteDiagnosticCategorySlot"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getSiteDiagnosticCategorySlotCreateRequest(ctx, resourceGroupName, siteName, diagnosticCategory, slot, options)
+	req, err := client.getSiteDiagnosticCategorySlotCreateRequest(ctx, resourceGroupName, siteName, slot, diagnosticCategory, options)
 	if err != nil {
 		return DiagnosticsClientGetSiteDiagnosticCategorySlotResponse{}, err
 	}
@@ -1042,7 +1067,7 @@ func (client *DiagnosticsClient) GetSiteDiagnosticCategorySlot(ctx context.Conte
 }
 
 // getSiteDiagnosticCategorySlotCreateRequest creates the GetSiteDiagnosticCategorySlot request.
-func (client *DiagnosticsClient) getSiteDiagnosticCategorySlotCreateRequest(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, slot string, _ *DiagnosticsClientGetSiteDiagnosticCategorySlotOptions) (*policy.Request, error) {
+func (client *DiagnosticsClient) getSiteDiagnosticCategorySlotCreateRequest(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, _ *DiagnosticsClientGetSiteDiagnosticCategorySlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -1056,14 +1081,14 @@ func (client *DiagnosticsClient) getSiteDiagnosticCategorySlotCreateRequest(ctx 
 		return nil, errors.New("parameter siteName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{siteName}", url.PathEscape(siteName))
-	if diagnosticCategory == "" {
-		return nil, errors.New("parameter diagnosticCategory cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{diagnosticCategory}", url.PathEscape(diagnosticCategory))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if diagnosticCategory == "" {
+		return nil, errors.New("parameter diagnosticCategory cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{diagnosticCategory}", url.PathEscape(diagnosticCategory))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -1229,9 +1254,12 @@ func (client *DiagnosticsClient) listSiteAnalysesHandleResponse(resp *http.Respo
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - siteName - Site Name
+//   - slot - Slot - optional
+//   - diagnosticCategory - Diagnostic Category
 //   - options - DiagnosticsClientListSiteAnalysesSlotOptions contains the optional parameters for the DiagnosticsClient.NewListSiteAnalysesSlotPager
 //     method.
-func (client *DiagnosticsClient) NewListSiteAnalysesSlotPager(resourceGroupName string, siteName string, diagnosticCategory string, slot string, options *DiagnosticsClientListSiteAnalysesSlotOptions) *runtime.Pager[DiagnosticsClientListSiteAnalysesSlotResponse] {
+func (client *DiagnosticsClient) NewListSiteAnalysesSlotPager(resourceGroupName string, siteName string, slot string, diagnosticCategory string, options *DiagnosticsClientListSiteAnalysesSlotOptions) *runtime.Pager[DiagnosticsClientListSiteAnalysesSlotResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DiagnosticsClientListSiteAnalysesSlotResponse]{
 		More: func(page DiagnosticsClientListSiteAnalysesSlotResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -1243,7 +1271,7 @@ func (client *DiagnosticsClient) NewListSiteAnalysesSlotPager(resourceGroupName 
 				nextLink = *page.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
-				return client.listSiteAnalysesSlotCreateRequest(ctx, resourceGroupName, siteName, diagnosticCategory, slot, options)
+				return client.listSiteAnalysesSlotCreateRequest(ctx, resourceGroupName, siteName, slot, diagnosticCategory, options)
 			}, nil)
 			if err != nil {
 				return DiagnosticsClientListSiteAnalysesSlotResponse{}, err
@@ -1255,7 +1283,7 @@ func (client *DiagnosticsClient) NewListSiteAnalysesSlotPager(resourceGroupName 
 }
 
 // listSiteAnalysesSlotCreateRequest creates the ListSiteAnalysesSlot request.
-func (client *DiagnosticsClient) listSiteAnalysesSlotCreateRequest(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, slot string, _ *DiagnosticsClientListSiteAnalysesSlotOptions) (*policy.Request, error) {
+func (client *DiagnosticsClient) listSiteAnalysesSlotCreateRequest(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, _ *DiagnosticsClientListSiteAnalysesSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -1269,14 +1297,14 @@ func (client *DiagnosticsClient) listSiteAnalysesSlotCreateRequest(ctx context.C
 		return nil, errors.New("parameter siteName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{siteName}", url.PathEscape(siteName))
-	if diagnosticCategory == "" {
-		return nil, errors.New("parameter diagnosticCategory cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{diagnosticCategory}", url.PathEscape(diagnosticCategory))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if diagnosticCategory == "" {
+		return nil, errors.New("parameter diagnosticCategory cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{diagnosticCategory}", url.PathEscape(diagnosticCategory))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -1514,9 +1542,12 @@ func (client *DiagnosticsClient) listSiteDetectorsHandleResponse(resp *http.Resp
 //
 // Generated from API version 2025-03-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - siteName - Site Name
+//   - slot - Slot Name
+//   - diagnosticCategory - Diagnostic Category
 //   - options - DiagnosticsClientListSiteDetectorsSlotOptions contains the optional parameters for the DiagnosticsClient.NewListSiteDetectorsSlotPager
 //     method.
-func (client *DiagnosticsClient) NewListSiteDetectorsSlotPager(resourceGroupName string, siteName string, diagnosticCategory string, slot string, options *DiagnosticsClientListSiteDetectorsSlotOptions) *runtime.Pager[DiagnosticsClientListSiteDetectorsSlotResponse] {
+func (client *DiagnosticsClient) NewListSiteDetectorsSlotPager(resourceGroupName string, siteName string, slot string, diagnosticCategory string, options *DiagnosticsClientListSiteDetectorsSlotOptions) *runtime.Pager[DiagnosticsClientListSiteDetectorsSlotResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DiagnosticsClientListSiteDetectorsSlotResponse]{
 		More: func(page DiagnosticsClientListSiteDetectorsSlotResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -1528,7 +1559,7 @@ func (client *DiagnosticsClient) NewListSiteDetectorsSlotPager(resourceGroupName
 				nextLink = *page.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
-				return client.listSiteDetectorsSlotCreateRequest(ctx, resourceGroupName, siteName, diagnosticCategory, slot, options)
+				return client.listSiteDetectorsSlotCreateRequest(ctx, resourceGroupName, siteName, slot, diagnosticCategory, options)
 			}, nil)
 			if err != nil {
 				return DiagnosticsClientListSiteDetectorsSlotResponse{}, err
@@ -1540,7 +1571,7 @@ func (client *DiagnosticsClient) NewListSiteDetectorsSlotPager(resourceGroupName
 }
 
 // listSiteDetectorsSlotCreateRequest creates the ListSiteDetectorsSlot request.
-func (client *DiagnosticsClient) listSiteDetectorsSlotCreateRequest(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, slot string, _ *DiagnosticsClientListSiteDetectorsSlotOptions) (*policy.Request, error) {
+func (client *DiagnosticsClient) listSiteDetectorsSlotCreateRequest(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, _ *DiagnosticsClientListSiteDetectorsSlotOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/detectors"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -1554,14 +1585,14 @@ func (client *DiagnosticsClient) listSiteDetectorsSlotCreateRequest(ctx context.
 		return nil, errors.New("parameter siteName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{siteName}", url.PathEscape(siteName))
-	if diagnosticCategory == "" {
-		return nil, errors.New("parameter diagnosticCategory cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{diagnosticCategory}", url.PathEscape(diagnosticCategory))
 	if slot == "" {
 		return nil, errors.New("parameter slot cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{slot}", url.PathEscape(slot))
+	if diagnosticCategory == "" {
+		return nil, errors.New("parameter diagnosticCategory cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{diagnosticCategory}", url.PathEscape(diagnosticCategory))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err

@@ -197,193 +197,6 @@ type AnalysisDefinitionProperties struct {
 	Description *string
 }
 
-// AppCertificate - SSL certificate for an app.
-type AppCertificate struct {
-	// REQUIRED; The geo-location where the resource lives
-	Location *string
-
-	// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference
-	// for details supported values for kind.
-	Kind *string
-
-	// Certificate resource specific properties
-	Properties *AppCertificateProperties
-
-	// Resource tags.
-	Tags map[string]*string
-
-	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
-	// READ-ONLY; The name of the resource
-	Name *string
-
-	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-}
-
-// AppCertificateCollection - Collection of certificates.
-type AppCertificateCollection struct {
-	// REQUIRED; The Certificate items on this page
-	Value []*AppCertificate
-
-	// The link to the next page of items
-	NextLink *string
-}
-
-// AppCertificatePatchResource - ARM resource for a certificate.
-type AppCertificatePatchResource struct {
-	// Kind of resource.
-	Kind *string
-
-	// CertificatePatchResource resource specific properties
-	Properties *AppCertificatePatchResourceProperties
-
-	// READ-ONLY; Resource Id.
-	ID *string
-
-	// READ-ONLY; Resource Name.
-	Name *string
-
-	// READ-ONLY; Resource type.
-	Type *string
-}
-
-// AppCertificatePatchResourceProperties - CertificatePatchResource resource specific properties
-type AppCertificatePatchResourceProperties struct {
-	// CNAME of the certificate to be issued via free certificate
-	CanonicalName *string
-
-	// Method of domain validation for free cert
-	DomainValidationMethod *string
-
-	// Host names the certificate applies to.
-	HostNames []*string
-
-	// Key Vault Csm resource Id.
-	KeyVaultID *string
-
-	// Key Vault secret name.
-	KeyVaultSecretName *string
-
-	// Pfx blob.
-	PfxBlob []byte
-
-	// Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}".
-	ServerFarmID *string
-
-	// READ-ONLY; Raw bytes of .cer file
-	CerBlob []byte
-
-	// READ-ONLY; Certificate expiration date.
-	ExpirationDate *time.Time
-
-	// READ-ONLY; Friendly name of the certificate.
-	FriendlyName *string
-
-	// READ-ONLY; Specification for the App Service Environment to use for the certificate.
-	HostingEnvironmentProfile *HostingEnvironmentProfile
-
-	// READ-ONLY; Certificate issue Date.
-	IssueDate *time.Time
-
-	// READ-ONLY; Certificate issuer.
-	Issuer *string
-
-	// READ-ONLY; Status of the Key Vault secret.
-	KeyVaultSecretStatus *KeyVaultSecretStatus
-
-	// READ-ONLY; Certificate password.
-	Password *string
-
-	// READ-ONLY; Public key hash.
-	PublicKeyHash *string
-
-	// READ-ONLY; Self link.
-	SelfLink *string
-
-	// READ-ONLY; App name.
-	SiteName *string
-
-	// READ-ONLY; Subject name of the certificate.
-	SubjectName *string
-
-	// READ-ONLY; Certificate thumbprint.
-	Thumbprint *string
-
-	// READ-ONLY; Is the certificate valid?.
-	Valid *bool
-}
-
-// AppCertificateProperties - Certificate resource specific properties
-type AppCertificateProperties struct {
-	// CNAME of the certificate to be issued via free certificate
-	CanonicalName *string
-
-	// Method of domain validation for free cert
-	DomainValidationMethod *string
-
-	// Host names the certificate applies to.
-	HostNames []*string
-
-	// Azure Key Vault Csm resource Id.
-	KeyVaultID *string
-
-	// Azure Key Vault secret name.
-	KeyVaultSecretName *string
-
-	// Certificate password.
-	Password *string
-
-	// Pfx blob.
-	PfxBlob []byte
-
-	// Resource ID of the associated App Service plan.
-	ServerFarmID *string
-
-	// READ-ONLY; Raw bytes of .cer file
-	CerBlob []byte
-
-	// READ-ONLY; Certificate expiration date.
-	ExpirationDate *time.Time
-
-	// READ-ONLY; Friendly name of the certificate.
-	FriendlyName *string
-
-	// READ-ONLY; Specification for the App Service Environment to use for the certificate.
-	HostingEnvironmentProfile *HostingEnvironmentProfile
-
-	// READ-ONLY; Certificate issue Date.
-	IssueDate *time.Time
-
-	// READ-ONLY; Certificate issuer.
-	Issuer *string
-
-	// READ-ONLY; Status of the Key Vault secret.
-	KeyVaultSecretStatus *KeyVaultSecretStatus
-
-	// READ-ONLY; Public key hash.
-	PublicKeyHash *string
-
-	// READ-ONLY; Self link.
-	SelfLink *string
-
-	// READ-ONLY; App name.
-	SiteName *string
-
-	// READ-ONLY; Subject name of the certificate.
-	SubjectName *string
-
-	// READ-ONLY; Certificate thumbprint.
-	Thumbprint *string
-
-	// READ-ONLY; Is the certificate valid?.
-	Valid *bool
-}
-
 // AppInsightsWebAppStackSettings - App Insights Web App stack settings.
 type AppInsightsWebAppStackSettings struct {
 	// READ-ONLY; <code>true</code> if Application Insights is disabled by default for the stack; otherwise, <code>false</code>.
@@ -1074,6 +887,34 @@ type Capability struct {
 	Value *string
 }
 
+// Certificate - SSL certificate for an app.
+type Certificate struct {
+	// REQUIRED; The geo-location where the resource lives
+	Location *string
+
+	// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference
+	// for details supported values for kind.
+	Kind *string
+
+	// Certificate resource specific properties
+	Properties *CertificateProperties
+
+	// Resource tags.
+	Tags map[string]*string
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
 // Certificate1 - Key Vault container for a certificate that is purchased through Azure.
 type Certificate1 struct {
 	// Key Vault resource Id.
@@ -1086,10 +927,31 @@ type Certificate1 struct {
 	ProvisioningState *KeyVaultSecretStatus
 }
 
-// CertificateCollection - Collection of certificate order certificates.
+// CertificateCollection - Collection of certificates.
 type CertificateCollection struct {
-	// REQUIRED; The AppServiceCertificateResource items on this page
+	// REQUIRED; REQUIRED; The Certificate items on this page
+	Value []*Certificate
+
+	// REQUIRED; REQUIRED; The AppServiceCertificateResource items on this page
 	Value []*CertificateResource
+
+	// The link to the next page of items
+	NextLink *string
+
+	// The link to the next page of items
+	NextLink *string
+}
+
+// CertificateCollection - Collection of certificates.
+type CertificateCollection struct {
+	// REQUIRED; REQUIRED; The Certificate items on this page
+	Value []*Certificate
+
+	// REQUIRED; REQUIRED; The AppServiceCertificateResource items on this page
+	Value []*CertificateResource
+
+	// The link to the next page of items
+	NextLink *string
 
 	// The link to the next page of items
 	NextLink *string
@@ -1330,6 +1192,24 @@ type CertificateOrderProperties struct {
 	Status *CertificateOrderStatus
 }
 
+// CertificatePatchResource - ARM resource for a certificate.
+type CertificatePatchResource struct {
+	// Kind of resource.
+	Kind *string
+
+	// CertificatePatchResource resource specific properties
+	Properties *CertificatePatchResourceProperties
+
+	// READ-ONLY; Resource Id.
+	ID *string
+
+	// READ-ONLY; Resource Name.
+	Name *string
+
+	// READ-ONLY; Resource type.
+	Type *string
+}
+
 // CertificatePatchResource1 - Key Vault container ARM resource for a certificate that is purchased through Azure.
 type CertificatePatchResource1 struct {
 	// Kind of resource.
@@ -1346,6 +1226,138 @@ type CertificatePatchResource1 struct {
 
 	// READ-ONLY; Resource type.
 	Type *string
+}
+
+// CertificatePatchResourceProperties - CertificatePatchResource resource specific properties
+type CertificatePatchResourceProperties struct {
+	// CNAME of the certificate to be issued via free certificate
+	CanonicalName *string
+
+	// Method of domain validation for free cert
+	DomainValidationMethod *string
+
+	// Host names the certificate applies to.
+	HostNames []*string
+
+	// Key Vault Csm resource Id.
+	KeyVaultID *string
+
+	// Key Vault secret name.
+	KeyVaultSecretName *string
+
+	// Pfx blob.
+	PfxBlob []byte
+
+	// Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}".
+	ServerFarmID *string
+
+	// READ-ONLY; Raw bytes of .cer file
+	CerBlob []byte
+
+	// READ-ONLY; Certificate expiration date.
+	ExpirationDate *time.Time
+
+	// READ-ONLY; Friendly name of the certificate.
+	FriendlyName *string
+
+	// READ-ONLY; Specification for the App Service Environment to use for the certificate.
+	HostingEnvironmentProfile *HostingEnvironmentProfile
+
+	// READ-ONLY; Certificate issue Date.
+	IssueDate *time.Time
+
+	// READ-ONLY; Certificate issuer.
+	Issuer *string
+
+	// READ-ONLY; Status of the Key Vault secret.
+	KeyVaultSecretStatus *KeyVaultSecretStatus
+
+	// READ-ONLY; Certificate password.
+	Password *string
+
+	// READ-ONLY; Public key hash.
+	PublicKeyHash *string
+
+	// READ-ONLY; Self link.
+	SelfLink *string
+
+	// READ-ONLY; App name.
+	SiteName *string
+
+	// READ-ONLY; Subject name of the certificate.
+	SubjectName *string
+
+	// READ-ONLY; Certificate thumbprint.
+	Thumbprint *string
+
+	// READ-ONLY; Is the certificate valid?.
+	Valid *bool
+}
+
+// CertificateProperties - Certificate resource specific properties
+type CertificateProperties struct {
+	// CNAME of the certificate to be issued via free certificate
+	CanonicalName *string
+
+	// Method of domain validation for free cert
+	DomainValidationMethod *string
+
+	// Host names the certificate applies to.
+	HostNames []*string
+
+	// Azure Key Vault Csm resource Id.
+	KeyVaultID *string
+
+	// Azure Key Vault secret name.
+	KeyVaultSecretName *string
+
+	// Certificate password.
+	Password *string
+
+	// Pfx blob.
+	PfxBlob []byte
+
+	// Resource ID of the associated App Service plan.
+	ServerFarmID *string
+
+	// READ-ONLY; Raw bytes of .cer file
+	CerBlob []byte
+
+	// READ-ONLY; Certificate expiration date.
+	ExpirationDate *time.Time
+
+	// READ-ONLY; Friendly name of the certificate.
+	FriendlyName *string
+
+	// READ-ONLY; Specification for the App Service Environment to use for the certificate.
+	HostingEnvironmentProfile *HostingEnvironmentProfile
+
+	// READ-ONLY; Certificate issue Date.
+	IssueDate *time.Time
+
+	// READ-ONLY; Certificate issuer.
+	Issuer *string
+
+	// READ-ONLY; Status of the Key Vault secret.
+	KeyVaultSecretStatus *KeyVaultSecretStatus
+
+	// READ-ONLY; Public key hash.
+	PublicKeyHash *string
+
+	// READ-ONLY; Self link.
+	SelfLink *string
+
+	// READ-ONLY; App name.
+	SiteName *string
+
+	// READ-ONLY; Subject name of the certificate.
+	SubjectName *string
+
+	// READ-ONLY; Certificate thumbprint.
+	Thumbprint *string
+
+	// READ-ONLY; Is the certificate valid?.
+	Valid *bool
 }
 
 // CertificateResource - Key Vault container ARM resource for a certificate that is purchased through Azure.

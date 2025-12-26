@@ -27,15 +27,15 @@ type DiagnosticsServer struct {
 
 	// ExecuteSiteAnalysisSlot is the fake for method DiagnosticsClient.ExecuteSiteAnalysisSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	ExecuteSiteAnalysisSlot func(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, analysisName string, slot string, options *armappservice.DiagnosticsClientExecuteSiteAnalysisSlotOptions) (resp azfake.Responder[armappservice.DiagnosticsClientExecuteSiteAnalysisSlotResponse], errResp azfake.ErrorResponder)
+	ExecuteSiteAnalysisSlot func(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, analysisName string, options *armappservice.DiagnosticsClientExecuteSiteAnalysisSlotOptions) (resp azfake.Responder[armappservice.DiagnosticsClientExecuteSiteAnalysisSlotResponse], errResp azfake.ErrorResponder)
 
 	// ExecuteSiteDetector is the fake for method DiagnosticsClient.ExecuteSiteDetector
 	// HTTP status codes to indicate success: http.StatusOK
-	ExecuteSiteDetector func(ctx context.Context, resourceGroupName string, siteName string, detectorName string, diagnosticCategory string, options *armappservice.DiagnosticsClientExecuteSiteDetectorOptions) (resp azfake.Responder[armappservice.DiagnosticsClientExecuteSiteDetectorResponse], errResp azfake.ErrorResponder)
+	ExecuteSiteDetector func(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, detectorName string, options *armappservice.DiagnosticsClientExecuteSiteDetectorOptions) (resp azfake.Responder[armappservice.DiagnosticsClientExecuteSiteDetectorResponse], errResp azfake.ErrorResponder)
 
 	// ExecuteSiteDetectorSlot is the fake for method DiagnosticsClient.ExecuteSiteDetectorSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	ExecuteSiteDetectorSlot func(ctx context.Context, resourceGroupName string, siteName string, detectorName string, diagnosticCategory string, slot string, options *armappservice.DiagnosticsClientExecuteSiteDetectorSlotOptions) (resp azfake.Responder[armappservice.DiagnosticsClientExecuteSiteDetectorSlotResponse], errResp azfake.ErrorResponder)
+	ExecuteSiteDetectorSlot func(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, detectorName string, options *armappservice.DiagnosticsClientExecuteSiteDetectorSlotOptions) (resp azfake.Responder[armappservice.DiagnosticsClientExecuteSiteDetectorSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetHostingEnvironmentDetectorResponse is the fake for method DiagnosticsClient.GetHostingEnvironmentDetectorResponse
 	// HTTP status codes to indicate success: http.StatusOK
@@ -47,7 +47,7 @@ type DiagnosticsServer struct {
 
 	// GetSiteAnalysisSlot is the fake for method DiagnosticsClient.GetSiteAnalysisSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetSiteAnalysisSlot func(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, analysisName string, slot string, options *armappservice.DiagnosticsClientGetSiteAnalysisSlotOptions) (resp azfake.Responder[armappservice.DiagnosticsClientGetSiteAnalysisSlotResponse], errResp azfake.ErrorResponder)
+	GetSiteAnalysisSlot func(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, analysisName string, options *armappservice.DiagnosticsClientGetSiteAnalysisSlotOptions) (resp azfake.Responder[armappservice.DiagnosticsClientGetSiteAnalysisSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetSiteDetector is the fake for method DiagnosticsClient.GetSiteDetector
 	// HTTP status codes to indicate success: http.StatusOK
@@ -59,11 +59,11 @@ type DiagnosticsServer struct {
 
 	// GetSiteDetectorResponseSlot is the fake for method DiagnosticsClient.GetSiteDetectorResponseSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetSiteDetectorResponseSlot func(ctx context.Context, resourceGroupName string, siteName string, detectorName string, slot string, options *armappservice.DiagnosticsClientGetSiteDetectorResponseSlotOptions) (resp azfake.Responder[armappservice.DiagnosticsClientGetSiteDetectorResponseSlotResponse], errResp azfake.ErrorResponder)
+	GetSiteDetectorResponseSlot func(ctx context.Context, resourceGroupName string, siteName string, slot string, detectorName string, options *armappservice.DiagnosticsClientGetSiteDetectorResponseSlotOptions) (resp azfake.Responder[armappservice.DiagnosticsClientGetSiteDetectorResponseSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetSiteDetectorSlot is the fake for method DiagnosticsClient.GetSiteDetectorSlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetSiteDetectorSlot func(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, detectorName string, slot string, options *armappservice.DiagnosticsClientGetSiteDetectorSlotOptions) (resp azfake.Responder[armappservice.DiagnosticsClientGetSiteDetectorSlotResponse], errResp azfake.ErrorResponder)
+	GetSiteDetectorSlot func(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, detectorName string, options *armappservice.DiagnosticsClientGetSiteDetectorSlotOptions) (resp azfake.Responder[armappservice.DiagnosticsClientGetSiteDetectorSlotResponse], errResp azfake.ErrorResponder)
 
 	// GetSiteDiagnosticCategory is the fake for method DiagnosticsClient.GetSiteDiagnosticCategory
 	// HTTP status codes to indicate success: http.StatusOK
@@ -71,7 +71,7 @@ type DiagnosticsServer struct {
 
 	// GetSiteDiagnosticCategorySlot is the fake for method DiagnosticsClient.GetSiteDiagnosticCategorySlot
 	// HTTP status codes to indicate success: http.StatusOK
-	GetSiteDiagnosticCategorySlot func(ctx context.Context, resourceGroupName string, siteName string, diagnosticCategory string, slot string, options *armappservice.DiagnosticsClientGetSiteDiagnosticCategorySlotOptions) (resp azfake.Responder[armappservice.DiagnosticsClientGetSiteDiagnosticCategorySlotResponse], errResp azfake.ErrorResponder)
+	GetSiteDiagnosticCategorySlot func(ctx context.Context, resourceGroupName string, siteName string, slot string, diagnosticCategory string, options *armappservice.DiagnosticsClientGetSiteDiagnosticCategorySlotOptions) (resp azfake.Responder[armappservice.DiagnosticsClientGetSiteDiagnosticCategorySlotResponse], errResp azfake.ErrorResponder)
 
 	// NewListHostingEnvironmentDetectorResponsesPager is the fake for method DiagnosticsClient.NewListHostingEnvironmentDetectorResponsesPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -83,7 +83,7 @@ type DiagnosticsServer struct {
 
 	// NewListSiteAnalysesSlotPager is the fake for method DiagnosticsClient.NewListSiteAnalysesSlotPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListSiteAnalysesSlotPager func(resourceGroupName string, siteName string, diagnosticCategory string, slot string, options *armappservice.DiagnosticsClientListSiteAnalysesSlotOptions) (resp azfake.PagerResponder[armappservice.DiagnosticsClientListSiteAnalysesSlotResponse])
+	NewListSiteAnalysesSlotPager func(resourceGroupName string, siteName string, slot string, diagnosticCategory string, options *armappservice.DiagnosticsClientListSiteAnalysesSlotOptions) (resp azfake.PagerResponder[armappservice.DiagnosticsClientListSiteAnalysesSlotResponse])
 
 	// NewListSiteDetectorResponsesPager is the fake for method DiagnosticsClient.NewListSiteDetectorResponsesPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -99,7 +99,7 @@ type DiagnosticsServer struct {
 
 	// NewListSiteDetectorsSlotPager is the fake for method DiagnosticsClient.NewListSiteDetectorsSlotPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListSiteDetectorsSlotPager func(resourceGroupName string, siteName string, diagnosticCategory string, slot string, options *armappservice.DiagnosticsClientListSiteDetectorsSlotOptions) (resp azfake.PagerResponder[armappservice.DiagnosticsClientListSiteDetectorsSlotResponse])
+	NewListSiteDetectorsSlotPager func(resourceGroupName string, siteName string, slot string, diagnosticCategory string, options *armappservice.DiagnosticsClientListSiteDetectorsSlotOptions) (resp azfake.PagerResponder[armappservice.DiagnosticsClientListSiteDetectorsSlotResponse])
 
 	// NewListSiteDiagnosticCategoriesPager is the fake for method DiagnosticsClient.NewListSiteDiagnosticCategoriesPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -319,15 +319,15 @@ func (d *DiagnosticsServerTransport) dispatchExecuteSiteAnalysisSlot(req *http.R
 	if err != nil {
 		return nil, err
 	}
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	if err != nil {
+		return nil, err
+	}
 	diagnosticCategoryParam, err := url.PathUnescape(matches[regex.SubexpIndex("diagnosticCategory")])
 	if err != nil {
 		return nil, err
 	}
 	analysisNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("analysisName")])
-	if err != nil {
-		return nil, err
-	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
@@ -360,7 +360,7 @@ func (d *DiagnosticsServerTransport) dispatchExecuteSiteAnalysisSlot(req *http.R
 			TimeGrain: timeGrainParam,
 		}
 	}
-	respr, errRespr := d.srv.ExecuteSiteAnalysisSlot(req.Context(), resourceGroupNameParam, siteNameParam, diagnosticCategoryParam, analysisNameParam, slotParam, options)
+	respr, errRespr := d.srv.ExecuteSiteAnalysisSlot(req.Context(), resourceGroupNameParam, siteNameParam, slotParam, diagnosticCategoryParam, analysisNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -394,11 +394,11 @@ func (d *DiagnosticsServerTransport) dispatchExecuteSiteDetector(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	detectorNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("detectorName")])
+	diagnosticCategoryParam, err := url.PathUnescape(matches[regex.SubexpIndex("diagnosticCategory")])
 	if err != nil {
 		return nil, err
 	}
-	diagnosticCategoryParam, err := url.PathUnescape(matches[regex.SubexpIndex("diagnosticCategory")])
+	detectorNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("detectorName")])
 	if err != nil {
 		return nil, err
 	}
@@ -431,7 +431,7 @@ func (d *DiagnosticsServerTransport) dispatchExecuteSiteDetector(req *http.Reque
 			TimeGrain: timeGrainParam,
 		}
 	}
-	respr, errRespr := d.srv.ExecuteSiteDetector(req.Context(), resourceGroupNameParam, siteNameParam, detectorNameParam, diagnosticCategoryParam, options)
+	respr, errRespr := d.srv.ExecuteSiteDetector(req.Context(), resourceGroupNameParam, siteNameParam, diagnosticCategoryParam, detectorNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -465,7 +465,7 @@ func (d *DiagnosticsServerTransport) dispatchExecuteSiteDetectorSlot(req *http.R
 	if err != nil {
 		return nil, err
 	}
-	detectorNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("detectorName")])
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
@@ -473,7 +473,7 @@ func (d *DiagnosticsServerTransport) dispatchExecuteSiteDetectorSlot(req *http.R
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	detectorNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("detectorName")])
 	if err != nil {
 		return nil, err
 	}
@@ -506,7 +506,7 @@ func (d *DiagnosticsServerTransport) dispatchExecuteSiteDetectorSlot(req *http.R
 			TimeGrain: timeGrainParam,
 		}
 	}
-	respr, errRespr := d.srv.ExecuteSiteDetectorSlot(req.Context(), resourceGroupNameParam, siteNameParam, detectorNameParam, diagnosticCategoryParam, slotParam, options)
+	respr, errRespr := d.srv.ExecuteSiteDetectorSlot(req.Context(), resourceGroupNameParam, siteNameParam, slotParam, diagnosticCategoryParam, detectorNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -647,6 +647,10 @@ func (d *DiagnosticsServerTransport) dispatchGetSiteAnalysisSlot(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	if err != nil {
+		return nil, err
+	}
 	diagnosticCategoryParam, err := url.PathUnescape(matches[regex.SubexpIndex("diagnosticCategory")])
 	if err != nil {
 		return nil, err
@@ -655,11 +659,7 @@ func (d *DiagnosticsServerTransport) dispatchGetSiteAnalysisSlot(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := d.srv.GetSiteAnalysisSlot(req.Context(), resourceGroupNameParam, siteNameParam, diagnosticCategoryParam, analysisNameParam, slotParam, nil)
+	respr, errRespr := d.srv.GetSiteAnalysisSlot(req.Context(), resourceGroupNameParam, siteNameParam, slotParam, diagnosticCategoryParam, analysisNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -801,11 +801,11 @@ func (d *DiagnosticsServerTransport) dispatchGetSiteDetectorResponseSlot(req *ht
 	if err != nil {
 		return nil, err
 	}
-	detectorNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("detectorName")])
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	detectorNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("detectorName")])
 	if err != nil {
 		return nil, err
 	}
@@ -838,7 +838,7 @@ func (d *DiagnosticsServerTransport) dispatchGetSiteDetectorResponseSlot(req *ht
 			TimeGrain: timeGrainParam,
 		}
 	}
-	respr, errRespr := d.srv.GetSiteDetectorResponseSlot(req.Context(), resourceGroupNameParam, siteNameParam, detectorNameParam, slotParam, options)
+	respr, errRespr := d.srv.GetSiteDetectorResponseSlot(req.Context(), resourceGroupNameParam, siteNameParam, slotParam, detectorNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -871,6 +871,10 @@ func (d *DiagnosticsServerTransport) dispatchGetSiteDetectorSlot(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
+	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
+	if err != nil {
+		return nil, err
+	}
 	diagnosticCategoryParam, err := url.PathUnescape(matches[regex.SubexpIndex("diagnosticCategory")])
 	if err != nil {
 		return nil, err
@@ -879,11 +883,7 @@ func (d *DiagnosticsServerTransport) dispatchGetSiteDetectorSlot(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := d.srv.GetSiteDetectorSlot(req.Context(), resourceGroupNameParam, siteNameParam, diagnosticCategoryParam, detectorNameParam, slotParam, nil)
+	respr, errRespr := d.srv.GetSiteDetectorSlot(req.Context(), resourceGroupNameParam, siteNameParam, slotParam, diagnosticCategoryParam, detectorNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -953,15 +953,15 @@ func (d *DiagnosticsServerTransport) dispatchGetSiteDiagnosticCategorySlot(req *
 	if err != nil {
 		return nil, err
 	}
-	diagnosticCategoryParam, err := url.PathUnescape(matches[regex.SubexpIndex("diagnosticCategory")])
-	if err != nil {
-		return nil, err
-	}
 	slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.GetSiteDiagnosticCategorySlot(req.Context(), resourceGroupNameParam, siteNameParam, diagnosticCategoryParam, slotParam, nil)
+	diagnosticCategoryParam, err := url.PathUnescape(matches[regex.SubexpIndex("diagnosticCategory")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := d.srv.GetSiteDiagnosticCategorySlot(req.Context(), resourceGroupNameParam, siteNameParam, slotParam, diagnosticCategoryParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -1082,15 +1082,15 @@ func (d *DiagnosticsServerTransport) dispatchNewListSiteAnalysesSlotPager(req *h
 		if err != nil {
 			return nil, err
 		}
-		diagnosticCategoryParam, err := url.PathUnescape(matches[regex.SubexpIndex("diagnosticCategory")])
-		if err != nil {
-			return nil, err
-		}
 		slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 		if err != nil {
 			return nil, err
 		}
-		resp := d.srv.NewListSiteAnalysesSlotPager(resourceGroupNameParam, siteNameParam, diagnosticCategoryParam, slotParam, nil)
+		diagnosticCategoryParam, err := url.PathUnescape(matches[regex.SubexpIndex("diagnosticCategory")])
+		if err != nil {
+			return nil, err
+		}
+		resp := d.srv.NewListSiteAnalysesSlotPager(resourceGroupNameParam, siteNameParam, slotParam, diagnosticCategoryParam, nil)
 		newListSiteAnalysesSlotPager = &resp
 		d.newListSiteAnalysesSlotPager.add(req, newListSiteAnalysesSlotPager)
 		server.PagerResponderInjectNextLinks(newListSiteAnalysesSlotPager, req, func(page *armappservice.DiagnosticsClientListSiteAnalysesSlotResponse, createLink func() string) {
@@ -1262,15 +1262,15 @@ func (d *DiagnosticsServerTransport) dispatchNewListSiteDetectorsSlotPager(req *
 		if err != nil {
 			return nil, err
 		}
-		diagnosticCategoryParam, err := url.PathUnescape(matches[regex.SubexpIndex("diagnosticCategory")])
-		if err != nil {
-			return nil, err
-		}
 		slotParam, err := url.PathUnescape(matches[regex.SubexpIndex("slot")])
 		if err != nil {
 			return nil, err
 		}
-		resp := d.srv.NewListSiteDetectorsSlotPager(resourceGroupNameParam, siteNameParam, diagnosticCategoryParam, slotParam, nil)
+		diagnosticCategoryParam, err := url.PathUnescape(matches[regex.SubexpIndex("diagnosticCategory")])
+		if err != nil {
+			return nil, err
+		}
+		resp := d.srv.NewListSiteDetectorsSlotPager(resourceGroupNameParam, siteNameParam, slotParam, diagnosticCategoryParam, nil)
 		newListSiteDetectorsSlotPager = &resp
 		d.newListSiteDetectorsSlotPager.add(req, newListSiteDetectorsSlotPager)
 		server.PagerResponderInjectNextLinks(newListSiteDetectorsSlotPager, req, func(page *armappservice.DiagnosticsClientListSiteDetectorsSlotResponse, createLink func() string) {
