@@ -220,6 +220,9 @@ generate('armcomputeschedule', armcomputeschedule, 'test/local/armcomputeschedul
 const armbillingbenefits = pkgRoot + 'test/tsp/BillingBenefits.Management';
 generate('armbillingbenefits', armbillingbenefits, 'test/local/armbillingbenefits', [`examples-directory=${armbillingbenefits}/examples`, 'generate-samples=true']);
 
+const armadditionalproperty = pkgRoot + 'test/tsp/Additional.Management';
+generate('armadditionalproperty', armadditionalproperty, 'test/local/armadditionalproperty', [`examples-directory=${armadditionalproperty}/examples`, 'generate-samples=true']);
+
 const nooptionalbody = pkgRoot + 'test/tsp/NoOptionalBody';
 generate('nooptionalbody', nooptionalbody, 'test/local/nooptionalbody', ['generate-fakes=false', 'go-generate=after_generate.go', 'no-optional-body=true']);
 

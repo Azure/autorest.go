@@ -14,12 +14,13 @@ import (
 )
 
 // TwoOperationGroupServer is a fake server for instances of the twoopgroup.TwoOperationGroupClient type.
-type TwoOperationGroupServer struct {
+type TwoOperationGroupServer struct{
 	// TwoOperationGroupGroup1Server contains the fakes for client TwoOperationGroupGroup1Client
 	TwoOperationGroupGroup1Server TwoOperationGroupGroup1Server
 
 	// TwoOperationGroupGroup2Server contains the fakes for client TwoOperationGroupGroup2Client
 	TwoOperationGroupGroup2Server TwoOperationGroupGroup2Server
+
 }
 
 // NewTwoOperationGroupServerTransport creates a new instance of TwoOperationGroupServerTransport with the provided implementation.
@@ -32,8 +33,8 @@ func NewTwoOperationGroupServerTransport(srv *TwoOperationGroupServer) *TwoOpera
 // TwoOperationGroupServerTransport connects instances of twoopgroup.TwoOperationGroupClient to instances of TwoOperationGroupServer.
 // Don't use this type directly, use NewTwoOperationGroupServerTransport instead.
 type TwoOperationGroupServerTransport struct {
-	srv                             *TwoOperationGroupServer
-	trMu                            sync.Mutex
+	srv *TwoOperationGroupServer
+	trMu sync.Mutex
 	trTwoOperationGroupGroup1Server *TwoOperationGroupGroup1ServerTransport
 	trTwoOperationGroupGroup2Server *TwoOperationGroupGroup2ServerTransport
 }
@@ -56,13 +57,11 @@ func (t *TwoOperationGroupServerTransport) dispatchToClientFake(req *http.Reques
 	switch client {
 	case "TwoOperationGroupGroup1Client":
 		initServer(&t.trMu, &t.trTwoOperationGroupGroup1Server, func() *TwoOperationGroupGroup1ServerTransport {
-			return NewTwoOperationGroupGroup1ServerTransport(&t.srv.TwoOperationGroupGroup1Server)
-		})
+		return NewTwoOperationGroupGroup1ServerTransport(&t.srv.TwoOperationGroupGroup1Server) })
 		resp, err = t.trTwoOperationGroupGroup1Server.Do(req)
 	case "TwoOperationGroupGroup2Client":
 		initServer(&t.trMu, &t.trTwoOperationGroupGroup2Server, func() *TwoOperationGroupGroup2ServerTransport {
-			return NewTwoOperationGroupGroup2ServerTransport(&t.srv.TwoOperationGroupGroup2Server)
-		})
+		return NewTwoOperationGroupGroup2ServerTransport(&t.srv.TwoOperationGroupGroup2Server) })
 		resp, err = t.trTwoOperationGroupGroup2Server.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)

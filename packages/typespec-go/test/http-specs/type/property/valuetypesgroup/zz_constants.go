@@ -12,7 +12,7 @@ const (
 
 // PossibleExtendedEnumValues returns the possible values for the ExtendedEnum const type.
 func PossibleExtendedEnumValues() []ExtendedEnum {
-	return []ExtendedEnum{
+	return []ExtendedEnum{	
 		ExtendedEnumEnumValue2,
 	}
 }
@@ -21,15 +21,15 @@ func PossibleExtendedEnumValues() []ExtendedEnum {
 type FixedInnerEnum string
 
 const (
-	// FixedInnerEnumValueOne - First value.
+// FixedInnerEnumValueOne - First value.
 	FixedInnerEnumValueOne FixedInnerEnum = "ValueOne"
-	// FixedInnerEnumValueTwo - Second value.
+// FixedInnerEnumValueTwo - Second value.
 	FixedInnerEnumValueTwo FixedInnerEnum = "ValueTwo"
 )
 
 // PossibleFixedInnerEnumValues returns the possible values for the FixedInnerEnum const type.
 func PossibleFixedInnerEnumValues() []FixedInnerEnum {
-	return []FixedInnerEnum{
+	return []FixedInnerEnum{	
 		FixedInnerEnumValueOne,
 		FixedInnerEnumValueTwo,
 	}
@@ -39,15 +39,15 @@ func PossibleFixedInnerEnumValues() []FixedInnerEnum {
 type InnerEnum string
 
 const (
-	// InnerEnumValueOne - First value.
+// InnerEnumValueOne - First value.
 	InnerEnumValueOne InnerEnum = "ValueOne"
-	// InnerEnumValueTwo - Second value.
+// InnerEnumValueTwo - Second value.
 	InnerEnumValueTwo InnerEnum = "ValueTwo"
 )
 
 // PossibleInnerEnumValues returns the possible values for the InnerEnum const type.
 func PossibleInnerEnumValues() []InnerEnum {
-	return []InnerEnum{
+	return []InnerEnum{	
 		InnerEnumValueOne,
 		InnerEnumValueTwo,
 	}
@@ -62,7 +62,7 @@ const (
 
 // PossibleUnionFloatLiteralPropertyPropertyValues returns the possible values for the UnionFloatLiteralPropertyProperty const type.
 func PossibleUnionFloatLiteralPropertyPropertyValues() []UnionFloatLiteralPropertyProperty {
-	return []UnionFloatLiteralPropertyProperty{
+	return []UnionFloatLiteralPropertyProperty{	
 		UnionFloatLiteralPropertyProperty43125,
 		UnionFloatLiteralPropertyProperty46875,
 	}
@@ -77,7 +77,7 @@ const (
 
 // PossibleUnionIntLiteralPropertyPropertyValues returns the possible values for the UnionIntLiteralPropertyProperty const type.
 func PossibleUnionIntLiteralPropertyPropertyValues() []UnionIntLiteralPropertyProperty {
-	return []UnionIntLiteralPropertyProperty{
+	return []UnionIntLiteralPropertyProperty{	
 		UnionIntLiteralPropertyProperty42,
 		UnionIntLiteralPropertyProperty43,
 	}
@@ -92,8 +92,9 @@ const (
 
 // PossibleUnionStringLiteralPropertyPropertyValues returns the possible values for the UnionStringLiteralPropertyProperty const type.
 func PossibleUnionStringLiteralPropertyPropertyValues() []UnionStringLiteralPropertyProperty {
-	return []UnionStringLiteralPropertyProperty{
+	return []UnionStringLiteralPropertyProperty{	
 		UnionStringLiteralPropertyPropertyHello,
 		UnionStringLiteralPropertyPropertyWorld,
 	}
 }
+

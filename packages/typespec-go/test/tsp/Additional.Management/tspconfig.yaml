@@ -1,0 +1,6 @@
+emit:
+  - "@azure-tools/typespec-go"
+options:
+  "@azure-tools/typespec-go":
+    module: "armadditionalproperty"
+    examples-directory: "{project-root}/examples"

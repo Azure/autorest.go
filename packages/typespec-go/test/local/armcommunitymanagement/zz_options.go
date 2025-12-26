@@ -7,21 +7,21 @@ package armcommunitymanagement
 // CommunityTrainingsClientBeginCreateOptions contains the optional parameters for the CommunityTrainingsClient.BeginCreate
 // method.
 type CommunityTrainingsClientBeginCreateOptions struct {
-	// Resumes the long-running operation from the provided token.
+// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // CommunityTrainingsClientBeginDeleteOptions contains the optional parameters for the CommunityTrainingsClient.BeginDelete
 // method.
 type CommunityTrainingsClientBeginDeleteOptions struct {
-	// Resumes the long-running operation from the provided token.
+// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // CommunityTrainingsClientBeginUpdateOptions contains the optional parameters for the CommunityTrainingsClient.BeginUpdate
 // method.
 type CommunityTrainingsClientBeginUpdateOptions struct {
-	// Resumes the long-running operation from the provided token.
+// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
@@ -46,3 +46,4 @@ type CommunityTrainingsClientListBySubscriptionOptions struct {
 type OperationsClientListOptions struct {
 	// placeholder for future optional parameters
 }
+

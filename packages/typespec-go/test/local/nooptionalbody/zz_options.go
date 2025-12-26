@@ -18,3 +18,4 @@ type ClientPostOptions struct {
 type ClientPutOptions struct {
 	// placeholder for future optional parameters
 }
+

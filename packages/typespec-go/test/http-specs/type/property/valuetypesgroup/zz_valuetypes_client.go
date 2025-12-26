@@ -34,7 +34,7 @@ func NewValueTypesClientWithNoCredential(endpoint string, options *ValueTypesCli
 	}
 	client := &ValueTypesClient{
 		endpoint: endpoint,
-		internal: cl,
+	internal: cl,
 	}
 	return client, nil
 }
@@ -270,3 +270,4 @@ func (client *ValueTypesClient) NewValueTypesUnknownStringClient() *ValueTypesUn
 		internal: client.internal,
 	}
 }
+

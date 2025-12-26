@@ -8,13 +8,13 @@ package armcodesigning
 type ActionType string
 
 const (
-	// ActionTypeInternal - Actions are for internal-only APIs.
+// ActionTypeInternal - Actions are for internal-only APIs.
 	ActionTypeInternal ActionType = "Internal"
 )
 
 // PossibleActionTypeValues returns the possible values for the ActionType const type.
 func PossibleActionTypeValues() []ActionType {
-	return []ActionType{
+	return []ActionType{	
 		ActionTypeInternal,
 	}
 }
@@ -23,17 +23,17 @@ func PossibleActionTypeValues() []ActionType {
 type CertificateProfileStatus string
 
 const (
-	// CertificateProfileStatusActive - The certificate profile is active.
+// CertificateProfileStatusActive - The certificate profile is active.
 	CertificateProfileStatusActive CertificateProfileStatus = "Active"
-	// CertificateProfileStatusDisabled - The certificate profile is disabled.
+// CertificateProfileStatusDisabled - The certificate profile is disabled.
 	CertificateProfileStatusDisabled CertificateProfileStatus = "Disabled"
-	// CertificateProfileStatusSuspended - The certificate profile is suspended.
+// CertificateProfileStatusSuspended - The certificate profile is suspended.
 	CertificateProfileStatusSuspended CertificateProfileStatus = "Suspended"
 )
 
 // PossibleCertificateProfileStatusValues returns the possible values for the CertificateProfileStatus const type.
 func PossibleCertificateProfileStatusValues() []CertificateProfileStatus {
-	return []CertificateProfileStatus{
+	return []CertificateProfileStatus{	
 		CertificateProfileStatusActive,
 		CertificateProfileStatusDisabled,
 		CertificateProfileStatusSuspended,
@@ -44,17 +44,17 @@ func PossibleCertificateProfileStatusValues() []CertificateProfileStatus {
 type CertificateStatus string
 
 const (
-	// CertificateStatusActive - The certificate is active.
+// CertificateStatusActive - The certificate is active.
 	CertificateStatusActive CertificateStatus = "Active"
-	// CertificateStatusExpired - The certificate is expired.
+// CertificateStatusExpired - The certificate is expired.
 	CertificateStatusExpired CertificateStatus = "Expired"
-	// CertificateStatusRevoked - The certificate is revoked.
+// CertificateStatusRevoked - The certificate is revoked.
 	CertificateStatusRevoked CertificateStatus = "Revoked"
 )
 
 // PossibleCertificateStatusValues returns the possible values for the CertificateStatus const type.
 func PossibleCertificateStatusValues() []CertificateStatus {
-	return []CertificateStatus{
+	return []CertificateStatus{	
 		CertificateStatusActive,
 		CertificateStatusExpired,
 		CertificateStatusRevoked,
@@ -65,19 +65,19 @@ func PossibleCertificateStatusValues() []CertificateStatus {
 type CreatedByType string
 
 const (
-	// CreatedByTypeApplication - The entity was created by an application.
+// CreatedByTypeApplication - The entity was created by an application.
 	CreatedByTypeApplication CreatedByType = "Application"
-	// CreatedByTypeKey - The entity was created by a key.
+// CreatedByTypeKey - The entity was created by a key.
 	CreatedByTypeKey CreatedByType = "Key"
-	// CreatedByTypeManagedIdentity - The entity was created by a managed identity.
+// CreatedByTypeManagedIdentity - The entity was created by a managed identity.
 	CreatedByTypeManagedIdentity CreatedByType = "ManagedIdentity"
-	// CreatedByTypeUser - The entity was created by a user.
+// CreatedByTypeUser - The entity was created by a user.
 	CreatedByTypeUser CreatedByType = "User"
 )
 
 // PossibleCreatedByTypeValues returns the possible values for the CreatedByType const type.
 func PossibleCreatedByTypeValues() []CreatedByType {
-	return []CreatedByType{
+	return []CreatedByType{	
 		CreatedByTypeApplication,
 		CreatedByTypeKey,
 		CreatedByTypeManagedIdentity,
@@ -90,15 +90,15 @@ func PossibleCreatedByTypeValues() []CreatedByType {
 type NameUnavailabilityReason string
 
 const (
-	// NameUnavailabilityReasonAccountNameInvalid - Account name is invalid
+// NameUnavailabilityReasonAccountNameInvalid - Account name is invalid
 	NameUnavailabilityReasonAccountNameInvalid NameUnavailabilityReason = "AccountNameInvalid"
-	// NameUnavailabilityReasonAlreadyExists - Account name already exists
+// NameUnavailabilityReasonAlreadyExists - Account name already exists
 	NameUnavailabilityReasonAlreadyExists NameUnavailabilityReason = "AlreadyExists"
 )
 
 // PossibleNameUnavailabilityReasonValues returns the possible values for the NameUnavailabilityReason const type.
 func PossibleNameUnavailabilityReasonValues() []NameUnavailabilityReason {
-	return []NameUnavailabilityReason{
+	return []NameUnavailabilityReason{	
 		NameUnavailabilityReasonAccountNameInvalid,
 		NameUnavailabilityReasonAlreadyExists,
 	}
@@ -109,17 +109,17 @@ func PossibleNameUnavailabilityReasonValues() []NameUnavailabilityReason {
 type Origin string
 
 const (
-	// OriginSystem - Indicates the operation is initiated by a system.
+// OriginSystem - Indicates the operation is initiated by a system.
 	OriginSystem Origin = "system"
-	// OriginUser - Indicates the operation is initiated by a user.
+// OriginUser - Indicates the operation is initiated by a user.
 	OriginUser Origin = "user"
-	// OriginUserSystem - Indicates the operation is initiated by a user or system.
+// OriginUserSystem - Indicates the operation is initiated by a user or system.
 	OriginUserSystem Origin = "user,system"
 )
 
 // PossibleOriginValues returns the possible values for the Origin const type.
 func PossibleOriginValues() []Origin {
-	return []Origin{
+	return []Origin{	
 		OriginSystem,
 		OriginUser,
 		OriginUserSystem,
@@ -130,21 +130,21 @@ func PossibleOriginValues() []Origin {
 type ProfileType string
 
 const (
-	// ProfileTypePrivateTrust - Used for signing files which are distributed internally within organization or group boundary.
+// ProfileTypePrivateTrust - Used for signing files which are distributed internally within organization or group boundary.
 	ProfileTypePrivateTrust ProfileType = "PrivateTrust"
-	// ProfileTypePrivateTrustCIPolicy - Used for signing CI policy files.
+// ProfileTypePrivateTrustCIPolicy - Used for signing CI policy files.
 	ProfileTypePrivateTrustCIPolicy ProfileType = "PrivateTrustCIPolicy"
-	// ProfileTypePublicTrust - Used for signing files which are distributed publicly.
+// ProfileTypePublicTrust - Used for signing files which are distributed publicly.
 	ProfileTypePublicTrust ProfileType = "PublicTrust"
-	// ProfileTypePublicTrustTest - Used for signing files for testing purpose.
+// ProfileTypePublicTrustTest - Used for signing files for testing purpose.
 	ProfileTypePublicTrustTest ProfileType = "PublicTrustTest"
-	// ProfileTypeVBSEnclave - Used for signing files which are run in secure vbs enclave.
+// ProfileTypeVBSEnclave - Used for signing files which are run in secure vbs enclave.
 	ProfileTypeVBSEnclave ProfileType = "VBSEnclave"
 )
 
 // PossibleProfileTypeValues returns the possible values for the ProfileType const type.
 func PossibleProfileTypeValues() []ProfileType {
-	return []ProfileType{
+	return []ProfileType{	
 		ProfileTypePrivateTrust,
 		ProfileTypePrivateTrustCIPolicy,
 		ProfileTypePublicTrust,
@@ -157,23 +157,23 @@ func PossibleProfileTypeValues() []ProfileType {
 type ProvisioningState string
 
 const (
-	// ProvisioningStateAccepted - Resource creation started.
+// ProvisioningStateAccepted - Resource creation started.
 	ProvisioningStateAccepted ProvisioningState = "Accepted"
-	// ProvisioningStateCanceled - Resource creation was canceled.
+// ProvisioningStateCanceled - Resource creation was canceled.
 	ProvisioningStateCanceled ProvisioningState = "Canceled"
-	// ProvisioningStateDeleting - Deletion in progress.
+// ProvisioningStateDeleting - Deletion in progress.
 	ProvisioningStateDeleting ProvisioningState = "Deleting"
-	// ProvisioningStateFailed - Resource creation failed.
+// ProvisioningStateFailed - Resource creation failed.
 	ProvisioningStateFailed ProvisioningState = "Failed"
-	// ProvisioningStateSucceeded - Resource has been created.
+// ProvisioningStateSucceeded - Resource has been created.
 	ProvisioningStateSucceeded ProvisioningState = "Succeeded"
-	// ProvisioningStateUpdating - Updating in progress.
+// ProvisioningStateUpdating - Updating in progress.
 	ProvisioningStateUpdating ProvisioningState = "Updating"
 )
 
 // PossibleProvisioningStateValues returns the possible values for the ProvisioningState const type.
 func PossibleProvisioningStateValues() []ProvisioningState {
-	return []ProvisioningState{
+	return []ProvisioningState{	
 		ProvisioningStateAccepted,
 		ProvisioningStateCanceled,
 		ProvisioningStateDeleting,
@@ -187,17 +187,17 @@ func PossibleProvisioningStateValues() []ProvisioningState {
 type RevocationStatus string
 
 const (
-	// RevocationStatusFailed - Certificate revocation failed.
+// RevocationStatusFailed - Certificate revocation failed.
 	RevocationStatusFailed RevocationStatus = "Failed"
-	// RevocationStatusInProgress - Certificate revocation is in progress.
+// RevocationStatusInProgress - Certificate revocation is in progress.
 	RevocationStatusInProgress RevocationStatus = "InProgress"
-	// RevocationStatusSucceeded - Certificate revocation succeeded.
+// RevocationStatusSucceeded - Certificate revocation succeeded.
 	RevocationStatusSucceeded RevocationStatus = "Succeeded"
 )
 
 // PossibleRevocationStatusValues returns the possible values for the RevocationStatus const type.
 func PossibleRevocationStatusValues() []RevocationStatus {
-	return []RevocationStatus{
+	return []RevocationStatus{	
 		RevocationStatusFailed,
 		RevocationStatusInProgress,
 		RevocationStatusSucceeded,
@@ -208,16 +208,17 @@ func PossibleRevocationStatusValues() []RevocationStatus {
 type SKUName string
 
 const (
-	// SKUNameBasic - Basic sku.
+// SKUNameBasic - Basic sku.
 	SKUNameBasic SKUName = "Basic"
-	// SKUNamePremium - Premium sku.
+// SKUNamePremium - Premium sku.
 	SKUNamePremium SKUName = "Premium"
 )
 
 // PossibleSKUNameValues returns the possible values for the SKUName const type.
 func PossibleSKUNameValues() []SKUName {
-	return []SKUName{
+	return []SKUName{	
 		SKUNameBasic,
 		SKUNamePremium,
 	}
 }
+

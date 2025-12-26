@@ -34,3 +34,4 @@ type TwoOperationGroupGroup2ClientSixOptions struct {
 type TwoOperationGroupGroup2ClientTwoOptions struct {
 	// placeholder for future optional parameters
 }
+

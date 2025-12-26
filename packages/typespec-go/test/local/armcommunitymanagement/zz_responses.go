@@ -6,7 +6,7 @@ package armcommunitymanagement
 
 // CommunityTrainingsClientCreateResponse contains the response from method CommunityTrainingsClient.BeginCreate.
 type CommunityTrainingsClientCreateResponse struct {
-	// A CommunityProviderHub resource
+// A CommunityProviderHub resource
 	CommunityTraining
 }
 
@@ -17,30 +17,31 @@ type CommunityTrainingsClientDeleteResponse struct {
 
 // CommunityTrainingsClientGetResponse contains the response from method CommunityTrainingsClient.Get.
 type CommunityTrainingsClientGetResponse struct {
-	// A CommunityProviderHub resource
+// A CommunityProviderHub resource
 	CommunityTraining
 }
 
 // CommunityTrainingsClientListByResourceGroupResponse contains the response from method CommunityTrainingsClient.NewListByResourceGroupPager.
 type CommunityTrainingsClientListByResourceGroupResponse struct {
-	// The response of a CommunityTraining list operation.
+// The response of a CommunityTraining list operation.
 	CommunityTrainingListResult
 }
 
 // CommunityTrainingsClientListBySubscriptionResponse contains the response from method CommunityTrainingsClient.NewListBySubscriptionPager.
 type CommunityTrainingsClientListBySubscriptionResponse struct {
-	// The response of a CommunityTraining list operation.
+// The response of a CommunityTraining list operation.
 	CommunityTrainingListResult
 }
 
 // CommunityTrainingsClientUpdateResponse contains the response from method CommunityTrainingsClient.BeginUpdate.
 type CommunityTrainingsClientUpdateResponse struct {
-	// A CommunityProviderHub resource
+// A CommunityProviderHub resource
 	CommunityTraining
 }
 
 // OperationsClientListResponse contains the response from method OperationsClient.NewListPager.
 type OperationsClientListResponse struct {
-	// A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results.
+// A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results.
 	OperationListResult
 }
+

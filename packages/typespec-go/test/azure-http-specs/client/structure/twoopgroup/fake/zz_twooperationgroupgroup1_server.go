@@ -16,7 +16,7 @@ import (
 )
 
 // TwoOperationGroupGroup1Server is a fake server for instances of the twoopgroup.TwoOperationGroupGroup1Client type.
-type TwoOperationGroupGroup1Server struct {
+type TwoOperationGroupGroup1Server struct{
 	// Four is the fake for method TwoOperationGroupGroup1Client.Four
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Four func(ctx context.Context, options *twoopgroup.TwoOperationGroupGroup1ClientFourOptions) (resp azfake.Responder[twoopgroup.TwoOperationGroupGroup1ClientFourResponse], errResp azfake.ErrorResponder)
@@ -28,6 +28,7 @@ type TwoOperationGroupGroup1Server struct {
 	// Three is the fake for method TwoOperationGroupGroup1Client.Three
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Three func(ctx context.Context, options *twoopgroup.TwoOperationGroupGroup1ClientThreeOptions) (resp azfake.Responder[twoopgroup.TwoOperationGroupGroup1ClientThreeResponse], errResp azfake.ErrorResponder)
+
 }
 
 // NewTwoOperationGroupGroup1ServerTransport creates a new instance of TwoOperationGroupGroup1ServerTransport with the provided implementation.
@@ -61,8 +62,8 @@ func (t *TwoOperationGroupGroup1ServerTransport) dispatchToMethodFake(req *http.
 	go func() {
 		var intercepted bool
 		var res result
-		if twoOperationGroupGroup1ServerTransportInterceptor != nil {
-			res.resp, res.err, intercepted = twoOperationGroupGroup1ServerTransportInterceptor.Do(req)
+		 if twoOperationGroupGroup1ServerTransportInterceptor != nil {
+			 res.resp, res.err, intercepted = twoOperationGroupGroup1ServerTransportInterceptor.Do(req)
 		}
 		if !intercepted {
 			switch method {
@@ -72,8 +73,8 @@ func (t *TwoOperationGroupGroup1ServerTransport) dispatchToMethodFake(req *http.
 				res.resp, res.err = t.dispatchOne(req)
 			case "TwoOperationGroupGroup1Client.Three":
 				res.resp, res.err = t.dispatchThree(req)
-			default:
-				res.err = fmt.Errorf("unhandled API %s", method)
+				default:
+		res.err = fmt.Errorf("unhandled API %s", method)
 			}
 
 		}

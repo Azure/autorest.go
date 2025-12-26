@@ -9,9 +9,10 @@ import (
 	"sync"
 )
 
+
 type result struct {
 	resp *http.Response
-	err  error
+	err error
 }
 
 type nonRetriableError struct {

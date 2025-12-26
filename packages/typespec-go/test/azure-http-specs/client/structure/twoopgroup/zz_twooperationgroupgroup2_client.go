@@ -123,3 +123,4 @@ func (client *TwoOperationGroupGroup2Client) twoCreateRequest(ctx context.Contex
 	}
 	return req, nil
 }
+

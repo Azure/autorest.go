@@ -99,8 +99,9 @@ func (client *ValueTypesCollectionsStringClient) putCreateRequest(ctx context.Co
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
-		return nil, err
-	}
-	return req, nil
+if err := runtime.MarshalAsJSON(req, body); err != nil {
+	return nil, err
 }
+;	return req, nil
+}
+

@@ -247,8 +247,8 @@ importers:
         version: 0.5.21
     devDependencies:
       '@azure-tools/azure-http-specs':
-        specifier: 0.1.0-alpha.35-dev.7
-        version: 0.1.0-alpha.35-dev.7(9069efbf617448a045164c09c00c60d4)
+        specifier: 0.1.0-alpha.34
+        version: 0.1.0-alpha.34(9069efbf617448a045164c09c00c60d4)
       '@azure-tools/typespec-autorest':
         specifier: 0.63.0
         version: 0.63.0(d3e3b11193798b33a68ad536365cb620)
@@ -356,16 +356,16 @@ packages:
     resolution: {integrity: sha512-4w2xfBcT0dj/IYp9t/fsBvuzTrV8faQnCs3URqfui9RBnoHVj12p8FdxCRKuRaN5CRPQlZ6XW4eMhp1wu5E8GQ==}
     engines: {node: '>=12.13.0'}
 
-  '@azure-tools/azure-http-specs@0.1.0-alpha.35-dev.7':
-    resolution: {integrity: sha512-S6AOE/McGIqPap6NE7yLQLfcJqsaI1tdiDYlM1Lk92Oeb3K70wk8OcyAp1Wgf3aqIJzimHe7RsjIzToUyxVbKQ==}
+  '@azure-tools/azure-http-specs@0.1.0-alpha.34':
+    resolution: {integrity: sha512-Z2DkKQVbDDY4rk4MT7tiRxfIJMrABxyYcKfqgbRakslwSBkmKxo8EN3OVHoyoP9JBapR14ZeOqYH2vyH+TjT7A==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@azure-tools/typespec-azure-core': ^0.63.0 || >=0.64.0-dev <0.64.0
-      '@typespec/compiler': ^1.7.1
+      '@azure-tools/typespec-azure-core': ^0.63.0
+      '@typespec/compiler': ^1.7.0
       '@typespec/http': ^1.7.0
-      '@typespec/rest': ^0.77.0 || >=0.78.0-dev <0.78.0
-      '@typespec/versioning': ^0.77.0 || >=0.78.0-dev <0.78.0
-      '@typespec/xml': ^0.77.0 || >=0.78.0-dev <0.78.0
+      '@typespec/rest': ^0.77.0
+      '@typespec/versioning': ^0.77.0
+      '@typespec/xml': ^0.77.0
 
   '@azure-tools/codegen@2.10.0':
     resolution: {integrity: sha512-gdy0at3BUZAAARgiX9Ye6SNCKhcjLs5FNUewa/KV/dMGcPv7mBvbslt5VO3W8wj0n96ifk970aIFaivjacBxeQ==}
@@ -5552,7 +5552,7 @@ snapshots:
       '@azure-tools/tasks': 4.0.246
       proper-lockfile: 2.0.1
 
-  '@azure-tools/azure-http-specs@0.1.0-alpha.35-dev.7(9069efbf617448a045164c09c00c60d4)':
+  '@azure-tools/azure-http-specs@0.1.0-alpha.34(9069efbf617448a045164c09c00c60d4)':
     dependencies:
       '@azure-tools/typespec-azure-core': 0.63.0(@typespec/compiler@1.7.0(@types/node@20.19.27))(@typespec/http@1.7.0(@typespec/compiler@1.7.0(@types/node@20.19.27))(@typespec/streams@0.77.0(@typespec/compiler@1.7.0(@types/node@20.19.27))))(@typespec/rest@0.77.0(@typespec/compiler@1.7.0(@types/node@20.19.27))(@typespec/http@1.7.0(@typespec/compiler@1.7.0(@types/node@20.19.27))(@typespec/streams@0.77.0(@typespec/compiler@1.7.0(@types/node@20.19.27)))))
       '@typespec/compiler': 1.7.0(@types/node@20.19.27)

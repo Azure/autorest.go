@@ -19,7 +19,7 @@ import (
 // Client contains the methods for the service.
 // Don't use this type directly, use NewClient() instead.
 type Client struct {
-	internal       *arm.Client
+	internal *arm.Client
 	subscriptionID string
 }
 
@@ -34,7 +34,7 @@ func NewClient(subscriptionID string, credential azcore.TokenCredential, options
 	}
 	client := &Client{
 		subscriptionID: subscriptionID,
-		internal:       cl,
+	internal: cl,
 	}
 	return client, nil
 }
@@ -51,7 +51,7 @@ func (client *Client) BeginListPrivateEndPoints(ctx context.Context, apiVersion 
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientListPrivateEndPointsResponse) (ClientListPrivateEndPointsResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.BeginListPrivateEndPoints")
+		ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.BeginListPrivateEndPoints")
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), *page.NextLink, func(ctx context.Context) (*policy.Request, error) {
 				return client.listPrivateEndPointsCreateRequest(ctx, apiVersion, resourceGroupName, resourceName, options)
 			}, nil)
@@ -59,7 +59,7 @@ func (client *Client) BeginListPrivateEndPoints(ctx context.Context, apiVersion 
 				return ClientListPrivateEndPointsResponse{}, err
 			}
 			return client.listPrivateEndPointsHandleResponse(resp)
-		},
+			},
 		Tracer: client.internal.Tracer(),
 	})
 	if options == nil || options.ResumeToken == "" {
@@ -69,13 +69,13 @@ func (client *Client) BeginListPrivateEndPoints(ctx context.Context, apiVersion 
 		}
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[*runtime.Pager[ClientListPrivateEndPointsResponse]]{
 			Response: &pager,
-			Tracer:   client.internal.Tracer(),
+			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[*runtime.Pager[ClientListPrivateEndPointsResponse]]{
 			Response: &pager,
-			Tracer:   client.internal.Tracer(),
+			Tracer: client.internal.Tracer(),
 		})
 	}
 }
@@ -136,3 +136,4 @@ func (client *Client) listPrivateEndPointsHandleResponse(resp *http.Response) (C
 	}
 	return result, nil
 }
+

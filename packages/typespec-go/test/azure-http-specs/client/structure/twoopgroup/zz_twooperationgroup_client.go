@@ -39,7 +39,7 @@ func NewTwoOperationGroupClientWithNoCredential(endpoint string, client ClientTy
 	endpoint = runtime.JoinPaths(endpoint, host)
 	twoOperationGroupClient := &TwoOperationGroupClient{
 		endpoint: endpoint,
-		internal: cl,
+	internal: cl,
 	}
 	return twoOperationGroupClient, nil
 }
@@ -59,3 +59,4 @@ func (client *TwoOperationGroupClient) NewTwoOperationGroupGroup2Client() *TwoOp
 		internal: client.internal,
 	}
 }
+

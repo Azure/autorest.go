@@ -33,3 +33,4 @@ type TwoOperationGroupGroup2ClientSixResponse struct {
 type TwoOperationGroupGroup2ClientTwoResponse struct {
 	// placeholder for future response values
 }
+

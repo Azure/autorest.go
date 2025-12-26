@@ -19,7 +19,7 @@ import (
 // CertificateProfilesClient contains the methods for the CertificateProfiles group.
 // Don't use this type directly, use NewCertificateProfilesClient() instead.
 type CertificateProfilesClient struct {
-	internal       *arm.Client
+	internal *arm.Client
 	subscriptionID string
 }
 
@@ -34,7 +34,7 @@ func NewCertificateProfilesClient(subscriptionID string, credential azcore.Token
 	}
 	client := &CertificateProfilesClient{
 		subscriptionID: subscriptionID,
-		internal:       cl,
+	internal: cl,
 	}
 	return client, nil
 }
@@ -57,7 +57,7 @@ func (client *CertificateProfilesClient) BeginCreate(ctx context.Context, resour
 		}
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CertificateProfilesClientCreateResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
-			Tracer:        client.internal.Tracer(),
+			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
@@ -120,10 +120,10 @@ func (client *CertificateProfilesClient) createCreateRequest(ctx context.Context
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, resource); err != nil {
-		return nil, err
-	}
-	return req, nil
+if err := runtime.MarshalAsJSON(req, resource); err != nil {
+	return nil, err
+}
+;	return req, nil
 }
 
 // BeginDelete - Delete a certificate profile.
@@ -282,13 +282,13 @@ func (client *CertificateProfilesClient) getHandleResponse(resp *http.Response) 
 //   - accountName - Trusted Signing account name.
 //   - options - CertificateProfilesClientListByCodeSigningAccountOptions contains the optional parameters for the CertificateProfilesClient.NewListByCodeSigningAccountPager
 //     method.
-func (client *CertificateProfilesClient) NewListByCodeSigningAccountPager(resourceGroupName string, accountName string, options *CertificateProfilesClientListByCodeSigningAccountOptions) *runtime.Pager[CertificateProfilesClientListByCodeSigningAccountResponse] {
+func (client *CertificateProfilesClient) NewListByCodeSigningAccountPager(resourceGroupName string, accountName string, options *CertificateProfilesClientListByCodeSigningAccountOptions) (*runtime.Pager[CertificateProfilesClientListByCodeSigningAccountResponse]) {
 	return runtime.NewPager(runtime.PagingHandler[CertificateProfilesClientListByCodeSigningAccountResponse]{
 		More: func(page CertificateProfilesClientListByCodeSigningAccountResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *CertificateProfilesClientListByCodeSigningAccountResponse) (CertificateProfilesClientListByCodeSigningAccountResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "CertificateProfilesClient.NewListByCodeSigningAccountPager")
+		ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "CertificateProfilesClient.NewListByCodeSigningAccountPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -300,7 +300,7 @@ func (client *CertificateProfilesClient) NewListByCodeSigningAccountPager(resour
 				return CertificateProfilesClientListByCodeSigningAccountResponse{}, err
 			}
 			return client.listByCodeSigningAccountHandleResponse(resp)
-		},
+			},
 		Tracer: client.internal.Tracer(),
 	})
 }
@@ -398,8 +398,9 @@ func (client *CertificateProfilesClient) revokeCertificateCreateRequest(ctx cont
 	reqQP.Set("api-version", "2024-09-30-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
-		return nil, err
-	}
-	return req, nil
+if err := runtime.MarshalAsJSON(req, body); err != nil {
+	return nil, err
 }
+;	return req, nil
+}
+
