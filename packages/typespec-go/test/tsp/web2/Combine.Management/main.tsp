@@ -12,7 +12,6 @@ import "@typespec/versioning";
 import "@azure-tools/typespec-azure-core";
 import "@azure-tools/typespec-azure-resource-manager";
 import "./../Web.Management/models.tsp";
-import "./../Web.Management/back-compatible.tsp";
 import "./../Web.Management/AppServiceEnvironmentResource.tsp";
 import "./../Web.Management/AddressResponse.tsp";
 import "./../Web.Management/CustomDnsSuffixConfiguration.tsp";
@@ -92,7 +91,6 @@ import "./TopLevelDomain.tsp";
 import "./routes.tsp";
 
 import "./models2.tsp";
-import "./back-compatible.tsp";
 import "./AppServiceCertificateOrder.tsp";
 import "./AppServiceCertificateResource.tsp";
 import "./DetectorResponse.tsp";

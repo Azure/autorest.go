@@ -2190,7 +2190,10 @@ using Microsoft.Web;
 @@clientLocation(listGeoRegions, "WebSiteManagement", "go");
 @@clientLocation(listPremierAddOnOffers, "WebSiteManagement", "go");
 @@clientLocation(listSkus, "WebSiteManagement", "go");
-@@clientLocation(listSiteIdentifiersAssignedToHostName, "WebSiteManagement", "go");
+@@clientLocation(listSiteIdentifiersAssignedToHostName,
+  "WebSiteManagement",
+  "go"
+);
 @@clientLocation(SourceControls.listSourceControls, "WebSiteManagement", "go");
 @@clientLocation(move, "WebSiteManagement", "go");
 @@clientLocation(regionalCheckNameAvailability, "WebSiteManagement", "go");
