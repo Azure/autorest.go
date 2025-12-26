@@ -6089,8 +6089,9 @@ model DiagnosticDetectorResponseProperties {
   /**
    * Additional Data that detector wants to send.
    */
+  #suppress "@azure-tools/typespec-azure-resource-manager/missing-x-ms-identifiers" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
   @identifiers(#["name"])
-  data?: NameValuePair[];
+  data?: NameValuePair[][];
 
   /**
    * Meta Data
@@ -6468,7 +6469,7 @@ model StackMajorVersion {
    *  Example: All the function apps need AppSetting: "FUNCTIONS_WORKER_RUNTIME" to be set stack name
    */
   #suppress "@azure-tools/typespec-azure-resource-manager/arm-no-record" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
-  appSettingsDictionary?: Record<Record<unknown>>;
+  appSettingsDictionary?: Record<unknown>;
 
   /**
    * <siteConfigProperties>
@@ -6477,7 +6478,7 @@ model StackMajorVersion {
    *  Example: All Linux Function Apps, need Use32BitWorkerProcess to be set to 0
    */
   #suppress "@azure-tools/typespec-azure-resource-manager/arm-no-record" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
-  siteConfigPropertiesDictionary?: Record<Record<unknown>>;
+  siteConfigPropertiesDictionary?: Record<unknown>;
 }
 
 /**
@@ -11476,7 +11477,7 @@ model ContinuousWebJobProperties {
    * Job settings.
    */
   #suppress "@azure-tools/typespec-azure-resource-manager/arm-no-record" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
-  settings?: Record<Record<unknown>>;
+  settings?: Record<unknown>;
 }
 
 /**
@@ -11632,17 +11633,9 @@ model MSDeployStatusProperties {
 #suppress "@azure-tools/typespec-azure-core/casing-style" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
 model MSDeploy extends ProxyOnlyResource {
   /** Core resource properties */
-  properties?: MSDeployProperties;
+  properties?: MSDeployCore;
 }
 
-#suppress "@azure-tools/typespec-azure-core/casing-style" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
-#suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
-#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
-model MSDeployProperties extends MSDeployCore {
-  /** List of Add-On packages. Add-On packages implicitly enable the Do Not Delete MSDeploy rule. */
-  @identifiers(#["packageUri"])
-  addOnPackages?: MSDeployCore[];
-}
 /**
  * MSDeploy ARM PUT core information
  */
@@ -13616,7 +13609,7 @@ model TriggeredWebJobProperties {
    * Job settings.
    */
   #suppress "@azure-tools/typespec-azure-resource-manager/arm-no-record" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
-  settings?: Record<Record<unknown>>;
+  settings?: Record<unknown>;
 }
 
 /**
@@ -13753,7 +13746,7 @@ model WebJobProperties {
    * Job settings.
    */
   #suppress "@azure-tools/typespec-azure-resource-manager/arm-no-record" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
-  settings?: Record<Record<unknown>>;
+  settings?: Record<unknown>;
 }
 
 /**
@@ -13792,7 +13785,7 @@ model WorkflowEnvelopeProperties {
    * Gets or sets the files.
    */
   #suppress "@azure-tools/typespec-azure-resource-manager/arm-no-record" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
-  files?: Record<Record<unknown>>;
+  files?: Record<unknown>;
 
   /**
    * Gets or sets the state of the workflow.
