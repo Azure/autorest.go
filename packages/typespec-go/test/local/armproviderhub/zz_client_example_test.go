@@ -78,7 +78,7 @@ func ExampleClient_GenerateManifest() {
 	// 				EndpointURI: to.Ptr("https://notificationendpoint.com"),
 	// 			},
 	// 		},
-	// 		Management: &armproviderhub.ResourceProviderManagement{
+	// 		Management: &armproviderhub.ResourceProviderManifestManagement{
 	// 			AuthorizationOwners: []*string{
 	// 				to.Ptr("authorizationOwners-group"),
 	// 			},
@@ -102,7 +102,7 @@ func ExampleClient_GenerateManifest() {
 	// 		},
 	// 		ProviderType: to.Ptr(armproviderhub.ResourceProviderType("Internal, Hidden")),
 	// 		ProviderVersion: to.Ptr("2.0"),
-	// 		ReRegisterSubscriptionMetadata: &armproviderhub.ReRegisterSubscriptionMetadata{
+	// 		ReRegisterSubscriptionMetadata: &armproviderhub.ResourceProviderManifestReRegisterSubscriptionMetadata{
 	// 			ConcurrencyLimit: to.Ptr[int32](100),
 	// 			Enabled: to.Ptr(true),
 	// 		},

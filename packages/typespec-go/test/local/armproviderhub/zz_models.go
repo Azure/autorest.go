@@ -112,22 +112,6 @@ type AuthorizedApplicationProperties struct {
 	ProvisioningState *ProvisioningState
 }
 
-type CanaryTrafficRegionRolloutConfiguration struct {
-	// The regions.
-	Regions []*string
-
-	// The skip regions.
-	SkipRegions []*string
-}
-
-type CheckNameAvailabilitySpecifications struct {
-	// Whether default validation is enabled.
-	EnableDefaultValidation *bool
-
-	// The resource types with custom validation.
-	ResourceTypesWithCustomValidation []*string
-}
-
 type CheckinManifestInfo struct {
 	// REQUIRED; Whether the manifest is checked in.
 	IsCheckedIn *bool
@@ -179,24 +163,24 @@ type CustomRolloutArrayResponseWithContinuation struct {
 
 type CustomRolloutProperties struct {
 	// REQUIRED; The specification.
-	Specification *CustomRolloutSpecification
+	Specification *CustomRolloutPropertiesSpecification
 
 	// The status.
-	Status *CustomRolloutStatus
+	Status *CustomRolloutPropertiesStatus
 
 	// READ-ONLY; The provisioned state of the resource.
 	ProvisioningState *ProvisioningState
 }
 
-type CustomRolloutSpecification struct {
+type CustomRolloutPropertiesSpecification struct {
 	// The auto provisioning configuration.
 	AutoProvisionConfig *CustomRolloutSpecificationAutoProvisionConfig
 
 	// The canary region configuration.
-	Canary *TrafficRegions
+	Canary *CustomRolloutSpecificationCanary
 
 	// The provider registration.
-	ProviderRegistration *ProviderRegistration
+	ProviderRegistration *CustomRolloutSpecificationProviderRegistration
 
 	// Whether refreshing subscription registration is enabled or disabled.
 	RefreshSubscriptionRegistration *bool
@@ -211,13 +195,7 @@ type CustomRolloutSpecification struct {
 	SkipReleaseScopeValidation *bool
 }
 
-// CustomRolloutSpecificationAutoProvisionConfig - The auto provisioning configuration.
-type CustomRolloutSpecificationAutoProvisionConfig struct {
-	ResourceGraph *bool
-	Storage       *bool
-}
-
-type CustomRolloutStatus struct {
+type CustomRolloutPropertiesStatus struct {
 	// The completed regions.
 	CompletedRegions []*string
 
@@ -225,7 +203,52 @@ type CustomRolloutStatus struct {
 	FailedOrSkippedRegions map[string]*ExtendedErrorInfo
 
 	// The manifest checkin status.
-	ManifestCheckinStatus *CheckinManifestInfo
+	ManifestCheckinStatus *CustomRolloutStatusManifestCheckinStatus
+}
+
+// CustomRolloutSpecificationAutoProvisionConfig - The auto provisioning configuration.
+type CustomRolloutSpecificationAutoProvisionConfig struct {
+	ResourceGraph *bool
+	Storage       *bool
+}
+
+type CustomRolloutSpecificationCanary struct {
+	Regions []*string
+}
+
+// CustomRolloutSpecificationProviderRegistration - Concrete proxy resource types can be created by aliasing this type using
+// a specific property type.
+type CustomRolloutSpecificationProviderRegistration struct {
+	// Provider registration kind. This Metadata is also used by portal/tooling/etc to render different UX experiences for resources
+	// of the same type.
+	Kind       *ProviderRegistrationKind
+	Properties *ProviderRegistrationProperties
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+type CustomRolloutStatusManifestCheckinStatus struct {
+	// REQUIRED; Whether the manifest is checked in.
+	IsCheckedIn *bool
+
+	// REQUIRED; The status message.
+	StatusMessage *string
+
+	// The commit id.
+	CommitID *string
+
+	// The pull request.
+	PullRequest *string
 }
 
 // DefaultRollout - Concrete proxy resource types can be created by aliasing this type using a specific property type.
@@ -257,45 +280,65 @@ type DefaultRolloutArrayResponseWithContinuation struct {
 
 type DefaultRolloutProperties struct {
 	// The default rollout specification.
-	Specification *DefaultRolloutSpecification
+	Specification *DefaultRolloutPropertiesSpecification
 
 	// The default rollout status.
-	Status *DefaultRolloutStatus
+	Status *DefaultRolloutPropertiesStatus
 
 	// READ-ONLY; The provisioned state of the resource.
 	ProvisioningState *ProvisioningState
 }
 
-type DefaultRolloutSpecification struct {
+type DefaultRolloutPropertiesSpecification struct {
 	// The auto provisioning config.
 	AutoProvisionConfig *DefaultRolloutSpecificationAutoProvisionConfig
 
 	// The canary traffic region configuration.
-	Canary *CanaryTrafficRegionRolloutConfiguration
+	Canary *DefaultRolloutSpecificationCanary
 
 	// The expedited rollout definition.
-	ExpeditedRollout *ExpeditedRolloutDefinition
+	ExpeditedRollout *DefaultRolloutSpecificationExpeditedRollout
 
 	// The high traffic region configuration.
-	HighTraffic *TrafficRegionRolloutConfiguration
+	HighTraffic *DefaultRolloutSpecificationHighTraffic
 
 	// The low traffic region configuration.
-	LowTraffic *TrafficRegionRolloutConfiguration
+	LowTraffic *DefaultRolloutSpecificationLowTraffic
 
 	// The medium traffic region configuration.
-	MediumTraffic *TrafficRegionRolloutConfiguration
+	MediumTraffic *DefaultRolloutSpecificationMediumTraffic
 
 	// The provider registration.
-	ProviderRegistration *ProviderRegistration
+	ProviderRegistration *DefaultRolloutSpecificationProviderRegistration
 
 	// The resource type registrations.
 	ResourceTypeRegistrations []*ResourceTypeRegistration
 
 	// The rest of the world group one region configuration.
-	RestOfTheWorldGroupOne *TrafficRegionRolloutConfiguration
+	RestOfTheWorldGroupOne *DefaultRolloutSpecificationRestOfTheWorldGroupOne
 
 	// The rest of the world group two region configuration.
-	RestOfTheWorldGroupTwo *TrafficRegionRolloutConfiguration
+	RestOfTheWorldGroupTwo *DefaultRolloutSpecificationRestOfTheWorldGroupTwo
+}
+
+type DefaultRolloutPropertiesStatus struct {
+	// The completed regions.
+	CompletedRegions []*string
+
+	// The failed or skipped regions.
+	FailedOrSkippedRegions map[string]*ExtendedErrorInfo
+
+	// The manifest checkin status.
+	ManifestCheckinStatus *DefaultRolloutStatusManifestCheckinStatus
+
+	// The next traffic region.
+	NextTrafficRegion *TrafficRegionCategory
+
+	// The next traffic region scheduled time.
+	NextTrafficRegionScheduledTime *time.Time
+
+	// The subscription reregistration result.
+	SubscriptionReregistrationResult *SubscriptionReregistrationResult
 }
 
 // DefaultRolloutSpecificationAutoProvisionConfig - The auto provisioning config.
@@ -307,24 +350,87 @@ type DefaultRolloutSpecificationAutoProvisionConfig struct {
 	Storage *bool
 }
 
-type DefaultRolloutStatus struct {
-	// The completed regions.
-	CompletedRegions []*string
+type DefaultRolloutSpecificationCanary struct {
+	// The regions.
+	Regions []*string
 
-	// The failed or skipped regions.
-	FailedOrSkippedRegions map[string]*ExtendedErrorInfo
+	// The skip regions.
+	SkipRegions []*string
+}
 
-	// The manifest checkin status.
-	ManifestCheckinStatus *CheckinManifestInfo
+type DefaultRolloutSpecificationExpeditedRollout struct {
+	// Indicates whether expedited rollout is enabled/disabled
+	Enabled *bool
+}
 
-	// The next traffic region.
-	NextTrafficRegion *TrafficRegionCategory
+type DefaultRolloutSpecificationHighTraffic struct {
+	Regions []*string
 
-	// The next traffic region scheduled time.
-	NextTrafficRegionScheduledTime *time.Time
+	// The wait duration.
+	WaitDuration *string
+}
 
-	// The subscription reregistration result.
-	SubscriptionReregistrationResult *SubscriptionReregistrationResult
+type DefaultRolloutSpecificationLowTraffic struct {
+	Regions []*string
+
+	// The wait duration.
+	WaitDuration *string
+}
+
+type DefaultRolloutSpecificationMediumTraffic struct {
+	Regions []*string
+
+	// The wait duration.
+	WaitDuration *string
+}
+
+// DefaultRolloutSpecificationProviderRegistration - Concrete proxy resource types can be created by aliasing this type using
+// a specific property type.
+type DefaultRolloutSpecificationProviderRegistration struct {
+	// Provider registration kind. This Metadata is also used by portal/tooling/etc to render different UX experiences for resources
+	// of the same type.
+	Kind       *ProviderRegistrationKind
+	Properties *ProviderRegistrationProperties
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+type DefaultRolloutSpecificationRestOfTheWorldGroupOne struct {
+	Regions []*string
+
+	// The wait duration.
+	WaitDuration *string
+}
+
+type DefaultRolloutSpecificationRestOfTheWorldGroupTwo struct {
+	Regions []*string
+
+	// The wait duration.
+	WaitDuration *string
+}
+
+type DefaultRolloutStatusManifestCheckinStatus struct {
+	// REQUIRED; Whether the manifest is checked in.
+	IsCheckedIn *bool
+
+	// REQUIRED; The status message.
+	StatusMessage *string
+
+	// The commit id.
+	CommitID *string
+
+	// The pull request.
+	PullRequest *string
 }
 
 type DeleteDependency struct {
@@ -338,14 +444,6 @@ type DeleteDependency struct {
 	RequiredFeatures []*string
 }
 
-type DstsConfiguration struct {
-	// REQUIRED; The service name.
-	ServiceName *string
-
-	// This is a URI property.
-	ServiceDNSName *string
-}
-
 type EndpointInformation struct {
 	// The endpoint.
 	Endpoint *string
@@ -355,11 +453,6 @@ type EndpointInformation struct {
 
 	// The schema version.
 	SchemaVersion *string
-}
-
-type ExpeditedRolloutDefinition struct {
-	// Indicates whether expedited rollout is enabled/disabled
-	Enabled *bool
 }
 
 // ExtendedErrorInfo - Error information.
@@ -387,20 +480,12 @@ type ExtendedLocationOptions struct {
 	Type *ExtendedLocationType
 }
 
-type ExtensionOptions struct {
-	// The request.
-	Request []*ExtensionOptionType
-
-	// The response.
-	Response []*ExtensionOptionType
-}
-
 type FanoutLinkedNotificationRule struct {
 	// The actions.
 	Actions []*string
 
 	// The dsts configuration.
-	DstsConfiguration *DstsConfiguration
+	DstsConfiguration *FanoutLinkedNotificationRuleDstsConfiguration
 
 	// The endpoints.
 	Endpoints []*ResourceProviderEndpoint
@@ -409,9 +494,12 @@ type FanoutLinkedNotificationRule struct {
 	TokenAuthConfiguration *TokenAuthConfiguration
 }
 
-type FeaturesRule struct {
-	// REQUIRED; The required feature policy.
-	RequiredFeaturesPolicy *FeaturesPolicy
+type FanoutLinkedNotificationRuleDstsConfiguration struct {
+	// REQUIRED; The service name.
+	ServiceName *string
+
+	// This is a URI property.
+	ServiceDNSName *string
 }
 
 type FilterRule struct {
@@ -450,10 +538,10 @@ type FrontloadPayloadProperties struct {
 	OperationType *string
 
 	// REQUIRED; The endpoint level fields to override.
-	OverrideEndpointLevelFields *ResourceTypeEndpointBase
+	OverrideEndpointLevelFields *FrontloadPayloadPropertiesOverrideEndpointLevelFields
 
 	// REQUIRED; The manifest level fields to override.
-	OverrideManifestLevelFields *ManifestLevelPropertyBag
+	OverrideManifestLevelFields *FrontloadPayloadPropertiesOverrideManifestLevelFields
 
 	// REQUIRED; The provider namespace.
 	ProviderNamespace *string
@@ -462,9 +550,47 @@ type FrontloadPayloadProperties struct {
 	ServiceFeatureFlag *ServiceFeatureFlagAction
 }
 
-type IdentityManagement struct {
-	// The type.
-	Type *IdentityManagementTypes
+type FrontloadPayloadPropertiesOverrideEndpointLevelFields struct {
+	// REQUIRED; The api version.
+	APIVersion *string
+
+	// REQUIRED; The api versions.
+	APIVersions []*string
+
+	// REQUIRED; The dsts configuration.
+	DstsConfiguration *ResourceTypeEndpointBaseDstsConfiguration
+
+	// REQUIRED; Whether it's enabled.
+	Enabled *bool
+
+	// REQUIRED; The endpoint type.
+	EndpointType *EndpointType
+
+	// REQUIRED; The endpoint uri.
+	EndpointURI *string
+
+	// REQUIRED; The features rule.
+	FeaturesRule *ResourceTypeEndpointBaseFeaturesRule
+
+	// REQUIRED; The locations.
+	Locations []*string
+
+	// REQUIRED; The required features.
+	RequiredFeatures []*string
+
+	// REQUIRED; The sku link.
+	SKULink *string
+
+	// REQUIRED; This is a TimeSpan property.
+	Timeout *string
+
+	// REQUIRED; The zones.
+	Zones []*string
+}
+
+type FrontloadPayloadPropertiesOverrideManifestLevelFields struct {
+	// The resource hydration accounts.
+	ResourceHydrationAccounts []*ResourceHydrationAccount
 }
 
 type LegacyDisallowedCondition struct {
@@ -530,7 +656,7 @@ type LinkedOperationRule struct {
 
 type LocalizedOperationDefinition struct {
 	// REQUIRED; Display information of the operation.
-	Display *LocalizedOperationDisplayDefinition
+	Display *LocalizedOperationDefinitionDisplay
 
 	// REQUIRED; Name of the operation.
 	Name *string
@@ -545,15 +671,15 @@ type LocalizedOperationDefinition struct {
 	Origin *OperationOrigins
 }
 
-type LocalizedOperationDisplayDefinition struct {
+type LocalizedOperationDefinitionDisplay struct {
 	// REQUIRED; Display information of the operation.
-	Default *OperationsDisplayDefinition
+	Default *LocalizedOperationDisplayDefinitionDefault
 
 	// Display information of the operation for cs locale.
-	Cs *OperationsDisplayDefinition
+	Cs *LocalizedOperationDisplayDefinitionCs
 
 	// Display information of the operation for de locale.
-	De *OperationsDisplayDefinition
+	De *LocalizedOperationDisplayDefinitionDe
 
 	// Display information of the operation for en locale.
 	En *LocalizedOperationDisplayDefinitionEn
@@ -562,46 +688,87 @@ type LocalizedOperationDisplayDefinition struct {
 	Es *LocalizedOperationDisplayDefinitionEs
 
 	// Display information of the operation for fr locale.
-	Fr *OperationsDisplayDefinition
+	Fr *LocalizedOperationDisplayDefinitionFr
 
 	// Display information of the operation for hu locale.
-	Hu *OperationsDisplayDefinition
+	Hu *LocalizedOperationDisplayDefinitionHu
 
 	// Display information of the operation for it locale.
-	It *OperationsDisplayDefinition
+	It *LocalizedOperationDisplayDefinitionIt
 
 	// Display information of the operation for ja locale.
-	Ja *OperationsDisplayDefinition
+	Ja *LocalizedOperationDisplayDefinitionJa
 
 	// Display information of the operation for ko locale.
-	Ko *OperationsDisplayDefinition
+	Ko *LocalizedOperationDisplayDefinitionKo
 
 	// Display information of the operation for nl locale.
-	Nl *OperationsDisplayDefinition
+	Nl *LocalizedOperationDisplayDefinitionNl
 
 	// Display information of the operation for pl locale.
-	Pl *OperationsDisplayDefinition
-
-	// Display information of the operation for pt-BR locale.
-	PtBR *OperationsDisplayDefinition
+	Pl *LocalizedOperationDisplayDefinitionPl
 
 	// Display information of the operation for pt-PT locale.
-	PtPT *OperationsDisplayDefinition
+	Pt *LocalizedOperationDisplayDefinitionPt
+
+	// Display information of the operation for pt-BR locale.
+	PtBR *LocalizedOperationDisplayDefinitionPtBR
 
 	// Display information of the operation for ru locale.
-	Ru *OperationsDisplayDefinition
+	Ru *LocalizedOperationDisplayDefinitionRu
 
 	// Display information of the operation for sv locale.
-	Sv *OperationsDisplayDefinition
+	Sv *LocalizedOperationDisplayDefinitionSv
 
 	// Display information of the operation for zh-Hans locale.
-	ZhHans *OperationsDisplayDefinition
+	ZhHans *LocalizedOperationDisplayDefinitionZhHans
 
 	// Display information of the operation for zh-Hant locale.
-	ZhHant *OperationsDisplayDefinition
+	ZhHant *LocalizedOperationDisplayDefinitionZhHant
 }
 
-// LocalizedOperationDisplayDefinitionEn - Operations display definition in English.
+type LocalizedOperationDisplayDefinitionCs struct {
+	// REQUIRED; The description.
+	Description *string
+
+	// REQUIRED; The operation.
+	Operation *string
+
+	// REQUIRED; The provider.
+	Provider *string
+
+	// REQUIRED; The resource.
+	Resource *string
+}
+
+type LocalizedOperationDisplayDefinitionDe struct {
+	// REQUIRED; The description.
+	Description *string
+
+	// REQUIRED; The operation.
+	Operation *string
+
+	// REQUIRED; The provider.
+	Provider *string
+
+	// REQUIRED; The resource.
+	Resource *string
+}
+
+type LocalizedOperationDisplayDefinitionDefault struct {
+	// REQUIRED; The description.
+	Description *string
+
+	// REQUIRED; The operation.
+	Operation *string
+
+	// REQUIRED; The provider.
+	Provider *string
+
+	// REQUIRED; The resource.
+	Resource *string
+}
+
 type LocalizedOperationDisplayDefinitionEn struct {
 	// REQUIRED; The description.
 	Description *string
@@ -616,8 +783,189 @@ type LocalizedOperationDisplayDefinitionEn struct {
 	Resource *string
 }
 
-// LocalizedOperationDisplayDefinitionEs - Operations display definition in English.
 type LocalizedOperationDisplayDefinitionEs struct {
+	// REQUIRED; The description.
+	Description *string
+
+	// REQUIRED; The operation.
+	Operation *string
+
+	// REQUIRED; The provider.
+	Provider *string
+
+	// REQUIRED; The resource.
+	Resource *string
+}
+
+type LocalizedOperationDisplayDefinitionFr struct {
+	// REQUIRED; The description.
+	Description *string
+
+	// REQUIRED; The operation.
+	Operation *string
+
+	// REQUIRED; The provider.
+	Provider *string
+
+	// REQUIRED; The resource.
+	Resource *string
+}
+
+type LocalizedOperationDisplayDefinitionHu struct {
+	// REQUIRED; The description.
+	Description *string
+
+	// REQUIRED; The operation.
+	Operation *string
+
+	// REQUIRED; The provider.
+	Provider *string
+
+	// REQUIRED; The resource.
+	Resource *string
+}
+
+type LocalizedOperationDisplayDefinitionIt struct {
+	// REQUIRED; The description.
+	Description *string
+
+	// REQUIRED; The operation.
+	Operation *string
+
+	// REQUIRED; The provider.
+	Provider *string
+
+	// REQUIRED; The resource.
+	Resource *string
+}
+
+type LocalizedOperationDisplayDefinitionJa struct {
+	// REQUIRED; The description.
+	Description *string
+
+	// REQUIRED; The operation.
+	Operation *string
+
+	// REQUIRED; The provider.
+	Provider *string
+
+	// REQUIRED; The resource.
+	Resource *string
+}
+
+type LocalizedOperationDisplayDefinitionKo struct {
+	// REQUIRED; The description.
+	Description *string
+
+	// REQUIRED; The operation.
+	Operation *string
+
+	// REQUIRED; The provider.
+	Provider *string
+
+	// REQUIRED; The resource.
+	Resource *string
+}
+
+type LocalizedOperationDisplayDefinitionNl struct {
+	// REQUIRED; The description.
+	Description *string
+
+	// REQUIRED; The operation.
+	Operation *string
+
+	// REQUIRED; The provider.
+	Provider *string
+
+	// REQUIRED; The resource.
+	Resource *string
+}
+
+type LocalizedOperationDisplayDefinitionPl struct {
+	// REQUIRED; The description.
+	Description *string
+
+	// REQUIRED; The operation.
+	Operation *string
+
+	// REQUIRED; The provider.
+	Provider *string
+
+	// REQUIRED; The resource.
+	Resource *string
+}
+
+type LocalizedOperationDisplayDefinitionPt struct {
+	// REQUIRED; The description.
+	Description *string
+
+	// REQUIRED; The operation.
+	Operation *string
+
+	// REQUIRED; The provider.
+	Provider *string
+
+	// REQUIRED; The resource.
+	Resource *string
+}
+
+type LocalizedOperationDisplayDefinitionPtBR struct {
+	// REQUIRED; The description.
+	Description *string
+
+	// REQUIRED; The operation.
+	Operation *string
+
+	// REQUIRED; The provider.
+	Provider *string
+
+	// REQUIRED; The resource.
+	Resource *string
+}
+
+type LocalizedOperationDisplayDefinitionRu struct {
+	// REQUIRED; The description.
+	Description *string
+
+	// REQUIRED; The operation.
+	Operation *string
+
+	// REQUIRED; The provider.
+	Provider *string
+
+	// REQUIRED; The resource.
+	Resource *string
+}
+
+type LocalizedOperationDisplayDefinitionSv struct {
+	// REQUIRED; The description.
+	Description *string
+
+	// REQUIRED; The operation.
+	Operation *string
+
+	// REQUIRED; The provider.
+	Provider *string
+
+	// REQUIRED; The resource.
+	Resource *string
+}
+
+type LocalizedOperationDisplayDefinitionZhHans struct {
+	// REQUIRED; The description.
+	Description *string
+
+	// REQUIRED; The operation.
+	Operation *string
+
+	// REQUIRED; The provider.
+	Provider *string
+
+	// REQUIRED; The resource.
+	Resource *string
+}
+
+type LocalizedOperationDisplayDefinitionZhHant struct {
 	// REQUIRED; The description.
 	Description *string
 
@@ -642,14 +990,6 @@ type LocationQuotaRule struct {
 	QuotaID *string
 }
 
-type LoggingHiddenPropertyPath struct {
-	// The hidden paths on request.
-	HiddenPathsOnRequest []*string
-
-	// The hidden paths on response.
-	HiddenPathsOnResponse []*string
-}
-
 type LoggingRule struct {
 	// REQUIRED; The action.
 	Action *string
@@ -661,32 +1001,28 @@ type LoggingRule struct {
 	Direction *LoggingDirections
 
 	// The hidden property paths.
-	HiddenPropertyPaths *LoggingHiddenPropertyPath
+	HiddenPropertyPaths *LoggingRuleHiddenPropertyPaths
 }
 
-type ManifestLevelPropertyBag struct {
-	// The resource hydration accounts.
-	ResourceHydrationAccounts []*ResourceHydrationAccount
+type LoggingRuleHiddenPropertyPaths struct {
+	// The hidden paths on request.
+	HiddenPathsOnRequest []*string
+
+	// The hidden paths on response.
+	HiddenPathsOnResponse []*string
 }
 
-type Metadata struct {
-	// The direct RP role definition id.
-	DirectRpRoleDefinitionID *string
+type MetadataProviderAuthentication struct {
+	// REQUIRED; The allowed audiences.
+	AllowedAudiences []*string
+}
 
-	// The global async operation resource type name.
-	GlobalAsyncOperationResourceTypeName *string
+type MetadataThirdPartyProviderAuthorization struct {
+	// The authorizations.
+	Authorizations []*LightHouseAuthorization
 
-	// The provider authentication.
-	ProviderAuthentication *ResourceProviderAuthentication
-
-	// The provider authorizations.
-	ProviderAuthorizations []*ResourceProviderAuthorization
-
-	// The regional async operation resource type name.
-	RegionalAsyncOperationResourceTypeName *string
-
-	// The third party provider authorization.
-	ThirdPartyProviderAuthorization *ThirdPartyProviderAuthorization
+	// The managed by tenant id.
+	ManagedByTenantID *string
 }
 
 type Notification struct {
@@ -759,15 +1095,10 @@ type OpenAPIValidation struct {
 	AllowNoncompliantCollectionResponse *bool
 }
 
-type OperationsContentProperties struct {
-	// Operations content.
-	Contents []*LocalizedOperationDefinition
-}
-
 // OperationsDefinition - Properties of an Operation.
 type OperationsDefinition struct {
 	// REQUIRED; Display information of the operation.
-	Display *OperationsDisplayDefinition
+	Display *OperationsDefinitionDisplay
 
 	// REQUIRED; Name of the operation.
 	Name *string
@@ -793,7 +1124,7 @@ type OperationsDefinitionArrayResponseWithContinuation struct {
 	Value []*OperationsDefinition
 }
 
-type OperationsDisplayDefinition struct {
+type OperationsDefinitionDisplay struct {
 	// REQUIRED; The description.
 	Description *string
 
@@ -809,7 +1140,7 @@ type OperationsDisplayDefinition struct {
 
 // OperationsPutContent - Concrete proxy resource types can be created by aliasing this type using a specific property type.
 type OperationsPutContent struct {
-	Properties *OperationsContentProperties
+	Properties *OperationsPutContentProperties
 
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
@@ -824,9 +1155,9 @@ type OperationsPutContent struct {
 	Type *string
 }
 
-type PrivateResourceProviderConfiguration struct {
-	// The allowed subscriptions.
-	AllowedSubscriptions []*string
+type OperationsPutContentProperties struct {
+	// Operations content.
+	Contents []*LocalizedOperationDefinition
 }
 
 // ProviderMonitorSetting - Concrete tracked resource types can be created by aliasing this type using a specific property
@@ -906,13 +1237,13 @@ type ProviderRegistrationProperties struct {
 	CustomManifestVersion *string
 
 	// The dsts configuration.
-	DstsConfiguration *DstsConfiguration
+	DstsConfiguration *ResourceProviderManifestPropertiesDstsConfiguration
 
 	// The enable tenant linked notification.
 	EnableTenantLinkedNotification *bool
 
 	// The features rule.
-	FeaturesRule *FeaturesRule
+	FeaturesRule *ResourceProviderManifestPropertiesFeaturesRule
 
 	// The global notification endpoints.
 	GlobalNotificationEndpoints []*ResourceProviderEndpoint
@@ -927,7 +1258,7 @@ type ProviderRegistrationProperties struct {
 	LinkedNotificationRules []*FanoutLinkedNotificationRule
 
 	// The resource provider management.
-	Management *ResourceProviderManagement
+	Management *ResourceProviderManifestPropertiesManagement
 
 	// Management groups global notification endpoints.
 	ManagementGroupGlobalNotificationEndpoints []*ResourceProviderEndpoint
@@ -951,16 +1282,16 @@ type ProviderRegistrationProperties struct {
 	OptionalFeatures []*string
 
 	// The private resource provider configuration.
-	PrivateResourceProviderConfiguration *PrivateResourceProviderConfiguration
+	PrivateResourceProviderConfiguration *ProviderRegistrationPropertiesPrivateResourceProviderConfiguration
 
 	// The provider authentication.
-	ProviderAuthentication *ResourceProviderAuthentication
+	ProviderAuthentication *ResourceProviderManifestPropertiesProviderAuthentication
 
 	// The provider authorizations.
 	ProviderAuthorizations []*ResourceProviderAuthorization
 
 	// The provider hub metadata.
-	ProviderHubMetadata *Metadata
+	ProviderHubMetadata *ProviderRegistrationPropertiesProviderHubMetadata
 
 	// The provider type.
 	ProviderType *ResourceProviderType
@@ -969,7 +1300,7 @@ type ProviderRegistrationProperties struct {
 	ProviderVersion *string
 
 	// The request header options.
-	RequestHeaderOptions *RequestHeaderOptions
+	RequestHeaderOptions *ResourceProviderManifestPropertiesRequestHeaderOptions
 
 	// The required features.
 	RequiredFeatures []*string
@@ -993,16 +1324,49 @@ type ProviderRegistrationProperties struct {
 	Services []*ResourceProviderService
 
 	// The subscription lifecycle notification specifications.
-	SubscriptionLifecycleNotificationSpecifications *SubscriptionLifecycleNotificationSpecifications
+	SubscriptionLifecycleNotificationSpecifications *ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications
 
 	// The template deployment options.
-	TemplateDeploymentOptions *TemplateDeploymentOptions
+	TemplateDeploymentOptions *ResourceProviderManifestPropertiesTemplateDeploymentOptions
 
 	// The token auth configuration.
 	TokenAuthConfiguration *TokenAuthConfiguration
 
 	// READ-ONLY; The provisioning state.
 	ProvisioningState *ProvisioningState
+}
+
+type ProviderRegistrationPropertiesPrivateResourceProviderConfiguration struct {
+	// The allowed subscriptions.
+	AllowedSubscriptions []*string
+}
+
+type ProviderRegistrationPropertiesProviderHubMetadata struct {
+	// The direct RP role definition id.
+	DirectRpRoleDefinitionID *string
+
+	// The global async operation resource type name.
+	GlobalAsyncOperationResourceTypeName *string
+
+	// The provider authentication.
+	ProviderAuthentication *MetadataProviderAuthentication
+
+	// The provider authorizations.
+	ProviderAuthorizations []*ResourceProviderAuthorization
+
+	// The regional async operation resource type name.
+	RegionalAsyncOperationResourceTypeName *string
+
+	// The third party provider authorization.
+	ThirdPartyProviderAuthorization *MetadataThirdPartyProviderAuthorization
+}
+
+type ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications struct {
+	// The soft delete TTL.
+	SoftDeleteTTL *string
+
+	// The subscription state override actions.
+	SubscriptionStateOverrideActions []*SubscriptionStateOverrideAction
 }
 
 type QuotaRule struct {
@@ -1016,22 +1380,6 @@ type QuotaRule struct {
 	RequiredFeatures []*string
 }
 
-type ReRegisterSubscriptionMetadata struct {
-	// REQUIRED; Whether it's enabled or not.
-	Enabled *bool
-
-	// The concurrency limit.
-	ConcurrencyLimit *int32
-}
-
-type RequestHeaderOptions struct {
-	// The opt in headers.
-	OptInHeaders *OptInHeaderType
-
-	// The opt out headers.
-	OptOutHeaders *OptOutHeaderType
-}
-
 type ResourceAccessRole struct {
 	// The actions.
 	Actions []*string
@@ -1043,14 +1391,6 @@ type ResourceAccessRole struct {
 type ResourceConcurrencyControlOption struct {
 	// The policy.
 	Policy *Policy
-}
-
-type ResourceGraphConfiguration struct {
-	// The api version.
-	APIVersion *string
-
-	// Whether it's enabled.
-	Enabled *bool
 }
 
 type ResourceHydrationAccount struct {
@@ -1084,22 +1424,6 @@ type ResourceManagementEntity struct {
 
 	// READ-ONLY; The operation status.
 	Status *string
-}
-
-type ResourceMovePolicy struct {
-	// Whether cross resource group move is enabled.
-	CrossResourceGroupMoveEnabled *bool
-
-	// Whether cross subscription move is enabled.
-	CrossSubscriptionMoveEnabled *bool
-
-	// Whether validation is required.
-	ValidationRequired *bool
-}
-
-type ResourceProviderAuthentication struct {
-	// REQUIRED; The allowed audiences.
-	AllowedAudiences []*string
 }
 
 type ResourceProviderAuthorization struct {
@@ -1163,7 +1487,7 @@ type ResourceProviderEndpoint struct {
 	EndpointURI *string
 
 	// The feature rules.
-	FeaturesRule *FeaturesRule
+	FeaturesRule *ResourceProviderEndpointFeaturesRule
 
 	// The locations.
 	Locations []*string
@@ -1178,7 +1502,97 @@ type ResourceProviderEndpoint struct {
 	Timeout *string
 }
 
-type ResourceProviderManagement struct {
+type ResourceProviderEndpointFeaturesRule struct {
+	// REQUIRED; The required feature policy.
+	RequiredFeaturesPolicy *FeaturesPolicy
+}
+
+// ResourceProviderManagementErrorResponseMessageOptions - Options for error response messages.
+type ResourceProviderManagementErrorResponseMessageOptions struct {
+	// Type of server failure response message.
+	ServerFailureResponseMessageType *ServerFailureResponseMessageType
+}
+
+// ResourceProviderManagementExpeditedRolloutMetadata - Metadata for expedited rollout.
+type ResourceProviderManagementExpeditedRolloutMetadata struct {
+	// Expedited rollout enabled?
+	Enabled *bool
+
+	// Expedited rollout intent.
+	ExpeditedRolloutIntent *ExpeditedRolloutIntent
+}
+
+type ResourceProviderManifest struct {
+	// The capabilities.
+	Capabilities []*ResourceProviderCapabilities
+
+	// The cross tenant token validation.
+	CrossTenantTokenValidation *CrossTenantTokenValidation
+
+	// Whether tenant linked notification is enabled.
+	EnableTenantLinkedNotification *bool
+
+	// The features rule.
+	FeaturesRule *ResourceProviderManifestFeaturesRule
+
+	// The global notification endpoints.
+	GlobalNotificationEndpoints []*ResourceProviderEndpoint
+
+	// The linked notification rules.
+	LinkedNotificationRules []*FanoutLinkedNotificationRule
+
+	// The resource provider management.
+	Management *ResourceProviderManifestManagement
+
+	// The metadata.
+	Metadata any
+
+	// The namespace.
+	Namespace *string
+
+	// The notifications.
+	Notifications []*Notification
+
+	// The provider authentication.
+	ProviderAuthentication *ResourceProviderManifestProviderAuthentication
+
+	// The provider authorizations.
+	ProviderAuthorizations []*ResourceProviderAuthorization
+
+	// The provider type.
+	ProviderType *ResourceProviderType
+
+	// The provider version.
+	ProviderVersion *string
+
+	// The re-register subscription metadata.
+	ReRegisterSubscriptionMetadata *ResourceProviderManifestReRegisterSubscriptionMetadata
+
+	// The request header options.
+	RequestHeaderOptions *ResourceProviderManifestRequestHeaderOptions
+
+	// The required features.
+	RequiredFeatures []*string
+
+	// The resource provider authorization rules.
+	ResourceProviderAuthorizationRules *ResourceProviderAuthorizationRules
+
+	// The resource types.
+	ResourceTypes []*ResourceType
+
+	// The service name.
+	ServiceName *string
+
+	// The services.
+	Services []*ResourceProviderService
+}
+
+type ResourceProviderManifestFeaturesRule struct {
+	// REQUIRED; The required feature policy.
+	RequiredFeaturesPolicy *FeaturesPolicy
+}
+
+type ResourceProviderManifestManagement struct {
 	// The authorization owners.
 	AuthorizationOwners []*string
 
@@ -1225,89 +1639,82 @@ type ResourceProviderManagement struct {
 	ServiceTreeInfos []*ServiceTreeInfo
 }
 
-// ResourceProviderManagementErrorResponseMessageOptions - Options for error response messages.
-type ResourceProviderManagementErrorResponseMessageOptions struct {
-	// Type of server failure response message.
-	ServerFailureResponseMessageType *ServerFailureResponseMessageType
-}
-
-// ResourceProviderManagementExpeditedRolloutMetadata - Metadata for expedited rollout.
-type ResourceProviderManagementExpeditedRolloutMetadata struct {
-	// Expedited rollout enabled?
-	Enabled *bool
-
-	// Expedited rollout intent.
-	ExpeditedRolloutIntent *ExpeditedRolloutIntent
-}
-
-type ResourceProviderManifest struct {
-	// The capabilities.
-	Capabilities []*ResourceProviderCapabilities
-
-	// The cross tenant token validation.
-	CrossTenantTokenValidation *CrossTenantTokenValidation
-
-	// Whether tenant linked notification is enabled.
-	EnableTenantLinkedNotification *bool
-
-	// The features rule.
-	FeaturesRule *FeaturesRule
-
-	// The global notification endpoints.
-	GlobalNotificationEndpoints []*ResourceProviderEndpoint
-
-	// The linked notification rules.
-	LinkedNotificationRules []*FanoutLinkedNotificationRule
-
-	// The resource provider management.
-	Management *ResourceProviderManagement
-
-	// The metadata.
-	Metadata any
-
-	// The namespace.
-	Namespace *string
-
-	// The notifications.
-	Notifications []*Notification
-
-	// The provider authentication.
-	ProviderAuthentication *ResourceProviderAuthentication
-
-	// The provider authorizations.
-	ProviderAuthorizations []*ResourceProviderAuthorization
-
-	// The provider type.
-	ProviderType *ResourceProviderType
-
-	// The provider version.
-	ProviderVersion *string
-
-	// The re-register subscription metadata.
-	ReRegisterSubscriptionMetadata *ReRegisterSubscriptionMetadata
-
-	// The request header options.
-	RequestHeaderOptions *RequestHeaderOptions
-
-	// The required features.
-	RequiredFeatures []*string
-
-	// The resource provider authorization rules.
-	ResourceProviderAuthorizationRules *ResourceProviderAuthorizationRules
-
-	// The resource types.
-	ResourceTypes []*ResourceType
-
-	// The service name.
+type ResourceProviderManifestPropertiesDstsConfiguration struct {
+	// REQUIRED; The service name.
 	ServiceName *string
 
-	// The services.
-	Services []*ResourceProviderService
+	// This is a URI property.
+	ServiceDNSName *string
+}
+
+type ResourceProviderManifestPropertiesFeaturesRule struct {
+	// REQUIRED; The required feature policy.
+	RequiredFeaturesPolicy *FeaturesPolicy
+}
+
+type ResourceProviderManifestPropertiesManagement struct {
+	// The authorization owners.
+	AuthorizationOwners []*string
+
+	// List of manifest owners for canary.
+	CanaryManifestOwners []*string
+
+	// Options for error response messages.
+	ErrorResponseMessageOptions *ResourceProviderManagementErrorResponseMessageOptions
+
+	// Metadata for expedited rollout.
+	ExpeditedRolloutMetadata *ResourceProviderManagementExpeditedRolloutMetadata
+
+	// List of expedited rollout submitters.
+	ExpeditedRolloutSubmitters []*string
+
+	// The incident contact email.
+	IncidentContactEmail *string
+
+	// The incident routing service.
+	IncidentRoutingService *string
+
+	// The incident routing team.
+	IncidentRoutingTeam *string
+
+	// The manifest owners.
+	ManifestOwners []*string
+
+	// The profit center code for the subscription.
+	PcCode *string
+
+	// The profit center program id for the subscription.
+	ProfitCenterProgramID *string
+
+	// The resource access policy.
+	ResourceAccessPolicy *ResourceAccessPolicy
+
+	// The resource access roles.
+	ResourceAccessRoles []*ResourceAccessRole
+
+	// The schema owners.
+	SchemaOwners []*string
+
+	// The service tree infos.
+	ServiceTreeInfos []*ServiceTreeInfo
 }
 
 // ResourceProviderManifestPropertiesNotificationSettings - Notification settings.
 type ResourceProviderManifestPropertiesNotificationSettings struct {
 	SubscriberSettings []*SubscriberSetting
+}
+
+type ResourceProviderManifestPropertiesProviderAuthentication struct {
+	// REQUIRED; The allowed audiences.
+	AllowedAudiences []*string
+}
+
+type ResourceProviderManifestPropertiesRequestHeaderOptions struct {
+	// The opt in headers.
+	OptInHeaders *OptInHeaderType
+
+	// The opt out headers.
+	OptOutHeaders *OptOutHeaderType
 }
 
 // ResourceProviderManifestPropertiesResourceGroupLockOptionDuringMove - Resource group lock option during move.
@@ -1319,6 +1726,35 @@ type ResourceProviderManifestPropertiesResourceGroupLockOptionDuringMove struct 
 // ResourceProviderManifestPropertiesResponseOptions - Response options.
 type ResourceProviderManifestPropertiesResponseOptions struct {
 	ServiceClientOptionsType *ServiceClientOptionsType
+}
+
+type ResourceProviderManifestPropertiesTemplateDeploymentOptions struct {
+	// The preflight options.
+	PreflightOptions []*PreflightOption
+
+	// Whether preflight is supported.
+	PreflightSupported *bool
+}
+
+type ResourceProviderManifestProviderAuthentication struct {
+	// REQUIRED; The allowed audiences.
+	AllowedAudiences []*string
+}
+
+type ResourceProviderManifestReRegisterSubscriptionMetadata struct {
+	// REQUIRED; Whether it's enabled or not.
+	Enabled *bool
+
+	// The concurrency limit.
+	ConcurrencyLimit *int32
+}
+
+type ResourceProviderManifestRequestHeaderOptions struct {
+	// The opt in headers.
+	OptInHeaders *OptInHeaderType
+
+	// The opt out headers.
+	OptOutHeaders *OptOutHeaderType
 }
 
 // ResourceProviderService - Resource provider service.
@@ -1359,10 +1795,10 @@ type ResourceType struct {
 	ExtendedLocations []*ExtendedLocationOptions
 
 	// The features rule.
-	FeaturesRule *FeaturesRule
+	FeaturesRule *ResourceTypeFeaturesRule
 
 	// The identity management.
-	IdentityManagement *IdentityManagement
+	IdentityManagement *ResourceTypeIdentityManagement
 
 	// The linked access checks.
 	LinkedAccessChecks []*LinkedAccessCheck
@@ -1392,7 +1828,7 @@ type ResourceType struct {
 	QuotaRule *QuotaRule
 
 	// The request header options.
-	RequestHeaderOptions *RequestHeaderOptions
+	RequestHeaderOptions *ResourceTypeRequestHeaderOptions
 
 	// The required features.
 	RequiredFeatures []*string
@@ -1419,7 +1855,7 @@ type ResourceType struct {
 	SubscriptionStateRules []*SubscriptionStateRule
 
 	// The template deployment policy.
-	TemplateDeploymentPolicy *TemplateDeploymentPolicy
+	TemplateDeploymentPolicy *ResourceTypeTemplateDeploymentPolicy
 
 	// The throttling rules.
 	ThrottlingRules []*ThrottlingRule
@@ -1436,7 +1872,7 @@ type ResourceTypeEndpoint struct {
 	DataBoundary *DataBoundary
 
 	// The dsts configuration.
-	DstsConfiguration *DstsConfiguration
+	DstsConfiguration *ResourceTypeEndpointDstsConfiguration
 
 	// Whether the endpoint is enabled.
 	Enabled *bool
@@ -1451,7 +1887,7 @@ type ResourceTypeEndpoint struct {
 	Extensions []*ResourceTypeExtension
 
 	// The features rule.
-	FeaturesRule *FeaturesRule
+	FeaturesRule *ResourceTypeEndpointFeaturesRule
 
 	// Resource type endpoint kind. This Metadata is also used by portal/tooling/etc to render different UX experiences for resources
 	// of the same type.
@@ -1476,42 +1912,30 @@ type ResourceTypeEndpoint struct {
 	Zones []*string
 }
 
-type ResourceTypeEndpointBase struct {
-	// REQUIRED; The api version.
-	APIVersion *string
+type ResourceTypeEndpointBaseDstsConfiguration struct {
+	// REQUIRED; The service name.
+	ServiceName *string
 
-	// REQUIRED; The api versions.
-	APIVersions []*string
+	// This is a URI property.
+	ServiceDNSName *string
+}
 
-	// REQUIRED; The dsts configuration.
-	DstsConfiguration *DstsConfiguration
+type ResourceTypeEndpointBaseFeaturesRule struct {
+	// REQUIRED
+	RequiredFeaturesPolicy *FeaturesPolicy
+}
 
-	// REQUIRED; Whether it's enabled.
-	Enabled *bool
+type ResourceTypeEndpointDstsConfiguration struct {
+	// REQUIRED; The service name.
+	ServiceName *string
 
-	// REQUIRED; The endpoint type.
-	EndpointType *EndpointType
+	// This is a URI property.
+	ServiceDNSName *string
+}
 
-	// REQUIRED; The endpoint uri.
-	EndpointURI *string
-
-	// REQUIRED; The features rule.
-	FeaturesRule *FeaturesPolicy
-
-	// REQUIRED; The locations.
-	Locations []*string
-
-	// REQUIRED; The required features.
-	RequiredFeatures []*string
-
-	// REQUIRED; The sku link.
-	SKULink *string
-
-	// REQUIRED; This is a TimeSpan property.
-	Timeout *string
-
-	// REQUIRED; The zones.
-	Zones []*string
+type ResourceTypeEndpointFeaturesRule struct {
+	// REQUIRED; The required feature policy.
+	RequiredFeaturesPolicy *FeaturesPolicy
 }
 
 type ResourceTypeExtension struct {
@@ -1525,9 +1949,22 @@ type ResourceTypeExtension struct {
 	Timeout *string
 }
 
-type ResourceTypeExtensionOptions struct {
-	// Resource creation begin.
-	ResourceCreationBegin *ExtensionOptions
+type ResourceTypeExtensionOptionsResourceCreationBegin struct {
+	// The request.
+	Request []*ExtensionOptionType
+
+	// The response.
+	Response []*ExtensionOptionType
+}
+
+type ResourceTypeFeaturesRule struct {
+	// REQUIRED; The required feature policy.
+	RequiredFeaturesPolicy *FeaturesPolicy
+}
+
+type ResourceTypeIdentityManagement struct {
+	// The type.
+	Type *IdentityManagementTypes
 }
 
 type ResourceTypeOnBehalfOfToken struct {
@@ -1612,7 +2049,7 @@ type ResourceTypeRegistrationProperties struct {
 	Category *ResourceTypeCategory
 
 	// The check name availability specifications.
-	CheckNameAvailabilitySpecifications *CheckNameAvailabilitySpecifications
+	CheckNameAvailabilitySpecifications *ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications
 
 	// Common API versions for the resource type.
 	CommonAPIVersions []*string
@@ -1630,7 +2067,7 @@ type ResourceTypeRegistrationProperties struct {
 	DisallowedEndUserOperations []*string
 
 	// The dsts configuration.
-	DstsConfiguration *DstsConfiguration
+	DstsConfiguration *ResourceTypeRegistrationPropertiesDstsConfiguration
 
 	// Whether async operation is enabled.
 	EnableAsyncOperation *bool
@@ -1645,10 +2082,10 @@ type ResourceTypeRegistrationProperties struct {
 	ExtendedLocations []*ExtendedLocationOptions
 
 	// The extension options.
-	ExtensionOptions *ResourceTypeExtensionOptions
+	ExtensionOptions *ResourceTypeRegistrationPropertiesExtensionOptions
 
 	// The features rule.
-	FeaturesRule *FeaturesRule
+	FeaturesRule *ResourceTypeRegistrationPropertiesFeaturesRule
 
 	// The frontdoor request mode.
 	FrontdoorRequestMode *FrontdoorRequestMode
@@ -1684,7 +2121,7 @@ type ResourceTypeRegistrationProperties struct {
 	LoggingRules []*LoggingRule
 
 	// The resource provider management.
-	Management *ResourceProviderManagement
+	Management *ResourceTypeRegistrationPropertiesManagement
 
 	// Manifest link.
 	ManifestLink *string
@@ -1717,7 +2154,7 @@ type ResourceTypeRegistrationProperties struct {
 	Regionality *Regionality
 
 	// The request header options.
-	RequestHeaderOptions *RequestHeaderOptions
+	RequestHeaderOptions *ResourceTypeRegistrationPropertiesRequestHeaderOptions
 
 	// The required features.
 	RequiredFeatures []*string
@@ -1732,13 +2169,13 @@ type ResourceTypeRegistrationProperties struct {
 	ResourceDeletionPolicy *ResourceDeletionPolicy
 
 	// The resource graph configuration.
-	ResourceGraphConfiguration *ResourceGraphConfiguration
+	ResourceGraphConfiguration *ResourceTypeRegistrationPropertiesResourceGraphConfiguration
 
 	// Resource management options.
 	ResourceManagementOptions *ResourceTypeRegistrationPropertiesResourceManagementOptions
 
 	// The resource move policy.
-	ResourceMovePolicy *ResourceMovePolicy
+	ResourceMovePolicy *ResourceTypeRegistrationPropertiesResourceMovePolicy
 
 	// The resource provider authorization rules.
 	ResourceProviderAuthorizationRules *ResourceProviderAuthorizationRules
@@ -1768,7 +2205,7 @@ type ResourceTypeRegistrationProperties struct {
 	ServiceTreeInfos []*ServiceTreeInfo
 
 	// The subscription lifecycle notification specifications.
-	SubscriptionLifecycleNotificationSpecifications *SubscriptionLifecycleNotificationSpecifications
+	SubscriptionLifecycleNotificationSpecifications *ResourceTypeRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications
 
 	// The subscription state rules.
 	SubscriptionStateRules []*SubscriptionStateRule
@@ -1780,10 +2217,10 @@ type ResourceTypeRegistrationProperties struct {
 	SwaggerSpecifications []*SwaggerSpecification
 
 	// The template deployment options.
-	TemplateDeploymentOptions *TemplateDeploymentOptions
+	TemplateDeploymentOptions *ResourceTypeRegistrationPropertiesTemplateDeploymentOptions
 
 	// The template deployment policy.
-	TemplateDeploymentPolicy *TemplateDeploymentPolicy
+	TemplateDeploymentPolicy *ResourceTypeRegistrationPropertiesTemplateDeploymentPolicy
 
 	// The throttling rules.
 	ThrottlingRules []*ThrottlingRule
@@ -1809,6 +2246,32 @@ type ResourceTypeRegistrationPropertiesCapacityRule struct {
 	SKUAlias *string
 }
 
+type ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications struct {
+	// Whether default validation is enabled.
+	EnableDefaultValidation *bool
+
+	// The resource types with custom validation.
+	ResourceTypesWithCustomValidation []*string
+}
+
+type ResourceTypeRegistrationPropertiesDstsConfiguration struct {
+	// REQUIRED; The service name.
+	ServiceName *string
+
+	// This is a URI property.
+	ServiceDNSName *string
+}
+
+type ResourceTypeRegistrationPropertiesExtensionOptions struct {
+	// Resource creation begin.
+	ResourceCreationBegin *ResourceTypeExtensionOptionsResourceCreationBegin
+}
+
+type ResourceTypeRegistrationPropertiesFeaturesRule struct {
+	// REQUIRED; The required feature policy.
+	RequiredFeaturesPolicy *FeaturesPolicy
+}
+
 type ResourceTypeRegistrationPropertiesIdentityManagement struct {
 	// The application id.
 	ApplicationID *string
@@ -1829,10 +2292,65 @@ type ResourceTypeRegistrationPropertiesLegacyPolicy struct {
 	DisallowedLegacyOperations []*LegacyOperation
 }
 
+type ResourceTypeRegistrationPropertiesManagement struct {
+	// The authorization owners.
+	AuthorizationOwners []*string
+
+	// List of manifest owners for canary.
+	CanaryManifestOwners []*string
+
+	// Options for error response messages.
+	ErrorResponseMessageOptions *ResourceProviderManagementErrorResponseMessageOptions
+
+	// Metadata for expedited rollout.
+	ExpeditedRolloutMetadata *ResourceProviderManagementExpeditedRolloutMetadata
+
+	// List of expedited rollout submitters.
+	ExpeditedRolloutSubmitters []*string
+
+	// The incident contact email.
+	IncidentContactEmail *string
+
+	// The incident routing service.
+	IncidentRoutingService *string
+
+	// The incident routing team.
+	IncidentRoutingTeam *string
+
+	// The manifest owners.
+	ManifestOwners []*string
+
+	// The profit center code for the subscription.
+	PcCode *string
+
+	// The profit center program id for the subscription.
+	ProfitCenterProgramID *string
+
+	// The resource access policy.
+	ResourceAccessPolicy *ResourceAccessPolicy
+
+	// The resource access roles.
+	ResourceAccessRoles []*ResourceAccessRole
+
+	// The schema owners.
+	SchemaOwners []*string
+
+	// The service tree infos.
+	ServiceTreeInfos []*ServiceTreeInfo
+}
+
 // ResourceTypeRegistrationPropertiesMarketplaceOptions - Marketplace options.
 type ResourceTypeRegistrationPropertiesMarketplaceOptions struct {
 	// Add-on plan conversion allowed.
 	AddOnPlanConversionAllowed *bool
+}
+
+type ResourceTypeRegistrationPropertiesRequestHeaderOptions struct {
+	// The opt in headers.
+	OptInHeaders *OptInHeaderType
+
+	// The opt out headers.
+	OptOutHeaders *OptOutHeaderType
 }
 
 // ResourceTypeRegistrationPropertiesResourceCache - Resource cache options.
@@ -1842,6 +2360,14 @@ type ResourceTypeRegistrationPropertiesResourceCache struct {
 
 	// Resource cache expiration timespan. This is a TimeSpan property.
 	ResourceCacheExpirationTimespan *string
+}
+
+type ResourceTypeRegistrationPropertiesResourceGraphConfiguration struct {
+	// The api version.
+	APIVersion *string
+
+	// Whether it's enabled.
+	Enabled *bool
 }
 
 // ResourceTypeRegistrationPropertiesResourceManagementOptions - Resource management options.
@@ -1868,6 +2394,17 @@ type ResourceTypeRegistrationPropertiesResourceManagementOptionsNestedProvisioni
 	MinimumAPIVersion *string
 }
 
+type ResourceTypeRegistrationPropertiesResourceMovePolicy struct {
+	// Whether cross resource group move is enabled.
+	CrossResourceGroupMoveEnabled *bool
+
+	// Whether cross subscription move is enabled.
+	CrossSubscriptionMoveEnabled *bool
+
+	// Whether validation is required.
+	ValidationRequired *bool
+}
+
 // ResourceTypeRegistrationPropertiesResourceQueryManagement - Resource query management options.
 type ResourceTypeRegistrationPropertiesResourceQueryManagement struct {
 	// Filter option.
@@ -1884,6 +2421,52 @@ type ResourceTypeRegistrationPropertiesResourceTypeCommonAttributeManagement str
 type ResourceTypeRegistrationPropertiesRoutingRule struct {
 	// Hosted resource type.
 	HostResourceType *string
+}
+
+type ResourceTypeRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications struct {
+	// The soft delete TTL.
+	SoftDeleteTTL *string
+
+	// The subscription state override actions.
+	SubscriptionStateOverrideActions []*SubscriptionStateOverrideAction
+}
+
+type ResourceTypeRegistrationPropertiesTemplateDeploymentOptions struct {
+	// The preflight options.
+	PreflightOptions []*PreflightOption
+
+	// Whether preflight is supported.
+	PreflightSupported *bool
+}
+
+type ResourceTypeRegistrationPropertiesTemplateDeploymentPolicy struct {
+	// REQUIRED; The capabilities.
+	Capabilities *TemplateDeploymentCapabilities
+
+	// REQUIRED; The preflight options.
+	PreflightOptions *TemplateDeploymentPreflightOptions
+
+	// The preflight notifications.
+	PreflightNotifications *TemplateDeploymentPreflightNotifications
+}
+
+type ResourceTypeRequestHeaderOptions struct {
+	// The opt in headers.
+	OptInHeaders *OptInHeaderType
+
+	// The opt out headers.
+	OptOutHeaders *OptOutHeaderType
+}
+
+type ResourceTypeTemplateDeploymentPolicy struct {
+	// REQUIRED; The capabilities.
+	Capabilities *TemplateDeploymentCapabilities
+
+	// REQUIRED; The preflight options.
+	PreflightOptions *TemplateDeploymentPreflightOptions
+
+	// The preflight notifications.
+	PreflightNotifications *TemplateDeploymentPreflightNotifications
 }
 
 type SKUCapability struct {
@@ -2032,14 +2615,6 @@ type SubscriberSetting struct {
 	FilterRules []*FilterRule
 }
 
-type SubscriptionLifecycleNotificationSpecifications struct {
-	// The soft delete TTL.
-	SoftDeleteTTL *string
-
-	// The subscription state override actions.
-	SubscriptionStateOverrideActions []*SubscriptionStateOverrideAction
-}
-
 type SubscriptionStateOverrideAction struct {
 	// REQUIRED; The action.
 	Action *SubscriptionNotificationOperation
@@ -2085,36 +2660,9 @@ type SystemData struct {
 	LastModifiedByType *CreatedByType
 }
 
-type TemplateDeploymentOptions struct {
-	// The preflight options.
-	PreflightOptions []*PreflightOption
-
-	// Whether preflight is supported.
-	PreflightSupported *bool
-}
-
-type TemplateDeploymentPolicy struct {
-	// REQUIRED; The capabilities.
-	Capabilities *TemplateDeploymentCapabilities
-
-	// REQUIRED; The preflight options.
-	PreflightOptions *TemplateDeploymentPreflightOptions
-
-	// The preflight notifications.
-	PreflightNotifications *TemplateDeploymentPreflightNotifications
-}
-
 type ThirdPartyExtension struct {
 	// Name of third party extension.
 	Name *string
-}
-
-type ThirdPartyProviderAuthorization struct {
-	// The authorizations.
-	Authorizations []*LightHouseAuthorization
-
-	// The managed by tenant id.
-	ManagedByTenantID *string
 }
 
 type ThrottlingMetric struct {
@@ -2151,17 +2699,6 @@ type TokenAuthConfiguration struct {
 
 	// The signed request scope.
 	SignedRequestScope *SignedRequestScope
-}
-
-type TrafficRegionRolloutConfiguration struct {
-	Regions []*string
-
-	// The wait duration.
-	WaitDuration *string
-}
-
-type TrafficRegions struct {
-	Regions []*string
 }
 
 // TypedErrorInfo - Error information.

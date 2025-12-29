@@ -67,7 +67,7 @@ func ExampleResourceTypeRegistrationsClient_BeginCreateOrUpdate_directResourceTy
 			CommonAPIVersions: []*string{
 				to.Ptr("2021-01-01"),
 			},
-			DstsConfiguration: &armproviderhub.DstsConfiguration{
+			DstsConfiguration: &armproviderhub.ResourceTypeRegistrationPropertiesDstsConfiguration{
 				ServiceDNSName: to.Ptr("prds.sparta.azure.com"),
 				ServiceName:    to.Ptr("prds-shim"),
 			},
@@ -115,7 +115,7 @@ func ExampleResourceTypeRegistrationsClient_BeginCreateOrUpdate_directResourceTy
 					LinkedOperation: to.Ptr(armproviderhub.LinkedOperationCrossResourceGroupResourceMove),
 				},
 			},
-			Management: &armproviderhub.ResourceProviderManagement{
+			Management: &armproviderhub.ResourceTypeRegistrationPropertiesManagement{
 				AuthorizationOwners: []*string{
 					to.Ptr("RPAAS-PlatformServiceAdministrator"),
 				},
@@ -152,7 +152,7 @@ func ExampleResourceTypeRegistrationsClient_BeginCreateOrUpdate_directResourceTy
 			},
 			PolicyExecutionType: to.Ptr(armproviderhub.PolicyExecutionTypeBypassPolicies),
 			Regionality:         to.Ptr(armproviderhub.RegionalityRegional),
-			RequestHeaderOptions: &armproviderhub.RequestHeaderOptions{
+			RequestHeaderOptions: &armproviderhub.ResourceTypeRegistrationPropertiesRequestHeaderOptions{
 				OptOutHeaders: to.Ptr(armproviderhub.OptOutHeaderTypeSystemDataCreatedByLastModifiedBy),
 			},
 			ResourceCache: &armproviderhub.ResourceTypeRegistrationPropertiesResourceCache{
@@ -170,7 +170,7 @@ func ExampleResourceTypeRegistrationsClient_BeginCreateOrUpdate_directResourceTy
 					Policy: to.Ptr(armproviderhub.PolicySynchronizeBeginExtension),
 				},
 			},
-			ResourceGraphConfiguration: &armproviderhub.ResourceGraphConfiguration{
+			ResourceGraphConfiguration: &armproviderhub.ResourceTypeRegistrationPropertiesResourceGraphConfiguration{
 				APIVersion: to.Ptr("2019-01-01"),
 				Enabled:    to.Ptr(true),
 			},
@@ -203,7 +203,7 @@ func ExampleResourceTypeRegistrationsClient_BeginCreateOrUpdate_directResourceTy
 					SwaggerSpecFolderURI: to.Ptr("https://github.com/Azure/azure-rest-api-specs/blob/feature/azure/contoso/specification/contoso/resource-manager/Microsoft.SampleRP/"),
 				},
 			},
-			TemplateDeploymentPolicy: &armproviderhub.TemplateDeploymentPolicy{
+			TemplateDeploymentPolicy: &armproviderhub.ResourceTypeRegistrationPropertiesTemplateDeploymentPolicy{
 				Capabilities:           to.Ptr(armproviderhub.TemplateDeploymentCapabilitiesPreflight),
 				PreflightNotifications: to.Ptr(armproviderhub.TemplateDeploymentPreflightNotificationsNone),
 				PreflightOptions:       to.Ptr(armproviderhub.TemplateDeploymentPreflightOptions("ValidationRequests, DeploymentRequests")),
@@ -268,7 +268,7 @@ func ExampleResourceTypeRegistrationsClient_BeginCreateOrUpdate_directResourceTy
 	// 			CommonAPIVersions: []*string{
 	// 				to.Ptr("2021-01-01"),
 	// 			},
-	// 			DstsConfiguration: &armproviderhub.DstsConfiguration{
+	// 			DstsConfiguration: &armproviderhub.ResourceTypeRegistrationPropertiesDstsConfiguration{
 	// 				ServiceDNSName: to.Ptr("prds.sparta.azure.com"),
 	// 				ServiceName: to.Ptr("prds-shim"),
 	// 			},
@@ -327,7 +327,7 @@ func ExampleResourceTypeRegistrationsClient_BeginCreateOrUpdate_directResourceTy
 	// 					LinkedOperation: to.Ptr(armproviderhub.LinkedOperationCrossResourceGroupResourceMove),
 	// 				},
 	// 			},
-	// 			Management: &armproviderhub.ResourceProviderManagement{
+	// 			Management: &armproviderhub.ResourceTypeRegistrationPropertiesManagement{
 	// 				IncidentContactEmail: to.Ptr("helpme@contoso.com"),
 	// 				IncidentRoutingService: to.Ptr(""),
 	// 				IncidentRoutingTeam: to.Ptr(""),
@@ -363,7 +363,7 @@ func ExampleResourceTypeRegistrationsClient_BeginCreateOrUpdate_directResourceTy
 	// 			PolicyExecutionType: to.Ptr(armproviderhub.PolicyExecutionTypeBypassPolicies),
 	// 			ProvisioningState: to.Ptr(armproviderhub.ProvisioningStateSucceeded),
 	// 			Regionality: to.Ptr(armproviderhub.RegionalityRegional),
-	// 			RequestHeaderOptions: &armproviderhub.RequestHeaderOptions{
+	// 			RequestHeaderOptions: &armproviderhub.ResourceTypeRegistrationPropertiesRequestHeaderOptions{
 	// 				OptOutHeaders: to.Ptr(armproviderhub.OptOutHeaderTypeSystemDataCreatedByLastModifiedBy),
 	// 			},
 	// 			ResourceCache: &armproviderhub.ResourceTypeRegistrationPropertiesResourceCache{
@@ -382,7 +382,7 @@ func ExampleResourceTypeRegistrationsClient_BeginCreateOrUpdate_directResourceTy
 	// 				},
 	// 			},
 	// 			ResourceDeletionPolicy: to.Ptr(armproviderhub.ResourceDeletionPolicyCascadeDeleteProxyOnlyChildren),
-	// 			ResourceGraphConfiguration: &armproviderhub.ResourceGraphConfiguration{
+	// 			ResourceGraphConfiguration: &armproviderhub.ResourceTypeRegistrationPropertiesResourceGraphConfiguration{
 	// 				APIVersion: to.Ptr("2019-01-01"),
 	// 				Enabled: to.Ptr(true),
 	// 			},
@@ -417,7 +417,7 @@ func ExampleResourceTypeRegistrationsClient_BeginCreateOrUpdate_directResourceTy
 	// 					SwaggerSpecFolderURI: to.Ptr("https://github.com/Azure/azure-rest-api-specs/blob/feature/azure/contoso/specification/contoso/resource-manager/Microsoft.SampleRP/"),
 	// 				},
 	// 			},
-	// 			TemplateDeploymentPolicy: &armproviderhub.TemplateDeploymentPolicy{
+	// 			TemplateDeploymentPolicy: &armproviderhub.ResourceTypeRegistrationPropertiesTemplateDeploymentPolicy{
 	// 				Capabilities: to.Ptr(armproviderhub.TemplateDeploymentCapabilitiesPreflight),
 	// 				PreflightNotifications: to.Ptr(armproviderhub.TemplateDeploymentPreflightNotificationsNone),
 	// 				PreflightOptions: to.Ptr(armproviderhub.TemplateDeploymentPreflightOptions("ValidationRequests, DeploymentRequests")),
@@ -464,7 +464,7 @@ func ExampleResourceTypeRegistrationsClient_BeginCreateOrUpdate_resourceTypeRegi
 					},
 				},
 			},
-			Management: &armproviderhub.ResourceProviderManagement{
+			Management: &armproviderhub.ResourceTypeRegistrationPropertiesManagement{
 				AuthorizationOwners: []*string{
 					to.Ptr("RPAAS-PlatformServiceAdministrator"),
 				},
@@ -496,7 +496,7 @@ func ExampleResourceTypeRegistrationsClient_BeginCreateOrUpdate_resourceTypeRegi
 				},
 			},
 			Regionality: to.Ptr(armproviderhub.RegionalityRegional),
-			RequestHeaderOptions: &armproviderhub.RequestHeaderOptions{
+			RequestHeaderOptions: &armproviderhub.ResourceTypeRegistrationPropertiesRequestHeaderOptions{
 				OptOutHeaders: to.Ptr(armproviderhub.OptOutHeaderTypeSystemDataCreatedByLastModifiedBy),
 			},
 			ResourceConcurrencyControlOptions: map[string]*armproviderhub.ResourceConcurrencyControlOption{
@@ -510,7 +510,7 @@ func ExampleResourceTypeRegistrationsClient_BeginCreateOrUpdate_resourceTypeRegi
 					Policy: to.Ptr(armproviderhub.PolicySynchronizeBeginExtension),
 				},
 			},
-			ResourceGraphConfiguration: &armproviderhub.ResourceGraphConfiguration{
+			ResourceGraphConfiguration: &armproviderhub.ResourceTypeRegistrationPropertiesResourceGraphConfiguration{
 				APIVersion: to.Ptr("2019-01-01"),
 				Enabled:    to.Ptr(true),
 			},
@@ -568,7 +568,7 @@ func ExampleResourceTypeRegistrationsClient_BeginCreateOrUpdate_resourceTypeRegi
 	// 					},
 	// 				},
 	// 			},
-	// 			Management: &armproviderhub.ResourceProviderManagement{
+	// 			Management: &armproviderhub.ResourceTypeRegistrationPropertiesManagement{
 	// 				IncidentContactEmail: to.Ptr("helpme@contoso.com"),
 	// 				IncidentRoutingService: to.Ptr(""),
 	// 				IncidentRoutingTeam: to.Ptr(""),
@@ -599,7 +599,7 @@ func ExampleResourceTypeRegistrationsClient_BeginCreateOrUpdate_resourceTypeRegi
 	// 			},
 	// 			ProvisioningState: to.Ptr(armproviderhub.ProvisioningStateSucceeded),
 	// 			Regionality: to.Ptr(armproviderhub.RegionalityRegional),
-	// 			RequestHeaderOptions: &armproviderhub.RequestHeaderOptions{
+	// 			RequestHeaderOptions: &armproviderhub.ResourceTypeRegistrationPropertiesRequestHeaderOptions{
 	// 				OptOutHeaders: to.Ptr(armproviderhub.OptOutHeaderTypeSystemDataCreatedByLastModifiedBy),
 	// 			},
 	// 			ResourceConcurrencyControlOptions: map[string]*armproviderhub.ResourceConcurrencyControlOption{
@@ -614,7 +614,7 @@ func ExampleResourceTypeRegistrationsClient_BeginCreateOrUpdate_resourceTypeRegi
 	// 				},
 	// 			},
 	// 			ResourceDeletionPolicy: to.Ptr(armproviderhub.ResourceDeletionPolicyCascadeDeleteProxyOnlyChildren),
-	// 			ResourceGraphConfiguration: &armproviderhub.ResourceGraphConfiguration{
+	// 			ResourceGraphConfiguration: &armproviderhub.ResourceTypeRegistrationPropertiesResourceGraphConfiguration{
 	// 				APIVersion: to.Ptr("2019-01-01"),
 	// 				Enabled: to.Ptr(true),
 	// 			},
@@ -714,7 +714,7 @@ func ExampleResourceTypeRegistrationsClient_Get() {
 	// 					},
 	// 				},
 	// 			},
-	// 			Management: &armproviderhub.ResourceProviderManagement{
+	// 			Management: &armproviderhub.ResourceTypeRegistrationPropertiesManagement{
 	// 				AuthorizationOwners: []*string{
 	// 					to.Ptr("RPAAS-PlatformServiceAdministrator"),
 	// 				},
@@ -748,7 +748,7 @@ func ExampleResourceTypeRegistrationsClient_Get() {
 	// 			},
 	// 			ProvisioningState: to.Ptr(armproviderhub.ProvisioningStateSucceeded),
 	// 			Regionality: to.Ptr(armproviderhub.RegionalityRegional),
-	// 			RequestHeaderOptions: &armproviderhub.RequestHeaderOptions{
+	// 			RequestHeaderOptions: &armproviderhub.ResourceTypeRegistrationPropertiesRequestHeaderOptions{
 	// 				OptOutHeaders: to.Ptr(armproviderhub.OptOutHeaderTypeSystemDataCreatedByLastModifiedBy),
 	// 			},
 	// 			ResourceConcurrencyControlOptions: map[string]*armproviderhub.ResourceConcurrencyControlOption{
@@ -762,7 +762,7 @@ func ExampleResourceTypeRegistrationsClient_Get() {
 	// 					Policy: to.Ptr(armproviderhub.PolicySynchronizeBeginExtension),
 	// 				},
 	// 			},
-	// 			ResourceGraphConfiguration: &armproviderhub.ResourceGraphConfiguration{
+	// 			ResourceGraphConfiguration: &armproviderhub.ResourceTypeRegistrationPropertiesResourceGraphConfiguration{
 	// 				APIVersion: to.Ptr("2019-01-01"),
 	// 				Enabled: to.Ptr(true),
 	// 			},
@@ -847,7 +847,7 @@ func ExampleResourceTypeRegistrationsClient_NewListByProviderRegistrationPager()
 		// 							},
 		// 						},
 		// 					},
-		// 					Management: &armproviderhub.ResourceProviderManagement{
+		// 					Management: &armproviderhub.ResourceTypeRegistrationPropertiesManagement{
 		// 						AuthorizationOwners: []*string{
 		// 							to.Ptr("RPAAS-PlatformServiceAdministrator"),
 		// 						},
@@ -881,7 +881,7 @@ func ExampleResourceTypeRegistrationsClient_NewListByProviderRegistrationPager()
 		// 					},
 		// 					ProvisioningState: to.Ptr(armproviderhub.ProvisioningStateSucceeded),
 		// 					Regionality: to.Ptr(armproviderhub.RegionalityRegional),
-		// 					RequestHeaderOptions: &armproviderhub.RequestHeaderOptions{
+		// 					RequestHeaderOptions: &armproviderhub.ResourceTypeRegistrationPropertiesRequestHeaderOptions{
 		// 						OptOutHeaders: to.Ptr(armproviderhub.OptOutHeaderTypeSystemDataCreatedByLastModifiedBy),
 		// 					},
 		// 					ResourceConcurrencyControlOptions: map[string]*armproviderhub.ResourceConcurrencyControlOption{
@@ -895,7 +895,7 @@ func ExampleResourceTypeRegistrationsClient_NewListByProviderRegistrationPager()
 		// 							Policy: to.Ptr(armproviderhub.PolicySynchronizeBeginExtension),
 		// 						},
 		// 					},
-		// 					ResourceGraphConfiguration: &armproviderhub.ResourceGraphConfiguration{
+		// 					ResourceGraphConfiguration: &armproviderhub.ResourceTypeRegistrationPropertiesResourceGraphConfiguration{
 		// 						APIVersion: to.Ptr("2019-01-01"),
 		// 						Enabled: to.Ptr(true),
 		// 					},

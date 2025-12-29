@@ -38,7 +38,7 @@ func ExampleOperationsClient_NewListPager() {
 		// 		Value: []*armproviderhub.OperationsDefinition{
 		// 			{
 		// 				Name: to.Ptr("Microsoft.ProviderHub/register/action"),
-		// 				Display: &armproviderhub.OperationsDisplayDefinition{
+		// 				Display: &armproviderhub.OperationsDefinitionDisplay{
 		// 					Description: to.Ptr("Registers the specified subscription with Microsoft.ProviderHub resource provider"),
 		// 					Operation: to.Ptr("Register for Microsoft.ProviderHub"),
 		// 					Provider: to.Ptr("Microsoft ProviderHub"),
@@ -48,7 +48,7 @@ func ExampleOperationsClient_NewListPager() {
 		// 			},
 		// 			{
 		// 				Name: to.Ptr("Microsoft.ProviderHub/defaultRollouts/write"),
-		// 				Display: &armproviderhub.OperationsDisplayDefinition{
+		// 				Display: &armproviderhub.OperationsDefinitionDisplay{
 		// 					Description: to.Ptr("Creates or Updates any rollout"),
 		// 					Operation: to.Ptr("Create or Update rollout"),
 		// 					Provider: to.Ptr("Microsoft ProviderHub"),
@@ -58,7 +58,7 @@ func ExampleOperationsClient_NewListPager() {
 		// 			},
 		// 			{
 		// 				Name: to.Ptr("Microsoft.ProviderHub/defaultRollouts/read"),
-		// 				Display: &armproviderhub.OperationsDisplayDefinition{
+		// 				Display: &armproviderhub.OperationsDefinitionDisplay{
 		// 					Description: to.Ptr("Reads any rollout"),
 		// 					Operation: to.Ptr("Read rollout"),
 		// 					Provider: to.Ptr("Microsoft ProviderHub"),
@@ -68,7 +68,7 @@ func ExampleOperationsClient_NewListPager() {
 		// 			},
 		// 			{
 		// 				Name: to.Ptr("Microsoft.ProviderHub/defaultRollouts/delete"),
-		// 				Display: &armproviderhub.OperationsDisplayDefinition{
+		// 				Display: &armproviderhub.OperationsDefinitionDisplay{
 		// 					Description: to.Ptr("Deletes any rollout"),
 		// 					Operation: to.Ptr("Delete rollout"),
 		// 					Provider: to.Ptr("Microsoft ProviderHub"),
@@ -78,7 +78,7 @@ func ExampleOperationsClient_NewListPager() {
 		// 			},
 		// 			{
 		// 				Name: to.Ptr("Microsoft.ProviderHub/defaultRollouts/stop/action"),
-		// 				Display: &armproviderhub.OperationsDisplayDefinition{
+		// 				Display: &armproviderhub.OperationsDefinitionDisplay{
 		// 					Description: to.Ptr("Deletes any rollout"),
 		// 					Operation: to.Ptr("Delete rollout"),
 		// 					Provider: to.Ptr("Microsoft ProviderHub"),
@@ -88,7 +88,7 @@ func ExampleOperationsClient_NewListPager() {
 		// 			},
 		// 			{
 		// 				Name: to.Ptr("Microsoft.ProviderHub/customRollouts/write"),
-		// 				Display: &armproviderhub.OperationsDisplayDefinition{
+		// 				Display: &armproviderhub.OperationsDefinitionDisplay{
 		// 					Description: to.Ptr("Creates or Updates any rollout"),
 		// 					Operation: to.Ptr("Create or Update rollout"),
 		// 					Provider: to.Ptr("Microsoft ProviderHub"),
@@ -98,7 +98,7 @@ func ExampleOperationsClient_NewListPager() {
 		// 			},
 		// 			{
 		// 				Name: to.Ptr("Microsoft.ProviderHub/customRollouts/read"),
-		// 				Display: &armproviderhub.OperationsDisplayDefinition{
+		// 				Display: &armproviderhub.OperationsDefinitionDisplay{
 		// 					Description: to.Ptr("Reads any rollout"),
 		// 					Operation: to.Ptr("Read rollout"),
 		// 					Provider: to.Ptr("Microsoft ProviderHub"),

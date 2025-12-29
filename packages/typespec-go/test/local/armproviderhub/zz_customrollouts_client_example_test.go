@@ -25,12 +25,12 @@ func ExampleCustomRolloutsClient_BeginCreateOrUpdate() {
 	}
 	poller, err := clientFactory.NewCustomRolloutsClient().BeginCreateOrUpdate(ctx, "Microsoft.Contoso", "brazilUsShoeBoxTesting", armproviderhub.CustomRollout{
 		Properties: &armproviderhub.CustomRolloutProperties{
-			Specification: &armproviderhub.CustomRolloutSpecification{
+			Specification: &armproviderhub.CustomRolloutPropertiesSpecification{
 				AutoProvisionConfig: &armproviderhub.CustomRolloutSpecificationAutoProvisionConfig{
 					ResourceGraph: to.Ptr(true),
 					Storage:       to.Ptr(true),
 				},
-				Canary: &armproviderhub.TrafficRegions{
+				Canary: &armproviderhub.CustomRolloutSpecificationCanary{
 					Regions: []*string{
 						to.Ptr("brazilus"),
 					},
@@ -56,12 +56,12 @@ func ExampleCustomRolloutsClient_BeginCreateOrUpdate() {
 	// 		ID: to.Ptr("/subscriptions/ab7a8701-f7ef-471a-a2f4-d0ebbf494f77/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso/customRollouts/brazilUsShoeBoxTesting"),
 	// 		Properties: &armproviderhub.CustomRolloutProperties{
 	// 			ProvisioningState: to.Ptr(armproviderhub.ProvisioningStateSucceeded),
-	// 			Specification: &armproviderhub.CustomRolloutSpecification{
+	// 			Specification: &armproviderhub.CustomRolloutPropertiesSpecification{
 	// 				AutoProvisionConfig: &armproviderhub.CustomRolloutSpecificationAutoProvisionConfig{
 	// 					ResourceGraph: to.Ptr(true),
 	// 					Storage: to.Ptr(true),
 	// 				},
-	// 				Canary: &armproviderhub.TrafficRegions{
+	// 				Canary: &armproviderhub.CustomRolloutSpecificationCanary{
 	// 					Regions: []*string{
 	// 						to.Ptr("brazilus"),
 	// 						to.Ptr("eastus2euap"),
@@ -70,13 +70,13 @@ func ExampleCustomRolloutsClient_BeginCreateOrUpdate() {
 	// 				},
 	// 				RefreshSubscriptionRegistration: to.Ptr(true),
 	// 			},
-	// 			Status: &armproviderhub.CustomRolloutStatus{
+	// 			Status: &armproviderhub.CustomRolloutPropertiesStatus{
 	// 				CompletedRegions: []*string{
 	// 					to.Ptr("brazilus"),
 	// 					to.Ptr("eastus2euap"),
 	// 					to.Ptr("centraluseuap"),
 	// 				},
-	// 				ManifestCheckinStatus: &armproviderhub.CheckinManifestInfo{
+	// 				ManifestCheckinStatus: &armproviderhub.CustomRolloutStatusManifestCheckinStatus{
 	// 					CommitID: to.Ptr("47317892d4edf22f08704f6b595105c4fd7a8db7"),
 	// 					IsCheckedIn: to.Ptr(true),
 	// 					StatusMessage: to.Ptr("Manifest is successfully merged. Use the Default/Custom rollout (http://aka.ms/rpaasrollout) to roll out the manifest in ARM."),
@@ -142,18 +142,18 @@ func ExampleCustomRolloutsClient_Get() {
 	// 		ID: to.Ptr("/subscriptions/ab7a8701-f7ef-471a-a2f4-d0ebbf494f77/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso/customRollouts/canaryTesting99"),
 	// 		Properties: &armproviderhub.CustomRolloutProperties{
 	// 			ProvisioningState: to.Ptr(armproviderhub.ProvisioningState("Completed")),
-	// 			Specification: &armproviderhub.CustomRolloutSpecification{
+	// 			Specification: &armproviderhub.CustomRolloutPropertiesSpecification{
 	// 				AutoProvisionConfig: &armproviderhub.CustomRolloutSpecificationAutoProvisionConfig{
 	// 					ResourceGraph: to.Ptr(true),
 	// 					Storage: to.Ptr(true),
 	// 				},
-	// 				Canary: &armproviderhub.TrafficRegions{
+	// 				Canary: &armproviderhub.CustomRolloutSpecificationCanary{
 	// 					Regions: []*string{
 	// 						to.Ptr("eastus2euap"),
 	// 						to.Ptr("centraluseuap"),
 	// 					},
 	// 				},
-	// 				ProviderRegistration: &armproviderhub.ProviderRegistration{
+	// 				ProviderRegistration: &armproviderhub.CustomRolloutSpecificationProviderRegistration{
 	// 					Name: to.Ptr("Microsoft.Contoso"),
 	// 					Type: to.Ptr("Microsoft.ProviderHub/providerRegistrations"),
 	// 					ID: to.Ptr("/subscriptions/ab7a8701-f7ef-471a-a2f4-d0ebbf494f77/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso"),
@@ -168,7 +168,7 @@ func ExampleCustomRolloutsClient_Get() {
 	// 								QuotaID: to.Ptr("CSP_MG_2017-12-01"),
 	// 							},
 	// 						},
-	// 						Management: &armproviderhub.ResourceProviderManagement{
+	// 						Management: &armproviderhub.ResourceProviderManifestPropertiesManagement{
 	// 							AuthorizationOwners: []*string{
 	// 								to.Ptr("RPAAS-PlatformServiceAdministrator"),
 	// 							},
@@ -188,8 +188,8 @@ func ExampleCustomRolloutsClient_Get() {
 	// 								RoleDefinitionID: to.Ptr("123456bf-gkur-2098-b890-98da392a00b2"),
 	// 							},
 	// 						},
-	// 						ProviderHubMetadata: &armproviderhub.Metadata{
-	// 							ProviderAuthentication: &armproviderhub.ResourceProviderAuthentication{
+	// 						ProviderHubMetadata: &armproviderhub.ProviderRegistrationPropertiesProviderHubMetadata{
+	// 							ProviderAuthentication: &armproviderhub.MetadataProviderAuthentication{
 	// 								AllowedAudiences: []*string{
 	// 									to.Ptr("https://management.core.windows.net/"),
 	// 								},
@@ -250,12 +250,12 @@ func ExampleCustomRolloutsClient_Get() {
 	// 					},
 	// 				},
 	// 			},
-	// 			Status: &armproviderhub.CustomRolloutStatus{
+	// 			Status: &armproviderhub.CustomRolloutPropertiesStatus{
 	// 				CompletedRegions: []*string{
 	// 					to.Ptr("eastus2euap"),
 	// 					to.Ptr("centraluseuap"),
 	// 				},
-	// 				ManifestCheckinStatus: &armproviderhub.CheckinManifestInfo{
+	// 				ManifestCheckinStatus: &armproviderhub.CustomRolloutStatusManifestCheckinStatus{
 	// 					CommitID: to.Ptr("47317892d4edf22f08704f6b595105c4fd7a8db7"),
 	// 					IsCheckedIn: to.Ptr(true),
 	// 					StatusMessage: to.Ptr("Manifest is successfully merged. Use the Default/Custom rollout (http://aka.ms/rpaasrollout) to roll out the manifest in ARM."),
@@ -305,12 +305,12 @@ func ExampleCustomRolloutsClient_NewListByProviderRegistrationPager() {
 		// 				ID: to.Ptr("/subscriptions/ab7a8701-f7ef-471a-a2f4-d0ebbf494f77/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso/customRollouts/canaryTesting99"),
 		// 				Properties: &armproviderhub.CustomRolloutProperties{
 		// 					ProvisioningState: to.Ptr(armproviderhub.ProvisioningStateSucceeded),
-		// 					Specification: &armproviderhub.CustomRolloutSpecification{
+		// 					Specification: &armproviderhub.CustomRolloutPropertiesSpecification{
 		// 						AutoProvisionConfig: &armproviderhub.CustomRolloutSpecificationAutoProvisionConfig{
 		// 							ResourceGraph: to.Ptr(true),
 		// 							Storage: to.Ptr(true),
 		// 						},
-		// 						Canary: &armproviderhub.TrafficRegions{
+		// 						Canary: &armproviderhub.CustomRolloutSpecificationCanary{
 		// 							Regions: []*string{
 		// 								to.Ptr("eastus2euap"),
 		// 								to.Ptr("centraluseuap"),
@@ -318,12 +318,12 @@ func ExampleCustomRolloutsClient_NewListByProviderRegistrationPager() {
 		// 						},
 		// 						RefreshSubscriptionRegistration: to.Ptr(true),
 		// 					},
-		// 					Status: &armproviderhub.CustomRolloutStatus{
+		// 					Status: &armproviderhub.CustomRolloutPropertiesStatus{
 		// 						CompletedRegions: []*string{
 		// 							to.Ptr("eastus2euap"),
 		// 							to.Ptr("centraluseuap"),
 		// 						},
-		// 						ManifestCheckinStatus: &armproviderhub.CheckinManifestInfo{
+		// 						ManifestCheckinStatus: &armproviderhub.CustomRolloutStatusManifestCheckinStatus{
 		// 							CommitID: to.Ptr("47317892d4edf22f08704f6b595105c4fd7a8db7"),
 		// 							IsCheckedIn: to.Ptr(true),
 		// 							StatusMessage: to.Ptr("Manifest is successfully merged. Use the Default/Custom rollout (http://aka.ms/rpaasrollout) to roll out the manifest in ARM."),
@@ -345,26 +345,26 @@ func ExampleCustomRolloutsClient_NewListByProviderRegistrationPager() {
 		// 				ID: to.Ptr("/subscriptions/ab7a8701-f7ef-471a-a2f4-d0ebbf494f77/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso/customRollouts/brazilustesting"),
 		// 				Properties: &armproviderhub.CustomRolloutProperties{
 		// 					ProvisioningState: to.Ptr(armproviderhub.ProvisioningStateFailed),
-		// 					Specification: &armproviderhub.CustomRolloutSpecification{
+		// 					Specification: &armproviderhub.CustomRolloutPropertiesSpecification{
 		// 						AutoProvisionConfig: &armproviderhub.CustomRolloutSpecificationAutoProvisionConfig{
 		// 							ResourceGraph: to.Ptr(true),
 		// 							Storage: to.Ptr(true),
 		// 						},
-		// 						Canary: &armproviderhub.TrafficRegions{
+		// 						Canary: &armproviderhub.CustomRolloutSpecificationCanary{
 		// 							Regions: []*string{
 		// 								to.Ptr("brazilus"),
 		// 							},
 		// 						},
 		// 						RefreshSubscriptionRegistration: to.Ptr(true),
 		// 					},
-		// 					Status: &armproviderhub.CustomRolloutStatus{
+		// 					Status: &armproviderhub.CustomRolloutPropertiesStatus{
 		// 						FailedOrSkippedRegions: map[string]*armproviderhub.ExtendedErrorInfo{
 		// 							"brazilus": &armproviderhub.ExtendedErrorInfo{
 		// 								Code: to.Ptr("RolloutTimedout"),
 		// 								Message: to.Ptr("Failed to rollout to specified region."),
 		// 							},
 		// 						},
-		// 						ManifestCheckinStatus: &armproviderhub.CheckinManifestInfo{
+		// 						ManifestCheckinStatus: &armproviderhub.CustomRolloutStatusManifestCheckinStatus{
 		// 							CommitID: to.Ptr("47317892d4edf22f08704f6b595105c4fd7a8db7"),
 		// 							IsCheckedIn: to.Ptr(true),
 		// 							StatusMessage: to.Ptr("Manifest is successfully merged. Use the Default/Custom rollout (http://aka.ms/rpaasrollout) to roll out the manifest in ARM."),

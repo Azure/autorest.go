@@ -37,7 +37,7 @@ func ExampleProviderRegistrationsClient_BeginCreateOrUpdate_directProviderRegist
 				},
 			},
 			CustomManifestVersion: to.Ptr("2.0"),
-			DstsConfiguration: &armproviderhub.DstsConfiguration{
+			DstsConfiguration: &armproviderhub.ResourceProviderManifestPropertiesDstsConfiguration{
 				ServiceDNSName: to.Ptr("prds.sparta.azure.com"),
 				ServiceName:    to.Ptr("prds-shim"),
 			},
@@ -45,7 +45,7 @@ func ExampleProviderRegistrationsClient_BeginCreateOrUpdate_directProviderRegist
 			LegacyRegistrations: []*string{
 				to.Ptr("legacyRegistration"),
 			},
-			Management: &armproviderhub.ResourceProviderManagement{
+			Management: &armproviderhub.ResourceProviderManifestPropertiesManagement{
 				IncidentContactEmail:   to.Ptr("helpme@contoso.com"),
 				IncidentRoutingService: to.Ptr("Contoso Resource Provider"),
 				IncidentRoutingTeam:    to.Ptr("Contoso Triage"),
@@ -143,7 +143,7 @@ func ExampleProviderRegistrationsClient_BeginCreateOrUpdate_directProviderRegist
 	// 				},
 	// 			},
 	// 			CustomManifestVersion: to.Ptr("2.0"),
-	// 			DstsConfiguration: &armproviderhub.DstsConfiguration{
+	// 			DstsConfiguration: &armproviderhub.ResourceProviderManifestPropertiesDstsConfiguration{
 	// 				ServiceDNSName: to.Ptr("prds.sparta.azure.com"),
 	// 				ServiceName: to.Ptr("prds-shim"),
 	// 			},
@@ -151,7 +151,7 @@ func ExampleProviderRegistrationsClient_BeginCreateOrUpdate_directProviderRegist
 	// 			LegacyRegistrations: []*string{
 	// 				to.Ptr("legacyRegistration"),
 	// 			},
-	// 			Management: &armproviderhub.ResourceProviderManagement{
+	// 			Management: &armproviderhub.ResourceProviderManifestPropertiesManagement{
 	// 				AuthorizationOwners: []*string{
 	// 					to.Ptr("authorizationOwners-group"),
 	// 				},
@@ -275,7 +275,7 @@ func ExampleProviderRegistrationsClient_BeginCreateOrUpdate_providerRegistration
 				},
 			},
 			CrossTenantTokenValidation: to.Ptr(armproviderhub.CrossTenantTokenValidationEnsureSecureValidation),
-			Management: &armproviderhub.ResourceProviderManagement{
+			Management: &armproviderhub.ResourceProviderManifestPropertiesManagement{
 				CanaryManifestOwners: []*string{
 					to.Ptr("SPARTA-PlatformServiceAdmin"),
 				},
@@ -340,7 +340,7 @@ func ExampleProviderRegistrationsClient_BeginCreateOrUpdate_providerRegistration
 	// 				},
 	// 			},
 	// 			CrossTenantTokenValidation: to.Ptr(armproviderhub.CrossTenantTokenValidationEnsureSecureValidation),
-	// 			Management: &armproviderhub.ResourceProviderManagement{
+	// 			Management: &armproviderhub.ResourceProviderManifestPropertiesManagement{
 	// 				AuthorizationOwners: []*string{
 	// 					to.Ptr("authorizationOwners-group"),
 	// 				},
@@ -404,7 +404,7 @@ func ExampleProviderRegistrationsClient_BeginCreateOrUpdate_providerRegistration
 	// 					RoleDefinitionID: to.Ptr("123456bf-gkur-2098-b890-98da392a00b3"),
 	// 				},
 	// 			},
-	// 			ProviderHubMetadata: &armproviderhub.Metadata{
+	// 			ProviderHubMetadata: &armproviderhub.ProviderRegistrationPropertiesProviderHubMetadata{
 	// 				DirectRpRoleDefinitionID: to.Ptr("1x86y807-6zx0-40y3-8z5x-686y7z43x0y2"),
 	// 			},
 	// 			ProviderType: to.Ptr(armproviderhub.ResourceProviderType("Internal, Hidden")),
@@ -481,7 +481,7 @@ func ExampleProviderRegistrationsClient_GenerateOperations() {
 	// 	undefined: &[]*armproviderhub.OperationsDefinition{
 	// 		{
 	// 			Name: to.Ptr("Microsoft.Contoso/Employees/Read"),
-	// 			Display: &armproviderhub.OperationsDisplayDefinition{
+	// 			Display: &armproviderhub.OperationsDefinitionDisplay{
 	// 				Description: to.Ptr("Read employees"),
 	// 				Operation: to.Ptr("Gets/List employee resources"),
 	// 				Provider: to.Ptr("Microsoft.Contoso"),
@@ -491,7 +491,7 @@ func ExampleProviderRegistrationsClient_GenerateOperations() {
 	// 		},
 	// 		{
 	// 			Name: to.Ptr("Microsoft.Contoso/Employees/Write"),
-	// 			Display: &armproviderhub.OperationsDisplayDefinition{
+	// 			Display: &armproviderhub.OperationsDefinitionDisplay{
 	// 				Description: to.Ptr("Writes employees"),
 	// 				Operation: to.Ptr("Create/update employee resources"),
 	// 				Provider: to.Ptr("Microsoft.Contoso"),
@@ -501,7 +501,7 @@ func ExampleProviderRegistrationsClient_GenerateOperations() {
 	// 		},
 	// 		{
 	// 			Name: to.Ptr("Microsoft.Contoso/Employees/Delete"),
-	// 			Display: &armproviderhub.OperationsDisplayDefinition{
+	// 			Display: &armproviderhub.OperationsDefinitionDisplay{
 	// 				Description: to.Ptr("Deletes employees"),
 	// 				Operation: to.Ptr("Deletes employee resource"),
 	// 				Provider: to.Ptr("Microsoft.Contoso"),
@@ -512,7 +512,7 @@ func ExampleProviderRegistrationsClient_GenerateOperations() {
 	// 		},
 	// 		{
 	// 			Name: to.Ptr("Microsoft.Contoso/Employees/Action"),
-	// 			Display: &armproviderhub.OperationsDisplayDefinition{
+	// 			Display: &armproviderhub.OperationsDefinitionDisplay{
 	// 				Description: to.Ptr("Writes employees"),
 	// 				Operation: to.Ptr("Create/update employee resources"),
 	// 				Provider: to.Ptr("Microsoft.Contoso"),
@@ -560,7 +560,7 @@ func ExampleProviderRegistrationsClient_Get() {
 	// 				},
 	// 			},
 	// 			CrossTenantTokenValidation: to.Ptr(armproviderhub.CrossTenantTokenValidationEnsureSecureValidation),
-	// 			Management: &armproviderhub.ResourceProviderManagement{
+	// 			Management: &armproviderhub.ResourceProviderManifestPropertiesManagement{
 	// 				AuthorizationOwners: []*string{
 	// 					to.Ptr("RPAAS-PlatformServiceAdministrator"),
 	// 				},
@@ -589,9 +589,9 @@ func ExampleProviderRegistrationsClient_Get() {
 	// 					RoleDefinitionID: to.Ptr("123456bf-gkur-2098-b890-98da392a00b2"),
 	// 				},
 	// 			},
-	// 			ProviderHubMetadata: &armproviderhub.Metadata{
+	// 			ProviderHubMetadata: &armproviderhub.ProviderRegistrationPropertiesProviderHubMetadata{
 	// 				DirectRpRoleDefinitionID: to.Ptr("1x86y807-6zx0-40y3-8z5x-686y7z43x0y2"),
-	// 				ProviderAuthentication: &armproviderhub.ResourceProviderAuthentication{
+	// 				ProviderAuthentication: &armproviderhub.MetadataProviderAuthentication{
 	// 					AllowedAudiences: []*string{
 	// 						to.Ptr("https://management.core.windows.net/"),
 	// 					},
@@ -668,7 +668,7 @@ func ExampleProviderRegistrationsClient_NewListPager() {
 		// 						},
 		// 					},
 		// 					CrossTenantTokenValidation: to.Ptr(armproviderhub.CrossTenantTokenValidationEnsureSecureValidation),
-		// 					Management: &armproviderhub.ResourceProviderManagement{
+		// 					Management: &armproviderhub.ResourceProviderManifestPropertiesManagement{
 		// 						AuthorizationOwners: []*string{
 		// 							to.Ptr("authorizationOwners-group"),
 		// 						},
@@ -696,9 +696,9 @@ func ExampleProviderRegistrationsClient_NewListPager() {
 		// 							RoleDefinitionID: to.Ptr("123456bf-gkur-2098-b890-98da392a00b2"),
 		// 						},
 		// 					},
-		// 					ProviderHubMetadata: &armproviderhub.Metadata{
+		// 					ProviderHubMetadata: &armproviderhub.ProviderRegistrationPropertiesProviderHubMetadata{
 		// 						DirectRpRoleDefinitionID: to.Ptr("1x86y807-6zx0-40y3-8z5x-686y7z43x0y2"),
-		// 						ProviderAuthentication: &armproviderhub.ResourceProviderAuthentication{
+		// 						ProviderAuthentication: &armproviderhub.MetadataProviderAuthentication{
 		// 							AllowedAudiences: []*string{
 		// 								to.Ptr("https://management.core.windows.net/"),
 		// 							},

@@ -38,19 +38,18 @@ func ExampleNewRegionFrontloadReleaseClient_CreateOrUpdate() {
 				to.Ptr("servers"),
 			},
 			OperationType: to.Ptr("Rollout"),
-			OverrideEndpointLevelFields: &armproviderhub.ResourceTypeEndpointBase{
+			OverrideEndpointLevelFields: &armproviderhub.FrontloadPayloadPropertiesOverrideEndpointLevelFields{
 				APIVersion: to.Ptr("2024-04-01-preview"),
 				APIVersions: []*string{
 					to.Ptr("2024-04-01-preview"),
 				},
-				DstsConfiguration: &armproviderhub.DstsConfiguration{
+				DstsConfiguration: &armproviderhub.ResourceTypeEndpointBaseDstsConfiguration{
 					ServiceDNSName: to.Ptr("messaging.azure-ppe.net"),
 					ServiceName:    to.Ptr("resourceprovider"),
 				},
 				Enabled:      to.Ptr(true),
 				EndpointType: to.Ptr(armproviderhub.EndpointTypeProduction),
 				EndpointURI:  to.Ptr("https://resource-endpoint.com/"),
-				FeaturesRule: to.Ptr(armproviderhub.FeaturesPolicyAny),
 				Locations: []*string{
 					to.Ptr("East US"),
 				},
@@ -63,7 +62,7 @@ func ExampleNewRegionFrontloadReleaseClient_CreateOrUpdate() {
 					to.Ptr("zone1"),
 				},
 			},
-			OverrideManifestLevelFields: &armproviderhub.ManifestLevelPropertyBag{
+			OverrideManifestLevelFields: &armproviderhub.FrontloadPayloadPropertiesOverrideManifestLevelFields{
 				ResourceHydrationAccounts: []*armproviderhub.ResourceHydrationAccount{
 					{
 						AccountName:    to.Ptr("classichydrationprodsn01"),
@@ -88,35 +87,35 @@ func ExampleNewRegionFrontloadReleaseClient_CreateOrUpdate() {
 	// 		ID: to.Ptr("/subscriptions/ab7a8701-f7ef-471a-a2f4-d0ebbf494f77/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso/defaultRollouts/2020week10"),
 	// 		Properties: &armproviderhub.DefaultRolloutProperties{
 	// 			ProvisioningState: to.Ptr(armproviderhub.ProvisioningStateRolloutInProgress),
-	// 			Specification: &armproviderhub.DefaultRolloutSpecification{
-	// 				Canary: &armproviderhub.CanaryTrafficRegionRolloutConfiguration{
+	// 			Specification: &armproviderhub.DefaultRolloutPropertiesSpecification{
+	// 				Canary: &armproviderhub.DefaultRolloutSpecificationCanary{
 	// 					Regions: []*string{
 	// 						to.Ptr("brazilus"),
 	// 						to.Ptr("eastus2euap"),
 	// 						to.Ptr("centraluseuap"),
 	// 					},
 	// 				},
-	// 				HighTraffic: &armproviderhub.TrafficRegionRolloutConfiguration{
+	// 				HighTraffic: &armproviderhub.DefaultRolloutSpecificationHighTraffic{
 	// 					Regions: []*string{
 	// 						to.Ptr("australiasoutheast"),
 	// 						to.Ptr("otherhightraficregions"),
 	// 					},
 	// 					WaitDuration: to.Ptr("PT24H"),
 	// 				},
-	// 				LowTraffic: &armproviderhub.TrafficRegionRolloutConfiguration{
+	// 				LowTraffic: &armproviderhub.DefaultRolloutSpecificationLowTraffic{
 	// 					Regions: []*string{
 	// 						to.Ptr("southeastasia"),
 	// 					},
 	// 					WaitDuration: to.Ptr("PT24H"),
 	// 				},
-	// 				MediumTraffic: &armproviderhub.TrafficRegionRolloutConfiguration{
+	// 				MediumTraffic: &armproviderhub.DefaultRolloutSpecificationMediumTraffic{
 	// 					Regions: []*string{
 	// 						to.Ptr("uksouth"),
 	// 						to.Ptr("indiawest"),
 	// 					},
 	// 					WaitDuration: to.Ptr("PT24H"),
 	// 				},
-	// 				RestOfTheWorldGroupOne: &armproviderhub.TrafficRegionRolloutConfiguration{
+	// 				RestOfTheWorldGroupOne: &armproviderhub.DefaultRolloutSpecificationRestOfTheWorldGroupOne{
 	// 					Regions: []*string{
 	// 						to.Ptr("koreacentral"),
 	// 						to.Ptr("francecentral"),
@@ -126,7 +125,7 @@ func ExampleNewRegionFrontloadReleaseClient_CreateOrUpdate() {
 	// 					},
 	// 					WaitDuration: to.Ptr("PT4H"),
 	// 				},
-	// 				RestOfTheWorldGroupTwo: &armproviderhub.TrafficRegionRolloutConfiguration{
+	// 				RestOfTheWorldGroupTwo: &armproviderhub.DefaultRolloutSpecificationRestOfTheWorldGroupTwo{
 	// 					Regions: []*string{
 	// 						to.Ptr("germanynorth"),
 	// 						to.Ptr("norwayeast"),
@@ -135,14 +134,14 @@ func ExampleNewRegionFrontloadReleaseClient_CreateOrUpdate() {
 	// 					WaitDuration: to.Ptr("PT4H"),
 	// 				},
 	// 			},
-	// 			Status: &armproviderhub.DefaultRolloutStatus{
+	// 			Status: &armproviderhub.DefaultRolloutPropertiesStatus{
 	// 				CompletedRegions: []*string{
 	// 					to.Ptr("brazilus"),
 	// 					to.Ptr("eastus2euap"),
 	// 					to.Ptr("centraluseuap"),
 	// 					to.Ptr("allcompletedregions"),
 	// 				},
-	// 				ManifestCheckinStatus: &armproviderhub.CheckinManifestInfo{
+	// 				ManifestCheckinStatus: &armproviderhub.DefaultRolloutStatusManifestCheckinStatus{
 	// 					CommitID: to.Ptr("47317892d4edf22f08704f6b595105c4fd7a8db7"),
 	// 					IsCheckedIn: to.Ptr(true),
 	// 					StatusMessage: to.Ptr("Manifest is successfully merged. Use the Default/Custom rollout (http://aka.ms/rpaasrollout) to roll out the manifest in ARM."),
@@ -187,19 +186,18 @@ func ExampleNewRegionFrontloadReleaseClient_GenerateManifest() {
 				to.Ptr("servers"),
 			},
 			OperationType: to.Ptr("Rollout"),
-			OverrideEndpointLevelFields: &armproviderhub.ResourceTypeEndpointBase{
+			OverrideEndpointLevelFields: &armproviderhub.FrontloadPayloadPropertiesOverrideEndpointLevelFields{
 				APIVersion: to.Ptr("2024-04-01-preview"),
 				APIVersions: []*string{
 					to.Ptr("2024-04-01-preview"),
 				},
-				DstsConfiguration: &armproviderhub.DstsConfiguration{
+				DstsConfiguration: &armproviderhub.ResourceTypeEndpointBaseDstsConfiguration{
 					ServiceDNSName: to.Ptr("messaging.azure-ppe.net"),
 					ServiceName:    to.Ptr("resourceprovider"),
 				},
 				Enabled:      to.Ptr(true),
 				EndpointType: to.Ptr(armproviderhub.EndpointTypeProduction),
 				EndpointURI:  to.Ptr("https://resource-endpoint.com/"),
-				FeaturesRule: to.Ptr(armproviderhub.FeaturesPolicyAny),
 				Locations: []*string{
 					to.Ptr("East US"),
 				},
@@ -212,7 +210,7 @@ func ExampleNewRegionFrontloadReleaseClient_GenerateManifest() {
 					to.Ptr("zone1"),
 				},
 			},
-			OverrideManifestLevelFields: &armproviderhub.ManifestLevelPropertyBag{
+			OverrideManifestLevelFields: &armproviderhub.FrontloadPayloadPropertiesOverrideManifestLevelFields{
 				ResourceHydrationAccounts: []*armproviderhub.ResourceHydrationAccount{
 					{
 						AccountName:    to.Ptr("classichydrationprodsn01"),
@@ -249,7 +247,7 @@ func ExampleNewRegionFrontloadReleaseClient_GenerateManifest() {
 	// 				EndpointURI: to.Ptr("https://notificationendpoint.com"),
 	// 			},
 	// 		},
-	// 		Management: &armproviderhub.ResourceProviderManagement{
+	// 		Management: &armproviderhub.ResourceProviderManifestManagement{
 	// 			AuthorizationOwners: []*string{
 	// 				to.Ptr("authorizationOwners-group"),
 	// 			},
@@ -273,7 +271,7 @@ func ExampleNewRegionFrontloadReleaseClient_GenerateManifest() {
 	// 		},
 	// 		ProviderType: to.Ptr(armproviderhub.ResourceProviderType("Internal, Hidden")),
 	// 		ProviderVersion: to.Ptr("2.0"),
-	// 		ReRegisterSubscriptionMetadata: &armproviderhub.ReRegisterSubscriptionMetadata{
+	// 		ReRegisterSubscriptionMetadata: &armproviderhub.ResourceProviderManifestReRegisterSubscriptionMetadata{
 	// 			ConcurrencyLimit: to.Ptr[int32](100),
 	// 			Enabled: to.Ptr(true),
 	// 		},
@@ -389,8 +387,8 @@ func ExampleNewRegionFrontloadReleaseClient_Get() {
 	// 		ID: to.Ptr("/subscriptions/ab7a8701-f7ef-471a-a2f4-d0ebbf494f77/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso/defaultRollouts/2020week10"),
 	// 		Properties: &armproviderhub.DefaultRolloutProperties{
 	// 			ProvisioningState: to.Ptr(armproviderhub.ProvisioningState("Cancelled")),
-	// 			Specification: &armproviderhub.DefaultRolloutSpecification{
-	// 				Canary: &armproviderhub.CanaryTrafficRegionRolloutConfiguration{
+	// 			Specification: &armproviderhub.DefaultRolloutPropertiesSpecification{
+	// 				Canary: &armproviderhub.DefaultRolloutSpecificationCanary{
 	// 					Regions: []*string{
 	// 						to.Ptr("eastus2euap"),
 	// 						to.Ptr("centraluseuap"),
@@ -399,30 +397,30 @@ func ExampleNewRegionFrontloadReleaseClient_Get() {
 	// 						to.Ptr("brazilus"),
 	// 					},
 	// 				},
-	// 				ExpeditedRollout: &armproviderhub.ExpeditedRolloutDefinition{
+	// 				ExpeditedRollout: &armproviderhub.DefaultRolloutSpecificationExpeditedRollout{
 	// 					Enabled: to.Ptr(true),
 	// 				},
-	// 				HighTraffic: &armproviderhub.TrafficRegionRolloutConfiguration{
+	// 				HighTraffic: &armproviderhub.DefaultRolloutSpecificationHighTraffic{
 	// 					Regions: []*string{
 	// 						to.Ptr("australiasoutheast"),
 	// 						to.Ptr("otherhightraficregions"),
 	// 					},
 	// 					WaitDuration: to.Ptr("PT24H"),
 	// 				},
-	// 				LowTraffic: &armproviderhub.TrafficRegionRolloutConfiguration{
+	// 				LowTraffic: &armproviderhub.DefaultRolloutSpecificationLowTraffic{
 	// 					Regions: []*string{
 	// 						to.Ptr("southeastasia"),
 	// 					},
 	// 					WaitDuration: to.Ptr("PT24H"),
 	// 				},
-	// 				MediumTraffic: &armproviderhub.TrafficRegionRolloutConfiguration{
+	// 				MediumTraffic: &armproviderhub.DefaultRolloutSpecificationMediumTraffic{
 	// 					Regions: []*string{
 	// 						to.Ptr("uksouth"),
 	// 						to.Ptr("indiawest"),
 	// 					},
 	// 					WaitDuration: to.Ptr("PT24H"),
 	// 				},
-	// 				ProviderRegistration: &armproviderhub.ProviderRegistration{
+	// 				ProviderRegistration: &armproviderhub.DefaultRolloutSpecificationProviderRegistration{
 	// 					Name: to.Ptr("Microsoft.Contoso"),
 	// 					Type: to.Ptr("Microsoft.ProviderHub/providerRegistrations"),
 	// 					ID: to.Ptr("/subscriptions/ab7a8701-f7ef-471a-a2f4-d0ebbf494f77/providers/Microsoft.ProviderHub/providerRegistrations/Microsoft.Contoso"),
@@ -437,7 +435,7 @@ func ExampleNewRegionFrontloadReleaseClient_Get() {
 	// 								QuotaID: to.Ptr("CSP_MG_2017-12-01"),
 	// 							},
 	// 						},
-	// 						Management: &armproviderhub.ResourceProviderManagement{
+	// 						Management: &armproviderhub.ResourceProviderManifestPropertiesManagement{
 	// 							AuthorizationOwners: []*string{
 	// 								to.Ptr("RPAAS-PlatformServiceAdministrator"),
 	// 							},
@@ -457,8 +455,8 @@ func ExampleNewRegionFrontloadReleaseClient_Get() {
 	// 								RoleDefinitionID: to.Ptr("123456bf-gkur-2098-b890-98da392a00b2"),
 	// 							},
 	// 						},
-	// 						ProviderHubMetadata: &armproviderhub.Metadata{
-	// 							ProviderAuthentication: &armproviderhub.ResourceProviderAuthentication{
+	// 						ProviderHubMetadata: &armproviderhub.ProviderRegistrationPropertiesProviderHubMetadata{
+	// 							ProviderAuthentication: &armproviderhub.MetadataProviderAuthentication{
 	// 								AllowedAudiences: []*string{
 	// 									to.Ptr("https://management.core.windows.net/"),
 	// 								},
@@ -517,7 +515,7 @@ func ExampleNewRegionFrontloadReleaseClient_Get() {
 	// 						},
 	// 					},
 	// 				},
-	// 				RestOfTheWorldGroupOne: &armproviderhub.TrafficRegionRolloutConfiguration{
+	// 				RestOfTheWorldGroupOne: &armproviderhub.DefaultRolloutSpecificationRestOfTheWorldGroupOne{
 	// 					Regions: []*string{
 	// 						to.Ptr("koreacentral"),
 	// 						to.Ptr("francecentral"),
@@ -527,7 +525,7 @@ func ExampleNewRegionFrontloadReleaseClient_Get() {
 	// 					},
 	// 					WaitDuration: to.Ptr("PT4H"),
 	// 				},
-	// 				RestOfTheWorldGroupTwo: &armproviderhub.TrafficRegionRolloutConfiguration{
+	// 				RestOfTheWorldGroupTwo: &armproviderhub.DefaultRolloutSpecificationRestOfTheWorldGroupTwo{
 	// 					Regions: []*string{
 	// 						to.Ptr("germanynorth"),
 	// 						to.Ptr("norwayeast"),
@@ -536,7 +534,7 @@ func ExampleNewRegionFrontloadReleaseClient_Get() {
 	// 					WaitDuration: to.Ptr("PT4H"),
 	// 				},
 	// 			},
-	// 			Status: &armproviderhub.DefaultRolloutStatus{
+	// 			Status: &armproviderhub.DefaultRolloutPropertiesStatus{
 	// 				CompletedRegions: []*string{
 	// 					to.Ptr("brazilus"),
 	// 					to.Ptr("eastus2euap"),
@@ -549,7 +547,7 @@ func ExampleNewRegionFrontloadReleaseClient_Get() {
 	// 						Message: to.Ptr("Rollout was explicitly stopped by the user."),
 	// 					},
 	// 				},
-	// 				ManifestCheckinStatus: &armproviderhub.CheckinManifestInfo{
+	// 				ManifestCheckinStatus: &armproviderhub.DefaultRolloutStatusManifestCheckinStatus{
 	// 					CommitID: to.Ptr("47317892d4edf22f08704f6b595105c4fd7a8db7"),
 	// 					IsCheckedIn: to.Ptr(true),
 	// 					StatusMessage: to.Ptr("Manifest is successfully merged. Use the Default/Custom rollout (http://aka.ms/rpaasrollout) to roll out the manifest in ARM."),

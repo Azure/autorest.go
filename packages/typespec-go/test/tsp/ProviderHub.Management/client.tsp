@@ -24,9 +24,22 @@ using Microsoft.ProviderHub;
 @@clientName(ManifestLevelPropertyBag, "FrontloadPayloadPropertiesOverrideManifestLevelFields", "go");
 @@clientName(ResourceTypeEndpointBase, "FrontloadPayloadPropertiesOverrideEndpointLevelFields", "go");
 @@clientName(ExpeditedRolloutDefinition, "DefaultRolloutSpecificationExpeditedRollout", "go");
-@@clientName(CanaryTrafficRegionRolloutConfiguration, "DefaultRolloutSpecificationCanary", "go");
 @@clientName(DefaultRolloutStatus, "DefaultRolloutPropertiesStatus", "go");
 @@clientName(TrafficRegions, "CustomRolloutSpecificationCanary", "go");
+@@clientName(IdentityManagement, "ResourceTypeIdentityManagement", "go");
+@@clientName(CheckNameAvailabilitySpecifications, "ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications", "go");
+@@clientName(ReRegisterSubscriptionMetadata, "ResourceProviderManifestReRegisterSubscriptionMetadata", "go");
+@@clientName(ExtensionOptions, "ResourceTypeExtensionOptionsResourceCreationBegin", "go");
+
+#suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
+model ResourceTypeEndpointBaseFeaturesRule {
+  requiredFeaturesPolicy: FeaturesPolicy;
+}
+@@alternateType(ResourceTypeEndpointBase.featuresRule, ResourceTypeEndpointBaseFeaturesRule, "go");
+
+#suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
+model DefaultRolloutSpecificationCanary is CanaryTrafficRegionRolloutConfiguration;
+@@alternateType(DefaultRolloutSpecification.canary, DefaultRolloutSpecificationCanary, "go");
 
 #suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
 model LocalizedOperationDisplayDefinitionEn is OperationsDisplayDefinition;
@@ -63,7 +76,9 @@ model LocalizedOperationDisplayDefinitionZhHans is OperationsDisplayDefinition;
 #suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
 model LocalizedOperationDisplayDefinitionZhHant is OperationsDisplayDefinition;
 #suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
-model LocalizedOperationDefinitionDisplay is OperationsDisplayDefinition;
+model LocalizedOperationDisplayDefinitionPt is OperationsDisplayDefinition;
+#suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
+model LocalizedOperationDefinitionDisplay is LocalizedOperationDisplayDefinition;
 #suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
 model OperationsDefinitionDisplay is OperationsDisplayDefinition;
 
@@ -71,7 +86,7 @@ model OperationsDefinitionDisplay is OperationsDisplayDefinition;
 @@alternateType(LocalizedOperationDefinition.display, LocalizedOperationDefinitionDisplay, "go");
 @@alternateType(LocalizedOperationDisplayDefinition.en, LocalizedOperationDisplayDefinitionEn, "go");
 @@alternateType(LocalizedOperationDisplayDefinition.es, LocalizedOperationDisplayDefinitionEs, "go");
-@@alternateType(LocalizedOperationDisplayDefinition.cs, LocalizedOperationDisplayDefinitionEn, "go");
+@@alternateType(LocalizedOperationDisplayDefinition.cs, LocalizedOperationDisplayDefinitionCs, "go");
 @@alternateType(LocalizedOperationDisplayDefinition.de, LocalizedOperationDisplayDefinitionDe, "go");
 @@alternateType(LocalizedOperationDisplayDefinition.default, LocalizedOperationDisplayDefinitionDefault, "go");
 @@alternateType(LocalizedOperationDisplayDefinition.fr, LocalizedOperationDisplayDefinitionFr, "go");
@@ -86,6 +101,8 @@ model OperationsDefinitionDisplay is OperationsDisplayDefinition;
 @@alternateType(LocalizedOperationDisplayDefinition.sv, LocalizedOperationDisplayDefinitionSv, "go");
 @@alternateType(LocalizedOperationDisplayDefinition.zhHans, LocalizedOperationDisplayDefinitionZhHans, "go");
 @@alternateType(LocalizedOperationDisplayDefinition.zhHant, LocalizedOperationDisplayDefinitionZhHant, "go");
+@@alternateType(LocalizedOperationDisplayDefinition.ptPT, LocalizedOperationDisplayDefinitionPt, "go");
+@@clientName(LocalizedOperationDefinitionDisplay.ptPT, "pt", "go");
 
 #suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
 model ResourceTypeRegistrationPropertiesTemplateDeploymentPolicy is TemplateDeploymentPolicy;
@@ -141,7 +158,7 @@ model ResourceProviderManifestPropertiesManagement is ResourceProviderManagement
 
 @@alternateType(ResourceTypeRegistrationProperties.management, ResourceTypeRegistrationPropertiesManagement, "go");
 @@alternateType(ResourceProviderManifest.management, ResourceProviderManifestManagement, "go");
-@@alternateType(ProviderRegistrationProperties.management, ResourceProviderManifestManagement, "go");
+@@alternateType(ProviderRegistrationProperties.management, ResourceProviderManifestPropertiesManagement, "go");
 
 #suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
 model ResourceTypeRegistrationPropertiesFeaturesRule is FeaturesRule;
@@ -211,10 +228,12 @@ model CustomRolloutStatusManifestCheckinStatus is CheckinManifestInfo;
 @@alternateType(DefaultRolloutStatus.manifestCheckinStatus, DefaultRolloutStatusManifestCheckinStatus, "go");
 @@alternateType(CustomRolloutStatus.manifestCheckinStatus, CustomRolloutStatusManifestCheckinStatus, "go");
 
-#suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
-model DefaultRolloutSpecificationProviderRegistration is ProviderRegistration;
-#suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
-model CustomRolloutSpecificationProviderRegistration is ProviderRegistration;
+namespace Microsoft.ProviderHub {
+  #suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
+  model DefaultRolloutSpecificationProviderRegistration is ProviderRegistration;
+  #suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
+  model CustomRolloutSpecificationProviderRegistration is ProviderRegistration;
+}
 
 @@alternateType(DefaultRolloutSpecification.providerRegistration, DefaultRolloutSpecificationProviderRegistration, "go");
 @@alternateType(CustomRolloutSpecification.providerRegistration, CustomRolloutSpecificationProviderRegistration, "go");
@@ -243,5 +262,3 @@ model DefaultRolloutSpecificationHighTraffic is TrafficRegionRolloutConfiguratio
 @@alternateType(DefaultRolloutSpecification.mediumTraffic, DefaultRolloutSpecificationMediumTraffic, "go");
 @@alternateType(DefaultRolloutSpecification.lowTraffic, DefaultRolloutSpecificationLowTraffic, "go");
 @@alternateType(DefaultRolloutSpecification.highTraffic, DefaultRolloutSpecificationHighTraffic, "go");
-
-
