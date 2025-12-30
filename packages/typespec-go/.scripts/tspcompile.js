@@ -223,6 +223,9 @@ generate('armappservice', armappservice, 'test/local/armappservice', [`examples-
 const armHybridNetwork = pkgRoot + 'test/tsp/HybridNetwork.Management';
 generate('armHybridNetwork', armHybridNetwork, 'test/local/armHybridNetwork', [`examples-directory=${armHybridNetwork}/examples`, 'generate-samples=true']);
 
+const armstoragemover = pkgRoot + 'test/tsp/StorageMover.Management';
+generate('armstoragemover', armstoragemover, 'test/local/armstoragemover', [`examples-directory=${armstoragemover}/examples`, 'generate-samples=true']);
+
 const armproviderhub = pkgRoot + 'test/tsp/ProviderHub.Management';
 generate('armproviderhub', armproviderhub, 'test/local/armproviderhub', [`examples-directory=${armproviderhub}/examples`, 'generate-samples=true']);
 

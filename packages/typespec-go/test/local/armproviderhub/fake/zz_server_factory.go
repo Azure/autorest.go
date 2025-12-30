@@ -36,9 +36,6 @@ type ServerFactory struct {
 	// OperationsServer contains the fakes for client OperationsClient
 	OperationsServer OperationsServer
 
-	// OperationsServer contains the fakes for client OperationsClient
-	OperationsServer OperationsServer
-
 	// ProviderMonitorSettingsServer contains the fakes for client ProviderMonitorSettingsClient
 	ProviderMonitorSettingsServer ProviderMonitorSettingsServer
 
@@ -75,7 +72,6 @@ type ServerFactoryTransport struct {
 	trDefaultRolloutsServer           *DefaultRolloutsServerTransport
 	trNewRegionFrontloadReleaseServer *NewRegionFrontloadReleaseServerTransport
 	trNotificationRegistrationsServer *NotificationRegistrationsServerTransport
-	trOperationsServer                *OperationsServerTransport
 	trOperationsServer                *OperationsServerTransport
 	trProviderMonitorSettingsServer   *ProviderMonitorSettingsServerTransport
 	trProviderRegistrationsServer     *ProviderRegistrationsServerTransport
@@ -125,9 +121,6 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 			return NewNotificationRegistrationsServerTransport(&s.srv.NotificationRegistrationsServer)
 		})
 		resp, err = s.trNotificationRegistrationsServer.Do(req)
-	case "OperationsClient":
-		initServer(s, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
-		resp, err = s.trOperationsServer.Do(req)
 	case "OperationsClient":
 		initServer(s, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
 		resp, err = s.trOperationsServer.Do(req)

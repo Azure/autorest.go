@@ -83,13 +83,6 @@ func (c *ClientFactory) NewNotificationRegistrationsClient() *NotificationRegist
 // NewOperationsClient creates a new instance of OperationsClient.
 func (c *ClientFactory) NewOperationsClient() *OperationsClient {
 	return &OperationsClient{
-		internal: c.internal,
-	}
-}
-
-// NewOperationsClient creates a new instance of OperationsClient.
-func (c *ClientFactory) NewOperationsClient() *OperationsClient {
-	return &OperationsClient{
 		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}

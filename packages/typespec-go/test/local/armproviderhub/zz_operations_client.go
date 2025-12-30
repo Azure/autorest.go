@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// OperationsClient contains the methods for the Operations group.
+// OperationsClient - Lists all the operations supported by Microsoft.ProviderHub.
 // Don't use this type directly, use NewOperationsClient() instead.
 type OperationsClient struct {
 	internal       *arm.Client
@@ -150,6 +150,56 @@ func (client *OperationsClient) deleteCreateRequest(ctx context.Context, provide
 	reqQP.Set("api-version", "2024-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
+}
+
+// NewListPager - List the operations for the provider
+//
+// Generated from API version 2024-09-01
+//   - options - OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
+func (client *OperationsClient) NewListPager(options *OperationsClientListOptions) *runtime.Pager[OperationsClientListResponse] {
+	return runtime.NewPager(runtime.PagingHandler[OperationsClientListResponse]{
+		More: func(page OperationsClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *OperationsClientListResponse) (OperationsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "OperationsClient.NewListPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, options)
+			}, nil)
+			if err != nil {
+				return OperationsClientListResponse{}, err
+			}
+			return client.listHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// listCreateRequest creates the List request.
+func (client *OperationsClient) listCreateRequest(ctx context.Context, _ *OperationsClientListOptions) (*policy.Request, error) {
+	urlPath := "/providers/Microsoft.ProviderHub/operations"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2024-09-01")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// listHandleResponse handles the List response.
+func (client *OperationsClient) listHandleResponse(resp *http.Response) (OperationsClientListResponse, error) {
+	result := OperationsClientListResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.OperationsDefinitionArrayResponseWithContinuation); err != nil {
+		return OperationsClientListResponse{}, err
+	}
+	return result, nil
 }
 
 // ListByProviderRegistration - Gets the operations supported by the given provider.
