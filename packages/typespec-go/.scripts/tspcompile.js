@@ -218,7 +218,7 @@ const armcomputeschedule = pkgRoot + 'test/tsp/ComputeSchedule.Management';
 generate('armcomputeschedule', armcomputeschedule, 'test/local/armcomputeschedule', [`examples-directory=${armcomputeschedule}/examples`, 'generate-samples=true']);
 
 const armbillingbenefits = pkgRoot + 'test/tsp/BillingBenefits.Management';
-generate('armbillingbenefits', armbillingbenefits, 'test/local/armbillingbenefits', [`examples-directory=${armbillingbenefits}/examples`, 'generate-samples=true']);
+generate('armbillingbenefits', armbillingbenefits, 'test/local/armbillingbenefits', [`examples-directory=${armbillingbenefits}/examples`, 'generate-samples=true', 'fix-const-stuttering=true','']);
 
 const armstoragemover = pkgRoot + 'test/tsp/StorageMover.Management';
 generate('armstoragemover', armstoragemover, 'test/local/armstoragemover', [`examples-directory=${armstoragemover}/examples`, 'generate-samples=true']);
