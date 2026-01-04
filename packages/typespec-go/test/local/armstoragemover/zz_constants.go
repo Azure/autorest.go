@@ -43,6 +43,28 @@ func PossibleAgentStatusValues() []AgentStatus {
 	}
 }
 
+// ConnectionStatus - The connection status.
+type ConnectionStatus string
+
+const (
+	ConnectionStatusApproved     ConnectionStatus = "Approved"
+	ConnectionStatusDisconnected ConnectionStatus = "Disconnected"
+	ConnectionStatusPending      ConnectionStatus = "Pending"
+	ConnectionStatusRejected     ConnectionStatus = "Rejected"
+	ConnectionStatusStale        ConnectionStatus = "Stale"
+)
+
+// PossibleConnectionStatusValues returns the possible values for the ConnectionStatus const type.
+func PossibleConnectionStatusValues() []ConnectionStatus {
+	return []ConnectionStatus{
+		ConnectionStatusApproved,
+		ConnectionStatusDisconnected,
+		ConnectionStatusPending,
+		ConnectionStatusRejected,
+		ConnectionStatusStale,
+	}
+}
+
 // CopyMode - Strategy to use for copy.
 type CopyMode string
 
@@ -94,6 +116,24 @@ const (
 func PossibleCredentialTypeValues() []CredentialType {
 	return []CredentialType{
 		CredentialTypeAzureKeyVaultSmb,
+	}
+}
+
+// DataIntegrityValidation - The Data integrity validation mode.
+type DataIntegrityValidation string
+
+const (
+	DataIntegrityValidationNone              DataIntegrityValidation = "None"
+	DataIntegrityValidationSaveFileMD5       DataIntegrityValidation = "SaveFileMD5"
+	DataIntegrityValidationSaveVerifyFileMD5 DataIntegrityValidation = "SaveVerifyFileMD5"
+)
+
+// PossibleDataIntegrityValidationValues returns the possible values for the DataIntegrityValidation const type.
+func PossibleDataIntegrityValidationValues() []DataIntegrityValidation {
+	return []DataIntegrityValidation{
+		DataIntegrityValidationNone,
+		DataIntegrityValidationSaveFileMD5,
+		DataIntegrityValidationSaveVerifyFileMD5,
 	}
 }
 

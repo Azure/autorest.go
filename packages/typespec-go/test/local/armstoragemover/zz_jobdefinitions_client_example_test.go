@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: 2025-07-01/JobDefinitions_CreateOrUpdate.json
+// Generated from example definition: 2025-08-01/JobDefinitions_CreateOrUpdate.json
 func ExampleJobDefinitionsClient_CreateOrUpdate_jobDefinitionsCreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -33,6 +33,9 @@ func ExampleJobDefinitionsClient_CreateOrUpdate_jobDefinitionsCreateOrUpdate() {
 			SourceSubpath: to.Ptr("/"),
 			TargetName:    to.Ptr("examples-targetEndpointName"),
 			TargetSubpath: to.Ptr("/"),
+			Connections: []*string{
+				to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/connections/example-connection"),
+			},
 		},
 	}, nil)
 	if err != nil {
@@ -57,12 +60,15 @@ func ExampleJobDefinitionsClient_CreateOrUpdate_jobDefinitionsCreateOrUpdate() {
 	// 			TargetName: to.Ptr("examples-targetEndpointName"),
 	// 			TargetResourceID: to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/endpoints/examples-targetEndpointName"),
 	// 			TargetSubpath: to.Ptr("/"),
+	// 			Connections: []*string{
+	// 				to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/connections/example-connection"),
+	// 			},
 	// 		},
 	// 	},
 	// }
 }
 
-// Generated from example definition: 2025-07-01/JobDefinitions_CreateOrUpdate_CloudToCloud.json
+// Generated from example definition: 2025-08-01/JobDefinitions_CreateOrUpdate_CloudToCloud.json
 func ExampleJobDefinitionsClient_CreateOrUpdate_jobDefinitionsCreateOrUpdateCloudToCloud() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -83,6 +89,9 @@ func ExampleJobDefinitionsClient_CreateOrUpdate_jobDefinitionsCreateOrUpdateClou
 			TargetName:    to.Ptr("examples-targetEndpointName"),
 			TargetSubpath: to.Ptr("/"),
 			AgentName:     to.Ptr("dummy-agent"),
+			Connections: []*string{
+				to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/connections/example-connection"),
+			},
 		},
 	}, nil)
 	if err != nil {
@@ -108,12 +117,15 @@ func ExampleJobDefinitionsClient_CreateOrUpdate_jobDefinitionsCreateOrUpdateClou
 	// 			TargetSubpath: to.Ptr("/"),
 	// 			AgentName: to.Ptr("migration-agent"),
 	// 			AgentResourceID: to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/agents/migration-agent"),
+	// 			Connections: []*string{
+	// 				to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/connections/example-connection"),
+	// 			},
 	// 		},
 	// 	},
 	// }
 }
 
-// Generated from example definition: 2025-07-01/JobDefinitions_Delete.json
+// Generated from example definition: 2025-08-01/JobDefinitions_Delete.json
 func ExampleJobDefinitionsClient_BeginDelete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -139,7 +151,7 @@ func ExampleJobDefinitionsClient_BeginDelete() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/JobDefinitions_Get.json
+// Generated from example definition: 2025-08-01/JobDefinitions_Get.json
 func ExampleJobDefinitionsClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -173,12 +185,15 @@ func ExampleJobDefinitionsClient_Get() {
 	// 			TargetName: to.Ptr("examples-targetEndpointName"),
 	// 			TargetResourceID: to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/endpoints/examples-targetEndpointName"),
 	// 			TargetSubpath: to.Ptr("/"),
+	// 			Connections: []*string{
+	// 				to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/connections/example-connection"),
+	// 			},
 	// 		},
 	// 	},
 	// }
 }
 
-// Generated from example definition: 2025-07-01/JobDefinitions_List.json
+// Generated from example definition: 2025-08-01/JobDefinitions_List.json
 func ExampleJobDefinitionsClient_NewListPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -219,6 +234,9 @@ func ExampleJobDefinitionsClient_NewListPager() {
 		// 					TargetName: to.Ptr("examples-targetEndpointName1"),
 		// 					TargetResourceID: to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/endpoints/examples-targetEndpointName1"),
 		// 					TargetSubpath: to.Ptr("/"),
+		// 					Connections: []*string{
+		// 						to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/connections/example-connection1"),
+		// 					},
 		// 				},
 		// 			},
 		// 			{
@@ -236,6 +254,9 @@ func ExampleJobDefinitionsClient_NewListPager() {
 		// 					TargetName: to.Ptr("examples-targetEndpointName2"),
 		// 					TargetResourceID: to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/endpoints/examples-targetEndpointName2"),
 		// 					TargetSubpath: to.Ptr("/"),
+		// 					Connections: []*string{
+		// 						to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/connections/example-connection2"),
+		// 					},
 		// 				},
 		// 				SystemData: &armstoragemover.SystemData{
 		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2023-07-01T01:01:01.1075056Z"); return t}()),
@@ -261,6 +282,9 @@ func ExampleJobDefinitionsClient_NewListPager() {
 		// 					TargetName: to.Ptr("examples-targetEndpointName3"),
 		// 					TargetResourceID: to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/endpoints/examples-targetEndpointName3"),
 		// 					TargetSubpath: to.Ptr("/"),
+		// 					Connections: []*string{
+		// 						to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/connections/example-connection3"),
+		// 					},
 		// 				},
 		// 			},
 		// 		},
@@ -269,7 +293,7 @@ func ExampleJobDefinitionsClient_NewListPager() {
 	}
 }
 
-// Generated from example definition: 2025-07-01/JobDefinitions_StartJob.json
+// Generated from example definition: 2025-08-01/JobDefinitions_StartJob.json
 func ExampleJobDefinitionsClient_StartJob() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -294,7 +318,7 @@ func ExampleJobDefinitionsClient_StartJob() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/JobDefinitions_StopJob.json
+// Generated from example definition: 2025-08-01/JobDefinitions_StopJob.json
 func ExampleJobDefinitionsClient_StopJob() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -319,7 +343,7 @@ func ExampleJobDefinitionsClient_StopJob() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/JobDefinitions_Update.json
+// Generated from example definition: 2025-08-01/JobDefinitions_Update.json
 func ExampleJobDefinitionsClient_Update() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -334,6 +358,9 @@ func ExampleJobDefinitionsClient_Update() {
 		Properties: &armstoragemover.JobDefinitionUpdateProperties{
 			Description: to.Ptr("Updated Job Definition Description"),
 			AgentName:   to.Ptr("updatedAgentName"),
+			Connections: []*string{
+				to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/connections/example-connection"),
+			},
 		},
 	}, nil)
 	if err != nil {
@@ -358,6 +385,9 @@ func ExampleJobDefinitionsClient_Update() {
 	// 			TargetName: to.Ptr("updatedTarget"),
 	// 			TargetResourceID: to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/endpoints/updatedTarget"),
 	// 			TargetSubpath: to.Ptr("/"),
+	// 			Connections: []*string{
+	// 				to.Ptr("/subscriptions/60bcfc77-6589-4da2-b7fd-f9ec9322cf95/resourceGroups/examples-rg/providers/Microsoft.StorageMover/storageMovers/examples-storageMoverName/connections/example-connection"),
+	// 			},
 	// 		},
 	// 	},
 	// }

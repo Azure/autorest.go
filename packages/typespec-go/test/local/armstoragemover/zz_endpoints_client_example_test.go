@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: 2025-07-01/Endpoints_CreateOrUpdate_AzureMultiCloudConnector.json
+// Generated from example definition: 2025-08-01/Endpoints_CreateOrUpdate_AzureMultiCloudConnector.json
 func ExampleEndpointsClient_CreateOrUpdate_endpointsCreateOrUpdateAzureMultiCloudConnector() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -53,7 +53,7 @@ func ExampleEndpointsClient_CreateOrUpdate_endpointsCreateOrUpdateAzureMultiClou
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_CreateOrUpdate_AzureStorageBlobContainer.json
+// Generated from example definition: 2025-08-01/Endpoints_CreateOrUpdate_AzureStorageBlobContainer.json
 func ExampleEndpointsClient_CreateOrUpdate_endpointsCreateOrUpdateAzureStorageBlobContainer() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -94,7 +94,7 @@ func ExampleEndpointsClient_CreateOrUpdate_endpointsCreateOrUpdateAzureStorageBl
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_CreateOrUpdate_AzureStorageNfsFileShare.json
+// Generated from example definition: 2025-08-01/Endpoints_CreateOrUpdate_AzureStorageNfsFileShare.json
 func ExampleEndpointsClient_CreateOrUpdate_endpointsCreateOrUpdateAzureStorageNfsFileShare() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -135,7 +135,7 @@ func ExampleEndpointsClient_CreateOrUpdate_endpointsCreateOrUpdateAzureStorageNf
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_CreateOrUpdate_AzureStorageSmbFileShare.json
+// Generated from example definition: 2025-08-01/Endpoints_CreateOrUpdate_AzureStorageSmbFileShare.json
 func ExampleEndpointsClient_CreateOrUpdate_endpointsCreateOrUpdateAzureStorageSmbFileShare() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -176,7 +176,7 @@ func ExampleEndpointsClient_CreateOrUpdate_endpointsCreateOrUpdateAzureStorageSm
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_CreateOrUpdate_NfsMount.json
+// Generated from example definition: 2025-08-01/Endpoints_CreateOrUpdate_NfsMount.json
 func ExampleEndpointsClient_CreateOrUpdate_endpointsCreateOrUpdateNfsMount() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -218,7 +218,7 @@ func ExampleEndpointsClient_CreateOrUpdate_endpointsCreateOrUpdateNfsMount() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_CreateOrUpdate_SmbMount.json
+// Generated from example definition: 2025-08-01/Endpoints_CreateOrUpdate_SmbMount.json
 func ExampleEndpointsClient_CreateOrUpdate_endpointsCreateOrUpdateSmbMount() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -269,7 +269,7 @@ func ExampleEndpointsClient_CreateOrUpdate_endpointsCreateOrUpdateSmbMount() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_Delete.json
+// Generated from example definition: 2025-08-01/Endpoints_Delete.json
 func ExampleEndpointsClient_BeginDelete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -295,7 +295,7 @@ func ExampleEndpointsClient_BeginDelete() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_Get_AzureMultiCloudConnector.json
+// Generated from example definition: 2025-08-01/Endpoints_Get_AzureMultiCloudConnector.json
 func ExampleEndpointsClient_Get_endpointsGetAzureMultiCloudConnector() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -329,7 +329,7 @@ func ExampleEndpointsClient_Get_endpointsGetAzureMultiCloudConnector() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_Get_AzureStorageBlobContainer.json
+// Generated from example definition: 2025-08-01/Endpoints_Get_AzureStorageBlobContainer.json
 func ExampleEndpointsClient_Get_endpointsGetAzureStorageBlobContainer() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -363,7 +363,7 @@ func ExampleEndpointsClient_Get_endpointsGetAzureStorageBlobContainer() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_Get_AzureStorageNfsFileShare.json
+// Generated from example definition: 2025-08-01/Endpoints_Get_AzureStorageNfsFileShare.json
 func ExampleEndpointsClient_Get_endpointsGetAzureStorageNfsFileShare() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -397,7 +397,7 @@ func ExampleEndpointsClient_Get_endpointsGetAzureStorageNfsFileShare() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_Get_AzureStorageSmbFileShare.json
+// Generated from example definition: 2025-08-01/Endpoints_Get_AzureStorageSmbFileShare.json
 func ExampleEndpointsClient_Get_endpointsGetAzureStorageSmbFileShare() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -431,7 +431,7 @@ func ExampleEndpointsClient_Get_endpointsGetAzureStorageSmbFileShare() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_Get_NfsMount.json
+// Generated from example definition: 2025-08-01/Endpoints_Get_NfsMount.json
 func ExampleEndpointsClient_Get_endpointsGetNfsMount() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -466,7 +466,7 @@ func ExampleEndpointsClient_Get_endpointsGetNfsMount() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_Get_SmbMount.json
+// Generated from example definition: 2025-08-01/Endpoints_Get_SmbMount.json
 func ExampleEndpointsClient_Get_endpointsGetSmbMount() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -505,7 +505,7 @@ func ExampleEndpointsClient_Get_endpointsGetSmbMount() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_List.json
+// Generated from example definition: 2025-08-01/Endpoints_List.json
 func ExampleEndpointsClient_NewListPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -574,7 +574,7 @@ func ExampleEndpointsClient_NewListPager() {
 	}
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_Update_AzureMultiCloudConnector.json
+// Generated from example definition: 2025-08-01/Endpoints_Update_AzureMultiCloudConnector.json
 func ExampleEndpointsClient_Update_endpointsUpdateAzureMultiCloudConnector() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -613,7 +613,7 @@ func ExampleEndpointsClient_Update_endpointsUpdateAzureMultiCloudConnector() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_Update_AzureStorageBlobContainer.json
+// Generated from example definition: 2025-08-01/Endpoints_Update_AzureStorageBlobContainer.json
 func ExampleEndpointsClient_Update_endpointsUpdateAzureStorageBlobContainer() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -652,7 +652,7 @@ func ExampleEndpointsClient_Update_endpointsUpdateAzureStorageBlobContainer() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_Update_AzureStorageNfsFileShare.json
+// Generated from example definition: 2025-08-01/Endpoints_Update_AzureStorageNfsFileShare.json
 func ExampleEndpointsClient_Update_endpointsUpdateAzureStorageNfsFileShare() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -691,7 +691,7 @@ func ExampleEndpointsClient_Update_endpointsUpdateAzureStorageNfsFileShare() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_Update_AzureStorageSmbFileShare.json
+// Generated from example definition: 2025-08-01/Endpoints_Update_AzureStorageSmbFileShare.json
 func ExampleEndpointsClient_Update_endpointsUpdateAzureStorageSmbFileShare() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -730,7 +730,7 @@ func ExampleEndpointsClient_Update_endpointsUpdateAzureStorageSmbFileShare() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_Update_NfsMount.json
+// Generated from example definition: 2025-08-01/Endpoints_Update_NfsMount.json
 func ExampleEndpointsClient_Update_endpointsUpdateNfsMount() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -770,7 +770,7 @@ func ExampleEndpointsClient_Update_endpointsUpdateNfsMount() {
 	// }
 }
 
-// Generated from example definition: 2025-07-01/Endpoints_Update_SmbMount.json
+// Generated from example definition: 2025-08-01/Endpoints_Update_SmbMount.json
 func ExampleEndpointsClient_Update_endpointsUpdateSmbMount() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

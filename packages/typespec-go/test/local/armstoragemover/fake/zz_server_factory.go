@@ -18,6 +18,9 @@ type ServerFactory struct {
 	// AgentsServer contains the fakes for client AgentsClient
 	AgentsServer AgentsServer
 
+	// ConnectionsServer contains the fakes for client ConnectionsClient
+	ConnectionsServer ConnectionsServer
+
 	// EndpointsServer contains the fakes for client EndpointsClient
 	EndpointsServer EndpointsServer
 
@@ -52,6 +55,7 @@ type ServerFactoryTransport struct {
 	srv                    *ServerFactory
 	trMu                   sync.Mutex
 	trAgentsServer         *AgentsServerTransport
+	trConnectionsServer    *ConnectionsServerTransport
 	trEndpointsServer      *EndpointsServerTransport
 	trJobDefinitionsServer *JobDefinitionsServerTransport
 	trJobRunsServer        *JobRunsServerTransport
@@ -76,6 +80,9 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	case "AgentsClient":
 		initServer(s, &s.trAgentsServer, func() *AgentsServerTransport { return NewAgentsServerTransport(&s.srv.AgentsServer) })
 		resp, err = s.trAgentsServer.Do(req)
+	case "ConnectionsClient":
+		initServer(s, &s.trConnectionsServer, func() *ConnectionsServerTransport { return NewConnectionsServerTransport(&s.srv.ConnectionsServer) })
+		resp, err = s.trConnectionsServer.Do(req)
 	case "EndpointsClient":
 		initServer(s, &s.trEndpointsServer, func() *EndpointsServerTransport { return NewEndpointsServerTransport(&s.srv.EndpointsServer) })
 		resp, err = s.trEndpointsServer.Do(req)

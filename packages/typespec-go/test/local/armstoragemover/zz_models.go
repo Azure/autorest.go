@@ -305,6 +305,54 @@ func (a *AzureStorageSmbFileShareEndpointUpdateProperties) GetEndpointBaseUpdate
 	}
 }
 
+// Connection - The Connection resource.
+type Connection struct {
+	// REQUIRED; Connection properties.
+	Properties *ConnectionProperties
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+// ConnectionList - List of Connections.
+type ConnectionList struct {
+	// READ-ONLY; The Connection items on this page
+	Value []*Connection
+
+	// The link to the next page of items
+	NextLink *string
+}
+
+// ConnectionProperties - Properties of the Connection resource.
+type ConnectionProperties struct {
+	// REQUIRED; The PrivateLinkServiceId for the connection.
+	PrivateLinkServiceID *string
+
+	// A description for the Connection.
+	Description *string
+
+	// List of job definitions associated with this connection.
+	JobList []*string
+
+	// READ-ONLY; The connection status.
+	ConnectionStatus *ConnectionStatus
+
+	// READ-ONLY; The PrivateEndpointName associated with the connection.
+	PrivateEndpointName *string
+
+	// READ-ONLY; The provisioning state of this resource.
+	ProvisioningState *ProvisioningState
+}
+
 // Credentials - The Credentials.
 type Credentials struct {
 	// REQUIRED; The Credentials type.
@@ -423,6 +471,12 @@ type JobDefinitionProperties struct {
 	// Name of the Agent to assign for new Job Runs of this Job Definition.
 	AgentName *string
 
+	// List of connections associated to this job
+	Connections []*string
+
+	// The checksum validation mode for the job definition.
+	DataIntegrityValidation *DataIntegrityValidation
+
 	// A description for the Job Definition. OnPremToCloud is for migrating data from on-premises to cloud. CloudToCloud is for
 	// migrating data between cloud to cloud.
 	Description *string
@@ -476,6 +530,9 @@ type JobDefinitionUpdateParameters struct {
 type JobDefinitionUpdateProperties struct {
 	// Name of the Agent to assign for new Job Runs of this Job Definition.
 	AgentName *string
+
+	// List of connections associated to this job
+	Connections []*string
 
 	// Strategy to use for copy.
 	CopyMode *CopyMode
@@ -608,12 +665,27 @@ type JobRunProperties struct {
 
 	// READ-ONLY; Fully qualified resource id of of Endpoint. This id may no longer exist.
 	TargetResourceID *string
+
+	// READ-ONLY; Warning details.
+	Warnings []*JobRunWarning
 }
 
 // JobRunResourceID - Response that identifies a Job Run.
 type JobRunResourceID struct {
 	// READ-ONLY; Fully qualified resource id of the Job Run.
 	JobRunResourceID *string
+}
+
+// JobRunWarning - Warning type
+type JobRunWarning struct {
+	// Error code of the given entry.
+	Code *string
+
+	// Warning message of the given entry.
+	Message *string
+
+	// Target of the given error entry.
+	Target *string
 }
 
 // List of Storage Movers.
