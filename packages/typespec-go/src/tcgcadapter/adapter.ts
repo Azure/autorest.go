@@ -105,7 +105,7 @@ export class Adapter {
   /** performs all the steps to convert tcgc to the Go code model */
   tcgcToGoCodeModel(): go.CodeModel {
     // TODO: stuttering fix-ups will need some rethinking for namespaces
-    const packageName = this.codeModel.root.kind === 'containingModule' ? this.codeModel.root.package.name : naming.packageNameFromOutputFolder(this.codeModel.root.identity);
+    const packageName = this.codeModel.root.kind === 'containingModule' ? this.codeModel.root.package.name : naming.packageNameFromOutputFolder(this.ctx.emitContext.emitterOutputDir);
     fixStutteringTypeNames(this.ctx.sdkPackage, packageName, this.options);
 
     const ta = new TypeAdapter(this.ctx, this.codeModel);

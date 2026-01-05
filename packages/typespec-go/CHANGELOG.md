@@ -2,6 +2,10 @@
 
 ## 0.8.9 (unreleased)
 
+### Bugs Fixed
+
+* Fix package name when module version is greater than v1.
+
 ### Features Added
 
 * Added support for client initializers with parameters.
