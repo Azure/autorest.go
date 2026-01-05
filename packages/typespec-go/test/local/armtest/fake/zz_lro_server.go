@@ -5,7 +5,7 @@
 package fake
 
 import (
-	"armtest"
+	"armtest/v2"
 	"context"
 	"errors"
 	"fmt"

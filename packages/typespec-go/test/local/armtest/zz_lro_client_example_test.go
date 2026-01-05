@@ -5,7 +5,7 @@
 package armtest_test
 
 import (
-	"armtest"
+	"armtest/v2"
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"

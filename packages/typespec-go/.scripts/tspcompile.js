@@ -200,7 +200,7 @@ const azkeys = pkgRoot + 'test/tsp/KeyVault.Keys/client.tsp';
 generate('azkeys', azkeys, 'test/local/azkeys', ['single-client=true', 'omit-constructors=true']);
 
 const armtest = pkgRoot + 'test/tsp/Test.Management';
-generate('armtest', armtest, 'test/local/armtest', [`examples-directory=${armtest}/examples`, 'generate-samples=true']);
+generate('armtest/v2', armtest, 'test/local/armtest', [`examples-directory=${armtest}/examples`, 'generate-samples=true']);
 
 const internalpager = pkgRoot + 'test/tsp/Internal.Pager';
 generate('internalpager', internalpager, 'test/local/internalpager', ['generate-fakes=false']);
