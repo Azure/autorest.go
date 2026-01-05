@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"reflect"
 	"time"
 )
@@ -107,12 +108,12 @@ func (c ContainerProperties) MarshalXML(enc *xml.Encoder, start xml.StartElement
 	type alias ContainerProperties
 	aux := &struct {
 		*alias
-		DeletedTime  *dateTimeRFC1123 `xml:"DeletedTime"`
-		LastModified *dateTimeRFC1123 `xml:"Last-Modified"`
+		DeletedTime  *datetime.RFC1123 `xml:"DeletedTime"`
+		LastModified *datetime.RFC1123 `xml:"Last-Modified"`
 	}{
 		alias:        (*alias)(&c),
-		DeletedTime:  (*dateTimeRFC1123)(c.DeletedTime),
-		LastModified: (*dateTimeRFC1123)(c.LastModified),
+		DeletedTime:  (*datetime.RFC1123)(c.DeletedTime),
+		LastModified: (*datetime.RFC1123)(c.LastModified),
 	}
 	return enc.EncodeElement(aux, start)
 }
@@ -122,8 +123,8 @@ func (c *ContainerProperties) UnmarshalXML(dec *xml.Decoder, start xml.StartElem
 	type alias ContainerProperties
 	aux := &struct {
 		*alias
-		DeletedTime  *dateTimeRFC1123 `xml:"DeletedTime"`
-		LastModified *dateTimeRFC1123 `xml:"Last-Modified"`
+		DeletedTime  *datetime.RFC1123 `xml:"DeletedTime"`
+		LastModified *datetime.RFC1123 `xml:"Last-Modified"`
 	}{
 		alias: (*alias)(c),
 	}
@@ -174,10 +175,10 @@ func (g GeoReplication) MarshalXML(enc *xml.Encoder, start xml.StartElement) err
 	type alias GeoReplication
 	aux := &struct {
 		*alias
-		LastSyncTime *dateTimeRFC1123 `xml:"LastSyncTime"`
+		LastSyncTime *datetime.RFC1123 `xml:"LastSyncTime"`
 	}{
 		alias:        (*alias)(&g),
-		LastSyncTime: (*dateTimeRFC1123)(g.LastSyncTime),
+		LastSyncTime: (*datetime.RFC1123)(g.LastSyncTime),
 	}
 	return enc.EncodeElement(aux, start)
 }
@@ -187,7 +188,7 @@ func (g *GeoReplication) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) 
 	type alias GeoReplication
 	aux := &struct {
 		*alias
-		LastSyncTime *dateTimeRFC1123 `xml:"LastSyncTime"`
+		LastSyncTime *datetime.RFC1123 `xml:"LastSyncTime"`
 	}{
 		alias: (*alias)(g),
 	}
@@ -258,25 +259,25 @@ func (p PropertiesInternal) MarshalXML(enc *xml.Encoder, start xml.StartElement)
 	type alias PropertiesInternal
 	aux := &struct {
 		*alias
-		AccessTierChangeTime        *dateTimeRFC1123 `xml:"AccessTierChangeTime"`
-		ContentMD5                  *string          `xml:"Content-MD5"`
-		CopyCompletionTime          *dateTimeRFC1123 `xml:"CopyCompletionTime"`
-		CreationTime                *dateTimeRFC1123 `xml:"Creation-Time"`
-		DeletedTime                 *dateTimeRFC1123 `xml:"DeletedTime"`
-		ExpiresOn                   *dateTimeRFC1123 `xml:"Expiry-Time"`
-		ImmutabilityPolicyExpiresOn *dateTimeRFC1123 `xml:"ImmutabilityPolicyUntilDate"`
-		LastAccessedOn              *dateTimeRFC1123 `xml:"LastAccessTime"`
-		LastModified                *dateTimeRFC1123 `xml:"Last-Modified"`
+		AccessTierChangeTime        *datetime.RFC1123 `xml:"AccessTierChangeTime"`
+		ContentMD5                  *string           `xml:"Content-MD5"`
+		CopyCompletionTime          *datetime.RFC1123 `xml:"CopyCompletionTime"`
+		CreationTime                *datetime.RFC1123 `xml:"Creation-Time"`
+		DeletedTime                 *datetime.RFC1123 `xml:"DeletedTime"`
+		ExpiresOn                   *datetime.RFC1123 `xml:"Expiry-Time"`
+		ImmutabilityPolicyExpiresOn *datetime.RFC1123 `xml:"ImmutabilityPolicyUntilDate"`
+		LastAccessedOn              *datetime.RFC1123 `xml:"LastAccessTime"`
+		LastModified                *datetime.RFC1123 `xml:"Last-Modified"`
 	}{
 		alias:                       (*alias)(&p),
-		AccessTierChangeTime:        (*dateTimeRFC1123)(p.AccessTierChangeTime),
-		CopyCompletionTime:          (*dateTimeRFC1123)(p.CopyCompletionTime),
-		CreationTime:                (*dateTimeRFC1123)(p.CreationTime),
-		DeletedTime:                 (*dateTimeRFC1123)(p.DeletedTime),
-		ExpiresOn:                   (*dateTimeRFC1123)(p.ExpiresOn),
-		ImmutabilityPolicyExpiresOn: (*dateTimeRFC1123)(p.ImmutabilityPolicyExpiresOn),
-		LastAccessedOn:              (*dateTimeRFC1123)(p.LastAccessedOn),
-		LastModified:                (*dateTimeRFC1123)(p.LastModified),
+		AccessTierChangeTime:        (*datetime.RFC1123)(p.AccessTierChangeTime),
+		CopyCompletionTime:          (*datetime.RFC1123)(p.CopyCompletionTime),
+		CreationTime:                (*datetime.RFC1123)(p.CreationTime),
+		DeletedTime:                 (*datetime.RFC1123)(p.DeletedTime),
+		ExpiresOn:                   (*datetime.RFC1123)(p.ExpiresOn),
+		ImmutabilityPolicyExpiresOn: (*datetime.RFC1123)(p.ImmutabilityPolicyExpiresOn),
+		LastAccessedOn:              (*datetime.RFC1123)(p.LastAccessedOn),
+		LastModified:                (*datetime.RFC1123)(p.LastModified),
 	}
 	if p.ContentMD5 != nil {
 		encodedContentMD5 := runtime.EncodeByteArray(p.ContentMD5, runtime.Base64StdFormat)
@@ -290,15 +291,15 @@ func (p *PropertiesInternal) UnmarshalXML(dec *xml.Decoder, start xml.StartEleme
 	type alias PropertiesInternal
 	aux := &struct {
 		*alias
-		AccessTierChangeTime        *dateTimeRFC1123 `xml:"AccessTierChangeTime"`
-		ContentMD5                  *string          `xml:"Content-MD5"`
-		CopyCompletionTime          *dateTimeRFC1123 `xml:"CopyCompletionTime"`
-		CreationTime                *dateTimeRFC1123 `xml:"Creation-Time"`
-		DeletedTime                 *dateTimeRFC1123 `xml:"DeletedTime"`
-		ExpiresOn                   *dateTimeRFC1123 `xml:"Expiry-Time"`
-		ImmutabilityPolicyExpiresOn *dateTimeRFC1123 `xml:"ImmutabilityPolicyUntilDate"`
-		LastAccessedOn              *dateTimeRFC1123 `xml:"LastAccessTime"`
-		LastModified                *dateTimeRFC1123 `xml:"Last-Modified"`
+		AccessTierChangeTime        *datetime.RFC1123 `xml:"AccessTierChangeTime"`
+		ContentMD5                  *string           `xml:"Content-MD5"`
+		CopyCompletionTime          *datetime.RFC1123 `xml:"CopyCompletionTime"`
+		CreationTime                *datetime.RFC1123 `xml:"Creation-Time"`
+		DeletedTime                 *datetime.RFC1123 `xml:"DeletedTime"`
+		ExpiresOn                   *datetime.RFC1123 `xml:"Expiry-Time"`
+		ImmutabilityPolicyExpiresOn *datetime.RFC1123 `xml:"ImmutabilityPolicyUntilDate"`
+		LastAccessedOn              *datetime.RFC1123 `xml:"LastAccessTime"`
+		LastModified                *datetime.RFC1123 `xml:"Last-Modified"`
 	}{
 		alias: (*alias)(p),
 	}
@@ -412,12 +413,12 @@ func (u UserDelegationKey) MarshalXML(enc *xml.Encoder, start xml.StartElement) 
 	type alias UserDelegationKey
 	aux := &struct {
 		*alias
-		SignedExpiry *dateTimeRFC3339 `xml:"SignedExpiry"`
-		SignedStart  *dateTimeRFC3339 `xml:"SignedStart"`
+		SignedExpiry *datetime.RFC3339 `xml:"SignedExpiry"`
+		SignedStart  *datetime.RFC3339 `xml:"SignedStart"`
 	}{
 		alias:        (*alias)(&u),
-		SignedExpiry: (*dateTimeRFC3339)(u.SignedExpiry),
-		SignedStart:  (*dateTimeRFC3339)(u.SignedStart),
+		SignedExpiry: (*datetime.RFC3339)(u.SignedExpiry),
+		SignedStart:  (*datetime.RFC3339)(u.SignedStart),
 	}
 	return enc.EncodeElement(aux, start)
 }
@@ -427,8 +428,8 @@ func (u *UserDelegationKey) UnmarshalXML(dec *xml.Decoder, start xml.StartElemen
 	type alias UserDelegationKey
 	aux := &struct {
 		*alias
-		SignedExpiry *dateTimeRFC3339 `xml:"SignedExpiry"`
-		SignedStart  *dateTimeRFC3339 `xml:"SignedStart"`
+		SignedExpiry *datetime.RFC3339 `xml:"SignedExpiry"`
+		SignedStart  *datetime.RFC3339 `xml:"SignedStart"`
 	}{
 		alias: (*alias)(u),
 	}

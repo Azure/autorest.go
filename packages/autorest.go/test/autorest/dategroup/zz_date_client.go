@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"net/http"
 	"time"
 )
@@ -62,7 +63,7 @@ func (client *DateClient) getInvalidDateCreateRequest(ctx context.Context, _ *Da
 // getInvalidDateHandleResponse handles the GetInvalidDate response.
 func (client *DateClient) getInvalidDateHandleResponse(resp *http.Response) (DateClientGetInvalidDateResponse, error) {
 	result := DateClientGetInvalidDateResponse{}
-	var aux *dateType
+	var aux *datetime.PlainDate
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DateClientGetInvalidDateResponse{}, err
 	}
@@ -111,7 +112,7 @@ func (client *DateClient) getMaxDateCreateRequest(ctx context.Context, _ *DateCl
 // getMaxDateHandleResponse handles the GetMaxDate response.
 func (client *DateClient) getMaxDateHandleResponse(resp *http.Response) (DateClientGetMaxDateResponse, error) {
 	result := DateClientGetMaxDateResponse{}
-	var aux *dateType
+	var aux *datetime.PlainDate
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DateClientGetMaxDateResponse{}, err
 	}
@@ -160,7 +161,7 @@ func (client *DateClient) getMinDateCreateRequest(ctx context.Context, _ *DateCl
 // getMinDateHandleResponse handles the GetMinDate response.
 func (client *DateClient) getMinDateHandleResponse(resp *http.Response) (DateClientGetMinDateResponse, error) {
 	result := DateClientGetMinDateResponse{}
-	var aux *dateType
+	var aux *datetime.PlainDate
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DateClientGetMinDateResponse{}, err
 	}
@@ -209,7 +210,7 @@ func (client *DateClient) getNullCreateRequest(ctx context.Context, _ *DateClien
 // getNullHandleResponse handles the GetNull response.
 func (client *DateClient) getNullHandleResponse(resp *http.Response) (DateClientGetNullResponse, error) {
 	result := DateClientGetNullResponse{}
-	var aux *dateType
+	var aux *datetime.PlainDate
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DateClientGetNullResponse{}, err
 	}
@@ -258,7 +259,7 @@ func (client *DateClient) getOverflowDateCreateRequest(ctx context.Context, _ *D
 // getOverflowDateHandleResponse handles the GetOverflowDate response.
 func (client *DateClient) getOverflowDateHandleResponse(resp *http.Response) (DateClientGetOverflowDateResponse, error) {
 	result := DateClientGetOverflowDateResponse{}
-	var aux *dateType
+	var aux *datetime.PlainDate
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DateClientGetOverflowDateResponse{}, err
 	}
@@ -307,7 +308,7 @@ func (client *DateClient) getUnderflowDateCreateRequest(ctx context.Context, _ *
 // getUnderflowDateHandleResponse handles the GetUnderflowDate response.
 func (client *DateClient) getUnderflowDateHandleResponse(resp *http.Response) (DateClientGetUnderflowDateResponse, error) {
 	result := DateClientGetUnderflowDateResponse{}
-	var aux *dateType
+	var aux *datetime.PlainDate
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DateClientGetUnderflowDateResponse{}, err
 	}
@@ -350,7 +351,7 @@ func (client *DateClient) putMaxDateCreateRequest(ctx context.Context, dateBody 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, dateType(dateBody)); err != nil {
+	if err := runtime.MarshalAsJSON(req, datetime.PlainDate(dateBody)); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -391,7 +392,7 @@ func (client *DateClient) putMinDateCreateRequest(ctx context.Context, dateBody 
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, dateType(dateBody)); err != nil {
+	if err := runtime.MarshalAsJSON(req, datetime.PlainDate(dateBody)); err != nil {
 		return nil, err
 	}
 	return req, nil
