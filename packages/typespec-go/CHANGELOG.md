@@ -4,7 +4,7 @@
 
 ### Bugs Fixed
 
-* Fix package name when module version greater than v1.
+* Fix package name when module version is greater than v1.
 
 ### Features Added
 
