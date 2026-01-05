@@ -18,7 +18,6 @@ import { generateOperations } from './core/operations.js';
 import { generateOptions } from './core/options.js';
 import { generatePolymorphicHelpers } from './core/polymorphics.js';
 import { generateResponses } from './core/responses.js';
-import { generateTimeHelpers } from './core/time.js';
 import { generateVersionInfo } from './core/version.js';
 import { generateXMLAdditionalPropsHelpers } from './core/xmlAdditionalProps.js';
 import { generateServers } from './fake/servers.js';
@@ -134,11 +133,6 @@ export class Emitter {
         await write('responses_serde.go', responses.serDe);
       }
 
-      const timeHelpers = generateTimeHelpers(pkg);
-      for (const helper of timeHelpers) {
-        await write(`${helper.name.toLowerCase()}.go`, helper.content);
-      }
-
       const xmlAddlProps = generateXMLAdditionalPropsHelpers(pkg);
       if (xmlAddlProps.length > 0) {
         await write('xml_helper.go', xmlAddlProps);
@@ -159,11 +153,6 @@ export class Emitter {
           }
 
           await write('internal.go', serverContent.internals, fakePkg.kind);
-
-          const timeHelpers = generateTimeHelpers(fakePkg);
-          for (const helper of timeHelpers) {
-            await write(`${helper.name.toLowerCase()}.go`, helper.content, fakePkg.kind);
-          }
 
           const polymorphics = generatePolymorphicHelpers(fakePkg);
           if (polymorphics.length > 0) {

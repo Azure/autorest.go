@@ -301,9 +301,9 @@ function schemaTypeToGoType(codeModel: m4.CodeModel, schema: m4.Schema, type: 'P
     case m4.SchemaType.DateTime: {
       const dateTime = <m4.DateTimeSchema>schema;
       if (dateTime.format === 'date-time-rfc1123') {
-        schema.language.go!.internalTimeType = 'dateTimeRFC1123';
+        schema.language.go!.internalTimeType = 'RFC1123';
       } else {
-        schema.language.go!.internalTimeType = 'dateTimeRFC3339';
+        schema.language.go!.internalTimeType = 'RFC3339';
       }
       if (type === 'InBody') {
         // add a marker to the code model indicating that we need
@@ -321,7 +321,7 @@ function schemaTypeToGoType(codeModel: m4.CodeModel, schema: m4.Schema, type: 'P
     case m4.SchemaType.UnixTime:
       // unix time always requires the helper time type
       codeModel.language.go!.generateUnixTimeHelper = true;
-      schema.language.go!.internalTimeType = 'timeUnix';
+      schema.language.go!.internalTimeType = 'Unix';
       return 'time.Time';
     case m4.SchemaType.Dictionary: {
       const dictSchema = <m4.DictionarySchema>schema;
@@ -355,13 +355,13 @@ function schemaTypeToGoType(codeModel: m4.CodeModel, schema: m4.Schema, type: 'P
     case m4.SchemaType.Uri:
       return 'string';
     case m4.SchemaType.Date:
-      schema.language.go!.internalTimeType = 'dateType';
+      schema.language.go!.internalTimeType = 'PlainDate';
       if (type === 'InBody') {
         codeModel.language.go!.generateDateHelper = true;
       }
       return 'time.Time';
     case m4.SchemaType.Time:
-      schema.language.go!.internalTimeType = 'timeRFC3339';
+      schema.language.go!.internalTimeType = 'RFC3339';
       if (type === 'InBody') {
         codeModel.language.go!.generateTimeRFC3339Helper = true;
       }

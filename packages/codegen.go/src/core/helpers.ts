@@ -293,7 +293,8 @@ export function formatParamValue(param: go.MethodParameter, imports: ImportManag
           return `strings.Join(${paramName}, "${separator}")`;
         case 'time':
           imports.add('strings');
-          return emitConvertOver(param.name, `${param.type.elementType.format}(${param.name}[i]).String()`);
+          imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+          return emitConvertOver(param.name, `datetime.${param.type.elementType.format}(${param.name}[i]).String()`);
         default:
           imports.add('fmt');
           imports.add('strings');
@@ -302,9 +303,9 @@ export function formatParamValue(param: go.MethodParameter, imports: ImportManag
     }
   }
 
-  if (param.type.kind === 'time' && param.type.format !== 'timeUnix') {
+  if (param.type.kind === 'time' && param.type.format !== 'Unix') {
     // for most time types we call methods on time.Time which is why we remove the dereference.
-    // however, for unix time, we cast to our unixTime helper first so we must keep the dereference.
+    // however, for unix time, we cast to our unix helper first so we must keep the dereference.
     if (!go.isRequiredParameter(param.style) && paramName[0] === '*') {
       // remove the dereference
       paramName = paramName.substring(1);
@@ -373,16 +374,18 @@ export function formatValue(paramName: string, type: go.WireType, imports: Impor
       }
     case 'time':
       switch (type.format) {
-        case 'dateTimeRFC1123':
-        case 'dateTimeRFC3339':
+        case 'RFC1123':
+        case 'RFC3339':
           imports.add('time');
-          return `${paramName}.Format(${type.format === 'dateTimeRFC1123' ? datetimeRFC1123Format : datetimeRFC3339Format})`;
-        case 'dateType':
+          return `${paramName}.Format(${type.format === 'RFC1123' ? datetimeRFC1123Format : datetimeRFC3339Format})`;
+        case 'PlainDate':
           return `${paramName}.Format("${dateFormat}")`;
-        case 'timeRFC3339':
-          return `timeRFC3339(${star}${paramName}).String()`;
-        case 'timeUnix':
-          return `timeUnix(${star}${paramName}).String()`;
+        case 'PlainTime':
+          imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+          return `datetime.PlainTime(${star}${paramName}).String()`;
+        case 'Unix':
+          imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+          return `datetime.Unix(${star}${paramName}).String()`;
       }
     default:
       return `${star}${paramName}`;
