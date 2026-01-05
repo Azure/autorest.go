@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"reflect"
 	"time"
@@ -528,7 +529,7 @@ func (s ScheduleCreateOrUpdateProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "aliases", s.Aliases)
 	populate(objectMap, "description", s.Description)
 	populateAny(objectMap, "interval", s.Interval)
-	populateDateTimeRFC3339(objectMap, "startTime", s.StartTime)
+	populateTime[datetime.RFC3339](objectMap, "startTime", s.StartTime)
 	return json.Marshal(objectMap)
 }
 
@@ -551,7 +552,7 @@ func (s *ScheduleCreateOrUpdateProperties) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Interval", &s.Interval)
 			delete(rawMsg, key)
 		case "startTime":
-			err = unpopulateDateTimeRFC3339(val, "StartTime", &s.StartTime)
+			err = unpopulateTime[datetime.RFC3339](val, "StartTime", &s.StartTime)
 			delete(rawMsg, key)
 		default:
 			err = fmt.Errorf("unmarshalling type %T, unknown field %q", s, key)
@@ -648,10 +649,10 @@ func (t *TypeWithRawJSON) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type TypeWithSliceOfTimes.
 func (t TypeWithSliceOfTimes) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateTimeRFC3339(objectMap, "interval", t.Interval)
-	aux := make([]dateTimeRFC3339, len(t.Times), len(t.Times))
+	populateTime[datetime.RFC3339](objectMap, "interval", t.Interval)
+	aux := make([]datetime.RFC3339, len(t.Times), len(t.Times))
 	for i := 0; i < len(t.Times); i++ {
-		aux[i] = (dateTimeRFC3339)(t.Times[i])
+		aux[i] = (datetime.RFC3339)(t.Times[i])
 	}
 	populate(objectMap, "times", aux)
 	return json.Marshal(objectMap)
@@ -667,10 +668,10 @@ func (t *TypeWithSliceOfTimes) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "interval":
-			err = unpopulateTimeRFC3339(val, "Interval", &t.Interval)
+			err = unpopulateTime[datetime.RFC3339](val, "Interval", &t.Interval)
 			delete(rawMsg, key)
 		case "times":
-			var aux []dateTimeRFC3339
+			var aux []datetime.RFC3339
 			err = unpopulate(val, "Times", &aux)
 			for _, au := range aux {
 				t.Times = append(t.Times, (time.Time)(au))
@@ -696,6 +697,17 @@ func populate(m map[string]any, k string, v any) {
 	}
 }
 
+func populateTime[T datetime.Constraints](m map[string]any, k string, t *time.Time) {
+	if t == nil {
+		return
+	} else if azcore.IsNullValue(t) {
+		m[k] = nil
+	} else if !reflect.ValueOf(t).IsNil() {
+		newTime := T(*t)
+		m[k] = (*T)(&newTime)
+	}
+}
+
 func populateAny(m map[string]any, k string, v any) {
 	if v == nil {
 		return
@@ -713,5 +725,18 @@ func unpopulate(data json.RawMessage, fn string, v any) error {
 	if err := json.Unmarshal(data, v); err != nil {
 		return fmt.Errorf("struct field %s: %v", fn, err)
 	}
+	return nil
+}
+
+func unpopulateTime[T datetime.Constraints](data json.RawMessage, fn string, t **time.Time) error {
+	if data == nil || string(data) == "null" {
+		return nil
+	}
+	var aux T
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	newTime := time.Time(aux)
+	*t = &newTime
 	return nil
 }

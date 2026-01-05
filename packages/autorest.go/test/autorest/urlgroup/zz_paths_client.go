@@ -12,6 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"net/http"
 	"net/url"
 	"strings"
@@ -1072,7 +1073,7 @@ func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath time
 // unixTimeURLCreateRequest creates the UnixTimeURL request.
 func (client *PathsClient) unixTimeURLCreateRequest(ctx context.Context, unixTimeURLPath time.Time, _ *PathsClientUnixTimeURLOptions) (*policy.Request, error) {
 	urlPath := "/paths/int/1460505600/{unixTimeUrlPath}"
-	urlPath = strings.ReplaceAll(urlPath, "{unixTimeUrlPath}", url.PathEscape(timeUnix(unixTimeURLPath).String()))
+	urlPath = strings.ReplaceAll(urlPath, "{unixTimeUrlPath}", url.PathEscape(datetime.Unix(unixTimeURLPath).String()))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err

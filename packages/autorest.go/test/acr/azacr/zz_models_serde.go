@@ -9,8 +9,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"reflect"
+	"time"
 )
 
 // MarshalJSON implements the json.Marshaller interface for type AccessToken.
@@ -44,7 +46,7 @@ func (a *AccessToken) UnmarshalJSON(data []byte) error {
 func (a Annotations) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "org.opencontainers.image.authors", a.Authors)
-	populateDateTimeRFC3339(objectMap, "org.opencontainers.image.created", a.Created)
+	populateTime[datetime.RFC3339](objectMap, "org.opencontainers.image.created", a.Created)
 	populate(objectMap, "org.opencontainers.image.description", a.Description)
 	populate(objectMap, "org.opencontainers.image.documentation", a.Documentation)
 	populate(objectMap, "org.opencontainers.image.licenses", a.Licenses)
@@ -76,7 +78,7 @@ func (a *Annotations) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Authors", &a.Authors)
 			delete(rawMsg, key)
 		case "org.opencontainers.image.created":
-			err = unpopulateDateTimeRFC3339(val, "Created", &a.Created)
+			err = unpopulateTime[datetime.RFC3339](val, "Created", &a.Created)
 			delete(rawMsg, key)
 		case "org.opencontainers.image.description":
 			err = unpopulate(val, "Description", &a.Description)
@@ -235,8 +237,8 @@ func (a *ArtifactTagProperties) UnmarshalJSON(data []byte) error {
 func (c ContainerRepositoryProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "changeableAttributes", c.ChangeableAttributes)
-	populateDateTimeRFC3339(objectMap, "createdTime", c.CreatedOn)
-	populateDateTimeRFC3339(objectMap, "lastUpdateTime", c.LastUpdatedOn)
+	populateTime[datetime.RFC3339](objectMap, "createdTime", c.CreatedOn)
+	populateTime[datetime.RFC3339](objectMap, "lastUpdateTime", c.LastUpdatedOn)
 	populate(objectMap, "manifestCount", c.ManifestCount)
 	populate(objectMap, "imageName", c.Name)
 	populate(objectMap, "registry", c.RegistryLoginServer)
@@ -257,10 +259,10 @@ func (c *ContainerRepositoryProperties) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ChangeableAttributes", &c.ChangeableAttributes)
 			delete(rawMsg, key)
 		case "createdTime":
-			err = unpopulateDateTimeRFC3339(val, "CreatedOn", &c.CreatedOn)
+			err = unpopulateTime[datetime.RFC3339](val, "CreatedOn", &c.CreatedOn)
 			delete(rawMsg, key)
 		case "lastUpdateTime":
-			err = unpopulateDateTimeRFC3339(val, "LastUpdatedOn", &c.LastUpdatedOn)
+			err = unpopulateTime[datetime.RFC3339](val, "LastUpdatedOn", &c.LastUpdatedOn)
 			delete(rawMsg, key)
 		case "manifestCount":
 			err = unpopulate(val, "ManifestCount", &c.ManifestCount)
@@ -616,9 +618,9 @@ func (m ManifestAttributesBase) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "architecture", m.Architecture)
 	populate(objectMap, "changeableAttributes", m.ChangeableAttributes)
 	populate(objectMap, "configMediaType", m.ConfigMediaType)
-	populateDateTimeRFC3339(objectMap, "createdTime", m.CreatedOn)
+	populateTime[datetime.RFC3339](objectMap, "createdTime", m.CreatedOn)
 	populate(objectMap, "digest", m.Digest)
-	populateDateTimeRFC3339(objectMap, "lastUpdateTime", m.LastUpdatedOn)
+	populateTime[datetime.RFC3339](objectMap, "lastUpdateTime", m.LastUpdatedOn)
 	populate(objectMap, "os", m.OperatingSystem)
 	populate(objectMap, "references", m.RelatedArtifacts)
 	populate(objectMap, "imageSize", m.Size)
@@ -645,13 +647,13 @@ func (m *ManifestAttributesBase) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ConfigMediaType", &m.ConfigMediaType)
 			delete(rawMsg, key)
 		case "createdTime":
-			err = unpopulateDateTimeRFC3339(val, "CreatedOn", &m.CreatedOn)
+			err = unpopulateTime[datetime.RFC3339](val, "CreatedOn", &m.CreatedOn)
 			delete(rawMsg, key)
 		case "digest":
 			err = unpopulate(val, "Digest", &m.Digest)
 			delete(rawMsg, key)
 		case "lastUpdateTime":
-			err = unpopulateDateTimeRFC3339(val, "LastUpdatedOn", &m.LastUpdatedOn)
+			err = unpopulateTime[datetime.RFC3339](val, "LastUpdatedOn", &m.LastUpdatedOn)
 			delete(rawMsg, key)
 		case "os":
 			err = unpopulate(val, "OperatingSystem", &m.OperatingSystem)
@@ -1261,9 +1263,9 @@ func (r *RepositoryWriteableProperties) UnmarshalJSON(data []byte) error {
 func (t TagAttributesBase) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "changeableAttributes", t.ChangeableAttributes)
-	populateDateTimeRFC3339(objectMap, "createdTime", t.CreatedOn)
+	populateTime[datetime.RFC3339](objectMap, "createdTime", t.CreatedOn)
 	populate(objectMap, "digest", t.Digest)
-	populateDateTimeRFC3339(objectMap, "lastUpdateTime", t.LastUpdatedOn)
+	populateTime[datetime.RFC3339](objectMap, "lastUpdateTime", t.LastUpdatedOn)
 	populate(objectMap, "name", t.Name)
 	populate(objectMap, "signed", t.Signed)
 	return json.Marshal(objectMap)
@@ -1282,13 +1284,13 @@ func (t *TagAttributesBase) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ChangeableAttributes", &t.ChangeableAttributes)
 			delete(rawMsg, key)
 		case "createdTime":
-			err = unpopulateDateTimeRFC3339(val, "CreatedOn", &t.CreatedOn)
+			err = unpopulateTime[datetime.RFC3339](val, "CreatedOn", &t.CreatedOn)
 			delete(rawMsg, key)
 		case "digest":
 			err = unpopulate(val, "Digest", &t.Digest)
 			delete(rawMsg, key)
 		case "lastUpdateTime":
-			err = unpopulateDateTimeRFC3339(val, "LastUpdatedOn", &t.LastUpdatedOn)
+			err = unpopulateTime[datetime.RFC3339](val, "LastUpdatedOn", &t.LastUpdatedOn)
 			delete(rawMsg, key)
 		case "name":
 			err = unpopulate(val, "Name", &t.Name)
@@ -1509,6 +1511,17 @@ func populate(m map[string]any, k string, v any) {
 	}
 }
 
+func populateTime[T datetime.Constraints](m map[string]any, k string, t *time.Time) {
+	if t == nil {
+		return
+	} else if azcore.IsNullValue(t) {
+		m[k] = nil
+	} else if !reflect.ValueOf(t).IsNil() {
+		newTime := T(*t)
+		m[k] = (*T)(&newTime)
+	}
+}
+
 func unpopulate(data json.RawMessage, fn string, v any) error {
 	if data == nil || string(data) == "null" {
 		return nil
@@ -1516,5 +1529,18 @@ func unpopulate(data json.RawMessage, fn string, v any) error {
 	if err := json.Unmarshal(data, v); err != nil {
 		return fmt.Errorf("struct field %s: %v", fn, err)
 	}
+	return nil
+}
+
+func unpopulateTime[T datetime.Constraints](data json.RawMessage, fn string, t **time.Time) error {
+	if data == nil || string(data) == "null" {
+		return nil
+	}
+	var aux T
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	newTime := time.Time(aux)
+	*t = &newTime
 	return nil
 }

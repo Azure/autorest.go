@@ -65,12 +65,12 @@
   "dependencies": {
     "@autorest/codemodel": "catalog:",
     "@autorest/extension-base": "~3.5.2",
-    "@azure-tools/async-io": "~3.0.0",
+    "@azure-tools/async-io": "~3.0.254",
     "@azure-tools/codegen": "catalog:",
     "@azure-tools/linq": "catalog:",
-    "@azure-tools/tasks": "~3.0.0",
+    "@azure-tools/tasks": "~3.0.255",
     "@types/html-to-text": "^5.1.2",
-    "@types/showdown": "^1.9.3",
+    "@types/showdown": "^1.9.4",
     "html-to-text": "^5.1.1",
     "showdown": "^1.9.1",
     "source-map-support": "0.5.21"

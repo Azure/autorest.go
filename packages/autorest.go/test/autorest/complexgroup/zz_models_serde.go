@@ -10,7 +10,9 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"reflect"
+	"time"
 )
 
 // MarshalJSON implements the json.Marshaller interface for type ArrayWrapper.
@@ -141,7 +143,7 @@ func (b *ByteWrapper) UnmarshalJSON(data []byte) error {
 func (c Cookiecuttershark) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "age", c.Age)
-	populateDateTimeRFC3339(objectMap, "birthday", c.Birthday)
+	populateTime[datetime.RFC3339](objectMap, "birthday", c.Birthday)
 	objectMap["fishtype"] = "cookiecuttershark"
 	populate(objectMap, "length", c.Length)
 	populate(objectMap, "siblings", c.Siblings)
@@ -162,7 +164,7 @@ func (c *Cookiecuttershark) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Age", &c.Age)
 			delete(rawMsg, key)
 		case "birthday":
-			err = unpopulateDateTimeRFC3339(val, "Birthday", &c.Birthday)
+			err = unpopulateTime[datetime.RFC3339](val, "Birthday", &c.Birthday)
 			delete(rawMsg, key)
 		case "fishtype":
 			err = unpopulate(val, "Fishtype", &c.Fishtype)
@@ -187,8 +189,8 @@ func (c *Cookiecuttershark) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type DateWrapper.
 func (d DateWrapper) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateDateType(objectMap, "field", d.Field)
-	populateDateType(objectMap, "leap", d.Leap)
+	populateTime[datetime.PlainDate](objectMap, "field", d.Field)
+	populateTime[datetime.PlainDate](objectMap, "leap", d.Leap)
 	return json.Marshal(objectMap)
 }
 
@@ -202,10 +204,10 @@ func (d *DateWrapper) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "field":
-			err = unpopulateDateType(val, "Field", &d.Field)
+			err = unpopulateTime[datetime.PlainDate](val, "Field", &d.Field)
 			delete(rawMsg, key)
 		case "leap":
-			err = unpopulateDateType(val, "Leap", &d.Leap)
+			err = unpopulateTime[datetime.PlainDate](val, "Leap", &d.Leap)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -218,8 +220,8 @@ func (d *DateWrapper) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type DatetimeWrapper.
 func (d DatetimeWrapper) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateDateTimeRFC3339(objectMap, "field", d.Field)
-	populateDateTimeRFC3339(objectMap, "now", d.Now)
+	populateTime[datetime.RFC3339](objectMap, "field", d.Field)
+	populateTime[datetime.RFC3339](objectMap, "now", d.Now)
 	return json.Marshal(objectMap)
 }
 
@@ -233,10 +235,10 @@ func (d *DatetimeWrapper) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "field":
-			err = unpopulateDateTimeRFC3339(val, "Field", &d.Field)
+			err = unpopulateTime[datetime.RFC3339](val, "Field", &d.Field)
 			delete(rawMsg, key)
 		case "now":
-			err = unpopulateDateTimeRFC3339(val, "Now", &d.Now)
+			err = unpopulateTime[datetime.RFC3339](val, "Now", &d.Now)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -249,8 +251,8 @@ func (d *DatetimeWrapper) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type Datetimerfc1123Wrapper.
 func (d Datetimerfc1123Wrapper) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateDateTimeRFC1123(objectMap, "field", d.Field)
-	populateDateTimeRFC1123(objectMap, "now", d.Now)
+	populateTime[datetime.RFC1123](objectMap, "field", d.Field)
+	populateTime[datetime.RFC1123](objectMap, "now", d.Now)
 	return json.Marshal(objectMap)
 }
 
@@ -264,10 +266,10 @@ func (d *Datetimerfc1123Wrapper) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "field":
-			err = unpopulateDateTimeRFC1123(val, "Field", &d.Field)
+			err = unpopulateTime[datetime.RFC1123](val, "Field", &d.Field)
 			delete(rawMsg, key)
 		case "now":
-			err = unpopulateDateTimeRFC1123(val, "Now", &d.Now)
+			err = unpopulateTime[datetime.RFC1123](val, "Now", &d.Now)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -580,7 +582,7 @@ func (f *FloatWrapper) UnmarshalJSON(data []byte) error {
 func (g Goblinshark) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "age", g.Age)
-	populateDateTimeRFC3339(objectMap, "birthday", g.Birthday)
+	populateTime[datetime.RFC3339](objectMap, "birthday", g.Birthday)
 	populate(objectMap, "color", g.Color)
 	objectMap["fishtype"] = "goblin"
 	populate(objectMap, "jawsize", g.Jawsize)
@@ -603,7 +605,7 @@ func (g *Goblinshark) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Age", &g.Age)
 			delete(rawMsg, key)
 		case "birthday":
-			err = unpopulateDateTimeRFC3339(val, "Birthday", &g.Birthday)
+			err = unpopulateTime[datetime.RFC3339](val, "Birthday", &g.Birthday)
 			delete(rawMsg, key)
 		case "color":
 			err = unpopulate(val, "Color", &g.Color)
@@ -876,7 +878,7 @@ func (s *Salmon) UnmarshalJSON(data []byte) error {
 func (s Sawshark) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "age", s.Age)
-	populateDateTimeRFC3339(objectMap, "birthday", s.Birthday)
+	populateTime[datetime.RFC3339](objectMap, "birthday", s.Birthday)
 	objectMap["fishtype"] = "sawshark"
 	populate(objectMap, "length", s.Length)
 	populateByteArray(objectMap, "picture", s.Picture, func() any {
@@ -900,7 +902,7 @@ func (s *Sawshark) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Age", &s.Age)
 			delete(rawMsg, key)
 		case "birthday":
-			err = unpopulateDateTimeRFC3339(val, "Birthday", &s.Birthday)
+			err = unpopulateTime[datetime.RFC3339](val, "Birthday", &s.Birthday)
 			delete(rawMsg, key)
 		case "fishtype":
 			err = unpopulate(val, "Fishtype", &s.Fishtype)
@@ -931,7 +933,7 @@ func (s *Sawshark) UnmarshalJSON(data []byte) error {
 func (s Shark) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "age", s.Age)
-	populateDateTimeRFC3339(objectMap, "birthday", s.Birthday)
+	populateTime[datetime.RFC3339](objectMap, "birthday", s.Birthday)
 	objectMap["fishtype"] = "shark"
 	populate(objectMap, "length", s.Length)
 	populate(objectMap, "siblings", s.Siblings)
@@ -952,7 +954,7 @@ func (s *Shark) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Age", &s.Age)
 			delete(rawMsg, key)
 		case "birthday":
-			err = unpopulateDateTimeRFC3339(val, "Birthday", &s.Birthday)
+			err = unpopulateTime[datetime.RFC3339](val, "Birthday", &s.Birthday)
 			delete(rawMsg, key)
 		case "fishtype":
 			err = unpopulate(val, "Fishtype", &s.Fishtype)
@@ -1128,6 +1130,17 @@ func populate(m map[string]any, k string, v any) {
 	}
 }
 
+func populateTime[T datetime.Constraints](m map[string]any, k string, t *time.Time) {
+	if t == nil {
+		return
+	} else if azcore.IsNullValue(t) {
+		m[k] = nil
+	} else if !reflect.ValueOf(t).IsNil() {
+		newTime := T(*t)
+		m[k] = (*T)(&newTime)
+	}
+}
+
 func populateByteArray[T any](m map[string]any, k string, b []T, convert func() any) {
 	if azcore.IsNullValue(b) {
 		m[k] = nil
@@ -1145,5 +1158,18 @@ func unpopulate(data json.RawMessage, fn string, v any) error {
 	if err := json.Unmarshal(data, v); err != nil {
 		return fmt.Errorf("struct field %s: %v", fn, err)
 	}
+	return nil
+}
+
+func unpopulateTime[T datetime.Constraints](data json.RawMessage, fn string, t **time.Time) error {
+	if data == nil || string(data) == "null" {
+		return nil
+	}
+	var aux T
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	newTime := time.Time(aux)
+	*t = &newTime
 	return nil
 }
