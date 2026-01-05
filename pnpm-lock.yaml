@@ -7494,7 +7494,7 @@ snapshots:
     dependencies:
       '@azure/identity': 4.13.0
       '@azure/storage-blob': 12.29.1
-      '@types/node': 24.10.4
+      '@types/node': 24.10.1
     transitivePeerDependencies:
       - supports-color
 
@@ -11880,7 +11880,7 @@ snapshots:
       schema-utils: 4.3.3
       tapable: 2.3.0
       terser-webpack-plugin: 5.3.16(webpack@5.99.9)
-      watchpack: 2.4.4
+      watchpack: 2.5.0
       webpack-sources: 3.3.3
     transitivePeerDependencies:
       - '@swc/core'
