@@ -2860,7 +2860,7 @@ schemas:
         go:
           name: time.Time
           description: Date time when the resource is created
-          internalTimeType: dateTimeRFC3339
+          internalTimeType: RFC3339
       protocol: {}
     - &ref_87
       type: date-time
@@ -2874,7 +2874,7 @@ schemas:
         go:
           name: time.Time
           description: Date time when the resource is created
-          internalTimeType: dateTimeRFC3339
+          internalTimeType: RFC3339
       protocol: {}
   objects:
     - &ref_3
