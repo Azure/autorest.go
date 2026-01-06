@@ -1,6 +1,6 @@
 # Release History
 
-## 0.9.0 (unreleased)
+## 0.9.0 (2026-01-06)
 
 ### Breaking Changes
 
@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-* Fix package name when module version is greater than v1.
+* Fixed incorrect package name when module version is greater than v1.
 
 ### Features Added
 
