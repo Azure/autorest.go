@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
@@ -30,7 +31,7 @@ func newLrOSCustomHeaderClient(t *testing.T) *LROsCustomHeaderClient {
 func ctxWithHTTPHeader() context.Context {
 	header := http.Header{}
 	header.Add("x-ms-client-request-id", "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0")
-	return runtime.WithHTTPHeader(context.Background(), header)
+	return policy.WithHTTPHeader(context.Background(), header)
 }
 
 func NewLROsCustomHeaderClient(endpoint string, options *azcore.ClientOptions) (*LROsCustomHeaderClient, error) {

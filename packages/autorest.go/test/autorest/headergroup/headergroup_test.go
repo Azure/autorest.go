@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
@@ -29,7 +29,7 @@ func TestHeaderCustomRequestID(t *testing.T) {
 	client := newHeaderClient(t)
 	header := http.Header{}
 	header.Set("x-ms-client-request-id", "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0")
-	result, err := client.CustomRequestID(runtime.WithHTTPHeader(context.Background(), header), nil)
+	result, err := client.CustomRequestID(policy.WithHTTPHeader(context.Background(), header), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
