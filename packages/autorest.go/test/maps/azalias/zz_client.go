@@ -182,7 +182,7 @@ func (client *Client) getScriptCreateRequest(ctx context.Context, headerCounts [
 	req.Raw().Header["Accept"] = []string{"text/powershell"}
 	req.Raw().Header["headerCounts"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerCounts), "[]")), ",")}
 	req.Raw().Header["headerStrings"] = []string{strings.Join(someGroup.HeaderStrings, ",")}
-	req.Raw().Header["headerTime"] = []string{headerTime.Format(time.RFC3339Nano)}
+	req.Raw().Header["headerTime"] = []string{datetime.PlainTime(headerTime).String()}
 	req.Raw().Header["numericHeader"] = []string{strconv.FormatInt(int64(numericHeader), 10)}
 	if err := runtime.MarshalAsJSON(req, props); err != nil {
 		return nil, err
