@@ -361,7 +361,7 @@ function schemaTypeToGoType(codeModel: m4.CodeModel, schema: m4.Schema, type: 'P
       }
       return 'time.Time';
     case m4.SchemaType.Time:
-      schema.language.go!.internalTimeType = 'RFC3339';
+      schema.language.go!.internalTimeType = 'PlainTime';
       if (type === 'InBody') {
         codeModel.language.go!.generateTimeRFC3339Helper = true;
       }
