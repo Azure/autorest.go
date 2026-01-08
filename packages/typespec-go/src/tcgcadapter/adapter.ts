@@ -175,8 +175,8 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
     recursiveWalkClients(sdkClient);
   }
 
-  // check if the name collides with an existing name. we check against
-  // models, enums (which include unions), and clients to prevent any naming conflicts.
+  // check if the name collides with an existing name. we only do
+  // this for model and enum types, as clients get a suffix.
   const nameCollision = function(newName: string): boolean {
     for (const modelType of sdkPackage.models) {
       if (modelType.name === newName) {
@@ -185,25 +185,6 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
     }
     for (const enumType of sdkPackage.enums) {
       if (enumType.name === newName) {
-        return true;
-      }
-    }
-    // recursively check clients and their children
-    const checkClient = function(client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): boolean {
-      if (client.name === newName) {
-        return true;
-      }
-      if (client.children && client.children.length > 0) {
-        for (const child of client.children) {
-          if (checkClient(child)) {
-            return true;
-          }
-        }
-      }
-      return false;
-    };
-    for (const sdkClient of sdkPackage.clients) {
-      if (checkClient(sdkClient)) {
         return true;
       }
     }
