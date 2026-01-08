@@ -3,7 +3,7 @@ module armcontainerorchestratorruntime
 go 1.24.0
 
 require (
-	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.20.1-0.20251220002059-aef45fad76ea
+	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.20.1-0.20260108000812-aee1f5b6ba58
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.13.1
 )
 

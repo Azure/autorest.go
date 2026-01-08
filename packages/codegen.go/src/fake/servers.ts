@@ -1081,9 +1081,9 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
     } else if (param.type.kind === 'time') {
       if (param.type.format === 'PlainDate' || param.type.format === 'PlainTime') {
         imports.add('time');
-        let format = helpers.dateFormat;
+        let format = helpers.plainDateFormat;
         if (param.type.format === 'PlainTime') {
-          format = helpers.timeRFC3339Format;
+          format = helpers.plainTimeFormat;
         }
         let from = `time.Parse("${format}", ${paramValue})`;
         if (!go.isRequiredParameter(param.style)) {
