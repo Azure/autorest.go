@@ -214,6 +214,9 @@ generate('armcomputeschedule', armcomputeschedule, 'test/local/armcomputeschedul
 const armbillingbenefits = pkgRoot + 'test/tsp/BillingBenefits.Management';
 generate('armbillingbenefits', armbillingbenefits, 'test/local/armbillingbenefits', [`examples-directory=${armbillingbenefits}/examples`, 'generate-samples=true']);
 
+const armworkloadssapvirtualinstance = pkgRoot + 'test/tsp/Workloads-2.SAPVirtualInstance.Management';
+generate('armworkloadssapvirtualinstance', armworkloadssapvirtualinstance, 'test/local/armworkloadssapvirtualinstance', [`examples-directory=${armworkloadssapvirtualinstance}/examples`, 'generate-samples=true']);
+
 const nooptionalbody = pkgRoot + 'test/tsp/NoOptionalBody';
 generate('nooptionalbody', nooptionalbody, 'test/local/nooptionalbody', ['generate-fakes=false', 'go-generate=after_generate.go', 'no-optional-body=true']);
 
