@@ -176,10 +176,15 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
   }
 
   // check if the name collides with an existing name. we only do
-  // this for model types as clients and enums get a suffix.
+  // this for model and enum types, as clients get a suffix.
   const nameCollision = function(newName: string): boolean {
     for (const modelType of sdkPackage.models) {
       if (modelType.name === newName) {
+        return true;
+      }
+    }
+    for (const enumType of sdkPackage.enums) {
+      if (enumType.name === newName) {
         return true;
       }
     }
