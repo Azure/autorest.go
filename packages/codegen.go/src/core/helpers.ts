@@ -12,10 +12,10 @@ import { CodegenError } from './errors.js';
 // variable to be used to determine comment length when calling comment from @azure-tools
 export const commentLength = 120;
 
-export const plainDateFormat = '2006-01-02';
-export const datetimeRFC3339Format = 'time.RFC3339Nano';
-export const datetimeRFC1123Format = 'time.RFC1123';
-export const plainTimeFormat = '15:04:05';
+export const plainDateFormat = 'time.DateOnly';
+export const RFC3339Format = 'time.RFC3339Nano';
+export const RFC1123Format = 'time.RFC1123';
+export const plainTimeFormat = 'time.TimeOnly';
 
 export const doNotEditRegex = /^\/\/ Code generated .* DO NOT EDIT\.$/m;
 
@@ -373,13 +373,14 @@ export function formatValue(paramName: string, type: go.WireType, imports: Impor
           throw new CodegenError('InternalError', `unhandled scalar type ${type.type}`);
       }
     case 'time':
+      imports.add('time');
       switch (type.format) {
         case 'RFC1123':
+          return `${paramName}.Format(${RFC1123Format})`;
         case 'RFC3339':
-          imports.add('time');
-          return `${paramName}.Format(${type.format === 'RFC1123' ? datetimeRFC1123Format : datetimeRFC3339Format})`;
+          return `${paramName}.Format(${RFC3339Format})`;
         case 'PlainDate':
-          return `${paramName}.Format("${plainDateFormat}")`;
+          return `${paramName}.Format(${plainDateFormat})`;
         case 'PlainTime':
           imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
           return `datetime.PlainTime(${star}${paramName}).String()`;
