@@ -1,6 +1,0 @@
-emit:
-  - "@azure-tools/typespec-go"
-options:
-  "@azure-tools/typespec-go":
-    module: "search"
-    packageDir: "search"
