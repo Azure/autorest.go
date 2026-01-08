@@ -11,3 +11,8 @@ type InnerSpreadParam struct {
 	// REQUIRED
 	Name *string
 }
+
+type SomeModel struct {
+	// REQUIRED
+	Name *string
+}

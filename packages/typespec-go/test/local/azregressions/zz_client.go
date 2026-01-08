@@ -43,6 +43,164 @@ func NewClientWithNoCredential(endpoint string, options *ClientOptions) (*Client
 	return client, nil
 }
 
+// ForceRequiredBodyPatch -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientForceRequiredBodyPatchOptions contains the optional parameters for the Client.ForceRequiredBodyPatch method.
+func (client *Client) ForceRequiredBodyPatch(ctx context.Context, body SomeModel, options *ClientForceRequiredBodyPatchOptions) (ClientForceRequiredBodyPatchResponse, error) {
+	var err error
+	const operationName = "Client.ForceRequiredBodyPatch"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.forceRequiredBodyPatchCreateRequest(ctx, body, options)
+	if err != nil {
+		return ClientForceRequiredBodyPatchResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientForceRequiredBodyPatchResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientForceRequiredBodyPatchResponse{}, err
+	}
+	return ClientForceRequiredBodyPatchResponse{}, nil
+}
+
+// forceRequiredBodyPatchCreateRequest creates the ForceRequiredBodyPatch request.
+func (client *Client) forceRequiredBodyPatchCreateRequest(ctx context.Context, body SomeModel, _ *ClientForceRequiredBodyPatchOptions) (*policy.Request, error) {
+	urlPath := "/force-required-body-patch"
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// ForceRequiredBodyPut -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientForceRequiredBodyPutOptions contains the optional parameters for the Client.ForceRequiredBodyPut method.
+func (client *Client) ForceRequiredBodyPut(ctx context.Context, body SomeModel, options *ClientForceRequiredBodyPutOptions) (ClientForceRequiredBodyPutResponse, error) {
+	var err error
+	const operationName = "Client.ForceRequiredBodyPut"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.forceRequiredBodyPutCreateRequest(ctx, body, options)
+	if err != nil {
+		return ClientForceRequiredBodyPutResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientForceRequiredBodyPutResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientForceRequiredBodyPutResponse{}, err
+	}
+	return ClientForceRequiredBodyPutResponse{}, nil
+}
+
+// forceRequiredBodyPutCreateRequest creates the ForceRequiredBodyPut request.
+func (client *Client) forceRequiredBodyPutCreateRequest(ctx context.Context, body SomeModel, _ *ClientForceRequiredBodyPutOptions) (*policy.Request, error) {
+	urlPath := "/force-required-body-put"
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// OptionalBinaryBody -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientOptionalBinaryBodyOptions contains the optional parameters for the Client.OptionalBinaryBody method.
+func (client *Client) OptionalBinaryBody(ctx context.Context, options *ClientOptionalBinaryBodyOptions) (ClientOptionalBinaryBodyResponse, error) {
+	var err error
+	const operationName = "Client.OptionalBinaryBody"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.optionalBinaryBodyCreateRequest(ctx, options)
+	if err != nil {
+		return ClientOptionalBinaryBodyResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientOptionalBinaryBodyResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientOptionalBinaryBodyResponse{}, err
+	}
+	return ClientOptionalBinaryBodyResponse{}, nil
+}
+
+// optionalBinaryBodyCreateRequest creates the OptionalBinaryBody request.
+func (client *Client) optionalBinaryBodyCreateRequest(ctx context.Context, options *ClientOptionalBinaryBodyOptions) (*policy.Request, error) {
+	urlPath := "/optional-binary-payload"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	if options != nil && options.Payload != nil {
+		req.Raw().Header["Content-Type"] = []string{"application/octet-stream"}
+		if err := req.SetBody(options.Payload, "application/octet-stream"); err != nil {
+			return nil, err
+		}
+		return req, nil
+	}
+	return req, nil
+}
+
+// OptionalBodyPost -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientOptionalBodyPostOptions contains the optional parameters for the Client.OptionalBodyPost method.
+func (client *Client) OptionalBodyPost(ctx context.Context, options *ClientOptionalBodyPostOptions) (ClientOptionalBodyPostResponse, error) {
+	var err error
+	const operationName = "Client.OptionalBodyPost"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.optionalBodyPostCreateRequest(ctx, options)
+	if err != nil {
+		return ClientOptionalBodyPostResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientOptionalBodyPostResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientOptionalBodyPostResponse{}, err
+	}
+	return ClientOptionalBodyPostResponse{}, nil
+}
+
+// optionalBodyPostCreateRequest creates the OptionalBodyPost request.
+func (client *Client) optionalBodyPostCreateRequest(ctx context.Context, options *ClientOptionalBodyPostOptions) (*policy.Request, error) {
+	urlPath := "/optional-body-post"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	if options != nil && options.Body != nil {
+		req.Raw().Header["Content-Type"] = []string{"application/json"}
+		if err := runtime.MarshalAsJSON(req, *options.Body); err != nil {
+			return nil, err
+		}
+		return req, nil
+	}
+	return req, nil
+}
+
 // SpreadWithModel -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ClientSpreadWithModelOptions contains the optional parameters for the Client.SpreadWithModel method.

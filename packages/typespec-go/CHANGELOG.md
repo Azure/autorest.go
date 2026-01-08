@@ -1,6 +1,14 @@
 # Release History
 
-## 0.8.9 (unreleased)
+## 0.9.0 (2026-01-06)
+
+### Breaking Changes
+
+* Optional streaming bodies are no longer forced to be required.
+
+### Bugs Fixed
+
+* Fixed incorrect package name when module version is greater than v1.
 
 ### Features Added
 

@@ -12,11 +12,29 @@ import (
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"io"
 	"net/http"
+	"reflect"
 )
 
 // Server is a fake server for instances of the azregressions.Client type.
 type Server struct {
+	// ForceRequiredBodyPatch is the fake for method Client.ForceRequiredBodyPatch
+	// HTTP status codes to indicate success: http.StatusNoContent
+	ForceRequiredBodyPatch func(ctx context.Context, body azregressions.SomeModel, options *azregressions.ClientForceRequiredBodyPatchOptions) (resp azfake.Responder[azregressions.ClientForceRequiredBodyPatchResponse], errResp azfake.ErrorResponder)
+
+	// ForceRequiredBodyPut is the fake for method Client.ForceRequiredBodyPut
+	// HTTP status codes to indicate success: http.StatusNoContent
+	ForceRequiredBodyPut func(ctx context.Context, body azregressions.SomeModel, options *azregressions.ClientForceRequiredBodyPutOptions) (resp azfake.Responder[azregressions.ClientForceRequiredBodyPutResponse], errResp azfake.ErrorResponder)
+
+	// OptionalBinaryBody is the fake for method Client.OptionalBinaryBody
+	// HTTP status codes to indicate success: http.StatusNoContent
+	OptionalBinaryBody func(ctx context.Context, options *azregressions.ClientOptionalBinaryBodyOptions) (resp azfake.Responder[azregressions.ClientOptionalBinaryBodyResponse], errResp azfake.ErrorResponder)
+
+	// OptionalBodyPost is the fake for method Client.OptionalBodyPost
+	// HTTP status codes to indicate success: http.StatusNoContent
+	OptionalBodyPost func(ctx context.Context, options *azregressions.ClientOptionalBodyPostOptions) (resp azfake.Responder[azregressions.ClientOptionalBodyPostResponse], errResp azfake.ErrorResponder)
+
 	// SpreadWithModel is the fake for method Client.SpreadWithModel
 	// HTTP status codes to indicate success: http.StatusNoContent
 	SpreadWithModel func(ctx context.Context, name string, options *azregressions.ClientSpreadWithModelOptions) (resp azfake.Responder[azregressions.ClientSpreadWithModelResponse], errResp azfake.ErrorResponder)
@@ -58,6 +76,14 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 		}
 		if !intercepted {
 			switch method {
+			case "Client.ForceRequiredBodyPatch":
+				res.resp, res.err = s.dispatchForceRequiredBodyPatch(req)
+			case "Client.ForceRequiredBodyPut":
+				res.resp, res.err = s.dispatchForceRequiredBodyPut(req)
+			case "Client.OptionalBinaryBody":
+				res.resp, res.err = s.dispatchOptionalBinaryBody(req)
+			case "Client.OptionalBodyPost":
+				res.resp, res.err = s.dispatchOptionalBodyPost(req)
 			case "Client.SpreadWithModel":
 				res.resp, res.err = s.dispatchSpreadWithModel(req)
 			default:
@@ -77,6 +103,106 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 	case res := <-resultChan:
 		return res.resp, res.err
 	}
+}
+
+func (s *ServerTransport) dispatchForceRequiredBodyPatch(req *http.Request) (*http.Response, error) {
+	if s.srv.ForceRequiredBodyPatch == nil {
+		return nil, &nonRetriableError{errors.New("fake for method ForceRequiredBodyPatch not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[azregressions.SomeModel](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.ForceRequiredBodyPatch(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchForceRequiredBodyPut(req *http.Request) (*http.Response, error) {
+	if s.srv.ForceRequiredBodyPut == nil {
+		return nil, &nonRetriableError{errors.New("fake for method ForceRequiredBodyPut not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[azregressions.SomeModel](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.ForceRequiredBodyPut(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchOptionalBinaryBody(req *http.Request) (*http.Response, error) {
+	if s.srv.OptionalBinaryBody == nil {
+		return nil, &nonRetriableError{errors.New("fake for method OptionalBinaryBody not implemented")}
+	}
+	var options *azregressions.ClientOptionalBinaryBodyOptions
+	if req.Body != nil {
+		options = &azregressions.ClientOptionalBinaryBodyOptions{
+			Payload: req.Body.(io.ReadSeekCloser),
+		}
+	}
+	respr, errRespr := s.srv.OptionalBinaryBody(req.Context(), options)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchOptionalBodyPost(req *http.Request) (*http.Response, error) {
+	if s.srv.OptionalBodyPost == nil {
+		return nil, &nonRetriableError{errors.New("fake for method OptionalBodyPost not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[azregressions.SomeModel](req)
+	if err != nil {
+		return nil, err
+	}
+	var options *azregressions.ClientOptionalBodyPostOptions
+	if !reflect.ValueOf(body).IsZero() {
+		options = &azregressions.ClientOptionalBodyPostOptions{
+			Body: &body,
+		}
+	}
+	respr, errRespr := s.srv.OptionalBodyPost(req.Context(), options)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (s *ServerTransport) dispatchSpreadWithModel(req *http.Request) (*http.Response, error) {

@@ -36,7 +36,7 @@ type ContainerRegistryBlobServer struct {
 
 	// CompleteUpload is the fake for method ContainerRegistryBlobClient.CompleteUpload
 	// HTTP status codes to indicate success: http.StatusCreated
-	CompleteUpload func(ctx context.Context, digest string, location string, value io.ReadSeekCloser, options *azacr.ContainerRegistryBlobClientCompleteUploadOptions) (resp azfake.Responder[azacr.ContainerRegistryBlobClientCompleteUploadResponse], errResp azfake.ErrorResponder)
+	CompleteUpload func(ctx context.Context, digest string, location string, options *azacr.ContainerRegistryBlobClientCompleteUploadOptions) (resp azfake.Responder[azacr.ContainerRegistryBlobClientCompleteUploadResponse], errResp azfake.ErrorResponder)
 
 	// DeleteBlob is the fake for method ContainerRegistryBlobClient.DeleteBlob
 	// HTTP status codes to indicate success: http.StatusAccepted
@@ -270,7 +270,13 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCompleteUpload(req *http.
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.CompleteUpload(req.Context(), digestParam, locationParam, req.Body.(io.ReadSeekCloser), nil)
+	var options *azacr.ContainerRegistryBlobClientCompleteUploadOptions
+	if req.Body != nil {
+		options = &azacr.ContainerRegistryBlobClientCompleteUploadOptions{
+			Value: req.Body.(io.ReadSeekCloser),
+		}
+	}
+	respr, errRespr := c.srv.CompleteUpload(req.Context(), digestParam, locationParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

@@ -2,6 +2,10 @@
 
 ## 4.0.0-preview.76 (unreleased)
 
+### Breaking Changes
+
+* Optional streaming bodies are no longer forced to be required.
+
 ### Other Changes
 
 * Updated the minimum version of Go to `v1.24.0`.
