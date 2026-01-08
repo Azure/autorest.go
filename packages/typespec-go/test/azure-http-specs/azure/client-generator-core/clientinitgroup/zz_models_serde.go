@@ -8,14 +8,16 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"reflect"
+	"time"
 )
 
 // MarshalJSON implements the json.Marshaller interface for type BlobProperties.
 func (b BlobProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "contentType", b.ContentType)
-	populateDateTimeRFC3339(objectMap, "createdOn", b.CreatedOn)
+	populateTime[datetime.RFC3339](objectMap, "createdOn", b.CreatedOn)
 	populate(objectMap, "name", b.Name)
 	populate(objectMap, "size", b.Size)
 	return json.Marshal(objectMap)
@@ -34,7 +36,7 @@ func (b *BlobProperties) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ContentType", &b.ContentType)
 			delete(rawMsg, key)
 		case "createdOn":
-			err = unpopulateDateTimeRFC3339(val, "CreatedOn", &b.CreatedOn)
+			err = unpopulateTime[datetime.RFC3339](val, "CreatedOn", &b.CreatedOn)
 			delete(rawMsg, key)
 		case "name":
 			err = unpopulate(val, "Name", &b.Name)
@@ -114,6 +116,17 @@ func populate(m map[string]any, k string, v any) {
 	}
 }
 
+func populateTime[T datetime.Constraints](m map[string]any, k string, t *time.Time) {
+	if t == nil {
+		return
+	} else if azcore.IsNullValue(t) {
+		m[k] = nil
+	} else if !reflect.ValueOf(t).IsNil() {
+		newTime := T(*t)
+		m[k] = (*T)(&newTime)
+	}
+}
+
 func unpopulate(data json.RawMessage, fn string, v any) error {
 	if data == nil || string(data) == "null" {
 		return nil
@@ -121,5 +134,18 @@ func unpopulate(data json.RawMessage, fn string, v any) error {
 	if err := json.Unmarshal(data, v); err != nil {
 		return fmt.Errorf("struct field %s: %v", fn, err)
 	}
+	return nil
+}
+
+func unpopulateTime[T datetime.Constraints](data json.RawMessage, fn string, t **time.Time) error {
+	if data == nil || string(data) == "null" {
+		return nil
+	}
+	var aux T
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	newTime := time.Time(aux)
+	*t = &newTime
 	return nil
 }

@@ -180,7 +180,7 @@ func (client *HeaderClient) paramDateCreateRequest(ctx context.Context, scenario
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["scenario"] = []string{scenario}
-	req.Raw().Header["value"] = []string{value.Format("2006-01-02")}
+	req.Raw().Header["value"] = []string{value.Format(time.DateOnly)}
 	return req, nil
 }
 
@@ -794,7 +794,7 @@ func (client *HeaderClient) responseDateCreateRequest(ctx context.Context, scena
 func (client *HeaderClient) responseDateHandleResponse(resp *http.Response) (HeaderClientResponseDateResponse, error) {
 	result := HeaderClientResponseDateResponse{}
 	if val := resp.Header.Get("value"); val != "" {
-		value, err := time.Parse("2006-01-02", val)
+		value, err := time.Parse(time.DateOnly, val)
 		if err != nil {
 			return HeaderClientResponseDateResponse{}, err
 		}

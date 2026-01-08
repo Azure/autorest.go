@@ -320,7 +320,7 @@ func (h *HeaderServerTransport) dispatchParamDate(req *http.Request) (*http.Resp
 	if h.srv.ParamDate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method ParamDate not implemented")}
 	}
-	valueParam, err := time.Parse("2006-01-02", getHeaderValue(req.Header, "value"))
+	valueParam, err := time.Parse(time.DateOnly, getHeaderValue(req.Header, "value"))
 	if err != nil {
 		return nil, err
 	}
@@ -665,7 +665,7 @@ func (h *HeaderServerTransport) dispatchResponseDate(req *http.Request) (*http.R
 		return nil, err
 	}
 	if val := server.GetResponse(respr).Value; val != nil {
-		resp.Header.Set("value", val.Format("2006-01-02"))
+		resp.Header.Set("value", val.Format(time.DateOnly))
 	}
 	return resp, nil
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"net/http"
 	"time"
 )
@@ -59,7 +60,7 @@ func (client *ArrayDatetimeValueClient) getCreateRequest(ctx context.Context, _ 
 // getHandleResponse handles the Get response.
 func (client *ArrayDatetimeValueClient) getHandleResponse(resp *http.Response) (ArrayDatetimeValueClientGetResponse, error) {
 	result := ArrayDatetimeValueClientGetResponse{}
-	var aux []dateTimeRFC3339
+	var aux []datetime.RFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayDatetimeValueClientGetResponse{}, err
 	}

@@ -9,7 +9,9 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"reflect"
+	"time"
 )
 
 // MarshalJSON implements the json.Marshaller interface for type BytesProperty.
@@ -156,7 +158,7 @@ func (c *CollectionsStringProperty) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type DatetimeProperty.
 func (d DatetimeProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateDateTimeRFC3339(objectMap, "nullableProperty", d.NullableProperty)
+	populateTime[datetime.RFC3339](objectMap, "nullableProperty", d.NullableProperty)
 	populate(objectMap, "requiredProperty", d.RequiredProperty)
 	return json.Marshal(objectMap)
 }
@@ -171,7 +173,7 @@ func (d *DatetimeProperty) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "nullableProperty":
-			err = unpopulateDateTimeRFC3339(val, "NullableProperty", &d.NullableProperty)
+			err = unpopulateTime[datetime.RFC3339](val, "NullableProperty", &d.NullableProperty)
 			delete(rawMsg, key)
 		case "requiredProperty":
 			err = unpopulate(val, "RequiredProperty", &d.RequiredProperty)
@@ -283,6 +285,17 @@ func populate(m map[string]any, k string, v any) {
 	}
 }
 
+func populateTime[T datetime.Constraints](m map[string]any, k string, t *time.Time) {
+	if t == nil {
+		return
+	} else if azcore.IsNullValue(t) {
+		m[k] = nil
+	} else if !reflect.ValueOf(t).IsNil() {
+		newTime := T(*t)
+		m[k] = (*T)(&newTime)
+	}
+}
+
 func populateByteArray[T any](m map[string]any, k string, b []T, convert func() any) {
 	if azcore.IsNullValue(b) {
 		m[k] = nil
@@ -300,5 +313,18 @@ func unpopulate(data json.RawMessage, fn string, v any) error {
 	if err := json.Unmarshal(data, v); err != nil {
 		return fmt.Errorf("struct field %s: %v", fn, err)
 	}
+	return nil
+}
+
+func unpopulateTime[T datetime.Constraints](data json.RawMessage, fn string, t **time.Time) error {
+	if data == nil || string(data) == "null" {
+		return nil
+	}
+	var aux T
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	newTime := time.Time(aux)
+	*t = &newTime
 	return nil
 }

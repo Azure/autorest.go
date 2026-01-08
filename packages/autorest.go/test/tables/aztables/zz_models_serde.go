@@ -10,6 +10,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"reflect"
 	"time"
 )
@@ -19,12 +20,12 @@ func (a AccessPolicy) MarshalXML(enc *xml.Encoder, start xml.StartElement) error
 	type alias AccessPolicy
 	aux := &struct {
 		*alias
-		Expiry *dateTimeRFC3339 `xml:"Expiry"`
-		Start  *dateTimeRFC3339 `xml:"Start"`
+		Expiry *datetime.RFC3339 `xml:"Expiry"`
+		Start  *datetime.RFC3339 `xml:"Start"`
 	}{
 		alias:  (*alias)(&a),
-		Expiry: (*dateTimeRFC3339)(a.Expiry),
-		Start:  (*dateTimeRFC3339)(a.Start),
+		Expiry: (*datetime.RFC3339)(a.Expiry),
+		Start:  (*datetime.RFC3339)(a.Start),
 	}
 	return enc.EncodeElement(aux, start)
 }
@@ -34,8 +35,8 @@ func (a *AccessPolicy) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) er
 	type alias AccessPolicy
 	aux := &struct {
 		*alias
-		Expiry *dateTimeRFC3339 `xml:"Expiry"`
-		Start  *dateTimeRFC3339 `xml:"Start"`
+		Expiry *datetime.RFC3339 `xml:"Expiry"`
+		Start  *datetime.RFC3339 `xml:"Start"`
 	}{
 		alias: (*alias)(a),
 	}
@@ -87,10 +88,10 @@ func (g GeoReplication) MarshalXML(enc *xml.Encoder, start xml.StartElement) err
 	type alias GeoReplication
 	aux := &struct {
 		*alias
-		LastSyncTime *dateTimeRFC1123 `xml:"LastSyncTime"`
+		LastSyncTime *datetime.RFC1123 `xml:"LastSyncTime"`
 	}{
 		alias:        (*alias)(&g),
-		LastSyncTime: (*dateTimeRFC1123)(g.LastSyncTime),
+		LastSyncTime: (*datetime.RFC1123)(g.LastSyncTime),
 	}
 	return enc.EncodeElement(aux, start)
 }
@@ -100,7 +101,7 @@ func (g *GeoReplication) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) 
 	type alias GeoReplication
 	aux := &struct {
 		*alias
-		LastSyncTime *dateTimeRFC1123 `xml:"LastSyncTime"`
+		LastSyncTime *datetime.RFC1123 `xml:"LastSyncTime"`
 	}{
 		alias: (*alias)(g),
 	}

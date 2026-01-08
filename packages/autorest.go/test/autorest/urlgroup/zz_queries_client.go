@@ -489,7 +489,7 @@ func (client *QueriesClient) dateNullCreateRequest(ctx context.Context, options 
 	}
 	reqQP := req.Raw().URL.Query()
 	if options != nil && options.DateQuery != nil {
-		reqQP.Set("dateQuery", options.DateQuery.Format("2006-01-02"))
+		reqQP.Set("dateQuery", options.DateQuery.Format(time.DateOnly))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
