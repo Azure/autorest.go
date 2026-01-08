@@ -500,10 +500,10 @@ function formatHeaderResponseValue(headerResp: go.HeaderScalarResponse | go.Head
           text += `\t\t${name}, err := time.Parse(${headerResp.type.format === 'RFC1123' ? helpers.datetimeRFC1123Format : helpers.datetimeRFC3339Format}, val)\n`;
           break;
         case 'PlainDate':
-          text += `\t\t${name}, err := time.Parse("${helpers.dateFormat}", val)\n`;
+          text += `\t\t${name}, err := time.Parse("${helpers.plainDateFormat}", val)\n`;
           break;
         case 'PlainTime':
-          text += `\t\t${name}, err := time.Parse("${helpers.timeRFC3339Format}", val)\n`;
+          text += `\t\t${name}, err := time.Parse("${helpers.plainTimeFormat}, val)\n`;
           break;
         case 'Unix':
           imports.add('strconv');

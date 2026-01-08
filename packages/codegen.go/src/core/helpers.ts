@@ -12,10 +12,10 @@ import { CodegenError } from './errors.js';
 // variable to be used to determine comment length when calling comment from @azure-tools
 export const commentLength = 120;
 
-export const dateFormat = '2006-01-02';
+export const plainDateFormat = '2006-01-02';
 export const datetimeRFC3339Format = 'time.RFC3339Nano';
 export const datetimeRFC1123Format = 'time.RFC1123';
-export const timeRFC3339Format = '15:04:05.999999999Z07:00';
+export const plainTimeFormat = '15:04:05';
 
 export const doNotEditRegex = /^\/\/ Code generated .* DO NOT EDIT\.$/m;
 
@@ -379,7 +379,7 @@ export function formatValue(paramName: string, type: go.WireType, imports: Impor
           imports.add('time');
           return `${paramName}.Format(${type.format === 'RFC1123' ? datetimeRFC1123Format : datetimeRFC3339Format})`;
         case 'PlainDate':
-          return `${paramName}.Format("${dateFormat}")`;
+          return `${paramName}.Format("${plainDateFormat}")`;
         case 'PlainTime':
           imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
           return `datetime.PlainTime(${star}${paramName}).String()`;
