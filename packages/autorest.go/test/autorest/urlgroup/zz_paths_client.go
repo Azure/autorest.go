@@ -254,7 +254,7 @@ func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time, opt
 // dateNullCreateRequest creates the DateNull request.
 func (client *PathsClient) dateNullCreateRequest(ctx context.Context, datePath time.Time, _ *PathsClientDateNullOptions) (*policy.Request, error) {
 	urlPath := "/paths/date/null/{datePath}"
-	urlPath = strings.ReplaceAll(urlPath, "{datePath}", url.PathEscape(datePath.Format("2006-01-02")))
+	urlPath = strings.ReplaceAll(urlPath, "{datePath}", url.PathEscape(datePath.Format(time.DateOnly)))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err

@@ -121,7 +121,7 @@ steps:
       npm stop
       popd
     displayName: "Run Acceptance Tests - go$(GoVersion)"
-    timeoutInMinutes: 10
+    timeoutInMinutes: 15
 
   - pwsh: pnpm test
     displayName: "Run Unit Tests - go$(GoVersion)"

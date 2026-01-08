@@ -361,7 +361,7 @@ func (s *ServerTransport) dispatchGetScript(req *http.Request) (*http.Response, 
 	if err != nil {
 		return nil, err
 	}
-	headerTimeParam, err := time.Parse("15:04:05", getHeaderValue(req.Header, "headerTime"))
+	headerTimeParam, err := time.Parse(time.TimeOnly, getHeaderValue(req.Header, "headerTime"))
 	if err != nil {
 		return nil, err
 	}
