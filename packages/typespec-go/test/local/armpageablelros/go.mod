@@ -2,7 +2,7 @@ module armpageablelros
 
 go 1.24.0
 
-require github.com/Azure/azure-sdk-for-go/sdk/azcore v1.20.1-0.20260108000812-aee1f5b6ba58
+require github.com/Azure/azure-sdk-for-go/sdk/azcore v1.20.1-0.20260112175848-481e4ab591a3
 
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/internal v1.11.2 // indirect

@@ -105,7 +105,7 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
     serdeImports.add('time');
     serdeImports.add('reflect');
     serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-    serdeTextBody += 'func populateTime[T datetime.Constraints](m map[string]any, k string, t *time.Time) {\n';
+    serdeTextBody += 'func populateTime[T dateTimeConstraints](m map[string]any, k string, t *time.Time) {\n';
     serdeTextBody += '\tif t == nil {\n';
     serdeTextBody += '\t\treturn\n';
     serdeTextBody += '\t} else if azcore.IsNullValue(t) {\n';
@@ -156,7 +156,7 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
   if (needsJSONUnpopulateTime) {
     serdeImports.add('fmt');
     serdeImports.add('time');
-    serdeTextBody += 'func unpopulateTime[T datetime.Constraints](data json.RawMessage, fn string, t **time.Time) error {\n';
+    serdeTextBody += 'func unpopulateTime[T dateTimeConstraints](data json.RawMessage, fn string, t **time.Time) error {\n';
     serdeTextBody += '\tif data == nil || string(data) == "null" {\n';
     serdeTextBody += '\t\treturn nil\n';
     serdeTextBody += '\t}\n';
@@ -175,6 +175,11 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
     serdeTextBody += '\tdata, err := json.Marshal(v)\n';
     serdeTextBody += '\tif err != nil {\n\t\treturn err\n\t}\n';
     serdeTextBody += '\tm[k] = data\n\treturn nil\n';
+    serdeTextBody += '}\n\n';
+  }
+  if (needsJSONUnpopulateTime || needsJSONPopulateTime) {
+    serdeTextBody += `type dateTimeConstraints interface {\n`;
+    serdeTextBody += `\tdatetime.PlainDate | datetime.PlainTime | datetime.RFC1123 | datetime.RFC3339 | datetime.Unix\n`;
     serdeTextBody += '}\n\n';
   }
   let serdeText = '';

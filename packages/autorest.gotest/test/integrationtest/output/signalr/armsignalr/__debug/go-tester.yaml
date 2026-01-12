@@ -20640,7 +20640,6 @@ language:
     name: SignalRManagementClient
     description: ''
     azureARM: true
-    generateDateTimeRFC3339Helper: true
     groupParameters: true
     headAsBoolean: true
     module: github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/signalr/armsignalr

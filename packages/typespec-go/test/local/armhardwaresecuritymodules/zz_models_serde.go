@@ -1568,7 +1568,7 @@ func populate(m map[string]any, k string, v any) {
 	}
 }
 
-func populateTime[T datetime.Constraints](m map[string]any, k string, t *time.Time) {
+func populateTime[T dateTimeConstraints](m map[string]any, k string, t *time.Time) {
 	if t == nil {
 		return
 	} else if azcore.IsNullValue(t) {
@@ -1599,7 +1599,7 @@ func unpopulate(data json.RawMessage, fn string, v any) error {
 	return nil
 }
 
-func unpopulateTime[T datetime.Constraints](data json.RawMessage, fn string, t **time.Time) error {
+func unpopulateTime[T dateTimeConstraints](data json.RawMessage, fn string, t **time.Time) error {
 	if data == nil || string(data) == "null" {
 		return nil
 	}
@@ -1610,4 +1610,8 @@ func unpopulateTime[T datetime.Constraints](data json.RawMessage, fn string, t *
 	newTime := time.Time(aux)
 	*t = &newTime
 	return nil
+}
+
+type dateTimeConstraints interface {
+	datetime.PlainDate | datetime.PlainTime | datetime.RFC1123 | datetime.RFC3339 | datetime.Unix
 }

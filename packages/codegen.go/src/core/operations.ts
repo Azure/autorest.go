@@ -1076,7 +1076,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
         body = `wrapper{${fieldName}: ${addr}${body}}`;
       } else if (bodyParam.type.kind === 'time' && bodyParam.type.format !== 'RFC3339') {
         // wrap the body in the internal time type
-        // no need for dateTimeRFC3339 as the JSON marshaler defaults to that.
+        // no need for RFC3339 as the JSON marshaler defaults to that.
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
         body = `datetime.${bodyParam.type.format}(${body})`;
       } else if (isArrayOfDateTimeForMarshalling(bodyParam.type)) {

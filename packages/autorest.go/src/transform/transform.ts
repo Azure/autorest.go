@@ -305,23 +305,16 @@ function schemaTypeToGoType(codeModel: m4.CodeModel, schema: m4.Schema, type: 'P
       } else {
         schema.language.go!.internalTimeType = 'RFC3339';
       }
-      if (type === 'InBody') {
-        // add a marker to the code model indicating that we need
-        // to include support for marshalling/unmarshalling time.
-        // header/query param values are parsed separately so they
-        // don't need the custom time types.
-        if (dateTime.format === 'date-time-rfc1123') {
-          codeModel.language.go!.generateDateTimeRFC1123Helper = true;
-        } else {
-          codeModel.language.go!.generateDateTimeRFC3339Helper = true;
-        }
-      }
       return 'time.Time';
     }
     case m4.SchemaType.UnixTime:
-      // unix time always requires the helper time type
-      codeModel.language.go!.generateUnixTimeHelper = true;
       schema.language.go!.internalTimeType = 'Unix';
+      return 'time.Time';
+    case m4.SchemaType.Date:
+      schema.language.go!.internalTimeType = 'PlainDate';
+      return 'time.Time';
+    case m4.SchemaType.Time:
+      schema.language.go!.internalTimeType = 'PlainTime';
       return 'time.Time';
     case m4.SchemaType.Dictionary: {
       const dictSchema = <m4.DictionarySchema>schema;
@@ -354,18 +347,6 @@ function schemaTypeToGoType(codeModel: m4.CodeModel, schema: m4.Schema, type: 'P
     case m4.SchemaType.Uuid:
     case m4.SchemaType.Uri:
       return 'string';
-    case m4.SchemaType.Date:
-      schema.language.go!.internalTimeType = 'PlainDate';
-      if (type === 'InBody') {
-        codeModel.language.go!.generateDateHelper = true;
-      }
-      return 'time.Time';
-    case m4.SchemaType.Time:
-      schema.language.go!.internalTimeType = 'PlainTime';
-      if (type === 'InBody') {
-        codeModel.language.go!.generateTimeRFC3339Helper = true;
-      }
-      return 'time.Time';
     case m4.SchemaType.Choice:
     case m4.SchemaType.SealedChoice:
     case m4.SchemaType.Object:
