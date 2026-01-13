@@ -509,7 +509,7 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
               let bodyTypeName = go.getTypeDeclaration(bodyParam.type, pkg);
               if (bodyParam.type.kind === 'time') {
                 imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
-                bodyTypeName = `datetime.${capitalize(bodyParam.type.format)}`;
+                bodyTypeName = `datetime.${bodyParam.type.format}`;
               }
               content += `\tbody, err := server.UnmarshalRequestAs${bodyParam.bodyFormat}[${bodyTypeName}](req)\n`;
               content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
