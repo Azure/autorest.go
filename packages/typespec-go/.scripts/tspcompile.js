@@ -105,7 +105,7 @@ const azureHttpSpecsGroup = {
   'commonpropsgroup': ['azure/resource-manager/common-properties'],
   'resources': ['azure/resource-manager/resources', 'factory-gather-all-params=false'],
   'nonresourcegroup' : ['azure/resource-manager/non-resource'],
-  'templatesgroup' : ['azure/resource-manager/operation-templates'],
+  // 'templatesgroup' : ['azure/resource-manager/operation-templates'], // https://github.com/Azure/autorest.go/issues/1822
   'largeheadergroup' : ['azure/resource-manager/large-header'],
   'methodsubscriptionidgroup' : ['/azure/resource-manager/method-subscription-id/client.tsp'],
   'armmultipleservicegroup' : ['/azure/resource-manager/multi-service/client.tsp'],
