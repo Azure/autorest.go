@@ -34,6 +34,12 @@ type LroClientBeginExportOptions struct {
 	ResumeToken string
 }
 
+// LroPagingClientBeginPostPagingLroOptions contains the optional parameters for the LroPagingClient.BeginPostPagingLro method.
+type LroPagingClientBeginPostPagingLroOptions struct {
+	// Resumes the long-running operation from the provided token.
+	ResumeToken string
+}
+
 // OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
 	// placeholder for future optional parameters

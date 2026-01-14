@@ -684,7 +684,7 @@ type operation struct {
 	Origin *origin
 }
 
-// operationDisplay - Localized display information for and operation.
+// operationDisplay - Localized display information for an operation.
 type operationDisplay struct {
 	// READ-ONLY; The short, localized friendly description of the operation; suitable for tool tips and detailed views.
 	Description *string

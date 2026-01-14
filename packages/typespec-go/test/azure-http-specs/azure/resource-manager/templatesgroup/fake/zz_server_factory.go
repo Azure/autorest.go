@@ -21,6 +21,9 @@ type ServerFactory struct {
 	// LroServer contains the fakes for client LroClient
 	LroServer LroServer
 
+	// LroPagingServer contains the fakes for client LroPagingClient
+	LroPagingServer LroPagingServer
+
 	// OperationsServer contains the fakes for client OperationsClient
 	OperationsServer OperationsServer
 
@@ -44,6 +47,7 @@ type ServerFactoryTransport struct {
 	trMu                          sync.Mutex
 	trCheckNameAvailabilityServer *CheckNameAvailabilityServerTransport
 	trLroServer                   *LroServerTransport
+	trLroPagingServer             *LroPagingServerTransport
 	trOperationsServer            *OperationsServerTransport
 	trOptionalBodyServer          *OptionalBodyServerTransport
 }
@@ -69,6 +73,9 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	case "LroClient":
 		initServer(s, &s.trLroServer, func() *LroServerTransport { return NewLroServerTransport(&s.srv.LroServer) })
 		resp, err = s.trLroServer.Do(req)
+	case "LroPagingClient":
+		initServer(s, &s.trLroPagingServer, func() *LroPagingServerTransport { return NewLroPagingServerTransport(&s.srv.LroPagingServer) })
+		resp, err = s.trLroPagingServer.Do(req)
 	case "OperationsClient":
 		initServer(s, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
 		resp, err = s.trOperationsServer.Do(req)

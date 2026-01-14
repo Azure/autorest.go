@@ -1050,8 +1050,13 @@ export class ClientAdapter {
     // for paged methods, tcgc models the method response type as an Array<T>.
     // however, we want the synthesized paged response envelope as that's what Go returns.
     if (sdkMethod.kind === 'lropaging' || sdkMethod.kind === 'paging') {
-      // grab the paged response envelope type from the first response
-      sdkResponseType = sdkMethod.operation.responses[0].type;
+      // grab the paged response envelope type from the operation responses
+      for (const httpResp of sdkMethod.operation.responses) {
+        if (httpResp.type) {
+          sdkResponseType = httpResp.type;
+          break;
+        }
+      }
       if (!sdkResponseType) {
         throw new AdapterError('InternalError', `paged method ${method.name} has no synthesized response type`, sdkMethod.__raw?.node);
       } else if (sdkResponseType.kind !== 'model') {

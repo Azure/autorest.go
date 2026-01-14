@@ -89,7 +89,7 @@ type Operation struct {
 	Origin *Origin
 }
 
-// OperationDisplay - Localized display information for and operation.
+// OperationDisplay - Localized display information for an operation.
 type OperationDisplay struct {
 	// READ-ONLY; The short, localized friendly description of the operation; suitable for tool tips and detailed views.
 	Description *string
@@ -146,6 +146,47 @@ type OrderProperties struct {
 	Amount *int32
 
 	// REQUIRED; The product ID of the order.
+	ProductID *string
+
+	// READ-ONLY; The provisioning state of the product.
+	ProvisioningState *string
+}
+
+// Product - Concrete tracked resource types can be created by aliasing this type using a specific property type.
+type Product struct {
+	// REQUIRED; The geo-location where the resource lives
+	Location *string
+
+	// The resource-specific properties for this resource.
+	Properties *ProductProperties
+
+	// Resource tags.
+	Tags map[string]*string
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; The name of the resource
+	Name *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+// ProductListResult - Paged collection of Product items
+type ProductListResult struct {
+	// REQUIRED; The Product items on this page
+	Value []*Product
+
+	// The link to the next page of items
+	NextLink *string
+}
+
+type ProductProperties struct {
+	// The product ID.
 	ProductID *string
 
 	// READ-ONLY; The provisioning state of the product.
