@@ -1,5 +1,11 @@
 # Release History
 
+## 0.9.1 (unreleased)
+
+### Bugs Fixed
+
+* Fixed name collision issue when a union type and a model type have the same name after package prefix trimming.
+
 ## 0.9.0 (2026-01-06)
 
 ### Breaking Changes
