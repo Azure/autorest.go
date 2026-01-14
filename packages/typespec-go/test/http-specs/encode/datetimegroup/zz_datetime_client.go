@@ -42,31 +42,31 @@ func NewDatetimeClientWithNoCredential(endpoint string, options *DatetimeClientO
 // NewDatetimeHeaderClient creates a new instance of [DatetimeHeaderClient].
 func (client *DatetimeClient) NewDatetimeHeaderClient() *DatetimeHeaderClient {
 	return &DatetimeHeaderClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewDatetimePropertyClient creates a new instance of [DatetimePropertyClient].
 func (client *DatetimeClient) NewDatetimePropertyClient() *DatetimePropertyClient {
 	return &DatetimePropertyClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewDatetimeQueryClient creates a new instance of [DatetimeQueryClient].
 func (client *DatetimeClient) NewDatetimeQueryClient() *DatetimeQueryClient {
 	return &DatetimeQueryClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewDatetimeResponseHeaderClient creates a new instance of [DatetimeResponseHeaderClient].
 func (client *DatetimeClient) NewDatetimeResponseHeaderClient() *DatetimeResponseHeaderClient {
 	return &DatetimeResponseHeaderClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

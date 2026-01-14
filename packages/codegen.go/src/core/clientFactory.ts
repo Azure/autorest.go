@@ -7,22 +7,30 @@ import * as go from '../../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 
-// Creates the content for client_factory.go (ARM only)
-export function generateClientFactory(codeModel: go.CodeModel): string {
+/**
+ * Creates the content for client_factory.go file.
+ * For non-ARM targets, the empty string is returned.
+ * 
+ * @param pkg contains the package content
+ * @param target the codegen target for the package
+ * @param options the emitter options
+ * @returns the text for the file or the empty string
+ */
+export function generateClientFactory(pkg: go.PackageContent, target: go.CodeModelType, options: go.Options): string {
   // generate client factory only for ARM
-  if (codeModel.type !== 'azure-arm' || codeModel.clients.length === 0) {
+  if (target !== 'azure-arm' || pkg.clients.length === 0) {
     return '';
   }
 
   let result = '';
   // the list of packages to import
-  const imports = new ImportManager();
+  const imports = new ImportManager(pkg);
 
   let clientFactoryParams:  Array<go.ClientParameter>;
-  if (codeModel.options.factoryGatherAllParams) {
-    clientFactoryParams =  helpers.getAllClientParameters(codeModel);
+  if (options.factoryGatherAllParams) {
+    clientFactoryParams =  helpers.getAllClientParameters(pkg, target);
   } else {
-    clientFactoryParams = helpers.getCommonClientParameters(codeModel);
+    clientFactoryParams = helpers.getCommonClientParameters(pkg, target);
   }
 
   const clientFactoryParamsMap = new Map<string, go.ClientParameter>();
@@ -40,7 +48,7 @@ export function generateClientFactory(codeModel: go.CodeModel): string {
       // credentials aren't persisted on the client
       continue;
     }
-    result += `\t${clientParam.name} ${helpers.formatParameterTypeName(clientParam)}\n`;
+    result += `\t${clientParam.name} ${helpers.formatParameterTypeName(pkg, clientParam)}\n`;
   }
   result += '\tinternal *arm.Client\n';
   result += '}\n\n';
@@ -55,7 +63,7 @@ export function generateClientFactory(codeModel: go.CodeModel): string {
   result += helpers.formatCommentAsBulletItem('credential', {summary: 'used to authorize requests. Usually a credential from azidentity.'});
   result += helpers.formatCommentAsBulletItem('options', {summary: 'pass nil to accept the default values.'});
 
-  result += `func NewClientFactory(${clientFactoryParams.map(param => { return `${param.name} ${helpers.formatParameterTypeName(param)}`; }).join(', ')}${clientFactoryParams.length>0 ? ',' : ''} options *arm.ClientOptions) (*ClientFactory, error) {\n`;
+  result += `func NewClientFactory(${clientFactoryParams.map(param => { return `${param.name} ${helpers.formatParameterTypeName(pkg, param)}`; }).join(', ')}${clientFactoryParams.length>0 ? ',' : ''} options *arm.ClientOptions) (*ClientFactory, error) {\n`;
   result += '\tinternal, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
   result += '\tif err != nil {\n';
   result += '\t\treturn nil, err\n';
@@ -73,7 +81,7 @@ export function generateClientFactory(codeModel: go.CodeModel): string {
   result += '}\n\n';
 
   // add new sub client method for all operation groups
-  for (const client of codeModel.clients) {
+  for (const client of pkg.clients) {
     const clientPrivateParams = new Array<go.ClientParameter>();
     const clientCommonParams = new Array<go.ClientParameter>();
     if (client.instance?.kind === 'constructable') {
@@ -95,7 +103,7 @@ export function generateClientFactory(codeModel: go.CodeModel): string {
     result += `func (c *ClientFactory) ${ctorName}(`;
     if (clientPrivateParams.length > 0) {
       result += `${clientPrivateParams.map(param => { 
-        return `${param.name} ${helpers.formatParameterTypeName(param)}`; 
+        return `${param.name} ${helpers.formatParameterTypeName(pkg, param)}`; 
       }).join(', ')}`;
     }
     result += `) *${client.name} {\n`;
@@ -119,6 +127,6 @@ export function generateClientFactory(codeModel: go.CodeModel): string {
     result += '}\n\n';
   }
 
-  result = helpers.contentPreamble(codeModel.packageName) + imports.text() + result;
+  result = helpers.contentPreamble(pkg) + imports.text() + result;
   return result;
 }

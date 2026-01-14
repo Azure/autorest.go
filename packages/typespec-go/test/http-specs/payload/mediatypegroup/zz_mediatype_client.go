@@ -42,7 +42,7 @@ func NewMediaTypeClientWithNoCredential(endpoint string, options *MediaTypeClien
 // NewMediaTypeStringBodyClient creates a new instance of [MediaTypeStringBodyClient].
 func (client *MediaTypeClient) NewMediaTypeStringBodyClient() *MediaTypeStringBodyClient {
 	return &MediaTypeStringBodyClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

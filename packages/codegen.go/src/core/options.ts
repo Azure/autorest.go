@@ -9,18 +9,23 @@ import * as go from '../../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 
-// Creates the content in options.go
-export function generateOptions(codeModel: go.CodeModel): string {
-  if (codeModel.paramGroups.length === 0) {
+/**
+ * Creates the content for the options.go file.
+ * 
+ * @param pkg contains the package content
+ * @returns the text for the file or the empty string
+ */
+export function generateOptions(pkg: go.PackageContent): string {
+  if (pkg.paramGroups.length === 0) {
     return '';
   }
 
-  const imports = new ImportManager();
-  let optionsText = helpers.contentPreamble(codeModel.packageName);
+  const imports = new ImportManager(pkg);
+  let optionsText = helpers.contentPreamble(pkg);
   let content = '';
 
-  for (const paramGroup of values(codeModel.paramGroups)) {
-    content += emit(paramGroup, imports);
+  for (const paramGroup of pkg.paramGroups) {
+    content += emit(pkg, paramGroup, imports);
   }
 
   optionsText += imports.text();
@@ -28,7 +33,15 @@ export function generateOptions(codeModel: go.CodeModel): string {
   return optionsText;
 }
 
-function emit(struct: go.Struct, imports: ImportManager): string {
+/**
+ * emits the options type definition
+ * 
+ * @param pkg the package to contain the options type
+ * @param struct the options type definition
+ * @param imports the import manager currently in scope
+ * @returns the text for the options type definition
+ */
+function emit(pkg: go.PackageContent, struct: go.Struct, imports: ImportManager): string {
   let text = helpers.formatDocComment(struct.docs);
   text += `type ${struct.name} struct {\n`;
 
@@ -40,7 +53,7 @@ function emit(struct: go.Struct, imports: ImportManager): string {
     let first = true;
 
     for (const field of values(struct.fields)) {
-      imports.addImportForType(field.type);
+      imports.addForType(field.type);
       if (field.docs.summary || field.docs.description) {
         if (!first) {
           // add an extra new-line between fields IFF the field
@@ -50,7 +63,7 @@ function emit(struct: go.Struct, imports: ImportManager): string {
         text += helpers.formatDocComment(field.docs);
       }
 
-      let typeName = go.getTypeDeclaration(field.type);
+      let typeName = go.getTypeDeclaration(field.type, pkg);
       if (field.type.kind === 'literal') {
         // for constants we use the underlying type name
         typeName = go.getLiteralTypeDeclaration(field.type.type);

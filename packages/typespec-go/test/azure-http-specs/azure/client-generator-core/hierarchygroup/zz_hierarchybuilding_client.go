@@ -42,23 +42,23 @@ func NewHierarchyBuildingClientWithNoCredential(endpoint string, options *Hierar
 // NewHierarchyBuildingAnimalOperationsClient creates a new instance of [HierarchyBuildingAnimalOperationsClient].
 func (client *HierarchyBuildingClient) NewHierarchyBuildingAnimalOperationsClient() *HierarchyBuildingAnimalOperationsClient {
 	return &HierarchyBuildingAnimalOperationsClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewHierarchyBuildingDogOperationsClient creates a new instance of [HierarchyBuildingDogOperationsClient].
 func (client *HierarchyBuildingClient) NewHierarchyBuildingDogOperationsClient() *HierarchyBuildingDogOperationsClient {
 	return &HierarchyBuildingDogOperationsClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewHierarchyBuildingPetOperationsClient creates a new instance of [HierarchyBuildingPetOperationsClient].
 func (client *HierarchyBuildingClient) NewHierarchyBuildingPetOperationsClient() *HierarchyBuildingPetOperationsClient {
 	return &HierarchyBuildingPetOperationsClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

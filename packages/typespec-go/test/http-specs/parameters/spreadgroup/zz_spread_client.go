@@ -42,15 +42,15 @@ func NewSpreadClientWithNoCredential(endpoint string, options *SpreadClientOptio
 // NewSpreadAliasClient creates a new instance of [SpreadAliasClient].
 func (client *SpreadClient) NewSpreadAliasClient() *SpreadAliasClient {
 	return &SpreadAliasClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewSpreadModelClient creates a new instance of [SpreadModelClient].
 func (client *SpreadClient) NewSpreadModelClient() *SpreadModelClient {
 	return &SpreadModelClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

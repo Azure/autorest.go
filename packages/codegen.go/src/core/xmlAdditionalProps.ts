@@ -4,16 +4,20 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as go from '../../../codemodel.go/src/index.js';
-import { contentPreamble, getSerDeFormat } from './helpers.js';
+import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 
-// Creates the content for required additional properties XML marshalling helpers.
-// Will be empty if no helpers are required.
-export function generateXMLAdditionalPropsHelpers(codeModel: go.CodeModel): string {
+/**
+ * Creates the content for the required additional properties XML marshalling helpers.
+ * 
+ * @param pkg contains the package content
+ * @returns the text for the file or the empty string
+ */
+export function generateXMLAdditionalPropsHelpers(pkg: go.PackageContent): string {
   // check if any models need this helper
   let required = false;
-  for (const model of codeModel.models) {
-    if (getSerDeFormat(model, codeModel) !== 'XML') {
+  for (const model of pkg.models) {
+    if (helpers.getSerDeFormat(model, pkg) !== 'XML') {
       continue;
     }
     for (const field of model.fields) {
@@ -31,9 +35,9 @@ export function generateXMLAdditionalPropsHelpers(codeModel: go.CodeModel): stri
     return '';
   }
 
-  let text = contentPreamble(codeModel.packageName);
+  let text = helpers.contentPreamble(pkg);
   // add standard imports
-  const imports = new ImportManager();
+  const imports = new ImportManager(pkg);
   imports.add('encoding/xml');
   imports.add('errors');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');

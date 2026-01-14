@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { GoEmitterOptions } from './lib.js';
-import { tcgcToGoCodeModel } from './tcgcadapter/adapter.js';
+import { Adapter, ExternalError } from './tcgcadapter/adapter.js';
 import { AdapterError } from './tcgcadapter/errors.js';
 import { CodeModelError } from '../../codemodel.go/src/errors.js';
 import * as codegen from '../../codegen.go/src/index.js';
@@ -18,7 +18,9 @@ import { execSync } from 'child_process';
 
 export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   try {
-    const codeModel = await tcgcToGoCodeModel(context);
+    const adapter = await Adapter.create(context);
+    const codeModel = adapter.tcgcToGoCodeModel();
+
     await mkdir(context.emitterOutputDir, { recursive: true });
 
     // clean up existing generated Go files
@@ -160,6 +162,11 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
           stack: error.stack ? truncateStack(error.stack, 'generate(') : 'Stack trace unavailable\n',
         },
       });
+    } else if (error instanceof ExternalError) {
+      // we don't want to throw in this case as that will
+      // make it appear as if the emitter crashed. just
+      // exit so the diagnostic error isn't lost in the noise
+      return;
     } else {
       throw error;
     }

@@ -5,7 +5,7 @@
 
 import { values } from '@azure-tools/linq';
 import * as go from '../../../codemodel.go/src/index.js';
-import { contentPreamble, getSerDeFormat, recursiveUnwrapMapSlice } from './helpers.js';
+import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 import { CodegenError } from './errors.js';
 
@@ -20,9 +20,13 @@ export class Content {
   }
 }
 
-// Creates the content for required time marshalling helpers.
-// Will be empty if no helpers are required.
-export function generateTimeHelpers(codeModel: go.CodeModel, packageName?: string): Array<Content> {
+/**
+ * Creates the content for the required time marshalling helpers.
+ * 
+ * @param pkg contains the package content
+ * @returns the text for the file or the empty string
+ */
+export function generateTimeHelpers(pkg: go.FakePackage | go.PackageContent): Array<Content> {
   let needsDateHelper = false;
   let needsDateTimeRFC1123Helper = false;
   let needsDateTimeRFC3339Helper = false;
@@ -57,11 +61,11 @@ export function generateTimeHelpers(codeModel: go.CodeModel, packageName?: strin
   // find the required helpers.
   // for most packages, we must check params, response envelopes, and models
   // for fakes, we check a subset
-  if (packageName !== 'fake') {
-    for (const client of codeModel.clients) {
+  if (pkg.kind !== 'fake') {
+    for (const client of pkg.clients) {
       for (const method of client.methods) {
         for (const param of method.parameters) {
-          const unwrappedParam = recursiveUnwrapMapSlice(param.type);
+          const unwrappedParam = helpers.recursiveUnwrapMapSlice(param.type);
           if (unwrappedParam.kind !== 'time') {
             continue;
           }
@@ -76,13 +80,13 @@ export function generateTimeHelpers(codeModel: go.CodeModel, packageName?: strin
       }
     }
 
-    for (const model of codeModel.models) {
+    for (const model of pkg.models) {
       for (const field of values(model.fields)) {
-        const unwrappedField = recursiveUnwrapMapSlice(field.type);
+        const unwrappedField = helpers.recursiveUnwrapMapSlice(field.type);
         if (unwrappedField.kind !== 'time') {
           continue;
         }
-        if (getSerDeFormat(model, codeModel) === 'JSON') {
+        if (helpers.getSerDeFormat(model, pkg) === 'JSON') {
           // needsSerDeHelpers helpers are for JSON only
           needsSerDeHelpers = true;
         }
@@ -90,11 +94,11 @@ export function generateTimeHelpers(codeModel: go.CodeModel, packageName?: strin
       }
     }
 
-    for (const respEnv of codeModel.responseEnvelopes) {
+    for (const respEnv of pkg.responseEnvelopes) {
       if (!respEnv.result || respEnv.result.kind !== 'monomorphicResult' || respEnv.result.format !== 'JSON') {
         continue;
       }
-      const unwrappedResult = recursiveUnwrapMapSlice(respEnv.result.monomorphicType);
+      const unwrappedResult = helpers.recursiveUnwrapMapSlice(respEnv.result.monomorphicType);
       if (unwrappedResult.kind !== 'time') {
         continue;
       }
@@ -103,7 +107,7 @@ export function generateTimeHelpers(codeModel: go.CodeModel, packageName?: strin
   } else {
 	// for fakes, only need to check the if the body params are of type time.Time.
 	// otherwise, the conversion happens in place
-    for (const client of codeModel.clients) {
+    for (const client of pkg.parent.clients) {
       for (const method of client.methods) {
         for (const param of method.parameters) {
           if (param.kind === 'bodyParam' && param.type.kind === 'time') {
@@ -113,7 +117,7 @@ export function generateTimeHelpers(codeModel: go.CodeModel, packageName?: strin
       }
     }
 
-    for (const respEnv of codeModel.responseEnvelopes) {
+    for (const respEnv of pkg.parent.responseEnvelopes) {
       for (const header of respEnv.headers) {
         // for header/path/query params, the conversion happens in place. the only
         // exceptions are for timeRFC3339 and timeUnix
@@ -136,24 +140,32 @@ export function generateTimeHelpers(codeModel: go.CodeModel, packageName?: strin
     return content;
   }
 
-  const preamble = contentPreamble(packageName ?? codeModel.packageName, true);
+  const preamble = helpers.contentPreamble(pkg, true);
   if (needsDateTimeRFC1123Helper) {
-    content.push(new Content('time_rfc1123', generateRFC1123Helper(preamble, needsSerDeHelpers)));
+    content.push(new Content('time_rfc1123', generateRFC1123Helper(pkg, preamble, needsSerDeHelpers)));
   }
   if (needsDateTimeRFC3339Helper || needsTimeRFC3339Helper) {
-    content.push(new Content('time_rfc3339', generateRFC3339Helper(preamble, needsDateTimeRFC3339Helper, needsTimeRFC3339Helper, needsSerDeHelpers)));
+    content.push(new Content('time_rfc3339', generateRFC3339Helper(pkg, preamble, needsDateTimeRFC3339Helper, needsTimeRFC3339Helper, needsSerDeHelpers)));
   }
   if (needsUnixTimeHelper) {
-    content.push(new Content('time_unix', generateUnixTimeHelper(preamble, needsSerDeHelpers)));
+    content.push(new Content('time_unix', generateUnixTimeHelper(pkg, preamble, needsSerDeHelpers)));
   }
   if (needsDateHelper) {
-    content.push(new Content('date_type', generateDateHelper(preamble, needsSerDeHelpers)));
+    content.push(new Content('date_type', generateDateHelper(pkg, preamble, needsSerDeHelpers)));
   }
   return content;
 }
 
-function generateRFC1123Helper(preamble: string, needsPopulate: boolean): string {
-  const imports = new ImportManager();
+/**
+ * generates the content for the RFC1123 helpers file
+ * 
+ * @param pkg the package to contain the helpers
+ * @param preamble the content preamble for the file
+ * @param needsPopulate indicates that the populate helper is required
+ * @returns the text for the RFC1123 helper file
+ */
+function generateRFC1123Helper(pkg: go.FakePackage | go.PackageContent, preamble: string, needsPopulate: boolean): string {
+  const imports = new ImportManager(pkg);
   imports.add('strings');
   imports.add('time');
   if (needsPopulate) {
@@ -233,8 +245,18 @@ func unpopulateDateTimeRFC1123(data json.RawMessage, fn string, t **time.Time) e
   return text;
 }
 
-function generateRFC3339Helper(preamble: string, dateTime: boolean, time: boolean, needsPopulate: boolean): string {
-  const imports = new ImportManager();
+/**
+ * generates the content for the RFC3339 helpers file
+ * 
+ * @param pkg the package to contain the helpers
+ * @param preamble the content preamble for the file
+ * @param dateTime indicates if the helper for date-time is required
+ * @param time indicates if the helper for time-only is required
+ * @param needsPopulate indicates that the populate helper is required
+ * @returns the text for the RFC3339 helper file
+ */
+function generateRFC3339Helper(pkg: go.FakePackage | go.PackageContent, preamble: string, dateTime: boolean, time: boolean, needsPopulate: boolean): string {
+  const imports = new ImportManager(pkg);
   imports.add('regexp');
   imports.add('strings');
   imports.add('time');
@@ -434,8 +456,16 @@ func unpopulateTimeRFC3339(data json.RawMessage, fn string, t **time.Time) error
   return text;
 }
 
-function generateUnixTimeHelper(preamble: string, needsPopulate: boolean): string {
-  const imports = new ImportManager();
+/**
+ * generates the content for the Unix time helpers file
+ * 
+ * @param pkg the package to contain the helpers
+ * @param preamble the content preamble for the file
+ * @param needsPopulate indicates that the populate helper is required
+ * @returns the text for the Unix time helper file
+ */
+function generateUnixTimeHelper(pkg: go.FakePackage | go.PackageContent, preamble: string, needsPopulate: boolean): string {
+  const imports = new ImportManager(pkg);
   imports.add('encoding/json');
   imports.add('fmt');
   imports.add('time');
@@ -497,8 +527,16 @@ func unpopulateTimeUnix(data json.RawMessage, fn string, t **time.Time) error {
   return text;
 }
 
-function generateDateHelper(preamble: string, needsPopulate: boolean): string {
-  const imports = new ImportManager();
+/**
+ * generates the content for the date-only helpers file
+ * 
+ * @param pkg the package to contain the helpers
+ * @param preamble the content preamble for the file
+ * @param needsPopulate indicates that the populate helper is required
+ * @returns the text for the date-only time helper file
+ */
+function generateDateHelper(pkg: go.FakePackage | go.PackageContent, preamble: string, needsPopulate: boolean): string {
+  const imports = new ImportManager(pkg);
   imports.add('fmt');
   imports.add('time');
   if (needsPopulate) {

@@ -1,6 +1,44 @@
 # Release History
 
-## 0.8.7 (unreleased)
+## 0.9.1 (unreleased)
+
+### Bugs Fixed
+
+* Fixed name collision issue when a union type and a model type have the same name after package prefix trimming.
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
+
+## 0.9.0 (2026-01-06)
+
+### Breaking Changes
+
+* Optional streaming bodies are no longer forced to be required.
+
+### Bugs Fixed
+
+* Fixed incorrect package name when module version is greater than v1.
+
+### Features Added
+
+* Added support for client initializers with parameters.
+
+### Other Changes
+
+* Updated to the latest TCGC to support multiple services and add related tests.
+
+## 0.8.8 (2025-12-17)
+
+### Bugs Fixed
+
+* Fixed mismatch for LRO polling headers in example generation.
+
+### Features Added
+
+* Added support for pageable LROs.
+
+## 0.8.7 (2025-12-10)
 
 ### Bugs Fixed
 

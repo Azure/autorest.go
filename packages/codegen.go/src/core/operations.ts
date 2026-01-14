@@ -22,17 +22,24 @@ export class OperationGroupContent {
   }
 }
 
-// Creates the content for all <operation>.go files
-export function generateOperations(codeModel: go.CodeModel): Array<OperationGroupContent> {
+/**
+ * Creates the content for all the *_client.go files.
+ * 
+ * @param pkg contains the package content
+ * @param target the codegen target for the module
+ * @param options the emitter options
+ * @returns the text for the files or the empty string
+ */
+export function generateOperations(pkg: go.PackageContent, target: go.CodeModelType, options: go.Options): Array<OperationGroupContent> {
   // generate protocol operations
   const operations = new Array<OperationGroupContent>();
-  if (codeModel.clients.length === 0) {
+  if (pkg.clients.length === 0) {
     return operations;
   }
-  const azureARM = codeModel.type === 'azure-arm';
-  for (const client of codeModel.clients) {
+  const azureARM = target === 'azure-arm';
+  for (const client of pkg.clients) {
     // the list of packages to import
-    const imports = new ImportManager();
+    const imports = new ImportManager(pkg);
     if (client.methods.length > 0) {
       // add standard imports for clients with methods.
       // clients that are purely hierarchical (i.e. having no APIs) won't need them.
@@ -53,7 +60,7 @@ export function generateOperations(codeModel: go.CodeModel): Array<OperationGrou
       // find the accessor method
       let accessorMethod: string | undefined;
       for (const clientAccessor of client.parent.clientAccessors) {
-        if (clientAccessor.subClient === client) {
+        if (clientAccessor.returns === client) {
           accessorMethod = clientAccessor.name;
           break;
         }
@@ -92,9 +99,9 @@ export function generateOperations(codeModel: go.CodeModel): Array<OperationGrou
         }
         clientText += `\t${clientParam.name} `;
         if (!isParamPointer(clientParam)) {
-          clientText += `${go.getTypeDeclaration(clientParam.type)}\n`;
+          clientText += `${go.getTypeDeclaration(clientParam.type, client.pkg)}\n`;
         } else {
-          clientText += `${helpers.formatParameterTypeName(clientParam)}\n`;
+          clientText += `${helpers.formatParameterTypeName(client.pkg, clientParam)}\n`;
         }
         if (!go.isRequiredParameter(clientParam.style)) {
           optionalParams.push(clientParam);
@@ -105,21 +112,36 @@ export function generateOperations(codeModel: go.CodeModel): Array<OperationGrou
     // end of client definition
     clientText += '}\n\n';
 
-    clientText += generateConstructors(client, codeModel.type, imports);
+    clientText += generateConstructors(client, target, imports);
 
     // generate client accessors and operations
     let opText = '';
     for (const clientAccessor of client.clientAccessors) {
-      opText += `// ${clientAccessor.name} creates a new instance of [${clientAccessor.subClient.name}].\n`;
-      opText += `func (client *${client.name}) ${clientAccessor.name}() *${clientAccessor.subClient.name} {\n`;
-      opText += `\treturn &${clientAccessor.subClient.name}{\n`;
-      opText += '\t\tinternal: client.internal,\n';
+      imports.addForType(clientAccessor.returns);
+      const subClientDecl = go.getTypeDeclaration(clientAccessor.returns, pkg);
+      opText += helpers.formatDocComment(clientAccessor.docs);
+      opText += `func (client *${client.name}) ${clientAccessor.name}(${getAPIParametersSig(clientAccessor, imports)}) *${subClientDecl} {\n`;
+      opText += `\treturn &${subClientDecl}{\n`;
+      const initFields = new Array<string>('internal: client.internal');
       // propagate all client params
+      for (const param of clientAccessor.parameters) {
+        // by convention, the client accessor params have the
+        // same name as their corresponding client fields.
+        initFields.push(`${param.name}: ${param.name}`);
+      }
+
+      // accessor params and client fields are mutually exclusive
+      // so we don't need to worry about potentials for duplication.
       for (const param of client.parameters) {
         if (go.isLiteralParameter(param.style)) {
           continue;
         }
-        opText += `\t\t${param.name}: client.${param.name},\n`;
+        initFields.push(`${param.name}: client.${param.name}`);
+      }
+
+      initFields.sort();
+      for (const initField of initFields) {
+        opText += `\t\t${initField},\n`;
       }
       opText += '\t}\n}\n\n';
     }
@@ -130,9 +152,9 @@ export function generateOperations(codeModel: go.CodeModel): Array<OperationGrou
       // it must be done before the imports are written out
       if (go.isLROMethod(method)) {
         // generate Begin method
-        opText += generateLROBeginMethod(method, imports, codeModel.options.injectSpans, codeModel.options.generateFakes);
+        opText += generateLROBeginMethod(method, imports, options);
       }
-      opText += generateOperation(method, imports, codeModel.options.injectSpans, codeModel.options.generateFakes);
+      opText += generateOperation(method, imports, options);
       opText += createProtocolRequest(azureARM, method, imports);
       if (method.kind !== 'lroMethod') {
         // LRO responses are handled elsewhere, with the exception of pageable LROs
@@ -149,7 +171,7 @@ export function generateOperations(codeModel: go.CodeModel): Array<OperationGrou
     }
 
     // stitch it all together
-    let text = helpers.contentPreamble(codeModel.packageName);
+    let text = helpers.contentPreamble(pkg);
     text += imports.text();
     text += clientText;
     text += opText;
@@ -191,7 +213,7 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
         }
         ctorText += `\t${comment(`The default value is ${helpers.formatLiteralValue(param.style.defaultValue, false)}`, '// ')}.\n`;
       }
-      ctorText += `\t${ensureNameCase(param.name)} *${go.getTypeDeclaration(param.type)}\n`;
+      ctorText += `\t${ensureNameCase(param.name)} *${go.getTypeDeclaration(param.type, client.pkg)}\n`;
     }
     ctorText += '}\n\n';
   }
@@ -220,8 +242,8 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
         // param is part of the options group
         continue;
       }
-      imports.addImportForType(ctorParam.type);
-      ctorParams.push(`${ctorParam.name} ${helpers.formatParameterTypeName(ctorParam)}`);
+      imports.addForType(ctorParam.type);
+      ctorParams.push(`${ctorParam.name} ${helpers.formatParameterTypeName(client.pkg, ctorParam)}`);
       if (ctorParam.docs.summary || ctorParam.docs.description) {
         paramDocs.push(helpers.formatCommentAsBulletItem(ctorParam.name, ctorParam.docs));
       }
@@ -313,7 +335,7 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
               const tokenPolicyOpts = '&policy.BearerTokenOptions{\n\t\t\tInsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,\n\t\t}';
               // we assume a single scope. this is enforced when adapting the data from tcgc
               const tokenPolicy = `\n\t\tPerCall: []policy.Policy{\n\t\truntime.NewBearerTokenPolicy(credential, []string{c.Audience + "${helpers.splitScope(credentialParam.type.scopes[0]).scope}"}, ${tokenPolicyOpts}),\n\t\t},\n`;
-              prolog = emitProlog(go.getTypeDeclaration(clientOptions), true, tokenPolicy);
+              prolog = emitProlog(go.getTypeDeclaration(clientOptions, client.pkg), true, tokenPolicy);
               break;
             }
             case 'armClientOptions':
@@ -325,11 +347,11 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
           break;
       }
     } else {
-      prolog = emitProlog(go.getTypeDeclaration(clientOptions), false);
+      prolog = emitProlog(go.getTypeDeclaration(clientOptions, client.pkg), false);
     }
 
     // add client options last
-    ctorParams.push(`options ${helpers.formatParameterTypeName(clientOptions)}`);
+    ctorParams.push(`options ${helpers.formatParameterTypeName(client.pkg, clientOptions)}`);
     paramDocs.push(helpers.formatCommentAsBulletItem('options', { summary: 'Contains optional client configuration. Pass nil to accept the default values.' }));
 
     ctorText += `// ${constructor.name} creates a new instance of ${client.name} with the specified values.\n`;
@@ -527,7 +549,7 @@ function generateNilChecks(path: string, prefix: string = 'page'): string {
   return checks.join(' && ');
 }
 
-function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
+function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, imports: ImportManager, options: go.Options): string {
   imports.add('context');
   let text = `runtime.NewPager(runtime.PagingHandler[${method.returns.name}]{\n`;
   text += `\t\tMore: func(page ${method.returns.name}) bool {\n`;
@@ -542,7 +564,7 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, i
   }
   text += `\t\tFetcher: func(ctx context.Context, page *${method.returns.name}) (${method.returns.name}, error) {\n`;
   const reqParams = helpers.getCreateRequestParameters(method);
-  if (generateFakes) {
+  if (options.generateFakes) {
     text += `\t\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "${method.receiver.type.name}.${fixUpMethodName(method)}")\n`;
   }
   if (method.nextLinkName) {
@@ -597,7 +619,7 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, i
     text += `\t\t\treturn client.${method.naming.responseMethod}(resp)\n`;
     text += '\t\t},\n';
   }
-  if (injectSpans) {
+  if (options.injectSpans) {
     text += '\t\tTracer: client.internal.Tracer(),\n';
   }
   text += '\t})\n';
@@ -630,7 +652,7 @@ function getClientReceiverDefinition(receiver: go.Receiver<go.Client>): string {
   return `(${receiver.name} ${receiver.byValue ? '' : '*'}${receiver.type.name})`;
 }
 
-function generateOperation(method: go.MethodType, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
+function generateOperation(method: go.MethodType, imports: ImportManager, options: go.Options): string {
   const params = getAPIParametersSig(method, imports);
   const returns = generateReturnsInfo(method, 'op');
   let methodName = method.name;
@@ -661,20 +683,20 @@ function generateOperation(method: go.MethodType, imports: ImportManager, inject
   const reqParams = helpers.getCreateRequestParameters(method);
   if (method.kind === 'pageableMethod') {
     text += '\treturn ';
-    text += emitPagerDefinition(method, imports, injectSpans, generateFakes);
+    text += emitPagerDefinition(method, imports, options);
     text += '}\n\n';
     return text;
   }
   text += '\tvar err error\n';
   let operationName = `"${method.receiver.type.name}.${fixUpMethodName(method)}"`;
-  if (generateFakes && injectSpans) {
+  if (options.generateFakes && options.injectSpans) {
     text += `\tconst operationName = ${operationName}\n`;
     operationName = 'operationName';
   }
-  if (generateFakes) {
+  if (options.generateFakes) {
     text += `\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, ${operationName})\n`;
   }
-  if (injectSpans) {
+  if (options.injectSpans) {
     text += `\tctx, endSpan := runtime.StartSpan(ctx, ${operationName}, client.internal.Tracer(), nil)\n`;
     text += '\tdefer func() { endSpan(err) }()\n';
   }
@@ -721,7 +743,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     if (param.location !== 'method' || !go.isRequiredParameter(param.style)) {
       continue;
     }
-    imports.addImportForType(param.type);
+    imports.addForType(param.type);
   }
 
   const returns = ['*policy.Request', 'error'];
@@ -1035,17 +1057,17 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
         // for XML payloads, create a wrapper type if the payload is an array
         imports.add('encoding/xml');
         text += '\ttype wrapper struct {\n';
-        let tagName = go.getTypeDeclaration(bodyParam.type);
+        let tagName = go.getTypeDeclaration(bodyParam.type, method.receiver.type.pkg);
         if (bodyParam.xml?.name) {
           tagName = bodyParam.xml.name;
         }
         text += `\t\tXMLName xml.Name \`xml:"${tagName}"\`\n`;
         const fieldName = capitalize(bodyParam.name);
-        let tag = go.getTypeDeclaration(bodyParam.type.elementType);
+        let tag = go.getTypeDeclaration(bodyParam.type.elementType, method.receiver.type.pkg);
         if (bodyParam.type.elementType.kind === 'model' && bodyParam.type.elementType.xml?.name) {
           tag = bodyParam.type.elementType.xml.name;
         }
-        text += `\t\t${fieldName} *${go.getTypeDeclaration(bodyParam.type)} \`xml:"${tag}"\`\n`;
+        text += `\t\t${fieldName} *${go.getTypeDeclaration(bodyParam.type, method.receiver.type.pkg)} \`xml:"${tag}"\`\n`;
         text += '\t}\n';
         let addr = '&';
         if (!go.isRequiredParameter(bodyParam.style) && !bodyParam.byValue) {
@@ -1123,7 +1145,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     // define and instantiate an instance of the wire type, using the values from each param.
     text += '\tbody := struct {\n';
     for (const partialBodyParam of partialBodyParams) {
-      text += `\t\t${capitalize(partialBodyParam.serializedName)} ${helpers.star(partialBodyParam.byValue)}${go.getTypeDeclaration(partialBodyParam.type)} \`${partialBodyParam.format.toLowerCase()}:"${partialBodyParam.serializedName}"\`\n`;
+      text += `\t\t${capitalize(partialBodyParam.serializedName)} ${helpers.star(partialBodyParam.byValue)}${go.getTypeDeclaration(partialBodyParam.type, method.receiver.type.pkg)} \`${partialBodyParam.format.toLowerCase()}:"${partialBodyParam.serializedName}"\`\n`;
     }
     text += '\t}{\n';
     // required params are emitted as initializers in the struct literal
@@ -1353,7 +1375,7 @@ function createProtocolResponse(method: go.SyncMethod | go.LROPageableMethod | g
             // the operation contains a mix of schemas and non-schema responses
             continue;
           }
-          text += `\tvar val ${go.getTypeDeclaration(resultType)}\n`;
+          text += `\tvar val ${go.getTypeDeclaration(resultType, method.receiver.type.pkg)}\n`;
           text += generateResponseUnmarshaller(method, resultType, result.format, 'val');
           text += '\tresult.Value = val\n';
         }
@@ -1422,17 +1444,35 @@ function isMapOfDateTime(paramType: go.WireType): string | undefined {
   return paramType.valueType.format;
 }
 
-// returns the parameters for the public API
-// e.g. "ctx context.Context, i int, s string"
-function getAPIParametersSig(method: go.MethodType, imports: ImportManager, pkgName?: string): string {
-  const methodParams = helpers.getMethodParameters(method);
+/**
+ * returns the parameters for the public API
+ * e.g. "ctx context.Context, i int, s string"
+ * 
+ * @param method the method for which to emit the parameters
+ * @param imports the import manager currently in scope
+ * @returns the text for the method parameters
+ */
+function getAPIParametersSig(method: go.ClientAccessor | go.MethodType, imports: ImportManager): string {
   const params = new Array<string>();
-  if (method.kind !== 'pageableMethod') {
-    imports.add('context');
-    params.push('ctx context.Context');
-  }
-  for (const methodParam of values(methodParams)) {
-    params.push(`${uncapitalize(methodParam.name)} ${helpers.formatParameterTypeName(methodParam, pkgName)}`);
+  if (method.kind === 'clientAccessor') {
+    // client accessor params don't have a concept
+    // of optionality nor do they contain literals
+    for (const param of method.parameters) {
+      imports.addForType(param.type);
+      params.push(`${param.name} ${go.getTypeDeclaration(param.type, method.receiver.type.pkg)}`);
+    }
+  } else {
+    const methodParams = helpers.getMethodParameters(method);
+    if (method.kind !== 'pageableMethod') {
+      imports.add('context');
+      params.push('ctx context.Context');
+    }
+    for (const methodParam of values(methodParams)) {
+      if (methodParam.kind !== 'paramGroup') {
+        imports.addForType(methodParam.type);
+      }
+      params.push(`${uncapitalize(methodParam.name)} ${helpers.formatParameterTypeName(method.receiver.type.pkg, methodParam)}`);
+    }
   }
   return params.join(', ');
 }
@@ -1479,7 +1519,7 @@ function generateReturnsInfo(method: go.MethodType, apiType: 'api' | 'op' | 'han
   return [returnType, 'error'];
 }
 
-function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
+function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imports: ImportManager, options: go.Options): string {
   const params = getAPIParametersSig(method, imports);
   const returns = generateReturnsInfo(method, 'api');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
@@ -1502,7 +1542,7 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imp
     pollerTypeParam = `[*runtime.Pager${pollerTypeParam}]`;
     pollerType = '&pager';
     text += '\tpager := ';
-    text += emitPagerDefinition(method, imports, injectSpans, generateFakes);
+    text += emitPagerDefinition(method, imports, options);
   }
 
   text += '\tif options == nil || options.ResumeToken == "" {\n';
@@ -1538,13 +1578,13 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imp
   }
 
   text += '\t\tpoller, err := runtime.NewPoller';
-  if (finalStateVia === '' && pollerType === 'nil' && !injectSpans) {
+  if (finalStateVia === '' && pollerType === 'nil' && !options.injectSpans) {
     // the generic type param is redundant when it's also specified in the
     // options struct so we only include it when there's no options.
     text += pollerTypeParam;
   }
   text += '(resp, client.internal.Pipeline(), ';
-  if (finalStateVia === '' && pollerType === 'nil' && !injectSpans && !method.operationLocationResultPath) {
+  if (finalStateVia === '' && pollerType === 'nil' && !options.injectSpans && !method.operationLocationResultPath) {
     // no options
     text += 'nil)\n';
   } else {
@@ -1559,7 +1599,7 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imp
     if (pollerType !== 'nil') {
       text += `\t\t\tResponse: ${pollerType},\n`;
     }
-    if (injectSpans) {
+    if (options.injectSpans) {
       text += '\t\t\tTracer: client.internal.Tracer(),\n';
     }
     text += '\t\t})\n';
@@ -1570,18 +1610,18 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imp
   // creating the poller from resume token branch
 
   text += '\t\treturn runtime.NewPollerFromResumeToken';
-  if (pollerType === 'nil' && !injectSpans) {
+  if (pollerType === 'nil' && !options.injectSpans) {
     text += pollerTypeParam;
   }
   text += '(options.ResumeToken, client.internal.Pipeline(), ';
-  if (pollerType === 'nil' && !injectSpans) {
+  if (pollerType === 'nil' && !options.injectSpans) {
     text += 'nil)\n';
   } else {
     text += `&runtime.NewPollerFromResumeTokenOptions${pollerTypeParam}{\n`;
     if (pollerType !== 'nil') {
       text += `\t\t\tResponse: ${pollerType},\n`;
     }
-    if (injectSpans) {
+    if (options.injectSpans) {
       text += '\t\t\tTracer: client.internal.Tracer(),\n';
     }
     text  += '\t\t})\n';

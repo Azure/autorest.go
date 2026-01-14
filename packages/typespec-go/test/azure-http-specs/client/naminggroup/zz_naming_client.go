@@ -45,16 +45,16 @@ func NewNamingClientWithNoCredential(endpoint string, options *NamingClientOptio
 // NewNamingModelClient creates a new instance of [NamingModelClient].
 func (client *NamingClient) NewNamingModelClient() *NamingModelClient {
 	return &NamingModelClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewNamingUnionEnumClient creates a new instance of [NamingUnionEnumClient].
 func (client *NamingClient) NewNamingUnionEnumClient() *NamingUnionEnumClient {
 	return &NamingUnionEnumClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 

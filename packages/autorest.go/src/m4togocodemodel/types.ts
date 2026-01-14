@@ -18,12 +18,12 @@ export function hasDescription(lang: m4.Language): boolean {
 const types = new Map<string, go.WireType>();
 const constValues = new Map<string, go.ConstantValue>();
 
-export function adaptConstantType(choice: m4.ChoiceSchema | m4.SealedChoiceSchema): go.Constant {
+export function adaptConstantType(choice: m4.ChoiceSchema | m4.SealedChoiceSchema, pkg: go.PackageContent): go.Constant {
   let constType = types.get(choice.language.go!.name);
   if (constType) {
     return <go.Constant>constType;
   }
-  constType = new go.Constant(choice.language.go!.name, adaptPrimitiveType(choice.choiceType.language.go!.name), choice.language.go!.possibleValuesFunc);
+  constType = new go.Constant(pkg, choice.language.go!.name, adaptPrimitiveType(choice.choiceType.language.go!.name), choice.language.go!.possibleValuesFunc);
   constType.values = adaptConstantValue(constType, choice.choices);
   if (hasDescription(choice.language.go!)) {
     constType.docs.description = choice.language.go!.description;
@@ -62,13 +62,13 @@ function adaptPrimitiveType(name: string): 'bool' | 'float32' | 'float64' | 'int
   }
 }
 
-export function adaptInterfaceType(obj: m4.ObjectSchema, parent?: go.Interface): go.Interface {
+export function adaptInterfaceType(obj: m4.ObjectSchema, pkg: go.PackageContent, parent?: go.Interface): go.Interface {
   let iface = types.get(obj.language.go!.discriminatorInterface);
   if (iface) {
     return <go.Interface>iface;
   }
 
-  iface = new go.Interface(obj.language.go!.discriminatorInterface, obj.discriminator!.property.serializedName);
+  iface = new go.Interface(pkg, obj.language.go!.discriminatorInterface, obj.discriminator!.property.serializedName);
   if (parent) {
     iface.parent = parent;
   }
@@ -77,7 +77,7 @@ export function adaptInterfaceType(obj: m4.ObjectSchema, parent?: go.Interface):
   return iface;
 }
 
-export function adaptModel(obj: m4.ObjectSchema): go.Model | go.PolymorphicModel {
+export function adaptModel(obj: m4.ObjectSchema, pkg: go.PackageContent): go.Model | go.PolymorphicModel {
   let modelType = types.get(obj.language.go!.name);
   if (modelType) {
     return <go.Model | go.PolymorphicModel>modelType;
@@ -108,13 +108,13 @@ export function adaptModel(obj: m4.ObjectSchema): go.Model | go.PolymorphicModel
     if (!iface) {
       throw new Error(`didn't find InterfaceType for discriminator interface ${ifaceName} on type ${obj.language.go!.name}`);
     }
-    modelType = new go.PolymorphicModel(obj.language.go!.name, <go.Interface>iface, annotations, adaptUsage(obj));
+    modelType = new go.PolymorphicModel(pkg, obj.language.go!.name, <go.Interface>iface, annotations, adaptUsage(obj));
     // only non-root and sub-root discriminators will have a discriminatorValue
     if (obj.discriminatorValue) {
-      modelType.discriminatorValue = getDiscriminatorLiteral(obj.discriminatorValue);
+      modelType.discriminatorValue = getDiscriminatorLiteral(pkg, obj.discriminatorValue);
     }
   } else {
-    modelType = new go.Model(obj.language.go!.name, annotations, adaptUsage(obj));
+    modelType = new go.Model(pkg, obj.language.go!.name, annotations, adaptUsage(obj));
     // polymorphic types don't have XMLInfo
     modelType.xml = adaptXMLInfo(obj);
   }
@@ -138,7 +138,7 @@ function adaptUsage(obj: m4.ObjectSchema): go.UsageFlags {
   return flags;
 }
 
-function getDiscriminatorLiteral(discriminatorValue: string): go.Literal {
+function getDiscriminatorLiteral(pkg: go.PackageContent, discriminatorValue: string): go.Literal {
   const createLiteralValue = function(type: go.LiteralType, value: string | go.ConstantValue): go.Literal {
     let valueKey: go.ConstantValueType;
     if (typeof value === 'string') {
@@ -146,7 +146,7 @@ function getDiscriminatorLiteral(discriminatorValue: string): go.Literal {
     } else {
       valueKey = value.value;
     }
-    const keyName = `literal-${go.getTypeDeclaration(type)}-${valueKey}`;
+    const keyName = `literal-${go.getTypeDeclaration(type, pkg)}-${valueKey}`;
     let literalString = types.get(keyName);
     if (literalString) {
       return <go.Literal>literalString;
@@ -171,8 +171,8 @@ function getDiscriminatorLiteral(discriminatorValue: string): go.Literal {
   return discriminatorLiteral;
 }
 
-export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.ModelField {
-  const fieldType = adaptWireType(prop.schema);
+export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema, pkg: go.PackageContent): go.ModelField {
+  const fieldType = adaptWireType(prop.schema, pkg);
   let required = prop.required === true;
   if (fieldType.kind === 'literal') {
     // for OpenAPI, literal values are always considered required
@@ -184,10 +184,10 @@ export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.Mod
     field.docs.description = prop.language.go!.description;
   }
   if (prop.isDiscriminator && obj.discriminatorValue) {
-    field.defaultValue = getDiscriminatorLiteral(obj.discriminatorValue);
+    field.defaultValue = getDiscriminatorLiteral(pkg, obj.discriminatorValue);
   } else if (prop.clientDefaultValue) {
     if (!go.isLiteralValueType(field.type)) {
-      throw new Error(`unsupported default value type ${go.getTypeDeclaration(field.type)} for field ${field.name}`);
+      throw new Error(`unsupported default value type ${go.getTypeDeclaration(field.type, pkg)} for field ${field.name}`);
     }
     if (field.type.kind === 'constant') {
       // find the corresponding ConstantValue
@@ -213,7 +213,7 @@ export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.Mod
         throw new Error(`didn't find ConstantValue for ${prop.clientDefaultValue}`);
       }
     } else {
-      const keyName = `literal-${go.getTypeDeclaration(field.type)}-${prop.clientDefaultValue}`;
+      const keyName = `literal-${go.getTypeDeclaration(field.type, pkg)}-${prop.clientDefaultValue}`;
       let literalValue = types.get(keyName);
       if (!literalValue) {
         literalValue = new go.Literal(field.type, prop.clientDefaultValue);
@@ -270,7 +270,7 @@ export function adaptXMLInfo(obj: m4.Schema): go.XMLInfo | undefined {
 }
 
 // converts an M4 schema type to a Go code model type
-export function adaptWireType(schema: m4.Schema, elementTypeByValue?: boolean): go.WireType {
+export function adaptWireType(schema: m4.Schema, pkg: go.PackageContent, elementTypeByValue?: boolean): go.WireType {
   const rawJSONAsBytes = <boolean>schema.language.go!.rawJSONAsBytes;
   switch (schema.type) {
     case m4.SchemaType.Any: {
@@ -330,7 +330,7 @@ export function adaptWireType(schema: m4.Schema, elementTypeByValue?: boolean): 
       if (arrayType) {
         return arrayType;
       }
-      arrayType = new go.Slice(adaptWireType((<m4.ArraySchema>schema).elementType, elementTypeByValue), myElementTypeByValue);
+      arrayType = new go.Slice(adaptWireType((<m4.ArraySchema>schema).elementType, pkg, elementTypeByValue), myElementTypeByValue);
       types.set(keyName, arrayType);
       return arrayType;
     }
@@ -364,9 +364,9 @@ export function adaptWireType(schema: m4.Schema, elementTypeByValue?: boolean): 
       return rune;
     }
     case m4.SchemaType.Choice:
-      return adaptConstantType(<m4.ChoiceSchema>schema);
+      return adaptConstantType(<m4.ChoiceSchema>schema, pkg);
     case m4.SchemaType.Constant:
-      return adaptLiteralValue(<m4.ConstantSchema>schema);
+      return adaptLiteralValue(<m4.ConstantSchema>schema, pkg);
     case m4.SchemaType.Credential: {
       let credType = types.get(m4.SchemaType.Credential);
       if (credType) {
@@ -395,7 +395,7 @@ export function adaptWireType(schema: m4.Schema, elementTypeByValue?: boolean): 
       if (mapType) {
         return mapType;
       }
-      mapType = new go.Map(adaptWireType((<m4.DictionarySchema>schema).elementType, elementTypeByValue), valueTypeByValue);
+      mapType = new go.Map(adaptWireType((<m4.DictionarySchema>schema).elementType, pkg, elementTypeByValue), valueTypeByValue);
       types.set(keyName, mapType);
       return mapType;
     }
@@ -449,7 +449,7 @@ export function adaptWireType(schema: m4.Schema, elementTypeByValue?: boolean): 
       return float64;
     }
     case m4.SchemaType.Object:
-      return adaptModel(<m4.ObjectSchema>schema);
+      return adaptModel(<m4.ObjectSchema>schema, pkg);
     case m4.SchemaType.ODataQuery: {
       let odataType = types.get(m4.SchemaType.ODataQuery);
       if (odataType) {
@@ -460,7 +460,7 @@ export function adaptWireType(schema: m4.Schema, elementTypeByValue?: boolean): 
       return odataType;
     }
     case m4.SchemaType.SealedChoice:
-      return adaptConstantType(<m4.SealedChoiceSchema>schema);
+      return adaptConstantType(<m4.SealedChoiceSchema>schema, pkg);
     case m4.SchemaType.String: {
       let stringType = types.get(m4.SchemaType.String);
       if (stringType) {
@@ -493,7 +493,7 @@ export function adaptWireType(schema: m4.Schema, elementTypeByValue?: boolean): 
   }
 }
 
-function adaptLiteralValue(constSchema: m4.ConstantSchema): go.Literal {
+function adaptLiteralValue(constSchema: m4.ConstantSchema, pkg: go.PackageContent): go.Literal {
   switch (constSchema.valueType.type) {
     case m4.SchemaType.Boolean: {
       const keyName = `literal-${m4.SchemaType.Boolean}-${constSchema.value.value}`;
@@ -522,7 +522,7 @@ function adaptLiteralValue(constSchema: m4.ConstantSchema): go.Literal {
       if (literalConst) {
         return <go.Literal>literalConst;
       }
-      literalConst = new go.Literal(adaptConstantType(<m4.ChoiceSchema>constSchema.valueType), constSchema.value.value);
+      literalConst = new go.Literal(adaptConstantType(<m4.ChoiceSchema>constSchema.valueType, pkg), constSchema.value.value);
       types.set(keyName, literalConst);
       return literalConst;
     }

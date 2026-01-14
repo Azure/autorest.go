@@ -3,92 +3,130 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { clientAdapter } from './clients.js';
+import { ClientAdapter } from './clients.js';
 import { AdapterError } from './errors.js';
-import { typeAdapter } from './types.js';
+import { TypeAdapter } from './types.js';
 import { GoEmitterOptions } from '../lib.js';
 import * as go from '../../../codemodel.go/src/index.js';
 import * as naming from '../../../naming.go/src/index.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
-import { EmitContext, NoTarget } from '@typespec/compiler';
+import * as tsp from '@typespec/compiler';
 import { createRequire } from 'module';
 
-export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): Promise<go.CodeModel> {
-  naming.CommonAcronyms.push('^iso\\d+$');
-  // @encodedName can be used in XML scenarios, it
-  // is effectively the same as TypeSpec.Xml.@name.
-  // however, it's filtered out by default so we need
-  // to add it to the allow list of decorators
-  const sdkContext = await tcgc.createSdkContext(context, '@azure-tools/typespec-go', {
-    additionalDecorators: ['TypeSpec\\.@encodedName'],
-    disableUsageAccessPropagationToBase: true,
-  });
-  context.program.reportDiagnostics(sdkContext.diagnostics);
-  let codeModelType: go.CodeModelType = 'data-plane';
-  if (sdkContext.arm === true) {
-    codeModelType = 'azure-arm';
+/**
+ * ExternalError is thrown when an external component reports a
+ * diagnostic error that would prevent the emitter from proceeding.
+ */
+export class ExternalError extends Error { }
+
+/** Adapter converts the tcgc code model to an instance of the Go code model */
+export class Adapter {
+  /**
+   * Creates an Adapter for the specified EmitContext.
+   * 
+   * @param context the compiler context from which to create the Adapter
+   * @returns a new Adapter for the provided context
+   */
+  static async create(context: tsp.EmitContext<GoEmitterOptions>): Promise<Adapter> {
+    naming.CommonAcronyms.push('^iso\\d+$');
+    // @encodedName can be used in XML scenarios, it
+    // is effectively the same as TypeSpec.Xml.@name.
+    // however, it's filtered out by default so we need
+    // to add it to the allow list of decorators
+    const ctx = await tcgc.createSdkContext(context, '@azure-tools/typespec-go', {
+      additionalDecorators: ['TypeSpec\\.@encodedName'],
+      disableUsageAccessPropagationToBase: true,
+    });
+
+    context.program.reportDiagnostics(ctx.diagnostics);
+    for (const diag of ctx.diagnostics) {
+      if (diag.severity === 'error') {
+        // there's no point in continuing if tcgc
+        // has reported diagnostic errors, so exit.
+        // this prevents spurious crashes in the
+        // emitter as our input state is invalid.
+        throw new ExternalError();
+      }
+    }
+
+    return new Adapter(ctx, context.options, context.emitterOutputDir);
   }
 
-  const info = new go.Info('TODO Title');
-  const options = new go.Options(
-    context.options['generate-fakes'] === true,
-    context.options['inject-spans'] === true,
-    context.options['disallow-unknown-fields'] === true,
-    context.options['generate-examples'] === true || context.options['generate-samples'] === true // generate-examples has been deprecated, for compat we still support it.
-  );
-  options.headerText = sdkContext.sdkPackage.licenseInfo?.header;
-  options.licenseText = sdkContext.sdkPackage.licenseInfo?.description;
+  private readonly ctx: tcgc.SdkContext;
+  private readonly options: GoEmitterOptions;
+  private readonly codeModel: go.CodeModel;
 
-  if (context.options['azcore-version']) {
-    options.azcoreVersion = context.options['azcore-version'];
+  private constructor(ctx: tcgc.SdkContext, options: GoEmitterOptions, emitterOutputDir: string) {
+    this.ctx = ctx;
+    this.options = options;
+
+    if (this.options['containing-module'] && this.options.module) {
+      throw new AdapterError('InvalidArgument', 'module and containing-module are mutually exclusive');
+    }
+
+    const goOptions = new go.Options(
+      this.options['generate-fakes'] === true,
+      this.options['inject-spans'] === true,
+      this.options['disallow-unknown-fields'] === true,
+      // generate-examples has been deprecated, for compat we still support it.
+      this.options['generate-examples'] === true || this.options['generate-samples'] === true
+    );
+    goOptions.headerText = this.ctx.sdkPackage.licenseInfo?.header;
+    goOptions.licenseText = this.ctx.sdkPackage.licenseInfo?.description;
+    goOptions.azcoreVersion = this.options['azcore-version'];
+    goOptions.omitConstructors = this.options['omit-constructors'] ?? false;
+
+    let root: go.ContainingModule | go.Module;
+    if (this.options.module) {
+      root = new go.Module(this.options.module);
+    } else if (this.options['containing-module']) {
+      root = new go.ContainingModule(this.options['containing-module']);
+      root.package = new go.Package(naming.packageNameFromOutputFolder(emitterOutputDir), root);
+    } else {
+      throw new AdapterError('InvalidArgument', 'missing argument module or containing-module');
+    }
+
+    const info = new go.Info(this.ctx.sdkPackage.crossLanguagePackageId);
+    const codeModelType: go.CodeModelType = this.ctx.arm === true ? 'azure-arm' : 'data-plane';
+    this.codeModel = new go.CodeModel(info, codeModelType, goOptions, root);
+
+    // get the emitter version from our package.json
+    const packageJson = createRequire(import.meta.url)('../../../../package.json') as Record<string, never>;
+    this.codeModel.metadata = {
+      ...this.ctx.sdkPackage.metadata,
+      emitterVersion: packageJson['version']
+    };
+
+    this.codeModel.options.rawJSONAsBytes = this.options['rawjson-as-bytes'] ?? false;
+    this.codeModel.options.sliceElementsByval = this.options['slice-elements-byval'] ?? false;
+    this.codeModel.options.factoryGatherAllParams = this.options['factory-gather-all-params'] ?? true;
   }
-  if (context.options['omit-constructors']) {
-    options.omitConstructors = context.options['omit-constructors'];
+
+  /** performs all the steps to convert tcgc to the Go code model */
+  tcgcToGoCodeModel(): go.CodeModel {
+    // TODO: stuttering fix-ups will need some rethinking for namespaces
+    const packageName = this.codeModel.root.kind === 'containingModule' ? this.codeModel.root.package.name : naming.packageNameFromOutputFolder(this.ctx.emitContext.emitterOutputDir);
+    fixStutteringTypeNames(this.ctx.sdkPackage, packageName, this.options);
+
+    const ta = new TypeAdapter(this.ctx, this.codeModel);
+    ta.adaptTypes();
+
+    const ca = new ClientAdapter(ta);
+    ca.adaptClients();
+
+    return this.codeModel;
   }
-
-  const codeModel = new go.CodeModel(info, codeModelType, naming.packageNameFromOutputFolder(context.emitterOutputDir), options);
-
-  const packageJson = createRequire(import.meta.url)('../../../../package.json') as Record<string, never>;
-  codeModel.metadata = {
-    ...sdkContext.sdkPackage.metadata,
-    emitterVersion: packageJson['version']
-  };
-
-  if (context.options['containing-module'] && context.options.module) {
-    throw new AdapterError('InvalidArgument', 'module and containing-module are mutually exclusive', NoTarget);
-  }
-
-  if (context.options.module) {
-    codeModel.options.module = context.options.module;
-  } else if (context.options['containing-module']) {
-    codeModel.options.containingModule = context.options['containing-module'];
-  } else {
-    throw new AdapterError('InvalidArgument', 'missing argument module or containing-module', NoTarget);
-  }
-
-  if (context.options['rawjson-as-bytes']) {
-    codeModel.options.rawJSONAsBytes = true;
-  }
-  if (context.options['slice-elements-byval']) {
-    codeModel.options.sliceElementsByval = true;
-  }
-  codeModel.options.factoryGatherAllParams = true;
-  if (context.options['factory-gather-all-params'] === false) {
-    codeModel.options.factoryGatherAllParams = false;
-  }
-  fixStutteringTypeNames(sdkContext.sdkPackage, codeModel, context.options);
-
-  const ta = new typeAdapter(codeModel);
-  ta.adaptTypes(sdkContext);
-
-  const ca = new clientAdapter(ta, context);
-  ca.adaptClients(sdkContext.sdkPackage);
-
-  return codeModel;
 }
 
-function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperation>, codeModel: go.CodeModel, options: GoEmitterOptions): void {
-  let stutteringPrefix = codeModel.packageName;
+/**
+ * fixes up names in the tcgc model to avoid stuttering.
+ * 
+ * @param sdkPackage the tcgc data model
+ * @param packageName the package name used to remove stuttering
+ * @param options the Go emitter options
+ */
+function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperation>, packageName: string, options: GoEmitterOptions): void {
+  let stutteringPrefix = packageName;
 
   if (options.stutter) {
     stutteringPrefix = options.stutter;
@@ -138,10 +176,15 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
   }
 
   // check if the name collides with an existing name. we only do
-  // this for model types as clients and enums get a suffix.
+  // this for model and enum types, as clients get a suffix.
   const nameCollision = function(newName: string): boolean {
     for (const modelType of sdkPackage.models) {
       if (modelType.name === newName) {
+        return true;
+      }
+    }
+    for (const enumType of sdkPackage.enums) {
+      if (enumType.name === newName) {
         return true;
       }
     }
@@ -176,6 +219,6 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
   }
 
   if (collisions.length > 0) {
-    throw new AdapterError('NameCollision', collisions.join('\n'), NoTarget);
+    throw new AdapterError('NameCollision', collisions.join('\n'));
   }
 }

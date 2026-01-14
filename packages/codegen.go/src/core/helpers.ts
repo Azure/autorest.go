@@ -37,11 +37,11 @@ export function setCustomHeaderText(headerText: string): void {
 /**
  * returns the common source-file preamble (license comment, package name etc)
  * 
- * @param packageName the name of the package to use in the package declaration
+ * @param pkg the package to use in the package declaration
  * @param doNotEdit when false the 'DO NOT EDIT' clause is omitted
  * @returns the source file preamble
  */
-export function contentPreamble(packageName: string, doNotEdit = true): string {
+export function contentPreamble(pkg: go.FakePackage | go.PackageContent | go.TestPackage, doNotEdit = true): string {
   const headerText = comment(overrideHeaderText ?? defaultHeaderText, '// ');
   let text = headerText;
   if (doNotEdit) {
@@ -55,7 +55,7 @@ export function contentPreamble(packageName: string, doNotEdit = true): string {
     // remove the blurb about the changes being lost
     text = text.replace(/^\/\/ Changes may cause incorrect behavior and will be lost if the code is regenerated\.$/m, '');
   }
-  text += `\n\npackage ${packageName}\n\n`;
+  text += `\n\npackage ${go.getPackageName(pkg)}\n\n`;
   return text;
 }
 
@@ -67,35 +67,31 @@ export function sortAscending(a: string, b: string): number {
 /**
  * returns the parameter's type definition with a possible '*' prefix
  * 
+ * @param scope the package into which the type definition is being emitted
  * @param param the parameter for which to emit the type definition
- * @param pkgName optional package name in which the type resides
  * @returns the parameter type definition text
  */
-export function formatParameterTypeName(param: go.ClientOptionsType | go.ClientParameter | go.ParameterGroup, pkgName?: string): string {
+export function formatParameterTypeName(scope: go.PackageType, param: go.ClientOptionsType | go.ClientParameter | go.ParameterGroup): string {
   let typeName: string;
+  let required: boolean;
   switch (param.kind) {
     case 'armClientOptions':
-      typeName = go.getTypeDeclaration(param, pkgName);
+      typeName = go.getTypeDeclaration(param, scope);
+      required = false;
       break;
     case 'clientOptions':
-      typeName = param.name;
+      typeName = go.getTypeDeclaration(param, scope);
+      required = false;
       break;
     case 'paramGroup':
-      typeName = param.groupName;
-      if (pkgName) {
-        typeName = `${pkgName}.${typeName}`;
-      }
-      if (param.required) {
-        return typeName;
-      }
+      typeName = go.getTypeDeclaration(param, scope);
+      required = param.required;
       break;
     default:
-      typeName = go.getTypeDeclaration(param.type, pkgName);
-      if (param.byValue) {
-        return typeName;
-      }
+      typeName = go.getTypeDeclaration(param.type, scope);
+      required = param.byValue;
   }
-  return `*${typeName}`;
+  return required ? typeName : `*${typeName}`;
 }
 
 // sorts parameters by their required state, ordering required before optional
@@ -164,7 +160,7 @@ export function getCreateRequestParametersSig(method: go.MethodType | go.NextPag
     if (methodParam.kind === 'paramGroup' && (methodParam.params.length === 0 || (methodParam.params.length === 1 && methodParam.params[0].kind === 'resumeTokenParam'))) {
       paramName = '_';
     }
-    params.push(`${paramName} ${formatParameterTypeName(methodParam)}`);
+    params.push(`${paramName} ${formatParameterTypeName(method.receiver.type.pkg, methodParam)}`);
   }
   return params.join(', ');
 }
@@ -681,17 +677,6 @@ export function formatDocComment(docs: go.Docs): string {
   return docComment;
 }
 
-export function getParentImport(codeModel: go.CodeModel): string {
-  const clientPkg = codeModel.packageName;
-  if (codeModel.options.module) {
-    return codeModel.options.module;
-  } else if (codeModel.options.containingModule) {
-    return codeModel.options.containingModule + '/' + clientPkg;
-  } else {
-    throw new CodegenError('InvalidArgument', 'unable to determine containing module for fakes. specify either the module or containing-module switch');
-  }
-}
-
 export function getBitSizeForNumber(intSize: 'float32' | 'float64' | 'int8' | 'int16' | 'int32' | 'int64'): string {
   switch (intSize) {
     case 'int8':
@@ -759,14 +744,14 @@ const serDeFormatCache = new Map<string, SerDeFormat>();
 
 // returns the wire format for the named model.
 // at present this assumes the formats to be mutually exclusive.
-export function getSerDeFormat(model: go.Model | go.PolymorphicModel, codeModel: go.CodeModel): SerDeFormat {
+export function getSerDeFormat(model: go.Model | go.PolymorphicModel, pkg: go.PackageContent): SerDeFormat {
   let serDeFormat = serDeFormatCache.get(model.name);
   if (serDeFormat) {
     return serDeFormat;
   }
 
   // for model-only builds we assume the format to be JSON
-  if (codeModel.clients.length === 0) {
+  if (pkg.clients.length === 0) {
     return 'JSON';
   }
 
@@ -797,7 +782,7 @@ export function getSerDeFormat(model: go.Model | go.PolymorphicModel, codeModel:
   };
 
   // walk the methods, indexing the model formats
-  for (const client of codeModel.clients) {
+  for (const client of pkg.clients) {
     for (const method of client.methods) {
       for (const param of method.parameters) {
         if (param.kind !== 'bodyParam' || (param.bodyFormat !== 'JSON' && param.bodyFormat !== 'XML')) {
@@ -845,9 +830,9 @@ export function getSerDeFormat(model: go.Model | go.PolymorphicModel, codeModel:
 }
 
 // return combined client parameters for all the clients
-export function getAllClientParameters(codeModel: go.CodeModel): Array<go.ClientParameter> {
+export function getAllClientParameters(pkg: go.PackageContent, target: go.CodeModelType): Array<go.ClientParameter> {
   const allClientParams = new Array<go.ClientParameter>();
-  for (const client of codeModel.clients) {
+  for (const client of pkg.clients) {
     if (client.instance?.kind === 'constructable') {
       for (const ctor of client.instance.constructors) {
         for (const ctorParam of ctor.parameters) {
@@ -861,16 +846,16 @@ export function getAllClientParameters(codeModel: go.CodeModel): Array<go.Client
       }
     }
   }
-  return sortClientParameters(allClientParams, codeModel.type);
+  return sortClientParameters(allClientParams, target);
 }
 
 // returns common client parameters for all the clients
-export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.ClientParameter> {
+export function getCommonClientParameters(pkg: go.PackageContent, target: go.CodeModelType): Array<go.ClientParameter> {
   const paramCount = new Map<string, { uses: number, param: go.ClientParameter }>();
   let numClients = 0; // track client count since we might skip some
-  for (const client of codeModel.clients) {
+  for (const client of pkg.clients) {
     // special cases: some ARM clients always don't contain any parameters (OperationsClient will be depracated in the future)
-    if (codeModel.type === 'azure-arm' && client.name.match(/^OperationsClient$/)) {
+    if (target === 'azure-arm' && client.name.match(/^OperationsClient$/)) {
       continue; 
     }
 
@@ -903,7 +888,7 @@ export function getCommonClientParameters(codeModel: go.CodeModel): Array<go.Cli
     }
   }
 
-  return sortClientParameters(commonClientParams, codeModel.type);
+  return sortClientParameters(commonClientParams, target);
 }
 
 /**

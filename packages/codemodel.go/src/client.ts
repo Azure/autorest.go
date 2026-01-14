@@ -5,14 +5,17 @@
 
 import { CodeModelError } from './errors.js';
 import { MethodExample } from './examples.js';
+import * as pkg from './codeModel.js';
 import * as method from './method.js';
-import * as pkg from './package.js';
+import * as module from './module.js';
 import * as param from './param.js';
 import * as result from './result.js';
 import * as type from './type.js';
 
 /** an SDK client */
 export interface Client {
+  kind: 'client';
+
   /** the name of the client */
   name: string;
 
@@ -30,6 +33,9 @@ export interface Client {
 
   /** contains any client accessor methods. can be empty */
   clientAccessors: Array<ClientAccessor>;
+
+  /** the package to which this client belongs */
+  pkg: module.PackageContent;
 
   /** the parent client in a hierarchical client */
   parent?: Client;
@@ -68,12 +74,14 @@ export type ClientOptionsType = type.ArmClientOptions | ClientOptions;
 export type ClientParameter = ClientCredentialParameter | param.MethodParameter;
 
 /** a client method that returns a sub-client instance */
-export interface ClientAccessor {
+export interface ClientAccessor extends method.Method<Client, Client> {
+  kind: 'clientAccessor';
+
   /** the name of the client accessor method */
   name: string;
 
-  /** the client returned by the accessor method */
-  subClient: Client;
+  /** the method's return type */
+  returns: Client;
 }
 
 /** a credential constructor parameter */
@@ -100,6 +108,9 @@ export interface ClientOptions {
 
   /** the parameters that belong to this options */
   parameters: Array<param.MethodParameter>;
+
+  /** the package to which this type belongs */
+  pkg: module.PackageContent;
 }
 
 /** a client constructor function */
@@ -109,6 +120,9 @@ export interface Constructor {
 
   /** the modeled parameters. can be empty */
   parameters: Array<ClientParameter>;
+
+  /** the package to which this constructor belongs */
+  pkg: module.PackageContent;
 }
 
 /** contains data on how to supplement a client endpoint */
@@ -236,13 +250,13 @@ export function isPageableMethod(method: MethodType): method is LROPageableMetho
 }
 
 /** creates the ClientOptions type from the specified input */
-export function newClientOptions(modelType: pkg.CodeModelType, clientName: string): ClientOptionsType {
+export function newClientOptions(pkg: module.PackageContent, modelType: pkg.CodeModelType, clientName: string): ClientOptionsType {
   if (modelType === 'azure-arm') {
     return new type.ArmClientOptions();
   }
 
   const optionsTypeName = `${clientName}Options`;
-  let options = new ClientOptions(optionsTypeName);
+  let options = new ClientOptions(pkg, optionsTypeName);
   options.docs.summary = `${optionsTypeName} contains the optional values for creating a [${clientName}]`;
   return options;
 }
@@ -320,12 +334,14 @@ class HttpMethodBase extends method.Method<Client, result.ResponseEnvelope> impl
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class Client implements Client {
-  constructor(name: string, docs: type.Docs) {
+  constructor(pkg: module.PackageContent, name: string, docs: type.Docs) {
+    this.kind = 'client';
     this.name = name;
     this.docs = docs;
     this.methods = new Array<MethodType>();
     this.clientAccessors = new Array<ClientAccessor>();
     this.parameters = new Array<ClientParameter>();
+    this.pkg = pkg;
   }
 }
 
@@ -335,10 +351,11 @@ export class ClientEndpoint implements ClientEndpoint {
   }
 }
 
-export class ClientAccessor implements ClientAccessor {
-  constructor(name: string, subClient: Client) {
-    this.name = name;
-    this.subClient = subClient;
+export class ClientAccessor extends method.Method<Client, Client> implements ClientAccessor {
+  constructor(name: string, client: Client, returns: Client) {
+    super(name, new method.Receiver('client', client, false));
+    this.kind = 'clientAccessor';
+    this.returns = returns;
   }
 }
 
@@ -359,18 +376,20 @@ export class ClientCredentialParameter extends method.Parameter implements Clien
 }
 
 export class ClientOptions implements ClientOptions {
-  constructor(name: string) {
+  constructor(pkg: module.PackageContent, name: string) {
     this.kind = 'clientOptions';
     this.name = name;
     this.docs = {};
     this.parameters = new Array<param.MethodParameter>();
+    this.pkg = pkg;
   }
 }
 
 export class Constructor implements Constructor {
-  constructor(name: string) {
+  constructor(pkg: module.PackageContent, name: string) {
     this.name = name;
     this.parameters = new Array<ClientParameter>();
+    this.pkg = pkg;
   }
 }
 

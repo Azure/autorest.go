@@ -7,16 +7,21 @@ import * as go from '../../../codemodel.go/src/index.js';
 import { comment } from '@azure-tools/codegen';
 import { contentPreamble, sortAscending } from './helpers.js';
 
-// Creates the content in interfaces.go
-export function generateInterfaces(codeModel: go.CodeModel): string {
-  if (codeModel.interfaces.length === 0) {
+/**
+ * Creates the content for the interfaces.go file.
+ * 
+ * @param pkg contains the package content
+ * @returns the text for the file or the empty string
+ */
+export function generateInterfaces(pkg: go.PackageContent): string {
+  if (pkg.interfaces.length === 0) {
     // no polymorphic types
     return '';
   }
 
-  let text = contentPreamble(codeModel.packageName);
+  let text = contentPreamble(pkg);
 
-  for (const iface of codeModel.interfaces) {
+  for (const iface of pkg.interfaces) {
     const methodName = `Get${iface.rootType.name}`;
     text += `// ${iface.name} provides polymorphic access to related types.\n`;
     text += `// Call the interface's ${methodName}() method to access the common type.\n`;

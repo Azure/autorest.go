@@ -10,18 +10,19 @@ import * as go from '../../../codemodel.go/src/index.js';
  * generates the contents for the cloud_config.go file.
  * if cloud config info isn't required, the empty string is returned.
  * 
- * @param codeModel the code model for which to generate the file
+ * @param module the module for which to generate the file
+ * @param target the codegen target for the module
  * @returns the text for the file or the empty string
  */
-export function generateCloudConfig(codeModel: go.CodeModel): string {
-  if (codeModel.type === 'azure-arm') {
+export function generateCloudConfig(module: go.Module, target: go.CodeModelType): string {
+  if (target === 'azure-arm') {
     // this is handled in azcore
     return '';
   }
 
   // check if this SDK uses token auth
   let tokenCred: go.TokenCredential | undefined;
-  for (const client of codeModel.clients) {
+  for (const client of module.clients) {
     if (client.instance?.kind !== 'constructable') {
       continue;
     }
@@ -46,20 +47,12 @@ export function generateCloudConfig(codeModel: go.CodeModel): string {
     return '';
   }
 
-  let cloudConfig = helpers.contentPreamble(codeModel.packageName);
+  let cloudConfig = helpers.contentPreamble(module);
   cloudConfig += 'import "github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"\n\n';
 
   cloudConfig += '// ServiceName is the [cloud.ServiceName] for this module, used to identify the respective [cloud.ServiceConfiguration].\n';
 
-  let serviceName: string;
-  if (codeModel.options.module) {
-    serviceName = codeModel.options.module;
-  } else if (codeModel.options.containingModule) {
-    serviceName = `${codeModel.options.containingModule}/${codeModel.packageName}`;
-  } else {
-    throw new Error('unreachable');
-  }
-
+  let serviceName = module.identity;
   const azureSdkPrefix = 'github.com/Azure/azure-sdk-for-go/sdk/';
   if (serviceName.startsWith(azureSdkPrefix)) {
     serviceName = serviceName.substring(azureSdkPrefix.length);

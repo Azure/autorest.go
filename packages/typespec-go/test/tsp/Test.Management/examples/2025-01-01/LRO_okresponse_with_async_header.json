@@ -1,0 +1,31 @@
+{
+    "operationId": "LRO_okResponseWithAsyncHeader",
+    "title": "LRO_okResponseWithAsyncHeader",
+    "parameters": {
+        "api-version": "2025-01-01",
+        "subscriptionId": "00000000-0000-0000-0000-000000000000",
+        "resourceGroupName": "myResourceGroup",
+        "LROModelName": "myLROModel",
+        "resource": {
+            "location": "eastus",
+            "properties": {
+                "description": "test"
+            }
+        }
+    },
+    "responses": {
+        "200": {
+            "headers": {
+                "Azure-AsyncOperation": "https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Test/locations/eastus/operations/00000000-0000-0000-0000-000000000000?api-version=2025-01-01"
+            },
+            "body": {
+                "name": "myLROModel",
+                "location": "eastus",
+                "properties": {
+                    "description": "test",
+                    "provisioningState": "Succeeded"
+                }
+            }
+        }
+    }
+}

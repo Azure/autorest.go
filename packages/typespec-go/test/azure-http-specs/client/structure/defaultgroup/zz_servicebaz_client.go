@@ -16,7 +16,7 @@ type ServiceBazClient struct {
 // NewServiceBazFooClient creates a new instance of [ServiceBazFooClient].
 func (client *ServiceBazClient) NewServiceBazFooClient() *ServiceBazFooClient {
 	return &ServiceBazFooClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

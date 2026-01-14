@@ -45,8 +45,8 @@ func NewBodyOptionalityClientWithNoCredential(endpoint string, options *BodyOpti
 // NewBodyOptionalityOptionalExplicitClient creates a new instance of [BodyOptionalityOptionalExplicitClient].
 func (client *BodyOptionalityClient) NewBodyOptionalityOptionalExplicitClient() *BodyOptionalityOptionalExplicitClient {
 	return &BodyOptionalityOptionalExplicitClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 

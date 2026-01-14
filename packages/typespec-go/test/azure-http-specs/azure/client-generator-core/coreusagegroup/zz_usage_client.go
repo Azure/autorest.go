@@ -42,7 +42,7 @@ func NewUsageClientWithNoCredential(endpoint string, options *UsageClientOptions
 // NewUsageModelInOperationClient creates a new instance of [UsageModelInOperationClient].
 func (client *UsageClient) NewUsageModelInOperationClient() *UsageModelInOperationClient {
 	return &UsageModelInOperationClient{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }

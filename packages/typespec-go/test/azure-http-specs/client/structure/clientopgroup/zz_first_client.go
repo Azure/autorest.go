@@ -50,16 +50,16 @@ func NewFirstClientWithNoCredential(endpoint string, client ClientType, options 
 // NewFirstGroup3Client creates a new instance of [FirstGroup3Client].
 func (client *FirstClient) NewFirstGroup3Client() *FirstGroup3Client {
 	return &FirstGroup3Client{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 
 // NewFirstGroup4Client creates a new instance of [FirstGroup4Client].
 func (client *FirstClient) NewFirstGroup4Client() *FirstGroup4Client {
 	return &FirstGroup4Client{
-		internal: client.internal,
 		endpoint: client.endpoint,
+		internal: client.internal,
 	}
 }
 

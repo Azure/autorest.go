@@ -56,7 +56,17 @@ export class Emitter {
     if (this.codeModel.options.headerText) {
       setCustomHeaderText(this.codeModel.options.headerText);
     }
-    sortContent(this.codeModel);
+
+    switch (this.codeModel.root.kind) {
+      case 'containingModule':
+        sortContent(this.codeModel.root.package);
+        break;
+      case 'module':
+        sortContent(this.codeModel.root);
+        break;
+      default:
+        this.codeModel.root satisfies never;
+    }
   }
 
   /**
@@ -64,113 +74,122 @@ export class Emitter {
    * this content is common to both emitters.
    */
   async emit(): Promise<void> {
-    const clientFactory = generateClientFactory(this.codeModel);
-    if (clientFactory.length > 0) {
-      await this.fs.write(`${this.filePrefix}client_factory.go`, clientFactory);
+    if (this.codeModel.root.kind === 'module') {
+      // don't overwrite an existing go.mod file, update it if required
+      const goModFile = 'go.mod';
+      let existingGoMod: string | undefined;
+      if (await this.fs.exists(goModFile)) {
+        existingGoMod = await this.fs.read(goModFile);
+      }
+      const gomod = generateGoModFile(this.codeModel.root, this.codeModel.options, existingGoMod);
+      if (gomod.length > 0) {
+        await this.fs.write(goModFile, gomod);
+      }
     }
 
-    const constants = generateConstants(this.codeModel);
-    if (constants.length > 0) {
-      await this.fs.write(`${this.filePrefix}constants.go`, constants);
-    }
+    await this.recursiveEmit(async (pkg: go.PackageContent, write: (name: string, content: string, subdir?: string) => Promise<void>): Promise<void> => {
+      const clientFactory = generateClientFactory(pkg, this.codeModel.type, this.codeModel.options);
+      if (clientFactory.length > 0) {
+        await write('client_factory.go', clientFactory);
+      }
 
-    const operations = generateOperations(this.codeModel);
-    for (const op of operations) {
-      const fileName = `${snakeClientFileName(op.name)}.go`;
-      await this.fs.write(`${this.filePrefix}${fileName}`, op.content);
-    }
+      const constants = generateConstants(pkg);
+      if (constants.length > 0) {
+        await write('constants.go', constants);
+      }
 
-    // don't overwrite an existing go.mod file, update it if required
-    const goModFile = 'go.mod';
-    let existingGoMod: string | undefined;
-    if (await this.fs.exists(goModFile)) {
-      existingGoMod = await this.fs.read(goModFile);
-    }
-    const gomod = generateGoModFile(this.codeModel, existingGoMod);
-    if (gomod.length > 0) {
-      await this.fs.write(goModFile, gomod);
-    }
+      const interfaces = generateInterfaces(pkg);
+      if (interfaces.length > 0) {
+        await write('interfaces.go', interfaces);
+      }
 
-    const interfaces = generateInterfaces(this.codeModel);
-    if (interfaces.length > 0) {
-      await this.fs.write(`${this.filePrefix}interfaces.go`, interfaces);
-    }
+      const operations = generateOperations(pkg, this.codeModel.type, this.codeModel.options);
+      for (const op of operations) {
+        await write(`${snakeClientFileName(op.name)}.go`, op.content);
+      }
 
-    const models = generateModels(this.codeModel);
-    if (models.models.length > 0) {
-      await this.fs.write(`${this.filePrefix}models.go`, models.models);
-    }
-    if (models.serDe.length > 0) {
-      await this.fs.write(`${this.filePrefix}models_serde.go`, models.serDe);
-    }
+      const models = generateModels(pkg, this.codeModel.options);
+      if (models.models.length > 0) {
+        await write('models.go', models.models);
+      }
+      if (models.serDe.length > 0) {
+        await write('models_serde.go', models.serDe);
+      }
 
-    const options = generateOptions(this.codeModel);
-    if (options.length > 0) {
-      await this.fs.write(`${this.filePrefix}options.go`, options);
-    }
+      const options = generateOptions(pkg);
+      if (options.length > 0) {
+        await write('options.go', options);
+      }
 
-    const polymorphics = generatePolymorphicHelpers(this.codeModel);
-    if (polymorphics.length > 0) {
-      await this.fs.write(`${this.filePrefix}polymorphic_helpers.go`, polymorphics);
-    }
+      const polymorphics = generatePolymorphicHelpers(pkg);
+      if (polymorphics.length > 0) {
+        await write('polymorphic_helpers.go', polymorphics);
+      }
 
-    const responses = generateResponses(this.codeModel);
-    if (responses.responses.length > 0) {
-      await this.fs.write(`${this.filePrefix}responses.go`, responses.responses);
-    }
-    if (responses.serDe.length > 0) {
-      await this.fs.write(`${this.filePrefix}responses_serde.go`, responses.serDe);
-    }
+      const responses = generateResponses(pkg, this.codeModel.options);
+      if (responses.responses.length > 0) {
+        await write('responses.go', responses.responses);
+      }
+      if (responses.serDe.length > 0) {
+        await write('responses_serde.go', responses.serDe);
+      }
 
-    const timeHelpers = generateTimeHelpers(this.codeModel);
-    for (const helper of timeHelpers) {
-      await this.fs.write(`${this.filePrefix}${helper.name.toLowerCase()}.go`, helper.content);
-    }
+      const timeHelpers = generateTimeHelpers(pkg);
+      for (const helper of timeHelpers) {
+        await write(`${helper.name.toLowerCase()}.go`, helper.content);
+      }
 
-    // don't overwrite an existing version.go file
-    const versionGo = generateVersionInfo(this.codeModel);
-    const versionGoFileName = `${this.filePrefix}version.go`;
-    if (versionGo.length > 0 && !await this.fs.exists(versionGoFileName)) {
-      await this.fs.write(versionGoFileName, versionGo);
-    }
+      const xmlAddlProps = generateXMLAdditionalPropsHelpers(pkg);
+      if (xmlAddlProps.length > 0) {
+        await write('xml_helper.go', xmlAddlProps);
+      }
 
-    const xmlAddlProps = generateXMLAdditionalPropsHelpers(this.codeModel);
-    if (xmlAddlProps.length > 0) {
-      await this.fs.write(`${this.filePrefix}xml_helper.go`, xmlAddlProps);
-    }
+      if (this.codeModel.options.generateFakes) {
+        const fakePkg = new go.FakePackage(pkg);
+        const serverContent = generateServers(fakePkg);
+        if (serverContent.servers.length > 0) {
+          for (const op of serverContent.servers) {
+            const fileName = `${snakeClientFileName(op.name, 'server')}.go`;
+            await write(fileName, op.content, fakePkg.kind);
+          }
 
-    if (this.codeModel.options.generateFakes) {
-      const serverContent = generateServers(this.codeModel);
-      if (serverContent.servers.length > 0) {
-        const fakesDir = 'fake';
-        for (const op of serverContent.servers) {
-          const fileName = `${snakeClientFileName(op.name, 'server')}.go`;
-          await this.fs.write(`${fakesDir}/${this.filePrefix}${fileName}`, op.content);
+          const serverFactory = generateServerFactory(fakePkg, this.codeModel.type);
+          if (serverFactory.length > 0) {
+            await write('server_factory.go', serverFactory, fakePkg.kind);
+          }
+
+          await write('internal.go', serverContent.internals, fakePkg.kind);
+
+          const timeHelpers = generateTimeHelpers(fakePkg);
+          for (const helper of timeHelpers) {
+            await write(`${helper.name.toLowerCase()}.go`, helper.content, fakePkg.kind);
+          }
+
+          const polymorphics = generatePolymorphicHelpers(fakePkg);
+          if (polymorphics.length > 0) {
+            await write('polymorphic_helpers.go', polymorphics, fakePkg.kind);
+          }
         }
+      }
+    });
 
-        const serverFactory = generateServerFactory(this.codeModel);
-        if (serverFactory.length > 0) {
-          await this.fs.write(`${fakesDir}/${this.filePrefix}server_factory.go`, serverFactory);
-        }
-
-        await this.fs.write(`${fakesDir}/${this.filePrefix}internal.go`, serverContent.internals);
-
-        const timeHelpers = generateTimeHelpers(this.codeModel, 'fake');
-        for (const helper of timeHelpers) {
-          await this.fs.write(`${fakesDir}/${this.filePrefix}${helper.name.toLowerCase()}.go`, helper.content);
-        }
-
-        const polymorphics = generatePolymorphicHelpers(this.codeModel, 'fake');
-        if (polymorphics.length > 0) {
-          await this.fs.write(`${fakesDir}/${this.filePrefix}polymorphic_helpers.go`, polymorphics);
-        }
+    // only one version.go file per module
+    if (this.codeModel.root.kind === 'module') {
+      // don't overwrite an existing version.go file
+      const versionGo = generateVersionInfo(this.codeModel.root);
+      const versionGoFileName = `${this.filePrefix}version.go`;
+      if (versionGo.length > 0 && !await this.fs.exists(versionGoFileName)) {
+        await this.fs.write(versionGoFileName, versionGo);
       }
     }
   }
 
   /** writes the cloud_config.go file */
   async emitCloudConfig(): Promise<void> {
-    const cloudConfig = generateCloudConfig(this.codeModel);
+    if (this.codeModel.root.kind !== 'module') {
+      return;
+    }
+    const cloudConfig = generateCloudConfig(this.codeModel.root, this.codeModel.type);
     if (cloudConfig.length > 0) {
       await this.fs.write(`${this.filePrefix}cloud_config.go`, cloudConfig);
     }
@@ -182,17 +201,22 @@ export class Emitter {
       return;
     }
 
-    const examples = generateExamples(this.codeModel);
-    for (const example of examples) {
-      const fileName = `${snakeClientFileName(example.name)}_example_test.go`;
-      await this.fs.write(`${this.filePrefix}${fileName}`, example.content);
-    }
+    await this.recursiveEmit(async (pkg: go.PackageContent, write: (name: string, content: string) => Promise<void>): Promise<void> => {
+      const examples = generateExamples(new go.TestPackage(pkg), this.codeModel.type, this.codeModel.options);
+      for (const example of examples) {
+        await write(`${snakeClientFileName(example.name)}_example_test.go`, example.content);
+      }
+    });
   }
 
   /** writes the LICENSE.txt file */
   async emitLicenseFile(): Promise<void> {
+    if (this.codeModel.root.kind !== 'module') {
+      return;
+    }
+
     // don't overwrite an existing LICENSE.txt file
-    const licenseTxt = generateLicenseTxt(this.codeModel);
+    const licenseTxt = generateLicenseTxt(this.codeModel.options);
     const licenseTxtFileName = 'LICENSE.txt';
     if (licenseTxt && !await this.fs.exists(licenseTxtFileName)) {
       await this.fs.write(licenseTxtFileName, licenseTxt);
@@ -201,9 +225,43 @@ export class Emitter {
 
   /** writes the emitter metadata file */
   async emitMetadataFile(): Promise<void> {
+    if (this.codeModel.root.kind !== 'module') {
+      return;
+    }
+
     const metadata = generateMetadataFile(this.codeModel);
     if (metadata.length > 0) {
       await this.fs.write('testdata/_metadata.json', metadata);
+    }
+  }
+
+  /**
+   * recursively emits package contents.
+   * 
+   * @param emitForPkg the package contents to emit
+   */
+  private async recursiveEmit(emitForPkg: (pkg: go.PackageContent, write: (name: string, content: string, subdir?: string) => Promise<void>) => Promise<void>): Promise<void> {
+    const recursiveEmit = async (pkg: go.PackageContent, dir: string): Promise<void> => {
+      await emitForPkg(pkg, async (name: string, content: string, subdir?: string) => {
+        return await this.fs.write(`${dir}${subdir ? `${subdir}/` : ''}${this.filePrefix}${name}`, content);
+      });
+
+      // recursively emit any sub-packages
+      for (const subPkg of pkg.packages) {
+        await recursiveEmit(subPkg, `${dir}${subPkg.name}/`);
+      }
+    };
+
+    switch (this.codeModel.root.kind) {
+      case 'containingModule':
+        await recursiveEmit(this.codeModel.root.package, '');
+        break;
+      case 'module':
+        // when emitting a module, the root directory is the module directory
+        await recursiveEmit(this.codeModel.root, '');
+        break;
+      default:
+        this.codeModel.root satisfies never;
     }
   }
 }
@@ -228,44 +286,44 @@ function snakeClientFileName(clientName: string, suffix: string = 'client'): str
 }
 
 /**
- * sorts code model contents by name in alphabetical order.
+ * recursively sorts code model contents by name in alphabetical order.
  * 
- * @param codeModel the contents to sort
+ * @param pkg the contents to sort
  */
-function sortContent(codeModel: go.CodeModel): void {
+function sortContent(pkg: go.PackageContent): void {
   const sortAscending = function(a: string, b: string): number {
     return a < b ? -1 : a > b ? 1 : 0;
   };
 
-  codeModel.constants.sort((a: go.Constant, b: go.Constant) => { return sortAscending(a.name, b.name); });
-  for (const enm of codeModel.constants) {
+  pkg.constants.sort((a: go.Constant, b: go.Constant) => { return sortAscending(a.name, b.name); });
+  for (const enm of pkg.constants) {
     enm.values.sort((a: go.ConstantValue, b: go.ConstantValue) => { return sortAscending(a.name, b.name); });
   }
 
-  codeModel.interfaces.sort((a: go.Interface, b: go.Interface) => { return sortAscending(a.name, b.name); });
-  for (const iface of codeModel.interfaces) {
+  pkg.interfaces.sort((a: go.Interface, b: go.Interface) => { return sortAscending(a.name, b.name); });
+  for (const iface of pkg.interfaces) {
     // we sort by literal value so that the switch/case statements in polymorphic_helpers.go
     // are ordered by the literal value which can be somewhat different from the model name.
     iface.possibleTypes.sort((a: go.PolymorphicModel, b: go.PolymorphicModel) => { return sortAscending(a.discriminatorValue!.literal, b.discriminatorValue!.literal); });
   }
 
-  codeModel.models.sort((a: go.Model | go.PolymorphicModel, b: go.Model | go.PolymorphicModel) => { return sortAscending(a.name, b.name); });
-  for (const model of codeModel.models) {
+  pkg.models.sort((a: go.Model | go.PolymorphicModel, b: go.Model | go.PolymorphicModel) => { return sortAscending(a.name, b.name); });
+  for (const model of pkg.models) {
     model.fields.sort((a: go.ModelField, b: go.ModelField) => { return sortAscending(a.name, b.name); });
   }
 
-  codeModel.paramGroups.sort((a: go.Struct, b: go.Struct) => { return sortAscending(a.name, b.name); });
-  for (const paramGroup of codeModel.paramGroups) {
+  pkg.paramGroups.sort((a: go.Struct, b: go.Struct) => { return sortAscending(a.name, b.name); });
+  for (const paramGroup of pkg.paramGroups) {
     paramGroup.fields.sort((a: go.StructField, b: go.StructField) => { return sortAscending(a.name, b.name); });
   }
 
-  codeModel.responseEnvelopes.sort((a: go.ResponseEnvelope, b: go.ResponseEnvelope) => { return sortAscending(a.name, b.name); });
-  for (const respEnv of codeModel.responseEnvelopes) {
+  pkg.responseEnvelopes.sort((a: go.ResponseEnvelope, b: go.ResponseEnvelope) => { return sortAscending(a.name, b.name); });
+  for (const respEnv of pkg.responseEnvelopes) {
     respEnv.headers.sort((a: go.HeaderScalarResponse | go.HeaderMapResponse, b: go.HeaderScalarResponse | go.HeaderMapResponse) => { return sortAscending(a.fieldName, b.fieldName); });
   }
 
-  codeModel.clients.sort((a: go.Client, b: go.Client) => { return sortAscending(a.name, b.name); });
-  for (const client of codeModel.clients) {
+  pkg.clients.sort((a: go.Client, b: go.Client) => { return sortAscending(a.name, b.name); });
+  for (const client of pkg.clients) {
     if (client.instance?.kind === 'constructable') {
       client.instance.constructors.sort((a: go.Constructor, b: go.Constructor) => sortAscending(a.name, b.name));
       if (client.instance.options.kind === 'clientOptions') {
@@ -278,5 +336,9 @@ function sortContent(codeModel: go.CodeModel): void {
     for (const method of client.methods) {
       method.httpStatusCodes.sort();
     }
+  }
+
+  for (const subPkg of pkg.packages) {
+    sortContent(subPkg);
   }
 }

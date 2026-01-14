@@ -66,6 +66,7 @@ const httpSpecsGroup = {
   'optionalitygroup': ['type/property/optionality', 'slice-elements-byval=true'], // missing support for plain time https://github.com/Azure/autorest.go/issues/1732
   'valuetypesgroup': ['type/property/value-types', 'slice-elements-byval=true'],
   'scalargroup': ['type/scalar', 'slice-elements-byval=true'],
+  //'uniondiscriminatedgroup': ['type/union/discriminated'], // requires union support
   //'uniongroup': ['type/union'], // requires union support
   //'addedgroup': ['versioning/added'], // requires union support
   'madeoptionalgroup': ['versioning/madeOptional'],
@@ -82,7 +83,7 @@ const azureHttpSpecsGroup = {
   'coreusagegroup': ['azure/client-generator-core/usage'],
   'overridegroup': ['azure/client-generator-core/override/client.tsp'],
   'hierarchygroup': ['azure/client-generator-core/hierarchy-building'],
-  // 'clientinitializationgroup': ['azure/client-generator-core/client-initialization'],
+  'clientinitgroup': ['azure/client-generator-core/client-initialization'],
   'apiversionheadergroup' : ['azure/client-generator-core/api-version/header/client.tsp'],
   'apiversionpathgroup' : ['azure/client-generator-core/api-version/path/client.tsp'],
   'apiversionquerygroup' : ['azure/client-generator-core/api-version/query/client.tsp'],
@@ -92,7 +93,10 @@ const azureHttpSpecsGroup = {
   'azurepagegroup': ['azure/core/page/client.tsp'], // requires paging with re-injection support
   'corescalargroup': ['azure/core/scalar'],
   'coremodelgroup': ['azure/core/model'],
-  'coreclientlocationgroup': ['azure/client-generator-core/client-location'],
+  'coreclientlocationmovemethodparametertoclientgroup': ['azure/client-generator-core/client-location/move-method-parameter-to-client'],
+  'coreclientlocationmoveexistingsubclientgroup': ['azure/client-generator-core/client-location/move-to-existing-sub-client'],
+  'coreclientlocationmovenewsubclientgroup': ['azure/client-generator-core/client-location/move-to-new-sub-client'],
+  'coreclientlocationmoverootclientgroup': ['azure/client-generator-core/client-location/move-to-root-client'],
   // 'coredeserializegroup': ['azure/client-generator-core/deserialize-empty-string-as-null'],
   'traitsgroup': ['azure/core/traits'], // requires union support
   'encodedurationgroup': ['azure/encode/duration'],
@@ -104,6 +108,7 @@ const azureHttpSpecsGroup = {
   'templatesgroup' : ['azure/resource-manager/operation-templates'],
   'largeheadergroup' : ['azure/resource-manager/large-header'],
   'methodsubscriptionidgroup' : ['/azure/resource-manager/method-subscription-id/client.tsp'],
+  'armmultipleservicegroup' : ['/azure/resource-manager/multi-service/client.tsp'],
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
   'previewversiongroup': ['azure/versioning/previewVersion', 'api-version=2024-12-01-preview'],
   'previewversiongroupspecificversion': ['azure/versioning/previewVersion', 'api-version=2024-06-01'],
@@ -118,6 +123,7 @@ const azureHttpSpecsGroup = {
   'twoopgroup': ['client/structure/two-operation-group/client.tsp'],
   'srvdrivenoldgroup': ['resiliency/srv-driven/old.tsp'],
   'srvdrivennewgroup': ['resiliency/srv-driven'],
+  'multipleservicegroup' : ['/service/multi-service/client.tsp'],
 };
 
 // default to using the locally built emitter
@@ -194,7 +200,7 @@ const azkeys = pkgRoot + 'test/tsp/KeyVault.Keys/client.tsp';
 generate('azkeys', azkeys, 'test/local/azkeys', ['single-client=true', 'omit-constructors=true']);
 
 const armtest = pkgRoot + 'test/tsp/Test.Management';
-generate('armtest', armtest, 'test/local/armtest', [`examples-directory=${armtest}/examples`, 'generate-samples=true']);
+generate('armtest/v2', armtest, 'test/local/armtest', [`examples-directory=${armtest}/examples`, 'generate-samples=true']);
 
 const internalpager = pkgRoot + 'test/tsp/Internal.Pager';
 generate('internalpager', internalpager, 'test/local/internalpager', ['generate-fakes=false']);
@@ -222,6 +228,9 @@ generate('rawjson', rawjson, 'test/local/rawjson/subpkg', ['containing-module=ra
 
 const azregressions = pkgRoot + 'test/tsp/Regressions';
 generate('azregressions', azregressions, 'test/local/azregressions');
+
+const armpageablelros = pkgRoot + 'test/tsp/PageableLROs';
+generate('armpageablelros', armpageablelros, 'test/local/armpageablelros');
 
 loopSpec(httpSpecsGroup, httpSpecs, 'test/http-specs')
 loopSpec(azureHttpSpecsGroup, azureHttpSpecs, 'test/azure-http-specs')
