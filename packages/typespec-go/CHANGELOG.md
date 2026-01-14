@@ -6,6 +6,10 @@
 
 * Fixed name collision issue when a union type and a model type have the same name after package prefix trimming.
 
+### Other Changes
+
+* Updated to the latest tsp toolset.
+
 ## 0.9.0 (2026-01-06)
 
 ### Breaking Changes
