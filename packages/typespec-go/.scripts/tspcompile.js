@@ -343,7 +343,7 @@ function generate(moduleName, input, outputDir, perTestOptions) {
           if (existsSync(metadataPath)) {
             const metadata = JSON.parse(readFileSync(metadataPath, 'utf8'));
             metadata.emitterVersion = '0.0.0';
-            writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
+            writeFileSync(metadataPath, JSON.stringify(metadata, null, 2) + '\n');
           }
         } else {
           // delete files on error so it's easy to spot codegen failures
