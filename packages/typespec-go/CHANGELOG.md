@@ -10,6 +10,7 @@
 
 * Updated to the latest tsp toolset.
 * Move time helpers to azcore.
+* Add new line at the end of metadata file.
 
 ## 0.9.0 (2026-01-06)
 
