@@ -402,7 +402,7 @@ func (p *PathsServerTransport) dispatchDateNull(req *http.Request) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	datePathParam, err := time.Parse("2006-01-02", datePathUnescaped)
+	datePathParam, err := time.Parse(time.DateOnly, datePathUnescaped)
 	if err != nil {
 		return nil, err
 	}

@@ -403,7 +403,8 @@ function generateServerTransportMethods(pkg: go.FakePackage, serverTransport: st
             }
             let responseField = `server.GetResponse(respr)${respField}`;
             if (method.returns.result.monomorphicType.kind === 'time') {
-              responseField = `(*${method.returns.result.monomorphicType.format})(${responseField})`;
+              imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+              responseField = `(*datetime.${method.returns.result.monomorphicType.format})(${responseField})`;
             }
             content += `\tresp, err := server.MarshalResponseAs${method.returns.result.format}(respContent, ${responseField}, req)\n`;
           }
@@ -507,7 +508,8 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
             default: {
               let bodyTypeName = go.getTypeDeclaration(bodyParam.type, pkg);
               if (bodyParam.type.kind === 'time') {
-                bodyTypeName = bodyParam.type.format;
+                imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+                bodyTypeName = `datetime.${bodyParam.type.format}`;
               }
               content += `\tbody, err := server.UnmarshalRequestAs${bodyParam.bodyFormat}[${bodyTypeName}](req)\n`;
               content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
@@ -1035,17 +1037,17 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
           fromVar = `parsed${capitalize(elementFormat)}`;
           content += `\t\t${fromVar}, parseErr := base64.${elementFormat}Encoding.DecodeString(${paramValue}[i])\n`;
           content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
-        } else if (elementFormat === 'dateTimeRFC1123' || elementFormat === 'dateTimeRFC3339' || elementFormat === 'timeUnix') {
+        } else if (elementFormat === 'RFC1123' || elementFormat === 'RFC3339' || elementFormat === 'Unix') {
           imports.add('time');
           fromVar = `parsed${capitalize(elementFormat)}`;
-          if (elementFormat === 'timeUnix') {
+          if (elementFormat === 'Unix') {
             imports.add('strconv');
             content += `\t\tp, parseErr := strconv.ParseInt(${paramValue}[i], 10, 64)\n`;
             content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
             content += `\t\t${fromVar} := time.Unix(p, 0).UTC()\n`;
           } else {
             let format = 'time.RFC3339Nano';
-            if (elementFormat === 'dateTimeRFC1123') {
+            if (elementFormat === 'RFC1123') {
               format = 'time.RFC1123';
             }
             content += `\t\t${fromVar}, parseErr := time.Parse(${format}, ${paramValue}[i])\n`;
@@ -1077,25 +1079,15 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
       content += `\t${createLocalVariableName(param, 'Param')}, err := base64.${param.type.encoding}Encoding.DecodeString(${paramValue})\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     } else if (param.type.kind === 'time') {
-      if (param.type.format === 'dateType' || param.type.format === 'timeRFC3339') {
-        imports.add('time');
-        let format = helpers.dateFormat;
-        if (param.type.format === 'timeRFC3339') {
-          format = helpers.timeRFC3339Format;
-        }
-        let from = `time.Parse("${format}", ${paramValue})`;
-        if (!go.isRequiredParameter(param.style)) {
-          requiredHelpers.parseOptional = true;
-          from = `parseOptional(${paramValue}, func(v string) (time.Time, error) { return time.Parse("${format}", v) })`;
-        }
-        content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
-        content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-      } else if (param.type.format === 'dateTimeRFC1123' || param.type.format === 'dateTimeRFC3339') {
-        imports.add('time');
-        let format = 'time.RFC3339Nano';
-        if (param.type.format === 'dateTimeRFC1123') {
-          format = 'time.RFC1123';
-        }
+      const formatMap: Record<string, string> = {
+        'PlainDate': helpers.plainDateFormat,
+        'PlainTime': helpers.plainTimeFormat,
+        'RFC1123': helpers.RFC1123Format,
+        'RFC3339': helpers.RFC3339Format,
+      };
+      imports.add('time');
+      if (param.type.format in formatMap) {
+        const format = formatMap[param.type.format];
         let from = `time.Parse(${format}, ${paramValue})`;
         if (!go.isRequiredParameter(param.style)) {
           requiredHelpers.parseOptional = true;

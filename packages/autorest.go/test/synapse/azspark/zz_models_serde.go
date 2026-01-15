@@ -9,7 +9,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"reflect"
+	"time"
 )
 
 // MarshalJSON implements the json.Marshaller interface for type BatchJob.
@@ -233,14 +235,14 @@ func (b *BatchJobOptions) UnmarshalJSON(data []byte) error {
 func (b BatchJobState) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "currentState", b.CurrentState)
-	populateDateTimeRFC3339(objectMap, "deadAt", b.DeadAt)
+	populateTime[datetime.RFC3339](objectMap, "deadAt", b.DeadAt)
 	populate(objectMap, "jobCreationRequest", b.JobCreationRequest)
-	populateDateTimeRFC3339(objectMap, "notStartedAt", b.NotStartedAt)
-	populateDateTimeRFC3339(objectMap, "recoveringAt", b.RecoveringAt)
-	populateDateTimeRFC3339(objectMap, "runningAt", b.RunningAt)
-	populateDateTimeRFC3339(objectMap, "startingAt", b.StartingAt)
-	populateDateTimeRFC3339(objectMap, "successAt", b.SuccessAt)
-	populateDateTimeRFC3339(objectMap, "killedAt", b.TerminatedAt)
+	populateTime[datetime.RFC3339](objectMap, "notStartedAt", b.NotStartedAt)
+	populateTime[datetime.RFC3339](objectMap, "recoveringAt", b.RecoveringAt)
+	populateTime[datetime.RFC3339](objectMap, "runningAt", b.RunningAt)
+	populateTime[datetime.RFC3339](objectMap, "startingAt", b.StartingAt)
+	populateTime[datetime.RFC3339](objectMap, "successAt", b.SuccessAt)
+	populateTime[datetime.RFC3339](objectMap, "killedAt", b.TerminatedAt)
 	return json.Marshal(objectMap)
 }
 
@@ -257,28 +259,28 @@ func (b *BatchJobState) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "CurrentState", &b.CurrentState)
 			delete(rawMsg, key)
 		case "deadAt":
-			err = unpopulateDateTimeRFC3339(val, "DeadAt", &b.DeadAt)
+			err = unpopulateTime[datetime.RFC3339](val, "DeadAt", &b.DeadAt)
 			delete(rawMsg, key)
 		case "jobCreationRequest":
 			err = unpopulate(val, "JobCreationRequest", &b.JobCreationRequest)
 			delete(rawMsg, key)
 		case "notStartedAt":
-			err = unpopulateDateTimeRFC3339(val, "NotStartedAt", &b.NotStartedAt)
+			err = unpopulateTime[datetime.RFC3339](val, "NotStartedAt", &b.NotStartedAt)
 			delete(rawMsg, key)
 		case "recoveringAt":
-			err = unpopulateDateTimeRFC3339(val, "RecoveringAt", &b.RecoveringAt)
+			err = unpopulateTime[datetime.RFC3339](val, "RecoveringAt", &b.RecoveringAt)
 			delete(rawMsg, key)
 		case "runningAt":
-			err = unpopulateDateTimeRFC3339(val, "RunningAt", &b.RunningAt)
+			err = unpopulateTime[datetime.RFC3339](val, "RunningAt", &b.RunningAt)
 			delete(rawMsg, key)
 		case "startingAt":
-			err = unpopulateDateTimeRFC3339(val, "StartingAt", &b.StartingAt)
+			err = unpopulateTime[datetime.RFC3339](val, "StartingAt", &b.StartingAt)
 			delete(rawMsg, key)
 		case "successAt":
-			err = unpopulateDateTimeRFC3339(val, "SuccessAt", &b.SuccessAt)
+			err = unpopulateTime[datetime.RFC3339](val, "SuccessAt", &b.SuccessAt)
 			delete(rawMsg, key)
 		case "killedAt":
-			err = unpopulateDateTimeRFC3339(val, "TerminatedAt", &b.TerminatedAt)
+			err = unpopulateTime[datetime.RFC3339](val, "TerminatedAt", &b.TerminatedAt)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -370,11 +372,11 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type Scheduler.
 func (s Scheduler) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateDateTimeRFC3339(objectMap, "cancellationRequestedAt", s.CancellationRequestedAt)
+	populateTime[datetime.RFC3339](objectMap, "cancellationRequestedAt", s.CancellationRequestedAt)
 	populate(objectMap, "currentState", s.CurrentState)
-	populateDateTimeRFC3339(objectMap, "endedAt", s.EndedAt)
-	populateDateTimeRFC3339(objectMap, "scheduledAt", s.ScheduledAt)
-	populateDateTimeRFC3339(objectMap, "submittedAt", s.SubmittedAt)
+	populateTime[datetime.RFC3339](objectMap, "endedAt", s.EndedAt)
+	populateTime[datetime.RFC3339](objectMap, "scheduledAt", s.ScheduledAt)
+	populateTime[datetime.RFC3339](objectMap, "submittedAt", s.SubmittedAt)
 	return json.Marshal(objectMap)
 }
 
@@ -388,19 +390,19 @@ func (s *Scheduler) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "cancellationRequestedAt":
-			err = unpopulateDateTimeRFC3339(val, "CancellationRequestedAt", &s.CancellationRequestedAt)
+			err = unpopulateTime[datetime.RFC3339](val, "CancellationRequestedAt", &s.CancellationRequestedAt)
 			delete(rawMsg, key)
 		case "currentState":
 			err = unpopulate(val, "CurrentState", &s.CurrentState)
 			delete(rawMsg, key)
 		case "endedAt":
-			err = unpopulateDateTimeRFC3339(val, "EndedAt", &s.EndedAt)
+			err = unpopulateTime[datetime.RFC3339](val, "EndedAt", &s.EndedAt)
 			delete(rawMsg, key)
 		case "scheduledAt":
-			err = unpopulateDateTimeRFC3339(val, "ScheduledAt", &s.ScheduledAt)
+			err = unpopulateTime[datetime.RFC3339](val, "ScheduledAt", &s.ScheduledAt)
 			delete(rawMsg, key)
 		case "submittedAt":
-			err = unpopulateDateTimeRFC3339(val, "SubmittedAt", &s.SubmittedAt)
+			err = unpopulateTime[datetime.RFC3339](val, "SubmittedAt", &s.SubmittedAt)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -448,12 +450,12 @@ func (s *ServiceError) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type ServicePlugin.
 func (s ServicePlugin) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateDateTimeRFC3339(objectMap, "cleanupStartedAt", s.CleanupStartedAt)
+	populateTime[datetime.RFC3339](objectMap, "cleanupStartedAt", s.CleanupStartedAt)
 	populate(objectMap, "currentState", s.CurrentState)
-	populateDateTimeRFC3339(objectMap, "monitoringStartedAt", s.MonitoringStartedAt)
-	populateDateTimeRFC3339(objectMap, "preparationStartedAt", s.PreparationStartedAt)
-	populateDateTimeRFC3339(objectMap, "resourceAcquisitionStartedAt", s.ResourceAcquisitionStartedAt)
-	populateDateTimeRFC3339(objectMap, "submissionStartedAt", s.SubmissionStartedAt)
+	populateTime[datetime.RFC3339](objectMap, "monitoringStartedAt", s.MonitoringStartedAt)
+	populateTime[datetime.RFC3339](objectMap, "preparationStartedAt", s.PreparationStartedAt)
+	populateTime[datetime.RFC3339](objectMap, "resourceAcquisitionStartedAt", s.ResourceAcquisitionStartedAt)
+	populateTime[datetime.RFC3339](objectMap, "submissionStartedAt", s.SubmissionStartedAt)
 	return json.Marshal(objectMap)
 }
 
@@ -467,22 +469,22 @@ func (s *ServicePlugin) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "cleanupStartedAt":
-			err = unpopulateDateTimeRFC3339(val, "CleanupStartedAt", &s.CleanupStartedAt)
+			err = unpopulateTime[datetime.RFC3339](val, "CleanupStartedAt", &s.CleanupStartedAt)
 			delete(rawMsg, key)
 		case "currentState":
 			err = unpopulate(val, "CurrentState", &s.CurrentState)
 			delete(rawMsg, key)
 		case "monitoringStartedAt":
-			err = unpopulateDateTimeRFC3339(val, "MonitoringStartedAt", &s.MonitoringStartedAt)
+			err = unpopulateTime[datetime.RFC3339](val, "MonitoringStartedAt", &s.MonitoringStartedAt)
 			delete(rawMsg, key)
 		case "preparationStartedAt":
-			err = unpopulateDateTimeRFC3339(val, "PreparationStartedAt", &s.PreparationStartedAt)
+			err = unpopulateTime[datetime.RFC3339](val, "PreparationStartedAt", &s.PreparationStartedAt)
 			delete(rawMsg, key)
 		case "resourceAcquisitionStartedAt":
-			err = unpopulateDateTimeRFC3339(val, "ResourceAcquisitionStartedAt", &s.ResourceAcquisitionStartedAt)
+			err = unpopulateTime[datetime.RFC3339](val, "ResourceAcquisitionStartedAt", &s.ResourceAcquisitionStartedAt)
 			delete(rawMsg, key)
 		case "submissionStartedAt":
-			err = unpopulateDateTimeRFC3339(val, "SubmissionStartedAt", &s.SubmissionStartedAt)
+			err = unpopulateTime[datetime.RFC3339](val, "SubmissionStartedAt", &s.SubmissionStartedAt)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -712,17 +714,17 @@ func (s *SessionOptions) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type SessionState.
 func (s SessionState) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateDateTimeRFC3339(objectMap, "busyAt", s.BusyAt)
+	populateTime[datetime.RFC3339](objectMap, "busyAt", s.BusyAt)
 	populate(objectMap, "currentState", s.CurrentState)
-	populateDateTimeRFC3339(objectMap, "deadAt", s.DeadAt)
-	populateDateTimeRFC3339(objectMap, "errorAt", s.ErrorAt)
-	populateDateTimeRFC3339(objectMap, "idleAt", s.IdleAt)
+	populateTime[datetime.RFC3339](objectMap, "deadAt", s.DeadAt)
+	populateTime[datetime.RFC3339](objectMap, "errorAt", s.ErrorAt)
+	populateTime[datetime.RFC3339](objectMap, "idleAt", s.IdleAt)
 	populate(objectMap, "jobCreationRequest", s.JobCreationRequest)
-	populateDateTimeRFC3339(objectMap, "notStartedAt", s.NotStartedAt)
-	populateDateTimeRFC3339(objectMap, "recoveringAt", s.RecoveringAt)
-	populateDateTimeRFC3339(objectMap, "shuttingDownAt", s.ShuttingDownAt)
-	populateDateTimeRFC3339(objectMap, "startingAt", s.StartingAt)
-	populateDateTimeRFC3339(objectMap, "killedAt", s.TerminatedAt)
+	populateTime[datetime.RFC3339](objectMap, "notStartedAt", s.NotStartedAt)
+	populateTime[datetime.RFC3339](objectMap, "recoveringAt", s.RecoveringAt)
+	populateTime[datetime.RFC3339](objectMap, "shuttingDownAt", s.ShuttingDownAt)
+	populateTime[datetime.RFC3339](objectMap, "startingAt", s.StartingAt)
+	populateTime[datetime.RFC3339](objectMap, "killedAt", s.TerminatedAt)
 	return json.Marshal(objectMap)
 }
 
@@ -736,37 +738,37 @@ func (s *SessionState) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "busyAt":
-			err = unpopulateDateTimeRFC3339(val, "BusyAt", &s.BusyAt)
+			err = unpopulateTime[datetime.RFC3339](val, "BusyAt", &s.BusyAt)
 			delete(rawMsg, key)
 		case "currentState":
 			err = unpopulate(val, "CurrentState", &s.CurrentState)
 			delete(rawMsg, key)
 		case "deadAt":
-			err = unpopulateDateTimeRFC3339(val, "DeadAt", &s.DeadAt)
+			err = unpopulateTime[datetime.RFC3339](val, "DeadAt", &s.DeadAt)
 			delete(rawMsg, key)
 		case "errorAt":
-			err = unpopulateDateTimeRFC3339(val, "ErrorAt", &s.ErrorAt)
+			err = unpopulateTime[datetime.RFC3339](val, "ErrorAt", &s.ErrorAt)
 			delete(rawMsg, key)
 		case "idleAt":
-			err = unpopulateDateTimeRFC3339(val, "IdleAt", &s.IdleAt)
+			err = unpopulateTime[datetime.RFC3339](val, "IdleAt", &s.IdleAt)
 			delete(rawMsg, key)
 		case "jobCreationRequest":
 			err = unpopulate(val, "JobCreationRequest", &s.JobCreationRequest)
 			delete(rawMsg, key)
 		case "notStartedAt":
-			err = unpopulateDateTimeRFC3339(val, "NotStartedAt", &s.NotStartedAt)
+			err = unpopulateTime[datetime.RFC3339](val, "NotStartedAt", &s.NotStartedAt)
 			delete(rawMsg, key)
 		case "recoveringAt":
-			err = unpopulateDateTimeRFC3339(val, "RecoveringAt", &s.RecoveringAt)
+			err = unpopulateTime[datetime.RFC3339](val, "RecoveringAt", &s.RecoveringAt)
 			delete(rawMsg, key)
 		case "shuttingDownAt":
-			err = unpopulateDateTimeRFC3339(val, "ShuttingDownAt", &s.ShuttingDownAt)
+			err = unpopulateTime[datetime.RFC3339](val, "ShuttingDownAt", &s.ShuttingDownAt)
 			delete(rawMsg, key)
 		case "startingAt":
-			err = unpopulateDateTimeRFC3339(val, "StartingAt", &s.StartingAt)
+			err = unpopulateTime[datetime.RFC3339](val, "StartingAt", &s.StartingAt)
 			delete(rawMsg, key)
 		case "killedAt":
-			err = unpopulateDateTimeRFC3339(val, "TerminatedAt", &s.TerminatedAt)
+			err = unpopulateTime[datetime.RFC3339](val, "TerminatedAt", &s.TerminatedAt)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -961,6 +963,17 @@ func populate(m map[string]any, k string, v any) {
 	}
 }
 
+func populateTime[T dateTimeConstraints](m map[string]any, k string, t *time.Time) {
+	if t == nil {
+		return
+	} else if azcore.IsNullValue(t) {
+		m[k] = nil
+	} else if !reflect.ValueOf(t).IsNil() {
+		newTime := T(*t)
+		m[k] = (*T)(&newTime)
+	}
+}
+
 func populateAny(m map[string]any, k string, v any) {
 	if v == nil {
 		return
@@ -979,4 +992,21 @@ func unpopulate(data json.RawMessage, fn string, v any) error {
 		return fmt.Errorf("struct field %s: %v", fn, err)
 	}
 	return nil
+}
+
+func unpopulateTime[T dateTimeConstraints](data json.RawMessage, fn string, t **time.Time) error {
+	if data == nil || string(data) == "null" {
+		return nil
+	}
+	var aux T
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	newTime := time.Time(aux)
+	*t = &newTime
+	return nil
+}
+
+type dateTimeConstraints interface {
+	datetime.PlainDate | datetime.PlainTime | datetime.RFC1123 | datetime.RFC3339 | datetime.Unix
 }

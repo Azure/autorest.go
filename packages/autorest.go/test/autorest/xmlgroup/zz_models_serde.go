@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"reflect"
 	"time"
 )
@@ -20,12 +21,12 @@ func (a AccessPolicy) MarshalXML(enc *xml.Encoder, start xml.StartElement) error
 	type alias AccessPolicy
 	aux := &struct {
 		*alias
-		Expiry *dateTimeRFC3339 `xml:"Expiry"`
-		Start  *dateTimeRFC3339 `xml:"Start"`
+		Expiry *datetime.RFC3339 `xml:"Expiry"`
+		Start  *datetime.RFC3339 `xml:"Start"`
 	}{
 		alias:  (*alias)(&a),
-		Expiry: (*dateTimeRFC3339)(a.Expiry),
-		Start:  (*dateTimeRFC3339)(a.Start),
+		Expiry: (*datetime.RFC3339)(a.Expiry),
+		Start:  (*datetime.RFC3339)(a.Start),
 	}
 	return enc.EncodeElement(aux, start)
 }
@@ -35,8 +36,8 @@ func (a *AccessPolicy) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) er
 	type alias AccessPolicy
 	aux := &struct {
 		*alias
-		Expiry *dateTimeRFC3339 `xml:"Expiry"`
-		Start  *dateTimeRFC3339 `xml:"Start"`
+		Expiry *datetime.RFC3339 `xml:"Expiry"`
+		Start  *datetime.RFC3339 `xml:"Start"`
 	}{
 		alias: (*alias)(a),
 	}
@@ -77,10 +78,10 @@ func (b Banana) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias Banana
 	aux := &struct {
 		*alias
-		Expiration *dateTimeRFC3339 `xml:"expiration"`
+		Expiration *datetime.RFC3339 `xml:"expiration"`
 	}{
 		alias:      (*alias)(&b),
-		Expiration: (*dateTimeRFC3339)(b.Expiration),
+		Expiration: (*datetime.RFC3339)(b.Expiration),
 	}
 	return enc.EncodeElement(aux, start)
 }
@@ -90,7 +91,7 @@ func (b *Banana) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
 	type alias Banana
 	aux := &struct {
 		*alias
-		Expiration *dateTimeRFC3339 `xml:"expiration"`
+		Expiration *datetime.RFC3339 `xml:"expiration"`
 	}{
 		alias: (*alias)(b),
 	}
@@ -137,14 +138,14 @@ func (b BlobProperties) MarshalXML(enc *xml.Encoder, start xml.StartElement) err
 	type alias BlobProperties
 	aux := &struct {
 		*alias
-		CopyCompletionTime *dateTimeRFC1123 `xml:"CopyCompletionTime"`
-		DeletedTime        *dateTimeRFC1123 `xml:"DeletedTime"`
-		LastModified       *dateTimeRFC1123 `xml:"Last-Modified"`
+		CopyCompletionTime *datetime.RFC1123 `xml:"CopyCompletionTime"`
+		DeletedTime        *datetime.RFC1123 `xml:"DeletedTime"`
+		LastModified       *datetime.RFC1123 `xml:"Last-Modified"`
 	}{
 		alias:              (*alias)(&b),
-		CopyCompletionTime: (*dateTimeRFC1123)(b.CopyCompletionTime),
-		DeletedTime:        (*dateTimeRFC1123)(b.DeletedTime),
-		LastModified:       (*dateTimeRFC1123)(b.LastModified),
+		CopyCompletionTime: (*datetime.RFC1123)(b.CopyCompletionTime),
+		DeletedTime:        (*datetime.RFC1123)(b.DeletedTime),
+		LastModified:       (*datetime.RFC1123)(b.LastModified),
 	}
 	return enc.EncodeElement(aux, start)
 }
@@ -154,9 +155,9 @@ func (b *BlobProperties) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) 
 	type alias BlobProperties
 	aux := &struct {
 		*alias
-		CopyCompletionTime *dateTimeRFC1123 `xml:"CopyCompletionTime"`
-		DeletedTime        *dateTimeRFC1123 `xml:"DeletedTime"`
-		LastModified       *dateTimeRFC1123 `xml:"Last-Modified"`
+		CopyCompletionTime *datetime.RFC1123 `xml:"CopyCompletionTime"`
+		DeletedTime        *datetime.RFC1123 `xml:"DeletedTime"`
+		LastModified       *datetime.RFC1123 `xml:"Last-Modified"`
 	}{
 		alias: (*alias)(b),
 	}
@@ -228,10 +229,10 @@ func (c ContainerProperties) MarshalXML(enc *xml.Encoder, start xml.StartElement
 	type alias ContainerProperties
 	aux := &struct {
 		*alias
-		LastModified *dateTimeRFC1123 `xml:"Last-Modified"`
+		LastModified *datetime.RFC1123 `xml:"Last-Modified"`
 	}{
 		alias:        (*alias)(&c),
-		LastModified: (*dateTimeRFC1123)(c.LastModified),
+		LastModified: (*datetime.RFC1123)(c.LastModified),
 	}
 	return enc.EncodeElement(aux, start)
 }
@@ -241,7 +242,7 @@ func (c *ContainerProperties) UnmarshalXML(dec *xml.Decoder, start xml.StartElem
 	type alias ContainerProperties
 	aux := &struct {
 		*alias
-		LastModified *dateTimeRFC1123 `xml:"Last-Modified"`
+		LastModified *datetime.RFC1123 `xml:"Last-Modified"`
 	}{
 		alias: (*alias)(c),
 	}

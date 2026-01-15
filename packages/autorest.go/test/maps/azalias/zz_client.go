@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"net/http"
 	"strconv"
 	"strings"
@@ -96,7 +97,7 @@ func (client *Client) createCreateRequest(ctx context.Context, headerBools []boo
 	}
 	reqQP.Set("queryEnum", string(queryEnum))
 	reqQP.Set("stringQuery", stringQuery)
-	reqQP.Set("unixTimeQuery", timeUnix(unixTimeQuery).String())
+	reqQP.Set("unixTimeQuery", datetime.Unix(unixTimeQuery).String())
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	assignedIDDefault := float32(8989)
@@ -109,7 +110,7 @@ func (client *Client) createCreateRequest(ctx context.Context, headerBools []boo
 	req.Raw().Header["headerBools"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerBools), "[]")), ",")}
 	req.Raw().Header["headerEnum"] = []string{string(headerEnum)}
 	if options != nil && options.OptionalUnixTime != nil {
-		req.Raw().Header["optionalUnixTime"] = []string{timeUnix(*options.OptionalUnixTime).String()}
+		req.Raw().Header["optionalUnixTime"] = []string{datetime.Unix(*options.OptionalUnixTime).String()}
 	}
 	return req, nil
 }
@@ -181,7 +182,7 @@ func (client *Client) getScriptCreateRequest(ctx context.Context, headerCounts [
 	req.Raw().Header["Accept"] = []string{"text/powershell"}
 	req.Raw().Header["headerCounts"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerCounts), "[]")), ",")}
 	req.Raw().Header["headerStrings"] = []string{strings.Join(someGroup.HeaderStrings, ",")}
-	req.Raw().Header["headerTime"] = []string{timeRFC3339(headerTime).String()}
+	req.Raw().Header["headerTime"] = []string{datetime.PlainTime(headerTime).String()}
 	req.Raw().Header["numericHeader"] = []string{strconv.FormatInt(int64(numericHeader), 10)}
 	if err := runtime.MarshalAsJSON(req, props); err != nil {
 		return nil, err

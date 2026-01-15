@@ -12,10 +12,10 @@ import { CodegenError } from './errors.js';
 // variable to be used to determine comment length when calling comment from @azure-tools
 export const commentLength = 120;
 
-export const dateFormat = '2006-01-02';
-export const datetimeRFC3339Format = 'time.RFC3339Nano';
-export const datetimeRFC1123Format = 'time.RFC1123';
-export const timeRFC3339Format = '15:04:05.999999999Z07:00';
+export const plainDateFormat = 'time.DateOnly';
+export const RFC3339Format = 'time.RFC3339Nano';
+export const RFC1123Format = 'time.RFC1123';
+export const plainTimeFormat = 'time.TimeOnly';
 
 export const doNotEditRegex = /^\/\/ Code generated .* DO NOT EDIT\.$/m;
 
@@ -293,7 +293,8 @@ export function formatParamValue(param: go.MethodParameter, imports: ImportManag
           return `strings.Join(${paramName}, "${separator}")`;
         case 'time':
           imports.add('strings');
-          return emitConvertOver(param.name, `${param.type.elementType.format}(${param.name}[i]).String()`);
+          imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+          return emitConvertOver(param.name, `datetime.${param.type.elementType.format}(${param.name}[i]).String()`);
         default:
           imports.add('fmt');
           imports.add('strings');
@@ -302,9 +303,9 @@ export function formatParamValue(param: go.MethodParameter, imports: ImportManag
     }
   }
 
-  if (param.type.kind === 'time' && param.type.format !== 'timeUnix') {
+  if (param.type.kind === 'time' && param.type.format !== 'Unix') {
     // for most time types we call methods on time.Time which is why we remove the dereference.
-    // however, for unix time, we cast to our unixTime helper first so we must keep the dereference.
+    // however, for unix time, we cast to our unix helper first so we must keep the dereference.
     if (!go.isRequiredParameter(param.style) && paramName[0] === '*') {
       // remove the dereference
       paramName = paramName.substring(1);
@@ -372,17 +373,20 @@ export function formatValue(paramName: string, type: go.WireType, imports: Impor
           throw new CodegenError('InternalError', `unhandled scalar type ${type.type}`);
       }
     case 'time':
+      imports.add('time');
       switch (type.format) {
-        case 'dateTimeRFC1123':
-        case 'dateTimeRFC3339':
-          imports.add('time');
-          return `${paramName}.Format(${type.format === 'dateTimeRFC1123' ? datetimeRFC1123Format : datetimeRFC3339Format})`;
-        case 'dateType':
-          return `${paramName}.Format("${dateFormat}")`;
-        case 'timeRFC3339':
-          return `timeRFC3339(${star}${paramName}).String()`;
-        case 'timeUnix':
-          return `timeUnix(${star}${paramName}).String()`;
+        case 'RFC1123':
+          return `${paramName}.Format(${RFC1123Format})`;
+        case 'RFC3339':
+          return `${paramName}.Format(${RFC3339Format})`;
+        case 'PlainDate':
+          return `${paramName}.Format(${plainDateFormat})`;
+        case 'PlainTime':
+          imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+          return `datetime.PlainTime(${star}${paramName}).String()`;
+        case 'Unix':
+          imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+          return `datetime.Unix(${star}${paramName}).String()`;
       }
     default:
       return `${star}${paramName}`;

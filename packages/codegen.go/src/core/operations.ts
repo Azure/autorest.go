@@ -495,17 +495,17 @@ function formatHeaderResponseValue(headerResp: go.HeaderScalarResponse | go.Head
     case 'time':
       imports.add('time');
       switch (headerResp.type.format) {
-        case 'dateTimeRFC1123':
-        case 'dateTimeRFC3339':
-          text += `\t\t${name}, err := time.Parse(${headerResp.type.format === 'dateTimeRFC1123' ? helpers.datetimeRFC1123Format : helpers.datetimeRFC3339Format}, val)\n`;
+        case 'RFC1123':
+        case 'RFC3339':
+          text += `\t\t${name}, err := time.Parse(${headerResp.type.format === 'RFC1123' ? helpers.RFC1123Format : helpers.RFC3339Format}, val)\n`;
           break;
-        case 'dateType':
-          text += `\t\t${name}, err := time.Parse("${helpers.dateFormat}", val)\n`;
+        case 'PlainDate':
+          text += `\t\t${name}, err := time.Parse(${helpers.plainDateFormat}, val)\n`;
           break;
-        case 'timeRFC3339':
-          text += `\t\t${name}, err := time.Parse("${helpers.timeRFC3339Format}", val)\n`;
+        case 'PlainTime':
+          text += `\t\t${name}, err := time.Parse(${helpers.plainTimeFormat}, val)\n`;
           break;
-        case 'timeUnix':
+        case 'Unix':
           imports.add('strconv');
           imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
           text += '\t\tsec, err := strconv.ParseInt(val, 10, 64)\n';
@@ -1074,26 +1074,29 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
           addr = '';
         }
         body = `wrapper{${fieldName}: ${addr}${body}}`;
-      } else if (bodyParam.type.kind === 'time' && bodyParam.type.format !== 'dateTimeRFC3339') {
+      } else if (bodyParam.type.kind === 'time' && bodyParam.type.format !== 'RFC3339') {
         // wrap the body in the internal time type
-        // no need for dateTimeRFC3339 as the JSON marshaler defaults to that.
-        body = `${bodyParam.type.format}(${body})`;
+        // no need for RFC3339 as the JSON marshaler defaults to that.
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+        body = `datetime.${bodyParam.type.format}(${body})`;
       } else if (isArrayOfDateTimeForMarshalling(bodyParam.type)) {
         const timeInfo = isArrayOfDateTimeForMarshalling(bodyParam.type);
         let elementPtr = '*';
         if (timeInfo?.elemByVal) {
           elementPtr = '';
         }
-        text += `\taux := make([]${elementPtr}${timeInfo?.format}, len(${body}))\n`;
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+        text += `\taux := make([]${elementPtr}datetime.${timeInfo?.format}, len(${body}))\n`;
         text += `\tfor i := 0; i < len(${body}); i++ {\n`;
-        text += `\t\taux[i] = (${elementPtr}${timeInfo?.format})(${body}[i])\n`;
+        text += `\t\taux[i] = (${elementPtr}datetime.${timeInfo?.format})(${body}[i])\n`;
         text += '\t}\n';
         body = 'aux';
       } else if (isMapOfDateTime(bodyParam.type)) {
-        const timeType = isMapOfDateTime(bodyParam.type);
-        text += `\taux := map[string]*${timeType}{}\n`;
+        let timeType = isMapOfDateTime(bodyParam.type);
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+        text += `\taux := map[string]*datetime.${timeType}{}\n`;
         text += `\tfor k, v := range ${body} {\n`;
-        text += `\t\taux[k] = (*${timeType})(v)\n`;
+        text += `\t\taux[k] = (*datetime.${timeType})(v)\n`;
         text += '\t}\n';
         body = 'aux';
       }
@@ -1256,16 +1259,16 @@ function isArrayOfDateTimeForMarshalling(paramType: go.WireType): { format: go.T
     return undefined;
   }
   switch (paramType.elementType.format) {
-    case 'dateType':
-    case 'dateTimeRFC1123':
-    case 'timeRFC3339':
-    case 'timeUnix':
+    case 'PlainDate':
+    case 'RFC1123':
+    case 'PlainTime':
+    case 'Unix':
       return {
         format: paramType.elementType.format,
         elemByVal: paramType.elementTypeByValue
       };
     default:
-      // dateTimeRFC3339 uses the default marshaller
+      // RFC3339 uses the default marshaller
       return undefined;
   }
 }
@@ -1276,12 +1279,13 @@ function needsResponseHandler(method: go.MethodType): boolean {
   return helpers.hasSchemaResponse(method) || method.returns.headers.length > 0;
 }
 
-function generateResponseUnmarshaller(method: go.MethodType, type: go.WireType, format: go.ResultFormat, unmarshalTarget: string): string {
+function generateResponseUnmarshaller(method: go.MethodType, type: go.WireType, format: go.ResultFormat, unmarshalTarget: string, imports: ImportManager): string {
   let unmarshallerText = '';
   const zeroValue = getZeroReturnValue(method, 'handler');
   if (type.kind === 'time') {
     // use the designated time type for unmarshalling
-    unmarshallerText += `\tvar aux *${type.format}\n`;
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+    unmarshallerText += `\tvar aux *datetime.${type.format}\n`;
     unmarshallerText += `\tif err := runtime.UnmarshalAs${format}(resp, &aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
@@ -1294,7 +1298,8 @@ function generateResponseUnmarshaller(method: go.MethodType, type: go.WireType, 
     if (timeInfo?.elemByVal) {
       elementPtr = '';
     }
-    unmarshallerText += `\tvar aux []${elementPtr}${timeInfo?.format}\n`;
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+    unmarshallerText += `\tvar aux []${elementPtr}datetime.${timeInfo?.format}\n`;
     unmarshallerText += `\tif err := runtime.UnmarshalAs${format}(resp, &aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
@@ -1305,7 +1310,9 @@ function generateResponseUnmarshaller(method: go.MethodType, type: go.WireType, 
     unmarshallerText += `\tresult.${helpers.getResultFieldName(method)} = cp\n`;
     return unmarshallerText;
   } else if (isMapOfDateTime(type)) {
-    unmarshallerText += `\taux := map[string]*${isMapOfDateTime(type)}{}\n`;
+    let timeType = isMapOfDateTime(type);
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+    unmarshallerText += `\taux := map[string]*datetime.${timeType}{}\n`;
     unmarshallerText += `\tif err := runtime.UnmarshalAs${format}(resp, &aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
@@ -1376,7 +1383,7 @@ function createProtocolResponse(method: go.SyncMethod | go.LROPageableMethod | g
             continue;
           }
           text += `\tvar val ${go.getTypeDeclaration(resultType, method.receiver.type.pkg)}\n`;
-          text += generateResponseUnmarshaller(method, resultType, result.format, 'val');
+          text += generateResponseUnmarshaller(method, resultType, result.format, 'val', imports);
           text += '\tresult.Value = val\n';
         }
         text += '\tdefault:\n';
@@ -1394,7 +1401,7 @@ function createProtocolResponse(method: go.SyncMethod | go.LROPageableMethod | g
       case 'modelResult':
         text += `\tresult := ${method.returns.name}{}\n`;
         addHeaders(method.returns.headers);
-        text += generateResponseUnmarshaller(method, result.modelType, result.format, `result.${helpers.getResultFieldName(method)}`);
+        text += generateResponseUnmarshaller(method, result.modelType, result.format, `result.${helpers.getResultFieldName(method)}`, imports);
         break;
       case 'monomorphicResult':
         text += `\tresult := ${method.returns.name}{}\n`;
@@ -1404,12 +1411,12 @@ function createProtocolResponse(method: go.SyncMethod | go.LROPageableMethod | g
         if (result.format === 'XML' && result.monomorphicType.kind === 'slice') {
           target = 'result';
         }
-        text += generateResponseUnmarshaller(method, result.monomorphicType, result.format, target);
+        text += generateResponseUnmarshaller(method, result.monomorphicType, result.format, target, imports);
         break;
       case 'polymorphicResult':
         text += `\tresult := ${method.returns.name}{}\n`;
         addHeaders(method.returns.headers);
-        text += generateResponseUnmarshaller(method, result.interface, result.format, 'result');
+        text += generateResponseUnmarshaller(method, result.interface, result.format, 'result', imports);
         break;
       default:
         result satisfies never;
@@ -1434,7 +1441,7 @@ function isArrayOfDateTime(paramType: go.WireType): { format: go.TimeFormat, ele
   };
 }
 
-function isMapOfDateTime(paramType: go.WireType): string | undefined {
+function isMapOfDateTime(paramType: go.WireType): go.TimeFormat | undefined {
   if (paramType.kind !== 'map') {
     return undefined;
   }

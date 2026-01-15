@@ -352,23 +352,20 @@ function getConstantValue(pkg: go.TestPackage, type: go.Constant, value: any): s
 }
 
 function getTimeValue(type: go.Time, value: any, imports?: ImportManager): string {
-  if (type.format === 'dateType' || type.format === 'timeRFC3339') {
-    if (imports) imports.add('time');
-    let format = helpers.dateFormat;
-    if (type.format === 'timeRFC3339') {
-      format = helpers.timeRFC3339Format;
-    }
-    return `func() time.Time { t, _ := time.Parse("${format}", "${value}"); return t}()`;
-  } else if (type.format === 'dateTimeRFC1123' || type.format === 'dateTimeRFC3339') {
-    if (imports) imports.add('time');
-    let format = helpers.datetimeRFC3339Format;
-    if (type.format === 'dateTimeRFC1123') {
-      format = helpers.datetimeRFC1123Format;
-    }
+  const formatMap: Record<string, string> = {
+    'PlainDate': helpers.plainDateFormat,
+    'PlainTime': helpers.plainTimeFormat,
+    'RFC1123': helpers.RFC1123Format,
+    'RFC3339': helpers.RFC3339Format,
+  };
+
+  if (type.format in formatMap) {
+    imports?.add('time');
+    const format = formatMap[type.format];
     return `func() time.Time { t, _ := time.Parse(${format}, "${value}"); return t}()`;
   } else {
-    if (imports) imports.add('strconv');
-    if (imports) imports.add('time');
+    imports?.add('strconv');
+    imports?.add('time');
     return `func() time.Time { t, _ := strconv.ParseInt(${value}, 10, 64); return time.Unix(t, 0).UTC()}()`;
   }
 }

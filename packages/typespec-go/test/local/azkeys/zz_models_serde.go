@@ -9,7 +9,9 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"reflect"
+	"time"
 )
 
 // MarshalJSON implements the json.Marshaller interface for type BackupKeyResult.
@@ -102,12 +104,12 @@ func (c *CreateKeyParameters) UnmarshalJSON(data []byte) error {
 func (d DeletedKey) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "attributes", d.Attributes)
-	populateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
+	populateTime[datetime.Unix](objectMap, "deletedDate", d.DeletedDate)
 	populate(objectMap, "key", d.Key)
 	populate(objectMap, "managed", d.Managed)
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "release_policy", d.ReleasePolicy)
-	populateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
+	populateTime[datetime.Unix](objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
 	populate(objectMap, "tags", d.Tags)
 	return json.Marshal(objectMap)
 }
@@ -125,7 +127,7 @@ func (d *DeletedKey) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Attributes", &d.Attributes)
 			delete(rawMsg, key)
 		case "deletedDate":
-			err = unpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
+			err = unpopulateTime[datetime.Unix](val, "DeletedDate", &d.DeletedDate)
 			delete(rawMsg, key)
 		case "key":
 			err = unpopulate(val, "Key", &d.Key)
@@ -140,7 +142,7 @@ func (d *DeletedKey) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ReleasePolicy", &d.ReleasePolicy)
 			delete(rawMsg, key)
 		case "scheduledPurgeDate":
-			err = unpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
+			err = unpopulateTime[datetime.Unix](val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
 			delete(rawMsg, key)
 		case "tags":
 			err = unpopulate(val, "Tags", &d.Tags)
@@ -157,11 +159,11 @@ func (d *DeletedKey) UnmarshalJSON(data []byte) error {
 func (d DeletedKeyProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "attributes", d.Attributes)
-	populateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
+	populateTime[datetime.Unix](objectMap, "deletedDate", d.DeletedDate)
 	populate(objectMap, "kid", d.KID)
 	populate(objectMap, "managed", d.Managed)
 	populate(objectMap, "recoveryId", d.RecoveryID)
-	populateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
+	populateTime[datetime.Unix](objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
 	populate(objectMap, "tags", d.Tags)
 	return json.Marshal(objectMap)
 }
@@ -179,7 +181,7 @@ func (d *DeletedKeyProperties) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Attributes", &d.Attributes)
 			delete(rawMsg, key)
 		case "deletedDate":
-			err = unpopulateTimeUnix(val, "DeletedDate", &d.DeletedDate)
+			err = unpopulateTime[datetime.Unix](val, "DeletedDate", &d.DeletedDate)
 			delete(rawMsg, key)
 		case "kid":
 			err = unpopulate(val, "KID", &d.KID)
@@ -191,7 +193,7 @@ func (d *DeletedKeyProperties) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "RecoveryID", &d.RecoveryID)
 			delete(rawMsg, key)
 		case "scheduledPurgeDate":
-			err = unpopulateTimeUnix(val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
+			err = unpopulateTime[datetime.Unix](val, "ScheduledPurgeDate", &d.ScheduledPurgeDate)
 			delete(rawMsg, key)
 		case "tags":
 			err = unpopulate(val, "Tags", &d.Tags)
@@ -495,15 +497,15 @@ func (k *KeyAttestation) UnmarshalJSON(data []byte) error {
 func (k KeyAttributes) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "attestation", k.Attestation)
-	populateTimeUnix(objectMap, "created", k.Created)
+	populateTime[datetime.Unix](objectMap, "created", k.Created)
 	populate(objectMap, "enabled", k.Enabled)
-	populateTimeUnix(objectMap, "exp", k.Expires)
+	populateTime[datetime.Unix](objectMap, "exp", k.Expires)
 	populate(objectMap, "exportable", k.Exportable)
 	populate(objectMap, "hsmPlatform", k.HSMPlatform)
-	populateTimeUnix(objectMap, "nbf", k.NotBefore)
+	populateTime[datetime.Unix](objectMap, "nbf", k.NotBefore)
 	populate(objectMap, "recoverableDays", k.RecoverableDays)
 	populate(objectMap, "recoveryLevel", k.RecoveryLevel)
-	populateTimeUnix(objectMap, "updated", k.Updated)
+	populateTime[datetime.Unix](objectMap, "updated", k.Updated)
 	return json.Marshal(objectMap)
 }
 
@@ -520,13 +522,13 @@ func (k *KeyAttributes) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Attestation", &k.Attestation)
 			delete(rawMsg, key)
 		case "created":
-			err = unpopulateTimeUnix(val, "Created", &k.Created)
+			err = unpopulateTime[datetime.Unix](val, "Created", &k.Created)
 			delete(rawMsg, key)
 		case "enabled":
 			err = unpopulate(val, "Enabled", &k.Enabled)
 			delete(rawMsg, key)
 		case "exp":
-			err = unpopulateTimeUnix(val, "Expires", &k.Expires)
+			err = unpopulateTime[datetime.Unix](val, "Expires", &k.Expires)
 			delete(rawMsg, key)
 		case "exportable":
 			err = unpopulate(val, "Exportable", &k.Exportable)
@@ -535,7 +537,7 @@ func (k *KeyAttributes) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "HSMPlatform", &k.HSMPlatform)
 			delete(rawMsg, key)
 		case "nbf":
-			err = unpopulateTimeUnix(val, "NotBefore", &k.NotBefore)
+			err = unpopulateTime[datetime.Unix](val, "NotBefore", &k.NotBefore)
 			delete(rawMsg, key)
 		case "recoverableDays":
 			err = unpopulate(val, "RecoverableDays", &k.RecoverableDays)
@@ -544,7 +546,7 @@ func (k *KeyAttributes) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "RecoveryLevel", &k.RecoveryLevel)
 			delete(rawMsg, key)
 		case "updated":
-			err = unpopulateTimeUnix(val, "Updated", &k.Updated)
+			err = unpopulateTime[datetime.Unix](val, "Updated", &k.Updated)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -889,9 +891,9 @@ func (k *KeyRotationPolicy) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type KeyRotationPolicyAttributes.
 func (k KeyRotationPolicyAttributes) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateTimeUnix(objectMap, "created", k.Created)
+	populateTime[datetime.Unix](objectMap, "created", k.Created)
 	populate(objectMap, "expiryTime", k.ExpiryTime)
-	populateTimeUnix(objectMap, "updated", k.Updated)
+	populateTime[datetime.Unix](objectMap, "updated", k.Updated)
 	return json.Marshal(objectMap)
 }
 
@@ -905,13 +907,13 @@ func (k *KeyRotationPolicyAttributes) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "created":
-			err = unpopulateTimeUnix(val, "Created", &k.Created)
+			err = unpopulateTime[datetime.Unix](val, "Created", &k.Created)
 			delete(rawMsg, key)
 		case "expiryTime":
 			err = unpopulate(val, "ExpiryTime", &k.ExpiryTime)
 			delete(rawMsg, key)
 		case "updated":
-			err = unpopulateTimeUnix(val, "Updated", &k.Updated)
+			err = unpopulateTime[datetime.Unix](val, "Updated", &k.Updated)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -1261,6 +1263,17 @@ func populate(m map[string]any, k string, v any) {
 	}
 }
 
+func populateTime[T dateTimeConstraints](m map[string]any, k string, t *time.Time) {
+	if t == nil {
+		return
+	} else if azcore.IsNullValue(t) {
+		m[k] = nil
+	} else if !reflect.ValueOf(t).IsNil() {
+		newTime := T(*t)
+		m[k] = (*T)(&newTime)
+	}
+}
+
 func populateByteArray[T any](m map[string]any, k string, b []T, convert func() any) {
 	if azcore.IsNullValue(b) {
 		m[k] = nil
@@ -1279,4 +1292,21 @@ func unpopulate(data json.RawMessage, fn string, v any) error {
 		return fmt.Errorf("struct field %s: %v", fn, err)
 	}
 	return nil
+}
+
+func unpopulateTime[T dateTimeConstraints](data json.RawMessage, fn string, t **time.Time) error {
+	if data == nil || string(data) == "null" {
+		return nil
+	}
+	var aux T
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	newTime := time.Time(aux)
+	*t = &newTime
+	return nil
+}
+
+type dateTimeConstraints interface {
+	datetime.PlainDate | datetime.PlainTime | datetime.RFC1123 | datetime.RFC3339 | datetime.Unix
 }

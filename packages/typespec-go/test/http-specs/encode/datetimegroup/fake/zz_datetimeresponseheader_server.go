@@ -12,6 +12,7 @@ import (
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"net/http"
 	"time"
 )
@@ -181,7 +182,7 @@ func (d *DatetimeResponseHeaderServerTransport) dispatchUnixTimestamp(req *http.
 		return nil, err
 	}
 	if val := server.GetResponse(respr).Value; val != nil {
-		resp.Header.Set("value", timeUnix(*val).String())
+		resp.Header.Set("value", datetime.Unix(*val).String())
 	}
 	return resp, nil
 }

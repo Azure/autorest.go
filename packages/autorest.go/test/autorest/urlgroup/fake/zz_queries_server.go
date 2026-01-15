@@ -601,7 +601,7 @@ func (q *QueriesServerTransport) dispatchDateNull(req *http.Request) (*http.Resp
 	if err != nil {
 		return nil, err
 	}
-	dateQueryParam, err := parseOptional(dateQueryUnescaped, func(v string) (time.Time, error) { return time.Parse("2006-01-02", v) })
+	dateQueryParam, err := parseOptional(dateQueryUnescaped, func(v string) (time.Time, error) { return time.Parse(time.DateOnly, v) })
 	if err != nil {
 		return nil, err
 	}

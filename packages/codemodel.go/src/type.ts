@@ -301,7 +301,7 @@ export interface Time extends QualifiedType {
 }
 
 /** the set of time serde formats */
-export type TimeFormat = 'dateType' | 'dateTimeRFC1123' | 'dateTimeRFC3339' | 'timeRFC3339' | 'timeUnix';
+export type TimeFormat = 'PlainDate' | 'RFC1123' | 'RFC3339' | 'PlainTime' | 'Unix';
 
 /** an azcore.TokenCredential */
 export interface TokenCredential extends QualifiedType {

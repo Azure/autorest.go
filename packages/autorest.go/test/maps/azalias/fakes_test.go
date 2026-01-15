@@ -58,7 +58,7 @@ func TestFakeGetScript(t *testing.T) {
 	explodedContent := []int64{9, 8, 7}
 	explodedStrings := []string{"foo", "bar"}
 	headerValue := int32(12345)
-	timeContent, err := time.Parse(time.TimeOnly, "15:04:05.12345")
+	timeContent, err := time.Parse(time.TimeOnly, "15:04:05")
 	headerStrings := []string{"bing", "bing"}
 	require.NoError(t, err)
 	server := fake.Server{

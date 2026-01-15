@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/stretchr/testify/require"
 )
@@ -38,7 +39,7 @@ func TestPostMethodLocalNull(t *testing.T) {
 // PostMethodLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func TestPostMethodLocalValid(t *testing.T) {
 	client := newSubscriptionInMethodClient(t)
-	result, err := client.PostMethodLocalValid(runtime.WithHTTPHeader(context.Background(), http.Header{
+	result, err := client.PostMethodLocalValid(policy.WithHTTPHeader(context.Background(), http.Header{
 		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
 	}), "1234-5678-9012-3456", nil)
 	require.NoError(t, err)
@@ -48,7 +49,7 @@ func TestPostMethodLocalValid(t *testing.T) {
 // PostPathLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func TestPostPathLocalValid(t *testing.T) {
 	client := newSubscriptionInMethodClient(t)
-	result, err := client.PostPathLocalValid(runtime.WithHTTPHeader(context.Background(), http.Header{
+	result, err := client.PostPathLocalValid(policy.WithHTTPHeader(context.Background(), http.Header{
 		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
 	}), "1234-5678-9012-3456", nil)
 	require.NoError(t, err)
@@ -58,7 +59,7 @@ func TestPostPathLocalValid(t *testing.T) {
 // PostSwaggerLocalValid - POST method with subscriptionId modeled in the method.  pass in subscription id = '1234-5678-9012-3456' to succeed
 func TestPostSwaggerLocalValid(t *testing.T) {
 	client := newSubscriptionInMethodClient(t)
-	result, err := client.PostSwaggerLocalValid(runtime.WithHTTPHeader(context.Background(), http.Header{
+	result, err := client.PostSwaggerLocalValid(policy.WithHTTPHeader(context.Background(), http.Header{
 		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
 	}), "1234-5678-9012-3456", nil)
 	require.NoError(t, err)

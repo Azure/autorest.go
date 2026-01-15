@@ -214,8 +214,8 @@ func (d *DatetimeHeaderServerTransport) dispatchUnixTimestampArray(req *http.Req
 		if parseErr != nil {
 			return nil, parseErr
 		}
-		parsedTimeUnix := time.Unix(p, 0).UTC()
-		valueParam[i] = time.Time(parsedTimeUnix)
+		parsedUnix := time.Unix(p, 0).UTC()
+		valueParam[i] = time.Time(parsedUnix)
 	}
 	respr, errRespr := d.srv.UnixTimestampArray(req.Context(), valueParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

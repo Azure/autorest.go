@@ -13,6 +13,7 @@ import (
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"net/http"
 	"time"
 )
@@ -141,7 +142,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchGetInvalid(req *http.Request) (
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC1123)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC1123)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +161,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchGetNull(req *http.Request) (*ht
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC1123)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC1123)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -179,7 +180,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchGetOverflow(req *http.Request) 
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC1123)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC1123)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -198,7 +199,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchGetUTCLowercaseMaxDateTime(req 
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC1123)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC1123)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -217,7 +218,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchGetUTCMinDateTime(req *http.Req
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC1123)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC1123)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -236,7 +237,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchGetUTCUppercaseMaxDateTime(req 
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC1123)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC1123)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -255,7 +256,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchGetUnderflow(req *http.Request)
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, (*dateTimeRFC1123)(server.GetResponse(respr).Value), req)
+	resp, err := server.MarshalResponseAsJSON(respContent, (*datetime.RFC1123)(server.GetResponse(respr).Value), req)
 	if err != nil {
 		return nil, err
 	}
@@ -266,7 +267,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchPutUTCMaxDateTime(req *http.Req
 	if d.srv.PutUTCMaxDateTime == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutUTCMaxDateTime not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[dateTimeRFC1123](req)
+	body, err := server.UnmarshalRequestAsJSON[datetime.RFC1123](req)
 	if err != nil {
 		return nil, err
 	}
@@ -289,7 +290,7 @@ func (d *Datetimerfc1123ServerTransport) dispatchPutUTCMinDateTime(req *http.Req
 	if d.srv.PutUTCMinDateTime == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutUTCMinDateTime not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[dateTimeRFC1123](req)
+	body, err := server.UnmarshalRequestAsJSON[datetime.RFC1123](req)
 	if err != nil {
 		return nil, err
 	}

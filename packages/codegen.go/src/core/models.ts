@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as go from '../../../codemodel.go/src/index.js';
-import { capitalize, comment } from '@azure-tools/codegen';
+import { comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
@@ -41,7 +41,9 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
 
   // structs
   let needsJSONPopulate = false;
+  let needsJSONPopulateTime = false;
   let needsJSONUnpopulate = false;
+  let needsJSONUnpopulateTime = false;
   let needsJSONPopulateByteArray = false;
   let needsJSONPopulateAny = false;
   let needsJSONPopulateMultipart = false;
@@ -67,8 +69,14 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
     if (modelDef.SerDe.needsJSONPopulate) {
       needsJSONPopulate = true;
     }
+    if (modelDef.SerDe.needsJSONPopulateTime) {
+      needsJSONPopulateTime = true;
+    }
     if (modelDef.SerDe.needsJSONUnpopulate) {
       needsJSONUnpopulate = true;
+    }
+    if (modelDef.SerDe.needsJSONUnpopulateTime) {
+      needsJSONUnpopulateTime = true;
     }
     if (modelDef.SerDe.needsJSONPopulateByteArray) {
       needsJSONPopulateByteArray = true;
@@ -90,6 +98,21 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
     serdeTextBody += '\t\tm[k] = nil\n';
     serdeTextBody += '\t} else if !reflect.ValueOf(v).IsNil() {\n';
     serdeTextBody += '\t\tm[k] = v\n';
+    serdeTextBody += '\t}\n';
+    serdeTextBody += '}\n\n';
+  }
+  if (needsJSONPopulateTime) {
+    serdeImports.add('time');
+    serdeImports.add('reflect');
+    serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+    serdeTextBody += 'func populateTime[T dateTimeConstraints](m map[string]any, k string, t *time.Time) {\n';
+    serdeTextBody += '\tif t == nil {\n';
+    serdeTextBody += '\t\treturn\n';
+    serdeTextBody += '\t} else if azcore.IsNullValue(t) {\n';
+    serdeTextBody += '\t\tm[k] = nil\n';
+    serdeTextBody += '\t} else if !reflect.ValueOf(t).IsNil() {\n';
+    serdeTextBody += '\t\tnewTime := T(*t)\n';
+    serdeTextBody += '\t\tm[k] = (*T)(&newTime)\n';
     serdeTextBody += '\t}\n';
     serdeTextBody += '}\n\n';
   }
@@ -130,12 +153,33 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
     serdeTextBody += '\treturn nil\n';
     serdeTextBody += '}\n\n';
   }
+  if (needsJSONUnpopulateTime) {
+    serdeImports.add('fmt');
+    serdeImports.add('time');
+    serdeTextBody += 'func unpopulateTime[T dateTimeConstraints](data json.RawMessage, fn string, t **time.Time) error {\n';
+    serdeTextBody += '\tif data == nil || string(data) == "null" {\n';
+    serdeTextBody += '\t\treturn nil\n';
+    serdeTextBody += '\t}\n';
+    serdeTextBody += '\tvar aux T\n';
+    serdeTextBody += '\tif err := json.Unmarshal(data, &aux); err != nil {\n';
+    serdeTextBody += '\t\treturn fmt.Errorf("struct field %s: %v", fn, err)\n';
+    serdeTextBody += '\t}\n';
+    serdeTextBody += '\tnewTime := time.Time(aux)\n';
+    serdeTextBody += '\t*t = &newTime\n';
+    serdeTextBody += '\treturn nil\n';
+    serdeTextBody += '}\n\n';
+  }
   if (needsJSONPopulateMultipart) {
     serdeImports.add('encoding/json');
     serdeTextBody += 'func populateMultipartJSON(m map[string]any, k string, v any) error {\n';
     serdeTextBody += '\tdata, err := json.Marshal(v)\n';
     serdeTextBody += '\tif err != nil {\n\t\treturn err\n\t}\n';
     serdeTextBody += '\tm[k] = data\n\treturn nil\n';
+    serdeTextBody += '}\n\n';
+  }
+  if (needsJSONUnpopulateTime || needsJSONPopulateTime) {
+    serdeTextBody += `type dateTimeConstraints interface {\n`;
+    serdeTextBody += `\tdatetime.PlainDate | datetime.PlainTime | datetime.RFC1123 | datetime.RFC3339 | datetime.Unix\n`;
     serdeTextBody += '}\n\n';
   }
   let serdeText = '';
@@ -374,9 +418,10 @@ function generateJSONMarshallerBody(modelDef: ModelDef, receiver: string, import
       if (field.type.elementTypeByValue) {
         elementPtr = '';
       }
-      marshaller += `\taux := make([]${elementPtr}${field.type.elementType.format}, len(${source}), len(${source}))\n`;
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+      marshaller += `\taux := make([]${elementPtr}datetime.${field.type.elementType.format}, len(${source}), len(${source}))\n`;
       marshaller += `\tfor i := 0; i < len(${source}); i++ {\n`;
-      marshaller += `\t\taux[i] = (${elementPtr}${field.type.elementType.format})(${source}[i])\n`;
+      marshaller += `\t\taux[i] = (${elementPtr}datetime.${field.type.elementType.format})(${source}[i])\n`;
       marshaller += '\t}\n';
       marshaller += `\tpopulate(objectMap, "${field.serializedName}", aux)\n`;
       modelDef.SerDe.needsJSONPopulate = true;
@@ -395,14 +440,16 @@ function generateJSONMarshallerBody(modelDef: ModelDef, receiver: string, import
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
         marshaller += `\tif ${receiver}.${field.name} == nil {\n\t\t${receiver}.${field.name} = to.Ptr(${helpers.formatLiteralValue(field.defaultValue, true)})\n\t}\n`;
       }
-      let populate = 'populate';
+      let populate: string;
       if (field.type.kind === 'time') {
-        populate += capitalize(field.type.format);
-        modelDef.SerDe.needsJSONPopulate = true;
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+        populate = `populateTime[datetime.${field.type.format}]`;
+        modelDef.SerDe.needsJSONPopulateTime = true;
       } else if (field.type.kind === 'any') {
-        populate += 'Any';
+        populate = 'populateAny';
         modelDef.SerDe.needsJSONPopulateAny = true;
       } else {
+        populate = 'populate'
         modelDef.SerDe.needsJSONPopulate = true;
       }
       if (field.type.kind === 'scalar' && (field.type.type.startsWith('uint') || field.type.type.startsWith('int')) && field.type.encodeAsString) {
@@ -516,16 +563,17 @@ function generateJSONUnmarshallerBody(modelDef: ModelDef, receiver: string, impo
         unmarshalBody += generateDiscriminatorUnmarshaller(modelDef.Model, field, receiver);
         needsErrCheck = true;
       } else if (field.type.kind === 'time') {
-        unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(field.type.format)}(val, "${field.name}", &${receiver}.${field.name})\n`;
-        modelDef.SerDe.needsJSONUnpopulate = true;
+        unmarshalBody += `\t\t\t\terr = unpopulateTime[datetime.${field.type.format}](val, "${field.name}", &${receiver}.${field.name})\n`;
+        modelDef.SerDe.needsJSONUnpopulateTime = true;
         needsErrCheck = true;
       } else if (field.type.kind === 'slice' && field.type.elementType.kind === 'time') {
         imports.add('time');
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
         let elementPtr = '*';
         if (field.type.elementTypeByValue) {
           elementPtr = '';
         }
-        unmarshalBody += `\t\t\tvar aux []${elementPtr}${field.type.elementType.format}\n`;
+        unmarshalBody += `\t\t\tvar aux []${elementPtr}datetime.${field.type.elementType.format}\n`;
         unmarshalBody += `\t\t\terr = unpopulate(val, "${field.name}", &aux)\n`;
         unmarshalBody += '\t\t\tfor _, au := range aux {\n';
         unmarshalBody += `\t\t\t\t${receiver}.${field.name} = append(${receiver}.${field.name}, (${elementPtr}time.Time)(au))\n`;
@@ -758,7 +806,7 @@ function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager): void
   if (modelDef.Model.xml?.wrapper) {
     text += `\tstart.Name.Local = "${modelDef.Model.xml.wrapper}"\n`;
   }
-  text += generateAliasType(modelDef.Model, receiver, true);
+  text += generateAliasType(modelDef.Model, receiver, true, imports);
   for (const field of modelDef.Model.fields) {
     if (field.type.kind === 'slice') {
       text += `\tif ${receiver}.${field.name} != nil {\n`;
@@ -791,7 +839,7 @@ function generateXMLUnmarshaller(modelDef: ModelDef, imports: ImportManager): vo
   const receiver = modelDef.receiverName();
   const desc = `UnmarshalXML implements the xml.Unmarshaller interface for type ${modelDef.Model.name}.`;
   let text = `func (${receiver} *${modelDef.Model.name}) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {\n`;
-  text += generateAliasType(modelDef.Model, receiver, false);
+  text += generateAliasType(modelDef.Model, receiver, false, imports);
   text += '\tif err := dec.DecodeElement(aux, &start); err != nil {\n';
   text += '\t\treturn err\n';
   text += '\t}\n';
@@ -823,14 +871,15 @@ function generateXMLUnmarshaller(modelDef: ModelDef, imports: ImportManager): vo
  * @param forMarshal when true, indicates type is to be used in a marshaller (else an unmarshaller)
  * @returns the text for an initialized type alias
  */
-function generateAliasType(modelType: go.Model | go.PolymorphicModel, receiver: string, forMarshal: boolean): string {
+function generateAliasType(modelType: go.Model | go.PolymorphicModel, receiver: string, forMarshal: boolean, imports: ImportManager): string {
   let text = `\ttype alias ${modelType.name}\n`;
   text += '\taux := &struct {\n';
   text += '\t\t*alias\n';
   for (const field of values(modelType.fields)) {
     const sn = getXMLSerialization(modelType, field);
     if (field.type.kind === 'time') {
-      text += `\t\t${field.name} *${field.type.format} \`xml:"${sn}"\`\n`;
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+      text += `\t\t${field.name} *datetime.${field.type.format} \`xml:"${sn}"\`\n`;
     } else if (field.annotations.isAdditionalProperties || field.type.kind === 'map') {
       text += `\t\t${field.name} additionalProperties \`xml:"${sn}"\`\n`;
     } else if (field.type.kind === 'slice') {
@@ -851,7 +900,8 @@ function generateAliasType(modelType: go.Model | go.PolymorphicModel, receiver: 
       if (field.type.kind !== 'time') {
         continue;
       }
-      text += `\t\t${field.name}: (*${field.type.format})(${receiver}.${field.name}),\n`;
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+      text += `\t\t${field.name}: (*datetime.${field.type.format})(${receiver}.${field.name}),\n`;
     }
   }
   text += '\t}\n';
@@ -869,7 +919,9 @@ interface ModelMethod {
 class SerDeInfo {
   methods: Array<ModelMethod>;
   needsJSONPopulate: boolean;
+  needsJSONPopulateTime: boolean;
   needsJSONUnpopulate: boolean;
+  needsJSONUnpopulateTime: boolean;
   needsJSONPopulateByteArray: boolean;
   needsJSONPopulateAny: boolean;
   needsJSONPopulateMultipart: boolean;
@@ -877,7 +929,9 @@ class SerDeInfo {
   constructor() {
     this.methods = new Array<ModelMethod>();
     this.needsJSONPopulate = false;
+    this.needsJSONPopulateTime = false;
     this.needsJSONUnpopulate = false;
+    this.needsJSONUnpopulateTime = false;
     this.needsJSONPopulateByteArray = false;
     this.needsJSONPopulateAny = false;
     this.needsJSONPopulateMultipart = false;

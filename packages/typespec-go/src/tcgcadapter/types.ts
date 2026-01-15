@@ -334,12 +334,12 @@ export class TypeAdapter {
       case 'bytes':
         return this.adaptBytesType(type);
       case 'plainDate': {
-        const dateKey = 'dateType';
+        const dateKey = 'plainDate';
         let date = this.types.get(dateKey);
         if (date) {
           return date;
         }
-        date = new go.Time('dateType', false);
+        date = new go.Time('PlainDate', false);
         this.types.set(dateKey, date);
         return date;
       }
@@ -425,7 +425,7 @@ export class TypeAdapter {
         return stringType;
       }
       case 'plainTime': {
-        const encoding = 'timeRFC3339';
+        const encoding = 'PlainTime';
         let time = this.types.get(encoding);
         if (time) {
           return time;
@@ -794,11 +794,11 @@ function getPrimitiveType(type: tcgc.SdkBuiltInType): 'bool' | 'float32' | 'floa
 function getDateTimeEncoding(encoding: tsp.DateTimeKnownEncoding): go.TimeFormat {
   switch (encoding) {
     case 'rfc3339':
-      return 'dateTimeRFC3339';
+      return 'RFC3339';
     case 'rfc7231':
-      return 'dateTimeRFC1123';
+      return 'RFC1123';
     case 'unixTimestamp':
-      return 'timeUnix';
+      return 'Unix';
   }
 }
 

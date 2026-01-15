@@ -9,7 +9,9 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"reflect"
+	"time"
 )
 
 // MarshalJSON implements the json.Marshaller interface for type BooleanLiteralProperty.
@@ -181,7 +183,7 @@ func (c *CollectionsStringProperty) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type DatetimeProperty.
 func (d DatetimeProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateDateTimeRFC3339(objectMap, "property", d.Property)
+	populateTime[datetime.RFC3339](objectMap, "property", d.Property)
 	return json.Marshal(objectMap)
 }
 
@@ -195,7 +197,7 @@ func (d *DatetimeProperty) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "property":
-			err = unpopulateDateTimeRFC3339(val, "Property", &d.Property)
+			err = unpopulateTime[datetime.RFC3339](val, "Property", &d.Property)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -809,6 +811,17 @@ func populate(m map[string]any, k string, v any) {
 	}
 }
 
+func populateTime[T dateTimeConstraints](m map[string]any, k string, t *time.Time) {
+	if t == nil {
+		return
+	} else if azcore.IsNullValue(t) {
+		m[k] = nil
+	} else if !reflect.ValueOf(t).IsNil() {
+		newTime := T(*t)
+		m[k] = (*T)(&newTime)
+	}
+}
+
 func populateAny(m map[string]any, k string, v any) {
 	if v == nil {
 		return
@@ -837,4 +850,21 @@ func unpopulate(data json.RawMessage, fn string, v any) error {
 		return fmt.Errorf("struct field %s: %v", fn, err)
 	}
 	return nil
+}
+
+func unpopulateTime[T dateTimeConstraints](data json.RawMessage, fn string, t **time.Time) error {
+	if data == nil || string(data) == "null" {
+		return nil
+	}
+	var aux T
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	newTime := time.Time(aux)
+	*t = &newTime
+	return nil
+}
+
+type dateTimeConstraints interface {
+	datetime.PlainDate | datetime.PlainTime | datetime.RFC1123 | datetime.RFC3339 | datetime.Unix
 }

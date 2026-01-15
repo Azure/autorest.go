@@ -14891,7 +14891,7 @@ schemas:
         go:
           name: time.Time
           description: The timestamp of resource creation (UTC).
-          internalTimeType: dateTimeRFC3339
+          internalTimeType: RFC3339
       protocol: {}
     - &ref_862
       type: date-time
@@ -14905,7 +14905,7 @@ schemas:
         go:
           name: time.Time
           description: The timestamp of resource last modification (UTC)
-          internalTimeType: dateTimeRFC3339
+          internalTimeType: RFC3339
       protocol: {}
     - &ref_242
       type: date-time
@@ -14919,7 +14919,7 @@ schemas:
         go:
           name: time.Time
           description: The time at which the compute was created.
-          internalTimeType: dateTimeRFC3339
+          internalTimeType: RFC3339
       protocol: {}
     - &ref_243
       type: date-time
@@ -14933,7 +14933,7 @@ schemas:
         go:
           name: time.Time
           description: The time at which the compute was last modified.
-          internalTimeType: dateTimeRFC3339
+          internalTimeType: RFC3339
       protocol: {}
     - &ref_160
       type: date-time
@@ -14947,7 +14947,7 @@ schemas:
         go:
           name: time.Time
           description: "Specifies end time of schedule in ISO 8601 format.\r\nIf not present, the schedule will run indefinitely"
-          internalTimeType: dateTimeRFC3339
+          internalTimeType: RFC3339
       protocol: {}
     - &ref_163
       type: date-time
@@ -14961,7 +14961,7 @@ schemas:
         go:
           name: time.Time
           description: Specifies start time of schedule in ISO 8601 format.
-          internalTimeType: dateTimeRFC3339
+          internalTimeType: RFC3339
       protocol: {}
     - &ref_107
       type: date-time
@@ -14976,7 +14976,7 @@ schemas:
         go:
           name: time.Time
           description: The time at which the compute entered its current allocation state.
-          internalTimeType: dateTimeRFC3339
+          internalTimeType: RFC3339
       protocol: {}
     - &ref_145
       type: date-time
@@ -14990,7 +14990,7 @@ schemas:
         go:
           name: time.Time
           description: Time of the last operation.
-          internalTimeType: dateTimeRFC3339
+          internalTimeType: RFC3339
       protocol: {}
     - &ref_186
       type: date-time
@@ -15005,7 +15005,7 @@ schemas:
         go:
           name: time.Time
           description: The time when the disk mounted.
-          internalTimeType: dateTimeRFC3339
+          internalTimeType: RFC3339
       protocol: {}
   durations:
     - &ref_100
@@ -70347,7 +70347,6 @@ language:
       - *ref_40
       - *ref_748
       - *ref_766
-    generateDateTimeRFC3339Helper: true
     groupParameters: true
     headAsBoolean: true
     module: github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/machinelearningservices/armmachinelearningservices
