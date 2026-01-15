@@ -1052,7 +1052,7 @@ export class ClientAdapter {
     if (sdkMethod.kind === 'lropaging' || sdkMethod.kind === 'paging') {
       // grab the paged response envelope type from the operation responses
       sdkResponseType = sdkMethod.kind === 'lropaging' 
-        ? sdkMethod.lroMetadata.finalResponse?.result
+        ? sdkMethod.lroMetadata.finalResponse?.envelopeResult
         : sdkMethod.operation.responses[0].type;
         
       if (!sdkResponseType) {
