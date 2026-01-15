@@ -1051,12 +1051,10 @@ export class ClientAdapter {
     // however, we want the synthesized paged response envelope as that's what Go returns.
     if (sdkMethod.kind === 'lropaging' || sdkMethod.kind === 'paging') {
       // grab the paged response envelope type from the operation responses
-      for (const httpResp of sdkMethod.operation.responses) {
-        if (httpResp.type) {
-          sdkResponseType = httpResp.type;
-          break;
-        }
-      }
+      sdkResponseType = sdkMethod.kind === 'lropaging' 
+        ? sdkMethod.lroMetadata.finalResponse?.result
+        : sdkMethod.operation.responses[0].type;
+        
       if (!sdkResponseType) {
         throw new AdapterError('InternalError', `paged method ${method.name} has no synthesized response type`, sdkMethod.__raw?.node);
       } else if (sdkResponseType.kind !== 'model') {
