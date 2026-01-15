@@ -1,6 +1,6 @@
 # Release History
 
-## 4.0.0-preview.76 (unreleased)
+## 4.0.0-preview.76 (2026-01-15)
 
 ### Breaking Changes
 
@@ -9,7 +9,7 @@
 ### Other Changes
 
 * Updated the minimum version of Go to `v1.24.0`.
-* Move time helpers to azcore
+* Move time helpers to `azcore`.
 
 ## 4.0.0-preview.75 (2025-11-07)
 
