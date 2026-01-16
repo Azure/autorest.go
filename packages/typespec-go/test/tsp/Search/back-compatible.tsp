@@ -4,8 +4,7 @@ using Azure.ClientGenerator.Core;
 using Microsoft.Search;
 
 #suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
-@@Azure.ClientGenerator.Core.Legacy.flattenProperty(SearchServiceUpdate.properties
-);
+@@Azure.ClientGenerator.Core.Legacy.flattenProperty(SearchServiceUpdate.properties);
 
 @@clientName(CheckNameAvailabilityOutput.nameAvailable, "IsNameAvailable");
 
@@ -29,30 +28,25 @@ using Microsoft.Search;
 #suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
 @@Azure.ClientGenerator.Core.Legacy.flattenProperty(SearchService.properties);
 
-@@clientName(PrivateEndpointConnections.update::parameters.resource,
-  "privateEndpointConnection"
-);
+@@clientName(PrivateEndpointConnections.update::parameters.resource, "privateEndpointConnection");
 
-@@clientName(SharedPrivateLinkResources.createOrUpdate::parameters.resource,
-  "sharedPrivateLinkResource"
-);
+@@clientName(SharedPrivateLinkResources.createOrUpdate::parameters.resource, "sharedPrivateLinkResource");
 
 @@clientLocation(ServicesOperationGroup.checkNameAvailability, "Services");
 
 @@clientLocation(UsagesOperationGroup.listBySubscription, "Usages");
-@@clientName(ServicesOperationGroup.checkNameAvailability::parameters.body,
-  "checkNameAvailabilityInput"
-);
+@@clientName(ServicesOperationGroup.checkNameAvailability::parameters.body, "checkNameAvailabilityInput");
 
-@@minLength(Azure.ResourceManager.CommonTypes.NetworkSecurityPerimeterConfigurationNameParameter.networkSecurityPerimeterConfigurationName,
-  38
-);
-@@maxLength(Azure.ResourceManager.CommonTypes.NetworkSecurityPerimeterConfigurationNameParameter.networkSecurityPerimeterConfigurationName,
-  100
-);
-@@pattern(Azure.ResourceManager.CommonTypes.NetworkSecurityPerimeterConfigurationNameParameter.networkSecurityPerimeterConfigurationName,
+@@minLength(Azure.ResourceManager.CommonTypes.NspConfigurationNameParameter.networkSecurityPerimeterConfigurationName, 38);
+@@maxLength(Azure.ResourceManager.CommonTypes.NspConfigurationNameParameter.networkSecurityPerimeterConfigurationName, 100);
+@@pattern(Azure.ResourceManager.CommonTypes.NspConfigurationNameParameter.networkSecurityPerimeterConfigurationName,
   "^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}\\.[a-z][a-z0-9]*$"
 );
-@@doc(Azure.ResourceManager.CommonTypes.NetworkSecurityPerimeterConfigurationNameParameter.networkSecurityPerimeterConfigurationName,
-  "The network security perimeter configuration name."
-);
+@@doc(Azure.ResourceManager.CommonTypes.NspConfigurationNameParameter.networkSecurityPerimeterConfigurationName, "The network security perimeter configuration name.");
+
+/** Network security perimeter configuration */
+model AccessRulePropertiesSubscriptionsItem {
+    /** The fully qualified Azure resource ID of the subscription e.g. ('/subscriptions/00000000-0000-0000-0000-000000000000') */
+    id?: Azure.Core.armResourceIdentifier;
+  }
+@@alternateType(Azure.ResourceManager.CommonTypes.AccessRuleProperties.subscriptions, AccessRulePropertiesSubscriptionsItem[], "go");

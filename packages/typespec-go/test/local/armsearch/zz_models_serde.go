@@ -93,15 +93,15 @@ func (a *AccessRuleProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AccessRulePropertiesSubscription.
-func (a AccessRulePropertiesSubscription) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AccessRulePropertiesSubscriptionsItem.
+func (a AccessRulePropertiesSubscriptionsItem) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "id", a.ID)
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AccessRulePropertiesSubscription.
-func (a *AccessRulePropertiesSubscription) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AccessRulePropertiesSubscriptionsItem.
+func (a *AccessRulePropertiesSubscriptionsItem) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", a, err)

@@ -40,9 +40,9 @@ func (c *ClientFactory) NewAdminKeysClient() *AdminKeysClient {
 	}
 }
 
-// NewClient creates a new instance of Client.
-func (c *ClientFactory) NewClient() *Client {
-	return &Client{
+// NewManagementClient creates a new instance of ManagementClient.
+func (c *ClientFactory) NewManagementClient() *ManagementClient {
+	return &ManagementClient{
 		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}

@@ -226,6 +226,12 @@ generate('armworkloadssapvirtualinstance', armworkloadssapvirtualinstance, 'test
 const armsearch = pkgRoot + 'test/tsp/Search';
 generate('armsearch', armsearch, 'test/local/armsearch', [`examples-directory=${armsearch}/examples`, 'generate-samples=false','fix-const-stuttering=false']);
 
+const armapimanagement = pkgRoot + 'test/tsp/ApiManagement';
+generate('armapimanagement', armapimanagement, 'test/local/armapimanagement', [`examples-directory=${armapimanagement}/examples`, 'generate-samples=false','fix-const-stuttering=false']);
+
+const armmachinelearningservices = pkgRoot + 'test/tsp/MachineLearningServices.Management';
+generate('armmachinelearningservices', armmachinelearningservices, 'test/local/armmachinelearningservices', [`examples-directory=${armmachinelearningservices}/examples`, 'generate-samples=true','fix-const-stuttering=false']);
+
 const nooptionalbody = pkgRoot + 'test/tsp/NoOptionalBody';
 generate('nooptionalbody', nooptionalbody, 'test/local/nooptionalbody', ['generate-fakes=false', 'go-generate=after_generate.go', 'no-optional-body=true']);
 

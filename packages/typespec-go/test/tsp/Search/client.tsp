@@ -656,6 +656,20 @@ op SharedPrivateLinkResourcesDeleteCustomization(
 @@Azure.ClientGenerator.Core.override(SearchServices.delete, searchDeleteCustomization);
 @@Azure.ClientGenerator.Core.override(SearchServices.create, queryKeysCreateCustomization);
 @@Azure.ClientGenerator.Core.override(SearchServices.queryKeysDelete, queryKeysDeleteCustomization);
+@@Azure.ClientGenerator.Core.override(SearchServices.adminKeysGet, adminKeysGetCustomization);
+@@Azure.ClientGenerator.Core.override(SearchServices.listBySearchService, queryKeysListBySearchServiceCustomization);
+@@Azure.ClientGenerator.Core.override(PrivateEndpointConnections.listByService, privateEndpointConnectionsListByServiceCustomization);
+@@Azure.ClientGenerator.Core.override(PrivateEndpointConnections.get, privateEndpointConnectionsGetCustomization);
+@@Azure.ClientGenerator.Core.override(PrivateEndpointConnections.update, privateEndpointConnectionsUpdateCustomization);
+@@Azure.ClientGenerator.Core.override(PrivateEndpointConnections.delete, privateEndpointConnectionsDeleteCustomization);
+@@Azure.ClientGenerator.Core.override(SearchServices.listSupported, privateLinkResourcesListSupportedCustomization);
+@@Azure.ClientGenerator.Core.override(SearchServices.regenerate, privateLinkResourcesRegenerateCustomization);
+@@Azure.ClientGenerator.Core.override(SharedPrivateLinkResources.listByService, SharedPrivateLinkResourcesListByServiceCustomization);
+@@Azure.ClientGenerator.Core.override(SharedPrivateLinkResources.get, SharedPrivateLinkResourcesGetCustomization);
+@@Azure.ClientGenerator.Core.override(SharedPrivateLinkResources.createOrUpdate, SharedPrivateLinkResourcesCreateOrUpdateCustomization);
+@@Azure.ClientGenerator.Core.override(SharedPrivateLinkResources.delete, SharedPrivateLinkResourcesDeleteCustomization);
+
+@@clientName(Microsoft.Search, "SearchManagementClient", "python");
 
 @@clientName(servicesCheckNameAvailabilityCustomization::parameters.params, "searchManagementRequestOptions", "go");
 @@clientName(usagesListBySubscriptionCustomization::parameters.params, "searchManagementRequestOptions", "go");
@@ -682,17 +696,4 @@ op SharedPrivateLinkResourcesDeleteCustomization(
 @@clientName(SharedPrivateLinkResourcesCreateOrUpdateCustomization::parameters.params, "searchManagementRequestOptions", "go");
 @@clientName(SharedPrivateLinkResourcesDeleteCustomization::parameters.params, "searchManagementRequestOptions", "go");
 
-@@Azure.ClientGenerator.Core.override(SearchServices.adminKeysGet, adminKeysGetCustomization);
-@@Azure.ClientGenerator.Core.override(SearchServices.listBySearchService, queryKeysListBySearchServiceCustomization);
-@@Azure.ClientGenerator.Core.override(PrivateEndpointConnections.listByService, privateEndpointConnectionsListByServiceCustomization);
-@@Azure.ClientGenerator.Core.override(PrivateEndpointConnections.get, privateEndpointConnectionsGetCustomization);
-@@Azure.ClientGenerator.Core.override(PrivateEndpointConnections.update, privateEndpointConnectionsUpdateCustomization);
-@@Azure.ClientGenerator.Core.override(PrivateEndpointConnections.delete, privateEndpointConnectionsDeleteCustomization);
-@@Azure.ClientGenerator.Core.override(SearchServices.listSupported, privateLinkResourcesListSupportedCustomization);
-@@Azure.ClientGenerator.Core.override(SearchServices.regenerate, privateLinkResourcesRegenerateCustomization);
-@@Azure.ClientGenerator.Core.override(SharedPrivateLinkResources.listByService, SharedPrivateLinkResourcesListByServiceCustomization);
-@@Azure.ClientGenerator.Core.override(SharedPrivateLinkResources.get, SharedPrivateLinkResourcesGetCustomization);
-@@Azure.ClientGenerator.Core.override(SharedPrivateLinkResources.createOrUpdate, SharedPrivateLinkResourcesCreateOrUpdateCustomization);
-@@Azure.ClientGenerator.Core.override(SharedPrivateLinkResources.delete, SharedPrivateLinkResourcesDeleteCustomization);
-
-@@clientName(Microsoft.Search, "SearchManagementClient", "python");
+@@clientLocation(usageBySubscriptionSku, "ManagementClient", "go");

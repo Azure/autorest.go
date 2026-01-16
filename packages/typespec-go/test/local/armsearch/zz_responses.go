@@ -16,8 +16,8 @@ type AdminKeysClientRegenerateResponse struct {
 	AdminKeyResult
 }
 
-// ClientUsageBySubscriptionSKUResponse contains the response from method Client.UsageBySubscriptionSKU.
-type ClientUsageBySubscriptionSKUResponse struct {
+// ManagementClientUsageBySubscriptionSKUResponse contains the response from method ManagementClient.UsageBySubscriptionSKU.
+type ManagementClientUsageBySubscriptionSKUResponse struct {
 	// Describes the quota usage for a particular SKU.
 	QuotaUsageResult
 }

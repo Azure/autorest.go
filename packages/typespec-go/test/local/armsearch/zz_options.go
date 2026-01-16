@@ -14,8 +14,9 @@ type AdminKeysClientRegenerateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientUsageBySubscriptionSKUOptions contains the optional parameters for the Client.UsageBySubscriptionSKU method.
-type ClientUsageBySubscriptionSKUOptions struct {
+// ManagementClientUsageBySubscriptionSKUOptions contains the optional parameters for the ManagementClient.UsageBySubscriptionSKU
+// method.
+type ManagementClientUsageBySubscriptionSKUOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -69,6 +70,13 @@ type ManagementRequestOptions struct {
 }
 
 // ManagementRequestOptions contains a group of parameters for the SharedPrivateLinkResourcesClient.ListByService method.
+type ManagementRequestOptions struct {
+	// A client-generated GUID value that identifies this request. If specified, this will be included in response information
+	// as a way to track the request.
+	ClientRequestID *string
+}
+
+// ManagementRequestOptions contains a group of parameters for the ManagementClient.UsageBySubscriptionSKU method.
 type ManagementRequestOptions struct {
 	// A client-generated GUID value that identifies this request. If specified, this will be included in response information
 	// as a way to track the request.
@@ -167,13 +175,6 @@ type ManagementRequestOptions struct {
 }
 
 // ManagementRequestOptions contains a group of parameters for the PrivateLinkResourcesClient.ListSupported method.
-type ManagementRequestOptions struct {
-	// A client-generated GUID value that identifies this request. If specified, this will be included in response information
-	// as a way to track the request.
-	ClientRequestID *string
-}
-
-// ManagementRequestOptions contains a group of parameters for the Client.UsageBySubscriptionSKU method.
 type ManagementRequestOptions struct {
 	// A client-generated GUID value that identifies this request. If specified, this will be included in response information
 	// as a way to track the request.
