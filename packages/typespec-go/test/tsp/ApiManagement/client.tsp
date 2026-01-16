@@ -90,3 +90,35 @@ using Http;
   Microsoft.ApiManagement,
   "python"
 );
+
+
+/**
+ * override for DeletedServiceContracts.getByName
+ */
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-operation" "customization"
+#suppress "@azure-tools/typespec-azure-core/documentation-required" "override"
+op replaceGetByName(
+  apiVersion: string,
+  subscriptionId: Azure.Core.uuid,
+  provider: Microsoft.ApiManagement,
+  serviceName: string,
+  location: Azure.Core.azureLocation,
+): Azure.ResourceManager.ArmResponse<Microsoft.ApiManagement.DeletedServiceContract> | Azure.ResourceManager.CommonTypes.ErrorResponse;
+
+@@override(DeletedServiceContracts.getByName, replaceGetByName, "go");
+
+/**
+ * override for DeletedServiceContracts.purge
+ */
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-operation" "customization"
+#suppress "@azure-tools/typespec-azure-core/documentation-required" "override"
+op replacePurge(
+  apiVersion: string, 
+  subscriptionId: Azure.Core.uuid, 
+  provider: "Microsoft.ApiManagement", 
+  serviceName: string,
+  location: Azure.Core.azureLocation
+): Azure.ResourceManager.ArmDeletedResponse | Microsoft.ApiManagement.{ statusCode: 202, location: string, retryAfter: int32, _: Microsoft.ApiManagement.DeletedServiceContract } | Azure.ResourceManager.ArmDeletedNoContentResponse | Azure.ResourceManager.CommonTypes.ErrorResponse;
+
+@@override(DeletedServiceContracts.purge, replacePurge, "go");
+
