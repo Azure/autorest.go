@@ -3,7 +3,10 @@ import "@azure-tools/typespec-client-generator-core";
 
 using Azure.ClientGenerator.Core;
 using Microsoft.ApiManagement;
-using Http;
+using TypeSpec.Rest;
+using Azure.ResourceManager;
+using TypeSpec.Http;
+using TypeSpec.OpenAPI;
 
 // Java-specific compatibility customizations generated per TypeSpec migration guidance.
 @@clientName(Microsoft.ApiManagement.PreferredIPVersion,
@@ -98,14 +101,14 @@ using Http;
 #suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-operation" "customization"
 #suppress "@azure-tools/typespec-azure-core/documentation-required" "override"
 op replaceGetByName(
-  apiVersion: string,
-  subscriptionId: Azure.Core.uuid,
-  provider: Microsoft.ApiManagement,
+  ...ApiVersionParameter,
+  ...SubscriptionIdParameter,
+  ...Azure.ResourceManager.Legacy.Provider,
   serviceName: string,
   location: Azure.Core.azureLocation,
 ): Azure.ResourceManager.ArmResponse<Microsoft.ApiManagement.DeletedServiceContract> | Azure.ResourceManager.CommonTypes.ErrorResponse;
 
-@@override(DeletedServiceContracts.getByName, replaceGetByName, "go");
+@@override(DeletedServiceContracts.getByName, replaceGetByName, "go,java");
 
 /**
  * override for DeletedServiceContracts.purge
@@ -113,12 +116,17 @@ op replaceGetByName(
 #suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-operation" "customization"
 #suppress "@azure-tools/typespec-azure-core/documentation-required" "override"
 op replacePurge(
-  apiVersion: string, 
-  subscriptionId: Azure.Core.uuid, 
-  provider: "Microsoft.ApiManagement", 
+  ...ApiVersionParameter,
+  ...SubscriptionIdParameter,
+  ...Azure.ResourceManager.Legacy.Provider,
   serviceName: string,
   location: Azure.Core.azureLocation
-): Azure.ResourceManager.ArmDeletedResponse | Microsoft.ApiManagement.{ statusCode: 202, location: string, retryAfter: int32, _: Microsoft.ApiManagement.DeletedServiceContract } | Azure.ResourceManager.ArmDeletedNoContentResponse | Azure.ResourceManager.CommonTypes.ErrorResponse;
+): ArmDeletedResponse | (ArmDeleteAcceptedLroResponse & {
+      @bodyRoot
+      _: DeletedServiceContract;
+    }) | ArmDeletedNoContentResponse;
 
-@@override(DeletedServiceContracts.purge, replacePurge, "go");
+@@override(DeletedServiceContracts.purge, replacePurge, "go,java");
 
+@@clientName(TagTagResourceContractProperties, "TagResourceContractProperties", "go,java");
+@@clientName(VersioningScheme, "APIVersionSetContractDetailsVersioningScheme", "go,java");
