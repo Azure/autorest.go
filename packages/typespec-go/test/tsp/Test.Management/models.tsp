@@ -6,6 +6,9 @@ model BodyRootProperties {
   @doc("Status of the current operation on trusted signing account.")
   @visibility(Lifecycle.Read)
   provisioningState?: ProvisioningState;
+
+  @doc("The value property.")
+  value?: unknown;
 }
 
 @doc("The status of the current operation.")

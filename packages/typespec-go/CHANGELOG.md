@@ -1,5 +1,11 @@
 # Release History
 
+## 0.9.2 (unreleased)
+
+### Bugs Fixed
+
+* Fixed incorrect example generation for unknown type.
+
 ## 0.9.1 (2026-01-15)
 
 ### Bugs Fixed

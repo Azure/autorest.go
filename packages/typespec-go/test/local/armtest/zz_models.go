@@ -46,6 +46,9 @@ type BodyRootProperties struct {
 	// The URI of the trusted signing account which is used during signing files.
 	Description *string
 
+	// The value property.
+	Value any
+
 	// READ-ONLY; Status of the current operation on trusted signing account.
 	ProvisioningState *ProvisioningState
 }

@@ -123,6 +123,7 @@ func (b BodyRootProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "description", b.Description)
 	populate(objectMap, "provisioningState", b.ProvisioningState)
+	populateAny(objectMap, "value", b.Value)
 	return json.Marshal(objectMap)
 }
 
@@ -140,6 +141,9 @@ func (b *BodyRootProperties) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "provisioningState":
 			err = unpopulate(val, "ProvisioningState", &b.ProvisioningState)
+			delete(rawMsg, key)
+		case "value":
+			err = unpopulate(val, "Value", &b.Value)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -265,6 +269,16 @@ func populateTime[T dateTimeConstraints](m map[string]any, k string, t *time.Tim
 	} else if !reflect.ValueOf(t).IsNil() {
 		newTime := T(*t)
 		m[k] = (*T)(&newTime)
+	}
+}
+
+func populateAny(m map[string]any, k string, v any) {
+	if v == nil {
+		return
+	} else if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else {
+		m[k] = v
 	}
 }
 
