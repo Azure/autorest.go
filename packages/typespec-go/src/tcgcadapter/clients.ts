@@ -23,9 +23,14 @@ export class ClientAdapter {
   // across multiple operations
   private readonly clientParams: Map<string, go.MethodParameter>;
 
+  // track parameter groups created from model types across all operations
+  // to avoid duplicates when the same parameter group is used in multiple methods
+  private readonly parameterGroups: Map<string, go.ParameterGroup>;
+
   constructor(ta: TypeAdapter) {
     this.ta = ta;
     this.clientParams = new Map<string, go.MethodParameter>();
+    this.parameterGroups = new Map<string, go.ParameterGroup>();
   }
 
   /**
@@ -40,6 +45,13 @@ export class ClientAdapter {
       // start with instantiable clients and recursively work down
       if (sdkClient.clientInitialization.initializedBy & tcgc.InitializedByFlags.Individually) {
         this.recursiveAdaptClient(sdkClient);
+      }
+    }
+
+    // after all clients and methods are processed, add all unique parameter groups
+    if (this.parameterGroups.size > 0) {
+      for (const paramGroup of this.parameterGroups.values()) {
+        this.ta.getPkg().paramGroups.push(this.adaptParameterGroup(paramGroup));
       }
     }
   }
@@ -590,9 +602,6 @@ export class ClientAdapter {
       allOpParams.push(sdkMethod.operation.bodyParam);
     }
 
-    // track parameter groups created from model types
-    const parameterGroups = new Map<string, go.ParameterGroup>();
-
     // Helper function to add a parameter to method.parameters and paramMapping
     const addParameterToMethod = (adaptedParam: go.MethodParameter, opParam: OperationParamType) => {
       method.parameters.push(adaptedParam);
@@ -718,8 +727,8 @@ export class ClientAdapter {
           const paramStyle = this.adaptParameterStyle(param);
           const isRequired = go.isRequiredParameter(paramStyle);
           
-          // Use the same naming approach as regular parameters for consistency
-          const paramGroupName = ensureNameCase(param.type.name);
+          // Use the original name to preserve the exact name as authored
+          const paramGroupName = ensureNameCase(param.type.__raw?.kind === 'Model' ? param.type.__raw?.name : param.type.name);
           const paramName = getEscapedReservedName(ensureNameCase(param.name, isRequired), 'Param');
           
           // Remove the model from codeModel.models if it is a parameter group
@@ -729,7 +738,7 @@ export class ClientAdapter {
           }
           
           // Check if parameter group already exists
-          let paramGroup = parameterGroups.get(paramGroupName);
+          let paramGroup = this.parameterGroups.get(paramGroupName);
           if (paramGroup) {
             continue;
           }
@@ -747,7 +756,7 @@ export class ClientAdapter {
           } else {
             paramGroup.docs.summary = `${paramGroupName} contains a group of parameters for the ${method.receiver.type.name}.${method.name} method.`;
           }
-          parameterGroups.set(paramGroupName, paramGroup);
+          this.parameterGroups.set(paramGroupName, paramGroup);
 
           // Add each property as a method parameter and associate with the group
           for (let i = 0; i < modelProperties.length; i++) {
@@ -820,11 +829,6 @@ export class ClientAdapter {
           }
         }
       }
-    }
-
-    // Add all parameter groups to the code model
-    for (const paramGroup of parameterGroups.values()) {
-      this.ta.getPkg().paramGroups.push(this.adaptParameterGroup(paramGroup));
     }
 
     return paramMapping;

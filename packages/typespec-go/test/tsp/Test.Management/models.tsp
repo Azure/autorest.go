@@ -36,3 +36,16 @@ model ActionRequest {
   @doc("The prop of the action.")
   prop: string;
 }
+
+@doc("Properties of the widget resource.")
+model WidgetProperties {
+  @doc("The name of the widget.")
+  name?: string;
+
+  @doc("The description of the widget.")
+  description?: string;
+
+  @doc("Status of the current operation on widget.")
+  @visibility(Lifecycle.Read)
+  provisioningState?: ProvisioningState;
+}

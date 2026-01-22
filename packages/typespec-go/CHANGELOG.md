@@ -1,5 +1,11 @@
 # Release History
 
+## 0.9.2 (unreleased)
+
+### Bugs Fixed
+
+* Fixed parameter group name generation when the parameter group is used by multiple operations.
+
 ## 0.9.1 (2026-01-15)
 
 ### Bugs Fixed
