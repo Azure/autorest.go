@@ -739,24 +739,23 @@ export class ClientAdapter {
           
           // Check if parameter group already exists
           let paramGroup = this.parameterGroups.get(paramGroupName);
-          if (paramGroup) {
-            continue;
+          if (!paramGroup) {
+            paramGroup = new go.ParameterGroup(
+              this.ta.getPkg(),
+              paramName,
+              paramGroupName,
+              isRequired,
+              'method'
+            );
+            // Use docs from model if present, otherwise generate default description
+            if (param.type.summary || param.type.doc) {
+              paramGroup.docs.summary = param.type.summary
+              paramGroup.docs.description = param.type.doc;
+            } else {
+              paramGroup.docs.summary = `${paramGroupName} contains a group of parameters for the ${method.receiver.type.name}.${method.name} method.`;
+            }
+            this.parameterGroups.set(paramGroupName, paramGroup);
           }
-          paramGroup = new go.ParameterGroup(
-            this.ta.getPkg(),
-            paramName,
-            paramGroupName,
-            isRequired,
-            'method'
-          );
-          // Use docs from model if present, otherwise generate default description
-          if (param.type.summary || param.type.doc) {
-            paramGroup.docs.summary = param.type.summary
-            paramGroup.docs.description = param.type.doc;
-          } else {
-            paramGroup.docs.summary = `${paramGroupName} contains a group of parameters for the ${method.receiver.type.name}.${method.name} method.`;
-          }
-          this.parameterGroups.set(paramGroupName, paramGroup);
 
           // Add each property as a method parameter and associate with the group
           for (let i = 0; i < modelProperties.length; i++) {
@@ -767,7 +766,10 @@ export class ClientAdapter {
             adaptedPropertyParam.docs.description = property.doc;
             adaptedPropertyParam.group = paramGroup;
             addParameterToMethod(adaptedPropertyParam, propertyOpParam);
-            paramGroup.params.push(adaptedPropertyParam);
+            // Only add to paramGroup.params if not already present
+            if (!paramGroup.params.some(p => p.name === adaptedPropertyParam.name)) {
+              paramGroup.params.push(adaptedPropertyParam);
+            }
           }
           continue; // Skip regular parameter handling
         }

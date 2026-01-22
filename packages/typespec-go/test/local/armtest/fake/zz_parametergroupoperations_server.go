@@ -25,7 +25,7 @@ type ParameterGroupOperationsServer struct {
 
 	// TestOperation2 is the fake for method ParameterGroupOperationsClient.TestOperation2
 	// HTTP status codes to indicate success: http.StatusOK
-	TestOperation2 func(ctx context.Context, resourceGroupName string, widgetName string, options *armtest.ParameterGroupOperationsClientTestOperation2Options) (resp azfake.Responder[armtest.ParameterGroupOperationsClientTestOperation2Response], errResp azfake.ErrorResponder)
+	TestOperation2 func(ctx context.Context, resourceGroupName string, widgetName string, params armtest.TestManagementRequestOptions, options *armtest.ParameterGroupOperationsClientTestOperation2Options) (resp azfake.Responder[armtest.ParameterGroupOperationsClientTestOperation2Response], errResp azfake.ErrorResponder)
 }
 
 // NewParameterGroupOperationsServerTransport creates a new instance of ParameterGroupOperationsServerTransport with the provided implementation.
@@ -144,7 +144,13 @@ func (p *ParameterGroupOperationsServerTransport) dispatchTestOperation2(req *ht
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.TestOperation2(req.Context(), resourceGroupNameParam, widgetNameParam, nil)
+	clientRequestIDParam := getOptional(getHeaderValue(req.Header, "x-ms-client-request-id"))
+	correlationIDParam := getOptional(getHeaderValue(req.Header, "x-ms-correlation-id"))
+	params := armtest.TestManagementRequestOptions{
+		ClientRequestID: clientRequestIDParam,
+		CorrelationID:   correlationIDParam,
+	}
+	respr, errRespr := p.srv.TestOperation2(req.Context(), resourceGroupNameParam, widgetNameParam, params, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

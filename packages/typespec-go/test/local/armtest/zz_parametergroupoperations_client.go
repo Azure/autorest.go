@@ -117,15 +117,16 @@ func (client *ParameterGroupOperationsClient) testOperation1HandleResponse(resp 
 // Generated from API version 2025-01-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - widgetName - The name of the widget
+//   - params - Request options for test operations
 //   - options - ParameterGroupOperationsClientTestOperation2Options contains the optional parameters for the ParameterGroupOperationsClient.TestOperation2
 //     method.
-func (client *ParameterGroupOperationsClient) TestOperation2(ctx context.Context, resourceGroupName string, widgetName string, options *ParameterGroupOperationsClientTestOperation2Options) (ParameterGroupOperationsClientTestOperation2Response, error) {
+func (client *ParameterGroupOperationsClient) TestOperation2(ctx context.Context, resourceGroupName string, widgetName string, params TestManagementRequestOptions, options *ParameterGroupOperationsClientTestOperation2Options) (ParameterGroupOperationsClientTestOperation2Response, error) {
 	var err error
 	const operationName = "ParameterGroupOperationsClient.TestOperation2"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.testOperation2CreateRequest(ctx, resourceGroupName, widgetName, options)
+	req, err := client.testOperation2CreateRequest(ctx, resourceGroupName, widgetName, params, options)
 	if err != nil {
 		return ParameterGroupOperationsClientTestOperation2Response{}, err
 	}
@@ -142,7 +143,7 @@ func (client *ParameterGroupOperationsClient) TestOperation2(ctx context.Context
 }
 
 // testOperation2CreateRequest creates the TestOperation2 request.
-func (client *ParameterGroupOperationsClient) testOperation2CreateRequest(ctx context.Context, resourceGroupName string, widgetName string, _ *ParameterGroupOperationsClientTestOperation2Options) (*policy.Request, error) {
+func (client *ParameterGroupOperationsClient) testOperation2CreateRequest(ctx context.Context, resourceGroupName string, widgetName string, params TestManagementRequestOptions, _ *ParameterGroupOperationsClientTestOperation2Options) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/testOperation2"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -164,6 +165,12 @@ func (client *ParameterGroupOperationsClient) testOperation2CreateRequest(ctx co
 	reqQP.Set("api-version", "2025-01-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	if params.ClientRequestID != nil {
+		req.Raw().Header["x-ms-client-request-id"] = []string{*params.ClientRequestID}
+	}
+	if params.CorrelationID != nil {
+		req.Raw().Header["x-ms-correlation-id"] = []string{*params.CorrelationID}
+	}
 	return req, nil
 }
 
