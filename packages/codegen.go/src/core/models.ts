@@ -179,7 +179,7 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
   }
   if (needsJSONUnpopulateTime || needsJSONPopulateTime) {
     serdeTextBody += `type dateTimeConstraints interface {\n`;
-    serdeTextBody += `\tdatetime.PlainDate | datetime.PlainTime | datetime.RFC1123 | datetime.RFC3339 | datetime.Unix\n`;
+    serdeTextBody += `\t${helpers.datetimeConstraints}\n`;
     serdeTextBody += '}\n\n';
   }
   let serdeText = '';

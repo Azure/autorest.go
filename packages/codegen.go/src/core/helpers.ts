@@ -17,6 +17,16 @@ export const RFC3339Format = 'time.RFC3339Nano';
 export const RFC1123Format = 'time.RFC1123';
 export const plainTimeFormat = 'time.TimeOnly';
 
+export const datetimeFormatMap: Record<string, string> = {
+  'PlainDate': plainDateFormat,
+  'PlainTime': plainTimeFormat,
+  'RFC1123': RFC1123Format,
+  'RFC3339': RFC3339Format,
+};
+
+// The datetime type constraint for generics
+export const datetimeConstraints = 'datetime.PlainDate | datetime.PlainTime | datetime.RFC1123 | datetime.RFC3339 | datetime.Unix';
+
 export const doNotEditRegex = /^\/\/ Code generated .* DO NOT EDIT\.$/m;
 
 const defaultHeaderText = `Copyright (c) Microsoft Corporation. All rights reserved.
