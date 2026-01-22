@@ -14,6 +14,12 @@ import * as tsp from '@typespec/compiler';
 import { createRequire } from 'module';
 
 /**
+ * Constant representing "all" API versions in TCGC metadata.
+ * Used to indicate that all versions should be included.
+ */
+const ALL_API_VERSIONS = 'all';
+
+/**
  * ExternalError is thrown when an external component reports a
  * diagnostic error that would prevent the emitter from proceeding.
  */
@@ -115,7 +121,7 @@ export class Adapter {
     
     // First check if there's a single package-level API version (backward compatibility)
     const packageApiVersion = this.ctx.sdkPackage.metadata.apiVersion;
-    if (packageApiVersion && packageApiVersion !== 'all') {
+    if (packageApiVersion && packageApiVersion !== ALL_API_VERSIONS) {
       // Single API version case - use the package metadata directly for backward compatibility
       return {
         apiVersion: packageApiVersion,
@@ -130,7 +136,7 @@ export class Adapter {
       if (versions && versions.length > 0) {
         // Use the first (or configured) version for this service
         const version = versions[0];
-        if (version && version !== 'all') {
+        if (version && version !== ALL_API_VERSIONS) {
           serviceVersionMap.set(namespace.name, version);
         }
       }
@@ -148,7 +154,7 @@ export class Adapter {
             // Use the first API version which is typically the one configured for emission
             const apiVersion = clientType.apiVersions[0];
             
-            if (apiVersion && apiVersion !== 'all') {
+            if (apiVersion && apiVersion !== ALL_API_VERSIONS) {
               // Map each service to its API version
               for (const service of services) {
                 const serviceName = service.name;
