@@ -4,6 +4,7 @@ import "@azure-tools/typespec-azure-core";
 import "@azure-tools/typespec-azure-resource-manager";
 import "./BodyRoot.tsp";
 import "./LRO.tsp";
+import "./ParameterGroups.tsp";
 
 using TypeSpec.Rest;
 using TypeSpec.Http;

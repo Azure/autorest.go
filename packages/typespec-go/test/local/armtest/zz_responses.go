@@ -20,3 +20,15 @@ type LROClientOkResponseWithAsyncHeaderResponse struct {
 	// LRO model resource.
 	LROModel
 }
+
+// ParameterGroupOperationsClientTestOperation1Response contains the response from method ParameterGroupOperationsClient.TestOperation1.
+type ParameterGroupOperationsClientTestOperation1Response struct {
+	// Widget resource for testing parameter groups
+	Widget
+}
+
+// ParameterGroupOperationsClientTestOperation2Response contains the response from method ParameterGroupOperationsClient.TestOperation2.
+type ParameterGroupOperationsClientTestOperation2Response struct {
+	// Widget resource for testing parameter groups
+	Widget
+}
