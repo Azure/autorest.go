@@ -92,14 +92,101 @@ export class Adapter {
 
     // get the emitter version from our package.json
     const packageJson = createRequire(import.meta.url)('../../../../package.json') as Record<string, never>;
-    this.codeModel.metadata = {
-      ...this.ctx.sdkPackage.metadata,
-      emitterVersion: packageJson['version']
-    };
+    
+    // Build metadata with support for multiple API versions
+    this.codeModel.metadata = this.buildMetadata(packageJson['version']);
 
     this.codeModel.options.rawJSONAsBytes = this.options['rawjson-as-bytes'] ?? false;
     this.codeModel.options.sliceElementsByval = this.options['slice-elements-byval'] ?? false;
     this.codeModel.options.factoryGatherAllParams = this.options['factory-gather-all-params'] ?? true;
+  }
+
+  /**
+   * Builds metadata object with support for multiple API versions.
+   * If there's a single API version, returns backward-compatible format with single apiVersion field.
+   * If there are multiple services with different API versions, returns services object.
+   * 
+   * @param emitterVersion the version of the emitter
+   * @returns metadata object for the code model
+   */
+  private buildMetadata(emitterVersion: string): Record<string, unknown> {
+    // Collect unique service-version pairs from all clients
+    const serviceVersionMap = new Map<string, string>();
+    
+    // First check if there's a single package-level API version (backward compatibility)
+    const packageApiVersion = this.ctx.sdkPackage.metadata.apiVersion;
+    if (packageApiVersion && packageApiVersion !== 'all') {
+      // Single API version case - use the package metadata directly for backward compatibility
+      return {
+        apiVersion: packageApiVersion,
+        emitterVersion
+      };
+    }
+    
+    // Multiple services case: collect API versions from package versions map
+    // This map contains namespace -> versions mapping for all services
+    const packageVersions = this.ctx.getPackageVersions();
+    for (const [namespace, versions] of packageVersions.entries()) {
+      if (versions && versions.length > 0) {
+        // Use the first (or configured) version for this service
+        const version = versions[0];
+        if (version && version !== 'all') {
+          serviceVersionMap.set(namespace.name, version);
+        }
+      }
+    }
+    
+    // Also check from clients in case package versions is empty
+    if (serviceVersionMap.size === 0) {
+      for (const clientType of this.ctx.sdkPackage.clients) {
+        // Get service namespace from the raw SdkClient
+        if (clientType.__raw.kind === 'SdkClient') {
+          const services = Array.isArray(clientType.__raw.service) ? clientType.__raw.service : [clientType.__raw.service];
+          
+          // Get API versions from the client type
+          if (clientType.apiVersions && clientType.apiVersions.length > 0) {
+            // Use the first API version which is typically the one configured for emission
+            const apiVersion = clientType.apiVersions[0];
+            
+            if (apiVersion && apiVersion !== 'all') {
+              // Map each service to its API version
+              for (const service of services) {
+                const serviceName = service.name;
+                // Only add if not already present (first client wins for a given service)
+                if (!serviceVersionMap.has(serviceName)) {
+                  serviceVersionMap.set(serviceName, apiVersion);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    // Build the metadata based on the number of unique service-version pairs
+    if (serviceVersionMap.size === 0) {
+      // No API versions found
+      return {
+        emitterVersion
+      };
+    } else if (serviceVersionMap.size === 1) {
+      // Single service - still use single apiVersion format for consistency
+      const [, apiVersion] = Array.from(serviceVersionMap.entries())[0];
+      return {
+        apiVersion,
+        emitterVersion
+      };
+    } else {
+      // Multiple services - use new format
+      const services: Record<string, { apiVersion: string }> = {};
+      for (const [serviceName, apiVersion] of serviceVersionMap.entries()) {
+        services[serviceName] = { apiVersion };
+      }
+      return {
+        emitterVersion,
+        services
+      };
+    }
   }
 
   /** performs all the steps to convert tcgc to the Go code model */
