@@ -108,28 +108,28 @@ export class Adapter {
   }
 
   /**
-   * Builds metadata object with support for multiple API versions.
-   * If there's a single API version, returns backward-compatible format with single apiVersion field.
-   * If there are multiple services with different API versions, returns services object.
+   * Builds metadata object by collecting API version information from TCGC.
+   * The actual formatting logic is handled by generateMetadataFile in codegen.go.
    * 
    * @param emitterVersion the version of the emitter
    * @returns metadata object for the code model
    */
   private buildMetadata(emitterVersion: string): Record<string, unknown> {
-    // Collect unique service-version pairs from all clients
-    const serviceVersionMap = new Map<string, string>();
+    const metadata: Record<string, unknown> = {
+      emitterVersion
+    };
     
     // First check if there's a single package-level API version (backward compatibility)
     const packageApiVersion = this.ctx.sdkPackage.metadata.apiVersion;
     if (packageApiVersion && packageApiVersion !== ALL_API_VERSIONS) {
-      // Single API version case - use the package metadata directly for backward compatibility
-      return {
-        apiVersion: packageApiVersion,
-        emitterVersion
-      };
+      // Single API version case - use the package metadata directly
+      metadata.apiVersion = packageApiVersion;
+      return metadata;
     }
     
     // Multiple services case: collect API versions from package versions map
+    const serviceVersionMap = new Map<string, string>();
+    
     // This map contains namespace -> versions mapping for all services
     const packageVersions = this.ctx.getPackageVersions();
     for (const [namespace, versions] of packageVersions.entries()) {
@@ -169,30 +169,16 @@ export class Adapter {
       }
     }
     
-    // Build the metadata based on the number of unique service-version pairs
-    if (serviceVersionMap.size === 0) {
-      // No API versions found
-      return {
-        emitterVersion
-      };
-    } else if (serviceVersionMap.size === 1) {
-      // Single service - still use single apiVersion format for consistency
-      const [, apiVersion] = Array.from(serviceVersionMap.entries())[0];
-      return {
-        apiVersion,
-        emitterVersion
-      };
-    } else {
-      // Multiple services - use new format
+    // If we found service-version mappings, add them to metadata
+    if (serviceVersionMap.size > 0) {
       const services: Record<string, { apiVersion: string }> = {};
       for (const [serviceName, apiVersion] of serviceVersionMap.entries()) {
         services[serviceName] = { apiVersion };
       }
-      return {
-        emitterVersion,
-        services
-      };
+      metadata.services = services;
     }
+    
+    return metadata;
   }
 
   /** performs all the steps to convert tcgc to the Go code model */
