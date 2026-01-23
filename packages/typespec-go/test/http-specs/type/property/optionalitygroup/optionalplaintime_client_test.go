@@ -1,0 +1,45 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+package optionalitygroup_test
+
+import (
+	"context"
+	"optionalitygroup"
+	"testing"
+	"time"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
+	"github.com/stretchr/testify/require"
+)
+
+func TestOptionalPlainTimeClient_GetAll(t *testing.T) {
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
+	require.NoError(t, err)
+	resp, err := client.NewOptionalPlainTimeClient().GetAll(context.Background(), nil)
+	require.NoError(t, err)
+	require.NotNil(t, resp.Property)
+	require.WithinDuration(t, time.Date(0, 1, 1, 13, 6, 12, 0, time.UTC), *resp.Property, 0)
+}
+
+func TestOptionalPlainTimeClient_GetDefault(t *testing.T) {
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
+	require.NoError(t, err)
+	resp, err := client.NewOptionalPlainTimeClient().GetDefault(context.Background(), nil)
+	require.NoError(t, err)
+	require.Nil(t, resp.Property)
+}
+
+func TestOptionalPlainTimeClient_PutAll(t *testing.T) {
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
+	require.NoError(t, err)
+	_, err = client.NewOptionalPlainTimeClient().PutAll(context.Background(), optionalitygroup.PlainTimeProperty{Property: to.Ptr(time.Date(0, 1, 1, 13, 6, 12, 0, time.UTC))}, nil)
+	require.NoError(t, err)
+}
+
+func TestOptionalPlainTimeClient_PutDefault(t *testing.T) {
+	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
+	require.NoError(t, err)
+	_, err = client.NewOptionalPlainTimeClient().PutDefault(context.Background(), optionalitygroup.PlainTimeProperty{}, nil)
+	require.NoError(t, err)
+}
