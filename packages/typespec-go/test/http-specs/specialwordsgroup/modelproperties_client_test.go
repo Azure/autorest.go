@@ -40,3 +40,13 @@ func TestModelPropertiesClient_DictMethods(t *testing.T) {
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
+
+func TestModelPropertiesClient_WithList(t *testing.T) {
+	client, err := specialwordsgroup.NewSpecialWordsClientWithNoCredential("http://localhost:3000", nil)
+	require.NoError(t, err)
+	resp, err := client.NewSpecialWordsModelPropertiesClient().WithList(context.Background(), specialwordsgroup.ModelWithList{
+		List: to.Ptr("ok"),
+	}, nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
