@@ -27,19 +27,21 @@ func TestOptionalPlainTimeClient_GetDefault(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewOptionalPlainTimeClient().GetDefault(context.Background(), nil)
 	require.NoError(t, err)
-	require.Nil(t, resp.Property)
+	require.Zero(t, resp)
 }
 
 func TestOptionalPlainTimeClient_PutAll(t *testing.T) {
 	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	_, err = client.NewOptionalPlainTimeClient().PutAll(context.Background(), optionalitygroup.PlainTimeProperty{Property: to.Ptr(time.Date(0, 1, 1, 13, 6, 12, 0, time.UTC))}, nil)
+	resp, err := client.NewOptionalPlainTimeClient().PutAll(context.Background(), optionalitygroup.PlainTimeProperty{Property: to.Ptr(time.Date(0, 1, 1, 13, 6, 12, 0, time.UTC))}, nil)
 	require.NoError(t, err)
+	require.Zero(t, resp)
 }
 
 func TestOptionalPlainTimeClient_PutDefault(t *testing.T) {
 	client, err := optionalitygroup.NewOptionalClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	_, err = client.NewOptionalPlainTimeClient().PutDefault(context.Background(), optionalitygroup.PlainTimeProperty{}, nil)
+	resp, err := client.NewOptionalPlainTimeClient().PutDefault(context.Background(), optionalitygroup.PlainTimeProperty{}, nil)
 	require.NoError(t, err)
+	require.Zero(t, resp)
 }
