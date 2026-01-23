@@ -6,6 +6,10 @@
 
 * Fixed incorrect example generation for unknown type.
 
+### Other Changes
+
+* Updated to the latest tsp toolset.
+
 ## 0.9.1 (2026-01-15)
 
 ### Bugs Fixed
