@@ -405,7 +405,7 @@ function getPointerValue(type: go.WireType, valueString: string, byValue: boolea
 
 function jsonToGo(value: any, indent: string): string {
   if (typeof value === 'string') {
-    return `${indent}"${value}"`;
+    return `${indent}"${escapeString(value)}"`;
   } else if (typeof value === 'number' || typeof value === 'bigint') {
     return `${indent}${value}`;
   } else if (typeof value === 'boolean') {
