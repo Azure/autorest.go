@@ -14,6 +14,11 @@ type SpecialWordsModelPropertiesClientSameAsModelResponse struct {
 	// placeholder for future response values
 }
 
+// SpecialWordsModelPropertiesClientWithListResponse contains the response from method SpecialWordsModelPropertiesClient.WithList.
+type SpecialWordsModelPropertiesClientWithListResponse struct {
+	// placeholder for future response values
+}
+
 // SpecialWordsModelsClientWithAndResponse contains the response from method SpecialWordsModelsClient.WithAnd.
 type SpecialWordsModelsClientWithAndResponse struct {
 	// placeholder for future response values

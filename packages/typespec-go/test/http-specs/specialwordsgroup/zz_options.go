@@ -16,6 +16,12 @@ type SpecialWordsModelPropertiesClientSameAsModelOptions struct {
 	// placeholder for future optional parameters
 }
 
+// SpecialWordsModelPropertiesClientWithListOptions contains the optional parameters for the SpecialWordsModelPropertiesClient.WithList
+// method.
+type SpecialWordsModelPropertiesClientWithListOptions struct {
+	// placeholder for future optional parameters
+}
+
 // SpecialWordsModelsClientWithAndOptions contains the optional parameters for the SpecialWordsModelsClient.WithAnd method.
 type SpecialWordsModelsClientWithAndOptions struct {
 	// placeholder for future optional parameters
