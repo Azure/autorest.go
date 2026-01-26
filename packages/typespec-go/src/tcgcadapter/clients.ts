@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { values } from '@azure-tools/linq';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import { ModelProperty, NoTarget } from '@typespec/compiler';
 import * as http from '@typespec/http';
@@ -609,8 +608,8 @@ export class ClientAdapter {
       // most params have a one-to-one mapping. however, for spread params, there will
       // be a many-to-one mapping. i.e. multiple params will map to the same underlying
       // operation param. each param corresponds to a field within the operation param.
-      const opParam = values(allOpParams).where((opParam: OperationParamType) => {
-        return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
+      const opParam = allOpParams.find((opParam: OperationParamType) => {
+        return opParam.correspondingMethodParams.find((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
           if (param.type.kind === 'model') {
             for (const property of param.type.properties) {
               if (property === methodParam) {
@@ -619,8 +618,8 @@ export class ClientAdapter {
             }
           }
           return methodParam === param;
-        }).any();
-      }).first();
+        });
+      });
 
       // special handling for constants that used in path, this will not be in operation parameters since it has been resolved in the url
       if (!opParam && param.type.kind === 'constant') {
@@ -698,11 +697,11 @@ export class ClientAdapter {
 
         // Validate all properties map to HTTP params
         for (const property of modelProperties) {
-          const propertyOpParam = values(allOpParams).where((op: OperationParamType) => {
-            return values(op.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
+          const propertyOpParam = allOpParams.find((op: OperationParamType) => {
+            return op.correspondingMethodParams.find((methodParam: tcgc.SdkModelPropertyType | tcgc.SdkMethodParameter) => {
               return methodParam === property;
-            }).any();
-          }).first();
+            });
+          });
 
           if (!propertyOpParam) {
             // If any property doesn't map to HTTP param it's not a parameter group

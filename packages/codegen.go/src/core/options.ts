@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { capitalize } from '@azure-tools/codegen';
-import { values } from '@azure-tools/linq';
 import * as go from '../../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
@@ -52,7 +51,7 @@ function emit(pkg: go.PackageContent, struct: go.Struct, imports: ImportManager)
     // used to track when to add an extra \n between fields that have comments
     let first = true;
 
-    for (const field of values(struct.fields)) {
+    for (const field of struct.fields) {
       imports.addForType(field.type);
       if (field.docs.summary || field.docs.description) {
         if (!first) {

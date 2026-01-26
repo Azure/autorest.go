@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { values } from '@azure-tools/linq';
 import * as go from '../../../codemodel.go/src/index.js';
 import { getServerName } from './servers.js';
 import * as helpers from '../core/helpers.js';
@@ -42,7 +41,7 @@ export function generateServerFactory(pkg: go.FakePackage, target: go.CodeModelT
   // we might remove some clients from the list
   const finalSubClients = new Array<go.Client>();
   for (const client of pkg.parent.clients) {
-    if (client.clientAccessors.length === 0 && values(client.methods).all(method => { return helpers.isMethodInternal(method) })) {
+    if (client.clientAccessors.length === 0 && helpers.clientHasNoExportedMethods(client)) {
       // client has no client accessors and no exported methods, skip it
       continue;
     }

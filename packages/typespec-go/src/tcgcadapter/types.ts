@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { uncapitalize } from '@azure-tools/codegen';
-import { values } from '@azure-tools/linq';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import * as tsp from '@typespec/compiler';
 import * as http from '@typespec/http';
@@ -88,7 +87,7 @@ export class TypeAdapter {
     const pagedResponses = this.getPagedResponses();
     for (const pagedResponse of pagedResponses) {
       // tsp allows custom paged responses, so we must check both the synthesized list and the models list
-      if (values(modelTypes).any(each => { return each.tcgc.name === pagedResponse.name; })) {
+      if (modelTypes.find((each) => each.tcgc.name === pagedResponse.name)) {
         continue;
       }
       const model = this.getModel(pagedResponse);
@@ -99,7 +98,10 @@ export class TypeAdapter {
     // now that the interface/model types have been generated, we can populate the rootType and possibleTypes
     for (const ifaceType of ifaceTypes) {
       ifaceType.go.rootType = <go.PolymorphicModel>this.getModel(ifaceType.tcgc);
-      for (const subType of values(ifaceType.tcgc.discriminatedSubtypes)) {
+      if (!ifaceType.tcgc.discriminatedSubtypes) {
+        continue;
+      }
+      for (const subType of Object.values(ifaceType.tcgc.discriminatedSubtypes)) {
         const possibleType = <go.PolymorphicModel>this.getModel(subType);
         ifaceType.go.possibleTypes.push(possibleType);
       }
@@ -108,7 +110,7 @@ export class TypeAdapter {
     // now adapt model fields
     for (const modelType of modelTypes) {
       const content = aggregateProperties(this.ctx, modelType.tcgc);
-      for (const prop of values(content.props)) {
+      for (const prop of content.props) {
         const field = this.getModelField(prop, modelType.tcgc);
         modelType.go.fields.push(field);
       }
@@ -141,7 +143,7 @@ export class TypeAdapter {
             continue;
           }
 
-          if (!values(pagedResponses).any(each => { return each.name === (<tcgc.SdkModelType>httpResp.type).name; })) {
+          if (!pagedResponses.find(each => each.name === (<tcgc.SdkModelType>httpResp.type).name)) {
             pagedResponses.push(httpResp.type);
           }
         }
@@ -879,7 +881,7 @@ function aggregateProperties(sdkContext: tcgc.SdkContext, model: tcgc.SdkModelTy
       if (tcgc.isHttpMetadata(sdkContext, parentProp)) {
         continue;
       }
-      const exists = values(allProps).where(p => { return p.name === parentProp.name; }).first();
+      const exists = allProps.find((p) => p.name === parentProp.name);
       if (exists) {
         // don't add the duplicate. the TS compiler has better enforcement than OpenAPI
         // to ensure that duplicate fields with different types aren't added.

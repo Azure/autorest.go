@@ -7,8 +7,7 @@
     "build": "tsc -p ."
   },
   "dependencies": {
-    "@azure-tools/codegen": "catalog:",
-    "@azure-tools/linq": "catalog:"
+    "@azure-tools/codegen": "catalog:"
   },
   "devDependencies": {
     "typescript": "catalog:"

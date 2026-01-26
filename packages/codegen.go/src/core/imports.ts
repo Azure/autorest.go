@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as go from '../../../codemodel.go/src/index.js';
-import { values } from '@azure-tools/linq';
 import * as helpers from './helpers.js';
 
 type importEntry = { imp: string, alias?: string };
@@ -32,7 +31,7 @@ export class ImportManager {
    * @param alias optional alias for the import
    */
   add(imp: string, alias?: string): void {
-    for (const existing of values(this.imports)) {
+    for (const existing of this.imports) {
       if (existing.imp === imp) {
         return;
       }
@@ -84,7 +83,7 @@ export class ImportManager {
     }
     this.imports.sort((a: importEntry, b: importEntry) => { return helpers.sortAscending(a.imp, b.imp); });
     let text = 'import (\n';
-    for (const imp of values(this.imports)) {
+    for (const imp of this.imports) {
       text += `\t${this.alias(imp)}"${imp.imp}"\n`;
     }
     text += ')\n\n';
