@@ -4,8 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as go from '../../../codemodel.go/src/index.js';
-import { ensureNameCase } from '../../../naming.go/src/naming.js';
-import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
+import * as naming from '../../../naming.go/src/naming.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 import { CodegenError } from './errors.js';
@@ -91,7 +90,7 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
         }
         if (clientParam.group) {
           if (!addedGroups.has(clientParam.group.groupName)) {
-            clientText += `\t${uncapitalize(clientParam.group.groupName)} ${!isParamPointer(clientParam) ? '' : '*'}${clientParam.group.groupName}\n`;
+            clientText += `\t${naming.uncapitalize(clientParam.group.groupName)} ${!isParamPointer(clientParam) ? '' : '*'}${clientParam.group.groupName}\n`;
             addedGroups.add(clientParam.group.groupName);
           }
           continue;
@@ -205,14 +204,14 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
         // we use azcore.ClientOptions.APIVersion
         continue;
       }
-      ctorText += helpers.formatDocCommentWithPrefix(ensureNameCase(param.name), param.docs);
+      ctorText += helpers.formatDocCommentWithPrefix(naming.ensureNameCase(param.name), param.docs);
       if (go.isClientSideDefault(param.style)) {
         if (!param.docs.description && !param.docs.summary) {
           ctorText += '\n';
         }
-        ctorText += `\t${comment(`The default value is ${helpers.formatLiteralValue(param.style.defaultValue, false)}`, '// ')}.\n`;
+        ctorText += `\t${helpers.comment(`The default value is ${helpers.formatLiteralValue(param.style.defaultValue, false)}`, '// ')}.\n`;
       }
-      ctorText += `\t${ensureNameCase(param.name)} *${go.getTypeDeclaration(param.type, client.pkg)}\n`;
+      ctorText += `\t${naming.ensureNameCase(param.name)} *${go.getTypeDeclaration(param.type, client.pkg)}\n`;
     }
     ctorText += '}\n\n';
   }
@@ -372,7 +371,7 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
           if (go.isAPIVersionParameter(param)) {
             name = 'APIVersion';
           } else {
-            name = ensureNameCase(param.name);
+            name = naming.ensureNameCase(param.name);
           }
           ctorText += `\t${param.name} := ${helpers.formatLiteralValue(param.style.defaultValue, false)}\n`;
           ctorText += `\tif options.${name} != ${helpers.zeroValue(param)} {\n\t\t${param.name} = ${helpers.star(param.byValue)}options.${name}\n\t}\n`;
@@ -402,7 +401,7 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
     // ensure clientVar doesn't collide with any params
     for (const param of consolidatedCtorParams) {
       if (param.name === clientVar) {
-        clientVar = ensureNameCase(client.name, true);
+        clientVar = naming.ensureNameCase(client.name, true);
         break;
       }
     }
@@ -446,7 +445,7 @@ function formatHeaderResponseValue(headerResp: go.HeaderScalarResponse | go.Head
   }
 
   let text = `\tif val := resp.Header.Get("${headerResp.headerName}"); val != "" {\n`;
-  let name = uncapitalize(headerResp.fieldName);
+  let name = naming.uncapitalize(headerResp.fieldName);
   let byRef = '&';
   switch (headerResp.type.kind) {
     case 'constant':
@@ -595,7 +594,7 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, i
       text += '&runtime.FetcherForNextLinkOptions{\n\t\t\t\tNextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {\n';
       text += `\t\t\t\t\treturn client.${method.nextPageMethod.name}(${nextOpParams.join(', ')})\n\t\t\t\t},\n\t\t\t})\n`;
     } else if (method.nextLinkVerb !== 'get') {
-      text += `&runtime.FetcherForNextLinkOptions{\n\t\t\t\tHTTPVerb: http.Method${capitalize(method.nextLinkVerb)},\n\t\t\t})\n`;
+      text += `&runtime.FetcherForNextLinkOptions{\n\t\t\t\tHTTPVerb: http.Method${naming.capitalize(method.nextLinkVerb)},\n\t\t\t})\n`;
     } else {
       text += 'nil)\n';
     }
@@ -746,7 +745,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
   }
 
   const returns = ['*policy.Request', 'error'];
-  let text = `${comment(name, '// ')} creates the ${method.name} request.\n`;
+  let text = `${helpers.comment(name, '// ')} creates the ${method.name} request.\n`;
   text += `func ${getClientReceiverDefinition(method.receiver)} ${name}(${helpers.getCreateRequestParametersSig(method)}) (${returns.join(', ')}) {\n`;
 
   const hostParams = new Array<go.URIParameter>();
@@ -806,12 +805,12 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     if (param.location === 'client') {
       client = 'client.';
     }
-    const paramGroupName = uncapitalize(param.group.name);
+    const paramGroupName = naming.uncapitalize(param.group.name);
     let optionalParamGroupCheck = `${client}${paramGroupName} != nil && `;
     if (param.group.required) {
       optionalParamGroupCheck = '';
     }
-    return `\tif ${optionalParamGroupCheck}${client}${paramGroupName}.${capitalize(param.name)} != nil {\n`;
+    return `\tif ${optionalParamGroupCheck}${client}${paramGroupName}.${naming.capitalize(param.name)} != nil {\n`;
   };
 
   if (hasPathParams) {
@@ -856,7 +855,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
         // param isn't required, so emit a local var with
         // the correct default value, then populate it with
         // the optional value when set.
-        paramValue = `optional${capitalize(pp.name)}`;
+        paramValue = `optional${naming.capitalize(pp.name)}`;
         text += `\t${paramValue} := ""\n`;
         text += emitParamGroupCheck(pp);
         text += `\t${paramValue} = ${helpers.formatParamValue(pp, imports)}\n\t}\n`;
@@ -890,7 +889,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     }
   }
 
-  text += `\treq, err := runtime.NewRequest(ctx, http.Method${capitalize(method.httpMethod)}, ${hostParam})\n`;
+  text += `\treq, err := runtime.NewRequest(ctx, http.Method${naming.capitalize(method.httpMethod)}, ${hostParam})\n`;
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';
   text += '\t}\n';
@@ -1061,7 +1060,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
           tagName = bodyParam.xml.name;
         }
         text += `\t\tXMLName xml.Name \`xml:"${tagName}"\`\n`;
-        const fieldName = capitalize(bodyParam.name);
+        const fieldName = naming.capitalize(bodyParam.name);
         let tag = go.getTypeDeclaration(bodyParam.type.elementType, method.receiver.type.pkg);
         if (bodyParam.type.elementType.kind === 'model' && bodyParam.type.elementType.xml?.name) {
           tag = bodyParam.type.elementType.xml.name;
@@ -1147,13 +1146,13 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     // define and instantiate an instance of the wire type, using the values from each param.
     text += '\tbody := struct {\n';
     for (const partialBodyParam of partialBodyParams) {
-      text += `\t\t${capitalize(partialBodyParam.serializedName)} ${helpers.star(partialBodyParam.byValue)}${go.getTypeDeclaration(partialBodyParam.type, method.receiver.type.pkg)} \`${partialBodyParam.format.toLowerCase()}:"${partialBodyParam.serializedName}"\`\n`;
+      text += `\t\t${naming.capitalize(partialBodyParam.serializedName)} ${helpers.star(partialBodyParam.byValue)}${go.getTypeDeclaration(partialBodyParam.type, method.receiver.type.pkg)} \`${partialBodyParam.format.toLowerCase()}:"${partialBodyParam.serializedName}"\`\n`;
     }
     text += '\t}{\n';
     // required params are emitted as initializers in the struct literal
     for (const partialBodyParam of partialBodyParams) {
       if (go.isRequiredParameter(partialBodyParam.style)) {
-        text += `\t\t${capitalize(partialBodyParam.serializedName)}: ${uncapitalize(partialBodyParam.name)},\n`;
+        text += `\t\t${naming.capitalize(partialBodyParam.serializedName)}: ${naming.uncapitalize(partialBodyParam.name)},\n`;
       }
     }
     text += '\t}\n';
@@ -1161,7 +1160,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     for (const partialBodyParam of partialBodyParams) {
       if (!go.isRequiredParameter(partialBodyParam.style)) {
         text += emitParamGroupCheck(partialBodyParam);
-        text += `\t\tbody.${capitalize(partialBodyParam.serializedName)} = options.${capitalize(partialBodyParam.name)}\n\t}\n`;
+        text += `\t\tbody.${naming.capitalize(partialBodyParam.serializedName)} = options.${naming.capitalize(partialBodyParam.name)}\n\t}\n`;
       }
     }
     // TODO: spread params are JSON only https://github.com/Azure/autorest.go/issues/1455
@@ -1218,10 +1217,10 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
 }
 
 function emitClientSideDefault(param: go.HeaderCollectionParameter | go.HeaderScalarParameter | go.QueryParameter, csd: go.ClientSideDefault, setterFormat: (name: string, val: string) => string, imports: ImportManager): string {
-  const defaultVar = uncapitalize(param.name) + 'Default';
+  const defaultVar = naming.uncapitalize(param.name) + 'Default';
   let text = `\t${defaultVar} := ${helpers.formatLiteralValue(csd.defaultValue, true)}\n`;
-  text += `\tif options != nil && options.${capitalize(param.name)} != nil {\n`;
-  text += `\t\t${defaultVar} = *options.${capitalize(param.name)}\n`;
+  text += `\tif options != nil && options.${naming.capitalize(param.name)} != nil {\n`;
+  text += `\t\t${defaultVar} = *options.${naming.capitalize(param.name)}\n`;
   text += '}\n';
 
   let serializedName: string;
@@ -1353,7 +1352,7 @@ function createProtocolResponse(method: go.SyncMethod | go.LROPageableMethod | g
     return '';
   }
   const name = method.naming.responseMethod;
-  let text = `${comment(name, '// ')} handles the ${method.name} response.\n`;
+  let text = `${helpers.comment(name, '// ')} handles the ${method.name} response.\n`;
   text += `func ${getClientReceiverDefinition(method.receiver)} ${name}(resp *http.Response) (${generateReturnsInfo(method, 'handler').join(', ')}) {\n`;
 
   const addHeaders = function (headers: Array<go.HeaderScalarResponse | go.HeaderMapResponse>) {
@@ -1477,7 +1476,7 @@ function getAPIParametersSig(method: go.ClientAccessor | go.MethodType, imports:
       if (methodParam.kind !== 'paramGroup') {
         imports.addForType(methodParam.type);
       }
-      params.push(`${uncapitalize(methodParam.name)} ${helpers.formatParameterTypeName(method.receiver.type.pkg, methodParam)}`);
+      params.push(`${naming.uncapitalize(methodParam.name)} ${helpers.formatParameterTypeName(method.receiver.type.pkg, methodParam)}`);
     }
   }
   return params.join(', ');

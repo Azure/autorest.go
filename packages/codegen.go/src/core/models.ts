@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as go from '../../../codemodel.go/src/index.js';
-import { comment } from '@azure-tools/codegen';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 
@@ -53,7 +52,7 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
     modelDef.Methods.sort((a: ModelMethod, b: ModelMethod) => { return helpers.sortAscending(a.name, b.name); });
     for (const method of modelDef.Methods) {
       if (method.desc.length > 0) {
-        modelText += `${comment(method.desc, '// ', undefined, helpers.commentLength)}\n`;
+        modelText += `${helpers.comment(method.desc, '// ', undefined, helpers.commentLength)}\n`;
       }
       modelText += method.text;
     }
@@ -61,7 +60,7 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
     modelDef.SerDe.methods.sort((a: ModelMethod, b: ModelMethod) => { return helpers.sortAscending(a.name, b.name); });
     for (const method of modelDef.SerDe.methods) {
       if (method.desc.length > 0) {
-        serdeTextBody += `${comment(method.desc, '// ', undefined, helpers.commentLength)}\n`;
+        serdeTextBody += `${helpers.comment(method.desc, '// ', undefined, helpers.commentLength)}\n`;
       }
       serdeTextBody += method.text;
     }

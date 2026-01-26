@@ -55,6 +55,7 @@
     "@eslint/js": "catalog:",
     "@microsoft.azure/autorest.testserver": "3.3.50",
     "@types/node": "catalog:",
+    "@types/semver": "catalog:",
     "@vitest/coverage-v8": "catalog:",
     "@vitest/ui": "catalog:",
     "eslint": "catalog:",
@@ -72,6 +73,7 @@
     "@types/html-to-text": "^5.1.2",
     "@types/showdown": "^1.9.4",
     "html-to-text": "^5.1.1",
+    "semver": "catalog:",
     "showdown": "^1.9.1",
     "source-map-support": "0.5.21"
   }

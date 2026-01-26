@@ -4,8 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as go from '../../../codemodel.go/src/index.js';
-import { comment } from '@azure-tools/codegen';
-import { contentPreamble, sortAscending } from './helpers.js';
+import * as helpers from './helpers.js';
 
 /**
  * Creates the content for the interfaces.go file.
@@ -19,7 +18,7 @@ export function generateInterfaces(pkg: go.PackageContent): string {
     return '';
   }
 
-  let text = contentPreamble(pkg);
+  let text = helpers.contentPreamble(pkg);
 
   for (const iface of pkg.interfaces) {
     const methodName = `Get${iface.rootType.name}`;
@@ -31,8 +30,8 @@ export function generateInterfaces(pkg: go.PackageContent): string {
     for (const possibleType of iface.possibleTypes) {
       possibleTypeNames.push(`*${possibleType.name}`);
     }
-    possibleTypeNames.sort(sortAscending);
-    text += comment(possibleTypeNames.join(', '), '// - ');
+    possibleTypeNames.sort(helpers.sortAscending);
+    text += helpers.comment(possibleTypeNames.join(', '), '// - ');
     text += `\ntype ${iface.name} interface {\n`;
     if (iface.parent) {
       text += `\t${iface.parent.name}\n`;

@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { uncapitalize } from '@azure-tools/codegen';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import * as tsp from '@typespec/compiler';
 import * as http from '@typespec/http';
@@ -446,7 +445,7 @@ export class TypeAdapter {
   private getConstantType(enumType: tcgc.SdkEnumType): go.Constant {
     let constTypeName = naming.ensureNameCase(enumType.name);
     if (enumType.access === 'internal') {
-      constTypeName = naming.getEscapedReservedName(uncapitalize(constTypeName), 'Type');
+      constTypeName = naming.getEscapedReservedName(naming.uncapitalize(constTypeName), 'Type');
     }
     let constType = this.types.get(constTypeName);
     if (constType) {
@@ -470,7 +469,7 @@ export class TypeAdapter {
     }
     let ifaceName = naming.createPolymorphicInterfaceName(naming.ensureNameCase(model.name));
     if (model.access === 'internal') {
-      ifaceName = uncapitalize(ifaceName);
+      ifaceName = naming.uncapitalize(ifaceName);
     }
     let iface = this.types.get(ifaceName);
     if (iface) {
@@ -500,7 +499,7 @@ export class TypeAdapter {
   private getModel(model: tcgc.SdkModelType): go.Model | go.PolymorphicModel {
     let modelName = naming.ensureNameCase(model.name);
     if (model.access === 'internal') {
-      modelName = naming.getEscapedReservedName(uncapitalize(modelName), 'Model');
+      modelName = naming.getEscapedReservedName(naming.uncapitalize(modelName), 'Model');
     }
     let modelType = this.types.get(modelName);
     if (modelType) {
@@ -626,7 +625,7 @@ export class TypeAdapter {
     for (const valueType of valueTypes) {
       let valueTypeName = `${type.name}${naming.ensureNameCase(valueType.name)}`;
       if (valueType.enumType.access === 'internal') {
-        valueTypeName = naming.getEscapedReservedName(uncapitalize(valueTypeName), 'Type');
+        valueTypeName = naming.getEscapedReservedName(naming.uncapitalize(valueTypeName), 'Type');
       }
 
       if (this.constValues.has(valueTypeName)) {
