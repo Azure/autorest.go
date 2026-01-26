@@ -19,20 +19,20 @@ export function generateMetadataFile(metadata?: go.Metadata): string {
   let outputMetadata: Record<string, unknown>;
   
   if (metadata.services && Object.keys(metadata.services).length > 1) {
-    // Multiple services - use new format
+    // Multiple services from services map
     outputMetadata = {
       emitterVersion: metadata.emitterVersion,
       services: metadata.services
     };
   } else if (metadata.services && Object.keys(metadata.services).length === 1) {
-    // Single service from services map - extract to flat format for backward compatibility
+    // Single service from services map
     const [, serviceInfo] = Object.entries(metadata.services)[0];
     outputMetadata = {
       apiVersion: serviceInfo.apiVersion,
       emitterVersion: metadata.emitterVersion
     };
   } else if (metadata.apiVersion) {
-    // Single API version (backward compatible)
+    // Single API version
     outputMetadata = {
       apiVersion: metadata.apiVersion,
       emitterVersion: metadata.emitterVersion

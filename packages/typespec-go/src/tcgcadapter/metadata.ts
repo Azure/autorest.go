@@ -47,42 +47,18 @@ export function buildMetadata(ctx: tcgc.SdkContext, emitterVersion: string): go.
       }
     }
   }
-  
-  // Also check from clients in case package versions is empty
+
   if (serviceVersionMap.size === 0) {
-    for (const clientType of ctx.sdkPackage.clients) {
-      // Get service namespace from the raw SdkClient
-      if (clientType.__raw.kind === 'SdkClient') {
-        const services = Array.isArray(clientType.__raw.service) ? clientType.__raw.service : [clientType.__raw.service];
-        
-        // Get API versions from the client type
-        if (clientType.apiVersions && clientType.apiVersions.length > 0) {
-          // Use the first API version which is typically the one configured for emission
-          const apiVersion = clientType.apiVersions[0];
-          
-          if (apiVersion && apiVersion !== ALL_API_VERSIONS) {
-            // Map each service to its API version
-            for (const service of services) {
-              const serviceName = service.name;
-              // Only add if not already present (first client wins for a given service)
-              if (!serviceVersionMap.has(serviceName)) {
-                serviceVersionMap.set(serviceName, apiVersion);
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+    // No valid service versions found, return empty metadata
+    return metadata;
+}   
   
   // If we found service-version mappings, add them to metadata
-  if (serviceVersionMap.size > 0) {
     const services: Record<string, { apiVersion: string }> = {};
     for (const [serviceName, apiVersion] of serviceVersionMap.entries()) {
       services[serviceName] = { apiVersion };
     }
     metadata.services = services;
-  }
   
   return metadata;
 }
