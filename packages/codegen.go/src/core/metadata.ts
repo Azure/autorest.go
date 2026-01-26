@@ -17,14 +17,15 @@ export function generateMetadataFile(metadata?: go.Metadata): string {
   
   // Build output metadata based on the structure
   let outputMetadata: Record<string, unknown>;
+  const serviceCount = metadata.services ? Object.keys(metadata.services).length : 0;
   
-  if (metadata.services && Object.keys(metadata.services).length > 1) {
+  if (metadata.services && serviceCount > 1) {
     // Multiple services - use new format
     outputMetadata = {
       emitterVersion: metadata.emitterVersion,
       services: metadata.services
     };
-  } else if (metadata.services && Object.keys(metadata.services).length === 1) {
+  } else if (metadata.services && serviceCount === 1) {
     // Single service from services map - extract to flat format for backward compatibility
     const [, serviceInfo] = Object.entries(metadata.services)[0];
     outputMetadata = {
