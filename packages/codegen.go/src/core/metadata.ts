@@ -9,7 +9,7 @@ import * as go from '../../../codemodel.go/src/index.js';
  * Creates the content in _metadata.json.
  * Handles formatting logic for single vs multiple service scenarios.
  */
-export function generateMetadataFile(metadata?: go.Metadata | undefined): string {
+export function generateMetadataFile(metadata?: go.Metadata): string {
   
   if (!metadata) {
     return '';
