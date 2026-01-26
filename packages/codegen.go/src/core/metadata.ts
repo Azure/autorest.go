@@ -6,26 +6,10 @@
 import * as go from '../../../codemodel.go/src/index.js';
 
 /**
- * Metadata structure that can be provided to generateMetadataFile.
- * Supports both single-service and multi-service formats.
- */
-export interface MetadataInput {
-  /** Emitter version */
-  emitterVersion?: string;
-  
-  /** Single API version (backward compatible format) */
-  apiVersion?: string;
-  
-  /** Multiple services with their API versions */
-  services?: Record<string, { apiVersion: string }>;
-}
-
-/**
  * Creates the content in _metadata.json.
  * Handles formatting logic for single vs multiple service scenarios.
  */
-export function generateMetadataFile(codeModel: go.CodeModel): string {
-  const metadata = codeModel.metadata as MetadataInput | undefined;
+export function generateMetadataFile(metadata?: go.Metadata | undefined): string {
   
   if (!metadata) {
     return '';

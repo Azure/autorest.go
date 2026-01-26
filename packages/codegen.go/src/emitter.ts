@@ -218,7 +218,7 @@ export class Emitter {
       return;
     }
 
-    const metadata = generateMetadataFile(this.codeModel);
+    const metadata = generateMetadataFile(this.codeModel.metadata);
     if (metadata.length > 0) {
       await this.fs.write('testdata/_metadata.json', metadata);
     }
