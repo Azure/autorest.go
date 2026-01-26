@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { comment } from '@azure-tools/codegen';
-import { values } from '@azure-tools/linq';
 import * as go from '../../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
@@ -180,7 +179,7 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
       }
     }
 
-    for (const header of values(respEnv.headers)) {
+    for (const header of respEnv.headers) {
       imports.addForType(header.type);
       let byValue = true;
       if (header.kind === 'headerScalarResponse') {

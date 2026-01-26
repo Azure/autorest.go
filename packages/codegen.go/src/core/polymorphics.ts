@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as go from '../../../codemodel.go/src/index.js';
-import { values } from '@azure-tools/linq';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 
@@ -67,8 +66,8 @@ export function generatePolymorphicHelpers(pkg: go.FakePackage | go.PackageConte
   if (pkg.kind === 'fake') {
     // when generating for the fakes server, we must look at operation parameters instead of return values
     for (const client of pkg.parent.clients) {
-      for (const method of values(client.methods)) {
-        for (const param of values(method.parameters)) {
+      for (const method of client.methods) {
+        for (const param of method.parameters) {
           trackDisciminator(param.type);
         }
       }

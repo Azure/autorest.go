@@ -6,7 +6,6 @@
 import * as go from '../../../codemodel.go/src/index.js';
 import { ensureNameCase } from '../../../naming.go/src/naming.js';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
-import { values } from '@azure-tools/linq';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 import { CodegenError } from './errors.js';
@@ -86,7 +85,7 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
     // now emit any client params (non parameterized host params case)
     if (client.parameters.length > 0) {
       const addedGroups = new Set<string>();
-      for (const clientParam of values(client.parameters)) {
+      for (const clientParam of client.parameters) {
         if (go.isLiteralParameter(clientParam.style)) {
           continue;
         }
@@ -412,7 +411,7 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
     // NOTE: we don't enumerate consolidatedCtorParams here
     // as any supplemental endpoint params are ephemeral and
     // consumed during client construction.
-    for (const parameter of values(client.parameters)) {
+    for (const parameter of client.parameters) {
       if (go.isLiteralParameter(parameter.style)) {
         continue;
       }
@@ -675,7 +674,7 @@ function generateOperation(method: go.MethodType, imports: ImportManager, option
   if (go.isLROMethod(method)) {
     methodName = method.naming.internalMethod;
   } else {
-    for (const param of values(helpers.getMethodParameters(method))) {
+    for (const param of helpers.getMethodParameters(method)) {
       text += helpers.formatCommentAsBulletItem(param.name, param.docs);
     }
   }
@@ -739,7 +738,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     name = method.naming.requestMethod;
   }
 
-  for (const param of values(method.parameters)) {
+  for (const param of method.parameters) {
     if (param.location !== 'method' || !go.isRequiredParameter(param.style)) {
       continue;
     }
@@ -769,7 +768,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
       text += `\thost = strings.ReplaceAll(host, "{${hostParam.uriPathSegment}}", ${helpers.formatValue(`client.${hostParam.name}`, hostParam.type, imports)})\n`;
     }
     // check for any method local host params
-    for (const param of values(method.parameters)) {
+    for (const param of method.parameters) {
       if (param.location === 'method' && param.kind === 'uriParam') {
         text += `\thost = strings.ReplaceAll(host, "{${param.uriPathSegment}}", ${helpers.formatValue(helpers.getParamName(param), param.type, imports)})\n`;
       }
@@ -922,7 +921,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
   // emit encoded params first
   if (encodedParams.length > 0) {
     text += '\treqQP := req.Raw().URL.Query()\n';
-    for (const qp of values(encodedParams.sort((a: go.QueryParameter, b: go.QueryParameter) => { return helpers.sortAscending(a.queryParameter, b.queryParameter); }))) {
+    for (const qp of encodedParams.sort((a: go.QueryParameter, b: go.QueryParameter) => { return helpers.sortAscending(a.queryParameter, b.queryParameter); })) {
       let setter: string;
       if (qp.kind === 'queryCollectionParam' && qp.collectionFormat === 'multi') {
         setter = `\tfor _, qv := range ${helpers.getParamName(qp)} {\n`;
@@ -967,7 +966,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     } else {
       text += '\tunencodedParams := []string{}\n';
     }
-    for (const qp of values(unencodedParams.sort((a: go.QueryParameter, b: go.QueryParameter) => { return helpers.sortAscending(a.queryParameter, b.queryParameter); }))) {
+    for (const qp of unencodedParams.sort((a: go.QueryParameter, b: go.QueryParameter) => { return helpers.sortAscending(a.queryParameter, b.queryParameter); })) {
       let setter: string;
       if (qp.kind === 'queryCollectionParam' && qp.collectionFormat === 'multi') {
         setter = `\tfor _, qv := range ${helpers.getParamName(qp)} {\n`;
@@ -1358,7 +1357,7 @@ function createProtocolResponse(method: go.SyncMethod | go.LROPageableMethod | g
   text += `func ${getClientReceiverDefinition(method.receiver)} ${name}(resp *http.Response) (${generateReturnsInfo(method, 'handler').join(', ')}) {\n`;
 
   const addHeaders = function (headers: Array<go.HeaderScalarResponse | go.HeaderMapResponse>) {
-    for (const header of values(headers)) {
+    for (const header of headers) {
       text += formatHeaderResponseValue(header, imports, 'result', `${method.returns.name}{}`);
     }
   };
@@ -1474,7 +1473,7 @@ function getAPIParametersSig(method: go.ClientAccessor | go.MethodType, imports:
       imports.add('context');
       params.push('ctx context.Context');
     }
-    for (const methodParam of values(methodParams)) {
+    for (const methodParam of methodParams) {
       if (methodParam.kind !== 'paramGroup') {
         imports.addForType(methodParam.type);
       }
@@ -1538,7 +1537,7 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imp
   }
   const zeroResp = getZeroReturnValue(method, 'api');
   const methodParams = helpers.getMethodParameters(method);
-  for (const param of values(methodParams)) {
+  for (const param of methodParams) {
     text += helpers.formatCommentAsBulletItem(param.name, param.docs);
   }
   text += `func ${getClientReceiverDefinition(method.receiver)} ${fixUpMethodName(method)}(${params}) (${returns.join(', ')}) {\n`;

@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as go from '../../../codemodel.go/src/index.js';
-import { values } from '@azure-tools/linq';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { ImportManager } from './imports.js';
 import { CodegenError } from './errors.js';
@@ -153,7 +152,7 @@ export function getCreateRequestParametersSig(method: go.MethodType | go.NextPag
   const methodParams = getMethodParameters(method);
   const params = new Array<string>();
   params.push('ctx context.Context');
-  for (const methodParam of values(methodParams)) {
+  for (const methodParam of methodParams) {
     let paramName = uncapitalize(methodParam.name);
     // when creating the method sig for fooCreateRequest, if the options type is empty
     // or only contains the ResumeToken param use _ for the param name to quiet the linter
@@ -172,7 +171,7 @@ export function getCreateRequestParameters(method: go.MethodType): string {
   const methodParams = getMethodParameters(method);
   const params = new Array<string>();
   params.push('ctx');
-  for (const methodParam of values(methodParams)) {
+  for (const methodParam of methodParams) {
     params.push(uncapitalize(methodParam.name));
   }
   return params.join(', ');
@@ -186,7 +185,7 @@ export function getMethodParameters(method: go.MethodType | go.NextPageMethod, p
   if (paramsFilter) {
     methodParams = paramsFilter(methodParams);
   }
-  for (const param of values(methodParams)) {
+  for (const param of methodParams) {
     if (param.location === 'client') {
       // client params are passed via the receiver
       // must check before param group as client params can be grouped
@@ -219,7 +218,7 @@ export function getMethodParameters(method: go.MethodType | go.NextPageMethod, p
   });
   // add the optional param group last if it's not already in the list.
   if (method.kind !== 'nextPageMethod') {
-    if (!values(paramGroups).any(gp => { return gp.groupName === method.optionalParamsGroup.groupName; })) {
+    if (!paramGroups.find(gp => gp.groupName === method.optionalParamsGroup.groupName)) {
       paramGroups.push(method.optionalParamsGroup);
     }
   }
@@ -842,7 +841,7 @@ export function getAllClientParameters(pkg: go.PackageContent, target: go.CodeMo
         for (const ctorParam of ctor.parameters) {
           if (go.isAPIVersionParameter(ctorParam)) {
             continue;
-          } else if (values(allClientParams).where(param => param.name === ctorParam.name).any()) {
+          } else if (allClientParams.find(param => param.name === ctorParam.name)) {
             continue;
           }
           allClientParams.push(ctorParam);
@@ -1107,4 +1106,19 @@ export function splitScope(scope: string): { audience: string, scope: string } {
 /** returns true if the specified method is internal */
 export function isMethodInternal(method: go.MethodType): boolean {
   return !!method.name.match(/^[a-z]{1}/);
+}
+
+/**
+ * returns true if the provided client has no exported methods
+ * 
+ * @param client the client containing the methods
+ * @returns true if all client methods are internal
+ */
+export function clientHasNoExportedMethods(client: go.Client): boolean {
+  for (const method of client.methods) {
+    if (!isMethodInternal(method)) {
+      return false;
+    }
+  }
+  return true;
 }
