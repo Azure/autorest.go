@@ -4,9 +4,7 @@ module.exports = {
   },
   testEnvironment: 'node',
   moduleFileExtensions: ['ts', 'js', 'json', 'node'],
-  moduleNameMapper: {
-    '^../../../codegen.go/src/core/copyright.js$': '<rootDir>/../codegen.go/src/core/copyright.ts',
-  },
+  moduleNameMapper: {},
   collectCoverage: true,
   collectCoverageFrom: ['./packages/autorest.go/src/**/*.ts', '!**/node_modules/**'],
   coverageReporters: ['json', 'lcov', 'cobertura', 'text', 'html', 'clover'],

@@ -5,4 +5,4 @@
 
 export * from './emitter.js';
 export * from './core/errors.js';
-export { doNotEditRegex, ensureDoNotEdit } from './core/helpers.js';
+export { doNotEditRegex } from './core/helpers.js';
