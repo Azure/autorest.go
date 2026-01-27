@@ -7,9 +7,10 @@
     "build": "tsc -p ."
   },
   "dependencies": {
-    "@azure-tools/codegen": "catalog:"
+    "semver": "catalog:"
   },
   "devDependencies": {
+    "@types/semver": "catalog:",
     "typescript": "catalog:"
   }
 }

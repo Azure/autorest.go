@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as go from '../../../codemodel.go/src/index.js';
-import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
+import * as naming from '../../../naming.go/src/naming.js';
 import { ImportManager } from './imports.js';
 import { CodegenError } from './errors.js';
 
@@ -153,7 +153,7 @@ export function getCreateRequestParametersSig(method: go.MethodType | go.NextPag
   const params = new Array<string>();
   params.push('ctx context.Context');
   for (const methodParam of methodParams) {
-    let paramName = uncapitalize(methodParam.name);
+    let paramName = naming.uncapitalize(methodParam.name);
     // when creating the method sig for fooCreateRequest, if the options type is empty
     // or only contains the ResumeToken param use _ for the param name to quiet the linter
     if (methodParam.kind === 'paramGroup' && (methodParam.params.length === 0 || (methodParam.params.length === 1 && methodParam.params[0].kind === 'resumeTokenParam'))) {
@@ -172,7 +172,7 @@ export function getCreateRequestParameters(method: go.MethodType): string {
   const params = new Array<string>();
   params.push('ctx');
   for (const methodParam of methodParams) {
-    params.push(uncapitalize(methodParam.name));
+    params.push(naming.uncapitalize(methodParam.name));
   }
   return params.join(', ');
 }
@@ -238,7 +238,7 @@ export function getParamName(param: go.MethodParameter): string {
   let paramName = param.name;
   // must check paramGroup first as client params can also be grouped
   if (param.group) {
-    paramName = `${uncapitalize(param.group.name)}.${capitalize(paramName)}`;
+    paramName = `${naming.uncapitalize(param.group.name)}.${naming.capitalize(paramName)}`;
   }
   if (param.location === 'client') {
     paramName = `client.${paramName}`;
@@ -272,7 +272,7 @@ export function formatParamValue(param: go.MethodParameter, imports: ImportManag
       const separator = getDelimiterForCollectionFormat(param.collectionFormat);
 
       const emitConvertOver = function(paramName: string, format: string): string {
-        const encodedVar = `encoded${capitalize(paramName)}`;
+        const encodedVar = `encoded${naming.capitalize(paramName)}`;
         let content = 'strings.Join(func() []string {\n';
         content += `\t\t${encodedVar} := make([]string, len(${paramName}))\n`;
         content += `\t\tfor i := 0; i < len(${paramName}); i++ {\n`;
@@ -1122,3 +1122,178 @@ export function clientHasNoExportedMethods(client: go.Client): boolean {
   }
   return true;
 }
+
+// the following was copied from @azure-tools/codegen as it's being deprecated
+const ones = [
+  "",
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+  "ten",
+  "eleven",
+  "twelve",
+  "thirteen",
+  "fourteen",
+  "fifteen",
+  "sixteen",
+  "seventeen",
+  "eighteen",
+  "nineteen",
+];
+const tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+const magvalues = [10 ** 3, 10 ** 6, 10 ** 9, 10 ** 12, 10 ** 15, 10 ** 18, 10 ** 21, 10 ** 24, 10 ** 27];
+const magnitude = [
+  "thousand",
+  "million",
+  "billion",
+  "trillion",
+  "quadrillion",
+  "quintillion",
+  "septillion",
+  "octillion",
+];
+
+function* convert(num: number): Iterable<string> {
+  if (!num) {
+    yield "zero";
+    return;
+  }
+  if (num > 1e30) {
+    yield "lots";
+    return;
+  }
+
+  if (num > 999) {
+    for (let i = magvalues.length; i > -1; i--) {
+      const c = magvalues[i];
+      if (num > c) {
+        yield* convert(Math.floor(num / c));
+        yield magnitude[i];
+        num = num % c;
+      }
+    }
+  }
+  if (num > 99) {
+    yield ones[Math.floor(num / 100)];
+    yield "hundred";
+    num %= 100;
+  }
+  if (num > 19) {
+    yield tens[Math.floor(num / 10)];
+    num %= 10;
+  }
+  if (num) {
+    yield ones[num];
+  }
+}
+
+function deconstruct(identifier: string | Array<string>): Array<string> {
+  if (Array.isArray(identifier)) {
+    return identifier.flatMap(deconstruct);
+  }
+  return `${identifier}`
+    .replace(/([a-z]+)([A-Z])/g, "$1 $2")
+    .replace(/(\d+)([a-z|A-Z]+)/g, "$1 $2")
+    .replace(/\b([A-Z]+)([A-Z])([a-z])/, "$1 $2$3")
+    .split(/[\W|_]+/)
+    .map((each) => each.toLowerCase());
+}
+
+function fixLeadingNumber(identifier: Array<string>): Array<string> {
+  if (identifier.length > 0 && /^\d+/.exec(identifier[0])) {
+    return [...convert(parseInt(identifier[0])), ...identifier.slice(1)];
+  }
+  return identifier;
+}
+
+function isEqual(s1: string, s2: string): boolean {
+  // when s2 is undefined and s1 is the string 'undefined', it returns 0, making this true.
+  // To prevent that, first we need to check if s2 is undefined.
+  return s2 !== undefined && !!s1 && !s1.localeCompare(s2, undefined, { sensitivity: "base" });
+}
+
+function removeSequentialDuplicates(identifier: Iterable<string>) {
+  const ids = [...identifier].filter((each) => !!each);
+  for (let i = 0; i < ids.length; i++) {
+    while (isEqual(ids[i], ids[i - 1])) {
+      ids.splice(i, 1);
+    }
+    while (isEqual(ids[i], ids[i - 2]) && isEqual(ids[i + 1], ids[i - 1])) {
+      ids.splice(i, 2);
+    }
+  }
+
+  return ids;
+}
+
+export function camelCase(identifier: string | Array<string>): string {
+  if (typeof identifier === "string") {
+    return camelCase(fixLeadingNumber(deconstruct(identifier)));
+  }
+  switch (identifier.length) {
+    case 0:
+      return "";
+    case 1:
+      return naming.uncapitalize(identifier[0]);
+  }
+  return `${naming.uncapitalize(identifier[0])}${pascalCase(identifier.slice(1))}`;
+}
+
+export function pascalCase(identifier: string | Array<string>, removeDuplicates = true): string {
+  return identifier === undefined
+    ? ""
+    : typeof identifier === "string"
+      ? pascalCase(fixLeadingNumber(deconstruct(identifier)), removeDuplicates)
+      : (removeDuplicates ? [...removeSequentialDuplicates(identifier)] : identifier)
+          .map((each) => naming.capitalize(each))
+          .join("");
+}
+
+function indent(content: string, factor = 1): string {
+  const i = '\t'.repeat(factor);
+  content = i + content.trim().replace(/\r\n/g, '\n');
+  return content.split(/\n/g).join(`\n${i}`);
+}
+
+const lineCommentPrefix = "//";
+
+export function comment(content: string, prefix = lineCommentPrefix, factor = 0, maxLength = 120) {
+  const result = new Array<string>();
+  let line = "";
+  prefix = indent(prefix, factor);
+
+  content = content.trim();
+  if (content) {
+    for (const word of content.replace(/\n+/g, ' » ').split(/\s+/g)) {
+      if (word === '»') {
+        result.push(line);
+        line = prefix;
+        continue;
+      }
+
+      if (maxLength < line.length) {
+        result.push(line);
+        line = '';
+      }
+
+      if (!line) {
+        line = prefix;
+      }
+
+      line += ` ${word}`;
+    }
+    if (line) {
+      result.push(line);
+    }
+
+    return result.join('\n');
+  }
+  return '';
+}
+// end ports from @azure-tools/codegen

@@ -56,6 +56,7 @@
     "@azure-tools/typespec-azure-rulesets": "0.64.0",
     "@azure-tools/typespec-client-generator-core": "0.64.3",
     "@types/node": "catalog:",
+    "@types/semver": "catalog:",
     "@typespec/compiler": "1.8.0",
     "@typespec/events": "0.78.0",
     "@typespec/http": "1.8.0",
@@ -81,7 +82,7 @@
     "@typespec/http": "^1.8.0"
   },
   "dependencies": {
-    "@azure-tools/codegen": "catalog:",
+    "semver": "catalog:",
     "source-map-support": "0.5.21"
   }
 }

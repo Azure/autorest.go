@@ -21,6 +21,9 @@ catalogs:
     '@types/node':
       specifier: ^20.19.25
       version: 20.19.27
+    '@types/semver':
+      specifier: ^7.7.1
+      version: 7.7.1
     '@vitest/coverage-v8':
       specifier: ^3.1.1
       version: 3.1.3
@@ -30,6 +33,9 @@ catalogs:
     eslint:
       specifier: ^9.39.1
       version: 9.39.2
+    semver:
+      specifier: ^7.7.1
+      version: 7.7.2
     typescript:
       specifier: ^5.9.3
       version: 5.9.3
@@ -83,6 +89,9 @@ importers:
       html-to-text:
         specifier: ^5.1.1
         version: 5.1.1
+      semver:
+        specifier: 'catalog:'
+        version: 7.7.2
       showdown:
         specifier: ^1.9.1
         version: 1.9.1
@@ -99,6 +108,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 20.19.27
+      '@types/semver':
+        specifier: 'catalog:'
+        version: 7.7.1
       '@vitest/coverage-v8':
         specifier: 'catalog:'
         version: 3.1.3(vitest@3.1.3)
@@ -211,10 +223,13 @@ importers:
 
   packages/codegen.go:
     dependencies:
-      '@azure-tools/codegen':
+      semver:
         specifier: 'catalog:'
-        version: 2.10.0
+        version: 7.7.2
     devDependencies:
+      '@types/semver':
+        specifier: 'catalog:'
+        version: 7.7.1
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -233,9 +248,9 @@ importers:
 
   packages/typespec-go:
     dependencies:
-      '@azure-tools/codegen':
+      semver:
         specifier: 'catalog:'
-        version: 2.10.0
+        version: 7.7.2
       source-map-support:
         specifier: 0.5.21
         version: 0.5.21
@@ -261,6 +276,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 20.19.27
+      '@types/semver':
+        specifier: 'catalog:'
+        version: 7.7.1
       '@typespec/compiler':
         specifier: 1.8.0
         version: 1.8.0(@types/node@20.19.27)
@@ -1608,6 +1626,9 @@ packages:
 
   '@types/nunjucks@3.2.6':
     resolution: {integrity: sha512-pHiGtf83na1nCzliuAdq8GowYiXvH5l931xZ0YEHaLMNFgynpEqx+IPStlu7UaDkehfvl01e4x/9Tpwhy7Ue3w==}
+
+  '@types/semver@7.7.1':
+    resolution: {integrity: sha512-FmgJfu+MOcQ370SD0ev7EI8TlCAfKYU+B4m5T3yXc1CiRN94g/SZPtsCkk506aUDtlMnFZvasDwHHUcZUEaYuA==}
 
   '@types/showdown@1.9.4':
     resolution: {integrity: sha512-50ehC3IAijfkvoNqmQ+VL73S7orOxmAK8ljQAFBv8o7G66lAZyxQj1L3BAv2dD86myLXI+sgKP1kcxAaxW356w==}
@@ -7256,6 +7277,8 @@ snapshots:
       undici-types: 7.16.0
 
   '@types/nunjucks@3.2.6': {}
+
+  '@types/semver@7.7.1': {}
 
   '@types/showdown@1.9.4': {}
 

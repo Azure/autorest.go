@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { comment } from '@azure-tools/codegen';
 import * as go from '../../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
@@ -74,7 +73,7 @@ function generateMarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager
     // without it, the response envelope type name is the outer type which is incorrect.
     imports.add('encoding/json');
     const receiver = respEnv.name[0].toLowerCase();
-    text += `${comment(`MarshalJSON implements the json.Marshaller interface for type ${respEnv.name}.`, '// ', undefined, helpers.commentLength)}\n`;
+    text += `${helpers.comment(`MarshalJSON implements the json.Marshaller interface for type ${respEnv.name}.`, '// ', undefined, helpers.commentLength)}\n`;
     text += `func (${receiver} ${respEnv.name}) MarshalJSON() ([]byte, error) {\n`;
     // TODO: this doesn't include any headers. however, LROs with header responses are currently broken :(
     text += `\treturn json.Marshal(${receiver}.${go.getTypeDeclaration(respEnv.result.interface, respEnv.method.receiver.type.pkg)})\n}\n\n`;
@@ -107,7 +106,7 @@ function generateUnmarshaller(respEnv: go.ResponseEnvelope, imports: ImportManag
   }
 
   const receiver = respEnv.name[0].toLowerCase();
-  let unmarshaller = `${comment(`UnmarshalJSON implements the json.Unmarshaller interface for type ${respEnv.name}.`, '// ', undefined, helpers.commentLength)}\n`;
+  let unmarshaller = `${helpers.comment(`UnmarshalJSON implements the json.Unmarshaller interface for type ${respEnv.name}.`, '// ', undefined, helpers.commentLength)}\n`;
   unmarshaller += `func (${receiver} *${respEnv.name}) UnmarshalJSON(data []byte) error {\n`;
 
   // add a custom unmarshaller to the response envelope

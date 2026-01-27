@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { capitalize } from '@azure-tools/codegen';
 import * as go from '../../../codemodel.go/src/index.js';
+import * as naming from '../../../naming.go/src/naming.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 
@@ -72,7 +72,7 @@ function emit(pkg: go.PackageContent, struct: go.Struct, imports: ImportManager)
       if (field.byValue) {
         pointer = '';
       }
-      text += `\t${capitalize(field.name)} ${pointer}${typeName}\n`;
+      text += `\t${naming.capitalize(field.name)} ${pointer}${typeName}\n`;
       first = false;
     }
   }
