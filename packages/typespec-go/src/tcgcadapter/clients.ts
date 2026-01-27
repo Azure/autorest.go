@@ -1062,7 +1062,7 @@ export class ClientAdapter {
     }
 
     // we have a response type, determine the content type
-    let contentType: go.BodyFormat = 'binary';
+    let contentType: go.BodyFormat | undefined;
     if (sdkMethod.kind === 'lro' || sdkMethod.kind === 'lropaging') {
       // we can't grovel through the operation responses for LROs as some of them
       // return only headers, thus have no content type. while it's highly likely
@@ -1070,19 +1070,21 @@ export class ClientAdapter {
       // or a binary response. the former seems unlikely, the latter though...??
       // TODO: https://github.com/Azure/typespec-azure/issues/535
       contentType = 'JSON';
+    } else if (sdkResponseType.kind === 'bytes' && sdkResponseType.encode === 'bytes') {
+      // bytes type with bytes encoding indicates a streaming binary response
+      contentType = 'binary';
     } else {
-      let foundResp = false;
       for (const httpResp of sdkMethod.operation.responses) {
         if (!httpResp.type || !httpResp.defaultContentType || httpResp.type.kind !== sdkResponseType.kind) {
           continue;
         }
         contentType = this.adaptContentType(httpResp.defaultContentType);
-        foundResp = true;
         break;
       }
-      if (!foundResp) {
-        throw new AdapterError('InternalError', `didn't find HTTP response for kind ${sdkResponseType.kind} in method ${method.name}`, sdkResponseType.__raw?.node);
-      }
+    }
+
+    if (!contentType) {
+      throw new AdapterError('InternalError', `didn't find HTTP response for kind ${sdkResponseType.kind} in method ${method.name}`, sdkResponseType.__raw?.node);
     }
 
     if (contentType === 'binary') {
