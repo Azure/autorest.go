@@ -1,5 +1,11 @@
 # Release History
 
+## 4.7.7 (Unreleased)
+
+### Bugs Fixed
+
+* Fixed example files not being deleted during cleanup due to mismatched comment format. The `DO NOT EDIT` marker is now placed on the same line as the `Code generated` comment to match the expected format.
+
 ## 4.7.6 (2025-11-26)
 
 ### Other Changes
