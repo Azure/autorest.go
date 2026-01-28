@@ -43,6 +43,53 @@ func NewClientWithNoCredential(endpoint string, options *ClientOptions) (*Client
 	return client, nil
 }
 
+// BinaryResponseWithXMLContentType -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientBinaryResponseWithXMLContentTypeOptions contains the optional parameters for the Client.BinaryResponseWithXMLContentType
+//     method.
+func (client *Client) BinaryResponseWithXMLContentType(ctx context.Context, options *ClientBinaryResponseWithXMLContentTypeOptions) (ClientBinaryResponseWithXMLContentTypeResponse, error) {
+	var err error
+	const operationName = "Client.BinaryResponseWithXMLContentType"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.binaryResponseWithXMLContentTypeCreateRequest(ctx, options)
+	if err != nil {
+		return ClientBinaryResponseWithXMLContentTypeResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientBinaryResponseWithXMLContentTypeResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientBinaryResponseWithXMLContentTypeResponse{}, err
+	}
+	resp, err := client.binaryResponseWithXMLContentTypeHandleResponse(httpResp)
+	return resp, err
+}
+
+// binaryResponseWithXMLContentTypeCreateRequest creates the BinaryResponseWithXMLContentType request.
+func (client *Client) binaryResponseWithXMLContentTypeCreateRequest(ctx context.Context, _ *ClientBinaryResponseWithXMLContentTypeOptions) (*policy.Request, error) {
+	urlPath := "/binary-response-with-xml-content-type"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	runtime.SkipBodyDownload(req)
+	req.Raw().Header["Accept"] = []string{"application/xml"}
+	return req, nil
+}
+
+// binaryResponseWithXMLContentTypeHandleResponse handles the BinaryResponseWithXMLContentType response.
+func (client *Client) binaryResponseWithXMLContentTypeHandleResponse(resp *http.Response) (ClientBinaryResponseWithXMLContentTypeResponse, error) {
+	result := ClientBinaryResponseWithXMLContentTypeResponse{Body: resp.Body}
+	if val := resp.Header.Get("Content-Type"); val != "" {
+		result.ContentType = &val
+	}
+	return result, nil
+}
+
 // ForceRequiredBodyPatch -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ClientForceRequiredBodyPatchOptions contains the optional parameters for the Client.ForceRequiredBodyPatch method.

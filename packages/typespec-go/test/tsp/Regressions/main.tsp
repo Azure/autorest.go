@@ -48,3 +48,14 @@ op forceRequiredBodyPut(@body body?: SomeModel): void;
 @post
 @route("/optional-body-post")
 op optionalBodyPost(@body body?: SomeModel): void;
+
+@get
+@route("/binary-response-with-xml-content-type")
+op binaryResponseWithXmlContentType():     {
+  @header("Content-Type")
+  contentType: "application/xml";
+
+  @bodyRoot
+  @encode("bytes")
+  body: bytes;
+};

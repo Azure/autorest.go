@@ -5,6 +5,7 @@
 ### Bugs Fixed
 
 * Fixed incorrect example generation for unknown type.
+* Fixed detection logic for streaming responses.
 
 ### Other Changes
 

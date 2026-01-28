@@ -19,6 +19,10 @@ import (
 
 // Server is a fake server for instances of the azregressions.Client type.
 type Server struct {
+	// BinaryResponseWithXMLContentType is the fake for method Client.BinaryResponseWithXMLContentType
+	// HTTP status codes to indicate success: http.StatusOK
+	BinaryResponseWithXMLContentType func(ctx context.Context, options *azregressions.ClientBinaryResponseWithXMLContentTypeOptions) (resp azfake.Responder[azregressions.ClientBinaryResponseWithXMLContentTypeResponse], errResp azfake.ErrorResponder)
+
 	// ForceRequiredBodyPatch is the fake for method Client.ForceRequiredBodyPatch
 	// HTTP status codes to indicate success: http.StatusNoContent
 	ForceRequiredBodyPatch func(ctx context.Context, body azregressions.SomeModel, options *azregressions.ClientForceRequiredBodyPatchOptions) (resp azfake.Responder[azregressions.ClientForceRequiredBodyPatchResponse], errResp azfake.ErrorResponder)
@@ -76,6 +80,8 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 		}
 		if !intercepted {
 			switch method {
+			case "Client.BinaryResponseWithXMLContentType":
+				res.resp, res.err = s.dispatchBinaryResponseWithXMLContentType(req)
 			case "Client.ForceRequiredBodyPatch":
 				res.resp, res.err = s.dispatchForceRequiredBodyPatch(req)
 			case "Client.ForceRequiredBodyPut":
@@ -103,6 +109,31 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 	case res := <-resultChan:
 		return res.resp, res.err
 	}
+}
+
+func (s *ServerTransport) dispatchBinaryResponseWithXMLContentType(req *http.Request) (*http.Response, error) {
+	if s.srv.BinaryResponseWithXMLContentType == nil {
+		return nil, &nonRetriableError{errors.New("fake for method BinaryResponseWithXMLContentType not implemented")}
+	}
+	respr, errRespr := s.srv.BinaryResponseWithXMLContentType(req.Context(), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
+		Body:        server.GetResponse(respr).Body,
+		ContentType: req.Header.Get("Content-Type"),
+	})
+	if err != nil {
+		return nil, err
+	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("Content-Type", "application/xml")
+	}
+	return resp, nil
 }
 
 func (s *ServerTransport) dispatchForceRequiredBodyPatch(req *http.Request) (*http.Response, error) {
