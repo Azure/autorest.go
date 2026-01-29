@@ -17,7 +17,7 @@ export interface CodeModel {
   options: Options;
 
   /** package metadata */
-  metadata?: {};
+  metadata?: Metadata;
 
   /** the root container of content to emit */
   root: module.ContainingModule | module.Module;
@@ -29,6 +29,21 @@ export type CodeModelType = 'azure-arm' | 'data-plane';
 /** contains top-level info about the input source */
 export interface Info {
   title: string;
+}
+
+/**
+ * Metadata for the generated code.
+ * Supports both single-service and multi-service formats.
+ */
+export interface Metadata {
+  /** Emitter version */
+  emitterVersion?: string;
+
+  /** Single API version (backward compatible format) */
+  apiVersion?: string;
+
+  /** Multiple services with their API versions */
+  services?: Record<string, { apiVersion: string }>;
 }
 
 /**
