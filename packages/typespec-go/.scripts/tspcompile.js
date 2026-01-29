@@ -87,6 +87,7 @@ const azureHttpSpecsGroup = {
   'apiversionheadergroup' : ['azure/client-generator-core/api-version/header/client.tsp'],
   'apiversionpathgroup' : ['azure/client-generator-core/api-version/path/client.tsp'],
   'apiversionquerygroup' : ['azure/client-generator-core/api-version/query/client.tsp'],
+  'deserializeemptystringasnull' : ['azure/client-generator-core/deserialize-empty-string-as-null'],
   'basicgroup': ['azure/core/basic'],
   'lrorpcgroup': ['azure/core/lro/rpc'],
   'lrostdgroup': ['azure/core/lro/standard'],
