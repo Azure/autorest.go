@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-*  Copyright (c) Microsoft Corporation. All rights reserved.
-*  Licensed under the MIT License. See License.txt in the project root for license information.
-*--------------------------------------------------------------------------------------------*/
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 
 import * as client from './client.js';
 import * as param from './param.js';
@@ -102,7 +102,7 @@ export interface ModelResult {
   /** any docs for the result type */
   docs: type.Docs;
 
-  /** 
+  /**
    * the type returned in the response envelope.
    * will be a PolymorphicModel when the response envelope
    * is a concrete type from a polymorphic hierarchy

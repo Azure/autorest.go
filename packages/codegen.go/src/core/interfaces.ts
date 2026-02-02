@@ -8,7 +8,7 @@ import * as helpers from './helpers.js';
 
 /**
  * Creates the content for the interfaces.go file.
- * 
+ *
  * @param pkg contains the package content
  * @returns the text for the file or the empty string
  */

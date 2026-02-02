@@ -9,7 +9,7 @@ import * as go from '../../../codemodel.go/src/index.js';
 /**
  * Creates the content in version.go.
  * if version.go doesn't need to be created, the empty string is returned.
- * 
+ *
  * @param module the module for which to generate version.go
  * @returns the contents of version.go or the empty string
  */

@@ -43,7 +43,7 @@ export function getServerName(client: go.Client): string {
 
 /**
  * Generates the contents for the *_server.go files.
- * 
+ *
  * @param pkg contains the package content
  * @returns the contents to generate or an empty object
  */
@@ -158,7 +158,7 @@ export function generateServers(pkg: go.FakePackage): ServerContent {
 
     content += `// New${serverTransport} creates a new instance of ${serverTransport} with the provided implementation.\n`;
     content += `// The returned ${serverTransport} instance is connected to an instance of ${go.getTypeDeclaration(client, pkg)} via the\n`;
-    content += '// azcore.ClientOptions.Transporter field in the client\'s constructor parameters.\n';
+    content += "// azcore.ClientOptions.Transporter field in the client's constructor parameters.\n";
     content += `func New${serverTransport}(srv *${serverName}) *${serverTransport} {\n`;
     if (countLROs === 0 && countPagers === 0) {
       content += `\treturn &${serverTransport}{srv: srv}\n}\n\n`;
@@ -339,7 +339,7 @@ function generateServerTransportMethodDispatch(serverTransport: string, client: 
 
 /**
  * generates the server transport methods for a fake server transport
- * 
+ *
  * @param pkg contains the package content
  * @param serverTransport the name of the server transport type
  * @param finalMethods the array of methods for which to generate the fake transports
@@ -447,7 +447,7 @@ function generateServerTransportMethods(pkg: go.FakePackage, serverTransport: st
 /**
  * generates the core dispatching logic for a server dispatch method.
  * this code is common to all method types.
- * 
+ *
  * @param pkg contains the package content
  * @param receiverName the name of the receiver for the dispatch method
  * @param method the method for which to emit dispatching logic
@@ -581,7 +581,7 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
 
     const isModelType = function (type: go.WireType): type is go.Model | go.PolymorphicModel {
       return type.kind === 'model' || type.kind === 'polymorphicModel';
-    }
+    };
 
     const emitCase = function (caseValue: string, paramVar: string, type: go.WireType): string {
       let caseContent = `\t\tcase "${caseValue}":\n`;
@@ -754,7 +754,7 @@ function getMethodStatusCodes(method: go.MethodType): Array<number> {
 
 /**
  * generates the dispatching logic for an LRO server dispatch method
- * 
+ *
  * @param pkg contains the package contents
  * @param receiverName the name of the receiver for the dispatch method
  * @param method the LRO method for which to emit the dispatch logic
@@ -788,7 +788,7 @@ function dispatchForLROBody(pkg: go.FakePackage, receiverName: string, method: g
 
 /**
  * generates the dispatching logic for a paged server dispatch method
- * 
+ *
  * @param pkg contains the package contents
  * @param receiverName the name of the receiver for the dispatch method
  * @param method the pageable method for which to emit the dispatch logic
@@ -861,7 +861,7 @@ interface parseResult {
 
 /**
  * parses header/path/query params as required
- * 
+ *
  * @param pkg contains the package contents
  * @param method the method for which to emit parameter parsing logic
  * @param imports the import manager currently in scope
@@ -971,8 +971,7 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
         content += '\t\tif unescapeErr != nil {\n\t\t\treturn "", unescapeErr\n\t\t}\n';
         content += `\t\treturn ${go.getTypeDeclaration(param.type, pkg)}(p), nil\n\t})\n`;
       } else {
-        if (go.isRequiredParameter(param.style) &&
-          (param.type.kind === 'string' || (param.type.kind === 'slice' && param.type.elementType.kind === 'string'))) {
+        if (go.isRequiredParameter(param.style) && (param.type.kind === 'string' || (param.type.kind === 'slice' && param.type.elementType.kind === 'string'))) {
           // by convention, if the value is in its "final form" (i.e. no parsing required)
           // then its var is to have the "Param" suffix. the only case is string, everything
           // else requires some amount of parsing/conversion.
@@ -1079,10 +1078,10 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     } else if (param.type.kind === 'time') {
       const formatMap: Record<string, string> = {
-        'PlainDate': helpers.plainDateFormat,
-        'PlainTime': helpers.plainTimeFormat,
-        'RFC1123': helpers.RFC1123Format,
-        'RFC3339': helpers.RFC3339Format,
+        PlainDate: helpers.plainDateFormat,
+        PlainTime: helpers.plainTimeFormat,
+        RFC1123: helpers.RFC1123Format,
+        RFC3339: helpers.RFC3339Format,
       };
       imports.add('time');
       if (param.type.format in formatMap) {
@@ -1119,7 +1118,7 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
         requiredHelpers.parseWithCast = true;
         parser = 'parseWithCast';
       }
-      if ((param.type.type === 'float32' || param.type.type === 'int32') || !go.isRequiredParameter(param.style)) {
+      if (param.type.type === 'float32' || param.type.type === 'int32' || !go.isRequiredParameter(param.style)) {
         content += `\t${createLocalVariableName(param, 'Param')}, err := ${parser}(${paramValue}, func(v string) (${param.type.type}, error) {\n`;
         content += `\t\tp, parseErr := ${emitNumericConversion('v', param.type.type)}\n`;
         content += '\t\tif parseErr != nil {\n\t\t\treturn 0, parseErr\n\t\t}\n';
@@ -1234,13 +1233,13 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
 
   return {
     content: content,
-    params: paramValues
+    params: paramValues,
   };
 }
 
 /**
  * generates the code to populate the method parameters that get passed to the fake
- * 
+ *
  * @param pkg contains the package contents
  * @param method the method to be called with the parsed parameters
  * @param paramValues maps a parameter name to the value to be passed to the fake
@@ -1328,7 +1327,7 @@ function getRawParamValue(param: go.MethodParameter): string {
  * returns the final value of param to be passed to the fake.
  * this is usually the value in paramValues but can be slightly
  * different for some cases.
- * 
+ *
  * @param pkg the contents of the package
  * @param param the parameter being evaluated
  * @param paramValues maps a parameter name to the value to be passed to the fake
@@ -1395,7 +1394,7 @@ function consolidateHostParams(params: Array<go.MethodParameter>): Array<go.Meth
 
 /**
  * copied from generator/operations.ts but with a slight tweak to consolidate host parameters
- * 
+ *
  * @param pkg the contents of the package
  * @param method the method for which to generate the parameter signature
  * @param imports the import manager currently in scope

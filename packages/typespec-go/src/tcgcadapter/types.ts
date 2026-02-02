@@ -31,7 +31,7 @@ export class TypeAdapter {
 
   /**
    * returns the package for the adapted tcgc code model.
-   * 
+   *
    * NOTE: this is temporary and will go away with namespaces.
    * @returns the module or package to contain the adapted tcgc model
    */
@@ -75,13 +75,13 @@ export class TypeAdapter {
         // this is a root discriminated type
         const iface = this.getInterfaceType(modelType);
         this.getPkg().interfaces.push(iface);
-        ifaceTypes.push({go: iface, tcgc: modelType});
+        ifaceTypes.push({ go: iface, tcgc: modelType });
       }
       // TODO: what's the equivalent of x-ms-external?
       const model = this.getModel(modelType);
-      modelTypes.push({go: model, tcgc: modelType});
+      modelTypes.push({ go: model, tcgc: modelType });
     }
-  
+
     // add the synthesized models from TCGC for paged results
     const pagedResponses = this.getPagedResponses();
     for (const pagedResponse of pagedResponses) {
@@ -90,9 +90,8 @@ export class TypeAdapter {
         continue;
       }
       const model = this.getModel(pagedResponse);
-      modelTypes.push({go: model, tcgc: pagedResponse});
+      modelTypes.push({ go: model, tcgc: pagedResponse });
     }
-
 
     // now that the interface/model types have been generated, we can populate the rootType and possibleTypes
     for (const ifaceType of ifaceTypes) {
@@ -126,7 +125,7 @@ export class TypeAdapter {
   // returns the synthesized paged response types
   private getPagedResponses(): Array<tcgc.SdkModelType> {
     const pagedResponses = new Array<tcgc.SdkModelType>();
-    const recursiveWalkClients = function(client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
+    const recursiveWalkClients = function (client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
       if (client.children && client.children.length > 0) {
         for (const child of client.children) {
           recursiveWalkClients(child);
@@ -142,7 +141,7 @@ export class TypeAdapter {
             continue;
           }
 
-          if (!pagedResponses.find(each => each.name === (<tcgc.SdkModelType>httpResp.type).name)) {
+          if (!pagedResponses.find((each) => each.name === (<tcgc.SdkModelType>httpResp.type).name)) {
             pagedResponses.push(httpResp.type);
           }
         }
@@ -434,7 +433,6 @@ export class TypeAdapter {
         time = new go.Time(encoding, false);
         this.types.set(encoding, time);
         return time;
-      
       }
       default:
         throw new AdapterError('UnsupportedTsp', `unsupported type kind ${type.kind}`, type.__raw?.node);
@@ -505,7 +503,7 @@ export class TypeAdapter {
     if (modelType) {
       return <go.Model | go.PolymorphicModel>modelType;
     }
-  
+
     let usage = go.UsageFlags.None;
     if (model.usage & tsp.UsageFlags.Input) {
       usage = go.UsageFlags.Input;
@@ -614,9 +612,9 @@ export class TypeAdapter {
       annotations.isDiscriminator = true;
       field.defaultValue = this.getDiscriminatorLiteral(prop);
     }
-  
+
     field.xml = adaptXMLInfo(this.getPkg(), prop.decorators, field);
-  
+
     return field;
   }
 
@@ -839,7 +837,7 @@ function recursiveKeyName(root: string, obj: tcgc.SdkType, substituteDiscriminat
 /**
  * returns true if the specified type doesn't need to be pointer-to-type
  * because it's implicitly nil-able.
- * 
+ *
  * @param type the type to inspect
  * @returns true if the type is implicitly nil-able
  */
@@ -847,9 +845,7 @@ export function isTypePassedByValue(type: tcgc.SdkType): boolean {
   if (type.kind === 'nullable') {
     type = type.type;
   }
-  return type.kind === 'unknown' || type.kind === 'array' ||
-  type.kind === 'bytes' || type.kind === 'dict' ||
-    (type.kind === 'model' && !!type.discriminatedSubtypes);
+  return type.kind === 'unknown' || type.kind === 'array' || type.kind === 'bytes' || type.kind === 'dict' || (type.kind === 'model' && !!type.discriminatedSubtypes);
 }
 
 interface ModelTypeSdkModelType {
@@ -864,7 +860,7 @@ interface InterfaceTypeSdkModelType {
 
 // aggregate the properties from the provided type and its parent types.
 // this includes any inherited additional properties.
-function aggregateProperties(sdkContext: tcgc.SdkContext, model: tcgc.SdkModelType): {props: Array<tcgc.SdkModelPropertyType>, addlProps?: tcgc.SdkType} {
+function aggregateProperties(sdkContext: tcgc.SdkContext, model: tcgc.SdkModelType): { props: Array<tcgc.SdkModelPropertyType>; addlProps?: tcgc.SdkType } {
   const allProps = new Array<tcgc.SdkModelPropertyType>();
   for (const prop of model.properties) {
     if (tcgc.isHttpMetadata(sdkContext, prop)) {
@@ -894,14 +890,14 @@ function aggregateProperties(sdkContext: tcgc.SdkContext, model: tcgc.SdkModelTy
     }
     parent = parent.baseModel;
   }
-  return {props: allProps, addlProps: addlProps};
+  return { props: allProps, addlProps: addlProps };
 }
 
 // called for models and model fields. for the former, the field param will be undefined
 export function adaptXMLInfo(pkg: go.PackageContent, decorators: Array<tcgc.DecoratorInfo>, field?: go.ModelField): go.XMLInfo | undefined {
   // if there are no decorators and this isn't a slice
   // type in a model field then do nothing
-  if (decorators.length === 0 && (!field || (field.type.kind !== 'slice'))) {
+  if (decorators.length === 0 && (!field || field.type.kind !== 'slice')) {
     return undefined;
   }
 
@@ -945,7 +941,7 @@ export function adaptXMLInfo(pkg: go.PackageContent, decorators: Array<tcgc.Deco
               break;
             case 'string':
               // an unwrapped string means it's text
-              xmlInfo.text = true;  
+              xmlInfo.text = true;
               break;
           }
         }

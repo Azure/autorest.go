@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-*  Copyright (c) Microsoft Corporation. All rights reserved.
-*  Licensed under the MIT License. See License.txt in the project root for license information.
-*--------------------------------------------------------------------------------------------*/
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 
 import * as path from 'path';
 import * as client from './client.js';
@@ -81,7 +81,7 @@ export type PackageType = FakePackage | PackageContent | TestPackage;
  * returns the package name for the specified input.
  * for module github.com/contoso/module, 'module' is returned.
  * any major version suffix on the module is removed.
- * 
+ *
  * @param pkg is the package source
  * @returns the package name for pkg
  */

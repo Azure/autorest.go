@@ -67,11 +67,11 @@ export function ensureNameCase(name: string, lowerFirst?: boolean): string {
 
 // case-preserving version of deconstruct() that also splits on more path-separator characters
 function deconstruct(identifier: string): Array<string> {
-  return `${identifier}`.
-    replace(/([a-z]+)([A-Z])/g, '$1 $2').
-    replace(/(\d+)([a-z|A-Z]+)/g, '$1 $2').
-    replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3').
-    split(/[\W|_|.|@|-|\s|$]+/);
+  return `${identifier}`
+    .replace(/([a-z]+)([A-Z])/g, '$1 $2')
+    .replace(/(\d+)([a-z|A-Z]+)/g, '$1 $2')
+    .replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3')
+    .split(/[\W|_|.|@|-|\s|$]+/);
 }
 
 // removes pkg from val based on some heuristics
@@ -97,12 +97,7 @@ export function trimPackagePrefix(pkg: string, val: string): string {
 }
 
 // the following was copied from @azure-tools/codegen as it's being deprecated
-const acronyms = new Set([
-  'ip',
-  'os',
-  'ms',
-  'vm',
-]);
+const acronyms = new Set(['ip', 'os', 'ms', 'vm']);
 
 export function capitalize(str: string): string {
   if (acronyms.has(str)) {
@@ -125,5 +120,5 @@ export function createOptionsTypeDescription(typeName: string, methodName: strin
 }
 
 export function createResponseEnvelopeDescription(typeName: string, methodName: string): string {
-  return `${typeName} contains the response from method ${methodName}.`
+  return `${typeName} contains the response from method ${methodName}.`;
 }

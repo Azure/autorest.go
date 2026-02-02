@@ -35,16 +35,20 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
       }
     }
 
-    const emitter = new codegen.Emitter(codeModel, {
-      exists: (name: string) => {
-        return Promise.resolve(existsSync(`${context.emitterOutputDir}/${name}`));
+    const emitter = new codegen.Emitter(
+      codeModel,
+      {
+        exists: (name: string) => {
+          return Promise.resolve(existsSync(`${context.emitterOutputDir}/${name}`));
+        },
+        read: (name: string) => readFile(`${context.emitterOutputDir}/${name}`, 'utf8'),
+        write: async (name: string, content: string) => {
+          await mkdir(path.dirname(`${context.emitterOutputDir}/${name}`), { recursive: true });
+          return writeFile(`${context.emitterOutputDir}/${name}`, content);
+        },
       },
-      read: (name: string) => readFile(`${context.emitterOutputDir}/${name}`, 'utf8'),
-      write: async (name: string, content: string) => {
-        await mkdir(path.dirname(`${context.emitterOutputDir}/${name}`), { recursive: true });
-        return writeFile(`${context.emitterOutputDir}/${name}`, content);
-      }
-    }, { filePrefix });
+      { filePrefix },
+    );
     await emitter.emit();
     await emitter.emitCloudConfig();
     await emitter.emitExamples();
@@ -194,7 +198,7 @@ function truncateStack(stack: string, finalFrame: string): string {
 /**
  * Clean up existing generated Go files in the output directory.
  * Removes any .go files that contain the Microsoft code generator comment.
- * 
+ *
  * exported for testing purposes only.
  *
  * @param outputDir the directory to clean up

@@ -14,12 +14,12 @@ export interface GoEmitterOptions {
   'go-generate'?: string;
   'head-as-boolean'?: boolean;
   'inject-spans'?: boolean;
-  'module'?: string;
+  module?: string;
   'omit-constructors'?: boolean;
   'rawjson-as-bytes'?: boolean;
   'slice-elements-byval'?: boolean;
   'single-client'?: boolean;
-  'stutter'?: string;
+  stutter?: string;
   'fix-const-stuttering'?: boolean;
   /**
    * @deprecated Use 'generate-samples' instead
@@ -36,7 +36,7 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
     'azcore-version': {
       type: 'string',
       nullable: true,
-      description: 'Semantic version of azcore without the leading \'v\' to use if different from the default version (e.g. 1.2.3).',
+      description: "Semantic version of azcore without the leading 'v' to use if different from the default version (e.g. 1.2.3).",
     },
     'containing-module': {
       type: 'string',
@@ -73,7 +73,7 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
       nullable: true,
       description: 'Enables generation of spans for distributed tracing. The default is false.',
     },
-    'module': {
+    module: {
       type: 'string',
       nullable: true,
       description: 'The module identity to use in go.mod. Mutually exclusive with containing-module.',
@@ -96,9 +96,10 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
     'single-client': {
       type: 'boolean',
       nullable: true,
-      description: 'Indicates package has a single client. This will omit the Client prefix from options and response types. If multiple clients are detected, an error is returned. The default is false.',
+      description:
+        'Indicates package has a single client. This will omit the Client prefix from options and response types. If multiple clients are detected, an error is returned. The default is false.',
     },
-    'stutter': {
+    stutter: {
       type: 'string',
       nullable: true,
       description: 'Uses the specified value to remove stuttering from types and funcs instead of the built-in algorithm.',
@@ -131,30 +132,30 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
 const libDef = {
   name: '@azure-tools/typespec-go',
   diagnostics: {
-    'InternalError': {
+    InternalError: {
       severity: 'error',
       messages: {
-        default: paramMessage`The emitter encountered an internal error during preprocessing. Please open an issue at https://github.com/Azure/autorest.go/issues and include the complete error message.\n${'stack'}`
-      }
+        default: paramMessage`The emitter encountered an internal error during preprocessing. Please open an issue at https://github.com/Azure/autorest.go/issues and include the complete error message.\n${'stack'}`,
+      },
     },
-    'InvalidArgument': {
+    InvalidArgument: {
       severity: 'error',
       messages: {
-        default: 'Invalid arguments were passed to the emitter.'
-      }
+        default: 'Invalid arguments were passed to the emitter.',
+      },
     },
-    'NameCollision': {
+    NameCollision: {
       severity: 'error',
       messages: {
-        default: paramMessage`The emitter automatically renamed one or more types which resulted in a type name collision. Please update the client.tsp to rename the type(s) to avoid the collision.\n${'stack'}`
-      }
+        default: paramMessage`The emitter automatically renamed one or more types which resulted in a type name collision. Please update the client.tsp to rename the type(s) to avoid the collision.\n${'stack'}`,
+      },
     },
-    'UnsupportedTsp': {
+    UnsupportedTsp: {
       severity: 'error',
       messages: {
-        default: paramMessage`The emitter encountered a TypeSpec definition that is currently not supported.\n${'stack'}`
-      }
-    }
+        default: paramMessage`The emitter encountered a TypeSpec definition that is currently not supported.\n${'stack'}`,
+      },
+    },
   },
   emitter: {
     options: <JSONSchemaType<GoEmitterOptions>>EmitterOptionsSchema,

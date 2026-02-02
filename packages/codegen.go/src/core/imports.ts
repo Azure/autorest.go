@@ -6,7 +6,7 @@
 import * as go from '../../../codemodel.go/src/index.js';
 import * as helpers from './helpers.js';
 
-type importEntry = { imp: string, alias?: string };
+type importEntry = { imp: string; alias?: string };
 
 // tracks packages that need to be imported
 export class ImportManager {
@@ -15,7 +15,7 @@ export class ImportManager {
 
   /**
    * creates a new instance of ImportManager for the specified package
-   * 
+   *
    * @param pkg the package that contains the import statements to emit
    */
   constructor(pkg: go.FakePackage | go.PackageContent | go.TestPackage) {
@@ -26,7 +26,7 @@ export class ImportManager {
   /**
    * adds a package for importing if not already in the list
    * accepts an optional package alias.
-   * 
+   *
    * @param imp the package name to import
    * @param alias optional alias for the import
    */
@@ -41,7 +41,7 @@ export class ImportManager {
 
   /**
    * adds the specified package for importing if not already in the list.
-   * 
+   *
    * @param pkg the package to import
    * @param alias optional package alias
    */
@@ -62,7 +62,7 @@ export class ImportManager {
 
   /**
    * returns the number of packages in the list
-   * 
+   *
    * @returns the import count
    */
   length(): number {
@@ -71,7 +71,7 @@ export class ImportManager {
 
   /**
    * returns the import list as Go source code
-   * 
+   *
    * @returns the text for the import statement
    */
   text(): string {
@@ -81,7 +81,9 @@ export class ImportManager {
       const first = this.imports[0];
       return `import ${this.alias(first)}"${first.imp}"\n\n`;
     }
-    this.imports.sort((a: importEntry, b: importEntry) => { return helpers.sortAscending(a.imp, b.imp); });
+    this.imports.sort((a: importEntry, b: importEntry) => {
+      return helpers.sortAscending(a.imp, b.imp);
+    });
     let text = 'import (\n';
     for (const imp of this.imports) {
       text += `\t${this.alias(imp)}"${imp.imp}"\n`;
@@ -93,7 +95,7 @@ export class ImportManager {
   /**
    * adds an import statement for the specified type
    * as required if not already in the list.
-   * 
+   *
    * @param type the type for which to add the import
    */
   addForType(type: go.Client | go.Type): void {
@@ -122,7 +124,7 @@ export class ImportManager {
 
   /**
    * returns the import alias or the empty string
-   * 
+   *
    * @param entry the entry to check for an alias
    * @returns the import alias or the empty string
    */
@@ -136,7 +138,7 @@ export class ImportManager {
 
 /**
  * builds the complete package import path for the provided package
- * 
+ *
  * @param pkg the package for which to build the import path
  * @returns the fully qualified package path
  */

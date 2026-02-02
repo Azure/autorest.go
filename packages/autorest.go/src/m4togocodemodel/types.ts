@@ -11,7 +11,7 @@ import * as go from '../../../codemodel.go/src/index.js';
 
 // returns true if the language contains a description
 export function hasDescription(lang: m4.Language): boolean {
-  return (lang.description !== undefined && lang.description.length > 0 && !lang.description.startsWith('MISSING'));
+  return lang.description !== undefined && lang.description.length > 0 && !lang.description.startsWith('MISSING');
 }
 
 // cache of previously created types
@@ -94,7 +94,7 @@ export function adaptModel(obj: m4.ObjectSchema, pkg: go.PackageContent): go.Mod
       // there are cases where a type might have multiple parents
       // so we iterate over them until we find the interface name
       // (e.g. KerberosKeytabCredentials type in machine learning)
-      for (const parent of values( obj.parents?.immediate)) {
+      for (const parent of values(obj.parents?.immediate)) {
         if (parent.language.go!.discriminatorInterface) {
           ifaceName = <string>parent.language.go!.discriminatorInterface;
           break;
@@ -129,17 +129,25 @@ export function adaptModel(obj: m4.ObjectSchema, pkg: go.PackageContent): go.Mod
 // returns the usage flags for this schema
 function adaptUsage(obj: m4.ObjectSchema): go.UsageFlags {
   let flags = go.UsageFlags.None;
-  if (values(obj.usage).any((u) => { return u === m4.SchemaContext.Input; })) {
+  if (
+    values(obj.usage).any((u) => {
+      return u === m4.SchemaContext.Input;
+    })
+  ) {
     flags = go.UsageFlags.Input;
   }
-  if (values(obj.usage).any((u) => { return u === m4.SchemaContext.Output; })) {
+  if (
+    values(obj.usage).any((u) => {
+      return u === m4.SchemaContext.Output;
+    })
+  ) {
     flags |= go.UsageFlags.Output;
   }
   return flags;
 }
 
 function getDiscriminatorLiteral(pkg: go.PackageContent, discriminatorValue: string): go.Literal {
-  const createLiteralValue = function(type: go.LiteralType, value: string | go.ConstantValue): go.Literal {
+  const createLiteralValue = function (type: go.LiteralType, value: string | go.ConstantValue): go.Literal {
     let valueKey: go.ConstantValueType;
     if (typeof value === 'string') {
       valueKey = value;

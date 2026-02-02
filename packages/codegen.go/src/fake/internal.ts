@@ -31,7 +31,7 @@ export class RequiredHelpers {
 
 /**
  * Generates the content for the required fake helpers in fake/internal.go.
- * 
+ *
  * @param pkg contains the package content
  * @param requiredHelpers contains data about the helpers to emit
  * @returns the text for the file or the empty string

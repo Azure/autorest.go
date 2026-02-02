@@ -17,17 +17,18 @@ import { fileURLToPath } from 'url';
 
 // converts an M4 code model into a GoCodeModel
 export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
-  const debug = await host.getValue('debug') || false;
+  const debug = (await host.getValue('debug')) || false;
 
   try {
     const session = await startSession<m4.CodeModel>(host, m4.codeModelSchema);
 
     const info = new go.Info(session.model.info.title);
     const options = new go.Options(
-      await session.getValue('generate-fakes', session.model.language.go!.azureARM), 
+      await session.getValue('generate-fakes', session.model.language.go!.azureARM),
       await session.getValue('inject-spans', session.model.language.go!.azureARM),
       await session.getValue('disallow-unknown-fields', false),
-      await session.getValue('generate-sdk-example', false));
+      await session.getValue('generate-sdk-example', false),
+    );
     options.headerText = await session.getValue('header-text', 'MISSING LICENSE HEADER');
     options.factoryGatherAllParams = await session.getValue('factory-gather-all-params', true);
     options.omitConstructors = true;
@@ -96,7 +97,7 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
     host.writeFile({
       filename: 'go-code-model.yaml',
       content: serialize(codeModel),
-      artifactType: 'go-code-model'
+      artifactType: 'go-code-model',
     });
   } catch (E) {
     if (debug) {
@@ -180,13 +181,19 @@ function adaptInterfaceTypes(m4CodeModel: m4.CodeModel, pkg: go.PackageContent) 
   }
 }
 
-function recursiveAdaptInterfaceType(obj: m4.ObjectSchema, ifaces: Array<go.Interface>, ifaceObjs: Array<InterfaceTypeObjectSchema>, pkg: go.PackageContent, parent?: go.Interface) {
+function recursiveAdaptInterfaceType(
+  obj: m4.ObjectSchema,
+  ifaces: Array<go.Interface>,
+  ifaceObjs: Array<InterfaceTypeObjectSchema>,
+  pkg: go.PackageContent,
+  parent?: go.Interface,
+) {
   const iface = adaptInterfaceType(obj, pkg, parent);
   if (ifaces.includes(iface)) {
     return;
   }
   ifaces.push(iface);
-  ifaceObjs.push({iface, obj});
+  ifaceObjs.push({ iface, obj });
 
   for (const val of values(obj.discriminator!.immediate)) {
     const asObj = <m4.ObjectSchema>val;
@@ -210,7 +217,7 @@ function adaptModels(m4CodeModel: m4.CodeModel, pkg: go.PackageContent) {
     // we must adapt all model types first. this is because models can contain cyclic references
     const modelType = adaptModel(obj, pkg);
     pkg.models.push(modelType);
-    modelObjs.push({type: modelType, obj: obj});
+    modelObjs.push({ type: modelType, obj: obj });
   }
 
   for (const modelObj of values(modelObjs)) {

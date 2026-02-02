@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-*  Copyright (c) Microsoft Corporation. All rights reserved.
-*  Licensed under the MIT License. See License.txt in the project root for license information.
-*--------------------------------------------------------------------------------------------*/
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 
 import * as path from 'path';
 import { Client, ClientOptions } from './client.js';
@@ -22,7 +22,25 @@ export interface Docs {
 export type SdkType = ArmClientOptions | ClientOptions | ParameterGroup | ResponseEnvelope | TokenCredential;
 
 /** defines types that go across the wire */
-export type WireType = Any | Constant | ConstantValue | EncodedBytes | ETag | Interface | Literal | Map | Model | MultipartContent | PolymorphicModel | RawJSON | ReadCloser | ReadSeekCloser | Scalar | Slice | String | Time;
+export type WireType =
+  | Any
+  | Constant
+  | ConstantValue
+  | EncodedBytes
+  | ETag
+  | Interface
+  | Literal
+  | Map
+  | Model
+  | MultipartContent
+  | PolymorphicModel
+  | RawJSON
+  | ReadCloser
+  | ReadSeekCloser
+  | Scalar
+  | Slice
+  | String
+  | Time;
 
 /** defines a type within the Go type system */
 export type Type = SdkType | WireType;
@@ -320,7 +338,7 @@ export enum UsageFlags {
   Input = 1,
 
   /** the type is sent over the wire */
-  Output = 2
+  Output = 2,
 }
 
 /** metadata used for XML serde */
@@ -329,7 +347,7 @@ export interface XMLInfo {
   name?: string;
 
   /** name propagated to the generated wrapper type */
-  wrapper? :string;
+  wrapper?: string;
 
   /** slices only. this is the name of the wrapped type */
   wraps?: string;
@@ -347,7 +365,7 @@ export interface XMLInfo {
 
 /**
  * returns the Go type declaration for the specified LiteralType
- * 
+ *
  * @param literal the type for which to emit the declaration
  * @returns the Go type declaration
  */
@@ -371,7 +389,7 @@ export function getLiteralTypeDeclaration(literal: LiteralType): string {
  * if the type is defined in a package that's different from
  * the provided scope, the type declaration will include
  * the type's package name prefix.
- * 
+ *
  * @param type the type for which to emit the declaration
  * @param scope the scope in which the type declaration is emitted
  * @returns the Go type declaration

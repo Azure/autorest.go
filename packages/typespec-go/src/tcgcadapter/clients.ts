@@ -7,7 +7,14 @@ import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import { ModelProperty, NoTarget } from '@typespec/compiler';
 import * as http from '@typespec/http';
 import * as go from '../../../codemodel.go/src/index.js';
-import { capitalize, createOptionsTypeDescription, createResponseEnvelopeDescription, ensureNameCase, getEscapedReservedName, uncapitalize } from '../../../naming.go/src/naming.js';
+import {
+  capitalize,
+  createOptionsTypeDescription,
+  createResponseEnvelopeDescription,
+  ensureNameCase,
+  getEscapedReservedName,
+  uncapitalize,
+} from '../../../naming.go/src/naming.js';
 import { AdapterError } from './errors.js';
 import { isTypePassedByValue, TypeAdapter } from './types.js';
 
@@ -101,7 +108,7 @@ export class ClientAdapter {
     // bit flags for auth types
     enum AuthTypes {
       Default = 0, // unspecified
-      NoAuth  = 1, // explicit NoAuth
+      NoAuth = 1, // explicit NoAuth
       WithAuth = 2, // explicit credential
     }
 
@@ -127,7 +134,7 @@ export class ClientAdapter {
 
     /**
      * processes a credendial, potentially adding its supporting client constructor
-     * 
+     *
      * @param goClient the Go client for which to add the constructor
      * @param constructable the constructable for the current Go client
      * @param cred the credential type to process
@@ -338,7 +345,7 @@ export class ClientAdapter {
 
   /**
    * creates a new Go client constructor using token credential authentication
-   * 
+   *
    * @param goClient the Go client for which to create the constructor
    * @param cred the token credential type
    * @returns a new Go client constructor using token credential authentication
@@ -352,19 +359,24 @@ export class ClientAdapter {
       throw new AdapterError('InternalError', `too many scopes defined for credential type ${cred.type}`, cred.model);
     }
     const ctor = new go.Constructor(this.ta.getPkg(), `New${goClient.name}`);
-    ctor.parameters.push(new go.ClientCredentialParameter('credential', new go.TokenCredential(cred.flows[0].scopes.map(each => each.value))));
+    ctor.parameters.push(new go.ClientCredentialParameter('credential', new go.TokenCredential(cred.flows[0].scopes.map((each) => each.value))));
     return ctor;
   }
 
   /**
    * converts a tcgc client accessor method to a Go client accessor method
-   * 
+   *
    * @param sdkParent the tcgc client that contains the accessor method
    * @param sdkChild the tcgc client accessor method to convert
    * @param goClient the client to which the method belongs
    * @param subClient the sub-client type that the method returns
    */
-  private adaptClientAccessor(sdkParent: tcgc.SdkClientType<tcgc.SdkHttpOperation>, sdkChild: tcgc.SdkClientType<tcgc.SdkHttpOperation>, goClient: go.Client, subClient: go.Client): void {
+  private adaptClientAccessor(
+    sdkParent: tcgc.SdkClientType<tcgc.SdkHttpOperation>,
+    sdkChild: tcgc.SdkClientType<tcgc.SdkHttpOperation>,
+    goClient: go.Client,
+    subClient: go.Client,
+  ): void {
     const clientAccessor = new go.ClientAccessor(`New${subClient.name}`, goClient, subClient);
     clientAccessor.docs.summary = `${clientAccessor.name} creates a new instance of [${go.getTypeDeclaration(subClient, goClient.pkg)}].`;
     for (const param of sdkChild.clientInitialization.parameters) {
@@ -391,7 +403,7 @@ export class ClientAdapter {
 
   /**
    * creates a new Go URI parameter from the specified tcgc path parameter
-   * 
+   *
    * @param sdkParam the tcgc parameter to adapt
    * @param forceRequired when true, the parameter is not optional regardless of authoring
    * @returns the adapted URI parameter
@@ -409,8 +421,7 @@ export class ClientAdapter {
       if (this.ta.codeModel.type === 'azure-arm' && !go.isRequiredParameter(style)) {
         throw new AdapterError('UnsupportedTsp', 'optional client parameters for ARM is not supported', sdkParam.__raw?.node);
       }
-      const uriParam = new go.URIParameter(sdkParam.name, sdkParam.serializedName, paramType,
-        style, isTypePassedByValue(sdkParam.type) || !sdkParam.optional, 'client');
+      const uriParam = new go.URIParameter(sdkParam.name, sdkParam.serializedName, paramType, style, isTypePassedByValue(sdkParam.type) || !sdkParam.optional, 'client');
       uriParam.docs.summary = sdkParam.summary;
       uriParam.docs.description = sdkParam.doc;
       uriParam.isApiVersion = sdkParam.isApiVersionParam;
@@ -420,8 +431,11 @@ export class ClientAdapter {
   }
 
   private adaptMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, goClient: go.Client): void {
-    const naming = new go.MethodNaming(getEscapedReservedName(uncapitalize(ensureNameCase(sdkMethod.name)), 'Operation'), ensureNameCase(`${sdkMethod.name}CreateRequest`, true),
-      ensureNameCase(`${sdkMethod.name}HandleResponse`, true));
+    const naming = new go.MethodNaming(
+      getEscapedReservedName(uncapitalize(ensureNameCase(sdkMethod.name)), 'Operation'),
+      ensureNameCase(`${sdkMethod.name}CreateRequest`, true),
+      ensureNameCase(`${sdkMethod.name}HandleResponse`, true),
+    );
 
     const getStatusCodes = function (httpOp: tcgc.SdkHttpOperation): Array<number> {
       const statusCodes = new Array<number>();
@@ -449,20 +463,28 @@ export class ClientAdapter {
       }
     }
 
-    const setLROInfo = function(goMethod: go.LROMethod | go.LROPageableMethod, sdkMethod: tcgc.SdkLroPagingServiceMethod<tcgc.SdkHttpOperation> | tcgc.SdkLroServiceMethod<tcgc.SdkHttpOperation>): void {
+    const setLROInfo = function (
+      goMethod: go.LROMethod | go.LROPageableMethod,
+      sdkMethod: tcgc.SdkLroPagingServiceMethod<tcgc.SdkHttpOperation> | tcgc.SdkLroServiceMethod<tcgc.SdkHttpOperation>,
+    ): void {
       const lroOptions = hasDecorator('Azure.Core.@useFinalStateVia', sdkMethod.decorators);
       if (lroOptions) {
         goMethod.finalStateVia = <go.FinalStateVia>lroOptions['finalState'];
       }
       if (sdkMethod.lroMetadata.finalResponse?.resultSegments) {
         // 'resultSegments' is designed for furture extensibility, currently only has one segment
-        goMethod.operationLocationResultPath = sdkMethod.lroMetadata.finalResponse.resultSegments.map((segment) => {
-          return segment.serializationOptions.json?.name;
-        }).join('.');
+        goMethod.operationLocationResultPath = sdkMethod.lroMetadata.finalResponse.resultSegments
+          .map((segment) => {
+            return segment.serializationOptions.json?.name;
+          })
+          .join('.');
       }
     };
 
-    const setPageableInfo = function(goMethod: go.LROPageableMethod | go.PageableMethod, sdkMethod: tcgc.SdkLroPagingServiceMethod<tcgc.SdkHttpOperation> | tcgc.SdkPagingServiceMethod<tcgc.SdkHttpOperation>): void {
+    const setPageableInfo = function (
+      goMethod: go.LROPageableMethod | go.PageableMethod,
+      sdkMethod: tcgc.SdkLroPagingServiceMethod<tcgc.SdkHttpOperation> | tcgc.SdkPagingServiceMethod<tcgc.SdkHttpOperation>,
+    ): void {
       if (sdkMethod.pagingMetadata.nextLinkVerb) {
         switch (sdkMethod.pagingMetadata.nextLinkVerb) {
           case 'GET':
@@ -476,13 +498,17 @@ export class ClientAdapter {
         }
       }
       if (sdkMethod.pagingMetadata.nextLinkSegments) {
-        goMethod.nextLinkName = capitalize(sdkMethod.pagingMetadata.nextLinkSegments.map((segment) => {
-          if (segment.kind === 'property') {
-            return ensureNameCase(segment.name);
-          } else {
-            throw new AdapterError('UnsupportedTsp', `unsupported next link segment kind ${segment.kind}`, sdkMethod.__raw?.node);
-          }
-        }).join('.'));
+        goMethod.nextLinkName = capitalize(
+          sdkMethod.pagingMetadata.nextLinkSegments
+            .map((segment) => {
+              if (segment.kind === 'property') {
+                return ensureNameCase(segment.name);
+              } else {
+                throw new AdapterError('UnsupportedTsp', `unsupported next link segment kind ${segment.kind}`, sdkMethod.__raw?.node);
+              }
+            })
+            .join('.'),
+        );
       }
     };
 
@@ -569,7 +595,10 @@ export class ClientAdapter {
     }
   }
 
-  private adaptMethodParameters(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType | go.NextPageMethod): Map<tcgc.SdkHttpParameter, Array<go.MethodParameter>> {
+  private adaptMethodParameters(
+    sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>,
+    method: go.MethodType | go.NextPageMethod,
+  ): Map<tcgc.SdkHttpParameter, Array<go.MethodParameter>> {
     const paramMapping = new Map<tcgc.SdkHttpParameter, Array<go.MethodParameter>>();
 
     let optionalGroup: go.ParameterGroup | undefined;
@@ -644,13 +673,13 @@ export class ClientAdapter {
       let adaptedParam: go.MethodParameter;
       // for the @bodyRoot decorator opParam.type !== param.type which is obviously not a
       // spread parameter. we also need to check the usage flag to disambiguate these cases.
-      if (opParam.kind === 'body' && opParam.type.kind === 'model' && opParam.type !== param.type && (opParam.type.usage & tcgc.UsageFlags.Spread)) {
+      if (opParam.kind === 'body' && opParam.type.kind === 'model' && opParam.type !== param.type && opParam.type.usage & tcgc.UsageFlags.Spread) {
         const paramStyle = this.adaptParameterStyle(param);
         const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');
         // if the param is required then it's always passed by value
         const byVal = go.isRequiredParameter(paramStyle) ? true : isTypePassedByValue(param.type);
         const contentType = this.adaptContentType(opParam.defaultContentType);
-        const getSerializedNameFromProperty = function(property: tcgc.SdkModelPropertyType): string | undefined {
+        const getSerializedNameFromProperty = function (property: tcgc.SdkModelPropertyType): string | undefined {
           if (contentType === 'JSON') {
             return property.serializationOptions.json?.name;
           }
@@ -716,32 +745,26 @@ export class ClientAdapter {
           // Create parameter group metadata to track which parameters belong to it.
           const paramStyle = this.adaptParameterStyle(param);
           const isRequired = go.isRequiredParameter(paramStyle);
-          
+
           // Use the same naming approach as regular parameters for consistency
           const paramGroupName = ensureNameCase(param.type.name);
           const paramName = getEscapedReservedName(ensureNameCase(param.name, isRequired), 'Param');
-          
+
           // Remove the model from codeModel.models if it is a parameter group
-          const modelIndex = this.ta.getPkg().models.findIndex(m => m.name === paramGroupName);
+          const modelIndex = this.ta.getPkg().models.findIndex((m) => m.name === paramGroupName);
           if (modelIndex >= 0) {
             this.ta.getPkg().models.splice(modelIndex, 1);
           }
-          
+
           // Check if parameter group already exists
           let paramGroup = parameterGroups.get(paramGroupName);
           if (paramGroup) {
             continue;
           }
-          paramGroup = new go.ParameterGroup(
-            this.ta.getPkg(),
-            paramName,
-            paramGroupName,
-            isRequired,
-            'method'
-          );
+          paramGroup = new go.ParameterGroup(this.ta.getPkg(), paramName, paramGroupName, isRequired, 'method');
           // Use docs from model if present, otherwise generate default description
           if (param.type.summary || param.type.doc) {
-            paramGroup.docs.summary = param.type.summary
+            paramGroup.docs.summary = param.type.summary;
             paramGroup.docs.description = param.type.doc;
           } else {
             paramGroup.docs.summary = `${paramGroupName} contains a group of parameters for the ${method.receiver.type.name}.${method.name} method.`;
@@ -803,9 +826,11 @@ export class ClientAdapter {
         // we must check via param name and not reference equality. this is because a client param
         // can be used in multiple ways. e.g. a client param "apiVersion" that's used as a path param
         // in one method and a query param in another.
-        if (!method.receiver.type.parameters.find((v: go.ClientParameter) => {
-          return v.name === adaptedParam.name;
-        })) {
+        if (
+          !method.receiver.type.parameters.find((v: go.ClientParameter) => {
+            return v.name === adaptedParam.name;
+          })
+        ) {
           if (this.ta.codeModel.type === 'azure-arm' && adaptedParam.style !== 'literal' && adaptedParam.style !== 'required') {
             throw new AdapterError('UnsupportedTsp', 'optional client parameters for ARM is not supported', opParam.__raw?.node);
           }
@@ -845,12 +870,15 @@ export class ClientAdapter {
 
   /**
    * adapts the provided operation parameter to a Go method parameter
-   * 
+   *
    * @param opParam the operation parameter to adapt
    * @param verb the HTTP verb used for the operation to which the parameter belongs
    * @returns the adapted Go method parameter
    */
-  private adaptMethodParameter(opParam: tcgc.SdkBodyParameter | tcgc.SdkCookieParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter, verb: go.HTTPMethod): go.MethodParameter {
+  private adaptMethodParameter(
+    opParam: tcgc.SdkBodyParameter | tcgc.SdkCookieParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter,
+    verb: go.HTTPMethod,
+  ): go.MethodParameter {
     if (opParam.isApiVersionParam) {
       // we emit the api version param inline as a literal, never as a param.
       // the ClientOptions.APIVersion setting is used to change the version.
@@ -876,7 +904,9 @@ export class ClientAdapter {
     }
 
     let location: go.ParameterLocation = 'method';
-    const getClientParamsKey = function (opParam: tcgc.SdkBodyParameter | tcgc.SdkCookieParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): string {
+    const getClientParamsKey = function (
+      opParam: tcgc.SdkBodyParameter | tcgc.SdkCookieParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter,
+    ): string {
       // include the param kind in the key name as a client param can be used
       // in different places across methods (path/query)
       return `${opParam.name}-${opParam.kind}`;
@@ -947,13 +977,29 @@ export class ClientAdapter {
           if (type.kind !== 'slice') {
             throw new AdapterError('InternalError', `unexpected kind ${type.kind} for HeaderCollectionParameter ${methodParam.name}`, opParam.__raw?.node);
           }
-          adaptedParam = new go.HeaderCollectionParameter(paramName, opParam.serializedName, type, opParam.collectionFormat === 'simple' ? 'csv' : opParam.collectionFormat, paramStyle, byVal, location);
+          adaptedParam = new go.HeaderCollectionParameter(
+            paramName,
+            opParam.serializedName,
+            type,
+            opParam.collectionFormat === 'simple' ? 'csv' : opParam.collectionFormat,
+            paramStyle,
+            byVal,
+            location,
+          );
         } else {
           adaptedParam = new go.HeaderScalarParameter(paramName, opParam.serializedName, this.adaptHeaderScalarType(methodParam.type, true), paramStyle, byVal, location);
         }
         break;
       case 'path':
-        adaptedParam = new go.PathScalarParameter(paramName, opParam.serializedName, !opParam.allowReserved, this.adaptPathScalarParameterType(methodParam.type), paramStyle, byVal, location);
+        adaptedParam = new go.PathScalarParameter(
+          paramName,
+          opParam.serializedName,
+          !opParam.allowReserved,
+          this.adaptPathScalarParameterType(methodParam.type),
+          paramStyle,
+          byVal,
+          location,
+        );
         break;
       case 'query':
         if (opParam.collectionFormat) {
@@ -962,7 +1008,16 @@ export class ClientAdapter {
             throw new AdapterError('InternalError', `unexpected kind ${type.kind} for QueryCollectionParameter ${methodParam.name}`, opParam.__raw?.node);
           }
           // TODO: unencoded query param
-          adaptedParam = new go.QueryCollectionParameter(paramName, opParam.serializedName, true, type, opParam.collectionFormat === 'simple' ? 'csv' : (opParam.collectionFormat === 'form' ? 'multi' : opParam.collectionFormat), paramStyle, byVal, location);
+          adaptedParam = new go.QueryCollectionParameter(
+            paramName,
+            opParam.serializedName,
+            true,
+            type,
+            opParam.collectionFormat === 'simple' ? 'csv' : opParam.collectionFormat === 'form' ? 'multi' : opParam.collectionFormat,
+            paramStyle,
+            byVal,
+            location,
+          );
         } else {
           // TODO: unencoded query param
           adaptedParam = new go.QueryScalarParameter(paramName, opParam.serializedName, true, this.adaptQueryScalarParameterType(methodParam.type), paramStyle, byVal, location);
@@ -1005,7 +1060,7 @@ export class ClientAdapter {
     if (sdkMethod.access === 'internal') {
       respEnvName = uncapitalize(respEnvName);
     }
-    const respEnv = new go.ResponseEnvelope(respEnvName, {summary: createResponseEnvelopeDescription(respEnvName, this.getMethodNameForDocComment(method))}, method);
+    const respEnv = new go.ResponseEnvelope(respEnvName, { summary: createResponseEnvelopeDescription(respEnvName, this.getMethodNameForDocComment(method)) }, method);
     this.ta.getPkg().responseEnvelopes.push(respEnv);
 
     // add any headers
@@ -1020,7 +1075,12 @@ export class ClientAdapter {
         }
 
         // TODO: x-ms-header-collection-prefix
-        const headerResp = new go.HeaderScalarResponse(ensureNameCase(httpHeader.serializedName), this.adaptHeaderScalarType(httpHeader.type, false), httpHeader.serializedName, isTypePassedByValue(httpHeader.type));
+        const headerResp = new go.HeaderScalarResponse(
+          ensureNameCase(httpHeader.serializedName),
+          this.adaptHeaderScalarType(httpHeader.type, false),
+          httpHeader.serializedName,
+          isTypePassedByValue(httpHeader.type),
+        );
         headerResp.docs.summary = httpHeader.summary;
         headerResp.docs.description = httpHeader.doc;
         respEnv.headers.push(headerResp);
@@ -1050,10 +1110,8 @@ export class ClientAdapter {
     // however, we want the synthesized paged response envelope as that's what Go returns.
     if (sdkMethod.kind === 'lropaging' || sdkMethod.kind === 'paging') {
       // grab the paged response envelope type from the operation responses
-      sdkResponseType = sdkMethod.kind === 'lropaging' 
-        ? sdkMethod.lroMetadata.finalResponse?.result
-        : sdkMethod.operation.responses[0].type;
-        
+      sdkResponseType = sdkMethod.kind === 'lropaging' ? sdkMethod.lroMetadata.finalResponse?.result : sdkMethod.operation.responses[0].type;
+
       if (!sdkResponseType) {
         throw new AdapterError('InternalError', `paged method ${method.name} has no synthesized response type`, sdkMethod.__raw?.node);
       } else if (sdkResponseType.kind !== 'model') {
@@ -1105,7 +1163,7 @@ export class ClientAdapter {
         // For polymorphic models, check if we can find a concrete type that matches the discriminator value
         // If no concrete type is found, create a PolymorphicResult that uses the interface type
         // else use the concrete type as the result type
-        const concreteType = modelType.interface.possibleTypes.find(t => t.discriminatorValue?.literal === modelType.discriminatorValue?.literal);
+        const concreteType = modelType.interface.possibleTypes.find((t) => t.discriminatorValue?.literal === modelType.discriminatorValue?.literal);
         if (concreteType === undefined) {
           respEnv.result = new go.PolymorphicResult(modelType.interface);
         }
@@ -1132,11 +1190,11 @@ export class ClientAdapter {
 
   /**
    * creates the monomorphic response field name based on its type.
-   * 
+   *
    * for unknown, use Interface or RawJSON if setting is enabled
    * for basic type, map of basic type, map of UDTs, enum, use Value
    * for array of basic type, array of UDTs, use xxxArray
-   * 
+   *
    * @param type the type for which to create a name
    * @param fromArray indicates if there was recursion from a parent array
    * @returns the name
@@ -1276,11 +1334,15 @@ export class ClientAdapter {
     }
   }
 
-  private adaptHttpOperationExamples(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType, paramMapping: Map<tcgc.SdkHttpParameter, Array<go.MethodParameter>>) {
+  private adaptHttpOperationExamples(
+    sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>,
+    method: go.MethodType,
+    paramMapping: Map<tcgc.SdkHttpParameter, Array<go.MethodParameter>>,
+  ) {
     if (sdkMethod.operation.examples && sdkMethod.access !== 'internal') {
       for (const example of sdkMethod.operation.examples) {
         try {
-          const goExample = new go.MethodExample(example.name, {summary: example.doc}, example.filePath);
+          const goExample = new go.MethodExample(example.name, { summary: example.doc }, example.filePath);
           for (const param of example.parameters) {
             if (param.parameter.isApiVersionParam && param.parameter.clientDefaultValue) {
               // skip the api-version param as it's not a formal parameter
@@ -1311,15 +1373,17 @@ export class ClientAdapter {
             }
           }
           // only handle 200 response
-          const response = example.responses.find((v) => { return v.statusCode === 200; });
+          const response = example.responses.find((v) => {
+            return v.statusCode === 200;
+          });
           if (response) {
             goExample.responseEnvelope = new go.ResponseEnvelopeExample(method.returns);
             for (const header of response.headers) {
               // filter out LRO polling headers as they aren't useful on the response envelope
-              if (go.isLROMethod(method) && isLROPollingHeader(header.header.serializedName)){
+              if (go.isLROMethod(method) && isLROPollingHeader(header.header.serializedName)) {
                 continue;
               }
-              const goHeader = method.returns.headers.find(h => h.headerName === header.header.serializedName);
+              const goHeader = method.returns.headers.find((h) => h.headerName === header.header.serializedName);
               if (!goHeader) {
                 throw new AdapterError('InternalError', `can not find go header for example header ${header.header.serializedName}`);
               }
@@ -1422,7 +1486,9 @@ export class ClientAdapter {
           let concreteType: go.Model | go.PolymorphicModel | undefined;
           if (goType.kind === 'interface') {
             /* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */
-            concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue);
+            concreteType = goType.possibleTypes.find(
+              (t) => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue,
+            );
             if (concreteType === undefined) {
               // can't find the sub type of a discriminated type, fallback to the base type
               concreteType = goType.rootType;
@@ -1435,7 +1501,7 @@ export class ClientAdapter {
           }
           const ret = new go.StructExample(concreteType);
           for (const [k, v] of Object.entries(exampleType.value)) {
-            const field = concreteType.fields.find(f => f.serializedName === k);
+            const field = concreteType.fields.find((f) => f.serializedName === k);
             if (!field) {
               throw new AdapterError('InternalError', `field with serializedName '${k}' not found in model '${concreteType.name}'.`);
             }
@@ -1444,7 +1510,7 @@ export class ClientAdapter {
           if (exampleType.additionalPropertiesValue) {
             ret.additionalProperties = {};
             for (const [k, v] of Object.entries(exampleType.additionalPropertiesValue)) {
-              const filed = concreteType.fields.find(f => f.annotations.isAdditionalProperties);
+              const filed = concreteType.fields.find((f) => f.annotations.isAdditionalProperties);
               if (!filed) {
                 throw new AdapterError('InternalError', `additional properties field not found in model '${concreteType.name}'.`);
               }
@@ -1465,7 +1531,7 @@ export class ClientAdapter {
 
 /**
  * returns the record for the specified decorator's arguments if it exists
- * 
+ *
  * @param name the name of the decorator to find
  * @param decorators the array of decorators to search
  * @returns the decorator's record of arguments or undefined
@@ -1497,7 +1563,7 @@ interface ParameterStyleInfo {
   name: string;
   optional: boolean;
   type: tcgc.SdkType;
-};
+}
 
 /**
  * checks if the specified header is an LRO polling header.
