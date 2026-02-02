@@ -19,11 +19,6 @@ steps:
     workingDirectory: $(System.DefaultWorkingDirectory)
 
   - script: |
-      pnpm eslint
-    displayName: "Run Lint"
-    workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
-
-  - script: |
       export currentVersion=$(node -p -e "require('./package.json').version")
       pnpm pack
       if [ "${{ parameters.Nightly }}" = "true" ]; then

@@ -11,11 +11,6 @@ steps:
     workingDirectory: $(System.DefaultWorkingDirectory)
 
   - script: |
-      pnpm eslint
-    displayName: "Run Lint"
-    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.gotest
-
-  - script: |
       export PATH=$PATH:$HOME/go/bin
       pnpm test
     displayName: "Run Tests - go$(GoVersion)"

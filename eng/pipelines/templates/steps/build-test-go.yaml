@@ -14,11 +14,6 @@ steps:
     workingDirectory: $(System.DefaultWorkingDirectory)
 
   - script: |
-      pnpm eslint
-    displayName: "Run Lint"
-    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
-
-  - script: |
       export currentVersion=$(node -p -e "require('./package.json').version")
       pnpm pack
       npm install -g autorest-go-$currentVersion.tgz

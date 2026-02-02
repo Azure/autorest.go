@@ -1485,8 +1485,8 @@ export class ClientAdapter {
         if (goType.kind === 'interface' || goType.kind === 'model' || goType.kind === 'polymorphicModel') {
           let concreteType: go.Model | go.PolymorphicModel | undefined;
           if (goType.kind === 'interface') {
-            /* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */
             concreteType = goType.possibleTypes.find(
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
               (t) => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue,
             );
             if (concreteType === undefined) {
