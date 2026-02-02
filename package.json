@@ -9,11 +9,14 @@
     "modtidy": "node .scripts/modtidy.js",
     "buildvet": "node .scripts/buildvet.js",
     "gogetu": "node .scripts/gogetu.js",
-    "gotest": "node .scripts/gotest.js"
+    "gotest": "node .scripts/gotest.js",
+    "format": "prettier --write \"packages/*/src/**/*.ts\" \"packages/*/test/**/*.ts\"",
+    "format:check": "prettier --check \"packages/*/src/**/*.ts\" \"packages/*/test/**/*.ts\""
   },
   "devDependencies": {
     "@eslint/js": "catalog:",
     "@types/node": "catalog:",
+    "prettier": "catalog:",
     "typescript-eslint": "catalog:"
   }
 }

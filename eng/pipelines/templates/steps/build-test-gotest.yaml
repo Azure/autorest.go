@@ -6,6 +6,11 @@ steps:
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.gotest
 
   - script: |
+      pnpm -w format:check
+    displayName: "Check Code Format"
+    workingDirectory: $(System.DefaultWorkingDirectory)
+
+  - script: |
       pnpm eslint
     displayName: "Run Lint"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.gotest
