@@ -140,19 +140,19 @@ const libDef = {
     'InvalidArgument': {
       severity: 'error',
       messages: {
-        default: 'Invalid arguments were passed to the emitter.'
+        default: paramMessage`Invalid arguments were passed to the emitter: ${'msg'}`
       }
     },
     'NameCollision': {
       severity: 'error',
       messages: {
-        default: paramMessage`The emitter automatically renamed one or more types which resulted in a type name collision. Please update the client.tsp to rename the type(s) to avoid the collision.\n${'stack'}`
+        default: paramMessage`The emitter automatically renamed one or more types which resulted in a type name collision. Please update the client.tsp to rename the type(s) to avoid the collision: ${'msg'}`
       }
     },
     'UnsupportedTsp': {
       severity: 'error',
       messages: {
-        default: paramMessage`The emitter encountered a TypeSpec definition that is currently not supported.\n${'stack'}`
+        default: paramMessage`The emitter encountered a TypeSpec definition that is currently not supported: ${'msg'}`
       }
     }
   },
