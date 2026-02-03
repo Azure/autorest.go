@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { camelCase, capitalize } from '@azure-tools/codegen';
 import * as go from '../../../codemodel.go/src/index.js';
+import * as naming from '../../../naming.go/src/naming.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 import { fixUpMethodName } from './operations.js';
@@ -71,7 +71,7 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
       for (const example of method.examples) {
         // function signature
         exampleText += `// Generated from example definition: ${example.filePath}\n`;
-        const exampleFuncNamePrefix = method.examples.length > 1 ? `_${camelCase(example.name)}` : '';
+        const exampleFuncNamePrefix = method.examples.length > 1 ? `_${helpers.camelCase(example.name)}` : '';
         exampleText += `func Example${client.name}_${fixUpMethodName(method)}${exampleFuncNamePrefix}() {\n`;
 
         // create credential
@@ -150,7 +150,7 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
         let methodOptionalParametersText = 'nil';
         if (methodOptionalParameters.length > 0) {
           methodOptionalParametersText = `&${go.getPackageName(method.optionalParamsGroup.pkg)}.${method.optionalParamsGroup.groupName}{\n`;
-          methodOptionalParametersText += methodOptionalParameters.map(p => `${capitalize(p.parameter.name)}: ${getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)}`).join(',\n');
+          methodOptionalParametersText += methodOptionalParameters.map(p => `${naming.capitalize(p.parameter.name)}: ${getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)}`).join(',\n');
           methodOptionalParametersText += `}`;
         }
 
@@ -405,7 +405,7 @@ function getPointerValue(type: go.WireType, valueString: string, byValue: boolea
 
 function jsonToGo(value: any, indent: string): string {
   if (typeof value === 'string') {
-    return `${indent}"${value}"`;
+    return `${indent}"${escapeString(value)}"`;
   } else if (typeof value === 'number' || typeof value === 'bigint') {
     return `${indent}${value}`;
   } else if (typeof value === 'boolean') {

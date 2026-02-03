@@ -33,7 +33,7 @@ var validResource2 = methodsubscriptionidgroup.SubscriptionResource2{
 }
 
 func TestSubscriptionResource2OperationsClient_Delete(t *testing.T) {
-	delResp, err := clientFactory.NewSubscriptionResource2OperationsClient().Delete(context.Background(), subscriptionIdExpected, "sub-resource-1", nil)
+	delResp, err := clientFactory.NewSubscriptionResource2OperationsClient().Delete(context.Background(), subscriptionIdExpected, "sub-resource-2", nil)
 	require.NoError(t, err)
 	require.Zero(t, delResp)
 }
@@ -44,14 +44,14 @@ func TestSubscriptionResource2OperationsClient_Put(t *testing.T) {
 			ConfigValue: to.Ptr(string("test-config")),
 		},
 	}
-	putResp, err := clientFactory.NewSubscriptionResource2OperationsClient().Put(context.Background(), subscriptionIdExpected, "sub-resource-1", validResource, nil)
+	putResp, err := clientFactory.NewSubscriptionResource2OperationsClient().Put(context.Background(), subscriptionIdExpected, "sub-resource-2", validResource, nil)
 	require.NoError(t, err)
 	require.NotNil(t, putResp)
 	require.Equal(t, validResource2, putResp.SubscriptionResource2)
 }
 
 func TestSubscriptionResource2OperationsClient_Get(t *testing.T) {
-	getResp, err := clientFactory.NewSubscriptionResource2OperationsClient().Get(context.Background(), subscriptionIdExpected, "sub-resource-1", nil)
+	getResp, err := clientFactory.NewSubscriptionResource2OperationsClient().Get(context.Background(), subscriptionIdExpected, "sub-resource-2", nil)
 	require.NoError(t, err)
 	require.NotNil(t, getResp)
 	require.Equal(t, validResource2, getResp.SubscriptionResource2)

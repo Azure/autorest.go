@@ -4,8 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as go from '../../../codemodel.go/src/index.js';
-import { comment } from '@azure-tools/codegen';
-import { values } from '@azure-tools/linq';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 
@@ -48,21 +46,21 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
   let needsJSONPopulateAny = false;
   let needsJSONPopulateMultipart = false;
   let serdeTextBody = '';
-  for (const modelDef of values(modelDefs)) {
+  for (const modelDef of modelDefs) {
     modelText += modelDef.text();
 
     modelDef.Methods.sort((a: ModelMethod, b: ModelMethod) => { return helpers.sortAscending(a.name, b.name); });
-    for (const method of values(modelDef.Methods)) {
+    for (const method of modelDef.Methods) {
       if (method.desc.length > 0) {
-        modelText += `${comment(method.desc, '// ', undefined, helpers.commentLength)}\n`;
+        modelText += `${helpers.comment(method.desc, '// ', undefined, helpers.commentLength)}\n`;
       }
       modelText += method.text;
     }
 
     modelDef.SerDe.methods.sort((a: ModelMethod, b: ModelMethod) => { return helpers.sortAscending(a.name, b.name); });
-    for (const method of values(modelDef.SerDe.methods)) {
+    for (const method of modelDef.SerDe.methods) {
       if (method.desc.length > 0) {
-        serdeTextBody += `${comment(method.desc, '// ', undefined, helpers.commentLength)}\n`;
+        serdeTextBody += `${helpers.comment(method.desc, '// ', undefined, helpers.commentLength)}\n`;
       }
       serdeTextBody += method.text;
     }
@@ -247,7 +245,7 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       serdeImports.add('encoding/xml');
       let needsDateTimeMarshalling = false;
       let byteArrayFormat = false;
-      for (const field of values(model.fields)) {
+      for (const field of model.fields) {
         serdeImports.addForType(field.type);
         if (field.type.kind === 'time') {
           needsDateTimeMarshalling = true;
@@ -287,7 +285,7 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
 }
 
 function needsXMLDictionaryHelper(modelType: go.Model): boolean {
-  for (const field of values(modelType.fields)) {
+  for (const field of modelType.fields) {
     // additional properties uses an internal wrapper type with its own serde impl
     if (field.type.kind === 'map' && !field.annotations.isAdditionalProperties) {
       return true;
@@ -297,7 +295,7 @@ function needsXMLDictionaryHelper(modelType: go.Model): boolean {
 }
 
 function needsXMLArrayMarshalling(modelType: go.Model): boolean {
-  for (const prop of values(modelType.fields)) {
+  for (const prop of modelType.fields) {
     if (prop.type.kind === 'slice') {
       return true;
     }
@@ -318,7 +316,7 @@ function generateDiscriminatorMarkerMethod(type: go.Interface, modelDef: ModelDe
     // the marker method is on a child type, so return an instance of the parent
     // type by copying the parent values into a new instance.
     method += `\n\treturn &${type.rootType.name}{\n`;
-    for (const field of values(type.rootType.fields)) {
+    for (const field of type.rootType.fields) {
       method += `\t\t${field.name}: ${modelDef.receiverName()}.${field.name},\n`;
     }
     method += '\t}\n}\n\n';
@@ -875,7 +873,7 @@ function generateAliasType(modelType: go.Model | go.PolymorphicModel, receiver: 
   let text = `\ttype alias ${modelType.name}\n`;
   text += '\taux := &struct {\n';
   text += '\t\t*alias\n';
-  for (const field of values(modelType.fields)) {
+  for (const field of modelType.fields) {
     const sn = getXMLSerialization(modelType, field);
     if (field.type.kind === 'time') {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');

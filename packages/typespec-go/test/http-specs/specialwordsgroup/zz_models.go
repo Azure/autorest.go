@@ -156,6 +156,11 @@ type Lambda struct {
 	Name *string
 }
 
+type ModelWithList struct {
+	// REQUIRED
+	List *string
+}
+
 type Not struct {
 	// REQUIRED
 	Name *string

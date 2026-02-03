@@ -96,3 +96,42 @@ func (client *SpecialWordsModelPropertiesClient) sameAsModelCreateRequest(ctx co
 	}
 	return req, nil
 }
+
+// WithList -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - SpecialWordsModelPropertiesClientWithListOptions contains the optional parameters for the SpecialWordsModelPropertiesClient.WithList
+//     method.
+func (client *SpecialWordsModelPropertiesClient) WithList(ctx context.Context, body ModelWithList, options *SpecialWordsModelPropertiesClientWithListOptions) (SpecialWordsModelPropertiesClientWithListResponse, error) {
+	var err error
+	const operationName = "SpecialWordsModelPropertiesClient.WithList"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.withListCreateRequest(ctx, body, options)
+	if err != nil {
+		return SpecialWordsModelPropertiesClientWithListResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return SpecialWordsModelPropertiesClientWithListResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return SpecialWordsModelPropertiesClientWithListResponse{}, err
+	}
+	return SpecialWordsModelPropertiesClientWithListResponse{}, nil
+}
+
+// withListCreateRequest creates the WithList request.
+func (client *SpecialWordsModelPropertiesClient) withListCreateRequest(ctx context.Context, body ModelWithList, _ *SpecialWordsModelPropertiesClientWithListOptions) (*policy.Request, error) {
+	urlPath := "/special-words/model-properties/list"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}

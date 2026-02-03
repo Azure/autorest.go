@@ -96,7 +96,7 @@ export function trimPackagePrefix(pkg: string, val: string): string {
   return val.substring(pkg.length);
 }
 
-// the following was copied from @azure-tools/codegen to keep compat without dragging in YAD
+// the following was copied from @azure-tools/codegen as it's being deprecated
 const acronyms = new Set([
   'ip',
   'os',
@@ -114,6 +114,7 @@ export function capitalize(str: string): string {
 export function uncapitalize(str: string): string {
   return str ? `${str.charAt(0).toLowerCase()}${str.slice(1)}` : str;
 }
+// end ports from @azure-tools/codegen
 
 export function createPolymorphicInterfaceName(base: string): string {
   return base + 'Classification';

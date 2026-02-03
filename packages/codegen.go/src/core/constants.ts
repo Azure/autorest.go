@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { values } from '@azure-tools/linq';
 import * as helpers from './helpers.js';
 import * as go from '../../../codemodel.go/src/index.js';
 
@@ -20,12 +19,12 @@ export function generateConstants(pkg: go.PackageContent): string {
 
   let text = helpers.contentPreamble(pkg);
 
-  for (const enm of values(pkg.constants)) {
+  for (const enm of pkg.constants) {
     text += helpers.formatDocCommentWithPrefix(enm.name, enm.docs);
     text += `type ${enm.name} ${enm.type}\n\n`;
     const vals = new Array<string>();
     text += 'const (\n';
-    for (const val of values(enm.values)) {
+    for (const val of enm.values) {
       text += helpers.formatDocCommentWithPrefix(val.name, val.docs);
       let formatValue = `"${val.value}"`;
       if (enm.type !== 'string') {
@@ -38,7 +37,7 @@ export function generateConstants(pkg: go.PackageContent): string {
     text += `// ${enm.valuesFuncName} returns the possible values for the ${enm.name} const type.\n`;
     text += `func ${enm.valuesFuncName}() []${enm.name} {\n`;
     text += `\treturn []${enm.name}{\t\n`;
-    for (const val of values(vals)) {
+    for (const val of vals) {
       text += `\t\t${val},\n`;
     }
     text += '\t}\n';

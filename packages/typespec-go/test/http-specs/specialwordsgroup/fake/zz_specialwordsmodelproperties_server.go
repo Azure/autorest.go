@@ -24,6 +24,10 @@ type SpecialWordsModelPropertiesServer struct {
 	// SameAsModel is the fake for method SpecialWordsModelPropertiesClient.SameAsModel
 	// HTTP status codes to indicate success: http.StatusNoContent
 	SameAsModel func(ctx context.Context, body specialwordsgroup.SameAsModel, options *specialwordsgroup.SpecialWordsModelPropertiesClientSameAsModelOptions) (resp azfake.Responder[specialwordsgroup.SpecialWordsModelPropertiesClientSameAsModelResponse], errResp azfake.ErrorResponder)
+
+	// WithList is the fake for method SpecialWordsModelPropertiesClient.WithList
+	// HTTP status codes to indicate success: http.StatusNoContent
+	WithList func(ctx context.Context, body specialwordsgroup.ModelWithList, options *specialwordsgroup.SpecialWordsModelPropertiesClientWithListOptions) (resp azfake.Responder[specialwordsgroup.SpecialWordsModelPropertiesClientWithListResponse], errResp azfake.ErrorResponder)
 }
 
 // NewSpecialWordsModelPropertiesServerTransport creates a new instance of SpecialWordsModelPropertiesServerTransport with the provided implementation.
@@ -66,6 +70,8 @@ func (s *SpecialWordsModelPropertiesServerTransport) dispatchToMethodFake(req *h
 				res.resp, res.err = s.dispatchDictMethods(req)
 			case "SpecialWordsModelPropertiesClient.SameAsModel":
 				res.resp, res.err = s.dispatchSameAsModel(req)
+			case "SpecialWordsModelPropertiesClient.WithList":
+				res.resp, res.err = s.dispatchWithList(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
 			}
@@ -117,6 +123,29 @@ func (s *SpecialWordsModelPropertiesServerTransport) dispatchSameAsModel(req *ht
 		return nil, err
 	}
 	respr, errRespr := s.srv.SameAsModel(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *SpecialWordsModelPropertiesServerTransport) dispatchWithList(req *http.Request) (*http.Response, error) {
+	if s.srv.WithList == nil {
+		return nil, &nonRetriableError{errors.New("fake for method WithList not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[specialwordsgroup.ModelWithList](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.WithList(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
