@@ -10,7 +10,7 @@ steps:
 
   - script: |
       pnpm -w format:check
-    displayName: "Check Code Format"
+    displayName: "Formatting and Lint"
     workingDirectory: $(System.DefaultWorkingDirectory)
 
   - script: |
