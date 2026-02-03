@@ -1,5 +1,11 @@
 # Release History
 
+## 0.9.3 (unreleased)
+
+### Other Changes
+
+* Allow customized datetime encoding format
+
 ## 0.9.2 (2026-01-29)
 
 ### Bugs Fixed
