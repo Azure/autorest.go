@@ -105,13 +105,17 @@ func (p *ParameterGroupOperationsServerTransport) dispatchTestOperation1(req *ht
 	if err != nil {
 		return nil, err
 	}
-	clientRequestIDParam := getOptional(getHeaderValue(req.Header, "x-ms-client-request-id"))
 	correlationIDParam := getOptional(getHeaderValue(req.Header, "x-ms-correlation-id"))
 	params := armtest.TestManagementRequestOptions{
-		ClientRequestID: clientRequestIDParam,
-		CorrelationID:   correlationIDParam,
+		ClientRequestID: getHeaderValue(req.Header, "x-ms-client-request-id"),
 	}
-	respr, errRespr := p.srv.TestOperation1(req.Context(), resourceGroupNameParam, widgetNameParam, params, nil)
+	var options *armtest.ParameterGroupOperationsClientTestOperation1Options
+	if correlationIDParam != nil {
+		options = &armtest.ParameterGroupOperationsClientTestOperation1Options{
+			CorrelationID: correlationIDParam,
+		}
+	}
+	respr, errRespr := p.srv.TestOperation1(req.Context(), resourceGroupNameParam, widgetNameParam, params, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -144,13 +148,17 @@ func (p *ParameterGroupOperationsServerTransport) dispatchTestOperation2(req *ht
 	if err != nil {
 		return nil, err
 	}
-	clientRequestIDParam := getOptional(getHeaderValue(req.Header, "x-ms-client-request-id"))
 	correlationIDParam := getOptional(getHeaderValue(req.Header, "x-ms-correlation-id"))
 	params := armtest.TestManagementRequestOptions{
-		ClientRequestID: clientRequestIDParam,
-		CorrelationID:   correlationIDParam,
+		ClientRequestID: getHeaderValue(req.Header, "x-ms-client-request-id"),
 	}
-	respr, errRespr := p.srv.TestOperation2(req.Context(), resourceGroupNameParam, widgetNameParam, params, nil)
+	var options *armtest.ParameterGroupOperationsClientTestOperation2Options
+	if correlationIDParam != nil {
+		options = &armtest.ParameterGroupOperationsClientTestOperation2Options{
+			CorrelationID: correlationIDParam,
+		}
+	}
+	respr, errRespr := p.srv.TestOperation2(req.Context(), resourceGroupNameParam, widgetNameParam, params, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

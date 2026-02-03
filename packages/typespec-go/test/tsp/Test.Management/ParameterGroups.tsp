@@ -16,7 +16,7 @@ namespace Microsoft.Test;
 model `test-management-request-options` {
   @doc("Client request ID for tracking")
   @header("x-ms-client-request-id")
-  clientRequestId?: string;
+  clientRequestId: string;
 
   @doc("Optional correlation ID")
   @header("x-ms-correlation-id")

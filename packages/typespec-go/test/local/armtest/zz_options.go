@@ -24,20 +24,19 @@ type LROClientBeginOkResponseWithAsyncHeaderOptions struct {
 // ParameterGroupOperationsClientTestOperation1Options contains the optional parameters for the ParameterGroupOperationsClient.TestOperation1
 // method.
 type ParameterGroupOperationsClientTestOperation1Options struct {
-	// placeholder for future optional parameters
+	// Optional correlation ID
+	CorrelationID *string
 }
 
 // ParameterGroupOperationsClientTestOperation2Options contains the optional parameters for the ParameterGroupOperationsClient.TestOperation2
 // method.
 type ParameterGroupOperationsClientTestOperation2Options struct {
-	// placeholder for future optional parameters
+	// Optional correlation ID
+	CorrelationID *string
 }
 
 // Request options for test operations
 type TestManagementRequestOptions struct {
 	// Client request ID for tracking
-	ClientRequestID *string
-
-	// Optional correlation ID
-	CorrelationID *string
+	ClientRequestID string
 }

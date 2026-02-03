@@ -722,13 +722,13 @@ export class ClientAdapter {
           // No properties mapped to HTTP params, treat as regular parameter
           adaptedParam = this.adaptMethodParameter(opParam, method.httpMethod);
         } else {
-          // Create parameter group metadata to track which parameters belong to it.
-          const paramStyle = this.adaptParameterStyle(param);
-          const isRequired = go.isRequiredParameter(paramStyle);
+          // Parameter group handling:
+          // - Required params stay in the named parameter group
+          // - Optional params are moved to the method's options type
+          // - If no required params remain, the param group "evaporates"
           
           // Use the original name to preserve the exact name as authored
           const paramGroupName = ensureNameCase(param.type.__raw?.kind === 'Model' ? param.type.__raw?.name : param.type.name);
-          const paramName = getEscapedReservedName(ensureNameCase(param.name, isRequired), 'Param');
           
           // Remove the model from codeModel.models if it is a parameter group
           const modelIndex = this.ta.getPkg().models.findIndex(m => m.name === paramGroupName);
@@ -738,36 +738,55 @@ export class ClientAdapter {
           
           // Check if parameter group already exists
           let paramGroup = this.parameterGroups.get(paramGroupName);
-          if (!paramGroup) {
-            paramGroup = new go.ParameterGroup(
-              this.ta.getPkg(),
-              paramName,
-              paramGroupName,
-              isRequired,
-              'method'
-            );
-            // Use docs from model if present, otherwise generate default description
-            if (param.type.summary || param.type.doc) {
-              paramGroup.docs.summary = param.type.summary
-              paramGroup.docs.description = param.type.doc;
-            } else {
-              paramGroup.docs.summary = `${paramGroupName} contains a group of parameters for the ${method.receiver.type.name}.${method.name} method.`;
-            }
-            this.parameterGroups.set(paramGroupName, paramGroup);
-          }
 
-          // Add each property as a method parameter and associate with the group
+          // Add each property as a method parameter
           for (let i = 0; i < modelProperties.length; i++) {
             const property = modelProperties[i];
             const propertyOpParam = correspondingOpParams[i];
             const adaptedPropertyParam = this.adaptMethodParameter(propertyOpParam, method.httpMethod);
             adaptedPropertyParam.docs.summary = property.summary;
             adaptedPropertyParam.docs.description = property.doc;
-            adaptedPropertyParam.group = paramGroup;
-            addParameterToMethod(adaptedPropertyParam, propertyOpParam);
-            // Only add to paramGroup.params if not already present
-            if (!paramGroup.params.some(p => p.name === adaptedPropertyParam.name)) {
-              paramGroup.params.push(adaptedPropertyParam);
+            
+            if (adaptedPropertyParam.style === 'required' || adaptedPropertyParam.style === 'literal') {
+              // Required params stay in the named parameter group
+              
+              // Create the param group if it doesn't exist yet
+              if (!paramGroup) {
+                const paramStyle = this.adaptParameterStyle(param);
+                const isRequired = go.isRequiredParameter(paramStyle);
+                const paramName = getEscapedReservedName(ensureNameCase(param.name, isRequired), 'Param');
+                
+                paramGroup = new go.ParameterGroup(
+                  this.ta.getPkg(),
+                  paramName,
+                  paramGroupName,
+                  true, // param group with required params is always required
+                  'method'
+                );
+                // Use docs from model if present, otherwise generate default description
+                if (param.type.summary || param.type.doc) {
+                  paramGroup.docs.summary = param.type.summary;
+                  paramGroup.docs.description = param.type.doc;
+                } else {
+                  paramGroup.docs.summary = `${paramGroupName} contains a group of parameters for the ${method.receiver.type.name}.${method.name} method.`;
+                }
+                this.parameterGroups.set(paramGroupName, paramGroup);
+              }
+              
+              adaptedPropertyParam.group = paramGroup;
+              addParameterToMethod(adaptedPropertyParam, propertyOpParam);
+              // Only add to paramGroup.params if not already present
+              if (!paramGroup.params.some(p => p.name === adaptedPropertyParam.name)) {
+                paramGroup.params.push(adaptedPropertyParam);
+              }
+            } else {
+              // Optional params are moved to the method's options type
+              if (!optionalGroup) {
+                throw new AdapterError('InternalError', `optional parameter ${property.name} has no optional parameter group`, property.__raw?.node);
+              }
+              adaptedPropertyParam.group = optionalGroup;
+              addParameterToMethod(adaptedPropertyParam, propertyOpParam);
+              optionalGroup.params.push(adaptedPropertyParam);
             }
           }
           continue; // Skip regular parameter handling

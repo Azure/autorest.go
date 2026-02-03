@@ -71,7 +71,7 @@ func (client *ParameterGroupOperationsClient) TestOperation1(ctx context.Context
 }
 
 // testOperation1CreateRequest creates the TestOperation1 request.
-func (client *ParameterGroupOperationsClient) testOperation1CreateRequest(ctx context.Context, resourceGroupName string, widgetName string, params TestManagementRequestOptions, _ *ParameterGroupOperationsClientTestOperation1Options) (*policy.Request, error) {
+func (client *ParameterGroupOperationsClient) testOperation1CreateRequest(ctx context.Context, resourceGroupName string, widgetName string, params TestManagementRequestOptions, options *ParameterGroupOperationsClientTestOperation1Options) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -93,11 +93,9 @@ func (client *ParameterGroupOperationsClient) testOperation1CreateRequest(ctx co
 	reqQP.Set("api-version", "2025-01-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if params.ClientRequestID != nil {
-		req.Raw().Header["x-ms-client-request-id"] = []string{*params.ClientRequestID}
-	}
-	if params.CorrelationID != nil {
-		req.Raw().Header["x-ms-correlation-id"] = []string{*params.CorrelationID}
+	req.Raw().Header["x-ms-client-request-id"] = []string{params.ClientRequestID}
+	if options != nil && options.CorrelationID != nil {
+		req.Raw().Header["x-ms-correlation-id"] = []string{*options.CorrelationID}
 	}
 	return req, nil
 }
@@ -143,7 +141,7 @@ func (client *ParameterGroupOperationsClient) TestOperation2(ctx context.Context
 }
 
 // testOperation2CreateRequest creates the TestOperation2 request.
-func (client *ParameterGroupOperationsClient) testOperation2CreateRequest(ctx context.Context, resourceGroupName string, widgetName string, params TestManagementRequestOptions, _ *ParameterGroupOperationsClientTestOperation2Options) (*policy.Request, error) {
+func (client *ParameterGroupOperationsClient) testOperation2CreateRequest(ctx context.Context, resourceGroupName string, widgetName string, params TestManagementRequestOptions, options *ParameterGroupOperationsClientTestOperation2Options) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/testOperation2"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -165,11 +163,9 @@ func (client *ParameterGroupOperationsClient) testOperation2CreateRequest(ctx co
 	reqQP.Set("api-version", "2025-01-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if params.ClientRequestID != nil {
-		req.Raw().Header["x-ms-client-request-id"] = []string{*params.ClientRequestID}
-	}
-	if params.CorrelationID != nil {
-		req.Raw().Header["x-ms-correlation-id"] = []string{*params.CorrelationID}
+	req.Raw().Header["x-ms-client-request-id"] = []string{params.ClientRequestID}
+	if options != nil && options.CorrelationID != nil {
+		req.Raw().Header["x-ms-correlation-id"] = []string{*options.CorrelationID}
 	}
 	return req, nil
 }
