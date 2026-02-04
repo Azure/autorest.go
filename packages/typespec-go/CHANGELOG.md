@@ -5,6 +5,7 @@
 ### Other Changes
 
 * Improved diagnostic messages to include detail message for known issues.
+* Allow customized datetime encoding format
 
 ## 0.9.2 (2026-01-29)
 
