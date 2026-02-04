@@ -12,7 +12,12 @@ export class GenerateContext {
   public packageName: string;
   public importManager: ImportManager;
 
-  public constructor(public host: AutorestExtensionHost, public codeModel: TestCodeModel, public testConfig: TestConfig, public swaggerCommit = 'main') {
+  public constructor(
+    public host: AutorestExtensionHost,
+    public codeModel: TestCodeModel,
+    public testConfig: TestConfig,
+    public swaggerCommit = 'main',
+  ) {
     this.packageName = this.codeModel?.language?.go?.packageName;
     this.importManager = new ImportManager();
     if (this.packageName) {

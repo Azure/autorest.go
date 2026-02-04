@@ -1,9 +1,9 @@
 /*---------------------------------------------------------------------------------------------
-*  Copyright (c) Microsoft Corporation. All rights reserved.
-*  Licensed under the MIT License. See License.txt in the project root for license information.
-*--------------------------------------------------------------------------------------------*/
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 
-import { ErrorCode } from "../../../codemodel.go/src/errors.js";
+import { ErrorCode } from '../../../codemodel.go/src/errors.js';
 
 /**
  * CodegenError is thrown when the emitter fails some condition

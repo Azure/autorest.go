@@ -33,6 +33,9 @@ catalogs:
     eslint:
       specifier: ^9.39.1
       version: 9.39.2
+    prettier:
+      specifier: ^3.5.3
+      version: 3.8.1
     semver:
       specifier: ^7.7.1
       version: 7.7.2
@@ -56,6 +59,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 20.19.27
+      prettier:
+        specifier: 'catalog:'
+        version: 3.8.1
       typescript-eslint:
         specifier: 'catalog:'
         version: 8.49.0(eslint@9.39.2)(typescript@5.9.3)
@@ -5546,7 +5552,7 @@ snapshots:
       cli-table3: 0.6.5
       pathe: 2.0.3
       picocolors: 1.1.1
-      prettier: 3.7.4
+      prettier: 3.8.1
 
   '@alloy-js/markdown@0.22.0':
     dependencies:

@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-*  Copyright (c) Microsoft Corporation. All rights reserved.
-*  Licensed under the MIT License. See License.txt in the project root for license information.
-*--------------------------------------------------------------------------------------------*/
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 
 import * as go from '../../codemodel.go/src/index.js';
 import { generateClientFactory } from './core/clientFactory.js';
@@ -167,7 +167,7 @@ export class Emitter {
       // don't overwrite an existing version.go file
       const versionGo = generateVersionInfo(this.codeModel.root);
       const versionGoFileName = `${this.filePrefix}version.go`;
-      if (versionGo.length > 0 && !await this.fs.exists(versionGoFileName)) {
+      if (versionGo.length > 0 && !(await this.fs.exists(versionGoFileName))) {
         await this.fs.write(versionGoFileName, versionGo);
       }
     }
@@ -207,7 +207,7 @@ export class Emitter {
     // don't overwrite an existing LICENSE.txt file
     const licenseTxt = generateLicenseTxt(this.codeModel.options);
     const licenseTxtFileName = 'LICENSE.txt';
-    if (licenseTxt && !await this.fs.exists(licenseTxtFileName)) {
+    if (licenseTxt && !(await this.fs.exists(licenseTxtFileName))) {
       await this.fs.write(licenseTxtFileName, licenseTxt);
     }
   }
@@ -226,7 +226,7 @@ export class Emitter {
 
   /**
    * recursively emits package contents.
-   * 
+   *
    * @param emitForPkg the package contents to emit
    */
   private async recursiveEmit(emitForPkg: (pkg: go.PackageContent, write: (name: string, content: string, subdir?: string) => Promise<void>) => Promise<void>): Promise<void> {
@@ -258,7 +258,7 @@ export class Emitter {
 /**
  * creates a snake cased client file name from the provided client name.
  * the returned name will not contain the .go suffix.
- * 
+ *
  * @param clientName the name of the client (e.g. FooClient)
  * @param suffix the client name suffix. the default value is 'client'
  * @returns a snaked client file name prefix (e.g. foo_client)
@@ -276,42 +276,64 @@ function snakeClientFileName(clientName: string, suffix: string = 'client'): str
 
 /**
  * recursively sorts code model contents by name in alphabetical order.
- * 
+ *
  * @param pkg the contents to sort
  */
 function sortContent(pkg: go.PackageContent): void {
-  const sortAscending = function(a: string, b: string): number {
+  const sortAscending = function (a: string, b: string): number {
     return a < b ? -1 : a > b ? 1 : 0;
   };
 
-  pkg.constants.sort((a: go.Constant, b: go.Constant) => { return sortAscending(a.name, b.name); });
+  pkg.constants.sort((a: go.Constant, b: go.Constant) => {
+    return sortAscending(a.name, b.name);
+  });
   for (const enm of pkg.constants) {
-    enm.values.sort((a: go.ConstantValue, b: go.ConstantValue) => { return sortAscending(a.name, b.name); });
+    enm.values.sort((a: go.ConstantValue, b: go.ConstantValue) => {
+      return sortAscending(a.name, b.name);
+    });
   }
 
-  pkg.interfaces.sort((a: go.Interface, b: go.Interface) => { return sortAscending(a.name, b.name); });
+  pkg.interfaces.sort((a: go.Interface, b: go.Interface) => {
+    return sortAscending(a.name, b.name);
+  });
   for (const iface of pkg.interfaces) {
     // we sort by literal value so that the switch/case statements in polymorphic_helpers.go
     // are ordered by the literal value which can be somewhat different from the model name.
-    iface.possibleTypes.sort((a: go.PolymorphicModel, b: go.PolymorphicModel) => { return sortAscending(a.discriminatorValue!.literal, b.discriminatorValue!.literal); });
+    iface.possibleTypes.sort((a: go.PolymorphicModel, b: go.PolymorphicModel) => {
+      return sortAscending(a.discriminatorValue!.literal, b.discriminatorValue!.literal);
+    });
   }
 
-  pkg.models.sort((a: go.Model | go.PolymorphicModel, b: go.Model | go.PolymorphicModel) => { return sortAscending(a.name, b.name); });
+  pkg.models.sort((a: go.Model | go.PolymorphicModel, b: go.Model | go.PolymorphicModel) => {
+    return sortAscending(a.name, b.name);
+  });
   for (const model of pkg.models) {
-    model.fields.sort((a: go.ModelField, b: go.ModelField) => { return sortAscending(a.name, b.name); });
+    model.fields.sort((a: go.ModelField, b: go.ModelField) => {
+      return sortAscending(a.name, b.name);
+    });
   }
 
-  pkg.paramGroups.sort((a: go.Struct, b: go.Struct) => { return sortAscending(a.name, b.name); });
+  pkg.paramGroups.sort((a: go.Struct, b: go.Struct) => {
+    return sortAscending(a.name, b.name);
+  });
   for (const paramGroup of pkg.paramGroups) {
-    paramGroup.fields.sort((a: go.StructField, b: go.StructField) => { return sortAscending(a.name, b.name); });
+    paramGroup.fields.sort((a: go.StructField, b: go.StructField) => {
+      return sortAscending(a.name, b.name);
+    });
   }
 
-  pkg.responseEnvelopes.sort((a: go.ResponseEnvelope, b: go.ResponseEnvelope) => { return sortAscending(a.name, b.name); });
+  pkg.responseEnvelopes.sort((a: go.ResponseEnvelope, b: go.ResponseEnvelope) => {
+    return sortAscending(a.name, b.name);
+  });
   for (const respEnv of pkg.responseEnvelopes) {
-    respEnv.headers.sort((a: go.HeaderScalarResponse | go.HeaderMapResponse, b: go.HeaderScalarResponse | go.HeaderMapResponse) => { return sortAscending(a.fieldName, b.fieldName); });
+    respEnv.headers.sort((a: go.HeaderScalarResponse | go.HeaderMapResponse, b: go.HeaderScalarResponse | go.HeaderMapResponse) => {
+      return sortAscending(a.fieldName, b.fieldName);
+    });
   }
 
-  pkg.clients.sort((a: go.Client, b: go.Client) => { return sortAscending(a.name, b.name); });
+  pkg.clients.sort((a: go.Client, b: go.Client) => {
+    return sortAscending(a.name, b.name);
+  });
   for (const client of pkg.clients) {
     if (client.instance?.kind === 'constructable') {
       client.instance.constructors.sort((a: go.Constructor, b: go.Constructor) => sortAscending(a.name, b.name));
@@ -320,8 +342,12 @@ function sortContent(pkg: go.PackageContent): void {
       }
     }
     client.parameters.sort((a: go.ClientParameter, b: go.ClientParameter) => sortAscending(a.name, b.name));
-    client.methods.sort((a: go.MethodType, b: go.MethodType) => { return sortAscending(a.name, b.name); });
-    client.clientAccessors.sort((a: go.ClientAccessor, b: go.ClientAccessor) => { return sortAscending(a.name, b.name); });
+    client.methods.sort((a: go.MethodType, b: go.MethodType) => {
+      return sortAscending(a.name, b.name);
+    });
+    client.clientAccessors.sort((a: go.ClientAccessor, b: go.ClientAccessor) => {
+      return sortAscending(a.name, b.name);
+    });
     for (const method of client.methods) {
       method.httpStatusCodes.sort();
     }

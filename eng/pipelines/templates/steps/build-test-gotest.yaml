@@ -6,9 +6,9 @@ steps:
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.gotest
 
   - script: |
-      pnpm eslint
-    displayName: "Run Lint"
-    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.gotest
+      pnpm -w format:check
+    displayName: "Formatting and Lint"
+    workingDirectory: $(System.DefaultWorkingDirectory)
 
   - script: |
       export PATH=$PATH:$HOME/go/bin

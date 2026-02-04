@@ -9,7 +9,7 @@ import * as go from '../../../codemodel.go/src/index.js';
 /**
  * generates the contents for the cloud_config.go file.
  * if cloud config info isn't required, the empty string is returned.
- * 
+ *
  * @param module the module for which to generate the file
  * @param target the codegen target for the module
  * @returns the text for the file or the empty string

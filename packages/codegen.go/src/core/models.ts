@@ -14,7 +14,7 @@ export interface ModelsSerDe {
 
 /**
  * Creates the content for the models.go file.
- * 
+ *
  * @param pkg contains the package content
  * @param options the emitter options
  * @returns the text for the files or the empty string
@@ -23,7 +23,7 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
   if (pkg.models.length === 0) {
     return {
       models: '',
-      serDe: ''
+      serDe: '',
     };
   }
 
@@ -49,7 +49,9 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
   for (const modelDef of modelDefs) {
     modelText += modelDef.text();
 
-    modelDef.Methods.sort((a: ModelMethod, b: ModelMethod) => { return helpers.sortAscending(a.name, b.name); });
+    modelDef.Methods.sort((a: ModelMethod, b: ModelMethod) => {
+      return helpers.sortAscending(a.name, b.name);
+    });
     for (const method of modelDef.Methods) {
       if (method.desc.length > 0) {
         modelText += `${helpers.comment(method.desc, '// ', undefined, helpers.commentLength)}\n`;
@@ -57,7 +59,9 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
       modelText += method.text;
     }
 
-    modelDef.SerDe.methods.sort((a: ModelMethod, b: ModelMethod) => { return helpers.sortAscending(a.name, b.name); });
+    modelDef.SerDe.methods.sort((a: ModelMethod, b: ModelMethod) => {
+      return helpers.sortAscending(a.name, b.name);
+    });
     for (const method of modelDef.SerDe.methods) {
       if (method.desc.length > 0) {
         serdeTextBody += `${helpers.comment(method.desc, '// ', undefined, helpers.commentLength)}\n`;
@@ -188,13 +192,13 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
   }
   return {
     models: modelText,
-    serDe: serdeText
+    serDe: serdeText,
   };
 }
 
 /**
  * converts model types to an array of ModelDef types
- * 
+ *
  * @param modelImports the import manager for the models file
  * @param serdeImports the import manager for the models_serde file
  * @param pkg contains the package content
@@ -352,7 +356,7 @@ function generateToMultipartForm(modelDef: ModelDef) {
 /**
  * generates the MarshalJSON method for the provided type.
  * the method impl is added to modelDef.SerDe.methods.
- * 
+ *
  * @param modelDef the type for which to emit the method
  * @param imports the import manager currently in scope
  */
@@ -375,7 +379,7 @@ function generateJSONMarshaller(modelDef: ModelDef, imports: ImportManager): voi
 
 /**
  * generates the contents of MarshalJSON that encode the target type
- * 
+ *
  * @param modelDef the type being encoded
  * @param receiver the name of the receiver in the MarshalJSON method
  * @param imports the import manager currently in scope
@@ -447,14 +451,14 @@ function generateJSONMarshallerBody(modelDef: ModelDef, receiver: string, import
         populate = 'populateAny';
         modelDef.SerDe.needsJSONPopulateAny = true;
       } else {
-        populate = 'populate'
+        populate = 'populate';
         modelDef.SerDe.needsJSONPopulate = true;
       }
       if (field.type.kind === 'scalar' && (field.type.type.startsWith('uint') || field.type.type.startsWith('int')) && field.type.encodeAsString) {
         // TODO: need to handle map and slice type with underlying int as string type
         imports.add('strconv');
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
-        if (field.type.type.startsWith('uint') && field.type.type !== 'uint64' || field.type.type.startsWith('int') && field.type.type !== 'int64') {
+        if ((field.type.type.startsWith('uint') && field.type.type !== 'uint64') || (field.type.type.startsWith('int') && field.type.type !== 'int64')) {
           marshaller += `\t${populate}(objectMap, "${field.serializedName}", to.Ptr(strconv.${field.type.type.startsWith('int') ? 'FormatInt' : 'FormatUint'}(${field.type.type.startsWith('int') ? 'int64' : 'uint64'}(*${receiver}.${field.name}), 10)))\n`;
         } else {
           marshaller += `\t${populate}(objectMap, "${field.serializedName}", to.Ptr(strconv.${field.type.type.startsWith('int') ? 'FormatInt' : 'FormatUint'}(*${receiver}.${field.name}, 10)))\n`;
@@ -481,7 +485,7 @@ function generateJSONMarshallerBody(modelDef: ModelDef, receiver: string, import
 /**
  * generates the UnmarshalJSON method for the provided type.
  * the method impl is added to modelDef.SerDe.methods.
- * 
+ *
  * @param modelDef the type for which to emit the method
  * @param imports the import manager currently in scope
  * @param options the Go emitter options
@@ -508,7 +512,7 @@ function generateJSONUnmarshaller(modelDef: ModelDef, imports: ImportManager, op
 
 /**
  * generates the contents of UnmarshalJSON that decode the target type
- * 
+ *
  * @param modelDef the type being decoded
  * @param receiver the receiver for the UnmarshalJSON method
  * @param imports the import manager currently in scope
@@ -547,7 +551,7 @@ function generateJSONUnmarshallerBody(modelDef: ModelDef, receiver: string, impo
     return addlPropsText;
   };
 
-  const emitSwitchCase = function(): string {
+  const emitSwitchCase = function (): string {
     let unmarshalBody = '';
     let addlProps: go.Map | undefined;
     unmarshalBody += '\t\tswitch key {\n';
@@ -606,7 +610,7 @@ function generateJSONUnmarshallerBody(modelDef: ModelDef, receiver: string, impo
         unmarshalBody += `\t\t\t\t\tvar v ${field.type.type.startsWith('int') ? 'int64' : 'uint64'}\n`;
         unmarshalBody += `\t\t\t\t\tv, err = strconv.${field.type.type.startsWith('int') ? 'ParseInt' : 'ParseUint'}(aux, 10, 0)\n`;
         unmarshalBody += `\t\t\t\t\tif err == nil {\n`;
-        if (field.type.type.startsWith('uint') && field.type.type !== 'uint64' || field.type.type.startsWith('int') && field.type.type !== 'int64') {
+        if ((field.type.type.startsWith('uint') && field.type.type !== 'uint64') || (field.type.type.startsWith('int') && field.type.type !== 'int64')) {
           unmarshalBody += `\t\t\t\t\t\t${receiver}.${field.name} = to.Ptr(${field.type.type}(v))\n`;
         } else {
           unmarshalBody += `\t\t\t\t\t\t${receiver}.${field.name} = to.Ptr(v)\n`;
@@ -730,7 +734,7 @@ function recursiveGetDiscriminatorTypeName(modelType: go.Model | go.PolymorphicM
 
 /**
  * recursively constructs the text to populate a nested discriminator
- * 
+ *
  * @param modelType the type that contains item
  * @param item the type for which to create the population
  * @param receiver the name of the receiver for the method to contain the expression
@@ -740,7 +744,15 @@ function recursiveGetDiscriminatorTypeName(modelType: go.Model | go.PolymorphicM
  * @param nesting the current level of nesting (increments with each recursive call)
  * @returns the text populating the discriminator
  */
-function recursivePopulateDiscriminator(modelType: go.Model | go.PolymorphicModel, item: go.WireType, receiver: string, rawSrc: string, dest: string, indent: string, nesting: number): string {
+function recursivePopulateDiscriminator(
+  modelType: go.Model | go.PolymorphicModel,
+  item: go.WireType,
+  receiver: string,
+  rawSrc: string,
+  dest: string,
+  indent: string,
+  nesting: number,
+): string {
   let text = '';
   let interfaceName = '';
   let targetType = '';
@@ -755,7 +767,7 @@ function recursivePopulateDiscriminator(modelType: go.Model | go.PolymorphicMode
       text += `${indent}for i${nesting} := range ${rawSrc} {\n`;
       rawSrc = `${rawSrc}[i${nesting}]`; // source becomes each element in the source slice
       dest = `${dest}[i${nesting}]`; // update destination to each element in the destination slice
-      text += recursivePopulateDiscriminator(modelType, item.elementType, receiver, rawSrc, dest, indent+'\t', nesting+1);
+      text += recursivePopulateDiscriminator(modelType, item.elementType, receiver, rawSrc, dest, indent + '\t', nesting + 1);
       text += `${indent}}\n`;
       return text;
     }
@@ -773,7 +785,7 @@ function recursivePopulateDiscriminator(modelType: go.Model | go.PolymorphicMode
       text += `${indent}for k${nesting}, v${nesting} := range ${rawSrc} {\n`;
       rawSrc = `v${nesting}`; // source becomes the current value in the source map
       dest = `${dest}[k${nesting}]`; // update destination to the destination map's value for the current key
-      text += recursivePopulateDiscriminator(modelType, item.valueType, receiver, rawSrc, dest, indent+'\t', nesting+1);
+      text += recursivePopulateDiscriminator(modelType, item.valueType, receiver, rawSrc, dest, indent + '\t', nesting + 1);
       text += `${indent}}\n`;
       return text;
     }
@@ -792,7 +804,7 @@ function recursivePopulateDiscriminator(modelType: go.Model | go.PolymorphicMode
 /**
  * generates an implementation of MarshalXML for the provided type.
  * the method impl is added to modelDef.SerDe.methods.
- * 
+ *
  * @param modelDef the type for which to implement MarshalXML
  * @param imports the import manager currently in scope
  */
@@ -828,7 +840,7 @@ function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager): void
 /**
  * generates an implementation of UnmarshalXML for the provided type.
  * the method impl is added to modelDef.SerDe.methods.
- * 
+ *
  * @param modelDef the type for which to implement UnmarshalXML
  * @param imports the import manager currently in scope
  */
@@ -863,7 +875,7 @@ function generateXMLUnmarshaller(modelDef: ModelDef, imports: ImportManager): vo
 
 /**
  * generates an alias type used by custom XML marshaller/unmarshaller
- * 
+ *
  * @param modelType the type for which to create the alias
  * @param receiver the name of the receiver for the type's serde method
  * @param forMarshal when true, indicates type is to be used in a marshaller (else an unmarshaller)
@@ -1011,7 +1023,7 @@ class ModelDef {
 
 /**
  * returns the serialization options to use in the XML tag on a model field
- * 
+ *
  * @param modelType the type that contains the field
  * @param field the field for which to construct the tag's contents
  * @returns the contents for the XML tag

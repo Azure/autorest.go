@@ -9,7 +9,7 @@ import { ImportManager } from './imports.js';
 
 /**
  * Creates the content for the required additional properties XML marshalling helpers.
- * 
+ *
  * @param pkg contains the package content
  * @returns the text for the file or the empty string
  */

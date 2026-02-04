@@ -10,7 +10,7 @@ import { ImportManager } from '../core/imports.js';
 
 /**
  * Generates the contents for the *_server_factory.go file.
- * 
+ *
  * @param pkg contains the package content
  * @param target the codegen target for the module
  * @returns the text for the file or the empty string
@@ -54,12 +54,12 @@ export function generateServerFactory(pkg: go.FakePackage, target: go.CodeModelT
 
   text += '// NewServerFactoryTransport creates a new instance of ServerFactoryTransport with the provided implementation.\n';
   text += `// The returned ServerFactoryTransport instance is connected to an instance of ${clientPkgName}.ClientFactory via the\n`;
-  text += '// azcore.ClientOptions.Transporter field in the client\'s constructor parameters.\n';
+  text += "// azcore.ClientOptions.Transporter field in the client's constructor parameters.\n";
   text += 'func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {\n';
   text += `${indent.get()}return &ServerFactoryTransport{\n${indent.push().get()}srv: srv,\n${indent.pop().get()}}\n}\n\n`;
 
   text += `// ServerFactoryTransport connects instances of ${clientPkgName}.ClientFactory to instances of ServerFactory.\n`;
-  text += '// Don\'t use this type directly, use NewServerFactoryTransport instead.\n';
+  text += "// Don't use this type directly, use NewServerFactoryTransport instead.\n";
   text += 'type ServerFactoryTransport struct {\n';
   text += `${indent.get()}srv *ServerFactory\n`;
   text += `${indent.get()}trMu sync.Mutex\n`;

@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-*  Copyright (c) Microsoft Corporation. All rights reserved.
-*  Licensed under the MIT License. See License.txt in the project root for license information.
-*--------------------------------------------------------------------------------------------*/
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 
 import * as method from './method.js';
 import * as module from './module.js';
@@ -23,8 +23,16 @@ export type PathParameter = PathCollectionParameter | PathScalarParameter;
 export type QueryParameter = QueryCollectionParameter | QueryScalarParameter;
 
 /** defines the possible method parameter types */
-export type MethodParameter = BodyParameter | FormBodyParameter | HeaderParameter | MultipartFormBodyParameter 
-  | PartialBodyParameter | PathParameter | QueryParameter | ResumeTokenParameter | URIParameter;
+export type MethodParameter =
+  | BodyParameter
+  | FormBodyParameter
+  | HeaderParameter
+  | MultipartFormBodyParameter
+  | PartialBodyParameter
+  | PathParameter
+  | QueryParameter
+  | ResumeTokenParameter
+  | URIParameter;
 
 /** parameter is sent in the HTTP request body */
 export interface BodyParameter extends HttpParameterBase {
@@ -113,7 +121,7 @@ export interface HeaderScalarParameter extends HttpParameterBase {
   type: HeaderScalarType;
 
   /**
-   * indicates this is an API version parameter 
+   * indicates this is an API version parameter
    * the default value is false.
    */
   isApiVersion: boolean;
@@ -129,7 +137,7 @@ export interface MultipartFormBodyParameter extends HttpParameterBase {
 
 /**
  * defines the style of a parameter.
- * 
+ *
  * required - the parameter is required
  * optional - the parameter is optional
  * literal - there is no formal parameter, the value is emitted directly in the code (e.g. the Accept header parameter)
@@ -212,7 +220,7 @@ export interface PathScalarParameter extends HttpParameterBase {
   isEncoded: boolean;
 
   /**
-   * indicates this is an API version parameter 
+   * indicates this is an API version parameter
    * the default value is false.
    */
   isApiVersion: boolean;
@@ -251,14 +259,14 @@ export interface QueryScalarParameter extends HttpParameterBase {
   /** the query string's key name */
   queryParameter: string;
 
-   /** the type of the parameter */
+  /** the type of the parameter */
   type: QueryScalarParameterType;
 
   /** indicates if the value must be URL encoded */
   isEncoded: boolean;
 
   /**
-   * indicates this is an API version parameter 
+   * indicates this is an API version parameter
    * the default value is false.
    */
   isApiVersion: boolean;
@@ -283,7 +291,7 @@ export interface URIParameter extends HttpParameterBase {
   type: URIParameterType;
 
   /**
-   * indicates this is an API version parameter 
+   * indicates this is an API version parameter
    * the default value is false.
    */
   isApiVersion: boolean;
@@ -503,7 +511,7 @@ export class ParameterGroup implements ParameterGroup {
   }
 }
 
-export class PartialBodyParameter extends HttpParameterBase implements PartialBodyParameter{
+export class PartialBodyParameter extends HttpParameterBase implements PartialBodyParameter {
   constructor(name: string, serializedName: string, format: 'JSON' | 'XML', type: type.WireType, style: ParameterStyle, byValue: boolean) {
     super(name, type, style, byValue, 'method');
     this.kind = 'partialBodyParam';
@@ -513,7 +521,16 @@ export class PartialBodyParameter extends HttpParameterBase implements PartialBo
 }
 
 export class PathCollectionParameter extends HttpParameterBase implements PathCollectionParameter {
-  constructor(name: string, pathSegment: string, isEncoded: boolean, type: type.Slice, collectionFormat: CollectionFormat, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
+  constructor(
+    name: string,
+    pathSegment: string,
+    isEncoded: boolean,
+    type: type.Slice,
+    collectionFormat: CollectionFormat,
+    style: ParameterStyle,
+    byValue: boolean,
+    location: ParameterLocation,
+  ) {
     super(name, type, style, byValue, location);
     this.kind = 'pathCollectionParam';
     this.pathSegment = pathSegment;
@@ -534,7 +551,16 @@ export class PathScalarParameter extends HttpParameterBase implements PathScalar
 }
 
 export class QueryCollectionParameter extends HttpParameterBase implements QueryCollectionParameter {
-  constructor(name: string, queryParam: string, isEncoded: boolean, type: type.Slice, collectionFormat: ExtendedCollectionFormat, style: ParameterStyle, byValue: boolean, location: ParameterLocation) {
+  constructor(
+    name: string,
+    queryParam: string,
+    isEncoded: boolean,
+    type: type.Slice,
+    collectionFormat: ExtendedCollectionFormat,
+    style: ParameterStyle,
+    byValue: boolean,
+    location: ParameterLocation,
+  ) {
     super(name, type, style, byValue, location);
     this.kind = 'queryCollectionParam';
     this.queryParameter = queryParam;

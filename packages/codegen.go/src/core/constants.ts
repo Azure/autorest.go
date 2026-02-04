@@ -8,7 +8,7 @@ import * as go from '../../../codemodel.go/src/index.js';
 
 /**
  * Creates the content for the constants.go file.
- * 
+ *
  * @param pkg contains the package content
  * @returns the text for the file or the empty string
  */

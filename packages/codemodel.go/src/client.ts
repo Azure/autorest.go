@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-*  Copyright (c) Microsoft Corporation. All rights reserved.
-*  Licensed under the MIT License. See License.txt in the project root for license information.
-*--------------------------------------------------------------------------------------------*/
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 
 import { CodeModelError } from './errors.js';
 import { MethodExample } from './examples.js';
@@ -149,7 +149,7 @@ export interface TemplatedHost {
 
 /**
  * returns true if the provided parameter is for the service API version
- * 
+ *
  * @param param the parameter to inspect
  * @returns true if the parameter is for the API version
  */
@@ -215,7 +215,7 @@ export interface NextPageMethod {
 
   /** the name of the next page method */
   name: string;
- 
+
   /** the HTTP path used when creating the request */
   httpPath: string;
 

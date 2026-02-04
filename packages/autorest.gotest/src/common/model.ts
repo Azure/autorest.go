@@ -35,9 +35,15 @@ export class GoExampleModel extends ExampleModel {
 }
 
 export class ParameterOutput {
-  public constructor(public paramName: string, public paramOutput: string) {}
+  public constructor(
+    public paramName: string,
+    public paramOutput: string,
+  ) {}
 }
 
 export class VariableOutput {
-  public constructor(public type: string, public value: string | undefined = undefined) {}
+  public constructor(
+    public type: string,
+    public value: string | undefined = undefined,
+  ) {}
 }

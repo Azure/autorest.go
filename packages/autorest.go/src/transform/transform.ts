@@ -21,7 +21,7 @@ const { Converter } = showdown;
 
 // The transformer adds Go-specific information to the code model.
 export async function transformM4(host: AutorestExtensionHost) {
-  const debug = await host.getValue('debug') || false;
+  const debug = (await host.getValue('debug')) || false;
 
   try {
     const session = await startSession<m4.CodeModel>(host, m4.codeModelSchema);
@@ -35,9 +35,8 @@ export async function transformM4(host: AutorestExtensionHost) {
     host.writeFile({
       filename: 'code-model-v4-transform.yaml',
       content: serialize(session.model),
-      artifactType: 'code-model-v4'
+      artifactType: 'code-model-v4',
     });
-
   } catch (E) {
     if (debug) {
       console.error(`${fileURLToPath(import.meta.url)} - FAILURE  ${JSON.stringify(E)} ${(<Error>E).stack}`);
@@ -228,18 +227,18 @@ function recursiveBuildDiscriminatorStrings(item: m4.Schema): DiscriminatorStrin
     const strings = recursiveBuildDiscriminatorStrings(item.elementType);
     return {
       Name: `[]${strings.Name}`,
-      Desc: `array of ${strings.Desc}`
+      Desc: `array of ${strings.Desc}`,
     };
   } else if (helpers.isDictionarySchema(item)) {
     const strings = recursiveBuildDiscriminatorStrings(item.elementType);
     return {
       Name: `map[string]${strings.Name}`,
-      Desc: `map of ${strings.Desc}`
+      Desc: `map of ${strings.Desc}`,
     };
   }
   return {
     Name: getDiscriminatorSchema(<m4.ObjectSchema>item).language.go!.discriminatorInterface,
-    Desc: 'discriminators'
+    Desc: 'discriminators',
   };
 }
 
@@ -273,7 +272,7 @@ function schemaTypeToGoType(codeModel: m4.CodeModel, schema: m4.Schema, type: 'P
         arrayElem.language.go!.rawJSONAsBytes = rawJSONAsBytes;
         return '[][]byte';
       }
-      arraySchema.language.go!.elementIsPtr = !helpers.isTypePassedByValue(arrayElem) && !<boolean>codeModel.language.go!.sliceElementsByValue;
+      arraySchema.language.go!.elementIsPtr = !helpers.isTypePassedByValue(arrayElem) && !(<boolean>codeModel.language.go!.sliceElementsByValue);
       // passing nil for array elements in headers, paths, and query params
       // isn't very useful as we'd just skip nil entries.  so disable it.
       if (type !== 'Property' && type !== 'InBody') {
@@ -413,8 +412,8 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
       const normalizeOperationName = await session.getValue('normalize-operation-name', false);
 
       // previous operation naming logic: keep original name if only one body type, and add suffix for operation with non-binary body type if more than one body type
-      // new normalized operation naming logic: add suffix for operation with unstructured body type and keep original name for operation with structured body type 
-      if (!normalizeOperationName){
+      // new normalized operation naming logic: add suffix for operation with unstructured body type and keep original name for operation with structured body type
+      if (!normalizeOperationName) {
         if (op.requests!.length > 1) {
           // for the non-binary media types we create a new method with the
           // media type name as a suffix, e.g. FooAPIWithJSON()
@@ -463,7 +462,10 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
           clientPrefix = '';
         }
         const optionalParamsGroupName = `${clientPrefix}${opName}Options`;
-        const desc = createOptionsTypeDescription(optionalParamsGroupName, `${group.language.go!.clientName}.${helpers.isPageableOperation(op) && !helpers.isLROOperation(op) ? `New${opName}Pager` : opName}`);
+        const desc = createOptionsTypeDescription(
+          optionalParamsGroupName,
+          `${group.language.go!.clientName}.${helpers.isPageableOperation(op) && !helpers.isLROOperation(op) ? `New${opName}Pager` : opName}`,
+        );
         const gp = createGroupProperty(optionalParamsGroupName, desc, false);
         gp.language.go!.name = 'options';
         // if there's an existing parameter with the name options then pick something else
@@ -553,7 +555,11 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
           if (param.protocol.http!.in === 'uri') {
             // this is a parameterized host param.
             // use the param name to avoid reference equality checks.
-            if (!values(hostParams).where(p => p.language.go!.name === param.language.go!.name).any()) {
+            if (
+              !values(hostParams)
+                .where((p) => p.language.go!.name === param.language.go!.name)
+                .any()
+            ) {
               hostParams.push(param);
             }
             // we special-case fully templated host param, e.g. {endpoint}
@@ -570,7 +576,11 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
           }
           const clientParams = <Array<m4.Parameter>>group.language.go!.clientParams;
           // check if this global param has already been added
-          if (values(clientParams).where(cp => cp.language.go!.name === param.language.go!.name).any()) {
+          if (
+            values(clientParams)
+              .where((cp) => cp.language.go!.name === param.language.go!.name)
+              .any()
+          ) {
             continue;
           }
           clientParams.push(param);
@@ -610,7 +620,9 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
           const paramGroup = paramGroups.get(paramGroupName);
           param.language.go!.paramGroup = paramGroup;
           // check for a duplicate, if it has the same schema then skip it
-          const dupe = values(paramGroup!.originalParameter).first((each: m4.Parameter) => { return each.language.go!.name === param.language.go!.name; });
+          const dupe = values(paramGroup!.originalParameter).first((each: m4.Parameter) => {
+            return each.language.go!.name === param.language.go!.name;
+          });
           if (!dupe) {
             paramGroup!.originalParameter.push(param);
             if (param.required) {
@@ -646,7 +658,11 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
       // recursively add the marshalling format to the body param if applicable
       const marshallingFormat = getMarshallingFormat(op.requests![0].protocol);
       if (marshallingFormat !== 'na') {
-        const bodyParam = values(helpers.aggregateParameters(op)).where((each: m4.Parameter) => { return each.protocol.http?.in === 'body'; }).first();
+        const bodyParam = values(helpers.aggregateParameters(op))
+          .where((each: m4.Parameter) => {
+            return each.protocol.http?.in === 'body';
+          })
+          .first();
         if (bodyParam) {
           recursiveAddMarshallingFormat(bodyParam.schema, marshallingFormat);
           if (marshallingFormat === 'xml' && bodyParam.schema.serialization?.xml?.name) {
@@ -662,7 +678,7 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
     if (hostParams.length > 0) {
       // attach host params to the operation group
       group.language.go!.hostParams = hostParams;
-    } else if (!<boolean>session.model.language.go!.azureARM) {
+    } else if (!(<boolean>session.model.language.go!.azureARM)) {
       // if there are no host params and this isn't Azure ARM, check for a swagger-provided host (e.g. test server)
       for (const param of values(session.model.globalParameters)) {
         if (param.language.default.name === '$host') {
@@ -682,7 +698,7 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
     for (const items of paramGroups.entries()) {
       pg.push(items[1]);
     }
-  }  
+  }
 }
 
 function createGroupProperty(name: string, description: string, groupedClientParams: boolean): m4.GroupProperty {
@@ -800,7 +816,7 @@ function createResponseEnvelope(codeModel: m4.CodeModel, group: m4.OperationGrou
           const description = `${name} contains the information returned from the ${head.header} header response.`;
           headers.set(name, <HttpHeaderWithDescription>{
             ...head,
-            description: description
+            description: description,
           });
         }
       }
@@ -817,7 +833,13 @@ function createResponseEnvelope(codeModel: m4.CodeModel, group: m4.OperationGrou
   }
   const respEnvName = ensureUniqueModelName(codeModel, `${clientPrefix}${op.language.go!.name}Response`, 'Envelope');
   const opName = helpers.isLROOperation(op) ? 'Begin' + op.language.go!.name : op.language.go!.name;
-  const respEnv = newObject(respEnvName, createResponseEnvelopeDescription(respEnvName, `${group.language.go!.clientName}.${helpers.isPageableOperation(op) && !helpers.isLROOperation(op) ? `New${opName}Pager` : opName}`));
+  const respEnv = newObject(
+    respEnvName,
+    createResponseEnvelopeDescription(
+      respEnvName,
+      `${group.language.go!.clientName}.${helpers.isPageableOperation(op) && !helpers.isLROOperation(op) ? `New${opName}Pager` : opName}`,
+    ),
+  );
   respEnv.language.go!.responseType = true;
   respEnv.properties = new Array<m4.Property>();
   responseEnvelopes.push(respEnv);
@@ -1130,7 +1152,6 @@ function parseComments(comment: string): string {
   });
 }
 
-
 // This function try to label all unreferenced types before doing transform.
 async function labelUnreferencedTypes(session: Session<m4.CodeModel>) {
   const model = session.model;
@@ -1150,9 +1171,9 @@ async function labelUnreferencedTypes(session: Session<m4.CodeModel>) {
 
 // This function help to label omit types according to the referencedTypes set.
 function labelOmitTypes<Type extends m4.Schema>(modelSchemas: Array<Type> | undefined, referencedSet: Set<Type>) {
-  if (modelSchemas){
-    for (const schema of modelSchemas){
-      if (!referencedSet.has(schema)){
+  if (modelSchemas) {
+    for (const schema of modelSchemas) {
+      if (!referencedSet.has(schema)) {
         schema.language.go!.omitType = true;
       }
     }
@@ -1184,7 +1205,9 @@ function iterateOperations(model: m4.CodeModel, referencedTypes: Set<m4.Schema>)
       // Such odata definition is not used directly in operation. But it seems the model is a detailed definition for some string param. Reserve for now.
       if (op.extensions?.['x-ms-odata']) {
         const schemaParts = (<string>op.extensions['x-ms-odata']).split('/');
-        const schema = values(model.schemas.objects).where((o) => o.language.default.name === schemaParts[schemaParts.length - 1]).first();
+        const schema = values(model.schemas.objects)
+          .where((o) => o.language.default.name === schemaParts[schemaParts.length - 1])
+          .first();
         if (schema) {
           dfsSchema(schema, referencedTypes);
         }
@@ -1201,7 +1224,7 @@ function dfsSchema(schema: m4.Schema, referencedTypes: Set<m4.Schema>) {
   referencedTypes.add(schema);
   if (helpers.isObjectSchema(schema)) {
     const allProps = helpers.aggregateProperties(schema);
-    for (const prop of allProps){
+    for (const prop of allProps) {
       dfsSchema(prop.schema, referencedTypes);
     }
     // If schema is a discriminator, then reserve all the children
@@ -1225,9 +1248,9 @@ function dfsSchema(schema: m4.Schema, referencedTypes: Set<m4.Schema>) {
 
 function separateOperationByRequestsProtocol(group: m4.OperationGroup, op: m4.Operation, defaultTypes: Array<KnownMediaType>) {
   for (const req of values(op.requests)) {
-    const newOp = <m4.Operation>{...op};
+    const newOp = <m4.Operation>{ ...op };
     newOp.language = clone(op.language);
-    newOp.requests = (<Array<m4.Request>>op.requests).filter(r => r === req);
+    newOp.requests = (<Array<m4.Request>>op.requests).filter((r) => r === req);
     let name = op.language.go!.name;
     if (req.protocol.http!.knownMediaType && !defaultTypes.includes(req.protocol.http!.knownMediaType)) {
       let suffix: string;
