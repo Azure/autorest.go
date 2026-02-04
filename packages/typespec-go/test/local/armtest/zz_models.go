@@ -77,10 +77,6 @@ type LROModel struct {
 	Type *string
 }
 
-// ManagementRequestOptions - Request options for test operations
-type ManagementRequestOptions struct {
-}
-
 // SystemData - Metadata pertaining to creation and last modification of the resource.
 type SystemData struct {
 	// The timestamp of resource creation (UTC).

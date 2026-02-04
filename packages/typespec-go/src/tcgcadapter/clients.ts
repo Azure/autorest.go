@@ -727,8 +727,8 @@ export class ClientAdapter {
           // - Optional params are moved to the method's options type
           // - If no required params remain, the param group "evaporates"
           
-          // Use the original name to preserve the exact name as authored
-          const paramGroupName = ensureNameCase(param.type.__raw?.kind === 'Model' ? param.type.__raw?.name : param.type.name);
+          // Use the same naming approach as regular parameters for consistency
+          const paramGroupName = ensureNameCase(param.type.name);
           
           // Remove the model from codeModel.models if it is a parameter group
           const modelIndex = this.ta.getPkg().models.findIndex(m => m.name === paramGroupName);

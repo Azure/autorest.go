@@ -21,11 +21,11 @@ import (
 type ParameterGroupOperationsServer struct {
 	// TestOperation1 is the fake for method ParameterGroupOperationsClient.TestOperation1
 	// HTTP status codes to indicate success: http.StatusOK
-	TestOperation1 func(ctx context.Context, resourceGroupName string, widgetName string, params armtest.TestManagementRequestOptions, options *armtest.ParameterGroupOperationsClientTestOperation1Options) (resp azfake.Responder[armtest.ParameterGroupOperationsClientTestOperation1Response], errResp azfake.ErrorResponder)
+	TestOperation1 func(ctx context.Context, resourceGroupName string, widgetName string, params armtest.ManagementRequestOptions, options *armtest.ParameterGroupOperationsClientTestOperation1Options) (resp azfake.Responder[armtest.ParameterGroupOperationsClientTestOperation1Response], errResp azfake.ErrorResponder)
 
 	// TestOperation2 is the fake for method ParameterGroupOperationsClient.TestOperation2
 	// HTTP status codes to indicate success: http.StatusOK
-	TestOperation2 func(ctx context.Context, resourceGroupName string, widgetName string, params armtest.TestManagementRequestOptions, options *armtest.ParameterGroupOperationsClientTestOperation2Options) (resp azfake.Responder[armtest.ParameterGroupOperationsClientTestOperation2Response], errResp azfake.ErrorResponder)
+	TestOperation2 func(ctx context.Context, resourceGroupName string, widgetName string, params armtest.ManagementRequestOptions, options *armtest.ParameterGroupOperationsClientTestOperation2Options) (resp azfake.Responder[armtest.ParameterGroupOperationsClientTestOperation2Response], errResp azfake.ErrorResponder)
 }
 
 // NewParameterGroupOperationsServerTransport creates a new instance of ParameterGroupOperationsServerTransport with the provided implementation.
@@ -106,7 +106,7 @@ func (p *ParameterGroupOperationsServerTransport) dispatchTestOperation1(req *ht
 		return nil, err
 	}
 	correlationIDParam := getOptional(getHeaderValue(req.Header, "x-ms-correlation-id"))
-	params := armtest.TestManagementRequestOptions{
+	params := armtest.ManagementRequestOptions{
 		ClientRequestID: getHeaderValue(req.Header, "x-ms-client-request-id"),
 	}
 	var options *armtest.ParameterGroupOperationsClientTestOperation1Options
@@ -149,7 +149,7 @@ func (p *ParameterGroupOperationsServerTransport) dispatchTestOperation2(req *ht
 		return nil, err
 	}
 	correlationIDParam := getOptional(getHeaderValue(req.Header, "x-ms-correlation-id"))
-	params := armtest.TestManagementRequestOptions{
+	params := armtest.ManagementRequestOptions{
 		ClientRequestID: getHeaderValue(req.Header, "x-ms-client-request-id"),
 	}
 	var options *armtest.ParameterGroupOperationsClientTestOperation2Options

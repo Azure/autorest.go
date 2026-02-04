@@ -48,7 +48,7 @@ func NewParameterGroupOperationsClient(subscriptionID string, credential azcore.
 //   - params - Request options for test operations
 //   - options - ParameterGroupOperationsClientTestOperation1Options contains the optional parameters for the ParameterGroupOperationsClient.TestOperation1
 //     method.
-func (client *ParameterGroupOperationsClient) TestOperation1(ctx context.Context, resourceGroupName string, widgetName string, params TestManagementRequestOptions, options *ParameterGroupOperationsClientTestOperation1Options) (ParameterGroupOperationsClientTestOperation1Response, error) {
+func (client *ParameterGroupOperationsClient) TestOperation1(ctx context.Context, resourceGroupName string, widgetName string, params ManagementRequestOptions, options *ParameterGroupOperationsClientTestOperation1Options) (ParameterGroupOperationsClientTestOperation1Response, error) {
 	var err error
 	const operationName = "ParameterGroupOperationsClient.TestOperation1"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -71,7 +71,7 @@ func (client *ParameterGroupOperationsClient) TestOperation1(ctx context.Context
 }
 
 // testOperation1CreateRequest creates the TestOperation1 request.
-func (client *ParameterGroupOperationsClient) testOperation1CreateRequest(ctx context.Context, resourceGroupName string, widgetName string, params TestManagementRequestOptions, options *ParameterGroupOperationsClientTestOperation1Options) (*policy.Request, error) {
+func (client *ParameterGroupOperationsClient) testOperation1CreateRequest(ctx context.Context, resourceGroupName string, widgetName string, params ManagementRequestOptions, options *ParameterGroupOperationsClientTestOperation1Options) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -118,7 +118,7 @@ func (client *ParameterGroupOperationsClient) testOperation1HandleResponse(resp 
 //   - params - Request options for test operations
 //   - options - ParameterGroupOperationsClientTestOperation2Options contains the optional parameters for the ParameterGroupOperationsClient.TestOperation2
 //     method.
-func (client *ParameterGroupOperationsClient) TestOperation2(ctx context.Context, resourceGroupName string, widgetName string, params TestManagementRequestOptions, options *ParameterGroupOperationsClientTestOperation2Options) (ParameterGroupOperationsClientTestOperation2Response, error) {
+func (client *ParameterGroupOperationsClient) TestOperation2(ctx context.Context, resourceGroupName string, widgetName string, params ManagementRequestOptions, options *ParameterGroupOperationsClientTestOperation2Options) (ParameterGroupOperationsClientTestOperation2Response, error) {
 	var err error
 	const operationName = "ParameterGroupOperationsClient.TestOperation2"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -141,7 +141,7 @@ func (client *ParameterGroupOperationsClient) TestOperation2(ctx context.Context
 }
 
 // testOperation2CreateRequest creates the TestOperation2 request.
-func (client *ParameterGroupOperationsClient) testOperation2CreateRequest(ctx context.Context, resourceGroupName string, widgetName string, params TestManagementRequestOptions, options *ParameterGroupOperationsClientTestOperation2Options) (*policy.Request, error) {
+func (client *ParameterGroupOperationsClient) testOperation2CreateRequest(ctx context.Context, resourceGroupName string, widgetName string, params ManagementRequestOptions, options *ParameterGroupOperationsClientTestOperation2Options) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/testOperation2"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

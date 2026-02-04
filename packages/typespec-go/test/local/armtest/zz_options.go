@@ -21,6 +21,12 @@ type LROClientBeginOkResponseWithAsyncHeaderOptions struct {
 	ResumeToken string
 }
 
+// Request options for test operations
+type ManagementRequestOptions struct {
+	// Client request ID for tracking
+	ClientRequestID string
+}
+
 // ParameterGroupOperationsClientTestOperation1Options contains the optional parameters for the ParameterGroupOperationsClient.TestOperation1
 // method.
 type ParameterGroupOperationsClientTestOperation1Options struct {
@@ -33,10 +39,4 @@ type ParameterGroupOperationsClientTestOperation1Options struct {
 type ParameterGroupOperationsClientTestOperation2Options struct {
 	// Optional correlation ID
 	CorrelationID *string
-}
-
-// Request options for test operations
-type TestManagementRequestOptions struct {
-	// Client request ID for tracking
-	ClientRequestID string
 }
