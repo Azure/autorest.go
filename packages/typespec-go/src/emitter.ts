@@ -143,6 +143,7 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
         code: error.code,
         target: error.target,
         format: {
+          msg: error.message,
           stack: error.stack ? truncateStack(error.stack, 'tcgcToGoCodeModel') : 'Stack trace unavailable\n',
         },
       });
@@ -151,6 +152,7 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
         code: error.code,
         target: NoTarget,
         format: {
+          msg: error.message,
           stack: error.stack ? truncateStack(error.stack, 'tcgcToGoCodeModel') : 'Stack trace unavailable\n',
         },
       });
@@ -159,6 +161,7 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
         code: error.code,
         target: NoTarget,
         format: {
+          msg: error.message,
           stack: error.stack ? truncateStack(error.stack, 'generate(') : 'Stack trace unavailable\n',
         },
       });
