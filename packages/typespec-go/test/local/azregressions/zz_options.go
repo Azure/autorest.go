@@ -6,6 +6,12 @@ package azregressions
 
 import "io"
 
+// ClientBinaryResponseWithXMLContentTypeOptions contains the optional parameters for the Client.BinaryResponseWithXMLContentType
+// method.
+type ClientBinaryResponseWithXMLContentTypeOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ClientForceRequiredBodyPatchOptions contains the optional parameters for the Client.ForceRequiredBodyPatch method.
 type ClientForceRequiredBodyPatchOptions struct {
 	// placeholder for future optional parameters
