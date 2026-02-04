@@ -630,11 +630,6 @@ export class ClientAdapter {
         });
       });
 
-      // special handling for constants that used in path, this will not be in operation parameters since it has been resolved in the url
-      if (!opParam && param.type.kind === 'constant') {
-        continue;
-      }
-
       if (!opParam) {
         throw new AdapterError('InternalError', `didn't find operation parameter for method ${sdkMethod.name} parameter ${param.name}`, sdkMethod.__raw?.node);
       }
