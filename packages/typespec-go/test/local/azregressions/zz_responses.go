@@ -4,6 +4,15 @@
 
 package azregressions
 
+import "io"
+
+// ClientBinaryResponseWithXMLContentTypeResponse contains the response from method Client.BinaryResponseWithXMLContentType.
+type ClientBinaryResponseWithXMLContentTypeResponse struct {
+	// Body contains the streaming response.
+	Body        io.ReadCloser
+	ContentType *string
+}
+
 // ClientForceRequiredBodyPatchResponse contains the response from method Client.ForceRequiredBodyPatch.
 type ClientForceRequiredBodyPatchResponse struct {
 	// placeholder for future response values

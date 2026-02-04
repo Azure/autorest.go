@@ -1,9 +1,10 @@
 # Release History
 
-## 0.9.3 (unreleased)
+## 0.9.3 (Unreleased)
 
 ### Other Changes
 
+* Improved diagnostic messages to include detail message for known issues.
 * Allow customized datetime encoding format
 
 ## 0.9.2 (2026-01-29)
@@ -11,6 +12,7 @@
 ### Bugs Fixed
 
 * Fixed incorrect example generation for unknown type.
+* Fixed detection logic for streaming responses.
 
 ### Other Changes
 
