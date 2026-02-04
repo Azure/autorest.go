@@ -734,7 +734,7 @@ export class ClientAdapter {
           // Check if parameter group already exists
           let paramGroup = this.parameterGroups.get(paramGroupName);
 
-          // Add each property as a method parameter
+          // Add each property as a method parameter and associate with the group
           for (let i = 0; i < modelProperties.length; i++) {
             const property = modelProperties[i];
             const propertyOpParam = correspondingOpParams[i];
@@ -744,7 +744,6 @@ export class ClientAdapter {
             
             if (adaptedPropertyParam.style === 'required' || adaptedPropertyParam.style === 'literal') {
               // Required params stay in the named parameter group
-              
               // Create the param group if it doesn't exist yet
               if (!paramGroup) {
                 const paramStyle = this.adaptParameterStyle(param);
