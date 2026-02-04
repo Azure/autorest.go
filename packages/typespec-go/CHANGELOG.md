@@ -1,9 +1,10 @@
 # Release History
 
-## 0.10.0 (unreleased)
+## 0.9.3 (Unreleased)
 
-### Breaking Changes
+### Other Changes
 
+* Improved diagnostic messages to include detail message for known issues.
 * Adjust the parameter group generation logic to only emit parameter groups when there is at least one required parameter in the group.
 
 ## 0.9.2 (2026-01-29)
@@ -11,6 +12,7 @@
 ### Bugs Fixed
 
 * Fixed incorrect example generation for unknown type.
+* Fixed detection logic for streaming responses.
 
 ### Other Changes
 
