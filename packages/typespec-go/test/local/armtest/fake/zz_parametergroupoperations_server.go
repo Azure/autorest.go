@@ -19,13 +19,17 @@ import (
 
 // ParameterGroupOperationsServer is a fake server for instances of the armtest.ParameterGroupOperationsClient type.
 type ParameterGroupOperationsServer struct {
-	// TestOperation1 is the fake for method ParameterGroupOperationsClient.TestOperation1
+	// NoParameterGroup is the fake for method ParameterGroupOperationsClient.NoParameterGroup
 	// HTTP status codes to indicate success: http.StatusOK
-	TestOperation1 func(ctx context.Context, resourceGroupName string, widgetName string, params armtest.ManagementRequestOptions, options *armtest.ParameterGroupOperationsClientTestOperation1Options) (resp azfake.Responder[armtest.ParameterGroupOperationsClientTestOperation1Response], errResp azfake.ErrorResponder)
+	NoParameterGroup func(ctx context.Context, resourceGroupName string, widgetName string, options *armtest.ParameterGroupOperationsClientNoParameterGroupOptions) (resp azfake.Responder[armtest.ParameterGroupOperationsClientNoParameterGroupResponse], errResp azfake.ErrorResponder)
 
-	// TestOperation2 is the fake for method ParameterGroupOperationsClient.TestOperation2
+	// SharedParameterGroup1 is the fake for method ParameterGroupOperationsClient.SharedParameterGroup1
 	// HTTP status codes to indicate success: http.StatusOK
-	TestOperation2 func(ctx context.Context, resourceGroupName string, widgetName string, params armtest.ManagementRequestOptions, options *armtest.ParameterGroupOperationsClientTestOperation2Options) (resp azfake.Responder[armtest.ParameterGroupOperationsClientTestOperation2Response], errResp azfake.ErrorResponder)
+	SharedParameterGroup1 func(ctx context.Context, resourceGroupName string, widgetName string, params armtest.ManagementRequestOptions, options *armtest.ParameterGroupOperationsClientSharedParameterGroup1Options) (resp azfake.Responder[armtest.ParameterGroupOperationsClientSharedParameterGroup1Response], errResp azfake.ErrorResponder)
+
+	// SharedParameterGroup2 is the fake for method ParameterGroupOperationsClient.SharedParameterGroup2
+	// HTTP status codes to indicate success: http.StatusOK
+	SharedParameterGroup2 func(ctx context.Context, resourceGroupName string, widgetName string, params armtest.ManagementRequestOptions, options *armtest.ParameterGroupOperationsClientSharedParameterGroup2Options) (resp azfake.Responder[armtest.ParameterGroupOperationsClientSharedParameterGroup2Response], errResp azfake.ErrorResponder)
 }
 
 // NewParameterGroupOperationsServerTransport creates a new instance of ParameterGroupOperationsServerTransport with the provided implementation.
@@ -64,10 +68,12 @@ func (p *ParameterGroupOperationsServerTransport) dispatchToMethodFake(req *http
 		}
 		if !intercepted {
 			switch method {
-			case "ParameterGroupOperationsClient.TestOperation1":
-				res.resp, res.err = p.dispatchTestOperation1(req)
-			case "ParameterGroupOperationsClient.TestOperation2":
-				res.resp, res.err = p.dispatchTestOperation2(req)
+			case "ParameterGroupOperationsClient.NoParameterGroup":
+				res.resp, res.err = p.dispatchNoParameterGroup(req)
+			case "ParameterGroupOperationsClient.SharedParameterGroup1":
+				res.resp, res.err = p.dispatchSharedParameterGroup1(req)
+			case "ParameterGroupOperationsClient.SharedParameterGroup2":
+				res.resp, res.err = p.dispatchSharedParameterGroup2(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
 			}
@@ -87,9 +93,49 @@ func (p *ParameterGroupOperationsServerTransport) dispatchToMethodFake(req *http
 	}
 }
 
-func (p *ParameterGroupOperationsServerTransport) dispatchTestOperation1(req *http.Request) (*http.Response, error) {
-	if p.srv.TestOperation1 == nil {
-		return nil, &nonRetriableError{errors.New("fake for method TestOperation1 not implemented")}
+func (p *ParameterGroupOperationsServerTransport) dispatchNoParameterGroup(req *http.Request) (*http.Response, error) {
+	if p.srv.NoParameterGroup == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NoParameterGroup not implemented")}
+	}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/widgets/(?P<widgetName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/noParameterGroup`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if len(matches) < 4 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	widgetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("widgetName")])
+	if err != nil {
+		return nil, err
+	}
+	correlationIDParam := getOptional(getHeaderValue(req.Header, "x-ms-correlation-id"))
+	var options *armtest.ParameterGroupOperationsClientNoParameterGroupOptions
+	if correlationIDParam != nil {
+		options = &armtest.ParameterGroupOperationsClientNoParameterGroupOptions{
+			CorrelationID: correlationIDParam,
+		}
+	}
+	respr, errRespr := p.srv.NoParameterGroup(req.Context(), resourceGroupNameParam, widgetNameParam, options)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Widget, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (p *ParameterGroupOperationsServerTransport) dispatchSharedParameterGroup1(req *http.Request) (*http.Response, error) {
+	if p.srv.SharedParameterGroup1 == nil {
+		return nil, &nonRetriableError{errors.New("fake for method SharedParameterGroup1 not implemented")}
 	}
 	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/widgets/(?P<widgetName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
@@ -109,13 +155,13 @@ func (p *ParameterGroupOperationsServerTransport) dispatchTestOperation1(req *ht
 	params := armtest.ManagementRequestOptions{
 		ClientRequestID: getHeaderValue(req.Header, "x-ms-client-request-id"),
 	}
-	var options *armtest.ParameterGroupOperationsClientTestOperation1Options
+	var options *armtest.ParameterGroupOperationsClientSharedParameterGroup1Options
 	if correlationIDParam != nil {
-		options = &armtest.ParameterGroupOperationsClientTestOperation1Options{
+		options = &armtest.ParameterGroupOperationsClientSharedParameterGroup1Options{
 			CorrelationID: correlationIDParam,
 		}
 	}
-	respr, errRespr := p.srv.TestOperation1(req.Context(), resourceGroupNameParam, widgetNameParam, params, options)
+	respr, errRespr := p.srv.SharedParameterGroup1(req.Context(), resourceGroupNameParam, widgetNameParam, params, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -130,11 +176,11 @@ func (p *ParameterGroupOperationsServerTransport) dispatchTestOperation1(req *ht
 	return resp, nil
 }
 
-func (p *ParameterGroupOperationsServerTransport) dispatchTestOperation2(req *http.Request) (*http.Response, error) {
-	if p.srv.TestOperation2 == nil {
-		return nil, &nonRetriableError{errors.New("fake for method TestOperation2 not implemented")}
+func (p *ParameterGroupOperationsServerTransport) dispatchSharedParameterGroup2(req *http.Request) (*http.Response, error) {
+	if p.srv.SharedParameterGroup2 == nil {
+		return nil, &nonRetriableError{errors.New("fake for method SharedParameterGroup2 not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/widgets/(?P<widgetName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/testOperation2`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/widgets/(?P<widgetName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/sharedParameterGroup2`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 4 {
@@ -152,13 +198,13 @@ func (p *ParameterGroupOperationsServerTransport) dispatchTestOperation2(req *ht
 	params := armtest.ManagementRequestOptions{
 		ClientRequestID: getHeaderValue(req.Header, "x-ms-client-request-id"),
 	}
-	var options *armtest.ParameterGroupOperationsClientTestOperation2Options
+	var options *armtest.ParameterGroupOperationsClientSharedParameterGroup2Options
 	if correlationIDParam != nil {
-		options = &armtest.ParameterGroupOperationsClientTestOperation2Options{
+		options = &armtest.ParameterGroupOperationsClientSharedParameterGroup2Options{
 			CorrelationID: correlationIDParam,
 		}
 	}
-	respr, errRespr := p.srv.TestOperation2(req.Context(), resourceGroupNameParam, widgetNameParam, params, options)
+	respr, errRespr := p.srv.SharedParameterGroup2(req.Context(), resourceGroupNameParam, widgetNameParam, params, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

@@ -10,14 +10,19 @@ using TypeSpec.Http;
 
 namespace Microsoft.Test;
 
-// Test parameter group model - should preserve "TestManagement" prefix
-// and not get stuttered to just "RequestOptions"
 @doc("Request options for test operations")
 model `test-management-request-options` {
   @doc("Client request ID for tracking")
   @header("x-ms-client-request-id")
   clientRequestId: string;
 
+  @doc("Optional correlation ID")
+  @header("x-ms-correlation-id")
+  correlationId?: string;
+}
+
+@doc("Request options for test operations")
+model `test-management-request-options-only-optional` {
   @doc("Optional correlation ID")
   @header("x-ms-correlation-id")
   correlationId?: string;
@@ -34,21 +39,30 @@ model Widget is TrackedResource<WidgetProperties> {
 
 @armResourceOperations
 interface ParameterGroupOperations {
-  @doc("Test operation 1 using parameter group")
+  @doc("This operation using parameter group")
   @get
   @armResourceRead(Widget)
-  testOperation1(
+  sharedParameterGroup1(
     ...ResourceInstanceParameters<Widget>,
     @doc("Parameter group options")
     params: `test-management-request-options`,
   ): ArmResponse<Widget> | ErrorResponse;
 
-  @doc("Test operation 2 using the same parameter group - should reuse, not duplicate")
+  @doc("This operation using the same parameter group - should reuse, not duplicate")
   @post
   @armResourceAction(Widget)
-  testOperation2(
+  sharedParameterGroup2(
     ...ResourceInstanceParameters<Widget>,
     @doc("Parameter group options")
     params: `test-management-request-options`,
+  ): ArmResponse<Widget> | ErrorResponse;
+
+  @doc("This operation should not emit parameter group since all parameters are optional")
+  @post
+  @armResourceAction(Widget)
+  noParameterGroup(
+    ...ResourceInstanceParameters<Widget>,
+    @doc("Parameter group options")
+    params: `test-management-request-options-only-optional`,
   ): ArmResponse<Widget> | ErrorResponse;
 }

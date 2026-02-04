@@ -27,16 +27,23 @@ type ManagementRequestOptions struct {
 	ClientRequestID string
 }
 
-// ParameterGroupOperationsClientTestOperation1Options contains the optional parameters for the ParameterGroupOperationsClient.TestOperation1
+// ParameterGroupOperationsClientNoParameterGroupOptions contains the optional parameters for the ParameterGroupOperationsClient.NoParameterGroup
 // method.
-type ParameterGroupOperationsClientTestOperation1Options struct {
+type ParameterGroupOperationsClientNoParameterGroupOptions struct {
 	// Optional correlation ID
 	CorrelationID *string
 }
 
-// ParameterGroupOperationsClientTestOperation2Options contains the optional parameters for the ParameterGroupOperationsClient.TestOperation2
+// ParameterGroupOperationsClientSharedParameterGroup1Options contains the optional parameters for the ParameterGroupOperationsClient.SharedParameterGroup1
 // method.
-type ParameterGroupOperationsClientTestOperation2Options struct {
+type ParameterGroupOperationsClientSharedParameterGroup1Options struct {
+	// Optional correlation ID
+	CorrelationID *string
+}
+
+// ParameterGroupOperationsClientSharedParameterGroup2Options contains the optional parameters for the ParameterGroupOperationsClient.SharedParameterGroup2
+// method.
+type ParameterGroupOperationsClientSharedParameterGroup2Options struct {
 	// Optional correlation ID
 	CorrelationID *string
 }

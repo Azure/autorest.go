@@ -39,39 +39,107 @@ func NewParameterGroupOperationsClient(subscriptionID string, credential azcore.
 	return client, nil
 }
 
-// TestOperation1 - Test operation 1 using parameter group
+// NoParameterGroup - This operation should not emit parameter group since all parameters are optional
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2025-01-01
+//   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - widgetName - The name of the widget
+//   - options - ParameterGroupOperationsClientNoParameterGroupOptions contains the optional parameters for the ParameterGroupOperationsClient.NoParameterGroup
+//     method.
+func (client *ParameterGroupOperationsClient) NoParameterGroup(ctx context.Context, resourceGroupName string, widgetName string, options *ParameterGroupOperationsClientNoParameterGroupOptions) (ParameterGroupOperationsClientNoParameterGroupResponse, error) {
+	var err error
+	const operationName = "ParameterGroupOperationsClient.NoParameterGroup"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.noParameterGroupCreateRequest(ctx, resourceGroupName, widgetName, options)
+	if err != nil {
+		return ParameterGroupOperationsClientNoParameterGroupResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ParameterGroupOperationsClientNoParameterGroupResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ParameterGroupOperationsClientNoParameterGroupResponse{}, err
+	}
+	resp, err := client.noParameterGroupHandleResponse(httpResp)
+	return resp, err
+}
+
+// noParameterGroupCreateRequest creates the NoParameterGroup request.
+func (client *ParameterGroupOperationsClient) noParameterGroupCreateRequest(ctx context.Context, resourceGroupName string, widgetName string, options *ParameterGroupOperationsClientNoParameterGroupOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/noParameterGroup"
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if widgetName == "" {
+		return nil, errors.New("parameter widgetName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{widgetName}", url.PathEscape(widgetName))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2025-01-01")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	if options != nil && options.CorrelationID != nil {
+		req.Raw().Header["x-ms-correlation-id"] = []string{*options.CorrelationID}
+	}
+	return req, nil
+}
+
+// noParameterGroupHandleResponse handles the NoParameterGroup response.
+func (client *ParameterGroupOperationsClient) noParameterGroupHandleResponse(resp *http.Response) (ParameterGroupOperationsClientNoParameterGroupResponse, error) {
+	result := ParameterGroupOperationsClientNoParameterGroupResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Widget); err != nil {
+		return ParameterGroupOperationsClientNoParameterGroupResponse{}, err
+	}
+	return result, nil
+}
+
+// SharedParameterGroup1 - This operation using parameter group
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2025-01-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - widgetName - The name of the widget
 //   - params - Request options for test operations
-//   - options - ParameterGroupOperationsClientTestOperation1Options contains the optional parameters for the ParameterGroupOperationsClient.TestOperation1
+//   - options - ParameterGroupOperationsClientSharedParameterGroup1Options contains the optional parameters for the ParameterGroupOperationsClient.SharedParameterGroup1
 //     method.
-func (client *ParameterGroupOperationsClient) TestOperation1(ctx context.Context, resourceGroupName string, widgetName string, params ManagementRequestOptions, options *ParameterGroupOperationsClientTestOperation1Options) (ParameterGroupOperationsClientTestOperation1Response, error) {
+func (client *ParameterGroupOperationsClient) SharedParameterGroup1(ctx context.Context, resourceGroupName string, widgetName string, params ManagementRequestOptions, options *ParameterGroupOperationsClientSharedParameterGroup1Options) (ParameterGroupOperationsClientSharedParameterGroup1Response, error) {
 	var err error
-	const operationName = "ParameterGroupOperationsClient.TestOperation1"
+	const operationName = "ParameterGroupOperationsClient.SharedParameterGroup1"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.testOperation1CreateRequest(ctx, resourceGroupName, widgetName, params, options)
+	req, err := client.sharedParameterGroup1CreateRequest(ctx, resourceGroupName, widgetName, params, options)
 	if err != nil {
-		return ParameterGroupOperationsClientTestOperation1Response{}, err
+		return ParameterGroupOperationsClientSharedParameterGroup1Response{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ParameterGroupOperationsClientTestOperation1Response{}, err
+		return ParameterGroupOperationsClientSharedParameterGroup1Response{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return ParameterGroupOperationsClientTestOperation1Response{}, err
+		return ParameterGroupOperationsClientSharedParameterGroup1Response{}, err
 	}
-	resp, err := client.testOperation1HandleResponse(httpResp)
+	resp, err := client.sharedParameterGroup1HandleResponse(httpResp)
 	return resp, err
 }
 
-// testOperation1CreateRequest creates the TestOperation1 request.
-func (client *ParameterGroupOperationsClient) testOperation1CreateRequest(ctx context.Context, resourceGroupName string, widgetName string, params ManagementRequestOptions, options *ParameterGroupOperationsClientTestOperation1Options) (*policy.Request, error) {
+// sharedParameterGroup1CreateRequest creates the SharedParameterGroup1 request.
+func (client *ParameterGroupOperationsClient) sharedParameterGroup1CreateRequest(ctx context.Context, resourceGroupName string, widgetName string, params ManagementRequestOptions, options *ParameterGroupOperationsClientSharedParameterGroup1Options) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -100,49 +168,49 @@ func (client *ParameterGroupOperationsClient) testOperation1CreateRequest(ctx co
 	return req, nil
 }
 
-// testOperation1HandleResponse handles the TestOperation1 response.
-func (client *ParameterGroupOperationsClient) testOperation1HandleResponse(resp *http.Response) (ParameterGroupOperationsClientTestOperation1Response, error) {
-	result := ParameterGroupOperationsClientTestOperation1Response{}
+// sharedParameterGroup1HandleResponse handles the SharedParameterGroup1 response.
+func (client *ParameterGroupOperationsClient) sharedParameterGroup1HandleResponse(resp *http.Response) (ParameterGroupOperationsClientSharedParameterGroup1Response, error) {
+	result := ParameterGroupOperationsClientSharedParameterGroup1Response{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Widget); err != nil {
-		return ParameterGroupOperationsClientTestOperation1Response{}, err
+		return ParameterGroupOperationsClientSharedParameterGroup1Response{}, err
 	}
 	return result, nil
 }
 
-// TestOperation2 - Test operation 2 using the same parameter group - should reuse, not duplicate
+// SharedParameterGroup2 - This operation using the same parameter group - should reuse, not duplicate
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2025-01-01
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - widgetName - The name of the widget
 //   - params - Request options for test operations
-//   - options - ParameterGroupOperationsClientTestOperation2Options contains the optional parameters for the ParameterGroupOperationsClient.TestOperation2
+//   - options - ParameterGroupOperationsClientSharedParameterGroup2Options contains the optional parameters for the ParameterGroupOperationsClient.SharedParameterGroup2
 //     method.
-func (client *ParameterGroupOperationsClient) TestOperation2(ctx context.Context, resourceGroupName string, widgetName string, params ManagementRequestOptions, options *ParameterGroupOperationsClientTestOperation2Options) (ParameterGroupOperationsClientTestOperation2Response, error) {
+func (client *ParameterGroupOperationsClient) SharedParameterGroup2(ctx context.Context, resourceGroupName string, widgetName string, params ManagementRequestOptions, options *ParameterGroupOperationsClientSharedParameterGroup2Options) (ParameterGroupOperationsClientSharedParameterGroup2Response, error) {
 	var err error
-	const operationName = "ParameterGroupOperationsClient.TestOperation2"
+	const operationName = "ParameterGroupOperationsClient.SharedParameterGroup2"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.testOperation2CreateRequest(ctx, resourceGroupName, widgetName, params, options)
+	req, err := client.sharedParameterGroup2CreateRequest(ctx, resourceGroupName, widgetName, params, options)
 	if err != nil {
-		return ParameterGroupOperationsClientTestOperation2Response{}, err
+		return ParameterGroupOperationsClientSharedParameterGroup2Response{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ParameterGroupOperationsClientTestOperation2Response{}, err
+		return ParameterGroupOperationsClientSharedParameterGroup2Response{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return ParameterGroupOperationsClientTestOperation2Response{}, err
+		return ParameterGroupOperationsClientSharedParameterGroup2Response{}, err
 	}
-	resp, err := client.testOperation2HandleResponse(httpResp)
+	resp, err := client.sharedParameterGroup2HandleResponse(httpResp)
 	return resp, err
 }
 
-// testOperation2CreateRequest creates the TestOperation2 request.
-func (client *ParameterGroupOperationsClient) testOperation2CreateRequest(ctx context.Context, resourceGroupName string, widgetName string, params ManagementRequestOptions, options *ParameterGroupOperationsClientTestOperation2Options) (*policy.Request, error) {
-	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/testOperation2"
+// sharedParameterGroup2CreateRequest creates the SharedParameterGroup2 request.
+func (client *ParameterGroupOperationsClient) sharedParameterGroup2CreateRequest(ctx context.Context, resourceGroupName string, widgetName string, params ManagementRequestOptions, options *ParameterGroupOperationsClientSharedParameterGroup2Options) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/sharedParameterGroup2"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
@@ -170,11 +238,11 @@ func (client *ParameterGroupOperationsClient) testOperation2CreateRequest(ctx co
 	return req, nil
 }
 
-// testOperation2HandleResponse handles the TestOperation2 response.
-func (client *ParameterGroupOperationsClient) testOperation2HandleResponse(resp *http.Response) (ParameterGroupOperationsClientTestOperation2Response, error) {
-	result := ParameterGroupOperationsClientTestOperation2Response{}
+// sharedParameterGroup2HandleResponse handles the SharedParameterGroup2 response.
+func (client *ParameterGroupOperationsClient) sharedParameterGroup2HandleResponse(resp *http.Response) (ParameterGroupOperationsClientSharedParameterGroup2Response, error) {
+	result := ParameterGroupOperationsClientSharedParameterGroup2Response{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Widget); err != nil {
-		return ParameterGroupOperationsClientTestOperation2Response{}, err
+		return ParameterGroupOperationsClientSharedParameterGroup2Response{}, err
 	}
 	return result, nil
 }
