@@ -4,7 +4,7 @@
 
 ### Breaking Changes
 
-* Parameter groups now only contain required parameters. Optional parameters within a parameter group are moved to the method's options type. If a parameter group contains no required parameters, it is not generated.
+* Adjust the parameter group generation logic to only emit parameter groups when there is at least one required parameter in the group.
 
 ## 0.9.2 (2026-01-29)
 
