@@ -6,6 +6,7 @@
 
 * Improved diagnostic messages to include detail message for known issues.
 * Adjust the parameter group generation logic to only emit parameter groups when there is at least one required parameter in the group.
+* Allow customized datetime encoding format
 
 ## 0.9.2 (2026-01-29)
 
