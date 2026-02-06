@@ -269,7 +269,7 @@ export class TypeAdapter {
       return datetime;
     } catch {
       this.ctx.program.reportDiagnostic({
-        code: 'UnsupportedEncoding',
+        code: 'UnsupportedTsp',
         severity: 'warning',
         message: `unsupported date time encoding '${type.encode}', falling back to wire type`,
         target: type.__raw?.node || NoTarget,
