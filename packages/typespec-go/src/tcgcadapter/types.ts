@@ -267,14 +267,14 @@ export class TypeAdapter {
       datetime = new go.Time(encoding, utc);
       this.types.set(encoding, datetime);
       return datetime;
-    } catch (e) {
+    } catch {
       this.ctx.program.reportDiagnostic({
-          code: 'UnsupportedEncoding',
-          severity: 'warning',
-          message: `unsupported date time encoding '${type.encode}', falling back to wire type`,
-          target: type.__raw?.node || NoTarget,
-        });
-        return this.getBuiltInType(type.wireType);
+        code: 'UnsupportedEncoding',
+        severity: 'warning',
+        message: `unsupported date time encoding '${type.encode}', falling back to wire type`,
+        target: type.__raw?.node || NoTarget,
+      });
+      return this.getBuiltInType(type.wireType);
     }
   }
 
