@@ -168,72 +168,7 @@ model Resource {
   systemData?: SystemData;
 }
 
-/**
- * The resource management error response.
- */
-@error
-model Error {
-  /**
-   * The error object.
-   */
-  #suppress "@azure-tools/typespec-client-generator-core/property-name-conflict" ""
-  error?: ErrorDetail;
-}
 
-/**
- * The error object detail.
- */
-model ErrorDetail {
-  /**
-   * The error code.
-   */
-  @visibility(Lifecycle.Read)
-  code?: string;
-
-  /**
-   * The error message.
-   */
-  @visibility(Lifecycle.Read)
-  message?: string;
-
-  /**
-   * The error target.
-   */
-  @visibility(Lifecycle.Read)
-  target?: string;
-
-  /**
-   * The error details.
-   */
-  @visibility(Lifecycle.Read)
-  @OpenAPI.extension("x-ms-identifiers", #[])
-  details?: Error[];
-
-  /**
-   * The error additional info.
-   */
-  @visibility(Lifecycle.Read)
-  @OpenAPI.extension("x-ms-identifiers", #[])
-  additionalInfo?: ErrorAdditionalInfo[];
-}
-
-/**
- * Additional information about an error.
- */
-model ErrorAdditionalInfo {
-  /**
-   * The type of the additional error information.
-   */
-  @visibility(Lifecycle.Read)
-  type?: string;
-
-  /**
-   * The additional error information.
-   */
-  #suppress "@azure-tools/typespec-azure-resource-manager/no-empty-model" ""
-  @visibility(Lifecycle.Read)
-  info?: {};
-}
 
 /**
  * Represents a user-assigned identity.
