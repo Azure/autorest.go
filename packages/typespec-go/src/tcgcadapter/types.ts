@@ -258,7 +258,7 @@ export class TypeAdapter {
   }
 
   private getTimeType(type: tcgc.SdkDateTimeType, utc: boolean): go.WireType {
-    try{
+    try {
       const encoding = getDateTimeEncoding(type.encode);
       let datetime = this.types.get(encoding);
       if (datetime) {
