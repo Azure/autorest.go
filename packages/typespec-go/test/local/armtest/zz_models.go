@@ -124,6 +124,9 @@ type Widget struct {
 
 // WidgetProperties - Properties of the widget resource.
 type WidgetProperties struct {
+	// A timestamp with an unknown encoding format for testing fallback behavior.
+	CustomEncodedTime *string
+
 	// The description of the widget.
 	Description *string
 

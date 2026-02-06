@@ -51,4 +51,8 @@ model WidgetProperties {
   @doc("Status of the current operation on widget.")
   @visibility(Lifecycle.Read)
   provisioningState?: ProvisioningState;
+
+  @doc("A timestamp with an unknown encoding format for testing fallback behavior.")
+  @encode("rfc3339-fixed-width", string)
+  customEncodedTime?: utcDateTime;
 }

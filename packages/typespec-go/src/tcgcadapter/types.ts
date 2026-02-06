@@ -5,6 +5,7 @@
 
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import * as tsp from '@typespec/compiler';
+import { NoTarget } from '@typespec/compiler';
 import * as http from '@typespec/http';
 import * as go from '../../../codemodel.go/src/index.js';
 import * as naming from '../../../naming.go/src/naming.js';
@@ -217,9 +218,9 @@ export class TypeAdapter {
       case 'enumvalue':
         return this.getLiteralValue(type);
       case 'offsetDateTime':
-        return this.getTimeType(type.encode, false);
+        return this.getTimeType(type, false);
       case 'utcDateTime':
-        return this.getTimeType(type.encode, true);
+        return this.getTimeType(type, true);
       case 'dict': {
         const valueTypeByValue = isTypePassedByValue(type.valueType);
         const keyName = recursiveKeyName(`dict-${valueTypeByValue}`, type.valueType, substituteDiscriminator);
@@ -256,15 +257,25 @@ export class TypeAdapter {
     }
   }
 
-  private getTimeType(encode: string, utc: boolean): go.Time {
-    const encoding = getDateTimeEncoding(encode);
-    let datetime = this.types.get(encoding);
-    if (datetime) {
-      return <go.Time>datetime;
+  private getTimeType(type: tcgc.SdkDateTimeType, utc: boolean): go.WireType {
+    try{
+      const encoding = getDateTimeEncoding(type.encode);
+      let datetime = this.types.get(encoding);
+      if (datetime) {
+        return <go.Time>datetime;
+      }
+      datetime = new go.Time(encoding, utc);
+      this.types.set(encoding, datetime);
+      return datetime;
+    } catch (e) {
+      this.ctx.program.reportDiagnostic({
+          code: 'UnsupportedEncoding',
+          severity: 'warning',
+          message: `unsupported date time encoding '${type.encode}', falling back to wire type`,
+          target: type.__raw?.node || NoTarget,
+        });
+        return this.getBuiltInType(type.wireType);
     }
-    datetime = new go.Time(encoding, utc);
-    this.types.set(encoding, datetime);
-    return datetime;
   }
 
   // returns the Go code model type for an io.ReadSeekCloser
