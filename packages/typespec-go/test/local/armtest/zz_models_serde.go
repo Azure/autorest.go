@@ -305,6 +305,7 @@ func (w *Widget) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type WidgetProperties.
 func (w WidgetProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
+	populate(objectMap, "customEncodedTime", w.CustomEncodedTime)
 	populate(objectMap, "description", w.Description)
 	populate(objectMap, "name", w.Name)
 	populate(objectMap, "provisioningState", w.ProvisioningState)
@@ -320,6 +321,9 @@ func (w *WidgetProperties) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "customEncodedTime":
+			err = unpopulate(val, "CustomEncodedTime", &w.CustomEncodedTime)
+			delete(rawMsg, key)
 		case "description":
 			err = unpopulate(val, "Description", &w.Description)
 			delete(rawMsg, key)
