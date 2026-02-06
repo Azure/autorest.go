@@ -5,6 +5,7 @@
 
 import { ClientAdapter } from './clients.js';
 import { AdapterError } from './errors.js';
+import { buildMetadata } from './metadata.js';
 import { TypeAdapter } from './types.js';
 import { GoEmitterOptions } from '../lib.js';
 import * as go from '../../../codemodel.go/src/index.js';
@@ -92,10 +93,9 @@ export class Adapter {
 
     // get the emitter version from our package.json
     const packageJson = createRequire(import.meta.url)('../../../../package.json') as Record<string, never>;
-    this.codeModel.metadata = {
-      ...this.ctx.sdkPackage.metadata,
-      emitterVersion: packageJson['version']
-    };
+    
+    // Build metadata with support for multiple API versions
+    this.codeModel.metadata = buildMetadata(this.ctx, packageJson['version']);
 
     this.codeModel.options.rawJSONAsBytes = this.options['rawjson-as-bytes'] ?? false;
     this.codeModel.options.sliceElementsByval = this.options['slice-elements-byval'] ?? false;
