@@ -52,7 +52,7 @@ interface HealthBots {
    */
   #suppress "@azure-tools/typespec-azure-core/no-openapi" "non-standard operations"
   @operationId("Bots_Get")
-  get is ArmResourceRead<HealthBot, Error = Error>;
+  get is ArmResourceRead<HealthBot>;
 
   /**
    * Create a new Azure Health Bot.
@@ -61,7 +61,6 @@ interface HealthBots {
   @operationId("Bots_Create")
   create is ArmResourceCreateOrReplaceAsync<
     HealthBot,
-    Error = Error,
     Response = ArmResourceUpdatedResponse<HealthBot> | ArmResourceCreatedResponse<
       HealthBot,
       ArmAsyncOperationHeader & Azure.Core.Foundations.RetryAfterHeader
@@ -78,7 +77,6 @@ interface HealthBots {
   update is ArmCustomPatchAsync<
     HealthBot,
     PatchModel = HealthBotUpdateParameters,
-    Error = Error,
     Response = ArmResponse<HealthBot> | ArmResourceCreatedResponse<
       HealthBot,
       ArmLroLocationHeader & Azure.Core.Foundations.RetryAfterHeader
@@ -93,8 +91,7 @@ interface HealthBots {
   @operationId("Bots_Delete")
   delete is ArmResourceDeleteWithoutOkAsync<
     HealthBot,
-    Response = ArmDeletedResponse | ArmDeleteAcceptedLroResponse | ArmDeletedNoContentResponse,
-    Error = Error
+    Response = ArmDeletedResponse | ArmDeleteAcceptedLroResponse | ArmDeletedNoContentResponse
   >;
 
   /**
@@ -104,8 +101,7 @@ interface HealthBots {
   @operationId("Bots_ListByResourceGroup")
   listByResourceGroup is ArmResourceListByParent<
     HealthBot,
-    Response = ArmResponse<BotResponseList>,
-    Error = Error
+    Response = ArmResponse<BotResponseList>
   >;
 
   /**
@@ -115,8 +111,7 @@ interface HealthBots {
   @operationId("Bots_List")
   list is ArmListBySubscription<
     HealthBot,
-    Response = ArmResponse<BotResponseList>,
-    Error = Error
+    Response = ArmResponse<BotResponseList>
   >;
 
   /**
@@ -127,8 +122,7 @@ interface HealthBots {
   listSecrets is ArmResourceActionSync<
     HealthBot,
     void,
-    ArmResponse<HealthBotKeysResponse>,
-    Error = Error
+    ArmResponse<HealthBotKeysResponse>
   >;
 
   /**
@@ -139,8 +133,7 @@ interface HealthBots {
   regenerateApiJwtSecret is ArmResourceActionSync<
     HealthBot,
     void,
-    ArmResponse<HealthBotKey>,
-    Error = Error
+    ArmResponse<HealthBotKey>
   >;
 }
 
