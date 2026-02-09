@@ -2,6 +2,9 @@
 
 ## 0.9.3 (Unreleased)
 
+### Bugs Fixed
+* Fixed incorrect naming for response headers
+
 ### Other Changes
 
 * Improved diagnostic messages to include detail message for known issues.

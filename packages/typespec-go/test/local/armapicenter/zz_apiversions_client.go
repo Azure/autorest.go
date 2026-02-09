@@ -119,7 +119,7 @@ func (client *APIVersionsClient) createOrUpdateCreateRequest(ctx context.Context
 func (client *APIVersionsClient) createOrUpdateHandleResponse(resp *http.Response) (APIVersionsClientCreateOrUpdateResponse, error) {
 	result := APIVersionsClientCreateOrUpdateResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.EtagHeader = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.APIVersion); err != nil {
 		return APIVersionsClientCreateOrUpdateResponse{}, err
@@ -269,7 +269,7 @@ func (client *APIVersionsClient) getCreateRequest(ctx context.Context, resourceG
 func (client *APIVersionsClient) getHandleResponse(resp *http.Response) (APIVersionsClientGetResponse, error) {
 	result := APIVersionsClientGetResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.EtagHeader = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.APIVersion); err != nil {
 		return APIVersionsClientGetResponse{}, err

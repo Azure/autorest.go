@@ -119,7 +119,7 @@ func (client *DeploymentsClient) createOrUpdateCreateRequest(ctx context.Context
 func (client *DeploymentsClient) createOrUpdateHandleResponse(resp *http.Response) (DeploymentsClientCreateOrUpdateResponse, error) {
 	result := DeploymentsClientCreateOrUpdateResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.EtagHeader = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Deployment); err != nil {
 		return DeploymentsClientCreateOrUpdateResponse{}, err
@@ -269,7 +269,7 @@ func (client *DeploymentsClient) getCreateRequest(ctx context.Context, resourceG
 func (client *DeploymentsClient) getHandleResponse(resp *http.Response) (DeploymentsClientGetResponse, error) {
 	result := DeploymentsClientGetResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.EtagHeader = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Deployment); err != nil {
 		return DeploymentsClientGetResponse{}, err

@@ -36,7 +36,7 @@ type NamingClientRequestResponse struct {
 
 // NamingClientResponseResponse contains the response from method NamingClient.Response.
 type NamingClientResponseResponse struct {
-	DefaultName *string
+	ClientName *string
 }
 
 // NamingModelClientClientResponse contains the response from method NamingModelClient.Client.

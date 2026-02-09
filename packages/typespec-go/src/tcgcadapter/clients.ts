@@ -1039,7 +1039,7 @@ export class ClientAdapter {
         }
 
         // TODO: x-ms-header-collection-prefix
-        const headerResp = new go.HeaderScalarResponse(ensureNameCase(httpHeader.serializedName), this.adaptHeaderScalarType(httpHeader.type, false), httpHeader.serializedName, isTypePassedByValue(httpHeader.type));
+        const headerResp = new go.HeaderScalarResponse(ensureNameCase(httpHeader.name), this.adaptHeaderScalarType(httpHeader.type, false), httpHeader.serializedName, isTypePassedByValue(httpHeader.type));
         headerResp.docs.summary = httpHeader.summary;
         headerResp.docs.description = httpHeader.doc;
         respEnv.headers.push(headerResp);

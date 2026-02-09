@@ -156,7 +156,7 @@ func (d *DeploymentsServerTransport) dispatchCreateOrUpdate(req *http.Request) (
 	if err != nil {
 		return nil, err
 	}
-	if val := server.GetResponse(respr).ETag; val != nil {
+	if val := server.GetResponse(respr).EtagHeader; val != nil {
 		resp.Header.Set("ETag", *val)
 	}
 	return resp, nil
@@ -249,7 +249,7 @@ func (d *DeploymentsServerTransport) dispatchGet(req *http.Request) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	if val := server.GetResponse(respr).ETag; val != nil {
+	if val := server.GetResponse(respr).EtagHeader; val != nil {
 		resp.Header.Set("ETag", *val)
 	}
 	return resp, nil
