@@ -65,7 +65,7 @@ interface Operations {
     @segment("providers")
     @doc("The provider namespace (this parameter will not show up in operations).")
     provider: "Microsoft.ThisWillBeReplaced",
-  ): ArmResponse<AvailableOperations> | Error;
+  ): ArmResponse<AvailableOperations> | ErrorResponse;
 }
 
 @@doc(Operations.list, "Lists all the available Azure Health Bot operations.");

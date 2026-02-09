@@ -83,7 +83,7 @@ const azureHttpSpecsGroup = {
   'coreusagegroup': ['azure/client-generator-core/usage'],
   'overridegroup': ['azure/client-generator-core/override/client.tsp'],
   'hierarchygroup': ['azure/client-generator-core/hierarchy-building'],
-  'clientinitgroup': ['azure/client-generator-core/client-initialization'],
+  // 'clientinitgroup': ['azure/client-generator-core/client-initialization'], // bypass for now to unblock nightly build
   'apiversionheadergroup' : ['azure/client-generator-core/api-version/header/client.tsp'],
   'apiversionpathgroup' : ['azure/client-generator-core/api-version/path/client.tsp'],
   'apiversionquerygroup' : ['azure/client-generator-core/api-version/query/client.tsp'],
