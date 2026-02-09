@@ -258,16 +258,8 @@ export class TypeAdapter {
   }
 
   private getTimeType(type: tcgc.SdkDateTimeType, utc: boolean): go.WireType {
-    try {
-      const encoding = getDateTimeEncoding(type.encode);
-      let datetime = this.types.get(encoding);
-      if (datetime) {
-        return <go.Time>datetime;
-      }
-      datetime = new go.Time(encoding, utc);
-      this.types.set(encoding, datetime);
-      return datetime;
-    } catch {
+    const encoding = getDateTimeEncoding(type.encode);
+    if (encoding === undefined) {
       this.ctx.program.reportDiagnostic({
         code: 'UnsupportedTsp',
         severity: 'warning',
@@ -276,6 +268,13 @@ export class TypeAdapter {
       });
       return this.getBuiltInType(type.wireType);
     }
+    let datetime = this.types.get(encoding);
+    if (datetime) {
+      return <go.Time>datetime;
+    }
+    datetime = new go.Time(encoding, utc);
+    this.types.set(encoding, datetime);
+    return datetime;
   }
 
   // returns the Go code model type for an io.ReadSeekCloser
@@ -803,7 +802,7 @@ function getPrimitiveType(type: tcgc.SdkBuiltInType): 'bool' | 'float32' | 'floa
   }
 }
 
-function getDateTimeEncoding(encoding: string): go.TimeFormat {
+function getDateTimeEncoding(encoding: string): go.TimeFormat | undefined {
   switch (encoding) {
     case 'rfc3339':
       return 'RFC3339';
@@ -812,7 +811,7 @@ function getDateTimeEncoding(encoding: string): go.TimeFormat {
     case 'unixTimestamp':
       return 'Unix';
     default:
-      throw new AdapterError('UnsupportedTsp', `unsupported date time encoding ${encoding}`);
+      return undefined;
   }
 }
 
