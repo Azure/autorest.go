@@ -1,4 +1,7 @@
 {
-  "apiVersions": {},
+  "apiVersions": {
+    "Service.MultiService.ServiceA": "av2",
+    "Service.MultiService.ServiceB": "bv2"
+  },
   "emitterVersion": "0.0.0"
 }

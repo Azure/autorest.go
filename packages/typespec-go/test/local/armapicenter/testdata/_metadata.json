@@ -1,5 +1,6 @@
 {
-  "apiVersion": "2024-03-15-preview",
-  "apiVersions": {},
+  "apiVersions": {
+    "Microsoft.ApiCenter": "2024-03-15-preview"
+  },
   "emitterVersion": "0.0.0"
 }

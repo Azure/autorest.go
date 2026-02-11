@@ -1,5 +1,6 @@
 {
-  "apiVersion": "2025-05-01",
-  "apiVersions": {},
+  "apiVersions": {
+    "Microsoft.ComputeSchedule": "2025-05-01"
+  },
   "emitterVersion": "0.0.0"
 }

@@ -1,5 +1,6 @@
 {
-  "apiVersion": "2024-06-01",
-  "apiVersions": {},
+  "apiVersions": {
+    "_Specs_.Azure.Versioning.PreviewVersion": "2024-06-01"
+  },
   "emitterVersion": "0.0.0"
 }
