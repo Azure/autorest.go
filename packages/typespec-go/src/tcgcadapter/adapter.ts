@@ -89,9 +89,7 @@ export class Adapter {
     const info = new go.Info(this.ctx.sdkPackage.crossLanguagePackageId);
     const codeModelType: go.CodeModelType = this.ctx.arm === true ? 'azure-arm' : 'data-plane';
     this.codeModel = new go.CodeModel(info, codeModelType, goOptions, root);
-
-    this.codeModel.metadata = buildMetadata(this.ctx.sdkPackage);
-
+    this.codeModel.metadata = buildMetadata(this.ctx.sdkPackage.metadata);
     this.codeModel.options.rawJSONAsBytes = this.options['rawjson-as-bytes'] ?? false;
     this.codeModel.options.sliceElementsByval = this.options['slice-elements-byval'] ?? false;
     this.codeModel.options.factoryGatherAllParams = this.options['factory-gather-all-params'] ?? true;
