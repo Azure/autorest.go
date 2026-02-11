@@ -13,10 +13,33 @@ import (
 )
 
 // ValueTypesUnionFloatLiteralClient contains the methods for the ValueTypesUnionFloatLiteral group.
-// Don't use this type directly, use [ValueTypesClient.NewValueTypesUnionFloatLiteralClient] instead.
+// Don't use this type directly, use NewValueTypesUnionFloatLiteralClientWithNoCredential() instead.
 type ValueTypesUnionFloatLiteralClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ValueTypesUnionFloatLiteralClientOptions contains the optional values for creating a [ValueTypesUnionFloatLiteralClient].
+type ValueTypesUnionFloatLiteralClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewValueTypesUnionFloatLiteralClientWithNoCredential creates a new instance of ValueTypesUnionFloatLiteralClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewValueTypesUnionFloatLiteralClientWithNoCredential(endpoint string, options *ValueTypesUnionFloatLiteralClientOptions) (*ValueTypesUnionFloatLiteralClient, error) {
+	if options == nil {
+		options = &ValueTypesUnionFloatLiteralClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ValueTypesUnionFloatLiteralClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - Get call

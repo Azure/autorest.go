@@ -13,10 +13,33 @@ import (
 )
 
 // ValueTypesBooleanLiteralClient contains the methods for the ValueTypesBooleanLiteral group.
-// Don't use this type directly, use [ValueTypesClient.NewValueTypesBooleanLiteralClient] instead.
+// Don't use this type directly, use NewValueTypesBooleanLiteralClientWithNoCredential() instead.
 type ValueTypesBooleanLiteralClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ValueTypesBooleanLiteralClientOptions contains the optional values for creating a [ValueTypesBooleanLiteralClient].
+type ValueTypesBooleanLiteralClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewValueTypesBooleanLiteralClientWithNoCredential creates a new instance of ValueTypesBooleanLiteralClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewValueTypesBooleanLiteralClientWithNoCredential(endpoint string, options *ValueTypesBooleanLiteralClientOptions) (*ValueTypesBooleanLiteralClient, error) {
+	if options == nil {
+		options = &ValueTypesBooleanLiteralClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ValueTypesBooleanLiteralClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - Get call

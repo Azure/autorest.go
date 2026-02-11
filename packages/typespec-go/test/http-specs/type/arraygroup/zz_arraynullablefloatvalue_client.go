@@ -13,10 +13,33 @@ import (
 )
 
 // ArrayNullableFloatValueClient - Array of nullable float values
-// Don't use this type directly, use [ArrayClient.NewArrayNullableFloatValueClient] instead.
+// Don't use this type directly, use NewArrayNullableFloatValueClientWithNoCredential() instead.
 type ArrayNullableFloatValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ArrayNullableFloatValueClientOptions contains the optional values for creating a [ArrayNullableFloatValueClient].
+type ArrayNullableFloatValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewArrayNullableFloatValueClientWithNoCredential creates a new instance of ArrayNullableFloatValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewArrayNullableFloatValueClientWithNoCredential(endpoint string, options *ArrayNullableFloatValueClientOptions) (*ArrayNullableFloatValueClient, error) {
+	if options == nil {
+		options = &ArrayNullableFloatValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ArrayNullableFloatValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

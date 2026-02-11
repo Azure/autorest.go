@@ -13,10 +13,33 @@ import (
 )
 
 // ScalarUnknownClient contains the methods for the ScalarUnknown group.
-// Don't use this type directly, use [ScalarClient.NewScalarUnknownClient] instead.
+// Don't use this type directly, use NewScalarUnknownClientWithNoCredential() instead.
 type ScalarUnknownClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ScalarUnknownClientOptions contains the optional values for creating a [ScalarUnknownClient].
+type ScalarUnknownClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewScalarUnknownClientWithNoCredential creates a new instance of ScalarUnknownClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewScalarUnknownClientWithNoCredential(endpoint string, options *ScalarUnknownClientOptions) (*ScalarUnknownClient, error) {
+	if options == nil {
+		options = &ScalarUnknownClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ScalarUnknownClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - get unknown value

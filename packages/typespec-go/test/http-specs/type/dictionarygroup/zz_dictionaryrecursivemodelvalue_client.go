@@ -13,10 +13,33 @@ import (
 )
 
 // DictionaryRecursiveModelValueClient - Dictionary of model values
-// Don't use this type directly, use [DictionaryClient.NewDictionaryRecursiveModelValueClient] instead.
+// Don't use this type directly, use NewDictionaryRecursiveModelValueClientWithNoCredential() instead.
 type DictionaryRecursiveModelValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// DictionaryRecursiveModelValueClientOptions contains the optional values for creating a [DictionaryRecursiveModelValueClient].
+type DictionaryRecursiveModelValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewDictionaryRecursiveModelValueClientWithNoCredential creates a new instance of DictionaryRecursiveModelValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewDictionaryRecursiveModelValueClientWithNoCredential(endpoint string, options *DictionaryRecursiveModelValueClientOptions) (*DictionaryRecursiveModelValueClient, error) {
+	if options == nil {
+		options = &DictionaryRecursiveModelValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &DictionaryRecursiveModelValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

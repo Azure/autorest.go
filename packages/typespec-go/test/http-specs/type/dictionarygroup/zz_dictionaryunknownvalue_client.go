@@ -13,10 +13,33 @@ import (
 )
 
 // DictionaryUnknownValueClient - Dictionary of unknown values
-// Don't use this type directly, use [DictionaryClient.NewDictionaryUnknownValueClient] instead.
+// Don't use this type directly, use NewDictionaryUnknownValueClientWithNoCredential() instead.
 type DictionaryUnknownValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// DictionaryUnknownValueClientOptions contains the optional values for creating a [DictionaryUnknownValueClient].
+type DictionaryUnknownValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewDictionaryUnknownValueClientWithNoCredential creates a new instance of DictionaryUnknownValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewDictionaryUnknownValueClientWithNoCredential(endpoint string, options *DictionaryUnknownValueClientOptions) (*DictionaryUnknownValueClient, error) {
+	if options == nil {
+		options = &DictionaryUnknownValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &DictionaryUnknownValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

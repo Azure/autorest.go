@@ -13,10 +13,33 @@ import (
 )
 
 // ArrayUnknownValueClient - Array of unknown values
-// Don't use this type directly, use [ArrayClient.NewArrayUnknownValueClient] instead.
+// Don't use this type directly, use NewArrayUnknownValueClientWithNoCredential() instead.
 type ArrayUnknownValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ArrayUnknownValueClientOptions contains the optional values for creating a [ArrayUnknownValueClient].
+type ArrayUnknownValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewArrayUnknownValueClientWithNoCredential creates a new instance of ArrayUnknownValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewArrayUnknownValueClientWithNoCredential(endpoint string, options *ArrayUnknownValueClientOptions) (*ArrayUnknownValueClient, error) {
+	if options == nil {
+		options = &ArrayUnknownValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ArrayUnknownValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

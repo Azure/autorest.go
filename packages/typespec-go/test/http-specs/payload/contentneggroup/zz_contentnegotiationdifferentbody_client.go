@@ -13,10 +13,33 @@ import (
 )
 
 // ContentNegotiationDifferentBodyClient contains the methods for the ContentNegotiationDifferentBody group.
-// Don't use this type directly, use [ContentNegotiationClient.NewContentNegotiationDifferentBodyClient] instead.
+// Don't use this type directly, use NewContentNegotiationDifferentBodyClientWithNoCredential() instead.
 type ContentNegotiationDifferentBodyClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ContentNegotiationDifferentBodyClientOptions contains the optional values for creating a [ContentNegotiationDifferentBodyClient].
+type ContentNegotiationDifferentBodyClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewContentNegotiationDifferentBodyClientWithNoCredential creates a new instance of ContentNegotiationDifferentBodyClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewContentNegotiationDifferentBodyClientWithNoCredential(endpoint string, options *ContentNegotiationDifferentBodyClientOptions) (*ContentNegotiationDifferentBodyClient, error) {
+	if options == nil {
+		options = &ContentNegotiationDifferentBodyClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ContentNegotiationDifferentBodyClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // GetAvatarAsJSON -

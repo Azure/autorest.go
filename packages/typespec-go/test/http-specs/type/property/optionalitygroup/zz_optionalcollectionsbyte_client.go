@@ -13,10 +13,33 @@ import (
 )
 
 // OptionalCollectionsByteClient contains the methods for the OptionalCollectionsByte group.
-// Don't use this type directly, use [OptionalClient.NewOptionalCollectionsByteClient] instead.
+// Don't use this type directly, use NewOptionalCollectionsByteClientWithNoCredential() instead.
 type OptionalCollectionsByteClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// OptionalCollectionsByteClientOptions contains the optional values for creating a [OptionalCollectionsByteClient].
+type OptionalCollectionsByteClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewOptionalCollectionsByteClientWithNoCredential creates a new instance of OptionalCollectionsByteClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewOptionalCollectionsByteClientWithNoCredential(endpoint string, options *OptionalCollectionsByteClientOptions) (*OptionalCollectionsByteClient, error) {
+	if options == nil {
+		options = &OptionalCollectionsByteClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &OptionalCollectionsByteClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // GetAll - Get models that will return all properties in the model

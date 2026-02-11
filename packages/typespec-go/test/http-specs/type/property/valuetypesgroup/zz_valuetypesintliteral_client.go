@@ -13,10 +13,33 @@ import (
 )
 
 // ValueTypesIntLiteralClient contains the methods for the ValueTypesIntLiteral group.
-// Don't use this type directly, use [ValueTypesClient.NewValueTypesIntLiteralClient] instead.
+// Don't use this type directly, use NewValueTypesIntLiteralClientWithNoCredential() instead.
 type ValueTypesIntLiteralClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ValueTypesIntLiteralClientOptions contains the optional values for creating a [ValueTypesIntLiteralClient].
+type ValueTypesIntLiteralClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewValueTypesIntLiteralClientWithNoCredential creates a new instance of ValueTypesIntLiteralClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewValueTypesIntLiteralClientWithNoCredential(endpoint string, options *ValueTypesIntLiteralClientOptions) (*ValueTypesIntLiteralClient, error) {
+	if options == nil {
+		options = &ValueTypesIntLiteralClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ValueTypesIntLiteralClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - Get call

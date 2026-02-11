@@ -13,10 +13,33 @@ import (
 )
 
 // ArrayInt32ValueClient - Array of int32 values
-// Don't use this type directly, use [ArrayClient.NewArrayInt32ValueClient] instead.
+// Don't use this type directly, use NewArrayInt32ValueClientWithNoCredential() instead.
 type ArrayInt32ValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ArrayInt32ValueClientOptions contains the optional values for creating a [ArrayInt32ValueClient].
+type ArrayInt32ValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewArrayInt32ValueClientWithNoCredential creates a new instance of ArrayInt32ValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewArrayInt32ValueClientWithNoCredential(endpoint string, options *ArrayInt32ValueClientOptions) (*ArrayInt32ValueClient, error) {
+	if options == nil {
+		options = &ArrayInt32ValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ArrayInt32ValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

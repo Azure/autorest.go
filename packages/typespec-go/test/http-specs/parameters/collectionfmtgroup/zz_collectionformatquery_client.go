@@ -14,10 +14,33 @@ import (
 )
 
 // CollectionFormatQueryClient contains the methods for the CollectionFormatQuery group.
-// Don't use this type directly, use [CollectionFormatClient.NewCollectionFormatQueryClient] instead.
+// Don't use this type directly, use NewCollectionFormatQueryClientWithNoCredential() instead.
 type CollectionFormatQueryClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// CollectionFormatQueryClientOptions contains the optional values for creating a [CollectionFormatQueryClient].
+type CollectionFormatQueryClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewCollectionFormatQueryClientWithNoCredential creates a new instance of CollectionFormatQueryClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewCollectionFormatQueryClientWithNoCredential(endpoint string, options *CollectionFormatQueryClientOptions) (*CollectionFormatQueryClient, error) {
+	if options == nil {
+		options = &CollectionFormatQueryClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &CollectionFormatQueryClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // CSV -

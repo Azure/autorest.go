@@ -13,10 +13,33 @@ import (
 )
 
 // DictionaryNullableFloatValueClient - Dictionary of nullable float values
-// Don't use this type directly, use [DictionaryClient.NewDictionaryNullableFloatValueClient] instead.
+// Don't use this type directly, use NewDictionaryNullableFloatValueClientWithNoCredential() instead.
 type DictionaryNullableFloatValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// DictionaryNullableFloatValueClientOptions contains the optional values for creating a [DictionaryNullableFloatValueClient].
+type DictionaryNullableFloatValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewDictionaryNullableFloatValueClientWithNoCredential creates a new instance of DictionaryNullableFloatValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewDictionaryNullableFloatValueClientWithNoCredential(endpoint string, options *DictionaryNullableFloatValueClientOptions) (*DictionaryNullableFloatValueClient, error) {
+	if options == nil {
+		options = &DictionaryNullableFloatValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &DictionaryNullableFloatValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

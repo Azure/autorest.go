@@ -13,10 +13,33 @@ import (
 )
 
 // XMLModelWithOptionalFieldValueClient - Operations for the ModelWithOptionalField type.
-// Don't use this type directly, use [XMLClient.NewXMLModelWithOptionalFieldValueClient] instead.
+// Don't use this type directly, use NewXMLModelWithOptionalFieldValueClientWithNoCredential() instead.
 type XMLModelWithOptionalFieldValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// XMLModelWithOptionalFieldValueClientOptions contains the optional values for creating a [XMLModelWithOptionalFieldValueClient].
+type XMLModelWithOptionalFieldValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewXMLModelWithOptionalFieldValueClientWithNoCredential creates a new instance of XMLModelWithOptionalFieldValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewXMLModelWithOptionalFieldValueClientWithNoCredential(endpoint string, options *XMLModelWithOptionalFieldValueClientOptions) (*XMLModelWithOptionalFieldValueClient, error) {
+	if options == nil {
+		options = &XMLModelWithOptionalFieldValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &XMLModelWithOptionalFieldValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

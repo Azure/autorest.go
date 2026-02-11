@@ -13,10 +13,33 @@ import (
 )
 
 // NullableCollectionsModelClient contains the methods for the NullableCollectionsModel group.
-// Don't use this type directly, use [NullableClient.NewNullableCollectionsModelClient] instead.
+// Don't use this type directly, use NewNullableCollectionsModelClientWithNoCredential() instead.
 type NullableCollectionsModelClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// NullableCollectionsModelClientOptions contains the optional values for creating a [NullableCollectionsModelClient].
+type NullableCollectionsModelClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewNullableCollectionsModelClientWithNoCredential creates a new instance of NullableCollectionsModelClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewNullableCollectionsModelClientWithNoCredential(endpoint string, options *NullableCollectionsModelClientOptions) (*NullableCollectionsModelClient, error) {
+	if options == nil {
+		options = &NullableCollectionsModelClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &NullableCollectionsModelClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // GetNonNull - Get models that will return all properties in the model

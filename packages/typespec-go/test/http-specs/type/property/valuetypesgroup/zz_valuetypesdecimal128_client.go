@@ -13,10 +13,33 @@ import (
 )
 
 // ValueTypesDecimal128Client contains the methods for the ValueTypesDecimal128 group.
-// Don't use this type directly, use [ValueTypesClient.NewValueTypesDecimal128Client] instead.
+// Don't use this type directly, use NewValueTypesDecimal128ClientWithNoCredential() instead.
 type ValueTypesDecimal128Client struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ValueTypesDecimal128ClientOptions contains the optional values for creating a [ValueTypesDecimal128Client].
+type ValueTypesDecimal128ClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewValueTypesDecimal128ClientWithNoCredential creates a new instance of ValueTypesDecimal128Client with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewValueTypesDecimal128ClientWithNoCredential(endpoint string, options *ValueTypesDecimal128ClientOptions) (*ValueTypesDecimal128Client, error) {
+	if options == nil {
+		options = &ValueTypesDecimal128ClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ValueTypesDecimal128Client{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - Get call

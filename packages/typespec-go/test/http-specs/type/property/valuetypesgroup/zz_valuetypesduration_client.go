@@ -13,10 +13,33 @@ import (
 )
 
 // ValueTypesDurationClient contains the methods for the ValueTypesDuration group.
-// Don't use this type directly, use [ValueTypesClient.NewValueTypesDurationClient] instead.
+// Don't use this type directly, use NewValueTypesDurationClientWithNoCredential() instead.
 type ValueTypesDurationClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ValueTypesDurationClientOptions contains the optional values for creating a [ValueTypesDurationClient].
+type ValueTypesDurationClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewValueTypesDurationClientWithNoCredential creates a new instance of ValueTypesDurationClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewValueTypesDurationClientWithNoCredential(endpoint string, options *ValueTypesDurationClientOptions) (*ValueTypesDurationClient, error) {
+	if options == nil {
+		options = &ValueTypesDurationClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ValueTypesDurationClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - Get call

@@ -13,10 +13,33 @@ import (
 )
 
 // ValueTypesUnknownIntClient contains the methods for the ValueTypesUnknownInt group.
-// Don't use this type directly, use [ValueTypesClient.NewValueTypesUnknownIntClient] instead.
+// Don't use this type directly, use NewValueTypesUnknownIntClientWithNoCredential() instead.
 type ValueTypesUnknownIntClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ValueTypesUnknownIntClientOptions contains the optional values for creating a [ValueTypesUnknownIntClient].
+type ValueTypesUnknownIntClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewValueTypesUnknownIntClientWithNoCredential creates a new instance of ValueTypesUnknownIntClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewValueTypesUnknownIntClientWithNoCredential(endpoint string, options *ValueTypesUnknownIntClientOptions) (*ValueTypesUnknownIntClient, error) {
+	if options == nil {
+		options = &ValueTypesUnknownIntClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ValueTypesUnknownIntClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - Get call

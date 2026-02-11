@@ -13,10 +13,33 @@ import (
 )
 
 // ValueTypesFloatLiteralClient contains the methods for the ValueTypesFloatLiteral group.
-// Don't use this type directly, use [ValueTypesClient.NewValueTypesFloatLiteralClient] instead.
+// Don't use this type directly, use NewValueTypesFloatLiteralClientWithNoCredential() instead.
 type ValueTypesFloatLiteralClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ValueTypesFloatLiteralClientOptions contains the optional values for creating a [ValueTypesFloatLiteralClient].
+type ValueTypesFloatLiteralClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewValueTypesFloatLiteralClientWithNoCredential creates a new instance of ValueTypesFloatLiteralClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewValueTypesFloatLiteralClientWithNoCredential(endpoint string, options *ValueTypesFloatLiteralClientOptions) (*ValueTypesFloatLiteralClient, error) {
+	if options == nil {
+		options = &ValueTypesFloatLiteralClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ValueTypesFloatLiteralClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - Get call

@@ -13,10 +13,33 @@ import (
 )
 
 // ValueTypesModelClient contains the methods for the ValueTypesModel group.
-// Don't use this type directly, use [ValueTypesClient.NewValueTypesModelClient] instead.
+// Don't use this type directly, use NewValueTypesModelClientWithNoCredential() instead.
 type ValueTypesModelClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ValueTypesModelClientOptions contains the optional values for creating a [ValueTypesModelClient].
+type ValueTypesModelClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewValueTypesModelClientWithNoCredential creates a new instance of ValueTypesModelClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewValueTypesModelClientWithNoCredential(endpoint string, options *ValueTypesModelClientOptions) (*ValueTypesModelClient, error) {
+	if options == nil {
+		options = &ValueTypesModelClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ValueTypesModelClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - Get call

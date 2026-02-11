@@ -13,10 +13,33 @@ import (
 )
 
 // AccessRelativeModelInOperationClient contains the methods for the AccessRelativeModelInOperation group.
-// Don't use this type directly, use [AccessClient.NewAccessRelativeModelInOperationClient] instead.
+// Don't use this type directly, use NewAccessRelativeModelInOperationClientWithNoCredential() instead.
 type AccessRelativeModelInOperationClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// AccessRelativeModelInOperationClientOptions contains the optional values for creating a [AccessRelativeModelInOperationClient].
+type AccessRelativeModelInOperationClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewAccessRelativeModelInOperationClientWithNoCredential creates a new instance of AccessRelativeModelInOperationClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewAccessRelativeModelInOperationClientWithNoCredential(endpoint string, options *AccessRelativeModelInOperationClientOptions) (*AccessRelativeModelInOperationClient, error) {
+	if options == nil {
+		options = &AccessRelativeModelInOperationClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &AccessRelativeModelInOperationClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // discriminator - Expected query parameter: kind="real"

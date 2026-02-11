@@ -13,10 +13,33 @@ import (
 )
 
 // MoveToRootResourceOperationsClient contains the methods for the MoveToRootResourceOperations group.
-// Don't use this type directly, use [MoveToRootClient.NewMoveToRootResourceOperationsClient] instead.
+// Don't use this type directly, use NewMoveToRootResourceOperationsClientWithNoCredential() instead.
 type MoveToRootResourceOperationsClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// MoveToRootResourceOperationsClientOptions contains the optional values for creating a [MoveToRootResourceOperationsClient].
+type MoveToRootResourceOperationsClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewMoveToRootResourceOperationsClientWithNoCredential creates a new instance of MoveToRootResourceOperationsClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewMoveToRootResourceOperationsClientWithNoCredential(endpoint string, options *MoveToRootResourceOperationsClientOptions) (*MoveToRootResourceOperationsClient, error) {
+	if options == nil {
+		options = &MoveToRootResourceOperationsClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &MoveToRootResourceOperationsClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // GetResource -

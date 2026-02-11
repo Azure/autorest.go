@@ -15,10 +15,33 @@ import (
 )
 
 // BytesQueryClient contains the methods for the BytesQuery group.
-// Don't use this type directly, use [BytesClient.NewBytesQueryClient] instead.
+// Don't use this type directly, use NewBytesQueryClientWithNoCredential() instead.
 type BytesQueryClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// BytesQueryClientOptions contains the optional values for creating a [BytesQueryClient].
+type BytesQueryClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewBytesQueryClientWithNoCredential creates a new instance of BytesQueryClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewBytesQueryClientWithNoCredential(endpoint string, options *BytesQueryClientOptions) (*BytesQueryClient, error) {
+	if options == nil {
+		options = &BytesQueryClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &BytesQueryClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Base64 -

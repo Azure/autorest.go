@@ -13,10 +13,33 @@ import (
 )
 
 // AccessSharedModelInOperationClient contains the methods for the AccessSharedModelInOperation group.
-// Don't use this type directly, use [AccessClient.NewAccessSharedModelInOperationClient] instead.
+// Don't use this type directly, use NewAccessSharedModelInOperationClientWithNoCredential() instead.
 type AccessSharedModelInOperationClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// AccessSharedModelInOperationClientOptions contains the optional values for creating a [AccessSharedModelInOperationClient].
+type AccessSharedModelInOperationClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewAccessSharedModelInOperationClientWithNoCredential creates a new instance of AccessSharedModelInOperationClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewAccessSharedModelInOperationClientWithNoCredential(endpoint string, options *AccessSharedModelInOperationClientOptions) (*AccessSharedModelInOperationClient, error) {
+	if options == nil {
+		options = &AccessSharedModelInOperationClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &AccessSharedModelInOperationClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Public -

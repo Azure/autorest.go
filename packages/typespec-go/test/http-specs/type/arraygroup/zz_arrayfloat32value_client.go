@@ -13,10 +13,33 @@ import (
 )
 
 // ArrayFloat32ValueClient - Array of float values
-// Don't use this type directly, use [ArrayClient.NewArrayFloat32ValueClient] instead.
+// Don't use this type directly, use NewArrayFloat32ValueClientWithNoCredential() instead.
 type ArrayFloat32ValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ArrayFloat32ValueClientOptions contains the optional values for creating a [ArrayFloat32ValueClient].
+type ArrayFloat32ValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewArrayFloat32ValueClientWithNoCredential creates a new instance of ArrayFloat32ValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewArrayFloat32ValueClientWithNoCredential(endpoint string, options *ArrayFloat32ValueClientOptions) (*ArrayFloat32ValueClient, error) {
+	if options == nil {
+		options = &ArrayFloat32ValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ArrayFloat32ValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

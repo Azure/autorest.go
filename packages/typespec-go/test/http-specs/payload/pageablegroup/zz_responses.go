@@ -66,3 +66,17 @@ type PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHe
 	RequestQueryResponseHeaderResponse
 	NextToken *string
 }
+
+// PageableXMLPaginationClientListWithContinuationResponse contains the response from method PageableXMLPaginationClient.NewListWithContinuationPager.
+type PageableXMLPaginationClientListWithContinuationResponse struct {
+	// The XML response for listing pets.
+	XMLPetListResult
+	ContentType *string
+}
+
+// PageableXMLPaginationClientListWithNextLinkResponse contains the response from method PageableXMLPaginationClient.NewListWithNextLinkPager.
+type PageableXMLPaginationClientListWithNextLinkResponse struct {
+	// The XML response for listing pets with next link.
+	XMLPetListResultWithNextLink
+	ContentType *string
+}

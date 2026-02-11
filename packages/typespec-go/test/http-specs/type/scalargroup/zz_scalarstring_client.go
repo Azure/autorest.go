@@ -13,10 +13,33 @@ import (
 )
 
 // ScalarStringClient contains the methods for the ScalarString group.
-// Don't use this type directly, use [ScalarClient.NewScalarStringClient] instead.
+// Don't use this type directly, use NewScalarStringClientWithNoCredential() instead.
 type ScalarStringClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ScalarStringClientOptions contains the optional values for creating a [ScalarStringClient].
+type ScalarStringClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewScalarStringClientWithNoCredential creates a new instance of ScalarStringClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewScalarStringClientWithNoCredential(endpoint string, options *ScalarStringClientOptions) (*ScalarStringClient, error) {
+	if options == nil {
+		options = &ScalarStringClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ScalarStringClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - get string value

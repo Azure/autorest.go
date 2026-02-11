@@ -13,10 +13,33 @@ import (
 )
 
 // AccessInternalOperationClient contains the methods for the AccessInternalOperation group.
-// Don't use this type directly, use [AccessClient.NewAccessInternalOperationClient] instead.
+// Don't use this type directly, use NewAccessInternalOperationClientWithNoCredential() instead.
 type AccessInternalOperationClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// AccessInternalOperationClientOptions contains the optional values for creating a [AccessInternalOperationClient].
+type AccessInternalOperationClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewAccessInternalOperationClientWithNoCredential creates a new instance of AccessInternalOperationClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewAccessInternalOperationClientWithNoCredential(endpoint string, options *AccessInternalOperationClientOptions) (*AccessInternalOperationClient, error) {
+	if options == nil {
+		options = &AccessInternalOperationClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &AccessInternalOperationClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // internalDecoratorInInternal -

@@ -13,10 +13,33 @@ import (
 )
 
 // ScalarDecimalVerifyClient - Decimal type verification
-// Don't use this type directly, use [ScalarClient.NewScalarDecimalVerifyClient] instead.
+// Don't use this type directly, use NewScalarDecimalVerifyClientWithNoCredential() instead.
 type ScalarDecimalVerifyClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ScalarDecimalVerifyClientOptions contains the optional values for creating a [ScalarDecimalVerifyClient].
+type ScalarDecimalVerifyClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewScalarDecimalVerifyClientWithNoCredential creates a new instance of ScalarDecimalVerifyClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewScalarDecimalVerifyClientWithNoCredential(endpoint string, options *ScalarDecimalVerifyClientOptions) (*ScalarDecimalVerifyClient, error) {
+	if options == nil {
+		options = &ScalarDecimalVerifyClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ScalarDecimalVerifyClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // PrepareVerify -

@@ -13,10 +13,33 @@ import (
 )
 
 // DatetimePropertyClient contains the methods for the DatetimeProperty group.
-// Don't use this type directly, use [DatetimeClient.NewDatetimePropertyClient] instead.
+// Don't use this type directly, use NewDatetimePropertyClientWithNoCredential() instead.
 type DatetimePropertyClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// DatetimePropertyClientOptions contains the optional values for creating a [DatetimePropertyClient].
+type DatetimePropertyClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewDatetimePropertyClientWithNoCredential creates a new instance of DatetimePropertyClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewDatetimePropertyClientWithNoCredential(endpoint string, options *DatetimePropertyClientOptions) (*DatetimePropertyClient, error) {
+	if options == nil {
+		options = &DatetimePropertyClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &DatetimePropertyClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Default -

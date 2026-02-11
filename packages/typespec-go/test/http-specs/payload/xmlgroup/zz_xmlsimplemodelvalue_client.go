@@ -13,10 +13,33 @@ import (
 )
 
 // XMLSimpleModelValueClient - Operations for the SimpleModel type.
-// Don't use this type directly, use [XMLClient.NewXMLSimpleModelValueClient] instead.
+// Don't use this type directly, use NewXMLSimpleModelValueClientWithNoCredential() instead.
 type XMLSimpleModelValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// XMLSimpleModelValueClientOptions contains the optional values for creating a [XMLSimpleModelValueClient].
+type XMLSimpleModelValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewXMLSimpleModelValueClientWithNoCredential creates a new instance of XMLSimpleModelValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewXMLSimpleModelValueClientWithNoCredential(endpoint string, options *XMLSimpleModelValueClientOptions) (*XMLSimpleModelValueClient, error) {
+	if options == nil {
+		options = &XMLSimpleModelValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &XMLSimpleModelValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

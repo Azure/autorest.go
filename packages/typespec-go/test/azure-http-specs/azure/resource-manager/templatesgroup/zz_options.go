@@ -28,6 +28,12 @@ type LroClientBeginDeleteOptions struct {
 	ResumeToken string
 }
 
+// LroClientBeginExportArrayOptions contains the optional parameters for the LroClient.BeginExportArray method.
+type LroClientBeginExportArrayOptions struct {
+	// Resumes the long-running operation from the provided token.
+	ResumeToken string
+}
+
 // LroClientBeginExportOptions contains the optional parameters for the LroClient.BeginExport method.
 type LroClientBeginExportOptions struct {
 	// Resumes the long-running operation from the provided token.

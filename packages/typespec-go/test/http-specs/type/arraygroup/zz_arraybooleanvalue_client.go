@@ -13,10 +13,33 @@ import (
 )
 
 // ArrayBooleanValueClient - Array of boolean values
-// Don't use this type directly, use [ArrayClient.NewArrayBooleanValueClient] instead.
+// Don't use this type directly, use NewArrayBooleanValueClientWithNoCredential() instead.
 type ArrayBooleanValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ArrayBooleanValueClientOptions contains the optional values for creating a [ArrayBooleanValueClient].
+type ArrayBooleanValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewArrayBooleanValueClientWithNoCredential creates a new instance of ArrayBooleanValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewArrayBooleanValueClientWithNoCredential(endpoint string, options *ArrayBooleanValueClientOptions) (*ArrayBooleanValueClient, error) {
+	if options == nil {
+		options = &ArrayBooleanValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ArrayBooleanValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

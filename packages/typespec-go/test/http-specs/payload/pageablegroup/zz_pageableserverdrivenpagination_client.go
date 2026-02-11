@@ -13,10 +13,33 @@ import (
 )
 
 // PageableServerDrivenPaginationClient contains the methods for the PageableServerDrivenPagination group.
-// Don't use this type directly, use [PageableClient.NewPageableServerDrivenPaginationClient] instead.
+// Don't use this type directly, use NewPageableServerDrivenPaginationClientWithNoCredential() instead.
 type PageableServerDrivenPaginationClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// PageableServerDrivenPaginationClientOptions contains the optional values for creating a [PageableServerDrivenPaginationClient].
+type PageableServerDrivenPaginationClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewPageableServerDrivenPaginationClientWithNoCredential creates a new instance of PageableServerDrivenPaginationClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewPageableServerDrivenPaginationClientWithNoCredential(endpoint string, options *PageableServerDrivenPaginationClientOptions) (*PageableServerDrivenPaginationClient, error) {
+	if options == nil {
+		options = &PageableServerDrivenPaginationClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &PageableServerDrivenPaginationClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // NewPageableServerDrivenPaginationContinuationTokenClient creates a new instance of [PageableServerDrivenPaginationContinuationTokenClient].

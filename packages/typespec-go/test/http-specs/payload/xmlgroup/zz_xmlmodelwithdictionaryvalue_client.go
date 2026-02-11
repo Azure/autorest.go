@@ -13,10 +13,33 @@ import (
 )
 
 // XMLModelWithDictionaryValueClient - Operations for the ModelWithDictionary type.
-// Don't use this type directly, use [XMLClient.NewXMLModelWithDictionaryValueClient] instead.
+// Don't use this type directly, use NewXMLModelWithDictionaryValueClientWithNoCredential() instead.
 type XMLModelWithDictionaryValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// XMLModelWithDictionaryValueClientOptions contains the optional values for creating a [XMLModelWithDictionaryValueClient].
+type XMLModelWithDictionaryValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewXMLModelWithDictionaryValueClientWithNoCredential creates a new instance of XMLModelWithDictionaryValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewXMLModelWithDictionaryValueClientWithNoCredential(endpoint string, options *XMLModelWithDictionaryValueClientOptions) (*XMLModelWithDictionaryValueClient, error) {
+	if options == nil {
+		options = &XMLModelWithDictionaryValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &XMLModelWithDictionaryValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

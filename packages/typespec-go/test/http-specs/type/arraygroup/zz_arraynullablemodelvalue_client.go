@@ -13,10 +13,33 @@ import (
 )
 
 // ArrayNullableModelValueClient - Array of nullable model values
-// Don't use this type directly, use [ArrayClient.NewArrayNullableModelValueClient] instead.
+// Don't use this type directly, use NewArrayNullableModelValueClientWithNoCredential() instead.
 type ArrayNullableModelValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ArrayNullableModelValueClientOptions contains the optional values for creating a [ArrayNullableModelValueClient].
+type ArrayNullableModelValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewArrayNullableModelValueClientWithNoCredential creates a new instance of ArrayNullableModelValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewArrayNullableModelValueClientWithNoCredential(endpoint string, options *ArrayNullableModelValueClientOptions) (*ArrayNullableModelValueClient, error) {
+	if options == nil {
+		options = &ArrayNullableModelValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ArrayNullableModelValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

@@ -15,10 +15,33 @@ import (
 )
 
 // MediaTypeStringBodyClient contains the methods for the MediaTypeStringBody group.
-// Don't use this type directly, use [MediaTypeClient.NewMediaTypeStringBodyClient] instead.
+// Don't use this type directly, use NewMediaTypeStringBodyClientWithNoCredential() instead.
 type MediaTypeStringBodyClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// MediaTypeStringBodyClientOptions contains the optional values for creating a [MediaTypeStringBodyClient].
+type MediaTypeStringBodyClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewMediaTypeStringBodyClientWithNoCredential creates a new instance of MediaTypeStringBodyClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewMediaTypeStringBodyClientWithNoCredential(endpoint string, options *MediaTypeStringBodyClientOptions) (*MediaTypeStringBodyClient, error) {
+	if options == nil {
+		options = &MediaTypeStringBodyClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &MediaTypeStringBodyClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // GetAsJSON -

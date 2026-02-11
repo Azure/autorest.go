@@ -20,6 +20,9 @@ type PageableServer struct {
 
 	// PageableServerDrivenPaginationServer contains the fakes for client PageableServerDrivenPaginationClient
 	PageableServerDrivenPaginationServer PageableServerDrivenPaginationServer
+
+	// PageableXMLPaginationServer contains the fakes for client PageableXMLPaginationClient
+	PageableXMLPaginationServer PageableXMLPaginationServer
 }
 
 // NewPageableServerTransport creates a new instance of PageableServerTransport with the provided implementation.
@@ -36,6 +39,7 @@ type PageableServerTransport struct {
 	trMu                                   sync.Mutex
 	trPageablePageSizeServer               *PageablePageSizeServerTransport
 	trPageableServerDrivenPaginationServer *PageableServerDrivenPaginationServerTransport
+	trPageableXMLPaginationServer          *PageableXMLPaginationServerTransport
 }
 
 // Do implements the policy.Transporter interface for PageableServerTransport.
@@ -64,6 +68,11 @@ func (p *PageableServerTransport) dispatchToClientFake(req *http.Request, client
 			return NewPageableServerDrivenPaginationServerTransport(&p.srv.PageableServerDrivenPaginationServer)
 		})
 		resp, err = p.trPageableServerDrivenPaginationServer.Do(req)
+	case "PageableXMLPaginationClient":
+		initServer(&p.trMu, &p.trPageableXMLPaginationServer, func() *PageableXMLPaginationServerTransport {
+			return NewPageableXMLPaginationServerTransport(&p.srv.PageableXMLPaginationServer)
+		})
+		resp, err = p.trPageableXMLPaginationServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

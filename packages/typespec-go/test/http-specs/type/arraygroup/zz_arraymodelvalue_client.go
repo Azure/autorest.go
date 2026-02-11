@@ -13,10 +13,33 @@ import (
 )
 
 // ArrayModelValueClient - Array of model values
-// Don't use this type directly, use [ArrayClient.NewArrayModelValueClient] instead.
+// Don't use this type directly, use NewArrayModelValueClientWithNoCredential() instead.
 type ArrayModelValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ArrayModelValueClientOptions contains the optional values for creating a [ArrayModelValueClient].
+type ArrayModelValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewArrayModelValueClientWithNoCredential creates a new instance of ArrayModelValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewArrayModelValueClientWithNoCredential(endpoint string, options *ArrayModelValueClientOptions) (*ArrayModelValueClient, error) {
+	if options == nil {
+		options = &ArrayModelValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ArrayModelValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

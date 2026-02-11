@@ -13,10 +13,33 @@ import (
 )
 
 // DictionaryModelValueClient - Dictionary of model values
-// Don't use this type directly, use [DictionaryClient.NewDictionaryModelValueClient] instead.
+// Don't use this type directly, use NewDictionaryModelValueClientWithNoCredential() instead.
 type DictionaryModelValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// DictionaryModelValueClientOptions contains the optional values for creating a [DictionaryModelValueClient].
+type DictionaryModelValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewDictionaryModelValueClientWithNoCredential creates a new instance of DictionaryModelValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewDictionaryModelValueClientWithNoCredential(endpoint string, options *DictionaryModelValueClientOptions) (*DictionaryModelValueClient, error) {
+	if options == nil {
+		options = &DictionaryModelValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &DictionaryModelValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

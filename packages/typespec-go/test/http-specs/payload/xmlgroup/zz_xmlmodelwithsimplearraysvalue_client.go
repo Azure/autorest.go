@@ -13,10 +13,33 @@ import (
 )
 
 // XMLModelWithSimpleArraysValueClient - Operations for the ModelWithSimpleArrays type.
-// Don't use this type directly, use [XMLClient.NewXMLModelWithSimpleArraysValueClient] instead.
+// Don't use this type directly, use NewXMLModelWithSimpleArraysValueClientWithNoCredential() instead.
 type XMLModelWithSimpleArraysValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// XMLModelWithSimpleArraysValueClientOptions contains the optional values for creating a [XMLModelWithSimpleArraysValueClient].
+type XMLModelWithSimpleArraysValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewXMLModelWithSimpleArraysValueClientWithNoCredential creates a new instance of XMLModelWithSimpleArraysValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewXMLModelWithSimpleArraysValueClientWithNoCredential(endpoint string, options *XMLModelWithSimpleArraysValueClientOptions) (*XMLModelWithSimpleArraysValueClient, error) {
+	if options == nil {
+		options = &XMLModelWithSimpleArraysValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &XMLModelWithSimpleArraysValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

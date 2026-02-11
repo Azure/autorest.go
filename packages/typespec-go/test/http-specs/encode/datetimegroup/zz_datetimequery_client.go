@@ -16,10 +16,33 @@ import (
 )
 
 // DatetimeQueryClient contains the methods for the DatetimeQuery group.
-// Don't use this type directly, use [DatetimeClient.NewDatetimeQueryClient] instead.
+// Don't use this type directly, use NewDatetimeQueryClientWithNoCredential() instead.
 type DatetimeQueryClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// DatetimeQueryClientOptions contains the optional values for creating a [DatetimeQueryClient].
+type DatetimeQueryClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewDatetimeQueryClientWithNoCredential creates a new instance of DatetimeQueryClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewDatetimeQueryClientWithNoCredential(endpoint string, options *DatetimeQueryClientOptions) (*DatetimeQueryClient, error) {
+	if options == nil {
+		options = &DatetimeQueryClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &DatetimeQueryClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Default -

@@ -13,11 +13,35 @@ import (
 )
 
 // MoveMethodParameterToBlobOperationsClient contains the methods for the MoveMethodParameterToBlobOperations group.
-// Don't use this type directly, use [MoveMethodParameterToClient.NewMoveMethodParameterToBlobOperationsClient] instead.
+// Don't use this type directly, use NewMoveMethodParameterToBlobOperationsClientWithNoCredential() instead.
 type MoveMethodParameterToBlobOperationsClient struct {
 	internal       *azcore.Client
 	endpoint       string
 	storageAccount string
+}
+
+// MoveMethodParameterToBlobOperationsClientOptions contains the optional values for creating a [MoveMethodParameterToBlobOperationsClient].
+type MoveMethodParameterToBlobOperationsClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewMoveMethodParameterToBlobOperationsClientWithNoCredential creates a new instance of MoveMethodParameterToBlobOperationsClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewMoveMethodParameterToBlobOperationsClientWithNoCredential(endpoint string, storageAccount string, options *MoveMethodParameterToBlobOperationsClientOptions) (*MoveMethodParameterToBlobOperationsClient, error) {
+	if options == nil {
+		options = &MoveMethodParameterToBlobOperationsClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &MoveMethodParameterToBlobOperationsClient{
+		endpoint:       endpoint,
+		storageAccount: storageAccount,
+		internal:       cl,
+	}
+	return client, nil
 }
 
 // GetBlob -

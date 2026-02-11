@@ -13,10 +13,33 @@ import (
 )
 
 // BytesResponseBodyClient contains the methods for the BytesResponseBody group.
-// Don't use this type directly, use [BytesClient.NewBytesResponseBodyClient] instead.
+// Don't use this type directly, use NewBytesResponseBodyClientWithNoCredential() instead.
 type BytesResponseBodyClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// BytesResponseBodyClientOptions contains the optional values for creating a [BytesResponseBodyClient].
+type BytesResponseBodyClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewBytesResponseBodyClientWithNoCredential creates a new instance of BytesResponseBodyClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewBytesResponseBodyClientWithNoCredential(endpoint string, options *BytesResponseBodyClientOptions) (*BytesResponseBodyClient, error) {
+	if options == nil {
+		options = &BytesResponseBodyClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &BytesResponseBodyClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Base64 -

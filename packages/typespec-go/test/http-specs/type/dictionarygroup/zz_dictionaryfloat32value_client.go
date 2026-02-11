@@ -13,10 +13,33 @@ import (
 )
 
 // DictionaryFloat32ValueClient - Dictionary of float values
-// Don't use this type directly, use [DictionaryClient.NewDictionaryFloat32ValueClient] instead.
+// Don't use this type directly, use NewDictionaryFloat32ValueClientWithNoCredential() instead.
 type DictionaryFloat32ValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// DictionaryFloat32ValueClientOptions contains the optional values for creating a [DictionaryFloat32ValueClient].
+type DictionaryFloat32ValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewDictionaryFloat32ValueClientWithNoCredential creates a new instance of DictionaryFloat32ValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewDictionaryFloat32ValueClientWithNoCredential(endpoint string, options *DictionaryFloat32ValueClientOptions) (*DictionaryFloat32ValueClient, error) {
+	if options == nil {
+		options = &DictionaryFloat32ValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &DictionaryFloat32ValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

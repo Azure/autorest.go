@@ -14,10 +14,33 @@ import (
 )
 
 // ScalarDecimal128TypeClient - Decimal128 type
-// Don't use this type directly, use [ScalarClient.NewScalarDecimal128TypeClient] instead.
+// Don't use this type directly, use NewScalarDecimal128TypeClientWithNoCredential() instead.
 type ScalarDecimal128TypeClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ScalarDecimal128TypeClientOptions contains the optional values for creating a [ScalarDecimal128TypeClient].
+type ScalarDecimal128TypeClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewScalarDecimal128TypeClientWithNoCredential creates a new instance of ScalarDecimal128TypeClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewScalarDecimal128TypeClientWithNoCredential(endpoint string, options *ScalarDecimal128TypeClientOptions) (*ScalarDecimal128TypeClient, error) {
+	if options == nil {
+		options = &ScalarDecimal128TypeClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ScalarDecimal128TypeClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // RequestBody -

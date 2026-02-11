@@ -13,10 +13,33 @@ import (
 )
 
 // OverrideGroupParametersClient contains the methods for the OverrideGroupParameters group.
-// Don't use this type directly, use [OverrideClient.NewOverrideGroupParametersClient] instead.
+// Don't use this type directly, use NewOverrideGroupParametersClientWithNoCredential() instead.
 type OverrideGroupParametersClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// OverrideGroupParametersClientOptions contains the optional values for creating a [OverrideGroupParametersClient].
+type OverrideGroupParametersClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewOverrideGroupParametersClientWithNoCredential creates a new instance of OverrideGroupParametersClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewOverrideGroupParametersClientWithNoCredential(endpoint string, options *OverrideGroupParametersClientOptions) (*OverrideGroupParametersClient, error) {
+	if options == nil {
+		options = &OverrideGroupParametersClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &OverrideGroupParametersClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Group -

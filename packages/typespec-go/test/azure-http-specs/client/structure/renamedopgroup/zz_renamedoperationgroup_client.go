@@ -10,13 +10,41 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // RenamedOperationGroupClient contains the methods for the RenamedOperationGroup group.
-// Don't use this type directly, use [RenamedOperationClient.NewRenamedOperationGroupClient] instead.
+// Don't use this type directly, use NewRenamedOperationGroupClientWithNoCredential() instead.
 type RenamedOperationGroupClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// RenamedOperationGroupClientOptions contains the optional values for creating a [RenamedOperationGroupClient].
+type RenamedOperationGroupClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewRenamedOperationGroupClientWithNoCredential creates a new instance of RenamedOperationGroupClient with the specified values.
+//   - endpoint - Service host
+//   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewRenamedOperationGroupClientWithNoCredential(endpoint string, client ClientType, options *RenamedOperationGroupClientOptions) (*RenamedOperationGroupClient, error) {
+	if options == nil {
+		options = &RenamedOperationGroupClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	host := "client/structure/{client}"
+	host = strings.ReplaceAll(host, "{client}", string(client))
+	endpoint = runtime.JoinPaths(endpoint, host)
+	renamedOperationGroupClient := &RenamedOperationGroupClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return renamedOperationGroupClient, nil
 }
 
 // RenamedFour -

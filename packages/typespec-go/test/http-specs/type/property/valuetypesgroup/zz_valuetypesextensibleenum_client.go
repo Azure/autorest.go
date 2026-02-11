@@ -13,10 +13,33 @@ import (
 )
 
 // ValueTypesExtensibleEnumClient contains the methods for the ValueTypesExtensibleEnum group.
-// Don't use this type directly, use [ValueTypesClient.NewValueTypesExtensibleEnumClient] instead.
+// Don't use this type directly, use NewValueTypesExtensibleEnumClientWithNoCredential() instead.
 type ValueTypesExtensibleEnumClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ValueTypesExtensibleEnumClientOptions contains the optional values for creating a [ValueTypesExtensibleEnumClient].
+type ValueTypesExtensibleEnumClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewValueTypesExtensibleEnumClientWithNoCredential creates a new instance of ValueTypesExtensibleEnumClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewValueTypesExtensibleEnumClientWithNoCredential(endpoint string, options *ValueTypesExtensibleEnumClientOptions) (*ValueTypesExtensibleEnumClient, error) {
+	if options == nil {
+		options = &ValueTypesExtensibleEnumClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ValueTypesExtensibleEnumClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - Get call

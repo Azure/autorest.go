@@ -13,10 +13,33 @@ import (
 )
 
 // HierarchyBuildingPetOperationsClient contains the methods for the HierarchyBuildingPetOperations group.
-// Don't use this type directly, use [HierarchyBuildingClient.NewHierarchyBuildingPetOperationsClient] instead.
+// Don't use this type directly, use NewHierarchyBuildingPetOperationsClientWithNoCredential() instead.
 type HierarchyBuildingPetOperationsClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// HierarchyBuildingPetOperationsClientOptions contains the optional values for creating a [HierarchyBuildingPetOperationsClient].
+type HierarchyBuildingPetOperationsClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewHierarchyBuildingPetOperationsClientWithNoCredential creates a new instance of HierarchyBuildingPetOperationsClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewHierarchyBuildingPetOperationsClientWithNoCredential(endpoint string, options *HierarchyBuildingPetOperationsClientOptions) (*HierarchyBuildingPetOperationsClient, error) {
+	if options == nil {
+		options = &HierarchyBuildingPetOperationsClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &HierarchyBuildingPetOperationsClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // UpdateDogAsPet - Update a dog as a pet

@@ -13,10 +13,33 @@ import (
 )
 
 // ArrayStringValueClient - Array of string values
-// Don't use this type directly, use [ArrayClient.NewArrayStringValueClient] instead.
+// Don't use this type directly, use NewArrayStringValueClientWithNoCredential() instead.
 type ArrayStringValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ArrayStringValueClientOptions contains the optional values for creating a [ArrayStringValueClient].
+type ArrayStringValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewArrayStringValueClientWithNoCredential creates a new instance of ArrayStringValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewArrayStringValueClientWithNoCredential(endpoint string, options *ArrayStringValueClientOptions) (*ArrayStringValueClient, error) {
+	if options == nil {
+		options = &ArrayStringValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ArrayStringValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

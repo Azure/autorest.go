@@ -13,10 +13,38 @@ import (
 )
 
 // CombinedBarClient contains the methods for the CombinedBar group.
-// Don't use this type directly, use [CombinedClient.NewCombinedBarClient] instead.
+// Don't use this type directly, use NewCombinedBarClientWithNoCredential() instead.
 type CombinedBarClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// CombinedBarClientOptions contains the optional values for creating a [CombinedBarClient].
+type CombinedBarClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewCombinedBarClientWithNoCredential creates a new instance of CombinedBarClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewCombinedBarClientWithNoCredential(endpoint string, options *CombinedBarClientOptions) (*CombinedBarClient, error) {
+	if options == nil {
+		options = &CombinedBarClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
+		APIVersion: runtime.APIVersionOptions{
+			Name:     "api-version",
+			Location: runtime.APIVersionLocationQueryParam,
+		},
+	}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &CombinedBarClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Test -

@@ -13,10 +13,33 @@ import (
 )
 
 // ValueTypesUnknownArrayClient contains the methods for the ValueTypesUnknownArray group.
-// Don't use this type directly, use [ValueTypesClient.NewValueTypesUnknownArrayClient] instead.
+// Don't use this type directly, use NewValueTypesUnknownArrayClientWithNoCredential() instead.
 type ValueTypesUnknownArrayClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ValueTypesUnknownArrayClientOptions contains the optional values for creating a [ValueTypesUnknownArrayClient].
+type ValueTypesUnknownArrayClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewValueTypesUnknownArrayClientWithNoCredential creates a new instance of ValueTypesUnknownArrayClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewValueTypesUnknownArrayClientWithNoCredential(endpoint string, options *ValueTypesUnknownArrayClientOptions) (*ValueTypesUnknownArrayClient, error) {
+	if options == nil {
+		options = &ValueTypesUnknownArrayClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ValueTypesUnknownArrayClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - Get call

@@ -13,10 +13,33 @@ import (
 )
 
 // DictionaryBooleanValueClient - Dictionary of boolean values
-// Don't use this type directly, use [DictionaryClient.NewDictionaryBooleanValueClient] instead.
+// Don't use this type directly, use NewDictionaryBooleanValueClientWithNoCredential() instead.
 type DictionaryBooleanValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// DictionaryBooleanValueClientOptions contains the optional values for creating a [DictionaryBooleanValueClient].
+type DictionaryBooleanValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewDictionaryBooleanValueClientWithNoCredential creates a new instance of DictionaryBooleanValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewDictionaryBooleanValueClientWithNoCredential(endpoint string, options *DictionaryBooleanValueClientOptions) (*DictionaryBooleanValueClient, error) {
+	if options == nil {
+		options = &DictionaryBooleanValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &DictionaryBooleanValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

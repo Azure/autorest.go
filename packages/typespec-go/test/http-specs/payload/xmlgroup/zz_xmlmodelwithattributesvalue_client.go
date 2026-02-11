@@ -13,10 +13,33 @@ import (
 )
 
 // XMLModelWithAttributesValueClient - Operations for the ModelWithAttributes type.
-// Don't use this type directly, use [XMLClient.NewXMLModelWithAttributesValueClient] instead.
+// Don't use this type directly, use NewXMLModelWithAttributesValueClientWithNoCredential() instead.
 type XMLModelWithAttributesValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// XMLModelWithAttributesValueClientOptions contains the optional values for creating a [XMLModelWithAttributesValueClient].
+type XMLModelWithAttributesValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewXMLModelWithAttributesValueClientWithNoCredential creates a new instance of XMLModelWithAttributesValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewXMLModelWithAttributesValueClientWithNoCredential(endpoint string, options *XMLModelWithAttributesValueClientOptions) (*XMLModelWithAttributesValueClient, error) {
+	if options == nil {
+		options = &XMLModelWithAttributesValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &XMLModelWithAttributesValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

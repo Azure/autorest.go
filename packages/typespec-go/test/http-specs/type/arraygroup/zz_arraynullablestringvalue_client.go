@@ -13,10 +13,33 @@ import (
 )
 
 // ArrayNullableStringValueClient - Array of nullable string values
-// Don't use this type directly, use [ArrayClient.NewArrayNullableStringValueClient] instead.
+// Don't use this type directly, use NewArrayNullableStringValueClientWithNoCredential() instead.
 type ArrayNullableStringValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ArrayNullableStringValueClientOptions contains the optional values for creating a [ArrayNullableStringValueClient].
+type ArrayNullableStringValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewArrayNullableStringValueClientWithNoCredential creates a new instance of ArrayNullableStringValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewArrayNullableStringValueClientWithNoCredential(endpoint string, options *ArrayNullableStringValueClientOptions) (*ArrayNullableStringValueClient, error) {
+	if options == nil {
+		options = &ArrayNullableStringValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ArrayNullableStringValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

@@ -13,10 +13,33 @@ import (
 )
 
 // UsageModelInOperationClient contains the methods for the UsageModelInOperation group.
-// Don't use this type directly, use [UsageClient.NewUsageModelInOperationClient] instead.
+// Don't use this type directly, use NewUsageModelInOperationClientWithNoCredential() instead.
 type UsageModelInOperationClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// UsageModelInOperationClientOptions contains the optional values for creating a [UsageModelInOperationClient].
+type UsageModelInOperationClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewUsageModelInOperationClientWithNoCredential creates a new instance of UsageModelInOperationClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewUsageModelInOperationClientWithNoCredential(endpoint string, options *UsageModelInOperationClientOptions) (*UsageModelInOperationClient, error) {
+	if options == nil {
+		options = &UsageModelInOperationClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &UsageModelInOperationClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // InputToInputOutput - Expected body parameter:

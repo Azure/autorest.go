@@ -13,10 +13,33 @@ import (
 )
 
 // ValueTypesDatetimeClient contains the methods for the ValueTypesDatetime group.
-// Don't use this type directly, use [ValueTypesClient.NewValueTypesDatetimeClient] instead.
+// Don't use this type directly, use NewValueTypesDatetimeClientWithNoCredential() instead.
 type ValueTypesDatetimeClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ValueTypesDatetimeClientOptions contains the optional values for creating a [ValueTypesDatetimeClient].
+type ValueTypesDatetimeClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewValueTypesDatetimeClientWithNoCredential creates a new instance of ValueTypesDatetimeClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewValueTypesDatetimeClientWithNoCredential(endpoint string, options *ValueTypesDatetimeClientOptions) (*ValueTypesDatetimeClient, error) {
+	if options == nil {
+		options = &ValueTypesDatetimeClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ValueTypesDatetimeClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - Get call

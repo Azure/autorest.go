@@ -13,10 +13,33 @@ import (
 )
 
 // BytesPropertyClient contains the methods for the BytesProperty group.
-// Don't use this type directly, use [BytesClient.NewBytesPropertyClient] instead.
+// Don't use this type directly, use NewBytesPropertyClientWithNoCredential() instead.
 type BytesPropertyClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// BytesPropertyClientOptions contains the optional values for creating a [BytesPropertyClient].
+type BytesPropertyClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewBytesPropertyClientWithNoCredential creates a new instance of BytesPropertyClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewBytesPropertyClientWithNoCredential(endpoint string, options *BytesPropertyClientOptions) (*BytesPropertyClient, error) {
+	if options == nil {
+		options = &BytesPropertyClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &BytesPropertyClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Base64 -

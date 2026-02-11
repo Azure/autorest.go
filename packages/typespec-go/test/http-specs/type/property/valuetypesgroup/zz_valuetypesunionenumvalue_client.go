@@ -13,10 +13,33 @@ import (
 )
 
 // ValueTypesUnionEnumValueClient contains the methods for the ValueTypesUnionEnumValue group.
-// Don't use this type directly, use [ValueTypesClient.NewValueTypesUnionEnumValueClient] instead.
+// Don't use this type directly, use NewValueTypesUnionEnumValueClientWithNoCredential() instead.
 type ValueTypesUnionEnumValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ValueTypesUnionEnumValueClientOptions contains the optional values for creating a [ValueTypesUnionEnumValueClient].
+type ValueTypesUnionEnumValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewValueTypesUnionEnumValueClientWithNoCredential creates a new instance of ValueTypesUnionEnumValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewValueTypesUnionEnumValueClientWithNoCredential(endpoint string, options *ValueTypesUnionEnumValueClientOptions) (*ValueTypesUnionEnumValueClient, error) {
+	if options == nil {
+		options = &ValueTypesUnionEnumValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ValueTypesUnionEnumValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - Get call

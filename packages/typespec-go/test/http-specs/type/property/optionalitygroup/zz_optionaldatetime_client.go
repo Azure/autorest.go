@@ -13,10 +13,33 @@ import (
 )
 
 // OptionalDatetimeClient contains the methods for the OptionalDatetime group.
-// Don't use this type directly, use [OptionalClient.NewOptionalDatetimeClient] instead.
+// Don't use this type directly, use NewOptionalDatetimeClientWithNoCredential() instead.
 type OptionalDatetimeClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// OptionalDatetimeClientOptions contains the optional values for creating a [OptionalDatetimeClient].
+type OptionalDatetimeClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewOptionalDatetimeClientWithNoCredential creates a new instance of OptionalDatetimeClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewOptionalDatetimeClientWithNoCredential(endpoint string, options *OptionalDatetimeClientOptions) (*OptionalDatetimeClient, error) {
+	if options == nil {
+		options = &OptionalDatetimeClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &OptionalDatetimeClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // GetAll - Get models that will return all properties in the model

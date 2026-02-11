@@ -13,10 +13,33 @@ import (
 )
 
 // ValueTypesBytesClient contains the methods for the ValueTypesBytes group.
-// Don't use this type directly, use [ValueTypesClient.NewValueTypesBytesClient] instead.
+// Don't use this type directly, use NewValueTypesBytesClientWithNoCredential() instead.
 type ValueTypesBytesClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ValueTypesBytesClientOptions contains the optional values for creating a [ValueTypesBytesClient].
+type ValueTypesBytesClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewValueTypesBytesClientWithNoCredential creates a new instance of ValueTypesBytesClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewValueTypesBytesClientWithNoCredential(endpoint string, options *ValueTypesBytesClientOptions) (*ValueTypesBytesClient, error) {
+	if options == nil {
+		options = &ValueTypesBytesClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ValueTypesBytesClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - Get call

@@ -13,10 +13,33 @@ import (
 )
 
 // XMLModelWithUnwrappedArrayValueClient - Operations for the ModelWithUnwrappedArray type.
-// Don't use this type directly, use [XMLClient.NewXMLModelWithUnwrappedArrayValueClient] instead.
+// Don't use this type directly, use NewXMLModelWithUnwrappedArrayValueClientWithNoCredential() instead.
 type XMLModelWithUnwrappedArrayValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// XMLModelWithUnwrappedArrayValueClientOptions contains the optional values for creating a [XMLModelWithUnwrappedArrayValueClient].
+type XMLModelWithUnwrappedArrayValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewXMLModelWithUnwrappedArrayValueClientWithNoCredential creates a new instance of XMLModelWithUnwrappedArrayValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewXMLModelWithUnwrappedArrayValueClientWithNoCredential(endpoint string, options *XMLModelWithUnwrappedArrayValueClientOptions) (*XMLModelWithUnwrappedArrayValueClient, error) {
+	if options == nil {
+		options = &XMLModelWithUnwrappedArrayValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &XMLModelWithUnwrappedArrayValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

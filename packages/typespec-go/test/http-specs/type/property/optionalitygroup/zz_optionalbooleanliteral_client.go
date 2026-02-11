@@ -13,10 +13,33 @@ import (
 )
 
 // OptionalBooleanLiteralClient contains the methods for the OptionalBooleanLiteral group.
-// Don't use this type directly, use [OptionalClient.NewOptionalBooleanLiteralClient] instead.
+// Don't use this type directly, use NewOptionalBooleanLiteralClientWithNoCredential() instead.
 type OptionalBooleanLiteralClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// OptionalBooleanLiteralClientOptions contains the optional values for creating a [OptionalBooleanLiteralClient].
+type OptionalBooleanLiteralClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewOptionalBooleanLiteralClientWithNoCredential creates a new instance of OptionalBooleanLiteralClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewOptionalBooleanLiteralClientWithNoCredential(endpoint string, options *OptionalBooleanLiteralClientOptions) (*OptionalBooleanLiteralClient, error) {
+	if options == nil {
+		options = &OptionalBooleanLiteralClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &OptionalBooleanLiteralClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // GetAll - Get models that will return all properties in the model

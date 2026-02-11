@@ -13,10 +13,38 @@ import (
 )
 
 // CombinedFooClient contains the methods for the CombinedFoo group.
-// Don't use this type directly, use [CombinedClient.NewCombinedFooClient] instead.
+// Don't use this type directly, use NewCombinedFooClientWithNoCredential() instead.
 type CombinedFooClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// CombinedFooClientOptions contains the optional values for creating a [CombinedFooClient].
+type CombinedFooClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewCombinedFooClientWithNoCredential creates a new instance of CombinedFooClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewCombinedFooClientWithNoCredential(endpoint string, options *CombinedFooClientOptions) (*CombinedFooClient, error) {
+	if options == nil {
+		options = &CombinedFooClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
+		APIVersion: runtime.APIVersionOptions{
+			Name:     "api-version",
+			Location: runtime.APIVersionLocationQueryParam,
+		},
+	}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &CombinedFooClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Test -

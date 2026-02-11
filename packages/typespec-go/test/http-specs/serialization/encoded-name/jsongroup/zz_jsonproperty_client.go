@@ -13,10 +13,33 @@ import (
 )
 
 // JSONPropertyClient contains the methods for the JSONProperty group.
-// Don't use this type directly, use [JSONClient.NewJSONPropertyClient] instead.
+// Don't use this type directly, use NewJSONPropertyClientWithNoCredential() instead.
 type JSONPropertyClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// JSONPropertyClientOptions contains the optional values for creating a [JSONPropertyClient].
+type JSONPropertyClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewJSONPropertyClientWithNoCredential creates a new instance of JSONPropertyClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewJSONPropertyClientWithNoCredential(endpoint string, options *JSONPropertyClientOptions) (*JSONPropertyClient, error) {
+	if options == nil {
+		options = &JSONPropertyClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &JSONPropertyClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

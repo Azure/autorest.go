@@ -10,13 +10,41 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // ServiceFooClient contains the methods for the ServiceFoo group.
-// Don't use this type directly, use [ServiceClient.NewServiceFooClient] instead.
+// Don't use this type directly, use NewServiceFooClientWithNoCredential() instead.
 type ServiceFooClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ServiceFooClientOptions contains the optional values for creating a [ServiceFooClient].
+type ServiceFooClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewServiceFooClientWithNoCredential creates a new instance of ServiceFooClient with the specified values.
+//   - endpoint - Service host
+//   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewServiceFooClientWithNoCredential(endpoint string, client ClientType, options *ServiceFooClientOptions) (*ServiceFooClient, error) {
+	if options == nil {
+		options = &ServiceFooClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	host := "client/structure/{client}"
+	host = strings.ReplaceAll(host, "{client}", string(client))
+	endpoint = runtime.JoinPaths(endpoint, host)
+	serviceFooClient := &ServiceFooClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return serviceFooClient, nil
 }
 
 // Four -

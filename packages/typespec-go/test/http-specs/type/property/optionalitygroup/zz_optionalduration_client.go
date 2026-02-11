@@ -13,10 +13,33 @@ import (
 )
 
 // OptionalDurationClient contains the methods for the OptionalDuration group.
-// Don't use this type directly, use [OptionalClient.NewOptionalDurationClient] instead.
+// Don't use this type directly, use NewOptionalDurationClientWithNoCredential() instead.
 type OptionalDurationClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// OptionalDurationClientOptions contains the optional values for creating a [OptionalDurationClient].
+type OptionalDurationClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewOptionalDurationClientWithNoCredential creates a new instance of OptionalDurationClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewOptionalDurationClientWithNoCredential(endpoint string, options *OptionalDurationClientOptions) (*OptionalDurationClient, error) {
+	if options == nil {
+		options = &OptionalDurationClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &OptionalDurationClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // GetAll - Get models that will return all properties in the model

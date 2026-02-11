@@ -13,10 +13,33 @@ import (
 )
 
 // OptionalPlainTimeClient contains the methods for the OptionalPlainTime group.
-// Don't use this type directly, use [OptionalClient.NewOptionalPlainTimeClient] instead.
+// Don't use this type directly, use NewOptionalPlainTimeClientWithNoCredential() instead.
 type OptionalPlainTimeClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// OptionalPlainTimeClientOptions contains the optional values for creating a [OptionalPlainTimeClient].
+type OptionalPlainTimeClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewOptionalPlainTimeClientWithNoCredential creates a new instance of OptionalPlainTimeClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewOptionalPlainTimeClientWithNoCredential(endpoint string, options *OptionalPlainTimeClientOptions) (*OptionalPlainTimeClient, error) {
+	if options == nil {
+		options = &OptionalPlainTimeClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &OptionalPlainTimeClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // GetAll - Get models that will return all properties in the model

@@ -16,10 +16,33 @@ import (
 )
 
 // DurationHeaderClient contains the methods for the DurationHeader group.
-// Don't use this type directly, use [DurationClient.NewDurationHeaderClient] instead.
+// Don't use this type directly, use NewDurationHeaderClientWithNoCredential() instead.
 type DurationHeaderClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// DurationHeaderClientOptions contains the optional values for creating a [DurationHeaderClient].
+type DurationHeaderClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewDurationHeaderClientWithNoCredential creates a new instance of DurationHeaderClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewDurationHeaderClientWithNoCredential(endpoint string, options *DurationHeaderClientOptions) (*DurationHeaderClient, error) {
+	if options == nil {
+		options = &DurationHeaderClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &DurationHeaderClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Default -

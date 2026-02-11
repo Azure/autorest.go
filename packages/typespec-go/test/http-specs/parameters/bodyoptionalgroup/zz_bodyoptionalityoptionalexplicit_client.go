@@ -13,10 +13,33 @@ import (
 )
 
 // BodyOptionalityOptionalExplicitClient contains the methods for the BodyOptionalityOptionalExplicit group.
-// Don't use this type directly, use [BodyOptionalityClient.NewBodyOptionalityOptionalExplicitClient] instead.
+// Don't use this type directly, use NewBodyOptionalityOptionalExplicitClientWithNoCredential() instead.
 type BodyOptionalityOptionalExplicitClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// BodyOptionalityOptionalExplicitClientOptions contains the optional values for creating a [BodyOptionalityOptionalExplicitClient].
+type BodyOptionalityOptionalExplicitClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewBodyOptionalityOptionalExplicitClientWithNoCredential creates a new instance of BodyOptionalityOptionalExplicitClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewBodyOptionalityOptionalExplicitClientWithNoCredential(endpoint string, options *BodyOptionalityOptionalExplicitClientOptions) (*BodyOptionalityOptionalExplicitClient, error) {
+	if options == nil {
+		options = &BodyOptionalityOptionalExplicitClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &BodyOptionalityOptionalExplicitClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Omit -

@@ -16,10 +16,33 @@ import (
 )
 
 // SpreadModelClient contains the methods for the SpreadModel group.
-// Don't use this type directly, use [SpreadClient.NewSpreadModelClient] instead.
+// Don't use this type directly, use NewSpreadModelClientWithNoCredential() instead.
 type SpreadModelClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// SpreadModelClientOptions contains the optional values for creating a [SpreadModelClient].
+type SpreadModelClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewSpreadModelClientWithNoCredential creates a new instance of SpreadModelClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewSpreadModelClientWithNoCredential(endpoint string, options *SpreadModelClientOptions) (*SpreadModelClient, error) {
+	if options == nil {
+		options = &SpreadModelClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &SpreadModelClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // SpreadAsRequestBody -

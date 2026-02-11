@@ -13,10 +13,33 @@ import (
 )
 
 // ValueTypesDictionaryStringClient contains the methods for the ValueTypesDictionaryString group.
-// Don't use this type directly, use [ValueTypesClient.NewValueTypesDictionaryStringClient] instead.
+// Don't use this type directly, use NewValueTypesDictionaryStringClientWithNoCredential() instead.
 type ValueTypesDictionaryStringClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ValueTypesDictionaryStringClientOptions contains the optional values for creating a [ValueTypesDictionaryStringClient].
+type ValueTypesDictionaryStringClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewValueTypesDictionaryStringClientWithNoCredential creates a new instance of ValueTypesDictionaryStringClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewValueTypesDictionaryStringClientWithNoCredential(endpoint string, options *ValueTypesDictionaryStringClientOptions) (*ValueTypesDictionaryStringClient, error) {
+	if options == nil {
+		options = &ValueTypesDictionaryStringClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ValueTypesDictionaryStringClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - Get call

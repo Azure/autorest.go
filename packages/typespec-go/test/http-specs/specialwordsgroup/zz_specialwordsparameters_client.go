@@ -13,10 +13,33 @@ import (
 )
 
 // SpecialWordsParametersClient - Verify reserved words as parameter name.
-// Don't use this type directly, use [SpecialWordsClient.NewSpecialWordsParametersClient] instead.
+// Don't use this type directly, use NewSpecialWordsParametersClientWithNoCredential() instead.
 type SpecialWordsParametersClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// SpecialWordsParametersClientOptions contains the optional values for creating a [SpecialWordsParametersClient].
+type SpecialWordsParametersClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewSpecialWordsParametersClientWithNoCredential creates a new instance of SpecialWordsParametersClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewSpecialWordsParametersClientWithNoCredential(endpoint string, options *SpecialWordsParametersClientOptions) (*SpecialWordsParametersClient, error) {
+	if options == nil {
+		options = &SpecialWordsParametersClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &SpecialWordsParametersClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // WithAnd -

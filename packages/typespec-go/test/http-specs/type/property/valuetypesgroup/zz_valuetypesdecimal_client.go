@@ -13,10 +13,33 @@ import (
 )
 
 // ValueTypesDecimalClient contains the methods for the ValueTypesDecimal group.
-// Don't use this type directly, use [ValueTypesClient.NewValueTypesDecimalClient] instead.
+// Don't use this type directly, use NewValueTypesDecimalClientWithNoCredential() instead.
 type ValueTypesDecimalClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ValueTypesDecimalClientOptions contains the optional values for creating a [ValueTypesDecimalClient].
+type ValueTypesDecimalClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewValueTypesDecimalClientWithNoCredential creates a new instance of ValueTypesDecimalClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewValueTypesDecimalClientWithNoCredential(endpoint string, options *ValueTypesDecimalClientOptions) (*ValueTypesDecimalClient, error) {
+	if options == nil {
+		options = &ValueTypesDecimalClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ValueTypesDecimalClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get - Get call

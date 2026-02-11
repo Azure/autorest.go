@@ -13,10 +13,33 @@ import (
 )
 
 // ArrayNullableInt32ValueClient - Array of nullable int32 values
-// Don't use this type directly, use [ArrayClient.NewArrayNullableInt32ValueClient] instead.
+// Don't use this type directly, use NewArrayNullableInt32ValueClientWithNoCredential() instead.
 type ArrayNullableInt32ValueClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ArrayNullableInt32ValueClientOptions contains the optional values for creating a [ArrayNullableInt32ValueClient].
+type ArrayNullableInt32ValueClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewArrayNullableInt32ValueClientWithNoCredential creates a new instance of ArrayNullableInt32ValueClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewArrayNullableInt32ValueClientWithNoCredential(endpoint string, options *ArrayNullableInt32ValueClientOptions) (*ArrayNullableInt32ValueClient, error) {
+	if options == nil {
+		options = &ArrayNullableInt32ValueClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ArrayNullableInt32ValueClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // Get -

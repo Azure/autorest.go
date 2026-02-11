@@ -14,10 +14,33 @@ import (
 )
 
 // ScalarDecimalTypeClient - Decimal type
-// Don't use this type directly, use [ScalarClient.NewScalarDecimalTypeClient] instead.
+// Don't use this type directly, use NewScalarDecimalTypeClientWithNoCredential() instead.
 type ScalarDecimalTypeClient struct {
 	internal *azcore.Client
 	endpoint string
+}
+
+// ScalarDecimalTypeClientOptions contains the optional values for creating a [ScalarDecimalTypeClient].
+type ScalarDecimalTypeClientOptions struct {
+	azcore.ClientOptions
+}
+
+// NewScalarDecimalTypeClientWithNoCredential creates a new instance of ScalarDecimalTypeClient with the specified values.
+//   - endpoint - Service host
+//   - options - Contains optional client configuration. Pass nil to accept the default values.
+func NewScalarDecimalTypeClientWithNoCredential(endpoint string, options *ScalarDecimalTypeClientOptions) (*ScalarDecimalTypeClient, error) {
+	if options == nil {
+		options = &ScalarDecimalTypeClientOptions{}
+	}
+	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
+	if err != nil {
+		return nil, err
+	}
+	client := &ScalarDecimalTypeClient{
+		endpoint: endpoint,
+		internal: cl,
+	}
+	return client, nil
 }
 
 // RequestBody -
