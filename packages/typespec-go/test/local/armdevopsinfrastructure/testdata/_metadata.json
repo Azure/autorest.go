@@ -1,4 +1,6 @@
 {
-  "apiVersion": "2024-04-04-preview",
+  "apiVersions": {
+    "Microsoft.DevOpsInfrastructure": "2024-04-04-preview"
+  },
   "emitterVersion": "0.0.0"
 }

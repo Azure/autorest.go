@@ -5,13 +5,13 @@
 
 import { ClientAdapter } from './clients.js';
 import { AdapterError } from './errors.js';
+import { buildMetadata } from './metadata.js';
 import { TypeAdapter } from './types.js';
 import { GoEmitterOptions } from '../lib.js';
 import * as go from '../../../codemodel.go/src/index.js';
 import * as naming from '../../../naming.go/src/index.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import * as tsp from '@typespec/compiler';
-import { createRequire } from 'module';
 
 /**
  * ExternalError is thrown when an external component reports a
@@ -89,14 +89,7 @@ export class Adapter {
     const info = new go.Info(this.ctx.sdkPackage.crossLanguagePackageId);
     const codeModelType: go.CodeModelType = this.ctx.arm === true ? 'azure-arm' : 'data-plane';
     this.codeModel = new go.CodeModel(info, codeModelType, goOptions, root);
-
-    // get the emitter version from our package.json
-    const packageJson = createRequire(import.meta.url)('../../../../package.json') as Record<string, never>;
-    this.codeModel.metadata = {
-      ...this.ctx.sdkPackage.metadata,
-      emitterVersion: packageJson['version']
-    };
-
+    this.codeModel.metadata = buildMetadata(this.ctx.sdkPackage.metadata);
     this.codeModel.options.rawJSONAsBytes = this.options['rawjson-as-bytes'] ?? false;
     this.codeModel.options.sliceElementsByval = this.options['slice-elements-byval'] ?? false;
     this.codeModel.options.factoryGatherAllParams = this.options['factory-gather-all-params'] ?? true;

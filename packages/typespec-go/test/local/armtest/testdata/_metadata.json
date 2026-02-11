@@ -1,4 +1,6 @@
 {
-  "apiVersion": "2025-01-01",
+  "apiVersions": {
+    "Microsoft.Test": "2025-01-01"
+  },
   "emitterVersion": "0.0.0"
 }

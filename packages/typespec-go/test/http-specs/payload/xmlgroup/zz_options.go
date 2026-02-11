@@ -143,3 +143,8 @@ type XMLSimpleModelValueClientGetOptions struct {
 type XMLSimpleModelValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
+
+// XMLXMLErrorValueClientGetOptions contains the optional parameters for the XMLXMLErrorValueClient.Get method.
+type XMLXMLErrorValueClientGetOptions struct {
+	// placeholder for future optional parameters
+}

@@ -54,3 +54,11 @@ func (client *PageableClient) NewPageableServerDrivenPaginationClient() *Pageabl
 		internal: client.internal,
 	}
 }
+
+// NewPageableXMLPaginationClient creates a new instance of [PageableXMLPaginationClient].
+func (client *PageableClient) NewPageableXMLPaginationClient() *PageableXMLPaginationClient {
+	return &PageableXMLPaginationClient{
+		endpoint: client.endpoint,
+		internal: client.internal,
+	}
+}

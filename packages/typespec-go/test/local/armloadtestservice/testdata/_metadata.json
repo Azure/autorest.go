@@ -1,4 +1,6 @@
 {
-  "apiVersion": "2023-12-01-preview",
+  "apiVersions": {
+    "Microsoft.LoadTestService": "2023-12-01-preview"
+  },
   "emitterVersion": "0.0.0"
 }

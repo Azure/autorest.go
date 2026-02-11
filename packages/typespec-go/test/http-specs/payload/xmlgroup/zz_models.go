@@ -103,3 +103,12 @@ type SimpleModel struct {
 	// REQUIRED
 	Name *string `xml:"name"`
 }
+
+// XMLErrorBody - The body of an XML error response.
+type XMLErrorBody struct {
+	// REQUIRED
+	Code *int32
+
+	// REQUIRED
+	Message *string
+}
