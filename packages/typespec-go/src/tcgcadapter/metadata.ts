@@ -3,6 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import { createRequire } from 'module';
 
 /**
@@ -11,11 +12,10 @@ import { createRequire } from 'module';
  * @param metadata the TCGC SDK package metadata
  * @returns the metadata object for the code model
  */
-export function buildMetadata(metadata: any): Record<string, unknown> {
+export function buildMetadata(metadata: tcgc.SdkPackage<tcgc.SdkHttpOperation>['metadata']): Record<string, unknown> {
   const result: Record<string, unknown> = {};
-  const apiVersions = metadata.apiVersions;
-  if (apiVersions && apiVersions.size > 0) {
-    result.apiVersions = Object.fromEntries(apiVersions);
+  if (metadata.apiVersions && metadata.apiVersions.size > 0) {
+    result.apiVersions = Object.fromEntries(metadata.apiVersions);
   }
 
   const packageJson = createRequire(import.meta.url)('../../../../package.json') as Record<string, never>;
