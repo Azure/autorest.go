@@ -168,11 +168,12 @@ export class ClientAdapter {
     };
 
     if (this.ta.codeModel.type === 'azure-arm') {
-      // to keep compat with pre-tsp codegen we
-      // treat all ARM clients as instantiable.
+      // workaround until https://github.com/Azure/typespec-azure/issues/3927 is resolved
       if (sdkClient.clientInitialization.initializedBy === tcgc.InitializedByFlags.Default) {
         sdkClient.clientInitialization.initializedBy = tcgc.InitializedByFlags.Parent;
       }
+      // to keep compat with pre-tsp codegen we
+      // treat all ARM clients as instantiable.
       sdkClient.clientInitialization.initializedBy |= tcgc.InitializedByFlags.Individually;
     }
 
@@ -1540,6 +1541,7 @@ function isLROPollingHeader(headerName: string): boolean {
  * @returns true for instantiable clients
  */
 function isInstantiableClient(initializedBy: tcgc.InitializedByFlags): boolean {
-  // NOTE: tcgc.InitializedByFlags.Default has value -1 (i.e. all bits set)
+  // NOTE: tcgc.InitializedByFlags.Default has value -1 (i.e. all bits set) which seems to be a mistake
+  // workaround until https://github.com/Azure/typespec-azure/issues/3927 is resolved
   return initializedBy !== tcgc.InitializedByFlags.Default && (initializedBy & tcgc.InitializedByFlags.Individually) !== 0;
 }
