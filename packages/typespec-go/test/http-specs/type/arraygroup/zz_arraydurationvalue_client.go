@@ -13,33 +13,10 @@ import (
 )
 
 // ArrayDurationValueClient - Array of duration values
-// Don't use this type directly, use NewArrayDurationValueClientWithNoCredential() instead.
+// Don't use this type directly, use [ArrayClient.NewArrayDurationValueClient] instead.
 type ArrayDurationValueClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ArrayDurationValueClientOptions contains the optional values for creating a [ArrayDurationValueClient].
-type ArrayDurationValueClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewArrayDurationValueClientWithNoCredential creates a new instance of ArrayDurationValueClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewArrayDurationValueClientWithNoCredential(endpoint string, options *ArrayDurationValueClientOptions) (*ArrayDurationValueClient, error) {
-	if options == nil {
-		options = &ArrayDurationValueClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &ArrayDurationValueClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get -

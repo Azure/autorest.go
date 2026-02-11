@@ -13,33 +13,10 @@ import (
 )
 
 // PageableXMLPaginationClient contains the methods for the PageableXMLPagination group.
-// Don't use this type directly, use NewPageableXMLPaginationClientWithNoCredential() instead.
+// Don't use this type directly, use [PageableClient.NewPageableXMLPaginationClient] instead.
 type PageableXMLPaginationClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// PageableXMLPaginationClientOptions contains the optional values for creating a [PageableXMLPaginationClient].
-type PageableXMLPaginationClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewPageableXMLPaginationClientWithNoCredential creates a new instance of PageableXMLPaginationClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewPageableXMLPaginationClientWithNoCredential(endpoint string, options *PageableXMLPaginationClientOptions) (*PageableXMLPaginationClient, error) {
-	if options == nil {
-		options = &PageableXMLPaginationClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &PageableXMLPaginationClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 //   - options - PageableXMLPaginationClientListWithContinuationOptions contains the optional parameters for the PageableXMLPaginationClient.NewListWithContinuationPager

@@ -13,33 +13,10 @@ import (
 )
 
 // BasicExplicitBodyClient contains the methods for the BasicExplicitBody group.
-// Don't use this type directly, use NewBasicExplicitBodyClientWithNoCredential() instead.
+// Don't use this type directly, use [BasicClient.NewBasicExplicitBodyClient] instead.
 type BasicExplicitBodyClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// BasicExplicitBodyClientOptions contains the optional values for creating a [BasicExplicitBodyClient].
-type BasicExplicitBodyClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewBasicExplicitBodyClientWithNoCredential creates a new instance of BasicExplicitBodyClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewBasicExplicitBodyClientWithNoCredential(endpoint string, options *BasicExplicitBodyClientOptions) (*BasicExplicitBodyClient, error) {
-	if options == nil {
-		options = &BasicExplicitBodyClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &BasicExplicitBodyClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Simple -

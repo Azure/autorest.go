@@ -13,33 +13,10 @@ import (
 )
 
 // FixedStringClient contains the methods for the FixedString group.
-// Don't use this type directly, use NewFixedStringClientWithNoCredential() instead.
+// Don't use this type directly, use [FixedClient.NewFixedStringClient] instead.
 type FixedStringClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// FixedStringClientOptions contains the optional values for creating a [FixedStringClient].
-type FixedStringClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewFixedStringClientWithNoCredential creates a new instance of FixedStringClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewFixedStringClientWithNoCredential(endpoint string, options *FixedStringClientOptions) (*FixedStringClient, error) {
-	if options == nil {
-		options = &FixedStringClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &FixedStringClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // GetKnownValue - getKnownValue

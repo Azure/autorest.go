@@ -13,33 +13,10 @@ import (
 )
 
 // XMLModelWithArrayOfModelValueClient - Operations for the ModelWithArrayOfModel type.
-// Don't use this type directly, use NewXMLModelWithArrayOfModelValueClientWithNoCredential() instead.
+// Don't use this type directly, use [XMLClient.NewXMLModelWithArrayOfModelValueClient] instead.
 type XMLModelWithArrayOfModelValueClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// XMLModelWithArrayOfModelValueClientOptions contains the optional values for creating a [XMLModelWithArrayOfModelValueClient].
-type XMLModelWithArrayOfModelValueClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewXMLModelWithArrayOfModelValueClientWithNoCredential creates a new instance of XMLModelWithArrayOfModelValueClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewXMLModelWithArrayOfModelValueClientWithNoCredential(endpoint string, options *XMLModelWithArrayOfModelValueClientOptions) (*XMLModelWithArrayOfModelValueClient, error) {
-	if options == nil {
-		options = &XMLModelWithArrayOfModelValueClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &XMLModelWithArrayOfModelValueClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get -

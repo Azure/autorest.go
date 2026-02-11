@@ -13,33 +13,10 @@ import (
 )
 
 // MoveToExistingSubUserOperationsClient contains the methods for the MoveToExistingSubUserOperations group.
-// Don't use this type directly, use NewMoveToExistingSubUserOperationsClientWithNoCredential() instead.
+// Don't use this type directly, use [MoveToExistingSubClient.NewMoveToExistingSubUserOperationsClient] instead.
 type MoveToExistingSubUserOperationsClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// MoveToExistingSubUserOperationsClientOptions contains the optional values for creating a [MoveToExistingSubUserOperationsClient].
-type MoveToExistingSubUserOperationsClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewMoveToExistingSubUserOperationsClientWithNoCredential creates a new instance of MoveToExistingSubUserOperationsClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewMoveToExistingSubUserOperationsClientWithNoCredential(endpoint string, options *MoveToExistingSubUserOperationsClientOptions) (*MoveToExistingSubUserOperationsClient, error) {
-	if options == nil {
-		options = &MoveToExistingSubUserOperationsClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &MoveToExistingSubUserOperationsClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // GetUser -

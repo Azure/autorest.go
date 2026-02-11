@@ -13,33 +13,10 @@ import (
 )
 
 // OptionalBytesClient contains the methods for the OptionalBytes group.
-// Don't use this type directly, use NewOptionalBytesClientWithNoCredential() instead.
+// Don't use this type directly, use [OptionalClient.NewOptionalBytesClient] instead.
 type OptionalBytesClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// OptionalBytesClientOptions contains the optional values for creating a [OptionalBytesClient].
-type OptionalBytesClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewOptionalBytesClientWithNoCredential creates a new instance of OptionalBytesClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewOptionalBytesClientWithNoCredential(endpoint string, options *OptionalBytesClientOptions) (*OptionalBytesClient, error) {
-	if options == nil {
-		options = &OptionalBytesClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &OptionalBytesClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // GetAll - Get models that will return all properties in the model

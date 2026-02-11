@@ -16,33 +16,10 @@ import (
 )
 
 // DurationQueryClient contains the methods for the DurationQuery group.
-// Don't use this type directly, use NewDurationQueryClientWithNoCredential() instead.
+// Don't use this type directly, use [DurationClient.NewDurationQueryClient] instead.
 type DurationQueryClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// DurationQueryClientOptions contains the optional values for creating a [DurationQueryClient].
-type DurationQueryClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewDurationQueryClientWithNoCredential creates a new instance of DurationQueryClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewDurationQueryClientWithNoCredential(endpoint string, options *DurationQueryClientOptions) (*DurationQueryClient, error) {
-	if options == nil {
-		options = &DurationQueryClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &DurationQueryClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Default -

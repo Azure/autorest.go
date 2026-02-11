@@ -13,33 +13,10 @@ import (
 )
 
 // NullableBytesClient contains the methods for the NullableBytes group.
-// Don't use this type directly, use NewNullableBytesClientWithNoCredential() instead.
+// Don't use this type directly, use [NullableClient.NewNullableBytesClient] instead.
 type NullableBytesClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// NullableBytesClientOptions contains the optional values for creating a [NullableBytesClient].
-type NullableBytesClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewNullableBytesClientWithNoCredential creates a new instance of NullableBytesClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewNullableBytesClientWithNoCredential(endpoint string, options *NullableBytesClientOptions) (*NullableBytesClient, error) {
-	if options == nil {
-		options = &NullableBytesClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &NullableBytesClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // GetNonNull - Get models that will return all properties in the model

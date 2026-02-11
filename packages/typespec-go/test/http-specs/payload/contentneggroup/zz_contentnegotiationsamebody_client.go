@@ -13,33 +13,10 @@ import (
 )
 
 // ContentNegotiationSameBodyClient contains the methods for the ContentNegotiationSameBody group.
-// Don't use this type directly, use NewContentNegotiationSameBodyClientWithNoCredential() instead.
+// Don't use this type directly, use [ContentNegotiationClient.NewContentNegotiationSameBodyClient] instead.
 type ContentNegotiationSameBodyClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ContentNegotiationSameBodyClientOptions contains the optional values for creating a [ContentNegotiationSameBodyClient].
-type ContentNegotiationSameBodyClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewContentNegotiationSameBodyClientWithNoCredential creates a new instance of ContentNegotiationSameBodyClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewContentNegotiationSameBodyClientWithNoCredential(endpoint string, options *ContentNegotiationSameBodyClientOptions) (*ContentNegotiationSameBodyClient, error) {
-	if options == nil {
-		options = &ContentNegotiationSameBodyClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &ContentNegotiationSameBodyClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // GetAvatarAsJPEG -

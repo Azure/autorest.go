@@ -13,33 +13,10 @@ import (
 )
 
 // SpecialWordsModelPropertiesClient - Verify model names
-// Don't use this type directly, use NewSpecialWordsModelPropertiesClientWithNoCredential() instead.
+// Don't use this type directly, use [SpecialWordsClient.NewSpecialWordsModelPropertiesClient] instead.
 type SpecialWordsModelPropertiesClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// SpecialWordsModelPropertiesClientOptions contains the optional values for creating a [SpecialWordsModelPropertiesClient].
-type SpecialWordsModelPropertiesClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewSpecialWordsModelPropertiesClientWithNoCredential creates a new instance of SpecialWordsModelPropertiesClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewSpecialWordsModelPropertiesClientWithNoCredential(endpoint string, options *SpecialWordsModelPropertiesClientOptions) (*SpecialWordsModelPropertiesClient, error) {
-	if options == nil {
-		options = &SpecialWordsModelPropertiesClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &SpecialWordsModelPropertiesClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // DictMethods -

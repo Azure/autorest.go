@@ -13,33 +13,10 @@ import (
 )
 
 // ValueTypesIntClient contains the methods for the ValueTypesInt group.
-// Don't use this type directly, use NewValueTypesIntClientWithNoCredential() instead.
+// Don't use this type directly, use [ValueTypesClient.NewValueTypesIntClient] instead.
 type ValueTypesIntClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ValueTypesIntClientOptions contains the optional values for creating a [ValueTypesIntClient].
-type ValueTypesIntClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewValueTypesIntClientWithNoCredential creates a new instance of ValueTypesIntClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewValueTypesIntClientWithNoCredential(endpoint string, options *ValueTypesIntClientOptions) (*ValueTypesIntClient, error) {
-	if options == nil {
-		options = &ValueTypesIntClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &ValueTypesIntClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get - Get call

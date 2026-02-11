@@ -13,33 +13,10 @@ import (
 )
 
 // MoveToNewSubProductOperationsClient contains the methods for the MoveToNewSubProductOperations group.
-// Don't use this type directly, use NewMoveToNewSubProductOperationsClientWithNoCredential() instead.
+// Don't use this type directly, use [MoveToNewSubClient.NewMoveToNewSubProductOperationsClient] instead.
 type MoveToNewSubProductOperationsClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// MoveToNewSubProductOperationsClientOptions contains the optional values for creating a [MoveToNewSubProductOperationsClient].
-type MoveToNewSubProductOperationsClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewMoveToNewSubProductOperationsClientWithNoCredential creates a new instance of MoveToNewSubProductOperationsClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewMoveToNewSubProductOperationsClientWithNoCredential(endpoint string, options *MoveToNewSubProductOperationsClientOptions) (*MoveToNewSubProductOperationsClient, error) {
-	if options == nil {
-		options = &MoveToNewSubProductOperationsClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &MoveToNewSubProductOperationsClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // ListProducts -

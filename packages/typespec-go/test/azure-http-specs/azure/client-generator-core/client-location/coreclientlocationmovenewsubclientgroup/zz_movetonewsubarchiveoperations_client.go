@@ -13,33 +13,10 @@ import (
 )
 
 // MoveToNewSubArchiveOperationsClient contains the methods for the MoveToNewSubArchiveOperations group.
-// Don't use this type directly, use NewMoveToNewSubArchiveOperationsClientWithNoCredential() instead.
+// Don't use this type directly, use [MoveToNewSubClient.NewMoveToNewSubArchiveOperationsClient] instead.
 type MoveToNewSubArchiveOperationsClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// MoveToNewSubArchiveOperationsClientOptions contains the optional values for creating a [MoveToNewSubArchiveOperationsClient].
-type MoveToNewSubArchiveOperationsClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewMoveToNewSubArchiveOperationsClientWithNoCredential creates a new instance of MoveToNewSubArchiveOperationsClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewMoveToNewSubArchiveOperationsClientWithNoCredential(endpoint string, options *MoveToNewSubArchiveOperationsClientOptions) (*MoveToNewSubArchiveOperationsClient, error) {
-	if options == nil {
-		options = &MoveToNewSubArchiveOperationsClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &MoveToNewSubArchiveOperationsClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // ArchiveProduct -

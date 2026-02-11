@@ -13,33 +13,10 @@ import (
 )
 
 // XMLModelWithEncodedNamesValueClient - Operations for the ModelWithEncodedNames type.
-// Don't use this type directly, use NewXMLModelWithEncodedNamesValueClientWithNoCredential() instead.
+// Don't use this type directly, use [XMLClient.NewXMLModelWithEncodedNamesValueClient] instead.
 type XMLModelWithEncodedNamesValueClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// XMLModelWithEncodedNamesValueClientOptions contains the optional values for creating a [XMLModelWithEncodedNamesValueClient].
-type XMLModelWithEncodedNamesValueClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewXMLModelWithEncodedNamesValueClientWithNoCredential creates a new instance of XMLModelWithEncodedNamesValueClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewXMLModelWithEncodedNamesValueClientWithNoCredential(endpoint string, options *XMLModelWithEncodedNamesValueClientOptions) (*XMLModelWithEncodedNamesValueClient, error) {
-	if options == nil {
-		options = &XMLModelWithEncodedNamesValueClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &XMLModelWithEncodedNamesValueClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get -

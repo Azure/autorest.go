@@ -14,33 +14,10 @@ import (
 )
 
 // PageablePageSizeClient contains the methods for the PageablePageSize group.
-// Don't use this type directly, use NewPageablePageSizeClientWithNoCredential() instead.
+// Don't use this type directly, use [PageableClient.NewPageablePageSizeClient] instead.
 type PageablePageSizeClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// PageablePageSizeClientOptions contains the optional values for creating a [PageablePageSizeClient].
-type PageablePageSizeClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewPageablePageSizeClientWithNoCredential creates a new instance of PageablePageSizeClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewPageablePageSizeClientWithNoCredential(endpoint string, options *PageablePageSizeClientOptions) (*PageablePageSizeClient, error) {
-	if options == nil {
-		options = &PageablePageSizeClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &PageablePageSizeClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 //   - options - PageablePageSizeClientListWithPageSizeOptions contains the optional parameters for the PageablePageSizeClient.NewListWithPageSizePager

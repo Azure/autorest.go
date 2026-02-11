@@ -13,33 +13,10 @@ import (
 )
 
 // NullableStringClient contains the methods for the NullableString group.
-// Don't use this type directly, use NewNullableStringClientWithNoCredential() instead.
+// Don't use this type directly, use [NullableClient.NewNullableStringClient] instead.
 type NullableStringClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// NullableStringClientOptions contains the optional values for creating a [NullableStringClient].
-type NullableStringClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewNullableStringClientWithNoCredential creates a new instance of NullableStringClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewNullableStringClientWithNoCredential(endpoint string, options *NullableStringClientOptions) (*NullableStringClient, error) {
-	if options == nil {
-		options = &NullableStringClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &NullableStringClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // GetNonNull - Get models that will return all properties in the model

@@ -13,33 +13,10 @@ import (
 )
 
 // NamingModelClient contains the methods for the NamingModel group.
-// Don't use this type directly, use NewNamingModelClientWithNoCredential() instead.
+// Don't use this type directly, use [NamingClient.NewNamingModelClient] instead.
 type NamingModelClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// NamingModelClientOptions contains the optional values for creating a [NamingModelClient].
-type NamingModelClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewNamingModelClientWithNoCredential creates a new instance of NamingModelClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewNamingModelClientWithNoCredential(endpoint string, options *NamingModelClientOptions) (*NamingModelClient, error) {
-	if options == nil {
-		options = &NamingModelClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &NamingModelClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Client -

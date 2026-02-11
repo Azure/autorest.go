@@ -13,33 +13,10 @@ import (
 )
 
 // XMLXMLErrorValueClient - Operations that return an error response in XML format.
-// Don't use this type directly, use NewXMLXMLErrorValueClientWithNoCredential() instead.
+// Don't use this type directly, use [XMLClient.NewXMLXMLErrorValueClient] instead.
 type XMLXMLErrorValueClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// XMLXMLErrorValueClientOptions contains the optional values for creating a [XMLXMLErrorValueClient].
-type XMLXMLErrorValueClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewXMLXMLErrorValueClientWithNoCredential creates a new instance of XMLXMLErrorValueClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewXMLXMLErrorValueClientWithNoCredential(endpoint string, options *XMLXMLErrorValueClientOptions) (*XMLXMLErrorValueClient, error) {
-	if options == nil {
-		options = &XMLXMLErrorValueClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &XMLXMLErrorValueClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get -

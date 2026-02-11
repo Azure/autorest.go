@@ -13,38 +13,10 @@ import (
 )
 
 // PageTwoModelsAsPageItemClient contains the methods for the PageTwoModelsAsPageItem group.
-// Don't use this type directly, use NewPageTwoModelsAsPageItemClientWithNoCredential() instead.
+// Don't use this type directly, use [PageClient.NewPageTwoModelsAsPageItemClient] instead.
 type PageTwoModelsAsPageItemClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// PageTwoModelsAsPageItemClientOptions contains the optional values for creating a [PageTwoModelsAsPageItemClient].
-type PageTwoModelsAsPageItemClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewPageTwoModelsAsPageItemClientWithNoCredential creates a new instance of PageTwoModelsAsPageItemClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewPageTwoModelsAsPageItemClientWithNoCredential(endpoint string, options *PageTwoModelsAsPageItemClientOptions) (*PageTwoModelsAsPageItemClient, error) {
-	if options == nil {
-		options = &PageTwoModelsAsPageItemClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
-		APIVersion: runtime.APIVersionOptions{
-			Name:     "api-version",
-			Location: runtime.APIVersionLocationQueryParam,
-		},
-	}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &PageTwoModelsAsPageItemClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // NewListFirstItemPager - Two operations with two different page item types should be successfully generated. Should generate

@@ -13,33 +13,10 @@ import (
 )
 
 // XMLModelWithTextValueClient - Operations for the ModelWithText type.
-// Don't use this type directly, use NewXMLModelWithTextValueClientWithNoCredential() instead.
+// Don't use this type directly, use [XMLClient.NewXMLModelWithTextValueClient] instead.
 type XMLModelWithTextValueClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// XMLModelWithTextValueClientOptions contains the optional values for creating a [XMLModelWithTextValueClient].
-type XMLModelWithTextValueClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewXMLModelWithTextValueClientWithNoCredential creates a new instance of XMLModelWithTextValueClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewXMLModelWithTextValueClientWithNoCredential(endpoint string, options *XMLModelWithTextValueClientOptions) (*XMLModelWithTextValueClient, error) {
-	if options == nil {
-		options = &XMLModelWithTextValueClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &XMLModelWithTextValueClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get -

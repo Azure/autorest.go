@@ -13,33 +13,10 @@ import (
 )
 
 // ArrayNullableBooleanValueClient - Array of nullable boolean values
-// Don't use this type directly, use NewArrayNullableBooleanValueClientWithNoCredential() instead.
+// Don't use this type directly, use [ArrayClient.NewArrayNullableBooleanValueClient] instead.
 type ArrayNullableBooleanValueClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ArrayNullableBooleanValueClientOptions contains the optional values for creating a [ArrayNullableBooleanValueClient].
-type ArrayNullableBooleanValueClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewArrayNullableBooleanValueClientWithNoCredential creates a new instance of ArrayNullableBooleanValueClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewArrayNullableBooleanValueClientWithNoCredential(endpoint string, options *ArrayNullableBooleanValueClientOptions) (*ArrayNullableBooleanValueClient, error) {
-	if options == nil {
-		options = &ArrayNullableBooleanValueClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &ArrayNullableBooleanValueClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get -

@@ -13,33 +13,10 @@ import (
 )
 
 // OptionalRequiredAndOptionalClient - Test optional and required properties
-// Don't use this type directly, use NewOptionalRequiredAndOptionalClientWithNoCredential() instead.
+// Don't use this type directly, use [OptionalClient.NewOptionalRequiredAndOptionalClient] instead.
 type OptionalRequiredAndOptionalClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// OptionalRequiredAndOptionalClientOptions contains the optional values for creating a [OptionalRequiredAndOptionalClient].
-type OptionalRequiredAndOptionalClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewOptionalRequiredAndOptionalClientWithNoCredential creates a new instance of OptionalRequiredAndOptionalClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewOptionalRequiredAndOptionalClientWithNoCredential(endpoint string, options *OptionalRequiredAndOptionalClientOptions) (*OptionalRequiredAndOptionalClient, error) {
-	if options == nil {
-		options = &OptionalRequiredAndOptionalClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &OptionalRequiredAndOptionalClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // GetAll - Get models that will return all properties in the model

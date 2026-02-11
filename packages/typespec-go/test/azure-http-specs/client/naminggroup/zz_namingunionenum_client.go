@@ -13,33 +13,10 @@ import (
 )
 
 // NamingUnionEnumClient contains the methods for the NamingUnionEnum group.
-// Don't use this type directly, use NewNamingUnionEnumClientWithNoCredential() instead.
+// Don't use this type directly, use [NamingClient.NewNamingUnionEnumClient] instead.
 type NamingUnionEnumClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// NamingUnionEnumClientOptions contains the optional values for creating a [NamingUnionEnumClient].
-type NamingUnionEnumClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewNamingUnionEnumClientWithNoCredential creates a new instance of NamingUnionEnumClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewNamingUnionEnumClientWithNoCredential(endpoint string, options *NamingUnionEnumClientOptions) (*NamingUnionEnumClient, error) {
-	if options == nil {
-		options = &NamingUnionEnumClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &NamingUnionEnumClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // UnionEnumMemberName -

@@ -13,33 +13,10 @@ import (
 )
 
 // OptionalStringClient contains the methods for the OptionalString group.
-// Don't use this type directly, use NewOptionalStringClientWithNoCredential() instead.
+// Don't use this type directly, use [OptionalClient.NewOptionalStringClient] instead.
 type OptionalStringClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// OptionalStringClientOptions contains the optional values for creating a [OptionalStringClient].
-type OptionalStringClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewOptionalStringClientWithNoCredential creates a new instance of OptionalStringClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewOptionalStringClientWithNoCredential(endpoint string, options *OptionalStringClientOptions) (*OptionalStringClient, error) {
-	if options == nil {
-		options = &OptionalStringClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &OptionalStringClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // GetAll - Get models that will return all properties in the model

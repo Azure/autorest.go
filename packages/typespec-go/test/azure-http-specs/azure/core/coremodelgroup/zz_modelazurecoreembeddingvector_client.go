@@ -13,33 +13,10 @@ import (
 )
 
 // ModelAzureCoreEmbeddingVectorClient contains the methods for the ModelAzureCoreEmbeddingVector group.
-// Don't use this type directly, use NewModelAzureCoreEmbeddingVectorClientWithNoCredential() instead.
+// Don't use this type directly, use [ModelClient.NewModelAzureCoreEmbeddingVectorClient] instead.
 type ModelAzureCoreEmbeddingVectorClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ModelAzureCoreEmbeddingVectorClientOptions contains the optional values for creating a [ModelAzureCoreEmbeddingVectorClient].
-type ModelAzureCoreEmbeddingVectorClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewModelAzureCoreEmbeddingVectorClientWithNoCredential creates a new instance of ModelAzureCoreEmbeddingVectorClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewModelAzureCoreEmbeddingVectorClientWithNoCredential(endpoint string, options *ModelAzureCoreEmbeddingVectorClientOptions) (*ModelAzureCoreEmbeddingVectorClient, error) {
-	if options == nil {
-		options = &ModelAzureCoreEmbeddingVectorClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &ModelAzureCoreEmbeddingVectorClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get - get an embedding vector

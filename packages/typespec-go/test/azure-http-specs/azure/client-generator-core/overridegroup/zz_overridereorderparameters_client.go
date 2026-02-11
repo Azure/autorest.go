@@ -16,33 +16,10 @@ import (
 )
 
 // OverrideReorderParametersClient contains the methods for the OverrideReorderParameters group.
-// Don't use this type directly, use NewOverrideReorderParametersClientWithNoCredential() instead.
+// Don't use this type directly, use [OverrideClient.NewOverrideReorderParametersClient] instead.
 type OverrideReorderParametersClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// OverrideReorderParametersClientOptions contains the optional values for creating a [OverrideReorderParametersClient].
-type OverrideReorderParametersClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewOverrideReorderParametersClientWithNoCredential creates a new instance of OverrideReorderParametersClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewOverrideReorderParametersClientWithNoCredential(endpoint string, options *OverrideReorderParametersClientOptions) (*OverrideReorderParametersClient, error) {
-	if options == nil {
-		options = &OverrideReorderParametersClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &OverrideReorderParametersClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Reorder -

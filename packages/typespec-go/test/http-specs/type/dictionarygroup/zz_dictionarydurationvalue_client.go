@@ -13,33 +13,10 @@ import (
 )
 
 // DictionaryDurationValueClient - Dictionary of duration values
-// Don't use this type directly, use NewDictionaryDurationValueClientWithNoCredential() instead.
+// Don't use this type directly, use [DictionaryClient.NewDictionaryDurationValueClient] instead.
 type DictionaryDurationValueClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// DictionaryDurationValueClientOptions contains the optional values for creating a [DictionaryDurationValueClient].
-type DictionaryDurationValueClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewDictionaryDurationValueClientWithNoCredential creates a new instance of DictionaryDurationValueClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewDictionaryDurationValueClientWithNoCredential(endpoint string, options *DictionaryDurationValueClientOptions) (*DictionaryDurationValueClient, error) {
-	if options == nil {
-		options = &DictionaryDurationValueClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &DictionaryDurationValueClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get -

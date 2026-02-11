@@ -15,33 +15,10 @@ import (
 )
 
 // DictionaryDatetimeValueClient - Dictionary of datetime values
-// Don't use this type directly, use NewDictionaryDatetimeValueClientWithNoCredential() instead.
+// Don't use this type directly, use [DictionaryClient.NewDictionaryDatetimeValueClient] instead.
 type DictionaryDatetimeValueClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// DictionaryDatetimeValueClientOptions contains the optional values for creating a [DictionaryDatetimeValueClient].
-type DictionaryDatetimeValueClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewDictionaryDatetimeValueClientWithNoCredential creates a new instance of DictionaryDatetimeValueClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewDictionaryDatetimeValueClientWithNoCredential(endpoint string, options *DictionaryDatetimeValueClientOptions) (*DictionaryDatetimeValueClient, error) {
-	if options == nil {
-		options = &DictionaryDatetimeValueClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &DictionaryDatetimeValueClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get -

@@ -14,33 +14,10 @@ import (
 )
 
 // CollectionFormatHeaderClient contains the methods for the CollectionFormatHeader group.
-// Don't use this type directly, use NewCollectionFormatHeaderClientWithNoCredential() instead.
+// Don't use this type directly, use [CollectionFormatClient.NewCollectionFormatHeaderClient] instead.
 type CollectionFormatHeaderClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// CollectionFormatHeaderClientOptions contains the optional values for creating a [CollectionFormatHeaderClient].
-type CollectionFormatHeaderClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewCollectionFormatHeaderClientWithNoCredential creates a new instance of CollectionFormatHeaderClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewCollectionFormatHeaderClientWithNoCredential(endpoint string, options *CollectionFormatHeaderClientOptions) (*CollectionFormatHeaderClient, error) {
-	if options == nil {
-		options = &CollectionFormatHeaderClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &CollectionFormatHeaderClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // CSV -

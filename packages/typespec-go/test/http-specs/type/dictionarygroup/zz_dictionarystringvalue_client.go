@@ -13,33 +13,10 @@ import (
 )
 
 // DictionaryStringValueClient - Dictionary of string values
-// Don't use this type directly, use NewDictionaryStringValueClientWithNoCredential() instead.
+// Don't use this type directly, use [DictionaryClient.NewDictionaryStringValueClient] instead.
 type DictionaryStringValueClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// DictionaryStringValueClientOptions contains the optional values for creating a [DictionaryStringValueClient].
-type DictionaryStringValueClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewDictionaryStringValueClientWithNoCredential creates a new instance of DictionaryStringValueClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewDictionaryStringValueClientWithNoCredential(endpoint string, options *DictionaryStringValueClientOptions) (*DictionaryStringValueClient, error) {
-	if options == nil {
-		options = &DictionaryStringValueClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &DictionaryStringValueClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get -

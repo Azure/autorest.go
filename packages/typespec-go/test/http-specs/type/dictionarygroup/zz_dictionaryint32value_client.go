@@ -13,33 +13,10 @@ import (
 )
 
 // DictionaryInt32ValueClient - Dictionary of int32 values
-// Don't use this type directly, use NewDictionaryInt32ValueClientWithNoCredential() instead.
+// Don't use this type directly, use [DictionaryClient.NewDictionaryInt32ValueClient] instead.
 type DictionaryInt32ValueClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// DictionaryInt32ValueClientOptions contains the optional values for creating a [DictionaryInt32ValueClient].
-type DictionaryInt32ValueClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewDictionaryInt32ValueClientWithNoCredential creates a new instance of DictionaryInt32ValueClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewDictionaryInt32ValueClientWithNoCredential(endpoint string, options *DictionaryInt32ValueClientOptions) (*DictionaryInt32ValueClient, error) {
-	if options == nil {
-		options = &DictionaryInt32ValueClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &DictionaryInt32ValueClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get -

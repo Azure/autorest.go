@@ -13,33 +13,10 @@ import (
 )
 
 // AccessPublicOperationClient contains the methods for the AccessPublicOperation group.
-// Don't use this type directly, use NewAccessPublicOperationClientWithNoCredential() instead.
+// Don't use this type directly, use [AccessClient.NewAccessPublicOperationClient] instead.
 type AccessPublicOperationClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// AccessPublicOperationClientOptions contains the optional values for creating a [AccessPublicOperationClient].
-type AccessPublicOperationClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewAccessPublicOperationClientWithNoCredential creates a new instance of AccessPublicOperationClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewAccessPublicOperationClientWithNoCredential(endpoint string, options *AccessPublicOperationClientOptions) (*AccessPublicOperationClient, error) {
-	if options == nil {
-		options = &AccessPublicOperationClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &AccessPublicOperationClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // NoDecoratorInPublic -

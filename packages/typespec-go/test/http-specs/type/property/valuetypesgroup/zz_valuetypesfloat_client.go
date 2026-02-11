@@ -13,33 +13,10 @@ import (
 )
 
 // ValueTypesFloatClient contains the methods for the ValueTypesFloat group.
-// Don't use this type directly, use NewValueTypesFloatClientWithNoCredential() instead.
+// Don't use this type directly, use [ValueTypesClient.NewValueTypesFloatClient] instead.
 type ValueTypesFloatClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ValueTypesFloatClientOptions contains the optional values for creating a [ValueTypesFloatClient].
-type ValueTypesFloatClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewValueTypesFloatClientWithNoCredential creates a new instance of ValueTypesFloatClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewValueTypesFloatClientWithNoCredential(endpoint string, options *ValueTypesFloatClientOptions) (*ValueTypesFloatClient, error) {
-	if options == nil {
-		options = &ValueTypesFloatClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &ValueTypesFloatClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get - Get call

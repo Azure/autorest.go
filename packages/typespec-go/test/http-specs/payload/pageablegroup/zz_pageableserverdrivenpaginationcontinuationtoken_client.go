@@ -14,33 +14,10 @@ import (
 
 // PageableServerDrivenPaginationContinuationTokenClient contains the methods for the PageableServerDrivenPaginationContinuationToken
 // group.
-// Don't use this type directly, use NewPageableServerDrivenPaginationContinuationTokenClientWithNoCredential() instead.
+// Don't use this type directly, use [PageableServerDrivenPaginationClient.NewPageableServerDrivenPaginationContinuationTokenClient] instead.
 type PageableServerDrivenPaginationContinuationTokenClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// PageableServerDrivenPaginationContinuationTokenClientOptions contains the optional values for creating a [PageableServerDrivenPaginationContinuationTokenClient].
-type PageableServerDrivenPaginationContinuationTokenClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewPageableServerDrivenPaginationContinuationTokenClientWithNoCredential creates a new instance of PageableServerDrivenPaginationContinuationTokenClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewPageableServerDrivenPaginationContinuationTokenClientWithNoCredential(endpoint string, options *PageableServerDrivenPaginationContinuationTokenClientOptions) (*PageableServerDrivenPaginationContinuationTokenClient, error) {
-	if options == nil {
-		options = &PageableServerDrivenPaginationContinuationTokenClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &PageableServerDrivenPaginationContinuationTokenClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 //   - options - PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions contains the optional

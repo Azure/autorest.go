@@ -13,33 +13,10 @@ import (
 )
 
 // ArrayInt64ValueClient - Array of int64 values
-// Don't use this type directly, use NewArrayInt64ValueClientWithNoCredential() instead.
+// Don't use this type directly, use [ArrayClient.NewArrayInt64ValueClient] instead.
 type ArrayInt64ValueClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ArrayInt64ValueClientOptions contains the optional values for creating a [ArrayInt64ValueClient].
-type ArrayInt64ValueClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewArrayInt64ValueClientWithNoCredential creates a new instance of ArrayInt64ValueClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewArrayInt64ValueClientWithNoCredential(endpoint string, options *ArrayInt64ValueClientOptions) (*ArrayInt64ValueClient, error) {
-	if options == nil {
-		options = &ArrayInt64ValueClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &ArrayInt64ValueClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get -

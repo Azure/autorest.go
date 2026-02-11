@@ -10,41 +10,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // ServiceQuxClient contains the methods for the ServiceQux group.
-// Don't use this type directly, use NewServiceQuxClientWithNoCredential() instead.
+// Don't use this type directly, use [ServiceClient.NewServiceQuxClient] instead.
 type ServiceQuxClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ServiceQuxClientOptions contains the optional values for creating a [ServiceQuxClient].
-type ServiceQuxClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewServiceQuxClientWithNoCredential creates a new instance of ServiceQuxClient with the specified values.
-//   - endpoint - Service host
-//   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewServiceQuxClientWithNoCredential(endpoint string, client ClientType, options *ServiceQuxClientOptions) (*ServiceQuxClient, error) {
-	if options == nil {
-		options = &ServiceQuxClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	host := "client/structure/{client}"
-	host = strings.ReplaceAll(host, "{client}", string(client))
-	endpoint = runtime.JoinPaths(endpoint, host)
-	serviceQuxClient := &ServiceQuxClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return serviceQuxClient, nil
 }
 
 // NewServiceQuxBarClient creates a new instance of [ServiceQuxBarClient].

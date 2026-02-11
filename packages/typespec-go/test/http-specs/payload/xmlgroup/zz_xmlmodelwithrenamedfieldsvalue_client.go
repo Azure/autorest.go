@@ -13,33 +13,10 @@ import (
 )
 
 // XMLModelWithRenamedFieldsValueClient - Operations for the ModelWithRenamedFields type.
-// Don't use this type directly, use NewXMLModelWithRenamedFieldsValueClientWithNoCredential() instead.
+// Don't use this type directly, use [XMLClient.NewXMLModelWithRenamedFieldsValueClient] instead.
 type XMLModelWithRenamedFieldsValueClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// XMLModelWithRenamedFieldsValueClientOptions contains the optional values for creating a [XMLModelWithRenamedFieldsValueClient].
-type XMLModelWithRenamedFieldsValueClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewXMLModelWithRenamedFieldsValueClientWithNoCredential creates a new instance of XMLModelWithRenamedFieldsValueClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewXMLModelWithRenamedFieldsValueClientWithNoCredential(endpoint string, options *XMLModelWithRenamedFieldsValueClientOptions) (*XMLModelWithRenamedFieldsValueClient, error) {
-	if options == nil {
-		options = &XMLModelWithRenamedFieldsValueClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &XMLModelWithRenamedFieldsValueClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get -

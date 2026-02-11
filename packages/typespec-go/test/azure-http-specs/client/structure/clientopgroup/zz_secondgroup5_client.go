@@ -10,41 +10,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // SecondGroup5Client contains the methods for the SecondGroup5 group.
-// Don't use this type directly, use NewSecondGroup5ClientWithNoCredential() instead.
+// Don't use this type directly, use [SecondClient.NewSecondGroup5Client] instead.
 type SecondGroup5Client struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// SecondGroup5ClientOptions contains the optional values for creating a [SecondGroup5Client].
-type SecondGroup5ClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewSecondGroup5ClientWithNoCredential creates a new instance of SecondGroup5Client with the specified values.
-//   - endpoint - Service host
-//   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewSecondGroup5ClientWithNoCredential(endpoint string, client ClientType, options *SecondGroup5ClientOptions) (*SecondGroup5Client, error) {
-	if options == nil {
-		options = &SecondGroup5ClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	host := "client/structure/{client}"
-	host = strings.ReplaceAll(host, "{client}", string(client))
-	endpoint = runtime.JoinPaths(endpoint, host)
-	secondGroup5Client := &SecondGroup5Client{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return secondGroup5Client, nil
 }
 
 // Six -

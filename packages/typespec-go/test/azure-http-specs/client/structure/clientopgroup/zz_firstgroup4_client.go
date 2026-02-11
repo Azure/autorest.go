@@ -10,41 +10,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // FirstGroup4Client contains the methods for the FirstGroup4 group.
-// Don't use this type directly, use NewFirstGroup4ClientWithNoCredential() instead.
+// Don't use this type directly, use [FirstClient.NewFirstGroup4Client] instead.
 type FirstGroup4Client struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// FirstGroup4ClientOptions contains the optional values for creating a [FirstGroup4Client].
-type FirstGroup4ClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewFirstGroup4ClientWithNoCredential creates a new instance of FirstGroup4Client with the specified values.
-//   - endpoint - Service host
-//   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewFirstGroup4ClientWithNoCredential(endpoint string, client ClientType, options *FirstGroup4ClientOptions) (*FirstGroup4Client, error) {
-	if options == nil {
-		options = &FirstGroup4ClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	host := "client/structure/{client}"
-	host = strings.ReplaceAll(host, "{client}", string(client))
-	endpoint = runtime.JoinPaths(endpoint, host)
-	firstGroup4Client := &FirstGroup4Client{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return firstGroup4Client, nil
 }
 
 // Four -

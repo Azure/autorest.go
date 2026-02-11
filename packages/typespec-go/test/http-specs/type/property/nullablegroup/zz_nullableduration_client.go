@@ -13,33 +13,10 @@ import (
 )
 
 // NullableDurationClient contains the methods for the NullableDuration group.
-// Don't use this type directly, use NewNullableDurationClientWithNoCredential() instead.
+// Don't use this type directly, use [NullableClient.NewNullableDurationClient] instead.
 type NullableDurationClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// NullableDurationClientOptions contains the optional values for creating a [NullableDurationClient].
-type NullableDurationClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewNullableDurationClientWithNoCredential creates a new instance of NullableDurationClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewNullableDurationClientWithNoCredential(endpoint string, options *NullableDurationClientOptions) (*NullableDurationClient, error) {
-	if options == nil {
-		options = &NullableDurationClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &NullableDurationClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // GetNonNull - Get models that will return all properties in the model

@@ -10,41 +10,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // TwoOperationGroupGroup2Client contains the methods for the TwoOperationGroupGroup2 group.
-// Don't use this type directly, use NewTwoOperationGroupGroup2ClientWithNoCredential() instead.
+// Don't use this type directly, use [TwoOperationGroupClient.NewTwoOperationGroupGroup2Client] instead.
 type TwoOperationGroupGroup2Client struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// TwoOperationGroupGroup2ClientOptions contains the optional values for creating a [TwoOperationGroupGroup2Client].
-type TwoOperationGroupGroup2ClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewTwoOperationGroupGroup2ClientWithNoCredential creates a new instance of TwoOperationGroupGroup2Client with the specified values.
-//   - endpoint - Service host
-//   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewTwoOperationGroupGroup2ClientWithNoCredential(endpoint string, client ClientType, options *TwoOperationGroupGroup2ClientOptions) (*TwoOperationGroupGroup2Client, error) {
-	if options == nil {
-		options = &TwoOperationGroupGroup2ClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	host := "client/structure/{client}"
-	host = strings.ReplaceAll(host, "{client}", string(client))
-	endpoint = runtime.JoinPaths(endpoint, host)
-	twoOperationGroupGroup2Client := &TwoOperationGroupGroup2Client{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return twoOperationGroupGroup2Client, nil
 }
 
 // Five -

@@ -13,33 +13,10 @@ import (
 )
 
 // DurationPropertyClient contains the methods for the DurationProperty group.
-// Don't use this type directly, use NewDurationPropertyClientWithNoCredential() instead.
+// Don't use this type directly, use [DurationClient.NewDurationPropertyClient] instead.
 type DurationPropertyClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// DurationPropertyClientOptions contains the optional values for creating a [DurationPropertyClient].
-type DurationPropertyClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewDurationPropertyClientWithNoCredential creates a new instance of DurationPropertyClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewDurationPropertyClientWithNoCredential(endpoint string, options *DurationPropertyClientOptions) (*DurationPropertyClient, error) {
-	if options == nil {
-		options = &DurationPropertyClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &DurationPropertyClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Default -

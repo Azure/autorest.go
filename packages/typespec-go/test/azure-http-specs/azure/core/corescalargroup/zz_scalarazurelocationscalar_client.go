@@ -13,33 +13,10 @@ import (
 )
 
 // ScalarAzureLocationScalarClient contains the methods for the ScalarAzureLocationScalar group.
-// Don't use this type directly, use NewScalarAzureLocationScalarClientWithNoCredential() instead.
+// Don't use this type directly, use [ScalarClient.NewScalarAzureLocationScalarClient] instead.
 type ScalarAzureLocationScalarClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ScalarAzureLocationScalarClientOptions contains the optional values for creating a [ScalarAzureLocationScalarClient].
-type ScalarAzureLocationScalarClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewScalarAzureLocationScalarClientWithNoCredential creates a new instance of ScalarAzureLocationScalarClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewScalarAzureLocationScalarClientWithNoCredential(endpoint string, options *ScalarAzureLocationScalarClientOptions) (*ScalarAzureLocationScalarClient, error) {
-	if options == nil {
-		options = &ScalarAzureLocationScalarClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &ScalarAzureLocationScalarClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get - get azureLocation value

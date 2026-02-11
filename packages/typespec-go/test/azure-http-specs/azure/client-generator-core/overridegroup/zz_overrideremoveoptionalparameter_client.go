@@ -16,33 +16,10 @@ import (
 )
 
 // OverrideRemoveOptionalParameterClient contains the methods for the OverrideRemoveOptionalParameter group.
-// Don't use this type directly, use NewOverrideRemoveOptionalParameterClientWithNoCredential() instead.
+// Don't use this type directly, use [OverrideClient.NewOverrideRemoveOptionalParameterClient] instead.
 type OverrideRemoveOptionalParameterClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// OverrideRemoveOptionalParameterClientOptions contains the optional values for creating a [OverrideRemoveOptionalParameterClient].
-type OverrideRemoveOptionalParameterClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewOverrideRemoveOptionalParameterClientWithNoCredential creates a new instance of OverrideRemoveOptionalParameterClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewOverrideRemoveOptionalParameterClientWithNoCredential(endpoint string, options *OverrideRemoveOptionalParameterClientOptions) (*OverrideRemoveOptionalParameterClient, error) {
-	if options == nil {
-		options = &OverrideRemoveOptionalParameterClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &OverrideRemoveOptionalParameterClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // RemoveOptional -

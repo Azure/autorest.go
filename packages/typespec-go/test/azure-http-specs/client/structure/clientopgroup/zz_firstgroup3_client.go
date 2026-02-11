@@ -10,41 +10,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // FirstGroup3Client contains the methods for the FirstGroup3 group.
-// Don't use this type directly, use NewFirstGroup3ClientWithNoCredential() instead.
+// Don't use this type directly, use [FirstClient.NewFirstGroup3Client] instead.
 type FirstGroup3Client struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// FirstGroup3ClientOptions contains the optional values for creating a [FirstGroup3Client].
-type FirstGroup3ClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewFirstGroup3ClientWithNoCredential creates a new instance of FirstGroup3Client with the specified values.
-//   - endpoint - Service host
-//   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewFirstGroup3ClientWithNoCredential(endpoint string, client ClientType, options *FirstGroup3ClientOptions) (*FirstGroup3Client, error) {
-	if options == nil {
-		options = &FirstGroup3ClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	host := "client/structure/{client}"
-	host = strings.ReplaceAll(host, "{client}", string(client))
-	endpoint = runtime.JoinPaths(endpoint, host)
-	firstGroup3Client := &FirstGroup3Client{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return firstGroup3Client, nil
 }
 
 // Three -

@@ -4,44 +4,13 @@
 
 package defaultgroup
 
-import (
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"strings"
-)
+import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
 // ServiceBazClient contains the methods for the ServiceBaz group.
-// Don't use this type directly, use NewServiceBazClientWithNoCredential() instead.
+// Don't use this type directly, use [ServiceClient.NewServiceBazClient] instead.
 type ServiceBazClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ServiceBazClientOptions contains the optional values for creating a [ServiceBazClient].
-type ServiceBazClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewServiceBazClientWithNoCredential creates a new instance of ServiceBazClient with the specified values.
-//   - endpoint - Service host
-//   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewServiceBazClientWithNoCredential(endpoint string, client ClientType, options *ServiceBazClientOptions) (*ServiceBazClient, error) {
-	if options == nil {
-		options = &ServiceBazClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	host := "client/structure/{client}"
-	host = strings.ReplaceAll(host, "{client}", string(client))
-	endpoint = runtime.JoinPaths(endpoint, host)
-	serviceBazClient := &ServiceBazClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return serviceBazClient, nil
 }
 
 // NewServiceBazFooClient creates a new instance of [ServiceBazFooClient].

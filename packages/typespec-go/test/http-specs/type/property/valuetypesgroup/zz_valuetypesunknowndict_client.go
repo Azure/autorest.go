@@ -13,33 +13,10 @@ import (
 )
 
 // ValueTypesUnknownDictClient contains the methods for the ValueTypesUnknownDict group.
-// Don't use this type directly, use NewValueTypesUnknownDictClientWithNoCredential() instead.
+// Don't use this type directly, use [ValueTypesClient.NewValueTypesUnknownDictClient] instead.
 type ValueTypesUnknownDictClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ValueTypesUnknownDictClientOptions contains the optional values for creating a [ValueTypesUnknownDictClient].
-type ValueTypesUnknownDictClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewValueTypesUnknownDictClientWithNoCredential creates a new instance of ValueTypesUnknownDictClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewValueTypesUnknownDictClientWithNoCredential(endpoint string, options *ValueTypesUnknownDictClientOptions) (*ValueTypesUnknownDictClient, error) {
-	if options == nil {
-		options = &ValueTypesUnknownDictClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &ValueTypesUnknownDictClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get - Get call

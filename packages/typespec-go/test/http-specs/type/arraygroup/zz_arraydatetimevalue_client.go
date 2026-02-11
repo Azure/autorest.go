@@ -15,33 +15,10 @@ import (
 )
 
 // ArrayDatetimeValueClient - Array of datetime values
-// Don't use this type directly, use NewArrayDatetimeValueClientWithNoCredential() instead.
+// Don't use this type directly, use [ArrayClient.NewArrayDatetimeValueClient] instead.
 type ArrayDatetimeValueClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ArrayDatetimeValueClientOptions contains the optional values for creating a [ArrayDatetimeValueClient].
-type ArrayDatetimeValueClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewArrayDatetimeValueClientWithNoCredential creates a new instance of ArrayDatetimeValueClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewArrayDatetimeValueClientWithNoCredential(endpoint string, options *ArrayDatetimeValueClientOptions) (*ArrayDatetimeValueClient, error) {
-	if options == nil {
-		options = &ArrayDatetimeValueClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &ArrayDatetimeValueClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get -

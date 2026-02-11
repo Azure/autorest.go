@@ -13,33 +13,10 @@ import (
 )
 
 // BasicImplicitBodyClient contains the methods for the BasicImplicitBody group.
-// Don't use this type directly, use NewBasicImplicitBodyClientWithNoCredential() instead.
+// Don't use this type directly, use [BasicClient.NewBasicImplicitBodyClient] instead.
 type BasicImplicitBodyClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// BasicImplicitBodyClientOptions contains the optional values for creating a [BasicImplicitBodyClient].
-type BasicImplicitBodyClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewBasicImplicitBodyClientWithNoCredential creates a new instance of BasicImplicitBodyClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewBasicImplicitBodyClientWithNoCredential(endpoint string, options *BasicImplicitBodyClientOptions) (*BasicImplicitBodyClient, error) {
-	if options == nil {
-		options = &BasicImplicitBodyClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &BasicImplicitBodyClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Simple -

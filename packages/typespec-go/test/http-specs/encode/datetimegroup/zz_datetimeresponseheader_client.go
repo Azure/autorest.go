@@ -16,33 +16,10 @@ import (
 )
 
 // DatetimeResponseHeaderClient contains the methods for the DatetimeResponseHeader group.
-// Don't use this type directly, use NewDatetimeResponseHeaderClientWithNoCredential() instead.
+// Don't use this type directly, use [DatetimeClient.NewDatetimeResponseHeaderClient] instead.
 type DatetimeResponseHeaderClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// DatetimeResponseHeaderClientOptions contains the optional values for creating a [DatetimeResponseHeaderClient].
-type DatetimeResponseHeaderClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewDatetimeResponseHeaderClientWithNoCredential creates a new instance of DatetimeResponseHeaderClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewDatetimeResponseHeaderClientWithNoCredential(endpoint string, options *DatetimeResponseHeaderClientOptions) (*DatetimeResponseHeaderClient, error) {
-	if options == nil {
-		options = &DatetimeResponseHeaderClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &DatetimeResponseHeaderClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Default -

@@ -16,33 +16,10 @@ import (
 )
 
 // SpreadAliasClient contains the methods for the SpreadAlias group.
-// Don't use this type directly, use NewSpreadAliasClientWithNoCredential() instead.
+// Don't use this type directly, use [SpreadClient.NewSpreadAliasClient] instead.
 type SpreadAliasClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// SpreadAliasClientOptions contains the optional values for creating a [SpreadAliasClient].
-type SpreadAliasClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewSpreadAliasClientWithNoCredential creates a new instance of SpreadAliasClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewSpreadAliasClientWithNoCredential(endpoint string, options *SpreadAliasClientOptions) (*SpreadAliasClient, error) {
-	if options == nil {
-		options = &SpreadAliasClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &SpreadAliasClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // SpreadAsRequestBody -

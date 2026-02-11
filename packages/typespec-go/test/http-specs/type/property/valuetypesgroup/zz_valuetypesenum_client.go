@@ -13,33 +13,10 @@ import (
 )
 
 // ValueTypesEnumClient contains the methods for the ValueTypesEnum group.
-// Don't use this type directly, use NewValueTypesEnumClientWithNoCredential() instead.
+// Don't use this type directly, use [ValueTypesClient.NewValueTypesEnumClient] instead.
 type ValueTypesEnumClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ValueTypesEnumClientOptions contains the optional values for creating a [ValueTypesEnumClient].
-type ValueTypesEnumClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewValueTypesEnumClientWithNoCredential creates a new instance of ValueTypesEnumClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewValueTypesEnumClientWithNoCredential(endpoint string, options *ValueTypesEnumClientOptions) (*ValueTypesEnumClient, error) {
-	if options == nil {
-		options = &ValueTypesEnumClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &ValueTypesEnumClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get - Get call

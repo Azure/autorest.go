@@ -13,33 +13,10 @@ import (
 )
 
 // EnumConflictSecondOperationsClient contains the methods for the EnumConflictSecondOperations group.
-// Don't use this type directly, use NewEnumConflictSecondOperationsClientWithNoCredential() instead.
+// Don't use this type directly, use [EnumConflictClient.NewEnumConflictSecondOperationsClient] instead.
 type EnumConflictSecondOperationsClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// EnumConflictSecondOperationsClientOptions contains the optional values for creating a [EnumConflictSecondOperationsClient].
-type EnumConflictSecondOperationsClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewEnumConflictSecondOperationsClientWithNoCredential creates a new instance of EnumConflictSecondOperationsClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewEnumConflictSecondOperationsClientWithNoCredential(endpoint string, options *EnumConflictSecondOperationsClientOptions) (*EnumConflictSecondOperationsClient, error) {
-	if options == nil {
-		options = &EnumConflictSecondOperationsClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &EnumConflictSecondOperationsClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Second - Operation using second namespace Status enum

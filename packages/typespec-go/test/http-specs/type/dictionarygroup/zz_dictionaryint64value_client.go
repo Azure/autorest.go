@@ -13,33 +13,10 @@ import (
 )
 
 // DictionaryInt64ValueClient - Dictionary of int64 values
-// Don't use this type directly, use NewDictionaryInt64ValueClientWithNoCredential() instead.
+// Don't use this type directly, use [DictionaryClient.NewDictionaryInt64ValueClient] instead.
 type DictionaryInt64ValueClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// DictionaryInt64ValueClientOptions contains the optional values for creating a [DictionaryInt64ValueClient].
-type DictionaryInt64ValueClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewDictionaryInt64ValueClientWithNoCredential creates a new instance of DictionaryInt64ValueClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewDictionaryInt64ValueClientWithNoCredential(endpoint string, options *DictionaryInt64ValueClientOptions) (*DictionaryInt64ValueClient, error) {
-	if options == nil {
-		options = &DictionaryInt64ValueClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &DictionaryInt64ValueClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get -

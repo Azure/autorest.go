@@ -13,33 +13,10 @@ import (
 )
 
 // OptionalFloatLiteralClient contains the methods for the OptionalFloatLiteral group.
-// Don't use this type directly, use NewOptionalFloatLiteralClientWithNoCredential() instead.
+// Don't use this type directly, use [OptionalClient.NewOptionalFloatLiteralClient] instead.
 type OptionalFloatLiteralClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// OptionalFloatLiteralClientOptions contains the optional values for creating a [OptionalFloatLiteralClient].
-type OptionalFloatLiteralClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewOptionalFloatLiteralClientWithNoCredential creates a new instance of OptionalFloatLiteralClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewOptionalFloatLiteralClientWithNoCredential(endpoint string, options *OptionalFloatLiteralClientOptions) (*OptionalFloatLiteralClient, error) {
-	if options == nil {
-		options = &OptionalFloatLiteralClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &OptionalFloatLiteralClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // GetAll - Get models that will return all properties in the model

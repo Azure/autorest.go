@@ -13,33 +13,10 @@ import (
 )
 
 // ScalarDecimal128VerifyClient - Decimal128 type verification
-// Don't use this type directly, use NewScalarDecimal128VerifyClientWithNoCredential() instead.
+// Don't use this type directly, use [ScalarClient.NewScalarDecimal128VerifyClient] instead.
 type ScalarDecimal128VerifyClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ScalarDecimal128VerifyClientOptions contains the optional values for creating a [ScalarDecimal128VerifyClient].
-type ScalarDecimal128VerifyClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewScalarDecimal128VerifyClientWithNoCredential creates a new instance of ScalarDecimal128VerifyClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewScalarDecimal128VerifyClientWithNoCredential(endpoint string, options *ScalarDecimal128VerifyClientOptions) (*ScalarDecimal128VerifyClient, error) {
-	if options == nil {
-		options = &ScalarDecimal128VerifyClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &ScalarDecimal128VerifyClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // PrepareVerify -

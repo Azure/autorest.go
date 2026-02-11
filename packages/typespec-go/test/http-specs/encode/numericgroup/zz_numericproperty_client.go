@@ -13,33 +13,10 @@ import (
 )
 
 // NumericPropertyClient contains the methods for the NumericProperty group.
-// Don't use this type directly, use NewNumericPropertyClientWithNoCredential() instead.
+// Don't use this type directly, use [NumericClient.NewNumericPropertyClient] instead.
 type NumericPropertyClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// NumericPropertyClientOptions contains the optional values for creating a [NumericPropertyClient].
-type NumericPropertyClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewNumericPropertyClientWithNoCredential creates a new instance of NumericPropertyClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewNumericPropertyClientWithNoCredential(endpoint string, options *NumericPropertyClientOptions) (*NumericPropertyClient, error) {
-	if options == nil {
-		options = &NumericPropertyClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &NumericPropertyClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // SafeintAsString -

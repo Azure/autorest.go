@@ -13,33 +13,10 @@ import (
 )
 
 // OptionalUnionIntLiteralClient contains the methods for the OptionalUnionIntLiteral group.
-// Don't use this type directly, use NewOptionalUnionIntLiteralClientWithNoCredential() instead.
+// Don't use this type directly, use [OptionalClient.NewOptionalUnionIntLiteralClient] instead.
 type OptionalUnionIntLiteralClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// OptionalUnionIntLiteralClientOptions contains the optional values for creating a [OptionalUnionIntLiteralClient].
-type OptionalUnionIntLiteralClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewOptionalUnionIntLiteralClientWithNoCredential creates a new instance of OptionalUnionIntLiteralClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewOptionalUnionIntLiteralClientWithNoCredential(endpoint string, options *OptionalUnionIntLiteralClientOptions) (*OptionalUnionIntLiteralClient, error) {
-	if options == nil {
-		options = &OptionalUnionIntLiteralClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &OptionalUnionIntLiteralClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // GetAll - Get models that will return all properties in the model

@@ -10,41 +10,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // ServiceBarClient contains the methods for the ServiceBar group.
-// Don't use this type directly, use NewServiceBarClientWithNoCredential() instead.
+// Don't use this type directly, use [ServiceClient.NewServiceBarClient] instead.
 type ServiceBarClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// ServiceBarClientOptions contains the optional values for creating a [ServiceBarClient].
-type ServiceBarClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewServiceBarClientWithNoCredential creates a new instance of ServiceBarClient with the specified values.
-//   - endpoint - Service host
-//   - client - Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client.
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewServiceBarClientWithNoCredential(endpoint string, client ClientType, options *ServiceBarClientOptions) (*ServiceBarClient, error) {
-	if options == nil {
-		options = &ServiceBarClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	host := "client/structure/{client}"
-	host = strings.ReplaceAll(host, "{client}", string(client))
-	endpoint = runtime.JoinPaths(endpoint, host)
-	serviceBarClient := &ServiceBarClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return serviceBarClient, nil
 }
 
 // Five -

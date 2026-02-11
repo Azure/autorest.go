@@ -13,33 +13,10 @@ import (
 )
 
 // HierarchyBuildingAnimalOperationsClient contains the methods for the HierarchyBuildingAnimalOperations group.
-// Don't use this type directly, use NewHierarchyBuildingAnimalOperationsClientWithNoCredential() instead.
+// Don't use this type directly, use [HierarchyBuildingClient.NewHierarchyBuildingAnimalOperationsClient] instead.
 type HierarchyBuildingAnimalOperationsClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// HierarchyBuildingAnimalOperationsClientOptions contains the optional values for creating a [HierarchyBuildingAnimalOperationsClient].
-type HierarchyBuildingAnimalOperationsClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewHierarchyBuildingAnimalOperationsClientWithNoCredential creates a new instance of HierarchyBuildingAnimalOperationsClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewHierarchyBuildingAnimalOperationsClientWithNoCredential(endpoint string, options *HierarchyBuildingAnimalOperationsClientOptions) (*HierarchyBuildingAnimalOperationsClient, error) {
-	if options == nil {
-		options = &HierarchyBuildingAnimalOperationsClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &HierarchyBuildingAnimalOperationsClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // UpdateDogAsAnimal - Update a dog as an animal

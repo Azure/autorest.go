@@ -13,33 +13,10 @@ import (
 )
 
 // SpecialWordsOperationsClient - Test reserved words as operation name.
-// Don't use this type directly, use NewSpecialWordsOperationsClientWithNoCredential() instead.
+// Don't use this type directly, use [SpecialWordsClient.NewSpecialWordsOperationsClient] instead.
 type SpecialWordsOperationsClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// SpecialWordsOperationsClientOptions contains the optional values for creating a [SpecialWordsOperationsClient].
-type SpecialWordsOperationsClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewSpecialWordsOperationsClientWithNoCredential creates a new instance of SpecialWordsOperationsClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewSpecialWordsOperationsClientWithNoCredential(endpoint string, options *SpecialWordsOperationsClientOptions) (*SpecialWordsOperationsClient, error) {
-	if options == nil {
-		options = &SpecialWordsOperationsClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &SpecialWordsOperationsClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // And -

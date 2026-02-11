@@ -13,33 +13,10 @@ import (
 )
 
 // XMLModelWithRenamedArraysValueClient - Operations for the ModelWithRenamedArrays type.
-// Don't use this type directly, use NewXMLModelWithRenamedArraysValueClientWithNoCredential() instead.
+// Don't use this type directly, use [XMLClient.NewXMLModelWithRenamedArraysValueClient] instead.
 type XMLModelWithRenamedArraysValueClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// XMLModelWithRenamedArraysValueClientOptions contains the optional values for creating a [XMLModelWithRenamedArraysValueClient].
-type XMLModelWithRenamedArraysValueClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewXMLModelWithRenamedArraysValueClientWithNoCredential creates a new instance of XMLModelWithRenamedArraysValueClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewXMLModelWithRenamedArraysValueClientWithNoCredential(endpoint string, options *XMLModelWithRenamedArraysValueClientOptions) (*XMLModelWithRenamedArraysValueClient, error) {
-	if options == nil {
-		options = &XMLModelWithRenamedArraysValueClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &XMLModelWithRenamedArraysValueClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // Get -

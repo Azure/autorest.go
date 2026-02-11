@@ -13,33 +13,10 @@ import (
 )
 
 // PagerWidgetsClient contains the methods for the PagerWidgets group.
-// Don't use this type directly, use NewPagerWidgetsClientWithNoCredential() instead.
+// Don't use this type directly, use [PagerClient.NewPagerWidgetsClient] instead.
 type PagerWidgetsClient struct {
 	internal *azcore.Client
 	endpoint string
-}
-
-// PagerWidgetsClientOptions contains the optional values for creating a [PagerWidgetsClient].
-type PagerWidgetsClientOptions struct {
-	azcore.ClientOptions
-}
-
-// NewPagerWidgetsClientWithNoCredential creates a new instance of PagerWidgetsClient with the specified values.
-//   - endpoint - Service host
-//   - options - Contains optional client configuration. Pass nil to accept the default values.
-func NewPagerWidgetsClientWithNoCredential(endpoint string, options *PagerWidgetsClientOptions) (*PagerWidgetsClient, error) {
-	if options == nil {
-		options = &PagerWidgetsClientOptions{}
-	}
-	cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions)
-	if err != nil {
-		return nil, err
-	}
-	client := &PagerWidgetsClient{
-		endpoint: endpoint,
-		internal: cl,
-	}
-	return client, nil
 }
 
 // - options - pagerWidgetsClientlistOptions contains the optional parameters for the PagerWidgetsClient.NewlistPager method.
