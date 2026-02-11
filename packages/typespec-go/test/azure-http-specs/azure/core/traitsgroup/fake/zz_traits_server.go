@@ -207,11 +207,11 @@ func (t *TraitsServerTransport) dispatchSmokeTest(req *http.Request) (*http.Resp
 	if val := server.GetResponse(respr).Bar; val != nil {
 		resp.Header.Set("bar", *val)
 	}
-	if val := server.GetResponse(respr).ETag; val != nil {
-		resp.Header.Set("ETag", *val)
-	}
-	if val := server.GetResponse(respr).XMSClientRequestID; val != nil {
+	if val := server.GetResponse(respr).ClientRequestID; val != nil {
 		resp.Header.Set("x-ms-client-request-id", *val)
+	}
+	if val := server.GetResponse(respr).EtagHeader; val != nil {
+		resp.Header.Set("ETag", *val)
 	}
 	return resp, nil
 }

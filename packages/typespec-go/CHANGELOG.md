@@ -1,6 +1,10 @@
 # Release History
 
-## 0.9.3 (Unreleased)
+## 0.10.0 (2026-02-11)
+
+### Breaking Changes
+
+* Fixed incorrect naming for response headers.
 
 ### Other Changes
 

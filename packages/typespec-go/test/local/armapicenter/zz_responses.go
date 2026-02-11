@@ -10,7 +10,7 @@ type APIDefinitionsClientCreateOrUpdateResponse struct {
 	APIDefinition
 
 	// The entity tag for the response.
-	ETag *string
+	EtagHeader *string
 }
 
 // APIDefinitionsClientDeleteResponse contains the response from method APIDefinitionsClient.Delete.
@@ -30,7 +30,7 @@ type APIDefinitionsClientGetResponse struct {
 	APIDefinition
 
 	// The entity tag for the response.
-	ETag *string
+	EtagHeader *string
 }
 
 // APIDefinitionsClientHeadResponse contains the response from method APIDefinitionsClient.Head.
@@ -57,7 +57,7 @@ type APIVersionsClientCreateOrUpdateResponse struct {
 	APIVersion
 
 	// The entity tag for the response.
-	ETag *string
+	EtagHeader *string
 }
 
 // APIVersionsClientDeleteResponse contains the response from method APIVersionsClient.Delete.
@@ -71,7 +71,7 @@ type APIVersionsClientGetResponse struct {
 	APIVersion
 
 	// The entity tag for the response.
-	ETag *string
+	EtagHeader *string
 }
 
 // APIVersionsClientHeadResponse contains the response from method APIVersionsClient.Head.
@@ -92,7 +92,7 @@ type ApisClientCreateOrUpdateResponse struct {
 	API
 
 	// The entity tag for the response.
-	ETag *string
+	EtagHeader *string
 }
 
 // ApisClientDeleteResponse contains the response from method ApisClient.Delete.
@@ -106,7 +106,7 @@ type ApisClientGetResponse struct {
 	API
 
 	// The entity tag for the response.
-	ETag *string
+	EtagHeader *string
 }
 
 // ApisClientHeadResponse contains the response from method ApisClient.Head.
@@ -132,7 +132,7 @@ type DeletedServicesClientGetResponse struct {
 	DeletedService
 
 	// The entity tag for the response.
-	ETag *string
+	EtagHeader *string
 }
 
 // DeletedServicesClientListBySubscriptionResponse contains the response from method DeletedServicesClient.NewListBySubscriptionPager.
@@ -153,7 +153,7 @@ type DeploymentsClientCreateOrUpdateResponse struct {
 	Deployment
 
 	// The entity tag for the response.
-	ETag *string
+	EtagHeader *string
 }
 
 // DeploymentsClientDeleteResponse contains the response from method DeploymentsClient.Delete.
@@ -167,7 +167,7 @@ type DeploymentsClientGetResponse struct {
 	Deployment
 
 	// The entity tag for the response.
-	ETag *string
+	EtagHeader *string
 }
 
 // DeploymentsClientHeadResponse contains the response from method DeploymentsClient.Head.
@@ -188,7 +188,7 @@ type EnvironmentsClientCreateOrUpdateResponse struct {
 	Environment
 
 	// The entity tag for the response.
-	ETag *string
+	EtagHeader *string
 }
 
 // EnvironmentsClientDeleteResponse contains the response from method EnvironmentsClient.Delete.
@@ -202,7 +202,7 @@ type EnvironmentsClientGetResponse struct {
 	Environment
 
 	// The entity tag for the response.
-	ETag *string
+	EtagHeader *string
 }
 
 // EnvironmentsClientHeadResponse contains the response from method EnvironmentsClient.Head.
@@ -223,7 +223,7 @@ type MetadataSchemasClientCreateOrUpdateResponse struct {
 	MetadataSchema
 
 	// The entity tag for the response.
-	ETag *string
+	EtagHeader *string
 }
 
 // MetadataSchemasClientDeleteResponse contains the response from method MetadataSchemasClient.Delete.
@@ -237,7 +237,7 @@ type MetadataSchemasClientGetResponse struct {
 	MetadataSchema
 
 	// The entity tag for the response.
-	ETag *string
+	EtagHeader *string
 }
 
 // MetadataSchemasClientHeadResponse contains the response from method MetadataSchemasClient.Head.
@@ -305,7 +305,7 @@ type WorkspacesClientCreateOrUpdateResponse struct {
 	Workspace
 
 	// The entity tag for the response.
-	ETag *string
+	EtagHeader *string
 }
 
 // WorkspacesClientDeleteResponse contains the response from method WorkspacesClient.Delete.
@@ -319,7 +319,7 @@ type WorkspacesClientGetResponse struct {
 	Workspace
 
 	// The entity tag for the response.
-	ETag *string
+	EtagHeader *string
 }
 
 // WorkspacesClientHeadResponse contains the response from method WorkspacesClient.Head.

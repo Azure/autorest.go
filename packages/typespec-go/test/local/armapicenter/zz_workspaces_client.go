@@ -109,7 +109,7 @@ func (client *WorkspacesClient) createOrUpdateCreateRequest(ctx context.Context,
 func (client *WorkspacesClient) createOrUpdateHandleResponse(resp *http.Response) (WorkspacesClientCreateOrUpdateResponse, error) {
 	result := WorkspacesClientCreateOrUpdateResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.EtagHeader = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Workspace); err != nil {
 		return WorkspacesClientCreateOrUpdateResponse{}, err
@@ -239,7 +239,7 @@ func (client *WorkspacesClient) getCreateRequest(ctx context.Context, resourceGr
 func (client *WorkspacesClient) getHandleResponse(resp *http.Response) (WorkspacesClientGetResponse, error) {
 	result := WorkspacesClientGetResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.EtagHeader = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Workspace); err != nil {
 		return WorkspacesClientGetResponse{}, err

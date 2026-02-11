@@ -71,8 +71,8 @@ func TestNamingClient_Response(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.Response(context.Background(), nil)
 	require.NoError(t, err)
-	require.NotNil(t, resp.DefaultName)
-	require.EqualValues(t, "true", *resp.DefaultName)
+	require.NotNil(t, resp.ClientName)
+	require.EqualValues(t, "true", *resp.ClientName)
 }
 
 func TestModelClient_Client(t *testing.T) {

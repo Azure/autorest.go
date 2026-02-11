@@ -183,11 +183,11 @@ func (client *TraitsClient) smokeTestHandleResponse(resp *http.Response) (Traits
 	if val := resp.Header.Get("bar"); val != "" {
 		result.Bar = &val
 	}
-	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
-	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.XMSClientRequestID = &val
+		result.ClientRequestID = &val
+	}
+	if val := resp.Header.Get("ETag"); val != "" {
+		result.EtagHeader = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.User); err != nil {
 		return TraitsClientSmokeTestResponse{}, err
