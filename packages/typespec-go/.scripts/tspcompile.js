@@ -18,8 +18,8 @@ const compiler = pkgRoot + 'node_modules/@typespec/compiler/cmd/tsp.js';
 // 'moduleName': [ 'input', 'emitter option 1', 'emitter option N...' ]
 // if no .tsp file is specified in input, it's assumed to be main.tsp
 const httpSpecsGroup = {
-  'apikeygroup': ['authentication/api-key'],     // ctors for API key not supported
-  'customgroup': ['authentication/http/custom'], // ctors for API key not supported
+  // 'apikeygroup': ['authentication/api-key'],     // ctors for API key not supported
+  // 'customgroup': ['authentication/http/custom'], // ctors for API key not supported
   'oauth2group': ['authentication/oauth2'],
   'unionauthgroup': ['authentication/union'],    // ctors for API key not supported
   'bytesgroup': ['encode/bytes'],
