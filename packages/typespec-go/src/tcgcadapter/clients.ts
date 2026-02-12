@@ -42,7 +42,7 @@ export class ClientAdapter {
     }
     for (const sdkClient of this.ta.ctx.sdkPackage.clients) {
       // start with instantiable clients and recursively work down
-      if (isInstantiableClient(sdkClient.clientInitialization.initializedBy)) {
+      if (sdkClient.clientInitialization.initializedBy & tcgc.InitializedByFlags.Individually) {
         this.recursiveAdaptClient(sdkClient);
       }
     }
@@ -168,17 +168,13 @@ export class ClientAdapter {
     };
 
     if (this.ta.codeModel.type === 'azure-arm') {
-      // workaround until https://github.com/Azure/typespec-azure/issues/3927 is resolved
-      if (sdkClient.clientInitialization.initializedBy === tcgc.InitializedByFlags.Default) {
-        sdkClient.clientInitialization.initializedBy = tcgc.InitializedByFlags.Parent;
-      }
       // to keep compat with pre-tsp codegen we
       // treat all ARM clients as instantiable.
       sdkClient.clientInitialization.initializedBy |= tcgc.InitializedByFlags.Individually;
     }
 
     // anything other than public means non-instantiable client
-    if (isInstantiableClient(sdkClient.clientInitialization.initializedBy)) {
+    if (sdkClient.clientInitialization.initializedBy & tcgc.InitializedByFlags.Individually) {
       let constructable: go.Constructable | undefined;
       // we skip generating client constructors when emitting into
       // an existing module. this is because the constructor(s) require
@@ -1532,16 +1528,4 @@ interface ParameterStyleInfo {
  */
 function isLROPollingHeader(headerName: string): boolean {
   return /Azure-AsyncOperation|Location|Operation-Location|Retry-After/i.test(headerName);
-}
-
-/**
- * returns true if bit tcgc.InitializedByFlags.Individually is set
- * 
- * @param initializedBy the value to test
- * @returns true for instantiable clients
- */
-function isInstantiableClient(initializedBy: tcgc.InitializedByFlags): boolean {
-  // NOTE: tcgc.InitializedByFlags.Default has value -1 (i.e. all bits set) which seems to be a mistake
-  // workaround until https://github.com/Azure/typespec-azure/issues/3927 is resolved
-  return initializedBy !== tcgc.InitializedByFlags.Default && (initializedBy & tcgc.InitializedByFlags.Individually) !== 0;
 }
