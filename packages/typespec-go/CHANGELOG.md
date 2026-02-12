@@ -1,5 +1,11 @@
 # Release History
 
+## 0.10.1 (Unreleased)
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
+
 ## 0.10.0 (2026-02-11)
 
 ### Breaking Changes
