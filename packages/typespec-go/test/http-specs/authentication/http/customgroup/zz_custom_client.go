@@ -37,6 +37,7 @@ func (client *CustomClient) Invalid(ctx context.Context, options *CustomClientIn
 	if err != nil {
 		return CustomClientInvalidResponse{}, err
 	}
+	req.Raw().Header.Set("authorization", "SharedAccessKey invalid-key")
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return CustomClientInvalidResponse{}, err
@@ -71,6 +72,7 @@ func (client *CustomClient) Valid(ctx context.Context, options *CustomClientVali
 	if err != nil {
 		return CustomClientValidResponse{}, err
 	}
+	req.Raw().Header.Set("authorization", "SharedAccessKey invalid-key")
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return CustomClientValidResponse{}, err
