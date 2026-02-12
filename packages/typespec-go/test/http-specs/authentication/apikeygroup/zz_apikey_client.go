@@ -6,11 +6,10 @@ package apikeygroup
 
 import (
 	"context"
-	"net/http"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"net/http"
 )
 
 // APIKeyClient - Illustrates clients generated with ApiKey authentication.
@@ -69,11 +68,11 @@ func (client *APIKeyClient) Valid(ctx context.Context, options *APIKeyClientVali
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
+	req.Raw().Header.Set("x-ms-api-key", "valid-key")
 	req, err := client.validCreateRequest(ctx, options)
 	if err != nil {
 		return APIKeyClientValidResponse{}, err
 	}
-	req.Raw().Header.Set("x-ms-api-key", "valid-key")
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIKeyClientValidResponse{}, err
