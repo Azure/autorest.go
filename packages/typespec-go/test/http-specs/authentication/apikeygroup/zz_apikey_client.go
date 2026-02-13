@@ -37,6 +37,7 @@ func (client *APIKeyClient) Invalid(ctx context.Context, options *APIKeyClientIn
 	if err != nil {
 		return APIKeyClientInvalidResponse{}, err
 	}
+	req.Raw().Header.Set("x-ms-api-key", "invalid-key")
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIKeyClientInvalidResponse{}, err
@@ -71,6 +72,7 @@ func (client *APIKeyClient) Valid(ctx context.Context, options *APIKeyClientVali
 	if err != nil {
 		return APIKeyClientValidResponse{}, err
 	}
+	req.Raw().Header.Set("x-ms-api-key", "valid-key")
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return APIKeyClientValidResponse{}, err
