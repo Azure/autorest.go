@@ -957,6 +957,13 @@ export class ClientAdapter {
         // TODO: currently we don't have Azure service using cookie parameter. need to add support if needed in the future.
         throw new AdapterError('UnsupportedTsp', 'unsupported parameter type cookie', opParam.__raw?.node);
       case 'header':
+        // if (opParam.serializedName === 'x-ms-meta') {
+        //   const type = this.ta.getWireType(methodParam.type, true, false);
+        //   if (type.kind !== 'map') {
+        //     throw new Error(`unexpected type ${type.kind} for HeaderMapParameter ${methodParam.name}`);
+        //   }
+        //   adaptedParam = new go.HeaderMapParameter(paramName, opParam.serializedName, type, paramStyle, byVal, location);
+        // } else 
         if (opParam.collectionFormat) {
           if (opParam.collectionFormat === 'multi' || opParam.collectionFormat === 'form') {
             throw new AdapterError('InternalError', `unexpected collection format ${opParam.collectionFormat} for HeaderCollectionParameter`, opParam.__raw?.node);
