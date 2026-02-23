@@ -8,11 +8,12 @@ import (
 	"customgroup"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/stretchr/testify/require"
 )
 
 func TestCustomClient_Invalid(t *testing.T) {
-	client, err := customgroup.NewCustomClient("http://localhost:3000", nil)
+	client, err := customgroup.NewCustomClient("http://localhost:3000", azcore.NewKeyCredential("invalid-key"), nil)
 	require.NoError(t, err)
 	resp, err := client.Invalid(context.Background(), nil)
 	require.Error(t, err)
@@ -20,7 +21,7 @@ func TestCustomClient_Invalid(t *testing.T) {
 }
 
 func TestCustomClient_Valid(t *testing.T) {
-	client, err := customgroup.NewCustomClient("http://localhost:3000", nil)
+	client, err := customgroup.NewCustomClient("http://localhost:3000", azcore.NewKeyCredential("valid-key"), nil)
 	require.NoError(t, err)
 	resp, err := client.Valid(context.Background(), nil)
 	require.NoError(t, err)
