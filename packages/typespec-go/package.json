@@ -1,6 +1,6 @@
 {
   "name": "@azure-tools/typespec-go",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "TypeSpec emitter for Go SDKs",
   "type": "module",
   "exports": {
@@ -54,7 +54,7 @@
     "@azure-tools/typespec-azure-core": "0.65.0",
     "@azure-tools/typespec-azure-resource-manager": "0.65.0",
     "@azure-tools/typespec-azure-rulesets": "0.65.0",
-    "@azure-tools/typespec-client-generator-core": "0.65.1",
+    "@azure-tools/typespec-client-generator-core": "0.65.3",
     "@types/node": "catalog:",
     "@types/semver": "catalog:",
     "@typespec/compiler": "1.9.0",
@@ -77,7 +77,7 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@azure-tools/typespec-client-generator-core": "^0.65.1",
+    "@azure-tools/typespec-client-generator-core": "^0.65.3",
     "@typespec/compiler": "^1.9.0",
     "@typespec/http": "^1.9.0"
   },
