@@ -242,13 +242,6 @@ interface Service {
   >;
 }
 
-// alias MetadataHeaders = {
-//   /** The metadata headers. */
-//   @alternateType(Record<string>, "rust,javascript,python,go")
-//   @header("x-ms-meta")
-//   metadata?: string;
-// };
-
 #suppress "@azure-tools/typespec-azure-core/operation-missing-api-version" "Existing API. Storage API version parameter pre-dates current guidance."
 interface Container {
   /** Creates a new container under the specified account. If the container with the same name already exists, the operation fails. */

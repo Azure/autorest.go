@@ -247,7 +247,7 @@ type AppendBlobClientCreateOptions struct {
 	LegalHold *bool
 
 	// The metadata headers.
-	Metadata *string
+	Metadata map[string]*string
 
 	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
 	// Timeouts for Blob Service Operations.</a>
@@ -359,7 +359,7 @@ type BlockBlobClientCommitBlockListOptions struct {
 	LegalHold *bool
 
 	// The metadata headers.
-	Metadata *string
+	Metadata map[string]*string
 
 	// The tier to be set on the blob.
 	Tier *AccessTier
@@ -632,7 +632,7 @@ type BlockBlobClientUploadBlobFromURLOptions struct {
 	LeaseID *string
 
 	// The metadata headers.
-	Metadata *string
+	Metadata map[string]*string
 
 	// Specify the md5 calculated for the range of bytes that must be read from the copy source.
 	SourceContentMD5 []byte
@@ -749,7 +749,7 @@ type BlockBlobClientUploadOptions struct {
 	LegalHold *bool
 
 	// The metadata headers.
-	Metadata *string
+	Metadata map[string]*string
 
 	// Required if the request body is a structured message. Specifies the message schema version and properties.
 	StructuredBodyType *string
@@ -920,7 +920,7 @@ type ClientCopyFromURLOptions struct {
 	LegalHold *bool
 
 	// The metadata headers.
-	Metadata *string
+	Metadata map[string]*string
 
 	// Specify the md5 calculated for the range of bytes that must be read from the copy source.
 	SourceContentMD5 []byte
@@ -986,7 +986,7 @@ type ClientCreateSnapshotOptions struct {
 	LeaseID *string
 
 	// The metadata headers.
-	Metadata *string
+	Metadata map[string]*string
 
 	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
 	// Timeouts for Blob Service Operations.</a>
@@ -1422,7 +1422,7 @@ type ClientSetMetadataOptions struct {
 	LeaseID *string
 
 	// The metadata headers.
-	Metadata *string
+	Metadata map[string]*string
 
 	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
 	// Timeouts for Blob Service Operations.</a>
@@ -1533,7 +1533,7 @@ type ClientStartCopyFromURLOptions struct {
 	LegalHold *bool
 
 	// The metadata headers.
-	Metadata *string
+	Metadata map[string]*string
 
 	// If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High
 	// and Standard.
@@ -1646,7 +1646,7 @@ type ContainerClientCreateOptions struct {
 	DefaultEncryptionScope *string
 
 	// The metadata headers.
-	Metadata *string
+	Metadata map[string]*string
 
 	// If a blob has a lease and the lease is of infinite duration then the value of this header is set to true, otherwise it
 	// is set to false.
@@ -1892,7 +1892,7 @@ type ContainerClientSetMetadataOptions struct {
 	LeaseID *string
 
 	// The metadata headers.
-	Metadata *string
+	Metadata map[string]*string
 
 	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
 	// Timeouts for Blob Service Operations.</a>
@@ -2067,7 +2067,7 @@ type PageBlobClientCreateOptions struct {
 	LegalHold *bool
 
 	// The metadata headers.
-	Metadata *string
+	Metadata map[string]*string
 
 	// Optional. Indicates the tier to be set on the page blob.
 	Tier *PremiumPageBlobAccessTier

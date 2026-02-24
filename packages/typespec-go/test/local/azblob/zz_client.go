@@ -10,8 +10,10 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -489,7 +491,11 @@ func (client *Client) copyFromURLCreateRequest(ctx context.Context, copySource s
 		req.Raw().Header["x-ms-legal-hold"] = []string{strconv.FormatBool(*options.LegalHold)}
 	}
 	if options != nil && options.Metadata != nil {
-		req.Raw().Header["x-ms-meta"] = []string{*options.Metadata}
+		for k, v := range options.Metadata {
+			if v != nil {
+				req.Raw().Header["x-ms-meta"+k] = []string{*v}
+			}
+		}
 	}
 	req.Raw().Header["x-ms-requires-sync"] = []string{"true"}
 	if options != nil && options.SourceContentMD5 != nil {
@@ -643,7 +649,11 @@ func (client *Client) createSnapshotCreateRequest(ctx context.Context, options *
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
 	if options != nil && options.Metadata != nil {
-		req.Raw().Header["x-ms-meta"] = []string{*options.Metadata}
+		for k, v := range options.Metadata {
+			if v != nil {
+				req.Raw().Header["x-ms-meta"+k] = []string{*v}
+			}
+		}
 	}
 	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
 	return req, nil
@@ -1146,14 +1156,24 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 		}
 		result.LegalHold = &legalHold
 	}
-	if val := resp.Header.Get("x-ms-meta"); val != "" {
-		result.Metadata = &val
+	for hh := range resp.Header {
+		if len(hh) > len("x-ms-meta") && strings.EqualFold(hh[:len("x-ms-meta")], "x-ms-meta") {
+			if result.Metadata == nil {
+				result.Metadata = map[string]*string{}
+			}
+			result.Metadata[hh[len("x-ms-meta"):]] = to.Ptr(resp.Header.Get(hh))
+		}
 	}
 	if val := resp.Header.Get("x-ms-or-policy-id"); val != "" {
 		result.ObjectReplicationPolicyID = &val
 	}
-	if val := resp.Header.Get("x-ms-or"); val != "" {
-		result.ObjectReplicationRules = &val
+	for hh := range resp.Header {
+		if len(hh) > len("x-ms-or") && strings.EqualFold(hh[:len("x-ms-or")], "x-ms-or") {
+			if result.ObjectReplicationRules == nil {
+				result.ObjectReplicationRules = map[string]*string{}
+			}
+			result.ObjectReplicationRules[hh[len("x-ms-or"):]] = to.Ptr(resp.Header.Get(hh))
+		}
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
 		result.RequestID = &val
@@ -1535,14 +1555,24 @@ func (client *Client) getPropertiesHandleResponse(resp *http.Response) (ClientGe
 		}
 		result.LegalHold = &legalHold
 	}
-	if val := resp.Header.Get("x-ms-meta"); val != "" {
-		result.Metadata = &val
+	for hh := range resp.Header {
+		if len(hh) > len("x-ms-meta") && strings.EqualFold(hh[:len("x-ms-meta")], "x-ms-meta") {
+			if result.Metadata == nil {
+				result.Metadata = map[string]*string{}
+			}
+			result.Metadata[hh[len("x-ms-meta"):]] = to.Ptr(resp.Header.Get(hh))
+		}
 	}
 	if val := resp.Header.Get("x-ms-or-policy-id"); val != "" {
 		result.ObjectReplicationPolicyID = &val
 	}
-	if val := resp.Header.Get("x-ms-or"); val != "" {
-		result.ObjectReplicationRules = &val
+	for hh := range resp.Header {
+		if len(hh) > len("x-ms-or") && strings.EqualFold(hh[:len("x-ms-or")], "x-ms-or") {
+			if result.ObjectReplicationRules == nil {
+				result.ObjectReplicationRules = map[string]*string{}
+			}
+			result.ObjectReplicationRules[hh[len("x-ms-or"):]] = to.Ptr(resp.Header.Get(hh))
+		}
 	}
 	if val := resp.Header.Get("x-ms-rehydrate-priority"); val != "" {
 		result.RehydratePriority = (*RehydratePriority)(&val)
@@ -2299,7 +2329,11 @@ func (client *Client) setMetadataCreateRequest(ctx context.Context, options *Cli
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
 	if options != nil && options.Metadata != nil {
-		req.Raw().Header["x-ms-meta"] = []string{*options.Metadata}
+		for k, v := range options.Metadata {
+			if v != nil {
+				req.Raw().Header["x-ms-meta"+k] = []string{*v}
+			}
+		}
 	}
 	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
 	return req, nil
@@ -2610,7 +2644,11 @@ func (client *Client) startCopyFromURLCreateRequest(ctx context.Context, copySou
 		req.Raw().Header["x-ms-legal-hold"] = []string{strconv.FormatBool(*options.LegalHold)}
 	}
 	if options != nil && options.Metadata != nil {
-		req.Raw().Header["x-ms-meta"] = []string{*options.Metadata}
+		for k, v := range options.Metadata {
+			if v != nil {
+				req.Raw().Header["x-ms-meta"+k] = []string{*v}
+			}
+		}
 	}
 	if options != nil && options.RehydratePriority != nil {
 		req.Raw().Header["x-ms-rehydrate-priority"] = []string{string(*options.RehydratePriority)}
