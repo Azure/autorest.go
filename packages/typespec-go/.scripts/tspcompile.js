@@ -83,7 +83,9 @@ const azureHttpSpecsGroup = {
   'coreusagegroup': ['azure/client-generator-core/usage'],
   'overridegroup': ['azure/client-generator-core/override/client.tsp'],
   'hierarchygroup': ['azure/client-generator-core/hierarchy-building'],
-  // 'clientinitgroup': ['azure/client-generator-core/client-initialization'], // bypass for now to unblock nightly build
+  'clientinitdefaultgroup': ['azure/client-generator-core/client-initialization/default'],
+  'clientinitindividuallygroup': ['azure/client-generator-core/client-initialization/individually'],
+  'clientinitindividuallyparentgroup': ['azure/client-generator-core/client-initialization/individuallyParent'],
   'apiversionheadergroup' : ['azure/client-generator-core/api-version/header/client.tsp'],
   'apiversionpathgroup' : ['azure/client-generator-core/api-version/path/client.tsp'],
   'apiversionquerygroup' : ['azure/client-generator-core/api-version/query/client.tsp'],
@@ -321,19 +323,19 @@ function generate(moduleName, input, outputDir, perTestOptions) {
       }
     }
     console.log('generating ' + input);
-    try {
-      const options = [];
-      for (const option of allOptions) {
-        options.push(`--option="@azure-tools/typespec-go.${option}"`);
-      }
-      if (switches.includes('--debugger')) {
-        options.push(`--option="@azure-tools/typespec-go.debugger=true"`);
-      }
-      const command = `node ${compiler} compile ${input} --emit=${emitter} ${options.join(' ')}`;
-      if (switches.includes('--verbose')) {
-        console.log(command);
-      }
-      exec(command, function(error, stdout, stderr) {
+    const options = [];
+    for (const option of allOptions) {
+      options.push(`--option="@azure-tools/typespec-go.${option}"`);
+    }
+    if (switches.includes('--debugger')) {
+      options.push(`--option="@azure-tools/typespec-go.debugger=true"`);
+    }
+    const command = `node ${compiler} compile ${input} --emit=${emitter} ${options.join(' ')}`;
+    if (switches.includes('--verbose')) {
+      console.log(command);
+    }
+    exec(command, function(error, stdout, stderr) {
+      try {
         // print any output or error from the tsp compile command
         logResult(error, stdout, stderr);
         // format on success
@@ -349,21 +351,21 @@ function generate(moduleName, input, outputDir, perTestOptions) {
           // delete files on error so it's easy to spot codegen failures
           cleanGeneratedFiles(fullOutputDir);
         }
-      });
-    } catch (err) {
-      console.error('An error occurred:');  
-      if (err.message) {
-        console.error('Message:', err.message);  
+      } catch (err) {
+        console.error('An error occurred:');
+        if (err.message) {
+          console.error('Message:', err.message);
+        }
+        if (err.stack) {
+          console.error('Stack:', err.stack);
+        }
+        if (err.output) {
+          console.error('Output:', err.output.toString());
+        }
+      } finally {
+        sem.leave();
       }
-      if (err.stack) {
-        console.error('Stack:', err.stack);  
-      }
-      if (err.output) {
-        console.error('Output:', err.output.toString());  
-      }
-    } finally {
-      sem.leave();
-    }
+    });
   });
 }
 
