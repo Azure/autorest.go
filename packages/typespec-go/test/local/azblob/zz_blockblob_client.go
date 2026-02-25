@@ -39,8 +39,6 @@ type BlockBlobClient struct {
 //     method.
 func (client *BlockBlobClient) CommitBlockList(ctx context.Context, blocks BlockLookupList, options *BlockBlobClientCommitBlockListOptions) (BlockBlobClientCommitBlockListResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "BlockBlobClient.CommitBlockList", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.commitBlockListCreateRequest(ctx, blocks, options)
 	if err != nil {
 		return BlockBlobClientCommitBlockListResponse{}, err
@@ -226,8 +224,6 @@ func (client *BlockBlobClient) commitBlockListHandleResponse(resp *http.Response
 //   - options - BlockBlobClientGetBlockListOptions contains the optional parameters for the BlockBlobClient.GetBlockList method.
 func (client *BlockBlobClient) GetBlockList(ctx context.Context, listType BlockListType, options *BlockBlobClientGetBlockListOptions) (BlockBlobClientGetBlockListResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "BlockBlobClient.GetBlockList", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.getBlockListCreateRequest(ctx, listType, options)
 	if err != nil {
 		return BlockBlobClientGetBlockListResponse{}, err
@@ -327,8 +323,6 @@ func (client *BlockBlobClient) getBlockListHandleResponse(resp *http.Response) (
 //   - options - BlockBlobClientQueryOptions contains the optional parameters for the BlockBlobClient.Query method.
 func (client *BlockBlobClient) Query(ctx context.Context, queryRequest QueryRequest, options *BlockBlobClientQueryOptions) (BlockBlobClientQueryResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "BlockBlobClient.Query", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.queryCreateRequest(ctx, queryRequest, options)
 	if err != nil {
 		return BlockBlobClientQueryResponse{}, err
@@ -535,11 +529,11 @@ func (client *BlockBlobClient) queryHandleResponse(resp *http.Response) (BlockBl
 		result.LeaseStatus = (*LeaseStatus)(&val)
 	}
 	for hh := range resp.Header {
-		if len(hh) > len("x-ms-meta") && strings.EqualFold(hh[:len("x-ms-meta")], "x-ms-meta") {
+		if len(hh) > len("x-ms-meta-") && strings.EqualFold(hh[:len("x-ms-meta-")], "x-ms-meta-") {
 			if result.Metadata == nil {
 				result.Metadata = map[string]*string{}
 			}
-			result.Metadata[hh[len("x-ms-meta"):]] = to.Ptr(resp.Header.Get(hh))
+			result.Metadata[hh[len("x-ms-meta-"):]] = to.Ptr(resp.Header.Get(hh))
 		}
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
@@ -563,8 +557,6 @@ func (client *BlockBlobClient) queryHandleResponse(resp *http.Response) (BlockBl
 //   - options - BlockBlobClientStageBlockOptions contains the optional parameters for the BlockBlobClient.StageBlock method.
 func (client *BlockBlobClient) StageBlock(ctx context.Context, blockID string, contentLength int64, body io.ReadSeekCloser, options *BlockBlobClientStageBlockOptions) (BlockBlobClientStageBlockResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "BlockBlobClient.StageBlock", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.stageBlockCreateRequest(ctx, blockID, contentLength, body, options)
 	if err != nil {
 		return BlockBlobClientStageBlockResponse{}, err
@@ -699,8 +691,6 @@ func (client *BlockBlobClient) stageBlockHandleResponse(resp *http.Response) (Bl
 //     method.
 func (client *BlockBlobClient) StageBlockFromURL(ctx context.Context, blockID string, contentLength int64, sourceURL string, options *BlockBlobClientStageBlockFromURLOptions) (BlockBlobClientStageBlockFromURLResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "BlockBlobClient.StageBlockFromURL", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.stageBlockFromURLCreateRequest(ctx, blockID, contentLength, sourceURL, options)
 	if err != nil {
 		return BlockBlobClientStageBlockFromURLResponse{}, err
@@ -851,8 +841,6 @@ func (client *BlockBlobClient) stageBlockFromURLHandleResponse(resp *http.Respon
 //   - options - BlockBlobClientUploadOptions contains the optional parameters for the BlockBlobClient.Upload method.
 func (client *BlockBlobClient) Upload(ctx context.Context, body io.ReadSeekCloser, contentLength int64, options *BlockBlobClientUploadOptions) (BlockBlobClientUploadResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "BlockBlobClient.Upload", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.uploadCreateRequest(ctx, body, contentLength, options)
 	if err != nil {
 		return BlockBlobClientUploadResponse{}, err
@@ -1047,8 +1035,6 @@ func (client *BlockBlobClient) uploadHandleResponse(resp *http.Response) (BlockB
 //     method.
 func (client *BlockBlobClient) UploadBlobFromURL(ctx context.Context, copySource string, options *BlockBlobClientUploadBlobFromURLOptions) (BlockBlobClientUploadBlobFromURLResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "BlockBlobClient.UploadBlobFromURL", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.uploadBlobFromURLCreateRequest(ctx, copySource, options)
 	if err != nil {
 		return BlockBlobClientUploadBlobFromURLResponse{}, err

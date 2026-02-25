@@ -34,8 +34,6 @@ type ContainerClient struct {
 //   - options - ContainerClientAcquireLeaseOptions contains the optional parameters for the ContainerClient.AcquireLease method.
 func (client *ContainerClient) AcquireLease(ctx context.Context, duration int32, options *ContainerClientAcquireLeaseOptions) (ContainerClientAcquireLeaseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.AcquireLease", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.acquireLeaseCreateRequest(ctx, duration, options)
 	if err != nil {
 		return ContainerClientAcquireLeaseResponse{}, err
@@ -125,8 +123,6 @@ func (client *ContainerClient) acquireLeaseHandleResponse(resp *http.Response) (
 //   - options - ContainerClientBreakLeaseOptions contains the optional parameters for the ContainerClient.BreakLease method.
 func (client *ContainerClient) BreakLease(ctx context.Context, options *ContainerClientBreakLeaseOptions) (ContainerClientBreakLeaseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.BreakLease", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.breakLeaseCreateRequest(ctx, options)
 	if err != nil {
 		return ContainerClientBreakLeaseResponse{}, err
@@ -222,8 +218,6 @@ func (client *ContainerClient) breakLeaseHandleResponse(resp *http.Response) (Co
 //   - options - ContainerClientChangeLeaseOptions contains the optional parameters for the ContainerClient.ChangeLease method.
 func (client *ContainerClient) ChangeLease(ctx context.Context, leaseID string, proposedLeaseID string, options *ContainerClientChangeLeaseOptions) (ContainerClientChangeLeaseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.ChangeLease", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.changeLeaseCreateRequest(ctx, leaseID, proposedLeaseID, options)
 	if err != nil {
 		return ContainerClientChangeLeaseResponse{}, err
@@ -311,8 +305,6 @@ func (client *ContainerClient) changeLeaseHandleResponse(resp *http.Response) (C
 //   - options - ContainerClientCreateOptions contains the optional parameters for the ContainerClient.Create method.
 func (client *ContainerClient) Create(ctx context.Context, options *ContainerClientCreateOptions) (ContainerClientCreateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.Create", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, options)
 	if err != nil {
 		return ContainerClientCreateResponse{}, err
@@ -404,8 +396,6 @@ func (client *ContainerClient) createHandleResponse(resp *http.Response) (Contai
 //   - options - ContainerClientDeleteOptions contains the optional parameters for the ContainerClient.Delete method.
 func (client *ContainerClient) Delete(ctx context.Context, options *ContainerClientDeleteOptions) (ContainerClientDeleteResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.Delete", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, options)
 	if err != nil {
 		return ContainerClientDeleteResponse{}, err
@@ -481,8 +471,6 @@ func (client *ContainerClient) deleteHandleResponse(resp *http.Response) (Contai
 //   - options - ContainerClientFilterBlobsOptions contains the optional parameters for the ContainerClient.FilterBlobs method.
 func (client *ContainerClient) FilterBlobs(ctx context.Context, filterExpression string, options *ContainerClientFilterBlobsOptions) (ContainerClientFilterBlobsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.FilterBlobs", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.filterBlobsCreateRequest(ctx, filterExpression, options)
 	if err != nil {
 		return ContainerClientFilterBlobsResponse{}, err
@@ -566,8 +554,6 @@ func (client *ContainerClient) filterBlobsHandleResponse(resp *http.Response) (C
 //     method.
 func (client *ContainerClient) GetAccessPolicy(ctx context.Context, options *ContainerClientGetAccessPolicyOptions) (ContainerClientGetAccessPolicyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.GetAccessPolicy", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.getAccessPolicyCreateRequest(ctx, options)
 	if err != nil {
 		return ContainerClientGetAccessPolicyResponse{}, err
@@ -656,8 +642,6 @@ func (client *ContainerClient) getAccessPolicyHandleResponse(resp *http.Response
 //     method.
 func (client *ContainerClient) GetAccountInfo(ctx context.Context, options *ContainerClientGetAccountInfoOptions) (ContainerClientGetAccountInfoResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.GetAccountInfo", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.getAccountInfoCreateRequest(ctx, options)
 	if err != nil {
 		return ContainerClientGetAccountInfoResponse{}, err
@@ -736,8 +720,6 @@ func (client *ContainerClient) getAccountInfoHandleResponse(resp *http.Response)
 //   - options - ContainerClientGetPropertiesOptions contains the optional parameters for the ContainerClient.GetProperties method.
 func (client *ContainerClient) GetProperties(ctx context.Context, options *ContainerClientGetPropertiesOptions) (ContainerClientGetPropertiesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.GetProperties", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.getPropertiesCreateRequest(ctx, options)
 	if err != nil {
 		return ContainerClientGetPropertiesResponse{}, err
@@ -836,11 +818,11 @@ func (client *ContainerClient) getPropertiesHandleResponse(resp *http.Response) 
 		result.LeaseStatus = (*LeaseStatus)(&val)
 	}
 	for hh := range resp.Header {
-		if len(hh) > len("x-ms-meta") && strings.EqualFold(hh[:len("x-ms-meta")], "x-ms-meta") {
+		if len(hh) > len("x-ms-meta-") && strings.EqualFold(hh[:len("x-ms-meta-")], "x-ms-meta-") {
 			if result.Metadata == nil {
 				result.Metadata = map[string]*string{}
 			}
-			result.Metadata[hh[len("x-ms-meta"):]] = to.Ptr(resp.Header.Get(hh))
+			result.Metadata[hh[len("x-ms-meta-"):]] = to.Ptr(resp.Header.Get(hh))
 		}
 	}
 	if val := resp.Header.Get("x-ms-deny-encryption-scope-override"); val != "" {
@@ -883,7 +865,6 @@ func (client *ContainerClient) NewListBlobFlatSegmentPager(options *ContainerCli
 			}
 			return client.listBlobFlatSegmentHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -978,7 +959,6 @@ func (client *ContainerClient) NewListBlobHierarchySegmentPager(delimiter string
 			}
 			return client.listBlobHierarchySegmentHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -1056,8 +1036,6 @@ func (client *ContainerClient) listBlobHierarchySegmentHandleResponse(resp *http
 //   - options - ContainerClientReleaseLeaseOptions contains the optional parameters for the ContainerClient.ReleaseLease method.
 func (client *ContainerClient) ReleaseLease(ctx context.Context, leaseID string, options *ContainerClientReleaseLeaseOptions) (ContainerClientReleaseLeaseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.ReleaseLease", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.releaseLeaseCreateRequest(ctx, leaseID, options)
 	if err != nil {
 		return ContainerClientReleaseLeaseResponse{}, err
@@ -1141,8 +1119,6 @@ func (client *ContainerClient) releaseLeaseHandleResponse(resp *http.Response) (
 //   - options - ContainerClientRenameOptions contains the optional parameters for the ContainerClient.Rename method.
 func (client *ContainerClient) Rename(ctx context.Context, sourceContainerName string, options *ContainerClientRenameOptions) (ContainerClientRenameResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.Rename", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.renameCreateRequest(ctx, sourceContainerName, options)
 	if err != nil {
 		return ContainerClientRenameResponse{}, err
@@ -1213,8 +1189,6 @@ func (client *ContainerClient) renameHandleResponse(resp *http.Response) (Contai
 //   - options - ContainerClientRenewLeaseOptions contains the optional parameters for the ContainerClient.RenewLease method.
 func (client *ContainerClient) RenewLease(ctx context.Context, leaseID string, options *ContainerClientRenewLeaseOptions) (ContainerClientRenewLeaseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.RenewLease", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.renewLeaseCreateRequest(ctx, leaseID, options)
 	if err != nil {
 		return ContainerClientRenewLeaseResponse{}, err
@@ -1300,8 +1274,6 @@ func (client *ContainerClient) renewLeaseHandleResponse(resp *http.Response) (Co
 //   - options - ContainerClientRestoreOptions contains the optional parameters for the ContainerClient.Restore method.
 func (client *ContainerClient) Restore(ctx context.Context, options *ContainerClientRestoreOptions) (ContainerClientRestoreResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.Restore", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.restoreCreateRequest(ctx, options)
 	if err != nil {
 		return ContainerClientRestoreResponse{}, err
@@ -1375,8 +1347,6 @@ func (client *ContainerClient) restoreHandleResponse(resp *http.Response) (Conta
 //     method.
 func (client *ContainerClient) SetAccessPolicy(ctx context.Context, containerACL SignedIdentifiers, options *ContainerClientSetAccessPolicyOptions) (ContainerClientSetAccessPolicyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.SetAccessPolicy", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.setAccessPolicyCreateRequest(ctx, containerACL, options)
 	if err != nil {
 		return ContainerClientSetAccessPolicyResponse{}, err
@@ -1467,8 +1437,6 @@ func (client *ContainerClient) setAccessPolicyHandleResponse(resp *http.Response
 //   - options - ContainerClientSetMetadataOptions contains the optional parameters for the ContainerClient.SetMetadata method.
 func (client *ContainerClient) SetMetadata(ctx context.Context, options *ContainerClientSetMetadataOptions) (ContainerClientSetMetadataResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.SetMetadata", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.setMetadataCreateRequest(ctx, options)
 	if err != nil {
 		return ContainerClientSetMetadataResponse{}, err
@@ -1558,8 +1526,6 @@ func (client *ContainerClient) setMetadataHandleResponse(resp *http.Response) (C
 //   - options - ContainerClientSubmitBatchOptions contains the optional parameters for the ContainerClient.SubmitBatch method.
 func (client *ContainerClient) SubmitBatch(ctx context.Context, contentLength int64, body SubmitBatchRequest, options *ContainerClientSubmitBatchOptions) (ContainerClientSubmitBatchResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ContainerClient.SubmitBatch", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.submitBatchCreateRequest(ctx, contentLength, body, options)
 	if err != nil {
 		return ContainerClientSubmitBatchResponse{}, err

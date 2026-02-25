@@ -962,7 +962,7 @@ export class ClientAdapter {
           if (type.kind !== 'map') {
             throw new Error(`unexpected type ${type.kind} for HeaderMapParameter ${methodParam.name}`);
           }
-          adaptedParam = new go.HeaderMapParameter(paramName, opParam.serializedName, type, paramStyle, byVal, location);
+          adaptedParam = new go.HeaderMapParameter(paramName, `${opParam.serializedName}-`, type, paramStyle, byVal, location);
         } else if (opParam.collectionFormat) {
           if (opParam.collectionFormat === 'multi' || opParam.collectionFormat === 'form') {
             throw new AdapterError('InternalError', `unexpected collection format ${opParam.collectionFormat} for HeaderCollectionParameter`, opParam.__raw?.node);
@@ -1049,9 +1049,8 @@ export class ClientAdapter {
           if (type.kind !== 'map') {
             throw new Error(`unexpected type ${type.kind} for HeaderMapResponse ${httpHeader.name}`);
           }
-          headerResp = new go.HeaderMapResponse(ensureNameCase(httpHeader.name), type, httpHeader.serializedName);
+          headerResp = new go.HeaderMapResponse(ensureNameCase(httpHeader.name), type, `${httpHeader.serializedName}-`);
         }  else {
-          // TODO: x-ms-header-collection-prefix
           headerResp = new go.HeaderScalarResponse(ensureNameCase(httpHeader.name), this.adaptHeaderScalarType(httpHeader.type, false), httpHeader.serializedName, isTypePassedByValue(httpHeader.type));
         }
 

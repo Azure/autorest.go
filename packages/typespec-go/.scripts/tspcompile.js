@@ -203,7 +203,7 @@ const azkeys = pkgRoot + 'test/tsp/KeyVault.Keys/client.tsp';
 generate('azkeys', azkeys, 'test/local/azkeys', ['single-client=true', 'omit-constructors=true']);
 
 const azblob = pkgRoot + 'test/tsp/Microsoft.BlobStorage/client.tsp';
-generate('azblob', azblob, 'test/local/azblob', ['generate-fakes=false', 'omit-constructors=true']);
+generate('azblob', azblob, 'test/local/azblob', ['generate-fakes=false', 'omit-constructors=true', 'inject-spans=false']);
 
 const armtest = pkgRoot + 'test/tsp/Test.Management';
 generate('armtest/v2', armtest, 'test/local/armtest', [`examples-directory=${armtest}/examples`, 'generate-samples=true']);

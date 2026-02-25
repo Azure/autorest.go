@@ -32,8 +32,6 @@ type AppendBlobClient struct {
 //   - options - AppendBlobClientAppendBlockOptions contains the optional parameters for the AppendBlobClient.AppendBlock method.
 func (client *AppendBlobClient) AppendBlock(ctx context.Context, body io.ReadSeekCloser, contentLength int64, options *AppendBlobClientAppendBlockOptions) (AppendBlobClientAppendBlockResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AppendBlobClient.AppendBlock", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.appendBlockCreateRequest(ctx, body, contentLength, options)
 	if err != nil {
 		return AppendBlobClientAppendBlockResponse{}, err
@@ -206,8 +204,6 @@ func (client *AppendBlobClient) appendBlockHandleResponse(resp *http.Response) (
 //     method.
 func (client *AppendBlobClient) AppendBlockFromURL(ctx context.Context, sourceURL string, contentLength int64, options *AppendBlobClientAppendBlockFromURLOptions) (AppendBlobClientAppendBlockFromURLResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AppendBlobClient.AppendBlockFromURL", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.appendBlockFromURLCreateRequest(ctx, sourceURL, contentLength, options)
 	if err != nil {
 		return AppendBlobClientAppendBlockFromURLResponse{}, err
@@ -397,8 +393,6 @@ func (client *AppendBlobClient) appendBlockFromURLHandleResponse(resp *http.Resp
 //   - options - AppendBlobClientCreateOptions contains the optional parameters for the AppendBlobClient.Create method.
 func (client *AppendBlobClient) Create(ctx context.Context, options *AppendBlobClientCreateOptions) (AppendBlobClientCreateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AppendBlobClient.Create", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, options)
 	if err != nil {
 		return AppendBlobClientCreateResponse{}, err
@@ -565,8 +559,6 @@ func (client *AppendBlobClient) createHandleResponse(resp *http.Response) (Appen
 //   - options - AppendBlobClientSealOptions contains the optional parameters for the AppendBlobClient.Seal method.
 func (client *AppendBlobClient) Seal(ctx context.Context, options *AppendBlobClientSealOptions) (AppendBlobClientSealResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "AppendBlobClient.Seal", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.sealCreateRequest(ctx, options)
 	if err != nil {
 		return AppendBlobClientSealResponse{}, err

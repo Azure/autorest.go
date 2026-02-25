@@ -33,8 +33,6 @@ type Client struct {
 //   - options - ClientAbortCopyFromURLOptions contains the optional parameters for the Client.AbortCopyFromURL method.
 func (client *Client) AbortCopyFromURL(ctx context.Context, copyID string, options *ClientAbortCopyFromURLOptions) (ClientAbortCopyFromURLResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.AbortCopyFromURL", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.abortCopyFromURLCreateRequest(ctx, copyID, options)
 	if err != nil {
 		return ClientAbortCopyFromURLResponse{}, err
@@ -107,8 +105,6 @@ func (client *Client) abortCopyFromURLHandleResponse(resp *http.Response) (Clien
 //   - options - ClientAcquireLeaseOptions contains the optional parameters for the Client.AcquireLease method.
 func (client *Client) AcquireLease(ctx context.Context, duration int32, options *ClientAcquireLeaseOptions) (ClientAcquireLeaseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.AcquireLease", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.acquireLeaseCreateRequest(ctx, duration, options)
 	if err != nil {
 		return ClientAcquireLeaseResponse{}, err
@@ -207,8 +203,6 @@ func (client *Client) acquireLeaseHandleResponse(resp *http.Response) (ClientAcq
 //   - options - ClientBreakLeaseOptions contains the optional parameters for the Client.BreakLease method.
 func (client *Client) BreakLease(ctx context.Context, options *ClientBreakLeaseOptions) (ClientBreakLeaseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.BreakLease", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.breakLeaseCreateRequest(ctx, options)
 	if err != nil {
 		return ClientBreakLeaseResponse{}, err
@@ -313,8 +307,6 @@ func (client *Client) breakLeaseHandleResponse(resp *http.Response) (ClientBreak
 //   - options - ClientChangeLeaseOptions contains the optional parameters for the Client.ChangeLease method.
 func (client *Client) ChangeLease(ctx context.Context, leaseID string, proposedLeaseID string, options *ClientChangeLeaseOptions) (ClientChangeLeaseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.ChangeLease", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.changeLeaseCreateRequest(ctx, leaseID, proposedLeaseID, options)
 	if err != nil {
 		return ClientChangeLeaseResponse{}, err
@@ -414,8 +406,6 @@ func (client *Client) changeLeaseHandleResponse(resp *http.Response) (ClientChan
 //   - options - ClientCopyFromURLOptions contains the optional parameters for the Client.CopyFromURL method.
 func (client *Client) CopyFromURL(ctx context.Context, copySource string, options *ClientCopyFromURLOptions) (ClientCopyFromURLResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.CopyFromURL", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.copyFromURLCreateRequest(ctx, copySource, options)
 	if err != nil {
 		return ClientCopyFromURLResponse{}, err
@@ -585,8 +575,6 @@ func (client *Client) copyFromURLHandleResponse(resp *http.Response) (ClientCopy
 //   - options - ClientCreateSnapshotOptions contains the optional parameters for the Client.CreateSnapshot method.
 func (client *Client) CreateSnapshot(ctx context.Context, options *ClientCreateSnapshotOptions) (ClientCreateSnapshotResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.CreateSnapshot", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.createSnapshotCreateRequest(ctx, options)
 	if err != nil {
 		return ClientCreateSnapshotResponse{}, err
@@ -719,8 +707,6 @@ func (client *Client) createSnapshotHandleResponse(resp *http.Response) (ClientC
 //   - options - ClientDeleteOptions contains the optional parameters for the Client.Delete method.
 func (client *Client) Delete(ctx context.Context, options *ClientDeleteOptions) (ClientDeleteResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.Delete", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, options)
 	if err != nil {
 		return ClientDeleteResponse{}, err
@@ -821,8 +807,6 @@ func (client *Client) deleteHandleResponse(resp *http.Response) (ClientDeleteRes
 //     method.
 func (client *Client) DeleteImmutabilityPolicy(ctx context.Context, options *ClientDeleteImmutabilityPolicyOptions) (ClientDeleteImmutabilityPolicyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.DeleteImmutabilityPolicy", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.deleteImmutabilityPolicyCreateRequest(ctx, options)
 	if err != nil {
 		return ClientDeleteImmutabilityPolicyResponse{}, err
@@ -894,8 +878,6 @@ func (client *Client) deleteImmutabilityPolicyHandleResponse(resp *http.Response
 //   - options - ClientDownloadOptions contains the optional parameters for the Client.Download method.
 func (client *Client) Download(ctx context.Context, options *ClientDownloadOptions) (ClientDownloadResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.Download", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.downloadCreateRequest(ctx, options)
 	if err != nil {
 		return ClientDownloadResponse{}, err
@@ -1157,22 +1139,22 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 		result.LegalHold = &legalHold
 	}
 	for hh := range resp.Header {
-		if len(hh) > len("x-ms-meta") && strings.EqualFold(hh[:len("x-ms-meta")], "x-ms-meta") {
+		if len(hh) > len("x-ms-meta-") && strings.EqualFold(hh[:len("x-ms-meta-")], "x-ms-meta-") {
 			if result.Metadata == nil {
 				result.Metadata = map[string]*string{}
 			}
-			result.Metadata[hh[len("x-ms-meta"):]] = to.Ptr(resp.Header.Get(hh))
+			result.Metadata[hh[len("x-ms-meta-"):]] = to.Ptr(resp.Header.Get(hh))
 		}
 	}
 	if val := resp.Header.Get("x-ms-or-policy-id"); val != "" {
 		result.ObjectReplicationPolicyID = &val
 	}
 	for hh := range resp.Header {
-		if len(hh) > len("x-ms-or") && strings.EqualFold(hh[:len("x-ms-or")], "x-ms-or") {
+		if len(hh) > len("x-ms-or-") && strings.EqualFold(hh[:len("x-ms-or-")], "x-ms-or-") {
 			if result.ObjectReplicationRules == nil {
 				result.ObjectReplicationRules = map[string]*string{}
 			}
-			result.ObjectReplicationRules[hh[len("x-ms-or"):]] = to.Ptr(resp.Header.Get(hh))
+			result.ObjectReplicationRules[hh[len("x-ms-or-"):]] = to.Ptr(resp.Header.Get(hh))
 		}
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
@@ -1211,8 +1193,6 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 //   - options - ClientGetAccountInfoOptions contains the optional parameters for the Client.GetAccountInfo method.
 func (client *Client) GetAccountInfo(ctx context.Context, options *ClientGetAccountInfoOptions) (ClientGetAccountInfoResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.GetAccountInfo", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.getAccountInfoCreateRequest(ctx, options)
 	if err != nil {
 		return ClientGetAccountInfoResponse{}, err
@@ -1290,8 +1270,6 @@ func (client *Client) getAccountInfoHandleResponse(resp *http.Response) (ClientG
 //   - options - ClientGetPropertiesOptions contains the optional parameters for the Client.GetProperties method.
 func (client *Client) GetProperties(ctx context.Context, options *ClientGetPropertiesOptions) (ClientGetPropertiesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.GetProperties", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.getPropertiesCreateRequest(ctx, options)
 	if err != nil {
 		return ClientGetPropertiesResponse{}, err
@@ -1556,22 +1534,22 @@ func (client *Client) getPropertiesHandleResponse(resp *http.Response) (ClientGe
 		result.LegalHold = &legalHold
 	}
 	for hh := range resp.Header {
-		if len(hh) > len("x-ms-meta") && strings.EqualFold(hh[:len("x-ms-meta")], "x-ms-meta") {
+		if len(hh) > len("x-ms-meta-") && strings.EqualFold(hh[:len("x-ms-meta-")], "x-ms-meta-") {
 			if result.Metadata == nil {
 				result.Metadata = map[string]*string{}
 			}
-			result.Metadata[hh[len("x-ms-meta"):]] = to.Ptr(resp.Header.Get(hh))
+			result.Metadata[hh[len("x-ms-meta-"):]] = to.Ptr(resp.Header.Get(hh))
 		}
 	}
 	if val := resp.Header.Get("x-ms-or-policy-id"); val != "" {
 		result.ObjectReplicationPolicyID = &val
 	}
 	for hh := range resp.Header {
-		if len(hh) > len("x-ms-or") && strings.EqualFold(hh[:len("x-ms-or")], "x-ms-or") {
+		if len(hh) > len("x-ms-or-") && strings.EqualFold(hh[:len("x-ms-or-")], "x-ms-or-") {
 			if result.ObjectReplicationRules == nil {
 				result.ObjectReplicationRules = map[string]*string{}
 			}
-			result.ObjectReplicationRules[hh[len("x-ms-or"):]] = to.Ptr(resp.Header.Get(hh))
+			result.ObjectReplicationRules[hh[len("x-ms-or-"):]] = to.Ptr(resp.Header.Get(hh))
 		}
 	}
 	if val := resp.Header.Get("x-ms-rehydrate-priority"); val != "" {
@@ -1603,8 +1581,6 @@ func (client *Client) getPropertiesHandleResponse(resp *http.Response) (ClientGe
 //   - options - ClientGetTagsOptions contains the optional parameters for the Client.GetTags method.
 func (client *Client) GetTags(ctx context.Context, options *ClientGetTagsOptions) (ClientGetTagsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.GetTags", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.getTagsCreateRequest(ctx, options)
 	if err != nil {
 		return ClientGetTagsResponse{}, err
@@ -1703,8 +1679,6 @@ func (client *Client) getTagsHandleResponse(resp *http.Response) (ClientGetTagsR
 //   - options - ClientReleaseLeaseOptions contains the optional parameters for the Client.ReleaseLease method.
 func (client *Client) ReleaseLease(ctx context.Context, leaseID string, options *ClientReleaseLeaseOptions) (ClientReleaseLeaseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.ReleaseLease", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.releaseLeaseCreateRequest(ctx, leaseID, options)
 	if err != nil {
 		return ClientReleaseLeaseResponse{}, err
@@ -1798,8 +1772,6 @@ func (client *Client) releaseLeaseHandleResponse(resp *http.Response) (ClientRel
 //   - options - ClientRenewLeaseOptions contains the optional parameters for the Client.RenewLease method.
 func (client *Client) RenewLease(ctx context.Context, leaseID string, options *ClientRenewLeaseOptions) (ClientRenewLeaseResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.RenewLease", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.renewLeaseCreateRequest(ctx, leaseID, options)
 	if err != nil {
 		return ClientRenewLeaseResponse{}, err
@@ -1895,8 +1867,6 @@ func (client *Client) renewLeaseHandleResponse(resp *http.Response) (ClientRenew
 //   - options - ClientSetExpiryOptions contains the optional parameters for the Client.SetExpiry method.
 func (client *Client) SetExpiry(ctx context.Context, expiryOptions ExpiryOptions, options *ClientSetExpiryOptions) (ClientSetExpiryResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.SetExpiry", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.setExpiryCreateRequest(ctx, expiryOptions, options)
 	if err != nil {
 		return ClientSetExpiryResponse{}, err
@@ -1975,8 +1945,6 @@ func (client *Client) setExpiryHandleResponse(resp *http.Response) (ClientSetExp
 //   - options - ClientSetHTTPHeadersOptions contains the optional parameters for the Client.SetHTTPHeaders method.
 func (client *Client) SetHTTPHeaders(ctx context.Context, options *ClientSetHTTPHeadersOptions) (ClientSetHTTPHeadersResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.SetHTTPHeaders", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.setHTTPHeadersCreateRequest(ctx, options)
 	if err != nil {
 		return ClientSetHTTPHeadersResponse{}, err
@@ -2095,8 +2063,6 @@ func (client *Client) setHTTPHeadersHandleResponse(resp *http.Response) (ClientS
 //   - options - ClientSetImmutabilityPolicyOptions contains the optional parameters for the Client.SetImmutabilityPolicy method.
 func (client *Client) SetImmutabilityPolicy(ctx context.Context, expiry time.Time, options *ClientSetImmutabilityPolicyOptions) (ClientSetImmutabilityPolicyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.SetImmutabilityPolicy", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.setImmutabilityPolicyCreateRequest(ctx, expiry, options)
 	if err != nil {
 		return ClientSetImmutabilityPolicyResponse{}, err
@@ -2185,8 +2151,6 @@ func (client *Client) setImmutabilityPolicyHandleResponse(resp *http.Response) (
 //   - options - ClientSetLegalHoldOptions contains the optional parameters for the Client.SetLegalHold method.
 func (client *Client) SetLegalHold(ctx context.Context, legalHold bool, options *ClientSetLegalHoldOptions) (ClientSetLegalHoldResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.SetLegalHold", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.setLegalHoldCreateRequest(ctx, legalHold, options)
 	if err != nil {
 		return ClientSetLegalHoldResponse{}, err
@@ -2265,8 +2229,6 @@ func (client *Client) setLegalHoldHandleResponse(resp *http.Response) (ClientSet
 //   - options - ClientSetMetadataOptions contains the optional parameters for the Client.SetMetadata method.
 func (client *Client) SetMetadata(ctx context.Context, options *ClientSetMetadataOptions) (ClientSetMetadataResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.SetMetadata", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.setMetadataCreateRequest(ctx, options)
 	if err != nil {
 		return ClientSetMetadataResponse{}, err
@@ -2395,8 +2357,6 @@ func (client *Client) setMetadataHandleResponse(resp *http.Response) (ClientSetM
 //   - options - ClientSetTagsOptions contains the optional parameters for the Client.SetTags method.
 func (client *Client) SetTags(ctx context.Context, tags Tags, options *ClientSetTagsOptions) (ClientSetTagsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.SetTags", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.setTagsCreateRequest(ctx, tags, options)
 	if err != nil {
 		return ClientSetTagsResponse{}, err
@@ -2495,8 +2455,6 @@ func (client *Client) setTagsHandleResponse(resp *http.Response) (ClientSetTagsR
 //   - options - ClientSetTierOptions contains the optional parameters for the Client.SetTier method.
 func (client *Client) SetTier(ctx context.Context, tier AccessTier, options *ClientSetTierOptions) (ClientSetTierResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.SetTier", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.setTierCreateRequest(ctx, tier, options)
 	if err != nil {
 		return ClientSetTierResponse{}, err
@@ -2580,8 +2538,6 @@ func (client *Client) setTierHandleResponse(resp *http.Response) (ClientSetTierR
 //   - options - ClientStartCopyFromURLOptions contains the optional parameters for the Client.StartCopyFromURL method.
 func (client *Client) StartCopyFromURL(ctx context.Context, copySource string, options *ClientStartCopyFromURLOptions) (ClientStartCopyFromURLResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.StartCopyFromURL", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.startCopyFromURLCreateRequest(ctx, copySource, options)
 	if err != nil {
 		return ClientStartCopyFromURLResponse{}, err
@@ -2726,8 +2682,6 @@ func (client *Client) startCopyFromURLHandleResponse(resp *http.Response) (Clien
 //   - options - ClientUndeleteOptions contains the optional parameters for the Client.Undelete method.
 func (client *Client) Undelete(ctx context.Context, options *ClientUndeleteOptions) (ClientUndeleteResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "Client.Undelete", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.undeleteCreateRequest(ctx, options)
 	if err != nil {
 		return ClientUndeleteResponse{}, err

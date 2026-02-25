@@ -31,8 +31,6 @@ type PageBlobClient struct {
 //   - options - PageBlobClientClearPagesOptions contains the optional parameters for the PageBlobClient.ClearPages method.
 func (client *PageBlobClient) ClearPages(ctx context.Context, rangeParam string, options *PageBlobClientClearPagesOptions) (PageBlobClientClearPagesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PageBlobClient.ClearPages", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.clearPagesCreateRequest(ctx, rangeParam, options)
 	if err != nil {
 		return PageBlobClientClearPagesResponse{}, err
@@ -177,8 +175,6 @@ func (client *PageBlobClient) clearPagesHandleResponse(resp *http.Response) (Pag
 //     method.
 func (client *PageBlobClient) CopyIncremental(ctx context.Context, copySource string, options *PageBlobClientCopyIncrementalOptions) (PageBlobClientCopyIncrementalResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PageBlobClient.CopyIncremental", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.copyIncrementalCreateRequest(ctx, copySource, options)
 	if err != nil {
 		return PageBlobClientCopyIncrementalResponse{}, err
@@ -277,8 +273,6 @@ func (client *PageBlobClient) copyIncrementalHandleResponse(resp *http.Response)
 //   - options - PageBlobClientCreateOptions contains the optional parameters for the PageBlobClient.Create method.
 func (client *PageBlobClient) Create(ctx context.Context, size int64, options *PageBlobClientCreateOptions) (PageBlobClientCreateResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PageBlobClient.Create", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, size, options)
 	if err != nil {
 		return PageBlobClientCreateResponse{}, err
@@ -452,8 +446,6 @@ func (client *PageBlobClient) createHandleResponse(resp *http.Response) (PageBlo
 //   - options - PageBlobClientGetPageRangesOptions contains the optional parameters for the PageBlobClient.GetPageRanges method.
 func (client *PageBlobClient) GetPageRanges(ctx context.Context, options *PageBlobClientGetPageRangesOptions) (PageBlobClientGetPageRangesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PageBlobClient.GetPageRanges", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.getPageRangesCreateRequest(ctx, options)
 	if err != nil {
 		return PageBlobClientGetPageRangesResponse{}, err
@@ -574,8 +566,6 @@ func (client *PageBlobClient) getPageRangesHandleResponse(resp *http.Response) (
 //     method.
 func (client *PageBlobClient) GetPageRangesDiff(ctx context.Context, options *PageBlobClientGetPageRangesDiffOptions) (PageBlobClientGetPageRangesDiffResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PageBlobClient.GetPageRangesDiff", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.getPageRangesDiffCreateRequest(ctx, options)
 	if err != nil {
 		return PageBlobClientGetPageRangesDiffResponse{}, err
@@ -702,8 +692,6 @@ func (client *PageBlobClient) getPageRangesDiffHandleResponse(resp *http.Respons
 //   - options - PageBlobClientResizeOptions contains the optional parameters for the PageBlobClient.Resize method.
 func (client *PageBlobClient) Resize(ctx context.Context, size int64, options *PageBlobClientResizeOptions) (PageBlobClientResizeResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PageBlobClient.Resize", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.resizeCreateRequest(ctx, size, options)
 	if err != nil {
 		return PageBlobClientResizeResponse{}, err
@@ -820,8 +808,6 @@ func (client *PageBlobClient) resizeHandleResponse(resp *http.Response) (PageBlo
 //     method.
 func (client *PageBlobClient) UpdateSequenceNumber(ctx context.Context, sequenceNumberAction SequenceNumberActionType, options *PageBlobClientUpdateSequenceNumberOptions) (PageBlobClientUpdateSequenceNumberResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PageBlobClient.UpdateSequenceNumber", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.updateSequenceNumberCreateRequest(ctx, sequenceNumberAction, options)
 	if err != nil {
 		return PageBlobClientUpdateSequenceNumberResponse{}, err
@@ -928,8 +914,6 @@ func (client *PageBlobClient) updateSequenceNumberHandleResponse(resp *http.Resp
 //   - options - PageBlobClientUploadPagesOptions contains the optional parameters for the PageBlobClient.UploadPages method.
 func (client *PageBlobClient) UploadPages(ctx context.Context, body io.ReadSeekCloser, contentLength int64, rangeParam string, options *PageBlobClientUploadPagesOptions) (PageBlobClientUploadPagesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PageBlobClient.UploadPages", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.uploadPagesCreateRequest(ctx, body, contentLength, rangeParam, options)
 	if err != nil {
 		return PageBlobClientUploadPagesResponse{}, err
@@ -1107,8 +1091,6 @@ func (client *PageBlobClient) uploadPagesHandleResponse(resp *http.Response) (Pa
 //     method.
 func (client *PageBlobClient) UploadPagesFromURL(ctx context.Context, sourceURL string, sourceRange string, contentLength int64, rangeParam string, options *PageBlobClientUploadPagesFromURLOptions) (PageBlobClientUploadPagesFromURLResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "PageBlobClient.UploadPagesFromURL", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.uploadPagesFromURLCreateRequest(ctx, sourceURL, sourceRange, contentLength, rangeParam, options)
 	if err != nil {
 		return PageBlobClientUploadPagesFromURLResponse{}, err

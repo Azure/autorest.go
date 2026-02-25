@@ -32,8 +32,6 @@ type ServiceClient struct {
 //   - options - ServiceClientFilterBlobsOptions contains the optional parameters for the ServiceClient.FilterBlobs method.
 func (client *ServiceClient) FilterBlobs(ctx context.Context, filterExpression string, options *ServiceClientFilterBlobsOptions) (ServiceClientFilterBlobsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.FilterBlobs", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.filterBlobsCreateRequest(ctx, filterExpression, options)
 	if err != nil {
 		return ServiceClientFilterBlobsResponse{}, err
@@ -115,8 +113,6 @@ func (client *ServiceClient) filterBlobsHandleResponse(resp *http.Response) (Ser
 //   - options - ServiceClientGetAccountInfoOptions contains the optional parameters for the ServiceClient.GetAccountInfo method.
 func (client *ServiceClient) GetAccountInfo(ctx context.Context, options *ServiceClientGetAccountInfoOptions) (ServiceClientGetAccountInfoResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.GetAccountInfo", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.getAccountInfoCreateRequest(ctx, options)
 	if err != nil {
 		return ServiceClientGetAccountInfoResponse{}, err
@@ -195,8 +191,6 @@ func (client *ServiceClient) getAccountInfoHandleResponse(resp *http.Response) (
 //   - options - ServiceClientGetPropertiesOptions contains the optional parameters for the ServiceClient.GetProperties method.
 func (client *ServiceClient) GetProperties(ctx context.Context, options *ServiceClientGetPropertiesOptions) (ServiceClientGetPropertiesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.GetProperties", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.getPropertiesCreateRequest(ctx, options)
 	if err != nil {
 		return ServiceClientGetPropertiesResponse{}, err
@@ -269,8 +263,6 @@ func (client *ServiceClient) getPropertiesHandleResponse(resp *http.Response) (S
 //   - options - ServiceClientGetStatisticsOptions contains the optional parameters for the ServiceClient.GetStatistics method.
 func (client *ServiceClient) GetStatistics(ctx context.Context, options *ServiceClientGetStatisticsOptions) (ServiceClientGetStatisticsResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.GetStatistics", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.getStatisticsCreateRequest(ctx, options)
 	if err != nil {
 		return ServiceClientGetStatisticsResponse{}, err
@@ -345,8 +337,6 @@ func (client *ServiceClient) getStatisticsHandleResponse(resp *http.Response) (S
 //     method.
 func (client *ServiceClient) GetUserDelegationKey(ctx context.Context, keyInfo KeyInfo, options *ServiceClientGetUserDelegationKeyOptions) (ServiceClientGetUserDelegationKeyResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.GetUserDelegationKey", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.getUserDelegationKeyCreateRequest(ctx, keyInfo, options)
 	if err != nil {
 		return ServiceClientGetUserDelegationKeyResponse{}, err
@@ -440,7 +430,6 @@ func (client *ServiceClient) NewListContainersSegmentPager(options *ServiceClien
 			}
 			return client.listContainersSegmentHandleResponse(resp)
 		},
-		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -513,8 +502,6 @@ func (client *ServiceClient) listContainersSegmentHandleResponse(resp *http.Resp
 //   - options - ServiceClientSetPropertiesOptions contains the optional parameters for the ServiceClient.SetProperties method.
 func (client *ServiceClient) SetProperties(ctx context.Context, storageServiceProperties StorageServiceProperties, options *ServiceClientSetPropertiesOptions) (ServiceClientSetPropertiesResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.SetProperties", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.setPropertiesCreateRequest(ctx, storageServiceProperties, options)
 	if err != nil {
 		return ServiceClientSetPropertiesResponse{}, err
@@ -585,8 +572,6 @@ func (client *ServiceClient) setPropertiesHandleResponse(resp *http.Response) (S
 //   - options - ServiceClientSubmitBatchOptions contains the optional parameters for the ServiceClient.SubmitBatch method.
 func (client *ServiceClient) SubmitBatch(ctx context.Context, contentLength int64, body SubmitBatchRequest, options *ServiceClientSubmitBatchOptions) (ServiceClientSubmitBatchResponse, error) {
 	var err error
-	ctx, endSpan := runtime.StartSpan(ctx, "ServiceClient.SubmitBatch", client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
 	req, err := client.submitBatchCreateRequest(ctx, contentLength, body, options)
 	if err != nil {
 		return ServiceClientSubmitBatchResponse{}, err
