@@ -6,11 +6,10 @@ package customgroup
 
 import (
 	"context"
-	"net/http"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"net/http"
 )
 
 // CustomClient - Illustrates clients generated with generic HTTP auth.
@@ -38,7 +37,6 @@ func (client *CustomClient) Invalid(ctx context.Context, options *CustomClientIn
 	if err != nil {
 		return CustomClientInvalidResponse{}, err
 	}
-	req.Raw().Header.Set("authorization", "SharedAccessKey invalid-key")
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return CustomClientInvalidResponse{}, err
@@ -73,7 +71,6 @@ func (client *CustomClient) Valid(ctx context.Context, options *CustomClientVali
 	if err != nil {
 		return CustomClientValidResponse{}, err
 	}
-	req.Raw().Header.Set("authorization", "SharedAccessKey valid-key")
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
 		return CustomClientValidResponse{}, err

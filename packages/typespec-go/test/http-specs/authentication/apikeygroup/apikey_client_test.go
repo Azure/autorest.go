@@ -8,11 +8,12 @@ import (
 	"context"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/stretchr/testify/require"
 )
 
 func TestAPIKeyClient_Invalid(t *testing.T) {
-	client, err := apikeygroup.NewAPIKeyClient("http://localhost:3000", nil)
+	client, err := apikeygroup.NewAPIKeyClient("http://localhost:3000", azcore.NewKeyCredential("invalid-key"), nil)
 	require.NoError(t, err)
 	resp, err := client.Invalid(context.Background(), nil)
 	require.Error(t, err)
@@ -21,7 +22,7 @@ func TestAPIKeyClient_Invalid(t *testing.T) {
 }
 
 func TestAPIKeyClient_Valid(t *testing.T) {
-	client, err := apikeygroup.NewAPIKeyClient("http://localhost:3000", nil)
+	client, err := apikeygroup.NewAPIKeyClient("http://localhost:3000", azcore.NewKeyCredential("valid-key"), nil)
 	require.NoError(t, err)
 	resp, err := client.Valid(context.Background(), nil)
 	require.NoError(t, err)

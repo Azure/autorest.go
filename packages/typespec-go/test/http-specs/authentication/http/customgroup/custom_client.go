@@ -5,11 +5,19 @@ package customgroup
 
 import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewCustomClient(endpoint string, options *azcore.ClientOptions) (*CustomClient, error) {
-	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{}, options)
+func NewCustomClient(endpoint string, credential *azcore.KeyCredential, options *azcore.ClientOptions) (*CustomClient, error) {
+	internal, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{
+		PerRetry: []policy.Policy{
+			runtime.NewKeyCredentialPolicy(credential, "authorization", &runtime.KeyCredentialPolicyOptions{
+				InsecureAllowCredentialWithHTTP: true,
+				Prefix:                          "SharedAccessKey ",
+			}),
+		},
+	}, options)
 	if err != nil {
 		return nil, err
 	}
