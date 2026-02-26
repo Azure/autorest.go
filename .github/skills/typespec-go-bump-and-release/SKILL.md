@@ -46,6 +46,7 @@ pnpm tspcompile
 
 **Notes:**
 - This command needs several minutes to finish; wait until it completes.
+- If `pnpm tspcompile` fails with any errors, **stop immediately** and report the error to the user. Do not proceed to subsequent steps until the error is resolved.
 - All changed files after `pnpm tspcompile` must be committed.
 
 ### Step 4: Update CHANGELOG.md
@@ -62,7 +63,7 @@ Update `packages/typespec-go/CHANGELOG.md` with a new entry. The format should b
 
 **Version rules:**
 1. Run `git diff` to inspect the changes.
-2. If any changes contain new features or breaking changes, bump the version accordingly (major for breaking, minor for features, patch for fixes/other).
+2. The emitter is currently v0.x.x, semver rules are shifted: bump **minor** for breaking changes, **patch** for features/fixes/other.
 3. If there is already an unreleased version entry at the top, append the changelog entry into that existing version instead of creating a new one.
 4. Update the version in `packages/typespec-go/package.json` to match.
 

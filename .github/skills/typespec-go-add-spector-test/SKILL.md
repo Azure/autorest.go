@@ -91,7 +91,6 @@ Open `packages/typespec-go/.scripts/tspcompile.js` and add a new entry to the ap
   - `azure/client-generator-core/access` → `accessgroup`
 
 - **Spec path**: the path relative to the specs root (e.g., `type/model/empty`, `azure/core/basic`).
-  - If the spec has a `client.tsp` instead of `main.tsp`, append `/client.tsp` to the path.
 
 ### Example additions
 
@@ -99,7 +98,7 @@ For http-specs:
 ```javascript
 const httpSpecsGroup = {
   // ... existing entries ...
-  'emptygroup': ['type/model/empty', 'single-client=true'],
+  'bytesgroup': ['encode/bytes'],
 };
 ```
 
