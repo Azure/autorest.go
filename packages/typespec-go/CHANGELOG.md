@@ -1,5 +1,11 @@
 # Release History
 
+## 0.10.1 (unreleased)
+
+### Bugs Fixed
+
+* Fixed duplicate definition of `fake.initServer` that can happen in some cases.
+
 ## 0.10.0 (2026-02-12)
 
 ### Breaking Changes

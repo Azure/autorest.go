@@ -86,40 +86,40 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 
 	switch client {
 	case "APIDefinitionsClient":
-		initServer(s, &s.trAPIDefinitionsServer, func() *APIDefinitionsServerTransport {
+		initServer(&s.trMu, &s.trAPIDefinitionsServer, func() *APIDefinitionsServerTransport {
 			return NewAPIDefinitionsServerTransport(&s.srv.APIDefinitionsServer)
 		})
 		resp, err = s.trAPIDefinitionsServer.Do(req)
 	case "APIVersionsClient":
-		initServer(s, &s.trAPIVersionsServer, func() *APIVersionsServerTransport { return NewAPIVersionsServerTransport(&s.srv.APIVersionsServer) })
+		initServer(&s.trMu, &s.trAPIVersionsServer, func() *APIVersionsServerTransport { return NewAPIVersionsServerTransport(&s.srv.APIVersionsServer) })
 		resp, err = s.trAPIVersionsServer.Do(req)
 	case "ApisClient":
-		initServer(s, &s.trApisServer, func() *ApisServerTransport { return NewApisServerTransport(&s.srv.ApisServer) })
+		initServer(&s.trMu, &s.trApisServer, func() *ApisServerTransport { return NewApisServerTransport(&s.srv.ApisServer) })
 		resp, err = s.trApisServer.Do(req)
 	case "DeletedServicesClient":
-		initServer(s, &s.trDeletedServicesServer, func() *DeletedServicesServerTransport {
+		initServer(&s.trMu, &s.trDeletedServicesServer, func() *DeletedServicesServerTransport {
 			return NewDeletedServicesServerTransport(&s.srv.DeletedServicesServer)
 		})
 		resp, err = s.trDeletedServicesServer.Do(req)
 	case "DeploymentsClient":
-		initServer(s, &s.trDeploymentsServer, func() *DeploymentsServerTransport { return NewDeploymentsServerTransport(&s.srv.DeploymentsServer) })
+		initServer(&s.trMu, &s.trDeploymentsServer, func() *DeploymentsServerTransport { return NewDeploymentsServerTransport(&s.srv.DeploymentsServer) })
 		resp, err = s.trDeploymentsServer.Do(req)
 	case "EnvironmentsClient":
-		initServer(s, &s.trEnvironmentsServer, func() *EnvironmentsServerTransport { return NewEnvironmentsServerTransport(&s.srv.EnvironmentsServer) })
+		initServer(&s.trMu, &s.trEnvironmentsServer, func() *EnvironmentsServerTransport { return NewEnvironmentsServerTransport(&s.srv.EnvironmentsServer) })
 		resp, err = s.trEnvironmentsServer.Do(req)
 	case "MetadataSchemasClient":
-		initServer(s, &s.trMetadataSchemasServer, func() *MetadataSchemasServerTransport {
+		initServer(&s.trMu, &s.trMetadataSchemasServer, func() *MetadataSchemasServerTransport {
 			return NewMetadataSchemasServerTransport(&s.srv.MetadataSchemasServer)
 		})
 		resp, err = s.trMetadataSchemasServer.Do(req)
 	case "OperationsClient":
-		initServer(s, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
+		initServer(&s.trMu, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
 		resp, err = s.trOperationsServer.Do(req)
 	case "ServicesClient":
-		initServer(s, &s.trServicesServer, func() *ServicesServerTransport { return NewServicesServerTransport(&s.srv.ServicesServer) })
+		initServer(&s.trMu, &s.trServicesServer, func() *ServicesServerTransport { return NewServicesServerTransport(&s.srv.ServicesServer) })
 		resp, err = s.trServicesServer.Do(req)
 	case "WorkspacesClient":
-		initServer(s, &s.trWorkspacesServer, func() *WorkspacesServerTransport { return NewWorkspacesServerTransport(&s.srv.WorkspacesServer) })
+		initServer(&s.trMu, &s.trWorkspacesServer, func() *WorkspacesServerTransport { return NewWorkspacesServerTransport(&s.srv.WorkspacesServer) })
 		resp, err = s.trWorkspacesServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
@@ -130,12 +130,4 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	}
 
 	return resp, nil
-}
-
-func initServer[T any](s *ServerFactoryTransport, dst **T, src func() *T) {
-	s.trMu.Lock()
-	if *dst == nil {
-		*dst = src()
-	}
-	s.trMu.Unlock()
 }

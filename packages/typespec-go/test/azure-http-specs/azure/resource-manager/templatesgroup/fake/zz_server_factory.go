@@ -66,21 +66,21 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 
 	switch client {
 	case "CheckNameAvailabilityClient":
-		initServer(s, &s.trCheckNameAvailabilityServer, func() *CheckNameAvailabilityServerTransport {
+		initServer(&s.trMu, &s.trCheckNameAvailabilityServer, func() *CheckNameAvailabilityServerTransport {
 			return NewCheckNameAvailabilityServerTransport(&s.srv.CheckNameAvailabilityServer)
 		})
 		resp, err = s.trCheckNameAvailabilityServer.Do(req)
 	case "LroClient":
-		initServer(s, &s.trLroServer, func() *LroServerTransport { return NewLroServerTransport(&s.srv.LroServer) })
+		initServer(&s.trMu, &s.trLroServer, func() *LroServerTransport { return NewLroServerTransport(&s.srv.LroServer) })
 		resp, err = s.trLroServer.Do(req)
 	case "LroPagingClient":
-		initServer(s, &s.trLroPagingServer, func() *LroPagingServerTransport { return NewLroPagingServerTransport(&s.srv.LroPagingServer) })
+		initServer(&s.trMu, &s.trLroPagingServer, func() *LroPagingServerTransport { return NewLroPagingServerTransport(&s.srv.LroPagingServer) })
 		resp, err = s.trLroPagingServer.Do(req)
 	case "OperationsClient":
-		initServer(s, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
+		initServer(&s.trMu, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
 		resp, err = s.trOperationsServer.Do(req)
 	case "OptionalBodyClient":
-		initServer(s, &s.trOptionalBodyServer, func() *OptionalBodyServerTransport { return NewOptionalBodyServerTransport(&s.srv.OptionalBodyServer) })
+		initServer(&s.trMu, &s.trOptionalBodyServer, func() *OptionalBodyServerTransport { return NewOptionalBodyServerTransport(&s.srv.OptionalBodyServer) })
 		resp, err = s.trOptionalBodyServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
@@ -91,12 +91,4 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	}
 
 	return resp, nil
-}
-
-func initServer[T any](s *ServerFactoryTransport, dst **T, src func() *T) {
-	s.trMu.Lock()
-	if *dst == nil {
-		*dst = src()
-	}
-	s.trMu.Unlock()
 }
