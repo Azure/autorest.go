@@ -26,10 +26,12 @@ steps:
       cd test
       pnpm -w modtidy $pwd 2>&1
       git add -A .
-      git diff --staged -w 1>&2
+      if ! git diff --staged -w --quiet; then
+        git diff --staged -w 1>&2
+        exit 1
+      fi
     displayName: "Regenerate Autorest Tests"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
-    failOnStderr: true
 
   - script: |
       set -e
