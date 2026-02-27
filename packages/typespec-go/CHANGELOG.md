@@ -1,10 +1,20 @@
 # Release History
 
-## 0.10.1 (unreleased)
+## 0.10.1 (2026-02-27)
 
 ### Bugs Fixed
 
 * Fixed duplicate definition of `fake.initServer` that can happen in some cases.
+* Fixed incorrect propagation of parent client parameters that aren't applicable to the child client.
+
+### Features Added
+
+* Added support for multiple response types for an operation.
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
+  * This includes the latest `TypeSpec.Http` lib that fixes reporting the `content-type` header for `HEAD` operations.
 
 ## 0.10.0 (2026-02-12)
 
