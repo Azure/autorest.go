@@ -1092,6 +1092,9 @@ export class ClientAdapter {
     } else if (sdkResponseType.kind === 'bytes' && sdkResponseType.encode === 'bytes') {
       // bytes type with bytes encoding indicates a streaming binary response
       contentType = 'binary';
+    } else if (sdkResponseType.kind === 'union') {
+      // this is a multi-response operation, we assume the content-type to be JSON
+      contentType = 'JSON';
     } else {
       for (const httpResp of sdkMethod.operation.responses) {
         if (!httpResp.type || !httpResp.defaultContentType || httpResp.type.kind !== sdkResponseType.kind) {
@@ -1139,6 +1142,30 @@ export class ClientAdapter {
       }
       respEnv.result.docs.summary = sdkResponseType.summary;
       respEnv.result.docs.description = sdkResponseType.doc;
+    } else if (sdkResponseType.kind === 'union') {
+      // multi-response
+      const resultTypes: Record<number, go.WireType> = {};
+      const possibleTypes = new Set<string>();
+      for (const resp of sdkMethod.operation.responses) {
+        if (!resp.type) {
+          // mix of typed and untyped responses, we skip
+          // the status codes that don't return a type
+          continue;
+        }
+
+        const respType = this.ta.getWireType(resp.type, false, true);
+        possibleTypes.add(go.getTypeDeclaration(respType, method.receiver.type.pkg));
+
+        if (isHttpStatusCodeRange(resp.statusCodes)) {
+          for (let code = resp.statusCodes.start; code <= resp.statusCodes.end; ++code) {
+            resultTypes[code] = respType;
+          }
+        } else {
+          resultTypes[resp.statusCodes] = respType;
+        }
+      }
+      respEnv.result = new go.AnyResult('Value', contentType, resultTypes);
+      respEnv.result.docs.summary = `Possible types are ${[...possibleTypes].sort().join(', ')}`;
     } else {
       const resultType = this.ta.getWireType(sdkResponseType, false, false);
       if (go.isMonomorphicResultType(resultType)) {
@@ -1352,7 +1379,8 @@ export class ClientAdapter {
             if (response.bodyValue && method.returns.result) {
               switch (method.returns.result.kind) {
                 case 'anyResult':
-                  goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.Any());
+                  // use the response type for 200 response
+                  goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.returns.result.httpStatusCodeType[200]);
                   break;
                 case 'binaryResult':
                   goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.Scalar('byte', false));

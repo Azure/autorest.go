@@ -4,6 +4,7 @@
   "description": "AutoRest Go Generator",
   "main": "dist/autorest.go/src/main.js",
   "type": "module",
+  "packageManager": "pnpm@10.30.3",
   "typings": "dist/autorest.go/src/main.d.ts",
   "directories": {
     "doc": "docs"

@@ -217,7 +217,7 @@ function autorestCallback(outputDir, inputFile) {
     console.log('done generating ' + inputFile);
     // format the output on success
     // print any output or error from go fmt
-    if (stderr === '' && error === null) {
+    if (error === null) {
       exec('gofmt -w .',
       { cwd: outputDir },
       function (error, stdout, stderr) {

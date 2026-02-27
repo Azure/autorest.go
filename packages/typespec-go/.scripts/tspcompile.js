@@ -169,6 +169,9 @@ generate('armcodesigning', armcodesigning, 'test/local/armcodesigning', [`exampl
 const armapicenter = pkgRoot +  'test/tsp/ApiCenter.Management';
 generate('armapicenter', armapicenter, 'test/local/armapicenter', [`examples-directory=${armapicenter}/examples`, 'generate-samples=true']);
 
+const armcognitiveservices = pkgRoot +  'test/tsp/CognitiveServices.Management';
+generate('armcognitiveservices', armcognitiveservices, 'test/local/armcognitiveservices', [`examples-directory=${armcognitiveservices}/examples`, 'generate-samples=true']);
+
 const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
 generate('armlargeinstance', armlargeinstance, 'test/local/armlargeinstance', ['stutter=AzureLargeInstance', `examples-directory=${armlargeinstance}/examples`, 'generate-samples=true']);
 
