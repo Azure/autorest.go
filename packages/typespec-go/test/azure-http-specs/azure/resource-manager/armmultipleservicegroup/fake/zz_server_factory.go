@@ -54,10 +54,10 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 
 	switch client {
 	case "DisksClient":
-		initServer(s, &s.trDisksServer, func() *DisksServerTransport { return NewDisksServerTransport(&s.srv.DisksServer) })
+		initServer(&s.trMu, &s.trDisksServer, func() *DisksServerTransport { return NewDisksServerTransport(&s.srv.DisksServer) })
 		resp, err = s.trDisksServer.Do(req)
 	case "VirtualMachinesClient":
-		initServer(s, &s.trVirtualMachinesServer, func() *VirtualMachinesServerTransport {
+		initServer(&s.trMu, &s.trVirtualMachinesServer, func() *VirtualMachinesServerTransport {
 			return NewVirtualMachinesServerTransport(&s.srv.VirtualMachinesServer)
 		})
 		resp, err = s.trVirtualMachinesServer.Do(req)
@@ -70,12 +70,4 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	}
 
 	return resp, nil
-}
-
-func initServer[T any](s *ServerFactoryTransport, dst **T, src func() *T) {
-	s.trMu.Lock()
-	if *dst == nil {
-		*dst = src()
-	}
-	s.trMu.Unlock()
 }

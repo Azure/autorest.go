@@ -50,7 +50,7 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 
 	switch client {
 	case "NonResourceOperationsClient":
-		initServer(s, &s.trNonResourceOperationsServer, func() *NonResourceOperationsServerTransport {
+		initServer(&s.trMu, &s.trNonResourceOperationsServer, func() *NonResourceOperationsServerTransport {
 			return NewNonResourceOperationsServerTransport(&s.srv.NonResourceOperationsServer)
 		})
 		resp, err = s.trNonResourceOperationsServer.Do(req)
@@ -63,12 +63,4 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	}
 
 	return resp, nil
-}
-
-func initServer[T any](s *ServerFactoryTransport, dst **T, src func() *T) {
-	s.trMu.Lock()
-	if *dst == nil {
-		*dst = src()
-	}
-	s.trMu.Unlock()
 }

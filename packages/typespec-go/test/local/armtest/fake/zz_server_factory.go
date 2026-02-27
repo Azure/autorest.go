@@ -58,13 +58,13 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 
 	switch client {
 	case "BodyRootsClient":
-		initServer(s, &s.trBodyRootsServer, func() *BodyRootsServerTransport { return NewBodyRootsServerTransport(&s.srv.BodyRootsServer) })
+		initServer(&s.trMu, &s.trBodyRootsServer, func() *BodyRootsServerTransport { return NewBodyRootsServerTransport(&s.srv.BodyRootsServer) })
 		resp, err = s.trBodyRootsServer.Do(req)
 	case "LROClient":
-		initServer(s, &s.trLROServer, func() *LROServerTransport { return NewLROServerTransport(&s.srv.LROServer) })
+		initServer(&s.trMu, &s.trLROServer, func() *LROServerTransport { return NewLROServerTransport(&s.srv.LROServer) })
 		resp, err = s.trLROServer.Do(req)
 	case "ParameterGroupOperationsClient":
-		initServer(s, &s.trParameterGroupOperationsServer, func() *ParameterGroupOperationsServerTransport {
+		initServer(&s.trMu, &s.trParameterGroupOperationsServer, func() *ParameterGroupOperationsServerTransport {
 			return NewParameterGroupOperationsServerTransport(&s.srv.ParameterGroupOperationsServer)
 		})
 		resp, err = s.trParameterGroupOperationsServer.Do(req)
@@ -77,12 +77,4 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	}
 
 	return resp, nil
-}
-
-func initServer[T any](s *ServerFactoryTransport, dst **T, src func() *T) {
-	s.trMu.Lock()
-	if *dst == nil {
-		*dst = src()
-	}
-	s.trMu.Unlock()
 }

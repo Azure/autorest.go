@@ -54,10 +54,10 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 
 	switch client {
 	case "ErrorClient":
-		initServer(s, &s.trErrorServer, func() *ErrorServerTransport { return NewErrorServerTransport(&s.srv.ErrorServer) })
+		initServer(&s.trMu, &s.trErrorServer, func() *ErrorServerTransport { return NewErrorServerTransport(&s.srv.ErrorServer) })
 		resp, err = s.trErrorServer.Do(req)
 	case "ManagedIdentityClient":
-		initServer(s, &s.trManagedIdentityServer, func() *ManagedIdentityServerTransport {
+		initServer(&s.trMu, &s.trManagedIdentityServer, func() *ManagedIdentityServerTransport {
 			return NewManagedIdentityServerTransport(&s.srv.ManagedIdentityServer)
 		})
 		resp, err = s.trManagedIdentityServer.Do(req)
@@ -70,12 +70,4 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	}
 
 	return resp, nil
-}
-
-func initServer[T any](s *ServerFactoryTransport, dst **T, src func() *T) {
-	s.trMu.Lock()
-	if *dst == nil {
-		*dst = src()
-	}
-	s.trMu.Unlock()
 }

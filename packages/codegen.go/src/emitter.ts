@@ -140,7 +140,7 @@ export class Emitter {
 
       if (this.codeModel.options.generateFakes) {
         const fakePkg = new go.FakePackage(pkg);
-        const serverContent = generateServers(fakePkg);
+        const serverContent = generateServers(fakePkg, this.codeModel.type);
         if (serverContent.servers.length > 0) {
           for (const op of serverContent.servers) {
             const fileName = `${snakeClientFileName(op.name, 'server')}.go`;

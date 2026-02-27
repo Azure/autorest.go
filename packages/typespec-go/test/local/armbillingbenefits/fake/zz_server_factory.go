@@ -78,38 +78,38 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 
 	switch client {
 	case "DiscountsClient":
-		initServer(s, &s.trDiscountsServer, func() *DiscountsServerTransport { return NewDiscountsServerTransport(&s.srv.DiscountsServer) })
+		initServer(&s.trMu, &s.trDiscountsServer, func() *DiscountsServerTransport { return NewDiscountsServerTransport(&s.srv.DiscountsServer) })
 		resp, err = s.trDiscountsServer.Do(req)
 	case "DiscountsOperationGroupClient":
-		initServer(s, &s.trDiscountsOperationGroupServer, func() *DiscountsOperationGroupServerTransport {
+		initServer(&s.trMu, &s.trDiscountsOperationGroupServer, func() *DiscountsOperationGroupServerTransport {
 			return NewDiscountsOperationGroupServerTransport(&s.srv.DiscountsOperationGroupServer)
 		})
 		resp, err = s.trDiscountsOperationGroupServer.Do(req)
 	case "OperationsClient":
-		initServer(s, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
+		initServer(&s.trMu, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
 		resp, err = s.trOperationsServer.Do(req)
 	case "ReservationOrderAliasResponsesClient":
-		initServer(s, &s.trReservationOrderAliasResponsesServer, func() *ReservationOrderAliasResponsesServerTransport {
+		initServer(&s.trMu, &s.trReservationOrderAliasResponsesServer, func() *ReservationOrderAliasResponsesServerTransport {
 			return NewReservationOrderAliasResponsesServerTransport(&s.srv.ReservationOrderAliasResponsesServer)
 		})
 		resp, err = s.trReservationOrderAliasResponsesServer.Do(req)
 	case "SavingsPlanModelsClient":
-		initServer(s, &s.trSavingsPlanModelsServer, func() *SavingsPlanModelsServerTransport {
+		initServer(&s.trMu, &s.trSavingsPlanModelsServer, func() *SavingsPlanModelsServerTransport {
 			return NewSavingsPlanModelsServerTransport(&s.srv.SavingsPlanModelsServer)
 		})
 		resp, err = s.trSavingsPlanModelsServer.Do(req)
 	case "SavingsPlanOperationGroupClient":
-		initServer(s, &s.trSavingsPlanOperationGroupServer, func() *SavingsPlanOperationGroupServerTransport {
+		initServer(&s.trMu, &s.trSavingsPlanOperationGroupServer, func() *SavingsPlanOperationGroupServerTransport {
 			return NewSavingsPlanOperationGroupServerTransport(&s.srv.SavingsPlanOperationGroupServer)
 		})
 		resp, err = s.trSavingsPlanOperationGroupServer.Do(req)
 	case "SavingsPlanOrderAliasModelsClient":
-		initServer(s, &s.trSavingsPlanOrderAliasModelsServer, func() *SavingsPlanOrderAliasModelsServerTransport {
+		initServer(&s.trMu, &s.trSavingsPlanOrderAliasModelsServer, func() *SavingsPlanOrderAliasModelsServerTransport {
 			return NewSavingsPlanOrderAliasModelsServerTransport(&s.srv.SavingsPlanOrderAliasModelsServer)
 		})
 		resp, err = s.trSavingsPlanOrderAliasModelsServer.Do(req)
 	case "SavingsPlanOrderModelsClient":
-		initServer(s, &s.trSavingsPlanOrderModelsServer, func() *SavingsPlanOrderModelsServerTransport {
+		initServer(&s.trMu, &s.trSavingsPlanOrderModelsServer, func() *SavingsPlanOrderModelsServerTransport {
 			return NewSavingsPlanOrderModelsServerTransport(&s.srv.SavingsPlanOrderModelsServer)
 		})
 		resp, err = s.trSavingsPlanOrderModelsServer.Do(req)
@@ -122,12 +122,4 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	}
 
 	return resp, nil
-}
-
-func initServer[T any](s *ServerFactoryTransport, dst **T, src func() *T) {
-	s.trMu.Lock()
-	if *dst == nil {
-		*dst = src()
-	}
-	s.trMu.Unlock()
 }
