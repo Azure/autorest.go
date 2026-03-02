@@ -26,4 +26,3 @@ func TestIndividuallyParentNestedWithParamAliasClient_WithOriginalName(t *testin
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
-

@@ -45,4 +45,3 @@ func TestIndividuallyParentNestedWithQueryClient_DeleteStandalone(t *testing.T) 
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
-
