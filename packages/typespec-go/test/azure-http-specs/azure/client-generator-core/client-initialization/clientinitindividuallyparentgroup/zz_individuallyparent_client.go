@@ -42,6 +42,7 @@ func NewIndividuallyParentClientWithNoCredential(endpoint string, options *Indiv
 // NewIndividuallyParentIndividuallyParentNestedWithHeaderClient creates a new instance of [IndividuallyParentIndividuallyParentNestedWithHeaderClient].
 func (client *IndividuallyParentClient) NewIndividuallyParentIndividuallyParentNestedWithHeaderClient(name string) *IndividuallyParentIndividuallyParentNestedWithHeaderClient {
 	return &IndividuallyParentIndividuallyParentNestedWithHeaderClient{
+		endpoint: client.endpoint,
 		internal: client.internal,
 		name:     name,
 	}
@@ -50,6 +51,7 @@ func (client *IndividuallyParentClient) NewIndividuallyParentIndividuallyParentN
 // NewIndividuallyParentIndividuallyParentNestedWithMixedClient creates a new instance of [IndividuallyParentIndividuallyParentNestedWithMixedClient].
 func (client *IndividuallyParentClient) NewIndividuallyParentIndividuallyParentNestedWithMixedClient(name string) *IndividuallyParentIndividuallyParentNestedWithMixedClient {
 	return &IndividuallyParentIndividuallyParentNestedWithMixedClient{
+		endpoint: client.endpoint,
 		internal: client.internal,
 		name:     name,
 	}
@@ -58,6 +60,7 @@ func (client *IndividuallyParentClient) NewIndividuallyParentIndividuallyParentN
 // NewIndividuallyParentIndividuallyParentNestedWithMultipleClient creates a new instance of [IndividuallyParentIndividuallyParentNestedWithMultipleClient].
 func (client *IndividuallyParentClient) NewIndividuallyParentIndividuallyParentNestedWithMultipleClient(name string, region string) *IndividuallyParentIndividuallyParentNestedWithMultipleClient {
 	return &IndividuallyParentIndividuallyParentNestedWithMultipleClient{
+		endpoint: client.endpoint,
 		internal: client.internal,
 		name:     name,
 		region:   region,
@@ -68,6 +71,7 @@ func (client *IndividuallyParentClient) NewIndividuallyParentIndividuallyParentN
 func (client *IndividuallyParentClient) NewIndividuallyParentIndividuallyParentNestedWithParamAliasClient(blobName string) *IndividuallyParentIndividuallyParentNestedWithParamAliasClient {
 	return &IndividuallyParentIndividuallyParentNestedWithParamAliasClient{
 		blobName: blobName,
+		endpoint: client.endpoint,
 		internal: client.internal,
 	}
 }
@@ -76,6 +80,7 @@ func (client *IndividuallyParentClient) NewIndividuallyParentIndividuallyParentN
 func (client *IndividuallyParentClient) NewIndividuallyParentIndividuallyParentNestedWithPathClient(blobName string) *IndividuallyParentIndividuallyParentNestedWithPathClient {
 	return &IndividuallyParentIndividuallyParentNestedWithPathClient{
 		blobName: blobName,
+		endpoint: client.endpoint,
 		internal: client.internal,
 	}
 }
@@ -84,6 +89,7 @@ func (client *IndividuallyParentClient) NewIndividuallyParentIndividuallyParentN
 func (client *IndividuallyParentClient) NewIndividuallyParentIndividuallyParentNestedWithQueryClient(blobName string) *IndividuallyParentIndividuallyParentNestedWithQueryClient {
 	return &IndividuallyParentIndividuallyParentNestedWithQueryClient{
 		blobName: blobName,
+		endpoint: client.endpoint,
 		internal: client.internal,
 	}
 }
