@@ -98,7 +98,12 @@ export function getSchemaResponse(op: m4.Operation): m4.SchemaResponse | undefin
   const schemaResponses = new Array<m4.SchemaResponse>();
   for (const response of values(op.responses)) {
     // perform the comparison by name as some responses have different objects for the same underlying response type
-    if (isSchemaResponse(response) && !values(schemaResponses).where(sr => sr.schema.language.go!.name === response.schema.language.go!.name).any()) {
+    if (
+      isSchemaResponse(response) &&
+      !values(schemaResponses)
+        .where((sr) => sr.schema.language.go!.name === response.schema.language.go!.name)
+        .any()
+    ) {
       schemaResponses.push(response);
     }
   }
@@ -146,7 +151,12 @@ export function isMultiRespOperation(op: m4.Operation): boolean {
   const schemaResponses = new Array<m4.SchemaResponse>();
   for (const response of values(op.responses)) {
     // perform the comparison by name as some responses have different objects for the same underlying response type
-    if (isSchemaResponse(response) && !values(schemaResponses).where(sr => sr.schema.language.go!.name === response.schema.language.go!.name).any()) {
+    if (
+      isSchemaResponse(response) &&
+      !values(schemaResponses)
+        .where((sr) => sr.schema.language.go!.name === response.schema.language.go!.name)
+        .any()
+    ) {
       schemaResponses.push(response);
     }
   }
@@ -169,13 +179,15 @@ export function isBinaryResponseOperation(op: m4.Operation): m4.BinaryResponse |
 
 // returns true if the type is implicitly passed by value (map, slice, etc)
 export function isTypePassedByValue(schema: m4.Schema): boolean {
-  if (schema.type === m4.SchemaType.Any ||
+  if (
+    schema.type === m4.SchemaType.Any ||
     schema.type === m4.SchemaType.AnyObject ||
     schema.type === m4.SchemaType.Array ||
     schema.type === m4.SchemaType.ByteArray ||
     schema.type === m4.SchemaType.Binary ||
     schema.type === m4.SchemaType.Dictionary ||
-    (isObjectSchema(schema) && schema.discriminator)) {
+    (isObjectSchema(schema) && schema.discriminator)
+  ) {
     return true;
   }
   return false;
@@ -202,7 +214,11 @@ export function aggregateProperties(obj: m4.ObjectSchema): Array<m4.Property> {
     if (isObjectSchema(parent)) {
       for (const parentProp of values(parent.properties)) {
         // ensure that the parent doesn't contain any properties with the same name but different type
-        const exists = values(allProps).where(p => { return p.language.go!.name === parentProp.language.go!.name; }).first();
+        const exists = values(allProps)
+          .where((p) => {
+            return p.language.go!.name === parentProp.language.go!.name;
+          })
+          .first();
         if (exists) {
           if (exists.schema.language.go!.name !== parentProp.schema.language.go!.name) {
             const msg = `type ${obj.language.go!.name} contains duplicate property ${exists.language.go!.name} with mismatched types`;

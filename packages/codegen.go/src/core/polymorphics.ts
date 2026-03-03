@@ -9,7 +9,7 @@ import { ImportManager } from './imports.js';
 
 /**
  * Creates the content for the polymorphic_helpers.go file.
- * 
+ *
  * @param pkg contains the package content
  * @returns the text for the file or the empty string
  */
@@ -37,7 +37,7 @@ export function generatePolymorphicHelpers(pkg: go.FakePackage | go.PackageConte
   // we know there are polymorphic types but we don't know how they're used.
   // i.e. are they vanilla fields, elements in a slice, or values in a map.
   // polymorphic types within maps/slices will also need the scalar helpers.
-  const trackDisciminator = function(type: go.WireType) {
+  const trackDisciminator = function (type: go.WireType) {
     switch (type.kind) {
       case 'interface':
         scalars.add(type.name);

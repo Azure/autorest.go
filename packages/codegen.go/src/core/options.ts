@@ -10,7 +10,7 @@ import { ImportManager } from './imports.js';
 
 /**
  * Creates the content for the options.go file.
- * 
+ *
  * @param pkg contains the package content
  * @returns the text for the file or the empty string
  */
@@ -34,7 +34,7 @@ export function generateOptions(pkg: go.PackageContent): string {
 
 /**
  * emits the options type definition
- * 
+ *
  * @param pkg the package to contain the options type
  * @param struct the options type definition
  * @param imports the import manager currently in scope

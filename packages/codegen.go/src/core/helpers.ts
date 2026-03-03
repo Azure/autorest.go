@@ -26,7 +26,7 @@ let overrideHeaderText: string | undefined;
 
 /**
  * sets the specified content to use as the header text comment per file.
- * 
+ *
  * @param headerText the custom header text to use
  */
 export function setCustomHeaderText(headerText: string): void {
@@ -35,7 +35,7 @@ export function setCustomHeaderText(headerText: string): void {
 
 /**
  * returns the common source-file preamble (license comment, package name etc)
- * 
+ *
  * @param pkg the package to use in the package declaration
  * @param doNotEdit when false the 'DO NOT EDIT' clause is omitted
  * @returns the source file preamble
@@ -65,7 +65,7 @@ export function sortAscending(a: string, b: string): number {
 
 /**
  * returns the parameter's type definition with a possible '*' prefix
- * 
+ *
  * @param scope the package into which the type definition is being emitted
  * @param param the parameter for which to emit the type definition
  * @returns the parameter type definition text
@@ -178,7 +178,10 @@ export function getCreateRequestParameters(method: go.MethodType): string {
 }
 
 // returns the complete collection of method parameters
-export function getMethodParameters(method: go.MethodType | go.NextPageMethod, paramsFilter?: (p: Array<go.MethodParameter>) => Array<go.MethodParameter>): Array<go.MethodParameter | go.ParameterGroup> {
+export function getMethodParameters(
+  method: go.MethodType | go.NextPageMethod,
+  paramsFilter?: (p: Array<go.MethodParameter>) => Array<go.MethodParameter>,
+): Array<go.MethodParameter | go.ParameterGroup> {
   const params = new Array<go.MethodParameter>();
   const paramGroups = new Array<go.ParameterGroup>();
   let methodParams = method.parameters;
@@ -218,7 +221,7 @@ export function getMethodParameters(method: go.MethodType | go.NextPageMethod, p
   });
   // add the optional param group last if it's not already in the list.
   if (method.kind !== 'nextPageMethod') {
-    if (!paramGroups.find(gp => gp.groupName === method.optionalParamsGroup.groupName)) {
+    if (!paramGroups.find((gp) => gp.groupName === method.optionalParamsGroup.groupName)) {
       paramGroups.push(method.optionalParamsGroup);
     }
   }
@@ -271,7 +274,7 @@ export function formatParamValue(param: go.MethodParameter, imports: ImportManag
 
       const separator = getDelimiterForCollectionFormat(param.collectionFormat);
 
-      const emitConvertOver = function(paramName: string, format: string): string {
+      const emitConvertOver = function (paramName: string, format: string): string {
         const encodedVar = `encoded${naming.capitalize(paramName)}`;
         let content = 'strings.Join(func() []string {\n';
         content += `\t\t${encodedVar} := make([]string, len(${paramName}))\n`;
@@ -280,7 +283,7 @@ export function formatParamValue(param: go.MethodParameter, imports: ImportManag
         content += `\t\treturn ${encodedVar}\n`;
         content += `\t}(), "${separator}")`;
         return content;
-      }
+      };
 
       switch (param.type.elementType.kind) {
         case 'encodedBytes':
@@ -710,7 +713,7 @@ export function recursiveUnwrapMapSlice(item: go.WireType): go.WireType {
 
 /**
  * returns a * character when byValue is false
- * 
+ *
  * @param byValue indicates if the type is passed by value
  * @returns a * or the empty string
  */
@@ -720,7 +723,7 @@ export function star(byValue: boolean): string {
 
 /**
  * returns the zero-value expression for the specific parameter
- * 
+ *
  * @param param the param for which to create a zero value
  * @returns the zero-value expression
  */
@@ -759,7 +762,7 @@ export function getSerDeFormat(model: go.Model | go.PolymorphicModel, pkg: go.Pa
   }
 
   // recursively walks the fields in model, updating serDeFormatCache with the model name and specified format
-  const recursiveWalkModelFields = function(type: go.WireType, serDeFormat: SerDeFormat): void {
+  const recursiveWalkModelFields = function (type: go.WireType, serDeFormat: SerDeFormat): void {
     type = recursiveUnwrapMapSlice(type);
     switch (type.kind) {
       case 'interface':
@@ -841,7 +844,7 @@ export function getAllClientParameters(pkg: go.PackageContent, target: go.CodeMo
         for (const ctorParam of ctor.parameters) {
           if (go.isAPIVersionParameter(ctorParam)) {
             continue;
-          } else if (allClientParams.find(param => param.name === ctorParam.name)) {
+          } else if (allClientParams.find((param) => param.name === ctorParam.name)) {
             continue;
           }
           allClientParams.push(ctorParam);
@@ -854,12 +857,12 @@ export function getAllClientParameters(pkg: go.PackageContent, target: go.CodeMo
 
 // returns common client parameters for all the clients
 export function getCommonClientParameters(pkg: go.PackageContent, target: go.CodeModelType): Array<go.ClientParameter> {
-  const paramCount = new Map<string, { uses: number, param: go.ClientParameter }>();
+  const paramCount = new Map<string, { uses: number; param: go.ClientParameter }>();
   let numClients = 0; // track client count since we might skip some
   for (const client of pkg.clients) {
     // special cases: some ARM clients always don't contain any parameters (OperationsClient will be depracated in the future)
     if (target === 'azure-arm' && client.name.match(/^OperationsClient$/)) {
-      continue; 
+      continue;
     }
 
     ++numClients;
@@ -926,7 +929,7 @@ export interface MethodParamGroups {
 
 /**
  * enumerates method parameters and returns them based on kinds
- * 
+ *
  * @param method the method containing the parameters to group
  * @returns the groups of parameters
  */
@@ -984,7 +987,7 @@ export function getMethodParamGroups(method: go.MethodType | go.NextPageMethod):
     pathParams,
     partialBodyParams,
     unencodedQueryParams,
-  }
+  };
 }
 
 /** helper for managing indentation levels */
@@ -1001,7 +1004,7 @@ export class indentation {
 
   /**
    * returns spaces for the current indentation level
-   * 
+   *
    * @returns a string with the current indentation level
    */
   get(): string {
@@ -1014,7 +1017,7 @@ export class indentation {
 
   /**
    * increments the indentation level
-   * 
+   *
    * @returns this indentation instance
    */
   push(): indentation {
@@ -1024,7 +1027,7 @@ export class indentation {
 
   /**
    * decrements the indentation level
-   * 
+   *
    * @returns this indentation instance
    */
   pop(): indentation {
@@ -1053,7 +1056,7 @@ export interface elseBlock {
 
 /**
  * constructs an if block (can expand to include else if as necessary)
- * 
+ *
  * @param indent the current indentation helper in scope
  * @param ifBlock the if block definition
  * @param elseBlock optional else block definition
@@ -1075,7 +1078,7 @@ export function buildIfBlock(indent: indentation, ifBlock: ifBlock, elseBlock?: 
 
 /**
  * constructs an "if err != nil { return something }" block
- * 
+ *
  * @param indent the current indentation helper in scope
  * @param errVar the name of the error variable used in the condition
  * @param returns the value(s) to return from the control block
@@ -1093,14 +1096,14 @@ export function buildErrCheck(indent: indentation, errVar: string, returns: stri
  * e.g. "https://monitor.azure.com/.default" is split into
  *   - audience: https://monitor.azure.com
  *   -    scope: /.default
- * @param scope 
+ * @param scope
  */
-export function splitScope(scope: string): { audience: string, scope: string } {
+export function splitScope(scope: string): { audience: string; scope: string } {
   const scopeSplit = scope.lastIndexOf('/');
   return {
     audience: scope.substring(0, scopeSplit),
     scope: scope.substring(scopeSplit),
-  }
+  };
 }
 
 /** returns true if the specified method is internal */
@@ -1110,7 +1113,7 @@ export function isMethodInternal(method: go.MethodType): boolean {
 
 /**
  * returns true if the provided client has no exported methods
- * 
+ *
  * @param client the client containing the methods
  * @returns true if all client methods are internal
  */
@@ -1125,47 +1128,38 @@ export function clientHasNoExportedMethods(client: go.Client): boolean {
 
 // the following was copied from @azure-tools/codegen as it's being deprecated
 const ones = [
-  "",
-  "one",
-  "two",
-  "three",
-  "four",
-  "five",
-  "six",
-  "seven",
-  "eight",
-  "nine",
-  "ten",
-  "eleven",
-  "twelve",
-  "thirteen",
-  "fourteen",
-  "fifteen",
-  "sixteen",
-  "seventeen",
-  "eighteen",
-  "nineteen",
+  '',
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+  'nine',
+  'ten',
+  'eleven',
+  'twelve',
+  'thirteen',
+  'fourteen',
+  'fifteen',
+  'sixteen',
+  'seventeen',
+  'eighteen',
+  'nineteen',
 ];
-const tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
 const magvalues = [10 ** 3, 10 ** 6, 10 ** 9, 10 ** 12, 10 ** 15, 10 ** 18, 10 ** 21, 10 ** 24, 10 ** 27];
-const magnitude = [
-  "thousand",
-  "million",
-  "billion",
-  "trillion",
-  "quadrillion",
-  "quintillion",
-  "septillion",
-  "octillion",
-];
+const magnitude = ['thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion', 'septillion', 'octillion'];
 
 function* convert(num: number): Iterable<string> {
   if (!num) {
-    yield "zero";
+    yield 'zero';
     return;
   }
   if (num > 1e30) {
-    yield "lots";
+    yield 'lots';
     return;
   }
 
@@ -1181,7 +1175,7 @@ function* convert(num: number): Iterable<string> {
   }
   if (num > 99) {
     yield ones[Math.floor(num / 100)];
-    yield "hundred";
+    yield 'hundred';
     num %= 100;
   }
   if (num > 19) {
@@ -1198,9 +1192,9 @@ function deconstruct(identifier: string | Array<string>): Array<string> {
     return identifier.flatMap(deconstruct);
   }
   return `${identifier}`
-    .replace(/([a-z]+)([A-Z])/g, "$1 $2")
-    .replace(/(\d+)([a-z|A-Z]+)/g, "$1 $2")
-    .replace(/\b([A-Z]+)([A-Z])([a-z])/, "$1 $2$3")
+    .replace(/([a-z]+)([A-Z])/g, '$1 $2')
+    .replace(/(\d+)([a-z|A-Z]+)/g, '$1 $2')
+    .replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3')
     .split(/[\W|_]+/)
     .map((each) => each.toLowerCase());
 }
@@ -1215,7 +1209,7 @@ function fixLeadingNumber(identifier: Array<string>): Array<string> {
 function isEqual(s1: string, s2: string): boolean {
   // when s2 is undefined and s1 is the string 'undefined', it returns 0, making this true.
   // To prevent that, first we need to check if s2 is undefined.
-  return s2 !== undefined && !!s1 && !s1.localeCompare(s2, undefined, { sensitivity: "base" });
+  return s2 !== undefined && !!s1 && !s1.localeCompare(s2, undefined, { sensitivity: 'base' });
 }
 
 function removeSequentialDuplicates(identifier: Iterable<string>) {
@@ -1233,12 +1227,12 @@ function removeSequentialDuplicates(identifier: Iterable<string>) {
 }
 
 export function camelCase(identifier: string | Array<string>): string {
-  if (typeof identifier === "string") {
+  if (typeof identifier === 'string') {
     return camelCase(fixLeadingNumber(deconstruct(identifier)));
   }
   switch (identifier.length) {
     case 0:
-      return "";
+      return '';
     case 1:
       return naming.uncapitalize(identifier[0]);
   }
@@ -1247,12 +1241,10 @@ export function camelCase(identifier: string | Array<string>): string {
 
 export function pascalCase(identifier: string | Array<string>, removeDuplicates = true): string {
   return identifier === undefined
-    ? ""
-    : typeof identifier === "string"
+    ? ''
+    : typeof identifier === 'string'
       ? pascalCase(fixLeadingNumber(deconstruct(identifier)), removeDuplicates)
-      : (removeDuplicates ? [...removeSequentialDuplicates(identifier)] : identifier)
-          .map((each) => naming.capitalize(each))
-          .join("");
+      : (removeDuplicates ? [...removeSequentialDuplicates(identifier)] : identifier).map((each) => naming.capitalize(each)).join('');
 }
 
 function indent(content: string, factor = 1): string {
@@ -1261,11 +1253,11 @@ function indent(content: string, factor = 1): string {
   return content.split(/\n/g).join(`\n${i}`);
 }
 
-const lineCommentPrefix = "//";
+const lineCommentPrefix = '//';
 
 export function comment(content: string, prefix = lineCommentPrefix, factor = 0, maxLength = 120) {
   const result = new Array<string>();
-  let line = "";
+  let line = '';
   prefix = indent(prefix, factor);
 
   content = content.trim();

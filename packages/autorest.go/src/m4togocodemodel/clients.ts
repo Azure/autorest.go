@@ -38,17 +38,23 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
 
       if (helpers.isLROOperation(op) && helpers.isPageableOperation(op)) {
         method = new go.LROPageableMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
-        method.finalStateVia = (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']);
+        method.finalStateVia = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
         method.nextLinkName = op.language.go!.paging.nextLinkName;
         if (op.language.go!.paging.nextLinkOperation) {
           // adapt the next link operation
-          const nextPageMethod = new go.NextPageMethod(op.language.go!.paging.nextLinkOperation.language.go.name, client, httpPath, httpMethod, getStatusCodes(op.language.go!.paging.nextLinkOperation));
+          const nextPageMethod = new go.NextPageMethod(
+            op.language.go!.paging.nextLinkOperation.language.go.name,
+            client,
+            httpPath,
+            httpMethod,
+            getStatusCodes(op.language.go!.paging.nextLinkOperation),
+          );
           populateMethod(op.language.go!.paging.nextLinkOperation, m4CodeModel, nextPageMethod);
           method.nextPageMethod = nextPageMethod;
         }
       } else if (helpers.isLROOperation(op)) {
         method = new go.LROMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
-        method.finalStateVia = (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']);
+        method.finalStateVia = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
       } else if (helpers.isPageableOperation(op)) {
         if (op.language.go!.paging.isNextOp) {
           continue;
@@ -171,19 +177,19 @@ function adaptURIPrameterType(schema: m4.Schema, pkg: go.PackageContent): go.URI
 
 /**
  * returns true if the parameter should be passed by value
- * 
+ *
  * @param style the style of the parameter
  * @param location the location of the parameter
  * @param param the parameter type (needed for schema)
  * @returns true if the param should be passed by value
  */
 function calculateParamByValue(param: m4.Parameter, style: go.ParameterStyle, location: go.ParameterLocation): boolean {
-  return helpers.isTypePassedByValue(param.schema) ? true : (go.isRequiredParameter(style) || (location === 'client' && go.isClientSideDefault(style)));
+  return helpers.isTypePassedByValue(param.schema) ? true : go.isRequiredParameter(style) || (location === 'client' && go.isClientSideDefault(style));
 }
 
 function adaptClient(group: m4.OperationGroup, pkg: go.PackageContent): go.Client {
   const description = `${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.`;
-  const client = new go.Client(pkg, group.language.go!.clientName, {description: description});
+  const client = new go.Client(pkg, group.language.go!.clientName, { description: description });
   if (group.language.go!.complexHostParams) {
     client.instance = new go.TemplatedHost(group.language.go!.host);
   }
@@ -191,8 +197,14 @@ function adaptClient(group: m4.OperationGroup, pkg: go.PackageContent): go.Clien
     for (const hostParam of values(<Array<m4.Parameter>>group.language.go!.hostParams)) {
       const style = adaptParameterStyle(hostParam, pkg);
       const location = adaptMethodLocation(hostParam.implementation);
-      const uriParam = new go.URIParameter(hostParam.language.go!.name, hostParam.language.go!.serializedName, adaptURIPrameterType(hostParam.schema, pkg),
-        style, calculateParamByValue(hostParam, style, location), location);
+      const uriParam = new go.URIParameter(
+        hostParam.language.go!.name,
+        hostParam.language.go!.serializedName,
+        adaptURIPrameterType(hostParam.schema, pkg),
+        style,
+        calculateParamByValue(hostParam, style, location),
+        location,
+      );
       client.parameters.push(uriParam);
     }
   }
@@ -227,7 +239,7 @@ function adaptMethodParameters(op: m4.Operation, method: go.MethodType | go.Next
 
 function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, op: m4.Operation, pkg: go.PackageContent, forMethod: go.MethodType): go.ResponseEnvelope {
   const respEnvSchema = <m4.ObjectSchema>op.language.go!.responseEnv;
-  const respEnv = new go.ResponseEnvelope(respEnvSchema.language.go!.name, {description: respEnvSchema.language.go!.description}, forMethod);
+  const respEnv = new go.ResponseEnvelope(respEnvSchema.language.go!.name, { description: respEnvSchema.language.go!.description }, forMethod);
 
   // add any headers
   for (const prop of values(respEnvSchema.properties)) {
@@ -264,7 +276,12 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, op: m4.Operation, pkg:
   } else if (!resultProp.language.go!.embeddedType) {
     const resultType = adaptWireType(resultProp.schema, forMethod.receiver.type.pkg);
     if (go.isMonomorphicResultType(resultType)) {
-      respEnv.result = new go.MonomorphicResult(resultProp.language.go!.name, adaptResultFormat(helpers.getSchemaResponse(op)!.protocol), resultType, resultProp.language.go!.byValue);
+      respEnv.result = new go.MonomorphicResult(
+        resultProp.language.go!.name,
+        adaptResultFormat(helpers.getSchemaResponse(op)!.protocol),
+        resultType,
+        resultProp.language.go!.byValue,
+      );
       respEnv.result.xml = adaptXMLInfo(resultProp.schema);
     } else {
       throw new Error(`invalid monomorphic result type ${resultType.kind}`);
@@ -282,10 +299,10 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, op: m4.Operation, pkg:
     }
     respEnv.result = new go.PolymorphicResult(ifaceResult);
   } else if (helpers.getSchemaResponse(op)) {
-  /** 
-   * The modelType will be a PolymorphicModel when the response envelope
-   * is a concrete type from a polymorphic hierarchy
-   */
+    /**
+     * The modelType will be a PolymorphicModel when the response envelope
+     * is a concrete type from a polymorphic hierarchy
+     */
     let modelType: go.Model | go.PolymorphicModel | undefined;
     for (const model of forMethod.receiver.type.pkg.models) {
       if ((model.kind === 'model' || model.kind === 'polymorphicModel') && model.name === resultProp.schema.language.go!.name) {
@@ -405,8 +422,14 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter, pkg: go.Pac
         }
         adaptedParam = new go.HeaderCollectionParameter(param.language.go!.name, param.language.go!.serializedName, headerType, collectionFormat, style, byValue, location);
       } else {
-        adaptedParam = new go.HeaderScalarParameter(param.language.go!.name, param.language.go!.serializedName, adaptHeaderScalarType(param.schema, true, pkg),
-          style, byValue, location);
+        adaptedParam = new go.HeaderScalarParameter(
+          param.language.go!.name,
+          param.language.go!.serializedName,
+          adaptHeaderScalarType(param.schema, true, pkg),
+          style,
+          byValue,
+          location,
+        );
       }
       break;
     }
@@ -417,15 +440,31 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter, pkg: go.Pac
         if (pathType.kind !== 'slice') {
           throw new Error(`unexpected type ${pathType.kind} for PathCollectionParameter ${param.language.go!.name}`);
         }
-        adaptedParam = new go.PathCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          pathType, collectionFormat, style, byValue, location);
+        adaptedParam = new go.PathCollectionParameter(
+          param.language.go!.name,
+          param.language.go!.serializedName,
+          !skipURLEncoding(param),
+          pathType,
+          collectionFormat,
+          style,
+          byValue,
+          location,
+        );
       } else {
         const skipUrlEncoding = skipURLEncoding(param);
-        adaptedParam = new go.PathScalarParameter(param.language.go!.name, param.language.go!.serializedName, !skipUrlEncoding,
-          adaptPathScalarParameterType(param.schema, pkg), style, byValue, location);
+        adaptedParam = new go.PathScalarParameter(
+          param.language.go!.name,
+          param.language.go!.serializedName,
+          !skipUrlEncoding,
+          adaptPathScalarParameterType(param.schema, pkg),
+          style,
+          byValue,
+          location,
+        );
         // this is a legacy hack to work around the fact that
         // swagger doesn't allow path params to be empty.
-        adaptedParam.omitEmptyStringCheck = skipUrlEncoding && (adaptedParam.type.kind === 'string' || (adaptedParam.type.kind === 'constant' && adaptedParam.type.type === 'string'));
+        adaptedParam.omitEmptyStringCheck =
+          skipUrlEncoding && (adaptedParam.type.kind === 'string' || (adaptedParam.type.kind === 'constant' && adaptedParam.type.type === 'string'));
       }
       break;
     }
@@ -436,17 +475,38 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter, pkg: go.Pac
         if (queryType.kind !== 'slice') {
           throw new Error(`unexpected type ${queryType.kind} for QueryCollectionParameter ${param.language.go!.name}`);
         }
-        adaptedParam = new go.QueryCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          queryType, collectionFormat, style, byValue, location);
+        adaptedParam = new go.QueryCollectionParameter(
+          param.language.go!.name,
+          param.language.go!.serializedName,
+          !skipURLEncoding(param),
+          queryType,
+          collectionFormat,
+          style,
+          byValue,
+          location,
+        );
       } else {
-        adaptedParam = new go.QueryScalarParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          adaptQueryScalarParameterType(param.schema, pkg), style, byValue, location);
+        adaptedParam = new go.QueryScalarParameter(
+          param.language.go!.name,
+          param.language.go!.serializedName,
+          !skipURLEncoding(param),
+          adaptQueryScalarParameterType(param.schema, pkg),
+          style,
+          byValue,
+          location,
+        );
       }
       break;
     }
     case 'uri':
-      adaptedParam = new go.URIParameter(param.language.go!.name, param.language.go!.serializedName, adaptURIPrameterType(param.schema, pkg),
-        style, byValue, adaptParameterlocation(param));
+      adaptedParam = new go.URIParameter(
+        param.language.go!.name,
+        param.language.go!.serializedName,
+        adaptURIPrameterType(param.schema, pkg),
+        style,
+        byValue,
+        adaptParameterlocation(param),
+      );
       break;
     default: {
       if (param.protocol.http?.in) {
@@ -473,7 +533,13 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter, pkg: go.Pac
   if (param.language.go!.paramGroup) {
     const paramGroup = findOrAdaptParamsGroup(param, pkg);
     // parameter groups can be shared across methods so don't add any duplicate parameters
-    if (values(paramGroup.params).where((each: go.MethodParameter) => { return each.name === adaptedParam.name; }).count() === 0) {
+    if (
+      values(paramGroup.params)
+        .where((each: go.MethodParameter) => {
+          return each.name === adaptedParam.name;
+        })
+        .count() === 0
+    ) {
       paramGroup.params.push(adaptedParam);
     }
     if (adaptedParam.style === 'required') {
@@ -506,7 +572,7 @@ function adaptCollectionFormat(param: m4.Parameter): go.CollectionFormat | undef
 function adaptExtendedCollectionFormat(param: m4.Parameter): go.ExtendedCollectionFormat | undefined {
   switch (param.protocol.http?.style) {
     case m4.SerializationStyle.Form:
-      if (param.protocol.http?.explode === true){
+      if (param.protocol.http?.explode === true) {
         return 'multi';
       }
       return 'csv';

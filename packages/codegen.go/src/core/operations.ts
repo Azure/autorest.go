@@ -22,7 +22,7 @@ export class OperationGroupContent {
 
 /**
  * Creates the content for all the *_client.go files.
- * 
+ *
  * @param pkg contains the package content
  * @param target the codegen target for the module
  * @param options the emitter options
@@ -46,12 +46,12 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
     }
 
-    imports.add(azureARM  ? 'github.com/Azure/azure-sdk-for-go/sdk/azcore/arm' : 'github.com/Azure/azure-sdk-for-go/sdk/azcore');
+    imports.add(azureARM ? 'github.com/Azure/azure-sdk-for-go/sdk/azcore/arm' : 'github.com/Azure/azure-sdk-for-go/sdk/azcore');
 
     // generate client type
 
     let clientText = helpers.formatDocComment(client.docs);
-    clientText += '// Don\'t use this type directly, use ';
+    clientText += "// Don't use this type directly, use ";
     if (client.instance?.kind === 'constructable' && client.instance.constructors.length === 1) {
       clientText += `${client.instance.constructors[0].name}() instead.\n`;
     } else if (client.parent) {
@@ -76,7 +76,7 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
     // check for any optional host params
     const optionalParams = new Array<go.ClientParameter>();
 
-    const isParamPointer = function(param: go.ClientParameter): boolean {
+    const isParamPointer = function (param: go.ClientParameter): boolean {
       // for client params, only optional and flag types are passed by pointer
       return param.style === 'flag' || param.style === 'optional';
     };
@@ -183,7 +183,7 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
 /**
  * generates all modeled client constructors and client options types.
  * if there are no client constructors, the empty string is returned.
- * 
+ *
  * @param client the client for which to generate constructors and the client options type
  * @param imports the import manager currently in scope
  * @returns the client constructor code or the empty string
@@ -249,7 +249,7 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
       }
     }
 
-    const emitProlog = function(optionsTypeName: string, tokenAuth: boolean, plOpts?: string): string {
+    const emitProlog = function (optionsTypeName: string, tokenAuth: boolean, plOpts?: string): string {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
       let bodyText = `\tif options == nil {\n\t\toptions = &${optionsTypeName}{}\n\t}\n`;
       let apiVersionConfig = '';
@@ -540,12 +540,12 @@ function getZeroReturnValue(method: go.MethodType, apiType: 'api' | 'op' | 'hand
 function generateNilChecks(path: string, prefix: string = 'page'): string {
   const segments = path.split('.');
   const checks: string[] = [];
-  
+
   for (let i = 0; i < segments.length; i++) {
     const currentPath = [prefix, ...segments.slice(0, i + 1)].join('.');
     checks.push(`${currentPath} != nil`);
   }
-  
+
   return checks.join(' && ');
 }
 
@@ -644,7 +644,7 @@ function genRespErrorDoc(method: go.MethodType): string {
 
 /**
  * returns the receiver definition for a client
- * 
+ *
  * @param receiver the receiver for which to emit the definition
  * @returns the receiver definition
  */
@@ -656,7 +656,7 @@ function generateOperation(method: go.MethodType, imports: ImportManager, option
   const params = getAPIParametersSig(method, imports);
   const returns = generateReturnsInfo(method, 'op');
   let methodName = method.name;
-  if(method.kind === 'pageableMethod') {
+  if (method.kind === 'pageableMethod') {
     methodName = fixUpMethodName(method);
   }
   let text = '';
@@ -871,7 +871,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
         }
       }
 
-      const emitPathEscape = function(): string {
+      const emitPathEscape = function (): string {
         if (pp.isEncoded) {
           imports.add('net/url');
           return `url.PathEscape(${paramValue})`;
@@ -903,7 +903,14 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
   const emitQueryParam = function (qp: go.QueryParameter, setter: string): string {
     let qpText = '';
     if (qp.location === 'method' && go.isClientSideDefault(qp.style)) {
-      qpText = emitClientSideDefault(qp, qp.style, (name, val) => { return `\treqQP.Set(${name}, ${val})`; }, imports);
+      qpText = emitClientSideDefault(
+        qp,
+        qp.style,
+        (name, val) => {
+          return `\treqQP.Set(${name}, ${val})`;
+        },
+        imports,
+      );
     } else if (go.isRequiredParameter(qp.style) || go.isLiteralParameter(qp.style) || (qp.location === 'client' && go.isClientSideDefault(qp.style))) {
       qpText = `\t${setter}\n`;
     } else if (qp.location === 'client' && !qp.group) {
@@ -922,7 +929,9 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
   // emit encoded params first
   if (encodedParams.length > 0) {
     text += '\treqQP := req.Raw().URL.Query()\n';
-    for (const qp of encodedParams.sort((a: go.QueryParameter, b: go.QueryParameter) => { return helpers.sortAscending(a.queryParameter, b.queryParameter); })) {
+    for (const qp of encodedParams.sort((a: go.QueryParameter, b: go.QueryParameter) => {
+      return helpers.sortAscending(a.queryParameter, b.queryParameter);
+    })) {
       let setter: string;
       if (qp.kind === 'queryCollectionParam' && qp.collectionFormat === 'multi') {
         setter = `\tfor _, qv := range ${helpers.getParamName(qp)} {\n`;
@@ -967,7 +976,9 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     } else {
       text += '\tunencodedParams := []string{}\n';
     }
-    for (const qp of unencodedParams.sort((a: go.QueryParameter, b: go.QueryParameter) => { return helpers.sortAscending(a.queryParameter, b.queryParameter); })) {
+    for (const qp of unencodedParams.sort((a: go.QueryParameter, b: go.QueryParameter) => {
+      return helpers.sortAscending(a.queryParameter, b.queryParameter);
+    })) {
       let setter: string;
       if (qp.kind === 'queryCollectionParam' && qp.collectionFormat === 'multi') {
         setter = `\tfor _, qv := range ${helpers.getParamName(qp)} {\n`;
@@ -997,16 +1008,23 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
       headerText += `${prefix}}\n`;
       return headerText;
     } else if (headerParam.location === 'method' && go.isClientSideDefault(headerParam.style)) {
-      return emitClientSideDefault(headerParam, headerParam.style, (name, val) => {
-        return `${prefix}req.Raw().Header[${name}] = []string{${val}}`;
-      }, imports);
+      return emitClientSideDefault(
+        headerParam,
+        headerParam.style,
+        (name, val) => {
+          return `${prefix}req.Raw().Header[${name}] = []string{${val}}`;
+        },
+        imports,
+      );
     } else {
       return `${prefix}req.Raw().Header["${headerParam.headerName}"] = []string{${helpers.formatParamValue(headerParam, imports)}}\n`;
     }
   };
 
   let contentType: string | undefined;
-  for (const param of methodParamGroups.headerParams.sort((a: go.HeaderParameter, b: go.HeaderParameter) => { return helpers.sortAscending(a.headerName, b.headerName);})) {
+  for (const param of methodParamGroups.headerParams.sort((a: go.HeaderParameter, b: go.HeaderParameter) => {
+    return helpers.sortAscending(a.headerName, b.headerName);
+  })) {
     if (param.headerName.match(/^content-type$/)) {
       // canonicalize content-type as req.SetBody checks for it via its canonicalized name :(
       param.headerName = 'Content-Type';
@@ -1038,7 +1056,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
   const multipartBodyParams = methodParamGroups.multipartBodyParams;
   const partialBodyParams = methodParamGroups.partialBodyParams;
 
-  const emitSetBodyWithErrCheck = function(setBodyParam: string, contentType?: string): string {
+  const emitSetBodyWithErrCheck = function (setBodyParam: string, contentType?: string): string {
     let content = `if err := ${setBodyParam}; err != nil {\n\treturn nil, err\n}\n;`;
     if (contentType) {
       content = `req.Raw().Header["Content-Type"] = []string{${contentType}}\n` + content;
@@ -1218,7 +1236,12 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
   return text;
 }
 
-function emitClientSideDefault(param: go.HeaderCollectionParameter | go.HeaderScalarParameter | go.QueryParameter, csd: go.ClientSideDefault, setterFormat: (name: string, val: string) => string, imports: ImportManager): string {
+function emitClientSideDefault(
+  param: go.HeaderCollectionParameter | go.HeaderScalarParameter | go.QueryParameter,
+  csd: go.ClientSideDefault,
+  setterFormat: (name: string, val: string) => string,
+  imports: ImportManager,
+): string {
   const defaultVar = naming.uncapitalize(param.name) + 'Default';
   let text = `\t${defaultVar} := ${helpers.formatLiteralValue(csd.defaultValue, true)}\n`;
   text += `\tif options != nil && options.${naming.capitalize(param.name)} != nil {\n`;
@@ -1251,7 +1274,7 @@ function getMediaFormat(type: go.WireType, mediaType: 'JSON' | 'XML', param: str
   return `${marshaller}(${param}${format})`;
 }
 
-function isArrayOfDateTimeForMarshalling(paramType: go.WireType): { format: go.TimeFormat, elemByVal: boolean } | undefined {
+function isArrayOfDateTimeForMarshalling(paramType: go.WireType): { format: go.TimeFormat; elemByVal: boolean } | undefined {
   if (paramType.kind !== 'slice') {
     return undefined;
   }
@@ -1265,7 +1288,7 @@ function isArrayOfDateTimeForMarshalling(paramType: go.WireType): { format: go.T
     case 'Unix':
       return {
         format: paramType.elementType.format,
-        elemByVal: paramType.elementTypeByValue
+        elemByVal: paramType.elementTypeByValue,
       };
     default:
       // RFC3339 uses the default marshaller
@@ -1428,7 +1451,7 @@ function createProtocolResponse(method: go.SyncMethod | go.LROPageableMethod | g
   return text;
 }
 
-function isArrayOfDateTime(paramType: go.WireType): { format: go.TimeFormat, elemByVal: boolean } | undefined {
+function isArrayOfDateTime(paramType: go.WireType): { format: go.TimeFormat; elemByVal: boolean } | undefined {
   if (paramType.kind !== 'slice') {
     return undefined;
   }
@@ -1437,7 +1460,7 @@ function isArrayOfDateTime(paramType: go.WireType): { format: go.TimeFormat, ele
   }
   return {
     format: paramType.elementType.format,
-    elemByVal: paramType.elementTypeByValue
+    elemByVal: paramType.elementTypeByValue,
   };
 }
 
@@ -1454,7 +1477,7 @@ function isMapOfDateTime(paramType: go.WireType): go.TimeFormat | undefined {
 /**
  * returns the parameters for the public API
  * e.g. "ctx context.Context, i int, s string"
- * 
+ *
  * @param method the method for which to emit the parameters
  * @param imports the import manager currently in scope
  * @returns the text for the method parameters
@@ -1598,7 +1621,7 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imp
     // at least one option
     text += `&runtime.NewPollerOptions${pollerTypeParam}{\n`;
     if (finalStateVia !== '') {
-      text += `\t\t\tFinalStateVia: ${finalStateVia},\n`;  
+      text += `\t\t\tFinalStateVia: ${finalStateVia},\n`;
     }
     if (method.operationLocationResultPath) {
       text += `\t\t\tOperationLocationResultPath: "${method.operationLocationResultPath}",\n`;
@@ -1631,7 +1654,7 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imp
     if (options.injectSpans) {
       text += '\t\t\tTracer: client.internal.Tracer(),\n';
     }
-    text  += '\t\t})\n';
+    text += '\t\t})\n';
   }
   text += '\t}\n';
 

@@ -23,7 +23,7 @@ export class ExampleContent {
 
 /**
  * Creates the content for all the *_example_test.go files.
- * 
+ *
  * @param pkg contains the package content
  * @param target the codegen target for the module
  * @param options the emitter options
@@ -56,7 +56,7 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
 
     let clientFactoryParams = new Array<go.ClientParameter>();
     if (options.factoryGatherAllParams) {
-      clientFactoryParams =  helpers.getAllClientParameters(pkg.src, target);
+      clientFactoryParams = helpers.getAllClientParameters(pkg.src, target);
     } else {
       clientFactoryParams = helpers.getCommonClientParameters(pkg.src, target);
     }
@@ -86,8 +86,8 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
         // create client
         const clientParameters: go.ParameterExample[] = [];
         for (const param of method.parameters) {
-          if (param.location === "client") {
-            const clientParam = example.parameters.find(p => p.parameter.name === param.name);
+          if (param.location === 'client') {
+            const clientParam = example.parameters.find((p) => p.parameter.name === param.name);
             if (clientParam) {
               clientParameters.push(clientParam);
             }
@@ -100,14 +100,14 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
           // since not all operation has all the client factory required parameters, we need to fake for the missing ones
           const clientFactoryParamsExample: go.ParameterExample[] = [];
           for (const clientParam of clientFactoryParams) {
-            const clientFactoryParam = clientParameters.find(p => p.parameter.name === clientParam.name);
+            const clientFactoryParam = clientParameters.find((p) => p.parameter.name === clientParam.name);
             if (clientFactoryParam) {
               clientFactoryParamsExample.push(clientFactoryParam);
             } else {
               clientFactoryParamsExample.push({ parameter: clientParam, value: generateFakeExample(clientParam.type, clientParam.name) });
             }
           }
-          exampleText += `\tclientFactory, err := ${go.getPackageName(pkg.src)}.NewClientFactory(${clientFactoryParamsExample.map(p => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue)).join(', ')}, nil)\n`;
+          exampleText += `\tclientFactory, err := ${go.getPackageName(pkg.src)}.NewClientFactory(${clientFactoryParamsExample.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue)).join(', ')}, nil)\n`;
           exampleText += `\tif err != nil {\n`;
           exampleText += `\t\tlog.Fatalf("failed to create client: %v", err)\n`;
           exampleText += `\t}\n`;
@@ -119,11 +119,11 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
             }
           }
           if (clientPrivateParameters.length > 0) {
-            clientRef += `${clientPrivateParameters.map(p => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}`;
+            clientRef += `${clientPrivateParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}`;
           }
           clientRef += `)`;
         } else {
-          exampleText += `\tclient, err := ${go.getPackageName(client.instance.constructors[0].pkg)}.${client.instance.constructors[0].name}(${clientParameters.map(p => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}, cred, nil)\n`;
+          exampleText += `\tclient, err := ${go.getPackageName(client.instance.constructors[0].pkg)}.${client.instance.constructors[0].name}(${clientParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}, cred, nil)\n`;
           exampleText += `\tif err != nil {\n`;
           exampleText += `\t\tlog.Fatalf("failed to create client: %v", err)\n`;
           exampleText += `\t}\n`;
@@ -133,8 +133,8 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
         // call method
         const methodParameters: go.ParameterExample[] = [];
         for (const param of method.parameters) {
-          if (param.location === "method") {
-            const methodParam = example.parameters.find(p => p.parameter.name === param.name);
+          if (param.location === 'method') {
+            const methodParam = example.parameters.find((p) => p.parameter.name === param.name);
             if (methodParam) {
               methodParameters.push(methodParam);
             } else if (go.isRequiredParameter(param.style)) {
@@ -144,20 +144,22 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
           }
         }
 
-        const methodOptionalParameters = example.optionalParamsGroup.filter(p => p.parameter.location === 'method');
+        const methodOptionalParameters = example.optionalParamsGroup.filter((p) => p.parameter.location === 'method');
         const checkResponse = example.responseEnvelope !== undefined;
 
         let methodOptionalParametersText = 'nil';
         if (methodOptionalParameters.length > 0) {
           methodOptionalParametersText = `&${go.getPackageName(method.optionalParamsGroup.pkg)}.${method.optionalParamsGroup.groupName}{\n`;
-          methodOptionalParametersText += methodOptionalParameters.map(p => `${naming.capitalize(p.parameter.name)}: ${getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)}`).join(',\n');
+          methodOptionalParametersText += methodOptionalParameters
+            .map((p) => `${naming.capitalize(p.parameter.name)}: ${getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)}`)
+            .join(',\n');
           methodOptionalParametersText += `}`;
         }
 
         switch (method.kind) {
           case 'lroMethod':
           case 'lroPageableMethod':
-            exampleText += `\tpoller, err := ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
+            exampleText += `\tpoller, err := ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
             exampleText += `\tif err != nil {\n`;
             exampleText += `\t\tlog.Fatalf("failed to finish the request: %v", err)\n`;
             exampleText += `\t}\n`;
@@ -168,13 +170,13 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
             exampleText += `\t}\n`;
             break;
           case 'method':
-            exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map(p => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
+            exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
             exampleText += `\tif err != nil {\n`;
             exampleText += `\t\tlog.Fatalf("failed to finish the request: %v", err)\n`;
             exampleText += `\t}\n`;
             break;
           case 'pageableMethod':
-            exampleText += `\tpager := ${clientRef}.${fixUpMethodName(method)}(${methodParameters.map(p => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
+            exampleText += `\tpager := ${clientRef}.${fixUpMethodName(method)}(${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
             break;
           default:
             method satisfies never;
@@ -186,7 +188,7 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
           if (method.kind === 'lroPageableMethod') {
             resultName = 'res';
           }
-          const itemType = ((method as go.PageableMethod).returns.result as go.ModelResult).modelType.fields.find(f => f.type.kind === 'slice')!;
+          const itemType = ((method as go.PageableMethod).returns.result as go.ModelResult).modelType.fields.find((f) => f.type.kind === 'slice')!;
           exampleText += `\tfor ${resultName}.More() {\n`;
           exampleText += `\t\tpage, err := ${resultName}.NextPage(ctx)\n`;
           exampleText += `\t\tif err != nil {\n`;
@@ -306,13 +308,13 @@ function getExampleValue(pkg: go.TestPackage, example: go.ExampleType, indent: s
         exampleText = `${indent}{\n`;
       }
       for (const field in example.value) {
-        const goField = example.type.fields.find(f => f.name === field)!;
+        const goField = example.type.fields.find((f) => f.name === field)!;
         const isFieldByValue = goField.byValue ?? false;
         const isFieldPolymorphic = goField.type.kind === 'interface';
         exampleText += `${indent}\t${field}: ${getExampleValue(pkg, example.value[field], indent + '\t', imports, isFieldByValue && !isFieldPolymorphic).slice(indent.length + 1)},\n`;
       }
       if (example.additionalProperties) {
-        const additionalPropertiesField = example.type.fields.find(f => f.annotations.isAdditionalProperties)!;
+        const additionalPropertiesField = example.type.fields.find((f) => f.annotations.isAdditionalProperties)!;
         if (additionalPropertiesField.type.kind !== 'map') {
           throw new CodegenError('InternalError', `additional properties field type should be map type`);
         }
@@ -334,7 +336,6 @@ function getExampleValue(pkg: go.TestPackage, example: go.ExampleType, indent: s
 
 function getRef(byValue: boolean): string {
   return byValue ? '' : '&';
-
 }
 
 function getConstantValue(pkg: go.TestPackage, type: go.Constant, value: any): string {
@@ -353,10 +354,10 @@ function getConstantValue(pkg: go.TestPackage, type: go.Constant, value: any): s
 
 function getTimeValue(type: go.Time, value: any, imports?: ImportManager): string {
   const formatMap: Record<string, string> = {
-    'PlainDate': helpers.plainDateFormat,
-    'PlainTime': helpers.plainTimeFormat,
-    'RFC1123': helpers.RFC1123Format,
-    'RFC3339': helpers.RFC3339Format,
+    PlainDate: helpers.plainDateFormat,
+    PlainTime: helpers.plainTimeFormat,
+    RFC1123: helpers.RFC1123Format,
+    RFC3339: helpers.RFC3339Format,
   };
 
   if (type.format in formatMap) {
