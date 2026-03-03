@@ -133,7 +133,7 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
       for (const param of client.parameters) {
         if (go.isLiteralParameter(param.style)) {
           continue;
-        } else if (clientAccessor.returns.parameters.includes(param)) {
+        } else if (clientAccessor.returns.parameters.some(p => p.name === param.name)) {
           // only propagate ctor params that are common between parent/child
           initFields.push(`${param.name}: client.${param.name}`);
         }
