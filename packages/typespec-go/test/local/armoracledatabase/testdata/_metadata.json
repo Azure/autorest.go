@@ -1,4 +1,6 @@
 {
-  "apiVersion": "2024-06-01-preview",
+  "apiVersions": {
+    "Oracle.Database": "2024-06-01-preview"
+  },
   "emitterVersion": "0.0.0"
 }

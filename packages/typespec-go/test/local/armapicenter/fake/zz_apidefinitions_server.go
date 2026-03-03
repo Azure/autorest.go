@@ -176,7 +176,7 @@ func (a *APIDefinitionsServerTransport) dispatchCreateOrUpdate(req *http.Request
 	if err != nil {
 		return nil, err
 	}
-	if val := server.GetResponse(respr).ETag; val != nil {
+	if val := server.GetResponse(respr).EtagHeader; val != nil {
 		resp.Header.Set("ETag", *val)
 	}
 	return resp, nil
@@ -337,7 +337,7 @@ func (a *APIDefinitionsServerTransport) dispatchGet(req *http.Request) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	if val := server.GetResponse(respr).ETag; val != nil {
+	if val := server.GetResponse(respr).EtagHeader; val != nil {
 		resp.Header.Set("ETag", *val)
 	}
 	return resp, nil

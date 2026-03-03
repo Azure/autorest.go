@@ -255,7 +255,7 @@ export class TypeAdapter {
     }
   }
 
-  private getTimeType(encode: tsp.DateTimeKnownEncoding, utc: boolean): go.Time {
+  private getTimeType(encode: string, utc: boolean): go.Time {
     const encoding = getDateTimeEncoding(encode);
     let datetime = this.types.get(encoding);
     if (datetime) {
@@ -790,7 +790,7 @@ function getPrimitiveType(type: tcgc.SdkBuiltInType): 'bool' | 'float32' | 'floa
   }
 }
 
-function getDateTimeEncoding(encoding: tsp.DateTimeKnownEncoding): go.TimeFormat {
+function getDateTimeEncoding(encoding: string): go.TimeFormat {
   switch (encoding) {
     case 'rfc3339':
       return 'RFC3339';
@@ -798,6 +798,8 @@ function getDateTimeEncoding(encoding: tsp.DateTimeKnownEncoding): go.TimeFormat
       return 'RFC1123';
     case 'unixTimestamp':
       return 'Unix';
+    default:
+      throw new AdapterError('UnsupportedTsp', `unsupported date time encoding ${encoding}`);
   }
 }
 

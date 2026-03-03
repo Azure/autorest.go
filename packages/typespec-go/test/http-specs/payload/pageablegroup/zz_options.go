@@ -81,3 +81,15 @@ type PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHe
 	Foo   *string
 	Token *string
 }
+
+// PageableXMLPaginationClientListWithContinuationOptions contains the optional parameters for the PageableXMLPaginationClient.NewListWithContinuationPager
+// method.
+type PageableXMLPaginationClientListWithContinuationOptions struct {
+	Marker *string
+}
+
+// PageableXMLPaginationClientListWithNextLinkOptions contains the optional parameters for the PageableXMLPaginationClient.NewListWithNextLinkPager
+// method.
+type PageableXMLPaginationClientListWithNextLinkOptions struct {
+	// placeholder for future optional parameters
+}

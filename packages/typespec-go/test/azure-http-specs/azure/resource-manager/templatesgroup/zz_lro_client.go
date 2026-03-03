@@ -273,3 +273,69 @@ func (client *LroClient) exportCreateRequest(ctx context.Context, resourceGroupN
 	}
 	return req, nil
 }
+
+// - body - The request body
+// - options - LroClientBeginExportArrayOptions contains the optional parameters for the LroClient.BeginExportArray method.
+func (client *LroClient) BeginExportArray(ctx context.Context, body ExportRequest, options *LroClientBeginExportArrayOptions) (*runtime.Poller[LroClientExportArrayResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.exportArray(ctx, body, options)
+		if err != nil {
+			return nil, err
+		}
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LroClientExportArrayResponse]{
+			Tracer: client.internal.Tracer(),
+		})
+		return poller, err
+	} else {
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[LroClientExportArrayResponse]{
+			Tracer: client.internal.Tracer(),
+		})
+	}
+}
+
+// ExportArray -
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-12-01-preview
+func (client *LroClient) exportArray(ctx context.Context, body ExportRequest, options *LroClientBeginExportArrayOptions) (*http.Response, error) {
+	var err error
+	const operationName = "LroClient.BeginExportArray"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.exportArrayCreateRequest(ctx, body, options)
+	if err != nil {
+		return nil, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
+	}
+	return httpResp, nil
+}
+
+// exportArrayCreateRequest creates the ExportArray request.
+func (client *LroClient) exportArrayCreateRequest(ctx context.Context, body ExportRequest, _ *LroClientBeginExportArrayOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/providers/Azure.ResourceManager.OperationTemplates/exportArray"
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2023-12-01-preview")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}

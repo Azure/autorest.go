@@ -17,7 +17,7 @@ import { ImportManager } from '../core/imports.js';
  */
 export function generateServerFactory(pkg: go.FakePackage, target: go.CodeModelType): string {
   // generate server factory only for ARM
-  if (target !== 'azure-arm' || !pkg.parent.clients) {
+  if (target !== 'azure-arm' || pkg.parent.clients.length === 0) {
     return '';
   }
 
@@ -80,7 +80,7 @@ export function generateServerFactory(pkg: go.FakePackage, target: go.CodeModelT
   for (const client of finalSubClients) {
     text += `${indent.get()}case "${client.name}":\n`;
     const serverName = getServerName(client);
-    text += `${indent.push().get()}initServer(s, &s.tr${serverName}, func() *${serverName}Transport { return New${serverName}Transport(&s.srv.${serverName}) })\n`;
+    text += `${indent.push().get()}initServer(&s.trMu, &s.tr${serverName}, func() *${serverName}Transport { return New${serverName}Transport(&s.srv.${serverName}) })\n`;
     text += `${indent.get()}resp, err = s.tr${serverName}.Do(req)\n`;
     indent.pop();
   }
@@ -88,13 +88,5 @@ export function generateServerFactory(pkg: go.FakePackage, target: go.CodeModelT
   text += `${indent.pop().get()}}\n\n`;
   text += `${indent.get()}${helpers.buildErrCheck(indent, 'err', 'nil, err')}\n\n`;
   text += `${indent.get()}return resp, nil\n}\n\n`;
-
-  text += 'func initServer[T any](s *ServerFactoryTransport, dst **T, src func() *T) {\n';
-  text += `${indent.get()}s.trMu.Lock()\n`;
-  text += `${indent.get()}${helpers.buildIfBlock(indent, {
-    condition: '*dst == nil',
-    body: (indent) => `${indent.get()}*dst = src()\n`,
-  })}\n`;
-  text += `${indent.get()}s.trMu.Unlock()\n}\n`;
   return text;
 }

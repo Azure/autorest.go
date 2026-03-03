@@ -27,6 +27,11 @@ type LroClientDeleteResponse struct {
 	// placeholder for future response values
 }
 
+// LroClientExportArrayResponse contains the response from method LroClient.BeginExportArray.
+type LroClientExportArrayResponse struct {
+	ExportResultArray []*ExportResult
+}
+
 // LroClientExportResponse contains the response from method LroClient.BeginExport.
 type LroClientExportResponse struct {
 	ExportResult

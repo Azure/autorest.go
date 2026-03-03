@@ -102,3 +102,26 @@ type RequestQueryResponseHeaderResponse struct {
 	// REQUIRED
 	Pets []*Pet
 }
+
+// XMLPet - An XML pet item.
+type XMLPet struct {
+	// REQUIRED
+	ID *string `xml:"Id"`
+
+	// REQUIRED
+	Name *string `xml:"Name"`
+}
+
+// XMLPetListResult - The XML response for listing pets.
+type XMLPetListResult struct {
+	// REQUIRED
+	Pets       []*XMLPet `xml:"Pets>XMLPet"`
+	NextMarker *string   `xml:"NextMarker"`
+}
+
+// XMLPetListResultWithNextLink - The XML response for listing pets with next link.
+type XMLPetListResultWithNextLink struct {
+	// REQUIRED
+	Pets     []*XMLPet `xml:"Pets>XMLPet"`
+	NextLink *string   `xml:"NextLink"`
+}

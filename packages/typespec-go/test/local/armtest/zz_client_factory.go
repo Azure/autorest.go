@@ -47,3 +47,11 @@ func (c *ClientFactory) NewLROClient() *LROClient {
 		internal:       c.internal,
 	}
 }
+
+// NewParameterGroupOperationsClient creates a new instance of ParameterGroupOperationsClient.
+func (c *ClientFactory) NewParameterGroupOperationsClient() *ParameterGroupOperationsClient {
+	return &ParameterGroupOperationsClient{
+		subscriptionID: c.subscriptionID,
+		internal:       c.internal,
+	}
+}

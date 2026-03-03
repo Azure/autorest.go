@@ -20,6 +20,9 @@ type ServerFactory struct {
 
 	// LROServer contains the fakes for client LROClient
 	LROServer LROServer
+
+	// ParameterGroupOperationsServer contains the fakes for client ParameterGroupOperationsClient
+	ParameterGroupOperationsServer ParameterGroupOperationsServer
 }
 
 // NewServerFactoryTransport creates a new instance of ServerFactoryTransport with the provided implementation.
@@ -34,10 +37,11 @@ func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
 // ServerFactoryTransport connects instances of armtest.ClientFactory to instances of ServerFactory.
 // Don't use this type directly, use NewServerFactoryTransport instead.
 type ServerFactoryTransport struct {
-	srv               *ServerFactory
-	trMu              sync.Mutex
-	trBodyRootsServer *BodyRootsServerTransport
-	trLROServer       *LROServerTransport
+	srv                              *ServerFactory
+	trMu                             sync.Mutex
+	trBodyRootsServer                *BodyRootsServerTransport
+	trLROServer                      *LROServerTransport
+	trParameterGroupOperationsServer *ParameterGroupOperationsServerTransport
 }
 
 // Do implements the policy.Transporter interface for ServerFactoryTransport.
@@ -54,11 +58,16 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 
 	switch client {
 	case "BodyRootsClient":
-		initServer(s, &s.trBodyRootsServer, func() *BodyRootsServerTransport { return NewBodyRootsServerTransport(&s.srv.BodyRootsServer) })
+		initServer(&s.trMu, &s.trBodyRootsServer, func() *BodyRootsServerTransport { return NewBodyRootsServerTransport(&s.srv.BodyRootsServer) })
 		resp, err = s.trBodyRootsServer.Do(req)
 	case "LROClient":
-		initServer(s, &s.trLROServer, func() *LROServerTransport { return NewLROServerTransport(&s.srv.LROServer) })
+		initServer(&s.trMu, &s.trLROServer, func() *LROServerTransport { return NewLROServerTransport(&s.srv.LROServer) })
 		resp, err = s.trLROServer.Do(req)
+	case "ParameterGroupOperationsClient":
+		initServer(&s.trMu, &s.trParameterGroupOperationsServer, func() *ParameterGroupOperationsServerTransport {
+			return NewParameterGroupOperationsServerTransport(&s.srv.ParameterGroupOperationsServer)
+		})
+		resp, err = s.trParameterGroupOperationsServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}
@@ -68,12 +77,4 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	}
 
 	return resp, nil
-}
-
-func initServer[T any](s *ServerFactoryTransport, dst **T, src func() *T) {
-	s.trMu.Lock()
-	if *dst == nil {
-		*dst = src()
-	}
-	s.trMu.Unlock()
 }

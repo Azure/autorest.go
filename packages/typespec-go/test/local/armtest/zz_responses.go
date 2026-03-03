@@ -20,3 +20,21 @@ type LROClientOkResponseWithAsyncHeaderResponse struct {
 	// LRO model resource.
 	LROModel
 }
+
+// ParameterGroupOperationsClientNoParameterGroupResponse contains the response from method ParameterGroupOperationsClient.NoParameterGroup.
+type ParameterGroupOperationsClientNoParameterGroupResponse struct {
+	// Widget resource for testing parameter groups
+	Widget
+}
+
+// ParameterGroupOperationsClientSharedParameterGroup1Response contains the response from method ParameterGroupOperationsClient.SharedParameterGroup1.
+type ParameterGroupOperationsClientSharedParameterGroup1Response struct {
+	// Widget resource for testing parameter groups
+	Widget
+}
+
+// ParameterGroupOperationsClientSharedParameterGroup2Response contains the response from method ParameterGroupOperationsClient.SharedParameterGroup2.
+type ParameterGroupOperationsClientSharedParameterGroup2Response struct {
+	// Widget resource for testing parameter groups
+	Widget
+}

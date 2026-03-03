@@ -134,3 +134,11 @@ func (client *XMLClient) NewXMLSimpleModelValueClient() *XMLSimpleModelValueClie
 		internal: client.internal,
 	}
 }
+
+// NewXMLXMLErrorValueClient creates a new instance of [XMLXMLErrorValueClient].
+func (client *XMLClient) NewXMLXMLErrorValueClient() *XMLXMLErrorValueClient {
+	return &XMLXMLErrorValueClient{
+		endpoint: client.endpoint,
+		internal: client.internal,
+	}
+}

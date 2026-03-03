@@ -66,25 +66,25 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 
 	switch client {
 	case "OperationsClient":
-		initServer(s, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
+		initServer(&s.trMu, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
 		resp, err = s.trOperationsServer.Do(req)
 	case "ResourceGroupResourceOperationsClient":
-		initServer(s, &s.trResourceGroupResourceOperationsServer, func() *ResourceGroupResourceOperationsServerTransport {
+		initServer(&s.trMu, &s.trResourceGroupResourceOperationsServer, func() *ResourceGroupResourceOperationsServerTransport {
 			return NewResourceGroupResourceOperationsServerTransport(&s.srv.ResourceGroupResourceOperationsServer)
 		})
 		resp, err = s.trResourceGroupResourceOperationsServer.Do(req)
 	case "SubscriptionResource1OperationsClient":
-		initServer(s, &s.trSubscriptionResource1OperationsServer, func() *SubscriptionResource1OperationsServerTransport {
+		initServer(&s.trMu, &s.trSubscriptionResource1OperationsServer, func() *SubscriptionResource1OperationsServerTransport {
 			return NewSubscriptionResource1OperationsServerTransport(&s.srv.SubscriptionResource1OperationsServer)
 		})
 		resp, err = s.trSubscriptionResource1OperationsServer.Do(req)
 	case "SubscriptionResource2OperationsClient":
-		initServer(s, &s.trSubscriptionResource2OperationsServer, func() *SubscriptionResource2OperationsServerTransport {
+		initServer(&s.trMu, &s.trSubscriptionResource2OperationsServer, func() *SubscriptionResource2OperationsServerTransport {
 			return NewSubscriptionResource2OperationsServerTransport(&s.srv.SubscriptionResource2OperationsServer)
 		})
 		resp, err = s.trSubscriptionResource2OperationsServer.Do(req)
 	case "SubscriptionResourceOperationsClient":
-		initServer(s, &s.trSubscriptionResourceOperationsServer, func() *SubscriptionResourceOperationsServerTransport {
+		initServer(&s.trMu, &s.trSubscriptionResourceOperationsServer, func() *SubscriptionResourceOperationsServerTransport {
 			return NewSubscriptionResourceOperationsServerTransport(&s.srv.SubscriptionResourceOperationsServer)
 		})
 		resp, err = s.trSubscriptionResourceOperationsServer.Do(req)
@@ -97,12 +97,4 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	}
 
 	return resp, nil
-}
-
-func initServer[T any](s *ServerFactoryTransport, dst **T, src func() *T) {
-	s.trMu.Lock()
-	if *dst == nil {
-		*dst = src()
-	}
-	s.trMu.Unlock()
 }

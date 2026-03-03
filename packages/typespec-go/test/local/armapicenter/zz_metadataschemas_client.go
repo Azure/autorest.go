@@ -109,7 +109,7 @@ func (client *MetadataSchemasClient) createOrUpdateCreateRequest(ctx context.Con
 func (client *MetadataSchemasClient) createOrUpdateHandleResponse(resp *http.Response) (MetadataSchemasClientCreateOrUpdateResponse, error) {
 	result := MetadataSchemasClientCreateOrUpdateResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.EtagHeader = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MetadataSchema); err != nil {
 		return MetadataSchemasClientCreateOrUpdateResponse{}, err
@@ -239,7 +239,7 @@ func (client *MetadataSchemasClient) getCreateRequest(ctx context.Context, resou
 func (client *MetadataSchemasClient) getHandleResponse(resp *http.Response) (MetadataSchemasClientGetResponse, error) {
 	result := MetadataSchemasClientGetResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.EtagHeader = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MetadataSchema); err != nil {
 		return MetadataSchemasClientGetResponse{}, err

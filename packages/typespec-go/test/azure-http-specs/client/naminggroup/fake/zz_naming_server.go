@@ -299,7 +299,7 @@ func (n *NamingServerTransport) dispatchResponse(req *http.Request) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	if val := server.GetResponse(respr).DefaultName; val != nil {
+	if val := server.GetResponse(respr).ClientName; val != nil {
 		resp.Header.Set("default-name", *val)
 	}
 	return resp, nil

@@ -6,6 +6,7 @@ package pageablegroup
 
 import (
 	"encoding/json"
+	"encoding/xml"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"reflect"
@@ -527,6 +528,50 @@ func (r *RequestQueryResponseHeaderResponse) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// MarshalXML implements the xml.Marshaller interface for type XMLPet.
+func (x XMLPet) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "Pet"
+	type alias XMLPet
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&x),
+	}
+	return enc.EncodeElement(aux, start)
+}
+
+// MarshalXML implements the xml.Marshaller interface for type XMLPetListResult.
+func (x XMLPetListResult) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "PetListResult"
+	type alias XMLPetListResult
+	aux := &struct {
+		*alias
+		Pets *[]*XMLPet `xml:"Pets>XMLPet"`
+	}{
+		alias: (*alias)(&x),
+	}
+	if x.Pets != nil {
+		aux.Pets = &x.Pets
+	}
+	return enc.EncodeElement(aux, start)
+}
+
+// MarshalXML implements the xml.Marshaller interface for type XMLPetListResultWithNextLink.
+func (x XMLPetListResultWithNextLink) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "PetListResult"
+	type alias XMLPetListResultWithNextLink
+	aux := &struct {
+		*alias
+		Pets *[]*XMLPet `xml:"Pets>XMLPet"`
+	}{
+		alias: (*alias)(&x),
+	}
+	if x.Pets != nil {
+		aux.Pets = &x.Pets
+	}
+	return enc.EncodeElement(aux, start)
 }
 
 func populate(m map[string]any, k string, v any) {

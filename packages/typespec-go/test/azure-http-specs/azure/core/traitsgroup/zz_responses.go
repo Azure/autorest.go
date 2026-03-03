@@ -19,9 +19,9 @@ type TraitsClientSmokeTestResponse struct {
 	User
 	Bar *string
 
-	// The entity tag for the response.
-	ETag *string
-
 	// An opaque, globally-unique, client-generated string identifier for the request.
-	XMSClientRequestID *string
+	ClientRequestID *string
+
+	// The entity tag for the response.
+	EtagHeader *string
 }

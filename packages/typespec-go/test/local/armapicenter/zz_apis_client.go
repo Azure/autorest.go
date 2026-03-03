@@ -113,7 +113,7 @@ func (client *ApisClient) createOrUpdateCreateRequest(ctx context.Context, resou
 func (client *ApisClient) createOrUpdateHandleResponse(resp *http.Response) (ApisClientCreateOrUpdateResponse, error) {
 	result := ApisClientCreateOrUpdateResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.EtagHeader = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.API); err != nil {
 		return ApisClientCreateOrUpdateResponse{}, err
@@ -253,7 +253,7 @@ func (client *ApisClient) getCreateRequest(ctx context.Context, resourceGroupNam
 func (client *ApisClient) getHandleResponse(resp *http.Response) (ApisClientGetResponse, error) {
 	result := ApisClientGetResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.EtagHeader = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.API); err != nil {
 		return ApisClientGetResponse{}, err

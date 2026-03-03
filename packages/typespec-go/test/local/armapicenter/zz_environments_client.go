@@ -114,7 +114,7 @@ func (client *EnvironmentsClient) createOrUpdateCreateRequest(ctx context.Contex
 func (client *EnvironmentsClient) createOrUpdateHandleResponse(resp *http.Response) (EnvironmentsClientCreateOrUpdateResponse, error) {
 	result := EnvironmentsClientCreateOrUpdateResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.EtagHeader = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Environment); err != nil {
 		return EnvironmentsClientCreateOrUpdateResponse{}, err
@@ -254,7 +254,7 @@ func (client *EnvironmentsClient) getCreateRequest(ctx context.Context, resource
 func (client *EnvironmentsClient) getHandleResponse(resp *http.Response) (EnvironmentsClientGetResponse, error) {
 	result := EnvironmentsClientGetResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.EtagHeader = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Environment); err != nil {
 		return EnvironmentsClientGetResponse{}, err

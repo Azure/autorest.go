@@ -45,9 +45,10 @@ export function getServerName(client: go.Client): string {
  * Generates the contents for the *_server.go files.
  *
  * @param pkg contains the package content
+ * @param target the codegen target for the module
  * @returns the contents to generate or an empty object
  */
-export function generateServers(pkg: go.FakePackage): ServerContent {
+export function generateServers(pkg: go.FakePackage, target: go.CodeModelType): ServerContent {
   const operations = new Array<OperationGroupContent>();
   for (const client of pkg.parent.clients) {
     if (client.clientAccessors.length === 0 && helpers.clientHasNoExportedMethods(client)) {
@@ -238,6 +239,12 @@ export function generateServers(pkg: go.FakePackage): ServerContent {
     text += content;
     operations.push(new OperationGroupContent(serverName, text));
   }
+
+  if (target === 'azure-arm' && pkg.parent.clients.length > 0) {
+    // ARM server factory uses the initServer func
+    requiredHelpers.initServer = true;
+  }
+
   return new ServerContent(operations, generateServerInternal(pkg, requiredHelpers));
 }
 

@@ -1,4 +1,6 @@
 {
-  "apiVersion": "2024-07-19-preview",
+  "apiVersions": {
+    "Microsoft.DatabaseWatcher": "2024-07-19-preview"
+  },
   "emitterVersion": "0.0.0"
 }

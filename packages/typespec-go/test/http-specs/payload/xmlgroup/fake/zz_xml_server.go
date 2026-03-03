@@ -50,6 +50,9 @@ type XMLServer struct {
 
 	// XMLSimpleModelValueServer contains the fakes for client XMLSimpleModelValueClient
 	XMLSimpleModelValueServer XMLSimpleModelValueServer
+
+	// XMLXMLErrorValueServer contains the fakes for client XMLXMLErrorValueClient
+	XMLXMLErrorValueServer XMLXMLErrorValueServer
 }
 
 // NewXMLServerTransport creates a new instance of XMLServerTransport with the provided implementation.
@@ -76,6 +79,7 @@ type XMLServerTransport struct {
 	trXMLModelWithTextValueServer           *XMLModelWithTextValueServerTransport
 	trXMLModelWithUnwrappedArrayValueServer *XMLModelWithUnwrappedArrayValueServerTransport
 	trXMLSimpleModelValueServer             *XMLSimpleModelValueServerTransport
+	trXMLXMLErrorValueServer                *XMLXMLErrorValueServerTransport
 }
 
 // Do implements the policy.Transporter interface for XMLServerTransport.
@@ -154,6 +158,11 @@ func (x *XMLServerTransport) dispatchToClientFake(req *http.Request, client stri
 			return NewXMLSimpleModelValueServerTransport(&x.srv.XMLSimpleModelValueServer)
 		})
 		resp, err = x.trXMLSimpleModelValueServer.Do(req)
+	case "XMLXMLErrorValueClient":
+		initServer(&x.trMu, &x.trXMLXMLErrorValueServer, func() *XMLXMLErrorValueServerTransport {
+			return NewXMLXMLErrorValueServerTransport(&x.srv.XMLXMLErrorValueServer)
+		})
+		resp, err = x.trXMLXMLErrorValueServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

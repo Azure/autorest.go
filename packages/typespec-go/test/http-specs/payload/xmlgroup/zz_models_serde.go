@@ -4,7 +4,13 @@
 
 package xmlgroup
 
-import "encoding/xml"
+import (
+	"encoding/json"
+	"encoding/xml"
+	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"reflect"
+)
 
 // MarshalXML implements the xml.Marshaller interface for type ModelWithArrayOfModel.
 func (m ModelWithArrayOfModel) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
@@ -148,4 +154,55 @@ func (m ModelWithUnwrappedArray) MarshalXML(enc *xml.Encoder, start xml.StartEle
 		aux.Counts = &m.Counts
 	}
 	return enc.EncodeElement(aux, start)
+}
+
+// MarshalJSON implements the json.Marshaller interface for type XMLErrorBody.
+func (x XMLErrorBody) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "code", x.Code)
+	populate(objectMap, "message", x.Message)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type XMLErrorBody.
+func (x *XMLErrorBody) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", x, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "code":
+			err = unpopulate(val, "Code", &x.Code)
+			delete(rawMsg, key)
+		case "message":
+			err = unpopulate(val, "Message", &x.Message)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", x, err)
+		}
+	}
+	return nil
+}
+
+func populate(m map[string]any, k string, v any) {
+	if v == nil {
+		return
+	} else if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else if !reflect.ValueOf(v).IsNil() {
+		m[k] = v
+	}
+}
+
+func unpopulate(data json.RawMessage, fn string, v any) error {
+	if data == nil || string(data) == "null" {
+		return nil
+	}
+	if err := json.Unmarshal(data, v); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	return nil
 }

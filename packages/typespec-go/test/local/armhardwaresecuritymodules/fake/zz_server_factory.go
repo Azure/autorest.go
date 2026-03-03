@@ -62,20 +62,20 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 
 	switch client {
 	case "CloudHsmClustersClient":
-		initServer(s, &s.trCloudHsmClustersServer, func() *CloudHsmClustersServerTransport {
+		initServer(&s.trMu, &s.trCloudHsmClustersServer, func() *CloudHsmClustersServerTransport {
 			return NewCloudHsmClustersServerTransport(&s.srv.CloudHsmClustersServer)
 		})
 		resp, err = s.trCloudHsmClustersServer.Do(req)
 	case "DedicatedHsmsClient":
-		initServer(s, &s.trDedicatedHsmsServer, func() *DedicatedHsmsServerTransport {
+		initServer(&s.trMu, &s.trDedicatedHsmsServer, func() *DedicatedHsmsServerTransport {
 			return NewDedicatedHsmsServerTransport(&s.srv.DedicatedHsmsServer)
 		})
 		resp, err = s.trDedicatedHsmsServer.Do(req)
 	case "OperationsClient":
-		initServer(s, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
+		initServer(&s.trMu, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
 		resp, err = s.trOperationsServer.Do(req)
 	case "PrivateEndpointConnectionsClient":
-		initServer(s, &s.trPrivateEndpointConnectionsServer, func() *PrivateEndpointConnectionsServerTransport {
+		initServer(&s.trMu, &s.trPrivateEndpointConnectionsServer, func() *PrivateEndpointConnectionsServerTransport {
 			return NewPrivateEndpointConnectionsServerTransport(&s.srv.PrivateEndpointConnectionsServer)
 		})
 		resp, err = s.trPrivateEndpointConnectionsServer.Do(req)
@@ -88,12 +88,4 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	}
 
 	return resp, nil
-}
-
-func initServer[T any](s *ServerFactoryTransport, dst **T, src func() *T) {
-	s.trMu.Lock()
-	if *dst == nil {
-		*dst = src()
-	}
-	s.trMu.Unlock()
 }

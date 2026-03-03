@@ -127,80 +127,80 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 
 	switch client {
 	case "AddonsClient":
-		initServer(s, &s.trAddonsServer, func() *AddonsServerTransport { return NewAddonsServerTransport(&s.srv.AddonsServer) })
+		initServer(&s.trMu, &s.trAddonsServer, func() *AddonsServerTransport { return NewAddonsServerTransport(&s.srv.AddonsServer) })
 		resp, err = s.trAddonsServer.Do(req)
 	case "AlertsClient":
-		initServer(s, &s.trAlertsServer, func() *AlertsServerTransport { return NewAlertsServerTransport(&s.srv.AlertsServer) })
+		initServer(&s.trMu, &s.trAlertsServer, func() *AlertsServerTransport { return NewAlertsServerTransport(&s.srv.AlertsServer) })
 		resp, err = s.trAlertsServer.Do(req)
 	case "AvailableSKUsClient":
-		initServer(s, &s.trAvailableSKUsServer, func() *AvailableSKUsServerTransport {
+		initServer(&s.trMu, &s.trAvailableSKUsServer, func() *AvailableSKUsServerTransport {
 			return NewAvailableSKUsServerTransport(&s.srv.AvailableSKUsServer)
 		})
 		resp, err = s.trAvailableSKUsServer.Do(req)
 	case "BandwidthSchedulesClient":
-		initServer(s, &s.trBandwidthSchedulesServer, func() *BandwidthSchedulesServerTransport {
+		initServer(&s.trMu, &s.trBandwidthSchedulesServer, func() *BandwidthSchedulesServerTransport {
 			return NewBandwidthSchedulesServerTransport(&s.srv.BandwidthSchedulesServer)
 		})
 		resp, err = s.trBandwidthSchedulesServer.Do(req)
 	case "ContainersClient":
-		initServer(s, &s.trContainersServer, func() *ContainersServerTransport { return NewContainersServerTransport(&s.srv.ContainersServer) })
+		initServer(&s.trMu, &s.trContainersServer, func() *ContainersServerTransport { return NewContainersServerTransport(&s.srv.ContainersServer) })
 		resp, err = s.trContainersServer.Do(req)
 	case "DevicesClient":
-		initServer(s, &s.trDevicesServer, func() *DevicesServerTransport { return NewDevicesServerTransport(&s.srv.DevicesServer) })
+		initServer(&s.trMu, &s.trDevicesServer, func() *DevicesServerTransport { return NewDevicesServerTransport(&s.srv.DevicesServer) })
 		resp, err = s.trDevicesServer.Do(req)
 	case "DiagnosticSettingsClient":
-		initServer(s, &s.trDiagnosticSettingsServer, func() *DiagnosticSettingsServerTransport {
+		initServer(&s.trMu, &s.trDiagnosticSettingsServer, func() *DiagnosticSettingsServerTransport {
 			return NewDiagnosticSettingsServerTransport(&s.srv.DiagnosticSettingsServer)
 		})
 		resp, err = s.trDiagnosticSettingsServer.Do(req)
 	case "JobsClient":
-		initServer(s, &s.trJobsServer, func() *JobsServerTransport { return NewJobsServerTransport(&s.srv.JobsServer) })
+		initServer(&s.trMu, &s.trJobsServer, func() *JobsServerTransport { return NewJobsServerTransport(&s.srv.JobsServer) })
 		resp, err = s.trJobsServer.Do(req)
 	case "MonitoringConfigClient":
-		initServer(s, &s.trMonitoringConfigServer, func() *MonitoringConfigServerTransport {
+		initServer(&s.trMu, &s.trMonitoringConfigServer, func() *MonitoringConfigServerTransport {
 			return NewMonitoringConfigServerTransport(&s.srv.MonitoringConfigServer)
 		})
 		resp, err = s.trMonitoringConfigServer.Do(req)
 	case "NodesClient":
-		initServer(s, &s.trNodesServer, func() *NodesServerTransport { return NewNodesServerTransport(&s.srv.NodesServer) })
+		initServer(&s.trMu, &s.trNodesServer, func() *NodesServerTransport { return NewNodesServerTransport(&s.srv.NodesServer) })
 		resp, err = s.trNodesServer.Do(req)
 	case "OperationsClient":
-		initServer(s, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
+		initServer(&s.trMu, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
 		resp, err = s.trOperationsServer.Do(req)
 	case "OperationsStatusClient":
-		initServer(s, &s.trOperationsStatusServer, func() *OperationsStatusServerTransport {
+		initServer(&s.trMu, &s.trOperationsStatusServer, func() *OperationsStatusServerTransport {
 			return NewOperationsStatusServerTransport(&s.srv.OperationsStatusServer)
 		})
 		resp, err = s.trOperationsStatusServer.Do(req)
 	case "OrdersClient":
-		initServer(s, &s.trOrdersServer, func() *OrdersServerTransport { return NewOrdersServerTransport(&s.srv.OrdersServer) })
+		initServer(&s.trMu, &s.trOrdersServer, func() *OrdersServerTransport { return NewOrdersServerTransport(&s.srv.OrdersServer) })
 		resp, err = s.trOrdersServer.Do(req)
 	case "RolesClient":
-		initServer(s, &s.trRolesServer, func() *RolesServerTransport { return NewRolesServerTransport(&s.srv.RolesServer) })
+		initServer(&s.trMu, &s.trRolesServer, func() *RolesServerTransport { return NewRolesServerTransport(&s.srv.RolesServer) })
 		resp, err = s.trRolesServer.Do(req)
 	case "SharesClient":
-		initServer(s, &s.trSharesServer, func() *SharesServerTransport { return NewSharesServerTransport(&s.srv.SharesServer) })
+		initServer(&s.trMu, &s.trSharesServer, func() *SharesServerTransport { return NewSharesServerTransport(&s.srv.SharesServer) })
 		resp, err = s.trSharesServer.Do(req)
 	case "StorageAccountCredentialsClient":
-		initServer(s, &s.trStorageAccountCredentialsServer, func() *StorageAccountCredentialsServerTransport {
+		initServer(&s.trMu, &s.trStorageAccountCredentialsServer, func() *StorageAccountCredentialsServerTransport {
 			return NewStorageAccountCredentialsServerTransport(&s.srv.StorageAccountCredentialsServer)
 		})
 		resp, err = s.trStorageAccountCredentialsServer.Do(req)
 	case "StorageAccountsClient":
-		initServer(s, &s.trStorageAccountsServer, func() *StorageAccountsServerTransport {
+		initServer(&s.trMu, &s.trStorageAccountsServer, func() *StorageAccountsServerTransport {
 			return NewStorageAccountsServerTransport(&s.srv.StorageAccountsServer)
 		})
 		resp, err = s.trStorageAccountsServer.Do(req)
 	case "SupportPackagesClient":
-		initServer(s, &s.trSupportPackagesServer, func() *SupportPackagesServerTransport {
+		initServer(&s.trMu, &s.trSupportPackagesServer, func() *SupportPackagesServerTransport {
 			return NewSupportPackagesServerTransport(&s.srv.SupportPackagesServer)
 		})
 		resp, err = s.trSupportPackagesServer.Do(req)
 	case "TriggersClient":
-		initServer(s, &s.trTriggersServer, func() *TriggersServerTransport { return NewTriggersServerTransport(&s.srv.TriggersServer) })
+		initServer(&s.trMu, &s.trTriggersServer, func() *TriggersServerTransport { return NewTriggersServerTransport(&s.srv.TriggersServer) })
 		resp, err = s.trTriggersServer.Do(req)
 	case "UsersClient":
-		initServer(s, &s.trUsersServer, func() *UsersServerTransport { return NewUsersServerTransport(&s.srv.UsersServer) })
+		initServer(&s.trMu, &s.trUsersServer, func() *UsersServerTransport { return NewUsersServerTransport(&s.srv.UsersServer) })
 		resp, err = s.trUsersServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
@@ -211,12 +211,4 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	}
 
 	return resp, nil
-}
-
-func initServer[T any](s *ServerFactoryTransport, dst **T, src func() *T) {
-	s.trMu.Lock()
-	if *dst == nil {
-		*dst = src()
-	}
-	s.trMu.Unlock()
 }

@@ -151,7 +151,7 @@ func (client *DeletedServicesClient) getCreateRequest(ctx context.Context, resou
 func (client *DeletedServicesClient) getHandleResponse(resp *http.Response) (DeletedServicesClientGetResponse, error) {
 	result := DeletedServicesClientGetResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.EtagHeader = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedService); err != nil {
 		return DeletedServicesClientGetResponse{}, err

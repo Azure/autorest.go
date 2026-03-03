@@ -1,5 +1,11 @@
 # Release History
 
+## 4.0.0-preview.77 (unreleased)
+
+### Bugs Fixed
+
+* Fixed duplicate definition of `fake.initServer` that can happen in some cases.
+
 ## 4.0.0-preview.76 (2026-01-15)
 
 ### Breaking Changes

@@ -20,3 +20,30 @@ type LROClientBeginOkResponseWithAsyncHeaderOptions struct {
 	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
+
+// Request options for test operations
+type ManagementRequestOptions struct {
+	// Client request ID for tracking
+	ClientRequestID string
+}
+
+// ParameterGroupOperationsClientNoParameterGroupOptions contains the optional parameters for the ParameterGroupOperationsClient.NoParameterGroup
+// method.
+type ParameterGroupOperationsClientNoParameterGroupOptions struct {
+	// Optional correlation ID
+	CorrelationID *string
+}
+
+// ParameterGroupOperationsClientSharedParameterGroup1Options contains the optional parameters for the ParameterGroupOperationsClient.SharedParameterGroup1
+// method.
+type ParameterGroupOperationsClientSharedParameterGroup1Options struct {
+	// Optional correlation ID
+	CorrelationID *string
+}
+
+// ParameterGroupOperationsClientSharedParameterGroup2Options contains the optional parameters for the ParameterGroupOperationsClient.SharedParameterGroup2
+// method.
+type ParameterGroupOperationsClientSharedParameterGroup2Options struct {
+	// Optional correlation ID
+	CorrelationID *string
+}

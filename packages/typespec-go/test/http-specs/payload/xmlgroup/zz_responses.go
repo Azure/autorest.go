@@ -147,3 +147,10 @@ type XMLSimpleModelValueClientGetResponse struct {
 type XMLSimpleModelValueClientPutResponse struct {
 	// placeholder for future response values
 }
+
+// XMLXMLErrorValueClientGetResponse contains the response from method XMLXMLErrorValueClient.Get.
+type XMLXMLErrorValueClientGetResponse struct {
+	// Contains fields of primitive types.
+	SimpleModel
+	ContentType *string
+}

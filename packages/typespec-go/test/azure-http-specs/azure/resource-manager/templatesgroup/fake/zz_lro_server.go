@@ -30,6 +30,10 @@ type LroServer struct {
 	// BeginExport is the fake for method LroClient.BeginExport
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
 	BeginExport func(ctx context.Context, resourceGroupName string, orderName string, body templatesgroup.ExportRequest, options *templatesgroup.LroClientBeginExportOptions) (resp azfake.PollerResponder[templatesgroup.LroClientExportResponse], errResp azfake.ErrorResponder)
+
+	// BeginExportArray is the fake for method LroClient.BeginExportArray
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	BeginExportArray func(ctx context.Context, body templatesgroup.ExportRequest, options *templatesgroup.LroClientBeginExportArrayOptions) (resp azfake.PollerResponder[templatesgroup.LroClientExportArrayResponse], errResp azfake.ErrorResponder)
 }
 
 // NewLroServerTransport creates a new instance of LroServerTransport with the provided implementation.
@@ -41,6 +45,7 @@ func NewLroServerTransport(srv *LroServer) *LroServerTransport {
 		beginCreateOrReplace: newTracker[azfake.PollerResponder[templatesgroup.LroClientCreateOrReplaceResponse]](),
 		beginDelete:          newTracker[azfake.PollerResponder[templatesgroup.LroClientDeleteResponse]](),
 		beginExport:          newTracker[azfake.PollerResponder[templatesgroup.LroClientExportResponse]](),
+		beginExportArray:     newTracker[azfake.PollerResponder[templatesgroup.LroClientExportArrayResponse]](),
 	}
 }
 
@@ -51,6 +56,7 @@ type LroServerTransport struct {
 	beginCreateOrReplace *tracker[azfake.PollerResponder[templatesgroup.LroClientCreateOrReplaceResponse]]
 	beginDelete          *tracker[azfake.PollerResponder[templatesgroup.LroClientDeleteResponse]]
 	beginExport          *tracker[azfake.PollerResponder[templatesgroup.LroClientExportResponse]]
+	beginExportArray     *tracker[azfake.PollerResponder[templatesgroup.LroClientExportArrayResponse]]
 }
 
 // Do implements the policy.Transporter interface for LroServerTransport.
@@ -82,6 +88,8 @@ func (l *LroServerTransport) dispatchToMethodFake(req *http.Request, method stri
 				res.resp, res.err = l.dispatchBeginDelete(req)
 			case "LroClient.BeginExport":
 				res.resp, res.err = l.dispatchBeginExport(req)
+			case "LroClient.BeginExportArray":
+				res.resp, res.err = l.dispatchBeginExportArray(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
 			}
@@ -236,6 +244,46 @@ func (l *LroServerTransport) dispatchBeginExport(req *http.Request) (*http.Respo
 	}
 	if !server.PollerResponderMore(beginExport) {
 		l.beginExport.remove(req)
+	}
+
+	return resp, nil
+}
+
+func (l *LroServerTransport) dispatchBeginExportArray(req *http.Request) (*http.Response, error) {
+	if l.srv.BeginExportArray == nil {
+		return nil, &nonRetriableError{errors.New("fake for method BeginExportArray not implemented")}
+	}
+	beginExportArray := l.beginExportArray.get(req)
+	if beginExportArray == nil {
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.OperationTemplates/exportArray`
+		regex := regexp.MustCompile(regexStr)
+		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+		if len(matches) < 2 {
+			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+		}
+		body, err := server.UnmarshalRequestAsJSON[templatesgroup.ExportRequest](req)
+		if err != nil {
+			return nil, err
+		}
+		respr, errRespr := l.srv.BeginExportArray(req.Context(), body, nil)
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
+		}
+		beginExportArray = &respr
+		l.beginExportArray.add(req, beginExportArray)
+	}
+
+	resp, err := server.PollerResponderNext(beginExportArray, req)
+	if err != nil {
+		return nil, err
+	}
+
+	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+		l.beginExportArray.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+	}
+	if !server.PollerResponderMore(beginExportArray) {
+		l.beginExportArray.remove(req)
 	}
 
 	return resp, nil
