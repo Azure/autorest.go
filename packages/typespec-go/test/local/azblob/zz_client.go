@@ -483,7 +483,7 @@ func (client *Client) copyFromURLCreateRequest(ctx context.Context, copySource s
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
 			if v != nil {
-				req.Raw().Header["x-ms-meta"+k] = []string{*v}
+				req.Raw().Header["x-ms-meta-"+k] = []string{*v}
 			}
 		}
 	}
@@ -639,7 +639,7 @@ func (client *Client) createSnapshotCreateRequest(ctx context.Context, options *
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
 			if v != nil {
-				req.Raw().Header["x-ms-meta"+k] = []string{*v}
+				req.Raw().Header["x-ms-meta-"+k] = []string{*v}
 			}
 		}
 	}
@@ -2293,7 +2293,7 @@ func (client *Client) setMetadataCreateRequest(ctx context.Context, options *Cli
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
 			if v != nil {
-				req.Raw().Header["x-ms-meta"+k] = []string{*v}
+				req.Raw().Header["x-ms-meta-"+k] = []string{*v}
 			}
 		}
 	}
@@ -2602,7 +2602,7 @@ func (client *Client) startCopyFromURLCreateRequest(ctx context.Context, copySou
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
 			if v != nil {
-				req.Raw().Header["x-ms-meta"+k] = []string{*v}
+				req.Raw().Header["x-ms-meta-"+k] = []string{*v}
 			}
 		}
 	}

@@ -139,7 +139,7 @@ func (client *BlockBlobClient) commitBlockListCreateRequest(ctx context.Context,
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
 			if v != nil {
-				req.Raw().Header["x-ms-meta"+k] = []string{*v}
+				req.Raw().Header["x-ms-meta-"+k] = []string{*v}
 			}
 		}
 	}
@@ -942,7 +942,7 @@ func (client *BlockBlobClient) uploadCreateRequest(ctx context.Context, body io.
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
 			if v != nil {
-				req.Raw().Header["x-ms-meta"+k] = []string{*v}
+				req.Raw().Header["x-ms-meta-"+k] = []string{*v}
 			}
 		}
 	}
@@ -1137,7 +1137,7 @@ func (client *BlockBlobClient) uploadBlobFromURLCreateRequest(ctx context.Contex
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
 			if v != nil {
-				req.Raw().Header["x-ms-meta"+k] = []string{*v}
+				req.Raw().Header["x-ms-meta-"+k] = []string{*v}
 			}
 		}
 	}

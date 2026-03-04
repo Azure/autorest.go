@@ -348,7 +348,7 @@ func (client *ContainerClient) createCreateRequest(ctx context.Context, options 
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
 			if v != nil {
-				req.Raw().Header["x-ms-meta"+k] = []string{*v}
+				req.Raw().Header["x-ms-meta-"+k] = []string{*v}
 			}
 		}
 	}
@@ -1477,7 +1477,7 @@ func (client *ContainerClient) setMetadataCreateRequest(ctx context.Context, opt
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
 			if v != nil {
-				req.Raw().Header["x-ms-meta"+k] = []string{*v}
+				req.Raw().Header["x-ms-meta-"+k] = []string{*v}
 			}
 		}
 	}

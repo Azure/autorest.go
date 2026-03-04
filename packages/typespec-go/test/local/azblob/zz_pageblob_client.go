@@ -372,7 +372,7 @@ func (client *PageBlobClient) createCreateRequest(ctx context.Context, size int6
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
 			if v != nil {
-				req.Raw().Header["x-ms-meta"+k] = []string{*v}
+				req.Raw().Header["x-ms-meta-"+k] = []string{*v}
 			}
 		}
 	}
