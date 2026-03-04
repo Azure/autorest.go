@@ -1029,21 +1029,21 @@ export class ClientAdapter {
 
     // add any headers
     const addedHeaders = new Set<string>();
-    for (const httpResp of sdkMethod.operation.responses) {
-      for (const httpHeader of httpResp.headers) {
-        if (addedHeaders.has(httpHeader.serializedName)) {
-          continue;
-        } else if (go.isLROMethod(method)) {
-          // skip adding headers for LROs as they aren't useful on the response envelope
-          continue;
-        }
+    // skip adding headers for LROs as they aren't useful on the response envelope
+    if (!go.isLROMethod(method)) {
+      for (const httpResp of sdkMethod.operation.responses) {
+        for (const httpHeader of httpResp.headers) {
+          if (addedHeaders.has(httpHeader.serializedName)) {
+            continue;
+          }
 
-        // TODO: x-ms-header-collection-prefix
-        const headerResp = new go.HeaderScalarResponse(ensureNameCase(httpHeader.name), this.adaptHeaderScalarType(httpHeader.type, false), httpHeader.serializedName, isTypePassedByValue(httpHeader.type));
-        headerResp.docs.summary = httpHeader.summary;
-        headerResp.docs.description = httpHeader.doc;
-        respEnv.headers.push(headerResp);
-        addedHeaders.add(httpHeader.serializedName);
+          // TODO: x-ms-header-collection-prefix
+          const headerResp = new go.HeaderScalarResponse(ensureNameCase(httpHeader.name), this.adaptHeaderScalarType(httpHeader.type, false), httpHeader.serializedName, isTypePassedByValue(httpHeader.type));
+          headerResp.docs.summary = httpHeader.summary;
+          headerResp.docs.description = httpHeader.doc;
+          respEnv.headers.push(headerResp);
+          addedHeaders.add(httpHeader.serializedName);
+        }
       }
     }
 
@@ -1362,16 +1362,15 @@ export class ClientAdapter {
           const response = example.responses.find((v) => { return v.statusCode === 200; });
           if (response) {
             goExample.responseEnvelope = new go.ResponseEnvelopeExample(method.returns);
-            for (const header of response.headers) {
-              // skip adding headers for LROs as they aren't useful on the response envelope
-              if (go.isLROMethod(method)){
-                continue;
+            // skip adding headers for LROs as they aren't useful on the response envelope
+            if (!go.isLROMethod(method)) {
+              for (const header of response.headers) {
+                const goHeader = method.returns.headers.find(h => h.headerName === header.header.serializedName);
+                if (!goHeader) {
+                  throw new AdapterError('InternalError', `can not find go header for example header ${header.header.serializedName}`);
+                }
+                goExample.responseEnvelope.headers.push(new go.ResponseHeaderExample(goHeader, this.adaptExampleType(header.value, goHeader.type)));
               }
-              const goHeader = method.returns.headers.find(h => h.headerName === header.header.serializedName);
-              if (!goHeader) {
-                throw new AdapterError('InternalError', `can not find go header for example header ${header.header.serializedName}`);
-              }
-              goExample.responseEnvelope.headers.push(new go.ResponseHeaderExample(goHeader, this.adaptExampleType(header.value, goHeader.type)));
             }
             // there are some problems with LROs at present which can cause the result
             // to be undefined even though the operation returns a response.
