@@ -1034,6 +1034,7 @@ export class ClientAdapter {
         if (addedHeaders.has(httpHeader.serializedName)) {
           continue;
         } else if (go.isLROMethod(method)) {
+          // skip adding headers for LROs as they aren't useful on the response envelope
           continue;
         }
 
