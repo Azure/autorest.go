@@ -1410,6 +1410,9 @@ func (client *Client) getPropertiesHandleResponse(resp *http.Response) (ClientGe
 		}
 		result.ContentMD5 = contentMD5
 	}
+	if val := resp.Header.Get("Content-Type"); val != "" {
+		result.ContentType = &val
+	}
 	if val := resp.Header.Get("x-ms-copy-completion-time"); val != "" {
 		copyCompletionTime, err := time.Parse(time.RFC1123, val)
 		if err != nil {

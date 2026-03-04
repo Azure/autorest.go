@@ -984,6 +984,9 @@ type ClientGetPropertiesResponse struct {
 	// can check for message content integrity.
 	ContentMD5 []byte
 
+	// Content-type.
+	ContentType *string
+
 	// Conclusion time of the last attempted Copy Blob operation where this blob was the destination blob. This value can specify
 	// the time of a completed, aborted, or failed copy attempt. This header does not appear if a copy is pending, if this blob
 	// has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob
