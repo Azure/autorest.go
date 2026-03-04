@@ -1,5 +1,10 @@
 # Release History
 
+## 0.10.2 (unreleased)
+
+### Bugs Fixed
+* Fixed generation of `x-ms-meta` and `x-ms-or` headers
+
 ## 0.10.1 (2026-02-27)
 
 ### Bugs Fixed
