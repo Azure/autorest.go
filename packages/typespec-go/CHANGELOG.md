@@ -1,5 +1,11 @@
 # Release History
 
+### 0.10.2 (2026-03-04)
+
+### Bugs Fixed
+
+* Fixed incorrect inclusion of response headers in the response envelope for LROs.
+
 ## 0.10.1 (2026-02-27)
 
 ### Bugs Fixed
