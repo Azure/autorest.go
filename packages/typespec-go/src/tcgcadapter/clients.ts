@@ -960,7 +960,7 @@ export class ClientAdapter {
         if (opParam.serializedName === 'x-ms-meta') {
           const type = this.ta.getWireType(methodParam.type, true, false);
           if (type.kind !== 'map') {
-            throw new Error(`unexpected type ${type.kind} for HeaderMapParameter ${methodParam.name}`);
+            throw new AdapterError('InternalError', `unexpected kind ${type.kind} for HeaderMapParameter ${methodParam.name}`, opParam.__raw?.node);
           }
           adaptedParam = new go.HeaderMapParameter(paramName, `${opParam.serializedName}-`, type, paramStyle, byVal, location);
         } else if (opParam.collectionFormat) {
@@ -1047,7 +1047,7 @@ export class ClientAdapter {
         if (httpHeader.serializedName === 'x-ms-meta' || httpHeader.serializedName === 'x-ms-or') {
           const type = this.ta.getWireType(httpHeader.type, true, false);
           if (type.kind !== 'map') {
-            throw new Error(`unexpected type ${type.kind} for HeaderMapResponse ${httpHeader.name}`);
+            throw new AdapterError('InternalError', `unexpected kind ${type.kind} for HeaderMapResponse ${httpHeader.name}`);
           }
           headerResp = new go.HeaderMapResponse(ensureNameCase(httpHeader.name), type, `${httpHeader.serializedName}-`);
         }  else {
