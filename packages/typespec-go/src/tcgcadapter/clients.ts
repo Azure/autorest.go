@@ -957,7 +957,13 @@ export class ClientAdapter {
         // TODO: currently we don't have Azure service using cookie parameter. need to add support if needed in the future.
         throw new AdapterError('UnsupportedTsp', 'unsupported parameter type cookie', opParam.__raw?.node);
       case 'header':
-        if (opParam.collectionFormat) {
+        if (opParam.serializedName === 'x-ms-meta') {
+          const type = this.ta.getWireType(methodParam.type, true, false);
+          if (type.kind !== 'map') {
+            throw new AdapterError('InternalError', `unexpected kind ${type.kind} for HeaderMapParameter ${methodParam.name}`, opParam.__raw?.node);
+          }
+          adaptedParam = new go.HeaderMapParameter(paramName, `${opParam.serializedName}-`, type, paramStyle, byVal, location);
+        } else if (opParam.collectionFormat) {
           if (opParam.collectionFormat === 'multi' || opParam.collectionFormat === 'form') {
             throw new AdapterError('InternalError', `unexpected collection format ${opParam.collectionFormat} for HeaderCollectionParameter`, opParam.__raw?.node);
           }
@@ -1037,9 +1043,17 @@ export class ClientAdapter {
           // we omit the LRO polling headers as they aren't useful on the response envelope
           continue;
         }
+        let headerResp: go.HeaderScalarResponse | go.HeaderMapResponse;
+        if (httpHeader.serializedName === 'x-ms-meta' || httpHeader.serializedName === 'x-ms-or') {
+          const type = this.ta.getWireType(httpHeader.type, true, false);
+          if (type.kind !== 'map') {
+            throw new AdapterError('InternalError', `unexpected kind ${type.kind} for HeaderMapResponse ${httpHeader.name}`);
+          }
+          headerResp = new go.HeaderMapResponse(ensureNameCase(httpHeader.name), type, `${httpHeader.serializedName}-`);
+        }  else {
+          headerResp = new go.HeaderScalarResponse(ensureNameCase(httpHeader.name), this.adaptHeaderScalarType(httpHeader.type, false), httpHeader.serializedName, isTypePassedByValue(httpHeader.type));
+        }
 
-        // TODO: x-ms-header-collection-prefix
-        const headerResp = new go.HeaderScalarResponse(ensureNameCase(httpHeader.name), this.adaptHeaderScalarType(httpHeader.type, false), httpHeader.serializedName, isTypePassedByValue(httpHeader.type));
         headerResp.docs.summary = httpHeader.summary;
         headerResp.docs.description = httpHeader.doc;
         respEnv.headers.push(headerResp);
