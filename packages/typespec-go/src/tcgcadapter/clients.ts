@@ -1035,29 +1035,28 @@ export class ClientAdapter {
 
     // add any headers
     const addedHeaders = new Set<string>();
-    for (const httpResp of sdkMethod.operation.responses) {
-      for (const httpHeader of httpResp.headers) {
-        if (addedHeaders.has(httpHeader.serializedName)) {
-          continue;
-        } else if (go.isLROMethod(method) && isLROPollingHeader(httpHeader.serializedName)) {
-          // we omit the LRO polling headers as they aren't useful on the response envelope
-          continue;
-        }
-        let headerResp: go.HeaderScalarResponse | go.HeaderMapResponse;
-        if (httpHeader.serializedName === 'x-ms-meta' || httpHeader.serializedName === 'x-ms-or') {
-          const type = this.ta.getWireType(httpHeader.type, true, false);
-          if (type.kind !== 'map') {
-            throw new AdapterError('InternalError', `unexpected kind ${type.kind} for HeaderMapResponse ${httpHeader.name}`);
+    if (!go.isLROMethod(method)) {
+      for (const httpResp of sdkMethod.operation.responses) {
+        for (const httpHeader of httpResp.headers) {
+          if (addedHeaders.has(httpHeader.serializedName)) {
+            continue;
           }
-          headerResp = new go.HeaderMapResponse(ensureNameCase(httpHeader.name), type, `${httpHeader.serializedName}-`);
-        }  else {
-          headerResp = new go.HeaderScalarResponse(ensureNameCase(httpHeader.name), this.adaptHeaderScalarType(httpHeader.type, false), httpHeader.serializedName, isTypePassedByValue(httpHeader.type));
-        }
+          let headerResp: go.HeaderScalarResponse | go.HeaderMapResponse;
+          if (httpHeader.serializedName === 'x-ms-meta' || httpHeader.serializedName === 'x-ms-or') {
+            const type = this.ta.getWireType(httpHeader.type, true, false);
+            if (type.kind !== 'map') {
+              throw new AdapterError('InternalError', `unexpected kind ${type.kind} for HeaderMapResponse ${httpHeader.name}`);
+            }
+            headerResp = new go.HeaderMapResponse(ensureNameCase(httpHeader.name), type, `${httpHeader.serializedName}-`);
+          }  else {
+            headerResp = new go.HeaderScalarResponse(ensureNameCase(httpHeader.name), this.adaptHeaderScalarType(httpHeader.type, false), httpHeader.serializedName, isTypePassedByValue(httpHeader.type));
+          }
 
-        headerResp.docs.summary = httpHeader.summary;
-        headerResp.docs.description = httpHeader.doc;
-        respEnv.headers.push(headerResp);
-        addedHeaders.add(httpHeader.serializedName);
+          headerResp.docs.summary = httpHeader.summary;
+          headerResp.docs.description = httpHeader.doc;
+          respEnv.headers.push(headerResp);
+          addedHeaders.add(httpHeader.serializedName);
+        }
       }
     }
 
@@ -1376,16 +1375,15 @@ export class ClientAdapter {
           const response = example.responses.find((v) => { return v.statusCode === 200; });
           if (response) {
             goExample.responseEnvelope = new go.ResponseEnvelopeExample(method.returns);
-            for (const header of response.headers) {
-              // filter out LRO polling headers as they aren't useful on the response envelope
-              if (go.isLROMethod(method) && isLROPollingHeader(header.header.serializedName)){
-                continue;
+            // skip adding headers for LROs as they aren't useful on the response envelope
+            if (!go.isLROMethod(method)) {
+              for (const header of response.headers) {
+                const goHeader = method.returns.headers.find(h => h.headerName === header.header.serializedName);
+                if (!goHeader) {
+                  throw new AdapterError('InternalError', `can not find go header for example header ${header.header.serializedName}`);
+                }
+                goExample.responseEnvelope.headers.push(new go.ResponseHeaderExample(goHeader, this.adaptExampleType(header.value, goHeader.type)));
               }
-              const goHeader = method.returns.headers.find(h => h.headerName === header.header.serializedName);
-              if (!goHeader) {
-                throw new AdapterError('InternalError', `can not find go header for example header ${header.header.serializedName}`);
-              }
-              goExample.responseEnvelope.headers.push(new go.ResponseHeaderExample(goHeader, this.adaptExampleType(header.value, goHeader.type)));
             }
             // there are some problems with LROs at present which can cause the result
             // to be undefined even though the operation returns a response.
@@ -1562,12 +1560,4 @@ interface ParameterStyleInfo {
   type: tcgc.SdkType;
 };
 
-/**
- * checks if the specified header is an LRO polling header.
- * LRO polling headers are not useful on the response envelope and should be filtered out.
- * @param headerName - the serialized name of the header to check
- * @returns true if the header is an LRO polling header, false otherwise
- */
-function isLROPollingHeader(headerName: string): boolean {
-  return /Azure-AsyncOperation|Location|Operation-Location|Retry-After/i.test(headerName);
-}
+
