@@ -1,0 +1,7 @@
+{
+  "apiVersions": {
+    "Azure.ResourceManager.MultiServiceOlderVersions.Compute": "2024-11-01",
+    "Azure.ResourceManager.MultiServiceOlderVersions.ComputeDisk": "2024-03-02"
+  },
+  "emitterVersion": "0.0.0"
+}
