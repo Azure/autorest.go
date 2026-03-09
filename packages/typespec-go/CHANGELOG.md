@@ -1,5 +1,12 @@
 # Release History
 
+## 0.10.2 (2026-03-06)
+
+### Bugs Fixed
+
+* Fixed incorrect inclusion of response headers in the response envelope for LROs
+* Fixed generation of `x-ms-meta` and `x-ms-or` headers
+
 ## 0.10.1 (2026-02-27)
 
 ### Bugs Fixed

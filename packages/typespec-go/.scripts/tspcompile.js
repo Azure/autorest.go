@@ -109,6 +109,7 @@ const azureHttpSpecsGroup = {
   'largeheadergroup' : ['azure/resource-manager/large-header'],
   'methodsubscriptionidgroup' : ['/azure/resource-manager/method-subscription-id/client.tsp'],
   'armmultipleservicegroup' : ['/azure/resource-manager/multi-service/client.tsp'],
+  'armmultisharedmodelsgroup' : ['/azure/resource-manager/multi-service-shared-models/client.tsp'],
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
   'previewversiongroup': ['azure/versioning/previewVersion', 'api-version=2024-12-01-preview'],
   'previewversiongroupspecificversion': ['azure/versioning/previewVersion', 'api-version=2024-06-01'],
@@ -201,6 +202,9 @@ generate('azmodelsonly', azmodelsonly, 'test/local/azmodelsonly');
 
 const azkeys = pkgRoot + 'test/tsp/KeyVault.Keys/client.tsp';
 generate('azkeys', azkeys, 'test/local/azkeys', ['single-client=true', 'omit-constructors=true']);
+
+const azblob = pkgRoot + 'test/tsp/Microsoft.BlobStorage/client.tsp';
+generate('azblob', azblob, 'test/local/azblob', ['generate-fakes=false', 'omit-constructors=true', 'inject-spans=false']);
 
 const armtest = pkgRoot + 'test/tsp/Test.Management';
 generate('armtest/v2', armtest, 'test/local/armtest', [`examples-directory=${armtest}/examples`, 'generate-samples=true']);

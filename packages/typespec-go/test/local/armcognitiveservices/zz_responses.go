@@ -8,15 +8,11 @@ package armcognitiveservices
 type AccountCapabilityHostsClientCreateOrUpdateResponse struct {
 	// Azure Resource Manager resource envelope.
 	CapabilityHost
-
-	// Timeout for the client to use when polling the asynchronous operation.
-	AsyncOperationTimeout *string
 }
 
 // AccountCapabilityHostsClientDeleteResponse contains the response from method AccountCapabilityHostsClient.BeginDelete.
 type AccountCapabilityHostsClientDeleteResponse struct {
-	// Timeout for the client to use when polling the asynchronous operation.
-	AsyncOperationTimeout *string
+	// placeholder for future response values
 }
 
 // AccountCapabilityHostsClientGetResponse contains the response from method AccountCapabilityHostsClient.Get.
@@ -128,9 +124,6 @@ type AccountsClientUpdateResponse struct {
 type AgentApplicationsClientCreateOrUpdateResponse struct {
 	// Agent Application resource
 	AgentApplication
-
-	// Timeout for the client to use when polling the asynchronous operation.
-	AsyncOperationTimeout *string
 }
 
 // AgentApplicationsClientDeleteResponse contains the response from method AgentApplicationsClient.BeginDelete.
@@ -170,9 +163,6 @@ type AgentApplicationsClientListResponse struct {
 type AgentDeploymentsClientCreateOrUpdateResponse struct {
 	// Agent Deployment resource
 	AgentDeployment
-
-	// Timeout for the client to use when polling the asynchronous operation.
-	AsyncOperationTimeout *string
 }
 
 // AgentDeploymentsClientDeleteResponse contains the response from method AgentDeploymentsClient.BeginDelete.
@@ -552,15 +542,11 @@ type PrivateLinkResourcesClientListResponse struct {
 type ProjectCapabilityHostsClientCreateOrUpdateResponse struct {
 	// Azure Resource Manager resource envelope for Project CapabilityHost.
 	ProjectCapabilityHost
-
-	// Timeout for the client to use when polling the asynchronous operation.
-	AsyncOperationTimeout *string
 }
 
 // ProjectCapabilityHostsClientDeleteResponse contains the response from method ProjectCapabilityHostsClient.BeginDelete.
 type ProjectCapabilityHostsClientDeleteResponse struct {
-	// Timeout for the client to use when polling the asynchronous operation.
-	AsyncOperationTimeout *string
+	// placeholder for future response values
 }
 
 // ProjectCapabilityHostsClientGetResponse contains the response from method ProjectCapabilityHostsClient.Get.
