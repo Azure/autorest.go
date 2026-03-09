@@ -32,6 +32,9 @@ func TestStorageAccountsClient_Get(t *testing.T) {
 	require.Equal(t, *validStorageAccountResource.Type, *resp.Type)
 	require.Equal(t, *validStorageAccountResource.Location, *resp.Location)
 	require.Equal(t, *validStorageAccountResource.Properties.ProvisioningState, *resp.Properties.ProvisioningState)
+	require.NotNil(t, resp.Properties.Metadata)
+	require.EqualValues(t, "admin@example.com", *resp.Properties.Metadata.CreatedBy)
+	require.EqualValues(t, "engineering", *resp.Properties.Metadata.Tags["department"])
 }
 
 func TestStorageAccountsClient_CreateOrUpdate(t *testing.T) {
