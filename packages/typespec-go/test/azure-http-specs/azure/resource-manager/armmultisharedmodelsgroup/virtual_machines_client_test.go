@@ -20,6 +20,10 @@ var (
 		Location: to.Ptr("eastus"),
 		Properties: &armmultisharedmodelsgroup.VirtualMachineProperties{
 			ProvisioningState: to.Ptr(armmultisharedmodelsgroup.ResourceProvisioningStateSucceeded),
+			Metadata: &armmultisharedmodelsgroup.SharedMetadata{
+				CreatedBy: to.Ptr("user@example.com"),
+				Tags:      map[string]*string{"environment": to.Ptr("production")},
+			},
 		},
 	}
 )
@@ -33,8 +37,8 @@ func TestVirtualMachinesClient_Get(t *testing.T) {
 	require.Equal(t, *validVirtualMachineResource.Location, *resp.Location)
 	require.Equal(t, *validVirtualMachineResource.Properties.ProvisioningState, *resp.Properties.ProvisioningState)
 	require.NotNil(t, resp.Properties.Metadata)
-	require.EqualValues(t, "user@example.com", *resp.Properties.Metadata.CreatedBy)
-	require.EqualValues(t, "production", *resp.Properties.Metadata.Tags["environment"])
+	require.Equal(t, *validVirtualMachineResource.Properties.Metadata.CreatedBy, *resp.Properties.Metadata.CreatedBy)
+	require.Equal(t, *validVirtualMachineResource.Properties.Metadata.Tags["environment"], *resp.Properties.Metadata.Tags["environment"])
 }
 
 func TestVirtualMachinesClient_CreateOrUpdate(t *testing.T) {

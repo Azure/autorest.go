@@ -20,6 +20,10 @@ var (
 		Location: to.Ptr("westus"),
 		Properties: &armmultisharedmodelsgroup.StorageAccountProperties{
 			ProvisioningState: to.Ptr(armmultisharedmodelsgroup.ResourceProvisioningStateSucceeded),
+			Metadata: &armmultisharedmodelsgroup.SharedMetadata{
+				CreatedBy: to.Ptr("admin@example.com"),
+				Tags:      map[string]*string{"department": to.Ptr("engineering")},
+			},
 		},
 	}
 )
@@ -33,8 +37,8 @@ func TestStorageAccountsClient_Get(t *testing.T) {
 	require.Equal(t, *validStorageAccountResource.Location, *resp.Location)
 	require.Equal(t, *validStorageAccountResource.Properties.ProvisioningState, *resp.Properties.ProvisioningState)
 	require.NotNil(t, resp.Properties.Metadata)
-	require.EqualValues(t, "admin@example.com", *resp.Properties.Metadata.CreatedBy)
-	require.EqualValues(t, "engineering", *resp.Properties.Metadata.Tags["department"])
+	require.Equal(t, *validStorageAccountResource.Properties.Metadata.CreatedBy, *resp.Properties.Metadata.CreatedBy)
+	require.Equal(t, *validStorageAccountResource.Properties.Metadata.Tags["department"], *resp.Properties.Metadata.Tags["department"])
 }
 
 func TestStorageAccountsClient_CreateOrUpdate(t *testing.T) {
