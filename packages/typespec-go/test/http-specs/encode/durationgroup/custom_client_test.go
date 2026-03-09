@@ -45,7 +45,6 @@ func TestHeaderClientFloatMilliseconds(t *testing.T) {
 }
 
 func TestHeaderClientFloatMillisecondsLargerUnit(t *testing.T) {
-	t.Skip("https://github.com/microsoft/typespec/issues/8987")
 	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationHeaderClient().FloatMillisecondsLargerUnit(context.Background(), 210000, nil)
@@ -62,7 +61,6 @@ func TestHeaderClientFloatSeconds(t *testing.T) {
 }
 
 func TestHeaderClientFloatSecondsLargerUnit(t *testing.T) {
-	t.Skip("https://github.com/microsoft/typespec/issues/8987")
 	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationHeaderClient().FloatSecondsLargerUnit(context.Background(), 150.0, nil)
@@ -325,7 +323,6 @@ func TestQueryClientFloatMilliseconds(t *testing.T) {
 }
 
 func TestQueryClientFloatMillisecondsLargerUnit(t *testing.T) {
-	t.Skip("https://github.com/microsoft/typespec/issues/8987")
 	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationQueryClient().FloatMillisecondsLargerUnit(context.Background(), 210000, nil)
@@ -342,7 +339,6 @@ func TestQueryClientFloatSeconds(t *testing.T) {
 }
 
 func TestQueryClientFloatSecondsLargerUnit(t *testing.T) {
-	t.Skip("https://github.com/microsoft/typespec/issues/8987")
 	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationQueryClient().FloatSecondsLargerUnit(context.Background(), 150.0, nil)
