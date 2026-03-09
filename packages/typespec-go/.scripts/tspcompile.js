@@ -109,6 +109,7 @@ const azureHttpSpecsGroup = {
   'largeheadergroup' : ['azure/resource-manager/large-header'],
   'methodsubscriptionidgroup' : ['/azure/resource-manager/method-subscription-id/client.tsp'],
   'armmultipleservicegroup' : ['/azure/resource-manager/multi-service/client.tsp'],
+  'armmultisharedmodelsgroup' : ['/azure/resource-manager/multi-service-shared-models/client.tsp'],
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
   'previewversiongroup': ['azure/versioning/previewVersion', 'api-version=2024-12-01-preview'],
   'previewversiongroupspecificversion': ['azure/versioning/previewVersion', 'api-version=2024-06-01'],
