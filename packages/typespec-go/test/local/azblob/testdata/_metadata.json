@@ -1,0 +1,6 @@
+{
+  "apiVersions": {
+    "Storage.Blob": "2026-04-06"
+  },
+  "emitterVersion": "0.0.0"
+}
