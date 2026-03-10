@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url';
 
 // The generator emits Go source code files to disk.
 export async function generateCode(host: AutorestExtensionHost) {
-  const debug = await host.getValue('debug') || false;
+  const debug = (await host.getValue('debug')) || false;
 
   try {
     // get the code model from the core
@@ -22,7 +22,7 @@ export async function generateCode(host: AutorestExtensionHost) {
     host.writeFile({
       filename: 'code-model-v4.yaml',
       content: serialize(session.model),
-      artifactType: 'code-model-v4'
+      artifactType: 'code-model-v4',
     });
 
     let filePrefix = await session.getValue('file-prefix', '');
@@ -31,22 +31,28 @@ export async function generateCode(host: AutorestExtensionHost) {
       filePrefix += '_';
     }
 
-    const emitter = new codegen.Emitter(session.model, {
-      exists: async (name: string) => {
-        const content = await host.readFile(name);
-        return Promise.resolve(content !== null);
+    const emitter = new codegen.Emitter(
+      session.model,
+      {
+        exists: async (name: string) => {
+          const content = await host.readFile(name);
+          return Promise.resolve(content !== null);
+        },
+        read: (name: string) => {
+          return host.readFile(name);
+        },
+        write: (name: string, content: string) => {
+          return Promise.resolve(
+            host.writeFile({
+              filename: name,
+              content: content,
+              artifactType: 'source-file-go',
+            }),
+          );
+        },
       },
-      read: (name: string) => {
-        return host.readFile(name);
-      },
-      write: (name: string, content: string) => {
-        return Promise.resolve(host.writeFile({
-          filename: name,
-          content: content,
-          artifactType: 'source-file-go'
-        }));
-      }
-    }, { filePrefix });
+      { filePrefix },
+    );
     await emitter.emit();
   } catch (E) {
     if (debug) {

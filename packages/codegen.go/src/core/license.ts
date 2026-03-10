@@ -8,15 +8,14 @@ import * as go from '../../../codemodel.go/src/index.js';
 /**
  * returns the content for the LICENSE.txt file.
  * NOTE: this is only required when emitting a module.
- * 
+ *
  * @returns the contents for the LICENSE.txt file
  */
 export function generateLicenseTxt(options: go.Options): string {
   return options.licenseText ?? mitLicenseForMSFT;
 }
 
-const mitLicenseForMSFT = 
-`MIT License
+const mitLicenseForMSFT = `MIT License
 
 Copyright (c) Microsoft Corporation.
 

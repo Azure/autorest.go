@@ -14,9 +14,9 @@ steps:
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
 
   - script: |
-      pnpm eslint
-    displayName: "Run Lint"
-    workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
+      pnpm -w format:check
+    displayName: "Formatting and Lint"
+    workingDirectory: $(System.DefaultWorkingDirectory)
 
   - script: |
       export currentVersion=$(node -p -e "require('./package.json').version")

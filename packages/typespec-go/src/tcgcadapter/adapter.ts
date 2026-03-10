@@ -17,13 +17,13 @@ import * as tsp from '@typespec/compiler';
  * ExternalError is thrown when an external component reports a
  * diagnostic error that would prevent the emitter from proceeding.
  */
-export class ExternalError extends Error { }
+export class ExternalError extends Error {}
 
 /** Adapter converts the tcgc code model to an instance of the Go code model */
 export class Adapter {
   /**
    * Creates an Adapter for the specified EmitContext.
-   * 
+   *
    * @param context the compiler context from which to create the Adapter
    * @returns a new Adapter for the provided context
    */
@@ -69,7 +69,7 @@ export class Adapter {
       this.options['inject-spans'] === true,
       this.options['disallow-unknown-fields'] === true,
       // generate-examples has been deprecated, for compat we still support it.
-      this.options['generate-examples'] === true || this.options['generate-samples'] === true
+      this.options['generate-examples'] === true || this.options['generate-samples'] === true,
     );
     goOptions.headerText = this.ctx.sdkPackage.licenseInfo?.header;
     goOptions.licenseText = this.ctx.sdkPackage.licenseInfo?.description;
@@ -98,7 +98,8 @@ export class Adapter {
   /** performs all the steps to convert tcgc to the Go code model */
   tcgcToGoCodeModel(): go.CodeModel {
     // TODO: stuttering fix-ups will need some rethinking for namespaces
-    const packageName = this.codeModel.root.kind === 'containingModule' ? this.codeModel.root.package.name : naming.packageNameFromOutputFolder(this.ctx.emitContext.emitterOutputDir);
+    const packageName =
+      this.codeModel.root.kind === 'containingModule' ? this.codeModel.root.package.name : naming.packageNameFromOutputFolder(this.ctx.emitContext.emitterOutputDir);
     fixStutteringTypeNames(this.ctx.sdkPackage, packageName, this.options);
 
     const ta = new TypeAdapter(this.ctx, this.codeModel);
@@ -113,7 +114,7 @@ export class Adapter {
 
 /**
  * fixes up names in the tcgc model to avoid stuttering.
- * 
+ *
  * @param sdkPackage the tcgc data model
  * @param packageName the package name used to remove stuttering
  * @param options the Go emitter options
@@ -135,7 +136,7 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
 
   // ensure that enum, client, and struct type names don't stutter
 
-  const recursiveWalkClients = function(client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
+  const recursiveWalkClients = function (client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
     // NOTE: we MUST do this before calling trimPackagePrefix to properly handle
     // the case where the client name is the same as the package name.
     if (!client.name.match(/Client$/)) {
@@ -170,7 +171,7 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
 
   // check if the name collides with an existing name. we only do
   // this for model and enum types, as clients get a suffix.
-  const nameCollision = function(newName: string): boolean {
+  const nameCollision = function (newName: string): boolean {
     for (const modelType of sdkPackage.models) {
       if (modelType.name === newName) {
         return true;
@@ -189,9 +190,9 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
 
   // trims the stuttering prefix from typeName and returns the new name.
   // if there's a collision, an entry is added to the collision list.
-  const renameType = function(typeName: string): string {
+  const renameType = function (typeName: string): string {
     const originalName = typeName;
-    const newName = naming.trimPackagePrefix(stutteringPrefix, originalName); 
+    const newName = naming.trimPackagePrefix(stutteringPrefix, originalName);
 
     // if the type was renamed to remove stuttering, check if it collides with an existing type name
     if (newName !== originalName && nameCollision(newName)) {

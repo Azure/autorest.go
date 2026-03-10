@@ -15,7 +15,7 @@ export interface ResponsesSerDe {
 
 /**
  * Creates the content for the responses.go file.
- * 
+ *
  * @param pkg contains the package content
  * @param options the emitter options
  * @returns the text for the file or the empty string
@@ -24,7 +24,7 @@ export function generateResponses(pkg: go.PackageContent, options: go.Options): 
   if (pkg.responseEnvelopes.length === 0) {
     return {
       responses: '',
-      serDe: ''
+      serDe: '',
     };
   }
 
@@ -54,14 +54,14 @@ export function generateResponses(pkg: go.PackageContent, options: go.Options): 
 
   return {
     responses: responses,
-    serDe: serDe
+    serDe: serDe,
   };
 }
 
 /**
  * generates a marshaler for the provided response envelope.
  * note that this is only required for fakes.
- * 
+ *
  * @param respEnv the response envelope for which to create a marshaler
  * @param imports the import manager currently in scope
  * @returns the text for the response envelope's marshaler
@@ -84,7 +84,7 @@ function generateMarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager
 /**
  * generates an unmarshaler for the provided response envelope.
  * note that not all response envelopes require one.
- * 
+ *
  * @param respEnv the response envelope for which to create an unmarshaler
  * @param imports the import manager currently in scope
  * @returns he text for the response envelope's unmarshaler or the empty string
@@ -130,7 +130,7 @@ function generateUnmarshaller(respEnv: go.ResponseEnvelope, imports: ImportManag
 
 /**
  * emits the type definition for the provided response envelope.
- * 
+ *
  * @param pkg the package to contain the response envelope
  * @param respEnv the response envelope for which to emit the definition
  * @param imports the import manager currently in scope
@@ -145,7 +145,7 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
     text += '\t// placeholder for future response values\n';
   } else {
     // fields will contain the merged headers and response field so they can be sorted together
-    const fields = new Array<{docs: go.Docs, field: string}>();
+    const fields = new Array<{ docs: go.Docs; field: string }>();
 
     // used to track when to add an extra \n between fields that have comments
     let first = true;
@@ -174,7 +174,10 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
           byValue = respEnv.result.byValue;
         }
 
-        fields.push({docs: respEnv.result.docs, field: `\t${respEnv.result.fieldName} ${helpers.star(byValue)}${go.getTypeDeclaration(respType, respEnv.method.receiver.type.pkg)}${tag}\n`});
+        fields.push({
+          docs: respEnv.result.docs,
+          field: `\t${respEnv.result.fieldName} ${helpers.star(byValue)}${go.getTypeDeclaration(respType, respEnv.method.receiver.type.pkg)}${tag}\n`,
+        });
       }
     }
 
@@ -184,10 +187,12 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
       if (header.kind === 'headerScalarResponse') {
         byValue = header.byValue;
       }
-      fields.push({docs: header.docs, field: `\t${header.fieldName} ${helpers.star(byValue)}${go.getTypeDeclaration(header.type, respEnv.method.receiver.type.pkg)}\n`});
+      fields.push({ docs: header.docs, field: `\t${header.fieldName} ${helpers.star(byValue)}${go.getTypeDeclaration(header.type, respEnv.method.receiver.type.pkg)}\n` });
     }
 
-    fields.sort((a: {desc?: string, field: string}, b: {desc?: string, field: string}) => { return helpers.sortAscending(a.field, b.field); });
+    fields.sort((a: { desc?: string; field: string }, b: { desc?: string; field: string }) => {
+      return helpers.sortAscending(a.field, b.field);
+    });
 
     for (const field of fields) {
       if (field.docs.summary || field.docs.description) {

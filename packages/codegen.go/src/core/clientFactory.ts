@@ -10,7 +10,7 @@ import { ImportManager } from './imports.js';
 /**
  * Creates the content for client_factory.go file.
  * For non-ARM targets, the empty string is returned.
- * 
+ *
  * @param pkg contains the package content
  * @param target the codegen target for the package
  * @param options the emitter options
@@ -26,9 +26,9 @@ export function generateClientFactory(pkg: go.PackageContent, target: go.CodeMod
   // the list of packages to import
   const imports = new ImportManager(pkg);
 
-  let clientFactoryParams:  Array<go.ClientParameter>;
+  let clientFactoryParams: Array<go.ClientParameter>;
   if (options.factoryGatherAllParams) {
-    clientFactoryParams =  helpers.getAllClientParameters(pkg, target);
+    clientFactoryParams = helpers.getAllClientParameters(pkg, target);
   } else {
     clientFactoryParams = helpers.getCommonClientParameters(pkg, target);
   }
@@ -41,7 +41,7 @@ export function generateClientFactory(pkg: go.PackageContent, target: go.CodeMod
   // add factory type
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   result += '// ClientFactory is a client factory used to create any client in this module.\n';
-  result += '// Don\'t use this type directly, use NewClientFactory instead.\n';
+  result += "// Don't use this type directly, use NewClientFactory instead.\n";
   result += 'type ClientFactory struct {\n';
   for (const clientParam of clientFactoryParams) {
     if (clientParam.kind === 'credentialParam') {
@@ -60,10 +60,14 @@ export function generateClientFactory(pkg: go.PackageContent, target: go.CodeMod
   for (const clientParam of clientFactoryParams) {
     result += helpers.formatCommentAsBulletItem(clientParam.name, clientParam.docs);
   }
-  result += helpers.formatCommentAsBulletItem('credential', {summary: 'used to authorize requests. Usually a credential from azidentity.'});
-  result += helpers.formatCommentAsBulletItem('options', {summary: 'pass nil to accept the default values.'});
+  result += helpers.formatCommentAsBulletItem('credential', { summary: 'used to authorize requests. Usually a credential from azidentity.' });
+  result += helpers.formatCommentAsBulletItem('options', { summary: 'pass nil to accept the default values.' });
 
-  result += `func NewClientFactory(${clientFactoryParams.map(param => { return `${param.name} ${helpers.formatParameterTypeName(pkg, param)}`; }).join(', ')}${clientFactoryParams.length>0 ? ',' : ''} options *arm.ClientOptions) (*ClientFactory, error) {\n`;
+  result += `func NewClientFactory(${clientFactoryParams
+    .map((param) => {
+      return `${param.name} ${helpers.formatParameterTypeName(pkg, param)}`;
+    })
+    .join(', ')}${clientFactoryParams.length > 0 ? ',' : ''} options *arm.ClientOptions) (*ClientFactory, error) {\n`;
   result += '\tinternal, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
   result += '\tif err != nil {\n';
   result += '\t\treturn nil, err\n';
@@ -102,9 +106,11 @@ export function generateClientFactory(pkg: go.PackageContent, target: go.CodeMod
     result += `// ${ctorName} creates a new instance of ${client.name}.\n`;
     result += `func (c *ClientFactory) ${ctorName}(`;
     if (clientPrivateParams.length > 0) {
-      result += `${clientPrivateParams.map(param => { 
-        return `${param.name} ${helpers.formatParameterTypeName(pkg, param)}`; 
-      }).join(', ')}`;
+      result += `${clientPrivateParams
+        .map((param) => {
+          return `${param.name} ${helpers.formatParameterTypeName(pkg, param)}`;
+        })
+        .join(', ')}`;
     }
     result += `) *${client.name} {\n`;
     result += `\treturn &${client.name}{\n`;

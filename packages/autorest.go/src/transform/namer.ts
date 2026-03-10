@@ -10,7 +10,14 @@
 import { Session } from '@autorest/extension-base';
 import { ChoiceSchema, CodeModel, HttpHeader, HttpMethod, Language, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
-import { createPolymorphicInterfaceName, ensureNameCase, getEscapedReservedName, packageNameFromOutputFolder, trimPackagePrefix, uncapitalize } from '../../../naming.go/src/naming.js';
+import {
+  createPolymorphicInterfaceName,
+  ensureNameCase,
+  getEscapedReservedName,
+  packageNameFromOutputFolder,
+  trimPackagePrefix,
+  uncapitalize,
+} from '../../../naming.go/src/naming.js';
 import { aggregateParameters, hasAdditionalProperties } from './helpers.js';
 
 const requestMethodSuffix = 'CreateRequest';
@@ -18,7 +25,7 @@ const responseMethodSuffix = 'HandleResponse';
 
 // contains extended naming information for operations
 export interface OperationNaming extends Language {
-  protocolNaming: protocolNaming
+  protocolNaming: protocolNaming;
 }
 
 interface protocolNaming {
@@ -110,7 +117,7 @@ export async function namer(session: Session<CodeModel>) {
   }
 
   // fix up enum type and value names and capitzalize acronyms
-  const renameChoicesAndValues = function(choices?: Array<ChoiceSchema> | Array<SealedChoiceSchema>): void {
+  const renameChoicesAndValues = function (choices?: Array<ChoiceSchema> | Array<SealedChoiceSchema>): void {
     if (!choices) {
       return;
     }
@@ -133,7 +140,7 @@ export async function namer(session: Session<CodeModel>) {
   // fix stuttering type names
   const collisions = new Array<string>();
 
-  const fixStutteringTypeName = function(details: Language): void {
+  const fixStutteringTypeName = function (details: Language): void {
     const originalName = details.name;
     details.name = trimPackagePrefix(stutteringPrefix, originalName);
     // if the type was renamed to remove stuttering, check if it collides with an existing type name
@@ -148,7 +155,7 @@ export async function namer(session: Session<CodeModel>) {
 
   // to avoid breaking changes, this is opt-in
   if (await session.getValue('fix-const-stuttering', false)) {
-    const fixStutteringForChoicesAndValues = function(choices?: Array<ChoiceSchema> | Array<SealedChoiceSchema>): void {
+    const fixStutteringForChoicesAndValues = function (choices?: Array<ChoiceSchema> | Array<SealedChoiceSchema>): void {
       if (!choices) {
         return;
       }
