@@ -13,8 +13,9 @@ import (
 )
 
 func TestIndividuallyParentNestedWithMixedClient_WithQuery(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithMixedClientWithNoCredential("http://localhost:3000", "test-name-value", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithMixedClient("test-name-value")
 	resp, err := client.WithQuery(context.Background(), "us-west", &clientinitindividuallyparentgroup.IndividuallyParentIndividuallyParentNestedWithMixedClientWithQueryOptions{
 		Format: to.Ptr("text"),
 	})
@@ -23,16 +24,18 @@ func TestIndividuallyParentNestedWithMixedClient_WithQuery(t *testing.T) {
 }
 
 func TestIndividuallyParentNestedWithMixedClient_GetStandalone(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithMixedClientWithNoCredential("http://localhost:3000", "test-name-value", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithMixedClient("test-name-value")
 	resp, err := client.GetStandalone(context.Background(), "us-west", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
 func TestIndividuallyParentNestedWithMixedClient_DeleteStandalone(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithMixedClientWithNoCredential("http://localhost:3000", "test-name-value", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithMixedClient("test-name-value")
 	resp, err := client.DeleteStandalone(context.Background(), "us-west", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)

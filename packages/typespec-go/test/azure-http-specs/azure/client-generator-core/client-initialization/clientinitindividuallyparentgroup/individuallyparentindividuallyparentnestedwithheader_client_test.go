@@ -13,8 +13,9 @@ import (
 )
 
 func TestIndividuallyParentNestedWithHeaderClient_WithQuery(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithHeaderClientWithNoCredential("http://localhost:3000", "test-name-value", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithHeaderClient("test-name-value")
 	resp, err := client.WithQuery(context.Background(), &clientinitindividuallyparentgroup.IndividuallyParentIndividuallyParentNestedWithHeaderClientWithQueryOptions{
 		Format: to.Ptr("text"),
 	})
@@ -23,16 +24,18 @@ func TestIndividuallyParentNestedWithHeaderClient_WithQuery(t *testing.T) {
 }
 
 func TestIndividuallyParentNestedWithHeaderClient_GetStandalone(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithHeaderClientWithNoCredential("http://localhost:3000", "test-name-value", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithHeaderClient("test-name-value")
 	resp, err := client.GetStandalone(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
 func TestIndividuallyParentNestedWithHeaderClient_DeleteStandalone(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithHeaderClientWithNoCredential("http://localhost:3000", "test-name-value", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithHeaderClient("test-name-value")
 	resp, err := client.DeleteStandalone(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)

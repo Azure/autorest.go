@@ -13,8 +13,9 @@ import (
 )
 
 func TestIndividuallyParentNestedWithMultipleClient_WithQuery(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithMultipleClientWithNoCredential("http://localhost:3000", "test-name-value", "us-west", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithMultipleClient("test-name-value", "us-west")
 	resp, err := client.WithQuery(context.Background(), &clientinitindividuallyparentgroup.IndividuallyParentIndividuallyParentNestedWithMultipleClientWithQueryOptions{
 		Format: to.Ptr("text"),
 	})
@@ -23,16 +24,18 @@ func TestIndividuallyParentNestedWithMultipleClient_WithQuery(t *testing.T) {
 }
 
 func TestIndividuallyParentNestedWithMultipleClient_GetStandalone(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithMultipleClientWithNoCredential("http://localhost:3000", "test-name-value", "us-west", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithMultipleClient("test-name-value", "us-west")
 	resp, err := client.GetStandalone(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
 func TestIndividuallyParentNestedWithMultipleClient_DeleteStandalone(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithMultipleClientWithNoCredential("http://localhost:3000", "test-name-value", "us-west", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithMultipleClient("test-name-value", "us-west")
 	resp, err := client.DeleteStandalone(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)

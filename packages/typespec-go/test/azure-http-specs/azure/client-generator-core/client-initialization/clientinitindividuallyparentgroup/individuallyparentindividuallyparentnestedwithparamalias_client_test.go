@@ -12,16 +12,18 @@ import (
 )
 
 func TestIndividuallyParentNestedWithParamAliasClient_WithAliasedName(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithParamAliasClientWithNoCredential("http://localhost:3000", "sample-blob", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithParamAliasClient("sample-blob")
 	resp, err := client.WithAliasedName(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
 func TestIndividuallyParentNestedWithParamAliasClient_WithOriginalName(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithParamAliasClientWithNoCredential("http://localhost:3000", "sample-blob", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithParamAliasClient("sample-blob")
 	resp, err := client.WithOriginalName(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)

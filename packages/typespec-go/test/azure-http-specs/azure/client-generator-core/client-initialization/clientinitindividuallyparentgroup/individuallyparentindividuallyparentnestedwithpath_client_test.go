@@ -14,8 +14,9 @@ import (
 )
 
 func TestIndividuallyParentNestedWithPathClient_WithQuery(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithPathClientWithNoCredential("http://localhost:3000", "test-blob", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithPathClient("test-blob")
 	resp, err := client.WithQuery(context.Background(), &clientinitindividuallyparentgroup.IndividuallyParentIndividuallyParentNestedWithPathClientWithQueryOptions{
 		Format: to.Ptr("text"),
 	})
@@ -24,8 +25,9 @@ func TestIndividuallyParentNestedWithPathClient_WithQuery(t *testing.T) {
 }
 
 func TestIndividuallyParentNestedWithPathClient_GetStandalone(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithPathClientWithNoCredential("http://localhost:3000", "test-blob", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithPathClient("test-blob")
 	resp, err := client.GetStandalone(context.Background(), nil)
 	require.NoError(t, err)
 	expectedTime, err := time.Parse(time.RFC3339, "2023-01-01T12:00:00Z")
@@ -39,8 +41,9 @@ func TestIndividuallyParentNestedWithPathClient_GetStandalone(t *testing.T) {
 }
 
 func TestIndividuallyParentNestedWithPathClient_DeleteStandalone(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithPathClientWithNoCredential("http://localhost:3000", "test-blob", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithPathClient("test-blob")
 	resp, err := client.DeleteStandalone(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)

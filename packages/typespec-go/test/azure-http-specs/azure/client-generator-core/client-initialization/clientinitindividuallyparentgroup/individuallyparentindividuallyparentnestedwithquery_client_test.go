@@ -14,8 +14,9 @@ import (
 )
 
 func TestIndividuallyParentNestedWithQueryClient_WithQuery(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithQueryClientWithNoCredential("http://localhost:3000", "test-blob", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithQueryClient("test-blob")
 	resp, err := client.WithQuery(context.Background(), &clientinitindividuallyparentgroup.IndividuallyParentIndividuallyParentNestedWithQueryClientWithQueryOptions{
 		Format: to.Ptr("text"),
 	})
@@ -24,8 +25,9 @@ func TestIndividuallyParentNestedWithQueryClient_WithQuery(t *testing.T) {
 }
 
 func TestIndividuallyParentNestedWithQueryClient_GetStandalone(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithQueryClientWithNoCredential("http://localhost:3000", "test-blob", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithQueryClient("test-blob")
 	resp, err := client.GetStandalone(context.Background(), nil)
 	require.NoError(t, err)
 	expectedTime, err := time.Parse(time.RFC3339, "2023-01-01T12:00:00Z")
@@ -39,8 +41,9 @@ func TestIndividuallyParentNestedWithQueryClient_GetStandalone(t *testing.T) {
 }
 
 func TestIndividuallyParentNestedWithQueryClient_DeleteStandalone(t *testing.T) {
-	client, err := clientinitindividuallyparentgroup.NewIndividuallyParentIndividuallyParentNestedWithQueryClientWithNoCredential("http://localhost:3000", "test-blob", nil)
+	parentClient, err := clientinitindividuallyparentgroup.NewIndividuallyParentClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
+	client := parentClient.NewIndividuallyParentIndividuallyParentNestedWithQueryClient("test-blob")
 	resp, err := client.DeleteStandalone(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
