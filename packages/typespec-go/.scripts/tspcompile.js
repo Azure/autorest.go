@@ -48,7 +48,7 @@ const httpSpecsGroup = {
   'versionedgroup': ['server/versions/versioned'],
   'condreqgroup': ['special-headers/conditional-request'],
   //'repeatabilitygroup': ['special-headers/repeatability'],   // requires union support
-  'specialwordsgroup': ['special-words'],
+  //'specialwordsgroup': ['special-words'],   // waiting for fix: https://github.com/microsoft/typespec/pull/9987
   //'jsonlgroup': ['streaming/jsonl'], // TODO: https://github.com/Azure/autorest.go/issues/1594
   'arraygroup': ['type/array', 'slice-elements-byval=true'],
   'dictionarygroup': ['type/dictionary'],
