@@ -1,5 +1,11 @@
 # Release History
 
+## 0.10.3 (unreleased)
+
+### Bugs Fixed
+
+* Fixed missing propagation of parent client parameters to sub-clients created via client accessor methods.
+
 ## 0.10.2 (2026-03-06)
 
 ### Bugs Fixed
