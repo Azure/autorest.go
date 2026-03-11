@@ -4,6 +4,8 @@
 
 package xmlgroup
 
+import "time"
+
 // ModelWithArrayOfModel - Contains an array of models.
 type ModelWithArrayOfModel struct {
 	// REQUIRED
@@ -20,6 +22,15 @@ type ModelWithAttributes struct {
 
 	// REQUIRED
 	Id2 *string `xml:"id2,attr"`
+}
+
+// ModelWithDatetime - Contains datetime properties with different encodings.
+type ModelWithDatetime struct {
+	// REQUIRED; DateTime value with rfc3339 encoding.
+	RFC3339 *time.Time `xml:"rfc3339"`
+
+	// REQUIRED; DateTime value with rfc7231 encoding.
+	RFC7231 *time.Time `xml:"rfc7231"`
 }
 
 // ModelWithDictionary - Contains a dictionary of key value pairs.
@@ -41,6 +52,12 @@ type ModelWithEncodedNames struct {
 
 	// REQUIRED
 	ModelData *SimpleModel `xml:"SimpleModelData"`
+}
+
+// ModelWithEnum - Contains a single property with an enum value.
+type ModelWithEnum struct {
+	// REQUIRED
+	Status *Status `xml:"status"`
 }
 
 // ModelWithOptionalField - Contains an optional field.

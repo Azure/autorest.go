@@ -10,6 +10,18 @@ type FlattenPropertyClientPutFlattenModelResponse struct {
 	FlattenModel
 }
 
+// FlattenPropertyClientPutFlattenReadOnlyModelResponse contains the response from method FlattenPropertyClient.PutFlattenReadOnlyModel.
+type FlattenPropertyClientPutFlattenReadOnlyModelResponse struct {
+	// This is the model with flattened properties that are all read-only.
+	Solution
+}
+
+// FlattenPropertyClientPutFlattenUnknownModelResponse contains the response from method FlattenPropertyClient.PutFlattenUnknownModel.
+type FlattenPropertyClientPutFlattenUnknownModelResponse struct {
+	// This is the model with unknown type properties to be flattened.
+	FlattenUnknownModel
+}
+
 // FlattenPropertyClientPutNestedFlattenModelResponse contains the response from method FlattenPropertyClient.PutNestedFlattenModel.
 type FlattenPropertyClientPutNestedFlattenModelResponse struct {
 	// This is the model with two levels of flattening.
