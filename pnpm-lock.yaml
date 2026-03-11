@@ -262,23 +262,23 @@ importers:
         version: 0.5.21
     devDependencies:
       '@azure-tools/azure-http-specs':
-        specifier: 0.1.0-alpha.37
-        version: 0.1.0-alpha.37(38d310fd60466ff6c7d057842ae705d7)
+        specifier: 0.1.0-alpha.38
+        version: 0.1.0-alpha.38(9029b0f03a9b79bfe26328c8e606fe51)
       '@azure-tools/typespec-autorest':
-        specifier: 0.65.0
-        version: 0.65.0(5de629f7ec4825e29c9e4d247b6d2442)
+        specifier: 0.66.0
+        version: 0.66.0(e3d94fc2867d0850c86fbfcb5eaa8375)
       '@azure-tools/typespec-azure-core':
-        specifier: 0.65.0
-        version: 0.65.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))(@typespec/rest@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))))
+        specifier: 0.66.0
+        version: 0.66.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))(@typespec/rest@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))))
       '@azure-tools/typespec-azure-resource-manager':
-        specifier: 0.65.0
-        version: 0.65.0(1e5c7dc609368fe5c319bd1250a8dd60)
+        specifier: 0.66.0
+        version: 0.66.0(92284d77af4bc64e2272860c16ccb203)
       '@azure-tools/typespec-azure-rulesets':
-        specifier: 0.65.0
-        version: 0.65.0(@azure-tools/typespec-azure-core@0.65.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))(@typespec/rest@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))))(@azure-tools/typespec-azure-resource-manager@0.65.0(1e5c7dc609368fe5c319bd1250a8dd60))(@azure-tools/typespec-client-generator-core@0.65.4(2296a36abc0f17fe42099d3726403d0d))(@typespec/compiler@1.9.0(@types/node@20.19.27))
+        specifier: 0.65.1
+        version: 0.65.1(@azure-tools/typespec-azure-core@0.66.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))(@typespec/rest@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))))(@azure-tools/typespec-azure-resource-manager@0.66.0(92284d77af4bc64e2272860c16ccb203))(@azure-tools/typespec-client-generator-core@0.66.0(7116c80abeec3045387c176f44a26031))(@typespec/compiler@1.10.0(@types/node@20.19.27))
       '@azure-tools/typespec-client-generator-core':
-        specifier: 0.65.4
-        version: 0.65.4(2296a36abc0f17fe42099d3726403d0d)
+        specifier: 0.66.0
+        version: 0.66.0(7116c80abeec3045387c176f44a26031)
       '@types/node':
         specifier: 'catalog:'
         version: 20.19.27
@@ -286,41 +286,41 @@ importers:
         specifier: 'catalog:'
         version: 7.7.1
       '@typespec/compiler':
-        specifier: 1.9.0
-        version: 1.9.0(@types/node@20.19.27)
+        specifier: 1.10.0
+        version: 1.10.0(@types/node@20.19.27)
       '@typespec/events':
-        specifier: 0.79.0
-        version: 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
+        specifier: 0.80.0
+        version: 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
       '@typespec/http':
-        specifier: 1.9.1
-        version: 1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
+        specifier: 1.10.0
+        version: 1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
       '@typespec/http-specs':
-        specifier: 0.1.0-alpha.32
-        version: 0.1.0-alpha.32(@types/node@20.19.27)(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))(@typespec/rest@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))(@typespec/versioning@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))(@typespec/xml@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
+        specifier: 0.1.0-alpha.33
+        version: 0.1.0-alpha.33(@types/node@20.19.27)(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))(@typespec/rest@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))(@typespec/versioning@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))(@typespec/xml@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
       '@typespec/openapi':
-        specifier: 1.9.0
-        version: 1.9.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))
+        specifier: 1.10.0
+        version: 1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))
       '@typespec/rest':
-        specifier: 0.79.0
-        version: 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))
+        specifier: 0.80.0
+        version: 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))
       '@typespec/spector':
-        specifier: 0.1.0-alpha.23
-        version: 0.1.0-alpha.23(@types/node@20.19.27)(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
+        specifier: 0.1.0-alpha.24
+        version: 0.1.0-alpha.24(@types/node@20.19.27)(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
       '@typespec/sse':
-        specifier: 0.79.0
-        version: 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/events@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
+        specifier: 0.80.0
+        version: 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/events@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
       '@typespec/streams':
-        specifier: 0.79.0
-        version: 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
+        specifier: 0.80.0
+        version: 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
       '@typespec/tspd':
-        specifier: 0.74.0
-        version: 0.74.0(@types/node@20.19.27)(typescript@5.9.3)
+        specifier: 0.74.1
+        version: 0.74.1(@types/node@20.19.27)(typescript@5.9.3)
       '@typespec/versioning':
-        specifier: 0.79.0
-        version: 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
+        specifier: 0.80.0
+        version: 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
       '@typespec/xml':
-        specifier: 0.79.0
-        version: 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
+        specifier: 0.80.0
+        version: 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
       '@vitest/coverage-v8':
         specifier: 'catalog:'
         version: 3.1.3(vitest@3.1.3)
@@ -374,16 +374,16 @@ packages:
     resolution: {integrity: sha512-4w2xfBcT0dj/IYp9t/fsBvuzTrV8faQnCs3URqfui9RBnoHVj12p8FdxCRKuRaN5CRPQlZ6XW4eMhp1wu5E8GQ==}
     engines: {node: '>=12.13.0'}
 
-  '@azure-tools/azure-http-specs@0.1.0-alpha.37':
-    resolution: {integrity: sha512-oMo0f14FGn2pg4epJQM7W86W6PNTIgtFUCmBGNUXUcffaZIMnzreR9M488ynyuAP4lbsOiu0uFcE2skDXip2Eg==}
+  '@azure-tools/azure-http-specs@0.1.0-alpha.38':
+    resolution: {integrity: sha512-OkwmMhmSNOV4PO4UA4Tm4ufyA0UPcOrWgZuhybQjWzUq0bbryW9y5ODyknvUV0Z0IOAInW1dUJQ2wRX9pLqNCA==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@azure-tools/typespec-azure-core': ^0.65.0
-      '@typespec/compiler': ^1.9.0
-      '@typespec/http': ^1.9.0
-      '@typespec/rest': ^0.79.0
-      '@typespec/versioning': ^0.79.0
-      '@typespec/xml': ^0.79.0
+      '@azure-tools/typespec-azure-core': ^0.66.0
+      '@typespec/compiler': ^1.10.0
+      '@typespec/http': ^1.10.0
+      '@typespec/rest': ^0.80.0
+      '@typespec/versioning': ^0.80.0
+      '@typespec/xml': ^0.80.0
 
   '@azure-tools/codegen@2.10.0':
     resolution: {integrity: sha512-gdy0at3BUZAAARgiX9Ye6SNCKhcjLs5FNUewa/KV/dMGcPv7mBvbslt5VO3W8wj0n96ifk970aIFaivjacBxeQ==}
@@ -413,65 +413,65 @@ packages:
     resolution: {integrity: sha512-ojnEXV1RIzsC9XpEoDGU8n1X6uiwaz5bhJeXtqK2tOLJFMNM0BK37CQN60FiBvZCZQADsyw2GC4r6FuHHMceEA==}
     engines: {node: '>=12.13.0'}
 
-  '@azure-tools/typespec-autorest@0.65.0':
-    resolution: {integrity: sha512-R8pZt7rYdA2Hr3nck93OGapkQZe3MSzoYq4PgRtsGDHcvA5Qp7RBQMF/tP5DEcFWDDm+unoQeDpbD02POb/LTA==}
+  '@azure-tools/typespec-autorest@0.66.0':
+    resolution: {integrity: sha512-sznnlQ2Cyxny7bXSl+PzGu+qQf/rrSIvf2qR7G/bqWbK6MNykXwiDk9uR5q93Y8spA9vv4jk38Il4rSXqmAzLQ==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@azure-tools/typespec-azure-core': ^0.65.0
-      '@azure-tools/typespec-azure-resource-manager': ^0.65.0
-      '@azure-tools/typespec-client-generator-core': ^0.65.0
-      '@typespec/compiler': ^1.9.0
-      '@typespec/http': ^1.9.0
-      '@typespec/openapi': ^1.9.0
-      '@typespec/rest': ^0.79.0
-      '@typespec/versioning': ^0.79.0
-      '@typespec/xml': ^0.79.0
+      '@azure-tools/typespec-azure-core': ^0.66.0
+      '@azure-tools/typespec-azure-resource-manager': ^0.66.0
+      '@azure-tools/typespec-client-generator-core': ^0.66.0
+      '@typespec/compiler': ^1.10.0
+      '@typespec/http': ^1.10.0
+      '@typespec/openapi': ^1.10.0
+      '@typespec/rest': ^0.80.0
+      '@typespec/versioning': ^0.80.0
+      '@typespec/xml': ^0.80.0
     peerDependenciesMeta:
       '@typespec/xml':
         optional: true
 
-  '@azure-tools/typespec-azure-core@0.65.0':
-    resolution: {integrity: sha512-dYgHtt0CY0Q9AimdIsMV41jHKLmAT4r++TLwyxAHRbxdiRG+Sll1UKJzOIIoq45Bq64wCfEltu5OOnyPA01/sQ==}
+  '@azure-tools/typespec-azure-core@0.66.0':
+    resolution: {integrity: sha512-OBKxRN7AucK3snh+GtLKSDdcZTz08IgcSZlIO3c4KSlmcR5twT1NMyqf1+V8SAhyOdZimndb+ikzrkkgab+GpA==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@typespec/compiler': ^1.9.0
-      '@typespec/http': ^1.9.0
-      '@typespec/rest': ^0.79.0
+      '@typespec/compiler': ^1.10.0
+      '@typespec/http': ^1.10.0
+      '@typespec/rest': ^0.80.0
 
-  '@azure-tools/typespec-azure-resource-manager@0.65.0':
-    resolution: {integrity: sha512-3rvyGDIYSqraZ7jHfq5Bfet8u3ZeERWJWhwWMNvbShnrS/vVR3iuu/1z2M0p5mTRFuwUaSMlL/dbtBp1YqgGAg==}
+  '@azure-tools/typespec-azure-resource-manager@0.66.0':
+    resolution: {integrity: sha512-UbgYUaYTt7prsv+RYxd2kiOWjeEeoH56QOqgXnSOFhYzq/h9fyDaQAm6+CY7cklziED+MYy3uMQd1BG9mNwlfQ==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@azure-tools/typespec-azure-core': ^0.65.0
-      '@typespec/compiler': ^1.9.0
-      '@typespec/http': ^1.9.0
-      '@typespec/openapi': ^1.9.0
-      '@typespec/rest': ^0.79.0
-      '@typespec/versioning': ^0.79.0
+      '@azure-tools/typespec-azure-core': ^0.66.0
+      '@typespec/compiler': ^1.10.0
+      '@typespec/http': ^1.10.0
+      '@typespec/openapi': ^1.10.0
+      '@typespec/rest': ^0.80.0
+      '@typespec/versioning': ^0.80.0
 
-  '@azure-tools/typespec-azure-rulesets@0.65.0':
-    resolution: {integrity: sha512-oGuCw61uU9fUASog/1iD1rGeGhcKgnAuyBWA63wRcMMrcW1ZqUK2xvjV1XJuoYRlMxU8HpQShFcvsj715pNVLQ==}
+  '@azure-tools/typespec-azure-rulesets@0.65.1':
+    resolution: {integrity: sha512-iF9prvhrKX2ZTzUinyLdelfqmKsxla7hwEj/6l4hvgpXEnTckxlCwKqfBTOGwvJ4ofQ5L2DIJWWR2+X8yLWRBg==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@azure-tools/typespec-azure-core': ^0.65.0
-      '@azure-tools/typespec-azure-resource-manager': ^0.65.0
-      '@azure-tools/typespec-client-generator-core': ^0.65.0
-      '@typespec/compiler': ^1.9.0
+      '@azure-tools/typespec-azure-core': ^0.66.0
+      '@azure-tools/typespec-azure-resource-manager': ^0.66.0
+      '@azure-tools/typespec-client-generator-core': ^0.66.0
+      '@typespec/compiler': ^1.10.0
 
-  '@azure-tools/typespec-client-generator-core@0.65.4':
-    resolution: {integrity: sha512-p+MZU/nEmU3ciLEuNbqQtAybPxUKo/fKeKT9feh+tZLVpDDFO5DTefYoN4cteZQkPu/xyzxhjeUnKKvyVQxd6A==}
+  '@azure-tools/typespec-client-generator-core@0.66.0':
+    resolution: {integrity: sha512-ITg9Ls1p0vr1nTM6BaeO+u3p5+jkJ6JtzomrUAhgBNQUZGsC5MIOt4leOJf8XMBCwW3WFLIRRVF86xMgamMfDA==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@azure-tools/typespec-azure-core': ^0.65.0
-      '@typespec/compiler': ^1.9.0
-      '@typespec/events': ^0.79.0
-      '@typespec/http': ^1.9.0
-      '@typespec/openapi': ^1.9.0
-      '@typespec/rest': ^0.79.0
-      '@typespec/sse': ^0.79.0
-      '@typespec/streams': ^0.79.0
-      '@typespec/versioning': ^0.79.0
-      '@typespec/xml': ^0.79.0
+      '@azure-tools/typespec-azure-core': ^0.66.0
+      '@typespec/compiler': ^1.10.0
+      '@typespec/events': ^0.80.0
+      '@typespec/http': ^1.10.0
+      '@typespec/openapi': ^1.10.0
+      '@typespec/rest': ^0.80.0
+      '@typespec/sse': ^0.80.0
+      '@typespec/streams': ^0.80.0
+      '@typespec/versioning': ^0.80.0
+      '@typespec/xml': ^0.80.0
 
   '@azure/abort-controller@2.1.2':
     resolution: {integrity: sha512-nBrLsEWm4J2u5LpAPjxADTlq3trDgVZZXHNKabeXZtpq3d3AbN/KGO82R87rdDz5/lYB024rtEf10/q0urNgsA==}
@@ -537,8 +537,8 @@ packages:
     resolution: {integrity: sha512-IQjj9RIzAKatmNca3D6bT0qJ+Pkox1WZGOg2esJF2YLHb45pQKOwGPIAV+w3rfgkj7zV3RMxpn/c6iftzSOZJQ==}
     engines: {node: '>=18.0.0'}
 
-  '@azure/storage-blob@12.30.0':
-    resolution: {integrity: sha512-peDCR8blSqhsAKDbpSP/o55S4sheNwSrblvCaHUZ5xUI73XA7ieUGGwrONgD/Fng0EoDe1VOa3fAQ7+WGB3Ocg==}
+  '@azure/storage-blob@12.31.0':
+    resolution: {integrity: sha512-DBgNv10aCSxopt92DkTDD0o9xScXeBqPKGmR50FPZQaEcH4JLQ+GEOGEDv19V5BMkB7kxr+m4h6il/cCDPvmHg==}
     engines: {node: '>=20.0.0'}
 
   '@azure/storage-common@12.3.0':
@@ -551,6 +551,10 @@ packages:
 
   '@babel/code-frame@7.28.6':
     resolution: {integrity: sha512-JYgintcMjRiCvS8mMECzaEn+m3PfoQiyqukOMCCVQtoJGYJw8j/8LBJEiqkHLkfwCcs74E3pbAUFNg7d9VNJ+Q==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/code-frame@7.29.0':
+    resolution: {integrity: sha512-9NhCeYjq9+3uxgdtp20LSiJXJvN0FeCtNGpJxuMFZ1Kv3cWUNb6DOhJwUvcVCzKGR66cw4njwM6hrJLqgOwbcw==}
     engines: {node: '>=6.9.0'}
 
   '@babel/compat-data@7.27.1':
@@ -1127,14 +1131,6 @@ packages:
       '@types/node':
         optional: true
 
-  '@isaacs/balanced-match@4.0.1':
-    resolution: {integrity: sha512-yzMTt9lEb8Gv7zRioUilSglI0c0smZ9k5D65677DLWLtWJaXIS3CqcGyUFByYKlnUj6TkjLVs54fBl6+TiGQDQ==}
-    engines: {node: 20 || >=22}
-
-  '@isaacs/brace-expansion@5.0.0':
-    resolution: {integrity: sha512-ZT55BDLV0yv0RBm2czMiZ+SqCGO7AvmOM3G/w2xhVPH+te0aKgFjmBvGlL1dH+ql2tgGO3MVrbb3jCKyvpgnxA==}
-    engines: {node: 20 || >=22}
-
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
@@ -1332,15 +1328,18 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@microsoft/api-extractor-model@7.32.2':
-    resolution: {integrity: sha512-Ussc25rAalc+4JJs9HNQE7TuO9y6jpYQX9nWD1DhqUzYPBr3Lr7O9intf+ZY8kD5HnIqeIRJX7ccCT0QyBy2Ww==}
+  '@microsoft/api-extractor-model@7.33.4':
+    resolution: {integrity: sha512-u1LTaNTikZAQ9uK6KG1Ms7nvNedsnODnspq/gH2dcyETWvH4hVNGNDvRAEutH66kAmxA4/necElqGNs1FggC8w==}
 
-  '@microsoft/api-extractor@7.55.2':
-    resolution: {integrity: sha512-1jlWO4qmgqYoVUcyh+oXYRztZde/pAi7cSVzBz/rc+S7CoVzDasy8QE13dx6sLG4VRo8SfkkLbFORR6tBw4uGQ==}
+  '@microsoft/api-extractor@7.57.7':
+    resolution: {integrity: sha512-kmnmVs32MFWbV5X6BInC1/TfCs7y1ugwxv1xHsAIj/DyUfoe7vtO0alRUgbQa57+yRGHBBjlNcEk33SCAt5/dA==}
     hasBin: true
 
   '@microsoft/tsdoc-config@0.18.0':
     resolution: {integrity: sha512-8N/vClYyfOH+l4fLkkr9+myAoR6M7akc8ntBJ4DJdWH2b09uVfr71+LTMpNyG19fNqWDg8KEDZhx5wxuqHyGjw==}
+
+  '@microsoft/tsdoc-config@0.18.1':
+    resolution: {integrity: sha512-9brPoVdfN9k9g0dcWkFeA7IH9bbcttzDJlXvkf8b2OBzd5MueR1V2wkKBL0abn0otvmkHJC6aapBOTJDDeMCZg==}
 
   '@microsoft/tsdoc@0.16.0':
     resolution: {integrity: sha512-xgAyonlVVS+q7Vc7qLW0UrJU7rSFcETRWsqdXZtjzRU8dF+6CkozTK4V4y1LwOX7j8r/vHphjDeMeGI4tNGeGA==}
@@ -1478,35 +1477,35 @@ packages:
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
 
-  '@rushstack/node-core-library@5.19.1':
-    resolution: {integrity: sha512-ESpb2Tajlatgbmzzukg6zyAhH+sICqJR2CNXNhXcEbz6UGCQfrKCtkxOpJTftWc8RGouroHG0Nud1SJAszvpmA==}
+  '@rushstack/node-core-library@5.20.3':
+    resolution: {integrity: sha512-95JgEPq2k7tHxhF9/OJnnyHDXfC9cLhhta0An/6MlkDsX2A6dTzDrTUG18vx4vjc280V0fi0xDH9iQczpSuWsw==}
     peerDependencies:
       '@types/node': '*'
     peerDependenciesMeta:
       '@types/node':
         optional: true
 
-  '@rushstack/problem-matcher@0.1.1':
-    resolution: {integrity: sha512-Fm5XtS7+G8HLcJHCWpES5VmeMyjAKaWeyZU5qPzZC+22mPlJzAsOxymHiWIfuirtPckX3aptWws+K2d0BzniJA==}
+  '@rushstack/problem-matcher@0.2.1':
+    resolution: {integrity: sha512-gulfhBs6n+I5b7DvjKRfhMGyUejtSgOHTclF/eONr8hcgF1APEDjhxIsfdUYYMzC3rvLwGluqLjbwCFZ8nxrog==}
     peerDependencies:
       '@types/node': '*'
     peerDependenciesMeta:
       '@types/node':
         optional: true
 
-  '@rushstack/rig-package@0.6.0':
-    resolution: {integrity: sha512-ZQmfzsLE2+Y91GF15c65L/slMRVhF6Hycq04D4TwtdGaUAbIXXg9c5pKA5KFU7M4QMaihoobp9JJYpYcaY3zOw==}
+  '@rushstack/rig-package@0.7.2':
+    resolution: {integrity: sha512-9XbFWuqMYcHUso4mnETfhGVUSaADBRj6HUAAEYk50nMPn8WRICmBuCphycQGNB3duIR6EEZX3Xj3SYc2XiP+9A==}
 
-  '@rushstack/terminal@0.19.5':
-    resolution: {integrity: sha512-6k5tpdB88G0K7QrH/3yfKO84HK9ggftfUZ51p7fePyCE7+RLLHkWZbID9OFWbXuna+eeCFE7AkKnRMHMxNbz7Q==}
+  '@rushstack/terminal@0.22.3':
+    resolution: {integrity: sha512-gHC9pIMrUPzAbBiI4VZMU7Q+rsCzb8hJl36lFIulIzoceKotyKL3Rd76AZ2CryCTKEg+0bnTj406HE5YY5OQvw==}
     peerDependencies:
       '@types/node': '*'
     peerDependenciesMeta:
       '@types/node':
         optional: true
 
-  '@rushstack/ts-command-line@5.1.5':
-    resolution: {integrity: sha512-YmrFTFUdHXblYSa+Xc9OO9FsL/XFcckZy0ycQ6q7VSBsVs5P0uD9vcges5Q9vctGlVdu27w+Ct6IuJ458V0cTQ==}
+  '@rushstack/ts-command-line@5.3.3':
+    resolution: {integrity: sha512-c+ltdcvC7ym+10lhwR/vWiOhsrm/bP3By2VsFcs5qTKv+6tTmxgbVrtJ5NdNjANiV5TcmOZgUN+5KYQ4llsvEw==}
 
   '@shikijs/engine-oniguruma@3.4.2':
     resolution: {integrity: sha512-zcZKMnNndgRa3ORja6Iemsr3DrLtkX3cAF7lTJkdMB6v9alhlBsX9uNiCpqofNrXOvpA3h6lHcLJxgCIhVOU5Q==}
@@ -1618,11 +1617,11 @@ packages:
   '@types/node@25.0.10':
     resolution: {integrity: sha512-zWW5KPngR/yvakJgGOmZ5vTBemDoSqF3AcV/LrO5u5wTWyEAVVh+IT39G4gtyAkh3CtTZs8aX/yRM82OfzHJRg==}
 
-  '@types/node@25.0.3':
-    resolution: {integrity: sha512-W609buLVRVmeW693xKfzHeIV6nJGGz98uCPfeXI1ELMLXVeKYZ9m15fAMSaUPBHYLGFsVRcMmSCksQOrZV9BYA==}
-
   '@types/node@25.2.3':
     resolution: {integrity: sha512-m0jEgYlYz+mDJZ2+F4v8D1AyQb+QzsNqRuI7xg1VQX/KlKS0qT9r1Mo16yo5F/MtifXFgaofIFsdFMox2SxIbQ==}
+
+  '@types/node@25.3.5':
+    resolution: {integrity: sha512-oX8xrhvpiyRCQkG1MFchB09f+cXftgIXb3a7UUa4Y3wpmZPw5tyZGTLWhlESOLq1Rq6oDlc8npVU2/9xiCuXMA==}
 
   '@types/nunjucks@3.2.6':
     resolution: {integrity: sha512-pHiGtf83na1nCzliuAdq8GowYiXvH5l931xZ0YEHaLMNFgynpEqx+IPStlu7UaDkehfvl01e4x/9Tpwhy7Ue3w==}
@@ -1754,99 +1753,99 @@ packages:
     resolution: {integrity: sha512-LlKaciDe3GmZFphXIc79THF/YYBugZ7FS1pO581E/edlVVNbZKDy93evqmrfQ9/Y4uN0vVhX4iuchq26mK/iiA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@typespec/compiler@1.9.0':
-    resolution: {integrity: sha512-Rz9fFWQSTJSnhBfZvtA/bDIuO82fknYdtyMsL9lZNJE82rquC6JByHPFsnbGH1VXA0HhMj9L7Oqyp3f0m/BTOA==}
+  '@typespec/compiler@1.10.0':
+    resolution: {integrity: sha512-R6BATDkughntPpaxeESJF+wxma5PEjgmnnKvH0/ByqUH8VyhIckQWE9kkP0Uc/EJ0o0VYhe8qCwWQvV70k5lTw==}
     engines: {node: '>=20.0.0'}
     hasBin: true
 
-  '@typespec/events@0.79.0':
-    resolution: {integrity: sha512-41R2jA7k21uMArjyUdvnqYzVnPPaSEcGi40dLMiRVP79m6XgnD3INuTdlMblaS1i+5jJ1BtS1o4QhBBuS/5/qg==}
+  '@typespec/events@0.80.0':
+    resolution: {integrity: sha512-FrWEUwxhDNbE2YN4fyqV5Qrz9qFJbvPoiKrJM7dexkb7eyhepq3dbc5zZgAm/qFBQ+XxGQQVJ4swXxKT+338fw==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@typespec/compiler': ^1.9.0
+      '@typespec/compiler': ^1.10.0
 
-  '@typespec/http-specs@0.1.0-alpha.32':
-    resolution: {integrity: sha512-a5kOR6M6H23+w4cmYyprh/2Oa5bmPmz6wOQKc9cKfXH8f2sFJ4ViIHBMovyAl5HsSaDAY4VvVz1vmEWA+OWj8g==}
+  '@typespec/http-specs@0.1.0-alpha.33':
+    resolution: {integrity: sha512-O3kYubDHi8wo1ZjTWKPBiz0OrBPHsWexN03zFHE91JnHv4SnfXXN+O2oxeTjqQh/ycKbVTb1k8LBImDiFW5Wnw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
-      '@typespec/compiler': ^1.9.0
-      '@typespec/http': ^1.9.0
-      '@typespec/rest': ^0.79.0
-      '@typespec/versioning': ^0.79.0
-      '@typespec/xml': ^0.79.0
+      '@typespec/compiler': ^1.10.0
+      '@typespec/http': ^1.10.0
+      '@typespec/rest': ^0.80.0
+      '@typespec/versioning': ^0.80.0
+      '@typespec/xml': ^0.80.0
 
-  '@typespec/http@1.9.1':
-    resolution: {integrity: sha512-agcwmbB/hK/o9KmM38UB8OGZwLgB17lJ7b4EjqYGpyshqcRMTESMRxnJIH7rRzUq4HJDTqal0tsb8z0K0zXuDg==}
+  '@typespec/http@1.10.0':
+    resolution: {integrity: sha512-/fj55fmUj4m/FmNdfH0V52menVrmS2r5Xj9d1H+pnjQbxvvaxS906RSRcoF8kbg3PvlibP/Py5u82TAk53AyqA==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@typespec/compiler': ^1.9.0
-      '@typespec/streams': ^0.79.0
+      '@typespec/compiler': ^1.10.0
+      '@typespec/streams': ^0.80.0
     peerDependenciesMeta:
       '@typespec/streams':
         optional: true
 
-  '@typespec/openapi@1.9.0':
-    resolution: {integrity: sha512-5ieXCWRLcyFLv3IFk26ena/RW/NxvT5KiHaoNVFRd79J0XZjFcE0Od6Lxxqj4dWmCo3C8oKtOwFoQuie18G3lQ==}
+  '@typespec/openapi@1.10.0':
+    resolution: {integrity: sha512-tukmyp+c9CFlA2FdF61XfT9eTe5WXWz6J8pOrJ9+IYg0BcBwhJkvDj6BYpDD6SjxbRr1wO5ZL2Whe6MequsyVw==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@typespec/compiler': ^1.9.0
-      '@typespec/http': ^1.9.0
+      '@typespec/compiler': ^1.10.0
+      '@typespec/http': ^1.10.0
 
-  '@typespec/rest@0.79.0':
-    resolution: {integrity: sha512-6QIX7oaUGy/z4rseUrC86LjHxZn8rAAY4fXvGnlPRce6GhEdTb9S9OQPmlPeWngXwCx/07P2+FCR915APqmZxg==}
+  '@typespec/rest@0.80.0':
+    resolution: {integrity: sha512-xczXLoB2akSIDner41gQYTS9CG6TdCN0QHYvXBT6ZrYEnBh+pMvdymW//5CSOTamZLOGo9AOJVJaFfwbFA4vQQ==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@typespec/compiler': ^1.9.0
-      '@typespec/http': ^1.9.0
+      '@typespec/compiler': ^1.10.0
+      '@typespec/http': ^1.10.0
 
-  '@typespec/spec-api@0.1.0-alpha.12':
-    resolution: {integrity: sha512-cAJ1vj6qk2Vw5g1uesohBItA6fl8KqrTRIwj0DdpPaBtQeaUS7yRJZgGQQz/JLeqDj2B+8z2pooLuvEBtnS+jA==}
+  '@typespec/spec-api@0.1.0-alpha.13':
+    resolution: {integrity: sha512-ed0qqGM92vKuangmENUYMeDQZpSlsEMYdeH7+wMl+bIgXzfZ7yv07fNwcmROzSEJd0CzdCTgz+Hp+ifmR4USNQ==}
     engines: {node: '>=20.0.0'}
 
-  '@typespec/spec-coverage-sdk@0.1.0-alpha.15':
-    resolution: {integrity: sha512-Y7SxNBEouGBlMIw5nD+skCYX8FkM2v1CxW79VjqX+iigJQsh2ML0F/G1Zh551l2Dr7zuMv+0qiPrmOC5v3yEgQ==}
+  '@typespec/spec-coverage-sdk@0.1.0-alpha.16':
+    resolution: {integrity: sha512-qwSnuE+CXjv4mn2uhioTVlaO4GjypR4ZtbkSoLmWA677ggYmoAjIDpyNgT1tjsc1lDKVtSiPvGhM9XFKExVmbQ==}
     engines: {node: '>=16.0.0'}
 
-  '@typespec/spector@0.1.0-alpha.23':
-    resolution: {integrity: sha512-z5ORR/HnaLKYcTL2a73sUfC4LmuOqlCRmSPF8h5NtUNDpER3s4aLlFu4DgcaVYTgHruiBLMkLyHpfNPxKDzY7g==}
+  '@typespec/spector@0.1.0-alpha.24':
+    resolution: {integrity: sha512-POUSFunRZ4UbPEs+YLz0vE9tDoc6chQ/61moyiWO/k4hD2R1KTH0qlRHhuKW8/Y2wa8Jbuex39Ft/O3reHZSTQ==}
     engines: {node: '>=16.0.0'}
     hasBin: true
 
-  '@typespec/sse@0.79.0':
-    resolution: {integrity: sha512-YQYlDWCNBza75S360jc51emwntWXMZfkvqXKng+etKP4iCuogJfTX1J8h1yd8tZwkuUNBcklEPCuz3O/+psopg==}
+  '@typespec/sse@0.80.0':
+    resolution: {integrity: sha512-/lxYgMaxgEcjBVhep9tf/VnFD2wnkZlkmjUHLeZL8Cuf+qip61Ren6Ml91YtNnnIFYsuuymDzRclrA073ZBR6Q==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@typespec/compiler': ^1.9.0
-      '@typespec/events': ^0.79.0
-      '@typespec/http': ^1.9.0
-      '@typespec/streams': ^0.79.0
+      '@typespec/compiler': ^1.10.0
+      '@typespec/events': ^0.80.0
+      '@typespec/http': ^1.10.0
+      '@typespec/streams': ^0.80.0
 
-  '@typespec/streams@0.79.0':
-    resolution: {integrity: sha512-nOXpLcEYNdWvLY/6WJ16rD6hGs7bKSmkH+WwgyVwdRON5KJ559quw56pns2DSANw+NaV0lJxJq/8ek5xKCGD6g==}
+  '@typespec/streams@0.80.0':
+    resolution: {integrity: sha512-lNvzrvX/ZRIxRpxIBZu90XNsT+uWsMbLtxHd9edspHAiID3c9WKZbl2fnLcPqdR/60odqKve4yGzB9gF58GUDQ==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@typespec/compiler': ^1.9.0
+      '@typespec/compiler': ^1.10.0
 
   '@typespec/ts-http-runtime@0.2.2':
     resolution: {integrity: sha512-Gz/Sm64+Sq/vklJu1tt9t+4R2lvnud8NbTD/ZfpZtMiUX7YeVpCA8j6NSW8ptwcoLL+NmYANwqP8DV0q/bwl2w==}
     engines: {node: '>=18.0.0'}
 
-  '@typespec/tspd@0.74.0':
-    resolution: {integrity: sha512-3djIZittIUk7PWzBvXTyu3UII8WXujjBnKz+ADzKUEPcLCZgVMjdXUAjeYQHM8q7AJr6jAovUqAQSft49wCk3Q==}
+  '@typespec/tspd@0.74.1':
+    resolution: {integrity: sha512-0padEJ3gQNkhYtihA+NVZwjiRfJuZDlj7dy4pofoeBcBPRQtb+7Rr3ejSadhOT2kp7+GwhlXzcfMxOw6hRildA==}
     engines: {node: '>=20.0.0'}
     hasBin: true
 
-  '@typespec/versioning@0.79.0':
-    resolution: {integrity: sha512-mk65zpKNm+ARyHASnre/lp3o3FKzb0P8Nj96ji182JUy7ShrVCCF0u+bC+ZXQ8ZTRza1d0xBjRC/Xr4iM+Uwag==}
+  '@typespec/versioning@0.80.0':
+    resolution: {integrity: sha512-WQCT0jN2lSRfwOy+Cd1KUYzenpKR5TdoX0uW6zQdvxQ9nQZIXoaSaReh9/ldhmSV4xv3p2dqF9oq1cdbVGfJTg==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@typespec/compiler': ^1.9.0
+      '@typespec/compiler': ^1.10.0
 
-  '@typespec/xml@0.79.0':
-    resolution: {integrity: sha512-BqbbtkL9xuiAhehHKKUCMtRg0a1vjSvoiAOanvTIuoFq3N8PbKVV3dKTcyI/oS3iCCkJErdu11HQcAoD/VsIsA==}
+  '@typespec/xml@0.80.0':
+    resolution: {integrity: sha512-Qfy5eyCcOF3xYOU/dejhpmmeY75U1Q9C8XBE+GvSZ3lakRfKBIpT+X6Q07qmKSAbGYJZKYLWCIAy/dgCuu/OAA==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@typespec/compiler': ^1.9.0
+      '@typespec/compiler': ^1.10.0
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
@@ -2130,11 +2129,11 @@ packages:
   ajv@8.12.0:
     resolution: {integrity: sha512-sRu1kpcO9yLtYxBKvqfTeh9KzZEwO3STyX1HT+4CaDzC6HpTGYhIhPIzj9XuKU7KYDwnaeh5hcOwjy1QuJzBPA==}
 
-  ajv@8.13.0:
-    resolution: {integrity: sha512-PRA911Blj99jR5RMeTunVbNXMF6Lp4vZXnk5GQjcnUWUTsrXtekg/pnmFFI2u/I36Y/2bITGS30GZCXei6uNkA==}
-
   ajv@8.17.1:
     resolution: {integrity: sha512-B/gBuNg5SiMTrPkC+A2+cW0RszwxYmn6VYxB/inlBStS5nx6xHIt/ehKRhIMhqusl7a8LjQoZnjCs5vhwxOQ1g==}
+
+  ajv@8.18.0:
+    resolution: {integrity: sha512-PlXPeEWMXMZ7sPYOHqmDyCJzcfNrUr3fGNKtezX14ykXOEIvyK81d+qydx89KY5O71FKMPaQ2vBfBFI5NHR63A==}
 
   ansi-escapes@4.3.2:
     resolution: {integrity: sha512-gKXj5ALrKWQLsYG9jlTRmR/xKluxHV+Z9QEwNIgCfM1/uwPMCuzVVnh5mwTd+OuBZcwSIMbqssNWRm1lE51QaQ==}
@@ -2286,6 +2285,10 @@ packages:
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
+  balanced-match@4.0.4:
+    resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==}
+    engines: {node: 18 || 20 || >=22}
+
   baseline-browser-mapping@2.9.19:
     resolution: {integrity: sha512-ipDqC8FrAl/76p2SSWKSI+H9tFwm7vYqXQrItCuiVPt26Km0jS+NzSsBWAaBusvSbQcfJG+JitdMm+wZAgTYqg==}
     hasBin: true
@@ -2307,6 +2310,10 @@ packages:
 
   brace-expansion@2.0.1:
     resolution: {integrity: sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==}
+
+  brace-expansion@5.0.4:
+    resolution: {integrity: sha512-h+DEnpVvxmfVefa4jFbCf5HdH5YMDXRsmKflpf1pILZWRFlTbJpxeU55nJl4Smt5HQaGzg1o6RHFPJaOqnmBDg==}
+    engines: {node: 18 || 20 || >=22}
 
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
@@ -2793,9 +2800,9 @@ packages:
     resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
     engines: {node: '>=0.12'}
 
-  env-paths@3.0.0:
-    resolution: {integrity: sha512-dtJUTepzMW3Lm/NPxRf3wP4642UWhjL2sQxc+ym2YMj1m/H2zDNQOlezafzkHwn6sMstjHTwG6iQQsctDW/b1A==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+  env-paths@4.0.0:
+    resolution: {integrity: sha512-pxP8eL2SwwaTRi/KHYwLYXinDs7gL3jxFcBYmEdYfZmZXbaVDvdppd0XBU8qVz03rDfKZMXg1omHCbsJjZrMsw==}
+    engines: {node: '>=20'}
 
   error-ex@1.3.2:
     resolution: {integrity: sha512-7dFHNmqeFSEt2ZBsCriorKnn3Z2pj+fd9kmI6QoWw4//DL+icEBfc0U7qJCisqrTsKTjw4fNFy2pW9OqStD84g==}
@@ -3501,6 +3508,10 @@ packages:
     resolution: {integrity: sha512-MjYsKHO5O7mCsmRGxWcLWheFqN9DJ/2TmngvjKXihe6efViPqc274+Fx/4fYj/r03+ESvBdTXK0V6tA3rgez1g==}
     engines: {node: '>= 0.4'}
 
+  is-safe-filename@0.1.1:
+    resolution: {integrity: sha512-4SrR7AdnY11LHfDKTZY1u6Ga3RuxZdl3YKWWShO5iyuG5h8QS4GD2tOb04peBJ5I7pXbR+CGBNEhTcwK+FzN3g==}
+    engines: {node: '>=20'}
+
   is-set@2.0.3:
     resolution: {integrity: sha512-iPAjerrse27/ygGLxw+EBR9agv9Y6uLeYVJMu+QNCoouJ1/1ri0mGrcWpfCqFZuzzx3WjtwxG098X+n4OuRkPg==}
     engines: {node: '>= 0.4'}
@@ -4125,9 +4136,9 @@ packages:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
     engines: {node: '>=6'}
 
-  minimatch@10.0.3:
-    resolution: {integrity: sha512-IPZ167aShDZZUMdRk66cyQAW3qr0WzbHkPdMYa8bzZhlHhO3jALbKdxcaak7W9FfT2rZNpQuUu4Od7ILEpXSaw==}
-    engines: {node: 20 || >=22}
+  minimatch@10.2.3:
+    resolution: {integrity: sha512-Rwi3pnapEqirPSbWbrZaa6N3nmqq4Xer/2XooiOKyV3q12ML06f7MOuc5DVH8ONZIFhwIYQ3yzPH4nt7iWHaTg==}
+    engines: {node: 18 || 20 || >=22}
 
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
@@ -5150,6 +5161,9 @@ packages:
   undici-types@7.16.0:
     resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
 
+  undici-types@7.18.2:
+    resolution: {integrity: sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==}
+
   unicorn-magic@0.4.0:
     resolution: {integrity: sha512-wH590V9VNgYH9g3lH9wWjTrUoKsjLF6sGLjhR4sH1LWpLmCOH0Zf7PukhDA8BiS7KHe4oPNkcTHqYkj7SOGUOw==}
     engines: {node: '>=20'}
@@ -5589,16 +5603,16 @@ snapshots:
       '@azure-tools/tasks': 4.0.246
       proper-lockfile: 2.0.1
 
-  '@azure-tools/azure-http-specs@0.1.0-alpha.37(38d310fd60466ff6c7d057842ae705d7)':
+  '@azure-tools/azure-http-specs@0.1.0-alpha.38(9029b0f03a9b79bfe26328c8e606fe51)':
     dependencies:
-      '@azure-tools/typespec-azure-core': 0.65.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))(@typespec/rest@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))))
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
-      '@typespec/http': 1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
-      '@typespec/rest': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))
-      '@typespec/spec-api': 0.1.0-alpha.12
-      '@typespec/spector': 0.1.0-alpha.23(@types/node@20.19.27)(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
-      '@typespec/versioning': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
-      '@typespec/xml': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
+      '@azure-tools/typespec-azure-core': 0.66.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))(@typespec/rest@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))))
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
+      '@typespec/http': 1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
+      '@typespec/rest': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))
+      '@typespec/spec-api': 0.1.0-alpha.13
+      '@typespec/spector': 0.1.0-alpha.24(@types/node@20.19.27)(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
+      '@typespec/versioning': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
+      '@typespec/xml': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
     transitivePeerDependencies:
       - '@types/node'
       - '@typespec/streams'
@@ -5631,55 +5645,55 @@ snapshots:
 
   '@azure-tools/tasks@4.0.246': {}
 
-  '@azure-tools/typespec-autorest@0.65.0(5de629f7ec4825e29c9e4d247b6d2442)':
+  '@azure-tools/typespec-autorest@0.66.0(e3d94fc2867d0850c86fbfcb5eaa8375)':
     dependencies:
-      '@azure-tools/typespec-azure-core': 0.65.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))(@typespec/rest@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))))
-      '@azure-tools/typespec-azure-resource-manager': 0.65.0(1e5c7dc609368fe5c319bd1250a8dd60)
-      '@azure-tools/typespec-client-generator-core': 0.65.4(2296a36abc0f17fe42099d3726403d0d)
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
-      '@typespec/http': 1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
-      '@typespec/openapi': 1.9.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))
-      '@typespec/rest': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))
-      '@typespec/versioning': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
+      '@azure-tools/typespec-azure-core': 0.66.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))(@typespec/rest@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))))
+      '@azure-tools/typespec-azure-resource-manager': 0.66.0(92284d77af4bc64e2272860c16ccb203)
+      '@azure-tools/typespec-client-generator-core': 0.66.0(7116c80abeec3045387c176f44a26031)
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
+      '@typespec/http': 1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
+      '@typespec/openapi': 1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))
+      '@typespec/rest': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))
+      '@typespec/versioning': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
     optionalDependencies:
-      '@typespec/xml': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
+      '@typespec/xml': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
 
-  '@azure-tools/typespec-azure-core@0.65.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))(@typespec/rest@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))))':
+  '@azure-tools/typespec-azure-core@0.66.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))(@typespec/rest@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))))':
     dependencies:
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
-      '@typespec/http': 1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
-      '@typespec/rest': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
+      '@typespec/http': 1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
+      '@typespec/rest': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))
 
-  '@azure-tools/typespec-azure-resource-manager@0.65.0(1e5c7dc609368fe5c319bd1250a8dd60)':
+  '@azure-tools/typespec-azure-resource-manager@0.66.0(92284d77af4bc64e2272860c16ccb203)':
     dependencies:
-      '@azure-tools/typespec-azure-core': 0.65.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))(@typespec/rest@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))))
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
-      '@typespec/http': 1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
-      '@typespec/openapi': 1.9.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))
-      '@typespec/rest': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))
-      '@typespec/versioning': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
+      '@azure-tools/typespec-azure-core': 0.66.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))(@typespec/rest@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))))
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
+      '@typespec/http': 1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
+      '@typespec/openapi': 1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))
+      '@typespec/rest': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))
+      '@typespec/versioning': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
       change-case: 5.4.4
       pluralize: 8.0.0
 
-  '@azure-tools/typespec-azure-rulesets@0.65.0(@azure-tools/typespec-azure-core@0.65.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))(@typespec/rest@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))))(@azure-tools/typespec-azure-resource-manager@0.65.0(1e5c7dc609368fe5c319bd1250a8dd60))(@azure-tools/typespec-client-generator-core@0.65.4(2296a36abc0f17fe42099d3726403d0d))(@typespec/compiler@1.9.0(@types/node@20.19.27))':
+  '@azure-tools/typespec-azure-rulesets@0.65.1(@azure-tools/typespec-azure-core@0.66.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))(@typespec/rest@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))))(@azure-tools/typespec-azure-resource-manager@0.66.0(92284d77af4bc64e2272860c16ccb203))(@azure-tools/typespec-client-generator-core@0.66.0(7116c80abeec3045387c176f44a26031))(@typespec/compiler@1.10.0(@types/node@20.19.27))':
     dependencies:
-      '@azure-tools/typespec-azure-core': 0.65.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))(@typespec/rest@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))))
-      '@azure-tools/typespec-azure-resource-manager': 0.65.0(1e5c7dc609368fe5c319bd1250a8dd60)
-      '@azure-tools/typespec-client-generator-core': 0.65.4(2296a36abc0f17fe42099d3726403d0d)
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
+      '@azure-tools/typespec-azure-core': 0.66.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))(@typespec/rest@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))))
+      '@azure-tools/typespec-azure-resource-manager': 0.66.0(92284d77af4bc64e2272860c16ccb203)
+      '@azure-tools/typespec-client-generator-core': 0.66.0(7116c80abeec3045387c176f44a26031)
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
 
-  '@azure-tools/typespec-client-generator-core@0.65.4(2296a36abc0f17fe42099d3726403d0d)':
+  '@azure-tools/typespec-client-generator-core@0.66.0(7116c80abeec3045387c176f44a26031)':
     dependencies:
-      '@azure-tools/typespec-azure-core': 0.65.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))(@typespec/rest@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))))
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
-      '@typespec/events': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
-      '@typespec/http': 1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
-      '@typespec/openapi': 1.9.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))
-      '@typespec/rest': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))
-      '@typespec/sse': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/events@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
-      '@typespec/streams': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
-      '@typespec/versioning': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
-      '@typespec/xml': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
+      '@azure-tools/typespec-azure-core': 0.66.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))(@typespec/rest@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))))
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
+      '@typespec/events': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
+      '@typespec/http': 1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
+      '@typespec/openapi': 1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))
+      '@typespec/rest': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))
+      '@typespec/sse': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/events@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
+      '@typespec/streams': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
+      '@typespec/versioning': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
+      '@typespec/xml': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
       change-case: 5.4.4
       pluralize: 8.0.0
       yaml: 2.8.2
@@ -5811,7 +5825,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@azure/storage-blob@12.30.0':
+  '@azure/storage-blob@12.31.0':
     dependencies:
       '@azure/abort-controller': 2.1.2
       '@azure/core-auth': 1.9.0
@@ -5846,11 +5860,17 @@ snapshots:
 
   '@babel/code-frame@7.27.1':
     dependencies:
-      '@babel/helper-validator-identifier': 7.27.1
+      '@babel/helper-validator-identifier': 7.28.5
       js-tokens: 4.0.0
       picocolors: 1.1.1
 
   '@babel/code-frame@7.28.6':
+    dependencies:
+      '@babel/helper-validator-identifier': 7.28.5
+      js-tokens: 4.0.0
+      picocolors: 1.1.1
+
+  '@babel/code-frame@7.29.0':
     dependencies:
       '@babel/helper-validator-identifier': 7.28.5
       js-tokens: 4.0.0
@@ -5863,7 +5883,7 @@ snapshots:
   '@babel/core@7.27.1':
     dependencies:
       '@ampproject/remapping': 2.3.0
-      '@babel/code-frame': 7.27.1
+      '@babel/code-frame': 7.28.6
       '@babel/generator': 7.27.1
       '@babel/helper-compilation-targets': 7.27.1
       '@babel/helper-module-transforms': 7.27.1(@babel/core@7.27.1)
@@ -5883,7 +5903,7 @@ snapshots:
   '@babel/core@7.27.7':
     dependencies:
       '@ampproject/remapping': 2.3.0
-      '@babel/code-frame': 7.27.1
+      '@babel/code-frame': 7.28.6
       '@babel/generator': 7.27.5
       '@babel/helper-compilation-targets': 7.27.2
       '@babel/helper-module-transforms': 7.27.3(@babel/core@7.27.7)
@@ -5943,7 +5963,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.27.1
       '@babel/helper-module-imports': 7.27.1
-      '@babel/helper-validator-identifier': 7.27.1
+      '@babel/helper-validator-identifier': 7.28.5
       '@babel/traverse': 7.27.1
     transitivePeerDependencies:
       - supports-color
@@ -5952,7 +5972,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.27.7
       '@babel/helper-module-imports': 7.27.1
-      '@babel/helper-validator-identifier': 7.27.1
+      '@babel/helper-validator-identifier': 7.28.5
       '@babel/traverse': 7.27.7
     transitivePeerDependencies:
       - supports-color
@@ -6153,19 +6173,19 @@ snapshots:
 
   '@babel/template@7.27.1':
     dependencies:
-      '@babel/code-frame': 7.27.1
+      '@babel/code-frame': 7.28.6
       '@babel/parser': 7.27.7
       '@babel/types': 7.27.7
 
   '@babel/template@7.27.2':
     dependencies:
-      '@babel/code-frame': 7.27.1
+      '@babel/code-frame': 7.28.6
       '@babel/parser': 7.27.7
       '@babel/types': 7.27.7
 
   '@babel/traverse@7.27.1':
     dependencies:
-      '@babel/code-frame': 7.27.1
+      '@babel/code-frame': 7.28.6
       '@babel/generator': 7.27.1
       '@babel/parser': 7.27.7
       '@babel/template': 7.27.1
@@ -6177,7 +6197,7 @@ snapshots:
 
   '@babel/traverse@7.27.7':
     dependencies:
-      '@babel/code-frame': 7.27.1
+      '@babel/code-frame': 7.28.6
       '@babel/generator': 7.27.5
       '@babel/parser': 7.27.7
       '@babel/template': 7.27.2
@@ -6190,7 +6210,7 @@ snapshots:
   '@babel/types@7.27.1':
     dependencies:
       '@babel/helper-string-parser': 7.27.1
-      '@babel/helper-validator-identifier': 7.27.1
+      '@babel/helper-validator-identifier': 7.28.5
 
   '@babel/types@7.27.7':
     dependencies:
@@ -6494,12 +6514,6 @@ snapshots:
     optionalDependencies:
       '@types/node': 20.19.27
 
-  '@isaacs/balanced-match@4.0.1': {}
-
-  '@isaacs/brace-expansion@5.0.0':
-    dependencies:
-      '@isaacs/balanced-match': 4.0.1
-
   '@isaacs/cliui@8.0.2':
     dependencies:
       string-width: 5.1.2
@@ -6526,7 +6540,7 @@ snapshots:
   '@jest/console@29.7.0':
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       chalk: 4.1.2
       jest-message-util: 29.7.0
       jest-util: 29.7.0
@@ -6535,7 +6549,7 @@ snapshots:
   '@jest/console@30.0.2':
     dependencies:
       '@jest/types': 30.0.1
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       chalk: 4.1.2
       jest-message-util: 30.0.2
       jest-util: 30.0.2
@@ -6618,14 +6632,14 @@ snapshots:
     dependencies:
       '@jest/fake-timers': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       jest-mock: 29.7.0
 
   '@jest/environment@30.0.2':
     dependencies:
       '@jest/fake-timers': 30.0.2
       '@jest/types': 30.0.1
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       jest-mock: 30.0.2
 
   '@jest/expect-utils@29.7.0':
@@ -6654,7 +6668,7 @@ snapshots:
     dependencies:
       '@jest/types': 29.6.3
       '@sinonjs/fake-timers': 10.3.0
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       jest-message-util: 29.7.0
       jest-mock: 29.7.0
       jest-util: 29.7.0
@@ -6663,7 +6677,7 @@ snapshots:
     dependencies:
       '@jest/types': 30.0.1
       '@sinonjs/fake-timers': 13.0.5
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       jest-message-util: 30.0.2
       jest-mock: 30.0.2
       jest-util: 30.0.2
@@ -6690,7 +6704,7 @@ snapshots:
 
   '@jest/pattern@30.0.1':
     dependencies:
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       jest-regex-util: 30.0.1
 
   '@jest/reporters@29.7.0':
@@ -6701,7 +6715,7 @@ snapshots:
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
       '@jridgewell/trace-mapping': 0.3.31
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       chalk: 4.1.2
       collect-v8-coverage: 1.0.2
       exit: 0.1.2
@@ -6730,7 +6744,7 @@ snapshots:
       '@jest/transform': 30.0.2
       '@jest/types': 30.0.1
       '@jridgewell/trace-mapping': 0.3.31
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       chalk: 4.1.2
       collect-v8-coverage: 1.0.2
       exit-x: 0.2.2
@@ -6913,26 +6927,26 @@ snapshots:
       - '@types/express'
       - supports-color
 
-  '@microsoft/api-extractor-model@7.32.2(@types/node@20.19.27)':
+  '@microsoft/api-extractor-model@7.33.4(@types/node@20.19.27)':
     dependencies:
       '@microsoft/tsdoc': 0.16.0
-      '@microsoft/tsdoc-config': 0.18.0
-      '@rushstack/node-core-library': 5.19.1(@types/node@20.19.27)
+      '@microsoft/tsdoc-config': 0.18.1
+      '@rushstack/node-core-library': 5.20.3(@types/node@20.19.27)
     transitivePeerDependencies:
       - '@types/node'
 
-  '@microsoft/api-extractor@7.55.2(@types/node@20.19.27)':
+  '@microsoft/api-extractor@7.57.7(@types/node@20.19.27)':
     dependencies:
-      '@microsoft/api-extractor-model': 7.32.2(@types/node@20.19.27)
+      '@microsoft/api-extractor-model': 7.33.4(@types/node@20.19.27)
       '@microsoft/tsdoc': 0.16.0
-      '@microsoft/tsdoc-config': 0.18.0
-      '@rushstack/node-core-library': 5.19.1(@types/node@20.19.27)
-      '@rushstack/rig-package': 0.6.0
-      '@rushstack/terminal': 0.19.5(@types/node@20.19.27)
-      '@rushstack/ts-command-line': 5.1.5(@types/node@20.19.27)
+      '@microsoft/tsdoc-config': 0.18.1
+      '@rushstack/node-core-library': 5.20.3(@types/node@20.19.27)
+      '@rushstack/rig-package': 0.7.2
+      '@rushstack/terminal': 0.22.3(@types/node@20.19.27)
+      '@rushstack/ts-command-line': 5.3.3(@types/node@20.19.27)
       diff: 8.0.3
       lodash: 4.17.23
-      minimatch: 10.0.3
+      minimatch: 10.2.3
       resolve: 1.22.10
       semver: 7.5.4
       source-map: 0.6.1
@@ -6944,6 +6958,13 @@ snapshots:
     dependencies:
       '@microsoft/tsdoc': 0.16.0
       ajv: 8.12.0
+      jju: 1.4.0
+      resolve: 1.22.10
+
+  '@microsoft/tsdoc-config@0.18.1':
+    dependencies:
+      '@microsoft/tsdoc': 0.16.0
+      ajv: 8.18.0
       jju: 1.4.0
       resolve: 1.22.10
 
@@ -7039,11 +7060,11 @@ snapshots:
 
   '@rtsao/scc@1.1.0': {}
 
-  '@rushstack/node-core-library@5.19.1(@types/node@20.19.27)':
+  '@rushstack/node-core-library@5.20.3(@types/node@20.19.27)':
     dependencies:
-      ajv: 8.13.0
-      ajv-draft-04: 1.0.0(ajv@8.13.0)
-      ajv-formats: 3.0.1(ajv@8.13.0)
+      ajv: 8.18.0
+      ajv-draft-04: 1.0.0(ajv@8.18.0)
+      ajv-formats: 3.0.1(ajv@8.18.0)
       fs-extra: 11.3.0
       import-lazy: 4.0.0
       jju: 1.4.0
@@ -7052,26 +7073,26 @@ snapshots:
     optionalDependencies:
       '@types/node': 20.19.27
 
-  '@rushstack/problem-matcher@0.1.1(@types/node@20.19.27)':
+  '@rushstack/problem-matcher@0.2.1(@types/node@20.19.27)':
     optionalDependencies:
       '@types/node': 20.19.27
 
-  '@rushstack/rig-package@0.6.0':
+  '@rushstack/rig-package@0.7.2':
     dependencies:
       resolve: 1.22.10
       strip-json-comments: 3.1.1
 
-  '@rushstack/terminal@0.19.5(@types/node@20.19.27)':
+  '@rushstack/terminal@0.22.3(@types/node@20.19.27)':
     dependencies:
-      '@rushstack/node-core-library': 5.19.1(@types/node@20.19.27)
-      '@rushstack/problem-matcher': 0.1.1(@types/node@20.19.27)
+      '@rushstack/node-core-library': 5.20.3(@types/node@20.19.27)
+      '@rushstack/problem-matcher': 0.2.1(@types/node@20.19.27)
       supports-color: 8.1.1
     optionalDependencies:
       '@types/node': 20.19.27
 
-  '@rushstack/ts-command-line@5.1.5(@types/node@20.19.27)':
+  '@rushstack/ts-command-line@5.3.3(@types/node@20.19.27)':
     dependencies:
-      '@rushstack/terminal': 0.19.5(@types/node@20.19.27)
+      '@rushstack/terminal': 0.22.3(@types/node@20.19.27)
       '@types/argparse': 1.0.38
       argparse: 1.0.10
       string-argv: 0.3.2
@@ -7163,7 +7184,7 @@ snapshots:
 
   '@types/graceful-fs@4.1.9':
     dependencies:
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
 
   '@types/hast@3.0.4':
     dependencies:
@@ -7209,13 +7230,13 @@ snapshots:
     dependencies:
       undici-types: 7.16.0
 
-  '@types/node@25.0.3':
-    dependencies:
-      undici-types: 7.16.0
-
   '@types/node@25.2.3':
     dependencies:
       undici-types: 7.16.0
+
+  '@types/node@25.3.5':
+    dependencies:
+      undici-types: 7.18.2
 
   '@types/nunjucks@3.2.6': {}
 
@@ -7468,13 +7489,13 @@ snapshots:
       '@typescript-eslint/types': 8.49.0
       eslint-visitor-keys: 4.2.1
 
-  '@typespec/compiler@1.9.0(@types/node@20.19.27)':
+  '@typespec/compiler@1.10.0(@types/node@20.19.27)':
     dependencies:
-      '@babel/code-frame': 7.28.6
+      '@babel/code-frame': 7.29.0
       '@inquirer/prompts': 8.0.2(@types/node@20.19.27)
-      ajv: 8.17.1
+      ajv: 8.18.0
       change-case: 5.4.4
-      env-paths: 3.0.0
+      env-paths: 4.0.0
       globby: 16.1.0
       is-unicode-supported: 2.1.0
       mustache: 4.2.0
@@ -7490,42 +7511,42 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@typespec/events@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))':
+  '@typespec/events@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))':
     dependencies:
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
 
-  '@typespec/http-specs@0.1.0-alpha.32(@types/node@20.19.27)(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))(@typespec/rest@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))(@typespec/versioning@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))(@typespec/xml@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))':
+  '@typespec/http-specs@0.1.0-alpha.33(@types/node@20.19.27)(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))(@typespec/rest@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))(@typespec/versioning@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))(@typespec/xml@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))':
     dependencies:
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
-      '@typespec/http': 1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
-      '@typespec/rest': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))
-      '@typespec/spec-api': 0.1.0-alpha.12
-      '@typespec/spector': 0.1.0-alpha.23(@types/node@20.19.27)(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
-      '@typespec/versioning': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
-      '@typespec/xml': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
+      '@typespec/http': 1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
+      '@typespec/rest': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))
+      '@typespec/spec-api': 0.1.0-alpha.13
+      '@typespec/spector': 0.1.0-alpha.24(@types/node@20.19.27)(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
+      '@typespec/versioning': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
+      '@typespec/xml': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
       deep-equal: 2.2.3
     transitivePeerDependencies:
       - '@types/node'
       - '@typespec/streams'
       - supports-color
 
-  '@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))':
+  '@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))':
     dependencies:
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
     optionalDependencies:
-      '@typespec/streams': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
+      '@typespec/streams': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
 
-  '@typespec/openapi@1.9.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))':
+  '@typespec/openapi@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))':
     dependencies:
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
-      '@typespec/http': 1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
+      '@typespec/http': 1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
 
-  '@typespec/rest@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))':
+  '@typespec/rest@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))':
     dependencies:
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
-      '@typespec/http': 1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
+      '@typespec/http': 1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
 
-  '@typespec/spec-api@0.1.0-alpha.12':
+  '@typespec/spec-api@0.1.0-alpha.13':
     dependencies:
       deep-equal: 2.2.3
       express: 5.2.1
@@ -7533,24 +7554,26 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typespec/spec-coverage-sdk@0.1.0-alpha.15':
+  '@typespec/spec-coverage-sdk@0.1.0-alpha.16':
     dependencies:
       '@azure/identity': 4.13.0
-      '@azure/storage-blob': 12.30.0
-      '@types/node': 25.0.10
+      '@azure/storage-blob': 12.31.0
+      '@types/node': 25.3.5
+      '@types/semver': 7.7.1
+      semver: 7.7.2
     transitivePeerDependencies:
       - supports-color
 
-  '@typespec/spector@0.1.0-alpha.23(@types/node@20.19.27)(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))':
+  '@typespec/spector@0.1.0-alpha.24(@types/node@20.19.27)(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))':
     dependencies:
       '@azure/identity': 4.13.0
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
-      '@typespec/http': 1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
-      '@typespec/rest': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))
-      '@typespec/spec-api': 0.1.0-alpha.12
-      '@typespec/spec-coverage-sdk': 0.1.0-alpha.15
-      '@typespec/versioning': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
-      ajv: 8.17.1
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
+      '@typespec/http': 1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
+      '@typespec/rest': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))
+      '@typespec/spec-api': 0.1.0-alpha.13
+      '@typespec/spec-coverage-sdk': 0.1.0-alpha.16
+      '@typespec/versioning': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
+      ajv: 8.18.0
       body-parser: 2.2.2
       deep-equal: 2.2.3
       express: 5.2.1
@@ -7568,16 +7591,16 @@ snapshots:
       - '@typespec/streams'
       - supports-color
 
-  '@typespec/sse@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/events@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))(@typespec/http@1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))':
+  '@typespec/sse@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/events@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))(@typespec/http@1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))':
     dependencies:
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
-      '@typespec/events': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
-      '@typespec/http': 1.9.1(@typespec/compiler@1.9.0(@types/node@20.19.27))(@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27)))
-      '@typespec/streams': 0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
+      '@typespec/events': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
+      '@typespec/http': 1.10.0(@typespec/compiler@1.10.0(@types/node@20.19.27))(@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27)))
+      '@typespec/streams': 0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))
 
-  '@typespec/streams@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))':
+  '@typespec/streams@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))':
     dependencies:
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
 
   '@typespec/ts-http-runtime@0.2.2':
     dependencies:
@@ -7587,16 +7610,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typespec/tspd@0.74.0(@types/node@20.19.27)(typescript@5.9.3)':
+  '@typespec/tspd@0.74.1(@types/node@20.19.27)(typescript@5.9.3)':
     dependencies:
       '@alloy-js/core': 0.22.0
       '@alloy-js/markdown': 0.22.0
       '@alloy-js/typescript': 0.22.0
-      '@microsoft/api-extractor': 7.55.2(@types/node@20.19.27)
-      '@microsoft/api-extractor-model': 7.32.2(@types/node@20.19.27)
+      '@microsoft/api-extractor': 7.57.7(@types/node@20.19.27)
+      '@microsoft/api-extractor-model': 7.33.4(@types/node@20.19.27)
       '@microsoft/tsdoc': 0.16.0
       '@microsoft/tsdoc-config': 0.18.0
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
       picocolors: 1.1.1
       prettier: 3.8.1
       typedoc: 0.28.5(typescript@5.9.3)
@@ -7607,13 +7630,13 @@ snapshots:
       - '@types/node'
       - typescript
 
-  '@typespec/versioning@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))':
+  '@typespec/versioning@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))':
     dependencies:
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
 
-  '@typespec/xml@0.79.0(@typespec/compiler@1.9.0(@types/node@20.19.27))':
+  '@typespec/xml@0.80.0(@typespec/compiler@1.10.0(@types/node@20.19.27))':
     dependencies:
-      '@typespec/compiler': 1.9.0(@types/node@20.19.27)
+      '@typespec/compiler': 1.10.0(@types/node@20.19.27)
 
   '@ungap/structured-clone@1.3.0': {}
 
@@ -7878,17 +7901,17 @@ snapshots:
       clean-stack: 4.2.0
       indent-string: 5.0.0
 
-  ajv-draft-04@1.0.0(ajv@8.13.0):
+  ajv-draft-04@1.0.0(ajv@8.18.0):
     optionalDependencies:
-      ajv: 8.13.0
+      ajv: 8.18.0
 
   ajv-formats@2.1.1(ajv@8.17.1):
     optionalDependencies:
       ajv: 8.17.1
 
-  ajv-formats@3.0.1(ajv@8.13.0):
+  ajv-formats@3.0.1(ajv@8.18.0):
     optionalDependencies:
-      ajv: 8.13.0
+      ajv: 8.18.0
 
   ajv-keywords@5.1.0(ajv@8.17.1):
     dependencies:
@@ -7909,14 +7932,14 @@ snapshots:
       require-from-string: 2.0.2
       uri-js: 4.4.1
 
-  ajv@8.13.0:
+  ajv@8.17.1:
     dependencies:
       fast-deep-equal: 3.1.3
+      fast-uri: 3.0.6
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
-      uri-js: 4.4.1
 
-  ajv@8.17.1:
+  ajv@8.18.0:
     dependencies:
       fast-deep-equal: 3.1.3
       fast-uri: 3.0.6
@@ -8161,6 +8184,8 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
+  balanced-match@4.0.4: {}
+
   baseline-browser-mapping@2.9.19: {}
 
   basic-auth@2.0.1:
@@ -8206,6 +8231,10 @@ snapshots:
   brace-expansion@2.0.1:
     dependencies:
       balanced-match: 1.0.2
+
+  brace-expansion@5.0.4:
+    dependencies:
+      balanced-match: 4.0.4
 
   braces@3.0.3:
     dependencies:
@@ -8673,7 +8702,9 @@ snapshots:
 
   entities@4.5.0: {}
 
-  env-paths@3.0.0: {}
+  env-paths@4.0.0:
+    dependencies:
+      is-safe-filename: 0.1.1
 
   error-ex@1.3.2:
     dependencies:
@@ -9114,9 +9145,9 @@ snapshots:
     dependencies:
       bser: 2.1.1
 
-  fdir@6.4.4(picomatch@4.0.2):
+  fdir@6.4.4(picomatch@4.0.3):
     optionalDependencies:
-      picomatch: 4.0.2
+      picomatch: 4.0.3
 
   fdir@6.5.0(picomatch@4.0.3):
     optionalDependencies:
@@ -9576,6 +9607,8 @@ snapshots:
       has-tostringtag: 1.0.2
       hasown: 2.0.2
 
+  is-safe-filename@0.1.1: {}
+
   is-set@2.0.3: {}
 
   is-shared-array-buffer@1.0.4:
@@ -9700,7 +9733,7 @@ snapshots:
       '@jest/expect': 29.7.0
       '@jest/test-result': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       chalk: 4.1.2
       co: 4.6.0
       dedent: 1.6.0
@@ -9726,7 +9759,7 @@ snapshots:
       '@jest/expect': 30.0.3
       '@jest/test-result': 30.0.2
       '@jest/types': 30.0.1
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       chalk: 4.1.2
       co: 4.6.0
       dedent: 1.6.0
@@ -9951,7 +9984,7 @@ snapshots:
       '@jest/environment': 29.7.0
       '@jest/fake-timers': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       jest-mock: 29.7.0
       jest-util: 29.7.0
 
@@ -9960,7 +9993,7 @@ snapshots:
       '@jest/environment': 30.0.2
       '@jest/fake-timers': 30.0.2
       '@jest/types': 30.0.1
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       jest-mock: 30.0.2
       jest-util: 30.0.2
       jest-validate: 30.0.2
@@ -9971,7 +10004,7 @@ snapshots:
     dependencies:
       '@jest/types': 29.6.3
       '@types/graceful-fs': 4.1.9
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       anymatch: 3.1.3
       fb-watchman: 2.0.2
       graceful-fs: 4.2.11
@@ -9986,7 +10019,7 @@ snapshots:
   jest-haste-map@30.0.2:
     dependencies:
       '@jest/types': 30.0.1
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       anymatch: 3.1.3
       fb-watchman: 2.0.2
       graceful-fs: 4.2.11
@@ -10056,7 +10089,7 @@ snapshots:
   jest-mock@29.7.0:
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       jest-util: 29.7.0
 
   jest-mock@30.0.2:
@@ -10121,7 +10154,7 @@ snapshots:
       '@jest/test-result': 29.7.0
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       chalk: 4.1.2
       emittery: 0.13.1
       graceful-fs: 4.2.11
@@ -10147,7 +10180,7 @@ snapshots:
       '@jest/test-result': 30.0.2
       '@jest/transform': 30.0.2
       '@jest/types': 30.0.1
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       chalk: 4.1.2
       emittery: 0.13.1
       exit-x: 0.2.2
@@ -10176,7 +10209,7 @@ snapshots:
       '@jest/test-result': 29.7.0
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       chalk: 4.1.2
       cjs-module-lexer: 1.4.3
       collect-v8-coverage: 1.0.2
@@ -10203,7 +10236,7 @@ snapshots:
       '@jest/test-result': 30.0.2
       '@jest/transform': 30.0.2
       '@jest/types': 30.0.1
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       chalk: 4.1.2
       cjs-module-lexer: 2.1.0
       collect-v8-coverage: 1.0.2
@@ -10275,7 +10308,7 @@ snapshots:
   jest-util@29.7.0:
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 25.0.3
+      '@types/node': 25.2.3
       chalk: 4.1.2
       ci-info: 3.9.0
       graceful-fs: 4.2.11
@@ -10312,7 +10345,7 @@ snapshots:
     dependencies:
       '@jest/test-result': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       emittery: 0.13.1
@@ -10323,7 +10356,7 @@ snapshots:
     dependencies:
       '@jest/test-result': 30.0.2
       '@jest/types': 30.0.1
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       emittery: 0.13.1
@@ -10338,14 +10371,14 @@ snapshots:
 
   jest-worker@29.7.0:
     dependencies:
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       jest-util: 29.7.0
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
   jest-worker@30.0.2:
     dependencies:
-      '@types/node': 25.0.10
+      '@types/node': 25.2.3
       '@ungap/structured-clone': 1.3.0
       jest-util: 30.0.2
       merge-stream: 2.0.0
@@ -10658,9 +10691,9 @@ snapshots:
 
   mimic-fn@2.1.0: {}
 
-  minimatch@10.0.3:
+  minimatch@10.2.3:
     dependencies:
-      '@isaacs/brace-expansion': 5.0.0
+      brace-expansion: 5.0.4
 
   minimatch@3.1.2:
     dependencies:
@@ -10890,7 +10923,7 @@ snapshots:
 
   parse-json@5.2.0:
     dependencies:
-      '@babel/code-frame': 7.27.1
+      '@babel/code-frame': 7.28.6
       error-ex: 1.3.2
       json-parse-even-better-errors: 2.3.1
       lines-and-columns: 1.2.4
@@ -11526,8 +11559,8 @@ snapshots:
 
   tinyglobby@0.2.13:
     dependencies:
-      fdir: 6.4.4(picomatch@4.0.2)
-      picomatch: 4.0.2
+      fdir: 6.4.4(picomatch@4.0.3)
+      picomatch: 4.0.3
 
   tinyglobby@0.2.15:
     dependencies:
@@ -11735,6 +11768,8 @@ snapshots:
 
   undici-types@7.16.0: {}
 
+  undici-types@7.18.2: {}
+
   unicorn-magic@0.4.0: {}
 
   universalify@0.2.0:
@@ -11828,8 +11863,8 @@ snapshots:
   vite@6.3.5(@types/node@20.19.27)(terser@5.46.0)(yaml@2.8.2):
     dependencies:
       esbuild: 0.25.4
-      fdir: 6.4.4(picomatch@4.0.2)
-      picomatch: 4.0.2
+      fdir: 6.4.4(picomatch@4.0.3)
+      picomatch: 4.0.3
       postcss: 8.5.3
       rollup: 4.40.1
       tinyglobby: 0.2.13

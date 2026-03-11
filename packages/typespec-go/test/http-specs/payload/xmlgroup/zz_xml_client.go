@@ -55,6 +55,14 @@ func (client *XMLClient) NewXMLModelWithAttributesValueClient() *XMLModelWithAtt
 	}
 }
 
+// NewXMLModelWithDatetimeValueClient creates a new instance of [XMLModelWithDatetimeValueClient].
+func (client *XMLClient) NewXMLModelWithDatetimeValueClient() *XMLModelWithDatetimeValueClient {
+	return &XMLModelWithDatetimeValueClient{
+		endpoint: client.endpoint,
+		internal: client.internal,
+	}
+}
+
 // NewXMLModelWithDictionaryValueClient creates a new instance of [XMLModelWithDictionaryValueClient].
 func (client *XMLClient) NewXMLModelWithDictionaryValueClient() *XMLModelWithDictionaryValueClient {
 	return &XMLModelWithDictionaryValueClient{
@@ -74,6 +82,14 @@ func (client *XMLClient) NewXMLModelWithEmptyArrayValueClient() *XMLModelWithEmp
 // NewXMLModelWithEncodedNamesValueClient creates a new instance of [XMLModelWithEncodedNamesValueClient].
 func (client *XMLClient) NewXMLModelWithEncodedNamesValueClient() *XMLModelWithEncodedNamesValueClient {
 	return &XMLModelWithEncodedNamesValueClient{
+		endpoint: client.endpoint,
+		internal: client.internal,
+	}
+}
+
+// NewXMLModelWithEnumValueClient creates a new instance of [XMLModelWithEnumValueClient].
+func (client *XMLClient) NewXMLModelWithEnumValueClient() *XMLModelWithEnumValueClient {
+	return &XMLModelWithEnumValueClient{
 		endpoint: client.endpoint,
 		internal: client.internal,
 	}

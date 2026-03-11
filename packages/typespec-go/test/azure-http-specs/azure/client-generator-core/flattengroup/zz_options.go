@@ -10,6 +10,18 @@ type FlattenPropertyClientPutFlattenModelOptions struct {
 	// placeholder for future optional parameters
 }
 
+// FlattenPropertyClientPutFlattenReadOnlyModelOptions contains the optional parameters for the FlattenPropertyClient.PutFlattenReadOnlyModel
+// method.
+type FlattenPropertyClientPutFlattenReadOnlyModelOptions struct {
+	// placeholder for future optional parameters
+}
+
+// FlattenPropertyClientPutFlattenUnknownModelOptions contains the optional parameters for the FlattenPropertyClient.PutFlattenUnknownModel
+// method.
+type FlattenPropertyClientPutFlattenUnknownModelOptions struct {
+	// placeholder for future optional parameters
+}
+
 // FlattenPropertyClientPutNestedFlattenModelOptions contains the optional parameters for the FlattenPropertyClient.PutNestedFlattenModel
 // method.
 type FlattenPropertyClientPutNestedFlattenModelOptions struct {

@@ -28,6 +28,18 @@ type XMLModelWithAttributesValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
+// XMLModelWithDatetimeValueClientGetResponse contains the response from method XMLModelWithDatetimeValueClient.Get.
+type XMLModelWithDatetimeValueClientGetResponse struct {
+	// Contains datetime properties with different encodings.
+	ModelWithDatetime
+	ContentType *string
+}
+
+// XMLModelWithDatetimeValueClientPutResponse contains the response from method XMLModelWithDatetimeValueClient.Put.
+type XMLModelWithDatetimeValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
 // XMLModelWithDictionaryValueClientGetResponse contains the response from method XMLModelWithDictionaryValueClient.Get.
 type XMLModelWithDictionaryValueClientGetResponse struct {
 	// Contains a dictionary of key value pairs.
@@ -61,6 +73,18 @@ type XMLModelWithEncodedNamesValueClientGetResponse struct {
 
 // XMLModelWithEncodedNamesValueClientPutResponse contains the response from method XMLModelWithEncodedNamesValueClient.Put.
 type XMLModelWithEncodedNamesValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
+// XMLModelWithEnumValueClientGetResponse contains the response from method XMLModelWithEnumValueClient.Get.
+type XMLModelWithEnumValueClientGetResponse struct {
+	// Contains a single property with an enum value.
+	ModelWithEnum
+	ContentType *string
+}
+
+// XMLModelWithEnumValueClientPutResponse contains the response from method XMLModelWithEnumValueClient.Put.
+type XMLModelWithEnumValueClientPutResponse struct {
 	// placeholder for future response values
 }
 

@@ -51,7 +51,7 @@ func (client *Client) AbortCopyFromURL(ctx context.Context, copyID string, optio
 
 // abortCopyFromURLCreateRequest creates the AbortCopyFromURL request.
 func (client *Client) abortCopyFromURLCreateRequest(ctx context.Context, copyID string, options *ClientAbortCopyFromURLOptions) (*policy.Request, error) {
-	urlPath := "/?comp=copy"
+	urlPath := "?comp=copy"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -123,7 +123,7 @@ func (client *Client) AcquireLease(ctx context.Context, duration int32, options 
 
 // acquireLeaseCreateRequest creates the AcquireLease request.
 func (client *Client) acquireLeaseCreateRequest(ctx context.Context, duration int32, options *ClientAcquireLeaseOptions) (*policy.Request, error) {
-	urlPath := "/?comp=lease"
+	urlPath := "?comp=lease"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -221,7 +221,7 @@ func (client *Client) BreakLease(ctx context.Context, options *ClientBreakLeaseO
 
 // breakLeaseCreateRequest creates the BreakLease request.
 func (client *Client) breakLeaseCreateRequest(ctx context.Context, options *ClientBreakLeaseOptions) (*policy.Request, error) {
-	urlPath := "/?comp=lease"
+	urlPath := "?comp=lease"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -325,7 +325,7 @@ func (client *Client) ChangeLease(ctx context.Context, leaseID string, proposedL
 
 // changeLeaseCreateRequest creates the ChangeLease request.
 func (client *Client) changeLeaseCreateRequest(ctx context.Context, leaseID string, proposedLeaseID string, options *ClientChangeLeaseOptions) (*policy.Request, error) {
-	urlPath := "/?comp=lease"
+	urlPath := "?comp=lease"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -424,7 +424,7 @@ func (client *Client) CopyFromURL(ctx context.Context, copySource string, option
 
 // copyFromURLCreateRequest creates the CopyFromURL request.
 func (client *Client) copyFromURLCreateRequest(ctx context.Context, copySource string, options *ClientCopyFromURLOptions) (*policy.Request, error) {
-	urlPath := "/?comp=copy"
+	urlPath := "?comp=copy"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -593,7 +593,7 @@ func (client *Client) CreateSnapshot(ctx context.Context, options *ClientCreateS
 
 // createSnapshotCreateRequest creates the CreateSnapshot request.
 func (client *Client) createSnapshotCreateRequest(ctx context.Context, options *ClientCreateSnapshotOptions) (*policy.Request, error) {
-	urlPath := "/?comp=snapshot"
+	urlPath := "?comp=snapshot"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -825,7 +825,7 @@ func (client *Client) DeleteImmutabilityPolicy(ctx context.Context, options *Cli
 
 // deleteImmutabilityPolicyCreateRequest creates the DeleteImmutabilityPolicy request.
 func (client *Client) deleteImmutabilityPolicyCreateRequest(ctx context.Context, options *ClientDeleteImmutabilityPolicyOptions) (*policy.Request, error) {
-	urlPath := "/?comp=immutabilityPolicies"
+	urlPath := "?comp=immutabilityPolicies"
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -1211,7 +1211,7 @@ func (client *Client) GetAccountInfo(ctx context.Context, options *ClientGetAcco
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
 func (client *Client) getAccountInfoCreateRequest(ctx context.Context, options *ClientGetAccountInfoOptions) (*policy.Request, error) {
-	urlPath := "/?restype=account&comp=properties"
+	urlPath := "?restype=account&comp=properties"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -1602,7 +1602,7 @@ func (client *Client) GetTags(ctx context.Context, options *ClientGetTagsOptions
 
 // getTagsCreateRequest creates the GetTags request.
 func (client *Client) getTagsCreateRequest(ctx context.Context, options *ClientGetTagsOptions) (*policy.Request, error) {
-	urlPath := "/?comp=tags"
+	urlPath := "?comp=tags"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -1700,7 +1700,7 @@ func (client *Client) ReleaseLease(ctx context.Context, leaseID string, options 
 
 // releaseLeaseCreateRequest creates the ReleaseLease request.
 func (client *Client) releaseLeaseCreateRequest(ctx context.Context, leaseID string, options *ClientReleaseLeaseOptions) (*policy.Request, error) {
-	urlPath := "/?comp=lease"
+	urlPath := "?comp=lease"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -1793,7 +1793,7 @@ func (client *Client) RenewLease(ctx context.Context, leaseID string, options *C
 
 // renewLeaseCreateRequest creates the RenewLease request.
 func (client *Client) renewLeaseCreateRequest(ctx context.Context, leaseID string, options *ClientRenewLeaseOptions) (*policy.Request, error) {
-	urlPath := "/?comp=lease"
+	urlPath := "?comp=lease"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -1888,7 +1888,7 @@ func (client *Client) SetExpiry(ctx context.Context, expiryOptions ExpiryOptions
 
 // setExpiryCreateRequest creates the SetExpiry request.
 func (client *Client) setExpiryCreateRequest(ctx context.Context, expiryOptions ExpiryOptions, options *ClientSetExpiryOptions) (*policy.Request, error) {
-	urlPath := "/?comp=expiry"
+	urlPath := "?comp=expiry"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -1966,7 +1966,7 @@ func (client *Client) SetHTTPHeaders(ctx context.Context, options *ClientSetHTTP
 
 // setHTTPHeadersCreateRequest creates the SetHTTPHeaders request.
 func (client *Client) setHTTPHeadersCreateRequest(ctx context.Context, options *ClientSetHTTPHeadersOptions) (*policy.Request, error) {
-	urlPath := "/?comp=properties"
+	urlPath := "?comp=properties"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -2084,7 +2084,7 @@ func (client *Client) SetImmutabilityPolicy(ctx context.Context, expiry time.Tim
 
 // setImmutabilityPolicyCreateRequest creates the SetImmutabilityPolicy request.
 func (client *Client) setImmutabilityPolicyCreateRequest(ctx context.Context, expiry time.Time, options *ClientSetImmutabilityPolicyOptions) (*policy.Request, error) {
-	urlPath := "/?comp=immutabilityPolicies"
+	urlPath := "?comp=immutabilityPolicies"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -2172,7 +2172,7 @@ func (client *Client) SetLegalHold(ctx context.Context, legalHold bool, options 
 
 // setLegalHoldCreateRequest creates the SetLegalHold request.
 func (client *Client) setLegalHoldCreateRequest(ctx context.Context, legalHold bool, options *ClientSetLegalHoldOptions) (*policy.Request, error) {
-	urlPath := "/?comp=legalhold"
+	urlPath := "?comp=legalhold"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -2250,7 +2250,7 @@ func (client *Client) SetMetadata(ctx context.Context, options *ClientSetMetadat
 
 // setMetadataCreateRequest creates the SetMetadata request.
 func (client *Client) setMetadataCreateRequest(ctx context.Context, options *ClientSetMetadataOptions) (*policy.Request, error) {
-	urlPath := "/?comp=metadata"
+	urlPath := "?comp=metadata"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -2378,7 +2378,7 @@ func (client *Client) SetTags(ctx context.Context, tags Tags, options *ClientSet
 
 // setTagsCreateRequest creates the SetTags request.
 func (client *Client) setTagsCreateRequest(ctx context.Context, tags Tags, options *ClientSetTagsOptions) (*policy.Request, error) {
-	urlPath := "/?comp=tags"
+	urlPath := "?comp=tags"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -2476,7 +2476,7 @@ func (client *Client) SetTier(ctx context.Context, tier AccessTier, options *Cli
 
 // setTierCreateRequest creates the SetTier request.
 func (client *Client) setTierCreateRequest(ctx context.Context, tier AccessTier, options *ClientSetTierOptions) (*policy.Request, error) {
-	urlPath := "/?comp=tier"
+	urlPath := "?comp=tier"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err
@@ -2703,7 +2703,7 @@ func (client *Client) Undelete(ctx context.Context, options *ClientUndeleteOptio
 
 // undeleteCreateRequest creates the Undelete request.
 func (client *Client) undeleteCreateRequest(ctx context.Context, options *ClientUndeleteOptions) (*policy.Request, error) {
-	urlPath := "/?comp=undelete"
+	urlPath := "?comp=undelete"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
 		return nil, err

@@ -9,7 +9,9 @@ import (
 	"encoding/xml"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"reflect"
+	"time"
 )
 
 // MarshalXML implements the xml.Marshaller interface for type ModelWithArrayOfModel.
@@ -25,6 +27,43 @@ func (m ModelWithArrayOfModel) MarshalXML(enc *xml.Encoder, start xml.StartEleme
 		aux.Items = &m.Items
 	}
 	return enc.EncodeElement(aux, start)
+}
+
+// MarshalXML implements the xml.Marshaller interface for type ModelWithDatetime.
+func (m ModelWithDatetime) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	type alias ModelWithDatetime
+	aux := &struct {
+		*alias
+		RFC3339 *datetime.RFC3339 `xml:"rfc3339"`
+		RFC7231 *datetime.RFC1123 `xml:"rfc7231"`
+	}{
+		alias:   (*alias)(&m),
+		RFC3339: (*datetime.RFC3339)(m.RFC3339),
+		RFC7231: (*datetime.RFC1123)(m.RFC7231),
+	}
+	return enc.EncodeElement(aux, start)
+}
+
+// UnmarshalXML implements the xml.Unmarshaller interface for type ModelWithDatetime.
+func (m *ModelWithDatetime) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
+	type alias ModelWithDatetime
+	aux := &struct {
+		*alias
+		RFC3339 *datetime.RFC3339 `xml:"rfc3339"`
+		RFC7231 *datetime.RFC1123 `xml:"rfc7231"`
+	}{
+		alias: (*alias)(m),
+	}
+	if err := dec.DecodeElement(aux, &start); err != nil {
+		return err
+	}
+	if aux.RFC3339 != nil && !(*time.Time)(aux.RFC3339).IsZero() {
+		m.RFC3339 = (*time.Time)(aux.RFC3339)
+	}
+	if aux.RFC7231 != nil && !(*time.Time)(aux.RFC7231).IsZero() {
+		m.RFC7231 = (*time.Time)(aux.RFC7231)
+	}
+	return nil
 }
 
 // MarshalXML implements the xml.Marshaller interface for type ModelWithDictionary.

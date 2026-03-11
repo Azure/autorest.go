@@ -92,6 +92,106 @@ func (client *FlattenPropertyClient) putFlattenModelHandleResponse(resp *http.Re
 	return result, nil
 }
 
+// PutFlattenReadOnlyModel -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - FlattenPropertyClientPutFlattenReadOnlyModelOptions contains the optional parameters for the FlattenPropertyClient.PutFlattenReadOnlyModel
+//     method.
+func (client *FlattenPropertyClient) PutFlattenReadOnlyModel(ctx context.Context, body Solution, options *FlattenPropertyClientPutFlattenReadOnlyModelOptions) (FlattenPropertyClientPutFlattenReadOnlyModelResponse, error) {
+	var err error
+	const operationName = "FlattenPropertyClient.PutFlattenReadOnlyModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.putFlattenReadOnlyModelCreateRequest(ctx, body, options)
+	if err != nil {
+		return FlattenPropertyClientPutFlattenReadOnlyModelResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return FlattenPropertyClientPutFlattenReadOnlyModelResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return FlattenPropertyClientPutFlattenReadOnlyModelResponse{}, err
+	}
+	resp, err := client.putFlattenReadOnlyModelHandleResponse(httpResp)
+	return resp, err
+}
+
+// putFlattenReadOnlyModelCreateRequest creates the PutFlattenReadOnlyModel request.
+func (client *FlattenPropertyClient) putFlattenReadOnlyModelCreateRequest(ctx context.Context, body Solution, _ *FlattenPropertyClientPutFlattenReadOnlyModelOptions) (*policy.Request, error) {
+	urlPath := "/azure/client-generator-core/flatten-property/flattenReadOnlyModel"
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// putFlattenReadOnlyModelHandleResponse handles the PutFlattenReadOnlyModel response.
+func (client *FlattenPropertyClient) putFlattenReadOnlyModelHandleResponse(resp *http.Response) (FlattenPropertyClientPutFlattenReadOnlyModelResponse, error) {
+	result := FlattenPropertyClientPutFlattenReadOnlyModelResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Solution); err != nil {
+		return FlattenPropertyClientPutFlattenReadOnlyModelResponse{}, err
+	}
+	return result, nil
+}
+
+// PutFlattenUnknownModel -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - FlattenPropertyClientPutFlattenUnknownModelOptions contains the optional parameters for the FlattenPropertyClient.PutFlattenUnknownModel
+//     method.
+func (client *FlattenPropertyClient) PutFlattenUnknownModel(ctx context.Context, input FlattenUnknownModel, options *FlattenPropertyClientPutFlattenUnknownModelOptions) (FlattenPropertyClientPutFlattenUnknownModelResponse, error) {
+	var err error
+	const operationName = "FlattenPropertyClient.PutFlattenUnknownModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.putFlattenUnknownModelCreateRequest(ctx, input, options)
+	if err != nil {
+		return FlattenPropertyClientPutFlattenUnknownModelResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return FlattenPropertyClientPutFlattenUnknownModelResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return FlattenPropertyClientPutFlattenUnknownModelResponse{}, err
+	}
+	resp, err := client.putFlattenUnknownModelHandleResponse(httpResp)
+	return resp, err
+}
+
+// putFlattenUnknownModelCreateRequest creates the PutFlattenUnknownModel request.
+func (client *FlattenPropertyClient) putFlattenUnknownModelCreateRequest(ctx context.Context, input FlattenUnknownModel, _ *FlattenPropertyClientPutFlattenUnknownModelOptions) (*policy.Request, error) {
+	urlPath := "/azure/client-generator-core/flatten-property/flattenUnknownModel"
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, input); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// putFlattenUnknownModelHandleResponse handles the PutFlattenUnknownModel response.
+func (client *FlattenPropertyClient) putFlattenUnknownModelHandleResponse(resp *http.Response) (FlattenPropertyClientPutFlattenUnknownModelResponse, error) {
+	result := FlattenPropertyClientPutFlattenUnknownModelResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.FlattenUnknownModel); err != nil {
+		return FlattenPropertyClientPutFlattenUnknownModelResponse{}, err
+	}
+	return result, nil
+}
+
 // PutNestedFlattenModel -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - FlattenPropertyClientPutNestedFlattenModelOptions contains the optional parameters for the FlattenPropertyClient.PutNestedFlattenModel

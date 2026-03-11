@@ -21,6 +21,12 @@ type PageClientListWithParametersOptions struct {
 	Another *ListItemInputExtensibleEnum
 }
 
+// PageClientWithRelativeNextLinkOptions contains the optional parameters for the PageClient.NewWithRelativeNextLinkPager
+// method.
+type PageClientWithRelativeNextLinkOptions struct {
+	// placeholder for future optional parameters
+}
+
 // PageTwoModelsAsPageItemClientListFirstItemOptions contains the optional parameters for the PageTwoModelsAsPageItemClient.NewListFirstItemPager
 // method.
 type PageTwoModelsAsPageItemClientListFirstItemOptions struct {

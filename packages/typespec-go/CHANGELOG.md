@@ -1,10 +1,14 @@
 # Release History
 
-## 0.10.3 (unreleased)
+## 0.10.3 (2026-03-11)
 
 ### Bugs Fixed
 
 * Fixed missing propagation of parent client parameters to sub-clients created via client accessor methods.
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
 
 ## 0.10.2 (2026-03-06)
 
