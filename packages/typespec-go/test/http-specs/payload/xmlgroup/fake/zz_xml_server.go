@@ -21,9 +21,6 @@ type XMLServer struct {
 	// XMLModelWithAttributesValueServer contains the fakes for client XMLModelWithAttributesValueClient
 	XMLModelWithAttributesValueServer XMLModelWithAttributesValueServer
 
-	// XMLModelWithDatetimeValueServer contains the fakes for client XMLModelWithDatetimeValueClient
-	XMLModelWithDatetimeValueServer XMLModelWithDatetimeValueServer
-
 	// XMLModelWithDictionaryValueServer contains the fakes for client XMLModelWithDictionaryValueClient
 	XMLModelWithDictionaryValueServer XMLModelWithDictionaryValueServer
 
@@ -32,9 +29,6 @@ type XMLServer struct {
 
 	// XMLModelWithEncodedNamesValueServer contains the fakes for client XMLModelWithEncodedNamesValueClient
 	XMLModelWithEncodedNamesValueServer XMLModelWithEncodedNamesValueServer
-
-	// XMLModelWithEnumValueServer contains the fakes for client XMLModelWithEnumValueClient
-	XMLModelWithEnumValueServer XMLModelWithEnumValueServer
 
 	// XMLModelWithOptionalFieldValueServer contains the fakes for client XMLModelWithOptionalFieldValueClient
 	XMLModelWithOptionalFieldValueServer XMLModelWithOptionalFieldValueServer
@@ -75,11 +69,9 @@ type XMLServerTransport struct {
 	trMu                                    sync.Mutex
 	trXMLModelWithArrayOfModelValueServer   *XMLModelWithArrayOfModelValueServerTransport
 	trXMLModelWithAttributesValueServer     *XMLModelWithAttributesValueServerTransport
-	trXMLModelWithDatetimeValueServer       *XMLModelWithDatetimeValueServerTransport
 	trXMLModelWithDictionaryValueServer     *XMLModelWithDictionaryValueServerTransport
 	trXMLModelWithEmptyArrayValueServer     *XMLModelWithEmptyArrayValueServerTransport
 	trXMLModelWithEncodedNamesValueServer   *XMLModelWithEncodedNamesValueServerTransport
-	trXMLModelWithEnumValueServer           *XMLModelWithEnumValueServerTransport
 	trXMLModelWithOptionalFieldValueServer  *XMLModelWithOptionalFieldValueServerTransport
 	trXMLModelWithRenamedArraysValueServer  *XMLModelWithRenamedArraysValueServerTransport
 	trXMLModelWithRenamedFieldsValueServer  *XMLModelWithRenamedFieldsValueServerTransport
@@ -116,11 +108,6 @@ func (x *XMLServerTransport) dispatchToClientFake(req *http.Request, client stri
 			return NewXMLModelWithAttributesValueServerTransport(&x.srv.XMLModelWithAttributesValueServer)
 		})
 		resp, err = x.trXMLModelWithAttributesValueServer.Do(req)
-	case "XMLModelWithDatetimeValueClient":
-		initServer(&x.trMu, &x.trXMLModelWithDatetimeValueServer, func() *XMLModelWithDatetimeValueServerTransport {
-			return NewXMLModelWithDatetimeValueServerTransport(&x.srv.XMLModelWithDatetimeValueServer)
-		})
-		resp, err = x.trXMLModelWithDatetimeValueServer.Do(req)
 	case "XMLModelWithDictionaryValueClient":
 		initServer(&x.trMu, &x.trXMLModelWithDictionaryValueServer, func() *XMLModelWithDictionaryValueServerTransport {
 			return NewXMLModelWithDictionaryValueServerTransport(&x.srv.XMLModelWithDictionaryValueServer)
@@ -136,11 +123,6 @@ func (x *XMLServerTransport) dispatchToClientFake(req *http.Request, client stri
 			return NewXMLModelWithEncodedNamesValueServerTransport(&x.srv.XMLModelWithEncodedNamesValueServer)
 		})
 		resp, err = x.trXMLModelWithEncodedNamesValueServer.Do(req)
-	case "XMLModelWithEnumValueClient":
-		initServer(&x.trMu, &x.trXMLModelWithEnumValueServer, func() *XMLModelWithEnumValueServerTransport {
-			return NewXMLModelWithEnumValueServerTransport(&x.srv.XMLModelWithEnumValueServer)
-		})
-		resp, err = x.trXMLModelWithEnumValueServer.Do(req)
 	case "XMLModelWithOptionalFieldValueClient":
 		initServer(&x.trMu, &x.trXMLModelWithOptionalFieldValueServer, func() *XMLModelWithOptionalFieldValueServerTransport {
 			return NewXMLModelWithOptionalFieldValueServerTransport(&x.srv.XMLModelWithOptionalFieldValueServer)

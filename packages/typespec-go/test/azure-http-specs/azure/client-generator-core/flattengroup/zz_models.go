@@ -31,13 +31,6 @@ type FlattenModel struct {
 	Properties *ChildModel
 }
 
-// FlattenUnknownModel - This is the model with unknown type properties to be flattened.
-type FlattenUnknownModel struct {
-	// REQUIRED
-	Name       *string
-	Properties any
-}
-
 // NestedFlattenModel - This is the model with two levels of flattening.
 type NestedFlattenModel struct {
 	// REQUIRED
@@ -45,23 +38,4 @@ type NestedFlattenModel struct {
 
 	// REQUIRED
 	Properties *ChildFlattenModel
-}
-
-// Solution - This is the model with flattened properties that are all read-only.
-type Solution struct {
-	// REQUIRED
-	Name       *string
-	Properties *SolutionProperties
-}
-
-// SolutionProperties - This is the model with all read-only properties to be flattened.
-type SolutionProperties struct {
-	// READ-ONLY
-	Content *string
-
-	// READ-ONLY
-	SolutionID *string
-
-	// READ-ONLY
-	Title *string
 }
