@@ -214,3 +214,49 @@ func (client *PageClient) listWithParametersHandleResponse(resp *http.Response) 
 	}
 	return result, nil
 }
+
+// NewWithRelativeNextLinkPager - List with relative nextLink URL that requires endpoint resolution.
+//   - options - PageClientWithRelativeNextLinkOptions contains the optional parameters for the PageClient.NewWithRelativeNextLinkPager
+//     method.
+func (client *PageClient) NewWithRelativeNextLinkPager(options *PageClientWithRelativeNextLinkOptions) *runtime.Pager[PageClientWithRelativeNextLinkResponse] {
+	return runtime.NewPager(runtime.PagingHandler[PageClientWithRelativeNextLinkResponse]{
+		More: func(page PageClientWithRelativeNextLinkResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *PageClientWithRelativeNextLinkResponse) (PageClientWithRelativeNextLinkResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageClient.NewWithRelativeNextLinkPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.withRelativeNextLinkCreateRequest(ctx, options)
+			}, nil)
+			if err != nil {
+				return PageClientWithRelativeNextLinkResponse{}, err
+			}
+			return client.withRelativeNextLinkHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// withRelativeNextLinkCreateRequest creates the WithRelativeNextLink request.
+func (client *PageClient) withRelativeNextLinkCreateRequest(ctx context.Context, _ *PageClientWithRelativeNextLinkOptions) (*policy.Request, error) {
+	urlPath := "/azure/core/page/with-relative-next-link"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// withRelativeNextLinkHandleResponse handles the WithRelativeNextLink response.
+func (client *PageClient) withRelativeNextLinkHandleResponse(resp *http.Response) (PageClientWithRelativeNextLinkResponse, error) {
+	result := PageClientWithRelativeNextLinkResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.PagedUser); err != nil {
+		return PageClientWithRelativeNextLinkResponse{}, err
+	}
+	return result, nil
+}

@@ -76,6 +76,14 @@ func NewSpecialWordsClientWithNoCredential(endpoint string, options *SpecialWord
 	return client, nil
 }
 
+// NewSpecialWordsExtensibleStringsClient creates a new instance of [SpecialWordsExtensibleStringsClient].
+func (client *SpecialWordsClient) NewSpecialWordsExtensibleStringsClient() *SpecialWordsExtensibleStringsClient {
+	return &SpecialWordsExtensibleStringsClient{
+		endpoint: client.endpoint,
+		internal: client.internal,
+	}
+}
+
 // NewSpecialWordsModelPropertiesClient creates a new instance of [SpecialWordsModelPropertiesClient].
 func (client *SpecialWordsClient) NewSpecialWordsModelPropertiesClient() *SpecialWordsModelPropertiesClient {
 	return &SpecialWordsModelPropertiesClient{

@@ -15,6 +15,9 @@ import (
 
 // SpecialWordsServer is a fake server for instances of the specialwordsgroup.SpecialWordsClient type.
 type SpecialWordsServer struct {
+	// SpecialWordsExtensibleStringsServer contains the fakes for client SpecialWordsExtensibleStringsClient
+	SpecialWordsExtensibleStringsServer SpecialWordsExtensibleStringsServer
+
 	// SpecialWordsModelPropertiesServer contains the fakes for client SpecialWordsModelPropertiesClient
 	SpecialWordsModelPropertiesServer SpecialWordsModelPropertiesServer
 
@@ -38,12 +41,13 @@ func NewSpecialWordsServerTransport(srv *SpecialWordsServer) *SpecialWordsServer
 // SpecialWordsServerTransport connects instances of specialwordsgroup.SpecialWordsClient to instances of SpecialWordsServer.
 // Don't use this type directly, use NewSpecialWordsServerTransport instead.
 type SpecialWordsServerTransport struct {
-	srv                                 *SpecialWordsServer
-	trMu                                sync.Mutex
-	trSpecialWordsModelPropertiesServer *SpecialWordsModelPropertiesServerTransport
-	trSpecialWordsModelsServer          *SpecialWordsModelsServerTransport
-	trSpecialWordsOperationsServer      *SpecialWordsOperationsServerTransport
-	trSpecialWordsParametersServer      *SpecialWordsParametersServerTransport
+	srv                                   *SpecialWordsServer
+	trMu                                  sync.Mutex
+	trSpecialWordsExtensibleStringsServer *SpecialWordsExtensibleStringsServerTransport
+	trSpecialWordsModelPropertiesServer   *SpecialWordsModelPropertiesServerTransport
+	trSpecialWordsModelsServer            *SpecialWordsModelsServerTransport
+	trSpecialWordsOperationsServer        *SpecialWordsOperationsServerTransport
+	trSpecialWordsParametersServer        *SpecialWordsParametersServerTransport
 }
 
 // Do implements the policy.Transporter interface for SpecialWordsServerTransport.
@@ -62,6 +66,11 @@ func (s *SpecialWordsServerTransport) dispatchToClientFake(req *http.Request, cl
 	var err error
 
 	switch client {
+	case "SpecialWordsExtensibleStringsClient":
+		initServer(&s.trMu, &s.trSpecialWordsExtensibleStringsServer, func() *SpecialWordsExtensibleStringsServerTransport {
+			return NewSpecialWordsExtensibleStringsServerTransport(&s.srv.SpecialWordsExtensibleStringsServer)
+		})
+		resp, err = s.trSpecialWordsExtensibleStringsServer.Do(req)
 	case "SpecialWordsModelPropertiesClient":
 		initServer(&s.trMu, &s.trSpecialWordsModelPropertiesServer, func() *SpecialWordsModelPropertiesServerTransport {
 			return NewSpecialWordsModelPropertiesServerTransport(&s.srv.SpecialWordsModelPropertiesServer)

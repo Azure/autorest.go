@@ -4,6 +4,12 @@
 
 package specialwordsgroup
 
+// SpecialWordsExtensibleStringsClientPutExtensibleStringValueOptions contains the optional parameters for the SpecialWordsExtensibleStringsClient.PutExtensibleStringValue
+// method.
+type SpecialWordsExtensibleStringsClientPutExtensibleStringValueOptions struct {
+	// placeholder for future optional parameters
+}
+
 // SpecialWordsModelPropertiesClientDictMethodsOptions contains the optional parameters for the SpecialWordsModelPropertiesClient.DictMethods
 // method.
 type SpecialWordsModelPropertiesClientDictMethodsOptions struct {

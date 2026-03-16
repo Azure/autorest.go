@@ -21,6 +21,14 @@ type FlattenPropertyServer struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	PutFlattenModel func(ctx context.Context, input flattengroup.FlattenModel, options *flattengroup.FlattenPropertyClientPutFlattenModelOptions) (resp azfake.Responder[flattengroup.FlattenPropertyClientPutFlattenModelResponse], errResp azfake.ErrorResponder)
 
+	// PutFlattenReadOnlyModel is the fake for method FlattenPropertyClient.PutFlattenReadOnlyModel
+	// HTTP status codes to indicate success: http.StatusOK
+	PutFlattenReadOnlyModel func(ctx context.Context, body flattengroup.Solution, options *flattengroup.FlattenPropertyClientPutFlattenReadOnlyModelOptions) (resp azfake.Responder[flattengroup.FlattenPropertyClientPutFlattenReadOnlyModelResponse], errResp azfake.ErrorResponder)
+
+	// PutFlattenUnknownModel is the fake for method FlattenPropertyClient.PutFlattenUnknownModel
+	// HTTP status codes to indicate success: http.StatusOK
+	PutFlattenUnknownModel func(ctx context.Context, input flattengroup.FlattenUnknownModel, options *flattengroup.FlattenPropertyClientPutFlattenUnknownModelOptions) (resp azfake.Responder[flattengroup.FlattenPropertyClientPutFlattenUnknownModelResponse], errResp azfake.ErrorResponder)
+
 	// PutNestedFlattenModel is the fake for method FlattenPropertyClient.PutNestedFlattenModel
 	// HTTP status codes to indicate success: http.StatusOK
 	PutNestedFlattenModel func(ctx context.Context, input flattengroup.NestedFlattenModel, options *flattengroup.FlattenPropertyClientPutNestedFlattenModelOptions) (resp azfake.Responder[flattengroup.FlattenPropertyClientPutNestedFlattenModelResponse], errResp azfake.ErrorResponder)
@@ -64,6 +72,10 @@ func (f *FlattenPropertyServerTransport) dispatchToMethodFake(req *http.Request,
 			switch method {
 			case "FlattenPropertyClient.PutFlattenModel":
 				res.resp, res.err = f.dispatchPutFlattenModel(req)
+			case "FlattenPropertyClient.PutFlattenReadOnlyModel":
+				res.resp, res.err = f.dispatchPutFlattenReadOnlyModel(req)
+			case "FlattenPropertyClient.PutFlattenUnknownModel":
+				res.resp, res.err = f.dispatchPutFlattenUnknownModel(req)
 			case "FlattenPropertyClient.PutNestedFlattenModel":
 				res.resp, res.err = f.dispatchPutNestedFlattenModel(req)
 			default:
@@ -102,6 +114,52 @@ func (f *FlattenPropertyServerTransport) dispatchPutFlattenModel(req *http.Reque
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).FlattenModel, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (f *FlattenPropertyServerTransport) dispatchPutFlattenReadOnlyModel(req *http.Request) (*http.Response, error) {
+	if f.srv.PutFlattenReadOnlyModel == nil {
+		return nil, &nonRetriableError{errors.New("fake for method PutFlattenReadOnlyModel not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[flattengroup.Solution](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := f.srv.PutFlattenReadOnlyModel(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Solution, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (f *FlattenPropertyServerTransport) dispatchPutFlattenUnknownModel(req *http.Request) (*http.Response, error) {
+	if f.srv.PutFlattenUnknownModel == nil {
+		return nil, &nonRetriableError{errors.New("fake for method PutFlattenUnknownModel not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[flattengroup.FlattenUnknownModel](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := f.srv.PutFlattenUnknownModel(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).FlattenUnknownModel, req)
 	if err != nil {
 		return nil, err
 	}

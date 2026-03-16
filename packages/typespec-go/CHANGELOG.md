@@ -6,6 +6,10 @@
 
 * Fixed missing propagation of parent client parameters to sub-clients created via client accessor methods.
 
+### Other Changes
+
+* Updated to the latest tsp toolset.
+
 ## 0.10.2 (2026-03-06)
 
 ### Bugs Fixed
