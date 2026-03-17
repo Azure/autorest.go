@@ -5,7 +5,6 @@ package xmlgroup_test
 
 import (
 	"context"
-	"errors"
 	"net/http"
 	"testing"
 	"xmlgroup"
@@ -19,7 +18,8 @@ func TestXMLXMLErrorValueClient_Get(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewXMLXMLErrorValueClient().Get(context.Background(), nil)
 	var respErr *azcore.ResponseError
-	require.True(t, errors.As(err, &respErr))
+	require.Error(t, err)
+	require.ErrorAs(t, err, &respErr)
 	require.EqualValues(t, http.StatusBadRequest, respErr.StatusCode)
 	require.Zero(t, resp)
 }

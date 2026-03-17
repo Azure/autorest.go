@@ -82,6 +82,10 @@ func TestNewLroClient_BeginExportArray(t *testing.T) {
 	resp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Len(t, resp.ExportResultArray, 2)
+	require.NotNil(t, resp.ExportResultArray[0])
+	require.NotNil(t, resp.ExportResultArray[0].Content)
+	require.NotNil(t, resp.ExportResultArray[1])
+	require.NotNil(t, resp.ExportResultArray[1].Content)
 	require.Equal(t, "order1,product1,1", *resp.ExportResultArray[0].Content)
 	require.Equal(t, "order2,product2,2", *resp.ExportResultArray[1].Content)
 }
