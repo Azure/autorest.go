@@ -72,3 +72,16 @@ func TestNewLroClient_BeginExport(t *testing.T) {
 	require.NotEmpty(t, resp.Content)
 	require.Equal(t, "order1,product1,1", *resp.Content)
 }
+
+func TestNewLroClient_BeginExportArray(t *testing.T) {
+	body := templatesgroup.ExportRequest{
+		Format: to.Ptr("csv"),
+	}
+	poller, err := clientFactory.NewLroClient().BeginExportArray(context.Background(), body, nil)
+	require.NoError(t, err)
+	resp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
+	require.NoError(t, err)
+	require.Len(t, resp.ExportResultArray, 2)
+	require.Equal(t, "order1,product1,1", *resp.ExportResultArray[0].Content)
+	require.Equal(t, "order2,product2,2", *resp.ExportResultArray[1].Content)
+}
