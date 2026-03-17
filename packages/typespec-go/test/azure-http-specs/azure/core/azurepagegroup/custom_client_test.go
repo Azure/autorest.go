@@ -109,3 +109,37 @@ func TestPageClient_NewListWithParametersPager(t *testing.T) {
 	}
 	require.EqualValues(t, 2, pages)
 }*/
+
+// TODO: runtime.FetcherForNextLink doesn't support relative next link URLs
+/*func TestPageClient_NewWithRelativeNextLinkPager(t *testing.T) {
+	client, err := azurepagegroup.NewPageClientWithNoCredential("http://localhost:3000", nil)
+	require.NoError(t, err)
+	pager := client.NewWithRelativeNextLinkPager(nil)
+	pages := 0
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		require.NoError(t, err)
+		pages++
+		switch pages {
+		case 1:
+			require.EqualValues(t, []*azurepagegroup.User{
+				{
+					ID:   to.Ptr[int32](1),
+					Name: to.Ptr("User1"),
+					Etag: to.Ptr[azcore.ETag]("11bdc430-65e8-45ad-81d9-8ffa60d55b59"),
+				},
+			}, page.Value)
+		case 2:
+			require.EqualValues(t, []*azurepagegroup.User{
+				{
+					ID:   to.Ptr[int32](2),
+					Name: to.Ptr("User2"),
+					Etag: to.Ptr[azcore.ETag]("11bdc430-65e8-45ad-81d9-8ffa60d55b59"),
+				},
+			}, page.Value)
+		default:
+			t.Fatalf("unexpected page number %d", pages)
+		}
+	}
+	require.EqualValues(t, 2, pages)
+}*/

@@ -28,6 +28,18 @@ type XMLModelWithAttributesValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
+// XMLModelWithDatetimeValueClientGetOptions contains the optional parameters for the XMLModelWithDatetimeValueClient.Get
+// method.
+type XMLModelWithDatetimeValueClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLModelWithDatetimeValueClientPutOptions contains the optional parameters for the XMLModelWithDatetimeValueClient.Put
+// method.
+type XMLModelWithDatetimeValueClientPutOptions struct {
+	// placeholder for future optional parameters
+}
+
 // XMLModelWithDictionaryValueClientGetOptions contains the optional parameters for the XMLModelWithDictionaryValueClient.Get
 // method.
 type XMLModelWithDictionaryValueClientGetOptions struct {
@@ -61,6 +73,16 @@ type XMLModelWithEncodedNamesValueClientGetOptions struct {
 // XMLModelWithEncodedNamesValueClientPutOptions contains the optional parameters for the XMLModelWithEncodedNamesValueClient.Put
 // method.
 type XMLModelWithEncodedNamesValueClientPutOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLModelWithEnumValueClientGetOptions contains the optional parameters for the XMLModelWithEnumValueClient.Get method.
+type XMLModelWithEnumValueClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLModelWithEnumValueClientPutOptions contains the optional parameters for the XMLModelWithEnumValueClient.Put method.
+type XMLModelWithEnumValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 

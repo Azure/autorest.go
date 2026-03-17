@@ -4,6 +4,12 @@
 
 package specialwordsgroup
 
+// SpecialWordsExtensibleStringsClientPutExtensibleStringValueResponse contains the response from method SpecialWordsExtensibleStringsClient.PutExtensibleStringValue.
+type SpecialWordsExtensibleStringsClientPutExtensibleStringValueResponse struct {
+	ContentType *string
+	Value       *ExtensibleString
+}
+
 // SpecialWordsModelPropertiesClientDictMethodsResponse contains the response from method SpecialWordsModelPropertiesClient.DictMethods.
 type SpecialWordsModelPropertiesClientDictMethodsResponse struct {
 	// placeholder for future response values
