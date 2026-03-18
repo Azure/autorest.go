@@ -21,5 +21,6 @@ func TestXMLXMLErrorValueClient_Get(t *testing.T) {
 	require.Error(t, err)
 	require.ErrorAs(t, err, &respErr)
 	require.EqualValues(t, http.StatusBadRequest, respErr.StatusCode)
+	require.EqualValues(t, "400", respErr.ErrorCode)
 	require.Zero(t, resp)
 }
