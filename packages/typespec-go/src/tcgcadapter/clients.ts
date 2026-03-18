@@ -1419,10 +1419,6 @@ export class ClientAdapter {
             if (!goParams) {
               throw new AdapterError('InternalError', `can not find go param for example param ${param.parameter.name}`);
             }
-            // skip literal parameters as they're set internally when composing the request
-            if (goParams.length === 1 && go.isLiteralParameter(goParams[0].style)) {
-              continue;
-            }
             if (goParams.length > 1) {
               // spread case
               for (const goParam of goParams) {
@@ -1435,6 +1431,10 @@ export class ClientAdapter {
                 }
               }
             } else {
+              // skip literal parameters as they're set internally when composing the request
+              if (go.isLiteralParameter(goParams[0].style)) {
+                continue;
+              }
               const paramExample = new go.ParameterExample(goParams[0], this.adaptExampleType(param.value, goParams[0]?.type));
               if (goParams[0]?.group) {
                 goExample.optionalParamsGroup.push(paramExample);
