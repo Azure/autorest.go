@@ -97,6 +97,76 @@ func (client *BodyRootsClient) actionCreateRequest(ctx context.Context, resource
 	return req, nil
 }
 
+// CreateOrUpdate - Create or update a body root resource.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2025-01-01
+//   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - bodyRootName - Body root resource name.
+//   - resource - Resource create parameters.
+//   - options - BodyRootsClientCreateOrUpdateOptions contains the optional parameters for the BodyRootsClient.CreateOrUpdate
+//     method.
+func (client *BodyRootsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, bodyRootName string, resource BodyRoot, options *BodyRootsClientCreateOrUpdateOptions) (BodyRootsClientCreateOrUpdateResponse, error) {
+	var err error
+	const operationName = "BodyRootsClient.CreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, bodyRootName, resource, options)
+	if err != nil {
+		return BodyRootsClientCreateOrUpdateResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return BodyRootsClientCreateOrUpdateResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return BodyRootsClientCreateOrUpdateResponse{}, err
+	}
+	resp, err := client.createOrUpdateHandleResponse(httpResp)
+	return resp, err
+}
+
+// createOrUpdateCreateRequest creates the CreateOrUpdate request.
+func (client *BodyRootsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, bodyRootName string, resource BodyRoot, _ *BodyRootsClientCreateOrUpdateOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/bodyRoots/{bodyRootName}"
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if bodyRootName == "" {
+		return nil, errors.New("parameter bodyRootName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{bodyRootName}", url.PathEscape(bodyRootName))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2025-01-01")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, resource); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// createOrUpdateHandleResponse handles the CreateOrUpdate response.
+func (client *BodyRootsClient) createOrUpdateHandleResponse(resp *http.Response) (BodyRootsClientCreateOrUpdateResponse, error) {
+	result := BodyRootsClientCreateOrUpdateResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.BodyRoot); err != nil {
+		return BodyRootsClientCreateOrUpdateResponse{}, err
+	}
+	return result, nil
+}
+
 // Get - Get details of a certificate profile.
 // If the operation fails it returns an *azcore.ResponseError type.
 //

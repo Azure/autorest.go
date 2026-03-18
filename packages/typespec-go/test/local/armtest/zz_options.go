@@ -9,6 +9,11 @@ type BodyRootsClientActionOptions struct {
 	// placeholder for future optional parameters
 }
 
+// BodyRootsClientCreateOrUpdateOptions contains the optional parameters for the BodyRootsClient.CreateOrUpdate method.
+type BodyRootsClientCreateOrUpdateOptions struct {
+	// placeholder for future optional parameters
+}
+
 // BodyRootsClientGetOptions contains the optional parameters for the BodyRootsClient.Get method.
 type BodyRootsClientGetOptions struct {
 	// placeholder for future optional parameters

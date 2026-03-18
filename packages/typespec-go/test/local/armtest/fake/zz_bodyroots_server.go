@@ -23,6 +23,10 @@ type BodyRootsServer struct {
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Action func(ctx context.Context, resourceGroupName string, bodyRootName string, action armtest.ActionRequest, options *armtest.BodyRootsClientActionOptions) (resp azfake.Responder[armtest.BodyRootsClientActionResponse], errResp azfake.ErrorResponder)
 
+	// CreateOrUpdate is the fake for method BodyRootsClient.CreateOrUpdate
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
+	CreateOrUpdate func(ctx context.Context, resourceGroupName string, bodyRootName string, resource armtest.BodyRoot, options *armtest.BodyRootsClientCreateOrUpdateOptions) (resp azfake.Responder[armtest.BodyRootsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
+
 	// Get is the fake for method BodyRootsClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
 	Get func(ctx context.Context, resourceGroupName string, bodyRootName string, options *armtest.BodyRootsClientGetOptions) (resp azfake.Responder[armtest.BodyRootsClientGetResponse], errResp azfake.ErrorResponder)
@@ -66,6 +70,8 @@ func (b *BodyRootsServerTransport) dispatchToMethodFake(req *http.Request, metho
 			switch method {
 			case "BodyRootsClient.Action":
 				res.resp, res.err = b.dispatchAction(req)
+			case "BodyRootsClient.CreateOrUpdate":
+				res.resp, res.err = b.dispatchCreateOrUpdate(req)
 			case "BodyRootsClient.Get":
 				res.resp, res.err = b.dispatchGet(req)
 			default:
@@ -118,6 +124,43 @@ func (b *BodyRootsServerTransport) dispatchAction(req *http.Request) (*http.Resp
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (b *BodyRootsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {
+	if b.srv.CreateOrUpdate == nil {
+		return nil, &nonRetriableError{errors.New("fake for method CreateOrUpdate not implemented")}
+	}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/bodyRoots/(?P<bodyRootName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if len(matches) < 4 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	body, err := server.UnmarshalRequestAsJSON[armtest.BodyRoot](req)
+	if err != nil {
+		return nil, err
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	bodyRootNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("bodyRootName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := b.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, bodyRootNameParam, body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).BodyRoot, req)
 	if err != nil {
 		return nil, err
 	}
