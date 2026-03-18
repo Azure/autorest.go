@@ -2031,7 +2031,7 @@ alias DateResponseHeaderPrivate = {
 /** The ETag response header */
 alias EtagResponseHeader = {
   /** The ETag contains a value that you can use to perform operations conditionally. */
-  @header("ETag") eTag: string;
+  @header("ETag") eTag: Azure.Core.eTag;
 };
 
 /** The private ETag response header */
@@ -2039,7 +2039,7 @@ alias EtagResponseHeaderPrivate = {
   /** The ETag contains a value that you can use to perform operations conditionally. */
   @access(Access.internal)
   @header("ETag")
-  eTag: string;
+  eTag: Azure.Core.eTag;
 };
 
 /** The copy source tags header parameter. */
@@ -2407,14 +2407,14 @@ alias IfTagsParameter = {
 alias IfMatchParameter = {
   /** A condition that must be met in order for the request to be processed. */
   @header("If-Match")
-  ifMatch?: string;
+  ifMatch?: Azure.Core.eTag;
 };
 
 /** The If-None-Match parameter. */
 alias IfNoneMatchParameter = {
   /** A condition that must be met in order for the request to be processed. */
   @header("If-None-Match")
-  ifNoneMatch?: string;
+  ifNoneMatch?: Azure.Core.eTag;
 };
 
 /** The range parameter. */

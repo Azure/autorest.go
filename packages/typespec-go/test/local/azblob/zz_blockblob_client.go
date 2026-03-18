@@ -71,13 +71,13 @@ func (client *BlockBlobClient) commitBlockListCreateRequest(ctx context.Context,
 		req.Raw().Header["Content-MD5"] = []string{base64.StdEncoding.EncodeToString(options.TransactionalContentMD5)}
 	}
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -182,7 +182,7 @@ func (client *BlockBlobClient) commitBlockListHandleResponse(resp *http.Response
 		result.Date = &date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
 		result.EncryptionKeySHA256 = &val
@@ -294,7 +294,7 @@ func (client *BlockBlobClient) getBlockListHandleResponse(resp *http.Response) (
 		result.Date = &date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
@@ -357,13 +357,13 @@ func (client *BlockBlobClient) queryCreateRequest(ctx context.Context, queryRequ
 	runtime.SkipBodyDownload(req)
 	req.Raw().Header["Accept"] = []string{"application/octet-stream"}
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -500,7 +500,7 @@ func (client *BlockBlobClient) queryHandleResponse(resp *http.Response) (BlockBl
 		result.Duration = (*LeaseDuration)(&val)
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
 		result.EncryptionKeySHA256 = &val
@@ -873,13 +873,13 @@ func (client *BlockBlobClient) uploadCreateRequest(ctx context.Context, body io.
 		req.Raw().Header["Content-MD5"] = []string{base64.StdEncoding.EncodeToString(options.TransactionalContentMD5)}
 	}
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -984,7 +984,7 @@ func (client *BlockBlobClient) uploadHandleResponse(resp *http.Response) (BlockB
 		result.Date = &date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
 		result.EncryptionKeySHA256 = &val
@@ -1067,13 +1067,13 @@ func (client *BlockBlobClient) uploadBlobFromURLCreateRequest(ctx context.Contex
 		req.Raw().Header["Content-MD5"] = []string{base64.StdEncoding.EncodeToString(options.TransactionalContentMD5)}
 	}
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -1196,7 +1196,7 @@ func (client *BlockBlobClient) uploadBlobFromURLHandleResponse(resp *http.Respon
 		result.Date = &date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
 		result.EncryptionKeySHA256 = &val

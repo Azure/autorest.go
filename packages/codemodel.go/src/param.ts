@@ -128,7 +128,7 @@ export interface HeaderScalarParameter extends HttpParameterBase {
 }
 
 /** defines the possible types for a scalar header */
-export type HeaderScalarType = type.Constant | type.EncodedBytes | type.Literal | type.Scalar | type.String | type.Time;
+export type HeaderScalarType = type.Constant | type.EncodedBytes | type.ETag | type.Literal | type.Scalar | type.String | type.Time;
 
 /** parameter goes in multipart/form body */
 export interface MultipartFormBodyParameter extends HttpParameterBase {
@@ -320,6 +320,7 @@ export function isHeaderScalarType(type: type.WireType): type is HeaderScalarTyp
   switch (type.kind) {
     case 'constant':
     case 'encodedBytes':
+    case 'etag':
     case 'literal':
     case 'scalar':
     case 'string':

@@ -405,14 +405,7 @@ export class TypeAdapter {
       case 'string':
       case 'url': {
         if (type.crossLanguageDefinitionId === 'Azure.Core.eTag') {
-          const etagKey = 'etag';
-          let etag = this.types.get(etagKey);
-          if (etag) {
-            return etag;
-          }
-          etag = new go.ETag();
-          this.types.set(etagKey, etag);
-          return etag;
+          return this.getETagType();
         }
 
         const stringKey = 'string';
@@ -456,6 +449,17 @@ export class TypeAdapter {
     constType.docs.description = enumType.doc;
     this.types.set(constTypeName, constType);
     return constType;
+  }
+
+  getETagType(): go.ETag {
+    const etagKey = 'etag';
+    let etag = this.types.get(etagKey);
+    if (etag) {
+      return <go.ETag>etag;
+    }
+    etag = new go.ETag();
+    this.types.set(etagKey, etag);
+    return etag;
   }
 
   private getInterfaceType(model: tcgc.SdkModelType): go.Interface {

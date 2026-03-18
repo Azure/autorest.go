@@ -134,13 +134,13 @@ func (client *Client) acquireLeaseCreateRequest(ctx context.Context, duration in
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -174,7 +174,7 @@ func (client *Client) acquireLeaseHandleResponse(resp *http.Response) (ClientAcq
 		result.Date = &date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
@@ -232,13 +232,13 @@ func (client *Client) breakLeaseCreateRequest(ctx context.Context, options *Clie
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -271,7 +271,7 @@ func (client *Client) breakLeaseHandleResponse(resp *http.Response) (ClientBreak
 		result.Date = &date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
@@ -336,13 +336,13 @@ func (client *Client) changeLeaseCreateRequest(ctx context.Context, leaseID stri
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -374,7 +374,7 @@ func (client *Client) changeLeaseHandleResponse(resp *http.Response) (ClientChan
 		result.Date = &date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
@@ -435,13 +435,13 @@ func (client *Client) copyFromURLCreateRequest(ctx context.Context, copySource s
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -544,7 +544,7 @@ func (client *Client) copyFromURLHandleResponse(resp *http.Response) (ClientCopy
 		result.Date = &date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
 		result.EncryptionScope = &val
@@ -604,13 +604,13 @@ func (client *Client) createSnapshotCreateRequest(ctx context.Context, options *
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -661,7 +661,7 @@ func (client *Client) createSnapshotHandleResponse(resp *http.Response) (ClientC
 		result.Date = &date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
@@ -744,13 +744,13 @@ func (client *Client) deleteCreateRequest(ctx context.Context, options *ClientDe
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -1072,7 +1072,7 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 		result.Duration = (*LeaseDuration)(&val)
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
 		result.EncryptionKeySHA256 = &val
@@ -1304,13 +1304,13 @@ func (client *Client) getPropertiesCreateRequest(ctx context.Context, options *C
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -1456,7 +1456,7 @@ func (client *Client) getPropertiesHandleResponse(resp *http.Response) (ClientGe
 		result.Duration = (*LeaseDuration)(&val)
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
 		result.EncryptionKeySHA256 = &val
@@ -1711,13 +1711,13 @@ func (client *Client) releaseLeaseCreateRequest(ctx context.Context, leaseID str
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -1748,7 +1748,7 @@ func (client *Client) releaseLeaseHandleResponse(resp *http.Response) (ClientRel
 		result.Date = &date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
@@ -1804,13 +1804,13 @@ func (client *Client) renewLeaseCreateRequest(ctx context.Context, leaseID strin
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -1841,7 +1841,7 @@ func (client *Client) renewLeaseHandleResponse(resp *http.Response) (ClientRenew
 		result.Date = &date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
@@ -1923,7 +1923,7 @@ func (client *Client) setExpiryHandleResponse(resp *http.Response) (ClientSetExp
 		result.Date = &date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
@@ -1977,13 +1977,13 @@ func (client *Client) setHTTPHeadersCreateRequest(ctx context.Context, options *
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -2040,7 +2040,7 @@ func (client *Client) setHTTPHeadersHandleResponse(resp *http.Response) (ClientS
 		result.Date = &date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
@@ -2261,13 +2261,13 @@ func (client *Client) setMetadataCreateRequest(ctx context.Context, options *Cli
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -2318,7 +2318,7 @@ func (client *Client) setMetadataHandleResponse(resp *http.Response) (ClientSetM
 		result.Date = &date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
 		result.EncryptionKeySHA256 = &val
@@ -2569,13 +2569,13 @@ func (client *Client) startCopyFromURLCreateRequest(ctx context.Context, copySou
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
+		req.Raw().Header["If-Match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["If-None-Match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -2657,7 +2657,7 @@ func (client *Client) startCopyFromURLHandleResponse(resp *http.Response) (Clien
 		result.Date = &date
 	}
 	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
+		result.ETag = (*azcore.ETag)(&val)
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)

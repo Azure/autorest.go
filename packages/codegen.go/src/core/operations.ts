@@ -429,7 +429,7 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
 }
 
 // use this to generate the code that will help process values returned in response headers
-function formatHeaderResponseValue(headerResp: go.HeaderScalarResponse | go.HeaderMapResponse, imports: ImportManager, respObj: string, zeroResp: string): string {
+function formatHeaderResponseValue(method: go.SyncMethod | go.LROPageableMethod | go.PageableMethod, headerResp: go.HeaderScalarResponse | go.HeaderMapResponse, imports: ImportManager, respObj: string, zeroResp: string): string {
   // dictionaries are handled slightly different so we do that first
   if (headerResp.kind === 'headerMapResponse') {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
@@ -451,7 +451,8 @@ function formatHeaderResponseValue(headerResp: go.HeaderScalarResponse | go.Head
   let byRef = '&';
   switch (headerResp.type.kind) {
     case 'constant':
-      text += `\t\t${respObj}.${headerResp.fieldName} = (*${headerResp.type.name})(&val)\n`;
+    case 'etag':
+      text += `\t\t${respObj}.${headerResp.fieldName} = (*${go.getTypeDeclaration(headerResp.type, method.receiver.type.pkg)})(&val)\n`;
       text += '\t}\n';
       return text;
     case 'encodedBytes':
@@ -1382,7 +1383,7 @@ function createProtocolResponse(method: go.SyncMethod | go.LROPageableMethod | g
 
   const addHeaders = function (headers: Array<go.HeaderScalarResponse | go.HeaderMapResponse>) {
     for (const header of headers) {
-      text += formatHeaderResponseValue(header, imports, 'result', `${method.returns.name}{}`);
+      text += formatHeaderResponseValue(method, header, imports, 'result', `${method.returns.name}{}`);
     }
   };
 

@@ -4,7 +4,10 @@
 
 package azblob
 
-import "time"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"time"
+)
 
 // AppendBlobClientAppendBlockFromURLOptions contains the optional parameters for the AppendBlobClient.AppendBlockFromURL
 // method.
@@ -41,13 +44,13 @@ type AppendBlobClientAppendBlockFromURLOptions struct {
 	FileRequestIntent *FileShareTokenIntent
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -131,13 +134,13 @@ type AppendBlobClientAppendBlockOptions struct {
 	EncryptionScope *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -220,13 +223,13 @@ type AppendBlobClientCreateOptions struct {
 	EncryptionScope *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -265,13 +268,13 @@ type AppendBlobClientSealOptions struct {
 	ClientRequestID *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has not been modified since the specified date-time.
 	IfUnmodifiedSince *time.Time
@@ -332,13 +335,13 @@ type BlockBlobClientCommitBlockListOptions struct {
 	EncryptionScope *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -416,13 +419,13 @@ type BlockBlobClientQueryOptions struct {
 	EncryptionKeySHA256 *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -614,13 +617,13 @@ type BlockBlobClientUploadBlobFromURLOptions struct {
 	FileRequestIntent *FileShareTokenIntent
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -722,13 +725,13 @@ type BlockBlobClientUploadOptions struct {
 	EncryptionScope *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -792,13 +795,13 @@ type ClientAcquireLeaseOptions struct {
 	ClientRequestID *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -827,13 +830,13 @@ type ClientBreakLeaseOptions struct {
 	ClientRequestID *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -852,13 +855,13 @@ type ClientChangeLeaseOptions struct {
 	ClientRequestID *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -893,13 +896,13 @@ type ClientCopyFromURLOptions struct {
 	FileRequestIntent *FileShareTokenIntent
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -968,13 +971,13 @@ type ClientCreateSnapshotOptions struct {
 	EncryptionScope *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -1031,13 +1034,13 @@ type ClientDeleteOptions struct {
 	DeleteSnapshots *DeleteSnapshotsOptionType
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -1156,13 +1159,13 @@ type ClientGetPropertiesOptions struct {
 	EncryptionKeySHA256 *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -1230,13 +1233,13 @@ type ClientReleaseLeaseOptions struct {
 	ClientRequestID *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -1255,13 +1258,13 @@ type ClientRenewLeaseOptions struct {
 	ClientRequestID *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -1315,13 +1318,13 @@ type ClientSetHTTPHeadersOptions struct {
 	ClientRequestID *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -1404,13 +1407,13 @@ type ClientSetMetadataOptions struct {
 	EncryptionScope *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -1506,13 +1509,13 @@ type ClientStartCopyFromURLOptions struct {
 	ClientRequestID *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -1932,13 +1935,13 @@ type PageBlobClientClearPagesOptions struct {
 	EncryptionScope *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify this header value to operate only on a blob if it has the specified sequence number.
 	IfSequenceNumberEqualTo *int64
@@ -1969,13 +1972,13 @@ type PageBlobClientCopyIncrementalOptions struct {
 	ClientRequestID *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -2040,13 +2043,13 @@ type PageBlobClientCreateOptions struct {
 	EncryptionScope *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -2083,13 +2086,13 @@ type PageBlobClientGetPageRangesDiffOptions struct {
 	ClientRequestID *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -2139,13 +2142,13 @@ type PageBlobClientGetPageRangesOptions struct {
 	ClientRequestID *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -2202,13 +2205,13 @@ type PageBlobClientResizeOptions struct {
 	EncryptionScope *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -2235,13 +2238,13 @@ type PageBlobClientUpdateSequenceNumberOptions struct {
 	ClientRequestID *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -2286,13 +2289,13 @@ type PageBlobClientUploadPagesFromURLOptions struct {
 	FileRequestIntent *FileShareTokenIntent
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify this header value to operate only on a blob if it has the specified sequence number.
 	IfSequenceNumberEqualTo *int64
@@ -2368,13 +2371,13 @@ type PageBlobClientUploadPagesOptions struct {
 	EncryptionScope *string
 
 	// A condition that must be met in order for the request to be processed.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// A date-time value. A request is made under the condition that the resource has been modified since the specified date-time.
 	IfModifiedSince *time.Time
 
 	// A condition that must be met in order for the request to be processed.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify this header value to operate only on a blob if it has the specified sequence number.
 	IfSequenceNumberEqualTo *int64

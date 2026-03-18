@@ -1339,12 +1339,22 @@ export class ClientAdapter {
   }
 
   private adaptHeaderScalarType(sdkType: tcgc.SdkType, forParam: boolean): go.HeaderScalarType {
+    // it would be ideal to force the ETag type for the known ETag
+    // headers per the RFC. however, it introduces too many breaking
+    // changes. that said, maybe we add a switch to enable this.
+    /*switch (header.toLowerCase()) {
+      case 'etag':
+      case 'if-match':
+      case 'if-none-match':
+        return this.ta.getETagType();
+    }*/
+
     // for header params, we never pass the element type by pointer
     const type = this.ta.getWireType(sdkType, forParam, false);
     if (go.isHeaderScalarType(type)) {
       return type;
     }
-    throw new AdapterError('InternalError', `unexpected header scalar parameter type ${sdkType.kind}`, sdkType.__raw?.node);
+    throw new AdapterError('InternalError', `unexpected header scalar parameter type ${type.kind}`, sdkType.__raw?.node);
   }
 
   private adaptPathScalarParameterType(sdkType: tcgc.SdkType): go.PathScalarParameterType {
