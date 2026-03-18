@@ -9,12 +9,6 @@ type BodyRootsClientActionResponse struct {
 	// placeholder for future response values
 }
 
-// BodyRootsClientCreateOrUpdateResponse contains the response from method BodyRootsClient.CreateOrUpdate.
-type BodyRootsClientCreateOrUpdateResponse struct {
-	// Body root resource.
-	BodyRoot
-}
-
 // BodyRootsClientGetResponse contains the response from method BodyRootsClient.Get.
 type BodyRootsClientGetResponse struct {
 	// Body root resource.

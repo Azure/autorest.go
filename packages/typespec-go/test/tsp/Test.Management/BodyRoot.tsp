@@ -26,15 +26,17 @@ interface BodyRoots {
   @doc("Get details of a certificate profile.")
   get is ArmResourceRead<BodyRoot>;
 
-  @doc("Create or update a body root resource.")
-  createOrUpdate is ArmResourceCreateOrReplaceSync<BodyRoot>;
-
   @doc("Revoke a certificate under a certificate profile.")
   action is ArmResourceActionNoContentSync<
     BodyRoot,
     {
       @bodyRoot
       action: ActionRequest;
+    },
+    Parameters = {
+      @doc("The constant filter value.")
+      @query("filter")
+      filter: "constantValue";
     }
   >;
 }
