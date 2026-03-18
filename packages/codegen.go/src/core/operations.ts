@@ -429,7 +429,13 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
 }
 
 // use this to generate the code that will help process values returned in response headers
-function formatHeaderResponseValue(method: go.SyncMethod | go.LROPageableMethod | go.PageableMethod, headerResp: go.HeaderScalarResponse | go.HeaderMapResponse, imports: ImportManager, respObj: string, zeroResp: string): string {
+function formatHeaderResponseValue(
+  method: go.SyncMethod | go.LROPageableMethod | go.PageableMethod,
+  headerResp: go.HeaderScalarResponse | go.HeaderMapResponse,
+  imports: ImportManager,
+  respObj: string,
+  zeroResp: string,
+): string {
   // dictionaries are handled slightly different so we do that first
   if (headerResp.kind === 'headerMapResponse') {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
