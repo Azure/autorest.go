@@ -42,9 +42,25 @@ func NewNamingClientWithNoCredential(endpoint string, options *NamingClientOptio
 	return client, nil
 }
 
+// NewNamingHeaderClient creates a new instance of [NamingHeaderClient].
+func (client *NamingClient) NewNamingHeaderClient() *NamingHeaderClient {
+	return &NamingHeaderClient{
+		endpoint: client.endpoint,
+		internal: client.internal,
+	}
+}
+
 // NewNamingModelClient creates a new instance of [NamingModelClient].
 func (client *NamingClient) NewNamingModelClient() *NamingModelClient {
 	return &NamingModelClient{
+		endpoint: client.endpoint,
+		internal: client.internal,
+	}
+}
+
+// NewNamingPropertyClient creates a new instance of [NamingPropertyClient].
+func (client *NamingClient) NewNamingPropertyClient() *NamingPropertyClient {
+	return &NamingPropertyClient{
 		endpoint: client.endpoint,
 		internal: client.internal,
 	}
@@ -56,44 +72,6 @@ func (client *NamingClient) NewNamingUnionEnumClient() *NamingUnionEnumClient {
 		endpoint: client.endpoint,
 		internal: client.internal,
 	}
-}
-
-// Client -
-// If the operation fails it returns an *azcore.ResponseError type.
-//   - options - NamingClientClientOptions contains the optional parameters for the NamingClient.Client method.
-func (client *NamingClient) Client(ctx context.Context, body ClientNameModel, options *NamingClientClientOptions) (NamingClientClientResponse, error) {
-	var err error
-	const operationName = "NamingClient.Client"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
-	req, err := client.clientCreateRequest(ctx, body, options)
-	if err != nil {
-		return NamingClientClientResponse{}, err
-	}
-	httpResp, err := client.internal.Pipeline().Do(req)
-	if err != nil {
-		return NamingClientClientResponse{}, err
-	}
-	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
-		err = runtime.NewResponseError(httpResp)
-		return NamingClientClientResponse{}, err
-	}
-	return NamingClientClientResponse{}, nil
-}
-
-// clientCreateRequest creates the Client request.
-func (client *NamingClient) clientCreateRequest(ctx context.Context, body ClientNameModel, _ *NamingClientClientOptions) (*policy.Request, error) {
-	urlPath := "/client/naming/property/client"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
-		return nil, err
-	}
-	return req, nil
 }
 
 // ClientName -
@@ -125,83 +103,6 @@ func (client *NamingClient) clientNameCreateRequest(ctx context.Context, _ *Nami
 	urlPath := "/client/naming/operation"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
-		return nil, err
-	}
-	return req, nil
-}
-
-// CompatibleWithEncodedName -
-// If the operation fails it returns an *azcore.ResponseError type.
-//   - options - NamingClientCompatibleWithEncodedNameOptions contains the optional parameters for the NamingClient.CompatibleWithEncodedName
-//     method.
-func (client *NamingClient) CompatibleWithEncodedName(ctx context.Context, body ClientNameAndJSONEncodedNameModel, options *NamingClientCompatibleWithEncodedNameOptions) (NamingClientCompatibleWithEncodedNameResponse, error) {
-	var err error
-	const operationName = "NamingClient.CompatibleWithEncodedName"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
-	req, err := client.compatibleWithEncodedNameCreateRequest(ctx, body, options)
-	if err != nil {
-		return NamingClientCompatibleWithEncodedNameResponse{}, err
-	}
-	httpResp, err := client.internal.Pipeline().Do(req)
-	if err != nil {
-		return NamingClientCompatibleWithEncodedNameResponse{}, err
-	}
-	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
-		err = runtime.NewResponseError(httpResp)
-		return NamingClientCompatibleWithEncodedNameResponse{}, err
-	}
-	return NamingClientCompatibleWithEncodedNameResponse{}, nil
-}
-
-// compatibleWithEncodedNameCreateRequest creates the CompatibleWithEncodedName request.
-func (client *NamingClient) compatibleWithEncodedNameCreateRequest(ctx context.Context, body ClientNameAndJSONEncodedNameModel, _ *NamingClientCompatibleWithEncodedNameOptions) (*policy.Request, error) {
-	urlPath := "/client/naming/property/compatible-with-encoded-name"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
-		return nil, err
-	}
-	return req, nil
-}
-
-// Language -
-// If the operation fails it returns an *azcore.ResponseError type.
-//   - options - NamingClientLanguageOptions contains the optional parameters for the NamingClient.Language method.
-func (client *NamingClient) Language(ctx context.Context, body LanguageClientNameModel, options *NamingClientLanguageOptions) (NamingClientLanguageResponse, error) {
-	var err error
-	const operationName = "NamingClient.Language"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
-	req, err := client.languageCreateRequest(ctx, body, options)
-	if err != nil {
-		return NamingClientLanguageResponse{}, err
-	}
-	httpResp, err := client.internal.Pipeline().Do(req)
-	if err != nil {
-		return NamingClientLanguageResponse{}, err
-	}
-	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
-		err = runtime.NewResponseError(httpResp)
-		return NamingClientLanguageResponse{}, err
-	}
-	return NamingClientLanguageResponse{}, nil
-}
-
-// languageCreateRequest creates the Language request.
-func (client *NamingClient) languageCreateRequest(ctx context.Context, body LanguageClientNameModel, _ *NamingClientLanguageOptions) (*policy.Request, error) {
-	urlPath := "/client/naming/property/language"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -242,83 +143,4 @@ func (client *NamingClient) parameterCreateRequest(ctx context.Context, clientNa
 	reqQP.Set("defaultName", clientName)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
-}
-
-// Request -
-// If the operation fails it returns an *azcore.ResponseError type.
-//   - options - NamingClientRequestOptions contains the optional parameters for the NamingClient.Request method.
-func (client *NamingClient) Request(ctx context.Context, clientName string, options *NamingClientRequestOptions) (NamingClientRequestResponse, error) {
-	var err error
-	const operationName = "NamingClient.Request"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
-	req, err := client.requestCreateRequest(ctx, clientName, options)
-	if err != nil {
-		return NamingClientRequestResponse{}, err
-	}
-	httpResp, err := client.internal.Pipeline().Do(req)
-	if err != nil {
-		return NamingClientRequestResponse{}, err
-	}
-	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
-		err = runtime.NewResponseError(httpResp)
-		return NamingClientRequestResponse{}, err
-	}
-	return NamingClientRequestResponse{}, nil
-}
-
-// requestCreateRequest creates the Request request.
-func (client *NamingClient) requestCreateRequest(ctx context.Context, clientName string, _ *NamingClientRequestOptions) (*policy.Request, error) {
-	urlPath := "/client/naming/header"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	req.Raw().Header["default-name"] = []string{clientName}
-	return req, nil
-}
-
-// Response -
-// If the operation fails it returns an *azcore.ResponseError type.
-//   - options - NamingClientResponseOptions contains the optional parameters for the NamingClient.Response method.
-func (client *NamingClient) Response(ctx context.Context, options *NamingClientResponseOptions) (NamingClientResponseResponse, error) {
-	var err error
-	const operationName = "NamingClient.Response"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
-	req, err := client.responseCreateRequest(ctx, options)
-	if err != nil {
-		return NamingClientResponseResponse{}, err
-	}
-	httpResp, err := client.internal.Pipeline().Do(req)
-	if err != nil {
-		return NamingClientResponseResponse{}, err
-	}
-	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
-		err = runtime.NewResponseError(httpResp)
-		return NamingClientResponseResponse{}, err
-	}
-	resp, err := client.responseHandleResponse(httpResp)
-	return resp, err
-}
-
-// responseCreateRequest creates the Response request.
-func (client *NamingClient) responseCreateRequest(ctx context.Context, _ *NamingClientResponseOptions) (*policy.Request, error) {
-	urlPath := "/client/naming/header"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	return req, nil
-}
-
-// responseHandleResponse handles the Response response.
-func (client *NamingClient) responseHandleResponse(resp *http.Response) (NamingClientResponseResponse, error) {
-	result := NamingClientResponseResponse{}
-	if val := resp.Header.Get("default-name"); val != "" {
-		result.ClientName = &val
-	}
-	return result, nil
 }

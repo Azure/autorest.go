@@ -18,7 +18,7 @@ import (
 
 func TestFakeNamingServer(t *testing.T) {
 	calledModelServerClient := false
-	calledNamingServerClient := false
+	calledPropertyServerClient := false
 	server := fake.NamingServer{
 		NamingModelServer: fake.NamingModelServer{
 			Client: func(ctx context.Context, body naminggroup.ClientModel, options *naminggroup.NamingModelClientClientOptions) (resp azfake.Responder[naminggroup.NamingModelClientClientResponse], errResp azfake.ErrorResponder) {
@@ -29,12 +29,14 @@ func TestFakeNamingServer(t *testing.T) {
 				return
 			},
 		},
-		Client: func(ctx context.Context, body naminggroup.ClientNameModel, options *naminggroup.NamingClientClientOptions) (resp azfake.Responder[naminggroup.NamingClientClientResponse], errResp azfake.ErrorResponder) {
-			require.NotNil(t, body.ClientName)
-			require.True(t, *body.ClientName)
-			calledNamingServerClient = true
-			resp.SetResponse(http.StatusNoContent, naminggroup.NamingClientClientResponse{}, nil)
-			return
+		NamingPropertyServer: fake.NamingPropertyServer{
+			Client: func(ctx context.Context, body naminggroup.ClientNameModel, options *naminggroup.NamingPropertyClientClientOptions) (resp azfake.Responder[naminggroup.NamingPropertyClientClientResponse], errResp azfake.ErrorResponder) {
+				require.NotNil(t, body.ClientName)
+				require.True(t, *body.ClientName)
+				calledPropertyServerClient = true
+				resp.SetResponse(http.StatusNoContent, naminggroup.NamingPropertyClientClientResponse{}, nil)
+				return
+			},
 		},
 	}
 	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", &naminggroup.NamingClientOptions{
@@ -49,11 +51,11 @@ func TestFakeNamingServer(t *testing.T) {
 	}, nil)
 	require.NoError(t, err)
 
-	_, err = client.Client(context.Background(), naminggroup.ClientNameModel{
+	_, err = client.NewNamingPropertyClient().Client(context.Background(), naminggroup.ClientNameModel{
 		ClientName: to.Ptr(true),
 	}, nil)
 	require.NoError(t, err)
 
 	require.True(t, calledModelServerClient)
-	require.True(t, calledNamingServerClient)
+	require.True(t, calledPropertyServerClient)
 }

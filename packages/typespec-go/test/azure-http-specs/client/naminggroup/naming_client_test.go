@@ -12,11 +12,11 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestNamingClient_Client(t *testing.T) {
+func TestPropertyClient_Client(t *testing.T) {
 	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	resp, err := client.Client(context.Background(), naminggroup.ClientNameModel{
-		to.Ptr(true),
+	resp, err := client.NewNamingPropertyClient().Client(context.Background(), naminggroup.ClientNameModel{
+		ClientName: to.Ptr(true),
 	}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
@@ -30,20 +30,20 @@ func TestNamingClient_ClientName(t *testing.T) {
 	require.Zero(t, resp)
 }
 
-func TestNamingClient_CompatibleWithEncodedName(t *testing.T) {
+func TestPropertyClient_CompatibleWithEncodedName(t *testing.T) {
 	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	resp, err := client.CompatibleWithEncodedName(context.Background(), naminggroup.ClientNameAndJSONEncodedNameModel{
+	resp, err := client.NewNamingPropertyClient().CompatibleWithEncodedName(context.Background(), naminggroup.ClientNameAndJSONEncodedNameModel{
 		ClientName: to.Ptr(true),
 	}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
-func TestNamingClient_Language(t *testing.T) {
+func TestPropertyClient_Language(t *testing.T) {
 	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	resp, err := client.Language(context.Background(), naminggroup.LanguageClientNameModel{
+	resp, err := client.NewNamingPropertyClient().Language(context.Background(), naminggroup.LanguageClientNameModel{
 		GoName: to.Ptr(true),
 	}, nil)
 	require.NoError(t, err)
@@ -58,18 +58,18 @@ func TestNamingClient_Parameter(t *testing.T) {
 	require.Zero(t, resp)
 }
 
-func TestNamingClient_Request(t *testing.T) {
+func TestHeaderClient_Request(t *testing.T) {
 	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	resp, err := client.Request(context.Background(), "true", nil)
+	resp, err := client.NewNamingHeaderClient().Request(context.Background(), "true", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
-func TestNamingClient_Response(t *testing.T) {
+func TestHeaderClient_Response(t *testing.T) {
 	client, err := naminggroup.NewNamingClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	resp, err := client.Response(context.Background(), nil)
+	resp, err := client.NewNamingHeaderClient().Response(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp.ClientName)
 	require.EqualValues(t, "true", *resp.ClientName)
