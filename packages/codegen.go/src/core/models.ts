@@ -250,7 +250,11 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       let needsDateTimeMarshalling = false;
       let byteArrayFormat = false;
       for (const field of model.fields) {
-        serdeImports.addForType(field.type);
+        if (field.type.kind !== 'etag') {
+          // azcore.ETag un/marshals on its own so no need to
+          // import azcore as we don't explicitly reference the type
+          serdeImports.addForType(field.type);
+        }
         if (field.type.kind === 'time') {
           needsDateTimeMarshalling = true;
         } else if (field.type.kind === 'encodedBytes') {

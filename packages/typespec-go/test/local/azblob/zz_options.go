@@ -83,13 +83,13 @@ type AppendBlobClientAppendBlockFromURLOptions struct {
 	SourceEncryptionKeySHA256 *string
 
 	// Specify an ETag value to operate only on blobs with a matching value.
-	SourceIfMatch *string
+	SourceIfMatch *azcore.ETag
 
 	// Specify this header value to operate only on a blob if it has been modified since the specified date/time.
 	SourceIfModifiedSince *time.Time
 
 	// Specify this header value to operate only on a blob if it has been modified since the specified date/time.
-	SourceIfNoneMatch *string
+	SourceIfNoneMatch *azcore.ETag
 
 	// Specify this header value to operate only on a blob if it has not been modified since the specified date/time.
 	SourceIfUnmodifiedSince *time.Time
@@ -494,13 +494,13 @@ type BlockBlobClientStageBlockFromURLOptions struct {
 	SourceEncryptionKeySHA256 *string
 
 	// Specify an ETag value to operate only on blobs with a matching value.
-	SourceIfMatch *string
+	SourceIfMatch *azcore.ETag
 
 	// Specify this header value to operate only on a blob if it has been modified since the specified date/time.
 	SourceIfModifiedSince *time.Time
 
 	// Specify this header value to operate only on a blob if it has been modified since the specified date/time.
-	SourceIfNoneMatch *string
+	SourceIfNoneMatch *azcore.ETag
 
 	// Specify this header value to operate only on a blob if it has not been modified since the specified date/time.
 	SourceIfUnmodifiedSince *time.Time
@@ -651,13 +651,13 @@ type BlockBlobClientUploadBlobFromURLOptions struct {
 	SourceEncryptionKeySHA256 *string
 
 	// Specify an ETag value to operate only on blobs with a matching value.
-	SourceIfMatch *string
+	SourceIfMatch *azcore.ETag
 
 	// Specify this header value to operate only on a blob if it has been modified since the specified date/time.
 	SourceIfModifiedSince *time.Time
 
 	// Specify this header value to operate only on a blob if it has been modified since the specified date/time.
-	SourceIfNoneMatch *string
+	SourceIfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	SourceIfTags *string
@@ -929,13 +929,13 @@ type ClientCopyFromURLOptions struct {
 	SourceContentMD5 []byte
 
 	// Specify an ETag value to operate only on blobs with a matching value.
-	SourceIfMatch *string
+	SourceIfMatch *azcore.ETag
 
 	// Specify this header value to operate only on a blob if it has been modified since the specified date/time.
 	SourceIfModifiedSince *time.Time
 
 	// Specify this header value to operate only on a blob if it has been modified since the specified date/time.
-	SourceIfNoneMatch *string
+	SourceIfNoneMatch *azcore.ETag
 
 	// Specify this header value to operate only on a blob if it has not been modified since the specified date/time.
 	SourceIfUnmodifiedSince *time.Time
@@ -1196,13 +1196,13 @@ type ClientGetTagsOptions struct {
 	ClientRequestID *string
 
 	// Specify an ETag value to operate only on blobs with a matching value.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// Specify this header value to operate only on a blob if it has been modified since the specified date/time.
 	IfModifiedSince *time.Time
 
 	// Specify an ETag value to operate only on blobs without a matching value.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -1438,13 +1438,13 @@ type ClientSetTagsOptions struct {
 	ClientRequestID *string
 
 	// Specify an ETag value to operate only on blobs with a matching value.
-	IfMatch *string
+	IfMatch *azcore.ETag
 
 	// Specify this header value to operate only on a blob if it has been modified since the specified date/time.
 	IfModifiedSince *time.Time
 
 	// Specify an ETag value to operate only on blobs without a matching value.
-	IfNoneMatch *string
+	IfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	IfTags *string
@@ -1546,13 +1546,13 @@ type ClientStartCopyFromURLOptions struct {
 	SealBlob *bool
 
 	// Specify an ETag value to operate only on blobs with a matching value.
-	SourceIfMatch *string
+	SourceIfMatch *azcore.ETag
 
 	// Specify this header value to operate only on a blob if it has been modified since the specified date/time.
 	SourceIfModifiedSince *time.Time
 
 	// Specify this header value to operate only on a blob if it has been modified since the specified date/time.
-	SourceIfNoneMatch *string
+	SourceIfNoneMatch *azcore.ETag
 
 	// Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
 	SourceIfTags *string
@@ -2332,13 +2332,13 @@ type PageBlobClientUploadPagesFromURLOptions struct {
 	SourceEncryptionKeySHA256 *string
 
 	// Specify an ETag value to operate only on blobs with a matching value.
-	SourceIfMatch *string
+	SourceIfMatch *azcore.ETag
 
 	// Specify this header value to operate only on a blob if it has been modified since the specified date/time.
 	SourceIfModifiedSince *time.Time
 
 	// Specify this header value to operate only on a blob if it has been modified since the specified date/time.
-	SourceIfNoneMatch *string
+	SourceIfNoneMatch *azcore.ETag
 
 	// Specify this header value to operate only on a blob if it has not been modified since the specified date/time.
 	SourceIfUnmodifiedSince *time.Time

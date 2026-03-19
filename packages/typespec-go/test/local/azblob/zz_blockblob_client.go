@@ -762,13 +762,13 @@ func (client *BlockBlobClient) stageBlockFromURLCreateRequest(ctx context.Contex
 		req.Raw().Header["x-ms-source-encryption-key-sha256"] = []string{*options.SourceEncryptionKeySHA256}
 	}
 	if options != nil && options.SourceIfMatch != nil {
-		req.Raw().Header["x-ms-source-if-match"] = []string{*options.SourceIfMatch}
+		req.Raw().Header["x-ms-source-if-match"] = []string{string(*options.SourceIfMatch)}
 	}
 	if options != nil && options.SourceIfModifiedSince != nil {
 		req.Raw().Header["x-ms-source-if-modified-since"] = []string{options.SourceIfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.SourceIfNoneMatch != nil {
-		req.Raw().Header["x-ms-source-if-none-match"] = []string{*options.SourceIfNoneMatch}
+		req.Raw().Header["x-ms-source-if-none-match"] = []string{string(*options.SourceIfNoneMatch)}
 	}
 	if options != nil && options.SourceIfUnmodifiedSince != nil {
 		req.Raw().Header["x-ms-source-if-unmodified-since"] = []string{options.SourceIfUnmodifiedSince.Format(time.RFC1123)}
@@ -1154,13 +1154,13 @@ func (client *BlockBlobClient) uploadBlobFromURLCreateRequest(ctx context.Contex
 		req.Raw().Header["x-ms-source-encryption-key-sha256"] = []string{*options.SourceEncryptionKeySHA256}
 	}
 	if options != nil && options.SourceIfMatch != nil {
-		req.Raw().Header["x-ms-source-if-match"] = []string{*options.SourceIfMatch}
+		req.Raw().Header["x-ms-source-if-match"] = []string{string(*options.SourceIfMatch)}
 	}
 	if options != nil && options.SourceIfModifiedSince != nil {
 		req.Raw().Header["x-ms-source-if-modified-since"] = []string{options.SourceIfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.SourceIfNoneMatch != nil {
-		req.Raw().Header["x-ms-source-if-none-match"] = []string{*options.SourceIfNoneMatch}
+		req.Raw().Header["x-ms-source-if-none-match"] = []string{string(*options.SourceIfNoneMatch)}
 	}
 	if options != nil && options.SourceIfTags != nil {
 		req.Raw().Header["x-ms-source-if-tags"] = []string{*options.SourceIfTags}

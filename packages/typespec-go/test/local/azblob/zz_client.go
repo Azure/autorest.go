@@ -492,13 +492,13 @@ func (client *Client) copyFromURLCreateRequest(ctx context.Context, copySource s
 		req.Raw().Header["x-ms-source-content-md5"] = []string{base64.StdEncoding.EncodeToString(options.SourceContentMD5)}
 	}
 	if options != nil && options.SourceIfMatch != nil {
-		req.Raw().Header["x-ms-source-if-match"] = []string{*options.SourceIfMatch}
+		req.Raw().Header["x-ms-source-if-match"] = []string{string(*options.SourceIfMatch)}
 	}
 	if options != nil && options.SourceIfModifiedSince != nil {
 		req.Raw().Header["x-ms-source-if-modified-since"] = []string{options.SourceIfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.SourceIfNoneMatch != nil {
-		req.Raw().Header["x-ms-source-if-none-match"] = []string{*options.SourceIfNoneMatch}
+		req.Raw().Header["x-ms-source-if-none-match"] = []string{string(*options.SourceIfNoneMatch)}
 	}
 	if options != nil && options.SourceIfUnmodifiedSince != nil {
 		req.Raw().Header["x-ms-source-if-unmodified-since"] = []string{options.SourceIfUnmodifiedSince.Format(time.RFC1123)}
@@ -1620,13 +1620,13 @@ func (client *Client) getTagsCreateRequest(ctx context.Context, options *ClientG
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["x-ms-blob-if-match"] = []string{*options.IfMatch}
+		req.Raw().Header["x-ms-blob-if-match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["x-ms-blob-if-modified-since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["x-ms-blob-if-none-match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["x-ms-blob-if-none-match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["x-ms-blob-if-unmodified-since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -2395,13 +2395,13 @@ func (client *Client) setTagsCreateRequest(ctx context.Context, tags Tags, optio
 		req.Raw().Header["Content-MD5"] = []string{base64.StdEncoding.EncodeToString(options.TransactionalContentMD5)}
 	}
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header["x-ms-blob-if-match"] = []string{*options.IfMatch}
+		req.Raw().Header["x-ms-blob-if-match"] = []string{string(*options.IfMatch)}
 	}
 	if options != nil && options.IfModifiedSince != nil {
 		req.Raw().Header["x-ms-blob-if-modified-since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header["x-ms-blob-if-none-match"] = []string{*options.IfNoneMatch}
+		req.Raw().Header["x-ms-blob-if-none-match"] = []string{string(*options.IfNoneMatch)}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
 		req.Raw().Header["x-ms-blob-if-unmodified-since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
@@ -2616,13 +2616,13 @@ func (client *Client) startCopyFromURLCreateRequest(ctx context.Context, copySou
 		req.Raw().Header["x-ms-seal-blob"] = []string{strconv.FormatBool(*options.SealBlob)}
 	}
 	if options != nil && options.SourceIfMatch != nil {
-		req.Raw().Header["x-ms-source-if-match"] = []string{*options.SourceIfMatch}
+		req.Raw().Header["x-ms-source-if-match"] = []string{string(*options.SourceIfMatch)}
 	}
 	if options != nil && options.SourceIfModifiedSince != nil {
 		req.Raw().Header["x-ms-source-if-modified-since"] = []string{options.SourceIfModifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.SourceIfNoneMatch != nil {
-		req.Raw().Header["x-ms-source-if-none-match"] = []string{*options.SourceIfNoneMatch}
+		req.Raw().Header["x-ms-source-if-none-match"] = []string{string(*options.SourceIfNoneMatch)}
 	}
 	if options != nil && options.SourceIfTags != nil {
 		req.Raw().Header["x-ms-source-if-tags"] = []string{*options.SourceIfTags}
