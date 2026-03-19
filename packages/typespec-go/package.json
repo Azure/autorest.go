@@ -55,7 +55,7 @@
     "@azure-tools/typespec-azure-core": "0.66.0",
     "@azure-tools/typespec-azure-resource-manager": "0.66.0",
     "@azure-tools/typespec-azure-rulesets": "0.66.0",
-    "@azure-tools/typespec-client-generator-core": "0.66.2",
+    "@azure-tools/typespec-client-generator-core": "0.66.3",
     "@types/node": "catalog:",
     "@types/semver": "catalog:",
     "@typespec/compiler": "1.10.0",
@@ -78,7 +78,7 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@azure-tools/typespec-client-generator-core": "^0.66.2",
+    "@azure-tools/typespec-client-generator-core": "^0.66.3",
     "@typespec/compiler": "^1.10.0",
     "@typespec/http": "^1.10.0"
   },
