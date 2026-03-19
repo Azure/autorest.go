@@ -9,34 +9,18 @@ type NamingClientClientNameOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NamingClientClientOptions contains the optional parameters for the NamingClient.Client method.
-type NamingClientClientOptions struct {
-	// placeholder for future optional parameters
-}
-
-// NamingClientCompatibleWithEncodedNameOptions contains the optional parameters for the NamingClient.CompatibleWithEncodedName
-// method.
-type NamingClientCompatibleWithEncodedNameOptions struct {
-	// placeholder for future optional parameters
-}
-
-// NamingClientLanguageOptions contains the optional parameters for the NamingClient.Language method.
-type NamingClientLanguageOptions struct {
-	// placeholder for future optional parameters
-}
-
 // NamingClientParameterOptions contains the optional parameters for the NamingClient.Parameter method.
 type NamingClientParameterOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NamingClientRequestOptions contains the optional parameters for the NamingClient.Request method.
-type NamingClientRequestOptions struct {
+// NamingHeaderClientRequestOptions contains the optional parameters for the NamingHeaderClient.Request method.
+type NamingHeaderClientRequestOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NamingClientResponseOptions contains the optional parameters for the NamingClient.Response method.
-type NamingClientResponseOptions struct {
+// NamingHeaderClientResponseOptions contains the optional parameters for the NamingHeaderClient.Response method.
+type NamingHeaderClientResponseOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -47,6 +31,22 @@ type NamingModelClientClientOptions struct {
 
 // NamingModelClientLanguageOptions contains the optional parameters for the NamingModelClient.Language method.
 type NamingModelClientLanguageOptions struct {
+	// placeholder for future optional parameters
+}
+
+// NamingPropertyClientClientOptions contains the optional parameters for the NamingPropertyClient.Client method.
+type NamingPropertyClientClientOptions struct {
+	// placeholder for future optional parameters
+}
+
+// NamingPropertyClientCompatibleWithEncodedNameOptions contains the optional parameters for the NamingPropertyClient.CompatibleWithEncodedName
+// method.
+type NamingPropertyClientCompatibleWithEncodedNameOptions struct {
+	// placeholder for future optional parameters
+}
+
+// NamingPropertyClientLanguageOptions contains the optional parameters for the NamingPropertyClient.Language method.
+type NamingPropertyClientLanguageOptions struct {
 	// placeholder for future optional parameters
 }
 
