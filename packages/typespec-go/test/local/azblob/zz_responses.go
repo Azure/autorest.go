@@ -5,6 +5,7 @@
 package azblob
 
 import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"io"
 	"time"
 )
@@ -32,7 +33,7 @@ type AppendBlobClientAppendBlockFromURLResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted
 	// with a customer-provided key.
@@ -80,7 +81,7 @@ type AppendBlobClientAppendBlockResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted
 	// with a customer-provided key.
@@ -121,7 +122,7 @@ type AppendBlobClientCreateResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted
 	// with a customer-provided key.
@@ -159,7 +160,7 @@ type AppendBlobClientSealResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// If this blob has been sealed
 	IsSealed *bool
@@ -190,7 +191,7 @@ type BlockBlobClientCommitBlockListResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted
 	// with a customer-provided key.
@@ -237,7 +238,7 @@ type BlockBlobClientGetBlockListResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -344,7 +345,7 @@ type BlockBlobClientQueryResponse struct {
 	Duration *LeaseDuration
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted
 	// with a customer-provided key.
@@ -464,7 +465,7 @@ type BlockBlobClientUploadBlobFromURLResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted
 	// with a customer-provided key.
@@ -506,7 +507,7 @@ type BlockBlobClientUploadResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted
 	// with a customer-provided key.
@@ -562,7 +563,7 @@ type ClientAcquireLeaseResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -586,7 +587,7 @@ type ClientBreakLeaseResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -610,7 +611,7 @@ type ClientChangeLeaseResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -648,7 +649,7 @@ type ClientCopyFromURLResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// If the blob has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned
 	// with the value of the whole blob's MD5 value. This value may or may not be equal to the value returned in Content-MD5 header,
@@ -678,7 +679,7 @@ type ClientCreateSnapshotResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm,
 	// and false otherwise.
@@ -830,7 +831,7 @@ type ClientDownloadResponse struct {
 	Duration *LeaseDuration
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted
 	// with a customer-provided key.
@@ -1032,7 +1033,7 @@ type ClientGetPropertiesResponse struct {
 	Duration *LeaseDuration
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted
 	// with a customer-provided key.
@@ -1142,7 +1143,7 @@ type ClientReleaseLeaseResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1163,7 +1164,7 @@ type ClientRenewLeaseResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1187,7 +1188,7 @@ type ClientSetExpiryResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1211,7 +1212,7 @@ type ClientSetHTTPHeadersResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1271,7 +1272,7 @@ type ClientSetMetadataResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted
 	// with a customer-provided key.
@@ -1346,7 +1347,7 @@ type ClientStartCopyFromURLResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1386,7 +1387,7 @@ type ContainerClientAcquireLeaseResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1410,7 +1411,7 @@ type ContainerClientBreakLeaseResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1434,7 +1435,7 @@ type ContainerClientChangeLeaseResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1458,7 +1459,7 @@ type ContainerClientCreateResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1524,7 +1525,7 @@ type ContainerClientGetAccessPolicyResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1579,7 +1580,7 @@ type ContainerClientGetPropertiesResponse struct {
 	Duration *LeaseDuration
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// Indicates whether the container has an immutability policy set on it.
 	HasImmutabilityPolicy *bool
@@ -1664,7 +1665,7 @@ type ContainerClientReleaseLeaseResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1700,7 +1701,7 @@ type ContainerClientRenewLeaseResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1739,7 +1740,7 @@ type ContainerClientSetAccessPolicyResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1760,7 +1761,7 @@ type ContainerClientSetMetadataResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1807,7 +1808,7 @@ type PageBlobClientClearPagesResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1835,7 +1836,7 @@ type PageBlobClientCopyIncrementalResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1860,7 +1861,7 @@ type PageBlobClientCreateResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted
 	// with a customer-provided key.
@@ -1907,7 +1908,7 @@ type PageBlobClientGetPageRangesDiffResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1937,7 +1938,7 @@ type PageBlobClientGetPageRangesResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1961,7 +1962,7 @@ type PageBlobClientResizeResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -1985,7 +1986,7 @@ type PageBlobClientUpdateSequenceNumberResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The date/time that the container was last modified.
 	LastModified *time.Time
@@ -2016,7 +2017,7 @@ type PageBlobClientUploadPagesFromURLResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted
 	// with a customer-provided key.
@@ -2060,7 +2061,7 @@ type PageBlobClientUploadPagesResponse struct {
 	Date *time.Time
 
 	// The ETag contains a value that you can use to perform operations conditionally.
-	ETag *string
+	ETag *azcore.ETag
 
 	// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted
 	// with a customer-provided key.

@@ -6,6 +6,7 @@
 
 * Fixed missing propagation of parent client parameters to sub-clients created via client accessor methods.
 * Fixed incorrect inclusion of literal parameters in generated example code.
+* Fixed an issue that prevented `Azure.Core.eTag` types from being used in request/response headers.
 
 ### Other Changes
 

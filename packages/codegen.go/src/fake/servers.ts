@@ -1179,7 +1179,8 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
     } else if (!go.isRequiredParameter(param.style)) {
       // we check this last as it's a superset of the previous conditions
       requiredHelpers.getOptional = true;
-      if (param.type.kind === 'constant') {
+      if (param.type.kind === 'constant' || param.type.kind === 'etag') {
+        imports.addForType(param.type);
         paramValue = `${go.getTypeDeclaration(param.type, pkg)}(${paramValue})`;
       }
       content += `\t${createLocalVariableName(param, 'Param')} := getOptional(${paramValue})\n`;

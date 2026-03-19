@@ -351,6 +351,8 @@ export function formatValue(paramName: string, type: go.WireType, imports: Impor
       // a base-64 encoded value in string format
       imports.add('encoding/base64');
       return `base64.${formatBytesEncoding(type.encoding)}Encoding.EncodeToString(${paramName})`;
+    case 'etag':
+      return `string(${star}${paramName})`;
     case 'literal':
       // cannot use formatLiteralValue() since all values are treated as strings
       return `"${type.literal}"`;

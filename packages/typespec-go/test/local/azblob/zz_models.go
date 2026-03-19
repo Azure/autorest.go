@@ -5,6 +5,7 @@
 package azblob
 
 import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"time"
 )
@@ -123,7 +124,7 @@ type ContainerItem struct {
 // ContainerProperties - The properties of a container.
 type ContainerProperties struct {
 	// REQUIRED; The ETag of the container.
-	ETag *string `xml:"Etag"`
+	ETag *azcore.ETag `xml:"Etag"`
 
 	// REQUIRED; The date-time the container was last modified in RFC1123 format.
 	LastModified *time.Time `xml:"Last-Modified"`
@@ -429,7 +430,7 @@ type Prefix struct {
 // Properties - The properties of a blob.
 type Properties struct {
 	// REQUIRED; The blob ETag.
-	ETag *string `xml:"Etag"`
+	ETag *azcore.ETag `xml:"Etag"`
 
 	// REQUIRED; The date-time the blob was last modified in RFC1123 format.
 	LastModified *time.Time `xml:"Last-Modified"`
