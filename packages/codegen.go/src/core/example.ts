@@ -87,6 +87,9 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
         const clientParameters: go.ParameterExample[] = [];
         for (const param of method.parameters) {
           if (param.location === 'client') {
+            if (go.isLiteralParameter(param.style)) {
+              continue;
+            }
             const clientParam = example.parameters.find((p) => p.parameter.name === param.name);
             if (clientParam) {
               clientParameters.push(clientParam);
@@ -134,6 +137,9 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
         const methodParameters: go.ParameterExample[] = [];
         for (const param of method.parameters) {
           if (param.location === 'method') {
+            if (go.isLiteralParameter(param.style)) {
+              continue;
+            }
             const methodParam = example.parameters.find((p) => p.parameter.name === param.name);
             if (methodParam) {
               methodParameters.push(methodParam);

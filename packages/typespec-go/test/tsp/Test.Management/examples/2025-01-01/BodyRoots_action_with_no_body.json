@@ -5,7 +5,11 @@
     "api-version": "2025-01-01",
     "subscriptionId": "00000000-0000-0000-0000-000000000000",
     "resourceGroupName": "myResourceGroup",
-    "bodyRootName": "myBodyRoot"
+    "bodyRootName": "myBodyRoot",
+    "filter": "constantValue",
+    "action": {
+      "prop": "myProp"
+    }
   },
   "responses": {
     "204": {}

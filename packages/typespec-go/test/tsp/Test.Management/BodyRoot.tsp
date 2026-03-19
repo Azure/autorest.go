@@ -32,6 +32,11 @@ interface BodyRoots {
     {
       @bodyRoot
       action: ActionRequest;
+    },
+    Parameters = {
+      @doc("The constant filter value.")
+      @query("filter")
+      filter: "constantValue";
     }
   >;
 }

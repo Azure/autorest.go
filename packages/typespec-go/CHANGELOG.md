@@ -5,6 +5,7 @@
 ### Bugs Fixed
 
 * Fixed missing propagation of parent client parameters to sub-clients created via client accessor methods.
+* Fixed incorrect inclusion of literal parameters in generated example code.
 
 ### Other Changes
 

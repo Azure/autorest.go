@@ -7,6 +7,7 @@ package armtest_test
 import (
 	"armtest/v2"
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
 )
@@ -22,7 +23,9 @@ func ExampleBodyRootsClient_Action() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = clientFactory.NewBodyRootsClient().Action(ctx, "myResourceGroup", "myBodyRoot", armtest.ActionRequest{}, nil)
+	_, err = clientFactory.NewBodyRootsClient().Action(ctx, "myResourceGroup", "myBodyRoot", armtest.ActionRequest{
+		Prop: to.Ptr("myProp"),
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

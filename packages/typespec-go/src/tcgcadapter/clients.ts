@@ -1431,6 +1431,10 @@ export class ClientAdapter {
                 }
               }
             } else {
+              // skip literal parameters as they're set internally when composing the request
+              if (go.isLiteralParameter(goParams[0].style)) {
+                continue;
+              }
               const paramExample = new go.ParameterExample(goParams[0], this.adaptExampleType(param.value, goParams[0]?.type));
               if (goParams[0]?.group) {
                 goExample.optionalParamsGroup.push(paramExample);
