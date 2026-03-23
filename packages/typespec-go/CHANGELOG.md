@@ -1,5 +1,11 @@
 # Release History
 
+## 0.10.4 (unreleased)
+
+### Bugs Fixed
+
+* Fixed discriminated types without subtypes not being generated as polymorphism types.
+
 ## 0.10.3 (2026-03-19)
 
 ### Bugs Fixed
