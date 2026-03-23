@@ -4,6 +4,20 @@
 
 package azregressions
 
+// DiscriminatedBaseNoSubTypes - A discriminated base type with no subtypes.
+type DiscriminatedBaseNoSubTypes struct {
+	// REQUIRED; Some property.
+	Name *string
+
+	// REQUIRED; The discriminator type.
+	Type *string
+}
+
+// GetDiscriminatedBaseNoSubTypes implements the DiscriminatedBaseNoSubTypesClassification interface for type DiscriminatedBaseNoSubTypes.
+func (d *DiscriminatedBaseNoSubTypes) GetDiscriminatedBaseNoSubTypes() *DiscriminatedBaseNoSubTypes {
+	return d
+}
+
 type InnerSpreadParam struct {
 	// REQUIRED
 	Code *int32

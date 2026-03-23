@@ -22,6 +22,11 @@ type ClientForceRequiredBodyPutOptions struct {
 	// placeholder for future optional parameters
 }
 
+// ClientGetDiscriminatedNoSubTypesOptions contains the optional parameters for the Client.GetDiscriminatedNoSubTypes method.
+type ClientGetDiscriminatedNoSubTypesOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ClientOptionalBinaryBodyOptions contains the optional parameters for the Client.OptionalBinaryBody method.
 type ClientOptionalBinaryBodyOptions struct {
 	Payload io.ReadSeekCloser
