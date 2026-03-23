@@ -31,11 +31,12 @@ export function generateGoModFile(module: go.Module, options: go.Options, existi
     version = options.azcoreVersion;
   }
 
+  const minGoVersion = 'go 1.25.0';
   const azcore = 'github.com/Azure/azure-sdk-for-go/sdk/azcore v' + version;
   if (!existingGoMod) {
     // no preexisting go.mod file, generate the default one
     let text = `module ${modName}\n\n`;
-    text += 'go 1.24.0\n\n';
+    text += `${minGoVersion}\n\n`;
     text += `require ${azcore}\n`;
     return text;
   }
@@ -43,6 +44,11 @@ export function generateGoModFile(module: go.Module, options: go.Options, existi
   // check if the module identity needs to be replaced due to a major version change
   if (!existingGoMod.match(`module ${modName}$`)) {
     existingGoMod = existingGoMod.replace(/module \S+/, `module ${modName}`);
+  }
+
+  // check if the minimum Go version needs to be replaced
+  if (!existingGoMod.match(minGoVersion)) {
+    existingGoMod = existingGoMod.replace(/go \d\.\d+\.\d/, minGoVersion);
   }
 
   // check if the existing version of azcore is greater than or equal to the specified version.
