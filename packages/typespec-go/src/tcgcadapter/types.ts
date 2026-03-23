@@ -71,7 +71,7 @@ export class TypeAdapter {
         continue;
       }
 
-      if (modelType.discriminatedSubtypes) {
+      if (modelType.discriminatedSubtypes || (modelType.discriminatorProperty && !modelType.discriminatorValue)) {
         // this is a root discriminated type
         const iface = this.getInterfaceType(modelType);
         this.getPkg().interfaces.push(iface);
@@ -244,7 +244,7 @@ export class TypeAdapter {
         }
       }
       case 'model':
-        if (type.discriminatedSubtypes && substituteDiscriminator) {
+        if ((type.discriminatedSubtypes || (type.discriminatorProperty && !type.discriminatorValue)) && substituteDiscriminator) {
           return this.getInterfaceType(type);
         }
         return this.getModel(type);
@@ -466,7 +466,7 @@ export class TypeAdapter {
     if (model.name.length === 0) {
       throw new AdapterError('InternalError', 'unnamed model');
     }
-    if (!model.discriminatedSubtypes) {
+    if (!model.discriminatedSubtypes && !model.discriminatorProperty) {
       throw new AdapterError('InternalError', `type ${model.name} isn't a discriminator root`, model.__raw?.node);
     }
     let ifaceName = naming.createPolymorphicInterfaceName(naming.ensureNameCase(model.name));
@@ -517,18 +517,18 @@ export class TypeAdapter {
     }
 
     const annotations = new go.ModelAnnotations(false, <tcgc.UsageFlags>(model.usage & tcgc.UsageFlags.MultipartFormData) === tcgc.UsageFlags.MultipartFormData);
-    if (model.discriminatedSubtypes || model.discriminatorValue) {
+    if (model.discriminatedSubtypes || model.discriminatorValue || model.discriminatorProperty) {
       let iface: go.Interface | undefined;
       let discriminatorLiteral: go.Literal | undefined;
 
-      if (model.discriminatedSubtypes) {
+      if (model.discriminatedSubtypes || (model.discriminatorProperty && !model.discriminatorValue)) {
         // root type, we can get the InterfaceType directly from it
         iface = this.getInterfaceType(model);
       } else {
         // walk the parents until we find the first root type
         let parent = model.baseModel;
         while (parent) {
-          if (parent.discriminatedSubtypes) {
+          if (parent.discriminatedSubtypes || (parent.discriminatorProperty && !parent.discriminatorValue)) {
             iface = this.getInterfaceType(parent);
             break;
           }

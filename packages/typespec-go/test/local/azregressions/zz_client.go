@@ -166,6 +166,52 @@ func (client *Client) forceRequiredBodyPutCreateRequest(ctx context.Context, bod
 	return req, nil
 }
 
+// GetDiscriminatedNoSubTypes -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientGetDiscriminatedNoSubTypesOptions contains the optional parameters for the Client.GetDiscriminatedNoSubTypes
+//     method.
+func (client *Client) GetDiscriminatedNoSubTypes(ctx context.Context, options *ClientGetDiscriminatedNoSubTypesOptions) (ClientGetDiscriminatedNoSubTypesResponse, error) {
+	var err error
+	const operationName = "Client.GetDiscriminatedNoSubTypes"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.getDiscriminatedNoSubTypesCreateRequest(ctx, options)
+	if err != nil {
+		return ClientGetDiscriminatedNoSubTypesResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientGetDiscriminatedNoSubTypesResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientGetDiscriminatedNoSubTypesResponse{}, err
+	}
+	resp, err := client.getDiscriminatedNoSubTypesHandleResponse(httpResp)
+	return resp, err
+}
+
+// getDiscriminatedNoSubTypesCreateRequest creates the GetDiscriminatedNoSubTypes request.
+func (client *Client) getDiscriminatedNoSubTypesCreateRequest(ctx context.Context, _ *ClientGetDiscriminatedNoSubTypesOptions) (*policy.Request, error) {
+	urlPath := "/discriminated-no-subtypes"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// getDiscriminatedNoSubTypesHandleResponse handles the GetDiscriminatedNoSubTypes response.
+func (client *Client) getDiscriminatedNoSubTypesHandleResponse(resp *http.Response) (ClientGetDiscriminatedNoSubTypesResponse, error) {
+	result := ClientGetDiscriminatedNoSubTypesResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
+		return ClientGetDiscriminatedNoSubTypesResponse{}, err
+	}
+	return result, nil
+}
+
 // OptionalBinaryBody -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ClientOptionalBinaryBodyOptions contains the optional parameters for the Client.OptionalBinaryBody method.

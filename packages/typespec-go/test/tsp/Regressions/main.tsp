@@ -59,3 +59,16 @@ op binaryResponseWithXmlContentType():     {
   @encode("bytes")
   body: bytes;
 };
+
+@doc("A discriminated base type with no subtypes.")
+@discriminator("type")
+model DiscriminatedBaseNoSubTypes {
+  @doc("The discriminator type.")
+  type: string;
+  @doc("Some property.")
+  name: string;
+}
+
+@get
+@route("/discriminated-no-subtypes")
+op getDiscriminatedNoSubTypes(): DiscriminatedBaseNoSubTypes;

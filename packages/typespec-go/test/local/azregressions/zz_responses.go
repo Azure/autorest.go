@@ -23,6 +23,12 @@ type ClientForceRequiredBodyPutResponse struct {
 	// placeholder for future response values
 }
 
+// ClientGetDiscriminatedNoSubTypesResponse contains the response from method Client.GetDiscriminatedNoSubTypes.
+type ClientGetDiscriminatedNoSubTypesResponse struct {
+	// A discriminated base type with no subtypes.
+	DiscriminatedBaseNoSubTypesClassification
+}
+
 // ClientOptionalBinaryBodyResponse contains the response from method Client.OptionalBinaryBody.
 type ClientOptionalBinaryBodyResponse struct {
 	// placeholder for future response values
