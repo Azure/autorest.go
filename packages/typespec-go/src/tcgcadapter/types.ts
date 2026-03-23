@@ -848,13 +848,7 @@ export function isTypePassedByValue(type: tcgc.SdkType): boolean {
   if (type.kind === 'nullable') {
     type = type.type;
   }
-  return (
-    type.kind === 'unknown' ||
-    type.kind === 'array' ||
-    type.kind === 'bytes' ||
-    type.kind === 'dict' ||
-    (type.kind === 'model' && isPolymorphicRoot(type))
-  );
+  return type.kind === 'unknown' || type.kind === 'array' || type.kind === 'bytes' || type.kind === 'dict' || (type.kind === 'model' && isPolymorphicRoot(type));
 }
 
 interface ModelTypeSdkModelType {
