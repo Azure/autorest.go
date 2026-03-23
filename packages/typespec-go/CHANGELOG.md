@@ -4,7 +4,7 @@
 
 ### Bugs Fixed
 
-* Fixed discriminated types without subtypes not being generated as polymorphism types.
+* Fixed discriminated types without subtypes not being generated as polymorphic types.
 
 ## 0.10.3 (2026-03-19)
 
