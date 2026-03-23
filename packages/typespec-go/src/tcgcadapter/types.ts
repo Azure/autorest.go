@@ -71,7 +71,7 @@ export class TypeAdapter {
         continue;
       }
 
-      if (modelType.discriminatorProperty && !modelType.discriminatorValue) {
+      if (isPolymorphicRoot(modelType)) {
         // this is a root discriminated type
         const iface = this.getInterfaceType(modelType);
         this.getPkg().interfaces.push(iface);
@@ -241,7 +241,7 @@ export class TypeAdapter {
         }
       }
       case 'model':
-        if (type.discriminatorProperty && !type.discriminatorValue && substituteDiscriminator) {
+        if (isPolymorphicRoot(type) && substituteDiscriminator) {
           return this.getInterfaceType(type);
         }
         return this.getModel(type);
@@ -463,7 +463,7 @@ export class TypeAdapter {
     if (model.name.length === 0) {
       throw new AdapterError('InternalError', 'unnamed model');
     }
-    if (!model.discriminatorProperty) {
+    if (!isPolymorphicRoot(model)) {
       throw new AdapterError('InternalError', `type ${model.name} isn't a discriminator root`, model.__raw?.node);
     }
     let ifaceName = naming.createPolymorphicInterfaceName(naming.ensureNameCase(model.name));
@@ -487,7 +487,7 @@ export class TypeAdapter {
       throw new AdapterError('InternalError', `failed to find discriminator field for type ${model.name}`);
     }
     iface = new go.Interface(this.getPkg(), ifaceName, discriminatorField);
-    if (model.baseModel && model.baseModel.discriminatorProperty && !model.baseModel.discriminatorValue) {
+    if (model.baseModel && isPolymorphicRoot(model.baseModel)) {
       iface.parent = this.getInterfaceType(model.baseModel);
     }
     this.types.set(ifaceName, iface);
@@ -514,18 +514,18 @@ export class TypeAdapter {
     }
 
     const annotations = new go.ModelAnnotations(false, <tcgc.UsageFlags>(model.usage & tcgc.UsageFlags.MultipartFormData) === tcgc.UsageFlags.MultipartFormData);
-    if (model.discriminatorProperty) {
+    if (isPolymorphicRoot(model) || model.discriminatorValue) {
       let iface: go.Interface | undefined;
       let discriminatorLiteral: go.Literal | undefined;
 
-      if (!model.discriminatorValue) {
+      if (isPolymorphicRoot(model)) {
         // root type, we can get the InterfaceType directly from it
         iface = this.getInterfaceType(model);
       } else {
         // walk the parents until we find the first root type
         let parent = model.baseModel;
         while (parent) {
-          if (parent.discriminatorProperty && !parent.discriminatorValue) {
+          if (isPolymorphicRoot(parent)) {
             iface = this.getInterfaceType(parent);
             break;
           }
@@ -853,7 +853,7 @@ export function isTypePassedByValue(type: tcgc.SdkType): boolean {
     type.kind === 'array' ||
     type.kind === 'bytes' ||
     type.kind === 'dict' ||
-    (type.kind === 'model' && !!type.discriminatorProperty && !type.discriminatorValue)
+    (type.kind === 'model' && isPolymorphicRoot(type))
   );
 }
 
@@ -959,4 +959,22 @@ export function adaptXMLInfo(pkg: go.PackageContent, decorators: Array<tcgc.Deco
   }
 
   return xmlInfo;
+}
+
+/**
+ * returns true if model is a polymorphic root type.
+ *
+ * @param model the model to inspect
+ * @returns true if the model is a polymorphic root
+ */
+function isPolymorphicRoot(model: tcgc.SdkModelType): boolean {
+  if (model.discriminatedSubtypes) {
+    // when there are sub-types we know for sure it's a polymorphic root
+    return true;
+  } else if (model.discriminatorProperty && !model.discriminatorValue) {
+    // we can land here if it's a root but has no child types
+    return true;
+  } else {
+    return false;
+  }
 }
