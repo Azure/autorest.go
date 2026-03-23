@@ -96,10 +96,7 @@ export class TypeAdapter {
     // now that the interface/model types have been generated, we can populate the rootType and possibleTypes
     for (const ifaceType of ifaceTypes) {
       ifaceType.go.rootType = <go.PolymorphicModel>this.getModel(ifaceType.tcgc);
-      if (!ifaceType.tcgc.discriminatedSubtypes) {
-        continue;
-      }
-      for (const subType of Object.values(ifaceType.tcgc.discriminatedSubtypes!)) {
+      for (const subType of Object.values(ifaceType.tcgc.discriminatedSubtypes ?? {})) {
         const possibleType = <go.PolymorphicModel>this.getModel(subType);
         ifaceType.go.possibleTypes.push(possibleType);
       }
@@ -517,11 +514,11 @@ export class TypeAdapter {
     }
 
     const annotations = new go.ModelAnnotations(false, <tcgc.UsageFlags>(model.usage & tcgc.UsageFlags.MultipartFormData) === tcgc.UsageFlags.MultipartFormData);
-    if (model.discriminatorProperty || model.discriminatorValue) {
+    if (model.discriminatorProperty) {
       let iface: go.Interface | undefined;
       let discriminatorLiteral: go.Literal | undefined;
 
-      if (model.discriminatorProperty && !model.discriminatorValue) {
+      if (!model.discriminatorValue) {
         // root type, we can get the InterfaceType directly from it
         iface = this.getInterfaceType(model);
       } else {
