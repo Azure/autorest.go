@@ -987,6 +987,10 @@ export class ClientAdapter {
             bodyType = this.ta.getReadSeekCloser(methodParam.type.kind === 'array');
           }
           adaptedParam = new go.BodyParameter(paramName, contentType, `"${opParam.defaultContentType}"`, bodyType, paramStyle, byVal);
+          if (contentType === 'XML' && methodParam.type.kind === 'array') {
+            adaptedParam.xml = new go.XMLInfo();
+            adaptedParam.xml.wrapper = methodParam.type.name;
+          }
         }
         break;
       case 'cookie':
@@ -1246,7 +1250,17 @@ export class ClientAdapter {
     } else {
       const resultType = this.ta.getWireType(sdkResponseType, false, false);
       if (go.isMonomorphicResultType(resultType)) {
-        respEnv.result = new go.MonomorphicResult(this.recursiveTypeName(sdkResponseType, false), contentType, resultType, isTypePassedByValue(sdkResponseType));
+        let fieldName: string;
+        let xmlInfo: go.XMLInfo | undefined;
+        if (contentType === 'XML' && sdkResponseType.kind === 'array') {
+          fieldName = sdkResponseType.name;
+          xmlInfo = new go.XMLInfo();
+          xmlInfo.wraps = go.getTypeDeclaration((<go.Slice>resultType).elementType, method.receiver.type.pkg);
+        } else {
+          fieldName = this.recursiveTypeName(sdkResponseType, false);
+        }
+        respEnv.result = new go.MonomorphicResult(fieldName, contentType, resultType, isTypePassedByValue(sdkResponseType));
+        respEnv.result.xml = xmlInfo;
       } else {
         throw new AdapterError('InternalError', `invalid monomorphic result type ${resultType.kind}`, sdkResponseType.__raw?.node);
       }

@@ -1082,9 +1082,11 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
         // for XML payloads, create a wrapper type if the payload is an array
         imports.add('encoding/xml');
         text += '\ttype wrapper struct {\n';
-        let tagName = go.getTypeDeclaration(bodyParam.type, method.receiver.type.pkg);
-        if (bodyParam.xml?.name) {
-          tagName = bodyParam.xml.name;
+        let tagName: string;
+        if (bodyParam.xml?.wrapper) {
+          tagName = bodyParam.xml.wrapper;
+        } else {
+          tagName = go.getTypeDeclaration(bodyParam.type, method.receiver.type.pkg);
         }
         text += `\t\tXMLName xml.Name \`xml:"${tagName}"\`\n`;
         const fieldName = naming.capitalize(bodyParam.name);
