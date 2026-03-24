@@ -1393,7 +1393,7 @@ func (client *ContainerClient) setAccessPolicyCreateRequest(ctx context.Context,
 	}
 	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
 	type wrapper struct {
-		XMLName      xml.Name             `xml:"SignedIdentifiers"`
+		XMLName      xml.Name             `xml:"CustomXmlName"`
 		ContainerACL *[]*SignedIdentifier `xml:"SignedIdentifier"`
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/xml"}

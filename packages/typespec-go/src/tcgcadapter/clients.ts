@@ -16,7 +16,7 @@ import {
   uncapitalize,
 } from '../../../naming.go/src/naming.js';
 import { AdapterError } from './errors.js';
-import { isTypePassedByValue, TypeAdapter } from './types.js';
+import { adaptXMLInfo, isTypePassedByValue, TypeAdapter } from './types.js';
 
 /**
  * used to convert tcgc clients and their methods to Go code model types
@@ -988,8 +988,11 @@ export class ClientAdapter {
           }
           adaptedParam = new go.BodyParameter(paramName, contentType, `"${opParam.defaultContentType}"`, bodyType, paramStyle, byVal);
           if (contentType === 'XML' && methodParam.type.kind === 'array') {
-            adaptedParam.xml = new go.XMLInfo();
-            adaptedParam.xml.wrapper = methodParam.type.name;
+            adaptedParam.xml = adaptXMLInfo(this.ta.getPkg(), methodParam.type.decorators);
+            if (!adaptedParam.xml) {
+              adaptedParam.xml = new go.XMLInfo();
+              adaptedParam.xml.wrapper = methodParam.type.name;
+            }
           }
         }
         break;
@@ -1250,13 +1253,20 @@ export class ClientAdapter {
     } else {
       const resultType = this.ta.getWireType(sdkResponseType, false, false);
       if (go.isMonomorphicResultType(resultType)) {
-        let fieldName: string;
+        let fieldName: string | undefined;
         let xmlInfo: go.XMLInfo | undefined;
-        if (contentType === 'XML' && sdkResponseType.kind === 'array') {
-          fieldName = sdkResponseType.name;
-          xmlInfo = new go.XMLInfo();
-          xmlInfo.wraps = go.getTypeDeclaration((<go.Slice>resultType).elementType, method.receiver.type.pkg);
-        } else {
+        if (contentType === 'XML') {
+          xmlInfo = adaptXMLInfo(method.receiver.type.pkg, sdkResponseType.decorators);
+          if (!xmlInfo) {
+            xmlInfo = new go.XMLInfo();
+          }
+          if (sdkResponseType.kind === 'array') {
+            fieldName = sdkResponseType.name;
+            xmlInfo.wraps = go.getTypeDeclaration((<go.Slice>resultType).elementType, method.receiver.type.pkg);
+          }
+        }
+
+        if (!fieldName) {
           fieldName = this.recursiveTypeName(sdkResponseType, false);
         }
         respEnv.result = new go.MonomorphicResult(fieldName, contentType, resultType, isTypePassedByValue(sdkResponseType));
