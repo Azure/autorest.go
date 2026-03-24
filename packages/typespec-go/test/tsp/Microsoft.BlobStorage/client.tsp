@@ -276,6 +276,7 @@ enum ImmutabilityPolicySetting {
   /** The immutability policy is unlocked. */
   Unlocked: "unlocked",
 }
+model SignedIdentifiersGo is Array<SignedIdentifier>;
 @@alternateType(AccessPolicy.start, utcDateTime, "go");
 @@alternateType(AccessPolicy.expiry, utcDateTime, "go");
 @@alternateType(BlobItem.name, string, "go");
@@ -286,6 +287,7 @@ enum ImmutabilityPolicySetting {
 @@alternateType(BlockLookupList.latest, string[], "go");
 @@alternateType(EncryptionAlgorithmParameter.encryptionAlgorithm, EncryptionAlgorithmTypeGo, "go");
 @@alternateType(ImmutabilityPolicyModeParameter.immutabilityPolicyMode, ImmutabilityPolicySetting, "go");
+@@alternateType(SignedIdentifiers, SignedIdentifiersGo, "go");
 @@alternateType(SourceEncryptionAlgorithmParameter.sourceEncryptionAlgorithm, EncryptionAlgorithmTypeGo, "go");
 @@alternateType(ListBlobsIncludeParameter.include, ListBlobsIncludeItemGo[], "go");
 @@alternateType(UserDelegationKey.signedExpiry, utcDateTime, "go");
@@ -305,6 +307,7 @@ enum ImmutabilityPolicySetting {
 @@clientName(ListBlobsIncludeItemGo, "ListBlobsIncludeItem", "go");
 @@clientName(ListBlobsResponse, "ListBlobsFlatSegmentResponse", "go");
 @@clientName(QueryType, "QueryFormatType", "go");
+@@clientName(SignedIdentifiersGo, "SignedIdentifiers", "go");
 @@clientName(Storage.Blob.Blob.setProperties, "SetHTTPHeaders", "go");
 @@clientName(Storage.Blob.Container.findBlobsByTags, "FilterBlobs", "go");
 @@clientName(Storage.Blob.Container.listBlobs, "ListBlobFlatSegment", "go");
