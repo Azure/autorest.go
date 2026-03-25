@@ -4,6 +4,11 @@
 
 package azregressions
 
+type DequeuedMessage struct {
+	// REQUIRED
+	MessageID *string `xml:"MessageId"`
+}
+
 // DiscriminatedBaseNoSubTypes - A discriminated base type with no subtypes.
 type DiscriminatedBaseNoSubTypes struct {
 	// REQUIRED; Some property.
@@ -24,6 +29,11 @@ type InnerSpreadParam struct {
 
 	// REQUIRED
 	Name *string
+}
+
+type SignedIdentifier struct {
+	// REQUIRED
+	ID *string `xml:"Id"`
 }
 
 type SomeModel struct {

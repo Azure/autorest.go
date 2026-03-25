@@ -29,6 +29,18 @@ type ClientGetDiscriminatedNoSubTypesResponse struct {
 	DiscriminatedBaseNoSubTypesClassification
 }
 
+// ClientGetXMLOneResponse contains the response from method Client.GetXMLOne.
+type ClientGetXMLOneResponse struct {
+	ContentType       *string
+	SignedIdentifiers []*SignedIdentifier `xml:"SignedIdentifier"`
+}
+
+// ClientGetXMLTwoResponse contains the response from method Client.GetXMLTwo.
+type ClientGetXMLTwoResponse struct {
+	ContentType *string
+	Messages    []*DequeuedMessage `xml:"QueueMessage"`
+}
+
 // ClientOptionalBinaryBodyResponse contains the response from method Client.OptionalBinaryBody.
 type ClientOptionalBinaryBodyResponse struct {
 	// placeholder for future response values

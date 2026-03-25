@@ -16,7 +16,7 @@ import {
   uncapitalize,
 } from '../../../naming.go/src/naming.js';
 import { AdapterError } from './errors.js';
-import { isTypePassedByValue, TypeAdapter } from './types.js';
+import { adaptXMLInfo, isTypePassedByValue, hasXMLInfo, TypeAdapter } from './types.js';
 
 /**
  * used to convert tcgc clients and their methods to Go code model types
@@ -987,6 +987,13 @@ export class ClientAdapter {
             bodyType = this.ta.getReadSeekCloser(methodParam.type.kind === 'array');
           }
           adaptedParam = new go.BodyParameter(paramName, contentType, `"${opParam.defaultContentType}"`, bodyType, paramStyle, byVal);
+          if (contentType === 'XML' && methodParam.type.kind === 'array') {
+            adaptedParam.xml = adaptXMLInfo(this.ta.getPkg(), methodParam.type.decorators);
+            if (!adaptedParam.xml) {
+              adaptedParam.xml = new go.XMLInfo();
+              adaptedParam.xml.wrapper = methodParam.type.name;
+            }
+          }
         }
         break;
       case 'cookie':
@@ -1246,7 +1253,26 @@ export class ClientAdapter {
     } else {
       const resultType = this.ta.getWireType(sdkResponseType, false, false);
       if (go.isMonomorphicResultType(resultType)) {
-        respEnv.result = new go.MonomorphicResult(this.recursiveTypeName(sdkResponseType, false), contentType, resultType, isTypePassedByValue(sdkResponseType));
+        let fieldName: string | undefined;
+        let xmlInfo: go.XMLInfo | undefined;
+        if (contentType === 'XML') {
+          xmlInfo = adaptXMLInfo(method.receiver.type.pkg, sdkResponseType.decorators);
+          if (!xmlInfo) {
+            xmlInfo = new go.XMLInfo();
+          }
+          if (sdkResponseType.kind === 'array') {
+            fieldName = sdkResponseType.name;
+            const elementType = (<go.Slice>resultType).elementType;
+            const elementTypeXmlName = hasXMLInfo(elementType)?.wrapper;
+            xmlInfo.wraps = elementTypeXmlName ?? go.getTypeDeclaration(elementType, method.receiver.type.pkg);
+          }
+        }
+
+        if (!fieldName) {
+          fieldName = this.recursiveTypeName(sdkResponseType, false);
+        }
+        respEnv.result = new go.MonomorphicResult(fieldName, contentType, resultType, isTypePassedByValue(sdkResponseType));
+        respEnv.result.xml = xmlInfo;
       } else {
         throw new AdapterError('InternalError', `invalid monomorphic result type ${resultType.kind}`, sdkResponseType.__raw?.node);
       }

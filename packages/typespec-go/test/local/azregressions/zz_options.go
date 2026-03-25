@@ -27,6 +27,16 @@ type ClientGetDiscriminatedNoSubTypesOptions struct {
 	// placeholder for future optional parameters
 }
 
+// ClientGetXMLOneOptions contains the optional parameters for the Client.GetXMLOne method.
+type ClientGetXMLOneOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetXMLTwoOptions contains the optional parameters for the Client.GetXMLTwo method.
+type ClientGetXMLTwoOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ClientOptionalBinaryBodyOptions contains the optional parameters for the Client.OptionalBinaryBody method.
 type ClientOptionalBinaryBodyOptions struct {
 	Payload io.ReadSeekCloser

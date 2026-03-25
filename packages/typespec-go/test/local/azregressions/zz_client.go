@@ -212,6 +212,103 @@ func (client *Client) getDiscriminatedNoSubTypesHandleResponse(resp *http.Respon
 	return result, nil
 }
 
+// GetXMLOne - verify we can swap the default definition of SignedIdentifiers with a custom one
+// that maintains the correct XML structure and tags.
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientGetXMLOneOptions contains the optional parameters for the Client.GetXMLOne method.
+func (client *Client) GetXMLOne(ctx context.Context, options *ClientGetXMLOneOptions) (ClientGetXMLOneResponse, error) {
+	var err error
+	const operationName = "Client.GetXMLOne"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.getXMLOneCreateRequest(ctx, options)
+	if err != nil {
+		return ClientGetXMLOneResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientGetXMLOneResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientGetXMLOneResponse{}, err
+	}
+	resp, err := client.getXMLOneHandleResponse(httpResp)
+	return resp, err
+}
+
+// getXMLOneCreateRequest creates the GetXMLOne request.
+func (client *Client) getXMLOneCreateRequest(ctx context.Context, _ *ClientGetXMLOneOptions) (*policy.Request, error) {
+	urlPath := "/xml-alternate-type-1"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
+	return req, nil
+}
+
+// getXMLOneHandleResponse handles the GetXMLOne response.
+func (client *Client) getXMLOneHandleResponse(resp *http.Response) (ClientGetXMLOneResponse, error) {
+	result := ClientGetXMLOneResponse{}
+	if val := resp.Header.Get("Content-Type"); val != "" {
+		result.ContentType = &val
+	}
+	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
+		return ClientGetXMLOneResponse{}, err
+	}
+	return result, nil
+}
+
+// GetXMLTwo -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientGetXMLTwoOptions contains the optional parameters for the Client.GetXMLTwo method.
+func (client *Client) GetXMLTwo(ctx context.Context, options *ClientGetXMLTwoOptions) (ClientGetXMLTwoResponse, error) {
+	var err error
+	const operationName = "Client.GetXMLTwo"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.getXMLTwoCreateRequest(ctx, options)
+	if err != nil {
+		return ClientGetXMLTwoResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientGetXMLTwoResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientGetXMLTwoResponse{}, err
+	}
+	resp, err := client.getXMLTwoHandleResponse(httpResp)
+	return resp, err
+}
+
+// getXMLTwoCreateRequest creates the GetXMLTwo request.
+func (client *Client) getXMLTwoCreateRequest(ctx context.Context, _ *ClientGetXMLTwoOptions) (*policy.Request, error) {
+	urlPath := "/xml-alternate-type-2"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
+	return req, nil
+}
+
+// getXMLTwoHandleResponse handles the GetXMLTwo response.
+func (client *Client) getXMLTwoHandleResponse(resp *http.Response) (ClientGetXMLTwoResponse, error) {
+	result := ClientGetXMLTwoResponse{}
+	if val := resp.Header.Get("Content-Type"); val != "" {
+		result.ContentType = &val
+	}
+	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
+		return ClientGetXMLTwoResponse{}, err
+	}
+	return result, nil
+}
+
 // OptionalBinaryBody -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ClientOptionalBinaryBodyOptions contains the optional parameters for the Client.OptionalBinaryBody method.
