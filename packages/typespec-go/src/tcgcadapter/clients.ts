@@ -16,7 +16,7 @@ import {
   uncapitalize,
 } from '../../../naming.go/src/naming.js';
 import { AdapterError } from './errors.js';
-import { adaptXMLInfo, isTypePassedByValue, TypeAdapter } from './types.js';
+import { adaptXMLInfo, isTypePassedByValue, hasXMLInfo, TypeAdapter } from './types.js';
 
 /**
  * used to convert tcgc clients and their methods to Go code model types
@@ -1262,7 +1262,9 @@ export class ClientAdapter {
           }
           if (sdkResponseType.kind === 'array') {
             fieldName = sdkResponseType.name;
-            xmlInfo.wraps = go.getTypeDeclaration((<go.Slice>resultType).elementType, method.receiver.type.pkg);
+            const elementType = (<go.Slice>resultType).elementType;
+            const elementTypeXmlName = hasXMLInfo(elementType)?.wrapper;
+            xmlInfo.wraps = elementTypeXmlName ?? go.getTypeDeclaration(elementType, method.receiver.type.pkg);
           }
         }
 

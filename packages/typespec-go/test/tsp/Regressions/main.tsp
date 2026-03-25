@@ -1,6 +1,7 @@
 import "@azure-tools/typespec-client-generator-core";
 import "@azure-tools/typespec-azure-core";
 import "@typespec/http";
+import "@typespec/xml";
 
 using TypeSpec.Http;
 
@@ -72,3 +73,43 @@ model DiscriminatedBaseNoSubTypes {
 @get
 @route("/discriminated-no-subtypes")
 op getDiscriminatedNoSubTypes(): DiscriminatedBaseNoSubTypes;
+
+alias ContentXml = {
+  @header("Content-Type")
+  contentType: "application/xml";
+};
+
+model SignedIdentifiers {
+  @Xml.unwrapped
+  @Xml.name("SignedIdentifier")
+  items: Array<SignedIdentifier>;
+}
+
+@Xml.name("SignedIdentifier")
+model SignedIdentifier {
+  @Xml.name("Id") id: string;
+}
+
+/**
+ * verify we can swap the default definition of SignedIdentifiers with a custom one
+ * that maintains the correct XML structure and tags.
+ */
+@get
+@route("/xml-alternate-type-1")
+op getXmlOne(): ContentXml & SignedIdentifiers;
+
+@Xml.name("QueueMessagesList")
+model ReceivedMessages {
+  @Xml.unwrapped
+  items: Array<ReceivedMessage>;
+}
+
+@Xml.name("QueueMessage")
+model ReceivedMessage {
+  @Xml.name("MessageId")
+  messageId: string;
+}
+
+@get
+@route("/xml-alternate-type-2")
+op getXmlTwo(): ContentXml & ReceivedMessages;

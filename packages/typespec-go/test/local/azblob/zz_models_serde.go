@@ -471,6 +471,21 @@ func (s SignedIdentifier) MarshalXML(enc *xml.Encoder, start xml.StartElement) e
 	return enc.EncodeElement(aux, start)
 }
 
+// MarshalXML implements the xml.Marshaller interface for type SignedIdentifiers.
+func (s SignedIdentifiers) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	type alias SignedIdentifiers
+	aux := &struct {
+		*alias
+		Items *[]*SignedIdentifier `xml:"items"`
+	}{
+		alias: (*alias)(&s),
+	}
+	if s.Items != nil {
+		aux.Items = &s.Items
+	}
+	return enc.EncodeElement(aux, start)
+}
+
 // MarshalXML implements the xml.Marshaller interface for type StorageServiceProperties.
 func (s StorageServiceProperties) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "StorageServiceProperties"

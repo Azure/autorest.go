@@ -6,7 +6,6 @@ package azblob
 
 import (
 	"context"
-	"encoding/xml"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
@@ -629,7 +628,7 @@ func (client *ContainerClient) getAccessPolicyHandleResponse(resp *http.Response
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
 	}
-	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
+	if err := runtime.UnmarshalAsXML(resp, &result.SignedIdentifiers); err != nil {
 		return ContainerClientGetAccessPolicyResponse{}, err
 	}
 	return result, nil
@@ -1346,7 +1345,7 @@ func (client *ContainerClient) restoreHandleResponse(resp *http.Response) (Conta
 //   - containerACL - The access control list for the container.
 //   - options - ContainerClientSetAccessPolicyOptions contains the optional parameters for the ContainerClient.SetAccessPolicy
 //     method.
-func (client *ContainerClient) SetAccessPolicy(ctx context.Context, containerACL []*SignedIdentifier, options *ContainerClientSetAccessPolicyOptions) (ContainerClientSetAccessPolicyResponse, error) {
+func (client *ContainerClient) SetAccessPolicy(ctx context.Context, containerACL SignedIdentifiers, options *ContainerClientSetAccessPolicyOptions) (ContainerClientSetAccessPolicyResponse, error) {
 	var err error
 	req, err := client.setAccessPolicyCreateRequest(ctx, containerACL, options)
 	if err != nil {
@@ -1365,7 +1364,7 @@ func (client *ContainerClient) SetAccessPolicy(ctx context.Context, containerACL
 }
 
 // setAccessPolicyCreateRequest creates the SetAccessPolicy request.
-func (client *ContainerClient) setAccessPolicyCreateRequest(ctx context.Context, containerACL []*SignedIdentifier, options *ContainerClientSetAccessPolicyOptions) (*policy.Request, error) {
+func (client *ContainerClient) setAccessPolicyCreateRequest(ctx context.Context, containerACL SignedIdentifiers, options *ContainerClientSetAccessPolicyOptions) (*policy.Request, error) {
 	urlPath := "?restype=container&comp=acl"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
@@ -1392,12 +1391,8 @@ func (client *ContainerClient) setAccessPolicyCreateRequest(ctx context.Context,
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
 	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
-	type wrapper struct {
-		XMLName      xml.Name             `xml:"CustomXmlName"`
-		ContainerACL *[]*SignedIdentifier `xml:"SignedIdentifier"`
-	}
 	req.Raw().Header["Content-Type"] = []string{"application/xml"}
-	if err := runtime.MarshalAsXML(req, wrapper{ContainerACL: &containerACL}); err != nil {
+	if err := runtime.MarshalAsXML(req, containerACL); err != nil {
 		return nil, err
 	}
 	return req, nil

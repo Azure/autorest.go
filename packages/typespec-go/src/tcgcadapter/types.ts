@@ -956,6 +956,19 @@ export function adaptXMLInfo(pkg: go.PackageContent, decorators: Array<tcgc.Deco
 }
 
 /**
+ * returns any XMLInfo available for the provided type or undefined
+ *
+ * @param type the type to inspect for XMLInfo
+ * @returns the XMLInfo or undefined
+ */
+export function hasXMLInfo(type: go.WireType): go.XMLInfo | undefined {
+  if ('xml' in type) {
+    return type.xml;
+  }
+  return undefined;
+}
+
+/**
  * returns true if model is a polymorphic root type.
  *
  * @param model the model to inspect

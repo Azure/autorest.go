@@ -6,10 +6,23 @@ package azregressions
 
 import (
 	"encoding/json"
+	"encoding/xml"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"reflect"
 )
+
+// MarshalXML implements the xml.Marshaller interface for type DequeuedMessage.
+func (d DequeuedMessage) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "QueueMessage"
+	type alias DequeuedMessage
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&d),
+	}
+	return enc.EncodeElement(aux, start)
+}
 
 // MarshalJSON implements the json.Marshaller interface for type DiscriminatedBaseNoSubTypes.
 func (d DiscriminatedBaseNoSubTypes) MarshalJSON() ([]byte, error) {
@@ -71,6 +84,18 @@ func (i *InnerSpreadParam) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// MarshalXML implements the xml.Marshaller interface for type SignedIdentifier.
+func (s SignedIdentifier) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "SignedIdentifier"
+	type alias SignedIdentifier
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&s),
+	}
+	return enc.EncodeElement(aux, start)
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SomeModel.
