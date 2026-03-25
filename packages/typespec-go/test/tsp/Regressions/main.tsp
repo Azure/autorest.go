@@ -113,3 +113,13 @@ model ReceivedMessage {
 @get
 @route("/xml-alternate-type-2")
 op getXmlTwo(): ContentXml & ReceivedMessages;
+
+@Xml.name("Queue")
+model QueueItem {
+  @Xml.name("Name") name: string;
+  @Xml.name("Metadata") metadata?: Record<string>;
+}
+
+@get
+@route("/xml-get-queue")
+op getQueue(): ContentXml & QueueItem;

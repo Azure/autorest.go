@@ -212,6 +212,54 @@ func (client *Client) getDiscriminatedNoSubTypesHandleResponse(resp *http.Respon
 	return result, nil
 }
 
+// GetQueue -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientGetQueueOptions contains the optional parameters for the Client.GetQueue method.
+func (client *Client) GetQueue(ctx context.Context, options *ClientGetQueueOptions) (ClientGetQueueResponse, error) {
+	var err error
+	const operationName = "Client.GetQueue"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.getQueueCreateRequest(ctx, options)
+	if err != nil {
+		return ClientGetQueueResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientGetQueueResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientGetQueueResponse{}, err
+	}
+	resp, err := client.getQueueHandleResponse(httpResp)
+	return resp, err
+}
+
+// getQueueCreateRequest creates the GetQueue request.
+func (client *Client) getQueueCreateRequest(ctx context.Context, _ *ClientGetQueueOptions) (*policy.Request, error) {
+	urlPath := "/xml-get-queue"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
+	return req, nil
+}
+
+// getQueueHandleResponse handles the GetQueue response.
+func (client *Client) getQueueHandleResponse(resp *http.Response) (ClientGetQueueResponse, error) {
+	result := ClientGetQueueResponse{}
+	if val := resp.Header.Get("Content-Type"); val != "" {
+		result.ContentType = &val
+	}
+	if err := runtime.UnmarshalAsXML(resp, &result.QueueItem); err != nil {
+		return ClientGetQueueResponse{}, err
+	}
+	return result, nil
+}
+
 // GetXMLOne - verify we can swap the default definition of SignedIdentifiers with a custom one
 // that maintains the correct XML structure and tags.
 // If the operation fails it returns an *azcore.ResponseError type.

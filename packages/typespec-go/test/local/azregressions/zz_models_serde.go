@@ -86,6 +86,36 @@ func (i *InnerSpreadParam) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// MarshalXML implements the xml.Marshaller interface for type QueueItem.
+func (q QueueItem) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "Queue"
+	type alias QueueItem
+	aux := &struct {
+		*alias
+		Metadata additionalProperties `xml:"Metadata"`
+	}{
+		alias: (*alias)(&q),
+	}
+	aux.Metadata = (additionalProperties)(q.Metadata)
+	return enc.EncodeElement(aux, start)
+}
+
+// UnmarshalXML implements the xml.Unmarshaller interface for type QueueItem.
+func (q *QueueItem) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
+	type alias QueueItem
+	aux := &struct {
+		*alias
+		Metadata additionalProperties `xml:"Metadata"`
+	}{
+		alias: (*alias)(q),
+	}
+	if err := dec.DecodeElement(aux, &start); err != nil {
+		return err
+	}
+	q.Metadata = (map[string]*string)(aux.Metadata)
+	return nil
+}
+
 // MarshalXML implements the xml.Marshaller interface for type SignedIdentifier.
 func (s SignedIdentifier) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "SignedIdentifier"

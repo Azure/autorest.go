@@ -27,6 +27,11 @@ type ClientGetDiscriminatedNoSubTypesOptions struct {
 	// placeholder for future optional parameters
 }
 
+// ClientGetQueueOptions contains the optional parameters for the Client.GetQueue method.
+type ClientGetQueueOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ClientGetXMLOneOptions contains the optional parameters for the Client.GetXMLOne method.
 type ClientGetXMLOneOptions struct {
 	// placeholder for future optional parameters

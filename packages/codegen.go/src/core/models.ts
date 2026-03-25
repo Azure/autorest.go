@@ -262,12 +262,13 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
         }
       }
       // due to differences in XML marshallers/unmarshallers, we use different codegen than for JSON
+      const needsXMLDictionaryUnmarshalling = needsXMLDictionaryHelper(model);
       if (needsDateTimeMarshalling || model.xml?.wrapper || needsXMLArrayMarshalling(model) || byteArrayFormat) {
         generateXMLMarshaller(modelDef, serdeImports);
-        if (needsDateTimeMarshalling || byteArrayFormat) {
+        if (needsDateTimeMarshalling || needsXMLDictionaryUnmarshalling || byteArrayFormat) {
           generateXMLUnmarshaller(modelDef, serdeImports);
         }
-      } else if (needsXMLDictionaryHelper(model)) {
+      } else if (needsXMLDictionaryUnmarshalling) {
         generateXMLMarshaller(modelDef, serdeImports);
         generateXMLUnmarshaller(modelDef, serdeImports);
       }
