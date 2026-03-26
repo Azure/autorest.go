@@ -2,10 +2,6 @@
 
 ## 0.10.4 (unreleased)
 
-### Features Added
-
-* Added support for LROs that return scalar final results.
-
 ### Bugs Fixed
 
 * Fixed discriminated types without subtypes not being generated as polymorphic types.
