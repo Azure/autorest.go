@@ -2,6 +2,10 @@
 
 ## 0.10.4 (unreleased)
 
+### Features Added
+
+* Added support for LROs that return scalar final results.
+
 ### Bugs Fixed
 
 * Fixed discriminated types without subtypes not being generated as polymorphic types.
@@ -10,6 +14,7 @@
 ### Other Changes
 
 * Updated the minimum version of Go to `v1.25.0`.
+* Updated to the latest tsp toolset.
 
 ## 0.10.3 (2026-03-19)
 
