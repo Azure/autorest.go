@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// XMLModelWithRenamedFieldsValueClient - Operations for the ModelWithRenamedFields type.
+// XMLModelWithRenamedFieldsValueClient - §1.3, §2.3 — Operations for the ModelWithRenamedFields type.
 // Don't use this type directly, use [XMLClient.NewXMLModelWithRenamedFieldsValueClient] instead.
 type XMLModelWithRenamedFieldsValueClient struct {
 	internal *azcore.Client

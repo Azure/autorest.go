@@ -119,3 +119,83 @@ func (client *LROClient) okResponseWithAsyncHeaderCreateRequest(ctx context.Cont
 	}
 	return req, nil
 }
+
+// BeginScalarResult - An LRO action that returns a scalar string result
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2025-01-01
+//   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - lroModelName - LRO model resource name.
+//   - body - The content of the action request
+//   - options - LROClientBeginScalarResultOptions contains the optional parameters for the LROClient.BeginScalarResult method.
+func (client *LROClient) BeginScalarResult(ctx context.Context, resourceGroupName string, lroModelName string, body ActionRequest, options *LROClientBeginScalarResultOptions) (*runtime.Poller[LROClientScalarResultResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.scalarResult(ctx, resourceGroupName, lroModelName, body, options)
+		if err != nil {
+			return nil, err
+		}
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LROClientScalarResultResponse]{
+			Tracer: client.internal.Tracer(),
+		})
+		return poller, err
+	} else {
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[LROClientScalarResultResponse]{
+			Tracer: client.internal.Tracer(),
+		})
+	}
+}
+
+// ScalarResult - An LRO action that returns a scalar string result
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2025-01-01
+func (client *LROClient) scalarResult(ctx context.Context, resourceGroupName string, lroModelName string, body ActionRequest, options *LROClientBeginScalarResultOptions) (*http.Response, error) {
+	var err error
+	const operationName = "LROClient.BeginScalarResult"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.scalarResultCreateRequest(ctx, resourceGroupName, lroModelName, body, options)
+	if err != nil {
+		return nil, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
+	}
+	return httpResp, nil
+}
+
+// scalarResultCreateRequest creates the ScalarResult request.
+func (client *LROClient) scalarResultCreateRequest(ctx context.Context, resourceGroupName string, lroModelName string, body ActionRequest, _ *LROClientBeginScalarResultOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/LROModels/{LROModelName}/scalarResult"
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if lroModelName == "" {
+		return nil, errors.New("parameter lroModelName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{LROModelName}", url.PathEscape(lroModelName))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2025-01-01")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"text/plain"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}

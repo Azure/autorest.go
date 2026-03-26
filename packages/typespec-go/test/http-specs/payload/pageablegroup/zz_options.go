@@ -16,6 +16,12 @@ type PageablePageSizeClientListWithoutContinuationOptions struct {
 	// placeholder for future optional parameters
 }
 
+// PageableServerDrivenPaginationAlternateInitialVerbClientPostOptions contains the optional parameters for the PageableServerDrivenPaginationAlternateInitialVerbClient.NewPostPager
+// method.
+type PageableServerDrivenPaginationAlternateInitialVerbClientPostOptions struct {
+	// placeholder for future optional parameters
+}
+
 // PageableServerDrivenPaginationClientLinkOptions contains the optional parameters for the PageableServerDrivenPaginationClient.NewLinkPager
 // method.
 type PageableServerDrivenPaginationClientLinkOptions struct {

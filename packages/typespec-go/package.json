@@ -1,6 +1,6 @@
 {
   "name": "@azure-tools/typespec-go",
-  "version": "0.10.3",
+  "version": "0.10.4",
   "description": "TypeSpec emitter for Go SDKs",
   "type": "module",
   "packageManager": "pnpm@10.32.1",
@@ -51,17 +51,17 @@
   "readme": "https://github.com/Azure/autorest.go/blob/main/readme.md",
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.39-dev.4",
-    "@azure-tools/typespec-autorest": "0.66.0",
-    "@azure-tools/typespec-azure-core": "0.66.0",
+    "@azure-tools/typespec-autorest": "0.66.1",
+    "@azure-tools/typespec-azure-core": "0.66.1",
     "@azure-tools/typespec-azure-resource-manager": "0.66.0",
     "@azure-tools/typespec-azure-rulesets": "0.66.0",
-    "@azure-tools/typespec-client-generator-core": "0.66.3",
+    "@azure-tools/typespec-client-generator-core": "0.66.4",
     "@types/node": "catalog:",
     "@types/semver": "catalog:",
     "@typespec/compiler": "1.10.0",
     "@typespec/events": "0.80.0",
     "@typespec/http": "1.10.0",
-    "@typespec/http-specs": "0.1.0-alpha.34",
+    "@typespec/http-specs": "0.1.0-alpha.35",
     "@typespec/openapi": "1.10.0",
     "@typespec/rest": "0.80.0",
     "@typespec/spector": "0.1.0-alpha.24",
@@ -78,7 +78,7 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@azure-tools/typespec-client-generator-core": "^0.66.3",
+    "@azure-tools/typespec-client-generator-core": "^0.66.4",
     "@typespec/compiler": "^1.10.0",
     "@typespec/http": "^1.10.0"
   },

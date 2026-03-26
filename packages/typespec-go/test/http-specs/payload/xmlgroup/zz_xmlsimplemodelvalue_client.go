@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// XMLSimpleModelValueClient - Operations for the SimpleModel type.
+// XMLSimpleModelValueClient - §1.1 — Operations for the SimpleModel type.
 // Don't use this type directly, use [XMLClient.NewXMLSimpleModelValueClient] instead.
 type XMLSimpleModelValueClient struct {
 	internal *azcore.Client

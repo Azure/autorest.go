@@ -4,6 +4,11 @@
 
 package pageablegroup
 
+type Filter struct {
+	// REQUIRED
+	Filter *string
+}
+
 type LinkResponse struct {
 	// REQUIRED
 	Pets []*Pet
@@ -49,6 +54,12 @@ type Pet struct {
 
 	// REQUIRED
 	Name *string
+}
+
+type PostResponse struct {
+	// REQUIRED
+	Pets []*Pet
+	Next *string
 }
 
 type RequestHeaderNestedResponseBodyResponse struct {

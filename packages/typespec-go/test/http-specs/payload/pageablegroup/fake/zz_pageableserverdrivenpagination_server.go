@@ -19,6 +19,9 @@ import (
 
 // PageableServerDrivenPaginationServer is a fake server for instances of the pageablegroup.PageableServerDrivenPaginationClient type.
 type PageableServerDrivenPaginationServer struct {
+	// PageableServerDrivenPaginationAlternateInitialVerbServer contains the fakes for client PageableServerDrivenPaginationAlternateInitialVerbClient
+	PageableServerDrivenPaginationAlternateInitialVerbServer PageableServerDrivenPaginationAlternateInitialVerbServer
+
 	// PageableServerDrivenPaginationContinuationTokenServer contains the fakes for client PageableServerDrivenPaginationContinuationTokenClient
 	PageableServerDrivenPaginationContinuationTokenServer PageableServerDrivenPaginationContinuationTokenServer
 
@@ -50,12 +53,13 @@ func NewPageableServerDrivenPaginationServerTransport(srv *PageableServerDrivenP
 // PageableServerDrivenPaginationServerTransport connects instances of pageablegroup.PageableServerDrivenPaginationClient to instances of PageableServerDrivenPaginationServer.
 // Don't use this type directly, use NewPageableServerDrivenPaginationServerTransport instead.
 type PageableServerDrivenPaginationServerTransport struct {
-	srv                                                     *PageableServerDrivenPaginationServer
-	trMu                                                    sync.Mutex
-	trPageableServerDrivenPaginationContinuationTokenServer *PageableServerDrivenPaginationContinuationTokenServerTransport
-	newLinkPager                                            *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientLinkResponse]]
-	newLinkStringPager                                      *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientLinkStringResponse]]
-	newNestedLinkPager                                      *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientNestedLinkResponse]]
+	srv                                                        *PageableServerDrivenPaginationServer
+	trMu                                                       sync.Mutex
+	trPageableServerDrivenPaginationAlternateInitialVerbServer *PageableServerDrivenPaginationAlternateInitialVerbServerTransport
+	trPageableServerDrivenPaginationContinuationTokenServer    *PageableServerDrivenPaginationContinuationTokenServerTransport
+	newLinkPager                                               *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientLinkResponse]]
+	newLinkStringPager                                         *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientLinkStringResponse]]
+	newNestedLinkPager                                         *tracker[azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationClientNestedLinkResponse]]
 }
 
 // Do implements the policy.Transporter interface for PageableServerDrivenPaginationServerTransport.
@@ -77,6 +81,11 @@ func (p *PageableServerDrivenPaginationServerTransport) dispatchToClientFake(req
 	var err error
 
 	switch client {
+	case "PageableServerDrivenPaginationAlternateInitialVerbClient":
+		initServer(&p.trMu, &p.trPageableServerDrivenPaginationAlternateInitialVerbServer, func() *PageableServerDrivenPaginationAlternateInitialVerbServerTransport {
+			return NewPageableServerDrivenPaginationAlternateInitialVerbServerTransport(&p.srv.PageableServerDrivenPaginationAlternateInitialVerbServer)
+		})
+		resp, err = p.trPageableServerDrivenPaginationAlternateInitialVerbServer.Do(req)
 	case "PageableServerDrivenPaginationContinuationTokenClient":
 		initServer(&p.trMu, &p.trPageableServerDrivenPaginationContinuationTokenServer, func() *PageableServerDrivenPaginationContinuationTokenServerTransport {
 			return NewPageableServerDrivenPaginationContinuationTokenServerTransport(&p.srv.PageableServerDrivenPaginationContinuationTokenServer)

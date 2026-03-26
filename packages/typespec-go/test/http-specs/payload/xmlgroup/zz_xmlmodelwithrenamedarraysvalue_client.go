@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// XMLModelWithRenamedArraysValueClient - Operations for the ModelWithRenamedArrays type.
+// XMLModelWithRenamedArraysValueClient - §3.3, §3.4 — Operations for the ModelWithRenamedArrays type.
 // Don't use this type directly, use [XMLClient.NewXMLModelWithRenamedArraysValueClient] instead.
 type XMLModelWithRenamedArraysValueClient struct {
 	internal *azcore.Client

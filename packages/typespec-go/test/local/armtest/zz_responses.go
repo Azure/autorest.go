@@ -21,6 +21,11 @@ type LROClientOkResponseWithAsyncHeaderResponse struct {
 	LROModel
 }
 
+// LROClientScalarResultResponse contains the response from method LROClient.BeginScalarResult.
+type LROClientScalarResultResponse struct {
+	Value *string
+}
+
 // ParameterGroupOperationsClientNoParameterGroupResponse contains the response from method ParameterGroupOperationsClient.NoParameterGroup.
 type ParameterGroupOperationsClientNoParameterGroupResponse struct {
 	// Widget resource for testing parameter groups

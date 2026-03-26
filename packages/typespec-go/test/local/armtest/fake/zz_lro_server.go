@@ -22,6 +22,10 @@ type LROServer struct {
 	// BeginOkResponseWithAsyncHeader is the fake for method LROClient.BeginOkResponseWithAsyncHeader
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
 	BeginOkResponseWithAsyncHeader func(ctx context.Context, resourceGroupName string, lroModelName string, resource armtest.LROModel, options *armtest.LROClientBeginOkResponseWithAsyncHeaderOptions) (resp azfake.PollerResponder[armtest.LROClientOkResponseWithAsyncHeaderResponse], errResp azfake.ErrorResponder)
+
+	// BeginScalarResult is the fake for method LROClient.BeginScalarResult
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	BeginScalarResult func(ctx context.Context, resourceGroupName string, lroModelName string, body armtest.ActionRequest, options *armtest.LROClientBeginScalarResultOptions) (resp azfake.PollerResponder[armtest.LROClientScalarResultResponse], errResp azfake.ErrorResponder)
 }
 
 // NewLROServerTransport creates a new instance of LROServerTransport with the provided implementation.
@@ -31,6 +35,7 @@ func NewLROServerTransport(srv *LROServer) *LROServerTransport {
 	return &LROServerTransport{
 		srv:                            srv,
 		beginOkResponseWithAsyncHeader: newTracker[azfake.PollerResponder[armtest.LROClientOkResponseWithAsyncHeaderResponse]](),
+		beginScalarResult:              newTracker[azfake.PollerResponder[armtest.LROClientScalarResultResponse]](),
 	}
 }
 
@@ -39,6 +44,7 @@ func NewLROServerTransport(srv *LROServer) *LROServerTransport {
 type LROServerTransport struct {
 	srv                            *LROServer
 	beginOkResponseWithAsyncHeader *tracker[azfake.PollerResponder[armtest.LROClientOkResponseWithAsyncHeaderResponse]]
+	beginScalarResult              *tracker[azfake.PollerResponder[armtest.LROClientScalarResultResponse]]
 }
 
 // Do implements the policy.Transporter interface for LROServerTransport.
@@ -66,6 +72,8 @@ func (l *LROServerTransport) dispatchToMethodFake(req *http.Request, method stri
 			switch method {
 			case "LROClient.BeginOkResponseWithAsyncHeader":
 				res.resp, res.err = l.dispatchBeginOkResponseWithAsyncHeader(req)
+			case "LROClient.BeginScalarResult":
+				res.resp, res.err = l.dispatchBeginScalarResult(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
 			}
@@ -128,6 +136,54 @@ func (l *LROServerTransport) dispatchBeginOkResponseWithAsyncHeader(req *http.Re
 	}
 	if !server.PollerResponderMore(beginOkResponseWithAsyncHeader) {
 		l.beginOkResponseWithAsyncHeader.remove(req)
+	}
+
+	return resp, nil
+}
+
+func (l *LROServerTransport) dispatchBeginScalarResult(req *http.Request) (*http.Response, error) {
+	if l.srv.BeginScalarResult == nil {
+		return nil, &nonRetriableError{errors.New("fake for method BeginScalarResult not implemented")}
+	}
+	beginScalarResult := l.beginScalarResult.get(req)
+	if beginScalarResult == nil {
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/LROModels/(?P<LROModelName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/scalarResult`
+		regex := regexp.MustCompile(regexStr)
+		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+		if len(matches) < 4 {
+			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+		}
+		body, err := server.UnmarshalRequestAsJSON[armtest.ActionRequest](req)
+		if err != nil {
+			return nil, err
+		}
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		if err != nil {
+			return nil, err
+		}
+		lroModelNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("LROModelName")])
+		if err != nil {
+			return nil, err
+		}
+		respr, errRespr := l.srv.BeginScalarResult(req.Context(), resourceGroupNameParam, lroModelNameParam, body, nil)
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
+		}
+		beginScalarResult = &respr
+		l.beginScalarResult.add(req, beginScalarResult)
+	}
+
+	resp, err := server.PollerResponderNext(beginScalarResult, req)
+	if err != nil {
+		return nil, err
+	}
+
+	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+		l.beginScalarResult.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+	}
+	if !server.PollerResponderMore(beginScalarResult) {
+		l.beginScalarResult.remove(req)
 	}
 
 	return resp, nil

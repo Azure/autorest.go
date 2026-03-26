@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// XMLModelWithTextValueClient - Operations for the ModelWithText type.
+// XMLModelWithTextValueClient - §8.1 — Operations for the ModelWithText type.
 // Don't use this type directly, use [XMLClient.NewXMLModelWithTextValueClient] instead.
 type XMLModelWithTextValueClient struct {
 	internal *azcore.Client
