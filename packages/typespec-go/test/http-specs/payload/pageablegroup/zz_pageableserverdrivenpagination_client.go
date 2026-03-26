@@ -19,6 +19,14 @@ type PageableServerDrivenPaginationClient struct {
 	endpoint string
 }
 
+// NewPageableServerDrivenPaginationAlternateInitialVerbClient creates a new instance of [PageableServerDrivenPaginationAlternateInitialVerbClient].
+func (client *PageableServerDrivenPaginationClient) NewPageableServerDrivenPaginationAlternateInitialVerbClient() *PageableServerDrivenPaginationAlternateInitialVerbClient {
+	return &PageableServerDrivenPaginationAlternateInitialVerbClient{
+		endpoint: client.endpoint,
+		internal: client.internal,
+	}
+}
+
 // NewPageableServerDrivenPaginationContinuationTokenClient creates a new instance of [PageableServerDrivenPaginationContinuationTokenClient].
 func (client *PageableServerDrivenPaginationClient) NewPageableServerDrivenPaginationContinuationTokenClient() *PageableServerDrivenPaginationContinuationTokenClient {
 	return &PageableServerDrivenPaginationContinuationTokenClient{

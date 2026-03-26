@@ -32,4 +32,13 @@ interface LRO {
       ArmCombinedLroHeaders<FinalResult = TestLROModel>) | (ArmCreatedResponse<TestLROModel> &
       ArmCombinedLroHeaders<FinalResult = TestLROModel>)
   >;
+
+  @doc("An LRO action that returns a scalar string result")
+  scalarResult is ArmResourceActionAsync<
+    TestLROModel,
+    ActionRequest,
+    string,
+    LroHeaders = ArmCombinedLroHeaders<FinalResult = string> &
+      Azure.Core.Foundations.RetryAfterHeader
+  >;
 }

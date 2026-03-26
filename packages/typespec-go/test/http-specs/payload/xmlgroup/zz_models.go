@@ -6,13 +6,25 @@ package xmlgroup
 
 import "time"
 
-// ModelWithArrayOfModel - Contains an array of models.
+// Author model with a custom XML name.
+type Author struct {
+	// REQUIRED
+	Name *string `xml:"name"`
+}
+
+// Book model with a custom XML name.
+type Book struct {
+	// REQUIRED
+	Title *string `xml:"title"`
+}
+
+// ModelWithArrayOfModel - §4.1 — Contains an array of models.
 type ModelWithArrayOfModel struct {
 	// REQUIRED
 	Items []SimpleModel `xml:"items>SimpleModel"`
 }
 
-// ModelWithAttributes - Contains fields that are XML attributes.
+// ModelWithAttributes - §5.1 — Contains fields that are XML attributes.
 type ModelWithAttributes struct {
 	// REQUIRED
 	Enabled *bool `xml:"enabled"`
@@ -60,6 +72,33 @@ type ModelWithEnum struct {
 	Status *Status `xml:"status"`
 }
 
+// ModelWithNamespace - §6.1, §7.1 — Contains fields with XML namespace on the model.
+type ModelWithNamespace struct {
+	// REQUIRED
+	ID *int32 `xml:"id"`
+
+	// REQUIRED
+	Title *string `xml:"title"`
+}
+
+// ModelWithNamespaceOnProperties - §6.2, §7.2 — Contains fields with different XML namespaces on individual properties.
+type ModelWithNamespaceOnProperties struct {
+	// REQUIRED
+	Author *string `xml:"author"`
+
+	// REQUIRED
+	ID *int32 `xml:"id"`
+
+	// REQUIRED
+	Title *string `xml:"title"`
+}
+
+// ModelWithNestedModel - §2.1 — Contains a property that references another model.
+type ModelWithNestedModel struct {
+	// REQUIRED
+	Nested *SimpleModel `xml:"nested"`
+}
+
 // ModelWithOptionalField - Contains an optional field.
 type ModelWithOptionalField struct {
 	// REQUIRED
@@ -67,7 +106,8 @@ type ModelWithOptionalField struct {
 	Value *int32  `xml:"value"`
 }
 
-// ModelWithRenamedArrays - Contains fields of wrapped and unwrapped arrays of primitive types that have different XML representations.
+// ModelWithRenamedArrays - §3.3, §3.4 — Contains fields of wrapped and unwrapped arrays of primitive types that have different
+// XML representations.
 type ModelWithRenamedArrays struct {
 	// REQUIRED
 	Colors []string `xml:"Colors"`
@@ -76,7 +116,19 @@ type ModelWithRenamedArrays struct {
 	Counts []int32 `xml:"Counts>int32"`
 }
 
-// ModelWithRenamedFields - Contains fields of the same type that have different XML representation.
+// ModelWithRenamedAttribute - §5.2 — Contains a renamed XML attribute.
+type ModelWithRenamedAttribute struct {
+	// REQUIRED
+	Author *string `xml:"author"`
+
+	// REQUIRED
+	ID *int32 `xml:"xml-id,attr"`
+
+	// REQUIRED
+	Title *string `xml:"title"`
+}
+
+// ModelWithRenamedFields - §1.3, §2.3 — Contains fields of the same type that have different XML representation.
 type ModelWithRenamedFields struct {
 	// REQUIRED
 	InputData *SimpleModel `xml:"InputData"`
@@ -85,7 +137,40 @@ type ModelWithRenamedFields struct {
 	OutputData *SimpleModel `xml:"OutputData"`
 }
 
-// ModelWithSimpleArrays - Contains fields of arrays of primitive types.
+// ModelWithRenamedNestedModel - §2.2 — Contains a property whose type has
+type ModelWithRenamedNestedModel struct {
+	// REQUIRED
+	Author *Author `xml:"author"`
+}
+
+// ModelWithRenamedProperty - §1.2 — Contains a scalar property with a custom XML name.
+type ModelWithRenamedProperty struct {
+	// REQUIRED
+	Author *string `xml:"author"`
+
+	// REQUIRED
+	Title *string `xml:"renamedTitle"`
+}
+
+// ModelWithRenamedUnwrappedModelArray - §4.4 — Contains an unwrapped array of models with a custom item name.
+type ModelWithRenamedUnwrappedModelArray struct {
+	// REQUIRED
+	Items []SimpleModel `xml:"ModelItem"`
+}
+
+// ModelWithRenamedWrappedAndItemModelArray - §4.5 — Contains a wrapped array of models with custom wrapper and item names.
+type ModelWithRenamedWrappedAndItemModelArray struct {
+	// REQUIRED
+	Books []Book `xml:"AllBooks>Book"`
+}
+
+// ModelWithRenamedWrappedModelArray - §4.3 — Contains a wrapped array of models with a custom wrapper name.
+type ModelWithRenamedWrappedModelArray struct {
+	// REQUIRED
+	Items []SimpleModel `xml:"AllItems>SimpleModel"`
+}
+
+// ModelWithSimpleArrays - §3.1 — Contains fields of arrays of primitive types.
 type ModelWithSimpleArrays struct {
 	// REQUIRED
 	Colors []string `xml:"colors>string"`
@@ -94,7 +179,7 @@ type ModelWithSimpleArrays struct {
 	Counts []int32 `xml:"counts>int32"`
 }
 
-// ModelWithText - Contains an attribute and text.
+// ModelWithText - §8.1 — Contains an attribute and text.
 type ModelWithText struct {
 	// REQUIRED
 	Content *string `xml:",chardata"`
@@ -103,7 +188,7 @@ type ModelWithText struct {
 	Language *string `xml:"language,attr"`
 }
 
-// ModelWithUnwrappedArray - Contains fields of wrapped and unwrapped arrays of primitive types.
+// ModelWithUnwrappedArray - §3.2 — Contains fields of wrapped and unwrapped arrays of primitive types.
 type ModelWithUnwrappedArray struct {
 	// REQUIRED
 	Colors []string `xml:"colors"`
@@ -112,7 +197,19 @@ type ModelWithUnwrappedArray struct {
 	Counts []int32 `xml:"counts>int32"`
 }
 
-// SimpleModel - Contains fields of primitive types.
+// ModelWithUnwrappedModelArray - §4.2 — Contains an unwrapped array of models.
+type ModelWithUnwrappedModelArray struct {
+	// REQUIRED
+	Items []SimpleModel `xml:"items"`
+}
+
+// ModelWithWrappedPrimitiveCustomItemNames - §3.5 — Contains a wrapped primitive array with custom wrapper and item names.
+type ModelWithWrappedPrimitiveCustomItemNames struct {
+	// REQUIRED
+	Tags []string `xml:"ItemsTags>string"`
+}
+
+// SimpleModel - §1.1 — Contains fields of primitive types.
 type SimpleModel struct {
 	// REQUIRED
 	Age *int32 `xml:"age"`

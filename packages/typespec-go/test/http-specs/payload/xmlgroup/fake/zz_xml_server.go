@@ -36,14 +36,41 @@ type XMLServer struct {
 	// XMLModelWithEnumValueServer contains the fakes for client XMLModelWithEnumValueClient
 	XMLModelWithEnumValueServer XMLModelWithEnumValueServer
 
+	// XMLModelWithNamespaceOnPropertiesValueServer contains the fakes for client XMLModelWithNamespaceOnPropertiesValueClient
+	XMLModelWithNamespaceOnPropertiesValueServer XMLModelWithNamespaceOnPropertiesValueServer
+
+	// XMLModelWithNamespaceValueServer contains the fakes for client XMLModelWithNamespaceValueClient
+	XMLModelWithNamespaceValueServer XMLModelWithNamespaceValueServer
+
+	// XMLModelWithNestedModelValueServer contains the fakes for client XMLModelWithNestedModelValueClient
+	XMLModelWithNestedModelValueServer XMLModelWithNestedModelValueServer
+
 	// XMLModelWithOptionalFieldValueServer contains the fakes for client XMLModelWithOptionalFieldValueClient
 	XMLModelWithOptionalFieldValueServer XMLModelWithOptionalFieldValueServer
 
 	// XMLModelWithRenamedArraysValueServer contains the fakes for client XMLModelWithRenamedArraysValueClient
 	XMLModelWithRenamedArraysValueServer XMLModelWithRenamedArraysValueServer
 
+	// XMLModelWithRenamedAttributeValueServer contains the fakes for client XMLModelWithRenamedAttributeValueClient
+	XMLModelWithRenamedAttributeValueServer XMLModelWithRenamedAttributeValueServer
+
 	// XMLModelWithRenamedFieldsValueServer contains the fakes for client XMLModelWithRenamedFieldsValueClient
 	XMLModelWithRenamedFieldsValueServer XMLModelWithRenamedFieldsValueServer
+
+	// XMLModelWithRenamedNestedModelValueServer contains the fakes for client XMLModelWithRenamedNestedModelValueClient
+	XMLModelWithRenamedNestedModelValueServer XMLModelWithRenamedNestedModelValueServer
+
+	// XMLModelWithRenamedPropertyValueServer contains the fakes for client XMLModelWithRenamedPropertyValueClient
+	XMLModelWithRenamedPropertyValueServer XMLModelWithRenamedPropertyValueServer
+
+	// XMLModelWithRenamedUnwrappedModelArrayValueServer contains the fakes for client XMLModelWithRenamedUnwrappedModelArrayValueClient
+	XMLModelWithRenamedUnwrappedModelArrayValueServer XMLModelWithRenamedUnwrappedModelArrayValueServer
+
+	// XMLModelWithRenamedWrappedAndItemModelArrayValueServer contains the fakes for client XMLModelWithRenamedWrappedAndItemModelArrayValueClient
+	XMLModelWithRenamedWrappedAndItemModelArrayValueServer XMLModelWithRenamedWrappedAndItemModelArrayValueServer
+
+	// XMLModelWithRenamedWrappedModelArrayValueServer contains the fakes for client XMLModelWithRenamedWrappedModelArrayValueClient
+	XMLModelWithRenamedWrappedModelArrayValueServer XMLModelWithRenamedWrappedModelArrayValueServer
 
 	// XMLModelWithSimpleArraysValueServer contains the fakes for client XMLModelWithSimpleArraysValueClient
 	XMLModelWithSimpleArraysValueServer XMLModelWithSimpleArraysValueServer
@@ -53,6 +80,12 @@ type XMLServer struct {
 
 	// XMLModelWithUnwrappedArrayValueServer contains the fakes for client XMLModelWithUnwrappedArrayValueClient
 	XMLModelWithUnwrappedArrayValueServer XMLModelWithUnwrappedArrayValueServer
+
+	// XMLModelWithUnwrappedModelArrayValueServer contains the fakes for client XMLModelWithUnwrappedModelArrayValueClient
+	XMLModelWithUnwrappedModelArrayValueServer XMLModelWithUnwrappedModelArrayValueServer
+
+	// XMLModelWithWrappedPrimitiveCustomItemNamesValueServer contains the fakes for client XMLModelWithWrappedPrimitiveCustomItemNamesValueClient
+	XMLModelWithWrappedPrimitiveCustomItemNamesValueServer XMLModelWithWrappedPrimitiveCustomItemNamesValueServer
 
 	// XMLSimpleModelValueServer contains the fakes for client XMLSimpleModelValueClient
 	XMLSimpleModelValueServer XMLSimpleModelValueServer
@@ -71,23 +104,34 @@ func NewXMLServerTransport(srv *XMLServer) *XMLServerTransport {
 // XMLServerTransport connects instances of xmlgroup.XMLClient to instances of XMLServer.
 // Don't use this type directly, use NewXMLServerTransport instead.
 type XMLServerTransport struct {
-	srv                                     *XMLServer
-	trMu                                    sync.Mutex
-	trXMLModelWithArrayOfModelValueServer   *XMLModelWithArrayOfModelValueServerTransport
-	trXMLModelWithAttributesValueServer     *XMLModelWithAttributesValueServerTransport
-	trXMLModelWithDatetimeValueServer       *XMLModelWithDatetimeValueServerTransport
-	trXMLModelWithDictionaryValueServer     *XMLModelWithDictionaryValueServerTransport
-	trXMLModelWithEmptyArrayValueServer     *XMLModelWithEmptyArrayValueServerTransport
-	trXMLModelWithEncodedNamesValueServer   *XMLModelWithEncodedNamesValueServerTransport
-	trXMLModelWithEnumValueServer           *XMLModelWithEnumValueServerTransport
-	trXMLModelWithOptionalFieldValueServer  *XMLModelWithOptionalFieldValueServerTransport
-	trXMLModelWithRenamedArraysValueServer  *XMLModelWithRenamedArraysValueServerTransport
-	trXMLModelWithRenamedFieldsValueServer  *XMLModelWithRenamedFieldsValueServerTransport
-	trXMLModelWithSimpleArraysValueServer   *XMLModelWithSimpleArraysValueServerTransport
-	trXMLModelWithTextValueServer           *XMLModelWithTextValueServerTransport
-	trXMLModelWithUnwrappedArrayValueServer *XMLModelWithUnwrappedArrayValueServerTransport
-	trXMLSimpleModelValueServer             *XMLSimpleModelValueServerTransport
-	trXMLXMLErrorValueServer                *XMLXMLErrorValueServerTransport
+	srv                                                      *XMLServer
+	trMu                                                     sync.Mutex
+	trXMLModelWithArrayOfModelValueServer                    *XMLModelWithArrayOfModelValueServerTransport
+	trXMLModelWithAttributesValueServer                      *XMLModelWithAttributesValueServerTransport
+	trXMLModelWithDatetimeValueServer                        *XMLModelWithDatetimeValueServerTransport
+	trXMLModelWithDictionaryValueServer                      *XMLModelWithDictionaryValueServerTransport
+	trXMLModelWithEmptyArrayValueServer                      *XMLModelWithEmptyArrayValueServerTransport
+	trXMLModelWithEncodedNamesValueServer                    *XMLModelWithEncodedNamesValueServerTransport
+	trXMLModelWithEnumValueServer                            *XMLModelWithEnumValueServerTransport
+	trXMLModelWithNamespaceOnPropertiesValueServer           *XMLModelWithNamespaceOnPropertiesValueServerTransport
+	trXMLModelWithNamespaceValueServer                       *XMLModelWithNamespaceValueServerTransport
+	trXMLModelWithNestedModelValueServer                     *XMLModelWithNestedModelValueServerTransport
+	trXMLModelWithOptionalFieldValueServer                   *XMLModelWithOptionalFieldValueServerTransport
+	trXMLModelWithRenamedArraysValueServer                   *XMLModelWithRenamedArraysValueServerTransport
+	trXMLModelWithRenamedAttributeValueServer                *XMLModelWithRenamedAttributeValueServerTransport
+	trXMLModelWithRenamedFieldsValueServer                   *XMLModelWithRenamedFieldsValueServerTransport
+	trXMLModelWithRenamedNestedModelValueServer              *XMLModelWithRenamedNestedModelValueServerTransport
+	trXMLModelWithRenamedPropertyValueServer                 *XMLModelWithRenamedPropertyValueServerTransport
+	trXMLModelWithRenamedUnwrappedModelArrayValueServer      *XMLModelWithRenamedUnwrappedModelArrayValueServerTransport
+	trXMLModelWithRenamedWrappedAndItemModelArrayValueServer *XMLModelWithRenamedWrappedAndItemModelArrayValueServerTransport
+	trXMLModelWithRenamedWrappedModelArrayValueServer        *XMLModelWithRenamedWrappedModelArrayValueServerTransport
+	trXMLModelWithSimpleArraysValueServer                    *XMLModelWithSimpleArraysValueServerTransport
+	trXMLModelWithTextValueServer                            *XMLModelWithTextValueServerTransport
+	trXMLModelWithUnwrappedArrayValueServer                  *XMLModelWithUnwrappedArrayValueServerTransport
+	trXMLModelWithUnwrappedModelArrayValueServer             *XMLModelWithUnwrappedModelArrayValueServerTransport
+	trXMLModelWithWrappedPrimitiveCustomItemNamesValueServer *XMLModelWithWrappedPrimitiveCustomItemNamesValueServerTransport
+	trXMLSimpleModelValueServer                              *XMLSimpleModelValueServerTransport
+	trXMLXMLErrorValueServer                                 *XMLXMLErrorValueServerTransport
 }
 
 // Do implements the policy.Transporter interface for XMLServerTransport.
@@ -141,6 +185,21 @@ func (x *XMLServerTransport) dispatchToClientFake(req *http.Request, client stri
 			return NewXMLModelWithEnumValueServerTransport(&x.srv.XMLModelWithEnumValueServer)
 		})
 		resp, err = x.trXMLModelWithEnumValueServer.Do(req)
+	case "XMLModelWithNamespaceOnPropertiesValueClient":
+		initServer(&x.trMu, &x.trXMLModelWithNamespaceOnPropertiesValueServer, func() *XMLModelWithNamespaceOnPropertiesValueServerTransport {
+			return NewXMLModelWithNamespaceOnPropertiesValueServerTransport(&x.srv.XMLModelWithNamespaceOnPropertiesValueServer)
+		})
+		resp, err = x.trXMLModelWithNamespaceOnPropertiesValueServer.Do(req)
+	case "XMLModelWithNamespaceValueClient":
+		initServer(&x.trMu, &x.trXMLModelWithNamespaceValueServer, func() *XMLModelWithNamespaceValueServerTransport {
+			return NewXMLModelWithNamespaceValueServerTransport(&x.srv.XMLModelWithNamespaceValueServer)
+		})
+		resp, err = x.trXMLModelWithNamespaceValueServer.Do(req)
+	case "XMLModelWithNestedModelValueClient":
+		initServer(&x.trMu, &x.trXMLModelWithNestedModelValueServer, func() *XMLModelWithNestedModelValueServerTransport {
+			return NewXMLModelWithNestedModelValueServerTransport(&x.srv.XMLModelWithNestedModelValueServer)
+		})
+		resp, err = x.trXMLModelWithNestedModelValueServer.Do(req)
 	case "XMLModelWithOptionalFieldValueClient":
 		initServer(&x.trMu, &x.trXMLModelWithOptionalFieldValueServer, func() *XMLModelWithOptionalFieldValueServerTransport {
 			return NewXMLModelWithOptionalFieldValueServerTransport(&x.srv.XMLModelWithOptionalFieldValueServer)
@@ -151,11 +210,41 @@ func (x *XMLServerTransport) dispatchToClientFake(req *http.Request, client stri
 			return NewXMLModelWithRenamedArraysValueServerTransport(&x.srv.XMLModelWithRenamedArraysValueServer)
 		})
 		resp, err = x.trXMLModelWithRenamedArraysValueServer.Do(req)
+	case "XMLModelWithRenamedAttributeValueClient":
+		initServer(&x.trMu, &x.trXMLModelWithRenamedAttributeValueServer, func() *XMLModelWithRenamedAttributeValueServerTransport {
+			return NewXMLModelWithRenamedAttributeValueServerTransport(&x.srv.XMLModelWithRenamedAttributeValueServer)
+		})
+		resp, err = x.trXMLModelWithRenamedAttributeValueServer.Do(req)
 	case "XMLModelWithRenamedFieldsValueClient":
 		initServer(&x.trMu, &x.trXMLModelWithRenamedFieldsValueServer, func() *XMLModelWithRenamedFieldsValueServerTransport {
 			return NewXMLModelWithRenamedFieldsValueServerTransport(&x.srv.XMLModelWithRenamedFieldsValueServer)
 		})
 		resp, err = x.trXMLModelWithRenamedFieldsValueServer.Do(req)
+	case "XMLModelWithRenamedNestedModelValueClient":
+		initServer(&x.trMu, &x.trXMLModelWithRenamedNestedModelValueServer, func() *XMLModelWithRenamedNestedModelValueServerTransport {
+			return NewXMLModelWithRenamedNestedModelValueServerTransport(&x.srv.XMLModelWithRenamedNestedModelValueServer)
+		})
+		resp, err = x.trXMLModelWithRenamedNestedModelValueServer.Do(req)
+	case "XMLModelWithRenamedPropertyValueClient":
+		initServer(&x.trMu, &x.trXMLModelWithRenamedPropertyValueServer, func() *XMLModelWithRenamedPropertyValueServerTransport {
+			return NewXMLModelWithRenamedPropertyValueServerTransport(&x.srv.XMLModelWithRenamedPropertyValueServer)
+		})
+		resp, err = x.trXMLModelWithRenamedPropertyValueServer.Do(req)
+	case "XMLModelWithRenamedUnwrappedModelArrayValueClient":
+		initServer(&x.trMu, &x.trXMLModelWithRenamedUnwrappedModelArrayValueServer, func() *XMLModelWithRenamedUnwrappedModelArrayValueServerTransport {
+			return NewXMLModelWithRenamedUnwrappedModelArrayValueServerTransport(&x.srv.XMLModelWithRenamedUnwrappedModelArrayValueServer)
+		})
+		resp, err = x.trXMLModelWithRenamedUnwrappedModelArrayValueServer.Do(req)
+	case "XMLModelWithRenamedWrappedAndItemModelArrayValueClient":
+		initServer(&x.trMu, &x.trXMLModelWithRenamedWrappedAndItemModelArrayValueServer, func() *XMLModelWithRenamedWrappedAndItemModelArrayValueServerTransport {
+			return NewXMLModelWithRenamedWrappedAndItemModelArrayValueServerTransport(&x.srv.XMLModelWithRenamedWrappedAndItemModelArrayValueServer)
+		})
+		resp, err = x.trXMLModelWithRenamedWrappedAndItemModelArrayValueServer.Do(req)
+	case "XMLModelWithRenamedWrappedModelArrayValueClient":
+		initServer(&x.trMu, &x.trXMLModelWithRenamedWrappedModelArrayValueServer, func() *XMLModelWithRenamedWrappedModelArrayValueServerTransport {
+			return NewXMLModelWithRenamedWrappedModelArrayValueServerTransport(&x.srv.XMLModelWithRenamedWrappedModelArrayValueServer)
+		})
+		resp, err = x.trXMLModelWithRenamedWrappedModelArrayValueServer.Do(req)
 	case "XMLModelWithSimpleArraysValueClient":
 		initServer(&x.trMu, &x.trXMLModelWithSimpleArraysValueServer, func() *XMLModelWithSimpleArraysValueServerTransport {
 			return NewXMLModelWithSimpleArraysValueServerTransport(&x.srv.XMLModelWithSimpleArraysValueServer)
@@ -171,6 +260,16 @@ func (x *XMLServerTransport) dispatchToClientFake(req *http.Request, client stri
 			return NewXMLModelWithUnwrappedArrayValueServerTransport(&x.srv.XMLModelWithUnwrappedArrayValueServer)
 		})
 		resp, err = x.trXMLModelWithUnwrappedArrayValueServer.Do(req)
+	case "XMLModelWithUnwrappedModelArrayValueClient":
+		initServer(&x.trMu, &x.trXMLModelWithUnwrappedModelArrayValueServer, func() *XMLModelWithUnwrappedModelArrayValueServerTransport {
+			return NewXMLModelWithUnwrappedModelArrayValueServerTransport(&x.srv.XMLModelWithUnwrappedModelArrayValueServer)
+		})
+		resp, err = x.trXMLModelWithUnwrappedModelArrayValueServer.Do(req)
+	case "XMLModelWithWrappedPrimitiveCustomItemNamesValueClient":
+		initServer(&x.trMu, &x.trXMLModelWithWrappedPrimitiveCustomItemNamesValueServer, func() *XMLModelWithWrappedPrimitiveCustomItemNamesValueServerTransport {
+			return NewXMLModelWithWrappedPrimitiveCustomItemNamesValueServerTransport(&x.srv.XMLModelWithWrappedPrimitiveCustomItemNamesValueServer)
+		})
+		resp, err = x.trXMLModelWithWrappedPrimitiveCustomItemNamesValueServer.Do(req)
 	case "XMLSimpleModelValueClient":
 		initServer(&x.trMu, &x.trXMLSimpleModelValueServer, func() *XMLSimpleModelValueServerTransport {
 			return NewXMLSimpleModelValueServerTransport(&x.srv.XMLSimpleModelValueServer)

@@ -20,25 +20,39 @@ import (
 
 // NamingServer is a fake server for instances of the naminggroup.NamingClient type.
 type NamingServer struct {
-	// NamingHeaderServer contains the fakes for client NamingHeaderClient
-	NamingHeaderServer NamingHeaderServer
-
 	// NamingModelServer contains the fakes for client NamingModelClient
 	NamingModelServer NamingModelServer
 
-	// NamingPropertyServer contains the fakes for client NamingPropertyClient
-	NamingPropertyServer NamingPropertyServer
-
 	// NamingUnionEnumServer contains the fakes for client NamingUnionEnumClient
 	NamingUnionEnumServer NamingUnionEnumServer
+
+	// Client is the fake for method NamingClient.Client
+	// HTTP status codes to indicate success: http.StatusNoContent
+	Client func(ctx context.Context, body naminggroup.ClientNameModel, options *naminggroup.NamingClientClientOptions) (resp azfake.Responder[naminggroup.NamingClientClientResponse], errResp azfake.ErrorResponder)
 
 	// ClientName is the fake for method NamingClient.ClientName
 	// HTTP status codes to indicate success: http.StatusNoContent
 	ClientName func(ctx context.Context, options *naminggroup.NamingClientClientNameOptions) (resp azfake.Responder[naminggroup.NamingClientClientNameResponse], errResp azfake.ErrorResponder)
 
+	// CompatibleWithEncodedName is the fake for method NamingClient.CompatibleWithEncodedName
+	// HTTP status codes to indicate success: http.StatusNoContent
+	CompatibleWithEncodedName func(ctx context.Context, body naminggroup.ClientNameAndJSONEncodedNameModel, options *naminggroup.NamingClientCompatibleWithEncodedNameOptions) (resp azfake.Responder[naminggroup.NamingClientCompatibleWithEncodedNameResponse], errResp azfake.ErrorResponder)
+
+	// Language is the fake for method NamingClient.Language
+	// HTTP status codes to indicate success: http.StatusNoContent
+	Language func(ctx context.Context, body naminggroup.LanguageClientNameModel, options *naminggroup.NamingClientLanguageOptions) (resp azfake.Responder[naminggroup.NamingClientLanguageResponse], errResp azfake.ErrorResponder)
+
 	// Parameter is the fake for method NamingClient.Parameter
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Parameter func(ctx context.Context, clientName string, options *naminggroup.NamingClientParameterOptions) (resp azfake.Responder[naminggroup.NamingClientParameterResponse], errResp azfake.ErrorResponder)
+
+	// Request is the fake for method NamingClient.Request
+	// HTTP status codes to indicate success: http.StatusNoContent
+	Request func(ctx context.Context, clientName string, options *naminggroup.NamingClientRequestOptions) (resp azfake.Responder[naminggroup.NamingClientRequestResponse], errResp azfake.ErrorResponder)
+
+	// Response is the fake for method NamingClient.Response
+	// HTTP status codes to indicate success: http.StatusNoContent
+	Response func(ctx context.Context, options *naminggroup.NamingClientResponseOptions) (resp azfake.Responder[naminggroup.NamingClientResponseResponse], errResp azfake.ErrorResponder)
 }
 
 // NewNamingServerTransport creates a new instance of NamingServerTransport with the provided implementation.
@@ -53,9 +67,7 @@ func NewNamingServerTransport(srv *NamingServer) *NamingServerTransport {
 type NamingServerTransport struct {
 	srv                     *NamingServer
 	trMu                    sync.Mutex
-	trNamingHeaderServer    *NamingHeaderServerTransport
 	trNamingModelServer     *NamingModelServerTransport
-	trNamingPropertyServer  *NamingPropertyServerTransport
 	trNamingUnionEnumServer *NamingUnionEnumServerTransport
 }
 
@@ -78,21 +90,11 @@ func (n *NamingServerTransport) dispatchToClientFake(req *http.Request, client s
 	var err error
 
 	switch client {
-	case "NamingHeaderClient":
-		initServer(&n.trMu, &n.trNamingHeaderServer, func() *NamingHeaderServerTransport {
-			return NewNamingHeaderServerTransport(&n.srv.NamingHeaderServer)
-		})
-		resp, err = n.trNamingHeaderServer.Do(req)
 	case "NamingModelClient":
 		initServer(&n.trMu, &n.trNamingModelServer, func() *NamingModelServerTransport {
 			return NewNamingModelServerTransport(&n.srv.NamingModelServer)
 		})
 		resp, err = n.trNamingModelServer.Do(req)
-	case "NamingPropertyClient":
-		initServer(&n.trMu, &n.trNamingPropertyServer, func() *NamingPropertyServerTransport {
-			return NewNamingPropertyServerTransport(&n.srv.NamingPropertyServer)
-		})
-		resp, err = n.trNamingPropertyServer.Do(req)
 	case "NamingUnionEnumClient":
 		initServer(&n.trMu, &n.trNamingUnionEnumServer, func() *NamingUnionEnumServerTransport {
 			return NewNamingUnionEnumServerTransport(&n.srv.NamingUnionEnumServer)
@@ -117,10 +119,20 @@ func (n *NamingServerTransport) dispatchToMethodFake(req *http.Request, method s
 		}
 		if !intercepted {
 			switch method {
+			case "NamingClient.Client":
+				res.resp, res.err = n.dispatchClient(req)
 			case "NamingClient.ClientName":
 				res.resp, res.err = n.dispatchClientName(req)
+			case "NamingClient.CompatibleWithEncodedName":
+				res.resp, res.err = n.dispatchCompatibleWithEncodedName(req)
+			case "NamingClient.Language":
+				res.resp, res.err = n.dispatchLanguage(req)
 			case "NamingClient.Parameter":
 				res.resp, res.err = n.dispatchParameter(req)
+			case "NamingClient.Request":
+				res.resp, res.err = n.dispatchRequest(req)
+			case "NamingClient.Response":
+				res.resp, res.err = n.dispatchResponse(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
 			}
@@ -140,11 +152,80 @@ func (n *NamingServerTransport) dispatchToMethodFake(req *http.Request, method s
 	}
 }
 
+func (n *NamingServerTransport) dispatchClient(req *http.Request) (*http.Response, error) {
+	if n.srv.Client == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Client not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[naminggroup.ClientNameModel](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := n.srv.Client(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (n *NamingServerTransport) dispatchClientName(req *http.Request) (*http.Response, error) {
 	if n.srv.ClientName == nil {
 		return nil, &nonRetriableError{errors.New("fake for method ClientName not implemented")}
 	}
 	respr, errRespr := n.srv.ClientName(req.Context(), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (n *NamingServerTransport) dispatchCompatibleWithEncodedName(req *http.Request) (*http.Response, error) {
+	if n.srv.CompatibleWithEncodedName == nil {
+		return nil, &nonRetriableError{errors.New("fake for method CompatibleWithEncodedName not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[naminggroup.ClientNameAndJSONEncodedNameModel](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := n.srv.CompatibleWithEncodedName(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (n *NamingServerTransport) dispatchLanguage(req *http.Request) (*http.Response, error) {
+	if n.srv.Language == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Language not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[naminggroup.LanguageClientNameModel](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := n.srv.Language(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -179,6 +260,47 @@ func (n *NamingServerTransport) dispatchParameter(req *http.Request) (*http.Resp
 	resp, err := server.NewResponse(respContent, req, nil)
 	if err != nil {
 		return nil, err
+	}
+	return resp, nil
+}
+
+func (n *NamingServerTransport) dispatchRequest(req *http.Request) (*http.Response, error) {
+	if n.srv.Request == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Request not implemented")}
+	}
+	respr, errRespr := n.srv.Request(req.Context(), getHeaderValue(req.Header, "default-name"), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (n *NamingServerTransport) dispatchResponse(req *http.Request) (*http.Response, error) {
+	if n.srv.Response == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Response not implemented")}
+	}
+	respr, errRespr := n.srv.Response(req.Context(), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	if val := server.GetResponse(respr).ClientName; val != nil {
+		resp.Header.Set("default-name", *val)
 	}
 	return resp, nil
 }

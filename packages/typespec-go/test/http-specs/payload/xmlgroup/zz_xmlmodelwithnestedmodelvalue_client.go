@@ -12,42 +12,42 @@ import (
 	"net/http"
 )
 
-// XMLModelWithArrayOfModelValueClient - §4.1 — Operations for the ModelWithArrayOfModel type.
-// Don't use this type directly, use [XMLClient.NewXMLModelWithArrayOfModelValueClient] instead.
-type XMLModelWithArrayOfModelValueClient struct {
+// XMLModelWithNestedModelValueClient - §2.1 — Operations for the ModelWithNestedModel type.
+// Don't use this type directly, use [XMLClient.NewXMLModelWithNestedModelValueClient] instead.
+type XMLModelWithNestedModelValueClient struct {
 	internal *azcore.Client
 	endpoint string
 }
 
 // Get -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - options - XMLModelWithArrayOfModelValueClientGetOptions contains the optional parameters for the XMLModelWithArrayOfModelValueClient.Get
+//   - options - XMLModelWithNestedModelValueClientGetOptions contains the optional parameters for the XMLModelWithNestedModelValueClient.Get
 //     method.
-func (client *XMLModelWithArrayOfModelValueClient) Get(ctx context.Context, options *XMLModelWithArrayOfModelValueClientGetOptions) (XMLModelWithArrayOfModelValueClientGetResponse, error) {
+func (client *XMLModelWithNestedModelValueClient) Get(ctx context.Context, options *XMLModelWithNestedModelValueClientGetOptions) (XMLModelWithNestedModelValueClientGetResponse, error) {
 	var err error
-	const operationName = "XMLModelWithArrayOfModelValueClient.Get"
+	const operationName = "XMLModelWithNestedModelValueClient.Get"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return XMLModelWithArrayOfModelValueClientGetResponse{}, err
+		return XMLModelWithNestedModelValueClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return XMLModelWithArrayOfModelValueClientGetResponse{}, err
+		return XMLModelWithNestedModelValueClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return XMLModelWithArrayOfModelValueClientGetResponse{}, err
+		return XMLModelWithNestedModelValueClientGetResponse{}, err
 	}
 	resp, err := client.getHandleResponse(httpResp)
 	return resp, err
 }
 
 // getCreateRequest creates the Get request.
-func (client *XMLModelWithArrayOfModelValueClient) getCreateRequest(ctx context.Context, _ *XMLModelWithArrayOfModelValueClientGetOptions) (*policy.Request, error) {
-	urlPath := "/payload/xml/modelWithArrayOfModel"
+func (client *XMLModelWithNestedModelValueClient) getCreateRequest(ctx context.Context, _ *XMLModelWithNestedModelValueClientGetOptions) (*policy.Request, error) {
+	urlPath := "/payload/xml/modelWithNestedModel"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
@@ -57,45 +57,45 @@ func (client *XMLModelWithArrayOfModelValueClient) getCreateRequest(ctx context.
 }
 
 // getHandleResponse handles the Get response.
-func (client *XMLModelWithArrayOfModelValueClient) getHandleResponse(resp *http.Response) (XMLModelWithArrayOfModelValueClientGetResponse, error) {
-	result := XMLModelWithArrayOfModelValueClientGetResponse{}
+func (client *XMLModelWithNestedModelValueClient) getHandleResponse(resp *http.Response) (XMLModelWithNestedModelValueClientGetResponse, error) {
+	result := XMLModelWithNestedModelValueClientGetResponse{}
 	if val := resp.Header.Get("content-type"); val != "" {
 		result.ContentType = &val
 	}
-	if err := runtime.UnmarshalAsXML(resp, &result.ModelWithArrayOfModel); err != nil {
-		return XMLModelWithArrayOfModelValueClientGetResponse{}, err
+	if err := runtime.UnmarshalAsXML(resp, &result.ModelWithNestedModel); err != nil {
+		return XMLModelWithNestedModelValueClientGetResponse{}, err
 	}
 	return result, nil
 }
 
 // Put -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - options - XMLModelWithArrayOfModelValueClientPutOptions contains the optional parameters for the XMLModelWithArrayOfModelValueClient.Put
+//   - options - XMLModelWithNestedModelValueClientPutOptions contains the optional parameters for the XMLModelWithNestedModelValueClient.Put
 //     method.
-func (client *XMLModelWithArrayOfModelValueClient) Put(ctx context.Context, input ModelWithArrayOfModel, options *XMLModelWithArrayOfModelValueClientPutOptions) (XMLModelWithArrayOfModelValueClientPutResponse, error) {
+func (client *XMLModelWithNestedModelValueClient) Put(ctx context.Context, input ModelWithNestedModel, options *XMLModelWithNestedModelValueClientPutOptions) (XMLModelWithNestedModelValueClientPutResponse, error) {
 	var err error
-	const operationName = "XMLModelWithArrayOfModelValueClient.Put"
+	const operationName = "XMLModelWithNestedModelValueClient.Put"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, input, options)
 	if err != nil {
-		return XMLModelWithArrayOfModelValueClientPutResponse{}, err
+		return XMLModelWithNestedModelValueClientPutResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return XMLModelWithArrayOfModelValueClientPutResponse{}, err
+		return XMLModelWithNestedModelValueClientPutResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return XMLModelWithArrayOfModelValueClientPutResponse{}, err
+		return XMLModelWithNestedModelValueClientPutResponse{}, err
 	}
-	return XMLModelWithArrayOfModelValueClientPutResponse{}, nil
+	return XMLModelWithNestedModelValueClientPutResponse{}, nil
 }
 
 // putCreateRequest creates the Put request.
-func (client *XMLModelWithArrayOfModelValueClient) putCreateRequest(ctx context.Context, input ModelWithArrayOfModel, _ *XMLModelWithArrayOfModelValueClientPutOptions) (*policy.Request, error) {
-	urlPath := "/payload/xml/modelWithArrayOfModel"
+func (client *XMLModelWithNestedModelValueClient) putCreateRequest(ctx context.Context, input ModelWithNestedModel, _ *XMLModelWithNestedModelValueClientPutOptions) (*policy.Request, error) {
+	urlPath := "/payload/xml/modelWithNestedModel"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err

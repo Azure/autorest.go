@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// XMLModelWithSimpleArraysValueClient - Operations for the ModelWithSimpleArrays type.
+// XMLModelWithSimpleArraysValueClient - §3.1 — Operations for the ModelWithSimpleArrays type.
 // Don't use this type directly, use [XMLClient.NewXMLModelWithSimpleArraysValueClient] instead.
 type XMLModelWithSimpleArraysValueClient struct {
 	internal *azcore.Client

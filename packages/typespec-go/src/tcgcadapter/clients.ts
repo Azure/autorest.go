@@ -599,6 +599,17 @@ export class ClientAdapter {
 
     const paramMapping = this.adaptMethodParameters(sdkMethod, method);
 
+    // for LRO methods, the accept header must be application/json as the poller
+    // infrastructure always uses JSON for polling and final result deserialization.
+    if (go.isLROMethod(method)) {
+      for (const param of method.parameters) {
+        if (param.kind === 'headerScalarParam' && param.headerName.match(/^accept$/i) && go.isLiteralParameter(param.style)) {
+          param.type = new go.Literal(new go.String(), 'application/json');
+          break;
+        }
+      }
+    }
+
     // we must do this after adapting method params as it can add optional params
     this.ta.getPkg().paramGroups.push(this.adaptParameterGroup(method.optionalParamsGroup));
 

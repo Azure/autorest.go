@@ -21,6 +21,12 @@ type LROClientBeginOkResponseWithAsyncHeaderOptions struct {
 	ResumeToken string
 }
 
+// LROClientBeginScalarResultOptions contains the optional parameters for the LROClient.BeginScalarResult method.
+type LROClientBeginScalarResultOptions struct {
+	// Resumes the long-running operation from the provided token.
+	ResumeToken string
+}
+
 // Request options for test operations
 type ManagementRequestOptions struct {
 	// Client request ID for tracking

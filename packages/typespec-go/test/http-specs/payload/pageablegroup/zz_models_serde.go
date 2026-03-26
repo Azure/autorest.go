@@ -12,6 +12,33 @@ import (
 	"reflect"
 )
 
+// MarshalJSON implements the json.Marshaller interface for type Filter.
+func (f Filter) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "filter", f.Filter)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type Filter.
+func (f *Filter) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", f, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "filter":
+			err = unpopulate(val, "Filter", &f.Filter)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", f, err)
+		}
+	}
+	return nil
+}
+
 // MarshalJSON implements the json.Marshaller interface for type LinkResponse.
 func (l LinkResponse) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
@@ -235,6 +262,37 @@ func (p *Pet) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "name":
 			err = unpopulate(val, "Name", &p.Name)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", p, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PostResponse.
+func (p PostResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "next", p.Next)
+	populate(objectMap, "pets", p.Pets)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type PostResponse.
+func (p *PostResponse) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", p, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "next":
+			err = unpopulate(val, "Next", &p.Next)
+			delete(rawMsg, key)
+		case "pets":
+			err = unpopulate(val, "Pets", &p.Pets)
 			delete(rawMsg, key)
 		}
 		if err != nil {

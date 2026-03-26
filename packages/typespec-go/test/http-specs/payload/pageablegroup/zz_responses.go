@@ -14,6 +14,11 @@ type PageablePageSizeClientListWithoutContinuationResponse struct {
 	ListWithoutContinuationResponse
 }
 
+// PageableServerDrivenPaginationAlternateInitialVerbClientPostResponse contains the response from method PageableServerDrivenPaginationAlternateInitialVerbClient.NewPostPager.
+type PageableServerDrivenPaginationAlternateInitialVerbClientPostResponse struct {
+	PostResponse
+}
+
 // PageableServerDrivenPaginationClientLinkResponse contains the response from method PageableServerDrivenPaginationClient.NewLinkPager.
 type PageableServerDrivenPaginationClientLinkResponse struct {
 	LinkResponse

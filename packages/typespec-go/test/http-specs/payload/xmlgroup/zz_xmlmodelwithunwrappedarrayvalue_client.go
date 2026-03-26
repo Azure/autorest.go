@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// XMLModelWithUnwrappedArrayValueClient - Operations for the ModelWithUnwrappedArray type.
+// XMLModelWithUnwrappedArrayValueClient - §3.2 — Operations for the ModelWithUnwrappedArray type.
 // Don't use this type directly, use [XMLClient.NewXMLModelWithUnwrappedArrayValueClient] instead.
 type XMLModelWithUnwrappedArrayValueClient struct {
 	internal *azcore.Client

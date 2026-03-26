@@ -6,7 +6,7 @@ package xmlgroup
 
 // XMLModelWithArrayOfModelValueClientGetResponse contains the response from method XMLModelWithArrayOfModelValueClient.Get.
 type XMLModelWithArrayOfModelValueClientGetResponse struct {
-	// Contains an array of models.
+	// §4.1 — Contains an array of models.
 	ModelWithArrayOfModel
 	ContentType *string
 }
@@ -18,7 +18,7 @@ type XMLModelWithArrayOfModelValueClientPutResponse struct {
 
 // XMLModelWithAttributesValueClientGetResponse contains the response from method XMLModelWithAttributesValueClient.Get.
 type XMLModelWithAttributesValueClientGetResponse struct {
-	// Contains fields that are XML attributes.
+	// §5.1 — Contains fields that are XML attributes.
 	ModelWithAttributes
 	ContentType *string
 }
@@ -88,6 +88,42 @@ type XMLModelWithEnumValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
+// XMLModelWithNamespaceOnPropertiesValueClientGetResponse contains the response from method XMLModelWithNamespaceOnPropertiesValueClient.Get.
+type XMLModelWithNamespaceOnPropertiesValueClientGetResponse struct {
+	// §6.2, §7.2 — Contains fields with different XML namespaces on individual properties.
+	ModelWithNamespaceOnProperties
+	ContentType *string
+}
+
+// XMLModelWithNamespaceOnPropertiesValueClientPutResponse contains the response from method XMLModelWithNamespaceOnPropertiesValueClient.Put.
+type XMLModelWithNamespaceOnPropertiesValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
+// XMLModelWithNamespaceValueClientGetResponse contains the response from method XMLModelWithNamespaceValueClient.Get.
+type XMLModelWithNamespaceValueClientGetResponse struct {
+	// §6.1, §7.1 — Contains fields with XML namespace on the model.
+	ModelWithNamespace
+	ContentType *string
+}
+
+// XMLModelWithNamespaceValueClientPutResponse contains the response from method XMLModelWithNamespaceValueClient.Put.
+type XMLModelWithNamespaceValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
+// XMLModelWithNestedModelValueClientGetResponse contains the response from method XMLModelWithNestedModelValueClient.Get.
+type XMLModelWithNestedModelValueClientGetResponse struct {
+	// §2.1 — Contains a property that references another model.
+	ModelWithNestedModel
+	ContentType *string
+}
+
+// XMLModelWithNestedModelValueClientPutResponse contains the response from method XMLModelWithNestedModelValueClient.Put.
+type XMLModelWithNestedModelValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
 // XMLModelWithOptionalFieldValueClientGetResponse contains the response from method XMLModelWithOptionalFieldValueClient.Get.
 type XMLModelWithOptionalFieldValueClientGetResponse struct {
 	// Contains an optional field.
@@ -102,7 +138,7 @@ type XMLModelWithOptionalFieldValueClientPutResponse struct {
 
 // XMLModelWithRenamedArraysValueClientGetResponse contains the response from method XMLModelWithRenamedArraysValueClient.Get.
 type XMLModelWithRenamedArraysValueClientGetResponse struct {
-	// Contains fields of wrapped and unwrapped arrays of primitive types that have different XML representations.
+	// §3.3, §3.4 — Contains fields of wrapped and unwrapped arrays of primitive types that have different XML representations.
 	ModelWithRenamedArrays
 	ContentType *string
 }
@@ -112,9 +148,21 @@ type XMLModelWithRenamedArraysValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
+// XMLModelWithRenamedAttributeValueClientGetResponse contains the response from method XMLModelWithRenamedAttributeValueClient.Get.
+type XMLModelWithRenamedAttributeValueClientGetResponse struct {
+	// §5.2 — Contains a renamed XML attribute.
+	ModelWithRenamedAttribute
+	ContentType *string
+}
+
+// XMLModelWithRenamedAttributeValueClientPutResponse contains the response from method XMLModelWithRenamedAttributeValueClient.Put.
+type XMLModelWithRenamedAttributeValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
 // XMLModelWithRenamedFieldsValueClientGetResponse contains the response from method XMLModelWithRenamedFieldsValueClient.Get.
 type XMLModelWithRenamedFieldsValueClientGetResponse struct {
-	// Contains fields of the same type that have different XML representation.
+	// §1.3, §2.3 — Contains fields of the same type that have different XML representation.
 	ModelWithRenamedFields
 	ContentType *string
 }
@@ -124,9 +172,69 @@ type XMLModelWithRenamedFieldsValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
+// XMLModelWithRenamedNestedModelValueClientGetResponse contains the response from method XMLModelWithRenamedNestedModelValueClient.Get.
+type XMLModelWithRenamedNestedModelValueClientGetResponse struct {
+	// §2.2 — Contains a property whose type has
+	ModelWithRenamedNestedModel
+	ContentType *string
+}
+
+// XMLModelWithRenamedNestedModelValueClientPutResponse contains the response from method XMLModelWithRenamedNestedModelValueClient.Put.
+type XMLModelWithRenamedNestedModelValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
+// XMLModelWithRenamedPropertyValueClientGetResponse contains the response from method XMLModelWithRenamedPropertyValueClient.Get.
+type XMLModelWithRenamedPropertyValueClientGetResponse struct {
+	// §1.2 — Contains a scalar property with a custom XML name.
+	ModelWithRenamedProperty
+	ContentType *string
+}
+
+// XMLModelWithRenamedPropertyValueClientPutResponse contains the response from method XMLModelWithRenamedPropertyValueClient.Put.
+type XMLModelWithRenamedPropertyValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
+// XMLModelWithRenamedUnwrappedModelArrayValueClientGetResponse contains the response from method XMLModelWithRenamedUnwrappedModelArrayValueClient.Get.
+type XMLModelWithRenamedUnwrappedModelArrayValueClientGetResponse struct {
+	// §4.4 — Contains an unwrapped array of models with a custom item name.
+	ModelWithRenamedUnwrappedModelArray
+	ContentType *string
+}
+
+// XMLModelWithRenamedUnwrappedModelArrayValueClientPutResponse contains the response from method XMLModelWithRenamedUnwrappedModelArrayValueClient.Put.
+type XMLModelWithRenamedUnwrappedModelArrayValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
+// XMLModelWithRenamedWrappedAndItemModelArrayValueClientGetResponse contains the response from method XMLModelWithRenamedWrappedAndItemModelArrayValueClient.Get.
+type XMLModelWithRenamedWrappedAndItemModelArrayValueClientGetResponse struct {
+	// §4.5 — Contains a wrapped array of models with custom wrapper and item names.
+	ModelWithRenamedWrappedAndItemModelArray
+	ContentType *string
+}
+
+// XMLModelWithRenamedWrappedAndItemModelArrayValueClientPutResponse contains the response from method XMLModelWithRenamedWrappedAndItemModelArrayValueClient.Put.
+type XMLModelWithRenamedWrappedAndItemModelArrayValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
+// XMLModelWithRenamedWrappedModelArrayValueClientGetResponse contains the response from method XMLModelWithRenamedWrappedModelArrayValueClient.Get.
+type XMLModelWithRenamedWrappedModelArrayValueClientGetResponse struct {
+	// §4.3 — Contains a wrapped array of models with a custom wrapper name.
+	ModelWithRenamedWrappedModelArray
+	ContentType *string
+}
+
+// XMLModelWithRenamedWrappedModelArrayValueClientPutResponse contains the response from method XMLModelWithRenamedWrappedModelArrayValueClient.Put.
+type XMLModelWithRenamedWrappedModelArrayValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
 // XMLModelWithSimpleArraysValueClientGetResponse contains the response from method XMLModelWithSimpleArraysValueClient.Get.
 type XMLModelWithSimpleArraysValueClientGetResponse struct {
-	// Contains fields of arrays of primitive types.
+	// §3.1 — Contains fields of arrays of primitive types.
 	ModelWithSimpleArrays
 	ContentType *string
 }
@@ -138,7 +246,7 @@ type XMLModelWithSimpleArraysValueClientPutResponse struct {
 
 // XMLModelWithTextValueClientGetResponse contains the response from method XMLModelWithTextValueClient.Get.
 type XMLModelWithTextValueClientGetResponse struct {
-	// Contains an attribute and text.
+	// §8.1 — Contains an attribute and text.
 	ModelWithText
 	ContentType *string
 }
@@ -150,7 +258,7 @@ type XMLModelWithTextValueClientPutResponse struct {
 
 // XMLModelWithUnwrappedArrayValueClientGetResponse contains the response from method XMLModelWithUnwrappedArrayValueClient.Get.
 type XMLModelWithUnwrappedArrayValueClientGetResponse struct {
-	// Contains fields of wrapped and unwrapped arrays of primitive types.
+	// §3.2 — Contains fields of wrapped and unwrapped arrays of primitive types.
 	ModelWithUnwrappedArray
 	ContentType *string
 }
@@ -160,9 +268,33 @@ type XMLModelWithUnwrappedArrayValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
+// XMLModelWithUnwrappedModelArrayValueClientGetResponse contains the response from method XMLModelWithUnwrappedModelArrayValueClient.Get.
+type XMLModelWithUnwrappedModelArrayValueClientGetResponse struct {
+	// §4.2 — Contains an unwrapped array of models.
+	ModelWithUnwrappedModelArray
+	ContentType *string
+}
+
+// XMLModelWithUnwrappedModelArrayValueClientPutResponse contains the response from method XMLModelWithUnwrappedModelArrayValueClient.Put.
+type XMLModelWithUnwrappedModelArrayValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
+// XMLModelWithWrappedPrimitiveCustomItemNamesValueClientGetResponse contains the response from method XMLModelWithWrappedPrimitiveCustomItemNamesValueClient.Get.
+type XMLModelWithWrappedPrimitiveCustomItemNamesValueClientGetResponse struct {
+	// §3.5 — Contains a wrapped primitive array with custom wrapper and item names.
+	ModelWithWrappedPrimitiveCustomItemNames
+	ContentType *string
+}
+
+// XMLModelWithWrappedPrimitiveCustomItemNamesValueClientPutResponse contains the response from method XMLModelWithWrappedPrimitiveCustomItemNamesValueClient.Put.
+type XMLModelWithWrappedPrimitiveCustomItemNamesValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
 // XMLSimpleModelValueClientGetResponse contains the response from method XMLSimpleModelValueClient.Get.
 type XMLSimpleModelValueClientGetResponse struct {
-	// Contains fields of primitive types.
+	// §1.1 — Contains fields of primitive types.
 	SimpleModel
 	ContentType *string
 }
@@ -174,7 +306,7 @@ type XMLSimpleModelValueClientPutResponse struct {
 
 // XMLXMLErrorValueClientGetResponse contains the response from method XMLXMLErrorValueClient.Get.
 type XMLXMLErrorValueClientGetResponse struct {
-	// Contains fields of primitive types.
+	// §1.1 — Contains fields of primitive types.
 	SimpleModel
 	ContentType *string
 }

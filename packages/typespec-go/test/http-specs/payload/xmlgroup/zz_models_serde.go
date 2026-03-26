@@ -14,6 +14,30 @@ import (
 	"time"
 )
 
+// MarshalXML implements the xml.Marshaller interface for type Author.
+func (a Author) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "XmlAuthor"
+	type alias Author
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&a),
+	}
+	return enc.EncodeElement(aux, start)
+}
+
+// MarshalXML implements the xml.Marshaller interface for type Book.
+func (b Book) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "XmlBook"
+	type alias Book
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&b),
+	}
+	return enc.EncodeElement(aux, start)
+}
+
 // MarshalXML implements the xml.Marshaller interface for type ModelWithArrayOfModel.
 func (m ModelWithArrayOfModel) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias ModelWithArrayOfModel
@@ -157,6 +181,51 @@ func (m ModelWithRenamedFields) MarshalXML(enc *xml.Encoder, start xml.StartElem
 	return enc.EncodeElement(aux, start)
 }
 
+// MarshalXML implements the xml.Marshaller interface for type ModelWithRenamedUnwrappedModelArray.
+func (m ModelWithRenamedUnwrappedModelArray) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	type alias ModelWithRenamedUnwrappedModelArray
+	aux := &struct {
+		*alias
+		Items *[]SimpleModel `xml:"ModelItem"`
+	}{
+		alias: (*alias)(&m),
+	}
+	if m.Items != nil {
+		aux.Items = &m.Items
+	}
+	return enc.EncodeElement(aux, start)
+}
+
+// MarshalXML implements the xml.Marshaller interface for type ModelWithRenamedWrappedAndItemModelArray.
+func (m ModelWithRenamedWrappedAndItemModelArray) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	type alias ModelWithRenamedWrappedAndItemModelArray
+	aux := &struct {
+		*alias
+		Books *[]Book `xml:"AllBooks>Book"`
+	}{
+		alias: (*alias)(&m),
+	}
+	if m.Books != nil {
+		aux.Books = &m.Books
+	}
+	return enc.EncodeElement(aux, start)
+}
+
+// MarshalXML implements the xml.Marshaller interface for type ModelWithRenamedWrappedModelArray.
+func (m ModelWithRenamedWrappedModelArray) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	type alias ModelWithRenamedWrappedModelArray
+	aux := &struct {
+		*alias
+		Items *[]SimpleModel `xml:"AllItems>SimpleModel"`
+	}{
+		alias: (*alias)(&m),
+	}
+	if m.Items != nil {
+		aux.Items = &m.Items
+	}
+	return enc.EncodeElement(aux, start)
+}
+
 // MarshalXML implements the xml.Marshaller interface for type ModelWithSimpleArrays.
 func (m ModelWithSimpleArrays) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias ModelWithSimpleArrays
@@ -191,6 +260,36 @@ func (m ModelWithUnwrappedArray) MarshalXML(enc *xml.Encoder, start xml.StartEle
 	}
 	if m.Counts != nil {
 		aux.Counts = &m.Counts
+	}
+	return enc.EncodeElement(aux, start)
+}
+
+// MarshalXML implements the xml.Marshaller interface for type ModelWithUnwrappedModelArray.
+func (m ModelWithUnwrappedModelArray) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	type alias ModelWithUnwrappedModelArray
+	aux := &struct {
+		*alias
+		Items *[]SimpleModel `xml:"items"`
+	}{
+		alias: (*alias)(&m),
+	}
+	if m.Items != nil {
+		aux.Items = &m.Items
+	}
+	return enc.EncodeElement(aux, start)
+}
+
+// MarshalXML implements the xml.Marshaller interface for type ModelWithWrappedPrimitiveCustomItemNames.
+func (m ModelWithWrappedPrimitiveCustomItemNames) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	type alias ModelWithWrappedPrimitiveCustomItemNames
+	aux := &struct {
+		*alias
+		Tags *[]string `xml:"ItemsTags>string"`
+	}{
+		alias: (*alias)(&m),
+	}
+	if m.Tags != nil {
+		aux.Tags = &m.Tags
 	}
 	return enc.EncodeElement(aux, start)
 }

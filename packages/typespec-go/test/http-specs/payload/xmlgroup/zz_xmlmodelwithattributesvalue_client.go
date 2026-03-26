@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// XMLModelWithAttributesValueClient - Operations for the ModelWithAttributes type.
+// XMLModelWithAttributesValueClient - §5.1 — Operations for the ModelWithAttributes type.
 // Don't use this type directly, use [XMLClient.NewXMLModelWithAttributesValueClient] instead.
 type XMLModelWithAttributesValueClient struct {
 	internal *azcore.Client

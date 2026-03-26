@@ -12,42 +12,42 @@ import (
 	"net/http"
 )
 
-// XMLModelWithArrayOfModelValueClient - §4.1 — Operations for the ModelWithArrayOfModel type.
-// Don't use this type directly, use [XMLClient.NewXMLModelWithArrayOfModelValueClient] instead.
-type XMLModelWithArrayOfModelValueClient struct {
+// XMLModelWithNamespaceValueClient - §6.1, §7.1 — Operations for the ModelWithNamespace type.
+// Don't use this type directly, use [XMLClient.NewXMLModelWithNamespaceValueClient] instead.
+type XMLModelWithNamespaceValueClient struct {
 	internal *azcore.Client
 	endpoint string
 }
 
 // Get -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - options - XMLModelWithArrayOfModelValueClientGetOptions contains the optional parameters for the XMLModelWithArrayOfModelValueClient.Get
+//   - options - XMLModelWithNamespaceValueClientGetOptions contains the optional parameters for the XMLModelWithNamespaceValueClient.Get
 //     method.
-func (client *XMLModelWithArrayOfModelValueClient) Get(ctx context.Context, options *XMLModelWithArrayOfModelValueClientGetOptions) (XMLModelWithArrayOfModelValueClientGetResponse, error) {
+func (client *XMLModelWithNamespaceValueClient) Get(ctx context.Context, options *XMLModelWithNamespaceValueClientGetOptions) (XMLModelWithNamespaceValueClientGetResponse, error) {
 	var err error
-	const operationName = "XMLModelWithArrayOfModelValueClient.Get"
+	const operationName = "XMLModelWithNamespaceValueClient.Get"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return XMLModelWithArrayOfModelValueClientGetResponse{}, err
+		return XMLModelWithNamespaceValueClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return XMLModelWithArrayOfModelValueClientGetResponse{}, err
+		return XMLModelWithNamespaceValueClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return XMLModelWithArrayOfModelValueClientGetResponse{}, err
+		return XMLModelWithNamespaceValueClientGetResponse{}, err
 	}
 	resp, err := client.getHandleResponse(httpResp)
 	return resp, err
 }
 
 // getCreateRequest creates the Get request.
-func (client *XMLModelWithArrayOfModelValueClient) getCreateRequest(ctx context.Context, _ *XMLModelWithArrayOfModelValueClientGetOptions) (*policy.Request, error) {
-	urlPath := "/payload/xml/modelWithArrayOfModel"
+func (client *XMLModelWithNamespaceValueClient) getCreateRequest(ctx context.Context, _ *XMLModelWithNamespaceValueClientGetOptions) (*policy.Request, error) {
+	urlPath := "/payload/xml/modelWithNamespace"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
@@ -57,45 +57,45 @@ func (client *XMLModelWithArrayOfModelValueClient) getCreateRequest(ctx context.
 }
 
 // getHandleResponse handles the Get response.
-func (client *XMLModelWithArrayOfModelValueClient) getHandleResponse(resp *http.Response) (XMLModelWithArrayOfModelValueClientGetResponse, error) {
-	result := XMLModelWithArrayOfModelValueClientGetResponse{}
+func (client *XMLModelWithNamespaceValueClient) getHandleResponse(resp *http.Response) (XMLModelWithNamespaceValueClientGetResponse, error) {
+	result := XMLModelWithNamespaceValueClientGetResponse{}
 	if val := resp.Header.Get("content-type"); val != "" {
 		result.ContentType = &val
 	}
-	if err := runtime.UnmarshalAsXML(resp, &result.ModelWithArrayOfModel); err != nil {
-		return XMLModelWithArrayOfModelValueClientGetResponse{}, err
+	if err := runtime.UnmarshalAsXML(resp, &result.ModelWithNamespace); err != nil {
+		return XMLModelWithNamespaceValueClientGetResponse{}, err
 	}
 	return result, nil
 }
 
 // Put -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - options - XMLModelWithArrayOfModelValueClientPutOptions contains the optional parameters for the XMLModelWithArrayOfModelValueClient.Put
+//   - options - XMLModelWithNamespaceValueClientPutOptions contains the optional parameters for the XMLModelWithNamespaceValueClient.Put
 //     method.
-func (client *XMLModelWithArrayOfModelValueClient) Put(ctx context.Context, input ModelWithArrayOfModel, options *XMLModelWithArrayOfModelValueClientPutOptions) (XMLModelWithArrayOfModelValueClientPutResponse, error) {
+func (client *XMLModelWithNamespaceValueClient) Put(ctx context.Context, input ModelWithNamespace, options *XMLModelWithNamespaceValueClientPutOptions) (XMLModelWithNamespaceValueClientPutResponse, error) {
 	var err error
-	const operationName = "XMLModelWithArrayOfModelValueClient.Put"
+	const operationName = "XMLModelWithNamespaceValueClient.Put"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, input, options)
 	if err != nil {
-		return XMLModelWithArrayOfModelValueClientPutResponse{}, err
+		return XMLModelWithNamespaceValueClientPutResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return XMLModelWithArrayOfModelValueClientPutResponse{}, err
+		return XMLModelWithNamespaceValueClientPutResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return XMLModelWithArrayOfModelValueClientPutResponse{}, err
+		return XMLModelWithNamespaceValueClientPutResponse{}, err
 	}
-	return XMLModelWithArrayOfModelValueClientPutResponse{}, nil
+	return XMLModelWithNamespaceValueClientPutResponse{}, nil
 }
 
 // putCreateRequest creates the Put request.
-func (client *XMLModelWithArrayOfModelValueClient) putCreateRequest(ctx context.Context, input ModelWithArrayOfModel, _ *XMLModelWithArrayOfModelValueClientPutOptions) (*policy.Request, error) {
-	urlPath := "/payload/xml/modelWithArrayOfModel"
+func (client *XMLModelWithNamespaceValueClient) putCreateRequest(ctx context.Context, input ModelWithNamespace, _ *XMLModelWithNamespaceValueClientPutOptions) (*policy.Request, error) {
+	urlPath := "/payload/xml/modelWithNamespace"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
