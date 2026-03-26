@@ -31,6 +31,12 @@ type InnerSpreadParam struct {
 	Name *string
 }
 
+type QueueItem struct {
+	// REQUIRED
+	Name     *string            `xml:"Name"`
+	Metadata map[string]*string `xml:"Metadata"`
+}
+
 type SignedIdentifier struct {
 	// REQUIRED
 	ID *string `xml:"Id"`

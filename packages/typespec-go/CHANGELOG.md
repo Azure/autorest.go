@@ -6,6 +6,7 @@
 
 * Fixed discriminated types without subtypes not being generated as polymorphic types.
 * Fixed some corner-cases when (un)marshaling slices in XML format.
+* Fixed missing XML unmarshaler for `map` helpers in some cases.
 
 ### Other Changes
 

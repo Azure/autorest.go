@@ -29,6 +29,12 @@ type ClientGetDiscriminatedNoSubTypesResponse struct {
 	DiscriminatedBaseNoSubTypesClassification
 }
 
+// ClientGetQueueResponse contains the response from method Client.GetQueue.
+type ClientGetQueueResponse struct {
+	QueueItem
+	ContentType *string
+}
+
 // ClientGetXMLOneResponse contains the response from method Client.GetXMLOne.
 type ClientGetXMLOneResponse struct {
 	ContentType       *string

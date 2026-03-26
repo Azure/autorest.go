@@ -35,6 +35,10 @@ type Server struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	GetDiscriminatedNoSubTypes func(ctx context.Context, options *azregressions.ClientGetDiscriminatedNoSubTypesOptions) (resp azfake.Responder[azregressions.ClientGetDiscriminatedNoSubTypesResponse], errResp azfake.ErrorResponder)
 
+	// GetQueue is the fake for method Client.GetQueue
+	// HTTP status codes to indicate success: http.StatusOK
+	GetQueue func(ctx context.Context, options *azregressions.ClientGetQueueOptions) (resp azfake.Responder[azregressions.ClientGetQueueResponse], errResp azfake.ErrorResponder)
+
 	// GetXMLOne is the fake for method Client.GetXMLOne
 	// HTTP status codes to indicate success: http.StatusOK
 	GetXMLOne func(ctx context.Context, options *azregressions.ClientGetXMLOneOptions) (resp azfake.Responder[azregressions.ClientGetXMLOneResponse], errResp azfake.ErrorResponder)
@@ -100,6 +104,8 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 				res.resp, res.err = s.dispatchForceRequiredBodyPut(req)
 			case "Client.GetDiscriminatedNoSubTypes":
 				res.resp, res.err = s.dispatchGetDiscriminatedNoSubTypes(req)
+			case "Client.GetQueue":
+				res.resp, res.err = s.dispatchGetQueue(req)
 			case "Client.GetXMLOne":
 				res.resp, res.err = s.dispatchGetXMLOne(req)
 			case "Client.GetXMLTwo":
@@ -215,6 +221,28 @@ func (s *ServerTransport) dispatchGetDiscriminatedNoSubTypes(req *http.Request) 
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).DiscriminatedBaseNoSubTypesClassification, req)
 	if err != nil {
 		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchGetQueue(req *http.Request) (*http.Response, error) {
+	if s.srv.GetQueue == nil {
+		return nil, &nonRetriableError{errors.New("fake for method GetQueue not implemented")}
+	}
+	respr, errRespr := s.srv.GetQueue(req.Context(), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsXML(respContent, server.GetResponse(respr).QueueItem, req)
+	if err != nil {
+		return nil, err
+	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("Content-Type", "application/xml")
 	}
 	return resp, nil
 }
