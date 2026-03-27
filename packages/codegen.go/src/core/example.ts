@@ -214,7 +214,7 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
           exampleText += `\t}\n`;
         } else if (example.responseEnvelope) {
           // if has fieldName, then the result is not a model type
-          const fieldName = (method.returns as any).fieldName;
+          const fieldName = (method.returns.result as any)?.fieldName;
           exampleText += `\t// You could use response here. We use blank identifier for just demo purposes.\n`;
           exampleText += `\t_ = res\n`;
 
@@ -223,7 +223,7 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
           for (const header of example.responseEnvelope?.headers ?? []) {
             exampleText += `\t// \t${header.header.fieldName}: ${getExampleValue(pkg, header.value, '', undefined, true).split('\n').join('\n\t// \t')}\n`;
           }
-          if (example.responseEnvelope?.result) {
+          if (example.responseEnvelope?.result && method.returns.result?.kind !== 'binaryResult') {
             exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result, '').split('\n').join('\n\t// \t')},\n`;
           }
           exampleText += '\t// }\n';
