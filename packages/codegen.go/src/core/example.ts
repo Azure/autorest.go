@@ -225,15 +225,7 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
           }
           if (example.responseEnvelope?.result) {
             const isBinaryResult = method.returns.result?.kind === 'binaryResult';
-            let resultValue: string;
-            if (isBinaryResult) {
-              // io.ReadCloser requires wrapping the value in a reader
-              const innerValue = getExampleValue(pkg, example.responseEnvelope.result, '', undefined, true);
-              resultValue = `io.NopCloser(bytes.NewReader([]byte(${innerValue})))`;
-            } else {
-              resultValue = getExampleValue(pkg, example.responseEnvelope.result, '', undefined, false);
-            }
-            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${resultValue.split('\n').join('\n\t// \t')},\n`;
+            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result, '', undefined, isBinaryResult).split('\n').join('\n\t// \t')},\n`;
           }
           exampleText += '\t// }\n';
         }
@@ -268,6 +260,8 @@ function getExampleValue(pkg: go.TestPackage, example: go.ExampleType, indent: s
       } else if (example.type.kind === 'etag') {
         imports?.add(example.type.module);
         exampleText = `${go.getTypeDeclaration(example.type, pkg)}("${escapeString(example.value)}")`;
+      } else if (example.type.kind === 'scalar' && example.type.type === 'byte') {
+        exampleText = `io.NopCloser(bytes.NewReader([]byte("${escapeString(example.value)}")))`;
       }
       return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
     }
