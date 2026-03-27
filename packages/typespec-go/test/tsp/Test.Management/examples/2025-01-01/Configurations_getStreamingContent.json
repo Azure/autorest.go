@@ -1,0 +1,18 @@
+{
+    "operationId": "Configurations_getStreamingContent",
+    "title": "Configurations_getStreamingContent",
+    "parameters": {
+        "api-version": "2025-01-01",
+        "subscriptionId": "00000000-0000-0000-0000-000000000000",
+        "resourceGroupName": "myResourceGroup",
+        "configurationName": "myConfiguration"
+    },
+    "responses": {
+        "200": {
+            "headers": {
+                "Content-Type": "text/powershell"
+            },
+            "body": "Configuration file content as a streaming response"
+        }
+    }
+}

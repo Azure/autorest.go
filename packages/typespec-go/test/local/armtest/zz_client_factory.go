@@ -40,6 +40,14 @@ func (c *ClientFactory) NewBodyRootsClient() *BodyRootsClient {
 	}
 }
 
+// NewConfigurationsClient creates a new instance of ConfigurationsClient.
+func (c *ClientFactory) NewConfigurationsClient() *ConfigurationsClient {
+	return &ConfigurationsClient{
+		subscriptionID: c.subscriptionID,
+		internal:       c.internal,
+	}
+}
+
 // NewLROClient creates a new instance of LROClient.
 func (c *ClientFactory) NewLROClient() *LROClient {
 	return &LROClient{

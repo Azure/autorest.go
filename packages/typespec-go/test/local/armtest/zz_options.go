@@ -14,6 +14,17 @@ type BodyRootsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
+// ConfigurationsClientGetContentOptions contains the optional parameters for the ConfigurationsClient.GetContent method.
+type ConfigurationsClientGetContentOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ConfigurationsClientGetStreamingContentOptions contains the optional parameters for the ConfigurationsClient.GetStreamingContent
+// method.
+type ConfigurationsClientGetStreamingContentOptions struct {
+	// placeholder for future optional parameters
+}
+
 // LROClientBeginOkResponseWithAsyncHeaderOptions contains the optional parameters for the LROClient.BeginOkResponseWithAsyncHeader
 // method.
 type LROClientBeginOkResponseWithAsyncHeaderOptions struct {
