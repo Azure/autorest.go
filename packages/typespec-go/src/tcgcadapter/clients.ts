@@ -1284,7 +1284,7 @@ export class ClientAdapter {
               return {
                 msg: `invalid client option ${name} on operation ${sdkMethod.name}`,
                 target: sdkMethod.__raw?.node,
-              }
+              };
           }
         });
 

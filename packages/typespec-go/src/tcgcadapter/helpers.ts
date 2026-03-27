@@ -115,7 +115,7 @@ export function isTypePassedByValue(type: tcgc.SdkType): boolean {
  * the callback invoked for each clientOption decorator key/value.
  * if the callback successfully handles the key/value it returns undefined.
  */
-export type ClientOptionProcessor = (name: string, value: string) => {msg: string, target?: tsp.DiagnosticTarget} | undefined;
+export type ClientOptionProcessor = (name: string, value: string) => { msg: string; target?: tsp.DiagnosticTarget } | undefined;
 
 /**
  * processes any clientOption decorator key/value pairs.

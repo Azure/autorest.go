@@ -526,14 +526,14 @@ export class TypeAdapter {
               return {
                 msg: `invalid omitSerdeMethods value ${value} on model ${model.name}`,
                 target: model.__raw?.node,
-              }
+              };
           }
           break;
         default:
           return {
             msg: `invalid client option ${name} on model ${model.name}`,
             target: model.__raw?.node,
-          }
+          };
       }
     });
 
