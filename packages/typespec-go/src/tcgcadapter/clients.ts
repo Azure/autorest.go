@@ -16,7 +16,8 @@ import {
   uncapitalize,
 } from '../../../naming.go/src/naming.js';
 import { AdapterError } from './errors.js';
-import { adaptXMLInfo, isTypePassedByValue, hasXMLInfo, TypeAdapter } from './types.js';
+import * as helpers from './helpers.js';
+import { TypeAdapter } from './types.js';
 
 /**
  * used to convert tcgc clients and their methods to Go code model types
@@ -433,7 +434,7 @@ export class ClientAdapter {
       if (this.ta.codeModel.type === 'azure-arm' && !go.isRequiredParameter(style)) {
         throw new AdapterError('UnsupportedTsp', 'optional client parameters for ARM is not supported', sdkParam.__raw?.node);
       }
-      const uriParam = new go.URIParameter(sdkParam.name, sdkParam.serializedName, paramType, style, isTypePassedByValue(sdkParam.type) || !sdkParam.optional, 'client');
+      const uriParam = new go.URIParameter(sdkParam.name, sdkParam.serializedName, paramType, style, helpers.isTypePassedByValue(sdkParam.type) || !sdkParam.optional, 'client');
       uriParam.docs.summary = sdkParam.summary;
       uriParam.docs.description = sdkParam.doc;
       uriParam.isApiVersion = sdkParam.isApiVersionParam;
@@ -681,7 +682,7 @@ export class ClientAdapter {
         const paramStyle = this.adaptParameterStyle(param);
         const paramName = getEscapedReservedName(ensureNameCase(param.name, paramStyle === 'required'), 'Param');
         // if the param is required then it's always passed by value
-        const byVal = go.isRequiredParameter(paramStyle) ? true : isTypePassedByValue(param.type);
+        const byVal = go.isRequiredParameter(paramStyle) ? true : helpers.isTypePassedByValue(param.type);
         const contentType = this.adaptContentType(opParam.defaultContentType);
         const getSerializedNameFromProperty = function (property: tcgc.SdkModelPropertyType): string | undefined {
           if (contentType === 'JSON') {
@@ -971,7 +972,7 @@ export class ClientAdapter {
     }
 
     const paramName = getEscapedReservedName(ensureNameCase(methodParam.name, paramStyle === 'required'), 'Param');
-    const byVal = go.isRequiredParameter(paramStyle) ? true : isTypePassedByValue(methodParam.type);
+    const byVal = go.isRequiredParameter(paramStyle) ? true : helpers.isTypePassedByValue(methodParam.type);
 
     let adaptedParam: go.MethodParameter;
     switch (opParam.kind) {
@@ -988,7 +989,7 @@ export class ClientAdapter {
           }
           adaptedParam = new go.BodyParameter(paramName, contentType, `"${opParam.defaultContentType}"`, bodyType, paramStyle, byVal);
           if (contentType === 'XML' && methodParam.type.kind === 'array') {
-            adaptedParam.xml = adaptXMLInfo(this.ta.getPkg(), methodParam.type.decorators);
+            adaptedParam.xml = helpers.adaptXMLInfo(this.ta.getPkg(), methodParam.type.decorators);
             if (!adaptedParam.xml) {
               adaptedParam.xml = new go.XMLInfo();
               adaptedParam.xml.wrapper = methodParam.type.name;
@@ -1121,7 +1122,7 @@ export class ClientAdapter {
               ensureNameCase(httpHeader.name),
               this.adaptHeaderScalarType(httpHeader.type, false),
               httpHeader.serializedName,
-              isTypePassedByValue(httpHeader.type),
+              helpers.isTypePassedByValue(httpHeader.type),
             );
           }
 
@@ -1256,14 +1257,15 @@ export class ClientAdapter {
         let fieldName: string | undefined;
         let xmlInfo: go.XMLInfo | undefined;
         if (contentType === 'XML') {
-          xmlInfo = adaptXMLInfo(method.receiver.type.pkg, sdkResponseType.decorators);
+          xmlInfo = helpers.adaptXMLInfo(method.receiver.type.pkg, sdkResponseType.decorators);
           if (!xmlInfo) {
             xmlInfo = new go.XMLInfo();
           }
           if (sdkResponseType.kind === 'array') {
+            // this is for compat with autorest.go
             fieldName = sdkResponseType.name;
             const elementType = (<go.Slice>resultType).elementType;
-            const elementTypeXmlName = hasXMLInfo(elementType)?.wrapper;
+            const elementTypeXmlName = helpers.hasXMLInfo(elementType)?.wrapper;
             xmlInfo.wraps = elementTypeXmlName ?? go.getTypeDeclaration(elementType, method.receiver.type.pkg);
           }
         }
@@ -1271,7 +1273,22 @@ export class ClientAdapter {
         if (!fieldName) {
           fieldName = this.recursiveTypeName(sdkResponseType, false);
         }
-        respEnv.result = new go.MonomorphicResult(fieldName, contentType, resultType, isTypePassedByValue(sdkResponseType));
+
+        // the monomorphicResponseFieldName decorator always wins when present
+        helpers.processClientOptions(this.ta.ctx.program, sdkMethod.decorators, (name: string, value: string) => {
+          switch (name) {
+            case 'monomorphicResponseFieldName':
+              fieldName = value;
+              return undefined;
+            default:
+              return {
+                msg: `invalid client option ${name} on operation ${sdkMethod.name}`,
+                target: sdkMethod.__raw?.node,
+              };
+          }
+        });
+
+        respEnv.result = new go.MonomorphicResult(fieldName, contentType, resultType, helpers.isTypePassedByValue(sdkResponseType));
         respEnv.result.xml = xmlInfo;
       } else {
         throw new AdapterError('InternalError', `invalid monomorphic result type ${resultType.kind}`, sdkResponseType.__raw?.node);
