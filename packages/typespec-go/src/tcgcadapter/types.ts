@@ -528,7 +528,6 @@ export class TypeAdapter {
                 target: model.__raw?.node,
               };
           }
-          break;
         default:
           return {
             msg: `invalid client option ${name} on model ${model.name}`,
