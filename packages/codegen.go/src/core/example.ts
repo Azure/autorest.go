@@ -225,7 +225,15 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
           }
           if (example.responseEnvelope?.result) {
             const isBinaryResult = method.returns.result?.kind === 'binaryResult';
-            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result, '', undefined, isBinaryResult).split('\n').join('\n\t// \t')},\n`;
+            let resultValue: string;
+            if (isBinaryResult) {
+              // io.ReadCloser requires wrapping the value in a reader
+              const innerValue = getExampleValue(pkg, example.responseEnvelope.result, '', undefined, true);
+              resultValue = `io.NopCloser(bytes.NewReader([]byte(${innerValue})))`;
+            } else {
+              resultValue = getExampleValue(pkg, example.responseEnvelope.result, '', undefined, false);
+            }
+            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${resultValue.split('\n').join('\n\t// \t')},\n`;
           }
           exampleText += '\t// }\n';
         }
