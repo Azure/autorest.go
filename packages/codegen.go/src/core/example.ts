@@ -224,8 +224,7 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
             exampleText += `\t// \t${header.header.fieldName}: ${getExampleValue(pkg, header.value, '', undefined, true).split('\n').join('\n\t// \t')}\n`;
           }
           if (example.responseEnvelope?.result) {
-            const isBinaryResult = method.returns.result?.kind === 'binaryResult';
-            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result, '', undefined, isBinaryResult).split('\n').join('\n\t// \t')},\n`;
+            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result, '', undefined, false).split('\n').join('\n\t// \t')},\n`;
           }
           exampleText += '\t// }\n';
         }
@@ -395,10 +394,12 @@ function getPointerValue(type: go.WireType, valueString: string, byValue: boolea
       if (imports) imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
       return `to.Ptr(${valueString})`;
     case 'scalar': {
+      if (type.type === 'byte') {
+        return valueString;
+      }
       let prtType = '';
       switch (type.type) {
         case `bool`:
-        case `byte`:
         case `rune`:
           prtType = 'Ptr';
           break;
