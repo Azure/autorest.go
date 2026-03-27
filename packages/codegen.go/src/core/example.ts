@@ -223,8 +223,9 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
           for (const header of example.responseEnvelope?.headers ?? []) {
             exampleText += `\t// \t${header.header.fieldName}: ${getExampleValue(pkg, header.value, '', undefined, true).split('\n').join('\n\t// \t')}\n`;
           }
-          if (example.responseEnvelope?.result && method.returns.result?.kind !== 'binaryResult') {
-            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result, '').split('\n').join('\n\t// \t')},\n`;
+          if (example.responseEnvelope?.result) {
+            const isBinaryResult = method.returns.result?.kind === 'binaryResult';
+            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result, '', undefined, isBinaryResult).split('\n').join('\n\t// \t')},\n`;
           }
           exampleText += '\t// }\n';
         }
