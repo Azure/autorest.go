@@ -1,5 +1,12 @@
 # Release History
 
+## 0.10.5 (2026-03-27)
+
+### Bugs Fixed
+
+* Fixed example generation for operations returning streaming binary responses (`Body io.ReadCloser`).
+* Fixed incorrect field name resolution in example generation for non-model result types.
+
 ## 0.10.4 (2026-03-26)
 
 ### Bugs Fixed
