@@ -9,6 +9,10 @@
   * `omitSerdeMethods` on models to skip emitting un/marshalers.
   * `responseEnvelopeName` on operations to specify the name of the response envelope.
 
+### Bugs Fixed
+
+* Fixed incorrect handling of XML tags in some cases.
+
 ## 0.10.4 (2026-03-26)
 
 ### Bugs Fixed
