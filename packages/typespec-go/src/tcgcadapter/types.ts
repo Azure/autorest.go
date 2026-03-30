@@ -628,7 +628,7 @@ export class TypeAdapter {
     } else if (prop.serializationOptions.xml) {
       serializedName = prop.serializationOptions.xml.name;
     } else {
-      // there are some edge cases where serializationOptions is missing so we fall back to the property name.
+      // there are some edge cases where serializationOptions is empty so we fall back to the property name.
       // e.g. /typespec-go/test/tsp/HardwareSecurityModules.Management/CloudHsmCluster.tsp#L99-L105
       serializedName = prop.name;
     }
