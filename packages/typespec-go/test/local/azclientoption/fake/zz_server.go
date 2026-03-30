@@ -19,7 +19,7 @@ import (
 type Server struct {
 	// CustomFieldName is the fake for method Client.CustomFieldName
 	// HTTP status codes to indicate success: http.StatusOK
-	CustomFieldName func(ctx context.Context, options *azclientoption.ClientCustomFieldNameOptions) (resp azfake.Responder[azclientoption.ClientCustomFieldNameResponse], errResp azfake.ErrorResponder)
+	CustomFieldName func(ctx context.Context, options *azclientoption.ClientCustomFieldNameOptions) (resp azfake.Responder[azclientoption.RenamedResponse], errResp azfake.ErrorResponder)
 }
 
 // NewServerTransport creates a new instance of ServerTransport with the provided implementation.
