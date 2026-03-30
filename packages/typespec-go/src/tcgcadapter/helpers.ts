@@ -111,32 +111,58 @@ export function isTypePassedByValue(type: tcgc.SdkType): boolean {
   return type.kind === 'unknown' || type.kind === 'array' || type.kind === 'bytes' || type.kind === 'dict' || (type.kind === 'model' && isPolymorphicRoot(type));
 }
 
-/**
- * the callback invoked for each clientOption decorator key/value.
- * if the callback successfully handles the key/value it returns undefined.
- */
-export type ClientOptionProcessor = (name: string, value: string) => { msg: string; target?: tsp.DiagnosticTarget } | undefined;
+/** contains the set of client options */
+const clientOptionKinds = ['monomorphicResponseFieldName', 'omitSerdeMethods', 'responseEnvelopeName'] as const;
+export type ClientOptionKind = (typeof clientOptionKinds)[number];
 
 /**
- * processes any clientOption decorator key/value pairs.
+ * returns the value of the specified client option if found in the provided decorators, otherwise returns undefined.
+ * reports a warning diagnostic for any client options found with an unrecognized name
  *
+ * @param option the client option to search for
+ * @param src the source to search for the client option
  * @param program the tsp Program currently in scope, used to report warning diagnostics for unhandled key/value pairs
- * @param decorators the array of decorators to process, can be empty
- * @param processor called for each clientOption key/value pair in decorators
+ * @returns the value of the client option if found, otherwise undefined
  */
-export function processClientOptions(program: tsp.Program, decorators: Array<tcgc.DecoratorInfo>, processor: ClientOptionProcessor): void {
-  const clientOptions = decorators.filter((decorator) => decorator.name === 'Azure.ClientGenerator.Core.@clientOption');
+export function getClientOption(option: ClientOptionKind, src: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation> | tcgc.SdkModelType, program: tsp.Program): string | undefined {
+  const clientOptions = src.decorators.filter((decorator) => decorator.name === 'Azure.ClientGenerator.Core.@clientOption');
   for (const clientOption of clientOptions) {
     const optionName = <string>clientOption.arguments['name'];
-    const optionValue = <string>clientOption.arguments['value'];
-    const err = processor(optionName, optionValue);
-    if (err) {
+    if (!clientOptionKinds.includes(optionName as ClientOptionKind)) {
       program.reportDiagnostic({
         code: 'InvalidClientOption',
         severity: 'warning',
-        message: err.msg,
-        target: err.target ?? tsp.NoTarget,
+        message: `invalid client option ${optionName}`,
+        target: src.__raw?.node ?? tsp.NoTarget,
       });
+      continue;
+    }
+
+    // ensure that the option is valid for the provided source
+    let valid = false;
+    switch (src.kind) {
+      case 'model':
+        valid = optionName === 'omitSerdeMethods';
+        break;
+      default:
+        // this branch is currently all method types
+        valid = optionName === 'monomorphicResponseFieldName' || optionName === 'responseEnvelopeName';
+    }
+
+    if (!valid) {
+      program.reportDiagnostic({
+        code: 'InvalidClientOption',
+        severity: 'warning',
+        message: `inapplicable client option ${optionName}`,
+        target: src.__raw?.node ?? tsp.NoTarget,
+      });
+      continue;
+    }
+
+    const optionValue = <string>clientOption.arguments['value'];
+    if (optionName === option) {
+      return optionValue;
     }
   }
+  return undefined;
 }

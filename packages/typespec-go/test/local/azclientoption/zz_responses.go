@@ -4,7 +4,7 @@
 
 package azclientoption
 
-// ClientCustomFieldNameResponse contains the response from method Client.CustomFieldName.
-type ClientCustomFieldNameResponse struct {
+// RenamedResponse contains the response from method Client.CustomFieldName.
+type RenamedResponse struct {
 	Users []*Person
 }

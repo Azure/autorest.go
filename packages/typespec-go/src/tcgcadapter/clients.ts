@@ -1099,6 +1099,10 @@ export class ClientAdapter {
     if (sdkMethod.access === 'internal') {
       respEnvName = uncapitalize(respEnvName);
     }
+    const customName = helpers.getClientOption('responseEnvelopeName', sdkMethod, this.ta.ctx.program);
+    if (customName) {
+      respEnvName = customName;
+    }
     const respEnv = new go.ResponseEnvelope(respEnvName, { summary: createResponseEnvelopeDescription(respEnvName, this.getMethodNameForDocComment(method)) }, method);
     this.ta.getPkg().responseEnvelopes.push(respEnv);
 
@@ -1275,18 +1279,10 @@ export class ClientAdapter {
         }
 
         // the monomorphicResponseFieldName decorator always wins when present
-        helpers.processClientOptions(this.ta.ctx.program, sdkMethod.decorators, (name: string, value: string) => {
-          switch (name) {
-            case 'monomorphicResponseFieldName':
-              fieldName = value;
-              return undefined;
-            default:
-              return {
-                msg: `invalid client option ${name} on operation ${sdkMethod.name}`,
-                target: sdkMethod.__raw?.node,
-              };
-          }
-        });
+        const customName = helpers.getClientOption('monomorphicResponseFieldName', sdkMethod, this.ta.ctx.program);
+        if (customName) {
+          fieldName = customName;
+        }
 
         respEnv.result = new go.MonomorphicResult(fieldName, contentType, resultType, helpers.isTypePassedByValue(sdkResponseType));
         respEnv.result.xml = xmlInfo;

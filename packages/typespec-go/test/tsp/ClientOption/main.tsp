@@ -28,5 +28,8 @@ op customFieldName(): Array<Person>;
 #suppress "@azure-tools/typespec-client-generator-core/client-option" "response has custom field name Users"
 @@clientOption(customFieldName, "monomorphicResponseFieldName", "Users", "go");
 
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "response envelope has custom name"
+@@clientOption(customFieldName, "responseEnvelopeName", "RenamedResponse", "go");
+
 #suppress "@azure-tools/typespec-client-generator-core/client-option" "omit serde methods for this type"
 @@clientOption(Person, "omitSerdeMethods", "all", "go");

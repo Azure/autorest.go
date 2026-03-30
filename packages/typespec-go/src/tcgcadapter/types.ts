@@ -515,26 +515,21 @@ export class TypeAdapter {
     }
 
     let omitSerde = false;
-    helpers.processClientOptions(this.ctx.program, model.decorators, (name: string, value: string) => {
-      switch (name) {
-        case 'omitSerdeMethods':
-          switch (value) {
-            case 'all':
-              omitSerde = true;
-              return undefined;
-            default:
-              return {
-                msg: `invalid omitSerdeMethods value ${value} on model ${model.name}`,
-                target: model.__raw?.node,
-              };
-          }
+    const omitValue = helpers.getClientOption('omitSerdeMethods', model, this.ctx.program);
+    if (omitValue) {
+      switch (omitValue) {
+        case 'all':
+          omitSerde = true;
+          break;
         default:
-          return {
-            msg: `invalid client option ${name} on model ${model.name}`,
-            target: model.__raw?.node,
-          };
+          this.ctx.program.reportDiagnostic({
+            code: 'InvalidClientOption',
+            severity: 'warning',
+            message: `invalid omitSerdeMethods value ${omitValue} on model ${model.name}`,
+            target: model.__raw?.node ?? tsp.NoTarget,
+          });
       }
-    });
+    }
 
     const annotations = new go.ModelAnnotations(omitSerde, <tcgc.UsageFlags>(model.usage & tcgc.UsageFlags.MultipartFormData) === tcgc.UsageFlags.MultipartFormData);
     if (helpers.isPolymorphicRoot(model) || model.discriminatorValue) {

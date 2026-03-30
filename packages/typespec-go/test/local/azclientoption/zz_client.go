@@ -45,7 +45,7 @@ func NewClientWithNoCredential(endpoint string, options *ClientOptions) (*Client
 // CustomFieldName -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ClientCustomFieldNameOptions contains the optional parameters for the Client.CustomFieldName method.
-func (client *Client) CustomFieldName(ctx context.Context, options *ClientCustomFieldNameOptions) (ClientCustomFieldNameResponse, error) {
+func (client *Client) CustomFieldName(ctx context.Context, options *ClientCustomFieldNameOptions) (RenamedResponse, error) {
 	var err error
 	const operationName = "Client.CustomFieldName"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -53,15 +53,15 @@ func (client *Client) CustomFieldName(ctx context.Context, options *ClientCustom
 	defer func() { endSpan(err) }()
 	req, err := client.customFieldNameCreateRequest(ctx, options)
 	if err != nil {
-		return ClientCustomFieldNameResponse{}, err
+		return RenamedResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientCustomFieldNameResponse{}, err
+		return RenamedResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return ClientCustomFieldNameResponse{}, err
+		return RenamedResponse{}, err
 	}
 	resp, err := client.customFieldNameHandleResponse(httpResp)
 	return resp, err
@@ -79,10 +79,10 @@ func (client *Client) customFieldNameCreateRequest(ctx context.Context, _ *Clien
 }
 
 // customFieldNameHandleResponse handles the CustomFieldName response.
-func (client *Client) customFieldNameHandleResponse(resp *http.Response) (ClientCustomFieldNameResponse, error) {
-	result := ClientCustomFieldNameResponse{}
+func (client *Client) customFieldNameHandleResponse(resp *http.Response) (RenamedResponse, error) {
+	result := RenamedResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Users); err != nil {
-		return ClientCustomFieldNameResponse{}, err
+		return RenamedResponse{}, err
 	}
 	return result, nil
 }
