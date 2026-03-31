@@ -4,6 +4,8 @@
 
 package armtest
 
+import "io"
+
 // BodyRootsClientActionResponse contains the response from method BodyRootsClient.Action.
 type BodyRootsClientActionResponse struct {
 	// placeholder for future response values
@@ -13,6 +15,24 @@ type BodyRootsClientActionResponse struct {
 type BodyRootsClientGetResponse struct {
 	// Body root resource.
 	BodyRoot
+}
+
+// ConfigurationsClientGetContentResponse contains the response from method ConfigurationsClient.GetContent.
+type ConfigurationsClientGetContentResponse struct {
+	// Configuration resource.
+	Configuration
+}
+
+// ConfigurationsClientGetStreamingContentResponse contains the response from method ConfigurationsClient.GetStreamingContent.
+type ConfigurationsClientGetStreamingContentResponse struct {
+	// Body contains the streaming response.
+	Body        io.ReadCloser
+	ContentType *string
+}
+
+// ConfigurationsClientPutStreamingContentResponse contains the response from method ConfigurationsClient.PutStreamingContent.
+type ConfigurationsClientPutStreamingContentResponse struct {
+	// placeholder for future response values
 }
 
 // LROClientOkResponseWithAsyncHeaderResponse contains the response from method LROClient.BeginOkResponseWithAsyncHeader.

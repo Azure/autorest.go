@@ -207,24 +207,28 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
           exampleText += `\t\t// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.\n`;
           exampleText += `\t\t// page = ${go.getPackageName(example.responseEnvelope.response.method.receiver.type.pkg)}.${example.responseEnvelope.response.name}{\n`;
           for (const header of example.responseEnvelope.headers ?? []) {
-            exampleText += `\t\t// \t${header.header.fieldName}: ${getExampleValue(pkg, header.value, '', undefined, true).split('\n').join('\n\t\t// \t')}\n`;
+            exampleText += `\t\t// \t${header.header.fieldName}: ${getExampleValue(pkg, header.value, '', undefined, (header.header as any).byValue)
+              .split('\n')
+              .join('\n\t\t// \t')},\n`;
           }
           exampleText += `\t\t// \t${(example.responseEnvelope.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result!, '', undefined, true).split('\n').join('\n\t\t// \t')},\n`;
           exampleText += '\t\t// }\n';
           exampleText += `\t}\n`;
         } else if (example.responseEnvelope) {
           // if has fieldName, then the result is not a model type
-          const fieldName = (method.returns as any).fieldName;
+          const fieldName = (method.returns.result as any)?.fieldName;
           exampleText += `\t// You could use response here. We use blank identifier for just demo purposes.\n`;
           exampleText += `\t_ = res\n`;
 
           exampleText += `\t// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.\n`;
           exampleText += `\t// res = ${go.getPackageName(example.responseEnvelope.response.method.receiver.type.pkg)}.${example.responseEnvelope.response.name}{\n`;
           for (const header of example.responseEnvelope?.headers ?? []) {
-            exampleText += `\t// \t${header.header.fieldName}: ${getExampleValue(pkg, header.value, '', undefined, true).split('\n').join('\n\t// \t')}\n`;
+            exampleText += `\t// \t${header.header.fieldName}: ${getExampleValue(pkg, header.value, '', undefined, (header.header as any).byValue)
+              .split('\n')
+              .join('\n\t// \t')},\n`;
           }
           if (example.responseEnvelope?.result) {
-            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result, '').split('\n').join('\n\t// \t')},\n`;
+            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result, '', undefined, false).split('\n').join('\n\t// \t')},\n`;
           }
           exampleText += '\t// }\n';
         }
@@ -259,6 +263,12 @@ function getExampleValue(pkg: go.TestPackage, example: go.ExampleType, indent: s
       } else if (example.type.kind === 'etag') {
         imports?.add(example.type.module);
         exampleText = `${go.getTypeDeclaration(example.type, pkg)}("${escapeString(example.value)}")`;
+      } else if (example.type.kind === 'scalar' && example.type.type === 'byte') {
+        exampleText = `io.NopCloser(bytes.NewReader([]byte("${escapeString(example.value)}")))`;
+      } else if (example.type.kind === 'readSeekCloser') {
+        imports?.add('bytes');
+        imports?.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
+        exampleText = `streaming.NopCloser(bytes.NewReader([]byte("${escapeString(example.value)}")))`;
       }
       return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
     }
@@ -392,10 +402,12 @@ function getPointerValue(type: go.WireType, valueString: string, byValue: boolea
       if (imports) imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
       return `to.Ptr(${valueString})`;
     case 'scalar': {
+      if (type.type === 'byte') {
+        return valueString;
+      }
       let prtType = '';
       switch (type.type) {
         case `bool`:
-        case `byte`:
         case `rune`:
           prtType = 'Ptr';
           break;
@@ -405,6 +417,8 @@ function getPointerValue(type: go.WireType, valueString: string, byValue: boolea
       if (imports) imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
       return `to.${prtType}(${valueString})`;
     }
+    case 'readSeekCloser':
+      return valueString;
     default:
       return `&${valueString}`;
   }

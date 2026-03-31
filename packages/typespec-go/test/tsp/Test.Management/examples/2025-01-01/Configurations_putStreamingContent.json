@@ -1,0 +1,15 @@
+{
+    "operationId": "Configurations_putStreamingContent",
+    "title": "Configurations_putStreamingContent",
+    "parameters": {
+        "api-version": "2025-01-01",
+        "subscriptionId": "00000000-0000-0000-0000-000000000000",
+        "resourceGroupName": "myResourceGroup",
+        "configurationName": "myConfiguration",
+        "Content-Type": "application/octet-stream",
+        "body": "Configuration file content as a streaming request"
+    },
+    "responses": {
+        "204": {}
+    }
+}

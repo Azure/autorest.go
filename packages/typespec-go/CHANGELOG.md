@@ -2,6 +2,11 @@
 
 ## 0.10.5 (unreleased)
 
+### Bugs Fixed
+
+* Fixed example generation for operations returning streaming binary responses (`Body io.ReadCloser`).
+* Fixed incorrect field name resolution in example generation for non-model result types.
+
 ### Features Added
 
 * Added support for specific `@clientOption` decorators.
