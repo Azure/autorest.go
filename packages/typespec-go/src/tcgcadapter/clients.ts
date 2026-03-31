@@ -1535,6 +1535,7 @@ export class ClientAdapter {
           case 'encodedBytes':
           case 'etag':
           case 'literal':
+          case 'readSeekCloser':
           case 'scalar':
           case 'string':
           case 'time':

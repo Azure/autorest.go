@@ -265,6 +265,10 @@ function getExampleValue(pkg: go.TestPackage, example: go.ExampleType, indent: s
         exampleText = `${go.getTypeDeclaration(example.type, pkg)}("${escapeString(example.value)}")`;
       } else if (example.type.kind === 'scalar' && example.type.type === 'byte') {
         exampleText = `io.NopCloser(bytes.NewReader([]byte("${escapeString(example.value)}")))`;
+      } else if (example.type.kind === 'readSeekCloser') {
+        imports?.add('bytes');
+        imports?.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
+        exampleText = `streaming.NopCloser(bytes.NewReader([]byte("${escapeString(example.value)}")))`;
       }
       return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
     }
@@ -413,6 +417,8 @@ function getPointerValue(type: go.WireType, valueString: string, byValue: boolea
       if (imports) imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
       return `to.${prtType}(${valueString})`;
     }
+    case 'readSeekCloser':
+      return valueString;
     default:
       return `&${valueString}`;
   }

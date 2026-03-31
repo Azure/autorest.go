@@ -12,6 +12,7 @@ import (
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"io"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -26,6 +27,10 @@ type ConfigurationsServer struct {
 	// GetStreamingContent is the fake for method ConfigurationsClient.GetStreamingContent
 	// HTTP status codes to indicate success: http.StatusOK
 	GetStreamingContent func(ctx context.Context, resourceGroupName string, configurationName string, options *armtest.ConfigurationsClientGetStreamingContentOptions) (resp azfake.Responder[armtest.ConfigurationsClientGetStreamingContentResponse], errResp azfake.ErrorResponder)
+
+	// PutStreamingContent is the fake for method ConfigurationsClient.PutStreamingContent
+	// HTTP status codes to indicate success: http.StatusNoContent
+	PutStreamingContent func(ctx context.Context, resourceGroupName string, configurationName string, body io.ReadSeekCloser, options *armtest.ConfigurationsClientPutStreamingContentOptions) (resp azfake.Responder[armtest.ConfigurationsClientPutStreamingContentResponse], errResp azfake.ErrorResponder)
 }
 
 // NewConfigurationsServerTransport creates a new instance of ConfigurationsServerTransport with the provided implementation.
@@ -68,6 +73,8 @@ func (c *ConfigurationsServerTransport) dispatchToMethodFake(req *http.Request, 
 				res.resp, res.err = c.dispatchGetContent(req)
 			case "ConfigurationsClient.GetStreamingContent":
 				res.resp, res.err = c.dispatchGetStreamingContent(req)
+			case "ConfigurationsClient.PutStreamingContent":
+				res.resp, res.err = c.dispatchPutStreamingContent(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
 			}
@@ -155,6 +162,39 @@ func (c *ConfigurationsServerTransport) dispatchGetStreamingContent(req *http.Re
 	}
 	if val := server.GetResponse(respr).ContentType; val != nil {
 		resp.Header.Set("Content-Type", "text/powershell")
+	}
+	return resp, nil
+}
+
+func (c *ConfigurationsServerTransport) dispatchPutStreamingContent(req *http.Request) (*http.Response, error) {
+	if c.srv.PutStreamingContent == nil {
+		return nil, &nonRetriableError{errors.New("fake for method PutStreamingContent not implemented")}
+	}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/configurations/(?P<configurationName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/putContent`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if len(matches) < 4 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	configurationNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("configurationName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := c.srv.PutStreamingContent(req.Context(), resourceGroupNameParam, configurationNameParam, req.Body.(io.ReadSeekCloser), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
 	}
 	return resp, nil
 }

@@ -30,6 +30,11 @@ type ConfigurationsClientGetStreamingContentResponse struct {
 	ContentType *string
 }
 
+// ConfigurationsClientPutStreamingContentResponse contains the response from method ConfigurationsClient.PutStreamingContent.
+type ConfigurationsClientPutStreamingContentResponse struct {
+	// placeholder for future response values
+}
+
 // LROClientOkResponseWithAsyncHeaderResponse contains the response from method LROClient.BeginOkResponseWithAsyncHeader.
 type LROClientOkResponseWithAsyncHeaderResponse struct {
 	// LRO model resource.
