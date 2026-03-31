@@ -628,9 +628,9 @@ export class TypeAdapter {
     } else if (prop.serializationOptions.xml) {
       serializedName = prop.serializationOptions.xml.name;
     } else {
-      // there are some edge cases where serializationOptions is empty so we fall back to the property name.
+      // there are some edge cases where serializationOptions is empty so we fall back to serializedName.
       // e.g. /typespec-go/test/tsp/HardwareSecurityModules.Management/CloudHsmCluster.tsp#L99-L105
-      serializedName = prop.name;
+      serializedName = prop.serializedName;
     }
 
     const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.name)), type, fieldByValue, serializedName, annotations);
