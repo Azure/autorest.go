@@ -44,4 +44,14 @@ interface Configurations {
     @encode("bytes")
     body: bytes;
   };
+
+  @doc("Put the content of the configuration identified by configuration name.")
+  @action("putContent")
+  putStreamingContent(
+    ...ResourceInstanceParameters<Configuration>,
+    @header("Content-Type")
+    contentType: "application/octet-stream",
+    @body
+    body: bytes,
+  ): void;
 }

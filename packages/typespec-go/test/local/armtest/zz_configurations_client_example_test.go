@@ -6,7 +6,9 @@ package armtest_test
 
 import (
 	"armtest/v2"
+	"bytes"
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"log"
 )
@@ -33,4 +35,21 @@ func ExampleConfigurationsClient_GetStreamingContent() {
 	// 	ContentType: to.Ptr("text/powershell"),
 	// 	Body: io.NopCloser(bytes.NewReader([]byte("Configuration file content as a streaming response"))),
 	// }
+}
+
+// Generated from example definition: 2025-01-01/Configurations_putStreamingContent.json
+func ExampleConfigurationsClient_PutStreamingContent() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	clientFactory, err := armtest.NewClientFactory("00000000-0000-0000-0000-000000000000", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	_, err = clientFactory.NewConfigurationsClient().PutStreamingContent(ctx, "myResourceGroup", "myConfiguration", streaming.NopCloser(bytes.NewReader([]byte("Configuration file content as a streaming request"))), nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
 }

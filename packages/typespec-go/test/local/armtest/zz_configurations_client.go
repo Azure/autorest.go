@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
@@ -168,4 +169,62 @@ func (client *ConfigurationsClient) getStreamingContentHandleResponse(resp *http
 		result.ContentType = &val
 	}
 	return result, nil
+}
+
+// PutStreamingContent - Put the content of the configuration identified by configuration name.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2025-01-01
+//   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - configurationName - The configuration name.
+//   - options - ConfigurationsClientPutStreamingContentOptions contains the optional parameters for the ConfigurationsClient.PutStreamingContent
+//     method.
+func (client *ConfigurationsClient) PutStreamingContent(ctx context.Context, resourceGroupName string, configurationName string, body io.ReadSeekCloser, options *ConfigurationsClientPutStreamingContentOptions) (ConfigurationsClientPutStreamingContentResponse, error) {
+	var err error
+	const operationName = "ConfigurationsClient.PutStreamingContent"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.putStreamingContentCreateRequest(ctx, resourceGroupName, configurationName, body, options)
+	if err != nil {
+		return ConfigurationsClientPutStreamingContentResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ConfigurationsClientPutStreamingContentResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ConfigurationsClientPutStreamingContentResponse{}, err
+	}
+	return ConfigurationsClientPutStreamingContentResponse{}, nil
+}
+
+// putStreamingContentCreateRequest creates the PutStreamingContent request.
+func (client *ConfigurationsClient) putStreamingContentCreateRequest(ctx context.Context, resourceGroupName string, configurationName string, body io.ReadSeekCloser, _ *ConfigurationsClientPutStreamingContentOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/configurations/{configurationName}/putContent"
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if configurationName == "" {
+		return nil, errors.New("parameter configurationName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{configurationName}", url.PathEscape(configurationName))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2025-01-01")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Content-Type"] = []string{"application/octet-stream"}
+	if err := req.SetBody(body, "application/octet-stream"); err != nil {
+		return nil, err
+	}
+	return req, nil
 }

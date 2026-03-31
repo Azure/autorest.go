@@ -80,7 +80,7 @@ export interface ResponseHeaderExample {
 export interface StringExample {
   kind: 'string';
   value: string;
-  type: type.Constant | type.EncodedBytes | type.ETag | type.Literal | type.Scalar | type.String | type.Time;
+  type: type.Constant | type.EncodedBytes | type.ETag | type.Literal | type.ReadSeekCloser | type.Scalar | type.String | type.Time;
 }
 
 export interface StructExample {
@@ -177,7 +177,7 @@ export class ResponseHeaderExample implements ResponseHeaderExample {
 }
 
 export class StringExample implements StringExample {
-  constructor(value: string, type: type.Constant | type.EncodedBytes | type.ETag | type.Literal | type.Scalar | type.String | type.Time) {
+  constructor(value: string, type: type.Constant | type.EncodedBytes | type.ETag | type.Literal | type.ReadSeekCloser | type.Scalar | type.String | type.Time) {
     this.kind = 'string';
     this.value = value;
     this.type = type;
