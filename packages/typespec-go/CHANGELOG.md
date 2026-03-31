@@ -1,11 +1,18 @@
 # Release History
 
-## 0.10.5 (2026-03-27)
+## 0.10.5 (unreleased)
 
 ### Bugs Fixed
 
 * Fixed example generation for operations returning streaming binary responses (`Body io.ReadCloser`).
 * Fixed incorrect field name resolution in example generation for non-model result types.
+
+### Features Added
+
+* Added support for specific `@clientOption` decorators.
+  * `monomorphicResponseFieldName` on operations that return a monomorphic response to customize the response field name.
+  * `omitSerdeMethods` on models to skip emitting un/marshalers.
+  * `responseEnvelopeName` on operations to specify the name of the response envelope.
 
 ## 0.10.4 (2026-03-26)
 
