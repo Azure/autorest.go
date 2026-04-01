@@ -1,11 +1,12 @@
 # Release History
 
-## 0.10.5 (unreleased)
+## 0.10.5 (2026-04-01)
 
 ### Bugs Fixed
 
 * Fixed example generation for operations returning streaming binary responses (`Body io.ReadCloser`).
 * Fixed incorrect field name resolution in example generation for non-model result types.
+* Fixed incorrect handling of XML tags in some cases.
 
 ### Features Added
 
@@ -14,9 +15,9 @@
   * `omitSerdeMethods` on models to skip emitting un/marshalers.
   * `responseEnvelopeName` on operations to specify the name of the response envelope.
 
-### Bugs Fixed
+### Other Changes
 
-* Fixed incorrect handling of XML tags in some cases.
+* Updated to the latest tsp toolset.
 
 ## 0.10.4 (2026-03-26)
 

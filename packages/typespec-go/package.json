@@ -51,9 +51,9 @@
   "readme": "https://github.com/Azure/autorest.go/blob/main/readme.md",
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.39-dev.4",
-    "@azure-tools/typespec-autorest": "0.66.1",
+    "@azure-tools/typespec-autorest": "0.66.2",
     "@azure-tools/typespec-azure-core": "0.66.1",
-    "@azure-tools/typespec-azure-resource-manager": "0.66.0",
+    "@azure-tools/typespec-azure-resource-manager": "0.66.1",
     "@azure-tools/typespec-azure-rulesets": "0.66.0",
     "@azure-tools/typespec-client-generator-core": "0.66.4",
     "@types/node": "catalog:",
