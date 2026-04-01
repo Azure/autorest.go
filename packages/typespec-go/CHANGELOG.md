@@ -1,6 +1,6 @@
 # Release History
 
-## 0.10.5 (unreleased)
+## 0.10.5 (2026-04-01)
 
 ### Bugs Fixed
 
@@ -17,6 +17,10 @@
 ### Bugs Fixed
 
 * Fixed incorrect handling of XML tags in some cases.
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
 
 ## 0.10.4 (2026-03-26)
 

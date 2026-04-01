@@ -9,18 +9,33 @@ type NamingClientClientNameResponse struct {
 	// placeholder for future response values
 }
 
+// NamingClientClientResponse contains the response from method NamingClient.Client.
+type NamingClientClientResponse struct {
+	// placeholder for future response values
+}
+
+// NamingClientCompatibleWithEncodedNameResponse contains the response from method NamingClient.CompatibleWithEncodedName.
+type NamingClientCompatibleWithEncodedNameResponse struct {
+	// placeholder for future response values
+}
+
+// NamingClientLanguageResponse contains the response from method NamingClient.Language.
+type NamingClientLanguageResponse struct {
+	// placeholder for future response values
+}
+
 // NamingClientParameterResponse contains the response from method NamingClient.Parameter.
 type NamingClientParameterResponse struct {
 	// placeholder for future response values
 }
 
-// NamingHeaderClientRequestResponse contains the response from method NamingHeaderClient.Request.
-type NamingHeaderClientRequestResponse struct {
+// NamingClientRequestResponse contains the response from method NamingClient.Request.
+type NamingClientRequestResponse struct {
 	// placeholder for future response values
 }
 
-// NamingHeaderClientResponseResponse contains the response from method NamingHeaderClient.Response.
-type NamingHeaderClientResponseResponse struct {
+// NamingClientResponseResponse contains the response from method NamingClient.Response.
+type NamingClientResponseResponse struct {
 	ClientName *string
 }
 
@@ -31,21 +46,6 @@ type NamingModelClientClientResponse struct {
 
 // NamingModelClientLanguageResponse contains the response from method NamingModelClient.Language.
 type NamingModelClientLanguageResponse struct {
-	// placeholder for future response values
-}
-
-// NamingPropertyClientClientResponse contains the response from method NamingPropertyClient.Client.
-type NamingPropertyClientClientResponse struct {
-	// placeholder for future response values
-}
-
-// NamingPropertyClientCompatibleWithEncodedNameResponse contains the response from method NamingPropertyClient.CompatibleWithEncodedName.
-type NamingPropertyClientCompatibleWithEncodedNameResponse struct {
-	// placeholder for future response values
-}
-
-// NamingPropertyClientLanguageResponse contains the response from method NamingPropertyClient.Language.
-type NamingPropertyClientLanguageResponse struct {
 	// placeholder for future response values
 }
 
