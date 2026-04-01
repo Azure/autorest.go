@@ -18,6 +18,9 @@ type ServerFactory struct {
 	// BodyRootsServer contains the fakes for client BodyRootsClient
 	BodyRootsServer BodyRootsServer
 
+	// ConfigurationsServer contains the fakes for client ConfigurationsClient
+	ConfigurationsServer ConfigurationsServer
+
 	// LROServer contains the fakes for client LROClient
 	LROServer LROServer
 
@@ -40,6 +43,7 @@ type ServerFactoryTransport struct {
 	srv                              *ServerFactory
 	trMu                             sync.Mutex
 	trBodyRootsServer                *BodyRootsServerTransport
+	trConfigurationsServer           *ConfigurationsServerTransport
 	trLROServer                      *LROServerTransport
 	trParameterGroupOperationsServer *ParameterGroupOperationsServerTransport
 }
@@ -60,6 +64,11 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	case "BodyRootsClient":
 		initServer(&s.trMu, &s.trBodyRootsServer, func() *BodyRootsServerTransport { return NewBodyRootsServerTransport(&s.srv.BodyRootsServer) })
 		resp, err = s.trBodyRootsServer.Do(req)
+	case "ConfigurationsClient":
+		initServer(&s.trMu, &s.trConfigurationsServer, func() *ConfigurationsServerTransport {
+			return NewConfigurationsServerTransport(&s.srv.ConfigurationsServer)
+		})
+		resp, err = s.trConfigurationsServer.Do(req)
 	case "LROClient":
 		initServer(&s.trMu, &s.trLROServer, func() *LROServerTransport { return NewLROServerTransport(&s.srv.LROServer) })
 		resp, err = s.trLROServer.Do(req)

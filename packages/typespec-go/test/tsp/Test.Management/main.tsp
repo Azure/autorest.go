@@ -5,6 +5,7 @@ import "@azure-tools/typespec-azure-resource-manager";
 import "./BodyRoot.tsp";
 import "./LRO.tsp";
 import "./ParameterGroups.tsp";
+import "./StreamingResponse.tsp";
 
 using TypeSpec.Rest;
 using TypeSpec.Http;
