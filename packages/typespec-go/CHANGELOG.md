@@ -6,6 +6,7 @@
 
 * Fixed example generation for operations returning streaming binary responses (`Body io.ReadCloser`).
 * Fixed incorrect field name resolution in example generation for non-model result types.
+* Fixed incorrect handling of XML tags in some cases.
 
 ### Features Added
 
@@ -13,10 +14,6 @@
   * `monomorphicResponseFieldName` on operations that return a monomorphic response to customize the response field name.
   * `omitSerdeMethods` on models to skip emitting un/marshalers.
   * `responseEnvelopeName` on operations to specify the name of the response envelope.
-
-### Bugs Fixed
-
-* Fixed incorrect handling of XML tags in some cases.
 
 ### Other Changes
 
