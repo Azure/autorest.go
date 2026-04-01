@@ -621,7 +621,19 @@ export class TypeAdapter {
         }
       }
     }
-    const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.name)), type, fieldByValue, prop.serializedName, annotations);
+
+    let serializedName: string;
+    if (prop.serializationOptions.json) {
+      serializedName = prop.serializationOptions.json.name;
+    } else if (prop.serializationOptions.xml) {
+      serializedName = prop.serializationOptions.xml.name;
+    } else {
+      // there are some edge cases where serializationOptions is empty so we fall back to serializedName.
+      // e.g. /typespec-go/test/tsp/HardwareSecurityModules.Management/CloudHsmCluster.tsp#L99-L105
+      serializedName = prop.serializedName;
+    }
+
+    const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.name)), type, fieldByValue, serializedName, annotations);
     field.docs.summary = prop.summary;
     field.docs.description = prop.doc;
 

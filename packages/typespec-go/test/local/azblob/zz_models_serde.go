@@ -137,9 +137,9 @@ func (b BlockLookupList) MarshalXML(enc *xml.Encoder, start xml.StartElement) er
 	type alias BlockLookupList
 	aux := &struct {
 		*alias
-		Committed   *[][]byte  `xml:"committed"`
-		Latest      *[]*string `xml:"latest"`
-		Uncommitted *[][]byte  `xml:"uncommitted"`
+		Committed   *[][]byte  `xml:"Committed"`
+		Latest      *[]*string `xml:"Latest"`
+		Uncommitted *[][]byte  `xml:"Uncommitted"`
 	}{
 		alias: (*alias)(&b),
 	}
@@ -394,8 +394,8 @@ func (p PageList) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias PageList
 	aux := &struct {
 		*alias
-		ClearRange *[]*ClearRange `xml:"clearRange"`
-		PageRange  *[]*PageRange  `xml:"pageRange"`
+		ClearRange *[]*ClearRange `xml:"ClearRange"`
+		PageRange  *[]*PageRange  `xml:"PageRange"`
 	}{
 		alias: (*alias)(&p),
 	}
@@ -510,7 +510,7 @@ func (s SignedIdentifiers) MarshalXML(enc *xml.Encoder, start xml.StartElement) 
 	type alias SignedIdentifiers
 	aux := &struct {
 		*alias
-		Items *[]*SignedIdentifier `xml:"items"`
+		Items *[]*SignedIdentifier `xml:"SignedIdentifier"`
 	}{
 		alias: (*alias)(&s),
 	}
