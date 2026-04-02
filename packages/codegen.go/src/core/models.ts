@@ -314,7 +314,7 @@ function needsXMLArrayMarshalling(modelType: go.Model): boolean {
 }
 
 function hasXMLNamespace(modelType: go.Model): boolean {
-  return !!modelType.xml?.namespace || modelType.fields.some(f => !!f.xml?.namespace);
+  return !!modelType.xml?.namespace || modelType.fields.some((f) => !!f.xml?.namespace);
 }
 
 // generates discriminator marker method
@@ -860,7 +860,7 @@ function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager): void
 
   // for models with namespace-prefixed fields, we must use a non-embedded struct
   // because Go's xml encoder doesn't shadow embedded fields when XML tags differ.
-  const hasNsPrefixedFields = modelDef.Model.fields.some(f => f.xml?.prefix);
+  const hasNsPrefixedFields = modelDef.Model.fields.some((f) => f.xml?.prefix);
   if (hasNsPrefixedFields) {
     text += generateNonEmbeddedAuxStruct(modelDef.Model, receiver, imports);
   } else {
