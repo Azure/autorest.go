@@ -314,15 +314,7 @@ function needsXMLArrayMarshalling(modelType: go.Model): boolean {
 }
 
 function hasXMLNamespace(modelType: go.Model): boolean {
-  if (modelType.xml?.namespace) {
-    return true;
-  }
-  for (const field of modelType.fields) {
-    if (field.xml?.namespace) {
-      return true;
-    }
-  }
-  return false;
+  return !!modelType.xml?.namespace || modelType.fields.some(f => !!f.xml?.namespace);
 }
 
 // generates discriminator marker method
