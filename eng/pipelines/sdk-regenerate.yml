@@ -51,8 +51,11 @@ jobs:
     inputs:
       versionSpec: '$(NodeVersion)'
 
-  - script: npm install -g pnpm@9.5.0
-    displayName: Install pnpm 9.5.0
+  - script: |
+      npm i -g corepack@latest
+      corepack enable
+      corepack prepare pnpm@latest-10 --activate
+    displayName: Install pnpm
 
   - script: pnpm install
     displayName: pnpm install
