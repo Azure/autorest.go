@@ -25,7 +25,7 @@ type AccessPolicy struct {
 // ArrowConfiguration - Represents the Apache Arrow configuration.
 type ArrowConfiguration struct {
 	// REQUIRED; The Apache Arrow schema
-	Schema []*ArrowField `xml:"Schema>ArrowField"`
+	Schema []*ArrowField `xml:"Schema>Field"`
 }
 
 // ArrowField - Represents an Apache Arrow field.
@@ -202,7 +202,7 @@ type FilterBlobItem struct {
 // FilterBlobSegment - The result of a Filter Blobs API call
 type FilterBlobSegment struct {
 	// REQUIRED; The blob segment.
-	Blobs []*FilterBlobItem `xml:"Blobs>FilterBlobItem"`
+	Blobs []*FilterBlobItem `xml:"Blobs>Blob"`
 
 	// REQUIRED; The service endpoint.
 	ServiceEndpoint *string `xml:"ServiceEndpoint,attr"`
@@ -344,7 +344,7 @@ type ListBlobsHierarchySegmentResponse struct {
 // ListContainersSegmentResponse - The list container segment response
 type ListContainersSegmentResponse struct {
 	// REQUIRED; The container segment.
-	ContainerItems []*ContainerItem `xml:"Containers>ContainerItem"`
+	ContainerItems []*ContainerItem `xml:"Containers>Container"`
 
 	// REQUIRED; The service endpoint.
 	ServiceEndpoint *string `xml:"ServiceEndpoint,attr"`
@@ -634,7 +634,7 @@ type StaticWebsite struct {
 // StorageServiceProperties - The service properties.
 type StorageServiceProperties struct {
 	// The CORS properties.
-	CORS []*CORSRule `xml:"Cors>CORSRule"`
+	CORS []*CORSRule `xml:"Cors>CorsRule"`
 
 	// The default service version.
 	DefaultServiceVersion *string `xml:"DefaultServiceVersion"`
