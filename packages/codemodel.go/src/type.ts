@@ -357,6 +357,12 @@ export interface XMLInfo {
 
   /** value is raw text */
   text: boolean;
+
+  /** XML namespace URI */
+  namespace?: string;
+
+  /** XML namespace prefix */
+  prefix?: string;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

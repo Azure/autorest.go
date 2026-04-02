@@ -13,7 +13,6 @@ import (
 )
 
 func TestXMLModelWithRenamedWrappedAndItemModelArrayValueClient_Get(t *testing.T) {
-	t.Skip("codegen bug: struct tag uses 'AllBooks>Book' but server returns 'AllBooks>XmlBook'")
 	client, err := xmlgroup.NewXMLClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithRenamedWrappedAndItemModelArrayValueClient().Get(context.Background(), nil)

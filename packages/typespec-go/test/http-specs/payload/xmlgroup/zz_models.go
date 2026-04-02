@@ -161,7 +161,7 @@ type ModelWithRenamedUnwrappedModelArray struct {
 // ModelWithRenamedWrappedAndItemModelArray - §4.5 — Contains a wrapped array of models with custom wrapper and item names.
 type ModelWithRenamedWrappedAndItemModelArray struct {
 	// REQUIRED
-	Books []Book `xml:"AllBooks>Book"`
+	Books []Book `xml:"AllBooks>XmlBook"`
 }
 
 // ModelWithRenamedWrappedModelArray - §4.3 — Contains a wrapped array of models with a custom wrapper name.
@@ -206,7 +206,7 @@ type ModelWithUnwrappedModelArray struct {
 // ModelWithWrappedPrimitiveCustomItemNames - §3.5 — Contains a wrapped primitive array with custom wrapper and item names.
 type ModelWithWrappedPrimitiveCustomItemNames struct {
 	// REQUIRED
-	Tags []string `xml:"ItemsTags>string"`
+	Tags []string `xml:"ItemsTags>ItemName"`
 }
 
 // SimpleModel - §1.1 — Contains fields of primitive types.

@@ -24,7 +24,6 @@ func TestXMLModelWithNamespaceValueClient_Get(t *testing.T) {
 }
 
 func TestXMLModelWithNamespaceValueClient_Put(t *testing.T) {
-	t.Skip("codegen bug: no XML namespace serde generated, server expects namespace-prefixed XML")
 	client, err := xmlgroup.NewXMLClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithNamespaceValueClient().Put(context.Background(), xmlgroup.ModelWithNamespace{

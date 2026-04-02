@@ -263,7 +263,8 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       }
       // due to differences in XML marshallers/unmarshallers, we use different codegen than for JSON
       const needsXMLDictionaryUnmarshalling = needsXMLDictionaryHelper(model);
-      if (needsDateTimeMarshalling || model.xml?.wrapper || needsXMLArrayMarshalling(model) || byteArrayFormat) {
+      const needsXMLNamespaceMarshalling = hasXMLNamespace(model);
+      if (needsDateTimeMarshalling || model.xml?.wrapper || needsXMLArrayMarshalling(model) || byteArrayFormat || needsXMLNamespaceMarshalling) {
         generateXMLMarshaller(modelDef, serdeImports);
         if (needsDateTimeMarshalling || needsXMLDictionaryUnmarshalling || byteArrayFormat) {
           generateXMLUnmarshaller(modelDef, serdeImports);
@@ -306,6 +307,18 @@ function needsXMLDictionaryHelper(modelType: go.Model): boolean {
 function needsXMLArrayMarshalling(modelType: go.Model): boolean {
   for (const prop of modelType.fields) {
     if (prop.type.kind === 'slice') {
+      return true;
+    }
+  }
+  return false;
+}
+
+function hasXMLNamespace(modelType: go.Model): boolean {
+  if (modelType.xml?.namespace) {
+    return true;
+  }
+  for (const field of modelType.fields) {
+    if (field.xml?.namespace) {
       return true;
     }
   }
@@ -814,14 +827,54 @@ function recursivePopulateDiscriminator(
  * @param imports the import manager currently in scope
  */
 function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager): void {
-  // only needed for types with time.Time, maps, or where the XML name doesn't match the type name
+  // only needed for types with time.Time, maps, or where XML namespace handling is required
   const receiver = modelDef.receiverName();
   const desc = `MarshalXML implements the xml.Marshaller interface for type ${modelDef.Model.name}.`;
   let text = `func (${receiver} ${modelDef.Model.name}) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {\n`;
-  if (modelDef.Model.xml?.wrapper) {
-    text += `\tstart.Name.Local = "${modelDef.Model.xml.wrapper}"\n`;
+
+  // collect namespace declarations from the model and its fields
+  const nsDecls = new Map<string, string>(); // prefix -> namespace URI
+  if (modelDef.Model.xml?.namespace && modelDef.Model.xml?.prefix) {
+    nsDecls.set(modelDef.Model.xml.prefix, modelDef.Model.xml.namespace);
   }
-  text += generateAliasType(modelDef.Model, receiver, true, imports);
+  for (const field of modelDef.Model.fields) {
+    if (field.xml?.namespace && field.xml?.prefix) {
+      nsDecls.set(field.xml.prefix, field.xml.namespace);
+    }
+  }
+
+  if (nsDecls.size > 0) {
+    // set the element name with namespace prefix
+    const prefix = modelDef.Model.xml?.prefix;
+    const localName = modelDef.Model.xml?.wrapper ?? modelDef.Model.name;
+    if (prefix) {
+      text += `\tstart.Name.Local = "${prefix}:${localName}"\n`;
+    }
+    // add xmlns attributes for all namespace declarations
+    for (const [prefix, ns] of nsDecls) {
+      text += `\tstart.Attr = append(start.Attr, xml.Attr{\n`;
+      text += `\t\tName:  xml.Name{Local: "xmlns:${prefix}"},\n`;
+      text += `\t\tValue: "${ns}",\n`;
+      text += '\t})\n';
+    }
+  } else if (modelDef.Model.xml?.wrapper) {
+    // conditionally override the element name only when serialized as a root element.
+    // when nested inside another struct, the parent's field tag provides the start name,
+    // so we must not override it.
+    text += `\tif start.Name.Local == "${modelDef.Model.name}" {\n`;
+    text += `\t\tstart.Name.Local = "${modelDef.Model.xml.wrapper}"\n`;
+    text += '\t}\n';
+  }
+
+  // for models with namespace-prefixed fields, we must use a non-embedded struct
+  // because Go's xml encoder doesn't shadow embedded fields when XML tags differ.
+  const hasNsPrefixedFields = modelDef.Model.fields.some(f => f.xml?.prefix);
+  if (hasNsPrefixedFields) {
+    text += generateNonEmbeddedAuxStruct(modelDef.Model, receiver, imports);
+  } else {
+    text += generateAliasType(modelDef.Model, receiver, true, imports);
+  }
+
   for (const field of modelDef.Model.fields) {
     if (field.type.kind === 'slice') {
       text += `\tif ${receiver}.${field.name} != nil {\n`;
@@ -876,6 +929,46 @@ function generateXMLUnmarshaller(modelDef: ModelDef, imports: ImportManager): vo
   text += '\treturn nil\n';
   text += '}\n\n';
   modelDef.SerDe.methods.push({ name: 'UnmarshalXML', desc: desc, text: text });
+}
+
+/**
+ * generates a non-embedded auxiliary struct for XML marshalling with namespace-prefixed fields.
+ * unlike generateAliasType which uses embedding, this creates a standalone struct to avoid
+ * Go's xml encoder encoding both the embedded and shadowed fields.
+ */
+function generateNonEmbeddedAuxStruct(modelType: go.Model | go.PolymorphicModel, receiver: string, imports: ImportManager): string {
+  let text = '\taux := &struct {\n';
+  for (const field of modelType.fields) {
+    const sn = getXMLSerialization(modelType, field);
+    const nsPrefix = field.xml?.prefix ? `${field.xml.prefix}:` : '';
+    if (field.type.kind === 'time') {
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+      text += `\t\t${field.name} *datetime.${field.type.format} \`xml:"${nsPrefix}${sn}"\`\n`;
+    } else if (field.annotations.isAdditionalProperties || field.type.kind === 'map') {
+      text += `\t\t${field.name} additionalProperties \`xml:"${nsPrefix}${sn}"\`\n`;
+    } else if (field.type.kind === 'slice') {
+      text += `\t\t${field.name} *${go.getTypeDeclaration(field.type, modelType.pkg)} \`xml:"${nsPrefix}${sn}"\`\n`;
+    } else if (field.type.kind === 'encodedBytes') {
+      text += `\t\t${field.name} *string \`xml:"${nsPrefix}${sn}"\`\n`;
+    } else {
+      const typeName = go.getTypeDeclaration(field.type, modelType.pkg);
+      text += `\t\t${field.name} ${helpers.star(field.byValue)}${typeName} \`xml:"${nsPrefix}${sn}"\`\n`;
+    }
+  }
+  text += '\t}{\n';
+  // initialize all fields from receiver
+  for (const field of modelType.fields) {
+    if (field.type.kind === 'time') {
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+      text += `\t\t${field.name}: (*datetime.${field.type.format})(${receiver}.${field.name}),\n`;
+    } else if (field.type.kind === 'slice' || field.type.kind === 'encodedBytes' || field.annotations.isAdditionalProperties || field.type.kind === 'map') {
+      // these are handled after struct initialization in the caller
+    } else {
+      text += `\t\t${field.name}: ${receiver}.${field.name},\n`;
+    }
+  }
+  text += '\t}\n';
+  return text;
 }
 
 /**

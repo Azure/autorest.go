@@ -16,7 +16,9 @@ import (
 
 // MarshalXML implements the xml.Marshaller interface for type Author.
 func (a Author) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	start.Name.Local = "XmlAuthor"
+	if start.Name.Local == "Author" {
+		start.Name.Local = "XmlAuthor"
+	}
 	type alias Author
 	aux := &struct {
 		*alias
@@ -28,7 +30,9 @@ func (a Author) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 
 // MarshalXML implements the xml.Marshaller interface for type Book.
 func (b Book) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	start.Name.Local = "XmlBook"
+	if start.Name.Local == "Book" {
+		start.Name.Local = "XmlBook"
+	}
 	type alias Book
 	aux := &struct {
 		*alias
@@ -136,7 +140,9 @@ func (m ModelWithEmptyArray) MarshalXML(enc *xml.Encoder, start xml.StartElement
 
 // MarshalXML implements the xml.Marshaller interface for type ModelWithEncodedNames.
 func (m ModelWithEncodedNames) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	start.Name.Local = "ModelWithEncodedNamesSrc"
+	if start.Name.Local == "ModelWithEncodedNames" {
+		start.Name.Local = "ModelWithEncodedNamesSrc"
+	}
 	type alias ModelWithEncodedNames
 	aux := &struct {
 		*alias
@@ -146,6 +152,45 @@ func (m ModelWithEncodedNames) MarshalXML(enc *xml.Encoder, start xml.StartEleme
 	}
 	if m.Colors != nil {
 		aux.Colors = &m.Colors
+	}
+	return enc.EncodeElement(aux, start)
+}
+
+// MarshalXML implements the xml.Marshaller interface for type ModelWithNamespace.
+func (m ModelWithNamespace) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "smp:ModelWithNamespace"
+	start.Attr = append(start.Attr, xml.Attr{
+		Name:  xml.Name{Local: "xmlns:smp"},
+		Value: "http://example.com/schema",
+	})
+	type alias ModelWithNamespace
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&m),
+	}
+	return enc.EncodeElement(aux, start)
+}
+
+// MarshalXML implements the xml.Marshaller interface for type ModelWithNamespaceOnProperties.
+func (m ModelWithNamespaceOnProperties) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "smp:ModelWithNamespaceOnProperties"
+	start.Attr = append(start.Attr, xml.Attr{
+		Name:  xml.Name{Local: "xmlns:smp"},
+		Value: "http://example.com/schema",
+	})
+	start.Attr = append(start.Attr, xml.Attr{
+		Name:  xml.Name{Local: "xmlns:ns2"},
+		Value: "http://example.com/ns2",
+	})
+	aux := &struct {
+		Author *string `xml:"ns2:author"`
+		ID     *int32  `xml:"id"`
+		Title  *string `xml:"smp:title"`
+	}{
+		Author: m.Author,
+		ID:     m.ID,
+		Title:  m.Title,
 	}
 	return enc.EncodeElement(aux, start)
 }
@@ -171,7 +216,9 @@ func (m ModelWithRenamedArrays) MarshalXML(enc *xml.Encoder, start xml.StartElem
 
 // MarshalXML implements the xml.Marshaller interface for type ModelWithRenamedFields.
 func (m ModelWithRenamedFields) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	start.Name.Local = "ModelWithRenamedFieldsSrc"
+	if start.Name.Local == "ModelWithRenamedFields" {
+		start.Name.Local = "ModelWithRenamedFieldsSrc"
+	}
 	type alias ModelWithRenamedFields
 	aux := &struct {
 		*alias
@@ -201,7 +248,7 @@ func (m ModelWithRenamedWrappedAndItemModelArray) MarshalXML(enc *xml.Encoder, s
 	type alias ModelWithRenamedWrappedAndItemModelArray
 	aux := &struct {
 		*alias
-		Books *[]Book `xml:"AllBooks>Book"`
+		Books *[]Book `xml:"AllBooks>XmlBook"`
 	}{
 		alias: (*alias)(&m),
 	}
@@ -284,7 +331,7 @@ func (m ModelWithWrappedPrimitiveCustomItemNames) MarshalXML(enc *xml.Encoder, s
 	type alias ModelWithWrappedPrimitiveCustomItemNames
 	aux := &struct {
 		*alias
-		Tags *[]string `xml:"ItemsTags>string"`
+		Tags *[]string `xml:"ItemsTags>ItemName"`
 	}{
 		alias: (*alias)(&m),
 	}

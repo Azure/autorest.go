@@ -12,7 +12,6 @@ import (
 )
 
 func TestXMLModelWithWrappedPrimitiveCustomItemNamesValueClient_Get(t *testing.T) {
-	t.Skip("codegen bug: struct tag uses 'ItemsTags>string' but server returns 'ItemsTags>ItemName'")
 	client, err := xmlgroup.NewXMLClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithWrappedPrimitiveCustomItemNamesValueClient().Get(context.Background(), nil)
@@ -23,7 +22,6 @@ func TestXMLModelWithWrappedPrimitiveCustomItemNamesValueClient_Get(t *testing.T
 }
 
 func TestXMLModelWithWrappedPrimitiveCustomItemNamesValueClient_Put(t *testing.T) {
-	t.Skip("codegen bug: struct tag uses 'ItemsTags>string' but server expects 'ItemsTags>ItemName'")
 	client, err := xmlgroup.NewXMLClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithWrappedPrimitiveCustomItemNamesValueClient().Put(context.Background(), xmlgroup.ModelWithWrappedPrimitiveCustomItemNames{

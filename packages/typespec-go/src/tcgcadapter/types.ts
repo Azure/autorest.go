@@ -570,6 +570,14 @@ export class TypeAdapter {
       modelType = new go.Model(this.getPkg(), modelName, annotations, usage);
       // polymorphic types don't have XMLInfo
       modelType.xml = helpers.adaptXMLInfo(this.getPkg(), model.decorators);
+      // set namespace from serialization options if available
+      if (model.serializationOptions.xml?.ns) {
+        if (!modelType.xml) {
+          modelType.xml = new go.XMLInfo();
+        }
+        modelType.xml.namespace = model.serializationOptions.xml.ns.namespace;
+        modelType.xml.prefix = model.serializationOptions.xml.ns.prefix;
+      }
     }
 
     modelType.docs.summary = model.summary;
@@ -645,6 +653,20 @@ export class TypeAdapter {
     }
 
     field.xml = helpers.adaptXMLInfo(this.getPkg(), prop.decorators, field);
+
+    // for wrapped arrays, use the TCGC item name if available
+    if (field.xml?.wraps && prop.serializationOptions.xml?.itemsName) {
+      field.xml.wraps = prop.serializationOptions.xml.itemsName;
+    }
+
+    // set field namespace from serialization options if available
+    if (prop.serializationOptions.xml?.ns) {
+      if (!field.xml) {
+        field.xml = new go.XMLInfo();
+      }
+      field.xml.namespace = prop.serializationOptions.xml.ns.namespace;
+      field.xml.prefix = prop.serializationOptions.xml.ns.prefix;
+    }
 
     return field;
   }
