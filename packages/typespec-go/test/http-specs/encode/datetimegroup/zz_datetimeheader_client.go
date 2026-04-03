@@ -53,7 +53,7 @@ func (client *DatetimeHeaderClient) defaultCreateRequest(ctx context.Context, va
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["value"] = []string{value.Format(time.RFC1123)}
+	req.Raw().Header["value"] = []string{datetime.RFC1123(value).String()}
 	return req, nil
 }
 
@@ -88,7 +88,7 @@ func (client *DatetimeHeaderClient) rfc3339CreateRequest(ctx context.Context, va
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["value"] = []string{value.Format(time.RFC3339Nano)}
+	req.Raw().Header["value"] = []string{datetime.RFC3339(value).String()}
 	return req, nil
 }
 
@@ -123,7 +123,7 @@ func (client *DatetimeHeaderClient) rfc7231CreateRequest(ctx context.Context, va
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["value"] = []string{value.Format(time.RFC1123)}
+	req.Raw().Header["value"] = []string{datetime.RFC1123(value).String()}
 	return req, nil
 }
 

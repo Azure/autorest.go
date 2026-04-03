@@ -305,14 +305,6 @@ export function formatParamValue(param: go.MethodParameter, imports: ImportManag
     }
   }
 
-  if (param.type.kind === 'time' && param.type.format !== 'Unix') {
-    // for most time types we call methods on time.Time which is why we remove the dereference.
-    // however, for unix time, we cast to our unix helper first so we must keep the dereference.
-    if (!go.isRequiredParameter(param.style) && paramName[0] === '*') {
-      // remove the dereference
-      paramName = paramName.substring(1);
-    }
-  }
   return formatValue(paramName, param.type, imports);
 }
 
@@ -377,21 +369,8 @@ export function formatValue(paramName: string, type: go.WireType, imports: Impor
           throw new CodegenError('InternalError', `unhandled scalar type ${type.type}`);
       }
     case 'time':
-      imports.add('time');
-      switch (type.format) {
-        case 'RFC1123':
-          return `${paramName}.Format(${RFC1123Format})`;
-        case 'RFC3339':
-          return `${paramName}.Format(${RFC3339Format})`;
-        case 'PlainDate':
-          return `${paramName}.Format(${plainDateFormat})`;
-        case 'PlainTime':
-          imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
-          return `datetime.PlainTime(${star}${paramName}).String()`;
-        case 'Unix':
-          imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
-          return `datetime.Unix(${star}${paramName}).String()`;
-      }
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+      return `datetime.${type.format}(${star}${paramName}).String()`;
     default:
       return `${star}${paramName}`;
   }

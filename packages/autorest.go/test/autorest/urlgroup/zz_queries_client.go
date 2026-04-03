@@ -11,10 +11,10 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"net/http"
 	"strconv"
 	"strings"
-	"time"
 )
 
 // QueriesClient contains the methods for the Queries group.
@@ -489,7 +489,7 @@ func (client *QueriesClient) dateNullCreateRequest(ctx context.Context, options 
 	}
 	reqQP := req.Raw().URL.Query()
 	if options != nil && options.DateQuery != nil {
-		reqQP.Set("dateQuery", options.DateQuery.Format(time.DateOnly))
+		reqQP.Set("dateQuery", datetime.PlainDate(*options.DateQuery).String())
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
@@ -531,7 +531,7 @@ func (client *QueriesClient) dateTimeNullCreateRequest(ctx context.Context, opti
 	}
 	reqQP := req.Raw().URL.Query()
 	if options != nil && options.DateTimeQuery != nil {
-		reqQP.Set("dateTimeQuery", options.DateTimeQuery.Format(time.RFC3339Nano))
+		reqQP.Set("dateTimeQuery", datetime.RFC3339(*options.DateTimeQuery).String())
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}

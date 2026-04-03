@@ -14,7 +14,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"net/http"
-	"time"
 )
 
 // DatetimeResponseHeaderServer is a fake server for instances of the datetimegroup.DatetimeResponseHeaderClient type.
@@ -116,7 +115,7 @@ func (d *DatetimeResponseHeaderServerTransport) dispatchDefault(req *http.Reques
 		return nil, err
 	}
 	if val := server.GetResponse(respr).Value; val != nil {
-		resp.Header.Set("value", val.Format(time.RFC1123))
+		resp.Header.Set("value", datetime.RFC1123(*val).String())
 	}
 	return resp, nil
 }
@@ -138,7 +137,7 @@ func (d *DatetimeResponseHeaderServerTransport) dispatchRFC3339(req *http.Reques
 		return nil, err
 	}
 	if val := server.GetResponse(respr).Value; val != nil {
-		resp.Header.Set("value", val.Format(time.RFC3339Nano))
+		resp.Header.Set("value", datetime.RFC3339(*val).String())
 	}
 	return resp, nil
 }
@@ -160,7 +159,7 @@ func (d *DatetimeResponseHeaderServerTransport) dispatchRFC7231(req *http.Reques
 		return nil, err
 	}
 	if val := server.GetResponse(respr).Value; val != nil {
-		resp.Header.Set("value", val.Format(time.RFC1123))
+		resp.Header.Set("value", datetime.RFC1123(*val).String())
 	}
 	return resp, nil
 }

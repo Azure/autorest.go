@@ -254,7 +254,7 @@ func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time, opt
 // dateNullCreateRequest creates the DateNull request.
 func (client *PathsClient) dateNullCreateRequest(ctx context.Context, datePath time.Time, _ *PathsClientDateNullOptions) (*policy.Request, error) {
 	urlPath := "/paths/date/null/{datePath}"
-	urlPath = strings.ReplaceAll(urlPath, "{datePath}", url.PathEscape(datePath.Format(time.DateOnly)))
+	urlPath = strings.ReplaceAll(urlPath, "{datePath}", url.PathEscape(datetime.PlainDate(datePath).String()))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
@@ -293,7 +293,7 @@ func (client *PathsClient) DateTimeNull(ctx context.Context, dateTimePath time.T
 // dateTimeNullCreateRequest creates the DateTimeNull request.
 func (client *PathsClient) dateTimeNullCreateRequest(ctx context.Context, dateTimePath time.Time, _ *PathsClientDateTimeNullOptions) (*policy.Request, error) {
 	urlPath := "/paths/datetime/null/{dateTimePath}"
-	urlPath = strings.ReplaceAll(urlPath, "{dateTimePath}", url.PathEscape(dateTimePath.Format(time.RFC3339Nano)))
+	urlPath = strings.ReplaceAll(urlPath, "{dateTimePath}", url.PathEscape(datetime.RFC3339(dateTimePath).String()))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err

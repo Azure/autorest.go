@@ -9,11 +9,11 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
-	"time"
 )
 
 // TraitsClient - Illustrates Azure Core operation customizations by traits
@@ -93,7 +93,7 @@ func (client *TraitsClient) repeatableActionCreateRequest(ctx context.Context, i
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.RepeatabilityFirstSent != nil {
-		req.Raw().Header["Repeatability-First-Sent"] = []string{options.RepeatabilityFirstSent.Format(time.RFC1123)}
+		req.Raw().Header["Repeatability-First-Sent"] = []string{datetime.RFC1123(*options.RepeatabilityFirstSent).String()}
 	}
 	if options != nil && options.RepeatabilityRequestID != nil {
 		req.Raw().Header["Repeatability-Request-ID"] = []string{*options.RepeatabilityRequestID}
@@ -162,13 +162,13 @@ func (client *TraitsClient) smokeTestCreateRequest(ctx context.Context, id int32
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
 	}
 	if options != nil && options.IfModifiedSince != nil {
-		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Modified-Since"] = []string{datetime.RFC1123(*options.IfModifiedSince).String()}
 	}
 	if options != nil && options.IfNoneMatch != nil {
 		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
-		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Unmodified-Since"] = []string{datetime.RFC1123(*options.IfUnmodifiedSince).String()}
 	}
 	req.Raw().Header["foo"] = []string{foo}
 	if options != nil && options.ClientRequestID != nil {
