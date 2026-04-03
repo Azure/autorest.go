@@ -6,6 +6,10 @@
 
 * Fixed duplicate definition of `fake.initServer` that can happen in some cases.
 
+### Other Changes
+
+* Use `datetime` helpers when formatting `time.Time` parameters.
+
 ## 4.0.0-preview.76 (2026-01-15)
 
 ### Breaking Changes

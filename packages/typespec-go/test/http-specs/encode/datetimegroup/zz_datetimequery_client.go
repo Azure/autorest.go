@@ -54,7 +54,7 @@ func (client *DatetimeQueryClient) defaultCreateRequest(ctx context.Context, val
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("value", value.Format(time.RFC3339Nano))
+	reqQP.Set("value", datetime.RFC3339(value).String())
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
@@ -91,7 +91,7 @@ func (client *DatetimeQueryClient) rfc3339CreateRequest(ctx context.Context, val
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("value", value.Format(time.RFC3339Nano))
+	reqQP.Set("value", datetime.RFC3339(value).String())
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
@@ -128,7 +128,7 @@ func (client *DatetimeQueryClient) rfc7231CreateRequest(ctx context.Context, val
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("value", value.Format(time.RFC1123))
+	reqQP.Set("value", datetime.RFC1123(value).String())
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }

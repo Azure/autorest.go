@@ -11,6 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"net/http"
 	"strconv"
 	"time"
@@ -180,7 +181,7 @@ func (client *HeaderClient) paramDateCreateRequest(ctx context.Context, scenario
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["scenario"] = []string{scenario}
-	req.Raw().Header["value"] = []string{value.Format(time.DateOnly)}
+	req.Raw().Header["value"] = []string{datetime.PlainDate(value).String()}
 	return req, nil
 }
 
@@ -222,7 +223,7 @@ func (client *HeaderClient) paramDatetimeCreateRequest(ctx context.Context, scen
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["scenario"] = []string{scenario}
-	req.Raw().Header["value"] = []string{value.Format(time.RFC3339Nano)}
+	req.Raw().Header["value"] = []string{datetime.RFC3339(value).String()}
 	return req, nil
 }
 
@@ -265,7 +266,7 @@ func (client *HeaderClient) paramDatetimeRFC1123CreateRequest(ctx context.Contex
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["scenario"] = []string{scenario}
 	if options != nil && options.Value != nil {
-		req.Raw().Header["value"] = []string{options.Value.Format(time.RFC1123)}
+		req.Raw().Header["value"] = []string{datetime.RFC1123(*options.Value).String()}
 	}
 	return req, nil
 }

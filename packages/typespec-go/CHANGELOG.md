@@ -1,5 +1,11 @@
 # Release History
 
+## 0.10.6 (unreleased)
+
+### Other Changes
+
+* Use `datetime` helpers when formatting `time.Time` parameters.
+
 ## 0.10.5 (2026-04-01)
 
 ### Bugs Fixed
