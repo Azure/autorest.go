@@ -65,7 +65,7 @@ func ExampleDiscountsClient_BeginCreate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armbillingbenefits.DiscountsClientCreateResponse{
-	// 	Discount: &armbillingbenefits.Discount{
+	// 	Discount: armbillingbenefits.Discount{
 	// 		Name: to.Ptr("testprimarydiscount"),
 	// 		Type: to.Ptr("Microsoft.BillingBenefits/discounts"),
 	// 		ID: to.Ptr("/subscriptions/30000000-0000-0000-0000-000000000000/resourceGroups/testrg/providers/Microsoft.BillingBenefits/discounts/testprimarydiscount"),

@@ -49,7 +49,7 @@ func ExampleDeploymentsClient_BeginCreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.DeploymentsClientCreateOrUpdateResponse{
-	// 	Deployment: &armcognitiveservices.Deployment{
+	// 	Deployment: armcognitiveservices.Deployment{
 	// 		Name: to.Ptr("deploymentName"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/deployments"),
 	// 		ID: to.Ptr("/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.CognitiveServices/accounts/accountName/deployments/deploymentName"),
@@ -116,7 +116,7 @@ func ExampleDeploymentsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.DeploymentsClientGetResponse{
-	// 	Deployment: &armcognitiveservices.Deployment{
+	// 	Deployment: armcognitiveservices.Deployment{
 	// 		Name: to.Ptr("deploymentName"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/deployments"),
 	// 		ID: to.Ptr("/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.CognitiveServices/accounts/accountName/deployments/deploymentName"),
@@ -255,7 +255,7 @@ func ExampleDeploymentsClient_Pause() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.DeploymentsClientPauseResponse{
-	// 	Deployment: &armcognitiveservices.Deployment{
+	// 	Deployment: armcognitiveservices.Deployment{
 	// 		Name: to.Ptr("deploymentName"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/deployments"),
 	// 		ID: to.Ptr("/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.CognitiveServices/accounts/accountName/deployments/deploymentName"),
@@ -295,7 +295,7 @@ func ExampleDeploymentsClient_Resume() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.DeploymentsClientResumeResponse{
-	// 	Deployment: &armcognitiveservices.Deployment{
+	// 	Deployment: armcognitiveservices.Deployment{
 	// 		Name: to.Ptr("deploymentName"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/deployments"),
 	// 		ID: to.Ptr("/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.CognitiveServices/accounts/accountName/deployments/deploymentName"),
@@ -344,7 +344,7 @@ func ExampleDeploymentsClient_BeginUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.DeploymentsClientUpdateResponse{
-	// 	Deployment: &armcognitiveservices.Deployment{
+	// 	Deployment: armcognitiveservices.Deployment{
 	// 		Name: to.Ptr("deploymentName"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/deployments"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroupName/providers/Microsoft.CognitiveServices/accounts/accountName/deployments/deploymentName"),

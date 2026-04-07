@@ -44,7 +44,7 @@ func ExampleDeploymentsClient_CreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.DeploymentsClientCreateOrUpdateResponse{
-	// 	Deployment: &armapicenter.Deployment{
+	// 	Deployment: armapicenter.Deployment{
 	// 		Type: to.Ptr("Microsoft.ApiCenter/services/apis/deployments"),
 	// 		ID: to.Ptr("/subscriptions/a200340d-6b82-494d-9dbf-687ba6e33f9e/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/workspaces/default/deployments/production"),
 	// 		Name: to.Ptr("production"),
@@ -109,7 +109,7 @@ func ExampleDeploymentsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.DeploymentsClientGetResponse{
-	// 	Deployment: &armapicenter.Deployment{
+	// 	Deployment: armapicenter.Deployment{
 	// 		Type: to.Ptr("Microsoft.ApiCenter/services/apis/deployments"),
 	// 		ID: to.Ptr("/subscriptions/a200340d-6b82-494d-9dbf-687ba6e33f9e/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/workspaces/default/deployments/production"),
 	// 		Name: to.Ptr("public"),

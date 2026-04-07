@@ -54,7 +54,7 @@ func ExampleRaiToolLabelsClient_CreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.RaiToolLabelsClientCreateOrUpdateResponse{
-	// 	RaiToolLabel: &armcognitiveservices.RaiToolLabel{
+	// 	RaiToolLabel: armcognitiveservices.RaiToolLabel{
 	// 		Name: to.Ptr("Web_Search"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/raiToolLabels"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroupName/providers/Microsoft.CognitiveServices/accounts/accountName/raiToolLabels/Web_Search"),
@@ -124,7 +124,7 @@ func ExampleRaiToolLabelsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.RaiToolLabelsClientGetResponse{
-	// 	RaiToolLabel: &armcognitiveservices.RaiToolLabel{
+	// 	RaiToolLabel: armcognitiveservices.RaiToolLabel{
 	// 		Name: to.Ptr("raiToolLabelName"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroupName/providers/Microsoft.CognitiveServices/accounts/accountName/raiIfcToolLabels/raiIfcToolLabelName"),
 	// 		Properties: &armcognitiveservices.RaiToolLabelProperties{

@@ -36,7 +36,7 @@ func ExampleAPIDefinitionsClient_CreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.APIDefinitionsClientCreateOrUpdateResponse{
-	// 	APIDefinition: &armapicenter.APIDefinition{
+	// 	APIDefinition: armapicenter.APIDefinition{
 	// 		Type: to.Ptr("Microsoft.ApiCenter/services/apis/versions/definitions"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/workspaces/default/apis/echo-api/versions/2023-01-01/definitions/openapi"),
 	// 		Name: to.Ptr("openapi"),
@@ -101,7 +101,7 @@ func ExampleAPIDefinitionsClient_BeginExportSpecification() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.APIDefinitionsClientExportSpecificationResponse{
-	// 	APISpecExportResult: &armapicenter.APISpecExportResult{
+	// 	APISpecExportResult: armapicenter.APISpecExportResult{
 	// 		Format: to.Ptr(armapicenter.APISpecExportResultFormatInline),
 	// 		Value: to.Ptr("{ ... }"),
 	// 	},
@@ -127,7 +127,7 @@ func ExampleAPIDefinitionsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.APIDefinitionsClientGetResponse{
-	// 	APIDefinition: &armapicenter.APIDefinition{
+	// 	APIDefinition: armapicenter.APIDefinition{
 	// 		Type: to.Ptr("Microsoft.ApiCenter/services/apis/versions/definitions"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/workspaces/default/apis/echo-api/versions/2023-01-01/definitions/openapi"),
 	// 		Name: to.Ptr("openapi"),

@@ -40,7 +40,7 @@ func ExampleFirewallRulesClient_BeginCreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.FirewallRulesClientCreateOrUpdateResponse{
-	// 	FirewallRule: &armmongocluster.FirewallRule{
+	// 	FirewallRule: armmongocluster.FirewallRule{
 	// 		ID: to.Ptr("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster/firewallRules/rule1"),
 	// 		Name: to.Ptr("rule1"),
 	// 		Type: to.Ptr("/Microsoft.DocumentDB/mongoClusters/firewallRules"),
@@ -101,7 +101,7 @@ func ExampleFirewallRulesClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armmongocluster.FirewallRulesClientGetResponse{
-	// 	FirewallRule: &armmongocluster.FirewallRule{
+	// 	FirewallRule: armmongocluster.FirewallRule{
 	// 		ID: to.Ptr("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster/firewallRules/rule1"),
 	// 		Name: to.Ptr("rule1"),
 	// 		Type: to.Ptr("/Microsoft.DocumentDB/mongoClusters/firewallRules"),

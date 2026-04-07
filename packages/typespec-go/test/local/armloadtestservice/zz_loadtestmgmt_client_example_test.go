@@ -41,7 +41,7 @@ func ExampleLoadTestMgmtClient_CheckAvailabilityQuota() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armloadtestservice.LoadTestMgmtClientCheckAvailabilityQuotaResponse{
-	// 	CheckQuotaAvailabilityResponse: &armloadtestservice.CheckQuotaAvailabilityResponse{
+	// 	CheckQuotaAvailabilityResponse: armloadtestservice.CheckQuotaAvailabilityResponse{
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.LoadTestService/locations/westus/quotas/testQuotaBucket"),
 	// 		Name: to.Ptr("testQuotaBucket"),
 	// 		Type: to.Ptr("Microsoft.LoadTestService/locations/quotas"),
@@ -97,7 +97,7 @@ func ExampleLoadTestMgmtClient_BeginCreateOrUpdateLoadtest() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armloadtestservice.LoadTestMgmtClientCreateOrUpdateLoadtestResponse{
-	// 	LoadTestResource: &armloadtestservice.LoadTestResource{
+	// 	LoadTestResource: armloadtestservice.LoadTestResource{
 	// 		Location: to.Ptr("westus"),
 	// 		Identity: &armloadtestservice.ManagedServiceIdentity{
 	// 			Type: to.Ptr(armloadtestservice.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
@@ -180,7 +180,7 @@ func ExampleLoadTestMgmtClient_GetLoadtest() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armloadtestservice.LoadTestMgmtClientGetLoadtestResponse{
-	// 	LoadTestResource: &armloadtestservice.LoadTestResource{
+	// 	LoadTestResource: armloadtestservice.LoadTestResource{
 	// 		Location: to.Ptr("westus"),
 	// 		Properties: &armloadtestservice.LoadTestProperties{
 	// 			Description: to.Ptr("This is new load test resource"),
@@ -224,7 +224,7 @@ func ExampleLoadTestMgmtClient_GetQuota() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armloadtestservice.LoadTestMgmtClientGetQuotaResponse{
-	// 	QuotaResource: &armloadtestservice.QuotaResource{
+	// 	QuotaResource: armloadtestservice.QuotaResource{
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.LoadTestService/locations/westus/quotas/testQuotaBucket"),
 	// 		Name: to.Ptr("testQuotaBucket"),
 	// 		Type: to.Ptr("Microsoft.LoadTestService/locations/quotas"),

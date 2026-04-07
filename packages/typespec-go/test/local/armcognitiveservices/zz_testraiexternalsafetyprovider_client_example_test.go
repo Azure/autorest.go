@@ -41,7 +41,7 @@ func ExampleTestRaiExternalSafetyProviderClient_CreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.TestRaiExternalSafetyProviderClientCreateOrUpdateResponse{
-	// 	RaiExternalSafetyProviderSchema: &armcognitiveservices.RaiExternalSafetyProviderSchema{
+	// 	RaiExternalSafetyProviderSchema: armcognitiveservices.RaiExternalSafetyProviderSchema{
 	// 		Name: to.Ptr("mySafetyProvider"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.CognitiveServices/raiExternalSafetyProviders/mySafetyProvider"),
 	// 		Properties: &armcognitiveservices.RaiExternalSafetyProviderSchemaProperties{

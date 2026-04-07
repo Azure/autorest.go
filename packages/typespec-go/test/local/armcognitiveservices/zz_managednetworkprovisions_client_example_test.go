@@ -35,7 +35,7 @@ func ExampleManagedNetworkProvisionsClient_BeginProvisionManagedNetwork() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.ManagedNetworkProvisionsClientProvisionManagedNetworkResponse{
-	// 	ManagedNetworkProvisionStatus: &armcognitiveservices.ManagedNetworkProvisionStatus{
+	// 	ManagedNetworkProvisionStatus: armcognitiveservices.ManagedNetworkProvisionStatus{
 	// 		Status: to.Ptr(armcognitiveservices.ManagedNetworkStatusActive),
 	// 	},
 	// }

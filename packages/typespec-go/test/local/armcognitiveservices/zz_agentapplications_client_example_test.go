@@ -44,7 +44,7 @@ func ExampleAgentApplicationsClient_BeginCreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.AgentApplicationsClientCreateOrUpdateResponse{
-	// 	AgentApplication: &armcognitiveservices.AgentApplication{
+	// 	AgentApplication: armcognitiveservices.AgentApplication{
 	// 		Name: to.Ptr("agent-app-1"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/projects/applications"),
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/test-rg/providers/Microsoft.CognitiveServices/accounts/my-cognitive-services-account/projects/my-project/applications/agent-app-1"),
@@ -153,7 +153,7 @@ func ExampleAgentApplicationsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.AgentApplicationsClientGetResponse{
-	// 	AgentApplication: &armcognitiveservices.AgentApplication{
+	// 	AgentApplication: armcognitiveservices.AgentApplication{
 	// 		Name: to.Ptr("agent-app-1"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/projects/applications"),
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/test-rg/providers/Microsoft.CognitiveServices/accounts/my-cognitive-services-account/projects/my-project/applications/agent-app-1"),
@@ -258,7 +258,7 @@ func ExampleAgentApplicationsClient_ListAgents() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.AgentApplicationsClientListAgentsResponse{
-	// 	AgentReferenceResourceArmPaginatedResult: &armcognitiveservices.AgentReferenceResourceArmPaginatedResult{
+	// 	AgentReferenceResourceArmPaginatedResult: armcognitiveservices.AgentReferenceResourceArmPaginatedResult{
 	// 		NextLink: nil,
 	// 		Value: []*armcognitiveservices.AgentReference{
 	// 			{

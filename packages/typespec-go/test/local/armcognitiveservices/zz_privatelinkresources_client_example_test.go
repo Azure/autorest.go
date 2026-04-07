@@ -30,7 +30,7 @@ func ExamplePrivateLinkResourcesClient_List() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.PrivateLinkResourcesClientListResponse{
-	// 	PrivateLinkResourceListResult: &armcognitiveservices.PrivateLinkResourceListResult{
+	// 	PrivateLinkResourceListResult: armcognitiveservices.PrivateLinkResourceListResult{
 	// 		Value: []*armcognitiveservices.PrivateLinkResource{
 	// 			{
 	// 				Name: to.Ptr("blob"),

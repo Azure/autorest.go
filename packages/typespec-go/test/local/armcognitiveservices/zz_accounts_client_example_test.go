@@ -59,7 +59,7 @@ func ExampleAccountsClient_BeginCreate_createAccount() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.AccountsClientCreateResponse{
-	// 	Account: &armcognitiveservices.Account{
+	// 	Account: armcognitiveservices.Account{
 	// 		Name: to.Ptr("testCreate1"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts"),
 	// 		Etag: to.Ptr("W/\"datetime'2017-04-10T08%3A00%3A05.445595Z'\""),
@@ -128,7 +128,7 @@ func ExampleAccountsClient_BeginCreate_createAccountMin() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.AccountsClientCreateResponse{
-	// 	Account: &armcognitiveservices.Account{
+	// 	Account: armcognitiveservices.Account{
 	// 		Name: to.Ptr("testCreate1"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts"),
 	// 		Etag: to.Ptr("W/\"datetime'2017-04-10T08%3A00%3A05.445595Z'\""),
@@ -196,7 +196,7 @@ func ExampleAccountsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.AccountsClientGetResponse{
-	// 	Account: &armcognitiveservices.Account{
+	// 	Account: armcognitiveservices.Account{
 	// 		Name: to.Ptr("myAccount"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts"),
 	// 		Etag: to.Ptr("W/\"datetime'2017-04-10T04%3A42%3A19.7067387Z'\""),
@@ -398,7 +398,7 @@ func ExampleAccountsClient_ListKeys() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.AccountsClientListKeysResponse{
-	// 	APIKeys: &armcognitiveservices.APIKeys{
+	// 	APIKeys: armcognitiveservices.APIKeys{
 	// 		Key1: to.Ptr("KEY1"),
 	// 		Key2: to.Ptr("KEY2"),
 	// 	},
@@ -625,7 +625,7 @@ func ExampleAccountsClient_ListSKUs() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.AccountsClientListSKUsResponse{
-	// 	AccountSKUListResult: &armcognitiveservices.AccountSKUListResult{
+	// 	AccountSKUListResult: armcognitiveservices.AccountSKUListResult{
 	// 		Value: []*armcognitiveservices.AccountSKU{
 	// 			{
 	// 				ResourceType: to.Ptr("Microsoft.CognitiveServices/accounts"),
@@ -665,7 +665,7 @@ func ExampleAccountsClient_ListUsages() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.AccountsClientListUsagesResponse{
-	// 	UsageListResult: &armcognitiveservices.UsageListResult{
+	// 	UsageListResult: armcognitiveservices.UsageListResult{
 	// 		Value: []*armcognitiveservices.Usage{
 	// 			{
 	// 				Name: &armcognitiveservices.MetricName{
@@ -705,7 +705,7 @@ func ExampleAccountsClient_RegenerateKey() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.AccountsClientRegenerateKeyResponse{
-	// 	APIKeys: &armcognitiveservices.APIKeys{
+	// 	APIKeys: armcognitiveservices.APIKeys{
 	// 		Key1: to.Ptr("KEY1"),
 	// 		Key2: to.Ptr("KEY2"),
 	// 	},
@@ -740,7 +740,7 @@ func ExampleAccountsClient_BeginUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.AccountsClientUpdateResponse{
-	// 	Account: &armcognitiveservices.Account{
+	// 	Account: armcognitiveservices.Account{
 	// 		Name: to.Ptr("bingSearch"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts"),
 	// 		Etag: to.Ptr("W/\"datetime'2017-04-10T07%3A46%3A21.5618831Z'\""),

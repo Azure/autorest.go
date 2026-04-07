@@ -42,7 +42,7 @@ func ExampleOutboundRuleClient_BeginCreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.OutboundRuleClientCreateOrUpdateResponse{
-	// 	OutboundRuleBasicResource: &armcognitiveservices.OutboundRuleBasicResource{
+	// 	OutboundRuleBasicResource: armcognitiveservices.OutboundRuleBasicResource{
 	// 		Name: to.Ptr("rule_name_1"),
 	// 		Type: to.Ptr("accounts/outboundRules"),
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/test-rg/providers/Microsoft.CognitiveServices/accounts/cognitive-account-name/managedNetworks/default/outboundRules/rule_name_1"),
@@ -96,7 +96,7 @@ func ExampleOutboundRuleClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.OutboundRuleClientGetResponse{
-	// 	OutboundRuleBasicResource: &armcognitiveservices.OutboundRuleBasicResource{
+	// 	OutboundRuleBasicResource: armcognitiveservices.OutboundRuleBasicResource{
 	// 		Name: to.Ptr("rule_name_1"),
 	// 		Type: to.Ptr("accounts/outboundRules"),
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/test-rg/providers/Microsoft.CognitiveServices/accounts/cognitive-account-name/managedNetworks/default/outboundRules/rule_name_1"),

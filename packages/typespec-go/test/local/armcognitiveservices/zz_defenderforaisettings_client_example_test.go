@@ -35,7 +35,7 @@ func ExampleDefenderForAISettingsClient_CreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.DefenderForAISettingsClientCreateOrUpdateResponse{
-	// 	DefenderForAISetting: &armcognitiveservices.DefenderForAISetting{
+	// 	DefenderForAISetting: armcognitiveservices.DefenderForAISetting{
 	// 		Name: to.Ptr("Default"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/defenderForAISettings"),
 	// 		Etag: to.Ptr("\"00000000-0000-0000-0000-000000000000\""),
@@ -74,7 +74,7 @@ func ExampleDefenderForAISettingsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.DefenderForAISettingsClientGetResponse{
-	// 	DefenderForAISetting: &armcognitiveservices.DefenderForAISetting{
+	// 	DefenderForAISetting: armcognitiveservices.DefenderForAISetting{
 	// 		Name: to.Ptr("Default"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/defenderForAISettings"),
 	// 		Etag: to.Ptr("\"00000000-0000-0000-0000-000000000000\""),
@@ -165,7 +165,7 @@ func ExampleDefenderForAISettingsClient_Update() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.DefenderForAISettingsClientUpdateResponse{
-	// 	DefenderForAISetting: &armcognitiveservices.DefenderForAISetting{
+	// 	DefenderForAISetting: armcognitiveservices.DefenderForAISetting{
 	// 		Name: to.Ptr("Default"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/defenderForAISettings"),
 	// 		Etag: to.Ptr("\"00000000-0000-0000-0000-000000000000\""),

@@ -41,7 +41,7 @@ func ExampleMetadataSchemasClient_CreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.MetadataSchemasClientCreateOrUpdateResponse{
-	// 	MetadataSchema: &armapicenter.MetadataSchema{
+	// 	MetadataSchema: armapicenter.MetadataSchema{
 	// 		Type: to.Ptr("Microsoft.ApiCenter/services/metadataSchemas"),
 	// 		ID: to.Ptr("/subscriptions/a200340d-6b82-494d-9dbf-687ba6e33f9e/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/metadataSchemas/author"),
 	// 		Name: to.Ptr("author"),
@@ -103,7 +103,7 @@ func ExampleMetadataSchemasClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.MetadataSchemasClientGetResponse{
-	// 	MetadataSchema: &armapicenter.MetadataSchema{
+	// 	MetadataSchema: armapicenter.MetadataSchema{
 	// 		Type: to.Ptr("Microsoft.ApiCenter/services/metadataSchemas"),
 	// 		ID: to.Ptr("/subscriptions/a200340d-6b82-494d-9dbf-687ba6e33f9e/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/metadataSchemas/author"),
 	// 		Name: to.Ptr("author"),

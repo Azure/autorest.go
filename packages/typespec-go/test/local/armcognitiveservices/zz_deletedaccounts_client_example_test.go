@@ -30,7 +30,7 @@ func ExampleDeletedAccountsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.DeletedAccountsClientGetResponse{
-	// 	Account: &armcognitiveservices.Account{
+	// 	Account: armcognitiveservices.Account{
 	// 		Name: to.Ptr("myAccount"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts"),
 	// 		Etag: to.Ptr("W/\"datetime'2017-04-10T04%3A42%3A19.7067387Z'\""),

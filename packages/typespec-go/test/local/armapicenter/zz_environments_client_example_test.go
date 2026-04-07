@@ -49,7 +49,7 @@ func ExampleEnvironmentsClient_CreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.EnvironmentsClientCreateOrUpdateResponse{
-	// 	Environment: &armapicenter.Environment{
+	// 	Environment: armapicenter.Environment{
 	// 		Type: to.Ptr("Microsoft.ApiCenter/services/workspaces/environments"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/workspaces/default/environments/public"),
 	// 		Name: to.Ptr("public"),
@@ -119,7 +119,7 @@ func ExampleEnvironmentsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.EnvironmentsClientGetResponse{
-	// 	Environment: &armapicenter.Environment{
+	// 	Environment: armapicenter.Environment{
 	// 		Type: to.Ptr("Microsoft.ApiCenter/services/environments"),
 	// 		ID: to.Ptr("/subscriptions/a200340d-6b82-494d-9dbf-687ba6e33f9e/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/workspaces/default/environments/public"),
 	// 		Name: to.Ptr("public"),

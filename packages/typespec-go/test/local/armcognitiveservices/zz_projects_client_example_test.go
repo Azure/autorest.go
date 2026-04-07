@@ -44,7 +44,7 @@ func ExampleProjectsClient_BeginCreate_createProject() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.ProjectsClientCreateResponse{
-	// 	Project: &armcognitiveservices.Project{
+	// 	Project: armcognitiveservices.Project{
 	// 		Name: to.Ptr("testProject1"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/projects"),
 	// 		Etag: to.Ptr("W/\"datetime'2017-04-10T08%3A00%3A05.445595Z'\""),
@@ -99,7 +99,7 @@ func ExampleProjectsClient_BeginCreate_createProjectMin() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.ProjectsClientCreateResponse{
-	// 	Project: &armcognitiveservices.Project{
+	// 	Project: armcognitiveservices.Project{
 	// 		Name: to.Ptr("testProject1"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/projects"),
 	// 		Etag: to.Ptr("W/\"datetime'2017-04-10T08%3A00%3A05.445595Z'\""),
@@ -163,7 +163,7 @@ func ExampleProjectsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.ProjectsClientGetResponse{
-	// 	Project: &armcognitiveservices.Project{
+	// 	Project: armcognitiveservices.Project{
 	// 		Name: to.Ptr("myProject"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/projects"),
 	// 		Etag: to.Ptr("W/\"datetime'2017-04-10T04%3A42%3A19.7067387Z'\""),
@@ -286,7 +286,7 @@ func ExampleProjectsClient_BeginUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.ProjectsClientUpdateResponse{
-	// 	Project: &armcognitiveservices.Project{
+	// 	Project: armcognitiveservices.Project{
 	// 		Name: to.Ptr("projectName"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/projects"),
 	// 		Etag: to.Ptr("W/\"datetime'2017-04-10T07%3A46%3A21.5618831Z'\""),

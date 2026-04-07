@@ -40,7 +40,7 @@ func ExampleCommitmentPlansClient_CreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.CommitmentPlansClientCreateOrUpdateResponse{
-	// 	CommitmentPlan: &armcognitiveservices.CommitmentPlan{
+	// 	CommitmentPlan: armcognitiveservices.CommitmentPlan{
 	// 		Name: to.Ptr("commitmentPlanName"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/commitmentPlans"),
 	// 		ID: to.Ptr("/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.CognitiveServices/accounts/accountName/commitmentPlans/commitmentPlanName"),
@@ -83,7 +83,7 @@ func ExampleCommitmentPlansClient_BeginCreateOrUpdateAssociation() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.CommitmentPlansClientCreateOrUpdateAssociationResponse{
-	// 	CommitmentPlanAccountAssociation: &armcognitiveservices.CommitmentPlanAccountAssociation{
+	// 	CommitmentPlanAccountAssociation: armcognitiveservices.CommitmentPlanAccountAssociation{
 	// 		Name: to.Ptr("commitmentPlanAssociationName"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/commitmentPlans/accountAssociations"),
 	// 		ID: to.Ptr("/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.CognitiveServices/commitmentPlans/commitmentPlanName/accountAssociations/commitmentPlanAssociationName"),
@@ -131,7 +131,7 @@ func ExampleCommitmentPlansClient_BeginCreateOrUpdatePlan() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.CommitmentPlansClientCreateOrUpdatePlanResponse{
-	// 	CommitmentPlan: &armcognitiveservices.CommitmentPlan{
+	// 	CommitmentPlan: armcognitiveservices.CommitmentPlan{
 	// 		Name: to.Ptr("commitmentPlanName"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/commitmentPlans"),
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroupName/providers/Microsoft.CognitiveServices/commitmentPlans/commitmentPlanName"),
@@ -250,7 +250,7 @@ func ExampleCommitmentPlansClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.CommitmentPlansClientGetResponse{
-	// 	CommitmentPlan: &armcognitiveservices.CommitmentPlan{
+	// 	CommitmentPlan: armcognitiveservices.CommitmentPlan{
 	// 		Name: to.Ptr("commitmentPlanName"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/commitmentPlans"),
 	// 		ID: to.Ptr("/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.CognitiveServices/accounts/accountName/commitmentPlans/commitmentPlanName"),
@@ -285,7 +285,7 @@ func ExampleCommitmentPlansClient_GetAssociation() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.CommitmentPlansClientGetAssociationResponse{
-	// 	CommitmentPlanAccountAssociation: &armcognitiveservices.CommitmentPlanAccountAssociation{
+	// 	CommitmentPlanAccountAssociation: armcognitiveservices.CommitmentPlanAccountAssociation{
 	// 		Name: to.Ptr("commitmentPlanAssociationName"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/commitmentPlans/accountAssociations"),
 	// 		ID: to.Ptr("/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.CognitiveServices/commitmentPlans/commitmentPlanName/accountAssociations/commitmentPlanAssociationName"),
@@ -315,7 +315,7 @@ func ExampleCommitmentPlansClient_GetPlan() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.CommitmentPlansClientGetPlanResponse{
-	// 	CommitmentPlan: &armcognitiveservices.CommitmentPlan{
+	// 	CommitmentPlan: armcognitiveservices.CommitmentPlan{
 	// 		Name: to.Ptr("commitmentPlanName"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/commitmentPlans"),
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroupName/providers/Microsoft.CognitiveServices/commitmentPlans/commitmentPlanName"),
@@ -547,7 +547,7 @@ func ExampleCommitmentPlansClient_BeginUpdatePlan() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.CommitmentPlansClientUpdatePlanResponse{
-	// 	CommitmentPlan: &armcognitiveservices.CommitmentPlan{
+	// 	CommitmentPlan: armcognitiveservices.CommitmentPlan{
 	// 		Name: to.Ptr("commitmentPlanName"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/commitmentPlans"),
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroupName/providers/Microsoft.CognitiveServices/commitmentPlans/commitmentPlanName"),
