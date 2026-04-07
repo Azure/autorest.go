@@ -2,6 +2,10 @@
 
 ## 0.10.6 (unreleased)
 
+### Bugs Fixed
+
+* Fixed incorrect pointer usage for model results in generated example response bodies.
+
 ### Other Changes
 
 * Use `datetime` helpers when formatting `time.Time` parameters.
