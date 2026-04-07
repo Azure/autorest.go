@@ -97,7 +97,7 @@ func (m *ManagedIdentityServerTransport) dispatchCreateWithSystemAssigned(req *h
 	if m.srv.CreateWithSystemAssigned == nil {
 		return nil, &nonRetriableError{errors.New("fake for method CreateWithSystemAssigned not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.CommonProperties/managedIdentityTrackedResources/(?P<managedIdentityTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.CommonProperties/managedIdentityTrackedResources/(?P<managedIdentityTrackedResourceName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 4 {
@@ -134,7 +134,7 @@ func (m *ManagedIdentityServerTransport) dispatchGet(req *http.Request) (*http.R
 	if m.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.CommonProperties/managedIdentityTrackedResources/(?P<managedIdentityTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.CommonProperties/managedIdentityTrackedResources/(?P<managedIdentityTrackedResourceName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 4 {
@@ -167,7 +167,7 @@ func (m *ManagedIdentityServerTransport) dispatchUpdateWithUserAssignedAndSystem
 	if m.srv.UpdateWithUserAssignedAndSystemAssigned == nil {
 		return nil, &nonRetriableError{errors.New("fake for method UpdateWithUserAssignedAndSystemAssigned not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.CommonProperties/managedIdentityTrackedResources/(?P<managedIdentityTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.CommonProperties/managedIdentityTrackedResources/(?P<managedIdentityTrackedResourceName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 4 {

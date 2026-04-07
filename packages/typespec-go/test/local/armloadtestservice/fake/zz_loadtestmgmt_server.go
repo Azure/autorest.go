@@ -156,7 +156,7 @@ func (l *LoadTestMgmtServerTransport) dispatchCheckAvailabilityQuota(req *http.R
 	if l.srv.CheckAvailabilityQuota == nil {
 		return nil, &nonRetriableError{errors.New("fake for method CheckAvailabilityQuota not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/locations/(?P<location>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/quotas/(?P<quotaBucketName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/checkAvailabilityQuota`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/locations/(?P<location>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/quotas/(?P<quotaBucketName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/checkAvailabilityQuota`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 4 {
@@ -195,7 +195,7 @@ func (l *LoadTestMgmtServerTransport) dispatchBeginCreateOrUpdateLoadtest(req *h
 	}
 	beginCreateOrUpdateLoadtest := l.beginCreateOrUpdateLoadtest.get(req)
 	if beginCreateOrUpdateLoadtest == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTests/(?P<loadTestName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTests/(?P<loadTestName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 4 {
@@ -243,7 +243,7 @@ func (l *LoadTestMgmtServerTransport) dispatchBeginDeleteLoadtest(req *http.Requ
 	}
 	beginDeleteLoadtest := l.beginDeleteLoadtest.get(req)
 	if beginDeleteLoadtest == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTests/(?P<loadTestName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTests/(?P<loadTestName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 4 {
@@ -285,7 +285,7 @@ func (l *LoadTestMgmtServerTransport) dispatchGetLoadtest(req *http.Request) (*h
 	if l.srv.GetLoadtest == nil {
 		return nil, &nonRetriableError{errors.New("fake for method GetLoadtest not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTests/(?P<loadTestName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTests/(?P<loadTestName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 4 {
@@ -318,7 +318,7 @@ func (l *LoadTestMgmtServerTransport) dispatchGetQuota(req *http.Request) (*http
 	if l.srv.GetQuota == nil {
 		return nil, &nonRetriableError{errors.New("fake for method GetQuota not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/locations/(?P<location>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/quotas/(?P<quotaBucketName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/locations/(?P<location>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/quotas/(?P<quotaBucketName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 4 {
@@ -353,7 +353,7 @@ func (l *LoadTestMgmtServerTransport) dispatchNewListByResourceGroupPager(req *h
 	}
 	newListByResourceGroupPager := l.newListByResourceGroupPager.get(req)
 	if newListByResourceGroupPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTests`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTests`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 3 {
@@ -390,7 +390,7 @@ func (l *LoadTestMgmtServerTransport) dispatchNewListBySubscriptionPager(req *ht
 	}
 	newListBySubscriptionPager := l.newListBySubscriptionPager.get(req)
 	if newListBySubscriptionPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTests`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTests`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 2 {
@@ -423,7 +423,7 @@ func (l *LoadTestMgmtServerTransport) dispatchNewListQuotaPager(req *http.Reques
 	}
 	newListQuotaPager := l.newListQuotaPager.get(req)
 	if newListQuotaPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/locations/(?P<location>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/quotas`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/locations/(?P<location>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/quotas`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 3 {
@@ -460,7 +460,7 @@ func (l *LoadTestMgmtServerTransport) dispatchNewOutboundNetworkDependenciesEndp
 	}
 	newOutboundNetworkDependenciesEndpointsPager := l.newOutboundNetworkDependenciesEndpointsPager.get(req)
 	if newOutboundNetworkDependenciesEndpointsPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTests/(?P<loadTestName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/outboundNetworkDependenciesEndpoints`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTests/(?P<loadTestName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/outboundNetworkDependenciesEndpoints`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 4 {
@@ -501,7 +501,7 @@ func (l *LoadTestMgmtServerTransport) dispatchBeginUpdateLoadtest(req *http.Requ
 	}
 	beginUpdateLoadtest := l.beginUpdateLoadtest.get(req)
 	if beginUpdateLoadtest == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTests/(?P<loadTestName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.LoadTestService/loadTests/(?P<loadTestName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 4 {

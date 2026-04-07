@@ -138,7 +138,7 @@ func (d *DiscountsServerTransport) dispatchBeginCancel(req *http.Request) (*http
 	}
 	beginCancel := d.beginCancel.get(req)
 	if beginCancel == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.BillingBenefits/discounts/(?P<discountName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/cancel`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.BillingBenefits/discounts/(?P<discountName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/cancel`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 4 {
@@ -182,7 +182,7 @@ func (d *DiscountsServerTransport) dispatchBeginCreate(req *http.Request) (*http
 	}
 	beginCreate := d.beginCreate.get(req)
 	if beginCreate == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.BillingBenefits/discounts/(?P<discountName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.BillingBenefits/discounts/(?P<discountName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 4 {
@@ -230,7 +230,7 @@ func (d *DiscountsServerTransport) dispatchBeginDelete(req *http.Request) (*http
 	}
 	beginDelete := d.beginDelete.get(req)
 	if beginDelete == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.BillingBenefits/discounts/(?P<discountName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.BillingBenefits/discounts/(?P<discountName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 4 {
@@ -272,7 +272,7 @@ func (d *DiscountsServerTransport) dispatchGet(req *http.Request) (*http.Respons
 	if d.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.BillingBenefits/discounts/(?P<discountName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.BillingBenefits/discounts/(?P<discountName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 4 {
@@ -307,7 +307,7 @@ func (d *DiscountsServerTransport) dispatchNewResourceGroupListPager(req *http.R
 	}
 	newResourceGroupListPager := d.newResourceGroupListPager.get(req)
 	if newResourceGroupListPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.BillingBenefits/discounts`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.BillingBenefits/discounts`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 3 {
@@ -344,7 +344,7 @@ func (d *DiscountsServerTransport) dispatchNewSubscriptionListPager(req *http.Re
 	}
 	newSubscriptionListPager := d.newSubscriptionListPager.get(req)
 	if newSubscriptionListPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.BillingBenefits/discounts`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.BillingBenefits/discounts`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 2 {
@@ -377,7 +377,7 @@ func (d *DiscountsServerTransport) dispatchBeginUpdate(req *http.Request) (*http
 	}
 	beginUpdate := d.beginUpdate.get(req)
 	if beginUpdate == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.BillingBenefits/discounts/(?P<discountName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.BillingBenefits/discounts/(?P<discountName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 4 {

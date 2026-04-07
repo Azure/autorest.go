@@ -127,7 +127,7 @@ func (b *BasicServerTransport) dispatchCreateOrReplace(req *http.Request) (*http
 	if b.srv.CreateOrReplace == nil {
 		return nil, &nonRetriableError{errors.New("fake for method CreateOrReplace not implemented")}
 	}
-	const regexStr = `/azure/core/basic/users/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/azure/core/basic/users/(?P<id>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -170,7 +170,7 @@ func (b *BasicServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.
 	if b.srv.CreateOrUpdate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method CreateOrUpdate not implemented")}
 	}
-	const regexStr = `/azure/core/basic/users/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/azure/core/basic/users/(?P<id>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -213,7 +213,7 @@ func (b *BasicServerTransport) dispatchDelete(req *http.Request) (*http.Response
 	if b.srv.Delete == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Delete not implemented")}
 	}
-	const regexStr = `/azure/core/basic/users/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/azure/core/basic/users/(?P<id>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -252,7 +252,7 @@ func (b *BasicServerTransport) dispatchExport(req *http.Request) (*http.Response
 	if b.srv.Export == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Export not implemented")}
 	}
-	const regexStr = `/azure/core/basic/users/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+):export`
+	const regexStr = `/azure/core/basic/users/(?P<id>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+):export`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -320,7 +320,7 @@ func (b *BasicServerTransport) dispatchGet(req *http.Request) (*http.Response, e
 	if b.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
-	const regexStr = `/azure/core/basic/users/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/azure/core/basic/users/(?P<id>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {

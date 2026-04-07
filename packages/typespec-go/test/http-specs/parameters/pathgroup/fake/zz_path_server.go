@@ -91,7 +91,7 @@ func (p *PathServerTransport) dispatchNormal(req *http.Request) (*http.Response,
 	if p.srv.Normal == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Normal not implemented")}
 	}
-	const regexStr = `/parameters/path/normal/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/parameters/path/normal/(?P<name>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -120,7 +120,7 @@ func (p *PathServerTransport) dispatchOptional(req *http.Request) (*http.Respons
 	if p.srv.Optional == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Optional not implemented")}
 	}
-	const regexStr = `/parameters/path/optional(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)?`
+	const regexStr = `/parameters/path/optional(?P<name>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)?`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {

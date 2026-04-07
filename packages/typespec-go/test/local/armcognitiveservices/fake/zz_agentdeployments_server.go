@@ -127,7 +127,7 @@ func (a *AgentDeploymentsServerTransport) dispatchBeginCreateOrUpdate(req *http.
 	}
 	beginCreateOrUpdate := a.beginCreateOrUpdate.get(req)
 	if beginCreateOrUpdate == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CognitiveServices/accounts/(?P<accountName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/projects/(?P<projectName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/applications/(?P<appName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/agentDeployments/(?P<deploymentName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CognitiveServices/accounts/(?P<accountName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/projects/(?P<projectName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/applications/(?P<appName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/agentDeployments/(?P<deploymentName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 7 {
@@ -187,7 +187,7 @@ func (a *AgentDeploymentsServerTransport) dispatchBeginDelete(req *http.Request)
 	}
 	beginDelete := a.beginDelete.get(req)
 	if beginDelete == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CognitiveServices/accounts/(?P<accountName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/projects/(?P<projectName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/applications/(?P<appName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/agentDeployments/(?P<deploymentName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CognitiveServices/accounts/(?P<accountName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/projects/(?P<projectName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/applications/(?P<appName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/agentDeployments/(?P<deploymentName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 7 {
@@ -241,7 +241,7 @@ func (a *AgentDeploymentsServerTransport) dispatchGet(req *http.Request) (*http.
 	if a.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CognitiveServices/accounts/(?P<accountName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/projects/(?P<projectName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/applications/(?P<appName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/agentDeployments/(?P<deploymentName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CognitiveServices/accounts/(?P<accountName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/projects/(?P<projectName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/applications/(?P<appName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/agentDeployments/(?P<deploymentName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 7 {
@@ -288,7 +288,7 @@ func (a *AgentDeploymentsServerTransport) dispatchNewListPager(req *http.Request
 	}
 	newListPager := a.newListPager.get(req)
 	if newListPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CognitiveServices/accounts/(?P<accountName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/projects/(?P<projectName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/applications/(?P<appName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/agentDeployments`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CognitiveServices/accounts/(?P<accountName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/projects/(?P<projectName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/applications/(?P<appName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/agentDeployments`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 6 {
@@ -387,7 +387,7 @@ func (a *AgentDeploymentsServerTransport) dispatchStart(req *http.Request) (*htt
 	if a.srv.Start == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Start not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CognitiveServices/accounts/(?P<accountName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/projects/(?P<projectName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/applications/(?P<appName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/agentDeployments/(?P<deploymentName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/start`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CognitiveServices/accounts/(?P<accountName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/projects/(?P<projectName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/applications/(?P<appName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/agentDeployments/(?P<deploymentName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/start`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 7 {
@@ -432,7 +432,7 @@ func (a *AgentDeploymentsServerTransport) dispatchStop(req *http.Request) (*http
 	if a.srv.Stop == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Stop not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CognitiveServices/accounts/(?P<accountName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/projects/(?P<projectName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/applications/(?P<appName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/agentDeployments/(?P<deploymentName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/stop`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CognitiveServices/accounts/(?P<accountName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/projects/(?P<projectName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/applications/(?P<appName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/agentDeployments/(?P<deploymentName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/stop`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 7 {

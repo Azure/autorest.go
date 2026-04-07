@@ -97,7 +97,7 @@ func (p *ParameterGroupOperationsServerTransport) dispatchNoParameterGroup(req *
 	if p.srv.NoParameterGroup == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NoParameterGroup not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/widgets/(?P<widgetName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/noParameterGroup`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/widgets/(?P<widgetName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/noParameterGroup`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 4 {
@@ -137,7 +137,7 @@ func (p *ParameterGroupOperationsServerTransport) dispatchSharedParameterGroup1(
 	if p.srv.SharedParameterGroup1 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method SharedParameterGroup1 not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/widgets/(?P<widgetName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/widgets/(?P<widgetName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 4 {
@@ -180,7 +180,7 @@ func (p *ParameterGroupOperationsServerTransport) dispatchSharedParameterGroup2(
 	if p.srv.SharedParameterGroup2 == nil {
 		return nil, &nonRetriableError{errors.New("fake for method SharedParameterGroup2 not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/widgets/(?P<widgetName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/sharedParameterGroup2`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/widgets/(?P<widgetName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/sharedParameterGroup2`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 4 {

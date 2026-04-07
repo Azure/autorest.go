@@ -135,7 +135,7 @@ func (s *SpreadAliasServerTransport) dispatchSpreadAsRequestParameter(req *http.
 	if s.srv.SpreadAsRequestParameter == nil {
 		return nil, &nonRetriableError{errors.New("fake for method SpreadAsRequestParameter not implemented")}
 	}
-	const regexStr = `/parameters/spread/alias/request-parameter/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/parameters/spread/alias/request-parameter/(?P<id>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -171,7 +171,7 @@ func (s *SpreadAliasServerTransport) dispatchSpreadParameterWithInnerAlias(req *
 	if s.srv.SpreadParameterWithInnerAlias == nil {
 		return nil, &nonRetriableError{errors.New("fake for method SpreadParameterWithInnerAlias not implemented")}
 	}
-	const regexStr = `/parameters/spread/alias/inner-alias-parameter/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/parameters/spread/alias/inner-alias-parameter/(?P<id>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -208,7 +208,7 @@ func (s *SpreadAliasServerTransport) dispatchSpreadParameterWithInnerModel(req *
 	if s.srv.SpreadParameterWithInnerModel == nil {
 		return nil, &nonRetriableError{errors.New("fake for method SpreadParameterWithInnerModel not implemented")}
 	}
-	const regexStr = `/parameters/spread/alias/inner-model-parameter/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/parameters/spread/alias/inner-model-parameter/(?P<id>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -244,7 +244,7 @@ func (s *SpreadAliasServerTransport) dispatchSpreadWithMultipleParameters(req *h
 	if s.srv.SpreadWithMultipleParameters == nil {
 		return nil, &nonRetriableError{errors.New("fake for method SpreadWithMultipleParameters not implemented")}
 	}
-	const regexStr = `/parameters/spread/alias/multiple-parameters/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/parameters/spread/alias/multiple-parameters/(?P<id>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {

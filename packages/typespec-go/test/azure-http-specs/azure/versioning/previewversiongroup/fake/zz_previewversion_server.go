@@ -97,7 +97,7 @@ func (p *PreviewVersionServerTransport) dispatchGetWidget(req *http.Request) (*h
 	if p.srv.GetWidget == nil {
 		return nil, &nonRetriableError{errors.New("fake for method GetWidget not implemented")}
 	}
-	const regexStr = `/azure/versioning/previewVersion/widgets/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/azure/versioning/previewVersion/widgets/(?P<id>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -163,7 +163,7 @@ func (p *PreviewVersionServerTransport) dispatchUpdateWidgetColor(req *http.Requ
 	if p.srv.UpdateWidgetColor == nil {
 		return nil, &nonRetriableError{errors.New("fake for method UpdateWidgetColor not implemented")}
 	}
-	const regexStr = `/azure/versioning/previewVersion/widgets/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/color`
+	const regexStr = `/azure/versioning/previewVersion/widgets/(?P<id>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/color`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {

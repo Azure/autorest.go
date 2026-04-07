@@ -110,7 +110,7 @@ func (o *OverloadServerTransport) dispatchListByScope(req *http.Request) (*http.
 	if o.srv.ListByScope == nil {
 		return nil, &nonRetriableError{errors.New("fake for method ListByScope not implemented")}
 	}
-	const regexStr = `/client/overload/resources/(?P<scope>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/client/overload/resources/(?P<scope>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {

@@ -93,7 +93,7 @@ func (t *TraitsServerTransport) dispatchRepeatableAction(req *http.Request) (*ht
 	if t.srv.RepeatableAction == nil {
 		return nil, &nonRetriableError{errors.New("fake for method RepeatableAction not implemented")}
 	}
-	const regexStr = `/azure/core/traits/user/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+):repeatableAction`
+	const regexStr = `/azure/core/traits/user/(?P<id>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+):repeatableAction`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -151,7 +151,7 @@ func (t *TraitsServerTransport) dispatchSmokeTest(req *http.Request) (*http.Resp
 	if t.srv.SmokeTest == nil {
 		return nil, &nonRetriableError{errors.New("fake for method SmokeTest not implemented")}
 	}
-	const regexStr = `/azure/core/traits/user/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/azure/core/traits/user/(?P<id>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {

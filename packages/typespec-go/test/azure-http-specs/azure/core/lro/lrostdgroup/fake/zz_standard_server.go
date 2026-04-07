@@ -107,7 +107,7 @@ func (s *StandardServerTransport) dispatchBeginCreateOrReplace(req *http.Request
 	}
 	beginCreateOrReplace := s.beginCreateOrReplace.get(req)
 	if beginCreateOrReplace == nil {
-		const regexStr = `/azure/core/lro/standard/users/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/azure/core/lro/standard/users/(?P<name>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 2 {
@@ -151,7 +151,7 @@ func (s *StandardServerTransport) dispatchBeginDelete(req *http.Request) (*http.
 	}
 	beginDelete := s.beginDelete.get(req)
 	if beginDelete == nil {
-		const regexStr = `/azure/core/lro/standard/users/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/azure/core/lro/standard/users/(?P<name>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 2 {
@@ -191,7 +191,7 @@ func (s *StandardServerTransport) dispatchBeginExport(req *http.Request) (*http.
 	}
 	beginExport := s.beginExport.get(req)
 	if beginExport == nil {
-		const regexStr = `/azure/core/lro/standard/users/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+):export`
+		const regexStr = `/azure/core/lro/standard/users/(?P<name>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+):export`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 2 {

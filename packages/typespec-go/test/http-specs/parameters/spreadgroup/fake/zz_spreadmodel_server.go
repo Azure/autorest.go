@@ -135,7 +135,7 @@ func (s *SpreadModelServerTransport) dispatchSpreadCompositeRequest(req *http.Re
 	if s.srv.SpreadCompositeRequest == nil {
 		return nil, &nonRetriableError{errors.New("fake for method SpreadCompositeRequest not implemented")}
 	}
-	const regexStr = `/parameters/spread/model/composite-request/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/parameters/spread/model/composite-request/(?P<name>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -168,7 +168,7 @@ func (s *SpreadModelServerTransport) dispatchSpreadCompositeRequestMix(req *http
 	if s.srv.SpreadCompositeRequestMix == nil {
 		return nil, &nonRetriableError{errors.New("fake for method SpreadCompositeRequestMix not implemented")}
 	}
-	const regexStr = `/parameters/spread/model/composite-request-mix/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/parameters/spread/model/composite-request-mix/(?P<name>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -227,7 +227,7 @@ func (s *SpreadModelServerTransport) dispatchSpreadCompositeRequestWithoutBody(r
 	if s.srv.SpreadCompositeRequestWithoutBody == nil {
 		return nil, &nonRetriableError{errors.New("fake for method SpreadCompositeRequestWithoutBody not implemented")}
 	}
-	const regexStr = `/parameters/spread/model/composite-request-without-body/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/parameters/spread/model/composite-request-without-body/(?P<name>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {

@@ -145,7 +145,7 @@ func (s *ScheduledActionsServerTransport) dispatchVirtualMachinesCancelOperation
 	if s.srv.VirtualMachinesCancelOperations == nil {
 		return nil, &nonRetriableError{errors.New("fake for method VirtualMachinesCancelOperations not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesCancelOperations`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesCancelOperations`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 3 {
@@ -178,7 +178,7 @@ func (s *ScheduledActionsServerTransport) dispatchVirtualMachinesExecuteCreate(r
 	if s.srv.VirtualMachinesExecuteCreate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method VirtualMachinesExecuteCreate not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesExecuteCreate`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesExecuteCreate`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 3 {
@@ -211,7 +211,7 @@ func (s *ScheduledActionsServerTransport) dispatchVirtualMachinesExecuteDealloca
 	if s.srv.VirtualMachinesExecuteDeallocate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method VirtualMachinesExecuteDeallocate not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesExecuteDeallocate`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesExecuteDeallocate`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 3 {
@@ -244,7 +244,7 @@ func (s *ScheduledActionsServerTransport) dispatchVirtualMachinesExecuteDelete(r
 	if s.srv.VirtualMachinesExecuteDelete == nil {
 		return nil, &nonRetriableError{errors.New("fake for method VirtualMachinesExecuteDelete not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesExecuteDelete`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesExecuteDelete`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 3 {
@@ -277,7 +277,7 @@ func (s *ScheduledActionsServerTransport) dispatchVirtualMachinesExecuteHibernat
 	if s.srv.VirtualMachinesExecuteHibernate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method VirtualMachinesExecuteHibernate not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesExecuteHibernate`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesExecuteHibernate`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 3 {
@@ -310,7 +310,7 @@ func (s *ScheduledActionsServerTransport) dispatchVirtualMachinesExecuteStart(re
 	if s.srv.VirtualMachinesExecuteStart == nil {
 		return nil, &nonRetriableError{errors.New("fake for method VirtualMachinesExecuteStart not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesExecuteStart`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesExecuteStart`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 3 {
@@ -343,7 +343,7 @@ func (s *ScheduledActionsServerTransport) dispatchVirtualMachinesGetOperationErr
 	if s.srv.VirtualMachinesGetOperationErrors == nil {
 		return nil, &nonRetriableError{errors.New("fake for method VirtualMachinesGetOperationErrors not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesGetOperationErrors`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesGetOperationErrors`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 3 {
@@ -376,7 +376,7 @@ func (s *ScheduledActionsServerTransport) dispatchVirtualMachinesGetOperationSta
 	if s.srv.VirtualMachinesGetOperationStatus == nil {
 		return nil, &nonRetriableError{errors.New("fake for method VirtualMachinesGetOperationStatus not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesGetOperationStatus`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesGetOperationStatus`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 3 {
@@ -409,7 +409,7 @@ func (s *ScheduledActionsServerTransport) dispatchVirtualMachinesSubmitDeallocat
 	if s.srv.VirtualMachinesSubmitDeallocate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method VirtualMachinesSubmitDeallocate not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesSubmitDeallocate`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesSubmitDeallocate`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 3 {
@@ -442,7 +442,7 @@ func (s *ScheduledActionsServerTransport) dispatchVirtualMachinesSubmitHibernate
 	if s.srv.VirtualMachinesSubmitHibernate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method VirtualMachinesSubmitHibernate not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesSubmitHibernate`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesSubmitHibernate`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 3 {
@@ -475,7 +475,7 @@ func (s *ScheduledActionsServerTransport) dispatchVirtualMachinesSubmitStart(req
 	if s.srv.VirtualMachinesSubmitStart == nil {
 		return nil, &nonRetriableError{errors.New("fake for method VirtualMachinesSubmitStart not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesSubmitStart`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.ComputeSchedule/locations/(?P<locationparameter>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/virtualMachinesSubmitStart`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 3 {

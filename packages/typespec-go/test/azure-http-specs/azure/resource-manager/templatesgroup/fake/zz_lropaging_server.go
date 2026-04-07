@@ -91,7 +91,7 @@ func (l *LroPagingServerTransport) dispatchBeginPostPagingLro(req *http.Request)
 	}
 	beginPostPagingLro := l.beginPostPagingLro.get(req)
 	if beginPostPagingLro == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.OperationTemplates/products/(?P<productName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/postPagingLro`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.OperationTemplates/products/(?P<productName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/postPagingLro`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 4 {

@@ -97,7 +97,7 @@ func (i *IndividuallyNestedWithPathServerTransport) dispatchDeleteStandalone(req
 	if i.srv.DeleteStandalone == nil {
 		return nil, &nonRetriableError{errors.New("fake for method DeleteStandalone not implemented")}
 	}
-	const regexStr = `/azure/client-generator-core/client-initialization/individually/nested-default-individually/(?P<blobName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/azure/client-generator-core/client-initialization/individually/nested-default-individually/(?P<blobName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -122,7 +122,7 @@ func (i *IndividuallyNestedWithPathServerTransport) dispatchGetStandalone(req *h
 	if i.srv.GetStandalone == nil {
 		return nil, &nonRetriableError{errors.New("fake for method GetStandalone not implemented")}
 	}
-	const regexStr = `/azure/client-generator-core/client-initialization/individually/nested-default-individually/(?P<blobName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/get-standalone`
+	const regexStr = `/azure/client-generator-core/client-initialization/individually/nested-default-individually/(?P<blobName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/get-standalone`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -147,7 +147,7 @@ func (i *IndividuallyNestedWithPathServerTransport) dispatchWithQuery(req *http.
 	if i.srv.WithQuery == nil {
 		return nil, &nonRetriableError{errors.New("fake for method WithQuery not implemented")}
 	}
-	const regexStr = `/azure/client-generator-core/client-initialization/individually/nested-default-individually/(?P<blobName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/with-query`
+	const regexStr = `/azure/client-generator-core/client-initialization/individually/nested-default-individually/(?P<blobName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/with-query`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {

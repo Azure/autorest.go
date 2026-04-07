@@ -90,7 +90,7 @@ func (p *ParamAliasServerTransport) dispatchWithAliasedName(req *http.Request) (
 	if p.srv.WithAliasedName == nil {
 		return nil, &nonRetriableError{errors.New("fake for method WithAliasedName not implemented")}
 	}
-	const regexStr = `/azure/client-generator-core/client-initialization/default/param-alias/(?P<blob>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/with-aliased-name`
+	const regexStr = `/azure/client-generator-core/client-initialization/default/param-alias/(?P<blob>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/with-aliased-name`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -115,7 +115,7 @@ func (p *ParamAliasServerTransport) dispatchWithOriginalName(req *http.Request) 
 	if p.srv.WithOriginalName == nil {
 		return nil, &nonRetriableError{errors.New("fake for method WithOriginalName not implemented")}
 	}
-	const regexStr = `/azure/client-generator-core/client-initialization/default/param-alias/(?P<blobName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/with-original-name`
+	const regexStr = `/azure/client-generator-core/client-initialization/default/param-alias/(?P<blobName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/with-original-name`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {

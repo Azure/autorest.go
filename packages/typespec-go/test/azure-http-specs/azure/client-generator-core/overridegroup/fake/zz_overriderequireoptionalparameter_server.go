@@ -85,7 +85,7 @@ func (o *OverrideRequireOptionalParameterServerTransport) dispatchRequireOptiona
 	if o.srv.RequireOptional == nil {
 		return nil, &nonRetriableError{errors.New("fake for method RequireOptional not implemented")}
 	}
-	const regexStr = `/azure/client-generator-core/override/require-optional/(?P<param1>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<param2>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/azure/client-generator-core/override/require-optional/(?P<param1>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<param2>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 3 {

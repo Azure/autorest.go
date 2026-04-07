@@ -91,7 +91,7 @@ func (o *OutboundRulesServerTransport) dispatchBeginPost(req *http.Request) (*ht
 	}
 	beginPost := o.beginPost.get(req)
 	if beginPost == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CognitiveServices/accounts/(?P<accountName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/managedNetworks/(?P<managedNetworkName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/batchOutboundRules`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CognitiveServices/accounts/(?P<accountName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/managedNetworks/(?P<managedNetworkName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/batchOutboundRules`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 5 {

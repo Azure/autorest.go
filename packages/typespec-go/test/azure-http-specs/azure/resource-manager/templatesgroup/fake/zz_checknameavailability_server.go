@@ -91,7 +91,7 @@ func (c *CheckNameAvailabilityServerTransport) dispatchCheckGlobal(req *http.Req
 	if c.srv.CheckGlobal == nil {
 		return nil, &nonRetriableError{errors.New("fake for method CheckGlobal not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.OperationTemplates/checkNameAvailability`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.OperationTemplates/checkNameAvailability`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
@@ -120,7 +120,7 @@ func (c *CheckNameAvailabilityServerTransport) dispatchCheckLocal(req *http.Requ
 	if c.srv.CheckLocal == nil {
 		return nil, &nonRetriableError{errors.New("fake for method CheckLocal not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.OperationTemplates/locations/(?P<location>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/checkNameAvailability`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.OperationTemplates/locations/(?P<location>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/checkNameAvailability`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 3 {

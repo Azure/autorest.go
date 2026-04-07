@@ -848,7 +848,15 @@ function createPathParamsRegex(method: go.MethodType, pathParams: Array<go.PathP
   urlPath = urlPath.replace(/([.$*+()])/g, '\\$1');
   for (const param of pathParams) {
     const toReplace = `{${param.pathSegment}}`;
-    let replaceWith = `(?P<${sanitizeRegexpCaptureGroupName(param.pathSegment)}>[!#&$-;=?-\\[\\]_a-zA-Z0-9~%@]+)`;
+    let regex: string;
+    if (param.isEncoded) {
+      // for encoded parameters, '/' will be encoded as '%2F' in the URL path so we don't match literal '/'
+      regex = `[!#&$-.0-;=?-\\[\\]_a-zA-Z0-9~%@]+`;
+    } else {
+      // for unencoded parameters (e.g. resourceURI), '/' can appear as a literal in the URL path
+      regex = `[!#&$-;=?-\\[\\]_a-zA-Z0-9~%@]+`;
+    }
+    let replaceWith = `(?P<${sanitizeRegexpCaptureGroupName(param.pathSegment)}>${regex})`;
     if (param.style === 'optional' || param.style === 'flag') {
       replaceWith += '?';
     }

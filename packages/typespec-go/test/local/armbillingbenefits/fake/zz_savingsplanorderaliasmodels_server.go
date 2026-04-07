@@ -97,7 +97,7 @@ func (s *SavingsPlanOrderAliasModelsServerTransport) dispatchBeginCreate(req *ht
 	}
 	beginCreate := s.beginCreate.get(req)
 	if beginCreate == nil {
-		const regexStr = `/providers/Microsoft\.BillingBenefits/savingsPlanOrderAliases/(?P<savingsPlanOrderAliasName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/providers/Microsoft\.BillingBenefits/savingsPlanOrderAliases/(?P<savingsPlanOrderAliasName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 2 {
@@ -139,7 +139,7 @@ func (s *SavingsPlanOrderAliasModelsServerTransport) dispatchGet(req *http.Reque
 	if s.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
-	const regexStr = `/providers/Microsoft\.BillingBenefits/savingsPlanOrderAliases/(?P<savingsPlanOrderAliasName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/providers/Microsoft\.BillingBenefits/savingsPlanOrderAliases/(?P<savingsPlanOrderAliasName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {

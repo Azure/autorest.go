@@ -99,7 +99,7 @@ func (l *LROServerTransport) dispatchBeginOkResponseWithAsyncHeader(req *http.Re
 	}
 	beginOkResponseWithAsyncHeader := l.beginOkResponseWithAsyncHeader.get(req)
 	if beginOkResponseWithAsyncHeader == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/LROModels/(?P<LROModelName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/LROModels/(?P<LROModelName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 4 {
@@ -147,7 +147,7 @@ func (l *LROServerTransport) dispatchBeginScalarResult(req *http.Request) (*http
 	}
 	beginScalarResult := l.beginScalarResult.get(req)
 	if beginScalarResult == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/LROModels/(?P<LROModelName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/scalarResult`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Test/LROModels/(?P<LROModelName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/scalarResult`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 4 {

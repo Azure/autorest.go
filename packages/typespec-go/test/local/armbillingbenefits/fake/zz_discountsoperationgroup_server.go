@@ -91,7 +91,7 @@ func (d *DiscountsOperationGroupServerTransport) dispatchNewScopeListPager(req *
 	}
 	newScopeListPager := d.newScopeListPager.get(req)
 	if newScopeListPager == nil {
-		const regexStr = `/(?P<scope>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.BillingBenefits/applicableDiscounts`
+		const regexStr = `/(?P<scope>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.BillingBenefits/applicableDiscounts`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 2 {

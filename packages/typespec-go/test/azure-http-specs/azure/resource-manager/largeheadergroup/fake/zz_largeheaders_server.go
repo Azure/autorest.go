@@ -91,7 +91,7 @@ func (l *LargeHeadersServerTransport) dispatchBeginTwo6K(req *http.Request) (*ht
 	}
 	beginTwo6K := l.beginTwo6K.get(req)
 	if beginTwo6K == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.LargeHeader/largeHeaders/(?P<largeHeaderName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/two6k`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.LargeHeader/largeHeaders/(?P<largeHeaderName>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/two6k`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 4 {

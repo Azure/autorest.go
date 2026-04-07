@@ -110,7 +110,7 @@ func (s *SavingsPlanModelsServerTransport) dispatchGet(req *http.Request) (*http
 	if s.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
-	const regexStr = `/providers/Microsoft\.BillingBenefits/savingsPlanOrders/(?P<savingsPlanOrderId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/savingsPlans/(?P<savingsPlanId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/providers/Microsoft\.BillingBenefits/savingsPlanOrders/(?P<savingsPlanOrderId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/savingsPlans/(?P<savingsPlanId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 3 {
@@ -157,7 +157,7 @@ func (s *SavingsPlanModelsServerTransport) dispatchNewListPager(req *http.Reques
 	}
 	newListPager := s.newListPager.get(req)
 	if newListPager == nil {
-		const regexStr = `/providers/Microsoft\.BillingBenefits/savingsPlanOrders/(?P<savingsPlanOrderId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/savingsPlans`
+		const regexStr = `/providers/Microsoft\.BillingBenefits/savingsPlanOrders/(?P<savingsPlanOrderId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/savingsPlans`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 2 {
@@ -194,7 +194,7 @@ func (s *SavingsPlanModelsServerTransport) dispatchBeginUpdate(req *http.Request
 	}
 	beginUpdate := s.beginUpdate.get(req)
 	if beginUpdate == nil {
-		const regexStr = `/providers/Microsoft\.BillingBenefits/savingsPlanOrders/(?P<savingsPlanOrderId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/savingsPlans/(?P<savingsPlanId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/providers/Microsoft\.BillingBenefits/savingsPlanOrders/(?P<savingsPlanOrderId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/savingsPlans/(?P<savingsPlanId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if len(matches) < 3 {
@@ -240,7 +240,7 @@ func (s *SavingsPlanModelsServerTransport) dispatchValidateUpdate(req *http.Requ
 	if s.srv.ValidateUpdate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method ValidateUpdate not implemented")}
 	}
-	const regexStr = `/providers/Microsoft\.BillingBenefits/savingsPlanOrders/(?P<savingsPlanOrderId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/savingsPlans/(?P<savingsPlanId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/validate`
+	const regexStr = `/providers/Microsoft\.BillingBenefits/savingsPlanOrders/(?P<savingsPlanOrderId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/savingsPlans/(?P<savingsPlanId>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)/validate`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 3 {

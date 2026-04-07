@@ -110,7 +110,7 @@ func (m *MultipleServerTransport) dispatchWithOperationPathParam(req *http.Reque
 	if m.srv.WithOperationPathParam == nil {
 		return nil, &nonRetriableError{errors.New("fake for method WithOperationPathParam not implemented")}
 	}
-	const regexStr = `/(?P<keyword>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/(?P<keyword>[!#&$-.0-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if len(matches) < 2 {
