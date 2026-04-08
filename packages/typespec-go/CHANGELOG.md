@@ -5,6 +5,7 @@
 ### Other Changes
 
 * Use `datetime` helpers when formatting `time.Time` parameters.
+* Updated to the latest tsp toolset.
 
 ## 0.10.5 (2026-04-01)
 
