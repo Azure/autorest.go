@@ -1,6 +1,6 @@
 # Release History
 
-## Unreleased
+## 0.10.7 (Unreleased)
 
 ### Bugs Fixed
 

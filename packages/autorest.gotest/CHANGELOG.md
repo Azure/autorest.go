@@ -1,6 +1,6 @@
 # Release History
 
-## Unreleased
+## 4.7.8 (Unreleased)
 
 ### Bugs Fixed
 
