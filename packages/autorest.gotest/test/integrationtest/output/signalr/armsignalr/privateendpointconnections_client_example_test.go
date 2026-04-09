@@ -178,6 +178,6 @@ func ExamplePrivateEndpointConnectionsClient_BeginDelete() {
 	}
 	_, err = poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 }

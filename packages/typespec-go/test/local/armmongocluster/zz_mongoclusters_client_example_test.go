@@ -109,7 +109,7 @@ func ExampleMongoClustersClient_BeginCreateOrUpdate_createsANewMongoClusterResou
 	}
 	res, err := poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
@@ -188,7 +188,7 @@ func ExampleMongoClustersClient_BeginCreateOrUpdate_createsAReplicaMongoClusterR
 	}
 	res, err := poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
@@ -262,7 +262,7 @@ func ExampleMongoClustersClient_BeginCreateOrUpdate_createsAMongoClusterResource
 	}
 	res, err := poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
@@ -324,7 +324,7 @@ func ExampleMongoClustersClient_BeginDelete() {
 	}
 	_, err = poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 }
 
@@ -708,7 +708,7 @@ func ExampleMongoClustersClient_BeginPromote() {
 	}
 	_, err = poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 }
 
@@ -735,7 +735,7 @@ func ExampleMongoClustersClient_BeginUpdate_updatesTheDiskSizeOnAMongoClusterRes
 	}
 	res, err := poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
@@ -809,7 +809,7 @@ func ExampleMongoClustersClient_BeginUpdate_disablesPublicNetworkAccessOnAMongoC
 	}
 	res, err := poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
@@ -912,7 +912,7 @@ func ExampleMongoClustersClient_BeginUpdate_resetsTheAdministratorLoginPassword(
 	}
 	res, err := poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
@@ -1003,7 +1003,7 @@ func ExampleMongoClustersClient_BeginUpdate_updatesAMongoClusterResource() {
 	}
 	res, err := poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res

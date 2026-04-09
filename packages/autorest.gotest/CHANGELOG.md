@@ -1,5 +1,11 @@
 # Release History
 
+## 4.7.8 (Unreleased)
+
+### Bugs Fixed
+
+* Fixed typo in generated LRO example error message: "failed to pull the result" is now "failed to poll the result".
+
 ## 4.7.7 (2026-01-28)
 
 ### Bugs Fixed

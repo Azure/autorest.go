@@ -1,6 +1,12 @@
 # Release History
 
-## 0.10.6 (unreleased)
+## 0.10.7 (Unreleased)
+
+### Bugs Fixed
+
+* Fixed typo in generated LRO example error message: "failed to pull the result" is now "failed to poll the result".
+
+## 0.10.6 (2026-04-08)
 
 ### Bugs Fixed
 
@@ -9,6 +15,7 @@
 ### Other Changes
 
 * Use `datetime` helpers when formatting `time.Time` parameters.
+* Updated to the latest tsp toolset.
 
 ## 0.10.5 (2026-04-01)
 
