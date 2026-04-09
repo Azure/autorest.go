@@ -38,7 +38,7 @@ func Example{{example.operationGroup.language.go.clientName}}_{{example.opName}}
     {%- if example.isLRO %}
     {% if example.checkResponse %}res{% else %}_{% endif %}, err {% if example.checkResponse %}:{% endif %}= poller.PollUntilDone(ctx, nil)
     if err != nil {
-        log.Fatalf("failed to pull the result: %v", err)
+        log.Fatalf("failed to poll the result: %v", err)
     }
     {%- endif %}
     {%- elif  (example.returnInfo.length == 1) and (example.isPageable) %}

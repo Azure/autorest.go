@@ -172,7 +172,7 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
 
             exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} poller.PollUntilDone(ctx, nil)\n`;
             exampleText += `\tif err != nil {\n`;
-            exampleText += `\t\tlog.Fatalf("failed to pull the result: %v", err)\n`;
+            exampleText += `\t\tlog.Fatalf("failed to poll the result: %v", err)\n`;
             exampleText += `\t}\n`;
             break;
           case 'method':
