@@ -263,7 +263,11 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       }
       // due to differences in XML marshallers/unmarshallers, we use different codegen than for JSON
       const needsXMLDictionaryUnmarshalling = needsXMLDictionaryHelper(model);
-      if (needsDateTimeMarshalling || model.xml?.wrapper || needsXMLArrayMarshalling(model) || byteArrayFormat) {
+      if (hasXMLTextField(model)) {
+        // models with XML text content (chardata) need a custom marshaller that uses
+        // xml.CharData tokens to avoid Go's encoding/xml encoding newlines as &#xA;
+        generateXMLTextMarshaller(modelDef, serdeImports);
+      } else if (needsDateTimeMarshalling || model.xml?.wrapper || needsXMLArrayMarshalling(model) || byteArrayFormat) {
         generateXMLMarshaller(modelDef, serdeImports);
         if (needsDateTimeMarshalling || needsXMLDictionaryUnmarshalling || byteArrayFormat) {
           generateXMLUnmarshaller(modelDef, serdeImports);
@@ -306,6 +310,15 @@ function needsXMLDictionaryHelper(modelType: go.Model): boolean {
 function needsXMLArrayMarshalling(modelType: go.Model): boolean {
   for (const prop of modelType.fields) {
     if (prop.type.kind === 'slice') {
+      return true;
+    }
+  }
+  return false;
+}
+
+function hasXMLTextField(modelType: go.Model): boolean {
+  for (const field of modelType.fields) {
+    if (field.xml?.text) {
       return true;
     }
   }
@@ -838,6 +851,69 @@ function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager): void
     }
   }
   text += '\treturn enc.EncodeElement(aux, start)\n';
+  text += '}\n\n';
+  modelDef.SerDe.methods.push({ name: 'MarshalXML', desc: desc, text: text });
+}
+
+/**
+ * generates a token-based MarshalXML for models with XML text content (chardata).
+ * using xml.CharData tokens directly avoids Go's encoding/xml encoding newlines as &#xA;
+ * in struct-tag-based marshalling with the ,chardata tag.
+ *
+ * @param modelDef the type for which to implement MarshalXML
+ * @param imports the import manager currently in scope
+ */
+function generateXMLTextMarshaller(modelDef: ModelDef, imports: ImportManager): void {
+  const receiver = modelDef.receiverName();
+  const modelName = modelDef.Model.name;
+  const desc = `MarshalXML implements the xml.Marshaller interface for type ${modelName}.`;
+  let text = `func (${receiver} ${modelName}) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {\n`;
+  if (modelDef.Model.xml?.wrapper) {
+    text += `\tstart.Name.Local = "${modelDef.Model.xml.wrapper}"\n`;
+  }
+  // add attribute fields to start element
+  let textField: go.ModelField | undefined;
+  for (const field of modelDef.Model.fields) {
+    if (field.xml?.text) {
+      textField = field;
+      continue;
+    }
+    if (field.xml?.attribute) {
+      const attrName = field.xml?.name ?? field.serializedName;
+      const isString = field.type.kind === 'string';
+      if (field.byValue) {
+        const valExpr = isString ? `${receiver}.${field.name}` : `fmt.Sprint(${receiver}.${field.name})`;
+        text += `\tstart.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "${attrName}"}, Value: ${valExpr}})\n`;
+      } else {
+        text += `\tif ${receiver}.${field.name} != nil {\n`;
+        const valExpr = isString ? `*${receiver}.${field.name}` : `fmt.Sprint(*${receiver}.${field.name})`;
+        text += `\t\tstart.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "${attrName}"}, Value: ${valExpr}})\n`;
+        text += `\t}\n`;
+      }
+      if (!isString) {
+        imports.add('fmt');
+      }
+    }
+  }
+  // encode start element token
+  text += `\tif err := enc.EncodeToken(start); err != nil {\n`;
+  text += `\t\treturn err\n`;
+  text += `\t}\n`;
+  // encode text content as CharData
+  if (textField) {
+    if (textField.byValue) {
+      text += `\tif err := enc.EncodeToken(xml.CharData(${receiver}.${textField.name})); err != nil {\n`;
+      text += `\t\treturn err\n`;
+      text += `\t}\n`;
+    } else {
+      text += `\tif ${receiver}.${textField.name} != nil {\n`;
+      text += `\t\tif err := enc.EncodeToken(xml.CharData(*${receiver}.${textField.name})); err != nil {\n`;
+      text += `\t\t\treturn err\n`;
+      text += `\t\t}\n`;
+      text += `\t}\n`;
+    }
+  }
+  text += `\treturn enc.EncodeToken(start.End())\n`;
   text += '}\n\n';
   modelDef.SerDe.methods.push({ name: 'MarshalXML', desc: desc, text: text });
 }

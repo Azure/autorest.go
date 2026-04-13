@@ -245,6 +245,22 @@ func (m ModelWithSimpleArrays) MarshalXML(enc *xml.Encoder, start xml.StartEleme
 	return enc.EncodeElement(aux, start)
 }
 
+// MarshalXML implements the xml.Marshaller interface for type ModelWithText.
+func (m ModelWithText) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	if m.Language != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "language"}, Value: *m.Language})
+	}
+	if err := enc.EncodeToken(start); err != nil {
+		return err
+	}
+	if m.Content != nil {
+		if err := enc.EncodeToken(xml.CharData(*m.Content)); err != nil {
+			return err
+		}
+	}
+	return enc.EncodeToken(start.End())
+}
+
 // MarshalXML implements the xml.Marshaller interface for type ModelWithUnwrappedArray.
 func (m ModelWithUnwrappedArray) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias ModelWithUnwrappedArray
