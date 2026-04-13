@@ -24,6 +24,7 @@ func TestXMLModelWithTextValueClient_Get(t *testing.T) {
 }
 
 func TestXMLModelWithTextValueClient_Put(t *testing.T) {
+	t.Skip("Go's encoding/xml encodes newlines as &#xA; in chardata, which fast-xml-parser doesn't decode back to newlines")
 	client, err := xmlgroup.NewXMLClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithTextValueClient().Put(context.Background(), xmlgroup.ModelWithText{
