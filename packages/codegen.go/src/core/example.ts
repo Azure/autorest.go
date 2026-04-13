@@ -228,7 +228,13 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
               .join('\n\t// \t')},\n`;
           }
           if (example.responseEnvelope?.result) {
-            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result, '', undefined, false).split('\n').join('\n\t// \t')},\n`;
+            // modelResult and polymorphicResult are anonymously embedded by value in the response struct.
+            // monomorphicResult has an explicit byValue property. all other result types default to by value.
+            let resultByValue = true;
+            if (method.returns.result?.kind === 'monomorphicResult') {
+              resultByValue = method.returns.result.byValue;
+            }
+            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result, '', undefined, resultByValue).split('\n').join('\n\t// \t')},\n`;
           }
           exampleText += '\t// }\n';
         }

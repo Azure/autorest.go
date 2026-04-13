@@ -54,7 +54,7 @@ func ExampleClient_CalculateModelCapacity() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.ClientCalculateModelCapacityResponse{
-	// 	CalculateModelCapacityResult: &armcognitiveservices.CalculateModelCapacityResult{
+	// 	CalculateModelCapacityResult: armcognitiveservices.CalculateModelCapacityResult{
 	// 		EstimatedCapacity: &armcognitiveservices.CalculateModelCapacityResultEstimatedCapacity{
 	// 			DeployableValue: to.Ptr[int32](400),
 	// 			Value: to.Ptr[int32](346),
@@ -91,7 +91,7 @@ func ExampleClient_CheckDomainAvailability() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.ClientCheckDomainAvailabilityResponse{
-	// 	DomainAvailability: &armcognitiveservices.DomainAvailability{
+	// 	DomainAvailability: armcognitiveservices.DomainAvailability{
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts"),
 	// 		IsSubdomainAvailable: to.Ptr(false),
 	// 		Reason: to.Ptr("Sub domain name 'contosodemoapp1' is not valid"),
@@ -125,7 +125,7 @@ func ExampleClient_CheckSKUAvailability() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.ClientCheckSKUAvailabilityResponse{
-	// 	SKUAvailabilityListResult: &armcognitiveservices.SKUAvailabilityListResult{
+	// 	SKUAvailabilityListResult: armcognitiveservices.SKUAvailabilityListResult{
 	// 		Value: []*armcognitiveservices.SKUAvailability{
 	// 			{
 	// 				Type: to.Ptr("Microsoft.CognitiveServices/accounts"),

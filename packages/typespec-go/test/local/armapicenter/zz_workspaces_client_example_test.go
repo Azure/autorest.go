@@ -35,7 +35,7 @@ func ExampleWorkspacesClient_CreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.WorkspacesClientCreateOrUpdateResponse{
-	// 	Workspace: &armapicenter.Workspace{
+	// 	Workspace: armapicenter.Workspace{
 	// 		Type: to.Ptr("Microsoft.ApiCenter/services/workspaces"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/workspaces/default"),
 	// 		Name: to.Ptr("default"),
@@ -91,7 +91,7 @@ func ExampleWorkspacesClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armapicenter.WorkspacesClientGetResponse{
-	// 	Workspace: &armapicenter.Workspace{
+	// 	Workspace: armapicenter.Workspace{
 	// 		Type: to.Ptr("Microsoft.ApiCenter/services/workspaces"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/workspaces/default"),
 	// 		Name: to.Ptr("default"),

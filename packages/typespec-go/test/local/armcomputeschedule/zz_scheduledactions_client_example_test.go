@@ -37,7 +37,7 @@ func ExampleScheduledActionsClient_VirtualMachinesCancelOperations_scheduledActi
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesCancelOperationsResponse{
-	// 	CancelOperationsResponse: &armcomputeschedule.CancelOperationsResponse{
+	// 	CancelOperationsResponse: armcomputeschedule.CancelOperationsResponse{
 	// 		Results: []*armcomputeschedule.ResourceOperation{
 	// 			{
 	// 				ResourceID: to.Ptr("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource3"),
@@ -93,7 +93,7 @@ func ExampleScheduledActionsClient_VirtualMachinesCancelOperations_scheduledActi
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesCancelOperationsResponse{
-	// 	CancelOperationsResponse: &armcomputeschedule.CancelOperationsResponse{
+	// 	CancelOperationsResponse: armcomputeschedule.CancelOperationsResponse{
 	// 		Results: []*armcomputeschedule.ResourceOperation{
 	// 			{
 	// 			},
@@ -224,7 +224,7 @@ func ExampleScheduledActionsClient_VirtualMachinesExecuteCreate_scheduledActions
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesExecuteCreateResponse{
-	// 	CreateResourceOperationResponse: &armcomputeschedule.CreateResourceOperationResponse{
+	// 	CreateResourceOperationResponse: armcomputeschedule.CreateResourceOperationResponse{
 	// 		Type: to.Ptr("virtualmachines"),
 	// 		Location: to.Ptr("eastus"),
 	// 		Results: []*armcomputeschedule.ResourceOperation{
@@ -383,7 +383,7 @@ func ExampleScheduledActionsClient_VirtualMachinesExecuteCreate_scheduledActions
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesExecuteCreateResponse{
-	// 	CreateResourceOperationResponse: &armcomputeschedule.CreateResourceOperationResponse{
+	// 	CreateResourceOperationResponse: armcomputeschedule.CreateResourceOperationResponse{
 	// 		Type: to.Ptr("virtualmachines"),
 	// 		Location: to.Ptr("eastus"),
 	// 		Results: []*armcomputeschedule.ResourceOperation{
@@ -460,7 +460,7 @@ func ExampleScheduledActionsClient_VirtualMachinesExecuteDeallocate_scheduledAct
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesExecuteDeallocateResponse{
-	// 	DeallocateResourceOperationResponse: &armcomputeschedule.DeallocateResourceOperationResponse{
+	// 	DeallocateResourceOperationResponse: armcomputeschedule.DeallocateResourceOperationResponse{
 	// 		Type: to.Ptr("fpnhqvrtbqizlylnwy"),
 	// 		Location: to.Ptr("hhioerbsucdqayxk"),
 	// 		Results: []*armcomputeschedule.ResourceOperation{
@@ -522,7 +522,7 @@ func ExampleScheduledActionsClient_VirtualMachinesExecuteDeallocate_scheduledAct
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesExecuteDeallocateResponse{
-	// 	DeallocateResourceOperationResponse: &armcomputeschedule.DeallocateResourceOperationResponse{
+	// 	DeallocateResourceOperationResponse: armcomputeschedule.DeallocateResourceOperationResponse{
 	// 		Type: to.Ptr("fpnhqvrtbqizlylnwy"),
 	// 		Location: to.Ptr("hhioerbsucdqayxk"),
 	// 		Description: to.Ptr("hjkgtlph"),
@@ -564,7 +564,7 @@ func ExampleScheduledActionsClient_VirtualMachinesExecuteDelete_scheduledActions
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesExecuteDeleteResponse{
-	// 	DeleteResourceOperationResponse: &armcomputeschedule.DeleteResourceOperationResponse{
+	// 	DeleteResourceOperationResponse: armcomputeschedule.DeleteResourceOperationResponse{
 	// 		Type: to.Ptr("virtualmachines"),
 	// 		Location: to.Ptr("eastus"),
 	// 		Results: []*armcomputeschedule.ResourceOperation{
@@ -643,7 +643,7 @@ func ExampleScheduledActionsClient_VirtualMachinesExecuteDelete_scheduledActions
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesExecuteDeleteResponse{
-	// 	DeleteResourceOperationResponse: &armcomputeschedule.DeleteResourceOperationResponse{
+	// 	DeleteResourceOperationResponse: armcomputeschedule.DeleteResourceOperationResponse{
 	// 		Type: to.Ptr("virtualMachines"),
 	// 		Location: to.Ptr("eastus"),
 	// 		Results: []*armcomputeschedule.ResourceOperation{
@@ -728,7 +728,7 @@ func ExampleScheduledActionsClient_VirtualMachinesExecuteHibernate_scheduledActi
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesExecuteHibernateResponse{
-	// 	HibernateResourceOperationResponse: &armcomputeschedule.HibernateResourceOperationResponse{
+	// 	HibernateResourceOperationResponse: armcomputeschedule.HibernateResourceOperationResponse{
 	// 		Type: to.Ptr("yrmuumqaqiyotst"),
 	// 		Location: to.Ptr("hhioerbsucdqayxk"),
 	// 		Results: []*armcomputeschedule.ResourceOperation{
@@ -790,7 +790,7 @@ func ExampleScheduledActionsClient_VirtualMachinesExecuteHibernate_scheduledActi
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesExecuteHibernateResponse{
-	// 	HibernateResourceOperationResponse: &armcomputeschedule.HibernateResourceOperationResponse{
+	// 	HibernateResourceOperationResponse: armcomputeschedule.HibernateResourceOperationResponse{
 	// 		Type: to.Ptr("yrmuumqaqiyotst"),
 	// 		Location: to.Ptr("hhioerbsucdqayxk"),
 	// 		Description: to.Ptr("ploigcuqj"),
@@ -831,7 +831,7 @@ func ExampleScheduledActionsClient_VirtualMachinesExecuteStart_scheduledActionsV
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesExecuteStartResponse{
-	// 	StartResourceOperationResponse: &armcomputeschedule.StartResourceOperationResponse{
+	// 	StartResourceOperationResponse: armcomputeschedule.StartResourceOperationResponse{
 	// 		Type: to.Ptr("lcikdomhndewkiqpf"),
 	// 		Location: to.Ptr("hhioerbsucdqayxk"),
 	// 		Results: []*armcomputeschedule.ResourceOperation{
@@ -893,7 +893,7 @@ func ExampleScheduledActionsClient_VirtualMachinesExecuteStart_scheduledActionsV
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesExecuteStartResponse{
-	// 	StartResourceOperationResponse: &armcomputeschedule.StartResourceOperationResponse{
+	// 	StartResourceOperationResponse: armcomputeschedule.StartResourceOperationResponse{
 	// 		Type: to.Ptr("lcikdomhndewkiqpf"),
 	// 		Location: to.Ptr("hhioerbsucdqayxk"),
 	// 		Description: to.Ptr("gzgowsi"),
@@ -924,7 +924,7 @@ func ExampleScheduledActionsClient_VirtualMachinesGetOperationErrors_scheduledAc
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesGetOperationErrorsResponse{
-	// 	GetOperationErrorsResponse: &armcomputeschedule.GetOperationErrorsResponse{
+	// 	GetOperationErrorsResponse: armcomputeschedule.GetOperationErrorsResponse{
 	// 		Results: []*armcomputeschedule.OperationErrorsResult{
 	// 			{
 	// 				OperationID: to.Ptr("emftjglfbsxaboxqzxlpbjian"),
@@ -972,7 +972,7 @@ func ExampleScheduledActionsClient_VirtualMachinesGetOperationErrors_scheduledAc
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesGetOperationErrorsResponse{
-	// 	GetOperationErrorsResponse: &armcomputeschedule.GetOperationErrorsResponse{
+	// 	GetOperationErrorsResponse: armcomputeschedule.GetOperationErrorsResponse{
 	// 		Results: []*armcomputeschedule.OperationErrorsResult{
 	// 			{
 	// 			},
@@ -1005,7 +1005,7 @@ func ExampleScheduledActionsClient_VirtualMachinesGetOperationStatus_scheduledAc
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesGetOperationStatusResponse{
-	// 	GetOperationStatusResponse: &armcomputeschedule.GetOperationStatusResponse{
+	// 	GetOperationStatusResponse: armcomputeschedule.GetOperationStatusResponse{
 	// 		Results: []*armcomputeschedule.ResourceOperation{
 	// 			{
 	// 				ResourceID: to.Ptr("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource3"),
@@ -1061,7 +1061,7 @@ func ExampleScheduledActionsClient_VirtualMachinesGetOperationStatus_scheduledAc
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesGetOperationStatusResponse{
-	// 	GetOperationStatusResponse: &armcomputeschedule.GetOperationStatusResponse{
+	// 	GetOperationStatusResponse: armcomputeschedule.GetOperationStatusResponse{
 	// 		Results: []*armcomputeschedule.ResourceOperation{
 	// 			{
 	// 			},
@@ -1110,7 +1110,7 @@ func ExampleScheduledActionsClient_VirtualMachinesSubmitDeallocate_scheduledActi
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesSubmitDeallocateResponse{
-	// 	DeallocateResourceOperationResponse: &armcomputeschedule.DeallocateResourceOperationResponse{
+	// 	DeallocateResourceOperationResponse: armcomputeschedule.DeallocateResourceOperationResponse{
 	// 		Type: to.Ptr("fpnhqvrtbqizlylnwy"),
 	// 		Location: to.Ptr("hhioerbsucdqayxk"),
 	// 		Results: []*armcomputeschedule.ResourceOperation{
@@ -1175,7 +1175,7 @@ func ExampleScheduledActionsClient_VirtualMachinesSubmitDeallocate_scheduledActi
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesSubmitDeallocateResponse{
-	// 	DeallocateResourceOperationResponse: &armcomputeschedule.DeallocateResourceOperationResponse{
+	// 	DeallocateResourceOperationResponse: armcomputeschedule.DeallocateResourceOperationResponse{
 	// 		Type: to.Ptr("fpnhqvrtbqizlylnwy"),
 	// 		Location: to.Ptr("hhioerbsucdqayxk"),
 	// 		Description: to.Ptr("hjkgtlph"),
@@ -1223,7 +1223,7 @@ func ExampleScheduledActionsClient_VirtualMachinesSubmitHibernate_scheduledActio
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesSubmitHibernateResponse{
-	// 	HibernateResourceOperationResponse: &armcomputeschedule.HibernateResourceOperationResponse{
+	// 	HibernateResourceOperationResponse: armcomputeschedule.HibernateResourceOperationResponse{
 	// 		Type: to.Ptr("yrmuumqaqiyotst"),
 	// 		Location: to.Ptr("hhioerbsucdqayxk"),
 	// 		Results: []*armcomputeschedule.ResourceOperation{
@@ -1288,7 +1288,7 @@ func ExampleScheduledActionsClient_VirtualMachinesSubmitHibernate_scheduledActio
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesSubmitHibernateResponse{
-	// 	HibernateResourceOperationResponse: &armcomputeschedule.HibernateResourceOperationResponse{
+	// 	HibernateResourceOperationResponse: armcomputeschedule.HibernateResourceOperationResponse{
 	// 		Type: to.Ptr("yrmuumqaqiyotst"),
 	// 		Location: to.Ptr("hhioerbsucdqayxk"),
 	// 		Description: to.Ptr("ploigcuqj"),
@@ -1336,7 +1336,7 @@ func ExampleScheduledActionsClient_VirtualMachinesSubmitStart_scheduledActionsVi
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesSubmitStartResponse{
-	// 	StartResourceOperationResponse: &armcomputeschedule.StartResourceOperationResponse{
+	// 	StartResourceOperationResponse: armcomputeschedule.StartResourceOperationResponse{
 	// 		Type: to.Ptr("lcikdomhndewkiqpf"),
 	// 		Location: to.Ptr("hhioerbsucdqayxk"),
 	// 		Results: []*armcomputeschedule.ResourceOperation{
@@ -1401,7 +1401,7 @@ func ExampleScheduledActionsClient_VirtualMachinesSubmitStart_scheduledActionsVi
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcomputeschedule.ScheduledActionsClientVirtualMachinesSubmitStartResponse{
-	// 	StartResourceOperationResponse: &armcomputeschedule.StartResourceOperationResponse{
+	// 	StartResourceOperationResponse: armcomputeschedule.StartResourceOperationResponse{
 	// 		Type: to.Ptr("lcikdomhndewkiqpf"),
 	// 		Location: to.Ptr("hhioerbsucdqayxk"),
 	// 		Description: to.Ptr("gzgowsi"),

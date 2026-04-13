@@ -41,7 +41,7 @@ func ExampleLROClient_BeginOkResponseWithAsyncHeader() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armtest.LROClientOkResponseWithAsyncHeaderResponse{
-	// 	LROModel: &armtest.LROModel{
+	// 	LROModel: armtest.LROModel{
 	// 		Name: to.Ptr("myLROModel"),
 	// 		Location: to.Ptr("eastus"),
 	// 		Properties: &armtest.BodyRootProperties{

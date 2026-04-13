@@ -42,7 +42,7 @@ func ExampleStorageClassClient_BeginCreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcontainerorchestratorruntime.StorageClassClientCreateOrUpdateResponse{
-	// 	StorageClassResource: &armcontainerorchestratorruntime.StorageClassResource{
+	// 	StorageClassResource: armcontainerorchestratorruntime.StorageClassResource{
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/example/providers/Microsoft.Kubernetes/connectedClusters/cluster1/providers/Microsoft.KubernetesRuntime/storageclasses/testrwx"),
 	// 		Name: to.Ptr("testrwx"),
 	// 		Type: to.Ptr("microsoft.kubernetesruntime/storageclass"),
@@ -104,7 +104,7 @@ func ExampleStorageClassClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcontainerorchestratorruntime.StorageClassClientGetResponse{
-	// 	StorageClassResource: &armcontainerorchestratorruntime.StorageClassResource{
+	// 	StorageClassResource: armcontainerorchestratorruntime.StorageClassResource{
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/example/providers/Microsoft.Kubernetes/connectedClusters/cluster1/providers/Microsoft.KubernetesRuntime/storageclasses/testrwx"),
 	// 		Name: to.Ptr("testrwx"),
 	// 		Type: to.Ptr("microsoft.kubernetesruntime/storageclass"),
@@ -206,7 +206,7 @@ func ExampleStorageClassClient_BeginUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcontainerorchestratorruntime.StorageClassClientUpdateResponse{
-	// 	StorageClassResource: &armcontainerorchestratorruntime.StorageClassResource{
+	// 	StorageClassResource: armcontainerorchestratorruntime.StorageClassResource{
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/example/providers/Microsoft.Kubernetes/connectedClusters/cluster1/providers/Microsoft.KubernetesRuntime/storageclasses/testrwx"),
 	// 		Name: to.Ptr("testrwx"),
 	// 		Type: to.Ptr("microsoft.kubernetesruntime/storageclass"),

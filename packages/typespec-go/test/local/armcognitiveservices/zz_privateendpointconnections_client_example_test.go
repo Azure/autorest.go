@@ -42,7 +42,7 @@ func ExamplePrivateEndpointConnectionsClient_BeginCreateOrUpdate() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.PrivateEndpointConnectionsClientCreateOrUpdateResponse{
-	// 	PrivateEndpointConnection: &armcognitiveservices.PrivateEndpointConnection{
+	// 	PrivateEndpointConnection: armcognitiveservices.PrivateEndpointConnection{
 	// 		Name: to.Ptr("{privateEndpointConnectionName}"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/privateEndpointConnections"),
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/res7231/providers/Microsoft.CognitiveServices/accounts/sto288/privateEndpointConnections/{privateEndpointConnectionName}"),
@@ -105,7 +105,7 @@ func ExamplePrivateEndpointConnectionsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.PrivateEndpointConnectionsClientGetResponse{
-	// 	PrivateEndpointConnection: &armcognitiveservices.PrivateEndpointConnection{
+	// 	PrivateEndpointConnection: armcognitiveservices.PrivateEndpointConnection{
 	// 		Name: to.Ptr("{privateEndpointConnectionName}"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/privateEndpointConnections"),
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/res7231/providers/Microsoft.CognitiveServices/accounts/sto288/privateEndpointConnections/{privateEndpointConnectionName}"),
