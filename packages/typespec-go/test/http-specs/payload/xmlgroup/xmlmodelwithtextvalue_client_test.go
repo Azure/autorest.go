@@ -19,7 +19,7 @@ func TestXMLModelWithTextValueClient_Get(t *testing.T) {
 	require.NoError(t, err)
 	require.EqualValues(t, xmlgroup.ModelWithText{
 		Language: to.Ptr("foo"),
-		Content:  to.Ptr("This is some text."),
+		Content:  to.Ptr("\n  This is some text.\n"),
 	}, resp.ModelWithText)
 }
 
