@@ -10,26 +10,26 @@ import * as go from '../../../codemodel.go/src/index.js';
 /** source data used to compute XMLInfo */
 export interface XMLSourceInfo {
   /** the Go type name */
-  goTypeName: string,
+  goTypeName: string;
 
   /**
    * the original type name. can be different from
    * goTypeName in some cases (e.g. stuttering cleanup)
    */
-  orTypeName: string,
+  orTypeName: string;
 
   /** the model/model field type */
-  type: go.WireType,
+  type: go.WireType;
 
   /** XML serialization data when available */
-  xml?: tcgc.XmlSerializationOptions,
+  xml?: tcgc.XmlSerializationOptions;
 }
 
 /**
  * creates XMLInfo for models and model fields.
  * returns undefined if no XMLInfo is required.
  *
- * @param src 
+ * @param src the source information to adapt
  * @returns XMLInfo or undefined
  */
 export function adaptXMLInfo(src: XMLSourceInfo): go.XMLInfo | undefined {
