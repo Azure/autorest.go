@@ -3,6 +3,7 @@ package azblob
 import (
 	"encoding/json"
 	"encoding/xml"
+	"strings"
 	"testing"
 	"time"
 
@@ -1166,7 +1167,7 @@ func TestJSONTextConfigurationMarshalElementName(t *testing.T) {
 
 	// Verify the element name is "JsonTextConfiguration", not "JSONTextConfiguration"
 	xmlStr := string(data)
-	if !contains(xmlStr, "<JsonTextConfiguration>") {
+	if !strings.Contains(xmlStr, "<JsonTextConfiguration>") {
 		t.Fatalf("expected element name JsonTextConfiguration, got: %s", xmlStr)
 	}
 
@@ -1191,19 +1192,6 @@ func TestJSONTextConfigurationMarshalElementName(t *testing.T) {
 		t.Fatal("JSONTextConfiguration is nil after round-trip")
 	}
 	assertEqual(t, "RecordSeparator", *qf2.JSONTextConfiguration.RecordSeparator, "\n")
-}
-
-func contains(s, substr string) bool {
-	return len(s) >= len(substr) && searchString(s, substr)
-}
-
-func searchString(s, substr string) bool {
-	for i := 0; i <= len(s)-len(substr); i++ {
-		if s[i:i+len(substr)] == substr {
-			return true
-		}
-	}
-	return false
 }
 
 func assertEqual[T comparable](t *testing.T, name string, got, want T) {
