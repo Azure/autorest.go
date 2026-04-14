@@ -19,17 +19,16 @@ func TestXMLModelWithTextValueClient_Get(t *testing.T) {
 	require.NoError(t, err)
 	require.EqualValues(t, xmlgroup.ModelWithText{
 		Language: to.Ptr("foo"),
-		Content:  to.Ptr("\n  This is some text.\n"),
+		Content:  to.Ptr("This is some text."),
 	}, resp.ModelWithText)
 }
 
 func TestXMLModelWithTextValueClient_Put(t *testing.T) {
-	t.Skip("Go's encoding/xml encodes newlines as &#xA; in chardata, which fast-xml-parser doesn't decode back to newlines: https://github.com/microsoft/typespec/issues/10350")
 	client, err := xmlgroup.NewXMLClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
 	resp, err := client.NewXMLModelWithTextValueClient().Put(context.Background(), xmlgroup.ModelWithText{
 		Language: to.Ptr("foo"),
-		Content:  to.Ptr("\n  This is some text.\n"),
+		Content:  to.Ptr("This is some text."),
 	}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
