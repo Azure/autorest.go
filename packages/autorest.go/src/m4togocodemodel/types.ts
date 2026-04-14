@@ -186,8 +186,14 @@ export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema, pkg: go
     // for OpenAPI, literal values are always considered required
     required = true;
   }
+
+  let serializedName = prop.serializedName;
+  if (prop.schema.serialization?.xml?.name) {
+    serializedName = prop.schema.serialization.xml.name;
+  }
+
   const annotations = new go.ModelFieldAnnotations(required, prop.readOnly === true, prop.language.go!.isAdditionalProperties === true, prop.isDiscriminator === true);
-  const field = new go.ModelField(prop.language.go!.name, fieldType, prop.language.go!.byValue === true, prop.serializedName, annotations);
+  const field = new go.ModelField(prop.language.go!.name, fieldType, prop.language.go!.byValue === true, serializedName, annotations);
   if (hasDescription(prop.language.go!)) {
     field.docs.description = prop.language.go!.description;
   }
@@ -239,7 +245,7 @@ export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema, pkg: go
 export function adaptXMLInfo(obj: m4.Schema): go.XMLInfo | undefined {
   const xmlInfo = new go.XMLInfo();
   let includeXMLField = false;
-  if (obj.serialization?.xml?.name) {
+  if (obj.serialization?.xml?.name && obj.serialization.xml.name !== obj.language.go!.name) {
     xmlInfo.name = obj.serialization?.xml?.name;
     includeXMLField = true;
   }
@@ -262,6 +268,10 @@ export function adaptXMLInfo(obj: m4.Schema): go.XMLInfo | undefined {
       includeXMLField = true;
     } else if (asArray.elementType.serialization?.xml?.name) {
       xmlInfo.name = asArray.elementType.serialization.xml.name;
+      includeXMLField = true;
+    } else if (asArray.elementType.language.default.name !== asArray.elementType.language.go!.name) {
+      // we can land here if the Go-specific type name was renamed to remove stuttering
+      xmlInfo.name = asArray.elementType.language.default.name;
       includeXMLField = true;
     }
   }

@@ -665,8 +665,8 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
           .first();
         if (bodyParam) {
           recursiveAddMarshallingFormat(bodyParam.schema, marshallingFormat);
-          if (marshallingFormat === 'xml' && bodyParam.schema.serialization?.xml?.name) {
-            // mark that this parameter type will need a custom marshaller to handle the XML name
+          if (marshallingFormat === 'xml' && bodyParam.schema.type === m4.SchemaType.Array && bodyParam.schema.serialization?.xml?.name) {
+            // mark that this parameter type will need a custom wrapper type for the wrapped XML array
             bodyParam.schema.language.go!.xmlWrapperName = bodyParam.schema.serialization?.xml?.name;
           } else if (marshallingFormat === 'json' && op.requests![0].protocol.http!.method === 'patch') {
             // mark that this type will need a custom marshaller to handle JSON nulls

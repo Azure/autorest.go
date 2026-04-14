@@ -263,7 +263,7 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       }
       // due to differences in XML marshallers/unmarshallers, we use different codegen than for JSON
       const needsXMLDictionaryUnmarshalling = needsXMLDictionaryHelper(model);
-      if (needsDateTimeMarshalling || model.xml?.wrapper || needsXMLArrayMarshalling(model) || byteArrayFormat) {
+      if (needsDateTimeMarshalling || model.xml?.name || needsXMLArrayMarshalling(model) || byteArrayFormat) {
         generateXMLMarshaller(modelDef, serdeImports);
         if (needsDateTimeMarshalling || needsXMLDictionaryUnmarshalling || byteArrayFormat) {
           generateXMLUnmarshaller(modelDef, serdeImports);
@@ -303,6 +303,15 @@ function needsXMLDictionaryHelper(modelType: go.Model): boolean {
   return false;
 }
 
+/**
+ * returns true if the model contains one or more slices,
+ * indicating that a custom marshaler is required.
+ * we use a custom marshaler to omit the XML tags for empty
+ * slices (the default marshaler will include them).
+ *
+ * @param modelType the model to check for slice fields
+ * @returns true if a custom marshaler is required
+ */
 function needsXMLArrayMarshalling(modelType: go.Model): boolean {
   for (const prop of modelType.fields) {
     if (prop.type.kind === 'slice') {
@@ -818,8 +827,8 @@ function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager): void
   const receiver = modelDef.receiverName();
   const desc = `MarshalXML implements the xml.Marshaller interface for type ${modelDef.Model.name}.`;
   let text = `func (${receiver} ${modelDef.Model.name}) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {\n`;
-  if (modelDef.Model.xml?.wrapper) {
-    text += `\tstart.Name.Local = "${modelDef.Model.xml.wrapper}"\n`;
+  if (modelDef.Model.xml?.name) {
+    text += `\tstart.Name.Local = "${modelDef.Model.xml.name}"\n`;
   }
   text += generateAliasType(modelDef.Model, receiver, true, imports);
   for (const field of modelDef.Model.fields) {
@@ -891,7 +900,7 @@ function generateAliasType(modelType: go.Model | go.PolymorphicModel, receiver: 
   text += '\taux := &struct {\n';
   text += '\t\t*alias\n';
   for (const field of modelType.fields) {
-    const sn = getXMLSerialization(modelType, field);
+    const sn = getXMLSerialization(field);
     if (field.type.kind === 'time') {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
       text += `\t\t${field.name} *datetime.${field.type.format} \`xml:"${sn}"\`\n`;
@@ -1004,7 +1013,7 @@ class ModelDef {
       if (this.Format === 'JSON') {
         serialization += ',omitempty';
       } else if (this.Format === 'XML') {
-        serialization = getXMLSerialization(this.Model, field);
+        serialization = getXMLSerialization(field);
       }
       let tag = '';
       // only emit tags for XML; JSON uses custom marshallers/unmarshallers
@@ -1029,11 +1038,10 @@ class ModelDef {
 /**
  * returns the serialization options to use in the XML tag on a model field
  *
- * @param modelType the type that contains the field
  * @param field the field for which to construct the tag's contents
  * @returns the contents for the XML tag
  */
-function getXMLSerialization(modelType: go.Model | go.PolymorphicModel, field: go.ModelField): string {
+function getXMLSerialization(field: go.ModelField): string {
   let serialization = field.serializedName;
   // default to using the serialization name
   if (field.xml?.name) {
@@ -1049,7 +1057,7 @@ function getXMLSerialization(modelType: go.Model | go.PolymorphicModel, field: g
     serialization += ',attr';
   } else if (field.type.kind === 'slice') {
     // start with the serialized name of the element, preferring xml name if available
-    let inner = go.getTypeDeclaration(field.type.elementType, modelType.pkg);
+    let inner = field.serializedName;
     if (field.xml?.name) {
       inner = field.xml.name;
     }

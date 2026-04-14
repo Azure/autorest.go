@@ -606,7 +606,7 @@ func (x XMLPetListResult) MarshalXML(enc *xml.Encoder, start xml.StartElement) e
 	type alias XMLPetListResult
 	aux := &struct {
 		*alias
-		Pets *[]*XMLPet `xml:"Pets>XMLPet"`
+		Pets *[]*XMLPet `xml:"Pets>Pet"`
 	}{
 		alias: (*alias)(&x),
 	}
@@ -622,7 +622,7 @@ func (x XMLPetListResultWithNextLink) MarshalXML(enc *xml.Encoder, start xml.Sta
 	type alias XMLPetListResultWithNextLink
 	aux := &struct {
 		*alias
-		Pets *[]*XMLPet `xml:"Pets>XMLPet"`
+		Pets *[]*XMLPet `xml:"Pets>Pet"`
 	}{
 		alias: (*alias)(&x),
 	}

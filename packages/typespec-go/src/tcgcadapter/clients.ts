@@ -989,11 +989,9 @@ export class ClientAdapter {
           }
           adaptedParam = new go.BodyParameter(paramName, contentType, `"${opParam.defaultContentType}"`, bodyType, paramStyle, byVal);
           if (contentType === 'XML' && methodParam.type.kind === 'array') {
-            adaptedParam.xml = helpers.adaptXMLInfo(this.ta.getPkg(), methodParam.type.decorators);
-            if (!adaptedParam.xml) {
-              adaptedParam.xml = new go.XMLInfo();
-              adaptedParam.xml.wrapper = methodParam.type.name;
-            }
+            // this is for compat with autorest.go
+            adaptedParam.xml = new go.XMLInfo();
+            adaptedParam.xml.wrapper = methodParam.type.name;
           }
         }
         break;
@@ -1260,18 +1258,13 @@ export class ClientAdapter {
       if (go.isMonomorphicResultType(resultType)) {
         let fieldName: string | undefined;
         let xmlInfo: go.XMLInfo | undefined;
-        if (contentType === 'XML') {
-          xmlInfo = helpers.adaptXMLInfo(method.receiver.type.pkg, sdkResponseType.decorators);
-          if (!xmlInfo) {
-            xmlInfo = new go.XMLInfo();
-          }
-          if (sdkResponseType.kind === 'array') {
-            // this is for compat with autorest.go
-            fieldName = sdkResponseType.name;
-            const elementType = (<go.Slice>resultType).elementType;
-            const elementTypeXmlName = helpers.hasXMLInfo(elementType)?.wrapper;
-            xmlInfo.wraps = elementTypeXmlName ?? go.getTypeDeclaration(elementType, method.receiver.type.pkg);
-          }
+        if (contentType === 'XML' && sdkResponseType.kind === 'array') {
+          // this is for compat with autorest.go
+          xmlInfo = new go.XMLInfo();
+          fieldName = sdkResponseType.name;
+          const elementType = (<go.Slice>resultType).elementType;
+          const elementTypeXmlName = helpers.hasXMLInfo(elementType)?.name;
+          xmlInfo.wraps = elementTypeXmlName ?? go.getTypeDeclaration(elementType, method.receiver.type.pkg);
         }
 
         if (!fieldName) {

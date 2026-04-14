@@ -5,6 +5,7 @@
 ### Bugs Fixed
 
 * Fixed duplicate definition of `fake.initServer` that can happen in some cases.
+* Fixed some incorrect un/marshaling for XML payloads.
 
 ### Other Changes
 

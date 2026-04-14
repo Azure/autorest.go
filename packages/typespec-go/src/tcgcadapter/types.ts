@@ -569,7 +569,12 @@ export class TypeAdapter {
     } else {
       modelType = new go.Model(this.getPkg(), modelName, annotations, usage);
       // polymorphic types don't have XMLInfo
-      modelType.xml = helpers.adaptXMLInfo(this.getPkg(), model.decorators);
+      modelType.xml = helpers.adaptXMLInfo({
+        goTypeName: modelType.name,
+        orTypeName: model.name,
+        type: modelType,
+        xml: model.serializationOptions.xml,
+      });
     }
 
     modelType.docs.summary = model.summary;
@@ -644,7 +649,12 @@ export class TypeAdapter {
       field.defaultValue = this.getDiscriminatorLiteral(prop);
     }
 
-    field.xml = helpers.adaptXMLInfo(this.getPkg(), prop.decorators, field);
+    field.xml = helpers.adaptXMLInfo({
+      goTypeName: field.name,
+      orTypeName: serializedName,
+      type: type,
+      xml: prop.serializationOptions.xml,
+    });
 
     return field;
   }
