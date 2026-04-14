@@ -116,18 +116,6 @@ func (q *QueueItem) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error
 	return nil
 }
 
-// MarshalXML implements the xml.Marshaller interface for type SignedIdentifier.
-func (s SignedIdentifier) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	start.Name.Local = "SignedIdentifier"
-	type alias SignedIdentifier
-	aux := &struct {
-		*alias
-	}{
-		alias: (*alias)(&s),
-	}
-	return enc.EncodeElement(aux, start)
-}
-
 // MarshalJSON implements the json.Marshaller interface for type SomeModel.
 func (s SomeModel) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)

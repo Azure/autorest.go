@@ -195,6 +195,18 @@ func (b Blobs) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	return enc.EncodeElement(aux, start)
 }
 
+// MarshalXML implements the xml.Marshaller interface for type ComplexTypeWithMeta.
+func (c ComplexTypeWithMeta) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "XMLComplexTypeWithMeta"
+	type alias ComplexTypeWithMeta
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&c),
+	}
+	return enc.EncodeElement(aux, start)
+}
+
 // MarshalXML implements the xml.Marshaller interface for type Container.
 func (c Container) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias Container
@@ -309,8 +321,21 @@ func (j *JSONOutput) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// MarshalXML implements the xml.Marshaller interface for type ListBlobsResponse.
+func (l ListBlobsResponse) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "EnumerationResults"
+	type alias ListBlobsResponse
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&l),
+	}
+	return enc.EncodeElement(aux, start)
+}
+
 // MarshalXML implements the xml.Marshaller interface for type ListContainersResponse.
 func (l ListContainersResponse) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "EnumerationResults"
 	type alias ListContainersResponse
 	aux := &struct {
 		*alias
@@ -360,8 +385,21 @@ func (m *ModelWithByteProperty) UnmarshalXML(dec *xml.Decoder, start xml.StartEl
 	return nil
 }
 
+// MarshalXML implements the xml.Marshaller interface for type ObjectWithXMsTextProperty.
+func (o ObjectWithXMsTextProperty) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "Data"
+	type alias ObjectWithXMsTextProperty
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&o),
+	}
+	return enc.EncodeElement(aux, start)
+}
+
 // MarshalXML implements the xml.Marshaller interface for type Slide.
 func (s Slide) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "slide"
 	type alias Slide
 	aux := &struct {
 		*alias

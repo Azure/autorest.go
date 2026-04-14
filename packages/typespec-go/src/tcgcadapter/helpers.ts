@@ -7,63 +7,75 @@ import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import * as tsp from '@typespec/compiler';
 import * as go from '../../../codemodel.go/src/index.js';
 
-// called for models and model fields. for the former, the field param will be undefined
-export function adaptXMLInfo(pkg: go.PackageContent, decorators: Array<tcgc.DecoratorInfo>, field?: go.ModelField): go.XMLInfo | undefined {
-  // if there are no decorators and this isn't a slice
-  // type in a model field then do nothing
-  if (decorators.length === 0 && (!field || field.type.kind !== 'slice')) {
-    return undefined;
-  }
+/** source data used to compute XMLInfo */
+export interface XMLSourceInfo {
+  /** the Go type name */
+  goTypeName: string,
 
+  /**
+   * the original type name. can be different from
+   * goTypeName in some cases (e.g. stuttering cleanup)
+   */
+  orTypeName: string,
+
+  /** the model/model field type */
+  type: go.WireType,
+
+  /** XML serialization data when available */
+  xml?: tcgc.XmlSerializationOptions,
+}
+
+/**
+ * creates XMLInfo for models and model fields.
+ * returns undefined if no XMLInfo is required.
+ *
+ * @param src 
+ * @returns XMLInfo or undefined
+ */
+export function adaptXMLInfo(src: XMLSourceInfo): go.XMLInfo | undefined {
   const xmlInfo = new go.XMLInfo();
-  if (field && field.type.kind === 'slice') {
-    // for tsp, arrays are wrapped by default
-    xmlInfo.wraps = go.getTypeDeclaration(field.type.elementType, pkg);
+  let returnXMLInfo = false;
+
+  if (src.xml?.name && src.xml.name !== src.goTypeName) {
+    xmlInfo.name = src.xml.name;
+    returnXMLInfo = true;
   }
 
-  const handleName = (decorator: tcgc.DecoratorInfo): void => {
-    if (field) {
-      xmlInfo.name = <string>decorator.arguments['name'];
-    } else {
-      // when applied to a model, it means the model's XML element
-      // node has a different name than the model.
-      xmlInfo.wrapper = <string>decorator.arguments['name'];
+  if (src.xml?.attribute) {
+    xmlInfo.attribute = true;
+    returnXMLInfo = true;
+  }
+  if (src.type.kind === 'slice') {
+    const elementXMLInfo = hasXMLInfo(src.type.elementType);
+    if (src.xml?.unwrapped === false) {
+      if (src.xml.itemsName) {
+        xmlInfo.wraps = src.xml.itemsName;
+      } else if (elementXMLInfo?.name) {
+        xmlInfo.wraps = elementXMLInfo.name;
+      } else if (src.orTypeName !== src.goTypeName) {
+        xmlInfo.wraps = src.orTypeName;
+      } else {
+        xmlInfo.wraps = src.goTypeName;
+      }
+      returnXMLInfo = true;
+    } else if (elementXMLInfo?.name) {
+      xmlInfo.name = elementXMLInfo.name;
+      returnXMLInfo = true;
+    } else if (src.orTypeName !== src.goTypeName) {
+      // we can land here if the Go-specific type name was renamed to remove stuttering
+      xmlInfo.name = src.orTypeName;
+      returnXMLInfo = true;
     }
-  };
-
-  for (const decorator of decorators) {
-    switch (decorator.name) {
-      case 'TypeSpec.@encodedName':
-        if (decorator.arguments['mimeType'] === 'application/xml') {
-          handleName(decorator);
-        }
-        break;
-      case 'TypeSpec.Xml.@attribute':
-        xmlInfo.attribute = true;
-        break;
-      case 'TypeSpec.Xml.@name':
-        handleName(decorator);
-        break;
-      case 'TypeSpec.Xml.@unwrapped':
-        // unwrapped can only be applied to fields
-        if (field) {
-          switch (field.type.kind) {
-            case 'slice':
-              // unwrapped slice. default to using the serialized name
-              xmlInfo.wraps = undefined;
-              xmlInfo.name = field.serializedName;
-              break;
-            case 'string':
-              // an unwrapped string means it's text
-              xmlInfo.text = true;
-              break;
-          }
-        }
-        break;
-    }
+  } else if (src.xml?.unwrapped && src.type.kind === 'string') {
+    // an unwrapped string means it's text
+    xmlInfo.text = true;
+    // the ",chardata" tag is mutually exclusive
+    // with a name tag so clear it if set
+    xmlInfo.name = undefined;
+    returnXMLInfo = true;
   }
 
-  return xmlInfo;
+  return returnXMLInfo ? xmlInfo : undefined;
 }
 
 /**

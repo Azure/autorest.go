@@ -201,7 +201,7 @@ func (m ModelWithRenamedWrappedAndItemModelArray) MarshalXML(enc *xml.Encoder, s
 	type alias ModelWithRenamedWrappedAndItemModelArray
 	aux := &struct {
 		*alias
-		Books *[]Book `xml:"AllBooks>Book"`
+		Books *[]Book `xml:"AllBooks>XmlBook"`
 	}{
 		alias: (*alias)(&m),
 	}
@@ -284,7 +284,7 @@ func (m ModelWithWrappedPrimitiveCustomItemNames) MarshalXML(enc *xml.Encoder, s
 	type alias ModelWithWrappedPrimitiveCustomItemNames
 	aux := &struct {
 		*alias
-		Tags *[]string `xml:"ItemsTags>string"`
+		Tags *[]string `xml:"ItemsTags>ItemName"`
 	}{
 		alias: (*alias)(&m),
 	}

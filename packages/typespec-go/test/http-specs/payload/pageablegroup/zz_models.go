@@ -126,13 +126,13 @@ type XMLPet struct {
 // XMLPetListResult - The XML response for listing pets.
 type XMLPetListResult struct {
 	// REQUIRED
-	Pets       []*XMLPet `xml:"Pets>XMLPet"`
+	Pets       []*XMLPet `xml:"Pets>Pet"`
 	NextMarker *string   `xml:"NextMarker"`
 }
 
 // XMLPetListResultWithNextLink - The XML response for listing pets with next link.
 type XMLPetListResultWithNextLink struct {
 	// REQUIRED
-	Pets     []*XMLPet `xml:"Pets>XMLPet"`
+	Pets     []*XMLPet `xml:"Pets>Pet"`
 	NextLink *string   `xml:"NextLink"`
 }
