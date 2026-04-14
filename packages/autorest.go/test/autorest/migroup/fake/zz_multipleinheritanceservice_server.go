@@ -84,9 +84,7 @@ func (m *MultipleInheritanceServiceServerTransport) Do(req *http.Request) (*http
 }
 
 func (m *MultipleInheritanceServiceServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	resultChan := make(chan result)
-	defer close(resultChan)
-
+	resultChan := make(chan result, 1)
 	go func() {
 		var intercepted bool
 		var res result
@@ -120,10 +118,7 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchToMethodFake(req *ht
 			}
 
 		}
-		select {
-		case resultChan <- res:
-		case <-req.Context().Done():
-		}
+		resultChan <- res
 	}()
 
 	select {

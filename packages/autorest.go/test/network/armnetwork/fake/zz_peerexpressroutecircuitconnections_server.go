@@ -59,9 +59,7 @@ func (p *PeerExpressRouteCircuitConnectionsServerTransport) Do(req *http.Request
 }
 
 func (p *PeerExpressRouteCircuitConnectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	resultChan := make(chan result)
-	defer close(resultChan)
-
+	resultChan := make(chan result, 1)
 	go func() {
 		var intercepted bool
 		var res result
@@ -79,10 +77,7 @@ func (p *PeerExpressRouteCircuitConnectionsServerTransport) dispatchToMethodFake
 			}
 
 		}
-		select {
-		case resultChan <- res:
-		case <-req.Context().Done():
-		}
+		resultChan <- res
 	}()
 
 	select {

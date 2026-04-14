@@ -77,9 +77,7 @@ func (p *ProximityPlacementGroupsServerTransport) Do(req *http.Request) (*http.R
 }
 
 func (p *ProximityPlacementGroupsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	resultChan := make(chan result)
-	defer close(resultChan)
-
+	resultChan := make(chan result, 1)
 	go func() {
 		var intercepted bool
 		var res result
@@ -105,10 +103,7 @@ func (p *ProximityPlacementGroupsServerTransport) dispatchToMethodFake(req *http
 			}
 
 		}
-		select {
-		case resultChan <- res:
-		case <-req.Context().Done():
-		}
+		resultChan <- res
 	}()
 
 	select {

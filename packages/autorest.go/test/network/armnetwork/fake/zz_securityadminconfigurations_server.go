@@ -70,9 +70,7 @@ func (s *SecurityAdminConfigurationsServerTransport) Do(req *http.Request) (*htt
 }
 
 func (s *SecurityAdminConfigurationsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	resultChan := make(chan result)
-	defer close(resultChan)
-
+	resultChan := make(chan result, 1)
 	go func() {
 		var intercepted bool
 		var res result
@@ -94,10 +92,7 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchToMethodFake(req *h
 			}
 
 		}
-		select {
-		case resultChan <- res:
-		case <-req.Context().Done():
-		}
+		resultChan <- res
 	}()
 
 	select {

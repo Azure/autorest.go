@@ -6,6 +6,7 @@
 
 * Fixed duplicate definition of `fake.initServer` that can happen in some cases.
 * Fixed some incorrect un/marshaling for XML payloads.
+* Fixed a race condition in fake servers.
 
 ### Other Changes
 
