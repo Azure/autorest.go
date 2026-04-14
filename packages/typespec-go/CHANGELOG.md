@@ -7,6 +7,7 @@
 * Fixed typo in generated LRO example error message: "failed to pull the result" is now "failed to poll the result".
 * Fixed incorrect pointer usage for model results in generated example response bodies.
 * Fixed some incorrect un/marshaling for XML payloads.
+* Fixed a race condition in fake servers.
 
 ## 0.10.6 (2026-04-08)
 

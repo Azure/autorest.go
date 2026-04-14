@@ -47,9 +47,7 @@ func (q *QueryServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (q *QueryServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	resultChan := make(chan result)
-	defer close(resultChan)
-
+	resultChan := make(chan result, 1)
 	go func() {
 		var intercepted bool
 		var res result
@@ -65,10 +63,7 @@ func (q *QueryServerTransport) dispatchToMethodFake(req *http.Request, method st
 			}
 
 		}
-		select {
-		case resultChan <- res:
-		case <-req.Context().Done():
-		}
+		resultChan <- res
 	}()
 
 	select {

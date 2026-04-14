@@ -53,9 +53,7 @@ func (i *ImageVersionsServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (i *ImageVersionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	resultChan := make(chan result)
-	defer close(resultChan)
-
+	resultChan := make(chan result, 1)
 	go func() {
 		var intercepted bool
 		var res result
@@ -71,10 +69,7 @@ func (i *ImageVersionsServerTransport) dispatchToMethodFake(req *http.Request, m
 			}
 
 		}
-		select {
-		case resultChan <- res:
-		case <-req.Context().Done():
-		}
+		resultChan <- res
 	}()
 
 	select {

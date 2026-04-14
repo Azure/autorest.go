@@ -71,9 +71,7 @@ func (p *PrivateDNSZoneGroupsServerTransport) Do(req *http.Request) (*http.Respo
 }
 
 func (p *PrivateDNSZoneGroupsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	resultChan := make(chan result)
-	defer close(resultChan)
-
+	resultChan := make(chan result, 1)
 	go func() {
 		var intercepted bool
 		var res result
@@ -95,10 +93,7 @@ func (p *PrivateDNSZoneGroupsServerTransport) dispatchToMethodFake(req *http.Req
 			}
 
 		}
-		select {
-		case resultChan <- res:
-		case <-req.Context().Done():
-		}
+		resultChan <- res
 	}()
 
 	select {

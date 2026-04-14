@@ -154,9 +154,7 @@ func (b *BackupInstancesServerTransport) Do(req *http.Request) (*http.Response, 
 }
 
 func (b *BackupInstancesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	resultChan := make(chan result)
-	defer close(resultChan)
-
+	resultChan := make(chan result, 1)
 	go func() {
 		var intercepted bool
 		var res result
@@ -206,10 +204,7 @@ func (b *BackupInstancesServerTransport) dispatchToMethodFake(req *http.Request,
 			}
 
 		}
-		select {
-		case resultChan <- res:
-		case <-req.Context().Done():
-		}
+		resultChan <- res
 	}()
 
 	select {

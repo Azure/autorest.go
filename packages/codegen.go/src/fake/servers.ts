@@ -309,8 +309,7 @@ function generateServerTransportMethodDispatch(serverTransport: string, client: 
 
   const receiverName = serverTransport[0].toLowerCase();
   let content = `func (${receiverName} *${serverTransport}) ${dispatchMethodFake}(req *http.Request, method string) (*http.Response, error) {\n`;
-  content += '\tresultChan := make(chan result)\n';
-  content += '\tdefer close(resultChan)\n\n';
+  content += '\tresultChan := make(chan result, 1)\n';
   content += '\tgo func() {\n\t\tvar intercepted bool\n\t\tvar res result\n';
   const interceptorVarName = getTransportInterceptorVarName(client);
   content += `\t\t if ${interceptorVarName} != nil {\n`;
@@ -328,10 +327,7 @@ function generateServerTransportMethodDispatch(serverTransport: string, client: 
   content += '\t\t\t}\n\n'; // end switch
   content += '\t\t}\n'; // end if !intercepted
 
-  content += '\t\tselect {\n';
-  content += '\t\tcase resultChan <- res:\n';
-  content += '\t\tcase <-req.Context().Done():\n';
-  content += '\t\t}\n';
+  content += '\t\tresultChan <- res\n';
   content += '\t}()\n\n'; // end goroutine
 
   content += '\tselect {\n';

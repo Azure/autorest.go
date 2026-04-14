@@ -51,9 +51,7 @@ func (v *ValueTypesCollectionsIntServerTransport) Do(req *http.Request) (*http.R
 }
 
 func (v *ValueTypesCollectionsIntServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	resultChan := make(chan result)
-	defer close(resultChan)
-
+	resultChan := make(chan result, 1)
 	go func() {
 		var intercepted bool
 		var res result
@@ -71,10 +69,7 @@ func (v *ValueTypesCollectionsIntServerTransport) dispatchToMethodFake(req *http
 			}
 
 		}
-		select {
-		case resultChan <- res:
-		case <-req.Context().Done():
-		}
+		resultChan <- res
 	}()
 
 	select {
