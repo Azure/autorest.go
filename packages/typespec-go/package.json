@@ -55,7 +55,7 @@
     "@azure-tools/typespec-azure-core": "0.67.0",
     "@azure-tools/typespec-azure-resource-manager": "0.67.0",
     "@azure-tools/typespec-azure-rulesets": "0.67.0",
-    "@azure-tools/typespec-client-generator-core": "0.67.0",
+    "@azure-tools/typespec-client-generator-core": "0.67.2",
     "@types/node": "catalog:",
     "@types/semver": "catalog:",
     "@typespec/compiler": "1.11.0",

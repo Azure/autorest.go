@@ -1,6 +1,6 @@
 # Release History
 
-## 0.10.7 (Unreleased)
+## 0.10.7 (2026-04-14)
 
 ### Bugs Fixed
 
@@ -10,6 +10,10 @@
 * Fixed a race condition in fake servers.
 * Fixed incorrect parameter name when it starts with an invalid identifier character.
 * Fake servers no longer double-decode query parameters.
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
 
 ## 0.10.6 (2026-04-08)
 
