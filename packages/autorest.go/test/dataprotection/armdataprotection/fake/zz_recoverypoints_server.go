@@ -17,6 +17,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 )
 
 // RecoveryPointsServer is a fake server for instances of the armdataprotection.RecoveryPointsClient type.
@@ -119,7 +120,7 @@ func (r *RecoveryPointsServerTransport) dispatchGet(req *http.Request) (*http.Re
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AzureBackupRecoveryPointResource, req)
@@ -154,16 +155,8 @@ func (r *RecoveryPointsServerTransport) dispatchNewListPager(req *http.Request) 
 		if err != nil {
 			return nil, err
 		}
-		filterUnescaped, err := url.QueryUnescape(qp.Get("$filter"))
-		if err != nil {
-			return nil, err
-		}
-		filterParam := getOptional(filterUnescaped)
-		skipTokenUnescaped, err := url.QueryUnescape(qp.Get("$skipToken"))
-		if err != nil {
-			return nil, err
-		}
-		skipTokenParam := getOptional(skipTokenUnescaped)
+		filterParam := getOptional(qp.Get("$filter"))
+		skipTokenParam := getOptional(qp.Get("$skipToken"))
 		var options *armdataprotection.RecoveryPointsClientListOptions
 		if filterParam != nil || skipTokenParam != nil {
 			options = &armdataprotection.RecoveryPointsClientListOptions{
@@ -182,7 +175,7 @@ func (r *RecoveryPointsServerTransport) dispatchNewListPager(req *http.Request) 
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		r.newListPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

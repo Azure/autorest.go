@@ -12,6 +12,11 @@ type ClientBinaryResponseWithXMLContentTypeOptions struct {
 	// placeholder for future optional parameters
 }
 
+// ClientDoubleDecodeOptions contains the optional parameters for the Client.DoubleDecode method.
+type ClientDoubleDecodeOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ClientForceRequiredBodyPatchOptions contains the optional parameters for the Client.ForceRequiredBodyPatch method.
 type ClientForceRequiredBodyPatchOptions struct {
 	// placeholder for future optional parameters

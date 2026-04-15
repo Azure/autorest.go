@@ -17,6 +17,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 	"strconv"
 )
 
@@ -180,16 +181,12 @@ func (m *ManagementServerTransport) dispatchCheckDNSNameAvailability(req *http.R
 	if err != nil {
 		return nil, err
 	}
-	domainNameLabelParam, err := url.QueryUnescape(qp.Get("domainNameLabel"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := m.srv.CheckDNSNameAvailability(req.Context(), locationParam, domainNameLabelParam, nil)
+	respr, errRespr := m.srv.CheckDNSNameAvailability(req.Context(), locationParam, qp.Get("domainNameLabel"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).DNSNameAvailabilityResult, req)
@@ -236,7 +233,7 @@ func (m *ManagementServerTransport) dispatchBeginDeleteBastionShareableLink(req 
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		m.beginDeleteBastionShareableLink.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
@@ -282,7 +279,7 @@ func (m *ManagementServerTransport) dispatchNewDisconnectActiveSessionsPager(req
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		m.newDisconnectActiveSessionsPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -311,7 +308,7 @@ func (m *ManagementServerTransport) dispatchExpressRouteProviderPort(req *http.R
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ExpressRouteProviderPort, req)
@@ -358,7 +355,7 @@ func (m *ManagementServerTransport) dispatchBeginGeneratevirtualwanvpnserverconf
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
 		m.beginGeneratevirtualwanvpnserverconfigurationvpnprofile.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
@@ -402,7 +399,7 @@ func (m *ManagementServerTransport) dispatchBeginGetActiveSessions(req *http.Req
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
 		m.beginGetActiveSessions.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
@@ -448,7 +445,7 @@ func (m *ManagementServerTransport) dispatchNewGetBastionShareableLinkPager(req 
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		m.newGetBastionShareableLinkPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -481,11 +478,7 @@ func (m *ManagementServerTransport) dispatchListActiveConnectivityConfigurations
 	if err != nil {
 		return nil, err
 	}
-	topUnescaped, err := url.QueryUnescape(qp.Get("$top"))
-	if err != nil {
-		return nil, err
-	}
-	topParam, err := parseOptional(topUnescaped, func(v string) (int32, error) {
+	topParam, err := parseOptional(qp.Get("$top"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -506,7 +499,7 @@ func (m *ManagementServerTransport) dispatchListActiveConnectivityConfigurations
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ActiveConnectivityConfigurationsListResult, req)
@@ -539,11 +532,7 @@ func (m *ManagementServerTransport) dispatchListActiveSecurityAdminRules(req *ht
 	if err != nil {
 		return nil, err
 	}
-	topUnescaped, err := url.QueryUnescape(qp.Get("$top"))
-	if err != nil {
-		return nil, err
-	}
-	topParam, err := parseOptional(topUnescaped, func(v string) (int32, error) {
+	topParam, err := parseOptional(qp.Get("$top"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -564,7 +553,7 @@ func (m *ManagementServerTransport) dispatchListActiveSecurityAdminRules(req *ht
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ActiveSecurityAdminRulesListResult, req)
@@ -597,11 +586,7 @@ func (m *ManagementServerTransport) dispatchListNetworkManagerEffectiveConnectiv
 	if err != nil {
 		return nil, err
 	}
-	topUnescaped, err := url.QueryUnescape(qp.Get("$top"))
-	if err != nil {
-		return nil, err
-	}
-	topParam, err := parseOptional(topUnescaped, func(v string) (int32, error) {
+	topParam, err := parseOptional(qp.Get("$top"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -622,7 +607,7 @@ func (m *ManagementServerTransport) dispatchListNetworkManagerEffectiveConnectiv
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ManagerEffectiveConnectivityConfigurationListResult, req)
@@ -655,11 +640,7 @@ func (m *ManagementServerTransport) dispatchListNetworkManagerEffectiveSecurityA
 	if err != nil {
 		return nil, err
 	}
-	topUnescaped, err := url.QueryUnescape(qp.Get("$top"))
-	if err != nil {
-		return nil, err
-	}
-	topParam, err := parseOptional(topUnescaped, func(v string) (int32, error) {
+	topParam, err := parseOptional(qp.Get("$top"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -680,7 +661,7 @@ func (m *ManagementServerTransport) dispatchListNetworkManagerEffectiveSecurityA
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ManagerEffectiveSecurityAdminRulesListResult, req)
@@ -727,7 +708,7 @@ func (m *ManagementServerTransport) dispatchBeginPutBastionShareableLink(req *ht
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
 		m.beginPutBastionShareableLink.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
@@ -761,7 +742,7 @@ func (m *ManagementServerTransport) dispatchSupportedSecurityProviders(req *http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).VirtualWanSecurityProviders, req)

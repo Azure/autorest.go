@@ -16,6 +16,8 @@ import (
 	"net/http"
 	"net/url"
 	"reflect"
+	"regexp"
+	"slices"
 	"strconv"
 )
 
@@ -24,6 +26,10 @@ type Server struct {
 	// BinaryResponseWithXMLContentType is the fake for method Client.BinaryResponseWithXMLContentType
 	// HTTP status codes to indicate success: http.StatusOK
 	BinaryResponseWithXMLContentType func(ctx context.Context, options *azregressions.ClientBinaryResponseWithXMLContentTypeOptions) (resp azfake.Responder[azregressions.ClientBinaryResponseWithXMLContentTypeResponse], errResp azfake.ErrorResponder)
+
+	// DoubleDecode is the fake for method Client.DoubleDecode
+	// HTTP status codes to indicate success: http.StatusNoContent
+	DoubleDecode func(ctx context.Context, pathParam string, query string, options *azregressions.ClientDoubleDecodeOptions) (resp azfake.Responder[azregressions.ClientDoubleDecodeResponse], errResp azfake.ErrorResponder)
 
 	// ForceRequiredBodyPatch is the fake for method Client.ForceRequiredBodyPatch
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -102,6 +108,8 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 			switch method {
 			case "Client.BinaryResponseWithXMLContentType":
 				res.resp, res.err = s.dispatchBinaryResponseWithXMLContentType(req)
+			case "Client.DoubleDecode":
+				res.resp, res.err = s.dispatchDoubleDecode(req)
 			case "Client.ForceRequiredBodyPatch":
 				res.resp, res.err = s.dispatchForceRequiredBodyPatch(req)
 			case "Client.ForceRequiredBodyPut":
@@ -147,7 +155,7 @@ func (s *ServerTransport) dispatchBinaryResponseWithXMLContentType(req *http.Req
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
@@ -159,6 +167,36 @@ func (s *ServerTransport) dispatchBinaryResponseWithXMLContentType(req *http.Req
 	}
 	if val := server.GetResponse(respr).ContentType; val != nil {
 		resp.Header.Set("Content-Type", "application/xml")
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchDoubleDecode(req *http.Request) (*http.Response, error) {
+	if s.srv.DoubleDecode == nil {
+		return nil, &nonRetriableError{errors.New("fake for method DoubleDecode not implemented")}
+	}
+	const regexStr = `/double-decode/(?P<path>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if len(matches) < 2 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	qp := req.URL.Query()
+	pathParamParam, err := url.PathUnescape(matches[regex.SubexpIndex("path")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.DoubleDecode(req.Context(), pathParamParam, qp.Get("query"), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
 	}
 	return resp, nil
 }
@@ -176,7 +214,7 @@ func (s *ServerTransport) dispatchForceRequiredBodyPatch(req *http.Request) (*ht
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -199,7 +237,7 @@ func (s *ServerTransport) dispatchForceRequiredBodyPut(req *http.Request) (*http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -218,7 +256,7 @@ func (s *ServerTransport) dispatchGetDiscriminatedNoSubTypes(req *http.Request) 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).DiscriminatedBaseNoSubTypesClassification, req)
@@ -237,7 +275,7 @@ func (s *ServerTransport) dispatchGetQueue(req *http.Request) (*http.Response, e
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsXML(respContent, server.GetResponse(respr).QueueItem, req)
@@ -259,7 +297,7 @@ func (s *ServerTransport) dispatchGetXMLOne(req *http.Request) (*http.Response, 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsXML(respContent, server.GetResponse(respr), req)
@@ -281,7 +319,7 @@ func (s *ServerTransport) dispatchGetXMLTwo(req *http.Request) (*http.Response, 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsXML(respContent, server.GetResponse(respr), req)
@@ -309,7 +347,7 @@ func (s *ServerTransport) dispatchOptionalBinaryBody(req *http.Request) (*http.R
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -338,7 +376,7 @@ func (s *ServerTransport) dispatchOptionalBodyPost(req *http.Request) (*http.Res
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -373,7 +411,7 @@ func (s *ServerTransport) dispatchSpreadWithModel(req *http.Request) (*http.Resp
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -388,15 +426,7 @@ func (s *ServerTransport) dispatchWithExpandParam(req *http.Request) (*http.Resp
 		return nil, &nonRetriableError{errors.New("fake for method WithExpandParam not implemented")}
 	}
 	qp := req.URL.Query()
-	expandParam, err := url.QueryUnescape(qp.Get("$expand"))
-	if err != nil {
-		return nil, err
-	}
-	topUnescaped, err := url.QueryUnescape(qp.Get("$top"))
-	if err != nil {
-		return nil, err
-	}
-	topParam, err := parseOptional(topUnescaped, func(v string) (int32, error) {
+	topParam, err := parseOptional(qp.Get("$top"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -412,12 +442,12 @@ func (s *ServerTransport) dispatchWithExpandParam(req *http.Request) (*http.Resp
 			Top: topParam,
 		}
 	}
-	respr, errRespr := s.srv.WithExpandParam(req.Context(), expandParam, options)
+	respr, errRespr := s.srv.WithExpandParam(req.Context(), qp.Get("$expand"), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

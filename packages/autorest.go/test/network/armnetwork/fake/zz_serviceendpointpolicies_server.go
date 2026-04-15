@@ -17,6 +17,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 )
 
 // ServiceEndpointPoliciesServer is a fake server for instances of the armnetwork.ServiceEndpointPoliciesClient type.
@@ -155,7 +156,7 @@ func (s *ServiceEndpointPoliciesServerTransport) dispatchBeginCreateOrUpdate(req
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusCreated}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusCreated}, resp.StatusCode) {
 		s.beginCreateOrUpdate.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", resp.StatusCode)}
 	}
@@ -199,7 +200,7 @@ func (s *ServiceEndpointPoliciesServerTransport) dispatchBeginDelete(req *http.R
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		s.beginDelete.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
@@ -229,11 +230,7 @@ func (s *ServiceEndpointPoliciesServerTransport) dispatchGet(req *http.Request) 
 	if err != nil {
 		return nil, err
 	}
-	expandUnescaped, err := url.QueryUnescape(qp.Get("$expand"))
-	if err != nil {
-		return nil, err
-	}
-	expandParam := getOptional(expandUnescaped)
+	expandParam := getOptional(qp.Get("$expand"))
 	var options *armnetwork.ServiceEndpointPoliciesClientGetOptions
 	if expandParam != nil {
 		options = &armnetwork.ServiceEndpointPoliciesClientGetOptions{
@@ -245,7 +242,7 @@ func (s *ServiceEndpointPoliciesServerTransport) dispatchGet(req *http.Request) 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ServiceEndpointPolicy, req)
@@ -278,7 +275,7 @@ func (s *ServiceEndpointPoliciesServerTransport) dispatchNewListPager(req *http.
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		s.newListPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -315,7 +312,7 @@ func (s *ServiceEndpointPoliciesServerTransport) dispatchNewListByResourceGroupP
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		s.newListByResourceGroupPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -352,7 +349,7 @@ func (s *ServiceEndpointPoliciesServerTransport) dispatchUpdateTags(req *http.Re
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ServiceEndpointPolicy, req)

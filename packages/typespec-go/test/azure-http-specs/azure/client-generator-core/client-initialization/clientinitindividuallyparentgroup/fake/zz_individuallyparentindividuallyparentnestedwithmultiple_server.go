@@ -13,7 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 )
 
 // IndividuallyParentIndividuallyParentNestedWithMultipleServer is a fake server for instances of the clientinitindividuallyparentgroup.IndividuallyParentIndividuallyParentNestedWithMultipleClient type.
@@ -96,7 +96,7 @@ func (i *IndividuallyParentIndividuallyParentNestedWithMultipleServerTransport) 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -115,7 +115,7 @@ func (i *IndividuallyParentIndividuallyParentNestedWithMultipleServerTransport) 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -130,11 +130,7 @@ func (i *IndividuallyParentIndividuallyParentNestedWithMultipleServerTransport) 
 		return nil, &nonRetriableError{errors.New("fake for method WithQuery not implemented")}
 	}
 	qp := req.URL.Query()
-	formatUnescaped, err := url.QueryUnescape(qp.Get("format"))
-	if err != nil {
-		return nil, err
-	}
-	formatParam := getOptional(formatUnescaped)
+	formatParam := getOptional(qp.Get("format"))
 	var options *clientinitindividuallyparentgroup.IndividuallyParentIndividuallyParentNestedWithMultipleClientWithQueryOptions
 	if formatParam != nil {
 		options = &clientinitindividuallyparentgroup.IndividuallyParentIndividuallyParentNestedWithMultipleClientWithQueryOptions{
@@ -146,7 +142,7 @@ func (i *IndividuallyParentIndividuallyParentNestedWithMultipleServerTransport) 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

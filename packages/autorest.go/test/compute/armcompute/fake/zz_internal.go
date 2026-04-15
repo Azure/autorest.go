@@ -25,15 +25,6 @@ func (nonRetriableError) NonRetriable() {
 	// marker method
 }
 
-func contains[T comparable](s []T, v T) bool {
-	for _, vv := range s {
-		if vv == v {
-			return true
-		}
-	}
-	return false
-}
-
 func getOptional[T any](v T) *T {
 	if reflect.ValueOf(v).IsZero() {
 		return nil
@@ -57,7 +48,7 @@ func parseOptional[T any](v string, parse func(v string) (T, error)) (*T, error)
 	if err != nil {
 		return nil, err
 	}
-	return &t, err
+	return &t, nil
 }
 
 func parseWithCast[T any](v string, parse func(v string) (T, error)) (T, error) {

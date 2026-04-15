@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 )
 
 // ApplicationGatewayWafDynamicManifestsServer is a fake server for instances of the armnetwork.ApplicationGatewayWafDynamicManifestsClient type.
@@ -108,7 +109,7 @@ func (a *ApplicationGatewayWafDynamicManifestsServerTransport) dispatchNewGetPag
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		a.newGetPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

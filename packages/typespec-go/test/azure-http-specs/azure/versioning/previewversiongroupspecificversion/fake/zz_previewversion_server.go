@@ -15,6 +15,7 @@ import (
 	"net/url"
 	"previewversiongroupspecificversion"
 	"regexp"
+	"slices"
 )
 
 // PreviewVersionServer is a fake server for instances of the previewversiongroupspecificversion.PreviewVersionClient type.
@@ -101,7 +102,7 @@ func (p *PreviewVersionServerTransport) dispatchGetWidget(req *http.Request) (*h
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK, http.StatusNotFound}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusNotFound}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusNotFound", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Widget, req)
@@ -116,11 +117,7 @@ func (p *PreviewVersionServerTransport) dispatchListWidgets(req *http.Request) (
 		return nil, &nonRetriableError{errors.New("fake for method ListWidgets not implemented")}
 	}
 	qp := req.URL.Query()
-	nameUnescaped, err := url.QueryUnescape(qp.Get("name"))
-	if err != nil {
-		return nil, err
-	}
-	nameParam := getOptional(nameUnescaped)
+	nameParam := getOptional(qp.Get("name"))
 	var options *previewversiongroupspecificversion.PreviewVersionClientListWidgetsOptions
 	if nameParam != nil {
 		options = &previewversiongroupspecificversion.PreviewVersionClientListWidgetsOptions{
@@ -132,7 +129,7 @@ func (p *PreviewVersionServerTransport) dispatchListWidgets(req *http.Request) (
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ListWidgetsResponse, req)

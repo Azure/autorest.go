@@ -7,10 +7,12 @@
 * Fixed duplicate definition of `fake.initServer` that can happen in some cases.
 * Fixed some incorrect un/marshaling for XML payloads.
 * Fixed a race condition in fake servers.
+* Fake servers no longer double-decode query parameters.
 
 ### Other Changes
 
 * Use `datetime` helpers when formatting `time.Time` parameters.
+* Minor cleanup of generated code for fakes.
 
 ## 4.0.0-preview.76 (2026-01-15)
 

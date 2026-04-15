@@ -17,6 +17,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 )
 
 // CapacityReservationGroupsServer is a fake server for instances of the armcompute.CapacityReservationGroupsClient type.
@@ -141,7 +142,7 @@ func (c *CapacityReservationGroupsServerTransport) dispatchCreateOrUpdate(req *h
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).CapacityReservationGroup, req)
@@ -174,7 +175,7 @@ func (c *CapacityReservationGroupsServerTransport) dispatchDelete(req *http.Requ
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK, http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -203,11 +204,7 @@ func (c *CapacityReservationGroupsServerTransport) dispatchGet(req *http.Request
 	if err != nil {
 		return nil, err
 	}
-	expandUnescaped, err := url.QueryUnescape(qp.Get("$expand"))
-	if err != nil {
-		return nil, err
-	}
-	expandParam := getOptional(armcompute.CapacityReservationGroupInstanceViewTypes(expandUnescaped))
+	expandParam := getOptional(armcompute.CapacityReservationGroupInstanceViewTypes(qp.Get("$expand")))
 	var options *armcompute.CapacityReservationGroupsClientGetOptions
 	if expandParam != nil {
 		options = &armcompute.CapacityReservationGroupsClientGetOptions{
@@ -219,7 +216,7 @@ func (c *CapacityReservationGroupsServerTransport) dispatchGet(req *http.Request
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).CapacityReservationGroup, req)
@@ -246,11 +243,7 @@ func (c *CapacityReservationGroupsServerTransport) dispatchNewListByResourceGrou
 		if err != nil {
 			return nil, err
 		}
-		expandUnescaped, err := url.QueryUnescape(qp.Get("$expand"))
-		if err != nil {
-			return nil, err
-		}
-		expandParam := getOptional(armcompute.ExpandTypesForGetCapacityReservationGroups(expandUnescaped))
+		expandParam := getOptional(armcompute.ExpandTypesForGetCapacityReservationGroups(qp.Get("$expand")))
 		var options *armcompute.CapacityReservationGroupsClientListByResourceGroupOptions
 		if expandParam != nil {
 			options = &armcompute.CapacityReservationGroupsClientListByResourceGroupOptions{
@@ -268,7 +261,7 @@ func (c *CapacityReservationGroupsServerTransport) dispatchNewListByResourceGrou
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		c.newListByResourceGroupPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -291,11 +284,7 @@ func (c *CapacityReservationGroupsServerTransport) dispatchNewListBySubscription
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		expandUnescaped, err := url.QueryUnescape(qp.Get("$expand"))
-		if err != nil {
-			return nil, err
-		}
-		expandParam := getOptional(armcompute.ExpandTypesForGetCapacityReservationGroups(expandUnescaped))
+		expandParam := getOptional(armcompute.ExpandTypesForGetCapacityReservationGroups(qp.Get("$expand")))
 		var options *armcompute.CapacityReservationGroupsClientListBySubscriptionOptions
 		if expandParam != nil {
 			options = &armcompute.CapacityReservationGroupsClientListBySubscriptionOptions{
@@ -313,7 +302,7 @@ func (c *CapacityReservationGroupsServerTransport) dispatchNewListBySubscription
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		c.newListBySubscriptionPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -350,7 +339,7 @@ func (c *CapacityReservationGroupsServerTransport) dispatchUpdate(req *http.Requ
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).CapacityReservationGroup, req)

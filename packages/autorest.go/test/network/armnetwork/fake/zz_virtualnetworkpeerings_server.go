@@ -17,6 +17,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 )
 
 // VirtualNetworkPeeringsServer is a fake server for instances of the armnetwork.VirtualNetworkPeeringsClient type.
@@ -133,11 +134,7 @@ func (v *VirtualNetworkPeeringsServerTransport) dispatchBeginCreateOrUpdate(req 
 		if err != nil {
 			return nil, err
 		}
-		syncRemoteAddressSpaceUnescaped, err := url.QueryUnescape(qp.Get("syncRemoteAddressSpace"))
-		if err != nil {
-			return nil, err
-		}
-		syncRemoteAddressSpaceParam := getOptional(armnetwork.SyncRemoteAddressSpace(syncRemoteAddressSpaceUnescaped))
+		syncRemoteAddressSpaceParam := getOptional(armnetwork.SyncRemoteAddressSpace(qp.Get("syncRemoteAddressSpace")))
 		var options *armnetwork.VirtualNetworkPeeringsClientBeginCreateOrUpdateOptions
 		if syncRemoteAddressSpaceParam != nil {
 			options = &armnetwork.VirtualNetworkPeeringsClientBeginCreateOrUpdateOptions{
@@ -157,7 +154,7 @@ func (v *VirtualNetworkPeeringsServerTransport) dispatchBeginCreateOrUpdate(req 
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusCreated}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusCreated}, resp.StatusCode) {
 		v.beginCreateOrUpdate.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", resp.StatusCode)}
 	}
@@ -205,7 +202,7 @@ func (v *VirtualNetworkPeeringsServerTransport) dispatchBeginDelete(req *http.Re
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginDelete.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
@@ -243,7 +240,7 @@ func (v *VirtualNetworkPeeringsServerTransport) dispatchGet(req *http.Request) (
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).VirtualNetworkPeering, req)
@@ -284,7 +281,7 @@ func (v *VirtualNetworkPeeringsServerTransport) dispatchNewListPager(req *http.R
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		v.newListPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

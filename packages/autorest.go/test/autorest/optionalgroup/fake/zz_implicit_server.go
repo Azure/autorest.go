@@ -18,6 +18,7 @@ import (
 	"net/url"
 	"reflect"
 	"regexp"
+	"slices"
 )
 
 // ImplicitServer is a fake server for instances of the optionalgroup.ImplicitClient type.
@@ -130,7 +131,7 @@ func (i *ImplicitServerTransport) dispatchGetOptionalGlobalQuery(req *http.Reque
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -155,7 +156,7 @@ func (i *ImplicitServerTransport) dispatchGetRequiredGlobalPath(req *http.Reques
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -174,7 +175,7 @@ func (i *ImplicitServerTransport) dispatchGetRequiredGlobalQuery(req *http.Reque
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -203,7 +204,7 @@ func (i *ImplicitServerTransport) dispatchGetRequiredPath(req *http.Request) (*h
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -228,7 +229,7 @@ func (i *ImplicitServerTransport) dispatchPutOptionalBinaryBody(req *http.Reques
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -257,7 +258,7 @@ func (i *ImplicitServerTransport) dispatchPutOptionalBody(req *http.Request) (*h
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -283,7 +284,7 @@ func (i *ImplicitServerTransport) dispatchPutOptionalHeader(req *http.Request) (
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -298,11 +299,7 @@ func (i *ImplicitServerTransport) dispatchPutOptionalQuery(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("fake for method PutOptionalQuery not implemented")}
 	}
 	qp := req.URL.Query()
-	queryParameterUnescaped, err := url.QueryUnescape(qp.Get("queryParameter"))
-	if err != nil {
-		return nil, err
-	}
-	queryParameterParam := getOptional(queryParameterUnescaped)
+	queryParameterParam := getOptional(qp.Get("queryParameter"))
 	var options *optionalgroup.ImplicitClientPutOptionalQueryOptions
 	if queryParameterParam != nil {
 		options = &optionalgroup.ImplicitClientPutOptionalQueryOptions{
@@ -314,7 +311,7 @@ func (i *ImplicitServerTransport) dispatchPutOptionalQuery(req *http.Request) (*
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 )
 
 // PetServer is a fake server for instances of the errorsgroup.PetClient type.
@@ -108,7 +109,7 @@ func (p *PetServerTransport) dispatchDoSomething(req *http.Request) (*http.Respo
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).PetAction, req)
@@ -137,7 +138,7 @@ func (p *PetServerTransport) dispatchGetPetByID(req *http.Request) (*http.Respon
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusAccepted}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Pet, req)
@@ -152,11 +153,7 @@ func (p *PetServerTransport) dispatchHasModelsParam(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("fake for method HasModelsParam not implemented")}
 	}
 	qp := req.URL.Query()
-	modelsUnescaped, err := url.QueryUnescape(qp.Get("models"))
-	if err != nil {
-		return nil, err
-	}
-	modelsParam := getOptional(modelsUnescaped)
+	modelsParam := getOptional(qp.Get("models"))
 	var options *errorsgroup.PetClientHasModelsParamOptions
 	if modelsParam != nil {
 		options = &errorsgroup.PetClientHasModelsParamOptions{
@@ -168,7 +165,7 @@ func (p *PetServerTransport) dispatchHasModelsParam(req *http.Request) (*http.Re
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

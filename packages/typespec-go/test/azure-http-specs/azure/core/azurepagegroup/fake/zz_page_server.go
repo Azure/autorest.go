@@ -13,7 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"net/http"
-	"net/url"
+	"slices"
 	"strings"
 	"sync"
 )
@@ -147,7 +147,7 @@ func (p *PageServerTransport) dispatchNewListWithCustomPageModelPager(req *http.
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newListWithCustomPageModelPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -174,7 +174,7 @@ func (p *PageServerTransport) dispatchNewListWithPagePager(req *http.Request) (*
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newListWithPagePager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -195,11 +195,7 @@ func (p *PageServerTransport) dispatchNewListWithParametersPager(req *http.Reque
 		if err != nil {
 			return nil, err
 		}
-		anotherUnescaped, err := url.QueryUnescape(qp.Get("another"))
-		if err != nil {
-			return nil, err
-		}
-		anotherParam := getOptional(azurepagegroup.ListItemInputExtensibleEnum(anotherUnescaped))
+		anotherParam := getOptional(azurepagegroup.ListItemInputExtensibleEnum(qp.Get("another")))
 		var options *azurepagegroup.PageClientListWithParametersOptions
 		if anotherParam != nil {
 			options = &azurepagegroup.PageClientListWithParametersOptions{
@@ -217,7 +213,7 @@ func (p *PageServerTransport) dispatchNewListWithParametersPager(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newListWithParametersPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -244,7 +240,7 @@ func (p *PageServerTransport) dispatchNewWithRelativeNextLinkPager(req *http.Req
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newWithRelativeNextLinkPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

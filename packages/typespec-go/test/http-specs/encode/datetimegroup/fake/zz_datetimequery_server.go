@@ -13,7 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 	"strconv"
 	"time"
 )
@@ -106,11 +106,7 @@ func (d *DatetimeQueryServerTransport) dispatchDefault(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("fake for method Default not implemented")}
 	}
 	qp := req.URL.Query()
-	valueUnescaped, err := url.QueryUnescape(qp.Get("value"))
-	if err != nil {
-		return nil, err
-	}
-	valueParam, err := time.Parse(time.RFC3339Nano, valueUnescaped)
+	valueParam, err := time.Parse(time.RFC3339Nano, qp.Get("value"))
 	if err != nil {
 		return nil, err
 	}
@@ -119,7 +115,7 @@ func (d *DatetimeQueryServerTransport) dispatchDefault(req *http.Request) (*http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -134,11 +130,7 @@ func (d *DatetimeQueryServerTransport) dispatchRFC3339(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("fake for method RFC3339 not implemented")}
 	}
 	qp := req.URL.Query()
-	valueUnescaped, err := url.QueryUnescape(qp.Get("value"))
-	if err != nil {
-		return nil, err
-	}
-	valueParam, err := time.Parse(time.RFC3339Nano, valueUnescaped)
+	valueParam, err := time.Parse(time.RFC3339Nano, qp.Get("value"))
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +139,7 @@ func (d *DatetimeQueryServerTransport) dispatchRFC3339(req *http.Request) (*http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -162,11 +154,7 @@ func (d *DatetimeQueryServerTransport) dispatchRFC7231(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("fake for method RFC7231 not implemented")}
 	}
 	qp := req.URL.Query()
-	valueUnescaped, err := url.QueryUnescape(qp.Get("value"))
-	if err != nil {
-		return nil, err
-	}
-	valueParam, err := time.Parse(time.RFC1123, valueUnescaped)
+	valueParam, err := time.Parse(time.RFC1123, qp.Get("value"))
 	if err != nil {
 		return nil, err
 	}
@@ -175,7 +163,7 @@ func (d *DatetimeQueryServerTransport) dispatchRFC7231(req *http.Request) (*http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -190,11 +178,7 @@ func (d *DatetimeQueryServerTransport) dispatchUnixTimestamp(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("fake for method UnixTimestamp not implemented")}
 	}
 	qp := req.URL.Query()
-	valueUnescaped, err := url.QueryUnescape(qp.Get("value"))
-	if err != nil {
-		return nil, err
-	}
-	valueParam, err := parseWithCast(valueUnescaped, func(v string) (time.Time, error) {
+	valueParam, err := parseWithCast(qp.Get("value"), func(v string) (time.Time, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 64)
 		if parseErr != nil {
 			return time.Time{}, parseErr
@@ -209,7 +193,7 @@ func (d *DatetimeQueryServerTransport) dispatchUnixTimestamp(req *http.Request) 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -224,11 +208,7 @@ func (d *DatetimeQueryServerTransport) dispatchUnixTimestampArray(req *http.Requ
 		return nil, &nonRetriableError{errors.New("fake for method UnixTimestampArray not implemented")}
 	}
 	qp := req.URL.Query()
-	valueUnescaped, err := url.QueryUnescape(qp.Get("value"))
-	if err != nil {
-		return nil, err
-	}
-	valueElements := splitHelper(valueUnescaped, ",")
+	valueElements := splitHelper(qp.Get("value"), ",")
 	valueParam := make([]time.Time, len(valueElements))
 	for i := 0; i < len(valueElements); i++ {
 		p, parseErr := strconv.ParseInt(valueElements[i], 10, 64)
@@ -243,7 +223,7 @@ func (d *DatetimeQueryServerTransport) dispatchUnixTimestampArray(req *http.Requ
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

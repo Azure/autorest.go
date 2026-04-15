@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 )
 
 // ExportJobsOperationResultServer is a fake server for instances of the armdataprotection.ExportJobsOperationResultClient type.
@@ -104,7 +105,7 @@ func (e *ExportJobsOperationResultServerTransport) dispatchGet(req *http.Request
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusAccepted}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ExportJobsResult, req)

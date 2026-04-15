@@ -13,7 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"naminggroup"
 	"net/http"
-	"net/url"
+	"slices"
 	"strings"
 	"sync"
 )
@@ -144,7 +144,7 @@ func (n *NamingServerTransport) dispatchClientName(req *http.Request) (*http.Res
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -159,16 +159,12 @@ func (n *NamingServerTransport) dispatchParameter(req *http.Request) (*http.Resp
 		return nil, &nonRetriableError{errors.New("fake for method Parameter not implemented")}
 	}
 	qp := req.URL.Query()
-	clientNameParam, err := url.QueryUnescape(qp.Get("defaultName"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := n.srv.Parameter(req.Context(), clientNameParam, nil)
+	respr, errRespr := n.srv.Parameter(req.Context(), qp.Get("defaultName"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

@@ -12,7 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 	"typechangedfromgroup"
 )
 
@@ -84,16 +84,12 @@ func (t *TypeChangedFromServerTransport) dispatchTest(req *http.Request) (*http.
 	if err != nil {
 		return nil, err
 	}
-	paramParam, err := url.QueryUnescape(qp.Get("param"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := t.srv.Test(req.Context(), body, paramParam, nil)
+	respr, errRespr := t.srv.Test(req.Context(), body, qp.Get("param"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).TestModel, req)

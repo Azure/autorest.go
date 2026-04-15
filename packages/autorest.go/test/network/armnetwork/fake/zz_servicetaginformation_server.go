@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 	"strconv"
 )
 
@@ -99,19 +100,11 @@ func (s *ServiceTagInformationServerTransport) dispatchNewListPager(req *http.Re
 		if err != nil {
 			return nil, err
 		}
-		noAddressPrefixesUnescaped, err := url.QueryUnescape(qp.Get("noAddressPrefixes"))
+		noAddressPrefixesParam, err := parseOptional(qp.Get("noAddressPrefixes"), strconv.ParseBool)
 		if err != nil {
 			return nil, err
 		}
-		noAddressPrefixesParam, err := parseOptional(noAddressPrefixesUnescaped, strconv.ParseBool)
-		if err != nil {
-			return nil, err
-		}
-		tagNameUnescaped, err := url.QueryUnescape(qp.Get("tagName"))
-		if err != nil {
-			return nil, err
-		}
-		tagNameParam := getOptional(tagNameUnescaped)
+		tagNameParam := getOptional(qp.Get("tagName"))
 		var options *armnetwork.ServiceTagInformationClientListOptions
 		if noAddressPrefixesParam != nil || tagNameParam != nil {
 			options = &armnetwork.ServiceTagInformationClientListOptions{
@@ -130,7 +123,7 @@ func (s *ServiceTagInformationServerTransport) dispatchNewListPager(req *http.Re
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		s.newListPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

@@ -15,6 +15,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"net/http"
 	"regexp"
+	"slices"
 )
 
 // ExpressRouteServiceProvidersServer is a fake server for instances of the armnetwork.ExpressRouteServiceProvidersClient type.
@@ -103,7 +104,7 @@ func (e *ExpressRouteServiceProvidersServerTransport) dispatchNewListPager(req *
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		e.newListPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

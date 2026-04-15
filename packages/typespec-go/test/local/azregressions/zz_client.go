@@ -6,11 +6,14 @@ package azregressions
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 	"strconv"
+	"strings"
 )
 
 // Client contains the methods for the service.
@@ -89,6 +92,47 @@ func (client *Client) binaryResponseWithXMLContentTypeHandleResponse(resp *http.
 		result.ContentType = &val
 	}
 	return result, nil
+}
+
+// DoubleDecode - ensure that path and query parameters aren't double-decoded by the fake server
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientDoubleDecodeOptions contains the optional parameters for the Client.DoubleDecode method.
+func (client *Client) DoubleDecode(ctx context.Context, pathParam string, query string, options *ClientDoubleDecodeOptions) (ClientDoubleDecodeResponse, error) {
+	var err error
+	const operationName = "Client.DoubleDecode"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.doubleDecodeCreateRequest(ctx, pathParam, query, options)
+	if err != nil {
+		return ClientDoubleDecodeResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientDoubleDecodeResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientDoubleDecodeResponse{}, err
+	}
+	return ClientDoubleDecodeResponse{}, nil
+}
+
+// doubleDecodeCreateRequest creates the DoubleDecode request.
+func (client *Client) doubleDecodeCreateRequest(ctx context.Context, pathParam string, query string, _ *ClientDoubleDecodeOptions) (*policy.Request, error) {
+	urlPath := "/double-decode/{path}"
+	if pathParam == "" {
+		return nil, errors.New("parameter pathParam cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{path}", url.PathEscape(pathParam))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("query", query)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	return req, nil
 }
 
 // ForceRequiredBodyPatch -
@@ -491,7 +535,7 @@ func (client *Client) spreadWithModelCreateRequest(ctx context.Context, name str
 	return req, nil
 }
 
-// WithExpandParam -
+// WithExpandParam - ensure that parameter names that start with invalid Go identifiers are properly cased
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ClientWithExpandParamOptions contains the optional parameters for the Client.WithExpandParam method.
 func (client *Client) WithExpandParam(ctx context.Context, expand string, options *ClientWithExpandParamOptions) (ClientWithExpandParamResponse, error) {

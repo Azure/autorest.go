@@ -15,6 +15,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 )
 
 // ResourceDetailsServer is a fake server for instances of the armdevopsinfrastructure.ResourceDetailsClient type.
@@ -111,7 +112,7 @@ func (r *ResourceDetailsServerTransport) dispatchNewListByPoolPager(req *http.Re
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		r.newListByPoolPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

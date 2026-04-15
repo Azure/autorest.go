@@ -12,8 +12,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"net/http"
-	"net/url"
 	"pageablegroup"
+	"slices"
 	"strconv"
 )
 
@@ -87,11 +87,7 @@ func (p *PageableServerTransport) dispatchNewListPager(req *http.Request) (*http
 	newListPager := p.newListPager.get(req)
 	if newListPager == nil {
 		qp := req.URL.Query()
-		maxpagesizeUnescaped, err := url.QueryUnescape(qp.Get("maxpagesize"))
-		if err != nil {
-			return nil, err
-		}
-		maxpagesizeParam, err := parseOptional(maxpagesizeUnescaped, func(v string) (int32, error) {
+		maxpagesizeParam, err := parseOptional(qp.Get("maxpagesize"), func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
 			if parseErr != nil {
 				return 0, parseErr
@@ -118,7 +114,7 @@ func (p *PageableServerTransport) dispatchNewListPager(req *http.Request) (*http
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newListPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

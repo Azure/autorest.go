@@ -12,8 +12,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
 	"scalargroup"
+	"slices"
 	"strconv"
 )
 
@@ -101,7 +101,7 @@ func (s *ScalarDecimal128TypeServerTransport) dispatchRequestBody(req *http.Requ
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -116,11 +116,7 @@ func (s *ScalarDecimal128TypeServerTransport) dispatchRequestParameter(req *http
 		return nil, &nonRetriableError{errors.New("fake for method RequestParameter not implemented")}
 	}
 	qp := req.URL.Query()
-	valueUnescaped, err := url.QueryUnescape(qp.Get("value"))
-	if err != nil {
-		return nil, err
-	}
-	valueParam, err := strconv.ParseFloat(valueUnescaped, 64)
+	valueParam, err := strconv.ParseFloat(qp.Get("value"), 64)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +125,7 @@ func (s *ScalarDecimal128TypeServerTransport) dispatchRequestParameter(req *http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -148,7 +144,7 @@ func (s *ScalarDecimal128TypeServerTransport) dispatchResponseBody(req *http.Req
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Value, req)

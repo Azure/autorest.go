@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 )
 
 // NodesServer is a fake server for instances of the armdataboxedge.NodesClient type.
@@ -112,7 +113,7 @@ func (n *NodesServerTransport) dispatchNewListByDataBoxEdgeDevicePager(req *http
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		n.newListByDataBoxEdgeDevicePager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

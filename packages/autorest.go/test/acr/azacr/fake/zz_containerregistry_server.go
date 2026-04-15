@@ -19,6 +19,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 	"strconv"
 )
 
@@ -182,7 +183,7 @@ func (c *ContainerRegistryServerTransport) dispatchCheckDockerV2Support(req *htt
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -219,7 +220,7 @@ func (c *ContainerRegistryServerTransport) dispatchCreateManifest(req *http.Requ
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusCreated", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
@@ -264,7 +265,7 @@ func (c *ContainerRegistryServerTransport) dispatchDeleteManifest(req *http.Requ
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusAccepted, http.StatusNotFound}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusAccepted, http.StatusNotFound}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNotFound", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -293,7 +294,7 @@ func (c *ContainerRegistryServerTransport) dispatchDeleteRepository(req *http.Re
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusAccepted, http.StatusNotFound}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusAccepted, http.StatusNotFound}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNotFound", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).DeleteRepositoryResult, req)
@@ -326,7 +327,7 @@ func (c *ContainerRegistryServerTransport) dispatchDeleteTag(req *http.Request) 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusAccepted, http.StatusNotFound}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusAccepted, http.StatusNotFound}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNotFound", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -366,7 +367,7 @@ func (c *ContainerRegistryServerTransport) dispatchGetManifest(req *http.Request
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ManifestWrapper, req)
@@ -399,7 +400,7 @@ func (c *ContainerRegistryServerTransport) dispatchGetManifestProperties(req *ht
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ArtifactManifestProperties, req)
@@ -426,16 +427,8 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetManifestsPager(req *htt
 		if err != nil {
 			return nil, err
 		}
-		lastUnescaped, err := url.QueryUnescape(qp.Get("last"))
-		if err != nil {
-			return nil, err
-		}
-		lastParam := getOptional(lastUnescaped)
-		nUnescaped, err := url.QueryUnescape(qp.Get("n"))
-		if err != nil {
-			return nil, err
-		}
-		nParam, err := parseOptional(nUnescaped, func(v string) (int32, error) {
+		lastParam := getOptional(qp.Get("last"))
+		nParam, err := parseOptional(qp.Get("n"), func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
 			if parseErr != nil {
 				return 0, parseErr
@@ -445,11 +438,7 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetManifestsPager(req *htt
 		if err != nil {
 			return nil, err
 		}
-		orderbyUnescaped, err := url.QueryUnescape(qp.Get("orderby"))
-		if err != nil {
-			return nil, err
-		}
-		orderbyParam := getOptional(orderbyUnescaped)
+		orderbyParam := getOptional(qp.Get("orderby"))
 		var options *azacr.ContainerRegistryClientGetManifestsOptions
 		if lastParam != nil || nParam != nil || orderbyParam != nil {
 			options = &azacr.ContainerRegistryClientGetManifestsOptions{
@@ -469,7 +458,7 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetManifestsPager(req *htt
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		c.newGetManifestsPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -498,7 +487,7 @@ func (c *ContainerRegistryServerTransport) dispatchGetProperties(req *http.Reque
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ContainerRepositoryProperties, req)
@@ -515,16 +504,8 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetRepositoriesPager(req *
 	newGetRepositoriesPager := c.newGetRepositoriesPager.get(req)
 	if newGetRepositoriesPager == nil {
 		qp := req.URL.Query()
-		lastUnescaped, err := url.QueryUnescape(qp.Get("last"))
-		if err != nil {
-			return nil, err
-		}
-		lastParam := getOptional(lastUnescaped)
-		nUnescaped, err := url.QueryUnescape(qp.Get("n"))
-		if err != nil {
-			return nil, err
-		}
-		nParam, err := parseOptional(nUnescaped, func(v string) (int32, error) {
+		lastParam := getOptional(qp.Get("last"))
+		nParam, err := parseOptional(qp.Get("n"), func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
 			if parseErr != nil {
 				return 0, parseErr
@@ -552,7 +533,7 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetRepositoriesPager(req *
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		c.newGetRepositoriesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -585,7 +566,7 @@ func (c *ContainerRegistryServerTransport) dispatchGetTagProperties(req *http.Re
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ArtifactTagProperties, req)
@@ -612,16 +593,8 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetTagsPager(req *http.Req
 		if err != nil {
 			return nil, err
 		}
-		lastUnescaped, err := url.QueryUnescape(qp.Get("last"))
-		if err != nil {
-			return nil, err
-		}
-		lastParam := getOptional(lastUnescaped)
-		nUnescaped, err := url.QueryUnescape(qp.Get("n"))
-		if err != nil {
-			return nil, err
-		}
-		nParam, err := parseOptional(nUnescaped, func(v string) (int32, error) {
+		lastParam := getOptional(qp.Get("last"))
+		nParam, err := parseOptional(qp.Get("n"), func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
 			if parseErr != nil {
 				return 0, parseErr
@@ -631,16 +604,8 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetTagsPager(req *http.Req
 		if err != nil {
 			return nil, err
 		}
-		orderbyUnescaped, err := url.QueryUnescape(qp.Get("orderby"))
-		if err != nil {
-			return nil, err
-		}
-		orderbyParam := getOptional(orderbyUnescaped)
-		digestUnescaped, err := url.QueryUnescape(qp.Get("digest"))
-		if err != nil {
-			return nil, err
-		}
-		digestParam := getOptional(digestUnescaped)
+		orderbyParam := getOptional(qp.Get("orderby"))
+		digestParam := getOptional(qp.Get("digest"))
 		var options *azacr.ContainerRegistryClientGetTagsOptions
 		if lastParam != nil || nParam != nil || orderbyParam != nil || digestParam != nil {
 			options = &azacr.ContainerRegistryClientGetTagsOptions{
@@ -661,7 +626,7 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetTagsPager(req *http.Req
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		c.newGetTagsPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -698,7 +663,7 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateManifestProperties(req 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ArtifactManifestProperties, req)
@@ -731,7 +696,7 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateProperties(req *http.Re
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ContainerRepositoryProperties, req)
@@ -768,7 +733,7 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateTagAttributes(req *http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ArtifactTagProperties, req)

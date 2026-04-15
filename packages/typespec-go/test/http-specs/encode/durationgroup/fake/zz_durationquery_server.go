@@ -13,7 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 	"strconv"
 )
 
@@ -159,16 +159,12 @@ func (d *DurationQueryServerTransport) dispatchDefault(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("fake for method Default not implemented")}
 	}
 	qp := req.URL.Query()
-	inputParam, err := url.QueryUnescape(qp.Get("input"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := d.srv.Default(req.Context(), inputParam, nil)
+	respr, errRespr := d.srv.Default(req.Context(), qp.Get("input"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -183,11 +179,7 @@ func (d *DurationQueryServerTransport) dispatchFloat64Milliseconds(req *http.Req
 		return nil, &nonRetriableError{errors.New("fake for method Float64Milliseconds not implemented")}
 	}
 	qp := req.URL.Query()
-	inputUnescaped, err := url.QueryUnescape(qp.Get("input"))
-	if err != nil {
-		return nil, err
-	}
-	inputParam, err := strconv.ParseFloat(inputUnescaped, 64)
+	inputParam, err := strconv.ParseFloat(qp.Get("input"), 64)
 	if err != nil {
 		return nil, err
 	}
@@ -196,7 +188,7 @@ func (d *DurationQueryServerTransport) dispatchFloat64Milliseconds(req *http.Req
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -211,11 +203,7 @@ func (d *DurationQueryServerTransport) dispatchFloat64Seconds(req *http.Request)
 		return nil, &nonRetriableError{errors.New("fake for method Float64Seconds not implemented")}
 	}
 	qp := req.URL.Query()
-	inputUnescaped, err := url.QueryUnescape(qp.Get("input"))
-	if err != nil {
-		return nil, err
-	}
-	inputParam, err := strconv.ParseFloat(inputUnescaped, 64)
+	inputParam, err := strconv.ParseFloat(qp.Get("input"), 64)
 	if err != nil {
 		return nil, err
 	}
@@ -224,7 +212,7 @@ func (d *DurationQueryServerTransport) dispatchFloat64Seconds(req *http.Request)
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -239,11 +227,7 @@ func (d *DurationQueryServerTransport) dispatchFloatMilliseconds(req *http.Reque
 		return nil, &nonRetriableError{errors.New("fake for method FloatMilliseconds not implemented")}
 	}
 	qp := req.URL.Query()
-	inputUnescaped, err := url.QueryUnescape(qp.Get("input"))
-	if err != nil {
-		return nil, err
-	}
-	inputParam, err := parseWithCast(inputUnescaped, func(v string) (float32, error) {
+	inputParam, err := parseWithCast(qp.Get("input"), func(v string) (float32, error) {
 		p, parseErr := strconv.ParseFloat(v, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -258,7 +242,7 @@ func (d *DurationQueryServerTransport) dispatchFloatMilliseconds(req *http.Reque
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -273,11 +257,7 @@ func (d *DurationQueryServerTransport) dispatchFloatMillisecondsLargerUnit(req *
 		return nil, &nonRetriableError{errors.New("fake for method FloatMillisecondsLargerUnit not implemented")}
 	}
 	qp := req.URL.Query()
-	inputUnescaped, err := url.QueryUnescape(qp.Get("input"))
-	if err != nil {
-		return nil, err
-	}
-	inputParam, err := parseWithCast(inputUnescaped, func(v string) (float32, error) {
+	inputParam, err := parseWithCast(qp.Get("input"), func(v string) (float32, error) {
 		p, parseErr := strconv.ParseFloat(v, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -292,7 +272,7 @@ func (d *DurationQueryServerTransport) dispatchFloatMillisecondsLargerUnit(req *
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -307,11 +287,7 @@ func (d *DurationQueryServerTransport) dispatchFloatSeconds(req *http.Request) (
 		return nil, &nonRetriableError{errors.New("fake for method FloatSeconds not implemented")}
 	}
 	qp := req.URL.Query()
-	inputUnescaped, err := url.QueryUnescape(qp.Get("input"))
-	if err != nil {
-		return nil, err
-	}
-	inputParam, err := parseWithCast(inputUnescaped, func(v string) (float32, error) {
+	inputParam, err := parseWithCast(qp.Get("input"), func(v string) (float32, error) {
 		p, parseErr := strconv.ParseFloat(v, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -326,7 +302,7 @@ func (d *DurationQueryServerTransport) dispatchFloatSeconds(req *http.Request) (
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -341,11 +317,7 @@ func (d *DurationQueryServerTransport) dispatchFloatSecondsLargerUnit(req *http.
 		return nil, &nonRetriableError{errors.New("fake for method FloatSecondsLargerUnit not implemented")}
 	}
 	qp := req.URL.Query()
-	inputUnescaped, err := url.QueryUnescape(qp.Get("input"))
-	if err != nil {
-		return nil, err
-	}
-	inputParam, err := parseWithCast(inputUnescaped, func(v string) (float32, error) {
+	inputParam, err := parseWithCast(qp.Get("input"), func(v string) (float32, error) {
 		p, parseErr := strconv.ParseFloat(v, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -360,7 +332,7 @@ func (d *DurationQueryServerTransport) dispatchFloatSecondsLargerUnit(req *http.
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -375,16 +347,12 @@ func (d *DurationQueryServerTransport) dispatchISO8601(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("fake for method ISO8601 not implemented")}
 	}
 	qp := req.URL.Query()
-	inputParam, err := url.QueryUnescape(qp.Get("input"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := d.srv.ISO8601(req.Context(), inputParam, nil)
+	respr, errRespr := d.srv.ISO8601(req.Context(), qp.Get("input"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -399,11 +367,7 @@ func (d *DurationQueryServerTransport) dispatchInt32Milliseconds(req *http.Reque
 		return nil, &nonRetriableError{errors.New("fake for method Int32Milliseconds not implemented")}
 	}
 	qp := req.URL.Query()
-	inputUnescaped, err := url.QueryUnescape(qp.Get("input"))
-	if err != nil {
-		return nil, err
-	}
-	inputParam, err := parseWithCast(inputUnescaped, func(v string) (int32, error) {
+	inputParam, err := parseWithCast(qp.Get("input"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -418,7 +382,7 @@ func (d *DurationQueryServerTransport) dispatchInt32Milliseconds(req *http.Reque
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -433,11 +397,7 @@ func (d *DurationQueryServerTransport) dispatchInt32MillisecondsArray(req *http.
 		return nil, &nonRetriableError{errors.New("fake for method Int32MillisecondsArray not implemented")}
 	}
 	qp := req.URL.Query()
-	inputUnescaped, err := url.QueryUnescape(qp.Get("input"))
-	if err != nil {
-		return nil, err
-	}
-	inputElements := splitHelper(inputUnescaped, ",")
+	inputElements := splitHelper(qp.Get("input"), ",")
 	inputParam := make([]int32, len(inputElements))
 	for i := 0; i < len(inputElements); i++ {
 		parsedInt32, parseErr := strconv.ParseInt(inputElements[i], 10, 32)
@@ -451,7 +411,7 @@ func (d *DurationQueryServerTransport) dispatchInt32MillisecondsArray(req *http.
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -466,11 +426,7 @@ func (d *DurationQueryServerTransport) dispatchInt32MillisecondsLargerUnit(req *
 		return nil, &nonRetriableError{errors.New("fake for method Int32MillisecondsLargerUnit not implemented")}
 	}
 	qp := req.URL.Query()
-	inputUnescaped, err := url.QueryUnescape(qp.Get("input"))
-	if err != nil {
-		return nil, err
-	}
-	inputParam, err := parseWithCast(inputUnescaped, func(v string) (int32, error) {
+	inputParam, err := parseWithCast(qp.Get("input"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -485,7 +441,7 @@ func (d *DurationQueryServerTransport) dispatchInt32MillisecondsLargerUnit(req *
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -500,11 +456,7 @@ func (d *DurationQueryServerTransport) dispatchInt32Seconds(req *http.Request) (
 		return nil, &nonRetriableError{errors.New("fake for method Int32Seconds not implemented")}
 	}
 	qp := req.URL.Query()
-	inputUnescaped, err := url.QueryUnescape(qp.Get("input"))
-	if err != nil {
-		return nil, err
-	}
-	inputParam, err := parseWithCast(inputUnescaped, func(v string) (int32, error) {
+	inputParam, err := parseWithCast(qp.Get("input"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -519,7 +471,7 @@ func (d *DurationQueryServerTransport) dispatchInt32Seconds(req *http.Request) (
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -534,11 +486,7 @@ func (d *DurationQueryServerTransport) dispatchInt32SecondsArray(req *http.Reque
 		return nil, &nonRetriableError{errors.New("fake for method Int32SecondsArray not implemented")}
 	}
 	qp := req.URL.Query()
-	inputUnescaped, err := url.QueryUnescape(qp.Get("input"))
-	if err != nil {
-		return nil, err
-	}
-	inputElements := splitHelper(inputUnescaped, ",")
+	inputElements := splitHelper(qp.Get("input"), ",")
 	inputParam := make([]int32, len(inputElements))
 	for i := 0; i < len(inputElements); i++ {
 		parsedInt32, parseErr := strconv.ParseInt(inputElements[i], 10, 32)
@@ -552,7 +500,7 @@ func (d *DurationQueryServerTransport) dispatchInt32SecondsArray(req *http.Reque
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -567,11 +515,7 @@ func (d *DurationQueryServerTransport) dispatchInt32SecondsLargerUnit(req *http.
 		return nil, &nonRetriableError{errors.New("fake for method Int32SecondsLargerUnit not implemented")}
 	}
 	qp := req.URL.Query()
-	inputUnescaped, err := url.QueryUnescape(qp.Get("input"))
-	if err != nil {
-		return nil, err
-	}
-	inputParam, err := parseWithCast(inputUnescaped, func(v string) (int32, error) {
+	inputParam, err := parseWithCast(qp.Get("input"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -586,7 +530,7 @@ func (d *DurationQueryServerTransport) dispatchInt32SecondsLargerUnit(req *http.
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

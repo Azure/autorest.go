@@ -12,7 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 	"srvdrivenoldgroup"
 )
 
@@ -96,7 +96,7 @@ func (r *ResiliencyServiceDrivenServerTransport) dispatchFromNone(req *http.Requ
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -111,11 +111,7 @@ func (r *ResiliencyServiceDrivenServerTransport) dispatchFromOneOptional(req *ht
 		return nil, &nonRetriableError{errors.New("fake for method FromOneOptional not implemented")}
 	}
 	qp := req.URL.Query()
-	parameterUnescaped, err := url.QueryUnescape(qp.Get("parameter"))
-	if err != nil {
-		return nil, err
-	}
-	parameterParam := getOptional(parameterUnescaped)
+	parameterParam := getOptional(qp.Get("parameter"))
 	var options *srvdrivenoldgroup.ResiliencyServiceDrivenClientFromOneOptionalOptions
 	if parameterParam != nil {
 		options = &srvdrivenoldgroup.ResiliencyServiceDrivenClientFromOneOptionalOptions{
@@ -127,7 +123,7 @@ func (r *ResiliencyServiceDrivenServerTransport) dispatchFromOneOptional(req *ht
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -142,16 +138,12 @@ func (r *ResiliencyServiceDrivenServerTransport) dispatchFromOneRequired(req *ht
 		return nil, &nonRetriableError{errors.New("fake for method FromOneRequired not implemented")}
 	}
 	qp := req.URL.Query()
-	parameterParam, err := url.QueryUnescape(qp.Get("parameter"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := r.srv.FromOneRequired(req.Context(), parameterParam, nil)
+	respr, errRespr := r.srv.FromOneRequired(req.Context(), qp.Get("parameter"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

@@ -15,7 +15,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 	"strconv"
 	"time"
 )
@@ -288,11 +288,7 @@ func (q *QueriesServerTransport) dispatchArrayStringCSVEmpty(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("fake for method ArrayStringCSVEmpty not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
-	if err != nil {
-		return nil, err
-	}
-	arrayQueryParam := splitHelper(arrayQueryUnescaped, ",")
+	arrayQueryParam := splitHelper(qp.Get("arrayQuery"), ",")
 	var options *urlgroup.QueriesClientArrayStringCSVEmptyOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringCSVEmptyOptions{
@@ -304,7 +300,7 @@ func (q *QueriesServerTransport) dispatchArrayStringCSVEmpty(req *http.Request) 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -319,11 +315,7 @@ func (q *QueriesServerTransport) dispatchArrayStringCSVNull(req *http.Request) (
 		return nil, &nonRetriableError{errors.New("fake for method ArrayStringCSVNull not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
-	if err != nil {
-		return nil, err
-	}
-	arrayQueryParam := splitHelper(arrayQueryUnescaped, ",")
+	arrayQueryParam := splitHelper(qp.Get("arrayQuery"), ",")
 	var options *urlgroup.QueriesClientArrayStringCSVNullOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringCSVNullOptions{
@@ -335,7 +327,7 @@ func (q *QueriesServerTransport) dispatchArrayStringCSVNull(req *http.Request) (
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -350,11 +342,7 @@ func (q *QueriesServerTransport) dispatchArrayStringCSVValid(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("fake for method ArrayStringCSVValid not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
-	if err != nil {
-		return nil, err
-	}
-	arrayQueryParam := splitHelper(arrayQueryUnescaped, ",")
+	arrayQueryParam := splitHelper(qp.Get("arrayQuery"), ",")
 	var options *urlgroup.QueriesClientArrayStringCSVValidOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringCSVValidOptions{
@@ -366,7 +354,7 @@ func (q *QueriesServerTransport) dispatchArrayStringCSVValid(req *http.Request) 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -381,11 +369,7 @@ func (q *QueriesServerTransport) dispatchArrayStringNoCollectionFormatEmpty(req 
 		return nil, &nonRetriableError{errors.New("fake for method ArrayStringNoCollectionFormatEmpty not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
-	if err != nil {
-		return nil, err
-	}
-	arrayQueryParam := splitHelper(arrayQueryUnescaped, ",")
+	arrayQueryParam := splitHelper(qp.Get("arrayQuery"), ",")
 	var options *urlgroup.QueriesClientArrayStringNoCollectionFormatEmptyOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringNoCollectionFormatEmptyOptions{
@@ -397,7 +381,7 @@ func (q *QueriesServerTransport) dispatchArrayStringNoCollectionFormatEmpty(req 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -412,11 +396,7 @@ func (q *QueriesServerTransport) dispatchArrayStringPipesValid(req *http.Request
 		return nil, &nonRetriableError{errors.New("fake for method ArrayStringPipesValid not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
-	if err != nil {
-		return nil, err
-	}
-	arrayQueryParam := splitHelper(arrayQueryUnescaped, "|")
+	arrayQueryParam := splitHelper(qp.Get("arrayQuery"), "|")
 	var options *urlgroup.QueriesClientArrayStringPipesValidOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringPipesValidOptions{
@@ -428,7 +408,7 @@ func (q *QueriesServerTransport) dispatchArrayStringPipesValid(req *http.Request
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -443,11 +423,7 @@ func (q *QueriesServerTransport) dispatchArrayStringSsvValid(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("fake for method ArrayStringSsvValid not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
-	if err != nil {
-		return nil, err
-	}
-	arrayQueryParam := splitHelper(arrayQueryUnescaped, " ")
+	arrayQueryParam := splitHelper(qp.Get("arrayQuery"), " ")
 	var options *urlgroup.QueriesClientArrayStringSsvValidOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringSsvValidOptions{
@@ -459,7 +435,7 @@ func (q *QueriesServerTransport) dispatchArrayStringSsvValid(req *http.Request) 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -474,11 +450,7 @@ func (q *QueriesServerTransport) dispatchArrayStringTsvValid(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("fake for method ArrayStringTsvValid not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
-	if err != nil {
-		return nil, err
-	}
-	arrayQueryParam := splitHelper(arrayQueryUnescaped, "\t")
+	arrayQueryParam := splitHelper(qp.Get("arrayQuery"), "\t")
 	var options *urlgroup.QueriesClientArrayStringTsvValidOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringTsvValidOptions{
@@ -490,7 +462,7 @@ func (q *QueriesServerTransport) dispatchArrayStringTsvValid(req *http.Request) 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -509,7 +481,7 @@ func (q *QueriesServerTransport) dispatchByteEmpty(req *http.Request) (*http.Res
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -524,11 +496,7 @@ func (q *QueriesServerTransport) dispatchByteMultiByte(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("fake for method ByteMultiByte not implemented")}
 	}
 	qp := req.URL.Query()
-	byteQueryUnescaped, err := url.QueryUnescape(qp.Get("byteQuery"))
-	if err != nil {
-		return nil, err
-	}
-	byteQueryParam, err := base64.StdEncoding.DecodeString(byteQueryUnescaped)
+	byteQueryParam, err := base64.StdEncoding.DecodeString(qp.Get("byteQuery"))
 	if err != nil {
 		return nil, err
 	}
@@ -543,7 +511,7 @@ func (q *QueriesServerTransport) dispatchByteMultiByte(req *http.Request) (*http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -558,11 +526,7 @@ func (q *QueriesServerTransport) dispatchByteNull(req *http.Request) (*http.Resp
 		return nil, &nonRetriableError{errors.New("fake for method ByteNull not implemented")}
 	}
 	qp := req.URL.Query()
-	byteQueryUnescaped, err := url.QueryUnescape(qp.Get("byteQuery"))
-	if err != nil {
-		return nil, err
-	}
-	byteQueryParam, err := base64.StdEncoding.DecodeString(byteQueryUnescaped)
+	byteQueryParam, err := base64.StdEncoding.DecodeString(qp.Get("byteQuery"))
 	if err != nil {
 		return nil, err
 	}
@@ -577,7 +541,7 @@ func (q *QueriesServerTransport) dispatchByteNull(req *http.Request) (*http.Resp
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -592,11 +556,7 @@ func (q *QueriesServerTransport) dispatchDateNull(req *http.Request) (*http.Resp
 		return nil, &nonRetriableError{errors.New("fake for method DateNull not implemented")}
 	}
 	qp := req.URL.Query()
-	dateQueryUnescaped, err := url.QueryUnescape(qp.Get("dateQuery"))
-	if err != nil {
-		return nil, err
-	}
-	dateQueryParam, err := parseOptional(dateQueryUnescaped, func(v string) (time.Time, error) { return time.Parse(time.DateOnly, v) })
+	dateQueryParam, err := parseOptional(qp.Get("dateQuery"), func(v string) (time.Time, error) { return time.Parse(time.DateOnly, v) })
 	if err != nil {
 		return nil, err
 	}
@@ -611,7 +571,7 @@ func (q *QueriesServerTransport) dispatchDateNull(req *http.Request) (*http.Resp
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -626,11 +586,7 @@ func (q *QueriesServerTransport) dispatchDateTimeNull(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("fake for method DateTimeNull not implemented")}
 	}
 	qp := req.URL.Query()
-	dateTimeQueryUnescaped, err := url.QueryUnescape(qp.Get("dateTimeQuery"))
-	if err != nil {
-		return nil, err
-	}
-	dateTimeQueryParam, err := parseOptional(dateTimeQueryUnescaped, func(v string) (time.Time, error) { return time.Parse(time.RFC3339Nano, v) })
+	dateTimeQueryParam, err := parseOptional(qp.Get("dateTimeQuery"), func(v string) (time.Time, error) { return time.Parse(time.RFC3339Nano, v) })
 	if err != nil {
 		return nil, err
 	}
@@ -645,7 +601,7 @@ func (q *QueriesServerTransport) dispatchDateTimeNull(req *http.Request) (*http.
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -664,7 +620,7 @@ func (q *QueriesServerTransport) dispatchDateTimeValid(req *http.Request) (*http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -683,7 +639,7 @@ func (q *QueriesServerTransport) dispatchDateValid(req *http.Request) (*http.Res
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -702,7 +658,7 @@ func (q *QueriesServerTransport) dispatchDoubleDecimalNegative(req *http.Request
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -721,7 +677,7 @@ func (q *QueriesServerTransport) dispatchDoubleDecimalPositive(req *http.Request
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -736,11 +692,7 @@ func (q *QueriesServerTransport) dispatchDoubleNull(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("fake for method DoubleNull not implemented")}
 	}
 	qp := req.URL.Query()
-	doubleQueryUnescaped, err := url.QueryUnescape(qp.Get("doubleQuery"))
-	if err != nil {
-		return nil, err
-	}
-	doubleQueryParam, err := parseOptional(doubleQueryUnescaped, func(v string) (float64, error) {
+	doubleQueryParam, err := parseOptional(qp.Get("doubleQuery"), func(v string) (float64, error) {
 		p, parseErr := strconv.ParseFloat(v, 64)
 		if parseErr != nil {
 			return 0, parseErr
@@ -761,7 +713,7 @@ func (q *QueriesServerTransport) dispatchDoubleNull(req *http.Request) (*http.Re
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -776,11 +728,7 @@ func (q *QueriesServerTransport) dispatchEnumNull(req *http.Request) (*http.Resp
 		return nil, &nonRetriableError{errors.New("fake for method EnumNull not implemented")}
 	}
 	qp := req.URL.Query()
-	enumQueryUnescaped, err := url.QueryUnescape(qp.Get("enumQuery"))
-	if err != nil {
-		return nil, err
-	}
-	enumQueryParam := getOptional(urlgroup.URIColor(enumQueryUnescaped))
+	enumQueryParam := getOptional(urlgroup.URIColor(qp.Get("enumQuery")))
 	var options *urlgroup.QueriesClientEnumNullOptions
 	if enumQueryParam != nil {
 		options = &urlgroup.QueriesClientEnumNullOptions{
@@ -792,7 +740,7 @@ func (q *QueriesServerTransport) dispatchEnumNull(req *http.Request) (*http.Resp
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -807,11 +755,7 @@ func (q *QueriesServerTransport) dispatchEnumValid(req *http.Request) (*http.Res
 		return nil, &nonRetriableError{errors.New("fake for method EnumValid not implemented")}
 	}
 	qp := req.URL.Query()
-	enumQueryUnescaped, err := url.QueryUnescape(qp.Get("enumQuery"))
-	if err != nil {
-		return nil, err
-	}
-	enumQueryParam := getOptional(urlgroup.URIColor(enumQueryUnescaped))
+	enumQueryParam := getOptional(urlgroup.URIColor(qp.Get("enumQuery")))
 	var options *urlgroup.QueriesClientEnumValidOptions
 	if enumQueryParam != nil {
 		options = &urlgroup.QueriesClientEnumValidOptions{
@@ -823,7 +767,7 @@ func (q *QueriesServerTransport) dispatchEnumValid(req *http.Request) (*http.Res
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -838,11 +782,7 @@ func (q *QueriesServerTransport) dispatchFloatNull(req *http.Request) (*http.Res
 		return nil, &nonRetriableError{errors.New("fake for method FloatNull not implemented")}
 	}
 	qp := req.URL.Query()
-	floatQueryUnescaped, err := url.QueryUnescape(qp.Get("floatQuery"))
-	if err != nil {
-		return nil, err
-	}
-	floatQueryParam, err := parseOptional(floatQueryUnescaped, func(v string) (float32, error) {
+	floatQueryParam, err := parseOptional(qp.Get("floatQuery"), func(v string) (float32, error) {
 		p, parseErr := strconv.ParseFloat(v, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -863,7 +803,7 @@ func (q *QueriesServerTransport) dispatchFloatNull(req *http.Request) (*http.Res
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -882,7 +822,7 @@ func (q *QueriesServerTransport) dispatchFloatScientificNegative(req *http.Reque
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -901,7 +841,7 @@ func (q *QueriesServerTransport) dispatchFloatScientificPositive(req *http.Reque
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -920,7 +860,7 @@ func (q *QueriesServerTransport) dispatchGetBooleanFalse(req *http.Request) (*ht
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -935,11 +875,7 @@ func (q *QueriesServerTransport) dispatchGetBooleanNull(req *http.Request) (*htt
 		return nil, &nonRetriableError{errors.New("fake for method GetBooleanNull not implemented")}
 	}
 	qp := req.URL.Query()
-	boolQueryUnescaped, err := url.QueryUnescape(qp.Get("boolQuery"))
-	if err != nil {
-		return nil, err
-	}
-	boolQueryParam, err := parseOptional(boolQueryUnescaped, strconv.ParseBool)
+	boolQueryParam, err := parseOptional(qp.Get("boolQuery"), strconv.ParseBool)
 	if err != nil {
 		return nil, err
 	}
@@ -954,7 +890,7 @@ func (q *QueriesServerTransport) dispatchGetBooleanNull(req *http.Request) (*htt
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -973,7 +909,7 @@ func (q *QueriesServerTransport) dispatchGetBooleanTrue(req *http.Request) (*htt
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -992,7 +928,7 @@ func (q *QueriesServerTransport) dispatchGetIntNegativeOneMillion(req *http.Requ
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -1007,11 +943,7 @@ func (q *QueriesServerTransport) dispatchGetIntNull(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("fake for method GetIntNull not implemented")}
 	}
 	qp := req.URL.Query()
-	intQueryUnescaped, err := url.QueryUnescape(qp.Get("intQuery"))
-	if err != nil {
-		return nil, err
-	}
-	intQueryParam, err := parseOptional(intQueryUnescaped, func(v string) (int32, error) {
+	intQueryParam, err := parseOptional(qp.Get("intQuery"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -1032,7 +964,7 @@ func (q *QueriesServerTransport) dispatchGetIntNull(req *http.Request) (*http.Re
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -1051,7 +983,7 @@ func (q *QueriesServerTransport) dispatchGetIntOneMillion(req *http.Request) (*h
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -1066,11 +998,7 @@ func (q *QueriesServerTransport) dispatchGetLongNull(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("fake for method GetLongNull not implemented")}
 	}
 	qp := req.URL.Query()
-	longQueryUnescaped, err := url.QueryUnescape(qp.Get("longQuery"))
-	if err != nil {
-		return nil, err
-	}
-	longQueryParam, err := parseOptional(longQueryUnescaped, func(v string) (int64, error) {
+	longQueryParam, err := parseOptional(qp.Get("longQuery"), func(v string) (int64, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 64)
 		if parseErr != nil {
 			return 0, parseErr
@@ -1091,7 +1019,7 @@ func (q *QueriesServerTransport) dispatchGetLongNull(req *http.Request) (*http.R
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -1110,7 +1038,7 @@ func (q *QueriesServerTransport) dispatchGetNegativeTenBillion(req *http.Request
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -1129,7 +1057,7 @@ func (q *QueriesServerTransport) dispatchGetTenBillion(req *http.Request) (*http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -1148,7 +1076,7 @@ func (q *QueriesServerTransport) dispatchStringEmpty(req *http.Request) (*http.R
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -1163,11 +1091,7 @@ func (q *QueriesServerTransport) dispatchStringNull(req *http.Request) (*http.Re
 		return nil, &nonRetriableError{errors.New("fake for method StringNull not implemented")}
 	}
 	qp := req.URL.Query()
-	stringQueryUnescaped, err := url.QueryUnescape(qp.Get("stringQuery"))
-	if err != nil {
-		return nil, err
-	}
-	stringQueryParam := getOptional(stringQueryUnescaped)
+	stringQueryParam := getOptional(qp.Get("stringQuery"))
 	var options *urlgroup.QueriesClientStringNullOptions
 	if stringQueryParam != nil {
 		options = &urlgroup.QueriesClientStringNullOptions{
@@ -1179,7 +1103,7 @@ func (q *QueriesServerTransport) dispatchStringNull(req *http.Request) (*http.Re
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -1198,7 +1122,7 @@ func (q *QueriesServerTransport) dispatchStringURLEncoded(req *http.Request) (*h
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -1217,7 +1141,7 @@ func (q *QueriesServerTransport) dispatchStringUnicode(req *http.Request) (*http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

@@ -17,6 +17,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 	"strconv"
 )
 
@@ -134,7 +135,7 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchCreateOrUpdate(req 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).SecurityAdminConfiguration, req)
@@ -169,11 +170,7 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchBeginDelete(req *ht
 		if err != nil {
 			return nil, err
 		}
-		forceUnescaped, err := url.QueryUnescape(qp.Get("force"))
-		if err != nil {
-			return nil, err
-		}
-		forceParam, err := parseOptional(forceUnescaped, strconv.ParseBool)
+		forceParam, err := parseOptional(qp.Get("force"), strconv.ParseBool)
 		if err != nil {
 			return nil, err
 		}
@@ -196,7 +193,7 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchBeginDelete(req *ht
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		s.beginDelete.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
@@ -234,7 +231,7 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchGet(req *http.Reque
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).SecurityAdminConfiguration, req)
@@ -265,11 +262,7 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchNewListPager(req *h
 		if err != nil {
 			return nil, err
 		}
-		topUnescaped, err := url.QueryUnescape(qp.Get("$top"))
-		if err != nil {
-			return nil, err
-		}
-		topParam, err := parseOptional(topUnescaped, func(v string) (int32, error) {
+		topParam, err := parseOptional(qp.Get("$top"), func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
 			if parseErr != nil {
 				return 0, parseErr
@@ -279,11 +272,7 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchNewListPager(req *h
 		if err != nil {
 			return nil, err
 		}
-		skipTokenUnescaped, err := url.QueryUnescape(qp.Get("$skipToken"))
-		if err != nil {
-			return nil, err
-		}
-		skipTokenParam := getOptional(skipTokenUnescaped)
+		skipTokenParam := getOptional(qp.Get("$skipToken"))
 		var options *armnetwork.SecurityAdminConfigurationsClientListOptions
 		if topParam != nil || skipTokenParam != nil {
 			options = &armnetwork.SecurityAdminConfigurationsClientListOptions{
@@ -302,7 +291,7 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchNewListPager(req *h
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		s.newListPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

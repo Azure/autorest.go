@@ -16,6 +16,7 @@ import (
 	"net/url"
 	"reflect"
 	"regexp"
+	"slices"
 )
 
 // ManagedNetworkProvisionsServer is a fake server for instances of the armcognitiveservices.ManagedNetworkProvisionsClient type.
@@ -124,7 +125,7 @@ func (m *ManagedNetworkProvisionsServerTransport) dispatchBeginProvisionManagedN
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
 		m.beginProvisionManagedNetwork.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}

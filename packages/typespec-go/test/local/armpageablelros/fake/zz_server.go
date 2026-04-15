@@ -15,6 +15,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 )
 
 // Server is a fake server for instances of the armpageablelros.Client type.
@@ -93,10 +94,6 @@ func (s *ServerTransport) dispatchBeginListPrivateEndPoints(req *http.Request) (
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		apiVersionParam, err := url.QueryUnescape(qp.Get("api-version"))
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -105,7 +102,7 @@ func (s *ServerTransport) dispatchBeginListPrivateEndPoints(req *http.Request) (
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := s.srv.BeginListPrivateEndPoints(req.Context(), apiVersionParam, resourceGroupNameParam, resourceNameParam, nil)
+		respr, errRespr := s.srv.BeginListPrivateEndPoints(req.Context(), qp.Get("api-version"), resourceGroupNameParam, resourceNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -118,7 +115,7 @@ func (s *ServerTransport) dispatchBeginListPrivateEndPoints(req *http.Request) (
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
 		s.beginListPrivateEndPoints.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}

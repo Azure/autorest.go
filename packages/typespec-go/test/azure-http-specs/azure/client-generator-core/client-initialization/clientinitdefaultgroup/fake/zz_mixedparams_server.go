@@ -13,7 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 )
 
 // MixedParamsServer is a fake server for instances of the clientinitdefaultgroup.MixedParamsClient type.
@@ -90,16 +90,12 @@ func (m *MixedParamsServerTransport) dispatchWithBody(req *http.Request) (*http.
 	if err != nil {
 		return nil, err
 	}
-	regionParam, err := url.QueryUnescape(qp.Get("region"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := m.srv.WithBody(req.Context(), regionParam, body, nil)
+	respr, errRespr := m.srv.WithBody(req.Context(), qp.Get("region"), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -114,20 +110,12 @@ func (m *MixedParamsServerTransport) dispatchWithQuery(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("fake for method WithQuery not implemented")}
 	}
 	qp := req.URL.Query()
-	regionParam, err := url.QueryUnescape(qp.Get("region"))
-	if err != nil {
-		return nil, err
-	}
-	idParam, err := url.QueryUnescape(qp.Get("id"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := m.srv.WithQuery(req.Context(), regionParam, idParam, nil)
+	respr, errRespr := m.srv.WithQuery(req.Context(), qp.Get("region"), qp.Get("id"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

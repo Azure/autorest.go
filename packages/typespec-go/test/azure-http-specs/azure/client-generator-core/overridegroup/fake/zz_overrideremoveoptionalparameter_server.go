@@ -15,6 +15,7 @@ import (
 	"net/url"
 	"overridegroup"
 	"regexp"
+	"slices"
 )
 
 // OverrideRemoveOptionalParameterServer is a fake server for instances of the overridegroup.OverrideRemoveOptionalParameterClient type.
@@ -91,11 +92,7 @@ func (o *OverrideRemoveOptionalParameterServerTransport) dispatchRemoveOptional(
 	if err != nil {
 		return nil, err
 	}
-	param2Unescaped, err := url.QueryUnescape(qp.Get("param2"))
-	if err != nil {
-		return nil, err
-	}
-	param2Param := getOptional(param2Unescaped)
+	param2Param := getOptional(qp.Get("param2"))
 	var options *overridegroup.OverrideRemoveOptionalParameterClientRemoveOptionalOptions
 	if param2Param != nil {
 		options = &overridegroup.OverrideRemoveOptionalParameterClientRemoveOptionalOptions{
@@ -107,7 +104,7 @@ func (o *OverrideRemoveOptionalParameterServerTransport) dispatchRemoveOptional(
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 	"unversionedgroup"
 )
 
@@ -107,7 +108,7 @@ func (n *NotVersionedServerTransport) dispatchWithPathAPIVersion(req *http.Reque
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -122,16 +123,12 @@ func (n *NotVersionedServerTransport) dispatchWithQueryAPIVersion(req *http.Requ
 		return nil, &nonRetriableError{errors.New("fake for method WithQueryAPIVersion not implemented")}
 	}
 	qp := req.URL.Query()
-	apiVersionParam, err := url.QueryUnescape(qp.Get("api-version"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := n.srv.WithQueryAPIVersion(req.Context(), apiVersionParam, nil)
+	respr, errRespr := n.srv.WithQueryAPIVersion(req.Context(), qp.Get("api-version"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -150,7 +147,7 @@ func (n *NotVersionedServerTransport) dispatchWithoutAPIVersion(req *http.Reques
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

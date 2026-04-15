@@ -12,8 +12,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"net/http"
-	"net/url"
 	"pageablegroup"
+	"slices"
 )
 
 // PageableXMLPaginationServer is a fake server for instances of the pageablegroup.PageableXMLPaginationClient type.
@@ -94,11 +94,7 @@ func (p *PageableXMLPaginationServerTransport) dispatchNewListWithContinuationPa
 	newListWithContinuationPager := p.newListWithContinuationPager.get(req)
 	if newListWithContinuationPager == nil {
 		qp := req.URL.Query()
-		markerUnescaped, err := url.QueryUnescape(qp.Get("marker"))
-		if err != nil {
-			return nil, err
-		}
-		markerParam := getOptional(markerUnescaped)
+		markerParam := getOptional(qp.Get("marker"))
 		var options *pageablegroup.PageableXMLPaginationClientListWithContinuationOptions
 		if markerParam != nil {
 			options = &pageablegroup.PageableXMLPaginationClientListWithContinuationOptions{
@@ -113,7 +109,7 @@ func (p *PageableXMLPaginationServerTransport) dispatchNewListWithContinuationPa
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newListWithContinuationPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -140,7 +136,7 @@ func (p *PageableXMLPaginationServerTransport) dispatchNewListWithNextLinkPager(
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newListWithNextLinkPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

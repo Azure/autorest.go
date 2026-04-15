@@ -15,6 +15,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 )
 
 // PrivateLinksServer is a fake server for instances of the armmongocluster.PrivateLinksClient type.
@@ -111,7 +112,7 @@ func (p *PrivateLinksServerTransport) dispatchNewListByMongoClusterPager(req *ht
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newListByMongoClusterPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

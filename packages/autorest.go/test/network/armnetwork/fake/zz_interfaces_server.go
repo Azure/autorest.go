@@ -17,6 +17,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 )
 
 // InterfacesServer is a fake server for instances of the armnetwork.InterfacesClient type.
@@ -229,7 +230,7 @@ func (i *InterfacesServerTransport) dispatchBeginCreateOrUpdate(req *http.Reques
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusCreated}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusCreated}, resp.StatusCode) {
 		i.beginCreateOrUpdate.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", resp.StatusCode)}
 	}
@@ -273,7 +274,7 @@ func (i *InterfacesServerTransport) dispatchBeginDelete(req *http.Request) (*htt
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		i.beginDelete.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
@@ -303,11 +304,7 @@ func (i *InterfacesServerTransport) dispatchGet(req *http.Request) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	expandUnescaped, err := url.QueryUnescape(qp.Get("$expand"))
-	if err != nil {
-		return nil, err
-	}
-	expandParam := getOptional(expandUnescaped)
+	expandParam := getOptional(qp.Get("$expand"))
 	var options *armnetwork.InterfacesClientGetOptions
 	if expandParam != nil {
 		options = &armnetwork.InterfacesClientGetOptions{
@@ -319,7 +316,7 @@ func (i *InterfacesServerTransport) dispatchGet(req *http.Request) (*http.Respon
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Interface, req)
@@ -356,11 +353,7 @@ func (i *InterfacesServerTransport) dispatchGetCloudServiceNetworkInterface(req 
 	if err != nil {
 		return nil, err
 	}
-	expandUnescaped, err := url.QueryUnescape(qp.Get("$expand"))
-	if err != nil {
-		return nil, err
-	}
-	expandParam := getOptional(expandUnescaped)
+	expandParam := getOptional(qp.Get("$expand"))
 	var options *armnetwork.InterfacesClientGetCloudServiceNetworkInterfaceOptions
 	if expandParam != nil {
 		options = &armnetwork.InterfacesClientGetCloudServiceNetworkInterfaceOptions{
@@ -372,7 +365,7 @@ func (i *InterfacesServerTransport) dispatchGetCloudServiceNetworkInterface(req 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Interface, req)
@@ -415,7 +408,7 @@ func (i *InterfacesServerTransport) dispatchBeginGetEffectiveRouteTable(req *htt
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
 		i.beginGetEffectiveRouteTable.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
@@ -457,11 +450,7 @@ func (i *InterfacesServerTransport) dispatchGetVirtualMachineScaleSetIPConfigura
 	if err != nil {
 		return nil, err
 	}
-	expandUnescaped, err := url.QueryUnescape(qp.Get("$expand"))
-	if err != nil {
-		return nil, err
-	}
-	expandParam := getOptional(expandUnescaped)
+	expandParam := getOptional(qp.Get("$expand"))
 	var options *armnetwork.InterfacesClientGetVirtualMachineScaleSetIPConfigurationOptions
 	if expandParam != nil {
 		options = &armnetwork.InterfacesClientGetVirtualMachineScaleSetIPConfigurationOptions{
@@ -473,7 +462,7 @@ func (i *InterfacesServerTransport) dispatchGetVirtualMachineScaleSetIPConfigura
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).InterfaceIPConfiguration, req)
@@ -510,11 +499,7 @@ func (i *InterfacesServerTransport) dispatchGetVirtualMachineScaleSetNetworkInte
 	if err != nil {
 		return nil, err
 	}
-	expandUnescaped, err := url.QueryUnescape(qp.Get("$expand"))
-	if err != nil {
-		return nil, err
-	}
-	expandParam := getOptional(expandUnescaped)
+	expandParam := getOptional(qp.Get("$expand"))
 	var options *armnetwork.InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceOptions
 	if expandParam != nil {
 		options = &armnetwork.InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceOptions{
@@ -526,7 +511,7 @@ func (i *InterfacesServerTransport) dispatchGetVirtualMachineScaleSetNetworkInte
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Interface, req)
@@ -563,7 +548,7 @@ func (i *InterfacesServerTransport) dispatchNewListPager(req *http.Request) (*ht
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		i.newListPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -596,7 +581,7 @@ func (i *InterfacesServerTransport) dispatchNewListAllPager(req *http.Request) (
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		i.newListAllPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -637,7 +622,7 @@ func (i *InterfacesServerTransport) dispatchNewListCloudServiceNetworkInterfaces
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		i.newListCloudServiceNetworkInterfacesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -682,7 +667,7 @@ func (i *InterfacesServerTransport) dispatchNewListCloudServiceRoleInstanceNetwo
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		i.newListCloudServiceRoleInstanceNetworkInterfacesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -725,7 +710,7 @@ func (i *InterfacesServerTransport) dispatchBeginListEffectiveNetworkSecurityGro
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
 		i.beginListEffectiveNetworkSecurityGroups.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
@@ -765,11 +750,7 @@ func (i *InterfacesServerTransport) dispatchNewListVirtualMachineScaleSetIPConfi
 		if err != nil {
 			return nil, err
 		}
-		expandUnescaped, err := url.QueryUnescape(qp.Get("$expand"))
-		if err != nil {
-			return nil, err
-		}
-		expandParam := getOptional(expandUnescaped)
+		expandParam := getOptional(qp.Get("$expand"))
 		var options *armnetwork.InterfacesClientListVirtualMachineScaleSetIPConfigurationsOptions
 		if expandParam != nil {
 			options = &armnetwork.InterfacesClientListVirtualMachineScaleSetIPConfigurationsOptions{
@@ -787,7 +768,7 @@ func (i *InterfacesServerTransport) dispatchNewListVirtualMachineScaleSetIPConfi
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		i.newListVirtualMachineScaleSetIPConfigurationsPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -828,7 +809,7 @@ func (i *InterfacesServerTransport) dispatchNewListVirtualMachineScaleSetNetwork
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		i.newListVirtualMachineScaleSetNetworkInterfacesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -873,7 +854,7 @@ func (i *InterfacesServerTransport) dispatchNewListVirtualMachineScaleSetVMNetwo
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		i.newListVirtualMachineScaleSetVMNetworkInterfacesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -910,7 +891,7 @@ func (i *InterfacesServerTransport) dispatchUpdateTags(req *http.Request) (*http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Interface, req)

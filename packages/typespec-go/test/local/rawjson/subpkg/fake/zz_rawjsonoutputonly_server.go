@@ -15,6 +15,7 @@ import (
 	"io"
 	"net/http"
 	"rawjson/v2/subpkg"
+	"slices"
 )
 
 // RawJSONOutputOnlyServer is a fake server for instances of the subpkg.RawJSONOutputOnlyClient type.
@@ -85,7 +86,7 @@ func (r *RawJSONOutputOnlyServerTransport) dispatchGet(req *http.Request) (*http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{

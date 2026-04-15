@@ -13,6 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"hierarchygroup"
 	"net/http"
+	"slices"
 )
 
 // HierarchyBuildingAnimalOperationsServer is a fake server for instances of the hierarchygroup.HierarchyBuildingAnimalOperationsClient type.
@@ -97,7 +98,7 @@ func (h *HierarchyBuildingAnimalOperationsServerTransport) dispatchUpdateDogAsAn
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AnimalClassification, req)
@@ -124,7 +125,7 @@ func (h *HierarchyBuildingAnimalOperationsServerTransport) dispatchUpdatePetAsAn
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AnimalClassification, req)

@@ -13,6 +13,11 @@ type ClientBinaryResponseWithXMLContentTypeResponse struct {
 	ContentType *string
 }
 
+// ClientDoubleDecodeResponse contains the response from method Client.DoubleDecode.
+type ClientDoubleDecodeResponse struct {
+	// placeholder for future response values
+}
+
 // ClientForceRequiredBodyPatchResponse contains the response from method Client.ForceRequiredBodyPatch.
 type ClientForceRequiredBodyPatchResponse struct {
 	// placeholder for future response values

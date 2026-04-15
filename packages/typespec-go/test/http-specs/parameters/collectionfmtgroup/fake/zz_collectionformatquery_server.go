@@ -13,7 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 )
 
 // CollectionFormatQueryServer is a fake server for instances of the collectionfmtgroup.CollectionFormatQueryClient type.
@@ -98,16 +98,12 @@ func (c *CollectionFormatQueryServerTransport) dispatchCSV(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("fake for method CSV not implemented")}
 	}
 	qp := req.URL.Query()
-	colorsParam, err := url.QueryUnescape(qp.Get("colors"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := c.srv.CSV(req.Context(), splitHelper(colorsParam, ","), nil)
+	respr, errRespr := c.srv.CSV(req.Context(), splitHelper(qp.Get("colors"), ","), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -122,21 +118,12 @@ func (c *CollectionFormatQueryServerTransport) dispatchMulti(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("fake for method Multi not implemented")}
 	}
 	qp := req.URL.Query()
-	colorsEscaped := qp["colors"]
-	colorsParam := make([]string, len(colorsEscaped))
-	for i, v := range colorsEscaped {
-		u, unescapeErr := url.QueryUnescape(v)
-		if unescapeErr != nil {
-			return nil, unescapeErr
-		}
-		colorsParam[i] = u
-	}
-	respr, errRespr := c.srv.Multi(req.Context(), colorsParam, nil)
+	respr, errRespr := c.srv.Multi(req.Context(), qp["colors"], nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -151,16 +138,12 @@ func (c *CollectionFormatQueryServerTransport) dispatchPipes(req *http.Request) 
 		return nil, &nonRetriableError{errors.New("fake for method Pipes not implemented")}
 	}
 	qp := req.URL.Query()
-	colorsParam, err := url.QueryUnescape(qp.Get("colors"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := c.srv.Pipes(req.Context(), splitHelper(colorsParam, "|"), nil)
+	respr, errRespr := c.srv.Pipes(req.Context(), splitHelper(qp.Get("colors"), "|"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -175,16 +158,12 @@ func (c *CollectionFormatQueryServerTransport) dispatchSsv(req *http.Request) (*
 		return nil, &nonRetriableError{errors.New("fake for method Ssv not implemented")}
 	}
 	qp := req.URL.Query()
-	colorsParam, err := url.QueryUnescape(qp.Get("colors"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := c.srv.Ssv(req.Context(), splitHelper(colorsParam, " "), nil)
+	respr, errRespr := c.srv.Ssv(req.Context(), splitHelper(qp.Get("colors"), " "), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

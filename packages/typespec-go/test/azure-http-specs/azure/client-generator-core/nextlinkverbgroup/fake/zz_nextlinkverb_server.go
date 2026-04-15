@@ -13,6 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"net/http"
 	"nextlinkverbgroup"
+	"slices"
 )
 
 // NextLinkVerbServer is a fake server for instances of the nextlinkverbgroup.NextLinkVerbClient type.
@@ -95,7 +96,7 @@ func (n *NextLinkVerbServerTransport) dispatchNewListItemsPager(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		n.newListItemsPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

@@ -13,8 +13,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
 	"regexp"
+	"slices"
 )
 
 // IndividuallyParentIndividuallyParentNestedWithPathServer is a fake server for instances of the clientinitindividuallyparentgroup.IndividuallyParentIndividuallyParentNestedWithPathClient type.
@@ -103,7 +103,7 @@ func (i *IndividuallyParentIndividuallyParentNestedWithPathServerTransport) disp
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -128,7 +128,7 @@ func (i *IndividuallyParentIndividuallyParentNestedWithPathServerTransport) disp
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).BlobProperties, req)
@@ -149,11 +149,7 @@ func (i *IndividuallyParentIndividuallyParentNestedWithPathServerTransport) disp
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	formatUnescaped, err := url.QueryUnescape(qp.Get("format"))
-	if err != nil {
-		return nil, err
-	}
-	formatParam := getOptional(formatUnescaped)
+	formatParam := getOptional(qp.Get("format"))
 	var options *clientinitindividuallyparentgroup.IndividuallyParentIndividuallyParentNestedWithPathClientWithQueryOptions
 	if formatParam != nil {
 		options = &clientinitindividuallyparentgroup.IndividuallyParentIndividuallyParentNestedWithPathClientWithQueryOptions{
@@ -165,7 +161,7 @@ func (i *IndividuallyParentIndividuallyParentNestedWithPathServerTransport) disp
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

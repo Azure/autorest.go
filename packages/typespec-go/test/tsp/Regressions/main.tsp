@@ -124,6 +124,16 @@ model QueueItem {
 @route("/xml-get-queue")
 op getQueue(): ContentXml & QueueItem;
 
+/**
+ * ensure that parameter names that start with invalid Go identifiers are properly cased
+ */
 @post
 @route("/fixed-param-name")
 op withExpandParam(@query("$expand") $expand: string, @query("$top") $top?: int32): void;
+
+/**
+ * ensure that path and query parameters aren't double-decoded by the fake server
+ */
+@post
+@route("/double-decode/{path}")
+op doubleDecode(@path path: string, @query query: string): void;
