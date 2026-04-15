@@ -14,9 +14,7 @@ import (
 
 // MarshalXML implements the xml.Marshaller interface for type DequeuedMessage.
 func (d DequeuedMessage) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "DequeuedMessage" {
-		start.Name.Local = "QueueMessage"
-	}
+	start.Name.Local = "QueueMessage"
 	type alias DequeuedMessage
 	aux := &struct {
 		*alias
@@ -90,9 +88,7 @@ func (i *InnerSpreadParam) UnmarshalJSON(data []byte) error {
 
 // MarshalXML implements the xml.Marshaller interface for type QueueItem.
 func (q QueueItem) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "QueueItem" {
-		start.Name.Local = "Queue"
-	}
+	start.Name.Local = "Queue"
 	type alias QueueItem
 	aux := &struct {
 		*alias

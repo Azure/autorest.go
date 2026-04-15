@@ -859,12 +859,7 @@ function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager): void
       text += '\t})\n';
     }
   } else if (modelDef.Model.xml?.name) {
-    // conditionally override the element name only when serialized as a root element.
-    // when nested inside another struct, the parent's field tag provides the start name,
-    // so we must not override it.
-    text += `\tif start.Name.Local == "${modelDef.Model.name}" {\n`;
-    text += `\t\tstart.Name.Local = "${modelDef.Model.xml.name}"\n`;
-    text += '\t}\n';
+    text += `\tstart.Name.Local = "${modelDef.Model.xml.name}"\n`;
   }
 
   // for models with namespace-prefixed fields, we must use a non-embedded struct

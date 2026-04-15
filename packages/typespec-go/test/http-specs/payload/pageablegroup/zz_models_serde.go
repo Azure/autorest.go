@@ -590,9 +590,7 @@ func (r *RequestQueryResponseHeaderResponse) UnmarshalJSON(data []byte) error {
 
 // MarshalXML implements the xml.Marshaller interface for type XMLPet.
 func (x XMLPet) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "XMLPet" {
-		start.Name.Local = "Pet"
-	}
+	start.Name.Local = "Pet"
 	type alias XMLPet
 	aux := &struct {
 		*alias
@@ -604,9 +602,7 @@ func (x XMLPet) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 
 // MarshalXML implements the xml.Marshaller interface for type XMLPetListResult.
 func (x XMLPetListResult) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "XMLPetListResult" {
-		start.Name.Local = "PetListResult"
-	}
+	start.Name.Local = "PetListResult"
 	type alias XMLPetListResult
 	aux := &struct {
 		*alias
@@ -622,9 +618,7 @@ func (x XMLPetListResult) MarshalXML(enc *xml.Encoder, start xml.StartElement) e
 
 // MarshalXML implements the xml.Marshaller interface for type XMLPetListResultWithNextLink.
 func (x XMLPetListResultWithNextLink) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "XMLPetListResultWithNextLink" {
-		start.Name.Local = "PetListResult"
-	}
+	start.Name.Local = "PetListResult"
 	type alias XMLPetListResultWithNextLink
 	aux := &struct {
 		*alias

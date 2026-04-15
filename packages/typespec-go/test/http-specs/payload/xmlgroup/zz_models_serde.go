@@ -16,9 +16,7 @@ import (
 
 // MarshalXML implements the xml.Marshaller interface for type Author.
 func (a Author) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "Author" {
-		start.Name.Local = "XmlAuthor"
-	}
+	start.Name.Local = "XmlAuthor"
 	type alias Author
 	aux := &struct {
 		*alias
@@ -30,9 +28,7 @@ func (a Author) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 
 // MarshalXML implements the xml.Marshaller interface for type Book.
 func (b Book) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "Book" {
-		start.Name.Local = "XmlBook"
-	}
+	start.Name.Local = "XmlBook"
 	type alias Book
 	aux := &struct {
 		*alias
@@ -140,9 +136,7 @@ func (m ModelWithEmptyArray) MarshalXML(enc *xml.Encoder, start xml.StartElement
 
 // MarshalXML implements the xml.Marshaller interface for type ModelWithEncodedNames.
 func (m ModelWithEncodedNames) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "ModelWithEncodedNames" {
-		start.Name.Local = "ModelWithEncodedNamesSrc"
-	}
+	start.Name.Local = "ModelWithEncodedNamesSrc"
 	type alias ModelWithEncodedNames
 	aux := &struct {
 		*alias
@@ -216,9 +210,7 @@ func (m ModelWithRenamedArrays) MarshalXML(enc *xml.Encoder, start xml.StartElem
 
 // MarshalXML implements the xml.Marshaller interface for type ModelWithRenamedFields.
 func (m ModelWithRenamedFields) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "ModelWithRenamedFields" {
-		start.Name.Local = "ModelWithRenamedFieldsSrc"
-	}
+	start.Name.Local = "ModelWithRenamedFieldsSrc"
 	type alias ModelWithRenamedFields
 	aux := &struct {
 		*alias

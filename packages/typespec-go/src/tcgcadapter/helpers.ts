@@ -57,14 +57,25 @@ export function adaptXMLInfo(src: XMLSourceInfo): go.XMLInfo | undefined {
       } else {
         xmlInfo.wraps = src.goTypeName;
       }
+      if (src.xml.itemsNs) {
+        xmlInfo.namespace = src.xml.itemsNs.namespace;
+        xmlInfo.prefix = src.xml.itemsNs.prefix;
+      }
       returnXMLInfo = true;
-    } else if (elementXMLInfo?.name) {
-      xmlInfo.name = elementXMLInfo.name;
-      returnXMLInfo = true;
-    } else if (src.orTypeName !== src.goTypeName) {
-      // we can land here if the Go-specific type name was renamed to remove stuttering
-      xmlInfo.name = src.orTypeName;
-      returnXMLInfo = true;
+    } else {
+      if (elementXMLInfo?.name) {
+        xmlInfo.name = elementXMLInfo.name;
+        returnXMLInfo = true;
+      } else if (src.orTypeName !== src.goTypeName) {
+        // we can land here if the Go-specific type name was renamed to remove stuttering
+        xmlInfo.name = src.orTypeName;
+        returnXMLInfo = true;
+      }
+      if (elementXMLInfo?.namespace && elementXMLInfo?.prefix) {
+        xmlInfo.namespace = elementXMLInfo.namespace;
+        xmlInfo.prefix = elementXMLInfo.prefix;
+        returnXMLInfo = true;
+      }
     }
   } else if (src.xml?.unwrapped && src.type.kind === 'string') {
     // an unwrapped string means it's text

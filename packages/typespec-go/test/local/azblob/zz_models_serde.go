@@ -66,9 +66,7 @@ func (a ArrowConfiguration) MarshalXML(enc *xml.Encoder, start xml.StartElement)
 
 // MarshalXML implements the xml.Marshaller interface for type ArrowField.
 func (a ArrowField) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "ArrowField" {
-		start.Name.Local = "Field"
-	}
+	start.Name.Local = "Field"
 	type alias ArrowField
 	aux := &struct {
 		*alias
@@ -135,9 +133,7 @@ func (b BlockList) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 
 // MarshalXML implements the xml.Marshaller interface for type BlockLookupList.
 func (b BlockLookupList) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "BlockLookupList" {
-		start.Name.Local = "BlockList"
-	}
+	start.Name.Local = "BlockList"
 	type alias BlockLookupList
 	aux := &struct {
 		*alias
@@ -161,9 +157,7 @@ func (b BlockLookupList) MarshalXML(enc *xml.Encoder, start xml.StartElement) er
 
 // MarshalXML implements the xml.Marshaller interface for type CORSRule.
 func (c CORSRule) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "CORSRule" {
-		start.Name.Local = "CorsRule"
-	}
+	start.Name.Local = "CorsRule"
 	type alias CORSRule
 	aux := &struct {
 		*alias
@@ -175,9 +169,7 @@ func (c CORSRule) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 
 // MarshalXML implements the xml.Marshaller interface for type ContainerItem.
 func (c ContainerItem) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "ContainerItem" {
-		start.Name.Local = "Container"
-	}
+	start.Name.Local = "Container"
 	type alias ContainerItem
 	aux := &struct {
 		*alias
@@ -244,9 +236,7 @@ func (c *ContainerProperties) UnmarshalXML(dec *xml.Decoder, start xml.StartElem
 
 // MarshalXML implements the xml.Marshaller interface for type FilterBlobItem.
 func (f FilterBlobItem) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "FilterBlobItem" {
-		start.Name.Local = "Blob"
-	}
+	start.Name.Local = "Blob"
 	type alias FilterBlobItem
 	aux := &struct {
 		*alias
@@ -258,9 +248,7 @@ func (f FilterBlobItem) MarshalXML(enc *xml.Encoder, start xml.StartElement) err
 
 // MarshalXML implements the xml.Marshaller interface for type FilterBlobSegment.
 func (f FilterBlobSegment) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "FilterBlobSegment" {
-		start.Name.Local = "EnumerationResults"
-	}
+	start.Name.Local = "EnumerationResults"
 	type alias FilterBlobSegment
 	aux := &struct {
 		*alias
@@ -276,9 +264,7 @@ func (f FilterBlobSegment) MarshalXML(enc *xml.Encoder, start xml.StartElement) 
 
 // MarshalXML implements the xml.Marshaller interface for type FlatListSegment.
 func (f FlatListSegment) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "FlatListSegment" {
-		start.Name.Local = "BlobFlatListSegment"
-	}
+	start.Name.Local = "BlobFlatListSegment"
 	type alias FlatListSegment
 	aux := &struct {
 		*alias
@@ -325,9 +311,7 @@ func (g *GeoReplication) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) 
 
 // MarshalXML implements the xml.Marshaller interface for type HierarchyListSegment.
 func (h HierarchyListSegment) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "HierarchyListSegment" {
-		start.Name.Local = "BlobHierarchyListSegment"
-	}
+	start.Name.Local = "BlobHierarchyListSegment"
 	type alias HierarchyListSegment
 	aux := &struct {
 		*alias
@@ -347,9 +331,7 @@ func (h HierarchyListSegment) MarshalXML(enc *xml.Encoder, start xml.StartElemen
 
 // MarshalXML implements the xml.Marshaller interface for type Item.
 func (i Item) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "Item" {
-		start.Name.Local = "Blob"
-	}
+	start.Name.Local = "Blob"
 	type alias Item
 	aux := &struct {
 		*alias
@@ -383,9 +365,7 @@ func (i *Item) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
 
 // MarshalXML implements the xml.Marshaller interface for type JSONTextConfiguration.
 func (j JSONTextConfiguration) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "JSONTextConfiguration" {
-		start.Name.Local = "JsonTextConfiguration"
-	}
+	start.Name.Local = "JsonTextConfiguration"
 	type alias JSONTextConfiguration
 	aux := &struct {
 		*alias
@@ -397,9 +377,7 @@ func (j JSONTextConfiguration) MarshalXML(enc *xml.Encoder, start xml.StartEleme
 
 // MarshalXML implements the xml.Marshaller interface for type ListBlobsFlatSegmentResponse.
 func (l ListBlobsFlatSegmentResponse) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "ListBlobsFlatSegmentResponse" {
-		start.Name.Local = "EnumerationResults"
-	}
+	start.Name.Local = "EnumerationResults"
 	type alias ListBlobsFlatSegmentResponse
 	aux := &struct {
 		*alias
@@ -411,9 +389,7 @@ func (l ListBlobsFlatSegmentResponse) MarshalXML(enc *xml.Encoder, start xml.Sta
 
 // MarshalXML implements the xml.Marshaller interface for type ListBlobsHierarchySegmentResponse.
 func (l ListBlobsHierarchySegmentResponse) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "ListBlobsHierarchySegmentResponse" {
-		start.Name.Local = "EnumerationResults"
-	}
+	start.Name.Local = "EnumerationResults"
 	type alias ListBlobsHierarchySegmentResponse
 	aux := &struct {
 		*alias
@@ -425,9 +401,7 @@ func (l ListBlobsHierarchySegmentResponse) MarshalXML(enc *xml.Encoder, start xm
 
 // MarshalXML implements the xml.Marshaller interface for type ListContainersSegmentResponse.
 func (l ListContainersSegmentResponse) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "ListContainersSegmentResponse" {
-		start.Name.Local = "EnumerationResults"
-	}
+	start.Name.Local = "EnumerationResults"
 	type alias ListContainersSegmentResponse
 	aux := &struct {
 		*alias
@@ -462,9 +436,7 @@ func (p PageList) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 
 // MarshalXML implements the xml.Marshaller interface for type Prefix.
 func (p Prefix) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
-	if start.Name.Local == "Prefix" {
-		start.Name.Local = "BlobPrefix"
-	}
+	start.Name.Local = "BlobPrefix"
 	type alias Prefix
 	aux := &struct {
 		*alias
