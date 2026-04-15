@@ -575,14 +575,6 @@ export class TypeAdapter {
         type: modelType,
         xml: model.serializationOptions.xml,
       });
-      // set namespace from serialization options if available
-      if (model.serializationOptions.xml?.ns) {
-        if (!modelType.xml) {
-          modelType.xml = new go.XMLInfo();
-        }
-        modelType.xml.namespace = model.serializationOptions.xml.ns.namespace;
-        modelType.xml.prefix = model.serializationOptions.xml.ns.prefix;
-      }
     }
 
     modelType.docs.summary = model.summary;
@@ -663,15 +655,6 @@ export class TypeAdapter {
       type: type,
       xml: prop.serializationOptions.xml,
     });
-
-    // set field namespace from serialization options if available
-    if (prop.serializationOptions.xml?.ns) {
-      if (!field.xml) {
-        field.xml = new go.XMLInfo();
-      }
-      field.xml.namespace = prop.serializationOptions.xml.ns.namespace;
-      field.xml.prefix = prop.serializationOptions.xml.ns.prefix;
-    }
 
     return field;
   }

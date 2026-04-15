@@ -75,6 +75,12 @@ export function adaptXMLInfo(src: XMLSourceInfo): go.XMLInfo | undefined {
     returnXMLInfo = true;
   }
 
+  if (src.xml?.ns) {
+    xmlInfo.namespace = src.xml.ns.namespace;
+    xmlInfo.prefix = src.xml.ns.prefix;
+    returnXMLInfo = true;
+  }
+
   return returnXMLInfo ? xmlInfo : undefined;
 }
 
