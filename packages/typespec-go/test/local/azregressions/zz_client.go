@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strconv"
 )
 
 // Client contains the methods for the service.
@@ -487,5 +488,45 @@ func (client *Client) spreadWithModelCreateRequest(ctx context.Context, name str
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
+	return req, nil
+}
+
+// WithExpandParam -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientWithExpandParamOptions contains the optional parameters for the Client.WithExpandParam method.
+func (client *Client) WithExpandParam(ctx context.Context, expand string, options *ClientWithExpandParamOptions) (ClientWithExpandParamResponse, error) {
+	var err error
+	const operationName = "Client.WithExpandParam"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.withExpandParamCreateRequest(ctx, expand, options)
+	if err != nil {
+		return ClientWithExpandParamResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientWithExpandParamResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientWithExpandParamResponse{}, err
+	}
+	return ClientWithExpandParamResponse{}, nil
+}
+
+// withExpandParamCreateRequest creates the WithExpandParam request.
+func (client *Client) withExpandParamCreateRequest(ctx context.Context, expand string, options *ClientWithExpandParamOptions) (*policy.Request, error) {
+	urlPath := "/fixed-param-name"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("$expand", expand)
+	if options != nil && options.Top != nil {
+		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
+	}
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
