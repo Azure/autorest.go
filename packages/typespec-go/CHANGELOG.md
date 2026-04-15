@@ -8,7 +8,7 @@
 * Fixed incorrect pointer usage for model results in generated example response bodies.
 * Fixed some incorrect un/marshaling for XML payloads.
 * Fixed a race condition in fake servers.
-* Fixed incorrect parameter name when it starts with a invalid identifier character.
+* Fixed incorrect parameter name when it starts with an invalid identifier character.
 
 ## 0.10.6 (2026-04-08)
 
