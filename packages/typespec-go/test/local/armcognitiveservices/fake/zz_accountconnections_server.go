@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 	"strconv"
 )
 
@@ -137,7 +138,7 @@ func (a *AccountConnectionsServerTransport) dispatchCreate(req *http.Request) (*
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ConnectionPropertiesV2BasicResource, req)
@@ -174,7 +175,7 @@ func (a *AccountConnectionsServerTransport) dispatchDelete(req *http.Request) (*
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK, http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -211,7 +212,7 @@ func (a *AccountConnectionsServerTransport) dispatchGet(req *http.Request) (*htt
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ConnectionPropertiesV2BasicResource, req)
@@ -242,21 +243,9 @@ func (a *AccountConnectionsServerTransport) dispatchNewListPager(req *http.Reque
 		if err != nil {
 			return nil, err
 		}
-		targetUnescaped, err := url.QueryUnescape(qp.Get("target"))
-		if err != nil {
-			return nil, err
-		}
-		targetParam := getOptional(targetUnescaped)
-		categoryUnescaped, err := url.QueryUnescape(qp.Get("category"))
-		if err != nil {
-			return nil, err
-		}
-		categoryParam := getOptional(categoryUnescaped)
-		includeAllUnescaped, err := url.QueryUnescape(qp.Get("includeAll"))
-		if err != nil {
-			return nil, err
-		}
-		includeAllParam, err := parseOptional(includeAllUnescaped, strconv.ParseBool)
+		targetParam := getOptional(qp.Get("target"))
+		categoryParam := getOptional(qp.Get("category"))
+		includeAllParam, err := parseOptional(qp.Get("includeAll"), strconv.ParseBool)
 		if err != nil {
 			return nil, err
 		}
@@ -279,7 +268,7 @@ func (a *AccountConnectionsServerTransport) dispatchNewListPager(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		a.newListPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -320,7 +309,7 @@ func (a *AccountConnectionsServerTransport) dispatchUpdate(req *http.Request) (*
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ConnectionPropertiesV2BasicResource, req)

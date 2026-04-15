@@ -13,7 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 )
 
 // MoveMethodParameterToBlobOperationsServer is a fake server for instances of the coreclientlocationmovemethodparametertoclientgroup.MoveMethodParameterToBlobOperationsClient type.
@@ -80,20 +80,12 @@ func (m *MoveMethodParameterToBlobOperationsServerTransport) dispatchGetBlob(req
 		return nil, &nonRetriableError{errors.New("fake for method GetBlob not implemented")}
 	}
 	qp := req.URL.Query()
-	containerParamParam, err := url.QueryUnescape(qp.Get("container"))
-	if err != nil {
-		return nil, err
-	}
-	blobParam, err := url.QueryUnescape(qp.Get("blob"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := m.srv.GetBlob(req.Context(), containerParamParam, blobParam, nil)
+	respr, errRespr := m.srv.GetBlob(req.Context(), qp.Get("container"), qp.Get("blob"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Blob, req)

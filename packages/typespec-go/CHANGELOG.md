@@ -9,6 +9,7 @@
 * Fixed some incorrect un/marshaling for XML payloads.
 * Fixed a race condition in fake servers.
 * Fixed incorrect parameter name when it starts with an invalid identifier character.
+* Fake servers no longer double-decode query parameters.
 
 ## 0.10.6 (2026-04-08)
 
@@ -16,6 +17,7 @@
 
 * Use `datetime` helpers when formatting `time.Time` parameters.
 * Updated to the latest tsp toolset.
+* Minor cleanup of generated code for fakes.
 
 ## 0.10.5 (2026-04-01)
 

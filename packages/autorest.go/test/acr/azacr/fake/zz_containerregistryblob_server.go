@@ -17,6 +17,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 	"strconv"
 )
 
@@ -158,7 +159,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCancelUpload(req *http.Re
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -191,7 +192,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCheckBlobExists(req *http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -230,7 +231,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCheckChunkExists(req *htt
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -257,10 +258,6 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCompleteUpload(req *http.
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	digestParam, err := url.QueryUnescape(qp.Get("digest"))
-	if err != nil {
-		return nil, err
-	}
 	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("nextBlobUuidLink")])
 	if err != nil {
 		return nil, err
@@ -271,12 +268,12 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCompleteUpload(req *http.
 			Value: req.Body.(io.ReadSeekCloser),
 		}
 	}
-	respr, errRespr := c.srv.CompleteUpload(req.Context(), digestParam, locationParam, options)
+	respr, errRespr := c.srv.CompleteUpload(req.Context(), qp.Get("digest"), locationParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusCreated", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -318,7 +315,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchDeleteBlob(req *http.Requ
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
@@ -357,7 +354,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetBlob(req *http.Request
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
@@ -399,7 +396,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetChunk(req *http.Reques
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusPartialContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusPartialContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusPartialContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
@@ -437,7 +434,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetUploadStatus(req *http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -468,20 +465,12 @@ func (c *ContainerRegistryBlobServerTransport) dispatchMountBlob(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	fromParam, err := url.QueryUnescape(qp.Get("from"))
-	if err != nil {
-		return nil, err
-	}
-	mountParam, err := url.QueryUnescape(qp.Get("mount"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := c.srv.MountBlob(req.Context(), nameParam, fromParam, mountParam, nil)
+	respr, errRespr := c.srv.MountBlob(req.Context(), nameParam, qp.Get("from"), qp.Get("mount"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusCreated}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusCreated", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -519,7 +508,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchStartUpload(req *http.Req
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -557,7 +546,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchUploadChunk(req *http.Req
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusAccepted}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

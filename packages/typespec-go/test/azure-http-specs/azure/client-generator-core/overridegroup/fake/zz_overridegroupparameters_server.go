@@ -12,8 +12,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
 	"overridegroup"
+	"slices"
 )
 
 // OverrideGroupParametersServer is a fake server for instances of the overridegroup.OverrideGroupParametersClient type.
@@ -80,24 +80,16 @@ func (o *OverrideGroupParametersServerTransport) dispatchGroup(req *http.Request
 		return nil, &nonRetriableError{errors.New("fake for method Group not implemented")}
 	}
 	qp := req.URL.Query()
-	param1Param, err := url.QueryUnescape(qp.Get("param1"))
-	if err != nil {
-		return nil, err
-	}
-	param2Param, err := url.QueryUnescape(qp.Get("param2"))
-	if err != nil {
-		return nil, err
-	}
 	options := overridegroup.GroupParametersOptions{
-		Param1: param1Param,
-		Param2: param2Param,
+		Param1: qp.Get("param1"),
+		Param2: qp.Get("param2"),
 	}
 	respr, errRespr := o.srv.Group(req.Context(), options, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

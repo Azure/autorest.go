@@ -13,8 +13,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"net/http"
-	"net/url"
 	"regexp"
+	"slices"
 )
 
 // ModelCapacitiesServer is a fake server for instances of the armcognitiveservices.ModelCapacitiesClient type.
@@ -93,19 +93,7 @@ func (m *ModelCapacitiesServerTransport) dispatchNewListPager(req *http.Request)
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		modelFormatParam, err := url.QueryUnescape(qp.Get("modelFormat"))
-		if err != nil {
-			return nil, err
-		}
-		modelNameParam, err := url.QueryUnescape(qp.Get("modelName"))
-		if err != nil {
-			return nil, err
-		}
-		modelVersionParam, err := url.QueryUnescape(qp.Get("modelVersion"))
-		if err != nil {
-			return nil, err
-		}
-		resp := m.srv.NewListPager(modelFormatParam, modelNameParam, modelVersionParam, nil)
+		resp := m.srv.NewListPager(qp.Get("modelFormat"), qp.Get("modelName"), qp.Get("modelVersion"), nil)
 		newListPager = &resp
 		m.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armcognitiveservices.ModelCapacitiesClientListResponse, createLink func() string) {
@@ -116,7 +104,7 @@ func (m *ModelCapacitiesServerTransport) dispatchNewListPager(req *http.Request)
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		m.newListPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

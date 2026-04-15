@@ -13,7 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 )
 
 // AccessPublicOperationServer is a fake server for instances of the accessgroup.AccessPublicOperationClient type.
@@ -86,16 +86,12 @@ func (a *AccessPublicOperationServerTransport) dispatchNoDecoratorInPublic(req *
 		return nil, &nonRetriableError{errors.New("fake for method NoDecoratorInPublic not implemented")}
 	}
 	qp := req.URL.Query()
-	nameParam, err := url.QueryUnescape(qp.Get("name"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := a.srv.NoDecoratorInPublic(req.Context(), nameParam, nil)
+	respr, errRespr := a.srv.NoDecoratorInPublic(req.Context(), qp.Get("name"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).NoDecoratorModelInPublic, req)
@@ -110,16 +106,12 @@ func (a *AccessPublicOperationServerTransport) dispatchPublicDecoratorInPublic(r
 		return nil, &nonRetriableError{errors.New("fake for method PublicDecoratorInPublic not implemented")}
 	}
 	qp := req.URL.Query()
-	nameParam, err := url.QueryUnescape(qp.Get("name"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := a.srv.PublicDecoratorInPublic(req.Context(), nameParam, nil)
+	respr, errRespr := a.srv.PublicDecoratorInPublic(req.Context(), qp.Get("name"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).PublicDecoratorModelInPublic, req)

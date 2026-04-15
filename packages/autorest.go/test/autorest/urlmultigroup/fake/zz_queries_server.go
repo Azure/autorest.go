@@ -14,7 +14,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 )
 
 // QueriesServer is a fake server for instances of the urlmultigroup.QueriesClient type.
@@ -93,19 +93,10 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiEmpty(req *http.Request
 		return nil, &nonRetriableError{errors.New("fake for method ArrayStringMultiEmpty not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryEscaped := qp["arrayQuery"]
-	arrayQueryParam := make([]string, len(arrayQueryEscaped))
-	for i, v := range arrayQueryEscaped {
-		u, unescapeErr := url.QueryUnescape(v)
-		if unescapeErr != nil {
-			return nil, unescapeErr
-		}
-		arrayQueryParam[i] = u
-	}
 	var options *urlmultigroup.QueriesClientArrayStringMultiEmptyOptions
-	if len(arrayQueryParam) > 0 {
+	if len(qp["arrayQuery"]) > 0 {
 		options = &urlmultigroup.QueriesClientArrayStringMultiEmptyOptions{
-			ArrayQuery: arrayQueryParam,
+			ArrayQuery: qp["arrayQuery"],
 		}
 	}
 	respr, errRespr := q.srv.ArrayStringMultiEmpty(req.Context(), options)
@@ -113,7 +104,7 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiEmpty(req *http.Request
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -128,19 +119,10 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiNull(req *http.Request)
 		return nil, &nonRetriableError{errors.New("fake for method ArrayStringMultiNull not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryEscaped := qp["arrayQuery"]
-	arrayQueryParam := make([]string, len(arrayQueryEscaped))
-	for i, v := range arrayQueryEscaped {
-		u, unescapeErr := url.QueryUnescape(v)
-		if unescapeErr != nil {
-			return nil, unescapeErr
-		}
-		arrayQueryParam[i] = u
-	}
 	var options *urlmultigroup.QueriesClientArrayStringMultiNullOptions
-	if len(arrayQueryParam) > 0 {
+	if len(qp["arrayQuery"]) > 0 {
 		options = &urlmultigroup.QueriesClientArrayStringMultiNullOptions{
-			ArrayQuery: arrayQueryParam,
+			ArrayQuery: qp["arrayQuery"],
 		}
 	}
 	respr, errRespr := q.srv.ArrayStringMultiNull(req.Context(), options)
@@ -148,7 +130,7 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiNull(req *http.Request)
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -163,19 +145,10 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiValid(req *http.Request
 		return nil, &nonRetriableError{errors.New("fake for method ArrayStringMultiValid not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryEscaped := qp["arrayQuery"]
-	arrayQueryParam := make([]string, len(arrayQueryEscaped))
-	for i, v := range arrayQueryEscaped {
-		u, unescapeErr := url.QueryUnescape(v)
-		if unescapeErr != nil {
-			return nil, unescapeErr
-		}
-		arrayQueryParam[i] = u
-	}
 	var options *urlmultigroup.QueriesClientArrayStringMultiValidOptions
-	if len(arrayQueryParam) > 0 {
+	if len(qp["arrayQuery"]) > 0 {
 		options = &urlmultigroup.QueriesClientArrayStringMultiValidOptions{
-			ArrayQuery: arrayQueryParam,
+			ArrayQuery: qp["arrayQuery"],
 		}
 	}
 	respr, errRespr := q.srv.ArrayStringMultiValid(req.Context(), options)
@@ -183,7 +156,7 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiValid(req *http.Request
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

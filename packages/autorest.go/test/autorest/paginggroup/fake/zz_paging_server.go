@@ -17,6 +17,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 	"strconv"
 )
 
@@ -276,7 +277,7 @@ func (p *PagingServerTransport) dispatchNewAppendAPIVersionPager(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newAppendAPIVersionPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -293,11 +294,7 @@ func (p *PagingServerTransport) dispatchNewDuplicateParamsPager(req *http.Reques
 	newDuplicateParamsPager := p.newDuplicateParamsPager.get(req)
 	if newDuplicateParamsPager == nil {
 		qp := req.URL.Query()
-		filterUnescaped, err := url.QueryUnescape(qp.Get("$filter"))
-		if err != nil {
-			return nil, err
-		}
-		filterParam := getOptional(filterUnescaped)
+		filterParam := getOptional(qp.Get("$filter"))
 		var options *paginggroup.PagingClientDuplicateParamsOptions
 		if filterParam != nil {
 			options = &paginggroup.PagingClientDuplicateParamsOptions{
@@ -315,7 +312,7 @@ func (p *PagingServerTransport) dispatchNewDuplicateParamsPager(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newDuplicateParamsPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -342,7 +339,7 @@ func (p *PagingServerTransport) dispatchNewFirstResponseEmptyPager(req *http.Req
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newFirstResponseEmptyPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -369,7 +366,7 @@ func (p *PagingServerTransport) dispatchNewGetEmptyNextLinkNamePagesPager(req *h
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetEmptyNextLinkNamePagesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -425,7 +422,7 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesPager(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetMultiplePagesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -452,7 +449,7 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFailurePager(req *htt
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetMultiplePagesFailurePager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -479,7 +476,7 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFailureURIPager(req *
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetMultiplePagesFailureURIPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -502,15 +499,11 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFragmentNextLinkPager
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		apiVersionParam, err := url.QueryUnescape(qp.Get("api_version"))
-		if err != nil {
-			return nil, err
-		}
 		tenantParam, err := url.PathUnescape(matches[regex.SubexpIndex("tenant")])
 		if err != nil {
 			return nil, err
 		}
-		resp := p.srv.NewGetMultiplePagesFragmentNextLinkPager(apiVersionParam, tenantParam, nil)
+		resp := p.srv.NewGetMultiplePagesFragmentNextLinkPager(qp.Get("api_version"), tenantParam, nil)
 		newGetMultiplePagesFragmentNextLinkPager = &resp
 		p.newGetMultiplePagesFragmentNextLinkPager.add(req, newGetMultiplePagesFragmentNextLinkPager)
 		server.PagerResponderInjectNextLinks(newGetMultiplePagesFragmentNextLinkPager, req, func(page *paginggroup.PagingClientGetMultiplePagesFragmentNextLinkResponse, createLink func() string) {
@@ -521,7 +514,7 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFragmentNextLinkPager
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetMultiplePagesFragmentNextLinkPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -544,16 +537,12 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFragmentWithGroupingN
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		aPIVersionParam, err := url.QueryUnescape(qp.Get("api_version"))
-		if err != nil {
-			return nil, err
-		}
 		tenantParam, err := url.PathUnescape(matches[regex.SubexpIndex("tenant")])
 		if err != nil {
 			return nil, err
 		}
 		customParameterGroup := paginggroup.CustomParameterGroup{
-			APIVersion: aPIVersionParam,
+			APIVersion: qp.Get("api_version"),
 			Tenant:     tenantParam,
 		}
 		resp := p.srv.NewGetMultiplePagesFragmentWithGroupingNextLinkPager(customParameterGroup, nil)
@@ -567,7 +556,7 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFragmentWithGroupingN
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetMultiplePagesFragmentWithGroupingNextLinkPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -625,7 +614,7 @@ func (p *PagingServerTransport) dispatchBeginGetMultiplePagesLRO(req *http.Reque
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
 		p.beginGetMultiplePagesLRO.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
@@ -653,7 +642,7 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesRetryFirstPager(req *
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetMultiplePagesRetryFirstPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -680,7 +669,7 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesRetrySecondPager(req 
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetMultiplePagesRetrySecondPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -754,7 +743,7 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesWithOffsetPager(req *
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetMultiplePagesWithOffsetPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -781,7 +770,7 @@ func (p *PagingServerTransport) dispatchNewGetNoItemNamePagesPager(req *http.Req
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetNoItemNamePagesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -805,7 +794,7 @@ func (p *PagingServerTransport) dispatchNewGetNullNextLinkNamePagesPager(req *ht
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetNullNextLinkNamePagesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -861,7 +850,7 @@ func (p *PagingServerTransport) dispatchNewGetODataMultiplePagesPager(req *http.
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetODataMultiplePagesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -888,7 +877,7 @@ func (p *PagingServerTransport) dispatchNewGetPagingModelWithItemNameWithXMSClie
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetPagingModelWithItemNameWithXMSClientNamePager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -915,7 +904,7 @@ func (p *PagingServerTransport) dispatchNewGetSinglePagesPager(req *http.Request
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetSinglePagesPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -942,7 +931,7 @@ func (p *PagingServerTransport) dispatchNewGetSinglePagesFailurePager(req *http.
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetSinglePagesFailurePager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -973,7 +962,7 @@ func (p *PagingServerTransport) dispatchNewGetSinglePagesWithBodyParamsPager(req
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetSinglePagesWithBodyParamsPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -990,11 +979,7 @@ func (p *PagingServerTransport) dispatchNewGetWithQueryParamsPager(req *http.Req
 	newGetWithQueryParamsPager := p.newGetWithQueryParamsPager.get(req)
 	if newGetWithQueryParamsPager == nil {
 		qp := req.URL.Query()
-		requiredQueryParameterUnescaped, err := url.QueryUnescape(qp.Get("requiredQueryParameter"))
-		if err != nil {
-			return nil, err
-		}
-		requiredQueryParameterParam, err := parseWithCast(requiredQueryParameterUnescaped, func(v string) (int32, error) {
+		requiredQueryParameterParam, err := parseWithCast(qp.Get("requiredQueryParameter"), func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
 			if parseErr != nil {
 				return 0, parseErr
@@ -1015,7 +1000,7 @@ func (p *PagingServerTransport) dispatchNewGetWithQueryParamsPager(req *http.Req
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newGetWithQueryParamsPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -1032,11 +1017,7 @@ func (p *PagingServerTransport) dispatchNewPageWithMaxPageSizePager(req *http.Re
 	newPageWithMaxPageSizePager := p.newPageWithMaxPageSizePager.get(req)
 	if newPageWithMaxPageSizePager == nil {
 		qp := req.URL.Query()
-		maxpagesizeUnescaped, err := url.QueryUnescape(qp.Get("$maxpagesize"))
-		if err != nil {
-			return nil, err
-		}
-		maxpagesizeParam := getOptional(maxpagesizeUnescaped)
+		maxpagesizeParam := getOptional(qp.Get("$maxpagesize"))
 		var options *paginggroup.PagingClientPageWithMaxPageSizeOptions
 		if maxpagesizeParam != nil {
 			options = &paginggroup.PagingClientPageWithMaxPageSizeOptions{
@@ -1054,7 +1035,7 @@ func (p *PagingServerTransport) dispatchNewPageWithMaxPageSizePager(req *http.Re
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newPageWithMaxPageSizePager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -1081,7 +1062,7 @@ func (p *PagingServerTransport) dispatchNewReplaceAPIVersionPager(req *http.Requ
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newReplaceAPIVersionPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

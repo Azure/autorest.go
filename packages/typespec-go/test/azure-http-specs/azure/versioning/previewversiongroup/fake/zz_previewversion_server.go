@@ -15,6 +15,7 @@ import (
 	"net/url"
 	"previewversiongroup"
 	"regexp"
+	"slices"
 )
 
 // PreviewVersionServer is a fake server for instances of the previewversiongroup.PreviewVersionClient type.
@@ -107,7 +108,7 @@ func (p *PreviewVersionServerTransport) dispatchGetWidget(req *http.Request) (*h
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK, http.StatusNotFound}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusNotFound}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusNotFound", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Widget, req)
@@ -122,16 +123,8 @@ func (p *PreviewVersionServerTransport) dispatchListWidgets(req *http.Request) (
 		return nil, &nonRetriableError{errors.New("fake for method ListWidgets not implemented")}
 	}
 	qp := req.URL.Query()
-	nameUnescaped, err := url.QueryUnescape(qp.Get("name"))
-	if err != nil {
-		return nil, err
-	}
-	nameParam := getOptional(nameUnescaped)
-	colorUnescaped, err := url.QueryUnescape(qp.Get("color"))
-	if err != nil {
-		return nil, err
-	}
-	colorParam := getOptional(colorUnescaped)
+	nameParam := getOptional(qp.Get("name"))
+	colorParam := getOptional(qp.Get("color"))
 	var options *previewversiongroup.PreviewVersionClientListWidgetsOptions
 	if nameParam != nil || colorParam != nil {
 		options = &previewversiongroup.PreviewVersionClientListWidgetsOptions{
@@ -144,7 +137,7 @@ func (p *PreviewVersionServerTransport) dispatchListWidgets(req *http.Request) (
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ListWidgetsResponse, req)
@@ -177,7 +170,7 @@ func (p *PreviewVersionServerTransport) dispatchUpdateWidgetColor(req *http.Requ
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK, http.StatusNotFound}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusNotFound}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusNotFound", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Widget, req)

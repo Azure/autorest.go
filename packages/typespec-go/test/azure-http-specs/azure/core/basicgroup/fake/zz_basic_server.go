@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 	"strconv"
 )
 
@@ -151,7 +152,7 @@ func (b *BasicServerTransport) dispatchCreateOrReplace(req *http.Request) (*http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).User, req)
@@ -194,7 +195,7 @@ func (b *BasicServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).User, req)
@@ -233,7 +234,7 @@ func (b *BasicServerTransport) dispatchDelete(req *http.Request) (*http.Response
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -268,16 +269,12 @@ func (b *BasicServerTransport) dispatchExport(req *http.Request) (*http.Response
 	if err != nil {
 		return nil, err
 	}
-	formatParamParam, err := url.QueryUnescape(qp.Get("format"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := b.srv.Export(req.Context(), idParam, formatParamParam, nil)
+	respr, errRespr := b.srv.Export(req.Context(), idParam, qp.Get("format"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).User, req)
@@ -292,16 +289,12 @@ func (b *BasicServerTransport) dispatchExportAllUsers(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("fake for method ExportAllUsers not implemented")}
 	}
 	qp := req.URL.Query()
-	formatParamParam, err := url.QueryUnescape(qp.Get("format"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := b.srv.ExportAllUsers(req.Context(), formatParamParam, nil)
+	respr, errRespr := b.srv.ExportAllUsers(req.Context(), qp.Get("format"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).UserList, req)
@@ -340,7 +333,7 @@ func (b *BasicServerTransport) dispatchGet(req *http.Request) (*http.Response, e
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).User, req)
@@ -357,11 +350,7 @@ func (b *BasicServerTransport) dispatchNewListPager(req *http.Request) (*http.Re
 	newListPager := b.newListPager.get(req)
 	if newListPager == nil {
 		qp := req.URL.Query()
-		topUnescaped, err := url.QueryUnescape(qp.Get("top"))
-		if err != nil {
-			return nil, err
-		}
-		topParam, err := parseOptional(topUnescaped, func(v string) (int32, error) {
+		topParam, err := parseOptional(qp.Get("top"), func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
 			if parseErr != nil {
 				return 0, parseErr
@@ -371,11 +360,7 @@ func (b *BasicServerTransport) dispatchNewListPager(req *http.Request) (*http.Re
 		if err != nil {
 			return nil, err
 		}
-		skipUnescaped, err := url.QueryUnescape(qp.Get("skip"))
-		if err != nil {
-			return nil, err
-		}
-		skipParam, err := parseOptional(skipUnescaped, func(v string) (int32, error) {
+		skipParam, err := parseOptional(qp.Get("skip"), func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
 			if parseErr != nil {
 				return 0, parseErr
@@ -385,11 +370,7 @@ func (b *BasicServerTransport) dispatchNewListPager(req *http.Request) (*http.Re
 		if err != nil {
 			return nil, err
 		}
-		maxpagesizeUnescaped, err := url.QueryUnescape(qp.Get("maxpagesize"))
-		if err != nil {
-			return nil, err
-		}
-		maxpagesizeParam, err := parseOptional(maxpagesizeUnescaped, func(v string) (int32, error) {
+		maxpagesizeParam, err := parseOptional(qp.Get("maxpagesize"), func(v string) (int32, error) {
 			p, parseErr := strconv.ParseInt(v, 10, 32)
 			if parseErr != nil {
 				return 0, parseErr
@@ -399,48 +380,17 @@ func (b *BasicServerTransport) dispatchNewListPager(req *http.Request) (*http.Re
 		if err != nil {
 			return nil, err
 		}
-		orderbyEscaped := qp["orderby"]
-		orderbyParam := make([]string, len(orderbyEscaped))
-		for i, v := range orderbyEscaped {
-			u, unescapeErr := url.QueryUnescape(v)
-			if unescapeErr != nil {
-				return nil, unescapeErr
-			}
-			orderbyParam[i] = u
-		}
-		filterUnescaped, err := url.QueryUnescape(qp.Get("filter"))
-		if err != nil {
-			return nil, err
-		}
-		filterParam := getOptional(filterUnescaped)
-		selectEscaped := qp["select"]
-		selectParam := make([]string, len(selectEscaped))
-		for i, v := range selectEscaped {
-			u, unescapeErr := url.QueryUnescape(v)
-			if unescapeErr != nil {
-				return nil, unescapeErr
-			}
-			selectParam[i] = u
-		}
-		expandEscaped := qp["expand"]
-		expandParam := make([]string, len(expandEscaped))
-		for i, v := range expandEscaped {
-			u, unescapeErr := url.QueryUnescape(v)
-			if unescapeErr != nil {
-				return nil, unescapeErr
-			}
-			expandParam[i] = u
-		}
+		filterParam := getOptional(qp.Get("filter"))
 		var options *basicgroup.BasicClientListOptions
-		if topParam != nil || skipParam != nil || maxpagesizeParam != nil || len(orderbyParam) > 0 || filterParam != nil || len(selectParam) > 0 || len(expandParam) > 0 {
+		if topParam != nil || skipParam != nil || maxpagesizeParam != nil || len(qp["orderby"]) > 0 || filterParam != nil || len(qp["select"]) > 0 || len(qp["expand"]) > 0 {
 			options = &basicgroup.BasicClientListOptions{
 				Top:         topParam,
 				Skip:        skipParam,
 				Maxpagesize: maxpagesizeParam,
-				Orderby:     orderbyParam,
+				Orderby:     qp["orderby"],
 				Filter:      filterParam,
-				Select:      selectParam,
-				Expand:      expandParam,
+				Select:      qp["select"],
+				Expand:      qp["expand"],
 			}
 		}
 		resp := b.srv.NewListPager(options)
@@ -454,7 +404,7 @@ func (b *BasicServerTransport) dispatchNewListPager(req *http.Request) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		b.newListPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

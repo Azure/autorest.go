@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 )
 
 // FetchCrossRegionRestoreJobsServer is a fake server for instances of the armdataprotection.FetchCrossRegionRestoreJobsClient type.
@@ -106,11 +107,7 @@ func (f *FetchCrossRegionRestoreJobsServerTransport) dispatchNewListPager(req *h
 		if err != nil {
 			return nil, err
 		}
-		filterUnescaped, err := url.QueryUnescape(qp.Get("$filter"))
-		if err != nil {
-			return nil, err
-		}
-		filterParam := getOptional(filterUnescaped)
+		filterParam := getOptional(qp.Get("$filter"))
 		var options *armdataprotection.FetchCrossRegionRestoreJobsClientListOptions
 		if filterParam != nil {
 			options = &armdataprotection.FetchCrossRegionRestoreJobsClientListOptions{
@@ -128,7 +125,7 @@ func (f *FetchCrossRegionRestoreJobsServerTransport) dispatchNewListPager(req *h
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		f.newListPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

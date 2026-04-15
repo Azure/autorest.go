@@ -13,7 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 )
 
 // AzureExampleServer is a fake server for instances of the examplebasicgroup.AzureExampleClient type.
@@ -84,16 +84,12 @@ func (a *AzureExampleServerTransport) dispatchBasicAction(req *http.Request) (*h
 	if err != nil {
 		return nil, err
 	}
-	queryParamParam, err := url.QueryUnescape(qp.Get("query-param"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := a.srv.BasicAction(req.Context(), queryParamParam, getHeaderValue(req.Header, "header-param"), body, nil)
+	respr, errRespr := a.srv.BasicAction(req.Context(), qp.Get("query-param"), getHeaderValue(req.Header, "header-param"), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ActionResponse, req)

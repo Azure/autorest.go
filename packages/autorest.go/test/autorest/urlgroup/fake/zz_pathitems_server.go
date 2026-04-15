@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 )
 
 // PathItemsServer is a fake server for instances of the urlgroup.PathItemsClient type.
@@ -110,20 +111,12 @@ func (p *PathItemsServerTransport) dispatchGetAllWithValues(req *http.Request) (
 	if err != nil {
 		return nil, err
 	}
-	pathItemStringQueryUnescaped, err := url.QueryUnescape(qp.Get("pathItemStringQuery"))
-	if err != nil {
-		return nil, err
-	}
-	pathItemStringQueryParam := getOptional(pathItemStringQueryUnescaped)
+	pathItemStringQueryParam := getOptional(qp.Get("pathItemStringQuery"))
 	localStringPathParam, err := url.PathUnescape(matches[regex.SubexpIndex("localStringPath")])
 	if err != nil {
 		return nil, err
 	}
-	localStringQueryUnescaped, err := url.QueryUnescape(qp.Get("localStringQuery"))
-	if err != nil {
-		return nil, err
-	}
-	localStringQueryParam := getOptional(localStringQueryUnescaped)
+	localStringQueryParam := getOptional(qp.Get("localStringQuery"))
 	var options *urlgroup.PathItemsClientGetAllWithValuesOptions
 	if pathItemStringQueryParam != nil || localStringQueryParam != nil {
 		options = &urlgroup.PathItemsClientGetAllWithValuesOptions{
@@ -136,7 +129,7 @@ func (p *PathItemsServerTransport) dispatchGetAllWithValues(req *http.Request) (
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -161,20 +154,12 @@ func (p *PathItemsServerTransport) dispatchGetGlobalAndLocalQueryNull(req *http.
 	if err != nil {
 		return nil, err
 	}
-	pathItemStringQueryUnescaped, err := url.QueryUnescape(qp.Get("pathItemStringQuery"))
-	if err != nil {
-		return nil, err
-	}
-	pathItemStringQueryParam := getOptional(pathItemStringQueryUnescaped)
+	pathItemStringQueryParam := getOptional(qp.Get("pathItemStringQuery"))
 	localStringPathParam, err := url.PathUnescape(matches[regex.SubexpIndex("localStringPath")])
 	if err != nil {
 		return nil, err
 	}
-	localStringQueryUnescaped, err := url.QueryUnescape(qp.Get("localStringQuery"))
-	if err != nil {
-		return nil, err
-	}
-	localStringQueryParam := getOptional(localStringQueryUnescaped)
+	localStringQueryParam := getOptional(qp.Get("localStringQuery"))
 	var options *urlgroup.PathItemsClientGetGlobalAndLocalQueryNullOptions
 	if pathItemStringQueryParam != nil || localStringQueryParam != nil {
 		options = &urlgroup.PathItemsClientGetGlobalAndLocalQueryNullOptions{
@@ -187,7 +172,7 @@ func (p *PathItemsServerTransport) dispatchGetGlobalAndLocalQueryNull(req *http.
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -212,20 +197,12 @@ func (p *PathItemsServerTransport) dispatchGetGlobalQueryNull(req *http.Request)
 	if err != nil {
 		return nil, err
 	}
-	pathItemStringQueryUnescaped, err := url.QueryUnescape(qp.Get("pathItemStringQuery"))
-	if err != nil {
-		return nil, err
-	}
-	pathItemStringQueryParam := getOptional(pathItemStringQueryUnescaped)
+	pathItemStringQueryParam := getOptional(qp.Get("pathItemStringQuery"))
 	localStringPathParam, err := url.PathUnescape(matches[regex.SubexpIndex("localStringPath")])
 	if err != nil {
 		return nil, err
 	}
-	localStringQueryUnescaped, err := url.QueryUnescape(qp.Get("localStringQuery"))
-	if err != nil {
-		return nil, err
-	}
-	localStringQueryParam := getOptional(localStringQueryUnescaped)
+	localStringQueryParam := getOptional(qp.Get("localStringQuery"))
 	var options *urlgroup.PathItemsClientGetGlobalQueryNullOptions
 	if pathItemStringQueryParam != nil || localStringQueryParam != nil {
 		options = &urlgroup.PathItemsClientGetGlobalQueryNullOptions{
@@ -238,7 +215,7 @@ func (p *PathItemsServerTransport) dispatchGetGlobalQueryNull(req *http.Request)
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -263,20 +240,12 @@ func (p *PathItemsServerTransport) dispatchGetLocalPathItemQueryNull(req *http.R
 	if err != nil {
 		return nil, err
 	}
-	pathItemStringQueryUnescaped, err := url.QueryUnescape(qp.Get("pathItemStringQuery"))
-	if err != nil {
-		return nil, err
-	}
-	pathItemStringQueryParam := getOptional(pathItemStringQueryUnescaped)
+	pathItemStringQueryParam := getOptional(qp.Get("pathItemStringQuery"))
 	localStringPathParam, err := url.PathUnescape(matches[regex.SubexpIndex("localStringPath")])
 	if err != nil {
 		return nil, err
 	}
-	localStringQueryUnescaped, err := url.QueryUnescape(qp.Get("localStringQuery"))
-	if err != nil {
-		return nil, err
-	}
-	localStringQueryParam := getOptional(localStringQueryUnescaped)
+	localStringQueryParam := getOptional(qp.Get("localStringQuery"))
 	var options *urlgroup.PathItemsClientGetLocalPathItemQueryNullOptions
 	if pathItemStringQueryParam != nil || localStringQueryParam != nil {
 		options = &urlgroup.PathItemsClientGetLocalPathItemQueryNullOptions{
@@ -289,7 +258,7 @@ func (p *PathItemsServerTransport) dispatchGetLocalPathItemQueryNull(req *http.R
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

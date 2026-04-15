@@ -14,7 +14,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"net/http"
-	"net/url"
+	"slices"
 	"strconv"
 )
 
@@ -94,26 +94,10 @@ func (s *SavingsPlanOperationGroupServerTransport) dispatchNewListAllPager(req *
 	newListAllPager := s.newListAllPager.get(req)
 	if newListAllPager == nil {
 		qp := req.URL.Query()
-		filterUnescaped, err := url.QueryUnescape(qp.Get("$filter"))
-		if err != nil {
-			return nil, err
-		}
-		filterParam := getOptional(filterUnescaped)
-		orderbyUnescaped, err := url.QueryUnescape(qp.Get("$orderby"))
-		if err != nil {
-			return nil, err
-		}
-		orderbyParam := getOptional(orderbyUnescaped)
-		refreshSummaryUnescaped, err := url.QueryUnescape(qp.Get("refreshSummary"))
-		if err != nil {
-			return nil, err
-		}
-		refreshSummaryParam := getOptional(refreshSummaryUnescaped)
-		skiptokenUnescaped, err := url.QueryUnescape(qp.Get("$skiptoken"))
-		if err != nil {
-			return nil, err
-		}
-		skiptokenParam, err := parseOptional(skiptokenUnescaped, func(v string) (float32, error) {
+		filterParam := getOptional(qp.Get("$filter"))
+		orderbyParam := getOptional(qp.Get("$orderby"))
+		refreshSummaryParam := getOptional(qp.Get("refreshSummary"))
+		skiptokenParam, err := parseOptional(qp.Get("$skiptoken"), func(v string) (float32, error) {
 			p, parseErr := strconv.ParseFloat(v, 32)
 			if parseErr != nil {
 				return 0, parseErr
@@ -123,16 +107,8 @@ func (s *SavingsPlanOperationGroupServerTransport) dispatchNewListAllPager(req *
 		if err != nil {
 			return nil, err
 		}
-		selectedStateUnescaped, err := url.QueryUnescape(qp.Get("selectedState"))
-		if err != nil {
-			return nil, err
-		}
-		selectedStateParam := getOptional(selectedStateUnescaped)
-		takeUnescaped, err := url.QueryUnescape(qp.Get("take"))
-		if err != nil {
-			return nil, err
-		}
-		takeParam, err := parseOptional(takeUnescaped, func(v string) (float32, error) {
+		selectedStateParam := getOptional(qp.Get("selectedState"))
+		takeParam, err := parseOptional(qp.Get("take"), func(v string) (float32, error) {
 			p, parseErr := strconv.ParseFloat(v, 32)
 			if parseErr != nil {
 				return 0, parseErr
@@ -164,7 +140,7 @@ func (s *SavingsPlanOperationGroupServerTransport) dispatchNewListAllPager(req *
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		s.newListAllPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -187,7 +163,7 @@ func (s *SavingsPlanOperationGroupServerTransport) dispatchValidatePurchase(req 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).SavingsPlanValidateResponse, req)

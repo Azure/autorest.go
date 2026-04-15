@@ -17,6 +17,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 )
 
 // SharedGalleryImageVersionsServer is a fake server for instances of the armcompute.SharedGalleryImageVersionsClient type.
@@ -119,7 +120,7 @@ func (s *SharedGalleryImageVersionsServerTransport) dispatchGet(req *http.Reques
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).SharedGalleryImageVersion, req)
@@ -154,11 +155,7 @@ func (s *SharedGalleryImageVersionsServerTransport) dispatchNewListPager(req *ht
 		if err != nil {
 			return nil, err
 		}
-		sharedToUnescaped, err := url.QueryUnescape(qp.Get("sharedTo"))
-		if err != nil {
-			return nil, err
-		}
-		sharedToParam := getOptional(armcompute.SharedToValues(sharedToUnescaped))
+		sharedToParam := getOptional(armcompute.SharedToValues(qp.Get("sharedTo")))
 		var options *armcompute.SharedGalleryImageVersionsClientListOptions
 		if sharedToParam != nil {
 			options = &armcompute.SharedGalleryImageVersionsClientListOptions{
@@ -176,7 +173,7 @@ func (s *SharedGalleryImageVersionsServerTransport) dispatchNewListPager(req *ht
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		s.newListPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

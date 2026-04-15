@@ -12,7 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 	"specialwordsgroup"
 )
 
@@ -278,16 +278,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithAnd(req *http.Reques
 		return nil, &nonRetriableError{errors.New("fake for method WithAnd not implemented")}
 	}
 	qp := req.URL.Query()
-	andParam, err := url.QueryUnescape(qp.Get("and"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithAnd(req.Context(), andParam, nil)
+	respr, errRespr := s.srv.WithAnd(req.Context(), qp.Get("and"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -302,16 +298,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithAs(req *http.Request
 		return nil, &nonRetriableError{errors.New("fake for method WithAs not implemented")}
 	}
 	qp := req.URL.Query()
-	asParam, err := url.QueryUnescape(qp.Get("as"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithAs(req.Context(), asParam, nil)
+	respr, errRespr := s.srv.WithAs(req.Context(), qp.Get("as"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -326,16 +318,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithAssert(req *http.Req
 		return nil, &nonRetriableError{errors.New("fake for method WithAssert not implemented")}
 	}
 	qp := req.URL.Query()
-	assertParam, err := url.QueryUnescape(qp.Get("assert"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithAssert(req.Context(), assertParam, nil)
+	respr, errRespr := s.srv.WithAssert(req.Context(), qp.Get("assert"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -350,16 +338,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithAsync(req *http.Requ
 		return nil, &nonRetriableError{errors.New("fake for method WithAsync not implemented")}
 	}
 	qp := req.URL.Query()
-	asyncParam, err := url.QueryUnescape(qp.Get("async"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithAsync(req.Context(), asyncParam, nil)
+	respr, errRespr := s.srv.WithAsync(req.Context(), qp.Get("async"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -374,16 +358,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithAwait(req *http.Requ
 		return nil, &nonRetriableError{errors.New("fake for method WithAwait not implemented")}
 	}
 	qp := req.URL.Query()
-	awaitParam, err := url.QueryUnescape(qp.Get("await"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithAwait(req.Context(), awaitParam, nil)
+	respr, errRespr := s.srv.WithAwait(req.Context(), qp.Get("await"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -398,16 +378,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithBreak(req *http.Requ
 		return nil, &nonRetriableError{errors.New("fake for method WithBreak not implemented")}
 	}
 	qp := req.URL.Query()
-	breakParamParam, err := url.QueryUnescape(qp.Get("break"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithBreak(req.Context(), breakParamParam, nil)
+	respr, errRespr := s.srv.WithBreak(req.Context(), qp.Get("break"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -422,16 +398,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithCancellationToken(re
 		return nil, &nonRetriableError{errors.New("fake for method WithCancellationToken not implemented")}
 	}
 	qp := req.URL.Query()
-	cancellationTokenParam, err := url.QueryUnescape(qp.Get("cancellationToken"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithCancellationToken(req.Context(), cancellationTokenParam, nil)
+	respr, errRespr := s.srv.WithCancellationToken(req.Context(), qp.Get("cancellationToken"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -446,16 +418,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithClass(req *http.Requ
 		return nil, &nonRetriableError{errors.New("fake for method WithClass not implemented")}
 	}
 	qp := req.URL.Query()
-	classParam, err := url.QueryUnescape(qp.Get("class"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithClass(req.Context(), classParam, nil)
+	respr, errRespr := s.srv.WithClass(req.Context(), qp.Get("class"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -470,16 +438,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithConstructor(req *htt
 		return nil, &nonRetriableError{errors.New("fake for method WithConstructor not implemented")}
 	}
 	qp := req.URL.Query()
-	constructorParam, err := url.QueryUnescape(qp.Get("constructor"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithConstructor(req.Context(), constructorParam, nil)
+	respr, errRespr := s.srv.WithConstructor(req.Context(), qp.Get("constructor"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -494,16 +458,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithContinue(req *http.R
 		return nil, &nonRetriableError{errors.New("fake for method WithContinue not implemented")}
 	}
 	qp := req.URL.Query()
-	continueParamParam, err := url.QueryUnescape(qp.Get("continue"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithContinue(req.Context(), continueParamParam, nil)
+	respr, errRespr := s.srv.WithContinue(req.Context(), qp.Get("continue"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -518,16 +478,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithDef(req *http.Reques
 		return nil, &nonRetriableError{errors.New("fake for method WithDef not implemented")}
 	}
 	qp := req.URL.Query()
-	defParam, err := url.QueryUnescape(qp.Get("def"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithDef(req.Context(), defParam, nil)
+	respr, errRespr := s.srv.WithDef(req.Context(), qp.Get("def"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -542,16 +498,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithDel(req *http.Reques
 		return nil, &nonRetriableError{errors.New("fake for method WithDel not implemented")}
 	}
 	qp := req.URL.Query()
-	delParam, err := url.QueryUnescape(qp.Get("del"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithDel(req.Context(), delParam, nil)
+	respr, errRespr := s.srv.WithDel(req.Context(), qp.Get("del"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -566,16 +518,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithElif(req *http.Reque
 		return nil, &nonRetriableError{errors.New("fake for method WithElif not implemented")}
 	}
 	qp := req.URL.Query()
-	elifParam, err := url.QueryUnescape(qp.Get("elif"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithElif(req.Context(), elifParam, nil)
+	respr, errRespr := s.srv.WithElif(req.Context(), qp.Get("elif"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -590,16 +538,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithElse(req *http.Reque
 		return nil, &nonRetriableError{errors.New("fake for method WithElse not implemented")}
 	}
 	qp := req.URL.Query()
-	elseParamParam, err := url.QueryUnescape(qp.Get("else"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithElse(req.Context(), elseParamParam, nil)
+	respr, errRespr := s.srv.WithElse(req.Context(), qp.Get("else"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -614,16 +558,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithExcept(req *http.Req
 		return nil, &nonRetriableError{errors.New("fake for method WithExcept not implemented")}
 	}
 	qp := req.URL.Query()
-	exceptParam, err := url.QueryUnescape(qp.Get("except"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithExcept(req.Context(), exceptParam, nil)
+	respr, errRespr := s.srv.WithExcept(req.Context(), qp.Get("except"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -638,16 +578,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithExec(req *http.Reque
 		return nil, &nonRetriableError{errors.New("fake for method WithExec not implemented")}
 	}
 	qp := req.URL.Query()
-	execParamParam, err := url.QueryUnescape(qp.Get("exec"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithExec(req.Context(), execParamParam, nil)
+	respr, errRespr := s.srv.WithExec(req.Context(), qp.Get("exec"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -662,16 +598,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithFinally(req *http.Re
 		return nil, &nonRetriableError{errors.New("fake for method WithFinally not implemented")}
 	}
 	qp := req.URL.Query()
-	finallyParam, err := url.QueryUnescape(qp.Get("finally"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithFinally(req.Context(), finallyParam, nil)
+	respr, errRespr := s.srv.WithFinally(req.Context(), qp.Get("finally"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -686,16 +618,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithFor(req *http.Reques
 		return nil, &nonRetriableError{errors.New("fake for method WithFor not implemented")}
 	}
 	qp := req.URL.Query()
-	forParamParam, err := url.QueryUnescape(qp.Get("for"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithFor(req.Context(), forParamParam, nil)
+	respr, errRespr := s.srv.WithFor(req.Context(), qp.Get("for"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -710,16 +638,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithFrom(req *http.Reque
 		return nil, &nonRetriableError{errors.New("fake for method WithFrom not implemented")}
 	}
 	qp := req.URL.Query()
-	fromParam, err := url.QueryUnescape(qp.Get("from"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithFrom(req.Context(), fromParam, nil)
+	respr, errRespr := s.srv.WithFrom(req.Context(), qp.Get("from"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -734,16 +658,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithGlobal(req *http.Req
 		return nil, &nonRetriableError{errors.New("fake for method WithGlobal not implemented")}
 	}
 	qp := req.URL.Query()
-	globalParam, err := url.QueryUnescape(qp.Get("global"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithGlobal(req.Context(), globalParam, nil)
+	respr, errRespr := s.srv.WithGlobal(req.Context(), qp.Get("global"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -758,16 +678,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithIf(req *http.Request
 		return nil, &nonRetriableError{errors.New("fake for method WithIf not implemented")}
 	}
 	qp := req.URL.Query()
-	ifParamParam, err := url.QueryUnescape(qp.Get("if"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithIf(req.Context(), ifParamParam, nil)
+	respr, errRespr := s.srv.WithIf(req.Context(), qp.Get("if"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -782,16 +698,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithImport(req *http.Req
 		return nil, &nonRetriableError{errors.New("fake for method WithImport not implemented")}
 	}
 	qp := req.URL.Query()
-	importParamParam, err := url.QueryUnescape(qp.Get("import"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithImport(req.Context(), importParamParam, nil)
+	respr, errRespr := s.srv.WithImport(req.Context(), qp.Get("import"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -806,16 +718,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithIn(req *http.Request
 		return nil, &nonRetriableError{errors.New("fake for method WithIn not implemented")}
 	}
 	qp := req.URL.Query()
-	inParam, err := url.QueryUnescape(qp.Get("in"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithIn(req.Context(), inParam, nil)
+	respr, errRespr := s.srv.WithIn(req.Context(), qp.Get("in"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -830,16 +738,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithIs(req *http.Request
 		return nil, &nonRetriableError{errors.New("fake for method WithIs not implemented")}
 	}
 	qp := req.URL.Query()
-	isParam, err := url.QueryUnescape(qp.Get("is"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithIs(req.Context(), isParam, nil)
+	respr, errRespr := s.srv.WithIs(req.Context(), qp.Get("is"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -854,16 +758,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithLambda(req *http.Req
 		return nil, &nonRetriableError{errors.New("fake for method WithLambda not implemented")}
 	}
 	qp := req.URL.Query()
-	lambdaParam, err := url.QueryUnescape(qp.Get("lambda"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithLambda(req.Context(), lambdaParam, nil)
+	respr, errRespr := s.srv.WithLambda(req.Context(), qp.Get("lambda"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -878,16 +778,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithNot(req *http.Reques
 		return nil, &nonRetriableError{errors.New("fake for method WithNot not implemented")}
 	}
 	qp := req.URL.Query()
-	notParam, err := url.QueryUnescape(qp.Get("not"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithNot(req.Context(), notParam, nil)
+	respr, errRespr := s.srv.WithNot(req.Context(), qp.Get("not"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -902,16 +798,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithOr(req *http.Request
 		return nil, &nonRetriableError{errors.New("fake for method WithOr not implemented")}
 	}
 	qp := req.URL.Query()
-	orParam, err := url.QueryUnescape(qp.Get("or"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithOr(req.Context(), orParam, nil)
+	respr, errRespr := s.srv.WithOr(req.Context(), qp.Get("or"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -926,16 +818,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithPass(req *http.Reque
 		return nil, &nonRetriableError{errors.New("fake for method WithPass not implemented")}
 	}
 	qp := req.URL.Query()
-	passParam, err := url.QueryUnescape(qp.Get("pass"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithPass(req.Context(), passParam, nil)
+	respr, errRespr := s.srv.WithPass(req.Context(), qp.Get("pass"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -950,16 +838,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithRaise(req *http.Requ
 		return nil, &nonRetriableError{errors.New("fake for method WithRaise not implemented")}
 	}
 	qp := req.URL.Query()
-	raiseParam, err := url.QueryUnescape(qp.Get("raise"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithRaise(req.Context(), raiseParam, nil)
+	respr, errRespr := s.srv.WithRaise(req.Context(), qp.Get("raise"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -974,16 +858,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithReturn(req *http.Req
 		return nil, &nonRetriableError{errors.New("fake for method WithReturn not implemented")}
 	}
 	qp := req.URL.Query()
-	returnParamParam, err := url.QueryUnescape(qp.Get("return"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithReturn(req.Context(), returnParamParam, nil)
+	respr, errRespr := s.srv.WithReturn(req.Context(), qp.Get("return"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -998,16 +878,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithTry(req *http.Reques
 		return nil, &nonRetriableError{errors.New("fake for method WithTry not implemented")}
 	}
 	qp := req.URL.Query()
-	tryParam, err := url.QueryUnescape(qp.Get("try"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithTry(req.Context(), tryParam, nil)
+	respr, errRespr := s.srv.WithTry(req.Context(), qp.Get("try"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -1022,16 +898,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithWhile(req *http.Requ
 		return nil, &nonRetriableError{errors.New("fake for method WithWhile not implemented")}
 	}
 	qp := req.URL.Query()
-	whileParam, err := url.QueryUnescape(qp.Get("while"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithWhile(req.Context(), whileParam, nil)
+	respr, errRespr := s.srv.WithWhile(req.Context(), qp.Get("while"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -1046,16 +918,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithWith(req *http.Reque
 		return nil, &nonRetriableError{errors.New("fake for method WithWith not implemented")}
 	}
 	qp := req.URL.Query()
-	withParam, err := url.QueryUnescape(qp.Get("with"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithWith(req.Context(), withParam, nil)
+	respr, errRespr := s.srv.WithWith(req.Context(), qp.Get("with"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -1070,16 +938,12 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithYield(req *http.Requ
 		return nil, &nonRetriableError{errors.New("fake for method WithYield not implemented")}
 	}
 	qp := req.URL.Query()
-	yieldParam, err := url.QueryUnescape(qp.Get("yield"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.WithYield(req.Context(), yieldParam, nil)
+	respr, errRespr := s.srv.WithYield(req.Context(), qp.Get("yield"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

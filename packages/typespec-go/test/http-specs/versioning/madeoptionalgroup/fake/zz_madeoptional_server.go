@@ -13,7 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"madeoptionalgroup"
 	"net/http"
-	"net/url"
+	"slices"
 )
 
 // MadeOptionalServer is a fake server for instances of the madeoptionalgroup.MadeOptionalClient type.
@@ -84,11 +84,7 @@ func (m *MadeOptionalServerTransport) dispatchTest(req *http.Request) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	paramUnescaped, err := url.QueryUnescape(qp.Get("param"))
-	if err != nil {
-		return nil, err
-	}
-	paramParam := getOptional(paramUnescaped)
+	paramParam := getOptional(qp.Get("param"))
 	var options *madeoptionalgroup.MadeOptionalClientTestOptions
 	if paramParam != nil {
 		options = &madeoptionalgroup.MadeOptionalClientTestOptions{
@@ -100,7 +96,7 @@ func (m *MadeOptionalServerTransport) dispatchTest(req *http.Request) (*http.Res
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).TestModel, req)

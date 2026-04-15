@@ -12,7 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 	"strconv"
 	"visibilitygroup"
 )
@@ -125,7 +125,7 @@ func (v *VisibilityServerTransport) dispatchDeleteModel(req *http.Request) (*htt
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -140,11 +140,7 @@ func (v *VisibilityServerTransport) dispatchGetModel(req *http.Request) (*http.R
 		return nil, &nonRetriableError{errors.New("fake for method GetModel not implemented")}
 	}
 	qp := req.URL.Query()
-	queryPropUnescaped, err := url.QueryUnescape(qp.Get("queryProp"))
-	if err != nil {
-		return nil, err
-	}
-	queryPropParam, err := parseWithCast(queryPropUnescaped, func(v string) (int32, error) {
+	queryPropParam, err := parseWithCast(qp.Get("queryProp"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -159,7 +155,7 @@ func (v *VisibilityServerTransport) dispatchGetModel(req *http.Request) (*http.R
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).VisibilityModel, req)
@@ -174,11 +170,7 @@ func (v *VisibilityServerTransport) dispatchHeadModel(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("fake for method HeadModel not implemented")}
 	}
 	qp := req.URL.Query()
-	queryPropUnescaped, err := url.QueryUnescape(qp.Get("queryProp"))
-	if err != nil {
-		return nil, err
-	}
-	queryPropParam, err := parseWithCast(queryPropUnescaped, func(v string) (int32, error) {
+	queryPropParam, err := parseWithCast(qp.Get("queryProp"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -193,7 +185,7 @@ func (v *VisibilityServerTransport) dispatchHeadModel(req *http.Request) (*http.
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -216,7 +208,7 @@ func (v *VisibilityServerTransport) dispatchPatchModel(req *http.Request) (*http
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -239,7 +231,7 @@ func (v *VisibilityServerTransport) dispatchPostModel(req *http.Request) (*http.
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -262,7 +254,7 @@ func (v *VisibilityServerTransport) dispatchPutModel(req *http.Request) (*http.R
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -285,7 +277,7 @@ func (v *VisibilityServerTransport) dispatchPutReadOnlyModel(req *http.Request) 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ReadOnlyModel, req)

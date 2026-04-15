@@ -11,8 +11,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
 	"pageablegroup"
+	"slices"
 )
 
 // PageableServerDrivenPaginationContinuationTokenServer is a fake server for instances of the pageablegroup.PageableServerDrivenPaginationContinuationTokenClient type.
@@ -127,11 +127,7 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 		qp := req.URL.Query()
 		tokenParam := getOptional(getHeaderValue(req.Header, "token"))
 		fooParam := getOptional(getHeaderValue(req.Header, "foo"))
-		barUnescaped, err := url.QueryUnescape(qp.Get("bar"))
-		if err != nil {
-			return nil, err
-		}
-		barParam := getOptional(barUnescaped)
+		barParam := getOptional(qp.Get("bar"))
 		var options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions
 		if tokenParam != nil || fooParam != nil || barParam != nil {
 			options = &pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions{
@@ -148,7 +144,7 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newRequestHeaderNestedResponseBodyPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -167,11 +163,7 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 		qp := req.URL.Query()
 		tokenParam := getOptional(getHeaderValue(req.Header, "token"))
 		fooParam := getOptional(getHeaderValue(req.Header, "foo"))
-		barUnescaped, err := url.QueryUnescape(qp.Get("bar"))
-		if err != nil {
-			return nil, err
-		}
-		barParam := getOptional(barUnescaped)
+		barParam := getOptional(qp.Get("bar"))
 		var options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions
 		if tokenParam != nil || fooParam != nil || barParam != nil {
 			options = &pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions{
@@ -188,7 +180,7 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newRequestHeaderResponseBodyPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -207,11 +199,7 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 		qp := req.URL.Query()
 		tokenParam := getOptional(getHeaderValue(req.Header, "token"))
 		fooParam := getOptional(getHeaderValue(req.Header, "foo"))
-		barUnescaped, err := url.QueryUnescape(qp.Get("bar"))
-		if err != nil {
-			return nil, err
-		}
-		barParam := getOptional(barUnescaped)
+		barParam := getOptional(qp.Get("bar"))
 		var options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions
 		if tokenParam != nil || fooParam != nil || barParam != nil {
 			options = &pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions{
@@ -228,7 +216,7 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newRequestHeaderResponseHeaderPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -245,17 +233,9 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 	newRequestQueryNestedResponseBodyPager := p.newRequestQueryNestedResponseBodyPager.get(req)
 	if newRequestQueryNestedResponseBodyPager == nil {
 		qp := req.URL.Query()
-		tokenUnescaped, err := url.QueryUnescape(qp.Get("token"))
-		if err != nil {
-			return nil, err
-		}
-		tokenParam := getOptional(tokenUnescaped)
+		tokenParam := getOptional(qp.Get("token"))
 		fooParam := getOptional(getHeaderValue(req.Header, "foo"))
-		barUnescaped, err := url.QueryUnescape(qp.Get("bar"))
-		if err != nil {
-			return nil, err
-		}
-		barParam := getOptional(barUnescaped)
+		barParam := getOptional(qp.Get("bar"))
 		var options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions
 		if tokenParam != nil || fooParam != nil || barParam != nil {
 			options = &pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions{
@@ -272,7 +252,7 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newRequestQueryNestedResponseBodyPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -289,17 +269,9 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 	newRequestQueryResponseBodyPager := p.newRequestQueryResponseBodyPager.get(req)
 	if newRequestQueryResponseBodyPager == nil {
 		qp := req.URL.Query()
-		tokenUnescaped, err := url.QueryUnescape(qp.Get("token"))
-		if err != nil {
-			return nil, err
-		}
-		tokenParam := getOptional(tokenUnescaped)
+		tokenParam := getOptional(qp.Get("token"))
 		fooParam := getOptional(getHeaderValue(req.Header, "foo"))
-		barUnescaped, err := url.QueryUnescape(qp.Get("bar"))
-		if err != nil {
-			return nil, err
-		}
-		barParam := getOptional(barUnescaped)
+		barParam := getOptional(qp.Get("bar"))
 		var options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyOptions
 		if tokenParam != nil || fooParam != nil || barParam != nil {
 			options = &pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyOptions{
@@ -316,7 +288,7 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newRequestQueryResponseBodyPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
@@ -333,17 +305,9 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 	newRequestQueryResponseHeaderPager := p.newRequestQueryResponseHeaderPager.get(req)
 	if newRequestQueryResponseHeaderPager == nil {
 		qp := req.URL.Query()
-		tokenUnescaped, err := url.QueryUnescape(qp.Get("token"))
-		if err != nil {
-			return nil, err
-		}
-		tokenParam := getOptional(tokenUnescaped)
+		tokenParam := getOptional(qp.Get("token"))
 		fooParam := getOptional(getHeaderValue(req.Header, "foo"))
-		barUnescaped, err := url.QueryUnescape(qp.Get("bar"))
-		if err != nil {
-			return nil, err
-		}
-		barParam := getOptional(barUnescaped)
+		barParam := getOptional(qp.Get("bar"))
 		var options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderOptions
 		if tokenParam != nil || fooParam != nil || barParam != nil {
 			options = &pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderOptions{
@@ -360,7 +324,7 @@ func (p *PageableServerDrivenPaginationContinuationTokenServerTransport) dispatc
 	if err != nil {
 		return nil, err
 	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !slices.Contains([]int{http.StatusOK}, resp.StatusCode) {
 		p.newRequestQueryResponseHeaderPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}

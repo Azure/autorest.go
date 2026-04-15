@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 )
 
 // SkipURLEncodingServer is a fake server for instances of the azurespecialsgroup.SkipURLEncodingClient type.
@@ -132,7 +133,7 @@ func (s *SkipURLEncodingServerTransport) dispatchGetMethodPathValid(req *http.Re
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -147,11 +148,7 @@ func (s *SkipURLEncodingServerTransport) dispatchGetMethodQueryNull(req *http.Re
 		return nil, &nonRetriableError{errors.New("fake for method GetMethodQueryNull not implemented")}
 	}
 	qp := req.URL.Query()
-	q1Unescaped, err := url.QueryUnescape(qp.Get("q1"))
-	if err != nil {
-		return nil, err
-	}
-	q1Param := getOptional(q1Unescaped)
+	q1Param := getOptional(qp.Get("q1"))
 	var options *azurespecialsgroup.SkipURLEncodingClientGetMethodQueryNullOptions
 	if q1Param != nil {
 		options = &azurespecialsgroup.SkipURLEncodingClientGetMethodQueryNullOptions{
@@ -163,7 +160,7 @@ func (s *SkipURLEncodingServerTransport) dispatchGetMethodQueryNull(req *http.Re
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -178,16 +175,12 @@ func (s *SkipURLEncodingServerTransport) dispatchGetMethodQueryValid(req *http.R
 		return nil, &nonRetriableError{errors.New("fake for method GetMethodQueryValid not implemented")}
 	}
 	qp := req.URL.Query()
-	q1Param, err := url.QueryUnescape(qp.Get("q1"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.GetMethodQueryValid(req.Context(), q1Param, nil)
+	respr, errRespr := s.srv.GetMethodQueryValid(req.Context(), qp.Get("q1"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -202,16 +195,12 @@ func (s *SkipURLEncodingServerTransport) dispatchGetPathQueryValid(req *http.Req
 		return nil, &nonRetriableError{errors.New("fake for method GetPathQueryValid not implemented")}
 	}
 	qp := req.URL.Query()
-	q1Param, err := url.QueryUnescape(qp.Get("q1"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.GetPathQueryValid(req.Context(), q1Param, nil)
+	respr, errRespr := s.srv.GetPathQueryValid(req.Context(), qp.Get("q1"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -240,7 +229,7 @@ func (s *SkipURLEncodingServerTransport) dispatchGetPathValid(req *http.Request)
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -259,7 +248,7 @@ func (s *SkipURLEncodingServerTransport) dispatchGetSwaggerPathValid(req *http.R
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -278,7 +267,7 @@ func (s *SkipURLEncodingServerTransport) dispatchGetSwaggerQueryValid(req *http.
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

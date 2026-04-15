@@ -10,6 +10,8 @@ import (
 	"testing"
 	"time"
 
+	"net/http"
+
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/stretchr/testify/require"
@@ -60,4 +62,33 @@ func TestContextCancelDuringDispatchRace(t *testing.T) {
 		_, _ = client.GetQueue(ctx, nil)
 		cancel()
 	}
+}
+
+// TestDoubleDecodeQueryParam verifies that query parameter values containing
+// percent-encoded sequences (e.g. "foo%20bar") are not double-decoded by the fake server.
+// The server's dispatchDoubleDecode calls url.QueryUnescape on a value that is already
+// decoded by req.URL.Query(), so "foo%20bar" incorrectly becomes "foo bar".
+func TestDoubleDecodeQueryParam(t *testing.T) {
+	const pathValue = "foo%20bar"
+	const queryValue = "baz%20qux"
+
+	var receivedPath, receivedQuery string
+	client, err := azregressions.NewClientWithNoCredential("https://fake.endpoint", &azregressions.ClientOptions{
+		ClientOptions: policy.ClientOptions{
+			Transport: fake.NewServerTransport(&fake.Server{
+				DoubleDecode: func(_ context.Context, pathParam string, query string, _ *azregressions.ClientDoubleDecodeOptions) (resp azfake.Responder[azregressions.ClientDoubleDecodeResponse], errResp azfake.ErrorResponder) {
+					receivedPath = pathParam
+					receivedQuery = query
+					resp.SetResponse(http.StatusNoContent, azregressions.ClientDoubleDecodeResponse{}, nil)
+					return
+				},
+			}),
+		},
+	})
+	require.NoError(t, err)
+
+	_, err = client.DoubleDecode(context.Background(), pathValue, queryValue, nil)
+	require.NoError(t, err)
+	require.Equal(t, pathValue, receivedPath, "path param was double-decoded")
+	require.Equal(t, queryValue, receivedQuery, "query param was double-decoded")
 }

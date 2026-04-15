@@ -13,7 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 )
 
 // QueryParamServer is a fake server for instances of the clientinitdefaultgroup.QueryParamClient type.
@@ -96,7 +96,7 @@ func (q *QueryParamServerTransport) dispatchDeleteStandalone(req *http.Request) 
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -115,7 +115,7 @@ func (q *QueryParamServerTransport) dispatchGetStandalone(req *http.Request) (*h
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).BlobProperties, req)
@@ -130,11 +130,7 @@ func (q *QueryParamServerTransport) dispatchWithQuery(req *http.Request) (*http.
 		return nil, &nonRetriableError{errors.New("fake for method WithQuery not implemented")}
 	}
 	qp := req.URL.Query()
-	formatUnescaped, err := url.QueryUnescape(qp.Get("format"))
-	if err != nil {
-		return nil, err
-	}
-	formatParam := getOptional(formatUnescaped)
+	formatParam := getOptional(qp.Get("format"))
 	var options *clientinitdefaultgroup.QueryParamClientWithQueryOptions
 	if formatParam != nil {
 		options = &clientinitdefaultgroup.QueryParamClientWithQueryOptions{
@@ -146,7 +142,7 @@ func (q *QueryParamServerTransport) dispatchWithQuery(req *http.Request) (*http.
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

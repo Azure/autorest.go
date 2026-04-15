@@ -14,7 +14,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 )
 
 // APIVersionLocalServer is a fake server for instances of the azurespecialsgroup.APIVersionLocalClient type.
@@ -99,11 +99,7 @@ func (a *APIVersionLocalServerTransport) dispatchGetMethodLocalNull(req *http.Re
 		return nil, &nonRetriableError{errors.New("fake for method GetMethodLocalNull not implemented")}
 	}
 	qp := req.URL.Query()
-	aPIVersionUnescaped, err := url.QueryUnescape(qp.Get("api-version"))
-	if err != nil {
-		return nil, err
-	}
-	aPIVersionParam := getOptional(aPIVersionUnescaped)
+	aPIVersionParam := getOptional(qp.Get("api-version"))
 	var options *azurespecialsgroup.APIVersionLocalClientGetMethodLocalNullOptions
 	if aPIVersionParam != nil {
 		options = &azurespecialsgroup.APIVersionLocalClientGetMethodLocalNullOptions{
@@ -115,7 +111,7 @@ func (a *APIVersionLocalServerTransport) dispatchGetMethodLocalNull(req *http.Re
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -134,7 +130,7 @@ func (a *APIVersionLocalServerTransport) dispatchGetMethodLocalValid(req *http.R
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -153,7 +149,7 @@ func (a *APIVersionLocalServerTransport) dispatchGetPathLocalValid(req *http.Req
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -172,7 +168,7 @@ func (a *APIVersionLocalServerTransport) dispatchGetSwaggerLocalValid(req *http.
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

@@ -14,8 +14,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
 	"reflect"
+	"slices"
 )
 
 // AuthenticationServer is a fake server for instances of the azacr.AuthenticationClient type.
@@ -128,7 +128,7 @@ func (a *AuthenticationServerTransport) dispatchExchangeAADAccessTokenForAcrRefr
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).RefreshToken, req)
@@ -172,7 +172,7 @@ func (a *AuthenticationServerTransport) dispatchExchangeAcrRefreshTokenForAcrAcc
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AccessToken, req)
@@ -187,20 +187,12 @@ func (a *AuthenticationServerTransport) dispatchGetAcrAccessTokenFromLogin(req *
 		return nil, &nonRetriableError{errors.New("fake for method GetAcrAccessTokenFromLogin not implemented")}
 	}
 	qp := req.URL.Query()
-	serviceParam, err := url.QueryUnescape(qp.Get("service"))
-	if err != nil {
-		return nil, err
-	}
-	scopeParam, err := url.QueryUnescape(qp.Get("scope"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := a.srv.GetAcrAccessTokenFromLogin(req.Context(), serviceParam, scopeParam, nil)
+	respr, errRespr := a.srv.GetAcrAccessTokenFromLogin(req.Context(), qp.Get("service"), qp.Get("scope"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AccessToken, req)

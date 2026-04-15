@@ -13,7 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 )
 
 // HeaderParamServer is a fake server for instances of the clientinitdefaultgroup.HeaderParamClient type.
@@ -94,7 +94,7 @@ func (h *HeaderParamServerTransport) dispatchWithBody(req *http.Request) (*http.
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -109,16 +109,12 @@ func (h *HeaderParamServerTransport) dispatchWithQuery(req *http.Request) (*http
 		return nil, &nonRetriableError{errors.New("fake for method WithQuery not implemented")}
 	}
 	qp := req.URL.Query()
-	idParam, err := url.QueryUnescape(qp.Get("id"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := h.srv.WithQuery(req.Context(), idParam, nil)
+	respr, errRespr := h.srv.WithQuery(req.Context(), qp.Get("id"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

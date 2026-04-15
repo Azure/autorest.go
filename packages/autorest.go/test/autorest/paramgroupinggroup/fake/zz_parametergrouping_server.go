@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"slices"
 	"strconv"
 )
 
@@ -126,7 +127,7 @@ func (p *ParameterGroupingServerTransport) dispatchGroupWithConstant(req *http.R
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -142,11 +143,7 @@ func (p *ParameterGroupingServerTransport) dispatchPostMultiParamGroups(req *htt
 	}
 	qp := req.URL.Query()
 	headerOneParam := getOptional(getHeaderValue(req.Header, "header-one"))
-	queryOneUnescaped, err := url.QueryUnescape(qp.Get("query-one"))
-	if err != nil {
-		return nil, err
-	}
-	queryOneParam, err := parseOptional(queryOneUnescaped, func(v string) (int32, error) {
+	queryOneParam, err := parseOptional(qp.Get("query-one"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -157,11 +154,7 @@ func (p *ParameterGroupingServerTransport) dispatchPostMultiParamGroups(req *htt
 		return nil, err
 	}
 	headerTwoParam := getOptional(getHeaderValue(req.Header, "header-two"))
-	queryTwoUnescaped, err := url.QueryUnescape(qp.Get("query-two"))
-	if err != nil {
-		return nil, err
-	}
-	queryTwoParam, err := parseOptional(queryTwoUnescaped, func(v string) (int32, error) {
+	queryTwoParam, err := parseOptional(qp.Get("query-two"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -190,7 +183,7 @@ func (p *ParameterGroupingServerTransport) dispatchPostMultiParamGroups(req *htt
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -206,11 +199,7 @@ func (p *ParameterGroupingServerTransport) dispatchPostOptional(req *http.Reques
 	}
 	qp := req.URL.Query()
 	customHeaderParam := getOptional(getHeaderValue(req.Header, "customHeader"))
-	queryUnescaped, err := url.QueryUnescape(qp.Get("query"))
-	if err != nil {
-		return nil, err
-	}
-	queryParam, err := parseOptional(queryUnescaped, func(v string) (int32, error) {
+	queryParam, err := parseOptional(qp.Get("query"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -232,7 +221,7 @@ func (p *ParameterGroupingServerTransport) dispatchPostOptional(req *http.Reques
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -258,11 +247,7 @@ func (p *ParameterGroupingServerTransport) dispatchPostRequired(req *http.Reques
 		return nil, err
 	}
 	customHeaderParam := getOptional(getHeaderValue(req.Header, "customHeader"))
-	queryUnescaped, err := url.QueryUnescape(qp.Get("query"))
-	if err != nil {
-		return nil, err
-	}
-	queryParam, err := parseOptional(queryUnescaped, func(v string) (int32, error) {
+	queryParam, err := parseOptional(qp.Get("query"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -287,7 +272,7 @@ func (p *ParameterGroupingServerTransport) dispatchPostRequired(req *http.Reques
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -302,16 +287,8 @@ func (p *ParameterGroupingServerTransport) dispatchPostReservedWords(req *http.R
 		return nil, &nonRetriableError{errors.New("fake for method PostReservedWords not implemented")}
 	}
 	qp := req.URL.Query()
-	fromUnescaped, err := url.QueryUnescape(qp.Get("from"))
-	if err != nil {
-		return nil, err
-	}
-	fromParam := getOptional(fromUnescaped)
-	acceptUnescaped, err := url.QueryUnescape(qp.Get("accept"))
-	if err != nil {
-		return nil, err
-	}
-	acceptParam := getOptional(acceptUnescaped)
+	fromParam := getOptional(qp.Get("from"))
+	acceptParam := getOptional(qp.Get("accept"))
 	var parameterGroupingClientPostReservedWordsParameters *paramgroupinggroup.ParameterGroupingClientPostReservedWordsParameters
 	if fromParam != nil || acceptParam != nil {
 		parameterGroupingClientPostReservedWordsParameters = &paramgroupinggroup.ParameterGroupingClientPostReservedWordsParameters{
@@ -324,7 +301,7 @@ func (p *ParameterGroupingServerTransport) dispatchPostReservedWords(req *http.R
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
@@ -340,11 +317,7 @@ func (p *ParameterGroupingServerTransport) dispatchPostSharedParameterGroupObjec
 	}
 	qp := req.URL.Query()
 	headerOneParam := getOptional(getHeaderValue(req.Header, "header-one"))
-	queryOneUnescaped, err := url.QueryUnescape(qp.Get("query-one"))
-	if err != nil {
-		return nil, err
-	}
-	queryOneParam, err := parseOptional(queryOneUnescaped, func(v string) (int32, error) {
+	queryOneParam, err := parseOptional(qp.Get("query-one"), func(v string) (int32, error) {
 		p, parseErr := strconv.ParseInt(v, 10, 32)
 		if parseErr != nil {
 			return 0, parseErr
@@ -366,7 +339,7 @@ func (p *ParameterGroupingServerTransport) dispatchPostSharedParameterGroupObjec
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)

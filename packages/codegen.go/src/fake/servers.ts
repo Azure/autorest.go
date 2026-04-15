@@ -357,6 +357,7 @@ function generateServerTransportMethods(pkg: go.FakePackage, serverTransport: st
   imports.addForPkg(pkg.parent);
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server');
+  imports.add('slices');
 
   const receiverName = serverTransport[0].toLowerCase();
 
@@ -376,7 +377,7 @@ function generateServerTransportMethods(pkg: go.FakePackage, serverTransport: st
         content += dispatchForOperationBody(pkg, receiverName, method, imports);
         content += '\trespContent := server.GetResponseContent(respr)\n';
         const formattedStatusCodes = helpers.formatStatusCodes(method.httpStatusCodes);
-        content += `\tif !contains([]int{${formattedStatusCodes}}, respContent.HTTPStatus) {\n`;
+        content += `\tif !slices.Contains([]int{${formattedStatusCodes}}, respContent.HTTPStatus) {\n`;
         content += `\t\treturn nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", respContent.HTTPStatus)}\n\t}\n`;
         if (!method.returns.result || method.returns.result.kind === 'headAsBooleanResult') {
           content += '\tresp, err := server.NewResponse(respContent, req, nil)\n';
@@ -779,7 +780,7 @@ function dispatchForLROBody(pkg: go.FakePackage, receiverName: string, method: g
   content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n\n';
 
   const formattedStatusCodes = helpers.formatStatusCodes(getMethodStatusCodes(method));
-  content += `\tif !contains([]int{${formattedStatusCodes}}, resp.StatusCode) {\n`;
+  content += `\tif !slices.Contains([]int{${formattedStatusCodes}}, resp.StatusCode) {\n`;
   content += `\t\t${operationStateMachine}.remove(req)\n`;
   content += `\t\treturn nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", resp.StatusCode)}\n\t}\n`;
 
@@ -818,7 +819,7 @@ function dispatchForPagerBody(pkg: go.FakePackage, receiverName: string, method:
   content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
 
   const formattedStatusCodes = helpers.formatStatusCodes(method.httpStatusCodes);
-  content += `\tif !contains([]int{${formattedStatusCodes}}, resp.StatusCode) {\n`;
+  content += `\tif !slices.Contains([]int{${formattedStatusCodes}}, resp.StatusCode) {\n`;
   content += `\t\t${operationStateMachine}.remove(req)\n`;
   content += `\t\treturn nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", resp.StatusCode)}\n\t}\n`;
 
@@ -937,40 +938,16 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
     // contains the unescaped value.
     let paramValue = getRawParamValue(param);
 
-    // path/query params might be escaped, so we need to unescape them first.
-    // must handle query collections first as it's a superset of query param.
-    if (param.kind === 'queryCollectionParam' && param.collectionFormat === 'multi') {
+    // path params are escaped, so we need to unescape them first.
+    if (go.isPathParameter(param)) {
       imports.add('net/url');
-      const escapedParam = createLocalVariableName(param, 'Escaped');
-      content += `\t${escapedParam} := ${paramValue}\n`;
-      let paramVar = createLocalVariableName(param, 'Unescaped');
-      if (param.type.elementType.kind === 'string') {
-        // by convention, if the value is in its "final form" (i.e. no parsing required)
-        // then its var is to have the "Param" suffix. the only case is string, everything
-        // else requires some amount of parsing/conversion.
-        paramVar = createLocalVariableName(param, 'Param');
-      }
-      content += `\t${paramVar} := make([]string, len(${escapedParam}))\n`;
-      content += `\tfor i, v := range ${escapedParam} {\n`;
-      content += '\t\tu, unescapeErr := url.QueryUnescape(v)\n';
-      content += '\t\tif unescapeErr != nil {\n\t\t\treturn nil, unescapeErr\n\t\t}\n';
-      content += `\t\t${paramVar}[i] = u\n\t}\n`;
-      paramValue = paramVar;
-    } else if (go.isPathParameter(param) || go.isQueryParameter(param)) {
-      imports.add('net/url');
-      let where: string;
-      if (go.isPathParameter(param)) {
-        where = 'Path';
-      } else {
-        where = 'Query';
-      }
       let paramVar = createLocalVariableName(param, 'Unescaped');
       if (go.isRequiredParameter(param.style) && param.type.kind === 'constant' && param.type.type === 'string') {
         // for string-based enums, we perform the conversion as part of unescaping
         requiredHelpers.parseWithCast = true;
         paramVar = createLocalVariableName(param, 'Param');
         content += `\t${paramVar}, err := parseWithCast(${paramValue}, func (v string) (${go.getTypeDeclaration(param.type, pkg)}, error) {\n`;
-        content += `\t\tp, unescapeErr := url.${where}Unescape(v)\n`;
+        content += `\t\tp, unescapeErr := url.PathUnescape(v)\n`;
         content += '\t\tif unescapeErr != nil {\n\t\t\treturn "", unescapeErr\n\t\t}\n';
         content += `\t\treturn ${go.getTypeDeclaration(param.type, pkg)}(p), nil\n\t})\n`;
       } else {
@@ -980,7 +957,7 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
           // else requires some amount of parsing/conversion.
           paramVar = createLocalVariableName(param, 'Param');
         }
-        content += `\t${paramVar}, err := url.${where}Unescape(${paramValue})\n`;
+        content += `\t${paramVar}, err := url.PathUnescape(${paramValue})\n`;
       }
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
       paramValue = paramVar;
@@ -1358,8 +1335,8 @@ function getFinalParamValue(pkg: go.FakePackage, param: go.MethodParameter, para
         requiredHelpers.splitHelper = true;
         return `splitHelper(${paramValue}, "${helpers.getDelimiterForCollectionFormat(param.collectionFormat)}")`;
       }
-    } else if (go.isHeaderParameter(param) && param.type.kind === 'constant' && param.type.type === 'string') {
-      // since headers aren't escaped, we cast required, string-based enums inline
+    } else if ((go.isHeaderParameter(param) || go.isQueryParameter(param)) && param.type.kind === 'constant' && param.type.type === 'string') {
+      // query params from req.URL.Query() are already decoded, so like headers we cast required, string-based enums inline
       return `${go.getTypeDeclaration(param.type, pkg)}(${paramValue})`;
     }
   } else if (param.kind === 'partialBodyParam') {

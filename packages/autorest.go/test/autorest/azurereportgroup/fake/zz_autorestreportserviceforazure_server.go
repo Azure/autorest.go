@@ -14,7 +14,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
+	"slices"
 )
 
 // AutoRestReportServiceForAzureServer is a fake server for instances of the azurereportgroup.AutoRestReportServiceForAzureClient type.
@@ -81,11 +81,7 @@ func (a *AutoRestReportServiceForAzureServerTransport) dispatchGetReport(req *ht
 		return nil, &nonRetriableError{errors.New("fake for method GetReport not implemented")}
 	}
 	qp := req.URL.Query()
-	qualifierUnescaped, err := url.QueryUnescape(qp.Get("qualifier"))
-	if err != nil {
-		return nil, err
-	}
-	qualifierParam := getOptional(qualifierUnescaped)
+	qualifierParam := getOptional(qp.Get("qualifier"))
 	var options *azurereportgroup.AutoRestReportServiceForAzureClientGetReportOptions
 	if qualifierParam != nil {
 		options = &azurereportgroup.AutoRestReportServiceForAzureClientGetReportOptions{
@@ -97,7 +93,7 @@ func (a *AutoRestReportServiceForAzureServerTransport) dispatchGetReport(req *ht
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Value, req)

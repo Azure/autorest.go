@@ -23,15 +23,6 @@ func (nonRetriableError) NonRetriable() {
 	// marker method
 }
 
-func contains[T comparable](s []T, v T) bool {
-	for _, vv := range s {
-		if vv == v {
-			return true
-		}
-	}
-	return false
-}
-
 func readRequestBody(req *http.Request) ([]byte, error) {
 	if req.Body == nil {
 		return nil, nil

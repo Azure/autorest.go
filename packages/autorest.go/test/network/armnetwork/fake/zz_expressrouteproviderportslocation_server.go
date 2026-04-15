@@ -14,8 +14,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"net/url"
 	"regexp"
+	"slices"
 )
 
 // ExpressRouteProviderPortsLocationServer is a fake server for instances of the armnetwork.ExpressRouteProviderPortsLocationClient type.
@@ -88,11 +88,7 @@ func (e *ExpressRouteProviderPortsLocationServerTransport) dispatchList(req *htt
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	filterUnescaped, err := url.QueryUnescape(qp.Get("$filter"))
-	if err != nil {
-		return nil, err
-	}
-	filterParam := getOptional(filterUnescaped)
+	filterParam := getOptional(qp.Get("$filter"))
 	var options *armnetwork.ExpressRouteProviderPortsLocationClientListOptions
 	if filterParam != nil {
 		options = &armnetwork.ExpressRouteProviderPortsLocationClientListOptions{
@@ -104,7 +100,7 @@ func (e *ExpressRouteProviderPortsLocationServerTransport) dispatchList(req *htt
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ExpressRouteProviderPortListResult, req)

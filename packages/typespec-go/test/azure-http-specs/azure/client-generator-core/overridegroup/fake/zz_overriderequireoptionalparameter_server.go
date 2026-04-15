@@ -15,6 +15,7 @@ import (
 	"net/url"
 	"overridegroup"
 	"regexp"
+	"slices"
 )
 
 // OverrideRequireOptionalParameterServer is a fake server for instances of the overridegroup.OverrideRequireOptionalParameterClient type.
@@ -99,7 +100,7 @@ func (o *OverrideRequireOptionalParameterServerTransport) dispatchRequireOptiona
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
