@@ -33,7 +33,7 @@ func ExampleAccountsClient_CheckNameAvailability() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcodesigning.AccountsClientCheckNameAvailabilityResponse{
-	// 	CheckNameAvailabilityResult: &armcodesigning.CheckNameAvailabilityResult{
+	// 	CheckNameAvailabilityResult: armcodesigning.CheckNameAvailabilityResult{
 	// 		NameAvailable: to.Ptr(true),
 	// 	},
 	// }
@@ -63,13 +63,13 @@ func ExampleAccountsClient_BeginCreate() {
 	}
 	res, err := poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcodesigning.AccountsClientCreateResponse{
-	// 	Account: &armcodesigning.Account{
+	// 	Account: armcodesigning.Account{
 	// 		Name: to.Ptr("MyAccount"),
 	// 		Type: to.Ptr("Microsoft.CodeSigning/codeSigningAccounts"),
 	// 		ID: to.Ptr("/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/MyResourceGroup/providers/Microsoft.CodeSigning/codeSigningAccounts/MyAccount"),
@@ -101,7 +101,7 @@ func ExampleAccountsClient_BeginDelete() {
 	}
 	_, err = poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 }
 
@@ -124,7 +124,7 @@ func ExampleAccountsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcodesigning.AccountsClientGetResponse{
-	// 	Account: &armcodesigning.Account{
+	// 	Account: armcodesigning.Account{
 	// 		Name: to.Ptr("MyAccount"),
 	// 		Type: to.Ptr("Microsoft.CodeSigning/codeSigningAccounts"),
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/MyResourceGroup/providers/Microsoft.CodeSigning/codeSigningAccounts/MyAccount"),
@@ -255,13 +255,13 @@ func ExampleAccountsClient_BeginUpdate() {
 	}
 	res, err := poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcodesigning.AccountsClientUpdateResponse{
-	// 	Account: &armcodesigning.Account{
+	// 	Account: armcodesigning.Account{
 	// 		Name: to.Ptr("MyAccount"),
 	// 		Type: to.Ptr("Microsoft.CodeSigning/codeSigningAccounts"),
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/MyResourceGroup/providers/Microsoft.CodeSigning/codeSigningAccounts/MyAccount"),

@@ -276,6 +276,9 @@ enum ImmutabilityPolicySetting {
   /** The immutability policy is unlocked. */
   Unlocked: "unlocked",
 }
+/** Represents an array of signed identifiers */
+@clientName("SignedIdentifiers", "go")
+model SignedIdentifiersGo is Array<SignedIdentifier>;
 @@alternateType(AccessPolicy.start, utcDateTime, "go");
 @@alternateType(AccessPolicy.expiry, utcDateTime, "go");
 @@alternateType(BlobItem.name, string, "go");
@@ -286,6 +289,7 @@ enum ImmutabilityPolicySetting {
 @@alternateType(BlockLookupList.latest, string[], "go");
 @@alternateType(EncryptionAlgorithmParameter.encryptionAlgorithm, EncryptionAlgorithmTypeGo, "go");
 @@alternateType(ImmutabilityPolicyModeParameter.immutabilityPolicyMode, ImmutabilityPolicySetting, "go");
+@@alternateType(SignedIdentifiers, SignedIdentifiersGo, "go");
 @@alternateType(SourceEncryptionAlgorithmParameter.sourceEncryptionAlgorithm, EncryptionAlgorithmTypeGo, "go");
 @@alternateType(ListBlobsIncludeParameter.include, ListBlobsIncludeItemGo[], "go");
 @@alternateType(UserDelegationKey.signedExpiry, utcDateTime, "go");
@@ -314,7 +318,7 @@ enum ImmutabilityPolicySetting {
 @@clientName(UserDelegationKey.signedDelegatedUserTid, "SignedDelegatedUserTID", "go");
 @@clientName(UserDelegationKey.signedOid, "SignedOID", "go");
 @@clientName(UserDelegationKey.signedTid, "SignedTID", "go");
-
+@@alternateType(ParquetConfiguration, Record<string>, "go");
 @@alternateType(AccessPolicy.start, string, "python");
 @@alternateType(AccessPolicy.expiry, string, "python");
 

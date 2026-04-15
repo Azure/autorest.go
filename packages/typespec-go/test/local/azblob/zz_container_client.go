@@ -6,10 +6,12 @@ package azblob
 
 import (
 	"context"
+	"encoding/xml"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"net/http"
 	"strconv"
@@ -63,10 +65,10 @@ func (client *ContainerClient) acquireLeaseCreateRequest(ctx context.Context, du
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfModifiedSince != nil {
-		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Modified-Since"] = []string{datetime.RFC1123(*options.IfModifiedSince).String()}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
-		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Unmodified-Since"] = []string{datetime.RFC1123(*options.IfUnmodifiedSince).String()}
 	}
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
@@ -152,10 +154,10 @@ func (client *ContainerClient) breakLeaseCreateRequest(ctx context.Context, opti
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfModifiedSince != nil {
-		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Modified-Since"] = []string{datetime.RFC1123(*options.IfModifiedSince).String()}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
-		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Unmodified-Since"] = []string{datetime.RFC1123(*options.IfUnmodifiedSince).String()}
 	}
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
@@ -247,10 +249,10 @@ func (client *ContainerClient) changeLeaseCreateRequest(ctx context.Context, lea
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfModifiedSince != nil {
-		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Modified-Since"] = []string{datetime.RFC1123(*options.IfModifiedSince).String()}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
-		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Unmodified-Since"] = []string{datetime.RFC1123(*options.IfUnmodifiedSince).String()}
 	}
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
@@ -425,10 +427,10 @@ func (client *ContainerClient) deleteCreateRequest(ctx context.Context, options 
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfModifiedSince != nil {
-		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Modified-Since"] = []string{datetime.RFC1123(*options.IfModifiedSince).String()}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
-		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Unmodified-Since"] = []string{datetime.RFC1123(*options.IfUnmodifiedSince).String()}
 	}
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
@@ -628,7 +630,7 @@ func (client *ContainerClient) getAccessPolicyHandleResponse(resp *http.Response
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
 	}
-	if err := runtime.UnmarshalAsXML(resp, &result.SignedIdentifiers); err != nil {
+	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
 		return ContainerClientGetAccessPolicyResponse{}, err
 	}
 	return result, nil
@@ -1065,10 +1067,10 @@ func (client *ContainerClient) releaseLeaseCreateRequest(ctx context.Context, le
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfModifiedSince != nil {
-		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Modified-Since"] = []string{datetime.RFC1123(*options.IfModifiedSince).String()}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
-		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Unmodified-Since"] = []string{datetime.RFC1123(*options.IfUnmodifiedSince).String()}
 	}
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
@@ -1218,10 +1220,10 @@ func (client *ContainerClient) renewLeaseCreateRequest(ctx context.Context, leas
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfModifiedSince != nil {
-		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Modified-Since"] = []string{datetime.RFC1123(*options.IfModifiedSince).String()}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
-		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Unmodified-Since"] = []string{datetime.RFC1123(*options.IfUnmodifiedSince).String()}
 	}
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
@@ -1345,7 +1347,7 @@ func (client *ContainerClient) restoreHandleResponse(resp *http.Response) (Conta
 //   - containerACL - The access control list for the container.
 //   - options - ContainerClientSetAccessPolicyOptions contains the optional parameters for the ContainerClient.SetAccessPolicy
 //     method.
-func (client *ContainerClient) SetAccessPolicy(ctx context.Context, containerACL SignedIdentifiers, options *ContainerClientSetAccessPolicyOptions) (ContainerClientSetAccessPolicyResponse, error) {
+func (client *ContainerClient) SetAccessPolicy(ctx context.Context, containerACL []*SignedIdentifier, options *ContainerClientSetAccessPolicyOptions) (ContainerClientSetAccessPolicyResponse, error) {
 	var err error
 	req, err := client.setAccessPolicyCreateRequest(ctx, containerACL, options)
 	if err != nil {
@@ -1364,7 +1366,7 @@ func (client *ContainerClient) SetAccessPolicy(ctx context.Context, containerACL
 }
 
 // setAccessPolicyCreateRequest creates the SetAccessPolicy request.
-func (client *ContainerClient) setAccessPolicyCreateRequest(ctx context.Context, containerACL SignedIdentifiers, options *ContainerClientSetAccessPolicyOptions) (*policy.Request, error) {
+func (client *ContainerClient) setAccessPolicyCreateRequest(ctx context.Context, containerACL []*SignedIdentifier, options *ContainerClientSetAccessPolicyOptions) (*policy.Request, error) {
 	urlPath := "?restype=container&comp=acl"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
@@ -1376,10 +1378,10 @@ func (client *ContainerClient) setAccessPolicyCreateRequest(ctx context.Context,
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfModifiedSince != nil {
-		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Modified-Since"] = []string{datetime.RFC1123(*options.IfModifiedSince).String()}
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
-		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Unmodified-Since"] = []string{datetime.RFC1123(*options.IfUnmodifiedSince).String()}
 	}
 	if options != nil && options.Access != nil {
 		req.Raw().Header["x-ms-blob-public-access"] = []string{string(*options.Access)}
@@ -1391,8 +1393,12 @@ func (client *ContainerClient) setAccessPolicyCreateRequest(ctx context.Context,
 		req.Raw().Header["x-ms-lease-id"] = []string{*options.LeaseID}
 	}
 	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
+	type wrapper struct {
+		XMLName      xml.Name             `xml:"SignedIdentifiers"`
+		ContainerACL *[]*SignedIdentifier `xml:"SignedIdentifier"`
+	}
 	req.Raw().Header["Content-Type"] = []string{"application/xml"}
-	if err := runtime.MarshalAsXML(req, containerACL); err != nil {
+	if err := runtime.MarshalAsXML(req, wrapper{ContainerACL: &containerACL}); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -1466,7 +1472,7 @@ func (client *ContainerClient) setMetadataCreateRequest(ctx context.Context, opt
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfModifiedSince != nil {
-		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Modified-Since"] = []string{datetime.RFC1123(*options.IfModifiedSince).String()}
 	}
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}

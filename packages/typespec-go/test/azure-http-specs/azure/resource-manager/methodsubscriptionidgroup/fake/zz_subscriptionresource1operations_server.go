@@ -57,9 +57,7 @@ func (s *SubscriptionResource1OperationsServerTransport) Do(req *http.Request) (
 }
 
 func (s *SubscriptionResource1OperationsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	resultChan := make(chan result)
-	defer close(resultChan)
-
+	resultChan := make(chan result, 1)
 	go func() {
 		var intercepted bool
 		var res result
@@ -79,10 +77,7 @@ func (s *SubscriptionResource1OperationsServerTransport) dispatchToMethodFake(re
 			}
 
 		}
-		select {
-		case resultChan <- res:
-		case <-req.Context().Done():
-		}
+		resultChan <- res
 	}()
 
 	select {

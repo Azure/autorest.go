@@ -416,11 +416,6 @@ type PageRange struct {
 	Start *int64 `xml:"Start"`
 }
 
-// ParquetConfiguration - Represents the Parquet configuration.
-type ParquetConfiguration struct {
-	AdditionalProperties map[string]any
-}
-
 // Prefix - Represents a blob prefix.
 type Prefix struct {
 	// REQUIRED; The blob name.
@@ -565,7 +560,7 @@ type QueryFormat struct {
 	JSONTextConfiguration *JSONTextConfiguration `xml:"JsonTextConfiguration"`
 
 	// The Parquet configuration.
-	ParquetTextConfiguration *ParquetConfiguration `xml:"ParquetConfiguration"`
+	ParquetTextConfiguration map[string]*string `xml:"ParquetConfiguration"`
 }
 
 // QueryRequest - Groups the set of query request settings.
@@ -608,12 +603,6 @@ type SignedIdentifier struct {
 
 	// REQUIRED; The unique ID for the signed identifier.
 	ID *string `xml:"Id"`
-}
-
-// SignedIdentifiers - Represents an array of signed identifiers
-type SignedIdentifiers struct {
-	// REQUIRED; The array of signed identifiers.
-	Items []*SignedIdentifier `xml:"SignedIdentifier"`
 }
 
 // StaticWebsite - The properties that enable an account to host a static website

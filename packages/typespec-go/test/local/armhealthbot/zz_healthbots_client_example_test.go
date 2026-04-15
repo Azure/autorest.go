@@ -43,13 +43,13 @@ func ExampleHealthBotsClient_BeginCreate() {
 	}
 	res, err := poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armhealthbot.HealthBotsClientCreateResponse{
-	// 	HealthBot: &armhealthbot.HealthBot{
+	// 	HealthBot: armhealthbot.HealthBot{
 	// 		Name: to.Ptr("samplebotname"),
 	// 		Type: to.Ptr("Microsoft.HealthBot/healthBots"),
 	// 		ID: to.Ptr("/subscriptions/subscription-id/resourceGroups/OneResourceGroupName/providers/Microsoft.HealthBot/healthBots/samplebotname"),
@@ -102,7 +102,7 @@ func ExampleHealthBotsClient_BeginDelete() {
 	}
 	res, err := poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
@@ -130,7 +130,7 @@ func ExampleHealthBotsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armhealthbot.HealthBotsClientGetResponse{
-	// 	HealthBot: &armhealthbot.HealthBot{
+	// 	HealthBot: armhealthbot.HealthBot{
 	// 		Name: to.Ptr("samplebotname"),
 	// 		Type: to.Ptr("Microsoft.HealthBot/healthBots"),
 	// 		ID: to.Ptr("/subscriptions/subscription-id/resourceGroups/OneResourceGroupName/providers/Microsoft.HealthBot/healthBots/samplebotname"),
@@ -333,7 +333,7 @@ func ExampleHealthBotsClient_ListSecrets() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armhealthbot.HealthBotsClientListSecretsResponse{
-	// 	KeysResponse: &armhealthbot.KeysResponse{
+	// 	KeysResponse: armhealthbot.KeysResponse{
 	// 		Secrets: []*armhealthbot.Key{
 	// 			{
 	// 				KeyName: to.Ptr("APP_SECRET"),
@@ -371,7 +371,7 @@ func ExampleHealthBotsClient_RegenerateAPIJwtSecret() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armhealthbot.HealthBotsClientRegenerateAPIJwtSecretResponse{
-	// 	Key: &armhealthbot.Key{
+	// 	Key: armhealthbot.Key{
 	// 		KeyName: to.Ptr("API_JWT_SECRET"),
 	// 		Value: to.Ptr("XXXXX"),
 	// 	},
@@ -399,7 +399,7 @@ func ExampleHealthBotsClient_BeginUpdate() {
 	}
 	res, err := poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res

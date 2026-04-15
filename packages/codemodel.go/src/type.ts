@@ -346,7 +346,11 @@ export interface XMLInfo {
   /** element name to use instead of the default name */
   name?: string;
 
-  /** name propagated to the generated wrapper type */
+  /**
+   * name propagated to the generated wrapper type.
+   * this is used solely in method bodies to generate
+   * a "type wrapper struct" with the specified name.
+   */
   wrapper?: string;
 
   /** slices only. this is the name of the wrapped type */

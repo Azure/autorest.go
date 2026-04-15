@@ -30,7 +30,7 @@ func ExampleRaiContentFiltersClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.RaiContentFiltersClientGetResponse{
-	// 	RaiContentFilter: &armcognitiveservices.RaiContentFilter{
+	// 	RaiContentFilter: armcognitiveservices.RaiContentFilter{
 	// 		Name: to.Ptr("IndirectAttack"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/locations/raiContentFilters"),
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.CognitiveServices/locations/WestUS/raiContentFilters/IndirectAttack"),

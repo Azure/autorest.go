@@ -297,6 +297,18 @@ func (s ServiceProperties) MarshalXML(enc *xml.Encoder, start xml.StartElement) 
 	return enc.EncodeElement(aux, start)
 }
 
+// MarshalXML implements the xml.Marshaller interface for type ServiceStats.
+func (s ServiceStats) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "StorageServiceStats"
+	type alias ServiceStats
+	aux := &struct {
+		*alias
+	}{
+		alias: (*alias)(&s),
+	}
+	return enc.EncodeElement(aux, start)
+}
+
 func populate(m map[string]any, k string, v any) {
 	if v == nil {
 		return

@@ -14,7 +14,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"net/http"
-	"time"
 )
 
 // DatetimeResponseHeaderServer is a fake server for instances of the datetimegroup.DatetimeResponseHeaderClient type.
@@ -61,9 +60,7 @@ func (d *DatetimeResponseHeaderServerTransport) Do(req *http.Request) (*http.Res
 }
 
 func (d *DatetimeResponseHeaderServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	resultChan := make(chan result)
-	defer close(resultChan)
-
+	resultChan := make(chan result, 1)
 	go func() {
 		var intercepted bool
 		var res result
@@ -85,10 +82,7 @@ func (d *DatetimeResponseHeaderServerTransport) dispatchToMethodFake(req *http.R
 			}
 
 		}
-		select {
-		case resultChan <- res:
-		case <-req.Context().Done():
-		}
+		resultChan <- res
 	}()
 
 	select {
@@ -116,7 +110,7 @@ func (d *DatetimeResponseHeaderServerTransport) dispatchDefault(req *http.Reques
 		return nil, err
 	}
 	if val := server.GetResponse(respr).Value; val != nil {
-		resp.Header.Set("value", val.Format(time.RFC1123))
+		resp.Header.Set("value", datetime.RFC1123(*val).String())
 	}
 	return resp, nil
 }
@@ -138,7 +132,7 @@ func (d *DatetimeResponseHeaderServerTransport) dispatchRFC3339(req *http.Reques
 		return nil, err
 	}
 	if val := server.GetResponse(respr).Value; val != nil {
-		resp.Header.Set("value", val.Format(time.RFC3339Nano))
+		resp.Header.Set("value", datetime.RFC3339(*val).String())
 	}
 	return resp, nil
 }
@@ -160,7 +154,7 @@ func (d *DatetimeResponseHeaderServerTransport) dispatchRFC7231(req *http.Reques
 		return nil, err
 	}
 	if val := server.GetResponse(respr).Value; val != nil {
-		resp.Header.Set("value", val.Format(time.RFC1123))
+		resp.Header.Set("value", datetime.RFC1123(*val).String())
 	}
 	return resp, nil
 }

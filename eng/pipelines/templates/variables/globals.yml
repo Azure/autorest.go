@@ -1,9 +1,9 @@
 variables:
   - name: GoVersionLatest
-    value: "1.25.4"
+    value: "1.26.1"
   - name: GoVersionPrevious
-    value: "1.24.10"
+    value: "1.25.8"
   - name: NodeVersion
-    value: "20.x"
+    value: "24.x"
   - name: GoLintCLIVersion
-    value: "v2.6.2"
+    value: "v2.11.4"

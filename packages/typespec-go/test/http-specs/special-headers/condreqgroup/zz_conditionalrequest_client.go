@@ -9,8 +9,8 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime"
 	"net/http"
-	"time"
 )
 
 // ConditionalRequestClient - Illustrates conditional request headers
@@ -75,7 +75,7 @@ func (client *ConditionalRequestClient) headIfModifiedSinceCreateRequest(ctx con
 		return nil, err
 	}
 	if options != nil && options.IfModifiedSince != nil {
-		req.Raw().Header["If-Modified-Since"] = []string{options.IfModifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Modified-Since"] = []string{datetime.RFC1123(*options.IfModifiedSince).String()}
 	}
 	return req, nil
 }
@@ -189,7 +189,7 @@ func (client *ConditionalRequestClient) postIfUnmodifiedSinceCreateRequest(ctx c
 		return nil, err
 	}
 	if options != nil && options.IfUnmodifiedSince != nil {
-		req.Raw().Header["If-Unmodified-Since"] = []string{options.IfUnmodifiedSince.Format(time.RFC1123)}
+		req.Raw().Header["If-Unmodified-Since"] = []string{datetime.RFC1123(*options.IfUnmodifiedSince).String()}
 	}
 	return req, nil
 }

@@ -569,7 +569,12 @@ export class TypeAdapter {
     } else {
       modelType = new go.Model(this.getPkg(), modelName, annotations, usage);
       // polymorphic types don't have XMLInfo
-      modelType.xml = helpers.adaptXMLInfo(this.getPkg(), model.decorators);
+      modelType.xml = helpers.adaptXMLInfo({
+        goTypeName: modelType.name,
+        orTypeName: model.name,
+        type: modelType,
+        xml: model.serializationOptions.xml,
+      });
       // set namespace from serialization options if available
       if (model.serializationOptions.xml?.ns) {
         if (!modelType.xml) {
@@ -652,12 +657,12 @@ export class TypeAdapter {
       field.defaultValue = this.getDiscriminatorLiteral(prop);
     }
 
-    field.xml = helpers.adaptXMLInfo(this.getPkg(), prop.decorators, field);
-
-    // for wrapped arrays, use the TCGC item name if available
-    if (field.xml?.wraps && prop.serializationOptions.xml?.itemsName) {
-      field.xml.wraps = prop.serializationOptions.xml.itemsName;
-    }
+    field.xml = helpers.adaptXMLInfo({
+      goTypeName: field.name,
+      orTypeName: serializedName,
+      type: type,
+      xml: prop.serializationOptions.xml,
+    });
 
     // set field namespace from serialization options if available
     if (prop.serializationOptions.xml?.ns) {

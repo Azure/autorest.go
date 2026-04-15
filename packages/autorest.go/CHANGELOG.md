@@ -5,6 +5,12 @@
 ### Bugs Fixed
 
 * Fixed duplicate definition of `fake.initServer` that can happen in some cases.
+* Fixed some incorrect un/marshaling for XML payloads.
+* Fixed a race condition in fake servers.
+
+### Other Changes
+
+* Use `datetime` helpers when formatting `time.Time` parameters.
 
 ## 4.0.0-preview.76 (2026-01-15)
 

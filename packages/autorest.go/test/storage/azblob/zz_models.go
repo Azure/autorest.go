@@ -187,7 +187,7 @@ type GeoReplication struct {
 type HierarchyListSegment struct {
 	// REQUIRED
 	BlobItems    []*ItemInternal `xml:"Blob"`
-	BlobPrefixes []*Prefix       `xml:"Prefix"`
+	BlobPrefixes []*Prefix       `xml:"BlobPrefix"`
 }
 
 // ItemInternal - An Azure Storage blob

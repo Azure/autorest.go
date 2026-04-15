@@ -60,9 +60,7 @@ func (l *LogAnalyticsServerTransport) Do(req *http.Request) (*http.Response, err
 }
 
 func (l *LogAnalyticsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	resultChan := make(chan result)
-	defer close(resultChan)
-
+	resultChan := make(chan result, 1)
 	go func() {
 		var intercepted bool
 		var res result
@@ -80,10 +78,7 @@ func (l *LogAnalyticsServerTransport) dispatchToMethodFake(req *http.Request, me
 			}
 
 		}
-		select {
-		case resultChan <- res:
-		case <-req.Context().Done():
-		}
+		resultChan <- res
 	}()
 
 	select {

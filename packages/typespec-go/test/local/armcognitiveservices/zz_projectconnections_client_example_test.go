@@ -39,7 +39,7 @@ func ExampleProjectConnectionsClient_Create() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.ProjectConnectionsClientCreateResponse{
-	// 	ConnectionPropertiesV2BasicResource: &armcognitiveservices.ConnectionPropertiesV2BasicResource{
+	// 	ConnectionPropertiesV2BasicResource: armcognitiveservices.ConnectionPropertiesV2BasicResource{
 	// 		Name: to.Ptr("connection-1"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/projects/connections"),
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup-1/providers/Microsoft.CognitiveServices/accounts/account-1/projects/project-1/connections/connection-1"),
@@ -94,7 +94,7 @@ func ExampleProjectConnectionsClient_Get() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.ProjectConnectionsClientGetResponse{
-	// 	ConnectionPropertiesV2BasicResource: &armcognitiveservices.ConnectionPropertiesV2BasicResource{
+	// 	ConnectionPropertiesV2BasicResource: armcognitiveservices.ConnectionPropertiesV2BasicResource{
 	// 		Name: to.Ptr("connection-1"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/projects/connections"),
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup-1/providers/Microsoft.CognitiveServices/accounts/account-1/projects/project-1/connections/connection-1"),
@@ -193,7 +193,7 @@ func ExampleProjectConnectionsClient_Update() {
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.ProjectConnectionsClientUpdateResponse{
-	// 	ConnectionPropertiesV2BasicResource: &armcognitiveservices.ConnectionPropertiesV2BasicResource{
+	// 	ConnectionPropertiesV2BasicResource: armcognitiveservices.ConnectionPropertiesV2BasicResource{
 	// 		Name: to.Ptr("connection-1"),
 	// 		Type: to.Ptr("Microsoft.CognitiveServices/accounts/projects/connections"),
 	// 		ID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup-1/providers/Microsoft.CognitiveServices/accounts/account-1/projects/project-1/connections/connection-1"),

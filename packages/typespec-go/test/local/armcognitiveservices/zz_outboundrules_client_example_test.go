@@ -41,13 +41,13 @@ func ExampleOutboundRulesClient_BeginPost() {
 	}
 	res, err := poller.PollUntilDone(ctx, nil)
 	if err != nil {
-		log.Fatalf("failed to pull the result: %v", err)
+		log.Fatalf("failed to poll the result: %v", err)
 	}
 	// You could use response here. We use blank identifier for just demo purposes.
 	_ = res
 	// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 	// res = armcognitiveservices.OutboundRulesClientPostResponse{
-	// 	OutboundRuleListResult: &armcognitiveservices.OutboundRuleListResult{
+	// 	OutboundRuleListResult: armcognitiveservices.OutboundRuleListResult{
 	// 		Value: []*armcognitiveservices.OutboundRuleBasicResource{
 	// 			{
 	// 				Name: to.Ptr("rule_name_1"),
