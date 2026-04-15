@@ -123,3 +123,7 @@ model QueueItem {
 @get
 @route("/xml-get-queue")
 op getQueue(): ContentXml & QueueItem;
+
+@post
+@route("/fixed-param-name")
+op withExpandParam(@query("$expand") $expand: string, @query("$top") $top?: int32): void;

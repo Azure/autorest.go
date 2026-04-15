@@ -61,3 +61,8 @@ type ClientOptionalBodyPostResponse struct {
 type ClientSpreadWithModelResponse struct {
 	// placeholder for future response values
 }
+
+// ClientWithExpandParamResponse contains the response from method Client.WithExpandParam.
+type ClientWithExpandParamResponse struct {
+	// placeholder for future response values
+}

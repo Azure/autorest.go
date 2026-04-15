@@ -71,7 +71,8 @@ function deconstruct(identifier: string): Array<string> {
     .replace(/([a-z]+)([A-Z])/g, '$1 $2')
     .replace(/(\d+)([a-z|A-Z]+)/g, '$1 $2')
     .replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3')
-    .split(/[\W|_|.|@|-|\s|$]+/);
+    .split(/[\W|_|.|@|-|\s|$]+/)
+    .filter((each) => each.length > 0);
 }
 
 // removes pkg from val based on some heuristics
