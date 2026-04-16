@@ -16,13 +16,14 @@ import * as go from '../../../codemodel.go/src/index.js';
 export function generateVersionInfo(module: go.Module): string {
   let text = helpers.contentPreamble(module, false);
 
+  const indent = new helpers.Indentation();
   text += 'const (\n';
   // strip off any major version suffix. this is for telemetry
   // purposes, so all major versions coalesce into the same bucket
-  text += `\tmoduleName = "${module.identity.replace(/\/v\d+$/, '')}"\n`;
+  text += `${indent.get()}moduleName = "${module.identity.replace(/\/v\d+$/, '')}"\n`;
 
   // for new modules, we seed the moduleVersion with a prerelease version
-  text += '\tmoduleVersion = "v0.1.0"\n';
+  text += `${indent.get()}moduleVersion = "v0.1.0"\n`;
   text += ')\n\n';
 
   return text;

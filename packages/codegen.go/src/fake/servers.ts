@@ -71,6 +71,8 @@ export function generateServers(pkg: go.FakePackage, target: go.CodeModelType): 
     content = `// ${serverName} is a fake server for instances of the ${go.getTypeDeclaration(client, pkg)} type.\n`;
     content += `type ${serverName} struct{\n`;
 
+    const indent = new helpers.Indentation();
+
     // we might remove some operations from the list
     const finalMethods = new Array<go.MethodType>();
     let countLROs = 0;
@@ -85,8 +87,8 @@ export function generateServers(pkg: go.FakePackage, target: go.CodeModelType): 
         continue;
       }
       const serverName = getServerName(clientAccessor.returns);
-      content += `\t// ${serverName} contains the fakes for client ${clientAccessor.returns.name}\n`;
-      content += `\t${serverName} ${serverName}\n\n`;
+      content += `${indent.get()}// ${serverName} contains the fakes for client ${clientAccessor.returns.name}\n`;
+      content += `${indent.get()}${serverName} ${serverName}\n\n`;
       finalSubClients.push(clientAccessor.returns);
     }
 
@@ -116,7 +118,7 @@ export function generateServers(pkg: go.FakePackage, target: go.CodeModelType): 
       }
 
       const operationName = fixUpMethodName(method);
-      content += `\t// ${operationName} is the fake for method ${client.name}.${operationName}\n`;
+      content += `${indent.get()}// ${operationName} is the fake for method ${client.name}.${operationName}\n`;
       const successCodes = new Array<string>();
       if (method.returns.result?.kind === 'anyResult') {
         for (const httpStatus of getMethodStatusCodes(method)) {
@@ -128,17 +130,17 @@ export function generateServers(pkg: go.FakePackage, target: go.CodeModelType): 
           }
           successCodes.push(`${helpers.formatStatusCode(httpStatus)} (returns ${go.getTypeDeclaration(result, pkg)})`);
         }
-        content += '\t// HTTP status codes to indicate success:\n';
+        content += `${indent.get()}// HTTP status codes to indicate success:\n`;
         for (const successCode of successCodes) {
-          content += `\t//   - ${successCode}\n`;
+          content += `${indent.get()}//   - ${successCode}\n`;
         }
       } else {
         for (const statusCode of getMethodStatusCodes(method)) {
           successCodes.push(`${helpers.formatStatusCode(statusCode)}`);
         }
-        content += `\t// HTTP status codes to indicate success: ${successCodes.join(', ')}\n`;
+        content += `${indent.get()}// HTTP status codes to indicate success: ${successCodes.join(', ')}\n`;
       }
-      content += `\t${operationName} func(${getAPIParametersSig(pkg, method, imports)}) (${serverResponse})\n\n`;
+      content += `${indent.get()}${operationName} func(${getAPIParametersSig(pkg, method, imports)}) (${serverResponse})\n\n`;
       finalMethods.push(method);
       switch (method.kind) {
         case 'lroMethod':
@@ -162,9 +164,11 @@ export function generateServers(pkg: go.FakePackage, target: go.CodeModelType): 
     content += "// azcore.ClientOptions.Transporter field in the client's constructor parameters.\n";
     content += `func New${serverTransport}(srv *${serverName}) *${serverTransport} {\n`;
     if (countLROs === 0 && countPagers === 0) {
-      content += `\treturn &${serverTransport}{srv: srv}\n}\n\n`;
+      content += `${indent.get()}return &${serverTransport}{srv: srv}\n}\n\n`;
     } else {
-      content += `\treturn &${serverTransport}{\n\t\tsrv: srv,\n`;
+      content += `${indent.get()}return &${serverTransport}{\n`;
+      indent.push();
+      content += `${indent.get()}srv: srv,\n`;
       for (const method of finalMethods) {
         let respType = go.getTypeDeclaration(method.returns, pkg);
         switch (method.kind) {
@@ -174,30 +178,31 @@ export function generateServers(pkg: go.FakePackage, target: go.CodeModelType): 
               respType = `azfake.PagerResponder[${go.getTypeDeclaration(method.returns, pkg)}]`;
             }
             requiredHelpers.tracker = true;
-            content += `\t\t${naming.uncapitalize(fixUpMethodName(method))}: newTracker[azfake.PollerResponder[${respType}]](),\n`;
+            content += `${indent.get()}${naming.uncapitalize(fixUpMethodName(method))}: newTracker[azfake.PollerResponder[${respType}]](),\n`;
             break;
           case 'pageableMethod':
             requiredHelpers.tracker = true;
-            content += `\t\t${naming.uncapitalize(fixUpMethodName(method))}: newTracker[azfake.PagerResponder[${respType}]](),\n`;
+            content += `${indent.get()}${naming.uncapitalize(fixUpMethodName(method))}: newTracker[azfake.PagerResponder[${respType}]](),\n`;
             break;
         }
       }
-      content += '\t}\n}\n\n';
+      indent.pop();
+      content += `${indent.get()}}\n}\n\n`;
     }
 
     content += `// ${serverTransport} connects instances of ${go.getTypeDeclaration(client, pkg)} to instances of ${serverName}.\n`;
     content += `// Don't use this type directly, use New${serverTransport} instead.\n`;
     content += `type ${serverTransport} struct {\n`;
-    content += `\tsrv *${serverName}\n`;
+    content += `${indent.get()}srv *${serverName}\n`;
 
     // add server transports for client accessors
     if (finalSubClients.length > 0) {
       requiredHelpers.initServer = true;
       imports.add('sync');
-      content += '\ttrMu sync.Mutex\n';
+      content += `${indent.get()}trMu sync.Mutex\n`;
       for (const subClient of finalSubClients) {
         const serverName = getServerName(subClient);
-        content += `\ttr${serverName} *${serverName}Transport\n`;
+        content += `${indent.get()}tr${serverName} *${serverName}Transport\n`;
       }
     }
 
@@ -211,25 +216,25 @@ export function generateServers(pkg: go.FakePackage, target: go.CodeModelType): 
             respType = `azfake.PagerResponder[${go.getTypeDeclaration(method.returns, pkg)}]`;
           }
           requiredHelpers.tracker = true;
-          content += `\t${naming.uncapitalize(fixUpMethodName(method))} *tracker[azfake.PollerResponder[${respType}]]\n`;
+          content += `${indent.get()}${naming.uncapitalize(fixUpMethodName(method))} *tracker[azfake.PollerResponder[${respType}]]\n`;
           break;
         case 'pageableMethod':
           requiredHelpers.tracker = true;
-          content += `\t${naming.uncapitalize(fixUpMethodName(method))} *tracker[azfake.PagerResponder[${go.getTypeDeclaration(method.returns, pkg)}]]\n`;
+          content += `${indent.get()}${naming.uncapitalize(fixUpMethodName(method))} *tracker[azfake.PagerResponder[${go.getTypeDeclaration(method.returns, pkg)}]]\n`;
           break;
       }
     }
     content += '}\n\n';
 
-    content += generateServerTransportDo(serverTransport, client, finalSubClients, finalMethods);
-    content += generateServerTransportClientDispatch(serverTransport, finalSubClients, imports);
-    content += generateServerTransportMethodDispatch(serverTransport, client, finalMethods);
-    content += generateServerTransportMethods(pkg, serverTransport, finalMethods, imports);
+    content += generateServerTransportDo(serverTransport, client, finalSubClients, finalMethods, indent);
+    content += generateServerTransportClientDispatch(serverTransport, finalSubClients, imports, indent);
+    content += generateServerTransportMethodDispatch(serverTransport, client, finalMethods, indent);
+    content += generateServerTransportMethods(pkg, serverTransport, finalMethods, imports, indent);
 
     content += `// set this to conditionally intercept incoming requests to ${serverTransport}\n`;
     content += `var ${getTransportInterceptorVarName(client)} interface {\n`;
-    content += '\t// Do returns true if the server transport should use the returned response/error\n';
-    content += '\tDo(*http.Request) (*http.Response, error, bool)\n}\n';
+    content += `${indent.get()}// Do returns true if the server transport should use the returned response/error\n`;
+    content += `${indent.get()}Do(*http.Request) (*http.Response, error, bool)\n}\n`;
 
     ///////////////////////////////////////////////////////////////////////////
 
@@ -256,31 +261,40 @@ function getTransportInterceptorVarName(client: go.Client): string {
 const dispatchMethodFake = 'dispatchToMethodFake';
 const dispatchToClientFake = 'dispatchToClientFake';
 
-function generateServerTransportDo(serverTransport: string, client: go.Client, finalSubClients: Array<go.Client>, finalMethods: Array<go.MethodType>): string {
+function generateServerTransportDo(
+  serverTransport: string,
+  client: go.Client,
+  finalSubClients: Array<go.Client>,
+  finalMethods: Array<go.MethodType>,
+  indent: helpers.Indentation,
+): string {
   const receiverName = serverTransport[0].toLowerCase();
   let content = `// Do implements the policy.Transporter interface for ${serverTransport}.\n`;
   content += `func (${receiverName} *${serverTransport}) Do(req *http.Request) (*http.Response, error) {\n`;
-  content += '\trawMethod := req.Context().Value(runtime.CtxAPINameKey{})\n';
-  content += '\tmethod, ok := rawMethod.(string)\n';
-  content += '\tif !ok {\n\t\treturn nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}\n\t}\n\n';
+  content += `${indent.get()}rawMethod := req.Context().Value(runtime.CtxAPINameKey{})\n`;
+  content += `${indent.get()}method, ok := rawMethod.(string)\n`;
+  content += `${indent.get()}if !ok {\n`;
+  content += `${indent.push().get()}return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}\n`;
+  content += `${indent.pop().get()}}\n\n`;
 
   if (finalSubClients.length > 0 && finalMethods.length > 0) {
     // client contains client accessors and methods.
     // if the method isn't for this client, dispatch to the correct client
-    content += `\tif client := method[:strings.Index(method, ".")]; client != "${client.name}" {\n`;
-    content += `\t\treturn ${receiverName}.${dispatchToClientFake}(req, client)\n\t}\n`;
+    content += `${indent.get()}if client := method[:strings.Index(method, ".")]; client != "${client.name}" {\n`;
+    content += `${indent.push().get()}return ${receiverName}.${dispatchToClientFake}(req, client)\n`;
+    content += `${indent.pop().get()}}\n`;
     // else dispatch to our method fakes
-    content += `\treturn ${receiverName}.${dispatchMethodFake}(req, method)\n`;
+    content += `${indent.get()}return ${receiverName}.${dispatchMethodFake}(req, method)\n`;
   } else if (finalSubClients.length > 0) {
-    content += `\treturn ${receiverName}.${dispatchToClientFake}(req, method[:strings.Index(method, ".")])\n`;
+    content += `${indent.get()}return ${receiverName}.${dispatchToClientFake}(req, method[:strings.Index(method, ".")])\n`;
   } else {
-    content += `\treturn ${receiverName}.${dispatchMethodFake}(req, method)\n`;
+    content += `${indent.get()}return ${receiverName}.${dispatchMethodFake}(req, method)\n`;
   }
   content += '}\n\n'; // end Do
   return content;
 }
 
-function generateServerTransportClientDispatch(serverTransport: string, subClients: Array<go.Client>, imports: ImportManager): string {
+function generateServerTransportClientDispatch(serverTransport: string, subClients: Array<go.Client>, imports: ImportManager, indent: helpers.Indentation): string {
   if (subClients.length === 0) {
     return '';
   }
@@ -288,54 +302,65 @@ function generateServerTransportClientDispatch(serverTransport: string, subClien
   const receiverName = serverTransport[0].toLowerCase();
   imports.add('strings');
   let content = `func (${receiverName} *${serverTransport}) ${dispatchToClientFake}(req *http.Request, client string) (*http.Response, error) {\n`;
-  content += '\tvar resp *http.Response\n\tvar err error\n\n';
-  content += '\tswitch client {\n';
+  content += `${indent.get()}var resp *http.Response\n${indent.get()}var err error\n\n`;
+  content += `${indent.get()}switch client {\n`;
   for (const subClient of subClients) {
-    content += `\tcase "${subClient.name}":\n`;
+    content += `${indent.get()}case "${subClient.name}":\n`;
     const serverName = getServerName(subClient);
-    content += `\t\tinitServer(&${receiverName}.trMu, &${receiverName}.tr${serverName}, func() *${serverName}Transport {\n\t\treturn New${serverName}Transport(&${receiverName}.srv.${serverName}) })\n`;
-    content += `\t\tresp, err = ${receiverName}.tr${serverName}.Do(req)\n`;
+    indent.push();
+    content += `${indent.get()}initServer(&${receiverName}.trMu, &${receiverName}.tr${serverName}, func() *${serverName}Transport {\n`;
+    content += `${indent.get()}return New${serverName}Transport(&${receiverName}.srv.${serverName}) })\n`;
+    content += `${indent.get()}resp, err = ${receiverName}.tr${serverName}.Do(req)\n`;
+    indent.pop();
   }
-  content += '\tdefault:\n\t\terr = fmt.Errorf("unhandled client %s", client)\n';
-  content += '\t}\n\n'; // end switch
-  content += '\treturn resp, err\n}\n\n';
+  content += `${indent.get()}default:\n`;
+  content += `${indent.push().get()}err = fmt.Errorf("unhandled client %s", client)\n`;
+  indent.pop();
+  content += `${indent.get()}}\n\n`; // end switch
+  content += `${indent.get()}return resp, err\n}\n\n`;
   return content;
 }
 
-function generateServerTransportMethodDispatch(serverTransport: string, client: go.Client, finalMethods: Array<go.MethodType>): string {
+function generateServerTransportMethodDispatch(serverTransport: string, client: go.Client, finalMethods: Array<go.MethodType>, indent: helpers.Indentation): string {
   if (finalMethods.length === 0) {
     return '';
   }
 
   const receiverName = serverTransport[0].toLowerCase();
   let content = `func (${receiverName} *${serverTransport}) ${dispatchMethodFake}(req *http.Request, method string) (*http.Response, error) {\n`;
-  content += '\tresultChan := make(chan result, 1)\n';
-  content += '\tgo func() {\n\t\tvar intercepted bool\n\t\tvar res result\n';
+  content += `${indent.get()}resultChan := make(chan result, 1)\n`;
+  content += `${indent.get()}go func() {\n`;
+  indent.push();
+  content += `${indent.get()}var intercepted bool\n${indent.get()}var res result\n`;
   const interceptorVarName = getTransportInterceptorVarName(client);
-  content += `\t\t if ${interceptorVarName} != nil {\n`;
-  content += `\t\t\t res.resp, res.err, intercepted = ${interceptorVarName}.Do(req)\n\t\t}\n`;
-  content += '\t\tif !intercepted {\n';
-  content += '\t\t\tswitch method {\n';
+  content += `${indent.get()} if ${interceptorVarName} != nil {\n`;
+  content += `${indent.push().get()} res.resp, res.err, intercepted = ${interceptorVarName}.Do(req)\n`;
+  content += `${indent.pop().get()}}\n`;
+  content += `${indent.get()}if !intercepted {\n`;
+  indent.push();
+  content += `${indent.get()}switch method {\n`;
 
   for (const method of finalMethods) {
     const operationName = fixUpMethodName(method);
-    content += `\t\t\tcase "${client.name}.${operationName}":\n`;
-    content += `\t\t\t\tres.resp, res.err = ${receiverName}.dispatch${operationName}(req)\n`;
+    content += `${indent.get()}case "${client.name}.${operationName}":\n`;
+    content += `${indent.push().get()}res.resp, res.err = ${receiverName}.dispatch${operationName}(req)\n`;
+    indent.pop();
   }
 
-  content += '\t\t\t\tdefault:\n\t\tres.err = fmt.Errorf("unhandled API %s", method)\n';
-  content += '\t\t\t}\n\n'; // end switch
-  content += '\t\t}\n'; // end if !intercepted
+  content += `${indent.push().get()}default:\n`;
+  content += `${indent.get()}res.err = fmt.Errorf("unhandled API %s", method)\n`;
+  content += `${indent.pop().get()}}\n\n`; // end switch
+  content += `${indent.pop().get()}}\n`; // end if !intercepted
 
-  content += '\t\tresultChan <- res\n';
-  content += '\t}()\n\n'; // end goroutine
+  content += `${indent.get()}resultChan <- res\n`;
+  content += `${indent.pop().get()}}()\n\n`; // end goroutine
 
-  content += '\tselect {\n';
-  content += '\tcase <-req.Context().Done():\n';
-  content += '\t\treturn nil, req.Context().Err()\n';
-  content += '\tcase res := <-resultChan:\n';
-  content += '\t\treturn res.resp, res.err\n';
-  content += '\t}\n}\n\n';
+  content += `${indent.get()}select {\n`;
+  content += `${indent.get()}case <-req.Context().Done():\n`;
+  content += `${indent.push().get()}return nil, req.Context().Err()\n`;
+  content += `${indent.pop().get()}case res := <-resultChan:\n`;
+  content += `${indent.push().get()}return res.resp, res.err\n`;
+  content += `${indent.pop().get()}}\n}\n\n`;
 
   return content;
 }
@@ -347,9 +372,16 @@ function generateServerTransportMethodDispatch(serverTransport: string, client: 
  * @param serverTransport the name of the server transport type
  * @param finalMethods the array of methods for which to generate the fake transports
  * @param imports the import manager currently in scope
+ * @param indent the indentation helper currently in scope
  * @returns the text for the server transport methods
  */
-function generateServerTransportMethods(pkg: go.FakePackage, serverTransport: string, finalMethods: Array<go.MethodType>, imports: ImportManager): string {
+function generateServerTransportMethods(
+  pkg: go.FakePackage,
+  serverTransport: string,
+  finalMethods: Array<go.MethodType>,
+  imports: ImportManager,
+  indent: helpers.Indentation,
+): string {
   if (finalMethods.length === 0) {
     return '';
   }
@@ -364,44 +396,48 @@ function generateServerTransportMethods(pkg: go.FakePackage, serverTransport: st
   let content = '';
   for (const method of finalMethods) {
     content += `func (${receiverName} *${serverTransport}) dispatch${fixUpMethodName(method)}(req *http.Request) (*http.Response, error) {\n`;
-    content += `\tif ${receiverName}.srv.${fixUpMethodName(method)} == nil {\n`;
-    content += `\t\treturn nil, &nonRetriableError{errors.New("fake for method ${fixUpMethodName(method)} not implemented")}\n\t}\n`;
+    content += `${indent.get()}if ${receiverName}.srv.${fixUpMethodName(method)} == nil {\n`;
+    content += `${indent.push().get()}return nil, &nonRetriableError{errors.New("fake for method ${fixUpMethodName(method)} not implemented")}\n`;
+    content += `${indent.pop().get()}}\n`;
 
     switch (method.kind) {
       case 'lroMethod':
       case 'lroPageableMethod':
         // must check LRO before pager as you can have paged LROs
-        content += dispatchForLROBody(pkg, receiverName, method, imports);
+        content += dispatchForLROBody(pkg, receiverName, method, imports, indent);
         break;
       case 'method': {
-        content += dispatchForOperationBody(pkg, receiverName, method, imports);
-        content += '\trespContent := server.GetResponseContent(respr)\n';
+        content += dispatchForOperationBody(pkg, receiverName, method, imports, indent);
+        content += `${indent.get()}respContent := server.GetResponseContent(respr)\n`;
         const formattedStatusCodes = helpers.formatStatusCodes(method.httpStatusCodes);
-        content += `\tif !slices.Contains([]int{${formattedStatusCodes}}, respContent.HTTPStatus) {\n`;
-        content += `\t\treturn nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", respContent.HTTPStatus)}\n\t}\n`;
+        content += `${indent.get()}if !slices.Contains([]int{${formattedStatusCodes}}, respContent.HTTPStatus) {\n`;
+        content += `${indent.push().get()}return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", respContent.HTTPStatus)}\n`;
+        content += `${indent.pop().get()}}\n`;
         if (!method.returns.result || method.returns.result.kind === 'headAsBooleanResult') {
-          content += '\tresp, err := server.NewResponse(respContent, req, nil)\n';
+          content += `${indent.get()}resp, err := server.NewResponse(respContent, req, nil)\n`;
         } else if (method.returns.result.kind === 'anyResult') {
-          content += `\tresp, err := server.MarshalResponseAs${method.returns.result.format}(respContent, server.GetResponse(respr).${getResultFieldName(method.returns.result)}, req)\n`;
+          content += `${indent.get()}resp, err := server.MarshalResponseAs${method.returns.result.format}(respContent, server.GetResponse(respr).${getResultFieldName(method.returns.result)}, req)\n`;
         } else if (method.returns.result.kind === 'binaryResult') {
-          content += '\tresp, err := server.NewResponse(respContent, req, &server.ResponseOptions{\n';
-          content += `\t\tBody: server.GetResponse(respr).${getResultFieldName(method.returns.result)},\n`;
-          content += '\t\tContentType: req.Header.Get("Content-Type"),\n';
-          content += '\t})\n';
+          content += `${indent.get()}resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{\n`;
+          indent.push();
+          content += `${indent.get()}Body: server.GetResponse(respr).${getResultFieldName(method.returns.result)},\n`;
+          content += `${indent.get()}ContentType: req.Header.Get("Content-Type"),\n`;
+          content += `${indent.pop().get()}})\n`;
         } else if (method.returns.result.kind === 'monomorphicResult') {
           if (method.returns.result.monomorphicType.kind === 'encodedBytes') {
             const encoding = method.returns.result.monomorphicType.encoding;
-            content += `\tresp, err := server.MarshalResponseAsByteArray(respContent, server.GetResponse(respr).${getResultFieldName(method.returns.result)}, runtime.Base64${encoding}Format, req)\n`;
+            content += `${indent.get()}resp, err := server.MarshalResponseAsByteArray(respContent, server.GetResponse(respr).${getResultFieldName(method.returns.result)}, runtime.Base64${encoding}Format, req)\n`;
           } else if (method.returns.result.monomorphicType.kind === 'rawJSON') {
             imports.add('bytes');
             imports.add('io');
-            content += '\tresp, err := server.NewResponse(respContent, req, &server.ResponseOptions{\n';
-            content += '\t\tBody: io.NopCloser(bytes.NewReader(server.GetResponse(respr).RawJSON)),\n';
-            content += '\t\tContentType: "application/json",\n\t})\n';
+            content += `${indent.get()}resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{\n`;
+            indent.push();
+            content += `${indent.get()}Body: io.NopCloser(bytes.NewReader(server.GetResponse(respr).RawJSON)),\n`;
+            content += `${indent.get()}ContentType: "application/json",\n`;
+            content += `${indent.pop().get()}})\n`;
           } else {
             let respField = `.${getResultFieldName(method.returns.result)}`;
             if (method.returns.result.format === 'XML' && method.returns.result.monomorphicType.kind === 'slice') {
-              // for XML array responses we use the response type directly as it has the necessary XML tag for proper marshalling
               respField = '';
             }
             let responseField = `server.GetResponse(respr)${respField}`;
@@ -409,35 +445,38 @@ function generateServerTransportMethods(pkg: go.FakePackage, serverTransport: st
               imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
               responseField = `(*datetime.${method.returns.result.monomorphicType.format})(${responseField})`;
             }
-            content += `\tresp, err := server.MarshalResponseAs${method.returns.result.format}(respContent, ${responseField}, req)\n`;
+            content += `${indent.get()}resp, err := server.MarshalResponseAs${method.returns.result.format}(respContent, ${responseField}, req)\n`;
           }
         } else if (method.returns.result.kind === 'modelResult' || method.returns.result.kind === 'polymorphicResult') {
           const respField = `.${getResultFieldName(method.returns.result)}`;
           const responseField = `server.GetResponse(respr)${respField}`;
-          content += `\tresp, err := server.MarshalResponseAs${method.returns.result.format}(respContent, ${responseField}, req)\n`;
+          content += `${indent.get()}resp, err := server.MarshalResponseAs${method.returns.result.format}(respContent, ${responseField}, req)\n`;
         }
 
-        content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+        content += `${indent.get()}if err != nil {\n`;
+        content += `${indent.push().get()}return nil, err\n`;
+        content += `${indent.pop().get()}}\n`;
 
         // propagate any header response values into the *http.Response
         for (const header of method.returns.headers) {
           if (header.kind === 'headerMapResponse') {
-            content += `\tfor k, v := range server.GetResponse(respr).${header.fieldName} {\n`;
-            content += '\t\tif v != nil {\n';
-            content += `\t\t\tresp.Header.Set("${header.headerName}"+k, *v)\n`;
-            content += '\t\t}\n';
-            content += '\t}\n';
+            content += `${indent.get()}for k, v := range server.GetResponse(respr).${header.fieldName} {\n`;
+            content += `${indent.push().get()}if v != nil {\n`;
+            content += `${indent.push().get()}resp.Header.Set("${header.headerName}"+k, *v)\n`;
+            content += `${indent.pop().get()}}\n`;
+            content += `${indent.pop().get()}}\n`;
           } else {
-            content += `\tif val := server.GetResponse(respr).${header.fieldName}; val != nil {\n`;
-            content += `\t\tresp.Header.Set("${header.headerName}", ${helpers.formatValue('val', header.type, imports, true)})\n\t}\n`;
+            content += `${indent.get()}if val := server.GetResponse(respr).${header.fieldName}; val != nil {\n`;
+            content += `${indent.push().get()}resp.Header.Set("${header.headerName}", ${helpers.formatValue('val', header.type, imports, true)})\n`;
+            content += `${indent.pop().get()}}\n`;
           }
         }
 
-        content += '\treturn resp, nil\n';
+        content += `${indent.get()}return resp, nil\n`;
         break;
       }
       case 'pageableMethod':
-        content += dispatchForPagerBody(pkg, receiverName, method, imports);
+        content += dispatchForPagerBody(pkg, receiverName, method, imports, indent);
         break;
       default:
         method satisfies never;
@@ -456,26 +495,27 @@ function generateServerTransportMethods(pkg: go.FakePackage, serverTransport: st
  * @param receiverName the name of the receiver for the dispatch method
  * @param method the method for which to emit dispatching logic
  * @param imports the import manager currently in scope
+ * @param indent the indentation helper currently in scope
  * @returns the text for dispatching logic
  */
-function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, method: go.MethodType, imports: ImportManager): string {
+function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, method: go.MethodType, imports: ImportManager, indent: helpers.Indentation): string {
   const methodParamGroups = helpers.getMethodParamGroups(method);
   const numPathParams = methodParamGroups.pathParams.filter((each: go.PathParameter) => !go.isLiteralParameter(each.style)).length;
   let content = '';
   if (numPathParams > 0) {
     imports.add('regexp');
-    content += `\tconst regexStr = \`${createPathParamsRegex(method, methodParamGroups.pathParams)}\`\n`;
-    content += '\tregex := regexp.MustCompile(regexStr)\n';
-    content += '\tmatches := regex.FindStringSubmatch(req.URL.EscapedPath())\n';
+    content += `${indent.get()}const regexStr = \`${createPathParamsRegex(method, methodParamGroups.pathParams)}\`\n`;
+    content += `${indent.get()}regex := regexp.MustCompile(regexStr)\n`;
+    content += `${indent.get()}matches := regex.FindStringSubmatch(req.URL.EscapedPath())\n`;
     // the total number of matches is the number of capture groups
     // plus the full match. so we add + 1 to include the full match.
-    content += `\tif len(matches) < ${numPathParams + 1} {\n`;
-    content += '\t\treturn nil, fmt.Errorf("failed to parse path %s", req.URL.Path)\n\t}\n';
+    content += `${indent.get()}if len(matches) < ${numPathParams + 1} {\n`;
+    content += `${indent.push().get()}return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)\n${indent.pop().get()}}\n`;
   }
 
   const allQueryParams = methodParamGroups.encodedQueryParams.concat(methodParamGroups.unencodedQueryParams);
   if (allQueryParams.find((each: go.QueryParameter) => each.location === 'method' && !go.isLiteralParameter(each.style))) {
-    content += '\tqp := req.URL.Query()\n';
+    content += `${indent.get()}qp := req.URL.Query()\n`;
   }
 
   // note that these are mutually exclusive
@@ -492,21 +532,21 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
           imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
           switch (bodyParam.type.kind) {
             case 'encodedBytes':
-              content += `\tbody, err := server.UnmarshalRequestAsByteArray(req, runtime.Base64${bodyParam.type.encoding}Format)\n`;
-              content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+              content += `${indent.get()}body, err := server.UnmarshalRequestAsByteArray(req, runtime.Base64${bodyParam.type.encoding}Format)\n`;
+              content += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
               break;
             case 'interface':
               requiredHelpers.readRequestBody = true;
-              content += '\traw, err := readRequestBody(req)\n';
-              content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-              content += `\tbody, err := unmarshal${bodyParam.type.name}(raw)\n`;
-              content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+              content += `${indent.get()}raw, err := readRequestBody(req)\n`;
+              content += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
+              content += `${indent.get()}body, err := unmarshal${bodyParam.type.name}(raw)\n`;
+              content += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
               break;
             case 'rawJSON':
               imports.add('io');
-              content += '\tbody, err := io.ReadAll(req.Body)\n';
-              content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-              content += '\treq.Body.Close()\n';
+              content += `${indent.get()}body, err := io.ReadAll(req.Body)\n`;
+              content += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
+              content += `${indent.get()}req.Body.Close()\n`;
               break;
             default: {
               let bodyTypeName = go.getTypeDeclaration(bodyParam.type, pkg);
@@ -514,8 +554,8 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
                 imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
                 bodyTypeName = `datetime.${bodyParam.type.format}`;
               }
-              content += `\tbody, err := server.UnmarshalRequestAs${bodyParam.bodyFormat}[${bodyTypeName}](req)\n`;
-              content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+              content += `${indent.get()}body, err := server.UnmarshalRequestAs${bodyParam.bodyFormat}[${bodyTypeName}](req)\n`;
+              content += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
             }
           }
         }
@@ -523,8 +563,8 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
       case 'Text':
         if (bodyParam && !go.isLiteralParameter(bodyParam.style)) {
           imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
-          content += '\tbody, err := server.UnmarshalRequestAsText(req)\n';
-          content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+          content += `${indent.get()}body, err := server.UnmarshalRequestAsText(req)\n`;
+          content += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
         }
         break;
     }
@@ -533,20 +573,21 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
     imports.add('io');
     imports.add('mime');
     imports.add('mime/multipart');
-    content += '\t_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))\n';
-    content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-    content += '\treader := multipart.NewReader(req.Body, params["boundary"])\n';
+    content += `${indent.get()}_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))\n`;
+    content += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
+    content += `${indent.get()}reader := multipart.NewReader(req.Body, params["boundary"])\n`;
     for (const param of multipartBodyParams) {
-      content += `\tvar ${param.name} ${go.getTypeDeclaration(param.type, pkg)}\n`;
+      content += `${indent.get()}var ${param.name} ${go.getTypeDeclaration(param.type, pkg)}\n`;
     }
 
-    content += '\tfor {\n';
-    content += '\t\tvar part *multipart.Part\n';
-    content += '\t\tpart, err = reader.NextPart()\n';
-    content += '\t\tif errors.Is(err, io.EOF) {\n\t\t\tbreak\n';
-    content += '\t\t} else if err != nil {\n\t\t\treturn nil, err\n\t\t}\n';
-    content += '\t\tvar content []byte\n';
-    content += '\t\tswitch fn := part.FormName(); fn {\n';
+    content += `${indent.get()}for {\n`;
+    indent.push();
+    content += `${indent.get()}var part *multipart.Part\n`;
+    content += `${indent.get()}part, err = reader.NextPart()\n`;
+    content += `${indent.get()}if errors.Is(err, io.EOF) {\n${indent.push().get()}break\n`;
+    content += `${indent.pop().get()}} else if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
+    content += `${indent.get()}var content []byte\n`;
+    content += `${indent.get()}switch fn := part.FormName(); fn {\n`;
 
     // specify boolTarget if parsing bools happens in place.
     // i.e. the result from the parsing doesn't require further conversion (e.g. casting)
@@ -560,26 +601,26 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
         case 'bool':
           if (boolTarget) {
             // we reuse the err var declared earlier when calling reader.NextPart()
-            parsingCode = `\t\t\t${boolTarget}, err = strconv.ParseBool(string(content))\n`;
+            parsingCode = `${indent.get()}${boolTarget}, err = strconv.ParseBool(string(content))\n`;
             parseErr = 'err';
           } else {
-            parsingCode = `\t\t\t${parseResults} := strconv.ParseBool(string(content))\n`;
+            parsingCode = `${indent.get()}${parseResults} := strconv.ParseBool(string(content))\n`;
           }
           break;
         case 'float32':
         case 'float64':
-          parsingCode = `\t\t\t${parseResults} := strconv.ParseFloat(string(content), ${helpers.getBitSizeForNumber(typeName)})\n`;
+          parsingCode = `${indent.get()}${parseResults} := strconv.ParseFloat(string(content), ${helpers.getBitSizeForNumber(typeName)})\n`;
           break;
         case 'int8':
         case 'int16':
         case 'int32':
         case 'int64':
-          parsingCode = `\t\t\t${parseResults} := strconv.ParseInt(string(content), 10, ${helpers.getBitSizeForNumber(typeName)})\n`;
+          parsingCode = `${indent.get()}${parseResults} := strconv.ParseInt(string(content), 10, ${helpers.getBitSizeForNumber(typeName)})\n`;
           break;
         default:
           throw new CodegenError('InternalError', `unhandled multipart parameter primitive type ${typeName}`);
       }
-      parsingCode += `\t\t\tif ${parseErr} != nil {\n\t\t\t\treturn nil, ${parseErr}\n\t\t\t}\n`;
+      parsingCode += `${indent.get()}if ${parseErr} != nil {\n${indent.push().get()}return nil, ${parseErr}\n${indent.pop().get()}}\n`;
       return parsingCode;
     };
 
@@ -588,13 +629,14 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
     };
 
     const emitCase = function (caseValue: string, paramVar: string, type: go.WireType): string {
-      let caseContent = `\t\tcase "${caseValue}":\n`;
-      caseContent += '\t\t\tcontent, err = io.ReadAll(part)\n';
-      caseContent += '\t\t\tif err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n';
+      let caseContent = `${indent.get()}case "${caseValue}":\n`;
+      indent.push();
+      caseContent += `${indent.get()}content, err = io.ReadAll(part)\n`;
+      caseContent += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
       let assignedValue: string | undefined;
       if (isModelType(helpers.recursiveUnwrapMapSlice(type))) {
         imports.add('encoding/json');
-        caseContent += `\t\t\tif err = json.Unmarshal(content, &${paramVar}); err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n`;
+        caseContent += `${indent.get()}if err = json.Unmarshal(content, &${paramVar}); err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
       } else if (type.kind === 'readSeekCloser') {
         imports.add('bytes');
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
@@ -643,15 +685,16 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
         const contentType = 'part.Header.Get("Content-Type")';
         const filename = 'part.FileName()';
         if (type.kind === 'slice') {
-          caseContent += `\t\t\t${paramVar} = append(${paramVar}, streaming.MultipartContent{\n`;
-          caseContent += `\t\t\t\tBody: ${bodyContent},\n`;
-          caseContent += `\t\t\t\tContentType: ${contentType},\n`;
-          caseContent += `\t\t\t\tFilename: ${filename},\n`;
-          caseContent += '\t\t\t})\n';
+          caseContent += `${indent.get()}${paramVar} = append(${paramVar}, streaming.MultipartContent{\n`;
+          indent.push();
+          caseContent += `${indent.get()}Body: ${bodyContent},\n`;
+          caseContent += `${indent.get()}ContentType: ${contentType},\n`;
+          caseContent += `${indent.get()}Filename: ${filename},\n`;
+          caseContent += `${indent.pop().get()}})\n`;
         } else {
-          caseContent += `\t\t\t${paramVar}.Body = ${bodyContent}\n`;
-          caseContent += `\t\t\t${paramVar}.ContentType = ${contentType}\n`;
-          caseContent += `\t\t\t${paramVar}.Filename = ${filename}\n`;
+          caseContent += `${indent.get()}${paramVar}.Body = ${bodyContent}\n`;
+          caseContent += `${indent.get()}${paramVar}.ContentType = ${contentType}\n`;
+          caseContent += `${indent.get()}${paramVar}.Filename = ${filename}\n`;
         }
       } else if (type.kind === 'slice') {
         if (type.elementType.kind === 'readSeekCloser') {
@@ -665,8 +708,9 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
         throw new CodegenError('InternalError', `uhandled multipart parameter kind ${type.kind}`);
       }
       if (assignedValue) {
-        caseContent += `\t\t\t${paramVar} = ${assignedValue}\n`;
+        caseContent += `${indent.get()}${paramVar} = ${assignedValue}\n`;
       }
+      indent.pop();
       return caseContent;
     };
 
@@ -680,18 +724,19 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
       }
     }
 
-    content += '\t\tdefault:\n\t\t\treturn nil, fmt.Errorf("unexpected part %s", fn)\n';
-    content += '\t\t}\n'; // end switch
-    content += '\t}\n'; // end for
+    content += `${indent.get()}default:\n`;
+    content += `${indent.push().get()}return nil, fmt.Errorf("unexpected part %s", fn)\n`;
+    content += `${indent.pop().get()}}\n`; // end switch
+    content += `${indent.pop().get()}}\n`; // end for
   } else if (formBodyParams.length > 0) {
     for (const param of formBodyParams) {
-      content += `\tvar ${param.name} ${go.getTypeDeclaration(param.type, pkg)}\n`;
+      content += `${indent.get()}var ${param.name} ${go.getTypeDeclaration(param.type, pkg)}\n`;
     }
-    content += '\tif err := req.ParseForm(); err != nil {\n\t\treturn nil, &nonRetriableError{fmt.Errorf("failed parsing form data: %v", err)}\n\t}\n';
-    content += '\tfor key := range req.Form {\n';
-    content += '\t\tswitch key {\n';
+    content += `${indent.get()}if err := req.ParseForm(); err != nil {\n${indent.push().get()}return nil, &nonRetriableError{fmt.Errorf("failed parsing form data: %v", err)}\n${indent.pop().get()}}\n`;
+    content += `${indent.get()}for key := range req.Form {\n`;
+    content += `${indent.push().get()}switch key {\n`;
     for (const param of formBodyParams) {
-      content += `\t\tcase "${param.formDataName}":\n`;
+      content += `${indent.get()}case "${param.formDataName}":\n`;
       let assignedValue: string;
       switch (param.type.kind) {
         case 'constant':
@@ -703,22 +748,24 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
         default:
           throw new CodegenError('InternalError', `uhandled form parameter kind ${param.type.kind}`);
       }
-      content += `\t\t\t${param.name} = ${assignedValue}\n`;
+      content += `${indent.push().get()}${param.name} = ${assignedValue}\n`;
+      indent.pop();
     }
-    content += '\t\t}\n'; // end switch
-    content += '\t}\n'; // end for
+    content += `${indent.pop().get()}}\n`; // end switch
+    content += `${indent.get()}}\n`; // end for
   } else if (partialBodyParams.length > 0) {
     // construct the partial body params type and unmarshal it
-    content += '\ttype partialBodyParams struct {\n';
+    content += `${indent.get()}type partialBodyParams struct {\n`;
+    indent.push();
     for (const partialBodyParam of partialBodyParams) {
-      content += `\t\t${naming.capitalize(partialBodyParam.name)} ${helpers.star(partialBodyParam.byValue)}${go.getTypeDeclaration(partialBodyParam.type, pkg)} \`json:"${partialBodyParam.serializedName}"\`\n`;
+      content += `${indent.get()}${naming.capitalize(partialBodyParam.name)} ${helpers.star(partialBodyParam.byValue)}${go.getTypeDeclaration(partialBodyParam.type, pkg)} \`json:"${partialBodyParam.serializedName}"\`\n`;
     }
-    content += '\t}\n';
-    content += `\tbody, err := server.UnmarshalRequestAs${partialBodyParams[0].format}[partialBodyParams](req)\n`;
-    content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+    content += `${indent.pop().get()}}\n`;
+    content += `${indent.get()}body, err := server.UnmarshalRequestAs${partialBodyParams[0].format}[partialBodyParams](req)\n`;
+    content += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
   }
 
-  const result = parseHeaderPathQueryParams(pkg, method, imports);
+  const result = parseHeaderPathQueryParams(pkg, method, imports, indent);
   content += result.content;
 
   // translate each partial body param to its field within the unmarshalled body
@@ -731,9 +778,9 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
     content += `resp ${apiCall}\n`;
     return content;
   }
-  content += `\trespr, errRespr ${apiCall}\n`;
-  content += '\tif respErr := server.GetError(errRespr, req); respErr != nil {\n';
-  content += '\t\treturn nil, respErr\n\t}\n';
+  content += `${indent.get()}respr, errRespr ${apiCall}\n`;
+  content += `${indent.get()}if respErr := server.GetError(errRespr, req); respErr != nil {\n`;
+  content += `${indent.push().get()}return nil, respErr\n${indent.pop().get()}}\n`;
   return content;
 }
 
@@ -763,30 +810,37 @@ function getMethodStatusCodes(method: go.MethodType): Array<number> {
  * @param receiverName the name of the receiver for the dispatch method
  * @param method the LRO method for which to emit the dispatch logic
  * @param imports the import manager currently in scope
+ * @param indent the indentation helper currently in scope
  * @returns the text for the LRO dispatch logic
  */
-function dispatchForLROBody(pkg: go.FakePackage, receiverName: string, method: go.LROMethod | go.LROPageableMethod, imports: ImportManager): string {
+function dispatchForLROBody(pkg: go.FakePackage, receiverName: string, method: go.LROMethod | go.LROPageableMethod, imports: ImportManager, indent: helpers.Indentation): string {
   const operationName = fixUpMethodName(method);
   const localVarName = naming.uncapitalize(operationName);
   const operationStateMachine = `${receiverName}.${naming.uncapitalize(operationName)}`;
-  let content = `\t${localVarName} := ${operationStateMachine}.get(req)\n`;
-  content += `\tif ${localVarName} == nil {\n`;
-  content += dispatchForOperationBody(pkg, receiverName, method, imports);
-  content += `\t\t${localVarName} = &respr\n`;
-  content += `\t\t${operationStateMachine}.add(req, ${localVarName})\n`;
-  content += '\t}\n\n';
+  let content = `${indent.get()}${localVarName} := ${operationStateMachine}.get(req)\n`;
+  content += `${indent.get()}if ${localVarName} == nil {\n`;
+  content += dispatchForOperationBody(pkg, receiverName, method, imports, indent);
+  indent.push();
+  content += `${indent.get()}${localVarName} = &respr\n`;
+  content += `${indent.get()}${operationStateMachine}.add(req, ${localVarName})\n`;
+  content += `${indent.pop().get()}}\n\n`;
 
-  content += `\tresp, err := server.PollerResponderNext(${localVarName}, req)\n`;
-  content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n\n';
+  content += `${indent.get()}resp, err := server.PollerResponderNext(${localVarName}, req)\n`;
+  content += `${indent.get()}if err != nil {\n`;
+  content += `${indent.push().get()}return nil, err\n`;
+  content += `${indent.pop().get()}}\n\n`;
 
   const formattedStatusCodes = helpers.formatStatusCodes(getMethodStatusCodes(method));
-  content += `\tif !slices.Contains([]int{${formattedStatusCodes}}, resp.StatusCode) {\n`;
-  content += `\t\t${operationStateMachine}.remove(req)\n`;
-  content += `\t\treturn nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", resp.StatusCode)}\n\t}\n`;
+  content += `${indent.get()}if !slices.Contains([]int{${formattedStatusCodes}}, resp.StatusCode) {\n`;
+  indent.push();
+  content += `${indent.get()}${operationStateMachine}.remove(req)\n`;
+  content += `${indent.get()}return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", resp.StatusCode)}\n`;
+  content += `${indent.pop().get()}}\n`;
 
-  content += `\tif !server.PollerResponderMore(${localVarName}) {\n`;
-  content += `\t\t${operationStateMachine}.remove(req)\n\t}\n\n`;
-  content += '\treturn resp, nil\n';
+  content += `${indent.get()}if !server.PollerResponderMore(${localVarName}) {\n`;
+  content += `${indent.push().get()}${operationStateMachine}.remove(req)\n`;
+  content += `${indent.pop().get()}}\n\n`;
+  content += `${indent.get()}return resp, nil\n`;
   return content;
 }
 
@@ -797,35 +851,43 @@ function dispatchForLROBody(pkg: go.FakePackage, receiverName: string, method: g
  * @param receiverName the name of the receiver for the dispatch method
  * @param method the pageable method for which to emit the dispatch logic
  * @param imports the import manager currently in scope
+ * @param indent the indentation helper currently in scope
  * @returns the text for the pageable dispatch logic
  */
-function dispatchForPagerBody(pkg: go.FakePackage, receiverName: string, method: go.PageableMethod, imports: ImportManager): string {
+function dispatchForPagerBody(pkg: go.FakePackage, receiverName: string, method: go.PageableMethod, imports: ImportManager, indent: helpers.Indentation): string {
   const operationName = fixUpMethodName(method);
   const localVarName = naming.uncapitalize(operationName);
   const operationStateMachine = `${receiverName}.${naming.uncapitalize(operationName)}`;
-  let content = `\t${localVarName} := ${operationStateMachine}.get(req)\n`;
-  content += `\tif ${localVarName} == nil {\n`;
-  content += dispatchForOperationBody(pkg, receiverName, method, imports);
-  content += `\t\t${localVarName} = &resp\n`;
-  content += `\t\t${operationStateMachine}.add(req, ${localVarName})\n`;
+  let content = `${indent.get()}${localVarName} := ${operationStateMachine}.get(req)\n`;
+  content += `${indent.get()}if ${localVarName} == nil {\n`;
+  content += dispatchForOperationBody(pkg, receiverName, method, imports, indent);
+  indent.push();
+  content += `${indent.get()}${localVarName} = &resp\n`;
+  content += `${indent.get()}${operationStateMachine}.add(req, ${localVarName})\n`;
   if (method.nextLinkName) {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
-    content += `\t\tserver.PagerResponderInjectNextLinks(${localVarName}, req, func(page *${go.getTypeDeclaration(method.returns, pkg)}, createLink func() string) {\n`;
-    content += `\t\t\tpage.${method.nextLinkName} = to.Ptr(createLink())\n`;
-    content += '\t\t})\n';
+    content += `${indent.get()}server.PagerResponderInjectNextLinks(${localVarName}, req, func(page *${go.getTypeDeclaration(method.returns, pkg)}, createLink func() string) {\n`;
+    content += `${indent.push().get()}page.${method.nextLinkName} = to.Ptr(createLink())\n`;
+    content += `${indent.pop().get()}})\n`;
   }
-  content += '\t}\n'; // end if
-  content += `\tresp, err := server.PagerResponderNext(${localVarName}, req)\n`;
-  content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+  indent.pop();
+  content += `${indent.get()}}\n`; // end if
+  content += `${indent.get()}resp, err := server.PagerResponderNext(${localVarName}, req)\n`;
+  content += `${indent.get()}if err != nil {\n`;
+  content += `${indent.push().get()}return nil, err\n`;
+  content += `${indent.pop().get()}}\n`;
 
   const formattedStatusCodes = helpers.formatStatusCodes(method.httpStatusCodes);
-  content += `\tif !slices.Contains([]int{${formattedStatusCodes}}, resp.StatusCode) {\n`;
-  content += `\t\t${operationStateMachine}.remove(req)\n`;
-  content += `\t\treturn nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", resp.StatusCode)}\n\t}\n`;
+  content += `${indent.get()}if !slices.Contains([]int{${formattedStatusCodes}}, resp.StatusCode) {\n`;
+  indent.push();
+  content += `${indent.get()}${operationStateMachine}.remove(req)\n`;
+  content += `${indent.get()}return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", resp.StatusCode)}\n`;
+  content += `${indent.pop().get()}}\n`;
 
-  content += `\tif !server.PagerResponderMore(${localVarName}) {\n`;
-  content += `\t\t${operationStateMachine}.remove(req)\n\t}\n`;
-  content += '\treturn resp, nil\n';
+  content += `${indent.get()}if !server.PagerResponderMore(${localVarName}) {\n`;
+  content += `${indent.push().get()}${operationStateMachine}.remove(req)\n`;
+  content += `${indent.pop().get()}}\n`;
+  content += `${indent.get()}return resp, nil\n`;
   return content;
 }
 
@@ -869,9 +931,10 @@ interface parseResult {
  * @param pkg contains the package contents
  * @param method the method for which to emit parameter parsing logic
  * @param imports the import manager currently in scope
+ * @param indent the indentation helper currently in scope
  * @returns the parsing code and the params that contain the parsed values
  */
-function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, imports: ImportManager): parseResult {
+function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, imports: ImportManager, indent: helpers.Indentation): parseResult {
   let content = '';
   const paramValues = new Map<string, string>();
 
@@ -946,10 +1009,10 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
         // for string-based enums, we perform the conversion as part of unescaping
         requiredHelpers.parseWithCast = true;
         paramVar = createLocalVariableName(param, 'Param');
-        content += `\t${paramVar}, err := parseWithCast(${paramValue}, func (v string) (${go.getTypeDeclaration(param.type, pkg)}, error) {\n`;
-        content += `\t\tp, unescapeErr := url.PathUnescape(v)\n`;
-        content += '\t\tif unescapeErr != nil {\n\t\t\treturn "", unescapeErr\n\t\t}\n';
-        content += `\t\treturn ${go.getTypeDeclaration(param.type, pkg)}(p), nil\n\t})\n`;
+        content += `${indent.get()}${paramVar}, err := parseWithCast(${paramValue}, func (v string) (${go.getTypeDeclaration(param.type, pkg)}, error) {\n`;
+        content += `${indent.push().get()}p, unescapeErr := url.PathUnescape(v)\n`;
+        content += `${indent.get()}if unescapeErr != nil {\n${indent.push().get()}return "", unescapeErr\n${indent.pop().get()}}\n`;
+        content += `${indent.get()}return ${go.getTypeDeclaration(param.type, pkg)}(p), nil\n${indent.pop().get()}})\n`;
       } else {
         if (go.isRequiredParameter(param.style) && (param.type.kind === 'string' || (param.type.kind === 'slice' && param.type.elementType.kind === 'string'))) {
           // by convention, if the value is in its "final form" (i.e. no parsing required)
@@ -957,9 +1020,9 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
           // else requires some amount of parsing/conversion.
           paramVar = createLocalVariableName(param, 'Param');
         }
-        content += `\t${paramVar}, err := url.PathUnescape(${paramValue})\n`;
+        content += `${indent.get()}${paramVar}, err := url.PathUnescape(${paramValue})\n`;
       }
-      content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+      content += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
       paramValue = paramVar;
     }
 
@@ -970,7 +1033,7 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
         if (param.collectionFormat !== 'multi') {
           requiredHelpers.splitHelper = true;
           const elementsParam = createLocalVariableName(param, 'Elements');
-          content += `\t${elementsParam} := splitHelper(${paramValue}, "${helpers.getDelimiterForCollectionFormat(param.collectionFormat)}")\n`;
+          content += `${indent.get()}${elementsParam} := splitHelper(${paramValue}, "${helpers.getDelimiterForCollectionFormat(param.collectionFormat)}")\n`;
           paramValue = elementsParam;
         }
 
@@ -992,20 +1055,21 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
         }
 
         const toType = go.getTypeDeclaration(param.type.elementType, pkg);
-        content += `\t${paramVar} := make([]${toType}, len(${paramValue}))\n`;
-        content += `\tfor i := 0; i < len(${paramValue}); i++ {\n`;
+        content += `${indent.get()}${paramVar} := make([]${toType}, len(${paramValue}))\n`;
+        content += `${indent.get()}for i := 0; i < len(${paramValue}); i++ {\n`;
+        indent.push();
         let fromVar: string;
 
         // TODO: consolidate with non-collection parsing code
         if (elementFormat === 'bool') {
           imports.add('strconv');
           fromVar = 'parsedBool';
-          content += `\t\t${fromVar}, parseErr := strconv.ParseBool(${paramValue}[i])\n`;
-          content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
+          content += `${indent.get()}${fromVar}, parseErr := strconv.ParseBool(${paramValue}[i])\n`;
+          content += `${indent.get()}if parseErr != nil {\n${indent.push().get()}return nil, parseErr\n${indent.pop().get()}}\n`;
         } else if (elementFormat === 'float32' || elementFormat === 'float64' || elementFormat === 'int32' || elementFormat === 'int64') {
           fromVar = `parsed${naming.capitalize(elementFormat)}`;
-          content += `\t\t${fromVar}, parseErr := ${emitNumericConversion(`${paramValue}[i]`, elementFormat)}\n`;
-          content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
+          content += `${indent.get()}${fromVar}, parseErr := ${emitNumericConversion(`${paramValue}[i]`, elementFormat)}\n`;
+          content += `${indent.get()}if parseErr != nil {\n${indent.push().get()}return nil, parseErr\n${indent.pop().get()}}\n`;
         } else if (elementFormat === 'string') {
           // we're casting an enum string value to its const type
           // TODO: what about enums that aren't strings?
@@ -1013,35 +1077,35 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
         } else if (elementFormat === 'Std' || elementFormat === 'URL') {
           imports.add('encoding/base64');
           fromVar = `parsed${naming.capitalize(elementFormat)}`;
-          content += `\t\t${fromVar}, parseErr := base64.${elementFormat}Encoding.DecodeString(${paramValue}[i])\n`;
-          content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
+          content += `${indent.get()}${fromVar}, parseErr := base64.${elementFormat}Encoding.DecodeString(${paramValue}[i])\n`;
+          content += `${indent.get()}if parseErr != nil {\n${indent.push().get()}return nil, parseErr\n${indent.pop().get()}}\n`;
         } else if (elementFormat === 'RFC1123' || elementFormat === 'RFC3339' || elementFormat === 'Unix') {
           imports.add('time');
           fromVar = `parsed${naming.capitalize(elementFormat)}`;
           if (elementFormat === 'Unix') {
             imports.add('strconv');
-            content += `\t\tp, parseErr := strconv.ParseInt(${paramValue}[i], 10, 64)\n`;
-            content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
-            content += `\t\t${fromVar} := time.Unix(p, 0).UTC()\n`;
+            content += `${indent.get()}p, parseErr := strconv.ParseInt(${paramValue}[i], 10, 64)\n`;
+            content += `${indent.get()}if parseErr != nil {\n${indent.push().get()}return nil, parseErr\n${indent.pop().get()}}\n`;
+            content += `${indent.get()}${fromVar} := time.Unix(p, 0).UTC()\n`;
           } else {
             let format = 'time.RFC3339Nano';
             if (elementFormat === 'RFC1123') {
               format = 'time.RFC1123';
             }
-            content += `\t\t${fromVar}, parseErr := time.Parse(${format}, ${paramValue}[i])\n`;
-            content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
+            content += `${indent.get()}${fromVar}, parseErr := time.Parse(${format}, ${paramValue}[i])\n`;
+            content += `${indent.get()}if parseErr != nil {\n${indent.push().get()}return nil, parseErr\n${indent.pop().get()}}\n`;
           }
         } else {
           throw new CodegenError('InternalError', `unhandled element format ${elementFormat}`);
         }
         // TODO: remove cast in some cases
-        content += `\t\t${paramVar}[i] = ${toType}(${fromVar})\n\t}\n`;
+        content += `${indent.get()}${paramVar}[i] = ${toType}(${fromVar})\n${indent.pop().get()}}\n`;
       } else if (!go.isRequiredParameter(param.style) && param.collectionFormat !== 'multi') {
         // for slices of strings that are required, the call to splitHelper(...) is inlined into
         // the invocation of the fake e.g. srv.FakeFunc(splitHelper...). but if it's optional, we
         // need to create a local first which will later be copied into the optional param group.
         requiredHelpers.splitHelper = true;
-        content += `\t${createLocalVariableName(param, 'Param')} := splitHelper(${paramValue}, "${helpers.getDelimiterForCollectionFormat(param.collectionFormat)}")\n`;
+        content += `${indent.get()}${createLocalVariableName(param, 'Param')} := splitHelper(${paramValue}, "${helpers.getDelimiterForCollectionFormat(param.collectionFormat)}")\n`;
       }
     } else if (param.type.kind === 'scalar' && param.type.type === 'bool') {
       imports.add('strconv');
@@ -1050,12 +1114,12 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
         requiredHelpers.parseOptional = true;
         from = `parseOptional(${paramValue}, strconv.ParseBool)`;
       }
-      content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
-      content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+      content += `${indent.get()}${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
+      content += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
     } else if (param.type.kind === 'encodedBytes') {
       imports.add('encoding/base64');
-      content += `\t${createLocalVariableName(param, 'Param')}, err := base64.${param.type.encoding}Encoding.DecodeString(${paramValue})\n`;
-      content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+      content += `${indent.get()}${createLocalVariableName(param, 'Param')}, err := base64.${param.type.encoding}Encoding.DecodeString(${paramValue})\n`;
+      content += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
     } else if (param.type.kind === 'time') {
       const formatMap: Record<string, string> = {
         PlainDate: helpers.plainDateFormat,
@@ -1071,8 +1135,8 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
           requiredHelpers.parseOptional = true;
           from = `parseOptional(${paramValue}, func(v string) (time.Time, error) { return time.Parse(${format}, v) })`;
         }
-        content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
-        content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+        content += `${indent.get()}${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
+        content += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
       } else {
         imports.add('strconv');
         let parser: string;
@@ -1083,11 +1147,11 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
           requiredHelpers.parseWithCast = true;
           parser = 'parseWithCast';
         }
-        content += `\t${createLocalVariableName(param, 'Param')}, err := ${parser}(${paramValue}, func (v string) (time.Time, error) {\n`;
-        content += '\t\tp, parseErr := strconv.ParseInt(v, 10, 64)\n';
-        content += '\t\tif parseErr != nil {\n\t\t\treturn time.Time{}, parseErr\n\t\t}\n';
-        content += '\t\treturn time.Unix(p, 0).UTC(), nil\n\t})\n';
-        content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+        content += `${indent.get()}${createLocalVariableName(param, 'Param')}, err := ${parser}(${paramValue}, func (v string) (time.Time, error) {\n`;
+        content += `${indent.push().get()}p, parseErr := strconv.ParseInt(v, 10, 64)\n`;
+        content += `${indent.get()}if parseErr != nil {\n${indent.push().get()}return time.Time{}, parseErr\n${indent.pop().get()}}\n`;
+        content += `${indent.get()}return time.Unix(p, 0).UTC(), nil\n${indent.pop().get()}})\n`;
+        content += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
       }
     } else if (param.type.kind === 'scalar' && (param.type.type === 'float32' || param.type.type === 'float64' || param.type.type === 'int32' || param.type.type === 'int64')) {
       let parser: string;
@@ -1099,30 +1163,30 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
         parser = 'parseWithCast';
       }
       if (param.type.type === 'float32' || param.type.type === 'int32' || !go.isRequiredParameter(param.style)) {
-        content += `\t${createLocalVariableName(param, 'Param')}, err := ${parser}(${paramValue}, func(v string) (${param.type.type}, error) {\n`;
-        content += `\t\tp, parseErr := ${emitNumericConversion('v', param.type.type)}\n`;
-        content += '\t\tif parseErr != nil {\n\t\t\treturn 0, parseErr\n\t\t}\n';
+        content += `${indent.get()}${createLocalVariableName(param, 'Param')}, err := ${parser}(${paramValue}, func(v string) (${param.type.type}, error) {\n`;
+        content += `${indent.push().get()}p, parseErr := ${emitNumericConversion('v', param.type.type)}\n`;
+        content += `${indent.get()}if parseErr != nil {\n${indent.push().get()}return 0, parseErr\n${indent.pop().get()}}\n`;
         let result = 'p';
         if (param.type.type === 'float32' || param.type.type === 'int32') {
           result = `${param.type.type}(${result})`;
         }
-        content += `\t\treturn ${result}, nil\n\t})\n`;
+        content += `${indent.get()}return ${result}, nil\n${indent.pop().get()}})\n`;
       } else {
-        content += `\t${createLocalVariableName(param, 'Param')}, err := ${emitNumericConversion(paramValue, param.type.type)}\n`;
+        content += `${indent.get()}${createLocalVariableName(param, 'Param')}, err := ${emitNumericConversion(paramValue, param.type.type)}\n`;
       }
-      content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+      content += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
     } else if (param.kind === 'headerMapParam') {
       imports.add('strings');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
       const localVar = createLocalVariableName(param, 'Param');
-      content += `\tvar ${localVar} map[string]*string\n`;
-      content += `\tfor hh := range ${paramValue} {\n`;
+      content += `${indent.get()}var ${localVar} map[string]*string\n`;
+      content += `${indent.get()}for hh := range ${paramValue} {\n`;
       const headerPrefix = param.headerName;
       requiredHelpers.getHeaderValue = true;
-      content += `\t\tif len(hh) > len("${headerPrefix}") && strings.EqualFold(hh[:len("x-ms-meta-")], "${headerPrefix}") {\n`;
-      content += `\t\t\tif ${localVar} == nil {\n\t\t\t\t${localVar} = map[string]*string{}\n\t\t\t}\n`;
-      content += `\t\t\t${localVar}[hh[len("${headerPrefix}"):]] = to.Ptr(getHeaderValue(req.Header, hh))\n`;
-      content += '\t\t}\n\t}\n';
+      content += `${indent.push().get()}if len(hh) > len("${headerPrefix}") && strings.EqualFold(hh[:len("x-ms-meta-")], "${headerPrefix}") {\n`;
+      content += `${indent.push().get()}if ${localVar} == nil {\n${indent.push().get()}${localVar} = map[string]*string{}\n${indent.pop().get()}}\n`;
+      content += `${indent.get()}${localVar}[hh[len("${headerPrefix}"):]] = to.Ptr(getHeaderValue(req.Header, hh))\n`;
+      content += `${indent.pop().get()}}\n${indent.pop().get()}}\n`;
     } else if (param.type.kind === 'constant' && param.type.type !== 'string') {
       let parseHelper: string;
       if (!go.isRequiredParameter(param.style)) {
@@ -1144,11 +1208,11 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
         zeroValue = '0';
       }
       const toConstType = go.getTypeDeclaration(param.type, pkg);
-      content += `\t${createLocalVariableName(param, 'Param')}, err := ${parseHelper}(${paramValue}, func(v string) (${toConstType}, error) {\n`;
-      content += `\t\tp, parseErr := ${parse}\n`;
-      content += `\t\tif parseErr != nil {\n\t\t\treturn ${zeroValue}, parseErr\n\t\t}\n`;
-      content += `\t\treturn ${toConstType}(p), nil\n\t})\n`;
-      content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+      content += `${indent.get()}${createLocalVariableName(param, 'Param')}, err := ${parseHelper}(${paramValue}, func(v string) (${toConstType}, error) {\n`;
+      content += `${indent.push().get()}p, parseErr := ${parse}\n`;
+      content += `${indent.get()}if parseErr != nil {\n${indent.push().get()}return ${zeroValue}, parseErr\n${indent.pop().get()}}\n`;
+      content += `${indent.get()}return ${toConstType}(p), nil\n${indent.pop().get()}})\n`;
+      content += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
     } else if (!go.isRequiredParameter(param.style)) {
       // we check this last as it's a superset of the previous conditions
       requiredHelpers.getOptional = true;
@@ -1156,23 +1220,25 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
         imports.addForType(param.type);
         paramValue = `${go.getTypeDeclaration(param.type, pkg)}(${paramValue})`;
       }
-      content += `\t${createLocalVariableName(param, 'Param')} := getOptional(${paramValue})\n`;
+      content += `${indent.get()}${createLocalVariableName(param, 'Param')} := getOptional(${paramValue})\n`;
     }
   }
 
   // create the param groups and populate their values
   for (const paramGroup of paramGroups.keys()) {
     if (paramGroup.required) {
-      content += `\t${naming.uncapitalize(paramGroup.name)} := ${go.getTypeDeclaration(paramGroup, pkg)}{\n`;
+      content += `${indent.get()}${naming.uncapitalize(paramGroup.name)} := ${go.getTypeDeclaration(paramGroup, pkg)}{\n`;
       const params = paramGroups.get(paramGroup);
       if (params) {
+        indent.push();
         for (const param of params) {
-          content += `\t\t${naming.capitalize(param.name)}: ${getFinalParamValue(pkg, param, paramValues)},\n`;
+          content += `${indent.get()}${naming.capitalize(param.name)}: ${getFinalParamValue(pkg, param, paramValues)},\n`;
         }
+        indent.pop();
       }
-      content += '\t}\n';
+      content += `${indent.get()}}\n`;
     } else {
-      content += `\tvar ${naming.uncapitalize(paramGroup.name)} *${go.getTypeDeclaration(paramGroup, pkg)}\n`;
+      content += `${indent.get()}var ${naming.uncapitalize(paramGroup.name)} *${go.getTypeDeclaration(paramGroup, pkg)}\n`;
       const params = paramGroups.get(paramGroup);
       const paramNilCheck = new Array<string>();
       if (params) {
@@ -1196,19 +1262,21 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
           }
         }
       }
-      content += `\tif ${paramNilCheck.join(' || ')} {\n`;
-      content += `\t\t${naming.uncapitalize(paramGroup.name)} = &${go.getTypeDeclaration(paramGroup, pkg)}{\n`;
+      content += `${indent.get()}if ${paramNilCheck.join(' || ')} {\n`;
+      content += `${indent.push().get()}${naming.uncapitalize(paramGroup.name)} = &${go.getTypeDeclaration(paramGroup, pkg)}{\n`;
       if (params) {
+        indent.push();
         for (const param of params) {
           let byRef = '&';
           if (param.byValue || (!go.isRequiredParameter(param.style) && param.kind !== 'bodyParam' && !go.isFormBodyParameter(param) && param.kind !== 'multipartFormBodyParam')) {
             byRef = '';
           }
-          content += `\t\t\t${naming.capitalize(param.name)}: ${byRef}${getFinalParamValue(pkg, param, paramValues)},\n`;
+          content += `${indent.get()}${naming.capitalize(param.name)}: ${byRef}${getFinalParamValue(pkg, param, paramValues)},\n`;
         }
+        indent.pop();
       }
-      content += '\t\t}\n';
-      content += '\t}\n';
+      content += `${indent.get()}}\n`;
+      content += `${indent.pop().get()}}\n`;
     }
   }
 

@@ -17,6 +17,8 @@ export function generateConstants(pkg: go.PackageContent): string {
     return '';
   }
 
+  const indent = new helpers.Indentation();
+
   let text = helpers.contentPreamble(pkg);
 
   for (const enm of pkg.constants) {
@@ -30,17 +32,18 @@ export function generateConstants(pkg: go.PackageContent): string {
       if (enm.type !== 'string') {
         formatValue = `${val.value}`;
       }
-      text += `\t${val.name} ${enm.name} = ${formatValue}\n`;
+      text += `${indent.get()}${val.name} ${enm.name} = ${formatValue}\n`;
       vals.push(val.name);
     }
     text += ')\n\n';
     text += `// ${enm.valuesFuncName} returns the possible values for the ${enm.name} const type.\n`;
     text += `func ${enm.valuesFuncName}() []${enm.name} {\n`;
-    text += `\treturn []${enm.name}{\t\n`;
+    text += `${indent.get()}return []${enm.name}{\n`;
+    indent.push();
     for (const val of vals) {
-      text += `\t\t${val},\n`;
+      text += `${indent.get()}${val},\n`;
     }
-    text += '\t}\n';
+    text += `${indent.pop().get()}}\n`;
     text += '}\n\n';
   }
   return text;

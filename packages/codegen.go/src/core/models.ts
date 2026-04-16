@@ -32,8 +32,10 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
   const serdeImports = new ImportManager(pkg);
   let modelText = helpers.contentPreamble(pkg);
 
+  const indent = new helpers.Indentation();
+
   // we do model generation first as it can add imports to the imports list
-  const modelDefs = generateModelDefs(modelImports, serdeImports, pkg, options);
+  const modelDefs = generateModelDefs(modelImports, serdeImports, pkg, options, indent);
 
   modelText += modelImports.text();
 
@@ -47,7 +49,7 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
   let needsJSONPopulateMultipart = false;
   let serdeTextBody = '';
   for (const modelDef of modelDefs) {
-    modelText += modelDef.text();
+    modelText += modelDef.text(indent);
 
     modelDef.Methods.sort((a: ModelMethod, b: ModelMethod) => {
       return helpers.sortAscending(a.name, b.name);
@@ -90,17 +92,18 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
       needsJSONPopulateMultipart = true;
     }
   }
+
   if (needsJSONPopulate) {
     serdeImports.add('reflect');
     serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     serdeTextBody += 'func populate(m map[string]any, k string, v any) {\n';
-    serdeTextBody += '\tif v == nil {\n';
-    serdeTextBody += '\t\treturn\n';
-    serdeTextBody += '\t} else if azcore.IsNullValue(v) {\n';
-    serdeTextBody += '\t\tm[k] = nil\n';
-    serdeTextBody += '\t} else if !reflect.ValueOf(v).IsNil() {\n';
-    serdeTextBody += '\t\tm[k] = v\n';
-    serdeTextBody += '\t}\n';
+    serdeTextBody += `${indent.get()}if v == nil {\n`;
+    serdeTextBody += `${indent.push().get()}return\n`;
+    serdeTextBody += `${indent.pop().get()}} else if azcore.IsNullValue(v) {\n`;
+    serdeTextBody += `${indent.push().get()}m[k] = nil\n`;
+    serdeTextBody += `${indent.pop().get()}} else if !reflect.ValueOf(v).IsNil() {\n`;
+    serdeTextBody += `${indent.push().get()}m[k] = v\n`;
+    serdeTextBody += `${indent.pop().get()}}\n`;
     serdeTextBody += '}\n\n';
   }
   if (needsJSONPopulateTime) {
@@ -108,80 +111,85 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
     serdeImports.add('reflect');
     serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     serdeTextBody += 'func populateTime[T dateTimeConstraints](m map[string]any, k string, t *time.Time) {\n';
-    serdeTextBody += '\tif t == nil {\n';
-    serdeTextBody += '\t\treturn\n';
-    serdeTextBody += '\t} else if azcore.IsNullValue(t) {\n';
-    serdeTextBody += '\t\tm[k] = nil\n';
-    serdeTextBody += '\t} else if !reflect.ValueOf(t).IsNil() {\n';
-    serdeTextBody += '\t\tnewTime := T(*t)\n';
-    serdeTextBody += '\t\tm[k] = (*T)(&newTime)\n';
-    serdeTextBody += '\t}\n';
+    serdeTextBody += `${indent.get()}if t == nil {\n`;
+    serdeTextBody += `${indent.push().get()}return\n`;
+    serdeTextBody += `${indent.pop().get()}} else if azcore.IsNullValue(t) {\n`;
+    serdeTextBody += `${indent.push().get()}m[k] = nil\n`;
+    serdeTextBody += `${indent.pop().get()}} else if !reflect.ValueOf(t).IsNil() {\n`;
+    indent.push();
+    serdeTextBody += `${indent.get()}newTime := T(*t)\n`;
+    serdeTextBody += `${indent.get()}m[k] = (*T)(&newTime)\n`;
+    indent.pop();
+    serdeTextBody += `${indent.get()}}\n`;
     serdeTextBody += '}\n\n';
   }
   if (needsJSONPopulateAny) {
     serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     serdeTextBody += 'func populateAny(m map[string]any, k string, v any) {\n';
-    serdeTextBody += '\tif v == nil {\n';
-    serdeTextBody += '\t\treturn\n';
-    serdeTextBody += '\t} else if azcore.IsNullValue(v) {\n';
-    serdeTextBody += '\t\tm[k] = nil\n';
-    serdeTextBody += '\t} else {\n';
-    serdeTextBody += '\t\tm[k] = v\n';
-    serdeTextBody += '\t}\n';
+    serdeTextBody += `${indent.get()}if v == nil {\n`;
+    serdeTextBody += `${indent.push().get()}return\n`;
+    serdeTextBody += `${indent.pop().get()}} else if azcore.IsNullValue(v) {\n`;
+    serdeTextBody += `${indent.push().get()}m[k] = nil\n`;
+    serdeTextBody += `${indent.pop().get()}} else {\n`;
+    serdeTextBody += `${indent.push().get()}m[k] = v\n`;
+    serdeTextBody += `${indent.pop().get()}}\n`;
     serdeTextBody += '}\n\n';
   }
   if (needsJSONPopulateByteArray) {
     serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
     serdeTextBody += 'func populateByteArray[T any](m map[string]any, k string, b []T, convert func() any) {\n';
-    serdeTextBody += '\tif azcore.IsNullValue(b) {\n';
-    serdeTextBody += '\t\tm[k] = nil\n';
-    serdeTextBody += '\t} else if len(b) == 0 {\n';
-    serdeTextBody += '\t\treturn\n';
-    serdeTextBody += '\t} else {\n';
-    serdeTextBody += '\t\tm[k] = convert()\n';
-    serdeTextBody += '\t}\n';
+    serdeTextBody += `${indent.get()}if azcore.IsNullValue(b) {\n`;
+    serdeTextBody += `${indent.push().get()}m[k] = nil\n`;
+    serdeTextBody += `${indent.pop().get()}} else if len(b) == 0 {\n`;
+    serdeTextBody += `${indent.push().get()}return\n`;
+    serdeTextBody += `${indent.pop().get()}} else {\n`;
+    serdeTextBody += `${indent.push().get()}m[k] = convert()\n`;
+    serdeTextBody += `${indent.pop().get()}}\n`;
     serdeTextBody += '}\n\n';
   }
   if (needsJSONUnpopulate) {
     serdeImports.add('fmt');
     serdeTextBody += 'func unpopulate(data json.RawMessage, fn string, v any) error {\n';
-    serdeTextBody += '\tif data == nil || string(data) == "null" {\n';
-    serdeTextBody += '\t\treturn nil\n';
-    serdeTextBody += '\t}\n';
-    serdeTextBody += '\tif err := json.Unmarshal(data, v); err != nil {\n';
-    serdeTextBody += '\t\treturn fmt.Errorf("struct field %s: %v", fn, err)\n';
-    serdeTextBody += '\t}\n';
-    serdeTextBody += '\treturn nil\n';
+    serdeTextBody += `${indent.get()}if data == nil || string(data) == "null" {\n`;
+    serdeTextBody += `${indent.push().get()}return nil\n`;
+    serdeTextBody += `${indent.pop().get()}}\n`;
+    serdeTextBody += `${indent.get()}if err := json.Unmarshal(data, v); err != nil {\n`;
+    serdeTextBody += `${indent.push().get()}return fmt.Errorf("struct field %s: %v", fn, err)\n`;
+    serdeTextBody += `${indent.pop().get()}}\n`;
+    serdeTextBody += `${indent.get()}return nil\n`;
     serdeTextBody += '}\n\n';
   }
   if (needsJSONUnpopulateTime) {
     serdeImports.add('fmt');
     serdeImports.add('time');
     serdeTextBody += 'func unpopulateTime[T dateTimeConstraints](data json.RawMessage, fn string, t **time.Time) error {\n';
-    serdeTextBody += '\tif data == nil || string(data) == "null" {\n';
-    serdeTextBody += '\t\treturn nil\n';
-    serdeTextBody += '\t}\n';
-    serdeTextBody += '\tvar aux T\n';
-    serdeTextBody += '\tif err := json.Unmarshal(data, &aux); err != nil {\n';
-    serdeTextBody += '\t\treturn fmt.Errorf("struct field %s: %v", fn, err)\n';
-    serdeTextBody += '\t}\n';
-    serdeTextBody += '\tnewTime := time.Time(aux)\n';
-    serdeTextBody += '\t*t = &newTime\n';
-    serdeTextBody += '\treturn nil\n';
+    serdeTextBody += `${indent.get()}if data == nil || string(data) == "null" {\n`;
+    serdeTextBody += `${indent.push().get()}return nil\n`;
+    serdeTextBody += `${indent.pop().get()}}\n`;
+    serdeTextBody += `${indent.get()}var aux T\n`;
+    serdeTextBody += `${indent.get()}if err := json.Unmarshal(data, &aux); err != nil {\n`;
+    serdeTextBody += `${indent.push().get()}return fmt.Errorf("struct field %s: %v", fn, err)\n`;
+    serdeTextBody += `${indent.pop().get()}}\n`;
+    serdeTextBody += `${indent.get()}newTime := time.Time(aux)\n`;
+    serdeTextBody += `${indent.get()}*t = &newTime\n`;
+    serdeTextBody += `${indent.get()}return nil\n`;
     serdeTextBody += '}\n\n';
   }
   if (needsJSONPopulateMultipart) {
     serdeImports.add('encoding/json');
     serdeTextBody += 'func populateMultipartJSON(m map[string]any, k string, v any) error {\n';
-    serdeTextBody += '\tdata, err := json.Marshal(v)\n';
-    serdeTextBody += '\tif err != nil {\n\t\treturn err\n\t}\n';
-    serdeTextBody += '\tm[k] = data\n\treturn nil\n';
+    serdeTextBody += `${indent.get()}data, err := json.Marshal(v)\n`;
+    serdeTextBody += `${indent.get()}if err != nil {\n`;
+    serdeTextBody += `${indent.push().get()}return err\n`;
+    serdeTextBody += `${indent.pop().get()}}\n`;
+    serdeTextBody += `${indent.get()}m[k] = data\n`;
+    serdeTextBody += `${indent.get()}return nil\n`;
     serdeTextBody += '}\n\n';
   }
   if (needsJSONUnpopulateTime || needsJSONPopulateTime) {
     serdeTextBody += `type dateTimeConstraints interface {\n`;
-    serdeTextBody += `\tdatetime.PlainDate | datetime.PlainTime | datetime.RFC1123 | datetime.RFC3339 | datetime.Unix\n`;
+    serdeTextBody += `${indent.get()}datetime.PlainDate | datetime.PlainTime | datetime.RFC1123 | datetime.RFC3339 | datetime.Unix\n`;
     serdeTextBody += '}\n\n';
   }
   let serdeText = '';
@@ -205,7 +213,7 @@ export function generateModels(pkg: go.PackageContent, options: go.Options): Mod
  * @param options the Go emitter options
  * @returns an array of ModelDefs
  */
-function generateModelDefs(modelImports: ImportManager, serdeImports: ImportManager, pkg: go.PackageContent, options: go.Options): Array<ModelDef> {
+function generateModelDefs(modelImports: ImportManager, serdeImports: ImportManager, pkg: go.PackageContent, options: go.Options, indent: helpers.Indentation): Array<ModelDef> {
   const models = pkg.models;
   const modelDefs = new Array<ModelDef>();
   for (const model of models) {
@@ -264,29 +272,29 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       // due to differences in XML marshallers/unmarshallers, we use different codegen than for JSON
       const needsXMLDictionaryUnmarshalling = needsXMLDictionaryHelper(model);
       if (needsDateTimeMarshalling || model.xml?.name || needsXMLArrayMarshalling(model) || byteArrayFormat) {
-        generateXMLMarshaller(modelDef, serdeImports);
+        generateXMLMarshaller(modelDef, serdeImports, indent);
         if (needsDateTimeMarshalling || needsXMLDictionaryUnmarshalling || byteArrayFormat) {
-          generateXMLUnmarshaller(modelDef, serdeImports);
+          generateXMLUnmarshaller(modelDef, serdeImports, indent);
         }
       } else if (needsXMLDictionaryUnmarshalling) {
-        generateXMLMarshaller(modelDef, serdeImports);
-        generateXMLUnmarshaller(modelDef, serdeImports);
+        generateXMLMarshaller(modelDef, serdeImports, indent);
+        generateXMLUnmarshaller(modelDef, serdeImports, indent);
       }
       modelDefs.push(modelDef);
       continue;
     }
     if (model.kind === 'polymorphicModel') {
-      generateDiscriminatorMarkerMethod(model.interface, modelDef);
+      generateDiscriminatorMarkerMethod(model.interface, modelDef, indent);
       for (let parent = model.interface.parent; parent !== undefined; parent = parent.parent) {
-        generateDiscriminatorMarkerMethod(parent, modelDef);
+        generateDiscriminatorMarkerMethod(parent, modelDef, indent);
       }
     }
     if (model.annotations.multipartFormData) {
-      generateToMultipartForm(modelDef);
+      generateToMultipartForm(modelDef, indent);
       modelDef.SerDe.needsJSONPopulateMultipart = true;
     } else if (!model.annotations.omitSerDeMethods) {
-      generateJSONMarshaller(modelDef, serdeImports);
-      generateJSONUnmarshaller(modelDef, serdeImports, options);
+      generateJSONMarshaller(modelDef, serdeImports, indent);
+      generateJSONUnmarshaller(modelDef, options, serdeImports, indent);
     }
     modelDefs.push(modelDef);
   }
@@ -322,7 +330,7 @@ function needsXMLArrayMarshalling(modelType: go.Model): boolean {
 }
 
 // generates discriminator marker method
-function generateDiscriminatorMarkerMethod(type: go.Interface, modelDef: ModelDef) {
+function generateDiscriminatorMarkerMethod(type: go.Interface, modelDef: ModelDef, indent: helpers.Indentation) {
   const typeName = type.rootType.name;
   const receiver = modelDef.receiverName();
   const interfaceMethod = `Get${typeName}`;
@@ -333,37 +341,43 @@ function generateDiscriminatorMarkerMethod(type: go.Interface, modelDef: ModelDe
   } else {
     // the marker method is on a child type, so return an instance of the parent
     // type by copying the parent values into a new instance.
-    method += `\n\treturn &${type.rootType.name}{\n`;
+    method += `\n${indent.get()}return &${type.rootType.name}{\n`;
+    indent.push();
     for (const field of type.rootType.fields) {
-      method += `\t\t${field.name}: ${modelDef.receiverName()}.${field.name},\n`;
+      method += `${indent.get()}${field.name}: ${modelDef.receiverName()}.${field.name},\n`;
     }
-    method += '\t}\n}\n\n';
+    method += `${indent.pop().get()}}\n}\n\n`;
   }
   modelDef.Methods.push({ name: interfaceMethod, desc: `${interfaceMethod} implements the ${type.name} interface for type ${modelDef.Model.name}.`, text: method });
 }
 
-function generateToMultipartForm(modelDef: ModelDef) {
+function generateToMultipartForm(modelDef: ModelDef, indent: helpers.Indentation) {
   const receiver = modelDef.receiverName();
   let method = `func (${receiver} ${modelDef.Model.name}) toMultipartFormData() (map[string]any, error) {\n`;
-  method += '\tobjectMap := make(map[string]any)\n';
+  method += `${indent.get()}objectMap := make(map[string]any)\n`;
   for (const field of modelDef.Model.fields) {
     const fieldType = helpers.recursiveUnwrapMapSlice(field.type);
-    let setField: string;
     let star = '';
     if (!field.byValue) {
       star = '*';
     }
+    if (!field.byValue) {
+      method += `${indent.get()}if ${receiver}.${field.name} != nil {\n`;
+      indent.push();
+    }
     if (fieldType.kind === 'model' && !fieldType.annotations.multipartFormData) {
-      setField = `\tif err := populateMultipartJSON(objectMap, "${field.serializedName}", ${star}${receiver}.${field.name}); err != nil {\n\t\treturn nil, err\n\t}\n`;
+      method += `${indent.get()}if err := populateMultipartJSON(objectMap, "${field.serializedName}", ${star}${receiver}.${field.name}); err != nil {\n`;
+      method += `${indent.push().get()}return nil, err\n`;
+      method += `${indent.pop().get()}}\n`;
     } else {
-      setField = `\tobjectMap["${field.serializedName}"] = ${star}${receiver}.${field.name}\n`;
+      method += `${indent.get()}objectMap["${field.serializedName}"] = ${star}${receiver}.${field.name}\n`;
     }
     if (!field.byValue) {
-      setField = `\tif ${receiver}.${field.name} != nil {\n\t\t${setField}\t}\n`;
+      indent.pop();
+      method += `${indent.get()}}\n`;
     }
-    method += setField;
   }
-  method += '\treturn objectMap, nil\n}\n\n';
+  method += `${indent.get()}return objectMap, nil\n}\n\n`;
   modelDef.SerDe.methods.push({ name: 'toMultipartFormData', desc: `toMultipartFormData converts ${modelDef.Model.name} to multipart/form data.`, text: method });
 }
 
@@ -373,8 +387,9 @@ function generateToMultipartForm(modelDef: ModelDef) {
  *
  * @param modelDef the type for which to emit the method
  * @param imports the import manager currently in scope
+ * @param indent the indentation helper currently in scope
  */
-function generateJSONMarshaller(modelDef: ModelDef, imports: ImportManager): void {
+function generateJSONMarshaller(modelDef: ModelDef, imports: ImportManager, indent: helpers.Indentation): void {
   if (modelDef.Model.kind === 'model' && modelDef.Model.fields.length === 0) {
     // non-discriminated types without content don't need a custom marshaller.
     // there is a case in network where child is allOf base and child has no properties.
@@ -384,9 +399,9 @@ function generateJSONMarshaller(modelDef: ModelDef, imports: ImportManager): voi
   const typeName = modelDef.Model.name;
   const receiver = modelDef.receiverName();
   let marshaller = `func (${receiver} ${typeName}) MarshalJSON() ([]byte, error) {\n`;
-  marshaller += '\tobjectMap := make(map[string]any)\n';
-  marshaller += generateJSONMarshallerBody(modelDef, receiver, imports);
-  marshaller += '\treturn json.Marshal(objectMap)\n';
+  marshaller += `${indent.get()}objectMap := make(map[string]any)\n`;
+  marshaller += generateJSONMarshallerBody(modelDef, receiver, imports, indent);
+  marshaller += `${indent.get()}return json.Marshal(objectMap)\n`;
   marshaller += '}\n\n';
   modelDef.SerDe.methods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
 }
@@ -397,9 +412,10 @@ function generateJSONMarshaller(modelDef: ModelDef, imports: ImportManager): voi
  * @param modelDef the type being encoded
  * @param receiver the name of the receiver in the MarshalJSON method
  * @param imports the import manager currently in scope
+ * @param indent the indentation helper currently in scope
  * @returns the text for encoding the target type
  */
-function generateJSONMarshallerBody(modelDef: ModelDef, receiver: string, imports: ImportManager): string {
+function generateJSONMarshallerBody(modelDef: ModelDef, receiver: string, imports: ImportManager, indent: helpers.Indentation): string {
   let marshaller = '';
   let addlProps: go.Map | undefined;
   for (const field of modelDef.Model.fields) {
@@ -409,24 +425,27 @@ function generateJSONMarshallerBody(modelDef: ModelDef, receiver: string, import
     }
     if (field.annotations.isDiscriminator) {
       if (field.defaultValue) {
-        marshaller += `\tobjectMap["${field.serializedName}"] = ${helpers.formatLiteralValue(field.defaultValue, true)}\n`;
+        marshaller += `${indent.get()}objectMap["${field.serializedName}"] = ${helpers.formatLiteralValue(field.defaultValue, true)}\n`;
       } else {
         // if there's no discriminator value (e.g. Fish in test server), use the field's value.
         // this will enable support for custom types that aren't (yet) described in the swagger.
-        marshaller += `\tobjectMap["${field.serializedName}"] = ${receiver}.${field.name}\n`;
+        marshaller += `${indent.get()}objectMap["${field.serializedName}"] = ${receiver}.${field.name}\n`;
       }
     } else if (field.type.kind === 'encodedBytes') {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-      marshaller += `\tpopulateByteArray(objectMap, "${field.serializedName}", ${receiver}.${field.name}, func() any {\n`;
-      marshaller += `\t\treturn runtime.EncodeByteArray(${receiver}.${field.name}, runtime.Base64${field.type.encoding}Format)\n\t})\n`;
+      marshaller += `${indent.get()}populateByteArray(objectMap, "${field.serializedName}", ${receiver}.${field.name}, func() any {\n`;
+      marshaller += `${indent.push().get()}return runtime.EncodeByteArray(${receiver}.${field.name}, runtime.Base64${field.type.encoding}Format)\n`;
+      marshaller += `${indent.pop().get()}})\n`;
       modelDef.SerDe.needsJSONPopulateByteArray = true;
     } else if (field.type.kind === 'slice' && field.type.elementType.kind === 'encodedBytes') {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-      marshaller += `\tpopulateByteArray(objectMap, "${field.serializedName}", ${receiver}.${field.name}, func() any {\n`;
-      marshaller += `\t\tencodedValue := make([]string, len(${receiver}.${field.name}))\n`;
-      marshaller += `\t\tfor i := 0; i < len(${receiver}.${field.name}); i++ {\n`;
-      marshaller += `\t\t\tencodedValue[i] = runtime.EncodeByteArray(${receiver}.${field.name}[i], runtime.Base64${field.type.elementType.encoding}Format)\n\t\t}\n`;
-      marshaller += '\t\treturn encodedValue\n\t})\n';
+      marshaller += `${indent.get()}populateByteArray(objectMap, "${field.serializedName}", ${receiver}.${field.name}, func() any {\n`;
+      marshaller += `${indent.push().get()}encodedValue := make([]string, len(${receiver}.${field.name}))\n`;
+      marshaller += `${indent.get()}for i := 0; i < len(${receiver}.${field.name}); i++ {\n`;
+      marshaller += `${indent.push().get()}encodedValue[i] = runtime.EncodeByteArray(${receiver}.${field.name}[i], runtime.Base64${field.type.elementType.encoding}Format)\n`;
+      marshaller += `${indent.pop().get()}}\n`;
+      marshaller += `${indent.get()}return encodedValue\n`;
+      marshaller += `${indent.pop().get()}})\n`;
       modelDef.SerDe.needsJSONPopulateByteArray = true;
     } else if (field.type.kind === 'slice' && field.type.elementType.kind === 'time') {
       const source = `${receiver}.${field.name}`;
@@ -435,26 +454,30 @@ function generateJSONMarshallerBody(modelDef: ModelDef, receiver: string, import
         elementPtr = '';
       }
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
-      marshaller += `\taux := make([]${elementPtr}datetime.${field.type.elementType.format}, len(${source}), len(${source}))\n`;
-      marshaller += `\tfor i := 0; i < len(${source}); i++ {\n`;
-      marshaller += `\t\taux[i] = (${elementPtr}datetime.${field.type.elementType.format})(${source}[i])\n`;
-      marshaller += '\t}\n';
-      marshaller += `\tpopulate(objectMap, "${field.serializedName}", aux)\n`;
+      marshaller += `${indent.get()}aux := make([]${elementPtr}datetime.${field.type.elementType.format}, len(${source}), len(${source}))\n`;
+      marshaller += `${indent.get()}for i := 0; i < len(${source}); i++ {\n`;
+      marshaller += `${indent.push().get()}aux[i] = (${elementPtr}datetime.${field.type.elementType.format})(${source}[i])\n`;
+      marshaller += `${indent.pop().get()}}\n`;
+      marshaller += `${indent.get()}populate(objectMap, "${field.serializedName}", aux)\n`;
       modelDef.SerDe.needsJSONPopulate = true;
     } else if (field.type.kind === 'literal') {
       const setter = `objectMap["${field.serializedName}"] = ${helpers.formatLiteralValue(field.type, true)}`;
       if (!field.annotations.required) {
-        marshaller += `\tif ${receiver}.${field.name} != nil {\n\t\t${setter}\n\t}\n`;
+        marshaller += `${indent.get()}if ${receiver}.${field.name} != nil {\n`;
+        marshaller += `${indent.push().get()}${setter}\n`;
+        marshaller += `${indent.pop().get()}}\n`;
       } else {
-        marshaller += `\t${setter}\n`;
+        marshaller += `${indent.get()}${setter}\n`;
       }
     } else if (field.type.kind === 'rawJSON') {
-      marshaller += `\tpopulate(objectMap, "${field.serializedName}", json.RawMessage(${receiver}.${field.name}))\n`;
+      marshaller += `${indent.get()}populate(objectMap, "${field.serializedName}", json.RawMessage(${receiver}.${field.name}))\n`;
       modelDef.SerDe.needsJSONPopulate = true;
     } else {
       if (field.defaultValue) {
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
-        marshaller += `\tif ${receiver}.${field.name} == nil {\n\t\t${receiver}.${field.name} = to.Ptr(${helpers.formatLiteralValue(field.defaultValue, true)})\n\t}\n`;
+        marshaller += `${indent.get()}if ${receiver}.${field.name} == nil {\n`;
+        marshaller += `${indent.push().get()}${receiver}.${field.name} = to.Ptr(${helpers.formatLiteralValue(field.defaultValue, true)})\n`;
+        marshaller += `${indent.pop().get()}}\n`;
       }
       let populate: string;
       if (field.type.kind === 'time') {
@@ -473,25 +496,25 @@ function generateJSONMarshallerBody(modelDef: ModelDef, receiver: string, import
         imports.add('strconv');
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
         if ((field.type.type.startsWith('uint') && field.type.type !== 'uint64') || (field.type.type.startsWith('int') && field.type.type !== 'int64')) {
-          marshaller += `\t${populate}(objectMap, "${field.serializedName}", to.Ptr(strconv.${field.type.type.startsWith('int') ? 'FormatInt' : 'FormatUint'}(${field.type.type.startsWith('int') ? 'int64' : 'uint64'}(*${receiver}.${field.name}), 10)))\n`;
+          marshaller += `${indent.get()}${populate}(objectMap, "${field.serializedName}", to.Ptr(strconv.${field.type.type.startsWith('int') ? 'FormatInt' : 'FormatUint'}(${field.type.type.startsWith('int') ? 'int64' : 'uint64'}(*${receiver}.${field.name}), 10)))\n`;
         } else {
-          marshaller += `\t${populate}(objectMap, "${field.serializedName}", to.Ptr(strconv.${field.type.type.startsWith('int') ? 'FormatInt' : 'FormatUint'}(*${receiver}.${field.name}, 10)))\n`;
+          marshaller += `${indent.get()}${populate}(objectMap, "${field.serializedName}", to.Ptr(strconv.${field.type.type.startsWith('int') ? 'FormatInt' : 'FormatUint'}(*${receiver}.${field.name}, 10)))\n`;
         }
       } else {
-        marshaller += `\t${populate}(objectMap, "${field.serializedName}", ${receiver}.${field.name})\n`;
+        marshaller += `${indent.get()}${populate}(objectMap, "${field.serializedName}", ${receiver}.${field.name})\n`;
       }
     }
   }
   if (addlProps) {
-    marshaller += `\tif ${receiver}.AdditionalProperties != nil {\n`;
-    marshaller += `\t\tfor key, val := range ${receiver}.AdditionalProperties {\n`;
+    marshaller += `${indent.get()}if ${receiver}.AdditionalProperties != nil {\n`;
+    marshaller += `${indent.push().get()}for key, val := range ${receiver}.AdditionalProperties {\n`;
     let assignment = 'val';
     if (addlProps.valueType.kind === 'time') {
       assignment = `(*${addlProps.valueType.format})(val)`;
     }
-    marshaller += `\t\t\tobjectMap[key] = ${assignment}\n`;
-    marshaller += '\t\t}\n';
-    marshaller += '\t}\n';
+    marshaller += `${indent.push().get()}objectMap[key] = ${assignment}\n`;
+    marshaller += `${indent.pop().get()}}\n`;
+    marshaller += `${indent.pop().get()}}\n`;
   }
   return marshaller;
 }
@@ -501,10 +524,11 @@ function generateJSONMarshallerBody(modelDef: ModelDef, receiver: string, import
  * the method impl is added to modelDef.SerDe.methods.
  *
  * @param modelDef the type for which to emit the method
- * @param imports the import manager currently in scope
  * @param options the Go emitter options
+ * @param imports the import manager currently in scope
+ * @param indent the indentation helper currently in scope
  */
-function generateJSONUnmarshaller(modelDef: ModelDef, imports: ImportManager, options: go.Options): void {
+function generateJSONUnmarshaller(modelDef: ModelDef, options: go.Options, imports: ImportManager, indent: helpers.Indentation): void {
   // there's a corner-case where a derived type might not add any new fields (Cookiecuttershark).
   // in this case skip adding the unmarshaller as it's not necessary and doesn't compile.
   if (modelDef.Model.fields.length === 0) {
@@ -515,11 +539,11 @@ function generateJSONUnmarshaller(modelDef: ModelDef, imports: ImportManager, op
   const typeName = modelDef.Model.name;
   const receiver = modelDef.receiverName();
   let unmarshaller = `func (${receiver} *${typeName}) UnmarshalJSON(data []byte) error {\n`;
-  unmarshaller += '\tvar rawMsg map[string]json.RawMessage\n';
-  unmarshaller += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';
-  unmarshaller += `\t\treturn fmt.Errorf("unmarshalling type %T: %v", ${receiver}, err)\n`;
-  unmarshaller += '\t}\n';
-  unmarshaller += generateJSONUnmarshallerBody(modelDef, receiver, imports, options);
+  unmarshaller += `${indent.get()}var rawMsg map[string]json.RawMessage\n`;
+  unmarshaller += `${indent.get()}if err := json.Unmarshal(data, &rawMsg); err != nil {\n`;
+  unmarshaller += `${indent.push().get()}return fmt.Errorf("unmarshalling type %T: %v", ${receiver}, err)\n`;
+  unmarshaller += `${indent.pop().get()}}\n`;
+  unmarshaller += generateJSONUnmarshallerBody(modelDef, receiver, options, imports, indent);
   unmarshaller += '}\n\n';
   modelDef.SerDe.methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });
 }
@@ -529,26 +553,28 @@ function generateJSONUnmarshaller(modelDef: ModelDef, imports: ImportManager, op
  *
  * @param modelDef the type being decoded
  * @param receiver the receiver for the UnmarshalJSON method
- * @param imports the import manager currently in scope
  * @param options the Go emitter options
+ * @param imports the import manager currently in scope
+ * @param indent the indentation helper currently in scope
  * @returns the text for decoding the target type
  */
-function generateJSONUnmarshallerBody(modelDef: ModelDef, receiver: string, imports: ImportManager, options: go.Options): string {
+function generateJSONUnmarshallerBody(modelDef: ModelDef, receiver: string, options: go.Options, imports: ImportManager, indent: helpers.Indentation): string {
   // we almost always need to have an error check when unmarshaling the values.
   // however, fields that are raw JSON don't require any unmarshaling. so, if all
   // of the fields in a type are raw JSON, then the error check isn't necessary
   // and can be elided (the linter complains about it otherwise).
   let needsErrCheck = false;
 
-  const emitAddlProps = function (tab: string, addlProps: go.Map): string {
-    let addlPropsText = `${tab}\t\tif ${receiver}.AdditionalProperties == nil {\n`;
+  const emitAddlProps = function (addlProps: go.Map): string {
+    // indent is at the case body level when called
+    let addlPropsText = `${indent.get()}if ${receiver}.AdditionalProperties == nil {\n`;
     let ref = '';
     if (!addlProps.valueTypeByValue) {
       ref = '&';
     }
-    addlPropsText += `${tab}\t\t\t${receiver}.AdditionalProperties = ${go.getTypeDeclaration(addlProps, modelDef.Model.pkg)}{}\n`;
-    addlPropsText += `${tab}\t\t}\n`;
-    addlPropsText += `${tab}\t\tif val != nil {\n`;
+    addlPropsText += `${indent.push().get()}${receiver}.AdditionalProperties = ${go.getTypeDeclaration(addlProps, modelDef.Model.pkg)}{}\n`;
+    addlPropsText += `${indent.pop().get()}}\n`;
+    addlPropsText += `${indent.get()}if val != nil {\n`;
     let auxType = go.getTypeDeclaration(addlProps.valueType, modelDef.Model.pkg);
     let assignment = `${ref}aux`;
     if (addlProps.valueType.kind === 'time') {
@@ -556,30 +582,32 @@ function generateJSONUnmarshallerBody(modelDef: ModelDef, receiver: string, impo
       auxType = addlProps.valueType.format;
       assignment = `(*time.Time)(${assignment})`;
     }
-    addlPropsText += `${tab}\t\t\tvar aux ${auxType}\n`;
-    addlPropsText += `${tab}\t\t\terr = json.Unmarshal(val, &aux)\n`;
-    addlPropsText += `${tab}\t\t\t${receiver}.AdditionalProperties[key] = ${assignment}\n`;
-    addlPropsText += `${tab}\t\t}\n`;
-    addlPropsText += `${tab}\t\tdelete(rawMsg, key)\n`;
+    addlPropsText += `${indent.push().get()}var aux ${auxType}\n`;
+    addlPropsText += `${indent.get()}err = json.Unmarshal(val, &aux)\n`;
+    addlPropsText += `${indent.get()}${receiver}.AdditionalProperties[key] = ${assignment}\n`;
+    addlPropsText += `${indent.pop().get()}}\n`;
+    addlPropsText += `${indent.get()}delete(rawMsg, key)\n`;
     needsErrCheck = true;
     return addlPropsText;
   };
 
   const emitSwitchCase = function (): string {
+    // indent is at level 2 (for loop body) when called
     let unmarshalBody = '';
     let addlProps: go.Map | undefined;
-    unmarshalBody += '\t\tswitch key {\n';
+    unmarshalBody += `${indent.get()}switch key {\n`;
     for (const field of modelDef.Model.fields) {
       if (field.type.kind === 'map' && field.annotations.isAdditionalProperties) {
         addlProps = field.type;
         continue;
       }
-      unmarshalBody += `\t\tcase "${field.serializedName}":\n`;
+      unmarshalBody += `${indent.get()}case "${field.serializedName}":\n`;
+      indent.push(); // case body level
       if (hasDiscriminatorInterface(field.type)) {
-        unmarshalBody += generateDiscriminatorUnmarshaller(modelDef.Model, field, receiver);
+        unmarshalBody += generateDiscriminatorUnmarshaller(modelDef.Model, field, receiver, indent);
         needsErrCheck = true;
       } else if (field.type.kind === 'time') {
-        unmarshalBody += `\t\t\t\terr = unpopulateTime[datetime.${field.type.format}](val, "${field.name}", &${receiver}.${field.name})\n`;
+        unmarshalBody += `${indent.get()}err = unpopulateTime[datetime.${field.type.format}](val, "${field.name}", &${receiver}.${field.name})\n`;
         modelDef.SerDe.needsJSONUnpopulateTime = true;
         needsErrCheck = true;
       } else if (field.type.kind === 'slice' && field.type.elementType.kind === 'time') {
@@ -589,85 +617,98 @@ function generateJSONUnmarshallerBody(modelDef: ModelDef, receiver: string, impo
         if (field.type.elementTypeByValue) {
           elementPtr = '';
         }
-        unmarshalBody += `\t\t\tvar aux []${elementPtr}datetime.${field.type.elementType.format}\n`;
-        unmarshalBody += `\t\t\terr = unpopulate(val, "${field.name}", &aux)\n`;
-        unmarshalBody += '\t\t\tfor _, au := range aux {\n';
-        unmarshalBody += `\t\t\t\t${receiver}.${field.name} = append(${receiver}.${field.name}, (${elementPtr}time.Time)(au))\n`;
-        unmarshalBody += '\t\t\t}\n';
+        unmarshalBody += `${indent.get()}var aux []${elementPtr}datetime.${field.type.elementType.format}\n`;
+        unmarshalBody += `${indent.get()}err = unpopulate(val, "${field.name}", &aux)\n`;
+        unmarshalBody += `${indent.get()}for _, au := range aux {\n`;
+        unmarshalBody += `${indent.push().get()}${receiver}.${field.name} = append(${receiver}.${field.name}, (${elementPtr}time.Time)(au))\n`;
+        unmarshalBody += `${indent.pop().get()}}\n`;
         modelDef.SerDe.needsJSONUnpopulate = true;
         needsErrCheck = true;
       } else if (field.type.kind === 'encodedBytes') {
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-        unmarshalBody += '\t\tif val != nil && string(val) != "null" {\n';
-        unmarshalBody += `\t\t\t\terr = runtime.DecodeByteArray(string(val), &${receiver}.${field.name}, runtime.Base64${field.type.encoding}Format)\n\t\t}\n`;
+        unmarshalBody += `${indent.get()}if val != nil && string(val) != "null" {\n`;
+        unmarshalBody += `${indent.push().get()}err = runtime.DecodeByteArray(string(val), &${receiver}.${field.name}, runtime.Base64${field.type.encoding}Format)\n`;
+        unmarshalBody += `${indent.pop().get()}}\n`;
         needsErrCheck = true;
       } else if (field.type.kind === 'slice' && field.type.elementType.kind === 'encodedBytes') {
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-        unmarshalBody += '\t\t\tvar encodedValue []string\n';
-        unmarshalBody += `\t\t\terr = unpopulate(val, "${field.name}", &encodedValue)\n`;
-        unmarshalBody += '\t\t\tif err == nil && len(encodedValue) > 0 {\n';
-        unmarshalBody += `\t\t\t\t${receiver}.${field.name} = make([][]byte, len(encodedValue))\n`;
-        unmarshalBody += '\t\t\t\tfor i := 0; i < len(encodedValue) && err == nil; i++ {\n';
-        unmarshalBody += `\t\t\t\t\terr = runtime.DecodeByteArray(encodedValue[i], &${receiver}.${field.name}[i], runtime.Base64${field.type.elementType.encoding}Format)\n`;
-        unmarshalBody += '\t\t\t\t}\n\t\t\t}\n';
+        unmarshalBody += `${indent.get()}var encodedValue []string\n`;
+        unmarshalBody += `${indent.get()}err = unpopulate(val, "${field.name}", &encodedValue)\n`;
+        unmarshalBody += `${indent.get()}if err == nil && len(encodedValue) > 0 {\n`;
+        indent.push();
+        unmarshalBody += `${indent.get()}${receiver}.${field.name} = make([][]byte, len(encodedValue))\n`;
+        unmarshalBody += `${indent.get()}for i := 0; i < len(encodedValue) && err == nil; i++ {\n`;
+        unmarshalBody += `${indent.push().get()}err = runtime.DecodeByteArray(encodedValue[i], &${receiver}.${field.name}[i], runtime.Base64${field.type.elementType.encoding}Format)\n`;
+        unmarshalBody += `${indent.pop().get()}}\n`;
+        indent.pop();
+        unmarshalBody += `${indent.get()}}\n`;
         modelDef.SerDe.needsJSONUnpopulate = true;
         needsErrCheck = true;
       } else if (field.type.kind === 'rawJSON') {
-        unmarshalBody += '\t\t\tif string(val) != "null" {\n';
-        unmarshalBody += `\t\t\t\t${receiver}.${field.name} = val\n\t\t\t}\n`;
+        unmarshalBody += `${indent.get()}if string(val) != "null" {\n`;
+        unmarshalBody += `${indent.push().get()}${receiver}.${field.name} = val\n`;
+        unmarshalBody += `${indent.pop().get()}}\n`;
       } else if (field.type.kind === 'scalar' && (field.type.type.startsWith('uint') || field.type.type.startsWith('int')) && field.type.encodeAsString) {
         // TODO: need to handle map and slice type with underlying int as string type
         imports.add('strconv');
-        unmarshalBody += `\t\t\t\tvar aux string\n`;
-        unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.name}", &aux)\n`;
-        unmarshalBody += `\t\t\t\tif err == nil {\n`;
-        unmarshalBody += `\t\t\t\t\tvar v ${field.type.type.startsWith('int') ? 'int64' : 'uint64'}\n`;
-        unmarshalBody += `\t\t\t\t\tv, err = strconv.${field.type.type.startsWith('int') ? 'ParseInt' : 'ParseUint'}(aux, 10, 0)\n`;
-        unmarshalBody += `\t\t\t\t\tif err == nil {\n`;
+        unmarshalBody += `${indent.get()}var aux string\n`;
+        unmarshalBody += `${indent.get()}err = unpopulate(val, "${field.name}", &aux)\n`;
+        unmarshalBody += `${indent.get()}if err == nil {\n`;
+        indent.push();
+        unmarshalBody += `${indent.get()}var v ${field.type.type.startsWith('int') ? 'int64' : 'uint64'}\n`;
+        unmarshalBody += `${indent.get()}v, err = strconv.${field.type.type.startsWith('int') ? 'ParseInt' : 'ParseUint'}(aux, 10, 0)\n`;
+        unmarshalBody += `${indent.get()}if err == nil {\n`;
         if ((field.type.type.startsWith('uint') && field.type.type !== 'uint64') || (field.type.type.startsWith('int') && field.type.type !== 'int64')) {
-          unmarshalBody += `\t\t\t\t\t\t${receiver}.${field.name} = to.Ptr(${field.type.type}(v))\n`;
+          unmarshalBody += `${indent.push().get()}${receiver}.${field.name} = to.Ptr(${field.type.type}(v))\n`;
         } else {
-          unmarshalBody += `\t\t\t\t\t\t${receiver}.${field.name} = to.Ptr(v)\n`;
+          unmarshalBody += `${indent.push().get()}${receiver}.${field.name} = to.Ptr(v)\n`;
         }
-        unmarshalBody += '\t\t\t\t\t}\n';
-        unmarshalBody += '\t\t\t\t}\n';
+        unmarshalBody += `${indent.pop().get()}}\n`;
+        indent.pop();
+        unmarshalBody += `${indent.get()}}\n`;
         modelDef.SerDe.needsJSONUnpopulate = true;
         needsErrCheck = true;
       } else {
-        unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.name}", &${receiver}.${field.name})\n`;
+        unmarshalBody += `${indent.get()}err = unpopulate(val, "${field.name}", &${receiver}.${field.name})\n`;
         modelDef.SerDe.needsJSONUnpopulate = true;
         needsErrCheck = true;
       }
-      unmarshalBody += '\t\t\tdelete(rawMsg, key)\n';
+      unmarshalBody += `${indent.get()}delete(rawMsg, key)\n`;
+      indent.pop(); // back to switch level
     }
     if (addlProps) {
-      unmarshalBody += '\t\tdefault:\n';
-      unmarshalBody += emitAddlProps('\t', addlProps);
+      unmarshalBody += `${indent.get()}default:\n`;
+      indent.push(); // case body level
+      unmarshalBody += emitAddlProps(addlProps);
+      indent.pop();
     } else if (options.disallowUnknownFields) {
-      unmarshalBody += '\t\tdefault:\n';
-      unmarshalBody += `\t\t\terr = fmt.Errorf("unmarshalling type %T, unknown field %q", ${receiver}, key)\n`;
+      unmarshalBody += `${indent.get()}default:\n`;
+      unmarshalBody += `${indent.push().get()}err = fmt.Errorf("unmarshalling type %T, unknown field %q", ${receiver}, key)\n`;
+      indent.pop();
       needsErrCheck = true;
     }
-    unmarshalBody += '\t\t}\n';
+    unmarshalBody += `${indent.get()}}\n`;
     return unmarshalBody;
   };
 
-  let unmarshalBody = '\tfor key, val := range rawMsg {\n';
+  let unmarshalBody = `${indent.get()}for key, val := range rawMsg {\n`;
+  indent.push(); // level 2 (for loop body)
 
   // emitSwitchCase sets needsErrCheck so we must call it first
   const switchCaseBody = emitSwitchCase();
 
   if (needsErrCheck) {
-    unmarshalBody += '\t\tvar err error\n';
+    unmarshalBody += `${indent.get()}var err error\n`;
   }
   unmarshalBody += switchCaseBody;
   if (needsErrCheck) {
-    unmarshalBody += '\t\tif err != nil {\n';
-    unmarshalBody += `\t\t\treturn fmt.Errorf("unmarshalling type %T: %v", ${receiver}, err)\n`;
-    unmarshalBody += '\t\t}\n';
+    unmarshalBody += `${indent.get()}if err != nil {\n`;
+    unmarshalBody += `${indent.push().get()}return fmt.Errorf("unmarshalling type %T: %v", ${receiver}, err)\n`;
+    unmarshalBody += `${indent.pop().get()}}\n`;
   }
-  unmarshalBody += '\t}\n'; // end for key, val := range rawMsg
-  unmarshalBody += '\treturn nil\n';
+  indent.pop(); // level 1
+  unmarshalBody += `${indent.get()}}\n`; // end for key, val := range rawMsg
+  unmarshalBody += `${indent.get()}return nil\n`;
   return unmarshalBody;
 }
 
@@ -687,25 +728,25 @@ function hasDiscriminatorInterface(item: go.WireType): boolean {
 }
 
 // returns the text for unmarshalling a discriminated type
-function generateDiscriminatorUnmarshaller(modelType: go.Model | go.PolymorphicModel, field: go.ModelField, receiver: string): string {
-  const startingIndentation = '\t\t\t';
+function generateDiscriminatorUnmarshaller(modelType: go.Model | go.PolymorphicModel, field: go.ModelField, receiver: string, indent: helpers.Indentation): string {
   const propertyName = field.name;
 
   // these are the simple, non-nested cases (e.g. IterfaceType, []InterfaceType, map[string]InterfaceType)
   if (field.type.kind === 'interface') {
-    return `${startingIndentation}${receiver}.${propertyName}, err = unmarshal${field.type.name}(val)\n`;
+    return `${indent.get()}${receiver}.${propertyName}, err = unmarshal${field.type.name}(val)\n`;
   } else if (field.type.kind === 'slice' && field.type.elementType.kind === 'interface') {
-    return `${startingIndentation}${receiver}.${propertyName}, err = unmarshal${field.type.elementType.name}Array(val)\n`;
+    return `${indent.get()}${receiver}.${propertyName}, err = unmarshal${field.type.elementType.name}Array(val)\n`;
   } else if (field.type.kind === 'map' && field.type.valueType.kind === 'interface') {
-    return `${startingIndentation}${receiver}.${propertyName}, err = unmarshal${field.type.valueType.name}Map(val)\n`;
+    return `${indent.get()}${receiver}.${propertyName}, err = unmarshal${field.type.valueType.name}Map(val)\n`;
   }
 
   // nested case (e.g. [][]InterfaceType, map[string]map[string]InterfaceType etc)
   // first, unmarshal the raw data
   const rawTargetVar = `${field.serializedName}Raw`;
-  let text = `${startingIndentation}var ${rawTargetVar} ${recursiveGetDiscriminatorTypeName(modelType, field.type, true)}\n`;
-  text += `${startingIndentation}if err = json.Unmarshal(val, &${rawTargetVar}); err != nil {\n`;
-  text += `${startingIndentation}\treturn err\n${startingIndentation}}\n`;
+  let text = `${indent.get()}var ${rawTargetVar} ${recursiveGetDiscriminatorTypeName(modelType, field.type, true)}\n`;
+  text += `${indent.get()}if err = json.Unmarshal(val, &${rawTargetVar}); err != nil {\n`;
+  text += `${indent.push().get()}return err\n`;
+  text += `${indent.pop().get()}}\n`;
 
   // create a local instantiation of the final type
   const finalTargetVar = field.serializedName;
@@ -716,13 +757,13 @@ function generateDiscriminatorUnmarshaller(modelType: go.Model | go.PolymorphicM
     // must be a dictionary
     finalTargetCtor = `${finalTargetCtor}{}`;
   }
-  text += `${startingIndentation}${finalTargetVar} := ${finalTargetCtor}\n`;
+  text += `${indent.get()}${finalTargetVar} := ${finalTargetCtor}\n`;
 
   // now populate the final type
-  text += recursivePopulateDiscriminator(modelType, field.type, receiver, rawTargetVar, finalTargetVar, startingIndentation, 1);
+  text += recursivePopulateDiscriminator(modelType, field.type, receiver, rawTargetVar, finalTargetVar, indent, 1);
 
   // finally, assign the final target to the property
-  text += `${startingIndentation}${receiver}.${propertyName} = ${finalTargetVar}\n`;
+  text += `${indent.get()}${receiver}.${propertyName} = ${finalTargetVar}\n`;
   return text;
 }
 
@@ -754,7 +795,7 @@ function recursiveGetDiscriminatorTypeName(modelType: go.Model | go.PolymorphicM
  * @param receiver the name of the receiver for the method to contain the expression
  * @param rawSrc contains the raw unmarshaled JSON source
  * @param dest the variable that will contain the result of the expression
- * @param indent the current level of indentation (increases with each recursive call)
+ * @param indent the current indentation helper (level increases with each recursive call)
  * @param nesting the current level of nesting (increments with each recursive call)
  * @returns the text populating the discriminator
  */
@@ -764,7 +805,7 @@ function recursivePopulateDiscriminator(
   receiver: string,
   rawSrc: string,
   dest: string,
-  indent: string,
+  indent: helpers.Indentation,
   nesting: number,
 ): string {
   let text = '';
@@ -775,14 +816,16 @@ function recursivePopulateDiscriminator(
     if (item.elementType.kind !== 'interface') {
       if (nesting > 1) {
         // at nestling level 1, the destination var was already created in generateDiscriminatorUnmarshaller()
-        text += `${indent}${dest} = make(${recursiveGetDiscriminatorTypeName(modelType, item, false)}, len(${rawSrc}))\n`;
+        text += `${indent.get()}${dest} = make(${recursiveGetDiscriminatorTypeName(modelType, item, false)}, len(${rawSrc}))\n`;
       }
 
-      text += `${indent}for i${nesting} := range ${rawSrc} {\n`;
+      text += `${indent.get()}for i${nesting} := range ${rawSrc} {\n`;
       rawSrc = `${rawSrc}[i${nesting}]`; // source becomes each element in the source slice
       dest = `${dest}[i${nesting}]`; // update destination to each element in the destination slice
-      text += recursivePopulateDiscriminator(modelType, item.elementType, receiver, rawSrc, dest, indent + '\t', nesting + 1);
-      text += `${indent}}\n`;
+      indent.push();
+      text += recursivePopulateDiscriminator(modelType, item.elementType, receiver, rawSrc, dest, indent, nesting + 1);
+      indent.pop();
+      text += `${indent.get()}}\n`;
       return text;
     }
 
@@ -793,14 +836,16 @@ function recursivePopulateDiscriminator(
     if (item.valueType.kind !== 'interface') {
       if (nesting > 1) {
         // at nestling level 1, the destination var was already created in generateDiscriminatorUnmarshaller()
-        text += `${indent}${dest} = ${recursiveGetDiscriminatorTypeName(modelType, item, false)}{}\n`;
+        text += `${indent.get()}${dest} = ${recursiveGetDiscriminatorTypeName(modelType, item, false)}{}\n`;
       }
 
-      text += `${indent}for k${nesting}, v${nesting} := range ${rawSrc} {\n`;
+      text += `${indent.get()}for k${nesting}, v${nesting} := range ${rawSrc} {\n`;
       rawSrc = `v${nesting}`; // source becomes the current value in the source map
       dest = `${dest}[k${nesting}]`; // update destination to the destination map's value for the current key
-      text += recursivePopulateDiscriminator(modelType, item.valueType, receiver, rawSrc, dest, indent + '\t', nesting + 1);
-      text += `${indent}}\n`;
+      indent.push();
+      text += recursivePopulateDiscriminator(modelType, item.valueType, receiver, rawSrc, dest, indent, nesting + 1);
+      indent.pop();
+      text += `${indent.get()}}\n`;
       return text;
     }
 
@@ -809,8 +854,10 @@ function recursivePopulateDiscriminator(
     targetType = 'Map';
   }
 
-  text += `${indent}${dest}, err = unmarshal${interfaceName}${targetType}(${rawSrc})\n`;
-  text += `${indent}if err != nil {\n${indent}\treturn fmt.Errorf("unmarshalling type %T: %v", ${receiver}, err)\n${indent}}\n`;
+  text += `${indent.get()}${dest}, err = unmarshal${interfaceName}${targetType}(${rawSrc})\n`;
+  text += `${indent.get()}if err != nil {\n`;
+  text += `${indent.push().get()}return fmt.Errorf("unmarshalling type %T: %v", ${receiver}, err)\n`;
+  text += `${indent.pop().get()}}\n`;
 
   return text;
 }
@@ -822,31 +869,33 @@ function recursivePopulateDiscriminator(
  * @param modelDef the type for which to implement MarshalXML
  * @param imports the import manager currently in scope
  */
-function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager): void {
+function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager, indent: helpers.Indentation): void {
   // only needed for types with time.Time, maps, or where the XML name doesn't match the type name
   const receiver = modelDef.receiverName();
   const desc = `MarshalXML implements the xml.Marshaller interface for type ${modelDef.Model.name}.`;
   let text = `func (${receiver} ${modelDef.Model.name}) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {\n`;
   if (modelDef.Model.xml?.name) {
-    text += `\tstart.Name.Local = "${modelDef.Model.xml.name}"\n`;
+    text += `${indent.get()}start.Name.Local = "${modelDef.Model.xml.name}"\n`;
   }
-  text += generateAliasType(modelDef.Model, receiver, true, imports);
+  text += generateAliasType(modelDef.Model, receiver, true, imports, indent);
   for (const field of modelDef.Model.fields) {
     if (field.type.kind === 'slice') {
-      text += `\tif ${receiver}.${field.name} != nil {\n`;
-      text += `\t\taux.${field.name} = &${receiver}.${field.name}\n`;
-      text += '\t}\n';
+      text += `${indent.get()}if ${receiver}.${field.name} != nil {\n`;
+      text += `${indent.push().get()}aux.${field.name} = &${receiver}.${field.name}\n`;
+      text += `${indent.pop().get()}}\n`;
     } else if (field.annotations.isAdditionalProperties || field.type.kind === 'map') {
-      text += `\taux.${field.name} = (additionalProperties)(${receiver}.${field.name})\n`;
+      text += `${indent.get()}aux.${field.name} = (additionalProperties)(${receiver}.${field.name})\n`;
     } else if (field.type.kind === 'encodedBytes') {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-      text += `\tif ${receiver}.${field.name} != nil {\n`;
-      text += `\t\tencoded${field.name} := runtime.EncodeByteArray(${receiver}.${field.name}, runtime.Base64${field.type.encoding}Format)\n`;
-      text += `\t\taux.${field.name} = &encoded${field.name}\n`;
-      text += '\t}\n';
+      text += `${indent.get()}if ${receiver}.${field.name} != nil {\n`;
+      indent.push();
+      text += `${indent.get()}encoded${field.name} := runtime.EncodeByteArray(${receiver}.${field.name}, runtime.Base64${field.type.encoding}Format)\n`;
+      text += `${indent.get()}aux.${field.name} = &encoded${field.name}\n`;
+      indent.pop();
+      text += `${indent.get()}}\n`;
     }
   }
-  text += '\treturn enc.EncodeElement(aux, start)\n';
+  text += `${indent.get()}return enc.EncodeElement(aux, start)\n`;
   text += '}\n\n';
   modelDef.SerDe.methods.push({ name: 'MarshalXML', desc: desc, text: text });
 }
@@ -858,31 +907,34 @@ function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager): void
  * @param modelDef the type for which to implement UnmarshalXML
  * @param imports the import manager currently in scope
  */
-function generateXMLUnmarshaller(modelDef: ModelDef, imports: ImportManager): void {
+function generateXMLUnmarshaller(modelDef: ModelDef, imports: ImportManager, indent: helpers.Indentation): void {
   // non-polymorphic case, must be something with time.Time
   const receiver = modelDef.receiverName();
   const desc = `UnmarshalXML implements the xml.Unmarshaller interface for type ${modelDef.Model.name}.`;
   let text = `func (${receiver} *${modelDef.Model.name}) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {\n`;
-  text += generateAliasType(modelDef.Model, receiver, false, imports);
-  text += '\tif err := dec.DecodeElement(aux, &start); err != nil {\n';
-  text += '\t\treturn err\n';
-  text += '\t}\n';
+  text += generateAliasType(modelDef.Model, receiver, false, imports, indent);
+  text += `${indent.get()}if err := dec.DecodeElement(aux, &start); err != nil {\n`;
+  text += `${indent.push().get()}return err\n`;
+  text += `${indent.pop().get()}}\n`;
   for (const field of modelDef.Model.fields) {
     if (field.type.kind === 'time') {
-      text += `\tif aux.${field.name} != nil && !(*time.Time)(aux.${field.name}).IsZero() {\n`;
-      text += `\t\t${receiver}.${field.name} = (*time.Time)(aux.${field.name})\n\t}\n`;
+      text += `${indent.get()}if aux.${field.name} != nil && !(*time.Time)(aux.${field.name}).IsZero() {\n`;
+      text += `${indent.push().get()}${receiver}.${field.name} = (*time.Time)(aux.${field.name})\n`;
+      text += `${indent.pop().get()}}\n`;
     } else if (field.annotations.isAdditionalProperties || field.type.kind === 'map') {
-      text += `\t${receiver}.${field.name} = (map[string]*string)(aux.${field.name})\n`;
+      text += `${indent.get()}${receiver}.${field.name} = (map[string]*string)(aux.${field.name})\n`;
     } else if (field.type.kind === 'encodedBytes') {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-      text += `\tif aux.${field.name} != nil {\n`;
-      text += `\t\tif err := runtime.DecodeByteArray(*aux.${field.name}, &${receiver}.${field.name}, runtime.Base64${field.type.encoding}Format); err != nil {\n`;
-      text += '\t\t\treturn err\n';
-      text += '\t\t}\n';
-      text += '\t}\n';
+      text += `${indent.get()}if aux.${field.name} != nil {\n`;
+      indent.push();
+      text += `${indent.get()}if err := runtime.DecodeByteArray(*aux.${field.name}, &${receiver}.${field.name}, runtime.Base64${field.type.encoding}Format); err != nil {\n`;
+      text += `${indent.push().get()}return err\n`;
+      text += `${indent.pop().get()}}\n`;
+      indent.pop();
+      text += `${indent.get()}}\n`;
     }
   }
-  text += '\treturn nil\n';
+  text += `${indent.get()}return nil\n`;
   text += '}\n\n';
   modelDef.SerDe.methods.push({ name: 'UnmarshalXML', desc: desc, text: text });
 }
@@ -895,29 +947,29 @@ function generateXMLUnmarshaller(modelDef: ModelDef, imports: ImportManager): vo
  * @param forMarshal when true, indicates type is to be used in a marshaller (else an unmarshaller)
  * @returns the text for an initialized type alias
  */
-function generateAliasType(modelType: go.Model | go.PolymorphicModel, receiver: string, forMarshal: boolean, imports: ImportManager): string {
-  let text = `\ttype alias ${modelType.name}\n`;
-  text += '\taux := &struct {\n';
-  text += '\t\t*alias\n';
+function generateAliasType(modelType: go.Model | go.PolymorphicModel, receiver: string, forMarshal: boolean, imports: ImportManager, indent: helpers.Indentation): string {
+  let text = `${indent.get()}type alias ${modelType.name}\n`;
+  text += `${indent.get()}aux := &struct {\n`;
+  text += `${indent.push().get()}*alias\n`;
   for (const field of modelType.fields) {
     const sn = getXMLSerialization(field);
     if (field.type.kind === 'time') {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
-      text += `\t\t${field.name} *datetime.${field.type.format} \`xml:"${sn}"\`\n`;
+      text += `${indent.get()}${field.name} *datetime.${field.type.format} \`xml:"${sn}"\`\n`;
     } else if (field.annotations.isAdditionalProperties || field.type.kind === 'map') {
-      text += `\t\t${field.name} additionalProperties \`xml:"${sn}"\`\n`;
+      text += `${indent.get()}${field.name} additionalProperties \`xml:"${sn}"\`\n`;
     } else if (field.type.kind === 'slice') {
-      text += `\t\t${field.name} *${go.getTypeDeclaration(field.type, modelType.pkg)} \`xml:"${sn}"\`\n`;
+      text += `${indent.get()}${field.name} *${go.getTypeDeclaration(field.type, modelType.pkg)} \`xml:"${sn}"\`\n`;
     } else if (field.type.kind === 'encodedBytes') {
-      text += `\t\t${field.name} *string \`xml:"${sn}"\`\n`;
+      text += `${indent.get()}${field.name} *string \`xml:"${sn}"\`\n`;
     }
   }
-  text += '\t}{\n';
+  text += `${indent.pop().get()}}{\n`;
   let rec = receiver;
   if (forMarshal) {
     rec = '&' + rec;
   }
-  text += `\t\talias: (*alias)(${rec}),\n`;
+  text += `${indent.push().get()}alias: (*alias)(${rec}),\n`;
   if (forMarshal) {
     // emit code to initialize time fields
     for (const field of modelType.fields) {
@@ -925,10 +977,10 @@ function generateAliasType(modelType: go.Model | go.PolymorphicModel, receiver: 
         continue;
       }
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
-      text += `\t\t${field.name}: (*datetime.${field.type.format})(${receiver}.${field.name}),\n`;
+      text += `${indent.get()}${field.name}: (*datetime.${field.type.format})(${receiver}.${field.name}),\n`;
     }
   }
-  text += '\t}\n';
+  text += `${indent.pop().get()}}\n`;
   return text;
 }
 
@@ -977,7 +1029,7 @@ class ModelDef {
   }
 
   /** returns the text for the struct definition */
-  text(): string {
+  text(indent: helpers.Indentation): string {
     let text = helpers.formatDocComment(this.Model.docs);
     text += `type ${this.Model.name} struct {\n`;
 
@@ -1020,7 +1072,7 @@ class ModelDef {
       if (this.Format === 'XML' && !field.annotations.isAdditionalProperties) {
         tag = ` \`xml:"${serialization}"\``;
       }
-      text += `\t${field.name} ${helpers.star(field.byValue)}${typeName}${tag}\n`;
+      text += `${indent.get()}${field.name} ${helpers.star(field.byValue)}${typeName}${tag}\n`;
       first = false;
     }
 

@@ -261,7 +261,7 @@ export function formatBytesEncoding(enc: go.BytesEncoding): string {
   return 'Std';
 }
 
-export function formatParamValue(param: go.MethodParameter, imports: ImportManager): string {
+export function formatParamValue(param: go.MethodParameter, imports: ImportManager, indent: Indentation): string {
   let paramName = getParamName(param);
   switch (param.kind) {
     case 'formBodyCollectionParam':
@@ -277,11 +277,12 @@ export function formatParamValue(param: go.MethodParameter, imports: ImportManag
       const emitConvertOver = function (paramName: string, format: string): string {
         const encodedVar = `encoded${naming.capitalize(paramName)}`;
         let content = 'strings.Join(func() []string {\n';
-        content += `\t\t${encodedVar} := make([]string, len(${paramName}))\n`;
-        content += `\t\tfor i := 0; i < len(${paramName}); i++ {\n`;
-        content += `\t\t\t${encodedVar}[i] = ${format}\n\t\t}\n`;
-        content += `\t\treturn ${encodedVar}\n`;
-        content += `\t}(), "${separator}")`;
+        content += `${indent.push().get()}${encodedVar} := make([]string, len(${paramName}))\n`;
+        content += `${indent.get()}for i := 0; i < len(${paramName}); i++ {\n`;
+        content += `${indent.push().get()}${encodedVar}[i] = ${format}\n`;
+        content += `${indent.pop().get()}}\n`;
+        content += `${indent.get()}return ${encodedVar}\n`;
+        content += `${indent.pop().get()}}(), "${separator}")`;
         return content;
       };
 
@@ -972,7 +973,7 @@ export function getMethodParamGroups(method: go.MethodType | go.NextPageMethod):
 }
 
 /** helper for managing indentation levels */
-export class indentation {
+export class Indentation {
   private level: number;
   constructor(level?: number) {
     if (level !== undefined) {
@@ -984,7 +985,7 @@ export class indentation {
   }
 
   /**
-   * returns spaces for the current indentation level
+   * returns tabs for the current indentation level
    *
    * @returns a string with the current indentation level
    */
@@ -1001,7 +1002,7 @@ export class indentation {
    *
    * @returns this indentation instance
    */
-  push(): indentation {
+  push(): Indentation {
     ++this.level;
     return this;
   }
@@ -1011,7 +1012,7 @@ export class indentation {
    *
    * @returns this indentation instance
    */
-  pop(): indentation {
+  pop(): Indentation {
     --this.level;
     if (this.level < 0) {
       throw new CodegenError('InternalError', 'indentation stack underflow');
@@ -1026,13 +1027,13 @@ export interface ifBlock {
   condition: string;
 
   /** the body of the if block */
-  body: (indent: indentation) => string;
+  body: (indent: Indentation) => string;
 }
 
 /** the else condition in an if/else block */
 export interface elseBlock {
   /** the body of the else block */
-  body: (indent: indentation) => string;
+  body: (indent: Indentation) => string;
 }
 
 /**
@@ -1043,7 +1044,7 @@ export interface elseBlock {
  * @param elseBlock optional else block definition
  * @returns the text for the if block
  */
-export function buildIfBlock(indent: indentation, ifBlock: ifBlock, elseBlock?: elseBlock): string {
+export function buildIfBlock(indent: Indentation, ifBlock: ifBlock, elseBlock?: elseBlock): string {
   let body = `if ${ifBlock.condition} {\n`;
   body += ifBlock.body(indent.push());
   body += `${indent.pop().get()}}`;
@@ -1065,7 +1066,7 @@ export function buildIfBlock(indent: indentation, ifBlock: ifBlock, elseBlock?: 
  * @param returns the value(s) to return from the control block
  * @returns the text for the error check block
  */
-export function buildErrCheck(indent: indentation, errVar: string, returns: string): string {
+export function buildErrCheck(indent: Indentation, errVar: string, returns: string): string {
   let body = `if ${errVar} != nil {\n`;
   body += `${indent.push().get()}return ${returns}\n`;
   body += `${indent.pop().get()}}`;

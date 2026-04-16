@@ -22,7 +22,8 @@ export function generateServerFactory(pkg: go.FakePackage, target: go.CodeModelT
   }
 
   const imports = new ImportManager(pkg);
-  const indent = new helpers.indentation();
+  const indent = new helpers.Indentation();
+
   imports.add('errors');
   imports.add('fmt');
   imports.add('net/http');

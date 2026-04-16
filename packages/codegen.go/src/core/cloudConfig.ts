@@ -60,11 +60,12 @@ export function generateCloudConfig(module: go.Module, target: go.CodeModelType)
   cloudConfig += `const ServiceName cloud.ServiceName = "${serviceName}"\n\n`;
 
   // we omit the Endpoint field as all client constructors take an endpoint parameter
+  const indent = new helpers.Indentation();
   cloudConfig += `func init() {\n`;
-  cloudConfig += 'cloud.AzurePublic.Services[ServiceName] = cloud.ServiceConfiguration{\n';
+  cloudConfig += `${indent.get()}cloud.AzurePublic.Services[ServiceName] = cloud.ServiceConfiguration{\n`;
   // we assume a single scope. this is enforced when adapting the data from tcgc
-  cloudConfig += `\t\tAudience: "${helpers.splitScope(tokenCred.scopes[0]).audience}",\n`;
-  cloudConfig += '\t}\n';
+  cloudConfig += `${indent.push().get()}Audience: "${helpers.splitScope(tokenCred.scopes[0]).audience}",\n`;
+  cloudConfig += `${indent.pop().get()}}\n`;
   cloudConfig += `}\n\n`;
 
   return cloudConfig;

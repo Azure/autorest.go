@@ -70,8 +70,11 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
     } else {
       clientText += 'a constructor function instead.\n';
     }
+
+    const indent = new helpers.Indentation();
+
     clientText += `type ${client.name} struct {\n`;
-    clientText += `\tinternal *${azureARM ? 'arm' : 'azcore'}.Client\n`;
+    clientText += `${indent.get()}internal *${azureARM ? 'arm' : 'azcore'}.Client\n`;
 
     // check for any optional host params
     const optionalParams = new Array<go.ClientParameter>();
@@ -90,12 +93,12 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
         }
         if (clientParam.group) {
           if (!addedGroups.has(clientParam.group.groupName)) {
-            clientText += `\t${naming.uncapitalize(clientParam.group.groupName)} ${!isParamPointer(clientParam) ? '' : '*'}${clientParam.group.groupName}\n`;
+            clientText += `${indent.get()}${naming.uncapitalize(clientParam.group.groupName)} ${!isParamPointer(clientParam) ? '' : '*'}${clientParam.group.groupName}\n`;
             addedGroups.add(clientParam.group.groupName);
           }
           continue;
         }
-        clientText += `\t${clientParam.name} `;
+        clientText += `${indent.get()}${clientParam.name} `;
         if (!isParamPointer(clientParam)) {
           clientText += `${go.getTypeDeclaration(clientParam.type, client.pkg)}\n`;
         } else {
@@ -110,7 +113,7 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
     // end of client definition
     clientText += '}\n\n';
 
-    clientText += generateConstructors(client, target, imports);
+    clientText += generateConstructors(client, target, imports, indent);
 
     // generate client accessors and operations
     let opText = '';
@@ -119,7 +122,7 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
       const subClientDecl = go.getTypeDeclaration(clientAccessor.returns, pkg);
       opText += helpers.formatDocComment(clientAccessor.docs);
       opText += `func (client *${client.name}) ${clientAccessor.name}(${getAPIParametersSig(clientAccessor, imports)}) *${subClientDecl} {\n`;
-      opText += `\treturn &${subClientDecl}{\n`;
+      opText += `${indent.get()}return &${subClientDecl}{\n`;
       const initFields = new Array<string>('internal: client.internal');
       // propagate all client params
       for (const param of clientAccessor.parameters) {
@@ -140,10 +143,12 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
       }
 
       initFields.sort();
+      indent.push();
       for (const initField of initFields) {
-        opText += `\t\t${initField},\n`;
+        opText += `${indent.get()}${initField},\n`;
       }
-      opText += '\t}\n}\n\n';
+      indent.pop();
+      opText += `${indent.get()}}\n}\n\n`;
     }
 
     const nextPageMethods = new Array<go.NextPageMethod>();
@@ -152,13 +157,13 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
       // it must be done before the imports are written out
       if (go.isLROMethod(method)) {
         // generate Begin method
-        opText += generateLROBeginMethod(method, imports, options);
+        opText += generateLROBeginMethod(method, options, imports, indent);
       }
-      opText += generateOperation(method, imports, options);
-      opText += createProtocolRequest(azureARM, method, imports);
+      opText += generateOperation(method, options, imports, indent);
+      opText += createProtocolRequest(azureARM, method, imports, indent);
       if (method.kind !== 'lroMethod') {
         // LRO responses are handled elsewhere, with the exception of pageable LROs
-        opText += createProtocolResponse(method, imports);
+        opText += createProtocolResponse(method, imports, indent);
       }
       if ((method.kind === 'lroPageableMethod' || method.kind === 'pageableMethod') && method.nextPageMethod && !nextPageMethods.includes(method.nextPageMethod)) {
         // track the next page methods to generate as multiple operations can use the same next page operation
@@ -167,7 +172,7 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
     }
 
     for (const method of nextPageMethods) {
-      opText += createProtocolRequest(azureARM, method, imports);
+      opText += createProtocolRequest(azureARM, method, imports, indent);
     }
 
     // stitch it all together
@@ -188,7 +193,7 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
  * @param imports the import manager currently in scope
  * @returns the client constructor code or the empty string
  */
-function generateConstructors(client: go.Client, type: go.CodeModelType, imports: ImportManager): string {
+function generateConstructors(client: go.Client, type: go.CodeModelType, imports: ImportManager, indent: helpers.Indentation): string {
   if (client.instance?.kind !== 'constructable') {
     return '';
   }
@@ -200,7 +205,7 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
   if (clientOptions.kind === 'clientOptions') {
     // for non-ARM, the options type will always be a parameter group
     ctorText += `// ${clientOptions.name} contains the optional values for creating a [${client.name}].\n`;
-    ctorText += `type ${clientOptions.name} struct {\n\tazcore.ClientOptions\n`;
+    ctorText += `type ${clientOptions.name} struct {\n${indent.get()}azcore.ClientOptions\n`;
     for (const param of clientOptions.parameters) {
       if (go.isAPIVersionParameter(param)) {
         // we use azcore.ClientOptions.APIVersion
@@ -211,9 +216,9 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
         if (!param.docs.description && !param.docs.summary) {
           ctorText += '\n';
         }
-        ctorText += `\t${helpers.comment(`The default value is ${helpers.formatLiteralValue(param.style.defaultValue, false)}`, '// ')}.\n`;
+        ctorText += `${indent.get()}${helpers.comment(`The default value is ${helpers.formatLiteralValue(param.style.defaultValue, false)}`, '// ')}.\n`;
       }
-      ctorText += `\t${naming.ensureNameCase(param.name)} *${go.getTypeDeclaration(param.type, client.pkg)}\n`;
+      ctorText += `${indent.get()}${naming.ensureNameCase(param.name)} *${go.getTypeDeclaration(param.type, client.pkg)}\n`;
     }
     ctorText += '}\n\n';
   }
@@ -251,7 +256,9 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
 
     const emitProlog = function (optionsTypeName: string, tokenAuth: boolean, plOpts?: string): string {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-      let bodyText = `\tif options == nil {\n\t\toptions = &${optionsTypeName}{}\n\t}\n`;
+      let bodyText = `${indent.get()}if options == nil {\n`;
+      bodyText += `${indent.push().get()}options = &${optionsTypeName}{}\n`;
+      bodyText += `${indent.pop().get()}}\n`;
       let apiVersionConfig = '';
       // check if there's an api version parameter
       let apiVersionParam: go.HeaderScalarParameter | go.PathScalarParameter | go.QueryScalarParameter | go.URIParameter | undefined;
@@ -271,13 +278,15 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud');
         imports.add('fmt');
         imports.add('reflect');
-        bodyText += '\tif reflect.ValueOf(options.Cloud).IsZero() {\n';
-        bodyText += '\t\toptions.Cloud = cloud.AzurePublic\n\t}\n';
-        bodyText += '\tc, ok := options.Cloud.Services[ServiceName]\n';
-        bodyText += '\tif !ok {\n';
-        bodyText += '\t\treturn nil, fmt.Errorf("provided Cloud field is missing configuration for %s", ServiceName)\n';
-        bodyText += '\t} else if c.Audience == "" {\n';
-        bodyText += '\t\treturn nil, fmt.Errorf("provided Cloud field is missing Audience for %s", ServiceName)\n\t}\n';
+        bodyText += `${indent.get()}if reflect.ValueOf(options.Cloud).IsZero() {\n`;
+        bodyText += `${indent.push().get()}options.Cloud = cloud.AzurePublic\n`;
+        bodyText += `${indent.pop().get()}}\n`;
+        bodyText += `${indent.get()}c, ok := options.Cloud.Services[ServiceName]\n`;
+        bodyText += `${indent.get()}if !ok {\n`;
+        bodyText += `${indent.push().get()}return nil, fmt.Errorf("provided Cloud field is missing configuration for %s", ServiceName)\n`;
+        bodyText += `${indent.pop().get()}} else if c.Audience == "" {\n`;
+        bodyText += `${indent.push().get()}return nil, fmt.Errorf("provided Cloud field is missing Audience for %s", ServiceName)\n`;
+        bodyText += `${indent.pop().get()}}\n`;
       }
 
       if (apiVersionParam) {
@@ -299,18 +308,23 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
             break;
         }
 
+        indent.push(); // level 2 for PipelineOptions fields
         if (name) {
-          name = `\n\t\t\tName: "${name}",`;
+          indent.push(); // level 3 for APIVersionOptions fields
+          name = `\n${indent.get()}Name: "${name}",`;
+          indent.pop(); // back to level 2
         } else {
           name = '';
         }
 
-        apiVersionConfig = `\n\t\tAPIVersion: runtime.APIVersionOptions{${name}\n\t\t\tLocation: runtime.APIVersionLocation${location},\n\t\t},`;
+        indent.push(); // level 3 for APIVersionOptions fields
+        apiVersionConfig = `\n${indent.pop().get()}APIVersion: runtime.APIVersionOptions{${name}\n${indent.push().get()}Location: runtime.APIVersionLocation${location},\n${indent.pop().get()}},`;
+        indent.pop(); // back to level 1
         if (!plOpts) {
           apiVersionConfig += '\n';
         }
       }
-      bodyText += `\tcl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{${apiVersionConfig}${plOpts ?? ''}}, &options.ClientOptions)\n`;
+      bodyText += `${indent.get()}cl, err := azcore.NewClient(moduleName, moduleVersion, runtime.PipelineOptions{${apiVersionConfig}${plOpts ?? ''}}, &options.ClientOptions)\n`;
       return bodyText;
     };
 
@@ -332,16 +346,19 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
           switch (clientOptions.kind) {
             case 'clientOptions': {
               imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/policy');
-              const tokenPolicyOpts = '&policy.BearerTokenOptions{\n\t\t\tInsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,\n\t\t}';
+              indent.push(); // level 2 for PipelineOptions fields
+              indent.push(); // level 3 for BearerTokenOptions fields
+              const tokenPolicyOpts = `&policy.BearerTokenOptions{\n${indent.get()}InsecureAllowCredentialWithHTTP: options.InsecureAllowCredentialWithHTTP,\n${indent.pop().get()}}`;
               // we assume a single scope. this is enforced when adapting the data from tcgc
-              const tokenPolicy = `\n\t\tPerCall: []policy.Policy{\n\t\truntime.NewBearerTokenPolicy(credential, []string{c.Audience + "${helpers.splitScope(credentialParam.type.scopes[0]).scope}"}, ${tokenPolicyOpts}),\n\t\t},\n`;
+              const tokenPolicy = `\n${indent.get()}PerCall: []policy.Policy{\n${indent.get()}runtime.NewBearerTokenPolicy(credential, []string{c.Audience + "${helpers.splitScope(credentialParam.type.scopes[0]).scope}"}, ${tokenPolicyOpts}),\n${indent.get()}},\n`;
+              indent.pop(); // back to level 1
               prolog = emitProlog(go.getTypeDeclaration(clientOptions, client.pkg), true, tokenPolicy);
               break;
             }
             case 'armClientOptions':
               // this is the ARM case
               imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
-              prolog = '\tcl, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
+              prolog = `${indent.get()}cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n`;
               break;
           }
           break;
@@ -361,9 +378,9 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
 
     ctorText += `func ${constructor.name}(${ctorParams.join(', ')}) (*${client.name}, error) {\n`;
     ctorText += prolog;
-    ctorText += '\tif err != nil {\n';
-    ctorText += '\t\treturn nil, err\n';
-    ctorText += '\t}\n';
+    ctorText += `${indent.get()}if err != nil {\n`;
+    ctorText += `${indent.push().get()}return nil, err\n`;
+    ctorText += `${indent.pop().get()}}\n`;
 
     // handle any client-side defaults
     if (clientOptions.kind === 'clientOptions') {
@@ -375,8 +392,10 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
           } else {
             name = naming.ensureNameCase(param.name);
           }
-          ctorText += `\t${param.name} := ${helpers.formatLiteralValue(param.style.defaultValue, false)}\n`;
-          ctorText += `\tif options.${name} != ${helpers.zeroValue(param)} {\n\t\t${param.name} = ${helpers.star(param.byValue)}options.${name}\n\t}\n`;
+          ctorText += `${indent.get()}${param.name} := ${helpers.formatLiteralValue(param.style.defaultValue, false)}\n`;
+          ctorText += `${indent.get()}if options.${name} != ${helpers.zeroValue(param)} {\n`;
+          ctorText += `${indent.push().get()}${param.name} = ${helpers.star(param.byValue)}options.${name}\n`;
+          ctorText += `${indent.pop().get()}}\n`;
         }
       }
     }
@@ -387,14 +406,14 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
       const endpointParam = client.instance.constructors[0].parameters[0];
       if (client.instance.endpoint.supplemental.parameters.length > 0) {
         imports.add('strings');
-        ctorText += `\thost := "${client.instance.endpoint.supplemental.path}"\n`;
+        ctorText += `${indent.get()}host := "${client.instance.endpoint.supplemental.path}"\n`;
         for (const param of client.instance.endpoint.supplemental.parameters) {
-          ctorText += `\thost = strings.ReplaceAll(host, "{${param.uriPathSegment}}", ${helpers.formatValue(param.name, param.type, imports)})\n`;
+          ctorText += `${indent.get()}host = strings.ReplaceAll(host, "{${param.uriPathSegment}}", ${helpers.formatValue(param.name, param.type, imports)})\n`;
         }
-        ctorText += `\t${endpointParam.name} = runtime.JoinPaths(${endpointParam.name}, host)\n`;
+        ctorText += `${indent.get()}${endpointParam.name} = runtime.JoinPaths(${endpointParam.name}, host)\n`;
       } else {
         // there are no params for the supplemental host, so just append it
-        ctorText += `\t${endpointParam.name} = runtime.JoinPaths(${endpointParam.name}, "${client.instance.endpoint.supplemental.path}")\n`;
+        ctorText += `${indent.get()}${endpointParam.name} = runtime.JoinPaths(${endpointParam.name}, "${client.instance.endpoint.supplemental.path}")\n`;
       }
     }
 
@@ -408,20 +427,22 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
       }
     }
 
-    ctorText += `\t${clientVar} := &${client.name}{\n`;
+    ctorText += `${indent.get()}${clientVar} := &${client.name}{\n`;
     // NOTE: we don't enumerate consolidatedCtorParams here
     // as any supplemental endpoint params are ephemeral and
     // consumed during client construction.
+    indent.push();
     for (const parameter of client.parameters) {
       if (go.isLiteralParameter(parameter.style)) {
         continue;
       }
       // each client field will have a matching parameter with the same name
-      ctorText += `\t\t${parameter.name}: ${parameter.name},\n`;
+      ctorText += `${indent.get()}${parameter.name}: ${parameter.name},\n`;
     }
-    ctorText += '\tinternal: cl,\n';
-    ctorText += '\t}\n';
-    ctorText += `\treturn ${clientVar}, nil\n`;
+    ctorText += `${indent.get()}internal: cl,\n`;
+    indent.pop();
+    ctorText += `${indent.get()}}\n`;
+    ctorText += `${indent.get()}return ${clientVar}, nil\n`;
     ctorText += '}\n\n';
   }
 
@@ -432,90 +453,94 @@ function generateConstructors(client: go.Client, type: go.CodeModelType, imports
 function formatHeaderResponseValue(
   method: go.SyncMethod | go.LROPageableMethod | go.PageableMethod,
   headerResp: go.HeaderScalarResponse | go.HeaderMapResponse,
-  imports: ImportManager,
   respObj: string,
   zeroResp: string,
+  imports: ImportManager,
+  indent: helpers.Indentation,
 ): string {
   // dictionaries are handled slightly different so we do that first
   if (headerResp.kind === 'headerMapResponse') {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
     imports.add('strings');
     const headerPrefix = headerResp.headerName;
-    let text = '\tfor hh := range resp.Header {\n';
-    text += `\t\tif len(hh) > len("${headerPrefix}") && strings.EqualFold(hh[:len("${headerPrefix}")], "${headerPrefix}") {\n`;
-    text += `\t\t\tif ${respObj}.${headerResp.fieldName} == nil {\n`;
-    text += `\t\t\t\t${respObj}.${headerResp.fieldName} = map[string]*string{}\n`;
-    text += '\t\t\t}\n';
-    text += `\t\t\t${respObj}.${headerResp.fieldName}[hh[len("${headerPrefix}"):]] = to.Ptr(resp.Header.Get(hh))\n`;
-    text += '\t\t}\n';
-    text += '\t}\n';
+    let text = `${indent.get()}for hh := range resp.Header {\n`;
+    text += `${indent.push().get()}if len(hh) > len("${headerPrefix}") && strings.EqualFold(hh[:len("${headerPrefix}")], "${headerPrefix}") {\n`;
+    text += `${indent.push().get()}if ${respObj}.${headerResp.fieldName} == nil {\n`;
+    text += `${indent.push().get()}${respObj}.${headerResp.fieldName} = map[string]*string{}\n`;
+    text += `${indent.pop().get()}}\n`;
+    text += `${indent.get()}${respObj}.${headerResp.fieldName}[hh[len("${headerPrefix}"):]] = to.Ptr(resp.Header.Get(hh))\n`;
+    text += `${indent.pop().get()}}\n`;
+    text += `${indent.pop().get()}}\n`;
     return text;
   }
 
-  let text = `\tif val := resp.Header.Get("${headerResp.headerName}"); val != "" {\n`;
+  let text = `${indent.get()}if val := resp.Header.Get("${headerResp.headerName}"); val != "" {\n`;
+  indent.push();
   let name = naming.uncapitalize(headerResp.fieldName);
   let byRef = '&';
   switch (headerResp.type.kind) {
     case 'constant':
     case 'etag':
-      text += `\t\t${respObj}.${headerResp.fieldName} = (*${go.getTypeDeclaration(headerResp.type, method.receiver.type.pkg)})(&val)\n`;
-      text += '\t}\n';
+      text += `${indent.get()}${respObj}.${headerResp.fieldName} = (*${go.getTypeDeclaration(headerResp.type, method.receiver.type.pkg)})(&val)\n`;
+      indent.pop();
+      text += `${indent.get()}}\n`;
       return text;
     case 'encodedBytes':
       // a base-64 encoded value in string format
       imports.add('encoding/base64');
-      text += `\t\t${name}, err := base64.${helpers.formatBytesEncoding(headerResp.type.encoding)}Encoding.DecodeString(val)\n`;
+      text += `${indent.get()}${name}, err := base64.${helpers.formatBytesEncoding(headerResp.type.encoding)}Encoding.DecodeString(val)\n`;
       byRef = '';
       break;
     case 'literal':
-      text += `\t\t${respObj}.${headerResp.fieldName} = &val\n`;
-      text += '\t}\n';
+      text += `${indent.get()}${respObj}.${headerResp.fieldName} = &val\n`;
+      indent.pop();
+      text += `${indent.get()}}\n`;
       return text;
     case 'scalar':
       imports.add('strconv');
       switch (headerResp.type.type) {
         case 'bool':
-          text += `\t\t${name}, err := strconv.ParseBool(val)\n`;
+          text += `${indent.get()}${name}, err := strconv.ParseBool(val)\n`;
           break;
         case 'float32':
-          text += `\t\t${name}32, err := strconv.ParseFloat(val, 32)\n`;
-          text += `\t\t${name} := float32(${name}32)\n`;
+          text += `${indent.get()}${name}32, err := strconv.ParseFloat(val, 32)\n`;
+          text += `${indent.get()}${name} := float32(${name}32)\n`;
           break;
         case 'float64':
-          text += `\t\t${name}, err := strconv.ParseFloat(val, 64)\n`;
+          text += `${indent.get()}${name}, err := strconv.ParseFloat(val, 64)\n`;
           break;
         case 'int32':
-          text += `\t\t${name}32, err := strconv.ParseInt(val, 10, 32)\n`;
-          text += `\t\t${name} := int32(${name}32)\n`;
+          text += `${indent.get()}${name}32, err := strconv.ParseInt(val, 10, 32)\n`;
+          text += `${indent.get()}${name} := int32(${name}32)\n`;
           break;
         case 'int64':
-          text += `\t\t${name}, err := strconv.ParseInt(val, 10, 64)\n`;
+          text += `${indent.get()}${name}, err := strconv.ParseInt(val, 10, 64)\n`;
           break;
         default:
           throw new CodegenError('InternalError', `unhandled scalar type ${headerResp.type.type}`);
       }
       break;
     case 'string':
-      text += `\t\t${respObj}.${headerResp.fieldName} = &val\n`;
-      text += '\t}\n';
+      text += `${indent.get()}${respObj}.${headerResp.fieldName} = &val\n`;
+      text += `${indent.pop().get()}}\n`;
       return text;
     case 'time':
       imports.add('time');
       switch (headerResp.type.format) {
         case 'RFC1123':
         case 'RFC3339':
-          text += `\t\t${name}, err := time.Parse(${headerResp.type.format === 'RFC1123' ? helpers.RFC1123Format : helpers.RFC3339Format}, val)\n`;
+          text += `${indent.get()}${name}, err := time.Parse(${headerResp.type.format === 'RFC1123' ? helpers.RFC1123Format : helpers.RFC3339Format}, val)\n`;
           break;
         case 'PlainDate':
-          text += `\t\t${name}, err := time.Parse(${helpers.plainDateFormat}, val)\n`;
+          text += `${indent.get()}${name}, err := time.Parse(${helpers.plainDateFormat}, val)\n`;
           break;
         case 'PlainTime':
-          text += `\t\t${name}, err := time.Parse(${helpers.plainTimeFormat}, val)\n`;
+          text += `${indent.get()}${name}, err := time.Parse(${helpers.plainTimeFormat}, val)\n`;
           break;
         case 'Unix':
           imports.add('strconv');
           imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
-          text += '\t\tsec, err := strconv.ParseInt(val, 10, 64)\n';
+          text += `${indent.get()}sec, err := strconv.ParseInt(val, 10, 64)\n`;
           name = 'to.Ptr(time.Unix(sec, 0))';
           byRef = '';
           break;
@@ -523,11 +548,11 @@ function formatHeaderResponseValue(
   }
 
   // NOTE: only cases that required parsing will fall through to here
-  text += '\t\tif err != nil {\n';
-  text += `\t\t\treturn ${zeroResp}, err\n`;
-  text += '\t\t}\n';
-  text += `\t\t${respObj}.${headerResp.fieldName} = ${byRef}${name}\n`;
-  text += '\t}\n';
+  text += `${indent.get()}if err != nil {\n`;
+  text += `${indent.push().get()}return ${zeroResp}, err\n`;
+  text += `${indent.pop().get()}}\n`;
+  text += `${indent.get()}${respObj}.${headerResp.fieldName} = ${byRef}${name}\n`;
+  text += `${indent.pop().get()}}\n`;
   return text;
 }
 
@@ -556,36 +581,39 @@ function generateNilChecks(path: string, prefix: string = 'page'): string {
   return checks.join(' && ');
 }
 
-function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, imports: ImportManager, options: go.Options): string {
+function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, options: go.Options, imports: ImportManager, indent: helpers.Indentation): string {
   imports.add('context');
   let text = `runtime.NewPager(runtime.PagingHandler[${method.returns.name}]{\n`;
-  text += `\t\tMore: func(page ${method.returns.name}) bool {\n`;
+  text += `${indent.push().get()}More: func(page ${method.returns.name}) bool {\n`;
+  indent.push();
   // there is no advancer for single-page pagers
   if (method.nextLinkName) {
     const nilChecks = generateNilChecks(method.nextLinkName);
-    text += `\t\t\treturn ${nilChecks} && len(*page.${method.nextLinkName}) > 0\n`;
-    text += '\t\t},\n';
+    text += `${indent.get()}return ${nilChecks} && len(*page.${method.nextLinkName}) > 0\n`;
   } else {
-    text += '\t\t\treturn false\n';
-    text += '\t\t},\n';
+    text += `${indent.get()}return false\n`;
   }
-  text += `\t\tFetcher: func(ctx context.Context, page *${method.returns.name}) (${method.returns.name}, error) {\n`;
+  text += `${indent.pop().get()}},\n`;
+  text += `${indent.get()}Fetcher: func(ctx context.Context, page *${method.returns.name}) (${method.returns.name}, error) {\n`;
+  indent.push();
   const reqParams = helpers.getCreateRequestParameters(method);
   if (options.generateFakes) {
-    text += `\t\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "${method.receiver.type.name}.${fixUpMethodName(method)}")\n`;
+    text += `${indent.get()}ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "${method.receiver.type.name}.${fixUpMethodName(method)}")\n`;
   }
   if (method.nextLinkName) {
     let nextLinkVar: string;
     if (method.kind === 'pageableMethod') {
-      text += '\t\t\tnextLink := ""\n';
+      text += `${indent.get()}nextLink := ""\n`;
       nextLinkVar = 'nextLink';
-      text += '\t\t\tif page != nil {\n';
-      text += `\t\t\t\tnextLink = *page.${method.nextLinkName}\n\t\t\t}\n`;
+      text += `${indent.get()}if page != nil {\n`;
+      text += `${indent.push().get()}nextLink = *page.${method.nextLinkName}\n`;
+      text += `${indent.pop().get()}}\n`;
     } else {
       nextLinkVar = `*page.${method.nextLinkName}`;
     }
-    text += `\t\t\tresp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), ${nextLinkVar}, func(ctx context.Context) (*policy.Request, error) {\n`;
-    text += `\t\t\t\treturn client.${method.naming.requestMethod}(${reqParams})\n\t\t\t}, `;
+    text += `${indent.get()}resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), ${nextLinkVar}, func(ctx context.Context) (*policy.Request, error) {\n`;
+    text += `${indent.push().get()}return client.${method.naming.requestMethod}(${reqParams})\n`;
+    text += `${indent.pop().get()}}, `;
     // nextPageMethod might be absent in some cases, see https://github.com/Azure/autorest/issues/4393
     if (method.nextPageMethod) {
       const nextOpParams = helpers.getCreateRequestParametersSig(method.nextPageMethod).split(',');
@@ -600,36 +628,43 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, i
         }
       }
       // add a definition for the nextReq func that uses the nextLinkOperation
-      text += '&runtime.FetcherForNextLinkOptions{\n\t\t\t\tNextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {\n';
-      text += `\t\t\t\t\treturn client.${method.nextPageMethod.name}(${nextOpParams.join(', ')})\n\t\t\t\t},\n\t\t\t})\n`;
+      indent.push();
+      text += `&runtime.FetcherForNextLinkOptions{\n`;
+      text += `${indent.get()}NextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {\n`;
+      text += `${indent.push().get()}return client.${method.nextPageMethod.name}(${nextOpParams.join(', ')})\n`;
+      text += `${indent.pop().get()}},\n`;
+      text += `${indent.pop().get()}})\n`;
     } else if (method.nextLinkVerb !== 'get') {
-      text += `&runtime.FetcherForNextLinkOptions{\n\t\t\t\tHTTPVerb: http.Method${naming.capitalize(method.nextLinkVerb)},\n\t\t\t})\n`;
+      text += `&runtime.FetcherForNextLinkOptions{\n`;
+      text += `${indent.push().get()}HTTPVerb: http.Method${naming.capitalize(method.nextLinkVerb)},\n`;
+      text += `${indent.pop().get()}})\n`;
     } else {
       text += 'nil)\n';
     }
-    text += `\t\t\tif err != nil {\n\t\t\t\treturn ${method.returns.name}{}, err\n\t\t\t}\n`;
-    text += `\t\t\treturn client.${method.naming.responseMethod}(resp)\n`;
-    text += '\t\t\t},\n';
+    text += `${indent.get()}if err != nil {\n`;
+    text += `${indent.push().get()}return ${method.returns.name}{}, err\n`;
+    text += `${indent.pop().get()}}\n`;
+    text += `${indent.get()}return client.${method.naming.responseMethod}(resp)\n`;
   } else {
     // this is the singular page case, no fetcher helper required
-    text += `\t\t\treq, err := client.${method.naming.requestMethod}(${reqParams})\n`;
-    text += '\t\t\tif err != nil {\n';
-    text += `\t\t\t\treturn ${method.returns.name}{}, err\n`;
-    text += '\t\t\t}\n';
-    text += '\t\t\tresp, err := client.internal.Pipeline().Do(req)\n';
-    text += '\t\t\tif err != nil {\n';
-    text += `\t\t\t\treturn ${method.returns.name}{}, err\n`;
-    text += '\t\t\t}\n';
-    text += '\t\t\tif !runtime.HasStatusCode(resp, http.StatusOK) {\n';
-    text += `\t\t\t\treturn ${method.returns.name}{}, runtime.NewResponseError(resp)\n`;
-    text += '\t\t\t}\n';
-    text += `\t\t\treturn client.${method.naming.responseMethod}(resp)\n`;
-    text += '\t\t},\n';
+    text += `${indent.get()}req, err := client.${method.naming.requestMethod}(${reqParams})\n`;
+    text += `${indent.get()}if err != nil {\n`;
+    text += `${indent.push().get()}return ${method.returns.name}{}, err\n`;
+    text += `${indent.pop().get()}}\n`;
+    text += `${indent.get()}resp, err := client.internal.Pipeline().Do(req)\n`;
+    text += `${indent.get()}if err != nil {\n`;
+    text += `${indent.push().get()}return ${method.returns.name}{}, err\n`;
+    text += `${indent.pop().get()}}\n`;
+    text += `${indent.get()}if !runtime.HasStatusCode(resp, http.StatusOK) {\n`;
+    text += `${indent.push().get()}return ${method.returns.name}{}, runtime.NewResponseError(resp)\n`;
+    text += `${indent.pop().get()}}\n`;
+    text += `${indent.get()}return client.${method.naming.responseMethod}(resp)\n`;
   }
+  text += `${indent.pop().get()}},\n`;
   if (options.injectSpans) {
-    text += '\t\tTracer: client.internal.Tracer(),\n';
+    text += `${indent.get()}Tracer: client.internal.Tracer(),\n`;
   }
-  text += '\t})\n';
+  text += `${indent.pop().get()}})\n`;
   return text;
 }
 
@@ -659,7 +694,7 @@ function getClientReceiverDefinition(receiver: go.Receiver<go.Client>): string {
   return `(${receiver.name} ${receiver.byValue ? '' : '*'}${receiver.type.name})`;
 }
 
-function generateOperation(method: go.MethodType, imports: ImportManager, options: go.Options): string {
+function generateOperation(method: go.MethodType, options: go.Options, imports: ImportManager, indent: helpers.Indentation): string {
   const params = getAPIParametersSig(method, imports);
   const returns = generateReturnsInfo(method, 'op');
   let methodName = method.name;
@@ -689,58 +724,59 @@ function generateOperation(method: go.MethodType, imports: ImportManager, option
   text += `func ${getClientReceiverDefinition(method.receiver)} ${methodName}(${params}) (${returns.join(', ')}) {\n`;
   const reqParams = helpers.getCreateRequestParameters(method);
   if (method.kind === 'pageableMethod') {
-    text += '\treturn ';
-    text += emitPagerDefinition(method, imports, options);
+    text += `${indent.get()}return `;
+    text += emitPagerDefinition(method, options, imports, indent);
     text += '}\n\n';
     return text;
   }
-  text += '\tvar err error\n';
+  text += `${indent.get()}var err error\n`;
   let operationName = `"${method.receiver.type.name}.${fixUpMethodName(method)}"`;
   if (options.generateFakes && options.injectSpans) {
-    text += `\tconst operationName = ${operationName}\n`;
+    text += `${indent.get()}const operationName = ${operationName}\n`;
     operationName = 'operationName';
   }
   if (options.generateFakes) {
-    text += `\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, ${operationName})\n`;
+    text += `${indent.get()}ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, ${operationName})\n`;
   }
   if (options.injectSpans) {
-    text += `\tctx, endSpan := runtime.StartSpan(ctx, ${operationName}, client.internal.Tracer(), nil)\n`;
-    text += '\tdefer func() { endSpan(err) }()\n';
+    text += `${indent.get()}ctx, endSpan := runtime.StartSpan(ctx, ${operationName}, client.internal.Tracer(), nil)\n`;
+    text += `${indent.get()}defer func() { endSpan(err) }()\n`;
   }
   const zeroResp = getZeroReturnValue(method, 'op');
-  text += `\treq, err := client.${method.naming.requestMethod}(${reqParams})\n`;
-  text += '\tif err != nil {\n';
-  text += `\t\treturn ${zeroResp}, err\n`;
-  text += '\t}\n';
-  text += '\thttpResp, err := client.internal.Pipeline().Do(req)\n';
-  text += '\tif err != nil {\n';
-  text += `\t\treturn ${zeroResp}, err\n`;
-  text += '\t}\n';
-  text += `\tif !runtime.HasStatusCode(httpResp, ${helpers.formatStatusCodes(method.httpStatusCodes)}) {\n`;
-  text += '\t\terr = runtime.NewResponseError(httpResp)\n';
-  text += `\t\treturn ${zeroResp}, err\n`;
-  text += '\t}\n';
+  text += `${indent.get()}req, err := client.${method.naming.requestMethod}(${reqParams})\n`;
+  text += `${indent.get()}if err != nil {\n`;
+  text += `${indent.push().get()}return ${zeroResp}, err\n`;
+  text += `${indent.pop().get()}}\n`;
+  text += `${indent.get()}httpResp, err := client.internal.Pipeline().Do(req)\n`;
+  text += `${indent.get()}if err != nil {\n`;
+  text += `${indent.push().get()}return ${zeroResp}, err\n`;
+  text += `${indent.pop().get()}}\n`;
+  text += `${indent.get()}if !runtime.HasStatusCode(httpResp, ${helpers.formatStatusCodes(method.httpStatusCodes)}) {\n`;
+  indent.push();
+  text += `${indent.get()}err = runtime.NewResponseError(httpResp)\n`;
+  text += `${indent.get()}return ${zeroResp}, err\n`;
+  text += `${indent.pop().get()}}\n`;
   // HAB with headers response is handled in protocol responder
   if (method.returns.result?.kind === 'headAsBooleanResult' && method.returns.headers.length === 0) {
-    text += `\treturn ${method.returns.name}{${method.returns.result.fieldName}: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil\n`;
+    text += `${indent.get()}return ${method.returns.name}{${method.returns.result.fieldName}: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil\n`;
   } else {
     if (go.isLROMethod(method)) {
-      text += '\treturn httpResp, nil\n';
+      text += `${indent.get()}return httpResp, nil\n`;
     } else if (needsResponseHandler(method)) {
       // also cheating here as at present the only param to the responder is an http.Response
-      text += `\tresp, err := client.${method.naming.responseMethod}(httpResp)\n`;
-      text += '\treturn resp, err\n';
+      text += `${indent.get()}resp, err := client.${method.naming.responseMethod}(httpResp)\n`;
+      text += `${indent.get()}return resp, err\n`;
     } else if (method.returns.result?.kind === 'binaryResult') {
-      text += `\treturn ${method.returns.name}{${method.returns.result.fieldName}: httpResp.Body}, nil\n`;
+      text += `${indent.get()}return ${method.returns.name}{${method.returns.result.fieldName}: httpResp.Body}, nil\n`;
     } else {
-      text += `\treturn ${method.returns.name}{}, nil\n`;
+      text += `${indent.get()}return ${method.returns.name}{}, nil\n`;
     }
   }
   text += '}\n\n';
   return text;
 }
 
-function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.NextPageMethod, imports: ImportManager): string {
+function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.NextPageMethod, imports: ImportManager, indent: helpers.Indentation): string {
   let name = method.name;
   if (method.kind !== 'nextPageMethod') {
     name = method.naming.requestMethod;
@@ -770,15 +806,15 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
   } else if (method.receiver.type.instance?.kind === 'templatedHost') {
     imports.add('strings');
     // we have a templated host
-    text += `\thost := "${method.receiver.type.instance.path}"\n`;
+    text += `${indent.get()}host := "${method.receiver.type.instance.path}"\n`;
     // get all the host params on the client
     for (const hostParam of hostParams) {
-      text += `\thost = strings.ReplaceAll(host, "{${hostParam.uriPathSegment}}", ${helpers.formatValue(`client.${hostParam.name}`, hostParam.type, imports)})\n`;
+      text += `${indent.get()}host = strings.ReplaceAll(host, "{${hostParam.uriPathSegment}}", ${helpers.formatValue(`client.${hostParam.name}`, hostParam.type, imports)})\n`;
     }
     // check for any method local host params
     for (const param of method.parameters) {
       if (param.location === 'method' && param.kind === 'uriParam') {
-        text += `\thost = strings.ReplaceAll(host, "{${param.uriPathSegment}}", ${helpers.formatValue(helpers.getParamName(param), param.type, imports)})\n`;
+        text += `${indent.get()}host = strings.ReplaceAll(host, "{${param.uriPathSegment}}", ${helpers.formatValue(helpers.getParamName(param), param.type, imports)})\n`;
       }
     }
     hostParam = 'host';
@@ -801,7 +837,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
   const pathContainsParms = pathStr.includes('{');
   if (hasPathParams || (!pathContainsParms && pathStr.length > 1)) {
     // there are path params, or the path doesn't contain tokens and is not "/" so emit it
-    text += `\turlPath := "${method.httpPath}"\n`;
+    text += `${indent.get()}urlPath := "${method.httpPath}"\n`;
     hostParam = `runtime.JoinPaths(${hostParam}, urlPath)`;
   }
 
@@ -819,7 +855,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     if (param.group.required) {
       optionalParamGroupCheck = '';
     }
-    return `\tif ${optionalParamGroupCheck}${client}${paramGroupName}.${naming.capitalize(param.name)} != nil {\n`;
+    return `${indent.get()}if ${optionalParamGroupCheck}${client}${paramGroupName}.${naming.capitalize(param.name)} != nil {\n`;
   };
 
   if (hasPathParams) {
@@ -839,13 +875,13 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
           if ((pp.type.kind === 'string' || choiceIsString(pp.type)) && !pp.omitEmptyStringCheck) {
             const paramName = helpers.getParamName(pp);
             imports.add('errors');
-            text += `\tif ${paramName} == "" {\n`;
-            text += `\t\treturn nil, errors.New("parameter ${paramName} cannot be empty")\n`;
-            text += '\t}\n';
+            text += `${indent.get()}if ${paramName} == "" {\n`;
+            text += `${indent.push().get()}return nil, errors.New("parameter ${paramName} cannot be empty")\n`;
+            text += `${indent.pop().get()}}\n`;
           }
         }
 
-        paramValue = helpers.formatParamValue(pp, imports);
+        paramValue = helpers.formatParamValue(pp, imports, indent);
 
         // for collection-based path params, we emit the empty check
         // after calling helpers.formatParamValue as that will have the
@@ -853,11 +889,11 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
         if (pp.kind === 'pathCollectionParam') {
           const paramName = helpers.getParamName(pp);
           const joinedParamName = `${paramName}Param`;
-          text += `\t${joinedParamName} := ${paramValue}\n`;
+          text += `${indent.get()}${joinedParamName} := ${paramValue}\n`;
           imports.add('errors');
-          text += `\tif len(${joinedParamName}) == 0 {\n`;
-          text += `\t\treturn nil, errors.New("parameter ${paramName} cannot be empty")\n`;
-          text += '\t}\n';
+          text += `${indent.get()}if len(${joinedParamName}) == 0 {\n`;
+          text += `${indent.push().get()}return nil, errors.New("parameter ${paramName} cannot be empty")\n`;
+          text += `${indent.pop().get()}}\n`;
           paramValue = joinedParamName;
         }
       } else {
@@ -865,9 +901,10 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
         // the correct default value, then populate it with
         // the optional value when set.
         paramValue = `optional${naming.capitalize(pp.name)}`;
-        text += `\t${paramValue} := ""\n`;
+        text += `${indent.get()}${paramValue} := ""\n`;
         text += emitParamGroupCheck(pp);
-        text += `\t${paramValue} = ${helpers.formatParamValue(pp, imports)}\n\t}\n`;
+        text += `${indent.push().get()}${paramValue} = ${helpers.formatParamValue(pp, imports, indent)}\n`;
+        text += `${indent.pop().get()}}\n`;
 
         // there are two cases for optional path params.
         //  - /foo/bar/{optional}
@@ -887,21 +924,21 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
       };
 
       if (optionalPathSep) {
-        text += `\tif len(${paramValue}) > 0 {\n`;
-        text += `\t\t${paramValue} = "/"+${emitPathEscape()}\n`;
-        text += '\t}\n';
+        text += `${indent.get()}if len(${paramValue}) > 0 {\n`;
+        text += `${indent.push().get()}${paramValue} = "/"+${emitPathEscape()}\n`;
+        text += `${indent.pop().get()}}\n`;
       } else {
         paramValue = emitPathEscape();
       }
 
-      text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.pathSegment}}", ${paramValue})\n`;
+      text += `${indent.get()}urlPath = strings.ReplaceAll(urlPath, "{${pp.pathSegment}}", ${paramValue})\n`;
     }
   }
 
-  text += `\treq, err := runtime.NewRequest(ctx, http.Method${naming.capitalize(method.httpMethod)}, ${hostParam})\n`;
-  text += '\tif err != nil {\n';
-  text += '\t\treturn nil, err\n';
-  text += '\t}\n';
+  text += `${indent.get()}req, err := runtime.NewRequest(ctx, http.Method${naming.capitalize(method.httpMethod)}, ${hostParam})\n`;
+  text += `${indent.get()}if err != nil {\n`;
+  text += `${indent.push().get()}return nil, err\n`;
+  text += `${indent.pop().get()}}\n`;
 
   // add query parameters
   const encodedParams = methodParamGroups.encodedQueryParams;
@@ -914,34 +951,35 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
         qp,
         qp.style,
         (name, val) => {
-          return `\treqQP.Set(${name}, ${val})`;
+          return `${indent.get()}reqQP.Set(${name}, ${val})`;
         },
         imports,
+        indent,
       );
     } else if (go.isRequiredParameter(qp.style) || go.isLiteralParameter(qp.style) || (qp.location === 'client' && go.isClientSideDefault(qp.style))) {
-      qpText = `\t${setter}\n`;
+      qpText = `${indent.get()}${setter}\n`;
     } else if (qp.location === 'client' && !qp.group) {
       // global optional param
-      qpText = `\tif client.${qp.name} != nil {\n`;
-      qpText += `\t\t${setter}\n`;
-      qpText += '\t}\n';
+      qpText = `${indent.get()}if client.${qp.name} != nil {\n`;
+      qpText += `${indent.push().get()}${setter}\n`;
+      qpText += `${indent.pop().get()}}\n`;
     } else {
       qpText = emitParamGroupCheck(qp);
-      qpText += `\t\t${setter}\n`;
-      qpText += '\t}\n';
+      qpText += `${indent.push().get()}${setter}\n`;
+      qpText += `${indent.pop().get()}}\n`;
     }
     return qpText;
   };
 
   // emit encoded params first
   if (encodedParams.length > 0) {
-    text += '\treqQP := req.Raw().URL.Query()\n';
+    text += `${indent.get()}reqQP := req.Raw().URL.Query()\n`;
     for (const qp of encodedParams.sort((a: go.QueryParameter, b: go.QueryParameter) => {
       return helpers.sortAscending(a.queryParameter, b.queryParameter);
     })) {
       let setter: string;
       if (qp.kind === 'queryCollectionParam' && qp.collectionFormat === 'multi') {
-        setter = `\tfor _, qv := range ${helpers.getParamName(qp)} {\n`;
+        setter = `for _, qv := range ${helpers.getParamName(qp)} {\n`;
 
         // emit a type conversion for the qv based on the array's element type
         let queryVal: string;
@@ -965,66 +1003,67 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
             queryVal = 'fmt.Sprintf("%v", qv)';
         }
 
-        setter += `\t\treqQP.Add("${qp.queryParameter}", ${queryVal})\n`;
-        setter += '\t}';
+        setter += `${indent.push().get()}reqQP.Add("${qp.queryParameter}", ${queryVal})\n`;
+        setter += `${indent.pop().get()}}`;
       } else {
         // cannot initialize setter to this value as helpers.formatParamValue() can change imports
-        setter = `reqQP.Set("${qp.queryParameter}", ${helpers.formatParamValue(qp, imports)})`;
+        setter = `reqQP.Set("${qp.queryParameter}", ${helpers.formatParamValue(qp, imports, indent)})`;
       }
       text += emitQueryParam(qp, setter);
     }
-    text += '\treq.Raw().URL.RawQuery = reqQP.Encode()\n';
+    text += `${indent.get()}req.Raw().URL.RawQuery = reqQP.Encode()\n`;
   }
 
   // tack on any unencoded params to the end
   if (unencodedParams.length > 0) {
     if (encodedParams.length > 0) {
-      text += '\tunencodedParams := []string{req.Raw().URL.RawQuery}\n';
+      text += `${indent.get()}unencodedParams := []string{req.Raw().URL.RawQuery}\n`;
     } else {
-      text += '\tunencodedParams := []string{}\n';
+      text += `${indent.get()}unencodedParams := []string{}\n`;
     }
     for (const qp of unencodedParams.sort((a: go.QueryParameter, b: go.QueryParameter) => {
       return helpers.sortAscending(a.queryParameter, b.queryParameter);
     })) {
       let setter: string;
       if (qp.kind === 'queryCollectionParam' && qp.collectionFormat === 'multi') {
-        setter = `\tfor _, qv := range ${helpers.getParamName(qp)} {\n`;
-        setter += `\t\tunencodedParams = append(unencodedParams, "${qp.queryParameter}="+qv)\n`;
-        setter += '\t}';
+        setter = `for _, qv := range ${helpers.getParamName(qp)} {\n`;
+        setter += `${indent.push().get()}unencodedParams = append(unencodedParams, "${qp.queryParameter}="+qv)\n`;
+        setter += `${indent.pop().get()}}`;
       } else {
-        setter = `unencodedParams = append(unencodedParams, "${qp.queryParameter}="+${helpers.formatParamValue(qp, imports)})`;
+        setter = `unencodedParams = append(unencodedParams, "${qp.queryParameter}="+${helpers.formatParamValue(qp, imports, indent)})`;
       }
       text += emitQueryParam(qp, setter);
     }
     imports.add('strings');
-    text += '\treq.Raw().URL.RawQuery = strings.Join(unencodedParams, "&")\n';
+    text += `${indent.get()}req.Raw().URL.RawQuery = strings.Join(unencodedParams, "&")\n`;
   }
 
   if (method.kind !== 'nextPageMethod' && method.returns.result?.kind === 'binaryResult') {
     // skip auto-body downloading for binary stream responses
-    text += '\truntime.SkipBodyDownload(req)\n';
+    text += `${indent.get()}runtime.SkipBodyDownload(req)\n`;
   }
 
   // add specific request headers
-  const emitHeaderSet = function (headerParam: go.HeaderParameter, prefix: string): string {
+  const emitHeaderSet = function (headerParam: go.HeaderParameter): string {
     if (headerParam.kind === 'headerMapParam') {
-      let headerText = `${prefix}for k, v := range ${helpers.getParamName(headerParam)} {\n`;
-      headerText += `${prefix}\tif v != nil {\n`;
-      headerText += `${prefix}\t\treq.Raw().Header["${headerParam.headerName}"+k] = []string{*v}\n`;
-      headerText += `${prefix}}\n`;
-      headerText += `${prefix}}\n`;
+      let headerText = `${indent.get()}for k, v := range ${helpers.getParamName(headerParam)} {\n`;
+      headerText += `${indent.push().get()}if v != nil {\n`;
+      headerText += `${indent.push().get()}req.Raw().Header["${headerParam.headerName}"+k] = []string{*v}\n`;
+      headerText += `${indent.pop().get()}}\n`;
+      headerText += `${indent.pop().get()}}\n`;
       return headerText;
     } else if (headerParam.location === 'method' && go.isClientSideDefault(headerParam.style)) {
       return emitClientSideDefault(
         headerParam,
         headerParam.style,
         (name, val) => {
-          return `${prefix}req.Raw().Header[${name}] = []string{${val}}`;
+          return `${indent.get()}req.Raw().Header[${name}] = []string{${val}}`;
         },
         imports,
+        indent,
       );
     } else {
-      return `${prefix}req.Raw().Header["${headerParam.headerName}"] = []string{${helpers.formatParamValue(headerParam, imports)}}\n`;
+      return `${indent.get()}req.Raw().Header["${headerParam.headerName}"] = []string{${helpers.formatParamValue(headerParam, imports, indent)}}\n`;
     }
   };
 
@@ -1042,18 +1081,22 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
       // to handle cases where the body param is optional. we don't want to set
       // the content-type if the body is nil.
       // we do it like this as tsp specifies content-type while swagger does not.
-      contentType = helpers.formatParamValue(param, imports);
+      contentType = helpers.formatParamValue(param, imports, indent);
     } else if (go.isRequiredParameter(param.style) || go.isLiteralParameter(param.style) || go.isClientSideDefault(param.style)) {
-      text += emitHeaderSet(param, '\t');
+      text += emitHeaderSet(param);
     } else if (param.location === 'client' && !param.group) {
       // global optional param
-      text += `\tif client.${param.name} != nil {\n`;
-      text += emitHeaderSet(param, '\t');
-      text += '\t}\n';
+      text += `${indent.get()}if client.${param.name} != nil {\n`;
+      indent.push();
+      text += emitHeaderSet(param);
+      indent.pop();
+      text += `${indent.get()}}\n`;
     } else {
       text += emitParamGroupCheck(param);
-      text += emitHeaderSet(param, '\t\t');
-      text += '\t}\n';
+      indent.push();
+      text += emitHeaderSet(param);
+      indent.pop();
+      text += `${indent.get()}}\n`;
     }
   }
 
@@ -1064,10 +1107,13 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
   const partialBodyParams = methodParamGroups.partialBodyParams;
 
   const emitSetBodyWithErrCheck = function (setBodyParam: string, contentType?: string): string {
-    let content = `if err := ${setBodyParam}; err != nil {\n\treturn nil, err\n}\n;`;
+    let content = '';
     if (contentType) {
-      content = `req.Raw().Header["Content-Type"] = []string{${contentType}}\n` + content;
+      content += `${indent.get()}req.Raw().Header["Content-Type"] = []string{${contentType}}\n`;
     }
+    content += `${indent.get()}if err := ${setBodyParam}; err != nil {\n`;
+    content += `${indent.push().get()}return nil, err\n`;
+    content += `${indent.pop().get()}}\n`;
     return content;
   };
 
@@ -1081,21 +1127,22 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
       } else if (bodyParam.bodyFormat === 'XML' && bodyParam.type.kind === 'slice') {
         // for XML payloads, create a wrapper type if the payload is an array
         imports.add('encoding/xml');
-        text += '\ttype wrapper struct {\n';
+        text += `${indent.get()}type wrapper struct {\n`;
+        indent.push();
         let tagName: string;
         if (bodyParam.xml?.wrapper) {
           tagName = bodyParam.xml.wrapper;
         } else {
           tagName = go.getTypeDeclaration(bodyParam.type, method.receiver.type.pkg);
         }
-        text += `\t\tXMLName xml.Name \`xml:"${tagName}"\`\n`;
+        text += `${indent.get()}XMLName xml.Name \`xml:"${tagName}"\`\n`;
         const fieldName = naming.capitalize(bodyParam.name);
         let tag = go.getTypeDeclaration(bodyParam.type.elementType, method.receiver.type.pkg);
         if (bodyParam.type.elementType.kind === 'model' && bodyParam.type.elementType.xml?.name) {
           tag = bodyParam.type.elementType.xml.name;
         }
-        text += `\t\t${fieldName} *${go.getTypeDeclaration(bodyParam.type, method.receiver.type.pkg)} \`xml:"${tag}"\`\n`;
-        text += '\t}\n';
+        text += `${indent.get()}${fieldName} *${go.getTypeDeclaration(bodyParam.type, method.receiver.type.pkg)} \`xml:"${tag}"\`\n`;
+        text += `${indent.pop().get()}}\n`;
         let addr = '&';
         if (!go.isRequiredParameter(bodyParam.style) && !bodyParam.byValue) {
           addr = '';
@@ -1113,18 +1160,18 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
           elementPtr = '';
         }
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
-        text += `\taux := make([]${elementPtr}datetime.${timeInfo?.format}, len(${body}))\n`;
-        text += `\tfor i := 0; i < len(${body}); i++ {\n`;
-        text += `\t\taux[i] = (${elementPtr}datetime.${timeInfo?.format})(${body}[i])\n`;
-        text += '\t}\n';
+        text += `${indent.get()}aux := make([]${elementPtr}datetime.${timeInfo?.format}, len(${body}))\n`;
+        text += `${indent.get()}for i := 0; i < len(${body}); i++ {\n`;
+        text += `${indent.push().get()}aux[i] = (${elementPtr}datetime.${timeInfo?.format})(${body}[i])\n`;
+        text += `${indent.pop().get()}}\n`;
         body = 'aux';
       } else if (isMapOfDateTime(bodyParam.type)) {
         let timeType = isMapOfDateTime(bodyParam.type);
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
-        text += `\taux := map[string]*datetime.${timeType}{}\n`;
-        text += `\tfor k, v := range ${body} {\n`;
-        text += `\t\taux[k] = (*datetime.${timeType})(v)\n`;
-        text += '\t}\n';
+        text += `${indent.get()}aux := map[string]*datetime.${timeType}{}\n`;
+        text += `${indent.get()}for k, v := range ${body} {\n`;
+        text += `${indent.push().get()}aux[k] = (*datetime.${timeType})(v)\n`;
+        text += `${indent.pop().get()}}\n`;
         body = 'aux';
       }
       let setBody = `runtime.MarshalAs${getMediaFormat(bodyParam.type, bodyParam.bodyFormat, `req, ${body}`)}`;
@@ -1134,112 +1181,130 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
         setBody = `req.SetBody(streaming.NopCloser(bytes.NewReader(${body})), "application/${bodyParam.bodyFormat.toLowerCase()}")`;
       }
       if (go.isRequiredParameter(bodyParam.style) || go.isLiteralParameter(bodyParam.style)) {
-        text += `\t${emitSetBodyWithErrCheck(setBody, contentType)}`;
-        text += '\treturn req, nil\n';
+        text += emitSetBodyWithErrCheck(setBody, contentType);
+        text += `${indent.get()}return req, nil\n`;
       } else {
         text += emitParamGroupCheck(bodyParam);
-        text += `\t${emitSetBodyWithErrCheck(setBody, contentType)}`;
-        text += '\t\treturn req, nil\n';
-        text += '\t}\n';
-        text += '\treturn req, nil\n';
+        indent.push();
+        text += emitSetBodyWithErrCheck(setBody, contentType);
+        text += `${indent.get()}return req, nil\n`;
+        indent.pop();
+        text += `${indent.get()}}\n`;
+        text += `${indent.get()}return req, nil\n`;
       }
     } else if (bodyParam.bodyFormat === 'binary') {
       if (go.isRequiredParameter(bodyParam.style)) {
-        text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${bodyParam.name}, ${bodyParam.contentType})`, contentType)}`;
-        text += '\treturn req, nil\n';
+        text += emitSetBodyWithErrCheck(`req.SetBody(${bodyParam.name}, ${bodyParam.contentType})`, contentType);
+        text += `${indent.get()}return req, nil\n`;
       } else {
         text += emitParamGroupCheck(bodyParam);
-        text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${helpers.getParamName(bodyParam)}, ${bodyParam.contentType})`, contentType)}`;
-        text += '\treturn req, nil\n';
-        text += '\t}\n';
-        text += '\treturn req, nil\n';
+        indent.push();
+        text += emitSetBodyWithErrCheck(`req.SetBody(${helpers.getParamName(bodyParam)}, ${bodyParam.contentType})`, contentType);
+        text += `${indent.get()}return req, nil\n`;
+        indent.pop();
+        text += `${indent.get()}}\n`;
+        text += `${indent.get()}return req, nil\n`;
       }
     } else if (bodyParam.bodyFormat === 'Text') {
       imports.add('strings');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
       if (go.isRequiredParameter(bodyParam.style)) {
-        text += `\tbody := streaming.NopCloser(strings.NewReader(${bodyParam.name}))\n`;
-        text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`, contentType)}`;
-        text += '\treturn req, nil\n';
+        text += `${indent.get()}body := streaming.NopCloser(strings.NewReader(${bodyParam.name}))\n`;
+        text += emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`, contentType);
+        text += `${indent.get()}return req, nil\n`;
       } else {
         text += emitParamGroupCheck(bodyParam);
-        text += `\tbody := streaming.NopCloser(strings.NewReader(${helpers.getParamName(bodyParam)}))\n`;
-        text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`, contentType)}`;
-        text += '\treturn req, nil\n';
-        text += '\t}\n';
-        text += '\treturn req, nil\n';
+        indent.push();
+        text += `${indent.get()}body := streaming.NopCloser(strings.NewReader(${helpers.getParamName(bodyParam)}))\n`;
+        text += emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`, contentType);
+        text += `${indent.get()}return req, nil\n`;
+        indent.pop();
+        text += `${indent.get()}}\n`;
+        text += `${indent.get()}return req, nil\n`;
       }
     }
   } else if (partialBodyParams.length > 0) {
     // partial body params are discrete params that are all fields within an internal struct.
     // define and instantiate an instance of the wire type, using the values from each param.
-    text += '\tbody := struct {\n';
+    text += `${indent.get()}body := struct {\n`;
+    indent.push();
     for (const partialBodyParam of partialBodyParams) {
-      text += `\t\t${naming.capitalize(partialBodyParam.serializedName)} ${helpers.star(partialBodyParam.byValue)}${go.getTypeDeclaration(partialBodyParam.type, method.receiver.type.pkg)} \`${partialBodyParam.format.toLowerCase()}:"${partialBodyParam.serializedName}"\`\n`;
+      text += `${indent.get()}${naming.capitalize(partialBodyParam.serializedName)} ${helpers.star(partialBodyParam.byValue)}${go.getTypeDeclaration(partialBodyParam.type, method.receiver.type.pkg)} \`${partialBodyParam.format.toLowerCase()}:"${partialBodyParam.serializedName}"\`\n`;
     }
-    text += '\t}{\n';
+    indent.pop();
+    text += `${indent.get()}}{\n`;
+    indent.push();
     // required params are emitted as initializers in the struct literal
     for (const partialBodyParam of partialBodyParams) {
       if (go.isRequiredParameter(partialBodyParam.style)) {
-        text += `\t\t${naming.capitalize(partialBodyParam.serializedName)}: ${naming.uncapitalize(partialBodyParam.name)},\n`;
+        text += `${indent.get()}${naming.capitalize(partialBodyParam.serializedName)}: ${naming.uncapitalize(partialBodyParam.name)},\n`;
       }
     }
-    text += '\t}\n';
+    indent.pop();
+    text += `${indent.get()}}\n`;
     // now populate any optional params from the options type
     for (const partialBodyParam of partialBodyParams) {
       if (!go.isRequiredParameter(partialBodyParam.style)) {
         text += emitParamGroupCheck(partialBodyParam);
-        text += `\t\tbody.${naming.capitalize(partialBodyParam.serializedName)} = options.${naming.capitalize(partialBodyParam.name)}\n\t}\n`;
+        text += `${indent.push().get()}body.${naming.capitalize(partialBodyParam.serializedName)} = options.${naming.capitalize(partialBodyParam.name)}\n`;
+        text += `${indent.pop().get()}}\n`;
       }
     }
     // TODO: spread params are JSON only https://github.com/Azure/autorest.go/issues/1455
-    text += '\treq.Raw().Header["Content-Type"] = []string{"application/json"}\n';
-    text += '\tif err := runtime.MarshalAsJSON(req, body); err != nil {\n\t\treturn nil, err\n\t}\n';
-    text += '\treturn req, nil\n';
+    text += `${indent.get()}req.Raw().Header["Content-Type"] = []string{"application/json"}\n`;
+    text += `${indent.get()}if err := runtime.MarshalAsJSON(req, body); err != nil {\n`;
+    text += `${indent.push().get()}return nil, err\n`;
+    text += `${indent.pop().get()}}\n`;
+    text += `${indent.get()}return req, nil\n`;
   } else if (multipartBodyParams.length > 0) {
     if (multipartBodyParams.length === 1 && multipartBodyParams[0].type.kind === 'model' && multipartBodyParams[0].type.annotations.multipartFormData) {
-      text += `\tformData, err := ${multipartBodyParams[0].name}.toMultipartFormData()\n`;
-      text += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+      text += `${indent.get()}formData, err := ${multipartBodyParams[0].name}.toMultipartFormData()\n`;
+      text += `${indent.get()}if err != nil {\n`;
+      text += `${indent.push().get()}return nil, err\n`;
+      text += `${indent.pop().get()}}\n`;
     } else {
-      text += '\tformData := map[string]any{}\n';
+      text += `${indent.get()}formData := map[string]any{}\n`;
       for (const param of multipartBodyParams) {
         const setter = `formData["${param.name}"] = ${helpers.getParamName(param)}`;
         if (go.isRequiredParameter(param.style)) {
-          text += `\t${setter}\n`;
+          text += `${indent.get()}${setter}\n`;
         } else {
           text += emitParamGroupCheck(param);
-          text += `\t${setter}\n\t}\n`;
+          text += `${indent.push().get()}${setter}\n`;
+          text += `${indent.pop().get()}}\n`;
         }
       }
     }
-    text += '\tif err := runtime.SetMultipartFormData(req, formData); err != nil {\n\t\treturn nil, err\n\t}\n';
-    text += '\treturn req, nil\n';
+    text += `${indent.get()}if err := runtime.SetMultipartFormData(req, formData); err != nil {\n`;
+    text += `${indent.push().get()}return nil, err\n`;
+    text += `${indent.pop().get()}}\n`;
+    text += `${indent.get()}return req, nil\n`;
   } else if (formBodyParams.length > 0) {
     const emitFormData = function (param: go.FormBodyParameter, setter: string): string {
       let formDataText = '';
       if (go.isRequiredParameter(param.style)) {
-        formDataText = `\t${setter}\n`;
+        formDataText = `${indent.get()}${setter}\n`;
       } else {
         formDataText = emitParamGroupCheck(param);
-        formDataText += `\t\t${setter}\n`;
-        formDataText += '\t}\n';
+        formDataText += `${indent.push().get()}${setter}\n`;
+        formDataText += `${indent.pop().get()}}\n`;
       }
       return formDataText;
     };
     imports.add('net/url');
     imports.add('strings');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
-    text += '\tformData := url.Values{}\n';
+    text += `${indent.get()}formData := url.Values{}\n`;
     // find all the form body params
     for (const param of formBodyParams) {
-      const setter = `formData.Set("${param.formDataName}", ${helpers.formatParamValue(param, imports)})`;
+      const setter = `formData.Set("${param.formDataName}", ${helpers.formatParamValue(param, imports, indent)})`;
       text += emitFormData(param, setter);
     }
-    text += '\tbody := streaming.NopCloser(strings.NewReader(formData.Encode()))\n';
-    text += `\t${emitSetBodyWithErrCheck('req.SetBody(body, "application/x-www-form-urlencoded")')}`;
-    text += '\treturn req, nil\n';
+    text += `${indent.get()}body := streaming.NopCloser(strings.NewReader(formData.Encode()))\n`;
+    text += emitSetBodyWithErrCheck('req.SetBody(body, "application/x-www-form-urlencoded")');
+    text += `${indent.get()}return req, nil\n`;
   } else {
-    text += '\treturn req, nil\n';
+    text += `${indent.get()}return req, nil\n`;
   }
   text += '}\n\n';
   return text;
@@ -1250,12 +1315,13 @@ function emitClientSideDefault(
   csd: go.ClientSideDefault,
   setterFormat: (name: string, val: string) => string,
   imports: ImportManager,
+  indent: helpers.Indentation,
 ): string {
   const defaultVar = naming.uncapitalize(param.name) + 'Default';
-  let text = `\t${defaultVar} := ${helpers.formatLiteralValue(csd.defaultValue, true)}\n`;
-  text += `\tif options != nil && options.${naming.capitalize(param.name)} != nil {\n`;
-  text += `\t\t${defaultVar} = *options.${naming.capitalize(param.name)}\n`;
-  text += '}\n';
+  let text = `${indent.get()}${defaultVar} := ${helpers.formatLiteralValue(csd.defaultValue, true)}\n`;
+  text += `${indent.get()}if options != nil && options.${naming.capitalize(param.name)} != nil {\n`;
+  text += `${indent.push().get()}${defaultVar} = *options.${naming.capitalize(param.name)}\n`;
+  text += `${indent.pop().get()}}\n`;
 
   let serializedName: string;
   switch (param.kind) {
@@ -1311,17 +1377,24 @@ function needsResponseHandler(method: go.MethodType): boolean {
   return helpers.hasSchemaResponse(method) || method.returns.headers.length > 0;
 }
 
-function generateResponseUnmarshaller(method: go.MethodType, type: go.WireType, format: go.ResultFormat, unmarshalTarget: string, imports: ImportManager): string {
+function generateResponseUnmarshaller(
+  method: go.MethodType,
+  type: go.WireType,
+  format: go.ResultFormat,
+  unmarshalTarget: string,
+  imports: ImportManager,
+  indent: helpers.Indentation,
+): string {
   let unmarshallerText = '';
   const zeroValue = getZeroReturnValue(method, 'handler');
   if (type.kind === 'time') {
     // use the designated time type for unmarshalling
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
-    unmarshallerText += `\tvar aux *datetime.${type.format}\n`;
-    unmarshallerText += `\tif err := runtime.UnmarshalAs${format}(resp, &aux); err != nil {\n`;
-    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
-    unmarshallerText += '\t}\n';
-    unmarshallerText += `\tresult.${helpers.getResultFieldName(method)} = (*time.Time)(aux)\n`;
+    unmarshallerText += `${indent.get()}var aux *datetime.${type.format}\n`;
+    unmarshallerText += `${indent.get()}if err := runtime.UnmarshalAs${format}(resp, &aux); err != nil {\n`;
+    unmarshallerText += `${indent.push().get()}return ${zeroValue}, err\n`;
+    unmarshallerText += `${indent.pop().get()}}\n`;
+    unmarshallerText += `${indent.get()}result.${helpers.getResultFieldName(method)} = (*time.Time)(aux)\n`;
     return unmarshallerText;
   } else if (isArrayOfDateTime(type)) {
     // unmarshalling arrays of date/time is a little more involved
@@ -1331,49 +1404,49 @@ function generateResponseUnmarshaller(method: go.MethodType, type: go.WireType, 
       elementPtr = '';
     }
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
-    unmarshallerText += `\tvar aux []${elementPtr}datetime.${timeInfo?.format}\n`;
-    unmarshallerText += `\tif err := runtime.UnmarshalAs${format}(resp, &aux); err != nil {\n`;
-    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
-    unmarshallerText += '\t}\n';
-    unmarshallerText += `\tcp := make([]${elementPtr}time.Time, len(aux))\n`;
-    unmarshallerText += '\tfor i := 0; i < len(aux); i++ {\n';
-    unmarshallerText += `\t\tcp[i] = (${elementPtr}time.Time)(aux[i])\n`;
-    unmarshallerText += '\t}\n';
-    unmarshallerText += `\tresult.${helpers.getResultFieldName(method)} = cp\n`;
+    unmarshallerText += `${indent.get()}var aux []${elementPtr}datetime.${timeInfo?.format}\n`;
+    unmarshallerText += `${indent.get()}if err := runtime.UnmarshalAs${format}(resp, &aux); err != nil {\n`;
+    unmarshallerText += `${indent.push().get()}return ${zeroValue}, err\n`;
+    unmarshallerText += `${indent.pop().get()}}\n`;
+    unmarshallerText += `${indent.get()}cp := make([]${elementPtr}time.Time, len(aux))\n`;
+    unmarshallerText += `${indent.get()}for i := 0; i < len(aux); i++ {\n`;
+    unmarshallerText += `${indent.push().get()}cp[i] = (${elementPtr}time.Time)(aux[i])\n`;
+    unmarshallerText += `${indent.pop().get()}}\n`;
+    unmarshallerText += `${indent.get()}result.${helpers.getResultFieldName(method)} = cp\n`;
     return unmarshallerText;
   } else if (isMapOfDateTime(type)) {
     let timeType = isMapOfDateTime(type);
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
-    unmarshallerText += `\taux := map[string]*datetime.${timeType}{}\n`;
-    unmarshallerText += `\tif err := runtime.UnmarshalAs${format}(resp, &aux); err != nil {\n`;
-    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
-    unmarshallerText += '\t}\n';
-    unmarshallerText += '\tcp := map[string]*time.Time{}\n';
-    unmarshallerText += '\tfor k, v := range aux {\n';
-    unmarshallerText += '\t\tcp[k] = (*time.Time)(v)\n';
-    unmarshallerText += '\t}\n';
-    unmarshallerText += `\tresult.${helpers.getResultFieldName(method)} = cp\n`;
+    unmarshallerText += `${indent.get()}aux := map[string]*datetime.${timeType}{}\n`;
+    unmarshallerText += `${indent.get()}if err := runtime.UnmarshalAs${format}(resp, &aux); err != nil {\n`;
+    unmarshallerText += `${indent.push().get()}return ${zeroValue}, err\n`;
+    unmarshallerText += `${indent.pop().get()}}\n`;
+    unmarshallerText += `${indent.get()}cp := map[string]*time.Time{}\n`;
+    unmarshallerText += `${indent.get()}for k, v := range aux {\n`;
+    unmarshallerText += `${indent.push().get()}cp[k] = (*time.Time)(v)\n`;
+    unmarshallerText += `${indent.pop().get()}}\n`;
+    unmarshallerText += `${indent.get()}result.${helpers.getResultFieldName(method)} = cp\n`;
     return unmarshallerText;
   }
   if (format === 'JSON' || format === 'XML') {
     if (type.kind === 'rawJSON') {
-      unmarshallerText += '\tbody, err := runtime.Payload(resp)\n';
-      unmarshallerText += '\tif err != nil {\n';
-      unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
-      unmarshallerText += '\t}\n';
-      unmarshallerText += `\t${unmarshalTarget} = body\n`;
+      unmarshallerText += `${indent.get()}body, err := runtime.Payload(resp)\n`;
+      unmarshallerText += `${indent.get()}if err != nil {\n`;
+      unmarshallerText += `${indent.push().get()}return ${zeroValue}, err\n`;
+      unmarshallerText += `${indent.pop().get()}}\n`;
+      unmarshallerText += `${indent.get()}${unmarshalTarget} = body\n`;
     } else {
-      unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaFormat(type, format, `resp, &${unmarshalTarget}`)}; err != nil {\n`;
-      unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
-      unmarshallerText += '\t}\n';
+      unmarshallerText += `${indent.get()}if err := runtime.UnmarshalAs${getMediaFormat(type, format, `resp, &${unmarshalTarget}`)}; err != nil {\n`;
+      unmarshallerText += `${indent.push().get()}return ${zeroValue}, err\n`;
+      unmarshallerText += `${indent.pop().get()}}\n`;
     }
   } else if (format === 'Text') {
-    unmarshallerText += '\tbody, err := runtime.Payload(resp)\n';
-    unmarshallerText += '\tif err != nil {\n';
-    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
-    unmarshallerText += '\t}\n';
-    unmarshallerText += '\ttxt := string(body)\n';
-    unmarshallerText += `\t${unmarshalTarget} = &txt\n`;
+    unmarshallerText += `${indent.get()}body, err := runtime.Payload(resp)\n`;
+    unmarshallerText += `${indent.get()}if err != nil {\n`;
+    unmarshallerText += `${indent.push().get()}return ${zeroValue}, err\n`;
+    unmarshallerText += `${indent.pop().get()}}\n`;
+    unmarshallerText += `${indent.get()}txt := string(body)\n`;
+    unmarshallerText += `${indent.get()}${unmarshalTarget} = &txt\n`;
   } else {
     // the remaining formats should have been handled elsewhere
     throw new CodegenError('InternalError', `unhandled format ${format} for operation ${method.receiver.type.name}.${method.name}`);
@@ -1381,7 +1454,7 @@ function generateResponseUnmarshaller(method: go.MethodType, type: go.WireType, 
   return unmarshallerText;
 }
 
-function createProtocolResponse(method: go.SyncMethod | go.LROPageableMethod | go.PageableMethod, imports: ImportManager): string {
+function createProtocolResponse(method: go.SyncMethod | go.LROPageableMethod | go.PageableMethod, imports: ImportManager, indent: helpers.Indentation): string {
   if (!needsResponseHandler(method)) {
     return '';
   }
@@ -1391,71 +1464,71 @@ function createProtocolResponse(method: go.SyncMethod | go.LROPageableMethod | g
 
   const addHeaders = function (headers: Array<go.HeaderScalarResponse | go.HeaderMapResponse>) {
     for (const header of headers) {
-      text += formatHeaderResponseValue(method, header, imports, 'result', `${method.returns.name}{}`);
+      text += formatHeaderResponseValue(method, header, 'result', `${method.returns.name}{}`, imports, indent);
     }
   };
 
   const result = method.returns.result;
   if (!result) {
     // only headers
-    text += `\tresult := ${method.returns.name}{}\n`;
+    text += `${indent.get()}result := ${method.returns.name}{}\n`;
     addHeaders(method.returns.headers);
   } else {
     switch (result.kind) {
       case 'anyResult':
         imports.add('fmt');
-        text += `\tresult := ${method.returns.name}{}\n`;
+        text += `${indent.get()}result := ${method.returns.name}{}\n`;
         addHeaders(method.returns.headers);
-        text += '\tswitch resp.StatusCode {\n';
+        text += `${indent.get()}switch resp.StatusCode {\n`;
         for (const statusCode of method.httpStatusCodes) {
-          text += `\tcase ${helpers.formatStatusCodes([statusCode])}:\n`;
+          text += `${indent.get()}case ${helpers.formatStatusCodes([statusCode])}:\n`;
           const resultType = result.httpStatusCodeType[statusCode];
           if (!resultType) {
             // the operation contains a mix of schemas and non-schema responses
             continue;
           }
-          text += `\tvar val ${go.getTypeDeclaration(resultType, method.receiver.type.pkg)}\n`;
-          text += generateResponseUnmarshaller(method, resultType, result.format, 'val', imports);
-          text += '\tresult.Value = val\n';
+          text += `${indent.get()}var val ${go.getTypeDeclaration(resultType, method.receiver.type.pkg)}\n`;
+          text += generateResponseUnmarshaller(method, resultType, result.format, 'val', imports, indent);
+          text += `${indent.get()}result.Value = val\n`;
         }
-        text += '\tdefault:\n';
-        text += `\t\treturn ${getZeroReturnValue(method, 'handler')}, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)\n`;
-        text += '\t}\n';
+        text += `${indent.get()}default:\n`;
+        text += `${indent.push().get()}return ${getZeroReturnValue(method, 'handler')}, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)\n`;
+        text += `${indent.pop().get()}}\n`;
         break;
       case 'binaryResult':
-        text += `\tresult := ${method.returns.name}{${result.fieldName}: resp.Body}\n`;
+        text += `${indent.get()}result := ${method.returns.name}{${result.fieldName}: resp.Body}\n`;
         addHeaders(method.returns.headers);
         break;
       case 'headAsBooleanResult':
-        text += `\tresult := ${method.returns.name}{${result.fieldName}: resp.StatusCode >= 200 && resp.StatusCode < 300}\n`;
+        text += `${indent.get()}result := ${method.returns.name}{${result.fieldName}: resp.StatusCode >= 200 && resp.StatusCode < 300}\n`;
         addHeaders(method.returns.headers);
         break;
       case 'modelResult':
-        text += `\tresult := ${method.returns.name}{}\n`;
+        text += `${indent.get()}result := ${method.returns.name}{}\n`;
         addHeaders(method.returns.headers);
-        text += generateResponseUnmarshaller(method, result.modelType, result.format, `result.${helpers.getResultFieldName(method)}`, imports);
+        text += generateResponseUnmarshaller(method, result.modelType, result.format, `result.${helpers.getResultFieldName(method)}`, imports, indent);
         break;
       case 'monomorphicResult':
-        text += `\tresult := ${method.returns.name}{}\n`;
+        text += `${indent.get()}result := ${method.returns.name}{}\n`;
         addHeaders(method.returns.headers);
         let target = `result.${helpers.getResultFieldName(method)}`;
         // when unmarshalling a wrapped XML array, unmarshal into the response envelope
         if (result.format === 'XML' && result.monomorphicType.kind === 'slice') {
           target = 'result';
         }
-        text += generateResponseUnmarshaller(method, result.monomorphicType, result.format, target, imports);
+        text += generateResponseUnmarshaller(method, result.monomorphicType, result.format, target, imports, indent);
         break;
       case 'polymorphicResult':
-        text += `\tresult := ${method.returns.name}{}\n`;
+        text += `${indent.get()}result := ${method.returns.name}{}\n`;
         addHeaders(method.returns.headers);
-        text += generateResponseUnmarshaller(method, result.interface, result.format, 'result', imports);
+        text += generateResponseUnmarshaller(method, result.interface, result.format, 'result', imports, indent);
         break;
       default:
         result satisfies never;
     }
   }
 
-  text += '\treturn result, nil\n';
+  text += `${indent.get()}return result, nil\n`;
   text += '}\n\n';
   return text;
 }
@@ -1558,7 +1631,7 @@ function generateReturnsInfo(method: go.MethodType, apiType: 'api' | 'op' | 'han
   return [returnType, 'error'];
 }
 
-function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imports: ImportManager, options: go.Options): string {
+function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, options: go.Options, imports: ImportManager, indent: helpers.Indentation): string {
   const params = getAPIParametersSig(method, imports);
   const returns = generateReturnsInfo(method, 'api');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
@@ -1580,19 +1653,20 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imp
     // for paged LROs, we construct a pager and pass it to the LRO ctor.
     pollerTypeParam = `[*runtime.Pager${pollerTypeParam}]`;
     pollerType = '&pager';
-    text += '\tpager := ';
-    text += emitPagerDefinition(method, imports, options);
+    text += `${indent.get()}pager := `;
+    text += emitPagerDefinition(method, options, imports, indent);
   }
 
-  text += '\tif options == nil || options.ResumeToken == "" {\n';
+  text += `${indent.get()}if options == nil || options.ResumeToken == "" {\n`;
+  indent.push();
 
   // creating the poller from response branch
 
   const opName = method.naming.internalMethod;
-  text += `\t\tresp, err := client.${opName}(${helpers.getCreateRequestParameters(method)})\n`;
-  text += '\t\tif err != nil {\n';
-  text += `\t\t\treturn ${zeroResp}, err\n`;
-  text += '\t\t}\n';
+  text += `${indent.get()}resp, err := client.${opName}(${helpers.getCreateRequestParameters(method)})\n`;
+  text += `${indent.get()}if err != nil {\n`;
+  text += `${indent.push().get()}return ${zeroResp}, err\n`;
+  text += `${indent.pop().get()}}\n`;
 
   let finalStateVia = '';
   // LRO operation might have a special configuration set in x-ms-long-running-operation-options
@@ -1616,7 +1690,7 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imp
     }
   }
 
-  text += '\t\tpoller, err := runtime.NewPoller';
+  text += `${indent.get()}poller, err := runtime.NewPoller`;
   if (finalStateVia === '' && pollerType === 'nil' && !options.injectSpans) {
     // the generic type param is redundant when it's also specified in the
     // options struct so we only include it when there's no options.
@@ -1628,27 +1702,31 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imp
     text += 'nil)\n';
   } else {
     // at least one option
+    indent.push();
     text += `&runtime.NewPollerOptions${pollerTypeParam}{\n`;
     if (finalStateVia !== '') {
-      text += `\t\t\tFinalStateVia: ${finalStateVia},\n`;
+      text += `${indent.get()}FinalStateVia: ${finalStateVia},\n`;
     }
     if (method.operationLocationResultPath) {
-      text += `\t\t\tOperationLocationResultPath: "${method.operationLocationResultPath}",\n`;
+      text += `${indent.get()}OperationLocationResultPath: "${method.operationLocationResultPath}",\n`;
     }
     if (pollerType !== 'nil') {
-      text += `\t\t\tResponse: ${pollerType},\n`;
+      text += `${indent.get()}Response: ${pollerType},\n`;
     }
     if (options.injectSpans) {
-      text += '\t\t\tTracer: client.internal.Tracer(),\n';
+      text += `${indent.get()}Tracer: client.internal.Tracer(),\n`;
     }
-    text += '\t\t})\n';
+    indent.pop();
+    text += `${indent.get()}})\n`;
   }
-  text += '\t\treturn poller, err\n';
-  text += '\t} else {\n';
+  text += `${indent.get()}return poller, err\n`;
+  indent.pop();
+  text += `${indent.get()}} else {\n`;
+  indent.push();
 
   // creating the poller from resume token branch
 
-  text += '\t\treturn runtime.NewPollerFromResumeToken';
+  text += `${indent.get()}return runtime.NewPollerFromResumeToken`;
   if (pollerType === 'nil' && !options.injectSpans) {
     text += pollerTypeParam;
   }
@@ -1656,16 +1734,19 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, imp
   if (pollerType === 'nil' && !options.injectSpans) {
     text += 'nil)\n';
   } else {
+    indent.push();
     text += `&runtime.NewPollerFromResumeTokenOptions${pollerTypeParam}{\n`;
     if (pollerType !== 'nil') {
-      text += `\t\t\tResponse: ${pollerType},\n`;
+      text += `${indent.get()}Response: ${pollerType},\n`;
     }
     if (options.injectSpans) {
-      text += '\t\t\tTracer: client.internal.Tracer(),\n';
+      text += `${indent.get()}Tracer: client.internal.Tracer(),\n`;
     }
-    text += '\t\t})\n';
+    indent.pop();
+    text += `${indent.get()}})\n`;
   }
-  text += '\t}\n';
+  indent.pop();
+  text += `${indent.get()}}\n`;
 
   text += '}\n\n';
   return text;
