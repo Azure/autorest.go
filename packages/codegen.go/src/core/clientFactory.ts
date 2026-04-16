@@ -40,6 +40,8 @@ export function generateClientFactory(pkg: go.PackageContent, target: go.CodeMod
 
   // add factory type
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+  const indent = new helpers.Indentation();
+
   result += '// ClientFactory is a client factory used to create any client in this module.\n';
   result += "// Don't use this type directly, use NewClientFactory instead.\n";
   result += 'type ClientFactory struct {\n';
@@ -48,9 +50,9 @@ export function generateClientFactory(pkg: go.PackageContent, target: go.CodeMod
       // credentials aren't persisted on the client
       continue;
     }
-    result += `\t${clientParam.name} ${helpers.formatParameterTypeName(pkg, clientParam)}\n`;
+    result += `${indent.get()}${clientParam.name} ${helpers.formatParameterTypeName(pkg, clientParam)}\n`;
   }
-  result += '\tinternal *arm.Client\n';
+  result += `${indent.get()}internal *arm.Client\n`;
   result += '}\n\n';
 
   // add factory CTOR
@@ -68,20 +70,22 @@ export function generateClientFactory(pkg: go.PackageContent, target: go.CodeMod
       return `${param.name} ${helpers.formatParameterTypeName(pkg, param)}`;
     })
     .join(', ')}${clientFactoryParams.length > 0 ? ',' : ''} options *arm.ClientOptions) (*ClientFactory, error) {\n`;
-  result += '\tinternal, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
-  result += '\tif err != nil {\n';
-  result += '\t\treturn nil, err\n';
-  result += '\t}\n';
-  result += '\treturn &ClientFactory{\n';
+  result += `${indent.get()}internal, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n`;
+  result += `${indent.get()}if err != nil {\n`;
+  result += `${indent.push().get()}return nil, err\n`;
+  result += `${indent.pop().get()}}\n`;
+  result += `${indent.get()}return &ClientFactory{\n`;
+
+  indent.push();
   for (const clientParam of clientFactoryParams) {
     if (clientParam.kind === 'credentialParam') {
       // credentials aren't persisted on the client
       continue;
     }
-    result += `\t\t${clientParam.name}: ${clientParam.name},\n`;
+    result += `${indent.get()}${clientParam.name}: ${clientParam.name},\n`;
   }
-  result += '\t\tinternal: internal,\n';
-  result += '\t}, nil\n';
+  result += `${indent.get()}internal: internal,\n`;
+  result += `${indent.pop().get()}}, nil\n`;
   result += '}\n\n';
 
   // add new sub client method for all operation groups
@@ -113,11 +117,12 @@ export function generateClientFactory(pkg: go.PackageContent, target: go.CodeMod
         .join(', ')}`;
     }
     result += `) *${client.name} {\n`;
-    result += `\treturn &${client.name}{\n`;
+    result += `${indent.get()}return &${client.name}{\n`;
 
     // some clients (e.g. operations client) don't utilize the client params
+    indent.push();
     for (const clientParam of clientPrivateParams) {
-      result += `\t\t${clientParam.name}: ${clientParam.name},\n`;
+      result += `${indent.get()}${clientParam.name}: ${clientParam.name},\n`;
     }
 
     for (const clientParam of clientCommonParams) {
@@ -125,11 +130,11 @@ export function generateClientFactory(pkg: go.PackageContent, target: go.CodeMod
         // credentials aren't persisted on the client
         continue;
       }
-      result += `\t\t${clientParam.name}: c.${clientParam.name},\n`;
+      result += `${indent.get()}${clientParam.name}: c.${clientParam.name},\n`;
     }
 
-    result += '\t\tinternal: c.internal,\n';
-    result += '\t}\n';
+    result += `${indent.pop().get()}internal: c.internal,\n`;
+    result += `${indent.get()}}\n`;
     result += '}\n\n';
   }
 

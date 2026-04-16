@@ -18,6 +18,7 @@ export function generateInterfaces(pkg: go.PackageContent): string {
     return '';
   }
 
+  const indent = new helpers.Indentation();
   let text = helpers.contentPreamble(pkg);
 
   for (const iface of pkg.interfaces) {
@@ -34,10 +35,10 @@ export function generateInterfaces(pkg: go.PackageContent): string {
     text += helpers.comment(possibleTypeNames.join(', '), '// - ');
     text += `\ntype ${iface.name} interface {\n`;
     if (iface.parent) {
-      text += `\t${iface.parent.name}\n`;
+      text += `${indent.get()}${iface.parent.name}\n`;
     }
-    text += `\t// ${methodName} returns the ${iface.rootType.name} content of the underlying type.\n`;
-    text += `\t${methodName}() *${iface.rootType.name}\n`;
+    text += `${indent.get()}// ${methodName} returns the ${iface.rootType.name} content of the underlying type.\n`;
+    text += `${indent.get()}${methodName}() *${iface.rootType.name}\n`;
     text += '}\n\n';
   }
   return text;

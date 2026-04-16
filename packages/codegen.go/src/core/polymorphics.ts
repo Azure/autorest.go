@@ -112,79 +112,87 @@ export function generatePolymorphicHelpers(pkg: go.FakePackage | go.PackageConte
     prefix = `${go.getPackageName(pkg.parent)}.`;
   }
 
+  const indent = new helpers.Indentation();
+
   for (const interfaceType of content.interfaces) {
     // generate unmarshallers for each discriminator
 
     // scalar unmarshaller
     if (scalars.has(interfaceType.name)) {
       text += `func unmarshal${interfaceType.name}(rawMsg json.RawMessage) (${prefix}${interfaceType.name}, error) {\n`;
-      text += '\tif rawMsg == nil || string(rawMsg) == "null" {\n';
-      text += '\t\treturn nil, nil\n';
-      text += '\t}\n';
-      text += '\tvar m map[string]any\n';
-      text += '\tif err := json.Unmarshal(rawMsg, &m); err != nil {\n';
-      text += '\t\treturn nil, err\n';
-      text += '\t}\n';
-      text += `\tvar b ${prefix}${interfaceType.name}\n`;
-      text += `\tswitch m["${interfaceType.discriminatorField}"] {\n`;
+      text += `${indent.get()}if rawMsg == nil || string(rawMsg) == "null" {\n`;
+      text += `${indent.push().get()}return nil, nil\n`;
+      text += `${indent.pop().get()}}\n`;
+      text += `${indent.get()}var m map[string]any\n`;
+      text += `${indent.get()}if err := json.Unmarshal(rawMsg, &m); err != nil {\n`;
+      text += `${indent.push().get()}return nil, err\n`;
+      text += `${indent.pop().get()}}\n`;
+      text += `${indent.get()}var b ${prefix}${interfaceType.name}\n`;
+      text += `${indent.get()}switch m["${interfaceType.discriminatorField}"] {\n`;
       for (const possibleType of interfaceType.possibleTypes) {
         let disc = helpers.formatLiteralValue(possibleType.discriminatorValue!, true);
         // when the discriminator value is an enum, cast the const as a string
         if (possibleType.discriminatorValue!.type.kind === 'constant') {
           disc = `string(${prefix}${disc})`;
         }
-        text += `\tcase ${disc}:\n`;
-        text += `\t\tb = &${prefix}${possibleType.name}{}\n`;
+        text += `${indent.get()}case ${disc}:\n`;
+        indent.push();
+        text += `${indent.get()}b = &${prefix}${possibleType.name}{}\n`;
+        indent.pop();
       }
-      text += '\tdefault:\n';
-      text += `\t\tb = &${prefix}${interfaceType.rootType.name}{}\n`;
-      text += '\t}\n';
-      text += '\tif err := json.Unmarshal(rawMsg, b); err != nil {\n\t\treturn nil, err\n\t}\n';
-      text += '\treturn b, nil\n';
+      text += `${indent.get()}default:\n`;
+      text += `${indent.push().get()}b = &${prefix}${interfaceType.rootType.name}{}\n`;
+      text += `${indent.pop().get()}}\n`;
+      text += `${indent.get()}if err := json.Unmarshal(rawMsg, b); err != nil {\n`;
+      text += `${indent.push().get()}return nil, err\n`;
+      text += `${indent.pop().get()}}\n`;
+      text += `${indent.get()}return b, nil\n`;
       text += '}\n\n';
     }
 
     // array unmarshaller
     if (arrays.has(interfaceType.name)) {
       text += `func unmarshal${interfaceType.name}Array(rawMsg json.RawMessage) ([]${prefix}${interfaceType.name}, error) {\n`;
-      text += '\tif rawMsg == nil || string(rawMsg) == "null" {\n';
-      text += '\t\treturn nil, nil\n';
-      text += '\t}\n';
-      text += '\tvar rawMessages []json.RawMessage\n';
-      text += '\tif err := json.Unmarshal(rawMsg, &rawMessages); err != nil {\n';
-      text += '\t\treturn nil, err\n';
-      text += '\t}\n';
-      text += `\tfArray := make([]${prefix}${interfaceType.name}, len(rawMessages))\n`;
-      text += '\tfor index, rawMessage := range rawMessages {\n';
-      text += `\t\tf, err := unmarshal${interfaceType.name}(rawMessage)\n`;
-      text += '\t\tif err != nil {\n';
-      text += '\t\t\treturn nil, err\n';
-      text += '\t\t}\n';
-      text += '\t\tfArray[index] = f\n';
-      text += '\t}\n';
-      text += '\treturn fArray, nil\n';
+      text += `${indent.get()}if rawMsg == nil || string(rawMsg) == "null" {\n`;
+      text += `${indent.push().get()}return nil, nil\n`;
+      text += `${indent.pop().get()}}\n`;
+      text += `${indent.get()}var rawMessages []json.RawMessage\n`;
+      text += `${indent.get()}if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {\n`;
+      text += `${indent.push().get()}return nil, err\n`;
+      text += `${indent.pop().get()}}\n`;
+      text += `${indent.get()}fArray := make([]${prefix}${interfaceType.name}, len(rawMessages))\n`;
+      text += `${indent.get()}for index, rawMessage := range rawMessages {\n`;
+      indent.push();
+      text += `${indent.get()}f, err := unmarshal${interfaceType.name}(rawMessage)\n`;
+      text += `${indent.get()}if err != nil {\n`;
+      text += `${indent.push().get()}return nil, err\n`;
+      text += `${indent.pop().get()}}\n`;
+      text += `${indent.get()}fArray[index] = f\n`;
+      text += `${indent.pop().get()}}\n`;
+      text += `${indent.get()}return fArray, nil\n`;
       text += '}\n\n';
     }
 
     // map unmarshaller
     if (maps.has(interfaceType.name)) {
       text += `func unmarshal${interfaceType.name}Map(rawMsg json.RawMessage) (map[string]${prefix}${interfaceType.name}, error) {\n`;
-      text += '\tif rawMsg == nil || string(rawMsg) == "null" {\n';
-      text += '\t\treturn nil, nil\n';
-      text += '\t}\n';
-      text += '\tvar rawMessages map[string]json.RawMessage\n';
-      text += '\tif err := json.Unmarshal(rawMsg, &rawMessages); err != nil {\n';
-      text += '\t\treturn nil, err\n';
-      text += '\t}\n';
-      text += `\tfMap := make(map[string]${prefix}${interfaceType.name}, len(rawMessages))\n`;
-      text += '\tfor key, rawMessage := range rawMessages {\n';
-      text += `\t\tf, err := unmarshal${interfaceType.name}(rawMessage)\n`;
-      text += '\t\tif err != nil {\n';
-      text += '\t\t\treturn nil, err\n';
-      text += '\t\t}\n';
-      text += '\t\tfMap[key] = f\n';
-      text += '\t}\n';
-      text += '\treturn fMap, nil\n';
+      text += `${indent.get()}if rawMsg == nil || string(rawMsg) == "null" {\n`;
+      text += `${indent.push().get()}return nil, nil\n`;
+      text += `${indent.pop().get()}}\n`;
+      text += `${indent.get()}var rawMessages map[string]json.RawMessage\n`;
+      text += `${indent.get()}if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {\n`;
+      text += `${indent.push().get()}return nil, err\n`;
+      text += `${indent.pop().get()}}\n`;
+      text += `${indent.get()}fMap := make(map[string]${prefix}${interfaceType.name}, len(rawMessages))\n`;
+      text += `${indent.get()}for key, rawMessage := range rawMessages {\n`;
+      indent.push();
+      text += `${indent.get()}f, err := unmarshal${interfaceType.name}(rawMessage)\n`;
+      text += `${indent.get()}if err != nil {\n`;
+      text += `${indent.push().get()}return nil, err\n`;
+      text += `${indent.pop().get()}}\n`;
+      text += `${indent.get()}fMap[key] = f\n`;
+      text += `${indent.pop().get()}}\n`;
+      text += `${indent.get()}return fMap, nil\n`;
       text += '}\n\n';
     }
   }

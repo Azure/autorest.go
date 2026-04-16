@@ -41,12 +41,13 @@ export function generateOptions(pkg: go.PackageContent): string {
  * @returns the text for the options type definition
  */
 function emit(pkg: go.PackageContent, struct: go.Struct, imports: ImportManager): string {
+  const indent = new helpers.Indentation();
   let text = helpers.formatDocComment(struct.docs);
   text += `type ${struct.name} struct {\n`;
 
   if (struct.fields.length === 0) {
     // this is an optional params placeholder struct
-    text += '\t// placeholder for future optional parameters\n';
+    text += `${indent.get()}// placeholder for future optional parameters\n`;
   } else {
     // used to track when to add an extra \n between fields that have comments
     let first = true;
@@ -72,7 +73,7 @@ function emit(pkg: go.PackageContent, struct: go.Struct, imports: ImportManager)
       if (field.byValue) {
         pointer = '';
       }
-      text += `\t${naming.capitalize(field.name)} ${pointer}${typeName}\n`;
+      text += `${indent.get()}${naming.capitalize(field.name)} ${pointer}${typeName}\n`;
       first = false;
     }
   }

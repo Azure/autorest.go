@@ -67,21 +67,21 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
 
     let exampleText = '';
     for (const method of client.methods) {
-      if (method.examples.length === 0) continue;
       for (const example of method.examples) {
+        const indent = new helpers.Indentation();
         // function signature
         exampleText += `// Generated from example definition: ${example.filePath}\n`;
         const exampleFuncNamePrefix = method.examples.length > 1 ? `_${helpers.camelCase(example.name)}` : '';
         exampleText += `func Example${client.name}_${fixUpMethodName(method)}${exampleFuncNamePrefix}() {\n`;
 
         // create credential
-        exampleText += `\tcred, err := azidentity.NewDefaultAzureCredential(nil)\n`;
-        exampleText += `\tif err != nil {\n`;
-        exampleText += `\t\tlog.Fatalf("failed to obtain a credential: %v", err)\n`;
-        exampleText += `\t}\n`;
+        exampleText += `${indent.get()}cred, err := azidentity.NewDefaultAzureCredential(nil)\n`;
+        exampleText += `${indent.get()}if err != nil {\n`;
+        exampleText += `${indent.push().get()}log.Fatalf("failed to obtain a credential: %v", err)\n`;
+        exampleText += `${indent.pop().get()}}\n`;
 
         // create context
-        exampleText += `\tctx := context.Background()\n`;
+        exampleText += `${indent.get()}ctx := context.Background()\n`;
 
         // create client
         const clientParameters: go.ParameterExample[] = [];
@@ -110,10 +110,10 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
               clientFactoryParamsExample.push({ parameter: clientParam, value: generateFakeExample(clientParam.type, clientParam.name) });
             }
           }
-          exampleText += `\tclientFactory, err := ${go.getPackageName(pkg.src)}.NewClientFactory(${clientFactoryParamsExample.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue)).join(', ')}, nil)\n`;
-          exampleText += `\tif err != nil {\n`;
-          exampleText += `\t\tlog.Fatalf("failed to create client: %v", err)\n`;
-          exampleText += `\t}\n`;
+          exampleText += `${indent.get()}clientFactory, err := ${go.getPackageName(pkg.src)}.NewClientFactory(${clientFactoryParamsExample.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue)).join(', ')}, nil)\n`;
+          exampleText += `${indent.get()}if err != nil {\n`;
+          exampleText += `${indent.push().get()}log.Fatalf("failed to create client: %v", err)\n`;
+          exampleText += `${indent.pop().get()}}\n`;
           clientRef = `clientFactory.${client.instance.constructors[0].name}(`;
           const clientPrivateParameters: go.ParameterExample[] = [];
           for (const clientParam of clientParameters) {
@@ -126,10 +126,10 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
           }
           clientRef += `)`;
         } else {
-          exampleText += `\tclient, err := ${go.getPackageName(client.instance.constructors[0].pkg)}.${client.instance.constructors[0].name}(${clientParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}, cred, nil)\n`;
-          exampleText += `\tif err != nil {\n`;
-          exampleText += `\t\tlog.Fatalf("failed to create client: %v", err)\n`;
-          exampleText += `\t}\n`;
+          exampleText += `${indent.get()}client, err := ${go.getPackageName(client.instance.constructors[0].pkg)}.${client.instance.constructors[0].name}(${clientParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}, cred, nil)\n`;
+          exampleText += `${indent.get()}if err != nil {\n`;
+          exampleText += `${indent.push().get()}log.Fatalf("failed to create client: %v", err)\n`;
+          exampleText += `${indent.pop().get()}}\n`;
           clientRef = 'client';
         }
 
@@ -165,24 +165,24 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
         switch (method.kind) {
           case 'lroMethod':
           case 'lroPageableMethod':
-            exampleText += `\tpoller, err := ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
-            exampleText += `\tif err != nil {\n`;
-            exampleText += `\t\tlog.Fatalf("failed to finish the request: %v", err)\n`;
-            exampleText += `\t}\n`;
+            exampleText += `${indent.get()}poller, err := ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n' + indent.get())})\n`;
+            exampleText += `${indent.get()}if err != nil {\n`;
+            exampleText += `${indent.push().get()}log.Fatalf("failed to finish the request: %v", err)\n`;
+            exampleText += `${indent.pop().get()}}\n`;
 
-            exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} poller.PollUntilDone(ctx, nil)\n`;
-            exampleText += `\tif err != nil {\n`;
-            exampleText += `\t\tlog.Fatalf("failed to poll the result: %v", err)\n`;
-            exampleText += `\t}\n`;
+            exampleText += `${indent.get()}${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} poller.PollUntilDone(ctx, nil)\n`;
+            exampleText += `${indent.get()}if err != nil {\n`;
+            exampleText += `${indent.push().get()}log.Fatalf("failed to poll the result: %v", err)\n`;
+            exampleText += `${indent.pop().get()}}\n`;
             break;
           case 'method':
-            exampleText += `\t${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
-            exampleText += `\tif err != nil {\n`;
-            exampleText += `\t\tlog.Fatalf("failed to finish the request: %v", err)\n`;
-            exampleText += `\t}\n`;
+            exampleText += `${indent.get()}${checkResponse ? 'res' : '_'}, err ${checkResponse ? ':=' : '='} ${clientRef}.${fixUpMethodName(method)}(ctx, ${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n' + indent.get())})\n`;
+            exampleText += `${indent.get()}if err != nil {\n`;
+            exampleText += `${indent.push().get()}log.Fatalf("failed to finish the request: %v", err)\n`;
+            exampleText += `${indent.pop().get()}}\n`;
             break;
           case 'pageableMethod':
-            exampleText += `\tpager := ${clientRef}.${fixUpMethodName(method)}(${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n\t')})\n`;
+            exampleText += `${indent.get()}pager := ${clientRef}.${fixUpMethodName(method)}(${methodParameters.map((p) => getExampleValue(pkg, p.value, '\t', imports, p.parameter.byValue).slice(1)).join(', ')}${methodParameters.length > 0 ? ', ' : ''}${methodOptionalParametersText.split('\n').join('\n' + indent.get())})\n`;
             break;
           default:
             method satisfies never;
@@ -195,37 +195,37 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
             resultName = 'res';
           }
           const itemType = ((method as go.PageableMethod).returns.result as go.ModelResult).modelType.fields.find((f) => f.type.kind === 'slice')!;
-          exampleText += `\tfor ${resultName}.More() {\n`;
-          exampleText += `\t\tpage, err := ${resultName}.NextPage(ctx)\n`;
-          exampleText += `\t\tif err != nil {\n`;
-          exampleText += `\t\t\tlog.Fatalf("failed to advance page: %v", err)\n`;
-          exampleText += `\t\t}\n`;
-          exampleText += `\t\tfor _, v := range page.${itemType.name} {\n`;
-          exampleText += `\t\t\t// You could use page here. We use blank identifier for just demo purposes.\n`;
-          exampleText += `\t\t\t_ = v\n`;
-          exampleText += `\t\t}\n`;
-          exampleText += `\t\t// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.\n`;
-          exampleText += `\t\t// page = ${go.getPackageName(example.responseEnvelope.response.method.receiver.type.pkg)}.${example.responseEnvelope.response.name}{\n`;
+          exampleText += `${indent.get()}for ${resultName}.More() {\n`;
+          exampleText += `${indent.push().get()}page, err := ${resultName}.NextPage(ctx)\n`;
+          exampleText += `${indent.get()}if err != nil {\n`;
+          exampleText += `${indent.push().get()}log.Fatalf("failed to advance page: %v", err)\n`;
+          exampleText += `${indent.pop().get()}}\n`;
+          exampleText += `${indent.get()}for _, v := range page.${itemType.name} {\n`;
+          exampleText += `${indent.push().get()}// You could use page here. We use blank identifier for just demo purposes.\n`;
+          exampleText += `${indent.get()}_ = v\n`;
+          exampleText += `${indent.pop().get()}}\n`;
+          exampleText += `${indent.get()}// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.\n`;
+          exampleText += `${indent.get()}// page = ${go.getPackageName(example.responseEnvelope.response.method.receiver.type.pkg)}.${example.responseEnvelope.response.name}{\n`;
           for (const header of example.responseEnvelope.headers ?? []) {
-            exampleText += `\t\t// \t${header.header.fieldName}: ${getExampleValue(pkg, header.value, '', undefined, (header.header as any).byValue)
+            exampleText += `${indent.get()}// \t${header.header.fieldName}: ${getExampleValue(pkg, header.value, '', undefined, (header.header as any).byValue)
               .split('\n')
-              .join('\n\t\t// \t')},\n`;
+              .join(`\n${indent.get()}// \t`)},\n`;
           }
-          exampleText += `\t\t// \t${(example.responseEnvelope.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result!, '', undefined, true).split('\n').join('\n\t\t// \t')},\n`;
-          exampleText += '\t\t// }\n';
-          exampleText += `\t}\n`;
+          exampleText += `${indent.get()}// \t${(example.responseEnvelope.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result!, '', undefined, true).split('\n').join(`\n${indent.get()}// \t`)},\n`;
+          exampleText += `${indent.get()}// }\n`;
+          exampleText += `${indent.pop().get()}}\n`;
         } else if (example.responseEnvelope) {
           // if has fieldName, then the result is not a model type
           const fieldName = (method.returns.result as any)?.fieldName;
-          exampleText += `\t// You could use response here. We use blank identifier for just demo purposes.\n`;
-          exampleText += `\t_ = res\n`;
+          exampleText += `${indent.get()}// You could use response here. We use blank identifier for just demo purposes.\n`;
+          exampleText += `${indent.get()}_ = res\n`;
 
-          exampleText += `\t// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.\n`;
-          exampleText += `\t// res = ${go.getPackageName(example.responseEnvelope.response.method.receiver.type.pkg)}.${example.responseEnvelope.response.name}{\n`;
+          exampleText += `${indent.get()}// If the HTTP response code is 200 as defined in example definition, your response structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.\n`;
+          exampleText += `${indent.get()}// res = ${go.getPackageName(example.responseEnvelope.response.method.receiver.type.pkg)}.${example.responseEnvelope.response.name}{\n`;
           for (const header of example.responseEnvelope?.headers ?? []) {
-            exampleText += `\t// \t${header.header.fieldName}: ${getExampleValue(pkg, header.value, '', undefined, (header.header as any).byValue)
+            exampleText += `${indent.get()}// \t${header.header.fieldName}: ${getExampleValue(pkg, header.value, '', undefined, (header.header as any).byValue)
               .split('\n')
-              .join('\n\t// \t')},\n`;
+              .join(`\n${indent.get()}// \t`)},\n`;
           }
           if (example.responseEnvelope?.result) {
             // modelResult and polymorphicResult are anonymously embedded by value in the response struct.
@@ -234,9 +234,9 @@ export function generateExamples(pkg: go.TestPackage, target: go.CodeModelType, 
             if (method.returns.result?.kind === 'monomorphicResult') {
               resultByValue = method.returns.result.byValue;
             }
-            exampleText += `\t// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result, '', undefined, resultByValue).split('\n').join('\n\t// \t')},\n`;
+            exampleText += `${indent.get()}// \t${fieldName ? fieldName : (example.responseEnvelope?.result.type as go.Model).name}: ${getExampleValue(pkg, example.responseEnvelope.result, '', undefined, resultByValue).split('\n').join(`\n${indent.get()}// \t`)},\n`;
           }
-          exampleText += '\t// }\n';
+          exampleText += `${indent.get()}// }\n`;
         }
         exampleText += `}\n\n`;
       }

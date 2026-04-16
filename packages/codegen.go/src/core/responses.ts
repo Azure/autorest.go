@@ -28,6 +28,7 @@ export function generateResponses(pkg: go.PackageContent, options: go.Options): 
     };
   }
 
+  const indent = new helpers.Indentation();
   const imports = new ImportManager(pkg);
   const serdeImports = new ImportManager(pkg);
   let responses = helpers.contentPreamble(pkg);
@@ -36,11 +37,11 @@ export function generateResponses(pkg: go.PackageContent, options: go.Options): 
   let serdeContent = '';
 
   for (const respEnv of pkg.responseEnvelopes) {
-    respContent += emit(respEnv, imports);
+    respContent += emit(respEnv, imports, indent);
     if (options.generateFakes) {
-      serdeContent += generateMarshaller(respEnv, serdeImports);
+      serdeContent += generateMarshaller(respEnv, serdeImports, indent);
     }
-    serdeContent += generateUnmarshaller(respEnv, serdeImports);
+    serdeContent += generateUnmarshaller(respEnv, serdeImports, indent);
   }
 
   responses += imports.text();
@@ -64,9 +65,10 @@ export function generateResponses(pkg: go.PackageContent, options: go.Options): 
  *
  * @param respEnv the response envelope for which to create a marshaler
  * @param imports the import manager currently in scope
+ * @param indent the indentation helper currently in scope
  * @returns the text for the response envelope's marshaler
  */
-function generateMarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
+function generateMarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager, indent: helpers.Indentation): string {
   let text = '';
   if (go.isLROMethod(respEnv.method) && respEnv.result?.kind === 'polymorphicResult') {
     // fakes require a custom marshaller for polymorphics results so that the data is in the correct shape.
@@ -76,7 +78,7 @@ function generateMarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager
     text += `${helpers.comment(`MarshalJSON implements the json.Marshaller interface for type ${respEnv.name}.`, '// ', undefined, helpers.commentLength)}\n`;
     text += `func (${receiver} ${respEnv.name}) MarshalJSON() ([]byte, error) {\n`;
     // TODO: this doesn't include any headers. however, LROs with header responses are currently broken :(
-    text += `\treturn json.Marshal(${receiver}.${go.getTypeDeclaration(respEnv.result.interface, respEnv.method.receiver.type.pkg)})\n}\n\n`;
+    text += `${indent.get()}return json.Marshal(${receiver}.${go.getTypeDeclaration(respEnv.result.interface, respEnv.method.receiver.type.pkg)})\n}\n\n`;
   }
   return text;
 }
@@ -87,9 +89,10 @@ function generateMarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager
  *
  * @param respEnv the response envelope for which to create an unmarshaler
  * @param imports the import manager currently in scope
- * @returns he text for the response envelope's unmarshaler or the empty string
+ * @param indent the indentation helper currently in scope
+ * @returns the text for the response envelope's unmarshaler or the empty string
  */
-function generateUnmarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
+function generateUnmarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager, indent: helpers.Indentation): string {
   // if the response envelope contains a discriminated type we need an unmarshaller
   let polymorphicRes: go.PolymorphicResult | undefined;
   // in addition, if it's an LRO operation that returns a scalar, we will also need one
@@ -112,15 +115,17 @@ function generateUnmarshaller(respEnv: go.ResponseEnvelope, imports: ImportManag
   // add a custom unmarshaller to the response envelope
   if (polymorphicRes) {
     const type = polymorphicRes.interface.name;
-    unmarshaller += `\tres, err := unmarshal${type}(data)\n`;
-    unmarshaller += '\tif err != nil {\n';
-    unmarshaller += '\t\treturn err\n';
-    unmarshaller += '\t}\n';
-    unmarshaller += `\t${receiver}.${type} = res\n`;
-    unmarshaller += '\treturn nil\n';
+    unmarshaller += `${indent.get()}res, err := unmarshal${type}(data)\n`;
+    unmarshaller += `${indent.get()}if err != nil {\n`;
+    indent.push();
+    unmarshaller += `${indent.get()}return err\n`;
+    indent.pop();
+    unmarshaller += `${indent.get()}}\n`;
+    unmarshaller += `${indent.get()}${receiver}.${type} = res\n`;
+    unmarshaller += `${indent.get()}return nil\n`;
   } else if (monomorphicRes) {
     imports.add('encoding/json');
-    unmarshaller += `\treturn json.Unmarshal(data, &${receiver}.${monomorphicRes.fieldName})\n`;
+    unmarshaller += `${indent.get()}return json.Unmarshal(data, &${receiver}.${monomorphicRes.fieldName})\n`;
   } else {
     throw new CodegenError('InternalError', `unhandled case for response envelope ${respEnv.name}`);
   }
@@ -134,15 +139,16 @@ function generateUnmarshaller(respEnv: go.ResponseEnvelope, imports: ImportManag
  * @param pkg the package to contain the response envelope
  * @param respEnv the response envelope for which to emit the definition
  * @param imports the import manager currently in scope
+ * @param indent the indentation helper currently in scope
  * @returns the text for the response enveloipe type definition
  */
-function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
+function emit(respEnv: go.ResponseEnvelope, imports: ImportManager, indent: helpers.Indentation): string {
   let text = helpers.formatDocComment(respEnv.docs);
 
   text += `type ${respEnv.name} struct {\n`;
   if (!respEnv.result && respEnv.headers.length === 0) {
     // this is an empty response envelope
-    text += '\t// placeholder for future response values\n';
+    text += `${indent.get()}// placeholder for future response values\n`;
   } else {
     // fields will contain the merged headers and response field so they can be sorted together
     const fields = new Array<{ docs: go.Docs; field: string }>();
@@ -156,7 +162,7 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
       if (respEnv.result.kind === 'modelResult' || respEnv.result.kind === 'polymorphicResult') {
         // anonymously embedded type always goes first
         text += helpers.formatDocComment(respEnv.result.docs);
-        text += `\t${go.getTypeDeclaration(respType, respEnv.method.receiver.type.pkg)}\n`;
+        text += `${indent.get()}${go.getTypeDeclaration(respType, respEnv.method.receiver.type.pkg)}\n`;
         first = false;
       } else {
         let tag = '';
@@ -176,7 +182,7 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
 
         fields.push({
           docs: respEnv.result.docs,
-          field: `\t${respEnv.result.fieldName} ${helpers.star(byValue)}${go.getTypeDeclaration(respType, respEnv.method.receiver.type.pkg)}${tag}\n`,
+          field: `${indent.get()}${respEnv.result.fieldName} ${helpers.star(byValue)}${go.getTypeDeclaration(respType, respEnv.method.receiver.type.pkg)}${tag}\n`,
         });
       }
     }
@@ -187,7 +193,10 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
       if (header.kind === 'headerScalarResponse') {
         byValue = header.byValue;
       }
-      fields.push({ docs: header.docs, field: `\t${header.fieldName} ${helpers.star(byValue)}${go.getTypeDeclaration(header.type, respEnv.method.receiver.type.pkg)}\n` });
+      fields.push({
+        docs: header.docs,
+        field: `${indent.get()}${header.fieldName} ${helpers.star(byValue)}${go.getTypeDeclaration(header.type, respEnv.method.receiver.type.pkg)}\n`,
+      });
     }
 
     fields.sort((a: { desc?: string; field: string }, b: { desc?: string; field: string }) => {
