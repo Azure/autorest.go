@@ -828,7 +828,7 @@ function recursivePopulateDiscriminator(
  * @param imports the import manager currently in scope
  */
 function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager): void {
-  // only needed for types with time.Time, maps, or where XML namespace handling is required
+  // needed for types that require custom XML handling: time.Time, slices, maps, encoded bytes, element name overrides, or namespaces
   const receiver = modelDef.receiverName();
   const desc = `MarshalXML implements the xml.Marshaller interface for type ${modelDef.Model.name}.`;
   let text = `func (${receiver} ${modelDef.Model.name}) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {\n`;
@@ -864,12 +864,8 @@ function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager): void
 
   // for models with namespace-prefixed fields, we must use a non-embedded struct
   // because Go's xml encoder doesn't shadow embedded fields when XML tags differ.
-  const hasNsPrefixedFields = modelDef.Model.fields.some((f) => f.xml?.prefix);
-  if (hasNsPrefixedFields) {
-    text += generateNonEmbeddedAuxStruct(modelDef.Model, receiver, imports);
-  } else {
-    text += generateAliasType(modelDef.Model, receiver, true, imports);
-  }
+  const nsPrefixed = modelDef.Model.fields.some((f) => f.xml?.prefix);
+  text += generateAliasType(modelDef.Model, receiver, true, imports, nsPrefixed);
 
   for (const field of modelDef.Model.fields) {
     if (field.type.kind === 'slice') {
@@ -903,7 +899,7 @@ function generateXMLUnmarshaller(modelDef: ModelDef, imports: ImportManager): vo
   const receiver = modelDef.receiverName();
   const desc = `UnmarshalXML implements the xml.Unmarshaller interface for type ${modelDef.Model.name}.`;
   let text = `func (${receiver} *${modelDef.Model.name}) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {\n`;
-  text += generateAliasType(modelDef.Model, receiver, false, imports);
+  text += generateAliasType(modelDef.Model, receiver, false, imports, false);
   text += '\tif err := dec.DecodeElement(aux, &start); err != nil {\n';
   text += '\t\treturn err\n';
   text += '\t}\n';
@@ -928,84 +924,58 @@ function generateXMLUnmarshaller(modelDef: ModelDef, imports: ImportManager): vo
 }
 
 /**
- * generates a non-embedded auxiliary struct for XML marshalling with namespace-prefixed fields.
- * unlike generateAliasType which uses embedding, this creates a standalone struct to avoid
- * Go's xml encoder encoding both the embedded and shadowed fields.
- */
-function generateNonEmbeddedAuxStruct(modelType: go.Model | go.PolymorphicModel, receiver: string, imports: ImportManager): string {
-  let text = '\taux := &struct {\n';
-  for (const field of modelType.fields) {
-    const sn = getXMLSerialization(field);
-    const nsPrefix = field.xml?.prefix ? `${field.xml.prefix}:` : '';
-    if (field.type.kind === 'time') {
-      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
-      text += `\t\t${field.name} *datetime.${field.type.format} \`xml:"${nsPrefix}${sn}"\`\n`;
-    } else if (field.annotations.isAdditionalProperties || field.type.kind === 'map') {
-      text += `\t\t${field.name} additionalProperties \`xml:"${nsPrefix}${sn}"\`\n`;
-    } else if (field.type.kind === 'slice') {
-      text += `\t\t${field.name} *${go.getTypeDeclaration(field.type, modelType.pkg)} \`xml:"${nsPrefix}${sn}"\`\n`;
-    } else if (field.type.kind === 'encodedBytes') {
-      text += `\t\t${field.name} *string \`xml:"${nsPrefix}${sn}"\`\n`;
-    } else {
-      const typeName = go.getTypeDeclaration(field.type, modelType.pkg);
-      text += `\t\t${field.name} ${helpers.star(field.byValue)}${typeName} \`xml:"${nsPrefix}${sn}"\`\n`;
-    }
-  }
-  text += '\t}{\n';
-  // initialize all fields from receiver
-  for (const field of modelType.fields) {
-    if (field.type.kind === 'time') {
-      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
-      text += `\t\t${field.name}: (*datetime.${field.type.format})(${receiver}.${field.name}),\n`;
-    } else if (field.type.kind === 'slice' || field.type.kind === 'encodedBytes' || field.annotations.isAdditionalProperties || field.type.kind === 'map') {
-      // these are handled after struct initialization in the caller
-    } else {
-      text += `\t\t${field.name}: ${receiver}.${field.name},\n`;
-    }
-  }
-  text += '\t}\n';
-  return text;
-}
-
-/**
- * generates an alias type used by custom XML marshaller/unmarshaller
+ * generates an alias type used by custom XML marshaller/unmarshaller.
+ * when nsPrefixed is true, generates a non-embedded struct with namespace-prefixed XML tags
+ * instead of using alias embedding (Go's xml encoder doesn't shadow embedded fields when tags differ).
  *
  * @param modelType the type for which to create the alias
  * @param receiver the name of the receiver for the type's serde method
  * @param forMarshal when true, indicates type is to be used in a marshaller (else an unmarshaller)
+ * @param nsPrefixed when true, uses non-embedded struct with namespace-prefixed XML tags
  * @returns the text for an initialized type alias
  */
-function generateAliasType(modelType: go.Model | go.PolymorphicModel, receiver: string, forMarshal: boolean, imports: ImportManager): string {
-  let text = `\ttype alias ${modelType.name}\n`;
+function generateAliasType(modelType: go.Model | go.PolymorphicModel, receiver: string, forMarshal: boolean, imports: ImportManager, nsPrefixed: boolean): string {
+  let text = '';
+  if (!nsPrefixed) {
+    text += `\ttype alias ${modelType.name}\n`;
+  }
   text += '\taux := &struct {\n';
-  text += '\t\t*alias\n';
+  if (!nsPrefixed) {
+    text += '\t\t*alias\n';
+  }
   for (const field of modelType.fields) {
     const sn = getXMLSerialization(field);
+    const xmlTag = nsPrefixed && field.xml?.prefix ? `${field.xml.prefix}:${sn}` : sn;
     if (field.type.kind === 'time') {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
-      text += `\t\t${field.name} *datetime.${field.type.format} \`xml:"${sn}"\`\n`;
+      text += `\t\t${field.name} *datetime.${field.type.format} \`xml:"${xmlTag}"\`\n`;
     } else if (field.annotations.isAdditionalProperties || field.type.kind === 'map') {
-      text += `\t\t${field.name} additionalProperties \`xml:"${sn}"\`\n`;
+      text += `\t\t${field.name} additionalProperties \`xml:"${xmlTag}"\`\n`;
     } else if (field.type.kind === 'slice') {
-      text += `\t\t${field.name} *${go.getTypeDeclaration(field.type, modelType.pkg)} \`xml:"${sn}"\`\n`;
+      text += `\t\t${field.name} *${go.getTypeDeclaration(field.type, modelType.pkg)} \`xml:"${xmlTag}"\`\n`;
     } else if (field.type.kind === 'encodedBytes') {
-      text += `\t\t${field.name} *string \`xml:"${sn}"\`\n`;
+      text += `\t\t${field.name} *string \`xml:"${xmlTag}"\`\n`;
+    } else if (nsPrefixed) {
+      const typeName = go.getTypeDeclaration(field.type, modelType.pkg);
+      text += `\t\t${field.name} ${helpers.star(field.byValue)}${typeName} \`xml:"${xmlTag}"\`\n`;
     }
   }
   text += '\t}{\n';
-  let rec = receiver;
-  if (forMarshal) {
-    rec = '&' + rec;
+  if (!nsPrefixed) {
+    let rec = receiver;
+    if (forMarshal) {
+      rec = '&' + rec;
+    }
+    text += `\t\talias: (*alias)(${rec}),\n`;
   }
-  text += `\t\talias: (*alias)(${rec}),\n`;
   if (forMarshal) {
-    // emit code to initialize time fields
     for (const field of modelType.fields) {
-      if (field.type.kind !== 'time') {
-        continue;
+      if (field.type.kind === 'time') {
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
+        text += `\t\t${field.name}: (*datetime.${field.type.format})(${receiver}.${field.name}),\n`;
+      } else if (nsPrefixed && field.type.kind !== 'slice' && field.type.kind !== 'encodedBytes' && !field.annotations.isAdditionalProperties && field.type.kind !== 'map') {
+        text += `\t\t${field.name}: ${receiver}.${field.name},\n`;
       }
-      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime/datetime');
-      text += `\t\t${field.name}: (*datetime.${field.type.format})(${receiver}.${field.name}),\n`;
     }
   }
   text += '\t}\n';
