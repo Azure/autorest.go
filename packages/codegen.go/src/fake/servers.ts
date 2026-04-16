@@ -1012,8 +1012,7 @@ function parseHeaderPathQueryParams(pkg: go.FakePackage, method: go.MethodType, 
         content += `${indent.get()}${paramVar}, err := parseWithCast(${paramValue}, func (v string) (${go.getTypeDeclaration(param.type, pkg)}, error) {\n`;
         content += `${indent.push().get()}p, unescapeErr := url.PathUnescape(v)\n`;
         content += `${indent.get()}if unescapeErr != nil {\n${indent.push().get()}return "", unescapeErr\n${indent.pop().get()}}\n`;
-        content += `${indent.get()}return ${go.getTypeDeclaration(param.type, pkg)}(p), nil\n${indent.pop().get()}})
-`;
+        content += `${indent.get()}return ${go.getTypeDeclaration(param.type, pkg)}(p), nil\n${indent.pop().get()}})\n`;
       } else {
         if (go.isRequiredParameter(param.style) && (param.type.kind === 'string' || (param.type.kind === 'slice' && param.type.elementType.kind === 'string'))) {
           // by convention, if the value is in its "final form" (i.e. no parsing required)

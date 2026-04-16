@@ -1026,9 +1026,9 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     })) {
       let setter: string;
       if (qp.kind === 'queryCollectionParam' && qp.collectionFormat === 'multi') {
-        setter = `${indent.get()}for _, qv := range ${helpers.getParamName(qp)} {\n`;
+        setter = `for _, qv := range ${helpers.getParamName(qp)} {\n`;
         setter += `${indent.push().get()}unencodedParams = append(unencodedParams, "${qp.queryParameter}="+qv)\n`;
-        setter += `${indent.pop().get()}`;
+        setter += `${indent.pop().get()}}`;
       } else {
         setter = `unencodedParams = append(unencodedParams, "${qp.queryParameter}="+${helpers.formatParamValue(qp, imports, indent)})`;
       }
