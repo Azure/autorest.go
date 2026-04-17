@@ -659,8 +659,8 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, o
     text += `${indent.get()}return client.${method.naming.responseMethod}(resp)\n`;
   } else {
     // this is the singular page case, no fetcher helper required
-    text += `${indent.get()}${callCreateRequestWithErrCheck(method, 'req', indent)}`;
-    text += `${indent.get()}${callPipelineDoWithErrCheck(method, 'req', 'resp', indent)}`;
+    text += callCreateRequestWithErrCheck(method, 'req', indent);
+    text += callPipelineDoWithErrCheck(method, 'req', 'resp', indent);
     text += `${indent.get()}if !runtime.HasStatusCode(resp, http.StatusOK) {\n`;
     text += `${indent.push().get()}return ${method.returns.name}{}, runtime.NewResponseError(resp)\n`;
     text += `${indent.pop().get()}}\n`;
@@ -679,7 +679,7 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, o
  * if the call returns an error, the error is propagated to the caller.
  *
  * @param method the method to call its *CreateRequest method
- * @param reqVarName the var name of the resultant *http.Request
+ * @param reqVarName the var name of the resultant *policy.Request
  * @param indent the indentation helper currently in scope
  * @returns the call to *CreateRequest with an error check
  */
@@ -696,7 +696,7 @@ function callCreateRequestWithErrCheck(method: go.MethodType, reqVarName: string
  * if the call returns an error, the error is propagated to the caller.
  *
  * @param method the method that's making the call
- * @param reqVarName the var name of the *http.Request
+ * @param reqVarName the var name of the *policy.Request
  * @param respVarName the var name of the *http.Response
  * @param indent the indentation helper currently in scope
  * @returns the call to Do() with an error check
@@ -782,8 +782,8 @@ function generateOperation(method: go.MethodType, options: go.Options, imports: 
     text += `${indent.get()}defer func() { endSpan(err) }()\n`;
   }
   const zeroResp = getZeroReturnValue(method, 'op');
-  text += `${indent.get()}${callCreateRequestWithErrCheck(method, 'req', indent)}`;
-  text += `${indent.get()}${callPipelineDoWithErrCheck(method, 'req', 'httpResp', indent)}`;
+  text += callCreateRequestWithErrCheck(method, 'req', indent);
+  text += callPipelineDoWithErrCheck(method, 'req', 'httpResp', indent);
   text += `${indent.get()}if !runtime.HasStatusCode(httpResp, ${helpers.formatStatusCodes(method.httpStatusCodes)}) {\n`;
   indent.push();
   text += `${indent.get()}err = runtime.NewResponseError(httpResp)\n`;
