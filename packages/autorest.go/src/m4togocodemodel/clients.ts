@@ -39,19 +39,6 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
       if (helpers.isLROOperation(op) && helpers.isPageableOperation(op)) {
         method = new go.LROPageableMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
         method.finalStateVia = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
-        method.nextLinkName = op.language.go!.paging.nextLinkName;
-        if (op.language.go!.paging.nextLinkOperation) {
-          // adapt the next link operation
-          const nextPageMethod = new go.NextPageMethod(
-            op.language.go!.paging.nextLinkOperation.language.go.name,
-            client,
-            httpPath,
-            httpMethod,
-            getStatusCodes(op.language.go!.paging.nextLinkOperation),
-          );
-          populateMethod(op.language.go!.paging.nextLinkOperation, m4CodeModel, nextPageMethod);
-          method.nextPageMethod = nextPageMethod;
-        }
       } else if (helpers.isLROOperation(op)) {
         method = new go.LROMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
         method.finalStateVia = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
@@ -60,12 +47,6 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
           continue;
         }
         method = new go.PageableMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
-        method.nextLinkName = op.language.go!.paging.nextLinkName;
-        if (op.language.go!.paging.nextLinkOperation) {
-          // adapt the next link operation
-          const nextPageMethod = adaptNextPageMethod(op, m4CodeModel, client);
-          method.nextPageMethod = nextPageMethod;
-        }
       } else {
         method = new go.SyncMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
       }
@@ -120,6 +101,20 @@ function adaptNextPageMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, client
 }
 
 function populateMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, method: go.MethodType | go.NextPageMethod): void {
+  const getNextLinkStrategy = function(method: go.LROPageableMethod | go.PageableMethod, nextLinkName: string): go.PageableStrategyNextLink {
+    // find the next link field in the response envelope's type
+    if (method.returns.result?.kind === 'modelResult') {
+      for (const field of method.returns.result.modelType.fields) {
+        if (field.name === nextLinkName) {
+          return new go.PageableStrategyNextLink([field]);
+        }
+      }
+      throw new Error(`didn't find next link field ${nextLinkName} in type ${method.returns.result.modelType.name} for method ${method.name}`);
+    } else {
+      throw new Error(`unexpected method result kind ${method.returns.result?.kind}`);
+    }
+  };
+
   if (method.kind !== 'nextPageMethod') {
     if (hasDescription(op.language.go!)) {
       method.docs.description = op.language.go!.description;
@@ -133,6 +128,16 @@ function populateMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, method: go.
 
     method.optionalParamsGroup = optionalParamsGroup;
     method.returns = adaptResponseEnvelope(m4CodeModel, op, method.receiver.type.pkg, method);
+
+    if (method.kind === 'lroPageableMethod' || method.kind === 'pageableMethod') {
+      if (op.language.go!.paging.nextLinkName) {
+        method.strategy = getNextLinkStrategy(method, op.language.go!.paging.nextLinkName);
+        if (op.language.go!.paging.nextLinkOperation) {
+          // adapt the next link operation
+          method.strategy.method = adaptNextPageMethod(op, m4CodeModel, method.receiver.type);
+        }
+      }
+    }
   }
 
   adaptMethodParameters(op, method);

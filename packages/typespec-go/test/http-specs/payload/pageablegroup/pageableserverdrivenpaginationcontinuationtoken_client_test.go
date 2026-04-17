@@ -5,303 +5,503 @@ package pageablegroup_test
 
 import (
 	"context"
+	"net/http"
 	"pageablegroup"
+	"pageablegroup/fake"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
 func TestNewRequestHeaderNestedResponseBodyPager(t *testing.T) {
-	t.Skip("https://github.com/Azure/autorest.go/issues/1494")
-	var token string
 	client, err := pageablegroup.NewPageableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	pager := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestHeaderNestedResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions{Bar: to.Ptr("bar"), Foo: to.Ptr("foo")})
+	pager := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestHeaderNestedResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions{
+		Bar: to.Ptr("bar"),
+		Foo: to.Ptr("foo"),
+	})
 	pageCount := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
 		require.NoError(t, err)
-		require.Len(t, page.NestedItems.Pets, 2)
 		pageCount++
-		require.Equal(t, []*pageablegroup.Pet{
-			{
-				ID:   to.Ptr("1"),
-				Name: to.Ptr("dog"),
-			},
-			{
-				ID:   to.Ptr("2"),
-				Name: to.Ptr("cat"),
-			},
-		}, page.NestedItems.Pets)
+		switch pageCount {
+		case 1:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("1"),
+					Name: to.Ptr("dog"),
+				},
+				{
+					ID:   to.Ptr("2"),
+					Name: to.Ptr("cat"),
+				},
+			}, page.NestedItems.Pets)
+		case 2:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("3"),
+					Name: to.Ptr("bird"),
+				},
+				{
+					ID:   to.Ptr("4"),
+					Name: to.Ptr("fish"),
+				},
+			}, page.NestedItems.Pets)
+		default:
+			t.Fatalf("unexpected page number %d", pageCount)
+		}
+	}
+	require.EqualValues(t, 2, pageCount)
 
-		token = *page.NestedNext.NextToken
+	pager = client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestHeaderNestedResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions{
+		Bar:   to.Ptr("bar"),
+		Foo:   to.Ptr("foo"),
+		Token: to.Ptr("page2"),
+	})
+	pageCount = 0
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		require.NoError(t, err)
+		pageCount++
+		switch pageCount {
+		case 1:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("3"),
+					Name: to.Ptr("bird"),
+				},
+				{
+					ID:   to.Ptr("4"),
+					Name: to.Ptr("fish"),
+				},
+			}, page.NestedItems.Pets)
+		default:
+			t.Fatalf("unexpected page number %d", pageCount)
+		}
 	}
 	require.EqualValues(t, 1, pageCount)
-
-	pagerToken := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestHeaderNestedResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions{Bar: to.Ptr("bar"), Foo: to.Ptr("foo"), Token: to.Ptr(token)})
-	pageTokenCount := 0
-	for pagerToken.More() {
-		page, err := pagerToken.NextPage(context.Background())
-		require.NoError(t, err)
-		require.Len(t, page.NestedItems.Pets, 2)
-		pageTokenCount++
-		require.Equal(t, []*pageablegroup.Pet{
-			{
-				ID:   to.Ptr("3"),
-				Name: to.Ptr("bird"),
-			},
-			{
-				ID:   to.Ptr("4"),
-				Name: to.Ptr("fish"),
-			},
-		}, page.NestedItems.Pets)
-		require.Nil(t, page.NestedNext)
-	}
-	require.EqualValues(t, 1, pageTokenCount)
 }
 
 func TestNewRequestHeaderResponseBodyPager(t *testing.T) {
-	t.Skip("https://github.com/Azure/autorest.go/issues/1494")
-	var token string
 	client, err := pageablegroup.NewPageableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	pager := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestHeaderResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions{Bar: to.Ptr("bar"), Foo: to.Ptr("foo")})
+	pager := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestHeaderResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions{
+		Bar: to.Ptr("bar"),
+		Foo: to.Ptr("foo"),
+	})
 	pageCount := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
 		require.NoError(t, err)
-		require.Len(t, page.Pets, 2)
 		pageCount++
-		require.Equal(t, []*pageablegroup.Pet{
-			{
-				ID:   to.Ptr("1"),
-				Name: to.Ptr("dog"),
-			},
-			{
-				ID:   to.Ptr("2"),
-				Name: to.Ptr("cat"),
-			},
-		}, page.Pets)
+		switch pageCount {
+		case 1:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("1"),
+					Name: to.Ptr("dog"),
+				},
+				{
+					ID:   to.Ptr("2"),
+					Name: to.Ptr("cat"),
+				},
+			}, page.Pets)
+		case 2:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("3"),
+					Name: to.Ptr("bird"),
+				},
+				{
+					ID:   to.Ptr("4"),
+					Name: to.Ptr("fish"),
+				},
+			}, page.Pets)
+		default:
+			t.Fatalf("unexpected page number %d", pageCount)
+		}
+	}
+	require.EqualValues(t, 2, pageCount)
 
-		token = *page.NextToken
+	pager = client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestHeaderResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions{
+		Bar:   to.Ptr("bar"),
+		Foo:   to.Ptr("foo"),
+		Token: to.Ptr("page2"),
+	})
+	pageCount = 0
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		require.NoError(t, err)
+		pageCount++
+		switch pageCount {
+		case 1:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("3"),
+					Name: to.Ptr("bird"),
+				},
+				{
+					ID:   to.Ptr("4"),
+					Name: to.Ptr("fish"),
+				},
+			}, page.Pets)
+		default:
+			t.Fatalf("unexpected page number %d", pageCount)
+		}
 	}
 	require.EqualValues(t, 1, pageCount)
-
-	pagerToken := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestHeaderResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions{Bar: to.Ptr("bar"), Foo: to.Ptr("foo"), Token: to.Ptr(token)})
-	pageTokenCount := 0
-	for pagerToken.More() {
-		page, err := pagerToken.NextPage(context.Background())
-		require.NoError(t, err)
-		require.Len(t, page.Pets, 2)
-		pageTokenCount++
-		require.Equal(t, []*pageablegroup.Pet{
-			{
-				ID:   to.Ptr("3"),
-				Name: to.Ptr("bird"),
-			},
-			{
-				ID:   to.Ptr("4"),
-				Name: to.Ptr("fish"),
-			},
-		}, page.Pets)
-		require.Nil(t, page.NextToken)
-	}
-	require.EqualValues(t, 1, pageTokenCount)
 }
 
 func TestNewRequestHeaderResponseHeaderPager(t *testing.T) {
-	t.Skip("https://github.com/Azure/autorest.go/issues/1494")
-	var token string
 	client, err := pageablegroup.NewPageableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	pager := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestHeaderResponseHeaderPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions{Bar: to.Ptr("bar"), Foo: to.Ptr("foo")})
+	pager := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestHeaderResponseHeaderPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions{
+		Bar: to.Ptr("bar"),
+		Foo: to.Ptr("foo"),
+	})
 	pageCount := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
 		require.NoError(t, err)
-		require.Len(t, page.Pets, 2)
 		pageCount++
-		require.Equal(t, []*pageablegroup.Pet{
-			{
-				ID:   to.Ptr("1"),
-				Name: to.Ptr("dog"),
-			},
-			{
-				ID:   to.Ptr("2"),
-				Name: to.Ptr("cat"),
-			},
-		}, page.Pets)
+		switch pageCount {
+		case 1:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("1"),
+					Name: to.Ptr("dog"),
+				},
+				{
+					ID:   to.Ptr("2"),
+					Name: to.Ptr("cat"),
+				},
+			}, page.Pets)
+		case 2:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("3"),
+					Name: to.Ptr("bird"),
+				},
+				{
+					ID:   to.Ptr("4"),
+					Name: to.Ptr("fish"),
+				},
+			}, page.Pets)
+		default:
+			t.Fatalf("unexpected page number %d", pageCount)
+		}
+	}
+	require.EqualValues(t, 2, pageCount)
 
-		token = *page.NextToken
+	pager = client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestHeaderResponseHeaderPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions{
+		Bar:   to.Ptr("bar"),
+		Foo:   to.Ptr("foo"),
+		Token: to.Ptr("page2"),
+	})
+	pageCount = 0
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		require.NoError(t, err)
+		pageCount++
+		switch pageCount {
+		case 1:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("3"),
+					Name: to.Ptr("bird"),
+				},
+				{
+					ID:   to.Ptr("4"),
+					Name: to.Ptr("fish"),
+				},
+			}, page.Pets)
+		default:
+			t.Fatalf("unexpected page number %d", pageCount)
+		}
 	}
 	require.EqualValues(t, 1, pageCount)
-
-	pagerToken := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestHeaderResponseHeaderPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions{Bar: to.Ptr("bar"), Foo: to.Ptr("foo"), Token: to.Ptr(token)})
-	pageTokenCount := 0
-	for pagerToken.More() {
-		page, err := pagerToken.NextPage(context.Background())
-		require.NoError(t, err)
-		require.Len(t, page.Pets, 2)
-		pageTokenCount++
-		require.Equal(t, []*pageablegroup.Pet{
-			{
-				ID:   to.Ptr("3"),
-				Name: to.Ptr("bird"),
-			},
-			{
-				ID:   to.Ptr("4"),
-				Name: to.Ptr("fish"),
-			},
-		}, page.Pets)
-		require.Nil(t, page.NextToken)
-	}
-	require.EqualValues(t, 1, pageTokenCount)
 }
 
 func TestNewRequestQueryNestedResponseBodyPager(t *testing.T) {
-	t.Skip("https://github.com/Azure/autorest.go/issues/1494")
-	var token string
 	client, err := pageablegroup.NewPageableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	pager := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestQueryNestedResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions{Bar: to.Ptr("bar"), Foo: to.Ptr("foo")})
+	pager := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestQueryNestedResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions{
+		Bar: to.Ptr("bar"),
+		Foo: to.Ptr("foo"),
+	})
 	pageCount := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
 		require.NoError(t, err)
-		require.Len(t, page.NestedItems.Pets, 2)
 		pageCount++
-		require.Equal(t, []*pageablegroup.Pet{
-			{
-				ID:   to.Ptr("1"),
-				Name: to.Ptr("dog"),
-			},
-			{
-				ID:   to.Ptr("2"),
-				Name: to.Ptr("cat"),
-			},
-		}, page.NestedItems.Pets)
+		switch pageCount {
+		case 1:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("1"),
+					Name: to.Ptr("dog"),
+				},
+				{
+					ID:   to.Ptr("2"),
+					Name: to.Ptr("cat"),
+				},
+			}, page.NestedItems.Pets)
+		case 2:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("3"),
+					Name: to.Ptr("bird"),
+				},
+				{
+					ID:   to.Ptr("4"),
+					Name: to.Ptr("fish"),
+				},
+			}, page.NestedItems.Pets)
+		default:
+			t.Fatalf("unexpected page number %d", pageCount)
+		}
+	}
+	require.EqualValues(t, 2, pageCount)
 
-		token = *page.NestedNext.NextToken
+	pager = client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestQueryNestedResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions{
+		Bar:   to.Ptr("bar"),
+		Foo:   to.Ptr("foo"),
+		Token: to.Ptr("page2"),
+	})
+	pageCount = 0
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		require.NoError(t, err)
+		pageCount++
+		switch pageCount {
+		case 1:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("3"),
+					Name: to.Ptr("bird"),
+				},
+				{
+					ID:   to.Ptr("4"),
+					Name: to.Ptr("fish"),
+				},
+			}, page.NestedItems.Pets)
+		default:
+			t.Fatalf("unexpected page number %d", pageCount)
+		}
 	}
 	require.EqualValues(t, 1, pageCount)
-
-	pagerToken := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestQueryNestedResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions{Bar: to.Ptr("bar"), Foo: to.Ptr("foo"), Token: to.Ptr(token)})
-	pageTokenCount := 0
-	for pagerToken.More() {
-		page, err := pagerToken.NextPage(context.Background())
-		require.NoError(t, err)
-		require.Len(t, page.NestedItems.Pets, 2)
-		pageTokenCount++
-		require.Equal(t, []*pageablegroup.Pet{
-			{
-				ID:   to.Ptr("3"),
-				Name: to.Ptr("bird"),
-			},
-			{
-				ID:   to.Ptr("4"),
-				Name: to.Ptr("fish"),
-			},
-		}, page.NestedItems.Pets)
-		require.Nil(t, page.NestedNext)
-	}
-	require.EqualValues(t, 1, pageTokenCount)
 }
 
 func TestNewRequestQueryResponseBodyPager(t *testing.T) {
-	t.Skip("https://github.com/Azure/autorest.go/issues/1494")
-	var token string
 	client, err := pageablegroup.NewPageableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	pager := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestQueryResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyOptions{Bar: to.Ptr("bar"), Foo: to.Ptr("foo")})
+	pager := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestQueryResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyOptions{
+		Bar: to.Ptr("bar"),
+		Foo: to.Ptr("foo"),
+	})
 	pageCount := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
 		require.NoError(t, err)
-		require.Len(t, page.Pets, 2)
 		pageCount++
-		require.Equal(t, []*pageablegroup.Pet{
-			{
-				ID:   to.Ptr("1"),
-				Name: to.Ptr("dog"),
-			},
-			{
-				ID:   to.Ptr("2"),
-				Name: to.Ptr("cat"),
-			},
-		}, page.Pets)
+		switch pageCount {
+		case 1:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("1"),
+					Name: to.Ptr("dog"),
+				},
+				{
+					ID:   to.Ptr("2"),
+					Name: to.Ptr("cat"),
+				},
+			}, page.Pets)
+		case 2:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("3"),
+					Name: to.Ptr("bird"),
+				},
+				{
+					ID:   to.Ptr("4"),
+					Name: to.Ptr("fish"),
+				},
+			}, page.Pets)
+		default:
+			t.Fatalf("unexpected page number %d", pageCount)
+		}
+	}
+	require.EqualValues(t, 2, pageCount)
 
-		token = *page.NextToken
+	pager = client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestQueryResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyOptions{
+		Bar:   to.Ptr("bar"),
+		Foo:   to.Ptr("foo"),
+		Token: to.Ptr("page2"),
+	})
+	pageCount = 0
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		require.NoError(t, err)
+		pageCount++
+		switch pageCount {
+		case 1:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("3"),
+					Name: to.Ptr("bird"),
+				},
+				{
+					ID:   to.Ptr("4"),
+					Name: to.Ptr("fish"),
+				},
+			}, page.Pets)
+		default:
+			t.Fatalf("unexpected page number %d", pageCount)
+		}
 	}
 	require.EqualValues(t, 1, pageCount)
-
-	pagerToken := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestQueryResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyOptions{Bar: to.Ptr("bar"), Foo: to.Ptr("foo"), Token: to.Ptr(token)})
-	pageTokenCount := 0
-	for pagerToken.More() {
-		page, err := pagerToken.NextPage(context.Background())
-		require.NoError(t, err)
-		require.Len(t, page.Pets, 2)
-		pageTokenCount++
-		require.Equal(t, []*pageablegroup.Pet{
-			{
-				ID:   to.Ptr("3"),
-				Name: to.Ptr("bird"),
-			},
-			{
-				ID:   to.Ptr("4"),
-				Name: to.Ptr("fish"),
-			},
-		}, page.Pets)
-		require.Nil(t, page.NextToken)
-	}
-	require.EqualValues(t, 1, pageTokenCount)
 }
 
 func TestNewRequestQueryResponseHeaderPager(t *testing.T) {
-	t.Skip("https://github.com/Azure/autorest.go/issues/1494")
-	var token string
 	client, err := pageablegroup.NewPageableClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	pager := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestQueryResponseHeaderPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderOptions{Bar: to.Ptr("bar"), Foo: to.Ptr("foo")})
+	pager := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestQueryResponseHeaderPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderOptions{
+		Bar: to.Ptr("bar"),
+		Foo: to.Ptr("foo"),
+	})
 	pageCount := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
 		require.NoError(t, err)
-		require.Len(t, page.Pets, 2)
 		pageCount++
-		require.Equal(t, []*pageablegroup.Pet{
-			{
-				ID:   to.Ptr("1"),
-				Name: to.Ptr("dog"),
-			},
-			{
-				ID:   to.Ptr("2"),
-				Name: to.Ptr("cat"),
-			},
-		}, page.Pets)
+		switch pageCount {
+		case 1:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("1"),
+					Name: to.Ptr("dog"),
+				},
+				{
+					ID:   to.Ptr("2"),
+					Name: to.Ptr("cat"),
+				},
+			}, page.Pets)
+		case 2:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("3"),
+					Name: to.Ptr("bird"),
+				},
+				{
+					ID:   to.Ptr("4"),
+					Name: to.Ptr("fish"),
+				},
+			}, page.Pets)
+		default:
+			t.Fatalf("unexpected page number %d", pageCount)
+		}
+	}
+	require.EqualValues(t, 2, pageCount)
 
-		token = *page.NextToken
+	pager = client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestQueryResponseHeaderPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderOptions{
+		Bar:   to.Ptr("bar"),
+		Foo:   to.Ptr("foo"),
+		Token: to.Ptr("page2"),
+	})
+	pageCount = 0
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		require.NoError(t, err)
+		pageCount++
+		switch pageCount {
+		case 1:
+			require.Equal(t, []*pageablegroup.Pet{
+				{
+					ID:   to.Ptr("3"),
+					Name: to.Ptr("bird"),
+				},
+				{
+					ID:   to.Ptr("4"),
+					Name: to.Ptr("fish"),
+				},
+			}, page.Pets)
+		default:
+			t.Fatalf("unexpected page number %d", pageCount)
+		}
 	}
 	require.EqualValues(t, 1, pageCount)
+}
 
-	pagerToken := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestQueryResponseHeaderPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderOptions{Bar: to.Ptr("bar"), Foo: to.Ptr("foo"), Token: to.Ptr(token)})
-	pageTokenCount := 0
-	for pagerToken.More() {
-		page, err := pagerToken.NextPage(context.Background())
-		require.NoError(t, err)
-		require.Len(t, page.Pets, 2)
-		pageTokenCount++
-		require.Equal(t, []*pageablegroup.Pet{
-			{
-				ID:   to.Ptr("3"),
-				Name: to.Ptr("bird"),
-			},
-			{
-				ID:   to.Ptr("4"),
-				Name: to.Ptr("fish"),
-			},
-		}, page.Pets)
-		require.Nil(t, page.NextToken)
+func TestNewRequestHeaderNestedResponseBodyPager_Fake(t *testing.T) {
+	srv := fake.PageableServerDrivenPaginationContinuationTokenServer{
+		NewRequestHeaderNestedResponseBodyPager: func(options *pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions) azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse] {
+			require.NotNil(t, options)
+			require.NotNil(t, options.Bar)
+			require.Equal(t, "bar", *options.Bar)
+			require.NotNil(t, options.Foo)
+			require.Equal(t, "foo", *options.Foo)
+			pager := azfake.PagerResponder[pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse]{}
+			pager.AddPage(http.StatusOK, pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse{
+				RequestHeaderNestedResponseBodyResponse: pageablegroup.RequestHeaderNestedResponseBodyResponse{
+					NestedItems: &pageablegroup.RequestHeaderNestedResponseBodyResponseNestedItems{
+						Pets: []*pageablegroup.Pet{
+							{ID: to.Ptr("1"), Name: to.Ptr("dog")},
+							{ID: to.Ptr("2"), Name: to.Ptr("cat")},
+						},
+					},
+					NestedNext: &pageablegroup.RequestHeaderNestedResponseBodyResponseNestedNext{
+						NextToken: to.Ptr("page2"),
+					},
+				},
+			}, nil)
+			pager.AddPage(http.StatusOK, pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse{
+				RequestHeaderNestedResponseBodyResponse: pageablegroup.RequestHeaderNestedResponseBodyResponse{
+					NestedItems: &pageablegroup.RequestHeaderNestedResponseBodyResponseNestedItems{
+						Pets: []*pageablegroup.Pet{
+							{ID: to.Ptr("3"), Name: to.Ptr("bird")},
+							{ID: to.Ptr("4"), Name: to.Ptr("fish")},
+						},
+					},
+				},
+			}, nil)
+			return pager
+		},
 	}
-	require.EqualValues(t, 1, pageTokenCount)
+
+	client, err := pageablegroup.NewPageableClientWithNoCredential("https://fake.endpoint", &pageablegroup.PageableClientOptions{
+		ClientOptions: azcore.ClientOptions{
+			Transport: fake.NewPageableServerDrivenPaginationContinuationTokenServerTransport(&srv),
+		},
+	})
+	require.NoError(t, err)
+
+	pager := client.NewPageableServerDrivenPaginationClient().NewPageableServerDrivenPaginationContinuationTokenClient().NewRequestHeaderNestedResponseBodyPager(&pageablegroup.PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions{
+		Bar: to.Ptr("bar"),
+		Foo: to.Ptr("foo"),
+	})
+	pageCount := 0
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		require.NoError(t, err)
+		pageCount++
+		switch pageCount {
+		case 1:
+			require.Equal(t, []*pageablegroup.Pet{
+				{ID: to.Ptr("1"), Name: to.Ptr("dog")},
+				{ID: to.Ptr("2"), Name: to.Ptr("cat")},
+			}, page.NestedItems.Pets)
+		case 2:
+			require.Equal(t, []*pageablegroup.Pet{
+				{ID: to.Ptr("3"), Name: to.Ptr("bird")},
+				{ID: to.Ptr("4"), Name: to.Ptr("fish")},
+			}, page.NestedItems.Pets)
+		default:
+			t.Fatalf("unexpected page number %d", pageCount)
+		}
+	}
+	require.EqualValues(t, 2, pageCount)
 }

@@ -19,6 +19,9 @@ export class TypeAdapter {
   /** the code model for this adapter */
   readonly codeModel: go.CodeModel;
 
+  // maps a tcgc model field to the adapted struct field
+  readonly fieldsMap: Map<tcgc.SdkModelPropertyType | tcgc.SdkPathParameter, go.ModelField>;
+
   // cache of previously created types/constant values
   private readonly types: Map<string, go.WireType>;
   private readonly constValues: Map<string, go.ConstantValue>;
@@ -28,6 +31,7 @@ export class TypeAdapter {
     this.codeModel = codeModel;
     this.types = new Map<string, go.WireType>();
     this.constValues = new Map<string, go.ConstantValue>();
+    this.fieldsMap = new Map<tcgc.SdkModelPropertyType | tcgc.SdkPathParameter, go.ModelField>();
   }
 
   /**
@@ -655,6 +659,11 @@ export class TypeAdapter {
       type: type,
       xml: prop.serializationOptions.xml,
     });
+
+    // it's possible for different models to reference the same property definition
+    if (!this.fieldsMap.get(prop)) {
+      this.fieldsMap.set(prop, field);
+    }
 
     return field;
   }

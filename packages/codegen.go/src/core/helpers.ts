@@ -1108,6 +1108,17 @@ export function clientHasNoExportedMethods(client: go.Client): boolean {
   return true;
 }
 
+/**
+ * provides access to the next link field, handling nested fields as required.
+ * e.g. var.Foo.Bar
+ *
+ * @param strategy the next link pageable strategy
+ * @returns the complete path to the next link
+ */
+export function buildNextLinkPath(strategy: go.PageableStrategyNextLink): string {
+  return strategy.nextLinkPath.map((segment) => segment.name).join('.');
+}
+
 // the following was copied from @azure-tools/codegen as it's being deprecated
 const ones = [
   '',

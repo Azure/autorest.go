@@ -851,9 +851,15 @@ func (client *ContainerClient) getPropertiesHandleResponse(resp *http.Response) 
 func (client *ContainerClient) NewListBlobFlatSegmentPager(options *ContainerClientListBlobFlatSegmentOptions) *runtime.Pager[ContainerClientListBlobFlatSegmentResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ContainerClientListBlobFlatSegmentResponse]{
 		More: func(page ContainerClientListBlobFlatSegmentResponse) bool {
-			return false
+			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ContainerClientListBlobFlatSegmentResponse) (ContainerClientListBlobFlatSegmentResponse, error) {
+			if options == nil {
+				options = &ContainerClientListBlobFlatSegmentOptions{}
+			}
+			if page != nil {
+				options.Marker = page.NextMarker
+			}
 			req, err := client.listBlobFlatSegmentCreateRequest(ctx, options)
 			if err != nil {
 				return ContainerClientListBlobFlatSegmentResponse{}, err
@@ -945,9 +951,15 @@ func (client *ContainerClient) listBlobFlatSegmentHandleResponse(resp *http.Resp
 func (client *ContainerClient) NewListBlobHierarchySegmentPager(delimiter string, options *ContainerClientListBlobHierarchySegmentOptions) *runtime.Pager[ContainerClientListBlobHierarchySegmentResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ContainerClientListBlobHierarchySegmentResponse]{
 		More: func(page ContainerClientListBlobHierarchySegmentResponse) bool {
-			return false
+			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ContainerClientListBlobHierarchySegmentResponse) (ContainerClientListBlobHierarchySegmentResponse, error) {
+			if options == nil {
+				options = &ContainerClientListBlobHierarchySegmentOptions{}
+			}
+			if page != nil {
+				options.Marker = page.NextMarker
+			}
 			req, err := client.listBlobHierarchySegmentCreateRequest(ctx, delimiter, options)
 			if err != nil {
 				return ContainerClientListBlobHierarchySegmentResponse{}, err

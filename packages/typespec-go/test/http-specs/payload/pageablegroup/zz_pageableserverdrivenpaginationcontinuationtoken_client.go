@@ -25,10 +25,16 @@ type PageableServerDrivenPaginationContinuationTokenClient struct {
 func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestHeaderNestedResponseBodyPager(options *PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions) *runtime.Pager[PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse]{
 		More: func(page PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse) bool {
-			return false
+			return page.NestedNext != nil && page.NestedNext.NextToken != nil && len(*page.NestedNext.NextToken) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse) (PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderNestedResponseBodyPager")
+			if options == nil {
+				options = &PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions{}
+			}
+			if page != nil && page.NestedNext != nil {
+				options.Token = page.NestedNext.NextToken
+			}
 			req, err := client.requestHeaderNestedResponseBodyCreateRequest(ctx, options)
 			if err != nil {
 				return PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse{}, err
@@ -82,10 +88,16 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) requestHead
 func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestHeaderResponseBodyPager(options *PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions) *runtime.Pager[PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyResponse]{
 		More: func(page PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyResponse) bool {
-			return false
+			return page.NextToken != nil && len(*page.NextToken) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyResponse) (PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderResponseBodyPager")
+			if options == nil {
+				options = &PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions{}
+			}
+			if page != nil {
+				options.Token = page.NextToken
+			}
 			req, err := client.requestHeaderResponseBodyCreateRequest(ctx, options)
 			if err != nil {
 				return PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyResponse{}, err
@@ -139,10 +151,16 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) requestHead
 func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestHeaderResponseHeaderPager(options *PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions) *runtime.Pager[PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse]{
 		More: func(page PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse) bool {
-			return false
+			return page.NextToken != nil && len(*page.NextToken) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse) (PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderResponseHeaderPager")
+			if options == nil {
+				options = &PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions{}
+			}
+			if page != nil {
+				options.Token = page.NextToken
+			}
 			req, err := client.requestHeaderResponseHeaderCreateRequest(ctx, options)
 			if err != nil {
 				return PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse{}, err
@@ -199,10 +217,16 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) requestHead
 func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestQueryNestedResponseBodyPager(options *PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions) *runtime.Pager[PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse]{
 		More: func(page PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse) bool {
-			return false
+			return page.NestedNext != nil && page.NestedNext.NextToken != nil && len(*page.NestedNext.NextToken) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse) (PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationContinuationTokenClient.NewRequestQueryNestedResponseBodyPager")
+			if options == nil {
+				options = &PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions{}
+			}
+			if page != nil && page.NestedNext != nil {
+				options.Token = page.NestedNext.NextToken
+			}
 			req, err := client.requestQueryNestedResponseBodyCreateRequest(ctx, options)
 			if err != nil {
 				return PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse{}, err
@@ -256,10 +280,16 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) requestQuer
 func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestQueryResponseBodyPager(options *PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyOptions) *runtime.Pager[PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyResponse]{
 		More: func(page PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyResponse) bool {
-			return false
+			return page.NextToken != nil && len(*page.NextToken) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyResponse) (PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationContinuationTokenClient.NewRequestQueryResponseBodyPager")
+			if options == nil {
+				options = &PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyOptions{}
+			}
+			if page != nil {
+				options.Token = page.NextToken
+			}
 			req, err := client.requestQueryResponseBodyCreateRequest(ctx, options)
 			if err != nil {
 				return PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyResponse{}, err
@@ -313,10 +343,16 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) requestQuer
 func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestQueryResponseHeaderPager(options *PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderOptions) *runtime.Pager[PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderResponse]{
 		More: func(page PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderResponse) bool {
-			return false
+			return page.NextToken != nil && len(*page.NextToken) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderResponse) (PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationContinuationTokenClient.NewRequestQueryResponseHeaderPager")
+			if options == nil {
+				options = &PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderOptions{}
+			}
+			if page != nil {
+				options.Token = page.NextToken
+			}
 			req, err := client.requestQueryResponseHeaderCreateRequest(ctx, options)
 			if err != nil {
 				return PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderResponse{}, err

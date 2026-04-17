@@ -1,5 +1,11 @@
 # Release History
 
+## 0.10.8 (unreleased)
+
+### Bugs Fixed
+
+* Fixed codegen for pageable operations that use a continuation token.
+
 ## 0.10.7 (2026-04-14)
 
 ### Bugs Fixed

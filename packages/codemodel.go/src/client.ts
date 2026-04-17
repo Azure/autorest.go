@@ -239,6 +239,41 @@ export interface PageableMethod extends PageableMethodBase {
   kind: 'pageableMethod';
 }
 
+/** the different strategies for fetching subsequent pages */
+export type PageableStrategyKind = PageableStrategyContinuationToken | PageableStrategyNextLink;
+
+/** indicates a pageable method uses the continuation token strategy */
+export interface PageableStrategyContinuationToken {
+  kind: 'continuationToken';
+
+  /** the parameter that contains the continuation token */
+  requestToken: param.HeaderScalarParameter | param.QueryScalarParameter;
+
+  /**
+   * the location in the response that contains the continuation token.
+   * can be a response header or a field in response model.
+   */
+  responseToken: result.HeaderScalarResponse | PageableStrategyNextLink;
+}
+
+/** indicates a pageable method uses the nextLink strategy */
+export interface PageableStrategyNextLink {
+  kind: 'nextLink';
+
+  /**
+   * the field path in the response that contains the next link URL.
+   * one entry at minimum. when the next link is nested in the response
+   * type, the array will contain the "path" to the next link.
+   */
+  nextLinkPath: Array<type.ModelField>;
+
+  /** the query params to be reinjected when fetching pages. can be empty */
+  reinjectedParams: Array<param.QueryCollectionParameter | param.QueryScalarParameter>;
+
+  /** the custom method used to fetch the next link */
+  method?: NextPageMethod;
+}
+
 /** narrows method to a LRO method type within the conditional block */
 export function isLROMethod(method: MethodType): method is LROMethod | LROPageableMethod {
   return method.kind === 'lroMethod' || method.kind === 'lroPageableMethod';
@@ -301,15 +336,18 @@ interface HttpMethodBase extends method.Method<Client, result.ResponseEnvelope> 
 }
 
 interface PageableMethodBase extends HttpMethodBase {
-  nextLinkName?: string;
-
   /**
    * the HTTP verb when fetching from the next link URL.
    * the default is get
    */
   nextLinkVerb: 'get' | 'post';
 
-  nextPageMethod?: NextPageMethod;
+  /**
+   * the strategy used to fetch the next page.
+   * no strategy indicates the method is modeled as pageable
+   * but doesn't (yet) support fetching subsequent pages.
+   */
+  strategy?: PageableStrategyKind;
 }
 
 class HttpMethodBase extends method.Method<Client, result.ResponseEnvelope> implements HttpMethodBase {
@@ -444,6 +482,22 @@ export class PageableMethod extends HttpMethodBase implements PageableMethod {
     super(name, client, httpPath, httpMethod, statusCodes, naming);
     this.kind = 'pageableMethod';
     this.nextLinkVerb = 'get';
+  }
+}
+
+export class PageableStrategyContinuationToken implements PageableStrategyContinuationToken {
+  constructor(requestToken: param.HeaderScalarParameter | param.QueryScalarParameter, responseToken: result.HeaderScalarResponse | PageableStrategyNextLink) {
+    this.kind = 'continuationToken';
+    this.requestToken = requestToken;
+    this.responseToken = responseToken;
+  }
+}
+
+export class PageableStrategyNextLink implements PageableStrategyNextLink {
+  constructor(nextLinkPath: Array<type.ModelField>) {
+    this.kind = 'nextLink';
+    this.nextLinkPath = nextLinkPath;
+    this.reinjectedParams = new Array<param.QueryCollectionParameter | param.QueryScalarParameter>();
   }
 }
 
