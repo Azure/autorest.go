@@ -597,7 +597,7 @@ export class ClientAdapter {
         case 'method': {
           const tokenParam = paramsMap.get(tokenReq);
           if (!tokenParam) {
-            throw new AdapterError('InternalError', `missing continuation token request parameter name ${tokenResp.name} for operation ${sdkMethod.name}`, sdkMethod.__raw?.node);
+            throw new AdapterError('InternalError', `missing continuation token request parameter name ${tokenReq.name} for operation ${sdkMethod.name}`, sdkMethod.__raw?.node);
           }
           requestToken = tokenParam;
           break;
