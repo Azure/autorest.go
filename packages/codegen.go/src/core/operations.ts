@@ -556,10 +556,22 @@ function formatHeaderResponseValue(
   return text;
 }
 
-function getZeroReturnValue(method: go.MethodType, apiType: 'api' | 'op' | 'handler'): string {
+/**
+ * returns the zero value for the specified method.
+ * note that the zero value will be different depending
+ * on which API for the method is being called.
+ *
+ * @param method the method to determine the zero value
+ * @param apiType the method's API that's being invoked
+ *       lro - the exported LRO API
+ *        op - the operation method. for sync methods this is the exported API. for LROs it's the internal method called by Begin*
+ *   handler - the internal response handler method
+ * @returns the zero value
+ */
+function getZeroReturnValue(method: go.MethodType, apiType: 'lro' | 'op' | 'handler'): string {
   let returnType = `${method.returns.name}{}`;
   if (go.isLROMethod(method)) {
-    if (apiType === 'api' || apiType === 'op') {
+    if (apiType === 'lro' || apiType === 'op') {
       // the api returns a *Poller[T]
       // the operation returns an *http.Response
       returnType = 'nil';
@@ -647,14 +659,8 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, o
     text += `${indent.get()}return client.${method.naming.responseMethod}(resp)\n`;
   } else {
     // this is the singular page case, no fetcher helper required
-    text += `${indent.get()}req, err := client.${method.naming.requestMethod}(${reqParams})\n`;
-    text += `${indent.get()}if err != nil {\n`;
-    text += `${indent.push().get()}return ${method.returns.name}{}, err\n`;
-    text += `${indent.pop().get()}}\n`;
-    text += `${indent.get()}resp, err := client.internal.Pipeline().Do(req)\n`;
-    text += `${indent.get()}if err != nil {\n`;
-    text += `${indent.push().get()}return ${method.returns.name}{}, err\n`;
-    text += `${indent.pop().get()}}\n`;
+    text += callCreateRequestWithErrCheck(method, 'req', indent);
+    text += callPipelineDoWithErrCheck(method, 'req', 'resp', indent);
     text += `${indent.get()}if !runtime.HasStatusCode(resp, http.StatusOK) {\n`;
     text += `${indent.push().get()}return ${method.returns.name}{}, runtime.NewResponseError(resp)\n`;
     text += `${indent.pop().get()}}\n`;
@@ -665,6 +671,40 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, o
     text += `${indent.get()}Tracer: client.internal.Tracer(),\n`;
   }
   text += `${indent.pop().get()}})\n`;
+  return text;
+}
+
+/**
+ * emits the call to the *CreateRequest method for an SDK method.
+ * if the call returns an error, the error is propagated to the caller.
+ *
+ * @param method the method to call its *CreateRequest method
+ * @param reqVarName the var name of the resultant *policy.Request
+ * @param indent the indentation helper currently in scope
+ * @returns the call to *CreateRequest with an error check
+ */
+function callCreateRequestWithErrCheck(method: go.MethodType, reqVarName: string, indent: helpers.Indentation): string {
+  const reqParams = helpers.getCreateRequestParameters(method);
+  let text = `${indent.get()}${reqVarName}, err := client.${method.naming.requestMethod}(${reqParams})\n`;
+  const zeroResp = getZeroReturnValue(method, 'op');
+  text += `${indent.get()}${helpers.buildErrCheck(indent, 'err', zeroResp)}\n`;
+  return text;
+}
+
+/**
+ * emits the call to the pipeline's Do() method on the internal client.
+ * if the call returns an error, the error is propagated to the caller.
+ *
+ * @param method the method that's making the call
+ * @param reqVarName the var name of the *policy.Request
+ * @param respVarName the var name of the *http.Response
+ * @param indent the indentation helper currently in scope
+ * @returns the call to Do() with an error check
+ */
+function callPipelineDoWithErrCheck(method: go.MethodType, reqVarName: string, respVarName: string, indent: helpers.Indentation): string {
+  let text = `${indent.get()}${respVarName}, err := client.internal.Pipeline().Do(${reqVarName})\n`;
+  const zeroResp = getZeroReturnValue(method, 'op');
+  text += `${indent.get()}${helpers.buildErrCheck(indent, 'err', zeroResp)}\n`;
   return text;
 }
 
@@ -722,7 +762,6 @@ function generateOperation(method: go.MethodType, options: go.Options, imports: 
     }
   }
   text += `func ${getClientReceiverDefinition(method.receiver)} ${methodName}(${params}) (${returns.join(', ')}) {\n`;
-  const reqParams = helpers.getCreateRequestParameters(method);
   if (method.kind === 'pageableMethod') {
     text += `${indent.get()}return `;
     text += emitPagerDefinition(method, options, imports, indent);
@@ -743,14 +782,8 @@ function generateOperation(method: go.MethodType, options: go.Options, imports: 
     text += `${indent.get()}defer func() { endSpan(err) }()\n`;
   }
   const zeroResp = getZeroReturnValue(method, 'op');
-  text += `${indent.get()}req, err := client.${method.naming.requestMethod}(${reqParams})\n`;
-  text += `${indent.get()}if err != nil {\n`;
-  text += `${indent.push().get()}return ${zeroResp}, err\n`;
-  text += `${indent.pop().get()}}\n`;
-  text += `${indent.get()}httpResp, err := client.internal.Pipeline().Do(req)\n`;
-  text += `${indent.get()}if err != nil {\n`;
-  text += `${indent.push().get()}return ${zeroResp}, err\n`;
-  text += `${indent.pop().get()}}\n`;
+  text += callCreateRequestWithErrCheck(method, 'req', indent);
+  text += callPipelineDoWithErrCheck(method, 'req', 'httpResp', indent);
   text += `${indent.get()}if !runtime.HasStatusCode(httpResp, ${helpers.formatStatusCodes(method.httpStatusCodes)}) {\n`;
   indent.push();
   text += `${indent.get()}err = runtime.NewResponseError(httpResp)\n`;
@@ -1641,7 +1674,7 @@ function generateLROBeginMethod(method: go.LROMethod | go.LROPageableMethod, opt
     text += genRespErrorDoc(method);
     text += genApiVersionDoc(method.apiVersions);
   }
-  const zeroResp = getZeroReturnValue(method, 'api');
+  const zeroResp = getZeroReturnValue(method, 'lro');
   const methodParams = helpers.getMethodParameters(method);
   for (const param of methodParams) {
     text += helpers.formatCommentAsBulletItem(param.name, param.docs);

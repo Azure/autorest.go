@@ -87,7 +87,7 @@ export function generateServerFactory(pkg: go.FakePackage, target: go.CodeModelT
   }
   text += `${indent.get()}default:\n${indent.push().get()}err = fmt.Errorf("unhandled client %s", client)\n`;
   text += `${indent.pop().get()}}\n\n`;
-  text += `${indent.get()}${helpers.buildErrCheck(indent, 'err', 'nil, err')}\n\n`;
+  text += `${indent.get()}${helpers.buildErrCheck(indent, 'err', 'nil')}\n\n`;
   text += `${indent.get()}return resp, nil\n}\n\n`;
   return text;
 }

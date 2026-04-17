@@ -1063,12 +1063,12 @@ export function buildIfBlock(indent: Indentation, ifBlock: ifBlock, elseBlock?: 
  *
  * @param indent the current indentation helper in scope
  * @param errVar the name of the error variable used in the condition
- * @param returns the value(s) to return from the control block
+ * @param returns optional value besides the error to return from the control block
  * @returns the text for the error check block
  */
-export function buildErrCheck(indent: Indentation, errVar: string, returns: string): string {
+export function buildErrCheck(indent: Indentation, errVar: string, returns?: string): string {
   let body = `if ${errVar} != nil {\n`;
-  body += `${indent.push().get()}return ${returns}\n`;
+  body += `${indent.push().get()}return ${returns ? `${returns}, ` : ''}${errVar}\n`;
   body += `${indent.pop().get()}}`;
   return body;
 }
