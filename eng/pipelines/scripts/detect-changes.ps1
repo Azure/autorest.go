@@ -3,6 +3,10 @@
   Detects changed files in a PR and sets Azure DevOps output variables
   to control which CI jobs should run.
 
+  This script stands in the place of what was originally 3 separate path triggers across 3 pipelines.
+  By utilizing this script to set output variables, we can consolidate into a single pipeline with conditional jobs,
+  while maintaining the same behavior of only running jobs when relevant files have changed.
+
   .DESCRIPTION
   Uses Get-ChangedFiles from eng/common to determine which files changed,
   then evaluates exclusion rules mirroring the original per-pipeline path
@@ -25,16 +29,25 @@ $changedFiles = Get-ChangedFiles `
   -DiffFilterType ''
 
 # On push/CI triggers there is no PR context, so Get-ChangedFiles returns
-# empty.  Fall back to running every job in that case.
+# empty.  Fall back to HEAD~1..HEAD so job flags still reflect the actual
+# changed files
 if (!$changedFiles) {
-  Write-Host "No changed files detected (possibly a CI push trigger) — enabling all jobs."
-  Write-Host "##vso[task.setvariable variable=run_autorest_go;isOutput=true]true"
-  Write-Host "##vso[task.setvariable variable=run_typespec_go;isOutput=true]true"
-  Write-Host "##vso[task.setvariable variable=run_gotest;isOutput=true]true"
-  exit 0
+  Write-Host "No PR context — falling back to HEAD~1..HEAD diff for push trigger."
+  $changedFiles = git -c core.quotepath=off diff HEAD~1..HEAD --name-only
+  if (!$changedFiles) {
+    Write-Host "Still no changed files detected — enabling all jobs as safety fallback."
+    Write-Host "##vso[task.setvariable variable=run_autorest_go;isOutput=true]true"
+    Write-Host "##vso[task.setvariable variable=run_typespec_go;isOutput=true]true"
+    Write-Host "##vso[task.setvariable variable=run_gotest;isOutput=true]true"
+    exit 0
+  }
+  Write-Host "Push trigger diff files:"
+  foreach ($file in $changedFiles) {
+    Write-Host "    $file"
+  }
 }
 
-# Exclusion sets mirroring the original pipeline path triggers.
+# Exclusion sets governing which jobs run based on which files are changed.
 # A job runs if ANY changed file is NOT covered by its exclude prefixes.
 $excludeSets = @{
   run_autorest_go = @(
