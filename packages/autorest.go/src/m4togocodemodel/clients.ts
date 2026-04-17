@@ -101,7 +101,7 @@ function adaptNextPageMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, client
 }
 
 function populateMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, method: go.MethodType | go.NextPageMethod): void {
-  const getNextLinkStrategy = function(method: go.LROPageableMethod | go.PageableMethod, nextLinkName: string): go.PageableStrategyNextLink {
+  const getNextLinkStrategy = function (method: go.LROPageableMethod | go.PageableMethod, nextLinkName: string): go.PageableStrategyNextLink {
     // find the next link field in the response envelope's type
     if (method.returns.result?.kind === 'modelResult') {
       for (const field of method.returns.result.modelType.fields) {
