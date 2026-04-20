@@ -164,15 +164,27 @@ export function getCreateRequestParametersSig(method: go.MethodType | go.NextPag
   return params.join(', ');
 }
 
-// returns the parameter names for an operation (excludes the param types).
-// e.g. "i, s"
-export function getCreateRequestParameters(method: go.MethodType): string {
+/**
+ * returns the parameter names for an operation (excludes the param types).
+ * e.g. "i, s"
+ *
+ * @param method the method containing the params
+ * @param optionsParam optional custom param name for the method options param
+ * @returns the text for the parameters
+ */
+export function getCreateRequestParameters(method: go.MethodType, optionsParam?: string): string {
   // NOTE: keep in sync with getCreateRequestParametersSig
   const methodParams = getMethodParameters(method);
   const params = new Array<string>();
   params.push('ctx');
-  for (const methodParam of methodParams) {
-    params.push(naming.uncapitalize(methodParam.name));
+  for (let i = 0; i < methodParams.length; ++i) {
+    const methodParam = methodParams[i];
+    // the options param is always the last one
+    if (optionsParam && i === methodParams.length - 1) {
+      params.push(optionsParam);
+    } else {
+      params.push(naming.uncapitalize(methodParam.name));
+    }
   }
   return params.join(', ');
 }
@@ -1106,6 +1118,17 @@ export function clientHasNoExportedMethods(client: go.Client): boolean {
     }
   }
   return true;
+}
+
+/**
+ * provides access to the next link field, handling nested fields as required.
+ * e.g. var.Foo.Bar
+ *
+ * @param strategy the next link pageable strategy
+ * @returns the complete path to the next link
+ */
+export function buildNextLinkPath(strategy: go.PageableStrategyNextLink): string {
+  return strategy.nextLinkPath.map((segment) => segment.name).join('.');
 }
 
 // the following was copied from @azure-tools/codegen as it's being deprecated

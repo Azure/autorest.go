@@ -24,11 +24,18 @@ type PageableXMLPaginationClient struct {
 func (client *PageableXMLPaginationClient) NewListWithContinuationPager(options *PageableXMLPaginationClientListWithContinuationOptions) *runtime.Pager[PageableXMLPaginationClientListWithContinuationResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PageableXMLPaginationClientListWithContinuationResponse]{
 		More: func(page PageableXMLPaginationClientListWithContinuationResponse) bool {
-			return false
+			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PageableXMLPaginationClientListWithContinuationResponse) (PageableXMLPaginationClientListWithContinuationResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableXMLPaginationClient.NewListWithContinuationPager")
-			req, err := client.listWithContinuationCreateRequest(ctx, options)
+			nextOpts := PageableXMLPaginationClientListWithContinuationOptions{}
+			if options != nil {
+				nextOpts = *options
+			}
+			if page != nil {
+				nextOpts.Marker = page.NextMarker
+			}
+			req, err := client.listWithContinuationCreateRequest(ctx, &nextOpts)
 			if err != nil {
 				return PageableXMLPaginationClientListWithContinuationResponse{}, err
 			}

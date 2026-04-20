@@ -165,9 +165,9 @@ export function generateOperations(pkg: go.PackageContent, target: go.CodeModelT
         // LRO responses are handled elsewhere, with the exception of pageable LROs
         opText += createProtocolResponse(method, imports, indent);
       }
-      if ((method.kind === 'lroPageableMethod' || method.kind === 'pageableMethod') && method.nextPageMethod && !nextPageMethods.includes(method.nextPageMethod)) {
+      if (go.isPageableMethod(method) && method.strategy?.kind === 'nextLink' && method.strategy.method && !nextPageMethods.includes(method.strategy.method)) {
         // track the next page methods to generate as multiple operations can use the same next page operation
-        nextPageMethods.push(method.nextPageMethod);
+        nextPageMethods.push(method.strategy.method);
       }
     }
 
@@ -580,97 +580,194 @@ function getZeroReturnValue(method: go.MethodType, apiType: 'lro' | 'op' | 'hand
   return returnType;
 }
 
-// Helper function to generate nil checks for a dotted path
-function generateNilChecks(path: string, prefix: string = 'page'): string {
-  const segments = path.split('.');
+/**
+ * Helper function to generate nil checks for a segmented path
+ * e.g. page.Foo != nil && page.Foo.Bar != nil
+ *
+ * @param segments the field segments
+ * @param varName optional variable name containing the fields
+ * @param omitLastSegment when true, omits the last item in segments.
+ *   note that this can cause the function to return the empty string when segments.length === 1
+ * @returns the sequence of nil checks
+ */
+function generateNilChecks(segments: Array<go.ModelField>, varName: string = 'page', omitLastSegment = false): string {
   const checks: string[] = [];
 
-  for (let i = 0; i < segments.length; i++) {
-    const currentPath = [prefix, ...segments.slice(0, i + 1)].join('.');
+  let segmentCount = segments.length;
+  if (omitLastSegment) {
+    segmentCount -= 1;
+  }
+
+  for (let i = 0; i < segmentCount; i++) {
+    const currentPath = [varName, ...segments.map((segment) => segment.name).slice(0, i + 1)].join('.');
     checks.push(`${currentPath} != nil`);
   }
 
   return checks.join(' && ');
 }
 
+/**
+ * emits code that calls runtime.NewPager
+ *
+ * @param method the pageable method
+ * @param options emitter options
+ * @param imports the import manager currently in scope
+ * @param indent the indentation helper currently in scope
+ * @returns the complete call to runtime.NewPager(...)
+ */
 function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, options: go.Options, imports: ImportManager, indent: helpers.Indentation): string {
   imports.add('context');
   let text = `runtime.NewPager(runtime.PagingHandler[${method.returns.name}]{\n`;
   text += `${indent.push().get()}More: func(page ${method.returns.name}) bool {\n`;
   indent.push();
-  // there is no advancer for single-page pagers
-  if (method.nextLinkName) {
-    const nilChecks = generateNilChecks(method.nextLinkName);
-    text += `${indent.get()}return ${nilChecks} && len(*page.${method.nextLinkName}) > 0\n`;
+  if (method.strategy) {
+    const moreForNextLinkPath = function (strategy: go.PageableStrategyNextLink): void {
+      const nilChecks = generateNilChecks(strategy.nextLinkPath);
+      const nextLinkPath = helpers.buildNextLinkPath(strategy);
+      text += `${indent.get()}return ${nilChecks} && len(*page.${nextLinkPath}) > 0\n`;
+    };
+
+    switch (method.strategy.kind) {
+      case 'continuationToken': {
+        switch (method.strategy.responseToken.kind) {
+          case 'headerScalarResponse':
+            const tokenRespField = method.strategy.responseToken.fieldName;
+            text += `${indent.get()}return page.${tokenRespField} != nil && len(*page.${tokenRespField}) > 0\n`;
+            break;
+          case 'nextLink':
+            moreForNextLinkPath(method.strategy.responseToken);
+            break;
+          default:
+            method.strategy.responseToken satisfies never;
+        }
+        break;
+      }
+      case 'nextLink': {
+        moreForNextLinkPath(method.strategy);
+        break;
+      }
+      default:
+        method.strategy satisfies never;
+    }
   } else {
+    // there is no advancer for single-page pagers
     text += `${indent.get()}return false\n`;
   }
-  text += `${indent.pop().get()}},\n`;
+  text += `${indent.pop().get()}},\n`; // end More func
+
   text += `${indent.get()}Fetcher: func(ctx context.Context, page *${method.returns.name}) (${method.returns.name}, error) {\n`;
   indent.push();
   const reqParams = helpers.getCreateRequestParameters(method);
   if (options.generateFakes) {
     text += `${indent.get()}ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "${method.receiver.type.name}.${fixUpMethodName(method)}")\n`;
   }
-  if (method.nextLinkName) {
-    let nextLinkVar: string;
-    if (method.kind === 'pageableMethod') {
-      text += `${indent.get()}nextLink := ""\n`;
-      nextLinkVar = 'nextLink';
-      text += `${indent.get()}if page != nil {\n`;
-      text += `${indent.push().get()}nextLink = *page.${method.nextLinkName}\n`;
-      text += `${indent.pop().get()}}\n`;
-    } else {
-      nextLinkVar = `*page.${method.nextLinkName}`;
-    }
-    text += `${indent.get()}resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), ${nextLinkVar}, func(ctx context.Context) (*policy.Request, error) {\n`;
-    text += `${indent.push().get()}return client.${method.naming.requestMethod}(${reqParams})\n`;
-    text += `${indent.pop().get()}}, `;
-    // nextPageMethod might be absent in some cases, see https://github.com/Azure/autorest/issues/4393
-    if (method.nextPageMethod) {
-      const nextOpParams = helpers.getCreateRequestParametersSig(method.nextPageMethod).split(',');
-      // keep the parameter names from the name/type tuples and find nextLink param
-      for (let i = 0; i < nextOpParams.length; ++i) {
-        const paramName = nextOpParams[i].trim().split(' ')[0];
-        const paramType = nextOpParams[i].trim().split(' ')[1];
-        if (paramName.startsWith('next') && paramType === 'string') {
-          nextOpParams[i] = 'encodedNextLink';
-        } else {
-          nextOpParams[i] = paramName;
+
+  /** emits code to check the HTTP status code and conditionally call the response handler */
+  const emitStatusCodeCheckAndResponse = function (respVarName: string, indent: helpers.Indentation): string {
+    let content = `${indent.get()}${helpers.buildIfBlock(indent, {
+      condition: `!runtime.HasStatusCode(${respVarName}, http.StatusOK)`,
+      body: (indent) => `${indent.get()}return ${getZeroReturnValue(method, 'op')}, runtime.NewResponseError(${respVarName})\n`,
+    })}\n`;
+    content += `${indent.get()}return client.${method.naming.responseMethod}(${respVarName})\n`;
+    return content;
+  };
+
+  if (method.strategy) {
+    switch (method.strategy.kind) {
+      case 'continuationToken': {
+        const ms = method.strategy;
+        const optionsCopy = 'nextOpts';
+        text += `${indent.get()}${optionsCopy} := ${method.optionalParamsGroup.groupName}{}\n`;
+        text += `${indent.get()}${helpers.buildIfBlock(indent, {
+          condition: `${method.optionalParamsGroup.name} != nil`,
+          body: (indent) => `${indent.get()}${optionsCopy} = *${method.optionalParamsGroup.name}\n`,
+        })}\n`;
+
+        let respToken: string;
+        let nestedNilChecks = '';
+        switch (ms.responseToken.kind) {
+          case 'headerScalarResponse':
+            respToken = ms.responseToken.fieldName;
+            break;
+          case 'nextLink':
+            respToken = helpers.buildNextLinkPath(ms.responseToken);
+            if (ms.responseToken.nextLinkPath.length > 1) {
+              // we don't need to check the last field for nil as we'll just
+              // assign it to the corresponding field in the options param
+              nestedNilChecks = ` && ${generateNilChecks(ms.responseToken.nextLinkPath, 'page', true)}`;
+            }
+            break;
         }
+
+        text += `${indent.get()}${helpers.buildIfBlock(indent, {
+          condition: `page != nil${nestedNilChecks}`,
+          body: (indent) => `${indent.get()}${optionsCopy}.${ms.requestToken.name} = page.${respToken}\n`,
+        })}\n`;
+
+        text += callCreateRequestWithErrCheck(method, 'req', indent, `&${optionsCopy}`);
+        text += callPipelineDoWithErrCheck(method, 'req', 'resp', indent);
+        text += emitStatusCodeCheckAndResponse('resp', indent);
+        break;
       }
-      // add a definition for the nextReq func that uses the nextLinkOperation
-      indent.push();
-      text += `&runtime.FetcherForNextLinkOptions{\n`;
-      text += `${indent.get()}NextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {\n`;
-      text += `${indent.push().get()}return client.${method.nextPageMethod.name}(${nextOpParams.join(', ')})\n`;
-      text += `${indent.pop().get()}},\n`;
-      text += `${indent.pop().get()}})\n`;
-    } else if (method.nextLinkVerb !== 'get') {
-      text += `&runtime.FetcherForNextLinkOptions{\n`;
-      text += `${indent.push().get()}HTTPVerb: http.Method${naming.capitalize(method.nextLinkVerb)},\n`;
-      text += `${indent.pop().get()}})\n`;
-    } else {
-      text += 'nil)\n';
+      case 'nextLink': {
+        const nextLinkPath = helpers.buildNextLinkPath(method.strategy);
+        let nextLinkVar: string;
+        if (method.kind === 'pageableMethod') {
+          text += `${indent.get()}nextLink := ""\n`;
+          nextLinkVar = 'nextLink';
+          text += `${indent.get()}if page != nil {\n`;
+          text += `${indent.push().get()}nextLink = *page.${nextLinkPath}\n`;
+          text += `${indent.pop().get()}}\n`;
+        } else {
+          nextLinkVar = `*page.${nextLinkPath}`;
+        }
+        text += `${indent.get()}resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), ${nextLinkVar}, func(ctx context.Context) (*policy.Request, error) {\n`;
+        text += `${indent.push().get()}return client.${method.naming.requestMethod}(${reqParams})\n`;
+        text += `${indent.pop().get()}}, `;
+        // nextPageMethod might be absent in some cases, see https://github.com/Azure/autorest/issues/4393
+        if (method.strategy.method) {
+          const nextOpParams = helpers.getCreateRequestParametersSig(method.strategy.method).split(',');
+          // keep the parameter names from the name/type tuples and find nextLink param
+          for (let i = 0; i < nextOpParams.length; ++i) {
+            const paramName = nextOpParams[i].trim().split(' ')[0];
+            const paramType = nextOpParams[i].trim().split(' ')[1];
+            if (paramName.startsWith('next') && paramType === 'string') {
+              nextOpParams[i] = 'encodedNextLink';
+            } else {
+              nextOpParams[i] = paramName;
+            }
+          }
+          // add a definition for the nextReq func that uses the nextLinkOperation
+          indent.push();
+          text += `&runtime.FetcherForNextLinkOptions{\n`;
+          text += `${indent.get()}NextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {\n`;
+          text += `${indent.push().get()}return client.${method.strategy.method.name}(${nextOpParams.join(', ')})\n`;
+          text += `${indent.pop().get()}},\n`;
+          text += `${indent.pop().get()}})\n`;
+        } else if (method.nextLinkVerb !== 'get') {
+          text += `&runtime.FetcherForNextLinkOptions{\n`;
+          text += `${indent.push().get()}HTTPVerb: http.Method${naming.capitalize(method.nextLinkVerb)},\n`;
+          text += `${indent.pop().get()}})\n`;
+        } else {
+          text += 'nil)\n';
+        }
+        text += `${indent.get()}if err != nil {\n`;
+        text += `${indent.push().get()}return ${method.returns.name}{}, err\n`;
+        text += `${indent.pop().get()}}\n`;
+        text += `${indent.get()}return client.${method.naming.responseMethod}(resp)\n`;
+      }
     }
-    text += `${indent.get()}if err != nil {\n`;
-    text += `${indent.push().get()}return ${method.returns.name}{}, err\n`;
-    text += `${indent.pop().get()}}\n`;
-    text += `${indent.get()}return client.${method.naming.responseMethod}(resp)\n`;
   } else {
     // this is the singular page case, no fetcher helper required
     text += callCreateRequestWithErrCheck(method, 'req', indent);
     text += callPipelineDoWithErrCheck(method, 'req', 'resp', indent);
-    text += `${indent.get()}if !runtime.HasStatusCode(resp, http.StatusOK) {\n`;
-    text += `${indent.push().get()}return ${method.returns.name}{}, runtime.NewResponseError(resp)\n`;
-    text += `${indent.pop().get()}}\n`;
-    text += `${indent.get()}return client.${method.naming.responseMethod}(resp)\n`;
+    text += emitStatusCodeCheckAndResponse('resp', indent);
   }
-  text += `${indent.pop().get()}},\n`;
+  text += `${indent.pop().get()}},\n`; // end Fetcher func
   if (options.injectSpans) {
     text += `${indent.get()}Tracer: client.internal.Tracer(),\n`;
   }
-  text += `${indent.pop().get()}})\n`;
+  text += `${indent.pop().get()}})\n`; // end runtime.NewPager
   return text;
 }
 
@@ -681,10 +778,11 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, o
  * @param method the method to call its *CreateRequest method
  * @param reqVarName the var name of the resultant *policy.Request
  * @param indent the indentation helper currently in scope
+ * @param optionsParam optional custom param name for the method options param
  * @returns the call to *CreateRequest with an error check
  */
-function callCreateRequestWithErrCheck(method: go.MethodType, reqVarName: string, indent: helpers.Indentation): string {
-  const reqParams = helpers.getCreateRequestParameters(method);
+function callCreateRequestWithErrCheck(method: go.MethodType, reqVarName: string, indent: helpers.Indentation, optionsParam?: string): string {
+  const reqParams = helpers.getCreateRequestParameters(method, optionsParam);
   let text = `${indent.get()}${reqVarName}, err := client.${method.naming.requestMethod}(${reqParams})\n`;
   const zeroResp = getZeroReturnValue(method, 'op');
   text += `${indent.get()}${helpers.buildErrCheck(indent, 'err', zeroResp)}\n`;

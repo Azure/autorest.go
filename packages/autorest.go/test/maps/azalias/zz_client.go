@@ -609,9 +609,9 @@ func (client *Client) uploadFormCreateRequest(ctx context.Context, requiredStrin
 func (client *Client) listLRONextCreateRequest(ctx context.Context, nextLink string) (*policy.Request, error) {
 	host := "https://{geography}.atlas.microsoft.com"
 	host = strings.ReplaceAll(host, "{geography}", string(client.geography))
-	urlPath := "/paged"
+	urlPath := "/paged/fragment/{nextLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

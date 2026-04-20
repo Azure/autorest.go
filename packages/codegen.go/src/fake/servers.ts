@@ -864,10 +864,10 @@ function dispatchForPagerBody(pkg: go.FakePackage, receiverName: string, method:
   indent.push();
   content += `${indent.get()}${localVarName} = &resp\n`;
   content += `${indent.get()}${operationStateMachine}.add(req, ${localVarName})\n`;
-  if (method.nextLinkName) {
+  if (method.strategy?.kind === 'nextLink') {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
     content += `${indent.get()}server.PagerResponderInjectNextLinks(${localVarName}, req, func(page *${go.getTypeDeclaration(method.returns, pkg)}, createLink func() string) {\n`;
-    content += `${indent.push().get()}page.${method.nextLinkName} = to.Ptr(createLink())\n`;
+    content += `${indent.push().get()}page.${helpers.buildNextLinkPath(method.strategy)} = to.Ptr(createLink())\n`;
     content += `${indent.pop().get()}})\n`;
   }
   indent.pop();

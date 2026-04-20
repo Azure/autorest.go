@@ -494,40 +494,31 @@ export class ClientAdapter {
       }
     };
 
-    const setPageableInfo = function (
+    const setPageableInfo = (
       goMethod: go.LROPageableMethod | go.PageableMethod,
       sdkMethod: tcgc.SdkLroPagingServiceMethod<tcgc.SdkHttpOperation> | tcgc.SdkPagingServiceMethod<tcgc.SdkHttpOperation>,
-    ): void {
-      if (sdkMethod.pagingMetadata.nextLinkVerb) {
-        switch (sdkMethod.pagingMetadata.nextLinkVerb) {
-          case 'GET':
-            // we default to GET in the ctor for PageableMethod
-            break;
-          case 'POST':
-            goMethod.nextLinkVerb = 'post';
-            break;
-          default:
-            sdkMethod.pagingMetadata.nextLinkVerb satisfies never;
+    ): ((paramsMap: ParamsMapForPageable, respHeadersMap: RespHeadersMapForPageable) => void) => {
+      return (paramsMap: ParamsMapForPageable, respHeadersMap: RespHeadersMapForPageable) => {
+        if (sdkMethod.pagingMetadata.nextLinkVerb) {
+          switch (sdkMethod.pagingMetadata.nextLinkVerb) {
+            case 'GET':
+              // we default to GET in the ctor for PageableMethod
+              break;
+            case 'POST':
+              goMethod.nextLinkVerb = 'post';
+              break;
+            default:
+              sdkMethod.pagingMetadata.nextLinkVerb satisfies never;
+          }
         }
-      }
-      if (sdkMethod.pagingMetadata.nextLinkSegments) {
-        goMethod.nextLinkName = capitalize(
-          sdkMethod.pagingMetadata.nextLinkSegments
-            .map((segment) => {
-              if (segment.kind === 'property') {
-                return ensureNameCase(segment.name);
-              } else {
-                throw new AdapterError('UnsupportedTsp', `unsupported next link segment kind ${segment.kind}`, sdkMethod.__raw?.node);
-              }
-            })
-            .join('.'),
-        );
-      }
+        goMethod.strategy = this.adaptPagingStrategy(sdkMethod, paramsMap, respHeadersMap);
+      };
     };
 
     const statusCodes = getStatusCodes(sdkMethod.operation);
 
     let method: go.MethodType;
+    let applyPageableInfo: ((paramsMap: ParamsMapForPageable, respHeadersMap: RespHeadersMapForPageable) => void) | undefined;
     switch (sdkMethod.kind) {
       case 'basic':
         method = new go.SyncMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
@@ -537,7 +528,7 @@ export class ClientAdapter {
           throw new AdapterError('UnsupportedTsp', `paging with re-injected parameters is not supported`, sdkMethod.__raw?.node);
         }
         method = new go.PageableMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
-        setPageableInfo(method, sdkMethod);
+        applyPageableInfo = setPageableInfo(method, sdkMethod);
         break;
       case 'lro':
         method = new go.LROMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
@@ -546,7 +537,7 @@ export class ClientAdapter {
       case 'lropaging':
         method = new go.LROPageableMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
         setLROInfo(method, sdkMethod);
-        setPageableInfo(method, sdkMethod);
+        applyPageableInfo = setPageableInfo(method, sdkMethod);
         break;
       default:
         sdkMethod satisfies never;
@@ -556,10 +547,94 @@ export class ClientAdapter {
     method.docs.summary = sdkMethod.summary;
     method.docs.description = sdkMethod.doc;
     goClient.methods.push(method);
-    this.populateMethod(sdkMethod, method);
+    const pageableInfo = this.populateMethod(sdkMethod, method);
+
+    // NOTE: we can't apply pageable info until the method has been populated
+    applyPageableInfo?.(pageableInfo.params, pageableInfo.respHeaders);
   }
 
-  private populateMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType | go.NextPageMethod) {
+  /**
+   * creates the pageable strategy based on the method definition.
+   * returns undefined if no strategy is required.
+   *
+   * @param sdkMethod the tcgc pageable method for which to create a strategy
+   * @returns the pageable strategy or undefined
+   */
+  private adaptPagingStrategy(
+    sdkMethod: tcgc.SdkLroPagingServiceMethod<tcgc.SdkHttpOperation> | tcgc.SdkPagingServiceMethod<tcgc.SdkHttpOperation>,
+    paramsMap: ParamsMapForPageable,
+    respHeadersMap: RespHeadersMapForPageable,
+  ): go.PageableStrategyKind | undefined {
+    const buildNextLinkPath = (segments: Array<tcgc.SdkServiceResponseHeader | tcgc.SdkModelPropertyType>): Array<go.ModelField> => {
+      // build the field path for the next link segments
+      const nextLinkPath = new Array<go.ModelField>();
+      for (const segment of segments) {
+        if (segment.kind !== 'property') {
+          throw new AdapterError('InternalError', `unexpected kind ${segment.kind} for next link segment in operation ${sdkMethod.name}`, sdkMethod.__raw?.node);
+        }
+
+        const nextLinkField = this.ta.fieldsMap.get(segment);
+        if (!nextLinkField) {
+          // the most likely explanation for this is lack of reference equality
+          throw new AdapterError('InternalError', `missing next link field name ${segment.name} for operation ${sdkMethod.name}`, sdkMethod.__raw?.node);
+        }
+        nextLinkPath.push(nextLinkField);
+      }
+      return nextLinkPath;
+    };
+
+    if (sdkMethod.pagingMetadata.nextLinkOperation) {
+      throw new AdapterError('UnsupportedTsp', 'next page operation NYI', sdkMethod.__raw?.node);
+    } else if (sdkMethod.pagingMetadata.nextLinkSegments) {
+      return new go.PageableStrategyNextLink(buildNextLinkPath(sdkMethod.pagingMetadata.nextLinkSegments));
+    } else if (sdkMethod.pagingMetadata.continuationTokenParameterSegments && sdkMethod.pagingMetadata.continuationTokenResponseSegments) {
+      const tokenReq = sdkMethod.pagingMetadata.continuationTokenParameterSegments[0];
+      const tokenResp = sdkMethod.pagingMetadata.continuationTokenResponseSegments[0];
+
+      // find the continuation token parameter
+      let requestToken: go.HeaderScalarParameter | go.QueryScalarParameter;
+      switch (tokenReq.kind) {
+        case 'method': {
+          const tokenParam = paramsMap.get(tokenReq);
+          if (!tokenParam) {
+            throw new AdapterError('InternalError', `missing continuation token request parameter name ${tokenReq.name} for operation ${sdkMethod.name}`, sdkMethod.__raw?.node);
+          }
+          requestToken = tokenParam;
+          break;
+        }
+        default:
+          throw new AdapterError('InternalError', `unhandled continuationTokenParameterSegment kind ${tokenReq.kind}`, tokenReq.__raw?.node);
+      }
+
+      // find the continuation token response
+      let responseToken: go.HeaderScalarResponse | go.PageableStrategyNextLink;
+      switch (tokenResp.kind) {
+        case 'property': {
+          responseToken = new go.PageableStrategyNextLink(buildNextLinkPath(sdkMethod.pagingMetadata.continuationTokenResponseSegments));
+          break;
+        }
+        case 'responseheader': {
+          const tokenHeader = respHeadersMap.get(tokenResp);
+          if (!tokenHeader) {
+            throw new AdapterError('InternalError', `missing continuation token response header name ${tokenResp.name} for operation ${sdkMethod.name}`, sdkMethod.__raw?.node);
+          }
+          responseToken = tokenHeader;
+          break;
+        }
+        default:
+          throw new AdapterError('InternalError', `missing continuation token`, sdkMethod.__raw?.node);
+      }
+      return new go.PageableStrategyContinuationToken(requestToken, responseToken);
+    }
+
+    // operation is pageable but doesn't yet support fetching subsequent pages
+    return undefined;
+  }
+
+  private populateMethod(
+    sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>,
+    method: go.MethodType | go.NextPageMethod,
+  ): { params: ParamsMapForPageable; respHeaders: RespHeadersMapForPageable } {
     if (method.kind === 'nextPageMethod') {
       throw new AdapterError('UnsupportedTsp', `unsupported method kind ${sdkMethod.kind}`, sdkMethod.__raw?.node);
     }
@@ -586,7 +661,8 @@ export class ClientAdapter {
     }
     method.optionalParamsGroup = new go.ParameterGroup(this.ta.getPkg(), optsGroupName, optionalParamsGroupName, false, 'method');
     method.optionalParamsGroup.docs.summary = createOptionsTypeDescription(optionalParamsGroupName, this.getMethodNameForDocComment(method));
-    method.returns = this.adaptResponseEnvelope(sdkMethod, method);
+    const respInfo = this.adaptResponseEnvelope(sdkMethod, method);
+    method.returns = respInfo.respEnv;
 
     // find the api version param to use for the doc comment.
     // we can't use sdkMethod.apiVersions as that includes all
@@ -604,15 +680,24 @@ export class ClientAdapter {
     this.ta.getPkg().paramGroups.push(this.adaptParameterGroup(method.optionalParamsGroup));
 
     if (this.ta.codeModel.options.generateExamples) {
-      this.adaptHttpOperationExamples(sdkMethod, method, paramMapping);
+      this.adaptHttpOperationExamples(sdkMethod, method, paramMapping.exampleParams);
     }
+
+    return {
+      params: paramMapping.paramsMap,
+      respHeaders: respInfo.respHeaders,
+    };
   }
 
   private adaptMethodParameters(
     sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>,
     method: go.MethodType | go.NextPageMethod,
-  ): Map<tcgc.SdkHttpParameter, Array<go.MethodParameter>> {
+  ): {
+    exampleParams: Map<tcgc.SdkHttpParameter, Array<go.MethodParameter>>;
+    paramsMap: ParamsMapForPageable;
+  } {
     const paramMapping = new Map<tcgc.SdkHttpParameter, Array<go.MethodParameter>>();
+    const pageableParamsMap: ParamsMapForPageable = new Map();
 
     let optionalGroup: go.ParameterGroup | undefined;
     if (method.kind !== 'nextPageMethod') {
@@ -817,6 +902,13 @@ export class ClientAdapter {
         }
       } else {
         adaptedParam = this.adaptMethodParameter(opParam, method.httpMethod);
+        if (method.kind !== 'nextPageMethod' && go.isPageableMethod(method)) {
+          switch (adaptedParam.kind) {
+            case 'headerScalarParam':
+            case 'queryScalarParam':
+              pageableParamsMap.set(param, adaptedParam);
+          }
+        }
       }
 
       adaptedParam.docs.summary = param.summary;
@@ -877,7 +969,10 @@ export class ClientAdapter {
       }
     }
 
-    return paramMapping;
+    return {
+      exampleParams: paramMapping,
+      paramsMap: pageableParamsMap,
+    };
   }
 
   private adaptContentType(contentTypeStr: string): 'binary' | 'JSON' | 'Text' | 'XML' {
@@ -1087,7 +1182,10 @@ export class ClientAdapter {
     return `${method.receiver.type.name}.${methodName}`;
   }
 
-  private adaptResponseEnvelope(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.MethodType): go.ResponseEnvelope {
+  private adaptResponseEnvelope(
+    sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>,
+    method: go.MethodType,
+  ): { respEnv: go.ResponseEnvelope; respHeaders: RespHeadersMapForPageable } {
     // TODO: add Envelope suffix if name collides with existing type
     let prefix = method.receiver.type.name;
     if (this.ta.ctx.emitContext.options['single-client']) {
@@ -1103,6 +1201,8 @@ export class ClientAdapter {
     }
     const respEnv = new go.ResponseEnvelope(respEnvName, { summary: createResponseEnvelopeDescription(respEnvName, this.getMethodNameForDocComment(method)) }, method);
     this.ta.getPkg().responseEnvelopes.push(respEnv);
+
+    const pageableRespHeadersMap: RespHeadersMapForPageable = new Map();
 
     // add any headers
     const addedHeaders = new Set<string>();
@@ -1126,6 +1226,9 @@ export class ClientAdapter {
               httpHeader.serializedName,
               helpers.isTypePassedByValue(httpHeader.type),
             );
+            if (go.isPageableMethod(method)) {
+              pageableRespHeadersMap.set(httpHeader, headerResp);
+            }
           }
 
           headerResp.docs.summary = httpHeader.summary;
@@ -1146,7 +1249,10 @@ export class ClientAdapter {
 
     if (!sdkResponseType) {
       // method doesn't return a type, so we're done
-      return respEnv;
+      return {
+        respEnv: respEnv,
+        respHeaders: pageableRespHeadersMap,
+      };
     }
 
     if (sdkResponseType.kind === 'nullable') {
@@ -1199,7 +1305,10 @@ export class ClientAdapter {
     if (contentType === 'binary') {
       respEnv.result = new go.BinaryResult('Body');
       respEnv.result.docs.summary = 'Body contains the streaming response.';
-      return respEnv;
+      return {
+        respEnv: respEnv,
+        respHeaders: pageableRespHeadersMap,
+      };
     } else if (sdkResponseType.kind === 'model') {
       let modelType: go.Model | go.PolymorphicModel | undefined;
       const modelName = ensureNameCase(sdkResponseType.name).toUpperCase();
@@ -1284,7 +1393,10 @@ export class ClientAdapter {
       }
     }
 
-    return respEnv;
+    return {
+      respEnv: respEnv,
+      respHeaders: pageableRespHeadersMap,
+    };
   }
 
   /**
@@ -1675,3 +1787,15 @@ interface ParameterStyleInfo {
   optional: boolean;
   type: tcgc.SdkType;
 }
+
+/**
+ * maps tcgc scalar header/query method params to their adapted Go type.
+ * this is used when creating certain pageable method strategies.
+ */
+type ParamsMapForPageable = Map<tcgc.SdkMethodParameter, go.HeaderScalarParameter | go.QueryScalarParameter>;
+
+/**
+ * maps tcgc scalar response headers to their adapted Go type.
+ * this is used when creating certain pageable method strategies.
+ */
+type RespHeadersMapForPageable = Map<tcgc.SdkServiceResponseHeader, go.HeaderScalarResponse>;
