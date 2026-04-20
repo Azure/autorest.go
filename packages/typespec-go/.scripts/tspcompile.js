@@ -79,6 +79,7 @@ const httpSpecsGroup = {
 
 const azureHttpSpecsGroup = {
   'accessgroup': ['azure/client-generator-core/access'],
+  'emptystringgroup': ['azure/client-generator-core/deserialize-empty-string-as-null'],
   'flattengroup': ['azure/client-generator-core/flatten-property'],
   'nextlinkverbgroup': ['azure/client-generator-core/next-link-verb', 'slice-elements-byval=true'],
   'coreusagegroup': ['azure/client-generator-core/usage'],

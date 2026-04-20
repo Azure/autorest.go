@@ -660,6 +660,10 @@ export class TypeAdapter {
       xml: prop.serializationOptions.xml,
     });
 
+    if (helpers.hasDecorator('@deserializeEmptyStringAsNull', prop.decorators)) {
+      field.annotations.unmarshalEmptyStringAsNil = true;
+    }
+
     // it's possible for different models to reference the same property definition
     if (!this.fieldsMap.has(prop)) {
       this.fieldsMap.set(prop, field);

@@ -669,7 +669,15 @@ function generateJSONUnmarshallerBody(modelDef: ModelDef, receiver: string, opti
         modelDef.SerDe.needsJSONUnpopulate = true;
         needsErrCheck = true;
       } else {
-        unmarshalBody += `${indent.get()}err = unpopulate(val, "${field.name}", &${receiver}.${field.name})\n`;
+        const unpopulateField = `${indent.get()}err = unpopulate(val, "${field.name}", &${receiver}.${field.name})\n`;
+        if (field.type.kind === 'string' && field.annotations.unmarshalEmptyStringAsNil) {
+          unmarshalBody += `${indent.get()}${helpers.buildIfBlock(indent, {
+            condition: `string(val) != \`""\``,
+            body: (indent) => `${indent.get()}${unpopulateField}`,
+          })}\n`;
+        } else {
+          unmarshalBody += unpopulateField;
+        }
         modelDef.SerDe.needsJSONUnpopulate = true;
         needsErrCheck = true;
       }
