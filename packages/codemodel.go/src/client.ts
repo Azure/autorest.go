@@ -267,9 +267,6 @@ export interface PageableStrategyNextLink {
    */
   nextLinkPath: Array<type.ModelField>;
 
-  /** the query params to be reinjected when fetching pages. can be empty */
-  reinjectedParams: Array<param.QueryCollectionParameter | param.QueryScalarParameter>;
-
   /** the custom method used to fetch the next link */
   method?: NextPageMethod;
 }
@@ -497,7 +494,6 @@ export class PageableStrategyNextLink implements PageableStrategyNextLink {
   constructor(nextLinkPath: Array<type.ModelField>) {
     this.kind = 'nextLink';
     this.nextLinkPath = nextLinkPath;
-    this.reinjectedParams = new Array<param.QueryCollectionParameter | param.QueryScalarParameter>();
   }
 }
 
