@@ -854,13 +854,14 @@ func (client *ContainerClient) NewListBlobFlatSegmentPager(options *ContainerCli
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ContainerClientListBlobFlatSegmentResponse) (ContainerClientListBlobFlatSegmentResponse, error) {
-			if options == nil {
-				options = &ContainerClientListBlobFlatSegmentOptions{}
+			nextOpts := ContainerClientListBlobFlatSegmentOptions{}
+			if options != nil {
+				nextOpts = *options
 			}
 			if page != nil {
-				options.Marker = page.NextMarker
+				nextOpts.Marker = page.NextMarker
 			}
-			req, err := client.listBlobFlatSegmentCreateRequest(ctx, options)
+			req, err := client.listBlobFlatSegmentCreateRequest(ctx, &nextOpts)
 			if err != nil {
 				return ContainerClientListBlobFlatSegmentResponse{}, err
 			}
@@ -954,13 +955,14 @@ func (client *ContainerClient) NewListBlobHierarchySegmentPager(delimiter string
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ContainerClientListBlobHierarchySegmentResponse) (ContainerClientListBlobHierarchySegmentResponse, error) {
-			if options == nil {
-				options = &ContainerClientListBlobHierarchySegmentOptions{}
+			nextOpts := ContainerClientListBlobHierarchySegmentOptions{}
+			if options != nil {
+				nextOpts = *options
 			}
 			if page != nil {
-				options.Marker = page.NextMarker
+				nextOpts.Marker = page.NextMarker
 			}
-			req, err := client.listBlobHierarchySegmentCreateRequest(ctx, delimiter, options)
+			req, err := client.listBlobHierarchySegmentCreateRequest(ctx, delimiter, &nextOpts)
 			if err != nil {
 				return ContainerClientListBlobHierarchySegmentResponse{}, err
 			}

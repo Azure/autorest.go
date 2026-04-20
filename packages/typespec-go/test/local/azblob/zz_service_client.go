@@ -417,13 +417,14 @@ func (client *ServiceClient) NewListContainersSegmentPager(options *ServiceClien
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ServiceClientListContainersSegmentResponse) (ServiceClientListContainersSegmentResponse, error) {
-			if options == nil {
-				options = &ServiceClientListContainersSegmentOptions{}
+			nextOpts := ServiceClientListContainersSegmentOptions{}
+			if options != nil {
+				nextOpts = *options
 			}
 			if page != nil {
-				options.Marker = page.NextMarker
+				nextOpts.Marker = page.NextMarker
 			}
-			req, err := client.listContainersSegmentCreateRequest(ctx, options)
+			req, err := client.listContainersSegmentCreateRequest(ctx, &nextOpts)
 			if err != nil {
 				return ServiceClientListContainersSegmentResponse{}, err
 			}

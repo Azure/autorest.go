@@ -28,13 +28,14 @@ func (client *PageableXMLPaginationClient) NewListWithContinuationPager(options 
 		},
 		Fetcher: func(ctx context.Context, page *PageableXMLPaginationClientListWithContinuationResponse) (PageableXMLPaginationClientListWithContinuationResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableXMLPaginationClient.NewListWithContinuationPager")
-			if options == nil {
-				options = &PageableXMLPaginationClientListWithContinuationOptions{}
+			nextOpts := PageableXMLPaginationClientListWithContinuationOptions{}
+			if options != nil {
+				nextOpts = *options
 			}
 			if page != nil {
-				options.Marker = page.NextMarker
+				nextOpts.Marker = page.NextMarker
 			}
-			req, err := client.listWithContinuationCreateRequest(ctx, options)
+			req, err := client.listWithContinuationCreateRequest(ctx, &nextOpts)
 			if err != nil {
 				return PageableXMLPaginationClientListWithContinuationResponse{}, err
 			}

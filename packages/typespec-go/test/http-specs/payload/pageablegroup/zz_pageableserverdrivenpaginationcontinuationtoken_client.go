@@ -29,13 +29,14 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestH
 		},
 		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse) (PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderNestedResponseBodyPager")
-			if options == nil {
-				options = &PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions{}
+			nextOpts := PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyOptions{}
+			if options != nil {
+				nextOpts = *options
 			}
 			if page != nil && page.NestedNext != nil {
-				options.Token = page.NestedNext.NextToken
+				nextOpts.Token = page.NestedNext.NextToken
 			}
-			req, err := client.requestHeaderNestedResponseBodyCreateRequest(ctx, options)
+			req, err := client.requestHeaderNestedResponseBodyCreateRequest(ctx, &nextOpts)
 			if err != nil {
 				return PageableServerDrivenPaginationContinuationTokenClientRequestHeaderNestedResponseBodyResponse{}, err
 			}
@@ -92,13 +93,14 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestH
 		},
 		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyResponse) (PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderResponseBodyPager")
-			if options == nil {
-				options = &PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions{}
+			nextOpts := PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyOptions{}
+			if options != nil {
+				nextOpts = *options
 			}
 			if page != nil {
-				options.Token = page.NextToken
+				nextOpts.Token = page.NextToken
 			}
-			req, err := client.requestHeaderResponseBodyCreateRequest(ctx, options)
+			req, err := client.requestHeaderResponseBodyCreateRequest(ctx, &nextOpts)
 			if err != nil {
 				return PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseBodyResponse{}, err
 			}
@@ -155,13 +157,14 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestH
 		},
 		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse) (PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationContinuationTokenClient.NewRequestHeaderResponseHeaderPager")
-			if options == nil {
-				options = &PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions{}
+			nextOpts := PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderOptions{}
+			if options != nil {
+				nextOpts = *options
 			}
 			if page != nil {
-				options.Token = page.NextToken
+				nextOpts.Token = page.NextToken
 			}
-			req, err := client.requestHeaderResponseHeaderCreateRequest(ctx, options)
+			req, err := client.requestHeaderResponseHeaderCreateRequest(ctx, &nextOpts)
 			if err != nil {
 				return PageableServerDrivenPaginationContinuationTokenClientRequestHeaderResponseHeaderResponse{}, err
 			}
@@ -221,13 +224,14 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestQ
 		},
 		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse) (PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationContinuationTokenClient.NewRequestQueryNestedResponseBodyPager")
-			if options == nil {
-				options = &PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions{}
+			nextOpts := PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyOptions{}
+			if options != nil {
+				nextOpts = *options
 			}
 			if page != nil && page.NestedNext != nil {
-				options.Token = page.NestedNext.NextToken
+				nextOpts.Token = page.NestedNext.NextToken
 			}
-			req, err := client.requestQueryNestedResponseBodyCreateRequest(ctx, options)
+			req, err := client.requestQueryNestedResponseBodyCreateRequest(ctx, &nextOpts)
 			if err != nil {
 				return PageableServerDrivenPaginationContinuationTokenClientRequestQueryNestedResponseBodyResponse{}, err
 			}
@@ -284,13 +288,14 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestQ
 		},
 		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyResponse) (PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationContinuationTokenClient.NewRequestQueryResponseBodyPager")
-			if options == nil {
-				options = &PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyOptions{}
+			nextOpts := PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyOptions{}
+			if options != nil {
+				nextOpts = *options
 			}
 			if page != nil {
-				options.Token = page.NextToken
+				nextOpts.Token = page.NextToken
 			}
-			req, err := client.requestQueryResponseBodyCreateRequest(ctx, options)
+			req, err := client.requestQueryResponseBodyCreateRequest(ctx, &nextOpts)
 			if err != nil {
 				return PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseBodyResponse{}, err
 			}
@@ -347,13 +352,14 @@ func (client *PageableServerDrivenPaginationContinuationTokenClient) NewRequestQ
 		},
 		Fetcher: func(ctx context.Context, page *PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderResponse) (PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableServerDrivenPaginationContinuationTokenClient.NewRequestQueryResponseHeaderPager")
-			if options == nil {
-				options = &PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderOptions{}
+			nextOpts := PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderOptions{}
+			if options != nil {
+				nextOpts = *options
 			}
 			if page != nil {
-				options.Token = page.NextToken
+				nextOpts.Token = page.NextToken
 			}
-			req, err := client.requestQueryResponseHeaderCreateRequest(ctx, options)
+			req, err := client.requestQueryResponseHeaderCreateRequest(ctx, &nextOpts)
 			if err != nil {
 				return PageableServerDrivenPaginationContinuationTokenClientRequestQueryResponseHeaderResponse{}, err
 			}

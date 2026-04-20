@@ -676,10 +676,11 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, o
     switch (method.strategy.kind) {
       case 'continuationToken': {
         const ms = method.strategy;
-        const optionsParamName = method.optionalParamsGroup.name;
+        const optionsCopy = 'nextOpts';
+        text += `${indent.get()}${optionsCopy} := ${method.optionalParamsGroup.groupName}{}\n`;
         text += `${indent.get()}${helpers.buildIfBlock(indent, {
-          condition: `${optionsParamName} == nil`,
-          body: (indent) => `${indent.get()}${optionsParamName} = &${method.optionalParamsGroup.groupName}{}\n`,
+          condition: `${method.optionalParamsGroup.name} != nil`,
+          body: (indent) => `${indent.get()}${optionsCopy} = *${method.optionalParamsGroup.name}\n`,
         })}\n`;
 
         let respToken: string;
@@ -700,10 +701,10 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, o
 
         text += `${indent.get()}${helpers.buildIfBlock(indent, {
           condition: `page != nil${nestedNilChecks}`,
-          body: (indent) => `${indent.get()}${optionsParamName}.${ms.requestToken.name} = page.${respToken}\n`,
+          body: (indent) => `${indent.get()}${optionsCopy}.${ms.requestToken.name} = page.${respToken}\n`,
         })}\n`;
 
-        text += callCreateRequestWithErrCheck(method, 'req', indent);
+        text += callCreateRequestWithErrCheck(method, 'req', indent, `&${optionsCopy}`);
         text += callPipelineDoWithErrCheck(method, 'req', 'resp', indent);
         text += emitStatusCodeCheckAndResponse('resp', indent);
         break;
@@ -777,10 +778,11 @@ function emitPagerDefinition(method: go.LROPageableMethod | go.PageableMethod, o
  * @param method the method to call its *CreateRequest method
  * @param reqVarName the var name of the resultant *policy.Request
  * @param indent the indentation helper currently in scope
+ * @param optionsParam optional custom param name for the method options param
  * @returns the call to *CreateRequest with an error check
  */
-function callCreateRequestWithErrCheck(method: go.MethodType, reqVarName: string, indent: helpers.Indentation): string {
-  const reqParams = helpers.getCreateRequestParameters(method);
+function callCreateRequestWithErrCheck(method: go.MethodType, reqVarName: string, indent: helpers.Indentation, optionsParam?: string): string {
+  const reqParams = helpers.getCreateRequestParameters(method, optionsParam);
   let text = `${indent.get()}${reqVarName}, err := client.${method.naming.requestMethod}(${reqParams})\n`;
   const zeroResp = getZeroReturnValue(method, 'op');
   text += `${indent.get()}${helpers.buildErrCheck(indent, 'err', zeroResp)}\n`;
