@@ -5,10 +5,6 @@ trigger:
       - feature/*
       - hotfix/*
       - release/*
-  paths:
-    exclude:
-      - packages/autorest.gotest
-      - packages/typespec-go
 
 pr:
   branches:
@@ -17,20 +13,43 @@ pr:
       - feature/*
       - hotfix/*
       - release/*
-  paths:
-    exclude:
-      - packages/autorest.gotest
-      - packages/typespec-go
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
     Use1ESOfficial: false
     stages:
-      - stage: "AutoRest_Go_CI"
+      - stage: "CI"
         jobs:
+          # ── Pre-job: detect which files changed and set flags ──
+          - job: "Detect_Changes"
+            displayName: "Detect Changed Files"
+
+            variables:
+              - template: /eng/pipelines/templates/variables/globals.yml
+              - template: /eng/pipelines/templates/variables/image.yml
+
+            pool:
+              name: "$(LINUXNEXTPOOL)"
+              image: "$(LINUXNEXTVMIMAGE)"
+              os: linux
+
+            steps:
+              - checkout: self
+                fetchDepth: 0
+
+              - task: PowerShell@2
+                inputs:
+                  filePath: eng/pipelines/scripts/detect-changes.ps1
+                  pwsh: true
+                name: SetFlags
+                displayName: "Detect changes and set job flags"
+
+          # ── AutoRest Go CI ──
           - job: "AutoRest_Go_CI"
             displayName: "Run AutoRest CI Checks - "
+            dependsOn: Detect_Changes
+            condition: and(succeeded(), eq(dependencies.Detect_Changes.outputs['SetFlags.run_autorest_go'], 'true'))
 
             variables:
               - template: /eng/pipelines/templates/variables/globals.yml
@@ -51,3 +70,55 @@ extends:
             steps:
               - template: /eng/pipelines/templates/steps/set-env.yaml
               - template: /eng/pipelines/templates/steps/build-test-go.yaml
+
+          # ── TypeSpec Go CI ──
+          - job: "TypeSpec_Go_CI"
+            displayName: "Run TypeSpec Go CI Checks - "
+            dependsOn: Detect_Changes
+            condition: and(succeeded(), eq(dependencies.Detect_Changes.outputs['SetFlags.run_typespec_go'], 'true'))
+
+            variables:
+              - template: /eng/pipelines/templates/variables/globals.yml
+              - template: /eng/pipelines/templates/variables/image.yml
+
+            pool:
+              name: "$(LINUXNEXTPOOL)"
+              image: "$(LINUXNEXTVMIMAGE)"
+              os: linux
+
+            strategy:
+              matrix:
+                GoVersionLatest:
+                  GoVersion: $(GoVersionLatest)
+                GoVersionPrevious:
+                  GoVersion: $(GoVersionPrevious)
+
+            steps:
+              - template: /eng/pipelines/templates/steps/set-env.yaml
+              - template: /eng/pipelines/templates/steps/build-test-typespec.yaml
+
+          # ── GoTest CI ──
+          - job: "GoTest_CI"
+            displayName: "Run GoTest CI Checks - "
+            dependsOn: Detect_Changes
+            condition: and(succeeded(), eq(dependencies.Detect_Changes.outputs['SetFlags.run_gotest'], 'true'))
+
+            variables:
+              - template: /eng/pipelines/templates/variables/globals.yml
+              - template: /eng/pipelines/templates/variables/image.yml
+
+            pool:
+              name: "$(LINUXNEXTPOOL)"
+              image: "$(LINUXNEXTVMIMAGE)"
+              os: linux
+
+            strategy:
+              matrix:
+                GoVersionLatest:
+                  GoVersion: $(GoVersionLatest)
+                GoVersionPrevious:
+                  GoVersion: $(GoVersionPrevious)
+
+            steps:
+              - template: /eng/pipelines/templates/steps/set-env.yaml
+              - template: /eng/pipelines/templates/steps/build-test-gotest.yaml
