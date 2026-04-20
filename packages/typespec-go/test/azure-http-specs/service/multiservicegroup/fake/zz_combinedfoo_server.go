@@ -11,26 +11,26 @@ import (
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"multipleservicegroup"
+	"multiservicegroup"
 	"net/http"
 	"slices"
 )
 
-// CombinedFooServer is a fake server for instances of the multipleservicegroup.CombinedFooClient type.
+// CombinedFooServer is a fake server for instances of the multiservicegroup.CombinedFooClient type.
 type CombinedFooServer struct {
 	// Test is the fake for method CombinedFooClient.Test
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Test func(ctx context.Context, options *multipleservicegroup.CombinedFooClientTestOptions) (resp azfake.Responder[multipleservicegroup.CombinedFooClientTestResponse], errResp azfake.ErrorResponder)
+	Test func(ctx context.Context, options *multiservicegroup.CombinedFooClientTestOptions) (resp azfake.Responder[multiservicegroup.CombinedFooClientTestResponse], errResp azfake.ErrorResponder)
 }
 
 // NewCombinedFooServerTransport creates a new instance of CombinedFooServerTransport with the provided implementation.
-// The returned CombinedFooServerTransport instance is connected to an instance of multipleservicegroup.CombinedFooClient via the
+// The returned CombinedFooServerTransport instance is connected to an instance of multiservicegroup.CombinedFooClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewCombinedFooServerTransport(srv *CombinedFooServer) *CombinedFooServerTransport {
 	return &CombinedFooServerTransport{srv: srv}
 }
 
-// CombinedFooServerTransport connects instances of multipleservicegroup.CombinedFooClient to instances of CombinedFooServer.
+// CombinedFooServerTransport connects instances of multiservicegroup.CombinedFooClient to instances of CombinedFooServer.
 // Don't use this type directly, use NewCombinedFooServerTransport instead.
 type CombinedFooServerTransport struct {
 	srv *CombinedFooServer

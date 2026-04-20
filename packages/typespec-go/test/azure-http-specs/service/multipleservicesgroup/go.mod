@@ -1,4 +1,4 @@
-module multipleservicegroup
+module multipleservicesgroup
 
 go 1.25.0
 
