@@ -128,7 +128,8 @@ const azureHttpSpecsGroup = {
   'overloadgroup': ['client/overload/client.tsp'],
   'srvdrivenoldgroup': ['resiliency/srv-driven/old.tsp'],
   'srvdrivennewgroup': ['resiliency/srv-driven'],
-  'multipleservicegroup' : ['/service/multi-service/client.tsp'],
+  'multipleservicesgroup' : ['/service/multiple-services'],
+  'multiservicegroup' : ['/service/multi-service'],
 };
 
 // default to using the locally built emitter

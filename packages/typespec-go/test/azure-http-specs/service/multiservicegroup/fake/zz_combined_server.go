@@ -13,7 +13,7 @@ import (
 	"sync"
 )
 
-// CombinedServer is a fake server for instances of the multipleservicegroup.CombinedClient type.
+// CombinedServer is a fake server for instances of the multiservicegroup.CombinedClient type.
 type CombinedServer struct {
 	// CombinedBarServer contains the fakes for client CombinedBarClient
 	CombinedBarServer CombinedBarServer
@@ -23,13 +23,13 @@ type CombinedServer struct {
 }
 
 // NewCombinedServerTransport creates a new instance of CombinedServerTransport with the provided implementation.
-// The returned CombinedServerTransport instance is connected to an instance of multipleservicegroup.CombinedClient via the
+// The returned CombinedServerTransport instance is connected to an instance of multiservicegroup.CombinedClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewCombinedServerTransport(srv *CombinedServer) *CombinedServerTransport {
 	return &CombinedServerTransport{srv: srv}
 }
 
-// CombinedServerTransport connects instances of multipleservicegroup.CombinedClient to instances of CombinedServer.
+// CombinedServerTransport connects instances of multiservicegroup.CombinedClient to instances of CombinedServer.
 // Don't use this type directly, use NewCombinedServerTransport instead.
 type CombinedServerTransport struct {
 	srv                 *CombinedServer

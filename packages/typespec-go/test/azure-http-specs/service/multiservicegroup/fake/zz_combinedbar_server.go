@@ -11,26 +11,26 @@ import (
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"multipleservicegroup"
+	"multiservicegroup"
 	"net/http"
 	"slices"
 )
 
-// CombinedBarServer is a fake server for instances of the multipleservicegroup.CombinedBarClient type.
+// CombinedBarServer is a fake server for instances of the multiservicegroup.CombinedBarClient type.
 type CombinedBarServer struct {
 	// Test is the fake for method CombinedBarClient.Test
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Test func(ctx context.Context, options *multipleservicegroup.CombinedBarClientTestOptions) (resp azfake.Responder[multipleservicegroup.CombinedBarClientTestResponse], errResp azfake.ErrorResponder)
+	Test func(ctx context.Context, options *multiservicegroup.CombinedBarClientTestOptions) (resp azfake.Responder[multiservicegroup.CombinedBarClientTestResponse], errResp azfake.ErrorResponder)
 }
 
 // NewCombinedBarServerTransport creates a new instance of CombinedBarServerTransport with the provided implementation.
-// The returned CombinedBarServerTransport instance is connected to an instance of multipleservicegroup.CombinedBarClient via the
+// The returned CombinedBarServerTransport instance is connected to an instance of multiservicegroup.CombinedBarClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewCombinedBarServerTransport(srv *CombinedBarServer) *CombinedBarServerTransport {
 	return &CombinedBarServerTransport{srv: srv}
 }
 
-// CombinedBarServerTransport connects instances of multipleservicegroup.CombinedBarClient to instances of CombinedBarServer.
+// CombinedBarServerTransport connects instances of multiservicegroup.CombinedBarClient to instances of CombinedBarServer.
 // Don't use this type directly, use NewCombinedBarServerTransport instead.
 type CombinedBarServerTransport struct {
 	srv *CombinedBarServer
