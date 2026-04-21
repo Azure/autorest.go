@@ -4,7 +4,10 @@
 
 package fake
 
-import "net/http"
+import (
+	"net/http"
+	"reflect"
+)
 
 type result struct {
 	resp *http.Response
@@ -17,6 +20,13 @@ type nonRetriableError struct {
 
 func (nonRetriableError) NonRetriable() {
 	// marker method
+}
+
+func getOptional[T any](v T) *T {
+	if reflect.ValueOf(v).IsZero() {
+		return nil
+	}
+	return &v
 }
 
 func parseOptional[T any](v string, parse func(v string) (T, error)) (*T, error) {

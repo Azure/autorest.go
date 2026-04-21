@@ -1034,11 +1034,12 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
           paramValue = joinedParamName;
         }
       } else if (go.isClientSideDefault(pp.style)) {
-        paramValue = naming.uncapitalize(pp.name) + 'Default';
-        text += `${indent.get()}${paramValue} := ${helpers.formatLiteralValue(pp.style.defaultValue, false)}\n`;
+        const defaultValue = naming.uncapitalize(pp.name) + 'Default';
+        text += `${indent.get()}${defaultValue} := ${helpers.formatLiteralValue(pp.style.defaultValue, true)}\n`;
         text += emitParamGroupCheck(pp);
-        text += `${indent.push().get()}${paramValue} = ${helpers.getParamName(pp)}\n`;
+        text += `${indent.push().get()}${defaultValue} = ${helpers.getParamName(pp)}\n`;
         text += `${indent.pop().get()}}\n`;
+        paramValue = helpers.formatValue(defaultValue, pp.type, imports);
       } else {
         // param isn't required, so emit a local var with
         // the correct default value, then populate it with

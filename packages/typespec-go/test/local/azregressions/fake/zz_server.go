@@ -67,6 +67,10 @@ type Server struct {
 	// HTTP status codes to indicate success: http.StatusNoContent
 	SpreadWithModel func(ctx context.Context, name string, options *azregressions.ClientSpreadWithModelOptions) (resp azfake.Responder[azregressions.ClientSpreadWithModelResponse], errResp azfake.ErrorResponder)
 
+	// WithClientDefaultValues is the fake for method Client.WithClientDefaultValues
+	// HTTP status codes to indicate success: http.StatusNoContent
+	WithClientDefaultValues func(ctx context.Context, options *azregressions.ClientWithClientDefaultValuesOptions) (resp azfake.Responder[azregressions.ClientWithClientDefaultValuesResponse], errResp azfake.ErrorResponder)
+
 	// WithExpandParam is the fake for method Client.WithExpandParam
 	// HTTP status codes to indicate success: http.StatusNoContent
 	WithExpandParam func(ctx context.Context, expand string, options *azregressions.ClientWithExpandParamOptions) (resp azfake.Responder[azregressions.ClientWithExpandParamResponse], errResp azfake.ErrorResponder)
@@ -128,6 +132,8 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 				res.resp, res.err = s.dispatchOptionalBodyPost(req)
 			case "Client.SpreadWithModel":
 				res.resp, res.err = s.dispatchSpreadWithModel(req)
+			case "Client.WithClientDefaultValues":
+				res.resp, res.err = s.dispatchWithClientDefaultValues(req)
 			case "Client.WithExpandParam":
 				res.resp, res.err = s.dispatchWithExpandParam(req)
 			default:
@@ -407,6 +413,57 @@ func (s *ServerTransport) dispatchSpreadWithModel(req *http.Request) (*http.Resp
 		}
 	}
 	respr, errRespr := s.srv.SpreadWithModel(req.Context(), body.Name, options)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchWithClientDefaultValues(req *http.Request) (*http.Response, error) {
+	if s.srv.WithClientDefaultValues == nil {
+		return nil, &nonRetriableError{errors.New("fake for method WithClientDefaultValues not implemented")}
+	}
+	const regexStr = `/non-string-path-params/(?P<color>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/(?P<count>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if len(matches) < 3 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	colorUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("color")])
+	if err != nil {
+		return nil, err
+	}
+	colorParam := getOptional(azregressions.Color(colorUnescaped))
+	countUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("count")])
+	if err != nil {
+		return nil, err
+	}
+	countParam, err := parseOptional(countUnescaped, func(v string) (int32, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
+		}
+		return int32(p), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	var options *azregressions.ClientWithClientDefaultValuesOptions
+	if colorParam != nil || countParam != nil {
+		options = &azregressions.ClientWithClientDefaultValuesOptions{
+			Color: colorParam,
+			Count: countParam,
+		}
+	}
+	respr, errRespr := s.srv.WithClientDefaultValues(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
