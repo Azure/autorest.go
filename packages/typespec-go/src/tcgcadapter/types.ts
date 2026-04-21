@@ -655,7 +655,38 @@ export class TypeAdapter {
       if (!go.isLiteralValueType(type)) {
         throw new AdapterError('InternalError', `unexpected client side default kind ${type.kind} for field ${field.name}`, prop.__raw?.node);
       }
-      field.defaultValue = new go.Literal(type, prop.clientDefaultValue);
+
+      let keyName: string;
+      let defaultValue = prop.clientDefaultValue;
+      switch (type.kind) {
+        case 'constant': {
+          // find the const value that matches the clientDefaultValue
+          const constantValue = type.values.find((value) => value.value === prop.clientDefaultValue);
+          if (!constantValue) {
+            throw new AdapterError(
+              'InternalError',
+              `unexpected constant client side default ${<string>prop.clientDefaultValue} for field ${field.name}`,
+              prop.__raw?.node,
+            );
+          }
+          defaultValue = constantValue;
+          keyName = `literal-${naming.ensureNameCase(constantValue.type.name)}${naming.ensureNameCase(constantValue.name)}`;
+          break;
+        }
+        case 'scalar':
+          keyName = `literal-${type.type}-${<string>defaultValue}`;
+          break;
+        default:
+          keyName = `literal-${type.kind}-${<string>defaultValue}`
+      }
+
+      let defaultValueType = <go.Literal>this.types.get(keyName);
+      if (!defaultValueType) {
+        defaultValueType = new go.Literal(type, defaultValue);
+        this.types.set(keyName, defaultValueType);
+      }
+
+      field.defaultValue = defaultValueType;
     }
 
     field.xml = helpers.adaptXMLInfo({

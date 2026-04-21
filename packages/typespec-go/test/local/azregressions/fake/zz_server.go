@@ -67,6 +67,10 @@ type Server struct {
 	// HTTP status codes to indicate success: http.StatusNoContent
 	SpreadWithModel func(ctx context.Context, name string, options *azregressions.ClientSpreadWithModelOptions) (resp azfake.Responder[azregressions.ClientSpreadWithModelResponse], errResp azfake.ErrorResponder)
 
+	// WithClientDefaultModelField is the fake for method Client.WithClientDefaultModelField
+	// HTTP status codes to indicate success: http.StatusNoContent
+	WithClientDefaultModelField func(ctx context.Context, widget azregressions.Widget, options *azregressions.ClientWithClientDefaultModelFieldOptions) (resp azfake.Responder[azregressions.ClientWithClientDefaultModelFieldResponse], errResp azfake.ErrorResponder)
+
 	// WithClientDefaultValues is the fake for method Client.WithClientDefaultValues
 	// HTTP status codes to indicate success: http.StatusNoContent
 	WithClientDefaultValues func(ctx context.Context, options *azregressions.ClientWithClientDefaultValuesOptions) (resp azfake.Responder[azregressions.ClientWithClientDefaultValuesResponse], errResp azfake.ErrorResponder)
@@ -132,6 +136,8 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 				res.resp, res.err = s.dispatchOptionalBodyPost(req)
 			case "Client.SpreadWithModel":
 				res.resp, res.err = s.dispatchSpreadWithModel(req)
+			case "Client.WithClientDefaultModelField":
+				res.resp, res.err = s.dispatchWithClientDefaultModelField(req)
 			case "Client.WithClientDefaultValues":
 				res.resp, res.err = s.dispatchWithClientDefaultValues(req)
 			case "Client.WithExpandParam":
@@ -413,6 +419,29 @@ func (s *ServerTransport) dispatchSpreadWithModel(req *http.Request) (*http.Resp
 		}
 	}
 	respr, errRespr := s.srv.SpreadWithModel(req.Context(), body.Name, options)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchWithClientDefaultModelField(req *http.Request) (*http.Response, error) {
+	if s.srv.WithClientDefaultModelField == nil {
+		return nil, &nonRetriableError{errors.New("fake for method WithClientDefaultModelField not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[azregressions.Widget](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.WithClientDefaultModelField(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

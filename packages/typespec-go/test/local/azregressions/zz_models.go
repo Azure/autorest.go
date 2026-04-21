@@ -46,3 +46,11 @@ type SomeModel struct {
 	// REQUIRED
 	Name *string
 }
+
+type Widget struct {
+	// REQUIRED
+	Color *Color
+
+	// REQUIRED
+	Name *string
+}

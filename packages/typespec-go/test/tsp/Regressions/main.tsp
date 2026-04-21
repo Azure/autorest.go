@@ -159,3 +159,16 @@ op withClientDefaultValues(
   @path
   count: int32,
 ):void;
+
+model Widget {
+  name: string;
+  @Legacy.clientDefaultValue(Color.green)
+  color: Color;
+}
+
+/**
+ * model with a client-side default that's an enum
+ */
+@put
+@route("/model-with-default-const")
+op withClientDefaultModelField(@body widget: Widget): void;

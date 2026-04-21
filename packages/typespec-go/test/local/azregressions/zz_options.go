@@ -63,6 +63,11 @@ type ClientSpreadWithModelOptions struct {
 	Inner *InnerSpreadParam
 }
 
+// ClientWithClientDefaultModelFieldOptions contains the optional parameters for the Client.WithClientDefaultModelField method.
+type ClientWithClientDefaultModelFieldOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ClientWithClientDefaultValuesOptions contains the optional parameters for the Client.WithClientDefaultValues method.
 type ClientWithClientDefaultValuesOptions struct {
 	Color *Color

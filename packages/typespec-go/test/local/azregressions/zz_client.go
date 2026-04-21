@@ -535,6 +535,45 @@ func (client *Client) spreadWithModelCreateRequest(ctx context.Context, name str
 	return req, nil
 }
 
+// WithClientDefaultModelField - model with a client-side default that's an enum
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientWithClientDefaultModelFieldOptions contains the optional parameters for the Client.WithClientDefaultModelField
+//     method.
+func (client *Client) WithClientDefaultModelField(ctx context.Context, widget Widget, options *ClientWithClientDefaultModelFieldOptions) (ClientWithClientDefaultModelFieldResponse, error) {
+	var err error
+	const operationName = "Client.WithClientDefaultModelField"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.withClientDefaultModelFieldCreateRequest(ctx, widget, options)
+	if err != nil {
+		return ClientWithClientDefaultModelFieldResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientWithClientDefaultModelFieldResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientWithClientDefaultModelFieldResponse{}, err
+	}
+	return ClientWithClientDefaultModelFieldResponse{}, nil
+}
+
+// withClientDefaultModelFieldCreateRequest creates the WithClientDefaultModelField request.
+func (client *Client) withClientDefaultModelFieldCreateRequest(ctx context.Context, widget Widget, _ *ClientWithClientDefaultModelFieldOptions) (*policy.Request, error) {
+	urlPath := "/model-with-default-const"
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, widget); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
 // WithClientDefaultValues - path params that aren't string types with client-side defaults
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ClientWithClientDefaultValuesOptions contains the optional parameters for the Client.WithClientDefaultValues
