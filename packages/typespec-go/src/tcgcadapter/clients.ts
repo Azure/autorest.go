@@ -480,7 +480,7 @@ export class ClientAdapter {
       goMethod: go.LROMethod | go.LROPageableMethod,
       sdkMethod: tcgc.SdkLroPagingServiceMethod<tcgc.SdkHttpOperation> | tcgc.SdkLroServiceMethod<tcgc.SdkHttpOperation>,
     ): void {
-      const lroOptions = hasDecorator('Azure.Core.@useFinalStateVia', sdkMethod.decorators);
+      const lroOptions = helpers.hasDecorator('@useFinalStateVia', sdkMethod.decorators);
       if (lroOptions) {
         goMethod.finalStateVia = <go.FinalStateVia>lroOptions['finalState'];
       }
@@ -1750,23 +1750,6 @@ export class ClientAdapter {
     }
     throw new AdapterError('InternalError', `can not map go type into example type ${exampleType.kind}`);
   }
-}
-
-/**
- * returns the record for the specified decorator's arguments if it exists
- *
- * @param name the name of the decorator to find
- * @param decorators the array of decorators to search
- * @returns the decorator's record of arguments or undefined
- */
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-function hasDecorator(name: string, decorators: Array<tcgc.DecoratorInfo>): Record<string, any> | undefined {
-  for (const decorator of decorators) {
-    if (decorator.name === name) {
-      return decorator.arguments;
-    }
-  }
-  return undefined;
 }
 
 interface HttpStatusCodeRange {

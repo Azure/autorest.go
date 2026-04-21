@@ -34,7 +34,7 @@ export class Adapter {
     // however, it's filtered out by default so we need
     // to add it to the allow list of decorators
     const ctx = await tcgc.createSdkContext(context, '@azure-tools/typespec-go', {
-      additionalDecorators: ['TypeSpec\\.@encodedName'],
+      additionalDecorators: ['TypeSpec\\.@encodedName', '@deserializeEmptyStringAsNull'],
       disableUsageAccessPropagationToBase: true,
     });
 

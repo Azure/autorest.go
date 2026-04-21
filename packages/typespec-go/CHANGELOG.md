@@ -6,6 +6,10 @@
 
 * Fixed codegen for pageable operations that use a continuation token.
 
+### Features Added
+
+* Added support for the `@deserializeEmptyStringAsNull` decorator.
+
 ## 0.10.7 (2026-04-14)
 
 ### Bugs Fixed

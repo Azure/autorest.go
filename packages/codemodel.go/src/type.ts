@@ -212,6 +212,9 @@ export interface ModelFieldAnnotations {
 
   /** field is the discriminator for a discriminated type */
   isDiscriminator: boolean;
+
+  /** unmarshal an empty string as nil. the default is false */
+  unmarshalEmptyStringAsNil: boolean;
 }
 
 /** a struct that participates in serialization over the wire */
@@ -653,6 +656,7 @@ export class ModelFieldAnnotations implements ModelFieldAnnotations {
     this.readOnly = readOnly;
     this.isAdditionalProperties = isAddlProps;
     this.isDiscriminator = isDiscriminator;
+    this.unmarshalEmptyStringAsNil = false;
   }
 }
 

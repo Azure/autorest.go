@@ -178,3 +178,20 @@ export function getClientOption(option: ClientOptionKind, src: tcgc.SdkServiceMe
   }
   return undefined;
 }
+
+/**
+ * returns the record for the specified decorator's arguments if it exists
+ *
+ * @param name the name of the decorator to find
+ * @param decorators the array of decorators to search
+ * @returns the decorator's record of arguments or undefined
+ */
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+export function hasDecorator(name: string, decorators: Array<tcgc.DecoratorInfo>): Record<string, any> | undefined {
+  for (const decorator of decorators) {
+    if (decorator.name.endsWith(name)) {
+      return decorator.arguments;
+    }
+  }
+  return undefined;
+}
