@@ -996,7 +996,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     for (const pp of methodParamGroups.pathParams) {
       let paramValue: string;
       let optionalPathSep = false;
-      if (pp.style !== 'optional') {
+      if (pp.style === 'required') {
         // emit check to ensure path param isn't an empty string
         if (pp.kind === 'pathScalarParam') {
           const choiceIsString = function (type: go.PathScalarParameterType): boolean {
@@ -1027,6 +1027,12 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
           text += `${indent.pop().get()}}\n`;
           paramValue = joinedParamName;
         }
+      } else if (go.isClientSideDefault(pp.style)) {
+        paramValue = naming.uncapitalize(pp.name) + 'Default';
+        text += `${indent.get()}${paramValue} := ${helpers.formatLiteralValue(pp.style.defaultValue, false)}\n`;
+        text += emitParamGroupCheck(pp);
+        text += `${indent.push().get()}${paramValue} = ${helpers.getParamName(pp)}\n`;
+        text += `${indent.pop().get()}}\n`;
       } else {
         // param isn't required, so emit a local var with
         // the correct default value, then populate it with

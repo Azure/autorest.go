@@ -651,6 +651,11 @@ export class TypeAdapter {
       // property is on a model that's not the root discriminator
       annotations.isDiscriminator = true;
       field.defaultValue = this.getDiscriminatorLiteral(prop);
+    } else if (prop.clientDefaultValue) {
+      if (!go.isLiteralValueType(type)) {
+        throw new AdapterError('InternalError', `unexpected client side default kind ${type.kind} for field ${field.name}`, prop.__raw?.node);
+      }
+      field.defaultValue = new go.Literal(type, prop.clientDefaultValue);
     }
 
     field.xml = helpers.adaptXMLInfo({
