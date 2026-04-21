@@ -45,5 +45,5 @@ steps:
     - script: |
         cd packages/${{ parameters.PackagePath }}
         echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc
-        pnpm publish --access public --no-git-checks
+        pnpm publish --access public --no-git-checks --tag latest
       displayName: "Publish to npm ${{ parameters.PackagePath }}"
