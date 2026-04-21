@@ -996,7 +996,13 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     for (const pp of methodParamGroups.pathParams) {
       let paramValue: string;
       let optionalPathSep = false;
-      if (pp.style === 'required') {
+      if (pp.style === 'literal') {
+        // literals are always scalar types and require no empty checks
+        paramValue = helpers.formatParamValue(pp, imports, indent);
+      } else if (pp.style === 'required' || pp.location === 'client') {
+        // NOTE: we include client params here since they behave
+        // like required params (i.e. not grouped).
+
         // emit check to ensure path param isn't an empty string
         if (pp.kind === 'pathScalarParam') {
           const choiceIsString = function (type: go.PathScalarParameterType): boolean {
