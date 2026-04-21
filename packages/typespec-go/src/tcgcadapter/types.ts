@@ -663,11 +663,7 @@ export class TypeAdapter {
           // find the const value that matches the clientDefaultValue
           const constantValue = type.values.find((value) => value.value === prop.clientDefaultValue);
           if (!constantValue) {
-            throw new AdapterError(
-              'InternalError',
-              `unexpected constant client side default ${<string>prop.clientDefaultValue} for field ${field.name}`,
-              prop.__raw?.node,
-            );
+            throw new AdapterError('InternalError', `unexpected constant client side default ${<string>prop.clientDefaultValue} for field ${field.name}`, prop.__raw?.node);
           }
           defaultValue = constantValue;
           keyName = `literal-${naming.ensureNameCase(constantValue.type.name)}${naming.ensureNameCase(constantValue.name)}`;
@@ -677,7 +673,7 @@ export class TypeAdapter {
           keyName = `literal-${type.type}-${<string>defaultValue}`;
           break;
         default:
-          keyName = `literal-${type.kind}-${<string>defaultValue}`
+          keyName = `literal-${type.kind}-${<string>defaultValue}`;
       }
 
       let defaultValueType = <go.Literal>this.types.get(keyName);
