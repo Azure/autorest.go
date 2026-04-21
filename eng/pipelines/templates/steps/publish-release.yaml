@@ -45,5 +45,9 @@ steps:
     - script: |
         cd packages/${{ parameters.PackagePath }}
         echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc
-        pnpm publish --access public --no-git-checks
+        TAG_ARG=""
+        if node -e "process.exit(require('semver').prerelease(require('./package.json').version) ? 0 : 1)"; then
+          TAG_ARG="--tag next"
+        fi
+        pnpm publish --access public --no-git-checks $TAG_ARG
       displayName: "Publish to npm ${{ parameters.PackagePath }}"
