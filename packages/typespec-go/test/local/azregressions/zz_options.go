@@ -70,7 +70,10 @@ type ClientWithClientDefaultModelFieldOptions struct {
 
 // ClientWithClientDefaultValuesOptions contains the optional parameters for the Client.WithClientDefaultValues method.
 type ClientWithClientDefaultValuesOptions struct {
+	// The default value is ColorBlue.
 	Color *Color
+
+	// The default value is 123.
 	Count *int32
 }
 

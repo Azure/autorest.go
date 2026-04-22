@@ -683,6 +683,9 @@ export class TypeAdapter {
       }
 
       field.defaultValue = defaultValueType;
+      if (!field.docs.summary && !field.docs.description) {
+        field.docs.summary = helpers.getClientDefaultValueDoc(field.defaultValue);
+      }
     }
 
     field.xml = helpers.adaptXMLInfo({

@@ -48,6 +48,8 @@ type SomeModel struct {
 }
 
 type Widget struct {
+	// The default value is ColorGreen.
+	//
 	// REQUIRED
 	Color *Color
 

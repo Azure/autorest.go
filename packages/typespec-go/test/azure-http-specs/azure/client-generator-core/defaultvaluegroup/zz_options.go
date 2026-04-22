@@ -7,20 +7,27 @@ package defaultvaluegroup
 // ClientDefaultValueClientGetHeaderParameterOptions contains the optional parameters for the ClientDefaultValueClient.GetHeaderParameter
 // method.
 type ClientDefaultValueClientGetHeaderParameterOptions struct {
-	Accept       *string
+	// The default value is "application/json;odata.metadata=none".
+	Accept *string
+
+	// The default value is "default-value".
 	CustomHeader *string
 }
 
 // ClientDefaultValueClientGetOperationParameterOptions contains the optional parameters for the ClientDefaultValueClient.GetOperationParameter
 // method.
 type ClientDefaultValueClientGetOperationParameterOptions struct {
-	Format   *string
+	// The default value is "json".
+	Format *string
+
+	// The default value is 10.
 	PageSize *int32
 }
 
 // ClientDefaultValueClientGetPathParameterOptions contains the optional parameters for the ClientDefaultValueClient.GetPathParameter
 // method.
 type ClientDefaultValueClientGetPathParameterOptions struct {
+	// The default value is "default-segment1".
 	Segment1 *string
 }
 
