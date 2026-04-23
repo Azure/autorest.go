@@ -1,5 +1,11 @@
 # Release History
 
+## 0.10.9 (unreleased)
+
+### Bugs Fixed
+
+* Removed the `iso` acronym override from the naming conversion to avoid breaking changes during typespec migration (e.g. `Iso8601` no longer becomes `ISO8601`).
+
 ## 0.10.8 (unreleased)
 
 ### Bugs Fixed
