@@ -535,6 +535,90 @@ func (client *Client) spreadWithModelCreateRequest(ctx context.Context, name str
 	return req, nil
 }
 
+// WithClientDefaultModelField - model with a client-side default that's an enum
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientWithClientDefaultModelFieldOptions contains the optional parameters for the Client.WithClientDefaultModelField
+//     method.
+func (client *Client) WithClientDefaultModelField(ctx context.Context, widget Widget, options *ClientWithClientDefaultModelFieldOptions) (ClientWithClientDefaultModelFieldResponse, error) {
+	var err error
+	const operationName = "Client.WithClientDefaultModelField"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.withClientDefaultModelFieldCreateRequest(ctx, widget, options)
+	if err != nil {
+		return ClientWithClientDefaultModelFieldResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientWithClientDefaultModelFieldResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientWithClientDefaultModelFieldResponse{}, err
+	}
+	return ClientWithClientDefaultModelFieldResponse{}, nil
+}
+
+// withClientDefaultModelFieldCreateRequest creates the WithClientDefaultModelField request.
+func (client *Client) withClientDefaultModelFieldCreateRequest(ctx context.Context, widget Widget, _ *ClientWithClientDefaultModelFieldOptions) (*policy.Request, error) {
+	urlPath := "/model-with-default-const"
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, widget); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// WithClientDefaultValues - path params that aren't string types with client-side defaults
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientWithClientDefaultValuesOptions contains the optional parameters for the Client.WithClientDefaultValues
+//     method.
+func (client *Client) WithClientDefaultValues(ctx context.Context, options *ClientWithClientDefaultValuesOptions) (ClientWithClientDefaultValuesResponse, error) {
+	var err error
+	const operationName = "Client.WithClientDefaultValues"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.withClientDefaultValuesCreateRequest(ctx, options)
+	if err != nil {
+		return ClientWithClientDefaultValuesResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ClientWithClientDefaultValuesResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return ClientWithClientDefaultValuesResponse{}, err
+	}
+	return ClientWithClientDefaultValuesResponse{}, nil
+}
+
+// withClientDefaultValuesCreateRequest creates the WithClientDefaultValues request.
+func (client *Client) withClientDefaultValuesCreateRequest(ctx context.Context, options *ClientWithClientDefaultValuesOptions) (*policy.Request, error) {
+	urlPath := "/non-string-path-params/{color}/{count}"
+	colorDefault := ColorBlue
+	if options != nil && options.Color != nil {
+		colorDefault = *options.Color
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{color}", url.PathEscape(string(colorDefault)))
+	countDefault := int32(123)
+	if options != nil && options.Count != nil {
+		countDefault = *options.Count
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{count}", url.PathEscape(strconv.FormatInt(int64(countDefault), 10)))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
 // WithExpandParam - ensure that parameter names that start with invalid Go identifiers are properly cased
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ClientWithExpandParamOptions contains the optional parameters for the Client.WithExpandParam method.

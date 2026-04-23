@@ -913,6 +913,10 @@ export class ClientAdapter {
 
       adaptedParam.docs.summary = param.summary;
       adaptedParam.docs.description = param.doc;
+      if (go.isClientSideDefault(adaptedParam.style) && !adaptedParam.docs.summary && !adaptedParam.docs.description) {
+        adaptedParam.docs.summary = helpers.getClientDefaultValueDoc(adaptedParam.style.defaultValue);
+      }
+
       addParameterToMethod(adaptedParam, opParam);
 
       if (adaptedParam.style !== 'required' && adaptedParam.style !== 'literal') {

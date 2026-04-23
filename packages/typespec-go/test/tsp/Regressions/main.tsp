@@ -3,6 +3,7 @@ import "@azure-tools/typespec-azure-core";
 import "@typespec/http";
 import "@typespec/xml";
 
+using Azure.ClientGenerator.Core;
 using TypeSpec.Http;
 
 @service(#{
@@ -137,3 +138,37 @@ op withExpandParam(@query("$expand") $expand: string, @query("$top") $top?: int3
 @post
 @route("/double-decode/{path}")
 op doubleDecode(@path path: string, @query query: string): void;
+
+union Color {
+  red: "red",
+  green: "green",
+  blue: "blue",
+}
+
+/**
+ * path params that aren't string types with client-side defaults
+ */
+@post
+@route("/non-string-path-params/{color}/{count}")
+op withClientDefaultValues(
+  @Legacy.clientDefaultValue(Color.blue)
+  @path
+  color: Color,
+
+  @Legacy.clientDefaultValue(123)
+  @path
+  count: int32,
+):void;
+
+model Widget {
+  name: string;
+  @Legacy.clientDefaultValue(Color.green)
+  color: Color;
+}
+
+/**
+ * model with a client-side default that's an enum
+ */
+@put
+@route("/model-with-default-const")
+op withClientDefaultModelField(@body widget: Widget): void;

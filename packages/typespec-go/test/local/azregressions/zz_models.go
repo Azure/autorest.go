@@ -46,3 +46,13 @@ type SomeModel struct {
 	// REQUIRED
 	Name *string
 }
+
+type Widget struct {
+	// The default value is ColorGreen.
+	//
+	// REQUIRED
+	Color *Color
+
+	// REQUIRED
+	Name *string
+}

@@ -195,3 +195,22 @@ export function hasDecorator(name: string, decorators: Array<tcgc.DecoratorInfo>
   }
   return undefined;
 }
+
+/**
+ * returns a doc comment for a literal that's used as a client-side default.
+ *
+ * @param literal the literal for which to create the doc comment
+ * @returns the doc comment
+ */
+export function getClientDefaultValueDoc(literal: go.Literal): string {
+  let value = <string>literal.literal;
+  switch (literal.type.kind) {
+    case 'constant':
+      value = (<go.ConstantValue>literal.literal).name;
+      break;
+    case 'string':
+      value = `"${value}"`;
+      break;
+  }
+  return `The default value is ${value}.`;
+}

@@ -5,10 +5,12 @@
 ### Bugs Fixed
 
 * Fixed codegen for pageable operations that use a continuation token.
+* Removed incorrect empty path check for path parameters that specify `@clientDefaultValue`.
 
 ### Features Added
 
 * Added support for the `@deserializeEmptyStringAsNull` decorator.
+* Model properties with the `@clientDefaultValue` decorator will have a default value set in their marshaler.
 
 ## 0.10.7 (2026-04-14)
 

@@ -67,6 +67,16 @@ type ClientSpreadWithModelResponse struct {
 	// placeholder for future response values
 }
 
+// ClientWithClientDefaultModelFieldResponse contains the response from method Client.WithClientDefaultModelField.
+type ClientWithClientDefaultModelFieldResponse struct {
+	// placeholder for future response values
+}
+
+// ClientWithClientDefaultValuesResponse contains the response from method Client.WithClientDefaultValues.
+type ClientWithClientDefaultValuesResponse struct {
+	// placeholder for future response values
+}
+
 // ClientWithExpandParamResponse contains the response from method Client.WithExpandParam.
 type ClientWithExpandParamResponse struct {
 	// placeholder for future response values
