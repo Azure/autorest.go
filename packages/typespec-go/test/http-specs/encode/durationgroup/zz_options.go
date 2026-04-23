@@ -44,16 +44,6 @@ type DurationHeaderClientFloatSecondsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DurationHeaderClientISO8601ArrayOptions contains the optional parameters for the DurationHeaderClient.ISO8601Array method.
-type DurationHeaderClientISO8601ArrayOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DurationHeaderClientISO8601Options contains the optional parameters for the DurationHeaderClient.ISO8601 method.
-type DurationHeaderClientISO8601Options struct {
-	// placeholder for future optional parameters
-}
-
 // DurationHeaderClientInt32MillisecondsArrayOptions contains the optional parameters for the DurationHeaderClient.Int32MillisecondsArray
 // method.
 type DurationHeaderClientInt32MillisecondsArrayOptions struct {
@@ -80,6 +70,16 @@ type DurationHeaderClientInt32SecondsLargerUnitOptions struct {
 
 // DurationHeaderClientInt32SecondsOptions contains the optional parameters for the DurationHeaderClient.Int32Seconds method.
 type DurationHeaderClientInt32SecondsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DurationHeaderClientIso8601ArrayOptions contains the optional parameters for the DurationHeaderClient.Iso8601Array method.
+type DurationHeaderClientIso8601ArrayOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DurationHeaderClientIso8601Options contains the optional parameters for the DurationHeaderClient.Iso8601 method.
+type DurationHeaderClientIso8601Options struct {
 	// placeholder for future optional parameters
 }
 
@@ -136,11 +136,6 @@ type DurationPropertyClientFloatSecondsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DurationPropertyClientISO8601Options contains the optional parameters for the DurationPropertyClient.ISO8601 method.
-type DurationPropertyClientISO8601Options struct {
-	// placeholder for future optional parameters
-}
-
 // DurationPropertyClientInt32MillisecondsLargerUnitOptions contains the optional parameters for the DurationPropertyClient.Int32MillisecondsLargerUnit
 // method.
 type DurationPropertyClientInt32MillisecondsLargerUnitOptions struct {
@@ -162,6 +157,11 @@ type DurationPropertyClientInt32SecondsLargerUnitOptions struct {
 // DurationPropertyClientInt32SecondsOptions contains the optional parameters for the DurationPropertyClient.Int32Seconds
 // method.
 type DurationPropertyClientInt32SecondsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DurationPropertyClientIso8601Options contains the optional parameters for the DurationPropertyClient.Iso8601 method.
+type DurationPropertyClientIso8601Options struct {
 	// placeholder for future optional parameters
 }
 
@@ -204,11 +204,6 @@ type DurationQueryClientFloatSecondsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DurationQueryClientISO8601Options contains the optional parameters for the DurationQueryClient.ISO8601 method.
-type DurationQueryClientISO8601Options struct {
-	// placeholder for future optional parameters
-}
-
 // DurationQueryClientInt32MillisecondsArrayOptions contains the optional parameters for the DurationQueryClient.Int32MillisecondsArray
 // method.
 type DurationQueryClientInt32MillisecondsArrayOptions struct {
@@ -241,5 +236,10 @@ type DurationQueryClientInt32SecondsLargerUnitOptions struct {
 
 // DurationQueryClientInt32SecondsOptions contains the optional parameters for the DurationQueryClient.Int32Seconds method.
 type DurationQueryClientInt32SecondsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DurationQueryClientIso8601Options contains the optional parameters for the DurationQueryClient.Iso8601 method.
+type DurationQueryClientIso8601Options struct {
 	// placeholder for future optional parameters
 }

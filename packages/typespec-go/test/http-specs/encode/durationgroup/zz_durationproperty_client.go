@@ -469,56 +469,6 @@ func (client *DurationPropertyClient) floatSecondsLargerUnitHandleResponse(resp 
 	return result, nil
 }
 
-// ISO8601 -
-// If the operation fails it returns an *azcore.ResponseError type.
-//   - options - DurationPropertyClientISO8601Options contains the optional parameters for the DurationPropertyClient.ISO8601
-//     method.
-func (client *DurationPropertyClient) ISO8601(ctx context.Context, body ISO8601DurationProperty, options *DurationPropertyClientISO8601Options) (DurationPropertyClientISO8601Response, error) {
-	var err error
-	const operationName = "DurationPropertyClient.ISO8601"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
-	req, err := client.iso8601CreateRequest(ctx, body, options)
-	if err != nil {
-		return DurationPropertyClientISO8601Response{}, err
-	}
-	httpResp, err := client.internal.Pipeline().Do(req)
-	if err != nil {
-		return DurationPropertyClientISO8601Response{}, err
-	}
-	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
-		err = runtime.NewResponseError(httpResp)
-		return DurationPropertyClientISO8601Response{}, err
-	}
-	resp, err := client.iso8601HandleResponse(httpResp)
-	return resp, err
-}
-
-// iso8601CreateRequest creates the ISO8601 request.
-func (client *DurationPropertyClient) iso8601CreateRequest(ctx context.Context, body ISO8601DurationProperty, _ *DurationPropertyClientISO8601Options) (*policy.Request, error) {
-	urlPath := "/encode/duration/property/iso8601"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
-		return nil, err
-	}
-	return req, nil
-}
-
-// iso8601HandleResponse handles the ISO8601 response.
-func (client *DurationPropertyClient) iso8601HandleResponse(resp *http.Response) (DurationPropertyClientISO8601Response, error) {
-	result := DurationPropertyClientISO8601Response{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.ISO8601DurationProperty); err != nil {
-		return DurationPropertyClientISO8601Response{}, err
-	}
-	return result, nil
-}
-
 // Int32Milliseconds -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationPropertyClientInt32MillisecondsOptions contains the optional parameters for the DurationPropertyClient.Int32Milliseconds
@@ -715,6 +665,56 @@ func (client *DurationPropertyClient) int32SecondsLargerUnitHandleResponse(resp 
 	result := DurationPropertyClientInt32SecondsLargerUnitResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32SecondsLargerUnitDurationProperty); err != nil {
 		return DurationPropertyClientInt32SecondsLargerUnitResponse{}, err
+	}
+	return result, nil
+}
+
+// Iso8601 -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationPropertyClientIso8601Options contains the optional parameters for the DurationPropertyClient.Iso8601
+//     method.
+func (client *DurationPropertyClient) Iso8601(ctx context.Context, body ISO8601DurationProperty, options *DurationPropertyClientIso8601Options) (DurationPropertyClientIso8601Response, error) {
+	var err error
+	const operationName = "DurationPropertyClient.Iso8601"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.iso8601CreateRequest(ctx, body, options)
+	if err != nil {
+		return DurationPropertyClientIso8601Response{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationPropertyClientIso8601Response{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationPropertyClientIso8601Response{}, err
+	}
+	resp, err := client.iso8601HandleResponse(httpResp)
+	return resp, err
+}
+
+// iso8601CreateRequest creates the Iso8601 request.
+func (client *DurationPropertyClient) iso8601CreateRequest(ctx context.Context, body ISO8601DurationProperty, _ *DurationPropertyClientIso8601Options) (*policy.Request, error) {
+	urlPath := "/encode/duration/property/iso8601"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// iso8601HandleResponse handles the Iso8601 response.
+func (client *DurationPropertyClient) iso8601HandleResponse(resp *http.Response) (DurationPropertyClientIso8601Response, error) {
+	result := DurationPropertyClientIso8601Response{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ISO8601DurationProperty); err != nil {
+		return DurationPropertyClientIso8601Response{}, err
 	}
 	return result, nil
 }

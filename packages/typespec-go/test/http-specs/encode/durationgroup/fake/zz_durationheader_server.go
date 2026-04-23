@@ -47,14 +47,6 @@ type DurationHeaderServer struct {
 	// HTTP status codes to indicate success: http.StatusNoContent
 	FloatSecondsLargerUnit func(ctx context.Context, duration float32, options *durationgroup.DurationHeaderClientFloatSecondsLargerUnitOptions) (resp azfake.Responder[durationgroup.DurationHeaderClientFloatSecondsLargerUnitResponse], errResp azfake.ErrorResponder)
 
-	// ISO8601 is the fake for method DurationHeaderClient.ISO8601
-	// HTTP status codes to indicate success: http.StatusNoContent
-	ISO8601 func(ctx context.Context, duration string, options *durationgroup.DurationHeaderClientISO8601Options) (resp azfake.Responder[durationgroup.DurationHeaderClientISO8601Response], errResp azfake.ErrorResponder)
-
-	// ISO8601Array is the fake for method DurationHeaderClient.ISO8601Array
-	// HTTP status codes to indicate success: http.StatusNoContent
-	ISO8601Array func(ctx context.Context, duration []string, options *durationgroup.DurationHeaderClientISO8601ArrayOptions) (resp azfake.Responder[durationgroup.DurationHeaderClientISO8601ArrayResponse], errResp azfake.ErrorResponder)
-
 	// Int32Milliseconds is the fake for method DurationHeaderClient.Int32Milliseconds
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Int32Milliseconds func(ctx context.Context, duration int32, options *durationgroup.DurationHeaderClientInt32MillisecondsOptions) (resp azfake.Responder[durationgroup.DurationHeaderClientInt32MillisecondsResponse], errResp azfake.ErrorResponder)
@@ -74,6 +66,14 @@ type DurationHeaderServer struct {
 	// Int32SecondsLargerUnit is the fake for method DurationHeaderClient.Int32SecondsLargerUnit
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Int32SecondsLargerUnit func(ctx context.Context, duration int32, options *durationgroup.DurationHeaderClientInt32SecondsLargerUnitOptions) (resp azfake.Responder[durationgroup.DurationHeaderClientInt32SecondsLargerUnitResponse], errResp azfake.ErrorResponder)
+
+	// Iso8601 is the fake for method DurationHeaderClient.Iso8601
+	// HTTP status codes to indicate success: http.StatusNoContent
+	Iso8601 func(ctx context.Context, duration string, options *durationgroup.DurationHeaderClientIso8601Options) (resp azfake.Responder[durationgroup.DurationHeaderClientIso8601Response], errResp azfake.ErrorResponder)
+
+	// Iso8601Array is the fake for method DurationHeaderClient.Iso8601Array
+	// HTTP status codes to indicate success: http.StatusNoContent
+	Iso8601Array func(ctx context.Context, duration []string, options *durationgroup.DurationHeaderClientIso8601ArrayOptions) (resp azfake.Responder[durationgroup.DurationHeaderClientIso8601ArrayResponse], errResp azfake.ErrorResponder)
 }
 
 // NewDurationHeaderServerTransport creates a new instance of DurationHeaderServerTransport with the provided implementation.
@@ -124,10 +124,6 @@ func (d *DurationHeaderServerTransport) dispatchToMethodFake(req *http.Request, 
 				res.resp, res.err = d.dispatchFloatSeconds(req)
 			case "DurationHeaderClient.FloatSecondsLargerUnit":
 				res.resp, res.err = d.dispatchFloatSecondsLargerUnit(req)
-			case "DurationHeaderClient.ISO8601":
-				res.resp, res.err = d.dispatchISO8601(req)
-			case "DurationHeaderClient.ISO8601Array":
-				res.resp, res.err = d.dispatchISO8601Array(req)
 			case "DurationHeaderClient.Int32Milliseconds":
 				res.resp, res.err = d.dispatchInt32Milliseconds(req)
 			case "DurationHeaderClient.Int32MillisecondsArray":
@@ -138,6 +134,10 @@ func (d *DurationHeaderServerTransport) dispatchToMethodFake(req *http.Request, 
 				res.resp, res.err = d.dispatchInt32Seconds(req)
 			case "DurationHeaderClient.Int32SecondsLargerUnit":
 				res.resp, res.err = d.dispatchInt32SecondsLargerUnit(req)
+			case "DurationHeaderClient.Iso8601":
+				res.resp, res.err = d.dispatchIso8601(req)
+			case "DurationHeaderClient.Iso8601Array":
+				res.resp, res.err = d.dispatchIso8601Array(req)
 			default:
 				res.err = fmt.Errorf("unhandled API %s", method)
 			}
@@ -335,44 +335,6 @@ func (d *DurationHeaderServerTransport) dispatchFloatSecondsLargerUnit(req *http
 	return resp, nil
 }
 
-func (d *DurationHeaderServerTransport) dispatchISO8601(req *http.Request) (*http.Response, error) {
-	if d.srv.ISO8601 == nil {
-		return nil, &nonRetriableError{errors.New("fake for method ISO8601 not implemented")}
-	}
-	respr, errRespr := d.srv.ISO8601(req.Context(), getHeaderValue(req.Header, "duration"), nil)
-	if respErr := server.GetError(errRespr, req); respErr != nil {
-		return nil, respErr
-	}
-	respContent := server.GetResponseContent(respr)
-	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
-	}
-	resp, err := server.NewResponse(respContent, req, nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (d *DurationHeaderServerTransport) dispatchISO8601Array(req *http.Request) (*http.Response, error) {
-	if d.srv.ISO8601Array == nil {
-		return nil, &nonRetriableError{errors.New("fake for method ISO8601Array not implemented")}
-	}
-	respr, errRespr := d.srv.ISO8601Array(req.Context(), splitHelper(getHeaderValue(req.Header, "duration"), ","), nil)
-	if respErr := server.GetError(errRespr, req); respErr != nil {
-		return nil, respErr
-	}
-	respContent := server.GetResponseContent(respr)
-	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
-	}
-	resp, err := server.NewResponse(respContent, req, nil)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
 func (d *DurationHeaderServerTransport) dispatchInt32Milliseconds(req *http.Request) (*http.Response, error) {
 	if d.srv.Int32Milliseconds == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Int32Milliseconds not implemented")}
@@ -503,6 +465,44 @@ func (d *DurationHeaderServerTransport) dispatchInt32SecondsLargerUnit(req *http
 		return nil, err
 	}
 	respr, errRespr := d.srv.Int32SecondsLargerUnit(req.Context(), durationParam, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (d *DurationHeaderServerTransport) dispatchIso8601(req *http.Request) (*http.Response, error) {
+	if d.srv.Iso8601 == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Iso8601 not implemented")}
+	}
+	respr, errRespr := d.srv.Iso8601(req.Context(), getHeaderValue(req.Header, "duration"), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !slices.Contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (d *DurationHeaderServerTransport) dispatchIso8601Array(req *http.Request) (*http.Response, error) {
+	if d.srv.Iso8601Array == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Iso8601Array not implemented")}
+	}
+	respr, errRespr := d.srv.Iso8601Array(req.Context(), splitHelper(getHeaderValue(req.Header, "duration"), ","), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
