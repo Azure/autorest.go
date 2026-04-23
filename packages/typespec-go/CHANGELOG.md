@@ -1,12 +1,10 @@
 # Release History
 
-## 0.10.9 (unreleased)
+## 0.11.0 (unreleased)
 
-### Bugs Fixed
+### Breaking Changes
 
 * Removed the `iso` acronym override from the naming conversion to avoid breaking changes during typespec migration (e.g. `Iso8601` no longer becomes `ISO8601`).
-
-## 0.10.8 (unreleased)
 
 ### Bugs Fixed
 
@@ -15,6 +13,10 @@
 ### Features Added
 
 * Added support for the `@deserializeEmptyStringAsNull` decorator.
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
 
 ## 0.10.7 (2026-04-14)
 
