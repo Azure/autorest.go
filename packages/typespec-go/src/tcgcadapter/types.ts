@@ -478,7 +478,21 @@ export class TypeAdapter {
    * @returns a Go literal
    */
   getLiteral<T extends go.LiteralType = go.LiteralType>(type: T, value: boolean | number | string): go.Literal<T> {
-    const literalKey = `literal-${type.kind}-${value}`;
+    let literalKey = `literal-${type.kind}`;
+    switch (type.kind) {
+      case 'constant':
+        literalKey = `${literalKey}-${type.name}`;
+        break;
+      case 'encodedBytes':
+        literalKey = `${literalKey}-${type.encoding}`;
+        break;
+      case 'scalar':
+        literalKey = `${literalKey}-${type.type}`;
+        break;
+      case 'time':
+        literalKey = `${literalKey}-${type.format}-${type.utc}`;
+    }
+    literalKey = `${literalKey}-${value}`;
     let literalType = this.types.get(literalKey);
     if (!literalType) {
       literalType = new go.Literal(type, value);

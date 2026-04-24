@@ -299,6 +299,7 @@ function sortContent(pkg: go.PackageContent): void {
   for (const iface of pkg.interfaces) {
     // we sort by literal value so that the switch/case statements in polymorphic_helpers.go
     // are ordered by the literal value which can be somewhat different from the model name.
+    // when constant values are used, we sort by the Go identifier instead.
     iface.possibleTypes.sort((a: go.PolymorphicModel, b: go.PolymorphicModel) => {
       const aValue = a.discriminatorValue!.type.kind === 'constant' ? (<go.ConstantValue>a.discriminatorValue!.literal).name : <string>a.discriminatorValue!.literal;
       const bValue = b.discriminatorValue!.type.kind === 'constant' ? (<go.ConstantValue>b.discriminatorValue!.literal).name : <string>b.discriminatorValue!.literal;

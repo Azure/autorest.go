@@ -1300,7 +1300,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
           // find the param
           for (const param of method.parameters) {
             if (param.kind === 'headerScalarParam' && param.name === src.name) {
-              let paramName = param.name;
+              let paramName = helpers.getParamName(param);
               if (param.type.kind === 'constant') {
                 paramName = `string(${paramName})`;
               }
