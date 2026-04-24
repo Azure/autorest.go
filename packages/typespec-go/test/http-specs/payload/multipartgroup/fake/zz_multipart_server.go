@@ -50,7 +50,7 @@ func (m *MultiPartServerTransport) dispatchToClientFake(req *http.Request, clien
 	var err error
 
 	switch client {
-	case "MultiPartFormDataClient":
+	case "MultiPartFormDataClient", "MultiPartFormDataFileClient", "MultiPartFormDataHTTPPartsClient", "MultiPartFormDataHTTPPartsContentTypeClient", "MultiPartFormDataHTTPPartsNonStringClient":
 		initServer(&m.trMu, &m.trMultiPartFormDataServer, func() *MultiPartFormDataServerTransport {
 			return NewMultiPartFormDataServerTransport(&m.srv.MultiPartFormDataServer)
 		})

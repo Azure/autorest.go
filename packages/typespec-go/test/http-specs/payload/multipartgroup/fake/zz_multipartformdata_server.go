@@ -111,7 +111,7 @@ func (m *MultiPartFormDataServerTransport) dispatchToClientFake(req *http.Reques
 			return NewMultiPartFormDataFileServerTransport(&m.srv.MultiPartFormDataFileServer)
 		})
 		resp, err = m.trMultiPartFormDataFileServer.Do(req)
-	case "MultiPartFormDataHTTPPartsClient":
+	case "MultiPartFormDataHTTPPartsClient", "MultiPartFormDataHTTPPartsContentTypeClient", "MultiPartFormDataHTTPPartsNonStringClient":
 		initServer(&m.trMu, &m.trMultiPartFormDataHTTPPartsServer, func() *MultiPartFormDataHTTPPartsServerTransport {
 			return NewMultiPartFormDataHTTPPartsServerTransport(&m.srv.MultiPartFormDataHTTPPartsServer)
 		})

@@ -59,7 +59,6 @@ func TestFakeFormDataClient_Basic(t *testing.T) {
 }
 
 func TestFakeFormDataFileClient_UploadFileRequiredFilename(t *testing.T) {
-	t.Skip("https://github.com/Azure/autorest.go/issues/1937")
 	calledUpload := false
 	srv := fake.MultiPartServer{
 		MultiPartFormDataServer: fake.MultiPartFormDataServer{
@@ -86,7 +85,6 @@ func TestFakeFormDataFileClient_UploadFileRequiredFilename(t *testing.T) {
 }
 
 func TestFakeFormDataHTTPPartsClient_JSONArrayAndFileArray(t *testing.T) {
-	t.Skip("https://github.com/Azure/autorest.go/issues/1937")
 	calledJSONArrayAndFileArray := false
 	srv := fake.MultiPartServer{
 		MultiPartFormDataServer: fake.MultiPartFormDataServer{
@@ -143,7 +141,6 @@ func TestFakeFormDataHTTPPartsClient_JSONArrayAndFileArray(t *testing.T) {
 }
 
 func TestFakeFormDataHTTPPartsContentTypeClient_RequiredContentType(t *testing.T) {
-	t.Skip("https://github.com/Azure/autorest.go/issues/1937")
 	calledRequiredContentType := false
 	srv := fake.MultiPartServer{
 		MultiPartFormDataServer: fake.MultiPartFormDataServer{
@@ -175,7 +172,6 @@ func TestFakeFormDataHTTPPartsContentTypeClient_RequiredContentType(t *testing.T
 }
 
 func TestFakeFormDataHTTPPartsNonStringClient_Float(t *testing.T) {
-	t.Skip("https://github.com/Azure/autorest.go/issues/1937")
 	calledFloat := false
 	srv := fake.MultiPartServer{
 		MultiPartFormDataServer: fake.MultiPartFormDataServer{

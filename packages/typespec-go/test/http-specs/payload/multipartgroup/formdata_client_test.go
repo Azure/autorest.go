@@ -156,10 +156,30 @@ func TestFormDataClient_MultiBinaryParts(t *testing.T) {
 
 func TestFormDataClient_OptionalParts(t *testing.T) {
 	client := newClient(t)
+
+	// first time with only id
+	resp, err := client.NewMultiPartFormDataClient().OptionalParts(context.Background(), multipartgroup.MultiPartOptionalRequest{
+		ID: to.Ptr("123"),
+	}, nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+
+	// second time with only profileImage
 	jpgFile, err := os.OpenFile(jpgPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
 	defer func() { _ = jpgFile.Close() }()
-	resp, err := client.NewMultiPartFormDataClient().OptionalParts(context.Background(), multipartgroup.MultiPartOptionalRequest{
+	resp, err = client.NewMultiPartFormDataClient().OptionalParts(context.Background(), multipartgroup.MultiPartOptionalRequest{
+		ProfileImage: &streaming.MultipartContent{
+			Body: jpgFile,
+		},
+	}, nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+
+	// third time with both id and profileImage
+	_, err = jpgFile.Seek(0, io.SeekStart)
+	require.NoError(t, err)
+	resp, err = client.NewMultiPartFormDataClient().OptionalParts(context.Background(), multipartgroup.MultiPartOptionalRequest{
 		ID: to.Ptr("123"),
 		ProfileImage: &streaming.MultipartContent{
 			Body: jpgFile,

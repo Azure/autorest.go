@@ -299,13 +299,48 @@ function generateServerTransportClientDispatch(serverTransport: string, subClien
     return '';
   }
 
+  /** gathers all children, not just immediate children, in breadth first order */
+  const getAllSubClientsForCase = function (client: go.Client): Array<go.Client> {
+    const result = new Array<go.Client>();
+    const visited = new Set<go.Client>();
+    const queue = new Array<go.Client>();
+    for (const clientAccessor of client.clientAccessors) {
+      if (helpers.clientHasNoExportedMethods(clientAccessor.returns)) {
+        continue;
+      }
+      if (!visited.has(clientAccessor.returns)) {
+        visited.add(clientAccessor.returns);
+        queue.push(clientAccessor.returns);
+        result.push(clientAccessor.returns);
+      }
+    }
+    while (queue.length > 0) {
+      const current = queue.shift()!;
+      for (const clientAccessor of current.clientAccessors) {
+        if (helpers.clientHasNoExportedMethods(clientAccessor.returns)) {
+          continue;
+        }
+        if (!visited.has(clientAccessor.returns)) {
+          visited.add(clientAccessor.returns);
+          queue.push(clientAccessor.returns);
+          result.push(clientAccessor.returns);
+        }
+      }
+    }
+    return result;
+  };
+
   const receiverName = serverTransport[0].toLowerCase();
   imports.add('strings');
   let content = `func (${receiverName} *${serverTransport}) ${dispatchToClientFake}(req *http.Request, client string) (*http.Response, error) {\n`;
   content += `${indent.get()}var resp *http.Response\n${indent.get()}var err error\n\n`;
   content += `${indent.get()}switch client {\n`;
   for (const subClient of subClients) {
-    content += `${indent.get()}case "${subClient.name}":\n`;
+    // we must include all child clients, not just the immediate children
+    const subClientsForCase = getAllSubClientsForCase(subClient);
+    const allClientNamesForCase = new Array<string>(`"${subClient.name}"`);
+    allClientNamesForCase.push(...subClientsForCase.map((each) => `"${each.name}"`));
+    content += `${indent.get()}case ${allClientNamesForCase.join(', ')}:\n`;
     const serverName = getServerName(subClient);
     indent.push();
     content += `${indent.get()}initServer(&${receiverName}.trMu, &${receiverName}.tr${serverName}, func() *${serverName}Transport {\n`;

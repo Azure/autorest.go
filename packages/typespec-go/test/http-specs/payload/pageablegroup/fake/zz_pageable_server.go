@@ -63,7 +63,7 @@ func (p *PageableServerTransport) dispatchToClientFake(req *http.Request, client
 			return NewPageablePageSizeServerTransport(&p.srv.PageablePageSizeServer)
 		})
 		resp, err = p.trPageablePageSizeServer.Do(req)
-	case "PageableServerDrivenPaginationClient":
+	case "PageableServerDrivenPaginationClient", "PageableServerDrivenPaginationAlternateInitialVerbClient", "PageableServerDrivenPaginationContinuationTokenClient":
 		initServer(&p.trMu, &p.trPageableServerDrivenPaginationServer, func() *PageableServerDrivenPaginationServerTransport {
 			return NewPageableServerDrivenPaginationServerTransport(&p.srv.PageableServerDrivenPaginationServer)
 		})
