@@ -39,16 +39,6 @@ type DurationHeaderClientFloatSecondsResponse struct {
 	// placeholder for future response values
 }
 
-// DurationHeaderClientISO8601ArrayResponse contains the response from method DurationHeaderClient.ISO8601Array.
-type DurationHeaderClientISO8601ArrayResponse struct {
-	// placeholder for future response values
-}
-
-// DurationHeaderClientISO8601Response contains the response from method DurationHeaderClient.ISO8601.
-type DurationHeaderClientISO8601Response struct {
-	// placeholder for future response values
-}
-
 // DurationHeaderClientInt32MillisecondsArrayResponse contains the response from method DurationHeaderClient.Int32MillisecondsArray.
 type DurationHeaderClientInt32MillisecondsArrayResponse struct {
 	// placeholder for future response values
@@ -71,6 +61,16 @@ type DurationHeaderClientInt32SecondsLargerUnitResponse struct {
 
 // DurationHeaderClientInt32SecondsResponse contains the response from method DurationHeaderClient.Int32Seconds.
 type DurationHeaderClientInt32SecondsResponse struct {
+	// placeholder for future response values
+}
+
+// DurationHeaderClientIso8601ArrayResponse contains the response from method DurationHeaderClient.Iso8601Array.
+type DurationHeaderClientIso8601ArrayResponse struct {
+	// placeholder for future response values
+}
+
+// DurationHeaderClientIso8601Response contains the response from method DurationHeaderClient.Iso8601.
+type DurationHeaderClientIso8601Response struct {
 	// placeholder for future response values
 }
 
@@ -119,11 +119,6 @@ type DurationPropertyClientFloatSecondsResponse struct {
 	FloatSecondsDurationProperty
 }
 
-// DurationPropertyClientISO8601Response contains the response from method DurationPropertyClient.ISO8601.
-type DurationPropertyClientISO8601Response struct {
-	ISO8601DurationProperty
-}
-
 // DurationPropertyClientInt32MillisecondsLargerUnitResponse contains the response from method DurationPropertyClient.Int32MillisecondsLargerUnit.
 type DurationPropertyClientInt32MillisecondsLargerUnitResponse struct {
 	Int32MillisecondsLargerUnitDurationProperty
@@ -142,6 +137,11 @@ type DurationPropertyClientInt32SecondsLargerUnitResponse struct {
 // DurationPropertyClientInt32SecondsResponse contains the response from method DurationPropertyClient.Int32Seconds.
 type DurationPropertyClientInt32SecondsResponse struct {
 	Int32SecondsDurationProperty
+}
+
+// DurationPropertyClientIso8601Response contains the response from method DurationPropertyClient.Iso8601.
+type DurationPropertyClientIso8601Response struct {
+	ISO8601DurationProperty
 }
 
 // DurationQueryClientDefaultResponse contains the response from method DurationQueryClient.Default.
@@ -179,11 +179,6 @@ type DurationQueryClientFloatSecondsResponse struct {
 	// placeholder for future response values
 }
 
-// DurationQueryClientISO8601Response contains the response from method DurationQueryClient.ISO8601.
-type DurationQueryClientISO8601Response struct {
-	// placeholder for future response values
-}
-
 // DurationQueryClientInt32MillisecondsArrayResponse contains the response from method DurationQueryClient.Int32MillisecondsArray.
 type DurationQueryClientInt32MillisecondsArrayResponse struct {
 	// placeholder for future response values
@@ -211,5 +206,10 @@ type DurationQueryClientInt32SecondsLargerUnitResponse struct {
 
 // DurationQueryClientInt32SecondsResponse contains the response from method DurationQueryClient.Int32Seconds.
 type DurationQueryClientInt32SecondsResponse struct {
+	// placeholder for future response values
+}
+
+// DurationQueryClientIso8601Response contains the response from method DurationQueryClient.Iso8601.
+type DurationQueryClientIso8601Response struct {
 	// placeholder for future response values
 }

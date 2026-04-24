@@ -1,6 +1,10 @@
 # Release History
 
-## 0.10.8 (unreleased)
+## 0.11.0 (2026-04-24)
+
+### Breaking Changes
+
+* Removed the `iso` acronym override from the naming conversion to avoid breaking changes during typespec migration (e.g. `Iso8601` no longer becomes `ISO8601`).
 
 ### Bugs Fixed
 
@@ -11,6 +15,10 @@
 
 * Added support for the `@deserializeEmptyStringAsNull` decorator.
 * Model properties with the `@clientDefaultValue` decorator will have a default value set in their marshaler.
+
+### Other Changes
+
+* Updated to the latest tsp toolset.
 
 ## 0.10.7 (2026-04-14)
 

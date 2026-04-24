@@ -28,7 +28,6 @@ export class Adapter {
    * @returns a new Adapter for the provided context
    */
   static async create(context: tsp.EmitContext<GoEmitterOptions>): Promise<Adapter> {
-    naming.CommonAcronyms.push('^iso\\d+$');
     // @encodedName can be used in XML scenarios, it
     // is effectively the same as TypeSpec.Xml.@name.
     // however, it's filtered out by default so we need

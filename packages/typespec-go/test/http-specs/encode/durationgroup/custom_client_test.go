@@ -108,18 +108,18 @@ func TestHeaderClientInt32SecondsLargerUnit(t *testing.T) {
 	require.Zero(t, resp)
 }
 
-func TestHeaderClientISO8601(t *testing.T) {
+func TestHeaderClientIso8601(t *testing.T) {
 	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	resp, err := client.NewDurationHeaderClient().ISO8601(context.Background(), "P40D", nil)
+	resp, err := client.NewDurationHeaderClient().Iso8601(context.Background(), "P40D", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
-func TestHeaderClientISO8601Array(t *testing.T) {
+func TestHeaderClientIso8601Array(t *testing.T) {
 	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	resp, err := client.NewDurationHeaderClient().ISO8601Array(context.Background(), []string{"P40D", "P50D"}, nil)
+	resp, err := client.NewDurationHeaderClient().Iso8601Array(context.Background(), []string{"P40D", "P50D"}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -279,10 +279,10 @@ func TestPropertyClientInt32SecondsLargerUnit(t *testing.T) {
 	require.EqualValues(t, int32(120), *resp.Value)
 }
 
-func TestPropertyClientISO8601(t *testing.T) {
+func TestPropertyClientIso8601(t *testing.T) {
 	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	resp, err := client.NewDurationPropertyClient().ISO8601(context.Background(), durationgroup.ISO8601DurationProperty{
+	resp, err := client.NewDurationPropertyClient().Iso8601(context.Background(), durationgroup.ISO8601DurationProperty{
 		Value: to.Ptr("P40D"),
 	}, nil)
 	require.NoError(t, err)
@@ -394,10 +394,10 @@ func TestQueryClientInt32SecondsLargerUnit(t *testing.T) {
 	require.Zero(t, resp)
 }
 
-func TestQueryClientISO8601(t *testing.T) {
+func TestQueryClientIso8601(t *testing.T) {
 	client, err := durationgroup.NewDurationClientWithNoCredential("http://localhost:3000", nil)
 	require.NoError(t, err)
-	resp, err := client.NewDurationQueryClient().ISO8601(context.Background(), "P40D", nil)
+	resp, err := client.NewDurationQueryClient().Iso8601(context.Background(), "P40D", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

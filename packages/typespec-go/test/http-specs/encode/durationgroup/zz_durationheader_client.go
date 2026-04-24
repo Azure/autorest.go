@@ -273,77 +273,6 @@ func (client *DurationHeaderClient) floatSecondsLargerUnitCreateRequest(ctx cont
 	return req, nil
 }
 
-// ISO8601 -
-// If the operation fails it returns an *azcore.ResponseError type.
-//   - options - DurationHeaderClientISO8601Options contains the optional parameters for the DurationHeaderClient.ISO8601 method.
-func (client *DurationHeaderClient) ISO8601(ctx context.Context, duration string, options *DurationHeaderClientISO8601Options) (DurationHeaderClientISO8601Response, error) {
-	var err error
-	const operationName = "DurationHeaderClient.ISO8601"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
-	req, err := client.iso8601CreateRequest(ctx, duration, options)
-	if err != nil {
-		return DurationHeaderClientISO8601Response{}, err
-	}
-	httpResp, err := client.internal.Pipeline().Do(req)
-	if err != nil {
-		return DurationHeaderClientISO8601Response{}, err
-	}
-	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
-		err = runtime.NewResponseError(httpResp)
-		return DurationHeaderClientISO8601Response{}, err
-	}
-	return DurationHeaderClientISO8601Response{}, nil
-}
-
-// iso8601CreateRequest creates the ISO8601 request.
-func (client *DurationHeaderClient) iso8601CreateRequest(ctx context.Context, duration string, _ *DurationHeaderClientISO8601Options) (*policy.Request, error) {
-	urlPath := "/encode/duration/header/iso8601"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	req.Raw().Header["duration"] = []string{duration}
-	return req, nil
-}
-
-// ISO8601Array -
-// If the operation fails it returns an *azcore.ResponseError type.
-//   - options - DurationHeaderClientISO8601ArrayOptions contains the optional parameters for the DurationHeaderClient.ISO8601Array
-//     method.
-func (client *DurationHeaderClient) ISO8601Array(ctx context.Context, duration []string, options *DurationHeaderClientISO8601ArrayOptions) (DurationHeaderClientISO8601ArrayResponse, error) {
-	var err error
-	const operationName = "DurationHeaderClient.ISO8601Array"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
-	req, err := client.iso8601ArrayCreateRequest(ctx, duration, options)
-	if err != nil {
-		return DurationHeaderClientISO8601ArrayResponse{}, err
-	}
-	httpResp, err := client.internal.Pipeline().Do(req)
-	if err != nil {
-		return DurationHeaderClientISO8601ArrayResponse{}, err
-	}
-	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
-		err = runtime.NewResponseError(httpResp)
-		return DurationHeaderClientISO8601ArrayResponse{}, err
-	}
-	return DurationHeaderClientISO8601ArrayResponse{}, nil
-}
-
-// iso8601ArrayCreateRequest creates the ISO8601Array request.
-func (client *DurationHeaderClient) iso8601ArrayCreateRequest(ctx context.Context, duration []string, _ *DurationHeaderClientISO8601ArrayOptions) (*policy.Request, error) {
-	urlPath := "/encode/duration/header/iso8601-array"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	req.Raw().Header["duration"] = []string{strings.Join(duration, ",")}
-	return req, nil
-}
-
 // Int32Milliseconds -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationHeaderClientInt32MillisecondsOptions contains the optional parameters for the DurationHeaderClient.Int32Milliseconds
@@ -521,5 +450,76 @@ func (client *DurationHeaderClient) int32SecondsLargerUnitCreateRequest(ctx cont
 		return nil, err
 	}
 	req.Raw().Header["duration"] = []string{strconv.FormatInt(int64(duration), 10)}
+	return req, nil
+}
+
+// Iso8601 -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationHeaderClientIso8601Options contains the optional parameters for the DurationHeaderClient.Iso8601 method.
+func (client *DurationHeaderClient) Iso8601(ctx context.Context, duration string, options *DurationHeaderClientIso8601Options) (DurationHeaderClientIso8601Response, error) {
+	var err error
+	const operationName = "DurationHeaderClient.Iso8601"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.iso8601CreateRequest(ctx, duration, options)
+	if err != nil {
+		return DurationHeaderClientIso8601Response{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationHeaderClientIso8601Response{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationHeaderClientIso8601Response{}, err
+	}
+	return DurationHeaderClientIso8601Response{}, nil
+}
+
+// iso8601CreateRequest creates the Iso8601 request.
+func (client *DurationHeaderClient) iso8601CreateRequest(ctx context.Context, duration string, _ *DurationHeaderClientIso8601Options) (*policy.Request, error) {
+	urlPath := "/encode/duration/header/iso8601"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["duration"] = []string{duration}
+	return req, nil
+}
+
+// Iso8601Array -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationHeaderClientIso8601ArrayOptions contains the optional parameters for the DurationHeaderClient.Iso8601Array
+//     method.
+func (client *DurationHeaderClient) Iso8601Array(ctx context.Context, duration []string, options *DurationHeaderClientIso8601ArrayOptions) (DurationHeaderClientIso8601ArrayResponse, error) {
+	var err error
+	const operationName = "DurationHeaderClient.Iso8601Array"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.iso8601ArrayCreateRequest(ctx, duration, options)
+	if err != nil {
+		return DurationHeaderClientIso8601ArrayResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationHeaderClientIso8601ArrayResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationHeaderClientIso8601ArrayResponse{}, err
+	}
+	return DurationHeaderClientIso8601ArrayResponse{}, nil
+}
+
+// iso8601ArrayCreateRequest creates the Iso8601Array request.
+func (client *DurationHeaderClient) iso8601ArrayCreateRequest(ctx context.Context, duration []string, _ *DurationHeaderClientIso8601ArrayOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/header/iso8601-array"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["duration"] = []string{strings.Join(duration, ",")}
 	return req, nil
 }

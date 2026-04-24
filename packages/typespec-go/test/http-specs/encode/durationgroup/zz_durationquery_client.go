@@ -287,43 +287,6 @@ func (client *DurationQueryClient) floatSecondsLargerUnitCreateRequest(ctx conte
 	return req, nil
 }
 
-// ISO8601 -
-// If the operation fails it returns an *azcore.ResponseError type.
-//   - options - DurationQueryClientISO8601Options contains the optional parameters for the DurationQueryClient.ISO8601 method.
-func (client *DurationQueryClient) ISO8601(ctx context.Context, input string, options *DurationQueryClientISO8601Options) (DurationQueryClientISO8601Response, error) {
-	var err error
-	const operationName = "DurationQueryClient.ISO8601"
-	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
-	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
-	defer func() { endSpan(err) }()
-	req, err := client.iso8601CreateRequest(ctx, input, options)
-	if err != nil {
-		return DurationQueryClientISO8601Response{}, err
-	}
-	httpResp, err := client.internal.Pipeline().Do(req)
-	if err != nil {
-		return DurationQueryClientISO8601Response{}, err
-	}
-	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
-		err = runtime.NewResponseError(httpResp)
-		return DurationQueryClientISO8601Response{}, err
-	}
-	return DurationQueryClientISO8601Response{}, nil
-}
-
-// iso8601CreateRequest creates the ISO8601 request.
-func (client *DurationQueryClient) iso8601CreateRequest(ctx context.Context, input string, _ *DurationQueryClientISO8601Options) (*policy.Request, error) {
-	urlPath := "/encode/duration/query/iso8601"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	reqQP := req.Raw().URL.Query()
-	reqQP.Set("input", input)
-	req.Raw().URL.RawQuery = reqQP.Encode()
-	return req, nil
-}
-
 // Int32Milliseconds -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationQueryClientInt32MillisecondsOptions contains the optional parameters for the DurationQueryClient.Int32Milliseconds
@@ -548,6 +511,43 @@ func (client *DurationQueryClient) int32SecondsLargerUnitCreateRequest(ctx conte
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("input", strconv.FormatInt(int64(input), 10))
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	return req, nil
+}
+
+// Iso8601 -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationQueryClientIso8601Options contains the optional parameters for the DurationQueryClient.Iso8601 method.
+func (client *DurationQueryClient) Iso8601(ctx context.Context, input string, options *DurationQueryClientIso8601Options) (DurationQueryClientIso8601Response, error) {
+	var err error
+	const operationName = "DurationQueryClient.Iso8601"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.iso8601CreateRequest(ctx, input, options)
+	if err != nil {
+		return DurationQueryClientIso8601Response{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationQueryClientIso8601Response{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationQueryClientIso8601Response{}, err
+	}
+	return DurationQueryClientIso8601Response{}, nil
+}
+
+// iso8601CreateRequest creates the Iso8601 request.
+func (client *DurationQueryClient) iso8601CreateRequest(ctx context.Context, input string, _ *DurationQueryClientIso8601Options) (*policy.Request, error) {
+	urlPath := "/encode/duration/query/iso8601"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("input", input)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
