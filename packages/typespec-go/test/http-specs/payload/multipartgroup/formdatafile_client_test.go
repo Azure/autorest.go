@@ -35,7 +35,7 @@ func TestFormDataFileClient_UploadFileRequiredFilename(t *testing.T) {
 	client := newClient(t)
 	pngFile, err := os.OpenFile(pngPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer pngFile.Close()
+	defer func() { _ = pngFile.Close() }()
 	resp, err := client.NewMultiPartFormDataClient().NewMultiPartFormDataFileClient().UploadFileRequiredFilename(context.Background(), streaming.MultipartContent{
 		Body:     pngFile,
 		Filename: "image.png",
@@ -48,7 +48,7 @@ func TestFormDataFileClient_UploadFileSpecificContentType(t *testing.T) {
 	client := newClient(t)
 	pngFile, err := os.OpenFile(pngPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer pngFile.Close()
+	defer func() { _ = pngFile.Close() }()
 	resp, err := client.NewMultiPartFormDataClient().NewMultiPartFormDataFileClient().UploadFileSpecificContentType(context.Background(), streaming.MultipartContent{
 		Body:     pngFile,
 		Filename: "image.png",

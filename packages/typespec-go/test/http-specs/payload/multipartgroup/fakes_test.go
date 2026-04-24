@@ -47,7 +47,7 @@ func TestFakeFormDataClient_Basic(t *testing.T) {
 	client := newFakeClient(t, fake.NewMultiPartServerTransport(&srv))
 	jpgFile, err := os.OpenFile(jpgPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer jpgFile.Close()
+	defer func() { _ = jpgFile.Close() }()
 	_, err = client.NewMultiPartFormDataClient().Basic(context.Background(), multipartgroup.MultiPartRequest{
 		ID: "123",
 		ProfileImage: streaming.MultipartContent{
@@ -76,7 +76,7 @@ func TestFakeFormDataFileClient_UploadFileRequiredFilename(t *testing.T) {
 	client := newFakeClient(t, fake.NewMultiPartServerTransport(&srv))
 	pngFile, err := os.OpenFile(pngPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer pngFile.Close()
+	defer func() { _ = pngFile.Close() }()
 	_, err = client.NewMultiPartFormDataClient().NewMultiPartFormDataFileClient().UploadFileRequiredFilename(context.Background(), streaming.MultipartContent{
 		Body:     pngFile,
 		Filename: "image.png",
@@ -108,7 +108,7 @@ func TestFakeFormDataHTTPPartsClient_JSONArrayAndFileArray(t *testing.T) {
 	client := newFakeClient(t, fake.NewMultiPartServerTransport(&srv))
 	jpgFile, err := os.OpenFile(jpgPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer jpgFile.Close()
+	defer func() { _ = jpgFile.Close() }()
 	pngFile, err := os.ReadFile(pngPath)
 	require.NoError(t, err)
 	_, err = client.NewMultiPartFormDataClient().NewMultiPartFormDataHTTPPartsClient().JSONArrayAndFileArray(context.Background(), multipartgroup.ComplexHTTPPartsModelRequest{
@@ -162,7 +162,7 @@ func TestFakeFormDataHTTPPartsContentTypeClient_RequiredContentType(t *testing.T
 	client := newFakeClient(t, fake.NewMultiPartServerTransport(&srv))
 	jpgFile, err := os.OpenFile(jpgPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer jpgFile.Close()
+	defer func() { _ = jpgFile.Close() }()
 	_, err = client.NewMultiPartFormDataClient().NewMultiPartFormDataHTTPPartsClient().NewMultiPartFormDataHTTPPartsContentTypeClient().RequiredContentType(context.Background(), multipartgroup.FileWithHTTPPartRequiredContentTypeRequest{
 		ProfileImage: streaming.MultipartContent{
 			Body:        jpgFile,

@@ -31,7 +31,7 @@ func TestFormDataClient_Basic(t *testing.T) {
 	client := newClient(t)
 	jpgFile, err := os.OpenFile(jpgPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer jpgFile.Close()
+	defer func() { _ = jpgFile.Close() }()
 	resp, err := client.NewMultiPartFormDataClient().Basic(context.Background(), multipartgroup.MultiPartRequest{
 		ID: "123",
 		ProfileImage: streaming.MultipartContent{
@@ -65,7 +65,7 @@ func TestFormDataClient_CheckFileNameAndContentType(t *testing.T) {
 	client := newClient(t)
 	jpgFile, err := os.OpenFile(jpgPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer jpgFile.Close()
+	defer func() { _ = jpgFile.Close() }()
 	resp, err := client.NewMultiPartFormDataClient().CheckFileNameAndContentType(context.Background(), multipartgroup.MultiPartRequest{
 		ID: "123",
 		ProfileImage: streaming.MultipartContent{
@@ -82,7 +82,7 @@ func TestFormDataClient_FileArrayAndBasic(t *testing.T) {
 	client := newClient(t)
 	jpgFile, err := os.OpenFile(jpgPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer jpgFile.Close()
+	defer func() { _ = jpgFile.Close() }()
 	pngFile, err := os.ReadFile(pngPath)
 	require.NoError(t, err)
 	resp, err := client.NewMultiPartFormDataClient().FileArrayAndBasic(context.Background(), multipartgroup.ComplexPartsRequest{
@@ -108,7 +108,7 @@ func TestFormDataClient_JSONPart(t *testing.T) {
 	client := newClient(t)
 	jpgFile, err := os.OpenFile(jpgPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer jpgFile.Close()
+	defer func() { _ = jpgFile.Close() }()
 	resp, err := client.NewMultiPartFormDataClient().JSONPart(context.Background(), multipartgroup.JSONPartRequest{
 		Address: multipartgroup.Address{
 			City: to.Ptr("X"),
@@ -125,7 +125,7 @@ func TestFormDataClient_MultiBinaryParts(t *testing.T) {
 	client := newClient(t)
 	jpgFile, err := os.OpenFile(jpgPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer jpgFile.Close()
+	defer func() { _ = jpgFile.Close() }()
 
 	// without optional picture
 	resp, err := client.NewMultiPartFormDataClient().MultiBinaryParts(context.Background(), multipartgroup.MultiBinaryPartsRequest{
@@ -141,7 +141,7 @@ func TestFormDataClient_MultiBinaryParts(t *testing.T) {
 	require.NoError(t, err)
 	pngFile, err := os.OpenFile(pngPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer pngFile.Close()
+	defer func() { _ = pngFile.Close() }()
 	resp, err = client.NewMultiPartFormDataClient().MultiBinaryParts(context.Background(), multipartgroup.MultiBinaryPartsRequest{
 		ProfileImage: streaming.MultipartContent{
 			Body: jpgFile,
@@ -158,7 +158,7 @@ func TestFormDataClient_OptionalParts(t *testing.T) {
 	client := newClient(t)
 	jpgFile, err := os.OpenFile(jpgPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer jpgFile.Close()
+	defer func() { _ = jpgFile.Close() }()
 	resp, err := client.NewMultiPartFormDataClient().OptionalParts(context.Background(), multipartgroup.MultiPartOptionalRequest{
 		ID: to.Ptr("123"),
 		ProfileImage: &streaming.MultipartContent{
@@ -173,7 +173,7 @@ func TestFormDataClient_WithWireName(t *testing.T) {
 	client := newClient(t)
 	jpgFile, err := os.OpenFile(jpgPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer jpgFile.Close()
+	defer func() { _ = jpgFile.Close() }()
 	resp, err := client.NewMultiPartFormDataClient().WithWireName(context.Background(), multipartgroup.MultiPartRequestWithWireName{
 		Identifier: "123",
 		Image: streaming.MultipartContent{

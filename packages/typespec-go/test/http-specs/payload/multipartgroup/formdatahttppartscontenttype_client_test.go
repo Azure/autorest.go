@@ -17,7 +17,7 @@ func TestFormDataHTTPPartsContentTypeClient_ImageJPEGContentType(t *testing.T) {
 	client := newClient(t)
 	jpgFile, err := os.OpenFile(jpgPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer jpgFile.Close()
+	defer func() { _ = jpgFile.Close() }()
 	resp, err := client.NewMultiPartFormDataClient().NewMultiPartFormDataHTTPPartsClient().NewMultiPartFormDataHTTPPartsContentTypeClient().ImageJPEGContentType(context.Background(), multipartgroup.FileWithHTTPPartSpecificContentTypeRequest{
 		ProfileImage: streaming.MultipartContent{
 			Body:     jpgFile,
@@ -32,7 +32,7 @@ func TestFormDataHTTPPartsContentTypeClient_OptionalContentType(t *testing.T) {
 	client := newClient(t)
 	jpgFile, err := os.OpenFile(jpgPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer jpgFile.Close()
+	defer func() { _ = jpgFile.Close() }()
 	resp, err := client.NewMultiPartFormDataClient().NewMultiPartFormDataHTTPPartsClient().NewMultiPartFormDataHTTPPartsContentTypeClient().OptionalContentType(context.Background(), multipartgroup.FileWithHTTPPartOptionalContentTypeRequest{
 		ProfileImage: streaming.MultipartContent{
 			Body:     jpgFile,
@@ -47,7 +47,7 @@ func TestFormDataHTTPPartsContentTypeClient_RequiredContentType(t *testing.T) {
 	client := newClient(t)
 	jpgFile, err := os.OpenFile(jpgPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer jpgFile.Close()
+	defer func() { _ = jpgFile.Close() }()
 	resp, err := client.NewMultiPartFormDataClient().NewMultiPartFormDataHTTPPartsClient().NewMultiPartFormDataHTTPPartsContentTypeClient().RequiredContentType(context.Background(), multipartgroup.FileWithHTTPPartRequiredContentTypeRequest{
 		ProfileImage: streaming.MultipartContent{
 			Body:        jpgFile,

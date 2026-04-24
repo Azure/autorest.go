@@ -19,7 +19,7 @@ func TestFormDataHTTPPartsClient_JSONArrayAndFileArray(t *testing.T) {
 	client := newClient(t)
 	jpgFile, err := os.OpenFile(jpgPath, os.O_RDONLY, 0)
 	require.NoError(t, err)
-	defer jpgFile.Close()
+	defer func() { _ = jpgFile.Close() }()
 	pngFile, err := os.ReadFile(pngPath)
 	require.NoError(t, err)
 	resp, err := client.NewMultiPartFormDataClient().NewMultiPartFormDataHTTPPartsClient().JSONArrayAndFileArray(context.Background(), multipartgroup.ComplexHTTPPartsModelRequest{
