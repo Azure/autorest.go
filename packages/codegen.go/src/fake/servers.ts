@@ -730,7 +730,9 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
           content += emitCase(field.serializedName, `${param.name}.${field.name}`, field.type, field.byValue);
         }
       } else {
-        content += emitCase(param.name, param.name, param.type, param.byValue);
+        // for this case we've emitted local vars of the underlying
+        // type which is why we pass true for param destIsByValue
+        content += emitCase(param.name, param.name, param.type, true);
       }
     }
 
