@@ -1291,6 +1291,27 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
   };
 
   if (bodyParam) {
+    /** returns the source value for the content type */
+    const getContentTypeValue = function (src: go.BodyParameterContentTypeKind): string {
+      switch (src.kind) {
+        case 'literal':
+          return helpers.formatLiteralValue(src, false);
+        case 'parameterRef': {
+          // find the param
+          for (const param of method.parameters) {
+            if (param.kind === 'headerScalarParam' && param.name === src.name) {
+              let paramName = param.name;
+              if (param.type.kind === 'constant') {
+                paramName = `string(${paramName})`;
+              }
+              return paramName;
+            }
+          }
+          throw new CodegenError('InternalError', `didn't find parameter reference ${src.name}`);
+        }
+      }
+    };
+
     if (bodyParam.bodyFormat === 'JSON' || bodyParam.bodyFormat === 'XML') {
       // default to the body param name
       let body = helpers.getParamName(bodyParam);
@@ -1367,12 +1388,12 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
       }
     } else if (bodyParam.bodyFormat === 'binary') {
       if (go.isRequiredParameter(bodyParam.style)) {
-        text += emitSetBodyWithErrCheck(`req.SetBody(${bodyParam.name}, ${bodyParam.contentType})`, contentType);
+        text += emitSetBodyWithErrCheck(`req.SetBody(${bodyParam.name}, ${getContentTypeValue(bodyParam.contentType)})`, contentType);
         text += `${indent.get()}return req, nil\n`;
       } else {
         text += emitParamGroupCheck(bodyParam);
         indent.push();
-        text += emitSetBodyWithErrCheck(`req.SetBody(${helpers.getParamName(bodyParam)}, ${bodyParam.contentType})`, contentType);
+        text += emitSetBodyWithErrCheck(`req.SetBody(${helpers.getParamName(bodyParam)}, ${getContentTypeValue(bodyParam.contentType)})`, contentType);
         text += `${indent.get()}return req, nil\n`;
         indent.pop();
         text += `${indent.get()}}\n`;
@@ -1383,13 +1404,13 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
       if (go.isRequiredParameter(bodyParam.style)) {
         text += `${indent.get()}body := streaming.NopCloser(strings.NewReader(${bodyParam.name}))\n`;
-        text += emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`, contentType);
+        text += emitSetBodyWithErrCheck(`req.SetBody(body, ${getContentTypeValue(bodyParam.contentType)})`, contentType);
         text += `${indent.get()}return req, nil\n`;
       } else {
         text += emitParamGroupCheck(bodyParam);
         indent.push();
         text += `${indent.get()}body := streaming.NopCloser(strings.NewReader(${helpers.getParamName(bodyParam)}))\n`;
-        text += emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`, contentType);
+        text += emitSetBodyWithErrCheck(`req.SetBody(body, ${getContentTypeValue(bodyParam.contentType)})`, contentType);
         text += `${indent.get()}return req, nil\n`;
         indent.pop();
         text += `${indent.get()}}\n`;

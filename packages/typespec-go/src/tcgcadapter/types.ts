@@ -209,14 +209,7 @@ export class TypeAdapter {
         return arrayType;
       }
       case 'endpoint': {
-        const stringKey = 'string';
-        let stringType = this.types.get(stringKey);
-        if (stringType) {
-          return stringType;
-        }
-        stringType = new go.String();
-        this.types.set(stringKey, stringType);
-        return stringType;
+        return this.getStringType();
       }
       case 'enum':
         return this.getConstantType(type);
@@ -313,7 +306,7 @@ export class TypeAdapter {
     }
     let mpc = this.types.get(keyName);
     if (!mpc) {
-      const ct = contentType ? new go.Literal(new go.String(), `"${contentType}"`) : undefined;
+      const ct = contentType ? new go.Literal(this.getStringType(), `"${contentType}"`) : undefined;
       mpc = new go.MultipartContent(ct);
       if (sliceOf) {
         mpc = new go.Slice(mpc, true);
@@ -430,15 +423,7 @@ export class TypeAdapter {
         if (type.crossLanguageDefinitionId === 'Azure.Core.eTag') {
           return this.getETagType();
         }
-
-        const stringKey = 'string';
-        let stringType = this.types.get(stringKey);
-        if (stringType) {
-          return stringType;
-        }
-        stringType = new go.String();
-        this.types.set(stringKey, stringType);
-        return stringType;
+        return this.getStringType();
       }
       case 'plainTime': {
         const encoding = 'PlainTime';
@@ -483,6 +468,34 @@ export class TypeAdapter {
     etag = new go.ETag();
     this.types.set(etagKey, etag);
     return etag;
+  }
+
+  /**
+   * returns a Go literal for the specified values
+   *
+   * @param type the underlying type of the literal
+   * @param value the literal value
+   * @returns a Go literal
+   */
+  getLiteral<T extends go.LiteralType = go.LiteralType>(type: T, value: boolean | number | string): go.Literal<T> {
+    const literalKey = `literal-${type.kind}-${value}`;
+    let literalType = this.types.get(literalKey);
+    if (!literalType) {
+      literalType = new go.Literal(type, value);
+      this.types.set(literalKey, literalType);
+    }
+    return <go.Literal<T>>literalType;
+  }
+
+  /** returns a Go string type */
+  getStringType(): go.String {
+    const stringKey = 'string';
+    let stringType = this.types.get(stringKey);
+    if (!stringType) {
+      stringType = new go.String();
+      this.types.set(stringKey, stringType);
+    }
+    return <go.String>stringType;
   }
 
   private getInterfaceType(model: tcgc.SdkModelType): go.Interface {
@@ -878,7 +891,7 @@ export class TypeAdapter {
         if (literalString) {
           return <go.Literal>literalString;
         }
-        literalString = new go.Literal(new go.String(), constType.value);
+        literalString = new go.Literal(this.getStringType(), constType.value);
         this.types.set(keyName, literalString);
         return literalString;
       }

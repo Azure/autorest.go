@@ -42,11 +42,14 @@ export interface BodyParameter extends HttpParameterBase {
   bodyFormat: BodyFormat;
 
   /** value used for the Content-Type header */
-  contentType: string;
+  contentType: BodyParameterContentTypeKind;
 
   /** optional XML schema metadata */
   xml?: type.XMLInfo;
 }
+
+/** describes how the body param's content type is set */
+export type BodyParameterContentTypeKind = type.Literal<type.String> | ParameterRef;
 
 /** represents parameters that have a default value on the client side */
 export interface ClientSideDefault {
@@ -234,6 +237,14 @@ export interface PathScalarParameter extends HttpParameterBase {
 
 /** defines the possible types for a PathScalarParameter */
 export type PathScalarParameterType = type.Constant | type.EncodedBytes | type.Literal | type.Scalar | type.String | type.Time;
+
+/** a reference to an existing parameter */
+export interface ParameterRef {
+  kind: 'parameterRef';
+
+  /** the name of the parameter */
+  name: string;
+}
 
 /** a collection of values that go in the HTTP query string */
 export interface QueryCollectionParameter extends HttpParameterBase {
@@ -434,7 +445,7 @@ class HttpParameterBase extends method.Parameter implements HttpParameterBase {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class BodyParameter extends HttpParameterBase implements BodyParameter {
-  constructor(name: string, bodyFormat: BodyFormat, contentType: string, type: type.WireType, style: ParameterStyle, byValue: boolean) {
+  constructor(name: string, bodyFormat: BodyFormat, contentType: BodyParameterContentTypeKind, type: type.WireType, style: ParameterStyle, byValue: boolean) {
     super(name, type, style, byValue, 'method');
     this.kind = 'bodyParam';
     this.bodyFormat = bodyFormat;
@@ -509,6 +520,13 @@ export class ParameterGroup implements ParameterGroup {
     this.required = required;
     this.docs = {};
     this.pkg = pkg;
+  }
+}
+
+export class ParameterRef implements ParameterRef {
+  constructor(name: string) {
+    this.kind = 'parameterRef';
+    this.name = name;
   }
 }
 

@@ -144,15 +144,22 @@ export interface Interface {
 }
 
 /** a literal value (e.g. "foo", 123, true) */
-export interface Literal {
+export interface Literal<T extends LiteralType = LiteralType> {
   kind: 'literal';
 
-  /** the literal's underlying type */
-  type: LiteralType;
+  /**
+   * the literal's underlying type.
+   * note that when T is a Constant type,
+   * literal will contain a ConstantValue
+   */
+  type: T;
 
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  /** the value for this literal */
-  literal: any;
+  /**
+   * the value for this literal.
+   * usually a boolean, number, or string
+   * but it can also be a ConstantValue
+   */
+  literal: unknown;
 }
 
 /** the possible types of literals */
@@ -227,7 +234,7 @@ export interface MultipartContent extends QualifiedType {
   kind: 'multipartContent';
 
   /** optional, explicit content-type for the payload */
-  contentType?: Literal;
+  contentType?: Literal<String>;
 }
 
 /** a model that's a discriminated type */
@@ -620,12 +627,10 @@ export class Interface implements Interface {
   }
 }
 
-export class Literal implements Literal {
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  constructor(type: LiteralType, literal: any) {
+export class Literal<T> implements Literal<T> {
+  constructor(type: T, literal: unknown) {
     this.kind = 'literal';
     this.type = type;
-    /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
     this.literal = literal;
   }
 }
@@ -672,7 +677,7 @@ export class Model extends ModelBase implements Model {
 }
 
 export class MultipartContent extends QualifiedType implements MultipartContent {
-  constructor(contentType?: Literal) {
+  constructor(contentType?: Literal<String>) {
     super('MultipartContent', 'github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
     this.kind = 'multipartContent';
     this.contentType = contentType;

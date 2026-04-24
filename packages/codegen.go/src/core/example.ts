@@ -265,7 +265,7 @@ function getExampleValue(pkg: go.TestPackage, example: go.ExampleType, indent: s
       } else if (example.type.kind === 'encodedBytes') {
         exampleText = `[]byte("${escapeString(example.value)}")`;
       } else if (example.type.kind === 'literal' && example.type.type.kind === 'constant') {
-        exampleText = getConstantValue(pkg, example.type.type, example.type.literal.value);
+        exampleText = getConstantValue(pkg, example.type.type, (<go.ConstantValue>example.type.literal).value);
       } else if (example.type.kind === 'etag') {
         imports?.add(example.type.module);
         exampleText = `${go.getTypeDeclaration(example.type, pkg)}("${escapeString(example.value)}")`;
@@ -475,7 +475,7 @@ function generateFakeExample(goType: go.Type, name?: string): go.ExampleType {
           return new go.NumberExample(goType.values[0].value as number, goType);
       }
     case 'literal':
-      return new go.StringExample(goType.literal, goType);
+      return new go.StringExample(<string>goType.literal, goType);
     case 'scalar':
       switch (goType.type) {
         case 'bool':

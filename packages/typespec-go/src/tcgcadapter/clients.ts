@@ -424,7 +424,7 @@ export class ClientAdapter {
   private adaptURIParam(sdkParam: tcgc.SdkPathParameter, forceRequired: boolean): go.URIParameter {
     let paramType: go.WireType;
     if (sdkParam.isApiVersionParam) {
-      paramType = new go.String();
+      paramType = this.ta.getStringType();
     } else {
       paramType = this.ta.getWireType(sdkParam.type, true, false);
     }
@@ -802,7 +802,8 @@ export class ClientAdapter {
             if (opParam.defaultContentType.match(/multipart/i)) {
               adaptedParam = this.adaptMultipartFormParameter(param, paramStyle, byVal);
             } else {
-              adaptedParam = new go.BodyParameter(paramName, contentType, `"${opParam.defaultContentType}"`, this.ta.getReadSeekCloser(false), paramStyle, byVal);
+              const contentTypeLiteral = this.ta.getLiteral(this.ta.getStringType(), opParam.defaultContentType);
+              adaptedParam = new go.BodyParameter(paramName, contentType, contentTypeLiteral, this.ta.getReadSeekCloser(false), paramStyle, byVal);
             }
             break;
           default:
@@ -1007,7 +1008,7 @@ export class ClientAdapter {
     if (opParam.isApiVersionParam) {
       // we emit the api version param inline as a literal, never as a param.
       // the ClientOptions.APIVersion setting is used to change the version.
-      const paramType = opParam.clientDefaultValue ? new go.Literal(new go.String(), opParam.clientDefaultValue) : new go.String();
+      const paramType = opParam.clientDefaultValue ? new go.Literal(this.ta.getStringType(), opParam.clientDefaultValue) : this.ta.getStringType();
       const paramStyle = opParam.clientDefaultValue ? 'literal' : opParam.optional ? 'optional' : 'required';
       const paramLoc = opParam.onClient ? 'client' : 'method';
       let apiVersionParam: go.HeaderScalarParameter | go.PathScalarParameter | go.QueryScalarParameter;
@@ -1086,7 +1087,8 @@ export class ClientAdapter {
             // tcgc models binary params as 'bytes' but we want an io.ReadSeekCloser
             bodyType = this.ta.getReadSeekCloser(methodParam.type.kind === 'array');
           }
-          adaptedParam = new go.BodyParameter(paramName, contentType, `"${opParam.defaultContentType}"`, bodyType, paramStyle, byVal);
+          const contentTypeLiteral = this.ta.getLiteral(this.ta.getStringType(), opParam.defaultContentType);
+          adaptedParam = new go.BodyParameter(paramName, contentType, contentTypeLiteral, bodyType, paramStyle, byVal);
           if (contentType === 'XML' && methodParam.type.kind === 'array') {
             // this is for compat with autorest.go
             adaptedParam.xml = new go.XMLInfo();
@@ -1569,7 +1571,7 @@ export class ClientAdapter {
       if (param.isApiVersionParam) {
         // we force the API version param type to a string
         // so it matches the ClientOptions.APIVersion type
-        adaptedType = new go.String();
+        adaptedType = this.ta.getStringType();
       } else {
         const adaptedWireType = this.ta.getWireType(param.type, false, false);
         if (!go.isLiteralValueType(adaptedWireType)) {
@@ -1753,8 +1755,7 @@ export class ClientAdapter {
           let concreteType: go.Model | go.PolymorphicModel | undefined;
           if (goType.kind === 'interface') {
             concreteType = goType.possibleTypes.find(
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-              (t) => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue,
+              (t) => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || (<go.ConstantValue>t.discriminatorValue?.literal).value === exampleType.type.discriminatorValue,
             );
             if (concreteType === undefined) {
               // can't find the sub type of a discriminated type, fallback to the base type
