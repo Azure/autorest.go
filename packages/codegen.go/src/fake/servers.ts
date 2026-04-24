@@ -299,13 +299,34 @@ function generateServerTransportClientDispatch(serverTransport: string, subClien
     return '';
   }
 
+  /** gathers all children, not just immediate children, in breadth first order */
+  const getAllSubClientsForCase = function(client: go.Client): Array<go.Client> {
+    const subClients = new Array<go.Client>();
+    for (const clientAccessor of client.clientAccessors) {
+      if (helpers.clientHasNoExportedMethods(clientAccessor.returns)) {
+        // client has no exported methods, skip it
+        continue;
+      }
+      subClients.push(clientAccessor.returns);
+    }
+    for (const subClient of subClients) {
+      const children = getAllSubClientsForCase(subClient);
+      subClients.push(...children);
+    }
+    return subClients;
+  };
+
   const receiverName = serverTransport[0].toLowerCase();
   imports.add('strings');
   let content = `func (${receiverName} *${serverTransport}) ${dispatchToClientFake}(req *http.Request, client string) (*http.Response, error) {\n`;
   content += `${indent.get()}var resp *http.Response\n${indent.get()}var err error\n\n`;
   content += `${indent.get()}switch client {\n`;
   for (const subClient of subClients) {
-    content += `${indent.get()}case "${subClient.name}":\n`;
+    // we must include all child clients, not just the immediate children
+    const subClientsforCase = getAllSubClientsForCase(subClient);
+    const allClientNamesForCase = new Array<string>(`"${subClient.name}"`);
+    allClientNamesForCase.push(...subClientsforCase.map((each) => `"${each.name}"`));
+    content += `${indent.get()}case ${allClientNamesForCase.join()}:\n`;
     const serverName = getServerName(subClient);
     indent.push();
     content += `${indent.get()}initServer(&${receiverName}.trMu, &${receiverName}.tr${serverName}, func() *${serverName}Transport {\n`;

@@ -84,7 +84,7 @@ func (s *ServiceServerTransport) dispatchToClientFake(req *http.Request, client 
 			return NewServiceFooServerTransport(&s.srv.ServiceFooServer)
 		})
 		resp, err = s.trServiceFooServer.Do(req)
-	case "ServiceQuxClient":
+	case "ServiceQuxClient", "ServiceQuxBarClient":
 		initServer(&s.trMu, &s.trServiceQuxServer, func() *ServiceQuxServerTransport {
 			return NewServiceQuxServerTransport(&s.srv.ServiceQuxServer)
 		})
