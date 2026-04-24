@@ -382,7 +382,7 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter, pkg: go.Pac
         throw new Error(`no media types defined for operation ${op.operationId}`);
       }
       const contentTypeLiteral = <string>op.requests![0].protocol.http!.mediaTypes[0];
-      let contentType: go.BodyParameterContentTypeKind = new go.Literal(new go.String, contentTypeLiteral);
+      let contentType: go.BodyParameterContentTypeKind = new go.Literal(new go.String(), contentTypeLiteral);
       if (op.requests![0].protocol.http!.mediaTypes.length > 1) {
         for (const param of values(op.requests![0].parameters)) {
           // If a request defined more than one possible media type, then the param is expected to be synthesized from modelerfour

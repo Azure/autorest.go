@@ -1755,7 +1755,9 @@ export class ClientAdapter {
           let concreteType: go.Model | go.PolymorphicModel | undefined;
           if (goType.kind === 'interface') {
             concreteType = goType.possibleTypes.find(
-              (t) => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || (<go.ConstantValue>t.discriminatorValue?.literal).value === exampleType.type.discriminatorValue,
+              (t) =>
+                t.discriminatorValue?.literal === exampleType.type.discriminatorValue ||
+                (<go.ConstantValue>t.discriminatorValue?.literal).value === exampleType.type.discriminatorValue,
             );
             if (concreteType === undefined) {
               // can't find the sub type of a discriminated type, fallback to the base type
