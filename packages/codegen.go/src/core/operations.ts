@@ -1418,7 +1418,7 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
           text += `${indent.pop().get()}}\n`;
           break;
         default:
-          throw new Error(`unexpected type kind ${multipartBodyParams[0].type.kind} for MultipartContent with contentType`);
+          throw new CodegenError('InternalError', `unexpected type kind ${multipartBodyParams[0].type.kind} for MultipartContent with contentType`);
       }
     }
     if (multipartBodyParams.length === 1 && multipartBodyParams[0].type.kind === 'model' && multipartBodyParams[0].type.annotations.multipartFormData) {
