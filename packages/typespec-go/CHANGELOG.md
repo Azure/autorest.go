@@ -1,5 +1,11 @@
 # Release History
 
+## 0.11.1 (unreleased)
+
+### Bugs Fixed
+
+* Fixed handling of `multipart/form` operations.
+
 ## 0.11.0 (2026-04-24)
 
 ### Breaking Changes

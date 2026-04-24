@@ -628,7 +628,7 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
       return type.kind === 'model' || type.kind === 'polymorphicModel';
     };
 
-    const emitCase = function (caseValue: string, paramVar: string, type: go.WireType): string {
+    const emitCase = function (caseValue: string, paramVar: string, type: go.WireType, destIsByValue: boolean): string {
       let caseContent = `${indent.get()}case "${caseValue}":\n`;
       indent.push();
       caseContent += `${indent.get()}content, err = io.ReadAll(part)\n`;
@@ -704,12 +704,22 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
         } else {
           throw new CodegenError('InternalError', `uhandled multipart parameter array element kind ${type.elementType.kind}`);
         }
+      } else if (type.kind === 'encodedBytes') {
+        imports.add('encoding/base64');
+        caseContent += `${indent.get()}${paramVar}, err = base64.${type.encoding}Encoding.DecodeString(string(content))\n`;
+        caseContent += `${indent.get()}if err != nil {\n${indent.push().get()}return nil, err\n${indent.pop().get()}}\n`;
       } else {
         throw new CodegenError('InternalError', `uhandled multipart parameter kind ${type.kind}`);
       }
+
       if (assignedValue) {
+        if (!destIsByValue) {
+          imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
+          assignedValue = `to.Ptr(${assignedValue})`;
+        }
         caseContent += `${indent.get()}${paramVar} = ${assignedValue}\n`;
       }
+
       indent.pop();
       return caseContent;
     };
@@ -717,10 +727,10 @@ function dispatchForOperationBody(pkg: go.FakePackage, receiverName: string, met
     for (const param of multipartBodyParams) {
       if (isModelType(param.type)) {
         for (const field of param.type.fields) {
-          content += emitCase(field.serializedName, `${param.name}.${field.name}`, field.type);
+          content += emitCase(field.serializedName, `${param.name}.${field.name}`, field.type, field.byValue);
         }
       } else {
-        content += emitCase(param.name, param.name, param.type);
+        content += emitCase(param.name, param.name, param.type, param.byValue);
       }
     }
 

@@ -577,7 +577,7 @@ func (client *ServiceClient) setPropertiesHandleResponse(resp *http.Response) (S
 //   - contentLength - The length of the request.
 //   - body - The body of the request.
 //   - options - ServiceClientSubmitBatchOptions contains the optional parameters for the ServiceClient.SubmitBatch method.
-func (client *ServiceClient) SubmitBatch(ctx context.Context, contentLength int64, body SubmitBatchRequest, options *ServiceClientSubmitBatchOptions) (ServiceClientSubmitBatchResponse, error) {
+func (client *ServiceClient) SubmitBatch(ctx context.Context, contentLength int64, body []byte, options *ServiceClientSubmitBatchOptions) (ServiceClientSubmitBatchResponse, error) {
 	var err error
 	req, err := client.submitBatchCreateRequest(ctx, contentLength, body, options)
 	if err != nil {
@@ -596,7 +596,7 @@ func (client *ServiceClient) SubmitBatch(ctx context.Context, contentLength int6
 }
 
 // submitBatchCreateRequest creates the SubmitBatch request.
-func (client *ServiceClient) submitBatchCreateRequest(ctx context.Context, contentLength int64, body SubmitBatchRequest, options *ServiceClientSubmitBatchOptions) (*policy.Request, error) {
+func (client *ServiceClient) submitBatchCreateRequest(ctx context.Context, contentLength int64, body []byte, options *ServiceClientSubmitBatchOptions) (*policy.Request, error) {
 	urlPath := "?comp=batch"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.url, urlPath))
 	if err != nil {
@@ -614,10 +614,8 @@ func (client *ServiceClient) submitBatchCreateRequest(ctx context.Context, conte
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
 	req.Raw().Header["x-ms-version"] = []string{"2026-04-06"}
-	formData, err := body.toMultipartFormData()
-	if err != nil {
-		return nil, err
-	}
+	formData := map[string]any{}
+	formData["body"] = body
 	if err := runtime.SetMultipartFormData(req, formData); err != nil {
 		return nil, err
 	}

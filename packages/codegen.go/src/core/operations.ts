@@ -1401,7 +1401,42 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     text += `${indent.pop().get()}}\n`;
     text += `${indent.get()}return req, nil\n`;
   } else if (multipartBodyParams.length > 0) {
+    // emit content type setters for direct MultipartContent params with a fixed content type.
+    // this handles the case where the param itself is a MultipartContent or a slice of them
+    // (i.e. not wrapped in a model struct with toMultipartFormData()).
+    const unwrapped = helpers.recursiveUnwrapMapSlice(multipartBodyParams[0].type);
+    if (unwrapped.kind === 'multipartContent' && unwrapped.contentType) {
+      switch (multipartBodyParams[0].type.kind) {
+        case 'multipartContent':
+          text += `${indent.get()}${multipartBodyParams[0].name}.ContentType = ${unwrapped.contentType.literal}\n`;
+          break;
+        case 'slice':
+          text += `${indent.get()}for i := range ${multipartBodyParams[0].name} {\n`;
+          text += `${indent.push().get()}${multipartBodyParams[0].name}[i].ContentType = ${unwrapped.contentType.literal}\n`;
+          text += `${indent.pop().get()}}\n`;
+          break;
+        default:
+          throw new Error(`unexpected type kind ${multipartBodyParams[0].type.kind} for MultipartContent with contentType`);
+      }
+    }
     if (multipartBodyParams.length === 1 && multipartBodyParams[0].type.kind === 'model' && multipartBodyParams[0].type.annotations.multipartFormData) {
+      // emit content type setters for model fields that have a fixed content type.
+      // toMultipartFormData() converts the model to map[string]any but doesn't set ContentType,
+      // so we must set it on each MultipartContent field before the conversion.
+      for (const field of multipartBodyParams[0].type.fields) {
+        const fieldUnwrapped = helpers.recursiveUnwrapMapSlice(field.type as go.WireType);
+        if (fieldUnwrapped.kind === 'multipartContent' && fieldUnwrapped.contentType) {
+          const fieldPath = `${multipartBodyParams[0].name}.${field.name}`;
+          const fieldType = field.type as go.WireType;
+          if (fieldType.kind === 'multipartContent') {
+            text += `${indent.get()}${fieldPath}.ContentType = ${fieldUnwrapped.contentType.literal}\n`;
+          } else if (fieldType.kind === 'slice') {
+            text += `${indent.get()}for i := range ${fieldPath} {\n`;
+            text += `${indent.push().get()}${fieldPath}[i].ContentType = ${fieldUnwrapped.contentType.literal}\n`;
+            text += `${indent.pop().get()}}\n`;
+          }
+        }
+      }
       text += `${indent.get()}formData, err := ${multipartBodyParams[0].name}.toMultipartFormData()\n`;
       text += `${indent.get()}if err != nil {\n`;
       text += `${indent.push().get()}return nil, err\n`;
