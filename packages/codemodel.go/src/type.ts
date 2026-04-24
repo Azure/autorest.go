@@ -225,6 +225,9 @@ export interface Model extends ModelBase {
 /** a streaming.MultipartContent type from azcore */
 export interface MultipartContent extends QualifiedType {
   kind: 'multipartContent';
+
+  /** optional, explicit content-type for the payload */
+  contentType?: Literal;
 }
 
 /** a model that's a discriminated type */
@@ -669,9 +672,10 @@ export class Model extends ModelBase implements Model {
 }
 
 export class MultipartContent extends QualifiedType implements MultipartContent {
-  constructor() {
+  constructor(contentType?: Literal) {
     super('MultipartContent', 'github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
     this.kind = 'multipartContent';
+    this.contentType = contentType;
   }
 }
 

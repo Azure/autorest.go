@@ -214,3 +214,10 @@ export function getClientDefaultValueDoc(literal: go.Literal): string {
   }
   return `The default value is ${value}.`;
 }
+
+/** returns true if model is a TypeSpec.Http.File type */
+export function isHttpFileType(model: tcgc.SdkModelType): boolean {
+  // we use startsWith('file') as there might be multiple
+  // instances with different suffixes (e.g. File1, File2, etc)
+  return model.namespace.toLowerCase() === 'typespec.http' && model.name.toLowerCase().startsWith('file');
+}

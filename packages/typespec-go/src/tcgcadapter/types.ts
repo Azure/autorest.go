@@ -74,6 +74,12 @@ export class TypeAdapter {
       } else if ((modelType.usage & tcgc.UsageFlags.Input) === 0 && (modelType.usage & tcgc.UsageFlags.Output) === 0) {
         // skip types without input and output usage
         continue;
+      } else if (modelType.isGeneratedName && modelType.usage & tcgc.UsageFlags.MultipartFormData) {
+        // we flatten these params into their underlying type
+        continue;
+      } else if (helpers.isHttpFileType(modelType) || (modelType.baseModel && helpers.isHttpFileType(modelType.baseModel))) {
+        // use use streaming.MultipartContent from azcore
+        continue;
       }
 
       if (helpers.isPolymorphicRoot(modelType)) {
@@ -248,6 +254,8 @@ export class TypeAdapter {
       case 'model':
         if (helpers.isPolymorphicRoot(type) && substituteDiscriminator) {
           return this.getInterfaceType(type);
+        } else if (helpers.isHttpFileType(type) || (type.baseModel && helpers.isHttpFileType(type.baseModel))) {
+          return this.getMultipartContent(false);
         }
         return this.getModel(type);
       case 'nullable':
@@ -285,15 +293,28 @@ export class TypeAdapter {
     return rsc;
   }
 
-  // returns the Go code model type for streaming.MultipartContent
-  getMultipartContent(sliceOf: boolean): go.WireType {
+  /**
+   * returns the Go code model type for streaming.MultipartContent.
+   * contentType is the fixed content type for the part (e.g. "image/png").
+   * different content types produce separate cached instances to avoid
+   * shared state mutation across unrelated multipart fields.
+   *
+   * @param sliceOf set to true if this should be a slice of streaming.MultipartContent
+   * @param contentType set when the request uses a fixed content type
+   * @returns the go.MultipartContent instance
+   */
+  getMultipartContent(sliceOf: boolean, contentType?: string): go.WireType {
     let keyName = 'streaming-multipartcontent';
+    if (contentType) {
+      keyName += `-${contentType}`;
+    }
     if (sliceOf) {
       keyName = 'sliceof-' + keyName;
     }
     let mpc = this.types.get(keyName);
     if (!mpc) {
-      mpc = new go.MultipartContent();
+      const ct = contentType ? new go.Literal(new go.String(), `"${contentType}"`) : undefined;
+      mpc = new go.MultipartContent(ct);
       if (sliceOf) {
         mpc = new go.Slice(mpc, true);
       }
@@ -618,8 +639,13 @@ export class TypeAdapter {
     }
     let type = this.getWireType(prop.type, isMultipartFormData, true);
     if (prop.kind === 'property') {
-      if (prop.isMultipartFileInput) {
-        type = this.getMultipartContent(prop.type.kind === 'array');
+      if (prop.serializationOptions.multipart?.isFilePart) {
+        // for file parts, check if the tsp defines a fixed content type
+        // (e.g. HttpPart<File<"image/png">>). if so, bake it into the MultipartContent type.
+        const multipartOpts = prop.serializationOptions.multipart;
+        const fixedContentType =
+          multipartOpts?.contentType?.type.kind === 'constant' && multipartOpts.defaultContentTypes.length === 1 ? multipartOpts.defaultContentTypes[0] : undefined;
+        type = this.getMultipartContent(prop.type.kind === 'array', fixedContentType);
       }
       if (prop.visibility) {
         // the field is read-only IFF the only visibility attribute present is Read.

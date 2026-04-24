@@ -800,7 +800,7 @@ export class ClientAdapter {
           }
           case 'binary':
             if (opParam.defaultContentType.match(/multipart/i)) {
-              adaptedParam = new go.MultipartFormBodyParameter(paramName, this.ta.getReadSeekCloser(false), paramStyle, byVal);
+              adaptedParam = this.adaptMultipartFormParameter(param, paramStyle, byVal);
             } else {
               adaptedParam = new go.BodyParameter(paramName, contentType, `"${opParam.defaultContentType}"`, this.ta.getReadSeekCloser(false), paramStyle, byVal);
             }
@@ -1078,7 +1078,7 @@ export class ClientAdapter {
       case 'body':
         // TODO: form data? (non-multipart)
         if (opParam.defaultContentType.match(/multipart/i)) {
-          adaptedParam = new go.MultipartFormBodyParameter(paramName, this.ta.getWireType(methodParam.type, false, true), paramStyle, byVal);
+          adaptedParam = this.adaptMultipartFormParameter(methodParam, paramStyle, byVal);
         } else {
           const contentType = this.adaptContentType(opParam.defaultContentType);
           let bodyType = this.ta.getWireType(methodParam.type, false, true);
@@ -1167,6 +1167,46 @@ export class ClientAdapter {
     }
 
     return adaptedParam;
+  }
+
+  /**
+   * adapts a multipart form body parameter from its tcgc representation.
+   * for generated wrapper types (isGeneratedName), unwraps to the inner property.
+   * for file parts with a fixed content type (e.g. HttpPart<File<"image/png">>),
+   * uses a MultipartContent type with the content type baked in.
+   */
+  private adaptMultipartFormParameter(param: tcgc.SdkMethodParameter | tcgc.SdkModelPropertyType, paramStyle: go.ParameterStyle, byVal: boolean): go.MultipartFormBodyParameter {
+    let paramName = param.name;
+    if (param.type.kind !== 'model') {
+      throw new AdapterError('InternalError', `unexpected kind ${param.type.kind}`, param.__raw?.node);
+    }
+
+    let paramType: tcgc.SdkType = param.type;
+    let multipartOptions: tcgc.MultipartOptions | undefined;
+    if (paramType.isGeneratedName) {
+      // tcgc wraps inline multipart params in a generated model with a single property.
+      // unwrap to the inner property to get the actual param name and type.
+      if (paramType.properties.length !== 1) {
+        throw new AdapterError('InternalError', `unexpected number of properties: ${paramType.properties.length}`, paramType.__raw?.node);
+      }
+      const prop = paramType.properties[0];
+      paramName = prop.name;
+      multipartOptions = prop.serializationOptions.multipart;
+      paramType = prop.type;
+    }
+
+    let type: go.WireType;
+    // only use MultipartContent for file parts with a fixed content type.
+    // non-file parts (e.g. HttpPart<{ @body body: float64; @header contentType: "text/plain" }>)
+    // should retain their underlying type (e.g. float64).
+    if (multipartOptions?.isFilePart && multipartOptions.contentType?.type.kind === 'constant' && multipartOptions.defaultContentTypes.length === 1) {
+      type = this.ta.getMultipartContent(paramType.kind === 'array', multipartOptions.defaultContentTypes[0]);
+    } else {
+      type = this.ta.getWireType(paramType, true, true);
+    }
+
+    paramName = getEscapedReservedName(ensureNameCase(paramName, paramStyle === 'required'), 'Param');
+    return new go.MultipartFormBodyParameter(paramName, type, paramStyle, byVal);
   }
 
   private getMethodNameForDocComment(method: go.MethodType): string {

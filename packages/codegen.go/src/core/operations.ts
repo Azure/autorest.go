@@ -907,6 +907,35 @@ function generateOperation(method: go.MethodType, options: go.Options, imports: 
   return text;
 }
 
+/**
+ * emits Go code to set ContentType on a MultipartContent variable if it has a fixed content type.
+ * handles both direct MultipartContent and slices of MultipartContent.
+ * returns the empty string if there's nothing to set.
+ *
+ * @param paramName the name of the multipart param
+ * @param wireType the underlying type of the multipart param
+ * @param indent the indentation helper currently in scope
+ * @returns setter code or the empty string
+ */
+function emitMultipartContentTypeSetter(paramName: string, wireType: go.WireType, indent: helpers.Indentation): string {
+  let text = '';
+  const unwrapped = helpers.recursiveUnwrapMapSlice(wireType);
+  if (unwrapped.kind !== 'multipartContent' || !unwrapped.contentType) {
+    return text;
+  }
+  switch (wireType.kind) {
+    case 'multipartContent':
+      text += `${indent.get()}${paramName}.ContentType = ${unwrapped.contentType.literal}\n`;
+      break;
+    case 'slice':
+      text += `${indent.get()}for i := range ${paramName} {\n`;
+      text += `${indent.push().get()}${paramName}[i].ContentType = ${unwrapped.contentType.literal}\n`;
+      text += `${indent.pop().get()}}\n`;
+      break;
+  }
+  return text;
+}
+
 function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.NextPageMethod, imports: ImportManager, indent: helpers.Indentation): string {
   let name = method.name;
   if (method.kind !== 'nextPageMethod') {
@@ -1401,7 +1430,19 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     text += `${indent.pop().get()}}\n`;
     text += `${indent.get()}return req, nil\n`;
   } else if (multipartBodyParams.length > 0) {
+    // emit content type setters for direct MultipartContent params with a fixed content type.
+    // this handles the case where the param itself is a MultipartContent or a slice of them
+    // (i.e. not wrapped in a model struct with toMultipartFormData()).
+    // note that tsp only allows homogeneous content types, which is why it's safe
+    // to unwrap the first param's type and check its contentType field.
+    text += emitMultipartContentTypeSetter(multipartBodyParams[0].name, multipartBodyParams[0].type, indent);
     if (multipartBodyParams.length === 1 && multipartBodyParams[0].type.kind === 'model' && multipartBodyParams[0].type.annotations.multipartFormData) {
+      // emit content type setters for model fields that have a fixed content type.
+      // toMultipartFormData() converts the model to map[string]any but doesn't set ContentType,
+      // so we must set it on each MultipartContent field before the conversion.
+      for (const field of multipartBodyParams[0].type.fields) {
+        text += emitMultipartContentTypeSetter(`${multipartBodyParams[0].name}.${field.name}`, field.type, indent);
+      }
       text += `${indent.get()}formData, err := ${multipartBodyParams[0].name}.toMultipartFormData()\n`;
       text += `${indent.get()}if err != nil {\n`;
       text += `${indent.push().get()}return nil, err\n`;

@@ -35,7 +35,7 @@ const httpSpecsGroup = {
   'contentneggroup': ['payload/content-negotiation'],
   'jmergepatchgroup': ['payload/json-merge-patch'],
   'mediatypegroup': ['payload/media-type'],
-  //'multipartgroup': ['payload/multipart'], // TODO: https://github.com/Azure/autorest.go/issues/1445
+  'multipartgroup': ['payload/multipart'],
   'pageablegroup': ['payload/pageable'], // missing support for continuation tokens: https://github.com/Azure/autorest.go/issues/1494
   'xmlgroup': ['payload/xml', 'slice-elements-byval=true'],
   //'statuscoderangegroup': ['response/status-code-range'], // TODO: https://github.com/Azure/autorest.go/issues/1606
