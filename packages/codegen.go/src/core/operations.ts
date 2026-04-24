@@ -1404,6 +1404,8 @@ function createProtocolRequest(azureARM: boolean, method: go.MethodType | go.Nex
     // emit content type setters for direct MultipartContent params with a fixed content type.
     // this handles the case where the param itself is a MultipartContent or a slice of them
     // (i.e. not wrapped in a model struct with toMultipartFormData()).
+    // note that tsp only allows homogeneous content types, which is why it's safe
+    // to unwrap the first param's type and check its contentType field.
     const unwrapped = helpers.recursiveUnwrapMapSlice(multipartBodyParams[0].type);
     if (unwrapped.kind === 'multipartContent' && unwrapped.contentType) {
       switch (multipartBodyParams[0].type.kind) {

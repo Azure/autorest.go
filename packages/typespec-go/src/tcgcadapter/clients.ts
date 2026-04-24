@@ -1178,7 +1178,7 @@ export class ClientAdapter {
   private adaptMultipartFormParameter(param: tcgc.SdkMethodParameter | tcgc.SdkModelPropertyType, paramStyle: go.ParameterStyle, byVal: boolean): go.MultipartFormBodyParameter {
     let paramName = param.name;
     if (param.type.kind !== 'model') {
-      throw new Error('boom1');
+      throw new AdapterError('InternalError', `unexpected kind ${param.type.kind}`, param.__raw?.node);
     }
 
     let paramType: tcgc.SdkType = param.type;
@@ -1186,8 +1186,8 @@ export class ClientAdapter {
     if (paramType.isGeneratedName) {
       // tcgc wraps inline multipart params in a generated model with a single property.
       // unwrap to the inner property to get the actual param name and type.
-      if (paramType.properties.length > 1) {
-        throw new Error('boom2');
+      if (paramType.properties.length !== 1) {
+        throw new AdapterError('InternalError', `unexpected number of properties: ${paramType.properties.length}`, paramType.__raw?.node);
       }
       const prop = paramType.properties[0];
       paramName = prop.name;

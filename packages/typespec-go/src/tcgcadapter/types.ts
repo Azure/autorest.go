@@ -303,7 +303,7 @@ export class TypeAdapter {
    * @param contentType set when the request uses a fixed content type
    * @returns the go.MultipartContent instance
    */
-  getMultipartContent(sliceOf: boolean, contentType?: string): go.MultipartContent {
+  getMultipartContent(sliceOf: boolean, contentType?: string): go.WireType {
     let keyName = 'streaming-multipartcontent';
     if (contentType) {
       keyName += `-${contentType}`;
@@ -320,7 +320,7 @@ export class TypeAdapter {
       }
       this.types.set(keyName, mpc);
     }
-    return <go.MultipartContent>mpc;
+    return mpc;
   }
 
   private getBuiltInType(type: tcgc.SdkBuiltInType): go.WireType {
